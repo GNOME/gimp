@@ -1,3 +1,11 @@
+2006-03-17  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/image.pdb: removed all remaining utility
+	functions, some cleanup and doc fixes.
+
+	* app/pdb/image_cmds.c
+	* libgimp/gimpimage_pdb.c: regenerated.
+
 2006-03-17  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-render.c

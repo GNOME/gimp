@@ -2251,8 +2251,8 @@ gimp_image_get_name (gint32 image_ID)
 /**
  * gimp_image_get_resolution:
  * @image_ID: The image.
- * @xresolution: The resolutionin the x-axis, in dots per inch.
- * @yresolution: The resolutionin the y-axis, in dots per inch.
+ * @xresolution: The resolution in the x-axis, in dots per inch.
+ * @yresolution: The resolution in the y-axis, in dots per inch.
  *
  * Returns the specified image's resolution.
  *
@@ -2406,7 +2406,7 @@ gimp_image_set_unit (gint32   image_ID,
  * save/load plugins that wish to preserve an images tattoo state.
  * Using this function at other times will produce unexpected results.
  *
- * Returns: The tattoo_state.
+ * Returns: The tattoo state.
  */
 gint
 gimp_image_get_tattoo_state (gint32 image_ID)
@@ -2421,7 +2421,7 @@ gimp_image_get_tattoo_state (gint32 image_ID)
 				    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    tattoo_state = return_vals[1].data.d_int32;
+    tattoo_state = return_vals[1].data.d_tattoo;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
@@ -2431,7 +2431,7 @@ gimp_image_get_tattoo_state (gint32 image_ID)
 /**
  * gimp_image_set_tattoo_state:
  * @image_ID: The image.
- * @tattoo_state: The new image tattoo_state.
+ * @tattoo_state: The new image tattoo state.
  *
  * Set the tattoo state associated with the image.
  *

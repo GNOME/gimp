@@ -17,81 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub image_get_prop_proc {
-    my ($prop, $type, $desc, $func) = @_;
-
-    if ($desc =~ /\bis\b/) {
-	$blurb = "Returns if the specified image's $desc.";
-	$help = "This procedure returns if the specified image's $desc. ";
-    } else {
-	$blurb = "Returns the specified image's $desc.";
-	$help = "This procedure returns the specified image's $desc. ";
-    }
-
-    &std_pdb_misc;
-
-    @inargs = ( &std_image_arg );
-
-    @outargs = (
-	{ name => $prop, type => $type,
-	  desc => "The $desc", no_declare => 1 }
-    );
-
-    my $alias = $func ? "gimp_image_get_$prop (gimage)" : "gimage->$prop";
-    $alias = "g_strdup ($alias)" if $type eq 'string';
-    $outargs[0]->{alias} .= "$alias";
-}
-
-sub image_set_prop_proc {
-    my ($prop, $type, $desc, $func) = @_;
-
-    if ($desc =~ /\bis\b/) {
-	$blurb = "Sets if the specified image's $desc.";
-	$help = "This procedure sets if the specified image's $desc. ";
-    } else {
-	$blurb = "Sets the specified image's $desc.";
-	$help = "This procedure sets the specified image's $desc. ";
-    }
-
-    &std_pdb_misc;
-
-    @inargs = (
-	&std_image_arg,
-	{ name => $prop, type => $type,
-	  desc => "The new image $desc" }
-    );
-
-    if ($type =~ /float/) {
-	$inargs[1]->{desc} .= ' (%%desc%%)';
-    }
-
-    $invoke{code} = $func ? "gimp_image_set_$prop (gimage, $prop);"
-			  : "gimage->$prop = $prop;";
-}
-
-sub image_accessors {
-    my ($prop, $type, $desc, $func, $extra) = @_;
-    my (@extra, %extra); my $once = 0;
-
-    ref($extra) ? (@extra = @$extra) : (@extra = ($extra, $extra));
-    %extra = map { $once++ ? 'set' : 'get', $_ ? $_ : "" } @extra;
-
-    foreach (sort keys %extra) {
-	my $proc = "image_${_}_$prop";
-
-	push @procs, $proc;
-
-	eval <<SUB;
-sub @{[ scalar caller ]}::$proc {
-    \&image_${_}_prop_proc('$prop', '$type', '$desc', $func);
-    $extra{$_}
-}
-SUB
-    }
-}
-
-# The defs
-
 sub image_list {
     $blurb = 'Returns the list of images currently open.';
 
@@ -160,7 +85,9 @@ HELP
 	code => <<'CODE'
 {
   image = gimp_create_image (gimp, width, height, type, FALSE);
-  success = (image != NULL);
+
+  if (! image)
+    success = FALSE;
 }
 CODE
     );
@@ -177,7 +104,9 @@ HELP
     &std_pdb_misc;
     $date = '1997';
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
 
     @outargs = (
 	{ name => 'new_image', type => 'image',
@@ -187,7 +116,12 @@ HELP
     %invoke = (
 	headers => [ qw("core/gimpimage-duplicate.h") ],
         code => <<'CODE'
-success = (new_image = gimp_image_duplicate (gimage)) != NULL;
+{
+  new_image = gimp_image_duplicate (gimage);
+
+  if (! new_image)
+    success = FALSE;
+}
 CODE
     );
 }
@@ -205,7 +139,9 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
 
     %invoke = ( code => <<'CODE' );
 {
@@ -269,7 +205,9 @@ HELP
 
     &simon_pdb_misc('2004', '2.2');
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
 
     %invoke = (
 	headers => [ qw("core/gimpimage-resize.h") ],
@@ -417,9 +355,17 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
 
-    %invoke = ( code => 'gimp_image_free_shadow (gimage);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_image_free_shadow (gimage);
+}
+CODE
+    );
 }
 
 sub image_get_layers {
@@ -559,9 +505,17 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
 
-    %invoke = ( code => 'gimp_image_unset_active_channel (gimage);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_image_unset_active_channel (gimage);
+}
+CODE
+    );
 }
 
 sub image_pick_color {
@@ -665,7 +619,11 @@ HELP
     );
 
     %invoke = (
-	code => 'layer = gimp_image_pick_correlate_layer (gimage, x, y);'
+	code => <<'CODE'
+{
+  layer = gimp_image_pick_correlate_layer (gimage, x, y);
+}
+CODE
     );
 }
 
@@ -864,7 +822,9 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
 
     @outargs = (
 	{ name => 'layer', type => 'layer',
@@ -873,7 +833,14 @@ HELP
 
     %invoke = (
 	headers => [ qw("core/gimpimage-merge.h") ],
-	code => 'success = (layer = gimp_image_flatten (gimage, context)) != NULL;'
+	code => <<'CODE'
+{
+  layer = gimp_image_flatten (gimage, context);
+
+  if (! layer)
+    success = FALSE;
+}
+CODE
     );
 }
 
@@ -931,7 +898,13 @@ HELP
 	  desc => 'The layer' }
     );
 
-    %invoke = ( code => 'gimp_image_remove_layer (gimage, layer);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_image_remove_layer (gimage, layer);
+}
+CODE
+    );
 }
 
 sub image_add_layer_mask {
@@ -940,11 +913,10 @@ sub image_add_layer_mask {
     @inargs = (
 	&std_image_arg,
 	{ name => 'layer', type => 'layer',
-	  desc => 'The layer' },
+	  desc => 'The layer to receive the mask' },
 	{ name => 'mask', type => 'layer_mask',
 	  desc => 'The mask to add to the layer' }
     );
-    $inargs[1]->{desc} .= ' to receive the mask';
 
     %invoke = (
 	code => <<'CODE'
@@ -961,13 +933,18 @@ sub image_remove_layer_mask {
     @inargs = (
 	&std_image_arg,
 	{ name => 'layer', type => 'layer',
-	  desc => 'The layer' },
+	  desc => 'The layer from which to remove mask' },
 	{ name => 'mode', type => 'enum GimpMaskApplyMode',
 	  desc => 'Removal mode: { %%desc%% }' }
     );
-    $inargs[1]->{desc} .= ' from which to remove mask';
 
-    %invoke = ( code => 'gimp_layer_apply_mask (layer, mode, TRUE);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_layer_apply_mask (layer, mode, TRUE);
+}
+CODE
+    );
 }
 
 sub image_raise_channel {
@@ -1069,7 +1046,13 @@ HELP
 	  desc => 'The channel' }
     );
 
-    %invoke = ( code => 'gimp_image_remove_channel (gimage, channel);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_image_remove_channel (gimage, channel);
+}
+CODE
+    );
 }
 
 sub image_add_vectors {
@@ -1114,7 +1097,13 @@ HELP
 	  desc => 'The vectors object' }
     );
 
-    %invoke = ( code => 'gimp_image_remove_vectors (gimage, vectors);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_image_remove_vectors (gimage, vectors);
+}
+CODE
+    );
 }
 
 sub image_raise_vectors {
@@ -1238,16 +1227,20 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
 
     @outargs = (
-	{ name => 'drawable', type => 'drawable',
+	{ name => 'drawable', type => 'drawable', return_fail => '-1',
 	  desc => 'The active drawable' }
     );
 
     %invoke = (
 	code => <<'CODE'
-success = (drawable = gimp_image_active_drawable (gimage)) != NULL;
+{
+  drawable = gimp_image_active_drawable (gimage);
+}
 CODE
     );
 }
@@ -1262,14 +1255,22 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
 
     @outargs = (
 	{ name => 'base_type', type => 'enum GimpImageBaseType',
 	  desc => "The image's base type: { %%desc%% }" }
     );
 
-    %invoke = ( code => 'base_type = gimp_image_base_type (gimage);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  base_type = gimp_image_base_type (gimage);
+}
+CODE
+    );
 }
 
 sub image_get_colormap {
@@ -1284,7 +1285,9 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
 
     @outargs = (
 	{ name => 'colormap', type => 'int8array', wrap => 1,
@@ -1328,7 +1331,12 @@ HELP
 
     %invoke = (
 	headers => [ qw("core/gimpimage-colormap.h") ],
-        code => 'gimp_image_set_colormap (gimage, colormap, num_bytes / 3, TRUE);' );
+        code => <<'CODE'
+{
+  gimp_image_set_colormap (gimage, colormap, num_bytes / 3, TRUE);
+}
+CODE
+    );
 }
 
 sub image_clean_all {
@@ -1345,9 +1353,17 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
 
-    %invoke = ( code => 'gimp_image_clean_all (gimage);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_image_clean_all (gimage);
+}
+CODE
+    );
 }
 
 sub image_is_dirty {
@@ -1362,14 +1378,22 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
 
     @outargs = (
 	{ name => 'dirty', type => 'boolean',
 	  desc => 'True if the image has unsaved changes.' }
     );
 
-    %invoke = ( code => 'dirty = (gimage->dirty != 0);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  dirty = (gimage->dirty != 0);
+}
+CODE
+    );
 }
 
 sub image_get_floating_sel {
@@ -1382,7 +1406,9 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
 
     @outargs = (
 	{ name => 'floating_sel', type => 'layer',
@@ -1390,7 +1416,13 @@ HELP
 	  return_fail => -1 }
     );
 
-    %invoke = ( code => 'floating_sel = gimp_image_floating_sel (gimage);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  floating_sel = gimp_image_floating_sel (gimage);
+}
+CODE
+    );
 }
 
 sub image_floating_sel_attached_to {
@@ -1403,7 +1435,9 @@ HELP
 
     &wolfgang_pdb_misc('1998');
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
 
     @outargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -1435,7 +1469,9 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
 
     @outargs = (
 	{ name => 'width', type => 'int32',
@@ -1461,7 +1497,9 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
 
     @outargs = (
 	{ name => 'height', type => 'int32',
@@ -1477,20 +1515,37 @@ CODE
     );
 }
 
-&image_accessors('active_layer', 'layer', 'active layer', 1,
-		 [ <<'CODE1', <<'CODE2' ]);
-    $invoke{code} = "active_layer = $outargs[0]->{alias};";
-    delete @{$outargs[0]}{qw(alias no_declare)};
-    $outargs[0]->{return_fail} = -1;
+sub image_get_active_layer {
+    $blurb = "Returns the specified image's active layer.";
 
     $help = <<'HELP';
 If there is an active layer, its ID will be returned, otherwise, -1.  If a
 channel is currently active, then no layer will be. If a layer mask is active,
 then this will return the associated layer.
 HELP
-CODE1
-    $invoke{code} =~ s/;//g;
-    $invoke{code} = "success = ($invoke{code} == active_layer);";
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg
+    );
+
+    @outargs = (
+	{ name => 'active_layer', type => 'layer',
+	  desc => 'The active layer', return_fail => '-1' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  active_layer = gimp_image_get_active_layer (gimage);
+}
+CODE
+    );
+}
+
+sub image_set_active_layer {
+    $blurb = "Sets the specified image's active layer.";
 
     $help = <<'HELP';
 If the layer exists, it is set as the active layer in the image. Any
@@ -1498,20 +1553,54 @@ previous active layer or channel is set to inactive. An exception is a
 previously existing floating selection, in which case this procedure
 will return an execution error.
 HELP
-CODE2
 
-&image_accessors('active_channel', 'channel', 'active channel', 1,
-		 [ <<'CODE1', <<'CODE2' ]);
-    $invoke{code} = "active_channel = $outargs[0]->{alias};";
-    delete @{$outargs[0]}{qw(alias no_declare)};
-    $outargs[0]->{return_fail} = -1;
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'active_layer', type => 'layer',
+	  desc => 'The new image active layer' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_image_set_active_layer (gimage, active_layer) != active_layer)
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub image_get_active_channel {
+    $blurb = "Returns the specified image's active channel.";
 
     $help = <<'HELP';
 If there is an active channel, this will return the channel ID, otherwise, -1.
 HELP
-CODE1
-    $invoke{code} =~ s/;//g;
-    $invoke{code} = "success = ($invoke{code} == active_channel);";
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg
+    );
+
+    @outargs = (
+	{ name => 'active_channel', type => 'channel',
+	  desc => 'The active channel', return_fail => '-1' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  active_channel = gimp_image_get_active_channel (gimage);
+}
+CODE
+    );
+}
+
+sub image_set_active_channel {
+    $blurb = "Sets the specified image's active channel.";
 
     $help = <<'HELP';
 If the channel exists, it is set as the active channel in the
@@ -1519,45 +1608,133 @@ image. Any previous active channel or channel is set to inactive. An
 exception is a previously existing floating selection, in which case
 this procedure will return an execution error.
 HELP
-CODE2
 
-&image_accessors('active_vectors', 'vectors', 'active vectors', 1,
-		 [ <<'CODE1', <<'CODE2' ]);
-    $invoke{code} = "active_vectors = $outargs[0]->{alias};";
-    delete @{$outargs[0]}{qw(alias no_declare)};
-    $outargs[0]->{return_fail} = -1;
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'active_channel', type => 'channel',
+	  desc => 'The new image active channel' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_image_set_active_channel (gimage, active_channel) != active_channel)
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub image_get_active_vectors {
+    $blurb = "Returns the specified image's active vectors.";
 
     $help = <<'HELP';
 If there is an active path, its ID will be returned, otherwise, -1.
 HELP
-CODE1
-    $invoke{code} =~ s/;//g;
-    $invoke{code} = "success = ($invoke{code} == active_vectors);";
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg
+    );
+
+    @outargs = (
+	{ name => 'active_vectors', type => 'vectors',
+	  desc => 'The active vectors', return_fail => '-1' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  active_vectors = gimp_image_get_active_vectors (gimage);
+}
+CODE
+    );
+}
+
+sub image_set_active_vectors {
+    $blurb = "Sets the specified image's active vectors.";
 
     $help = <<'HELP';
 If the path exists, it is set as the active path in the image.
 HELP
-CODE2
 
-&image_accessors('selection', 'selection', 'selection', 1,
-		 [ <<'CODE', undef ]);
-    $invoke{code} = "success = (selection = gimp_image_get_mask (gimage)) != NULL;";
-    delete @{$outargs[0]}{qw(alias no_declare)};
-    $outargs[0]->{desc} .= ' channel';
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'active_vectors', type => 'vectors',
+	  desc => 'The new image active vectors' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_image_set_active_vectors (gimage, active_vectors) != active_vectors)
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub image_get_selection {
+    $blurb = "Returns the specified image's selection.";
 
     $help = <<'HELP';
 This will always return a valid ID for a selection -- which is represented as a
 channel internally.
 HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg
+    );
+
+    @outargs = (
+	{ name => 'selection', type => 'selection',
+	  desc => 'The selection channel' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  selection = gimp_image_get_mask (gimage);
+
+  if (! selection)
+    success = FALSE;
+}
 CODE
-$#procs--;
+    );
+}
 
-my $comp_arg = <<'CODE';
-    splice @inargs, 1, 0, ({ name => 'component',
-			     type => 'enum GimpChannelType',
-			     desc => 'The image component: { %%desc%% }' });
+sub image_get_component_active {
+    $blurb = "Returns if the specified image's image component is active.";
 
-    $invoke{code} = <<'SUCCESS';
+    $help = <<'HELP';
+This procedure returns if the specified image's image component
+(i.e. Red, Green, Blue intensity channels in an RGB image) is active
+or inactive -- whether or not it can be modified. If the specified
+component is not valid for the image type, an error is returned.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'component', type => 'enum GimpChannelType',
+	  desc => 'The image component: { %%desc%% }' }
+    );
+
+    @outargs = (
+	{ name => 'active', type => 'boolean',
+	  desc => 'Component is active (%%desc%%)' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
 {
   if (component == GIMP_GRAY_CHANNEL)
     success = gimp_image_base_type (gimage) == GIMP_GRAY;
@@ -1565,70 +1742,175 @@ my $comp_arg = <<'CODE';
     success = gimp_image_base_type (gimage) == GIMP_INDEXED;
   else
     success = gimp_image_base_type (gimage) == GIMP_RGB;
-}
-SUCCESS
-CODE
-
-my $comp_help = <<'CODE';
-	$help =~ s/(component)/$1 (i.e. Red, Green, Blue intensity channels
-			       in an RGB image)/;
-	$help =~ s/\. $/ /;
-	$help .= <<HELP;
-or in%%type%% -- whether or not it can be %%action%%. If the specified component
-is not valid for the image type, an error is returned.
-HELP
-CODE
-
-my %comp_action = (
-    active => 'modified',
-    visible => 'seen'
-);
-
-foreach (sort keys %comp_action) {
-    my $help = $comp_help;
-
-    $help =~ s/%%type%%/$_/e;
-    $help =~ s/%%action%%/$comp_action{$_}/e;
-
-    &image_accessors("component_$_", 'boolean', "image component is $_", 1,
-		     [ <<CODE1, <<CODE2 ]);
-	$comp_arg;
-	\$outargs[0]->{name} = '$_';
-	\$outargs[0]->{desc} = 'Component is $_ (%%desc%%)';
-
-	chop \$outargs[0]->{alias};
-	\$outargs[0]->{alias} .= ', component)';
-	$help;
-CODE1
-	my \$code = <<CODE;
 
   if (success)
-    \$invoke{code}
+    active = gimp_image_get_component_active (gimage, component);
+}
 CODE
-	$comp_arg;
-	\$invoke{code} =~ s/}/"\$code}"/e;
-	\$invoke{code} =~ s/ component_$_/ component, $_/;
-	\$inargs[2]->{name} = '$_';
-	\$inargs[2]->{desc} = 'Component is $_ (%%desc%%)';
- 	$help;
-CODE2
+    );
 }
 
-&image_accessors('filename', 'string', 'filename', 1,
-		 [ <<'CODE1', <<'CODE2' ]);
-    $help =~ s/\. $//;
-    $help .= <<'HELP';
- in the filesystem encoding. The image has a filename only if it was loaded
-or has since been saved. Otherwise, this function returns %NULL.
+sub image_set_component_active {
+    $blurb = "Sets if the specified image's image component is active.";
+
+    $help = <<'HELP';
+This procedure sets if the specified image's image component
+(i.e. Red, Green, Blue intensity channels in an RGB image) is active
+or inactive -- whether or not it can be modified. If the specified
+component is not valid for the image type, an error is returned.
 HELP
 
-    $outargs[0]->{alias} =~ s/g_strdup \((.*)\)/$1/;
-CODE1
-    $help .= " The filename should be in the filesystem encoding.";
+    &std_pdb_misc;
 
-    $inargs[1]->{no_validate} = 1;
+    @inargs = (
+	&std_image_arg,
+	{ name => 'component', type => 'enum GimpChannelType',
+	  desc => 'The image component: { %%desc%% }' },
+	{ name => 'active', type => 'boolean',
+	  desc => 'Component is active (%%desc%%)' }
+    );
 
-    $invoke{code} = <<CODE3;
+    %invoke = (
+	code => <<'CODE'
+{
+  if (component == GIMP_GRAY_CHANNEL)
+    success = gimp_image_base_type (gimage) == GIMP_GRAY;
+  else if (component == GIMP_INDEXED_CHANNEL)
+    success = gimp_image_base_type (gimage) == GIMP_INDEXED;
+  else
+    success = gimp_image_base_type (gimage) == GIMP_RGB;
+
+  if (success)
+    gimp_image_set_component_active (gimage, component, active);
+}
+CODE
+    );
+}
+
+sub image_get_component_visible {
+    $blurb = "Returns if the specified image's image component is visible.";
+
+    $help = <<'HELP';
+This procedure returns if the specified image's image component
+(i.e. Red, Green, Blue intensity channels in an RGB image) is visible
+or invisible -- whether or not it can be seen. If the specified
+component is not valid for the image type, an error is returned.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'component', type => 'enum GimpChannelType',
+	  desc => 'The image component: { %%desc%% }' }
+    );
+
+    @outargs = (
+	{ name => 'visible', type => 'boolean',
+	  desc => 'Component is visible (%%desc%%)' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (component == GIMP_GRAY_CHANNEL)
+    success = gimp_image_base_type (gimage) == GIMP_GRAY;
+  else if (component == GIMP_INDEXED_CHANNEL)
+    success = gimp_image_base_type (gimage) == GIMP_INDEXED;
+  else
+    success = gimp_image_base_type (gimage) == GIMP_RGB;
+
+  if (success)
+    visible = gimp_image_get_component_visible (gimage, component);
+}
+CODE
+    );
+}
+
+sub image_set_component_visible {
+    $blurb = "Sets if the specified image's image component is visible.";
+
+    $help = <<'HELP';
+This procedure sets if the specified image's image component
+(i.e. Red, Green, Blue intensity channels in an RGB image) is visible
+or invisible -- whether or not it can be seen. If the specified
+component is not valid for the image type, an error is returned.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'component', type => 'enum GimpChannelType',
+	  desc => 'The image component: { %%desc%% }' },
+	{ name => 'visible', type => 'boolean',
+	  desc => 'Component is visible (%%desc%%)' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (component == GIMP_GRAY_CHANNEL)
+    success = gimp_image_base_type (gimage) == GIMP_GRAY;
+  else if (component == GIMP_INDEXED_CHANNEL)
+    success = gimp_image_base_type (gimage) == GIMP_INDEXED;
+  else
+    success = gimp_image_base_type (gimage) == GIMP_RGB;
+
+  if (success)
+    gimp_image_set_component_visible (gimage, component, visible);
+}
+CODE
+    );
+}
+
+sub image_get_filename {
+    $blurb = "Returns the specified image's filename.";
+
+    $help = <<'HELP';
+This procedure returns the specified image's filename in the
+filesystem encoding. The image has a filename only if it was loaded or
+has since been saved. Otherwise, this function returns %NULL.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg
+    );
+
+    @outargs = (
+	{ name => 'filename', type => 'string',
+	  desc => 'The filename' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  filename = gimp_image_get_filename (gimage);
+}
+CODE
+    );
+}
+
+sub image_set_filename {
+    $blurb = "Sets the specified image's filename.";
+
+    $help = <<'HELP';
+This procedure sets the specified image's filename. The filename
+should be in the filesystem encoding.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'filename', type => 'string',
+	  desc => 'The new image filename', no_validate => 1 }
+    );
+
+    %invoke = (
+	code => <<'CODE'
 {
   /*  verify that the filename can be converted to UTF-8 and back  */
   gchar *utf8 = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
@@ -1648,17 +1930,29 @@ CODE1
     success = FALSE;
 
   if (success)
-    $invoke{code}
+    gimp_image_set_filename (gimage, filename);
 }
-CODE3
-CODE2
+CODE
+    );
+}
 
-&image_accessors('name', 'string', 'name', 1,
-		 [ <<'CODE1', undef ]);
-    delete @{$outargs[0]}{qw(alias no_declare)};
+sub image_get_name {
+    $blurb = "Returns the specified image's name.";
+    $help  = "This procedure returns the specified image's name.";
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg
+    );
+
+    @outargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The name' }
+    );
 
     %invoke = (
-	code => <<'CODE2'
+	code => <<'CODE'
 {
   gchar *filename = gimp_image_get_filename (gimage);
 
@@ -1667,50 +1961,61 @@ CODE2
   else
     name = g_strdup (_("Untitled"));
 }
-CODE2
+CODE
     );
-CODE1
-$#procs--;
+}
 
-&image_accessors('resolution', 'float', 'resolution', 0,
-		 [ <<'CODE1', <<'CODE2' ]);
-    $help =~ s/\. $/ /;
-    $help .= <<'HELP';
-in dots per inch. This value is independent of any of the layers in this image.
+sub image_get_resolution {
+    $blurb = "Returns the specified image's resolution.";
+
+    $help = <<'HELP';
+This procedure returns the specified image's resolution in dots per inch. 
+This value is independent of any of the layers in this image.
 HELP
 
     &austin_pdb_misc('1998');
 
-    push @outargs, { %{$outargs[0]} };
-    $outargs[0]->{void_ret} = 1;
+    @inargs = (
+	&std_image_arg
+    );
 
-    my $count = 0;
-    foreach $coord (qw(x y)) {
-	foreach (qw(name alias)) {
-	    $outargs[$count]->{$_} =~ s/res/"${coord}res"/e
-	}
-	$outargs[$count++]->{desc} .= "in the $coord-axis, in dots per inch";
-    }
-CODE1
-    $help =~ s/\. $/ /;
-    $help .= <<'HELP';
-in dots per inch. This value is independent of any of the layers in this image.
+    @outargs = (
+	{ name => 'xresolution', type => 'float', void_ret => 1,
+	  desc => 'The resolution in the x-axis, in dots per inch' },
+	{ name => 'yresolution', type => 'float',
+	  desc => 'The resolution in the y-axis, in dots per inch' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_image_get_resolution (gimage, &xresolution, &yresolution);
+}
+CODE
+    );
+}
+
+sub image_set_resolution {
+    $blurb = "Sets the specified image's resolution.";
+
+    $help = <<'HELP';
+This procedure sets the specified image's resolution in dots per inch. 
+This value is independent of any of the layers in this image.
 No scaling or resizing is performed.
 HELP
 
     &austin_pdb_misc('1998');
 
-    push @inargs, { %{$inargs[1]} };
+    @inargs = (
+	&std_image_arg,
+	{ name => 'xresolution', type => 'float',
+	  desc => 'The new image resolution in the x-axis, in dots per inch' },
+	{ name => 'yresolution', type => 'float',
+	  desc => 'The new image resolution in the y-axis, in dots per inch' }
+    );
 
-    my $count = 1; undef %invoke;
-    foreach $coord (qw(x y)) {
-	my $arg = $inargs[$count];
-	$arg->{name} =~ s/res/"${coord}res"/e;
-	$arg->{desc} .= "in the $coord-axis, in dots per inch";
-	$count++;
-    }
-
-    $invoke{code} = <<'CODE';
+    %invoke = (
+	code => <<'CODE'
 {
   if (! FINITE (xresolution) ||
       xresolution < GIMP_MIN_RESOLUTION || xresolution > GIMP_MAX_RESOLUTION ||
@@ -1727,36 +2032,99 @@ HELP
     }
 }
 CODE
-CODE2
+    );
+}
 
+sub image_get_unit {
+    $blurb = "Returns the specified image's unit.";
 
-my $unit_help = <<'HELP';
-This value is independent of any of the layers in this image. See the
-gimp_unit_* procedure definitions for the valid range of unit IDs and a
+    $help = <<'HELP';
+This procedure returns the specified image's unit. This value is
+independent of any of the layers in this image. See the gimp_unit_*
+procedure definitions for the valid range of unit IDs and a
 description of the unit system.
 HELP
 
-&image_accessors('unit', 'unit (min GIMP_UNIT_INCH)', 'unit', 1,
-		 [ <<CODE1, <<CODE2 ]);
-    \$help .= '$unit_help';
     &mitch_pdb_misc('1998');
-CODE1
-    \$help .= 'No scaling or resizing is performed. $unit_help';
-    &mitch_pdb_misc('1998');
-CODE2
 
-&image_accessors('tattoo_state', 'int32', 'tattoo_state', 1,
-		 [ <<CODE1, <<CODE2 ]);
-    \$blurb = 'Returns the tattoo state associated with the image.';
-    \$help = <<'HELP';
+    @inargs = (
+	&std_image_arg
+    );
+
+    @outargs = (
+	{ name => 'unit', type => 'unit',
+	  desc => 'The unit' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  unit = gimp_image_get_unit (gimage);
+}
+CODE
+    );
+}
+
+sub image_set_unit {
+    $blurb = "Sets the specified image's unit.";
+
+    $help = <<'HELP';
+This procedure sets the specified image's unit. No scaling or resizing
+is performed. This value is independent of any of the layers in this
+image. See the gimp_unit_* procedure definitions for the valid range
+of unit IDs and a description of the unit system.
+HELP
+
+    &mitch_pdb_misc('1998');
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'unit', type => 'unit (min GIMP_UNIT_INCH)',
+	  desc => 'The new image unit' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_image_set_unit (gimage, unit);
+}
+CODE
+    );
+}
+
+sub image_get_tattoo_state {
+    $blurb = 'Returns the tattoo state associated with the image.';
+
+    $help = <<'HELP';
 This procedure returns the tattoo state of the image. Use only by
 save/load plugins that wish to preserve an images tattoo state. Using this
 function at other times will produce unexpected results.
 HELP
+
     &andy_pdb_misc('2000');
-CODE1
-    \$blurb = 'Set the tattoo state associated with the image.';
-    \$help = <<'HELP';
+
+    @inargs = (
+	&std_image_arg
+    );
+
+    @outargs = (
+	{ name => 'tattoo_state', type => 'tattoo',
+	  desc => 'The tattoo state' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  tattoo_state = gimp_image_get_tattoo_state (gimage);
+}
+CODE
+    );
+}
+
+sub image_set_tattoo_state {
+    $blurb = 'Set the tattoo state associated with the image.';
+
+    $help = <<'HELP';
 This procedure sets the tattoo state of the image. Use only by
 save/load plugins that wish to preserve an images tattoo state. Using
 this function at other times will produce unexpected results. A full
@@ -1769,43 +2137,109 @@ loaded and all the tattoos have been set then this is the last
 procedure that should be called. If effectively does a status check on
 the tattoo values that have been set to make sure that all is OK.
 HELP
+
     &andy_pdb_misc('2000');
-CODE2
 
-
-foreach (qw(layer channel vectors)) {
-    push @procs, "image_get_${_}_by_tattoo";
-    eval <<SUB;
-sub image_get_${_}_by_tattoo {
-    \$blurb = 'Find a $_ with a given tattoo in an image.';
-
-    \$help = <<'HELP';
-This procedure returns the $_ with the given tattoo in the specified image.
-HELP
-
-    \&jay_pdb_misc('1998');
-
-    \@inargs = (
-	\&std_image_arg,
-	{ name => 'tattoo', type => 'tattoo',
-	  desc => 'The tattoo of the $_ to find' }
+    @inargs = (
+	&std_image_arg,
+	{ name => 'tattoo_state', type => 'tattoo',
+	  desc => 'The new image tattoo state' }
     );
 
-    \@outargs = (
-	{ name => '$_', type => '$_',
-	  desc => 'The $_ with the specified tattoo' }
-    );
-
-    \%invoke = (
+    %invoke = (
 	code => <<'CODE'
 {
-  $_ = gimp_image_get_${_}_by_tattoo (gimage, tattoo);
-  success = $_ != NULL;
+  gimp_image_set_tattoo_state (gimage, tattoo_state);
 }
 CODE
     );
 }
-SUB
+
+sub image_get_layer_by_tattoo {
+    $blurb = 'Find a layer with a given tattoo in an image.';
+
+    $help = <<'HELP';
+This procedure returns the layer with the given tattoo in the specified image.
+HELP
+
+    &jay_pdb_misc('1998');
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'tattoo', type => 'tattoo',
+	  desc => 'The tattoo of the layer to find' }
+    );
+
+    @outargs = (
+	{ name => 'layer', type => 'layer', return_fail => '-1',
+	  desc => 'The layer with the specified tattoo' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  layer = gimp_image_get_layer_by_tattoo (gimage, tattoo);
+}
+CODE
+    );
+}
+
+sub image_get_channel_by_tattoo {
+    $blurb = 'Find a channel with a given tattoo in an image.';
+
+    $help = <<'HELP';
+This procedure returns the channel with the given tattoo in the specified image.
+HELP
+
+    &jay_pdb_misc('1998');
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'tattoo', type => 'tattoo',
+	  desc => 'The tattoo of the channel to find' }
+    );
+
+    @outargs = (
+	{ name => 'channel', type => 'channel', return_fail => '-1',
+	  desc => 'The channel with the specified tattoo' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  channel = gimp_image_get_channel_by_tattoo (gimage, tattoo);
+}
+CODE
+    );
+}
+
+sub image_get_vectors_by_tattoo {
+    $blurb = 'Find a vectors with a given tattoo in an image.';
+
+    $help = <<'HELP';
+This procedure returns the vectors with the given tattoo in the specified image.
+HELP
+
+    &jay_pdb_misc('1998');
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'tattoo', type => 'tattoo',
+	  desc => 'The tattoo of the vectors to find' }
+    );
+
+    @outargs = (
+	{ name => 'vectors', type => 'vectors', return_fail => '-1',
+	  desc => 'The vectors with the specified tattoo' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  vectors = gimp_image_get_vectors_by_tattoo (gimage, tattoo);
+}
+CODE
+    );
 }
 
 sub image_thumbnail {
@@ -1829,7 +2263,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'actual_width', type => 'int32',
+	{ name => 'actual_width', type => 'int32', void_ret => 1,
 	  desc => 'The previews width' },
 	{ name => 'actual_height', type => 'int32',
 	  desc => 'The previews height' },
@@ -1840,7 +2274,6 @@ HELP
 	  array => { name => 'thumbnail_data_count',
 		     desc => 'The number of bytes in thumbnail data' } }
     );
-    $outargs[0]->{void_ret} = 1;
 
     %invoke = (
 	code => <<'CODE'
@@ -1905,32 +2338,46 @@ $extra{app}->{code} = <<'CODE';
 #endif
 CODE
 
-unshift @procs, qw(image_list image_new image_duplicate image_delete
-                   image_base_type
-                   image_width image_height
-                   image_free_shadow
-                   image_resize image_resize_to_layers image_scale
-                   image_crop image_flip image_rotate
-                   image_get_layers image_get_channels
-                   image_get_vectors
-                   image_get_active_drawable
-                   image_unset_active_channel
-                   image_get_floating_sel image_floating_sel_attached_to
-                   image_pick_color image_pick_correlate_layer
-                   image_add_layer image_remove_layer
-                   image_raise_layer image_lower_layer
-                   image_raise_layer_to_top image_lower_layer_to_bottom
-                   image_raise_vectors image_lower_vectors
-                   image_raise_vectors_to_top image_lower_vectors_to_bottom
-                   image_add_channel image_remove_channel
-                   image_add_vectors
-                   image_remove_vectors
-                   image_raise_channel image_lower_channel
-                   image_flatten image_merge_visible_layers image_merge_down
-                   image_add_layer_mask image_remove_layer_mask
-                   image_get_colormap image_set_colormap
-                   image_clean_all image_is_dirty
-                   image_thumbnail);
+@procs = qw(image_list image_new image_duplicate image_delete
+            image_base_type
+            image_width image_height
+            image_free_shadow
+            image_resize image_resize_to_layers image_scale
+            image_crop image_flip image_rotate
+            image_get_layers image_get_channels
+            image_get_vectors
+            image_get_active_drawable
+            image_unset_active_channel
+            image_get_floating_sel image_floating_sel_attached_to
+            image_pick_color image_pick_correlate_layer
+            image_add_layer image_remove_layer
+            image_raise_layer image_lower_layer
+            image_raise_layer_to_top image_lower_layer_to_bottom
+            image_raise_vectors image_lower_vectors
+            image_raise_vectors_to_top image_lower_vectors_to_bottom
+            image_add_channel image_remove_channel
+            image_add_vectors
+            image_remove_vectors
+            image_raise_channel image_lower_channel
+            image_flatten image_merge_visible_layers image_merge_down
+            image_add_layer_mask image_remove_layer_mask
+            image_get_colormap image_set_colormap
+            image_clean_all image_is_dirty
+            image_thumbnail
+	    image_get_active_layer image_set_active_layer
+	    image_get_active_channel image_set_active_channel
+	    image_get_active_vectors image_set_active_vectors
+	    image_get_selection
+	    image_get_component_active image_set_component_active
+	    image_get_component_visible image_set_component_visible
+	    image_get_filename image_set_filename
+	    image_get_name
+	    image_get_resolution image_set_resolution
+	    image_get_unit image_set_unit
+	    image_get_tattoo_state image_set_tattoo_state
+            image_get_layer_by_tattoo
+            image_get_channel_by_tattoo
+            image_get_vectors_by_tattoo);
 %exports = (app => [@procs], lib => [@procs[0..41,44..70]]);
 
 $desc = 'Image';
