@@ -1,3 +1,8 @@
+2006-03-17  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/gimpplugin.py: _run should pass on the return
+	value. Fixes bug #334874.
+
 2006-03-17  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb.pl: generically map NULL to -1 when returning

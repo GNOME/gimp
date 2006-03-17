@@ -56,7 +56,7 @@ class plugin:
 
     def _run(self, name, params):
         if hasattr(self, name):
-            apply(getattr(self, name), params)
+            return apply(getattr(self, name), params)
         else:
             raise AttributeError, name
 
