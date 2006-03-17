@@ -295,7 +295,7 @@ query (void)
     " The sample_drawable should be of type RGB or RGBA";
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Colorize image using a sample image as a guide."),
+                          N_("Colorize image using a sample image as a guide"),
                           help_string,
                           "Wolfgang Hofer",
                           "hof@hotbot.com",

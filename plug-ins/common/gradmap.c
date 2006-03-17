@@ -81,7 +81,7 @@ query (void)
   };
 
   gimp_install_procedure (GRADMAP_PROC,
-                          N_("Recolor the image using colors from the active gradient."),
+                          N_("Recolor the image using colors from the active gradient"),
                           "This plug-in maps the contents of the specified "
                           "drawable with active gradient. It calculates "
                           "luminosity of each pixel and replaces the pixel "
@@ -103,7 +103,7 @@ query (void)
   gimp_plugin_menu_register (GRADMAP_PROC, "<Image>/Colors/Map");
 
   gimp_install_procedure (PALETTEMAP_PROC,
-                          N_("Recolor the image using colors from the active palette."),
+                          N_("Recolor the image using colors from the active palette"),
                           "This plug-in maps the contents of the specified "
                           "drawable with the active palette. It calculates "
                           "luminosity of each pixel and replaces the pixel "

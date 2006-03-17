@@ -141,7 +141,7 @@ query (void)
 
 
   gimp_install_procedure (RGB_NOISE_PROC,
-                          N_("Distort colors by random amounts."),
+                          N_("Distort colors by random amounts"),
                           "Add normally distributed (zero mean) random values "
                           "to image channels.  Noise may be additive "
                           "(uncorrelated) or multiplicative (correlated - "

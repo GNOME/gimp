@@ -185,7 +185,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Add a lens flare effect."),
+                          N_("Add a lens flare effect"),
                           "Adds a lens flare effects.  Makes your image look "
                           "like it was snapped with a cheap camera with a lot "
                           "of lens :)",

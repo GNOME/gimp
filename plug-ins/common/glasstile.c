@@ -123,7 +123,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Simulate distortion caused by square glass tiles."),
+                          N_("Simulate distortion caused by square glass tiles"),
                           "Divide the image into square glassblocks in "
                           "which the image is refracted.",
                           "Karl-Johan Andersson", /* Author */

@@ -99,7 +99,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Replace all colors with shades of a specified color."),
+                          N_("Replace all colors with shades of a specified color"),
                           "Makes an average of the RGB channels and uses it "
                           "to set the color",
                           "Francisco Bustamante",

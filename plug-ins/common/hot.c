@@ -204,7 +204,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  N_("Find and fix pixels that may be unsafely bright."),
+			  N_("Find and fix pixels that may be unsafely bright"),
 			  "hot scans an image for pixels that will give unsave "
 			  "values of chrominance or composite signale "
 			  "amplitude when encoded into an NTSC or PAL signal.  "

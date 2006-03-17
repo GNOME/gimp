@@ -120,7 +120,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Swap one color with another."),
+                          N_("Swap one color with another"),
                           "Exchange one color with another, optionally setting a threshold "
                           "to convert from one shade to another",
                           "robert@experimental.net",

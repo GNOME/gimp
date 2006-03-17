@@ -153,7 +153,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Enhance contrast using the Retinex method."),
+                          N_("Enhance contrast using the Retinex method"),
                           "The Retinex Image Enhancement Algorithm is an "
                           "automatic image enhancement method that enhances "
                           "a digital image in terms of dynamic range "

@@ -99,7 +99,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Remove vertical stripe artifacts from the image."),
+                          N_("Remove vertical stripe artifacts from the image"),
                           "This plug-in tries to remove vertical stripes from "
                           "an image.",
                           "Marc Lehmann <pcg@goof.com>",

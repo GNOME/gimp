@@ -80,7 +80,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Derive a smooth color palette from the image."),
+                          N_("Derive a smooth color palette from the image"),
                           "help!",
                           "Scott Draves",
                           "Scott Draves",

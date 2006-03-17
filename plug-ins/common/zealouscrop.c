@@ -82,7 +82,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Autocrop unused space from edges and middle."),
+                          N_("Autocrop unused space from edges and middle"),
                           "",
                           "Adam D. Moss",
                           "Adam D. Moss",

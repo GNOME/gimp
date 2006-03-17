@@ -140,7 +140,7 @@ query (void)
   };
 
   gimp_install_procedure (COLOR_ADJUST_PROC,
-                          N_("Map colors sending foreground to black, background to white."),
+                          N_("Map colors sending foreground to black, background to white"),
                           "The current foreground color is mapped to black "
                           "(black point), the current background color is "
                           "mapped to white (white point). Intermediate "

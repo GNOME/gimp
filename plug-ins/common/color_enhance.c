@@ -67,7 +67,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  N_("Stretch color saturation to cover maximum possible range."),
+			  N_("Stretch color saturation to cover maximum possible range"),
 			  "This simple plug-in does an automatic saturation "
 			  "stretch.  For each channel in the image, it finds "
 			  "the minimum and maximum values... it uses those "

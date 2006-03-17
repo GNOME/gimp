@@ -520,7 +520,7 @@ query (void)
 
   /* the actual installation of the bend plugin */
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Bend the image using two control curves."),
+                          N_("Bend the image using two control curves"),
                           "This plug-in does bend the active layer "
                           "If there is a current selection it is copied to "
                           "floating selection and the curve_bend distortion "

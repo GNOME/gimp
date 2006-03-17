@@ -125,7 +125,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Align all visible layers of the image."),
+                          N_("Align all visible layers of the image"),
                           "Align visible layers",
                           "Shuji Narazaki <narazaki@InetQ.or.jp>",
                           "Shuji Narazaki",

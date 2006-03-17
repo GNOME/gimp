@@ -131,7 +131,7 @@ query (void)
     "alternatively, diffuse, the glow effect should be.";
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Simulate glow by making highlights intense and fuzzy."),
+                          N_("Simulate glow by making highlights intense and fuzzy"),
                           help_string,
                           "Spencer Kimball",
                           "Bit Specialists, Inc.",

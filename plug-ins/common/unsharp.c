@@ -128,7 +128,7 @@ query (void)
     };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("The most widely useful method for sharpening an image."),
+                          N_("The most widely useful method for sharpening an image"),
                           "The unsharp mask is a sharpening filter that works "
                           "by comparing using the difference of the image and "
                           "a blurred version of the image.  It is commonly "

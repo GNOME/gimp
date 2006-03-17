@@ -143,7 +143,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Remove speckle noise from the image."),
+                          N_("Remove speckle noise from the image"),
                           "This plug-in selectively performs a median or "
                           "adaptive box filter on an image.",
                           "Michael Sweet <mike@easysw.com>",

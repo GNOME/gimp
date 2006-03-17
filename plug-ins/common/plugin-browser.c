@@ -131,7 +131,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Display information about plug-ins."),
+                          N_("Display information about plug-ins"),
                           "Allows to browse the plug-in menus system. You can "
                           "search for plug-in names, sort by name or menu "
                           "location and you can view a tree representation "

@@ -94,7 +94,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Blur neighboring pixels, but only in low-contrast areas."),
+                          N_("Blur neighboring pixels, but only in low-contrast areas"),
                           "This filter functions similar to the regular "
                           "gaussian blur filter except that neighbouring "
                           "pixels that differ more than the given maxdelta "

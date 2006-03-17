@@ -1139,7 +1139,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Add a canvas texture to the image."),
+                          N_("Add a canvas texture to the image"),
                           "This function applies a canvas texture map to the drawable.",
                           "Karl-Johan Andersson", /* Author */
                           "Karl-Johan Andersson", /* Copyright */

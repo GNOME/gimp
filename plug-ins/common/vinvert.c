@@ -69,7 +69,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  N_("Invert the brightness of each pixel."),
+			  N_("Invert the brightness of each pixel"),
 			  "This function takes an indexed/RGB image and "
 			  "inverts its 'value' in HSV space.  The upshot of "
 			  "this is that the color and saturation at any given "

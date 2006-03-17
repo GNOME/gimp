@@ -118,13 +118,13 @@ static GtkActionEntry actions[] =
 
   { "unit-editor-new", GTK_STOCK_NEW,
     NULL, "<control>N",
-    N_("Create a new unit from scratch."),
+    N_("Create a new unit from scratch"),
     G_CALLBACK (new_callback)
   },
 
   { "unit-editor-duplicate", GIMP_STOCK_DUPLICATE,
     NULL,  "<control>D",
-    N_("Create a new unit using the currently selected unit as template."),
+    N_("Create a new unit using the currently selected unit as template"),
     G_CALLBACK (duplicate_callback)
   }
 };
@@ -142,7 +142,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Create or alter units used in GIMP."),
+                          N_("Create or alter units used in GIMP"),
                           "The GIMP unit editor",
                           "Michael Natterer <mitch@gimp.org>",
                           "Michael Natterer <mitch@gimp.org>",

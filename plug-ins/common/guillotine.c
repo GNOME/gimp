@@ -66,7 +66,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Slice the image into subimages using guides."),
+                          N_("Slice the image into subimages using guides"),
                           "This function takes an image and blah blah.  Hooray!",
                           "Adam D. Moss (adam@foxbox.org)",
                           "Adam D. Moss (adam@foxbox.org)",

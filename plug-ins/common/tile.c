@@ -98,7 +98,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  N_("Create an array of copies of the image."),
+			  N_("Create an array of copies of the image"),
 			  "This function creates a new image with a single "
 			  "layer sized to the specified 'new_width' and "
 			  "'new_height' parameters.  The specified drawable "

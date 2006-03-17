@@ -321,7 +321,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Interactively modify the image colors."),
+                          N_("Interactively modify the image colors"),
                           "Interactively modify the image colors.",
                           "Pavel Grinfeld (pavel@ml.com)",
                           "Pavel Grinfeld (pavel@ml.com)",

@@ -147,7 +147,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Convert the image into randomly rotated square blobs."),
+                          N_("Convert the image into randomly rotated square blobs"),
                           "Help not yet written for this plug-in",
                           "Spencer Kimball & Tracy Scott",
                           "Spencer Kimball & Tracy Scott",

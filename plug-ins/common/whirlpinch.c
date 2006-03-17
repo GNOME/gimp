@@ -136,7 +136,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Distort an image by whirling and pinching."),
+                          N_("Distort an image by whirling and pinching"),
                           "Distorts the image by whirling and pinching, which "
                           "are two common center-based, circular distortions.  "
                           "Whirling is like projecting the image onto the "

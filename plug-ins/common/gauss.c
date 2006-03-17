@@ -156,7 +156,7 @@ query (void)
   };
 
   gimp_install_procedure (GAUSS_PROC,
-                          N_("Simplest, most commonly used way of blurring."),
+                          N_("Simplest, most commonly used way of blurring"),
                           "Applies a gaussian blur to the drawable, with "
                           "specified radius of affect.  The standard deviation "
                           "of the normal distribution used to modify pixel "

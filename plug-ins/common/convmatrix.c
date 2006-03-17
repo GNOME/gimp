@@ -181,7 +181,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Apply a generic 5x5 convolution matrix."),
+                          N_("Apply a generic 5x5 convolution matrix"),
                           "",
                           "Lauri Alanko",
                           "Lauri Alanko",

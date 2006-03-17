@@ -1803,7 +1803,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Simulate distortion produced by a fuzzy or low-res monitor."),
+                          N_("Simulate distortion produced by a fuzzy or low-res monitor"),
                           "This function simulates the degradation of "
                           "being on an old low-dotpitch RGB video monitor "
                           "to the specified drawable.",

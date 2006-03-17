@@ -113,7 +113,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Transform image with the Mandelbrot Fractal."),
+                          N_("Transform image with the Mandelbrot Fractal"),
                           "transform image with the Mandelbrot Fractal",
                           "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",
                           "Copyright (C) 1997 Hirotsuna Mizuno",

@@ -85,7 +85,7 @@ query (void)
   };
 
   gimp_install_procedure (PROC_NAME,
-                          N_("Print the image using the GNOME Print system."),
+                          N_("Print the image using the GNOME Print system"),
                           "FIXME: write help",
                           "Sven Neumann  <sven@gimp.org>",
                           "Sven Neumann  <sven@gimp.org>",

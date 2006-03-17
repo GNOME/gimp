@@ -261,7 +261,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Use mouse control to warp image areas."),
+                          N_("Use mouse control to warp image areas"),
                           "Interactive warping of the specified drawable",
                           "Norbert Schmitz",
                           "Norbert Schmitz",

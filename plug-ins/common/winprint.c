@@ -216,7 +216,7 @@ query (void)
   };
 
   gimp_install_procedure (PRINT_PROC,
-			  N_("Print image to any recognized printer."),
+			  N_("Print image to any recognized printer"),
 			  "Tor Lillqvist <tml@iki.fi>",
 			  "Copyright 1999 Tor Lillqvist",
 			  "$Id$",
@@ -227,7 +227,7 @@ query (void)
 			  print_args, NULL);
 
   gimp_install_procedure (PAGE_SETUP_PROC,
-			  N_("Set up  page layout for printing."),
+			  N_("Set up  page layout for printing"),
 			  "Tor Lillqvist <tml@iki.fi>",
 			  "Copyright 1999 Tor Lillqvist",
 			  "$Id$",

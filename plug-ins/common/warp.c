@@ -233,7 +233,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  N_("Twist or smear image in many different ways."),
+			  N_("Twist or smear image in many different ways"),
 			  "Smears an image along vector paths calculated as "
 			  "the gradient of a separate control matrix. The "
 			  "effect can look like brushstrokes of acrylic or "

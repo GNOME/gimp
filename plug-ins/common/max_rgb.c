@@ -87,7 +87,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Reduce image to pure red, green, and blue."),
+                          N_("Reduce image to pure red, green, and blue"),
                           "There's no help yet.",
                           "Shuji Narazaki (narazaki@InetQ.or.jp)",
                           "Shuji Narazaki",

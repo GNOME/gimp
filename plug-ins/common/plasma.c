@@ -175,7 +175,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Create a random plasma texture."),
+                          N_("Create a random plasma texture"),
                           "More help",
                           "Stephen Norris & (ported to 1.0 by) Eiichi Takamori",
                           "Stephen Norris",

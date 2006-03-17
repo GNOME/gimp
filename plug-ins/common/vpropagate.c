@@ -253,7 +253,7 @@ query (void)
                           args, NULL);
 
   gimp_install_procedure (DILATE_PROC,
-                          N_("Grow darker areas of the image."),
+                          N_("Grow darker areas of the image"),
                           "Dilate image",
                           "Shuji Narazaki (narazaki@InetQ.or.jp)",
                           "Shuji Narazaki",

@@ -141,7 +141,7 @@ query (void)
     "noticable; larger values achieve the opposite effect.";
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Simulate a cartoon by enhancing edges."),
+                          N_("Simulate a cartoon by enhancing edges"),
                           help_string,
                           "Spencer Kimball",
                           "Bit Specialists, Inc.",

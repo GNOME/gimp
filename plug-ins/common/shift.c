@@ -100,7 +100,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Shift each row of pixels by a random amount."),
+                          N_("Shift each row of pixels by a random amount"),
                           "Shifts the pixels of the specified drawable. "
                           "Each row will be displaced a random value of pixels.",
                           "Spencer Kimball and Peter Mattis, ported by Brian "

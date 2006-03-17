@@ -100,7 +100,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Simulate an antique engraving."),
+                          N_("Simulate an antique engraving"),
                           "Creates a black-and-white 'engraved' version of an image as seen in old illustrations",
                           "Spencer Kimball & Peter Mattis, Eiichi Takamori, Torsten Martinsen",
                           "Spencer Kimball & Peter Mattis, Eiichi Takamori, Torsten Martinsen",

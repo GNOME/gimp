@@ -113,7 +113,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Simulate an image painted on window blinds."),
+                          N_("Simulate an image painted on window blinds"),
                           "More here later",
                           "Andy Thomas",
                           "Andy Thomas",

@@ -93,7 +93,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Convert a specified color to transparency."),
+                          N_("Convert a specified color to transparency"),
                           "This replaces as much of a given color as possible "
                           "in each pixel with a corresponding amount of alpha, "
                           "then readjusts the color accordingly.",

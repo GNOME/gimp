@@ -178,7 +178,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Turn bright spots into starry sparkles."),
+                          N_("Turn bright spots into starry sparkles"),
                           "Uses a percentage based luminoisty threhsold to find "
                           "candidate pixels for adding some sparkles (spikes). ",
                           "John Beale, & (ported to GIMP v0.54) Michael "
