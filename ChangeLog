@@ -1,3 +1,8 @@
+2006-03-17  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/lic.c: applied a patch from Karine Delvare that
+	fixes a performance problem in the Van Gogh plug-in (bug #113615).
+
 2006-03-17  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpplugin.py: _run should pass on the return

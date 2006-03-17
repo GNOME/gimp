@@ -442,8 +442,8 @@ rgb_to_hsl (GimpDrawable     *drawable,
 
   maxc = drawable->width * drawable->height;
 
-  gimp_pixel_rgn_init (&region, drawable, 0, 0,
-                       drawable->width, drawable->height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&region, drawable, border_x1, border_y1,
+                       border_x2 - border_x1, border_y2 - border_y1, FALSE, FALSE);
 
   themap = g_new (guchar, maxc);
 
@@ -494,14 +494,14 @@ compute_lic (GimpDrawable *drawable,
   GimpPixelRgn src_rgn, dest_rgn;
 
   gimp_pixel_rgn_init (&src_rgn, drawable,
-                       0, 0,
-                       drawable->width,
-                       drawable->height, FALSE, FALSE);
+                       border_x1, border_y1,
+                       border_x2 - border_x1,
+                       border_y2 - border_y1, FALSE, FALSE);
 
   gimp_pixel_rgn_init (&dest_rgn, drawable,
-                       0, 0,
-                       drawable->width,
-                       drawable->height, TRUE, TRUE);
+                       border_x1, border_y1,
+                       border_x2 - border_x1,
+                       border_y2 - border_y1, TRUE, TRUE);
 
   for (ycount = 0; ycount < src_rgn.h; ycount++)
     {
@@ -560,7 +560,6 @@ compute_image (GimpDrawable *drawable)
 
   /* Get some useful info on the input drawable */
   /* ========================================== */
-
   gimp_drawable_mask_bounds (drawable->drawable_id,
                              &border_x1, &border_y1, &border_x2, &border_y2);
 
@@ -607,8 +606,8 @@ compute_image (GimpDrawable *drawable)
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, 0, 0,
-                        drawable->width, drawable->height);
+  gimp_drawable_update (drawable->drawable_id, border_x1, border_y1,
+                        border_x2 - border_x1, border_y2 - border_y1);
 
   gimp_displays_flush ();
 }

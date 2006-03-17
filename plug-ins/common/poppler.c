@@ -227,8 +227,7 @@ run (const gchar      *name,
 
 	case GIMP_RUN_WITH_LAST_VALS:
         case GIMP_RUN_NONINTERACTIVE:
-          /* bah! hardly any file plugins work non-interactively.
-           * why should we? */
+          /* FIXME: implement non-interactive mode */
           status = GIMP_PDB_EXECUTION_ERROR;
           break;
         }
@@ -673,17 +672,118 @@ thumbnail_thread (gpointer data)
   return NULL;
 }
 
+/* user interface for size / resolution entry */
+
+static GimpSizeEntry *size       = NULL;
+static GtkObject     *xadj       = NULL;
+static GtkObject     *yadj       = NULL;
+static GtkWidget     *constrain  = NULL;
+static gdouble        ratio_x    = 1.0;
+static gdouble        ratio_y    = 1.0;
+static gint           pdf_width  = 0;
+static gint           pdf_height = 0;
+
+static void  load_dialog_set_ratio (gdouble x,
+                                    gdouble y);
+
+
+static void
+load_dialog_size_callback (GtkWidget *widget,
+                           gpointer   data)
+{
+  if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (constrain)))
+    {
+      gdouble x = gimp_size_entry_get_refval (size, 0) / (gdouble) pdf_width;
+      gdouble y = gimp_size_entry_get_refval (size, 1) / (gdouble) pdf_height;
+
+      if (x != ratio_x)
+        {
+          load_dialog_set_ratio (x, x);
+        }
+      else if (y != ratio_y)
+        {
+          load_dialog_set_ratio (y, y);
+        }
+    }
+}
+
+static void
+load_dialog_ratio_callback (GtkAdjustment *adj,
+                            gpointer       data)
+{
+  gdouble x = gtk_adjustment_get_value (GTK_ADJUSTMENT (xadj));
+  gdouble y = gtk_adjustment_get_value (GTK_ADJUSTMENT (yadj));
+
+  if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (constrain)))
+    {
+      if (x != ratio_x)
+        y = x;
+      else
+        x = y;
+    }
+
+  load_dialog_set_ratio (x, y);
+}
+
+static void
+load_dialog_resolution_callback (GimpSizeEntry   *res,
+                                 PopplerDocument *doc)
+{
+  PdfLoadVals  vals = { 0.0, 0, 0 };
+
+  loadvals.resolution = vals.resolution = gimp_size_entry_get_refval (res, 0);
+
+#if 0
+  if (!load_rpdf_size (filename, &vals, NULL))
+    return;
+
+  pdf_width  = vals.width;
+  pdf_height = vals.height;
+
+#endif
+
+  load_dialog_set_ratio (ratio_x, ratio_y);
+}
+
+static void
+load_dialog_set_ratio (gdouble x,
+                       gdouble y)
+{
+  ratio_x = x;
+  ratio_y = y;
+
+  g_signal_handlers_block_by_func (size, load_dialog_size_callback, NULL);
+
+  gimp_size_entry_set_refval (size, 0, pdf_width  * x);
+  gimp_size_entry_set_refval (size, 1, pdf_height * y);
+
+  g_signal_handlers_unblock_by_func (size, load_dialog_size_callback, NULL);
+
+  g_signal_handlers_block_by_func (xadj, load_dialog_ratio_callback, NULL);
+  g_signal_handlers_block_by_func (yadj, load_dialog_ratio_callback, NULL);
+
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (xadj), x);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (yadj), y);
+
+  g_signal_handlers_unblock_by_func (xadj, load_dialog_ratio_callback, NULL);
+  g_signal_handlers_unblock_by_func (yadj, load_dialog_ratio_callback, NULL);
+}
+
 static gboolean
 load_dialog (PopplerDocument  *doc,
              PdfSelectedPages *pages)
 {
   GtkWidget  *dialog;
   GtkWidget  *vbox;
-  GtkWidget  *title;
+  GtkWidget  *label;
   GtkWidget  *selector;
-  GtkWidget  *resolution;
   GtkWidget  *toggle;
   GtkWidget  *hbox;
+  GtkWidget  *table;
+  GtkWidget  *table2;
+  GtkWidget  *spinbutton;
+  GtkWidget  *res;
+  GtkObject  *adj;
 
   ThreadData  thread_data;
   GThread    *thread;
@@ -718,9 +818,9 @@ load_dialog (PopplerDocument  *doc,
   gtk_widget_show (vbox);
 
   /* Title */
-  title = gimp_prop_label_new (G_OBJECT (doc), "title");
-  gtk_box_pack_start (GTK_BOX (vbox), title, FALSE, FALSE, 0);
-  gtk_widget_show (title);
+  label = gimp_prop_label_new (G_OBJECT (doc), "title");
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
   /* Page Selector */
   selector = gimp_page_selector_new ();
@@ -759,34 +859,170 @@ load_dialog (PopplerDocument  *doc,
   thread = g_thread_create (thumbnail_thread, &thread_data, TRUE, NULL);
 
   /* Resolution */
+#if 0
+  pdf_width  = loadvals.width;
+  pdf_height = loadvals.height;
+#endif
+
+  table = gtk_table_new (5, 3, FALSE);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 2);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  /*  Width and Height  */
+  label = gtk_label_new (_("Width:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  label = gtk_label_new (_("Height:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
 
   hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 0, 1,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (hbox);
 
-  resolution = gimp_resolution_entry_new (_("_Width (pixels):"), width,
-                                          _("_Height (pixels):"), height,
-                                          GIMP_UNIT_POINT,
+  spinbutton = gimp_spin_button_new (&adj, 1, 1, 1, 1, 10, 1, 1, 2);
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_show (spinbutton);
 
-                                          _("_Resolution:"), loadvals.resolution,
-                                          _("_Resolution:"), loadvals.resolution,
-                                          GIMP_UNIT_INCH,
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 1, 2,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (hbox);
 
-                                          FALSE,
-                                          0);
+  size = GIMP_SIZE_ENTRY (gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
+                                               TRUE, FALSE, FALSE, 10,
+                                               GIMP_SIZE_ENTRY_UPDATE_SIZE));
+  gtk_table_set_col_spacing (GTK_TABLE (size), 1, 6);
 
-  gtk_box_pack_start (GTK_BOX (hbox), resolution, FALSE, FALSE, 0);
-  gtk_widget_show (resolution);
+  gimp_size_entry_add_field (size, GTK_SPIN_BUTTON (spinbutton), NULL);
 
-  g_signal_connect (resolution, "x-changed",
-                    G_CALLBACK (gimp_resolution_entry_update_x_in_dpi),
-                    &loadvals.resolution);
+  gtk_box_pack_start (GTK_BOX (hbox), GTK_WIDGET (size), FALSE, FALSE, 0);
+  gtk_widget_show (GTK_WIDGET (size));
+
+  gimp_size_entry_set_refval_boundaries (size, 0,
+                                         GIMP_MIN_IMAGE_SIZE,
+                                         GIMP_MAX_IMAGE_SIZE);
+  gimp_size_entry_set_refval_boundaries (size, 1,
+                                         GIMP_MIN_IMAGE_SIZE,
+                                         GIMP_MAX_IMAGE_SIZE);
+
+  gimp_size_entry_set_refval (size, 0, pdf_width);
+  gimp_size_entry_set_refval (size, 1, pdf_height);
+
+  gimp_size_entry_set_resolution (size, 0, loadvals.resolution, FALSE);
+  gimp_size_entry_set_resolution (size, 1, loadvals.resolution, FALSE);
+
+  g_signal_connect (size, "value-changed",
+		    G_CALLBACK (load_dialog_size_callback),
+                    NULL);
+
+  /*  Scale ratio  */
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 2, 4,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (hbox);
+
+  table2 = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table2), 0, 2);
+  gtk_table_set_row_spacing (GTK_TABLE (table2), 0, 4);
+  gtk_box_pack_start (GTK_BOX (hbox), table2, FALSE, FALSE, 0);
+
+  spinbutton =
+    gimp_spin_button_new (&xadj,
+                          ratio_x,
+                          (gdouble) GIMP_MIN_IMAGE_SIZE / (gdouble) pdf_width,
+                          (gdouble) GIMP_MAX_IMAGE_SIZE / (gdouble) pdf_width,
+                          0.01, 0.1, 1,
+                          0.01, 4);
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
+  gtk_table_attach_defaults (GTK_TABLE (table2), spinbutton, 0, 1, 0, 1);
+  gtk_widget_show (spinbutton);
+
+  g_signal_connect (xadj, "value-changed",
+		    G_CALLBACK (load_dialog_ratio_callback),
+		    NULL);
+
+  label = gtk_label_new_with_mnemonic (_("_X ratio:"));
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  spinbutton =
+    gimp_spin_button_new (&yadj,
+                          ratio_y,
+                          (gdouble) GIMP_MIN_IMAGE_SIZE / (gdouble) pdf_height,
+                          (gdouble) GIMP_MAX_IMAGE_SIZE / (gdouble) pdf_height,
+                          0.01, 0.1, 1,
+                          0.01, 4);
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
+  gtk_table_attach_defaults (GTK_TABLE (table2), spinbutton, 0, 1, 1, 2);
+  gtk_widget_show (spinbutton);
+
+  g_signal_connect (yadj, "value-changed",
+		    G_CALLBACK (load_dialog_ratio_callback),
+		    NULL);
+
+  label = gtk_label_new_with_mnemonic (_("_Y ratio:"));
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  /*  the constrain ratio chainbutton  */
+  constrain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
+  gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (constrain), TRUE);
+  gtk_table_attach_defaults (GTK_TABLE (table2), constrain, 1, 2, 0, 2);
+  gtk_widget_show (constrain);
+
+  gimp_help_set_help_data (GIMP_CHAIN_BUTTON (constrain)->button,
+                           _("Constrain aspect ratio"), NULL);
+
+  gtk_widget_show (table2);
+
+  /*  Resolution   */
+  label = gtk_label_new (_("Resolution:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  res = gimp_size_entry_new (1, GIMP_UNIT_INCH, _("pixels/%a"),
+                             FALSE, FALSE, FALSE, 10,
+                             GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
+  gtk_table_set_col_spacing (GTK_TABLE (res), 1, 6);
+
+  gtk_table_attach (GTK_TABLE (table), res, 1, 2, 4, 5,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (res);
+
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (res), 0,
+                                         5.0, GIMP_MAX_RESOLUTION);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (res), 0, loadvals.resolution);
+
+  g_signal_connect (res, "value-changed",
+                    G_CALLBACK (load_dialog_resolution_callback),
+                    doc);
 
   /* Antialiasing */
   toggle = gtk_check_button_new_with_mnemonic (_("A_ntialiasing"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), loadvals.antialias);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
+
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &loadvals.antialias);
