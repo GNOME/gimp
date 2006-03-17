@@ -1,3 +1,7 @@
+2006-03-17  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/tmpl/gimpimage.sgml: regenerated.
+
 2006-02-28  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/tmpl/gimpaspectpreview.sgml
