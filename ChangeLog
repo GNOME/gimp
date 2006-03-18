@@ -1,5 +1,13 @@
 2006-03-18  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/drawable.pdb: got rid of all perl utility
+	functions.
+
+	* app/pdb/drawable_cmds.c
+	* libgimp/gimpdrawable_pdb.c: regenerated.
+
+2006-03-18  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/app.pl: removed support for arg->on_success and
 	arg->on_fail.
 

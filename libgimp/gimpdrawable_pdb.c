@@ -731,7 +731,7 @@ gimp_drawable_set_linked (gint32   drawable_ID,
  * This procedure returns the specified drawable's tattoo. A tattoo is
  * a unique and permanent identifier attached to a drawable that can be
  * used to uniquely identify a drawable within an image even between
- * sessions
+ * sessions.
  *
  * Returns: The drawable tattoo.
  */
@@ -765,7 +765,7 @@ gimp_drawable_get_tattoo (gint32 drawable_ID)
  * This procedure sets the specified drawable's tattoo. A tattoo is a
  * unique and permanent identifier attached to a drawable that can be
  * used to uniquely identify a drawable within an image even between
- * sessions
+ * sessions.
  *
  * Returns: TRUE on success.
  */

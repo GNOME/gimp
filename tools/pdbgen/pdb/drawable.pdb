@@ -17,134 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub drawable_prop_proc {
-    my ($return, $name, $type, $func, $desc, $core_type, $core_var) = @_;
-
-    $core_type = 'drawable' unless $core_type;
-    $core_var  = 'drawable' unless $core_var;
-
-    $blurb = "Returns $return.";
-
-    &std_pdb_misc;
-
-    @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable' }
-    );
-
-    @outargs = (
-	{ name => $name, type => $type, desc => $desc,
-	  alias => "gimp_${core_type}_$func (${core_var})", no_declare => 1 }
-    );
-}
-
-sub drawable_type_proc {
-    my ($desc, $type, $func) = @_;
-
-    $help = <<HELP;
-This procedure returns non-zero if the specified drawable is of type
-{ $type }.
-HELP
-
-    &drawable_prop_proc("whether the drawable is $desc type", $func, 'boolean',
-			$func, "non-zero if the drawable is $desc type");
-}
-
-sub drawable_is_proc {
-    my ($desc, $check) = @_;
-
-    my $type = $desc;
-    $type =~ s/ /_/g;
-
-    $help = <<HELP;
-This procedure returns non-zero if the specified drawable is a $desc.
-HELP
-
-    &drawable_prop_proc("whether the drawable is a $desc",
-			$type, 'boolean', $type,
-			"Non-zero if the drawable is a $desc");
-
-    $outargs[0]->{alias} = $check . ' (drawable) ? TRUE : FALSE';
-}
-
-sub drawable_get_prop_proc {
-    my ($prop, $type, $desc, $undo, $core_type, $core_var) = @_;
-
-    $core_type = 'drawable' unless $core_type;
-    $core_var  = 'drawable' unless $core_var;
-
-    $blurb = "Get the $desc of the specified drawable.";
-
-    $help = "This procedure returns the specified drawable's $desc. ";
-
-    &std_pdb_misc;
-
-    @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable' }
-    );
-
-    @outargs = (
-	{ name => $prop, type => $type,
-	  desc => "The drawable $desc", no_declare => 1 }
-    );
-
-    my $alias = "gimp_${core_type}_get_$prop ($core_var)";
-    $alias = "g_strdup ($alias)" if $type eq 'string';
-    $outargs[0]->{alias} .= "$alias";
-}
-
-sub drawable_set_prop_proc {
-    my ($prop, $type, $desc, $undo, $core_type, $core_var) = @_;
-
-    $core_type = 'drawable' unless $core_type;
-    $core_var  = 'drawable' unless $core_var;
-
-    $blurb = "Set the $desc of the specified drawable.";
-
-    $help = "This procedure sets the specified drawable's $desc. ";
-
-    &std_pdb_misc;
-
-    @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable' },
-	{ name => $prop, type => $type,
-	  desc => "The new drawable $desc" }
-    );
-
-    if ($type =~ /float/) {
-	$inargs[1]->{desc} .= ' (%%desc%%)';
-    }
-
-    $invoke{code} = $undo ? "gimp_${core_type}_set_$prop ($core_var, $prop, TRUE);"
-                          : "gimp_${core_type}_set_$prop ($core_var, $prop);";
-}
-
-sub drawable_accessors {
-    my ($prop, $type, $desc, $undo, $extra, $core_type, $core_var) = @_;
-
-    $core_type = 'drawable' unless $core_type;
-    $core_var  = 'drawable' unless $core_var;
-
-    my (@extra, %extra); my $once = 0;
-
-    ref($extra) ? (@extra = @$extra) : (@extra = ($extra, $extra));
-    %extra = map { $once++ ? 'set' : 'get', $_ ? $_ : "" } @extra;
-
-    foreach (sort keys %extra) {
-	my $proc = "drawable_${_}_$prop";
-
-	eval <<SUB;
-sub @{[ scalar caller ]}::$proc {
-    \&drawable_${_}_prop_proc('$prop', '$type', '$desc', $undo,
-                              '$core_type', '$core_var');
-    $extra{$_}
-}
-SUB
-    }
-}
-
 sub drawable_merge_shadow {
     $blurb = 'Merge the shadow buffer with the specified drawable.';
 
@@ -211,7 +83,13 @@ HELP
 	  desc => 'The type of fill: %%desc%%' }
     );
 
-    %invoke = ( code => 'gimp_drawable_fill_by_type (drawable, context, (GimpFillType) fill_type);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_drawable_fill_by_type (drawable, context, (GimpFillType) fill_type);
+}
+CODE
+    );
 }
 
 sub drawable_update {
@@ -238,7 +116,13 @@ HELP
 	  desc => 'Height of update region' }
     );
 
-    %invoke = ( code => 'gimp_drawable_update (drawable, x, y, width, height);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_drawable_update (drawable, x, y, width, height);
+}
+CODE
+    );
 }
 
 sub drawable_mask_bounds {
@@ -284,7 +168,9 @@ HELP
 
     %invoke = (
 	code => <<'CODE'
-non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+{
+  non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+}
 CODE
     );
 }
@@ -326,7 +212,9 @@ HELP
 
     %invoke = (
 	code => <<'CODE'
-non_empty = gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height);
+{
+  non_empty = gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height);
+}
 CODE
     );
 }
@@ -354,25 +242,63 @@ sub drawable_get_image {
 }
 
 sub drawable_type {
-    $help = "This procedure returns the drawable's type.";
+    $blurb = "Returns the drawable's type.";
+    $help  = "This procedure returns the drawable's type.";
 
-    &drawable_prop_proc("the drawable's type", 'type', 'enum GimpImageType',
-			'type', "The drawable's type: { %%desc%% }");
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    @outargs = (
+	{ name => 'type', type => 'enum GimpImageType',
+	  desc => "The drawable's type: { %%desc%% }" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  type = gimp_drawable_type (drawable);
+}
+CODE
+    );
 }
 
 sub drawable_has_alpha {
+    $blurb = 'Returns non-zero if the drawable has an alpha channel.';
+
     $help = <<'HELP';
 This procedure returns whether the specified drawable has an alpha channel.
 This can only be true for layers, and the associated type will be one of:
 { RGBA , GRAYA, INDEXEDA }.
 HELP
 
-    &drawable_prop_proc('non-zero if the drawable has an alpha channel',
-			'has_alpha', 'boolean', 'has_alpha',
-			'Does the drawable have an alpha channel?');
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    @outargs = (
+	{ name => 'has_alpha', type => 'boolean',
+	  desc => 'Does the drawable have an alpha channel?' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  has_alpha = gimp_drawable_has_alpha (drawable);
+}
+CODE
+    );
 }
 
 sub drawable_type_with_alpha {
+    $blurb = "Returns the drawable's type with alpha.";
+
     $help = <<'HELP';
 This procedure returns the drawable's type as if had an alpha
 channel. If the type is currently Gray, for instance, the returned
@@ -380,48 +306,193 @@ type would be GrayA. If the drawable already has an alpha channel, the
 drawable's type is simply returned.
 HELP
 
-    &drawable_prop_proc("the drawable's type with alpha", 'type_with_alpha',
-			'enum GimpImageType (no RGB_GIMAGE, GRAY_GIMAGE,
-			 INDEXED_GIMAGE)', 'type_with_alpha',
-			"The drawable's type with alpha: { %%desc%% }");
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    @outargs = (
+	{ name => 'type_with_alpha', type => 'enum GimpImageType
+					      (no RGB_GIMAGE, GRAY_GIMAGE,
+					      INDEXED_GIMAGE)',
+	  desc => "The drawable's type with alpha: { %%desc%% }" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  type_with_alpha = gimp_drawable_type_with_alpha (drawable);
+}
+CODE
+    );
 }
 
 sub drawable_is_rgb {
-    &drawable_type_proc('an RGB', 'RGB, RGBA', 'is_rgb');
+    $blurb = 'Returns whether the drawable is an RGB type.';
+
+    $help = <<HELP;
+This procedure returns non-zero if the specified drawable
+is of type { RGB, RGBA }.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    @outargs = (
+	{ name => 'is_rgb', type => 'boolean',
+	  desc => 'non-zero if the drawable is an RGB type' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  is_rgb = gimp_drawable_is_rgb (drawable);
+}
+CODE
+    );
 }
 
 sub drawable_is_gray {
-    &drawable_type_proc('a grayscale', 'Gray, GrayA', 'is_gray');
+    $blurb = 'Returns whether the drawable is a grayscale type.';
+
+    $help = <<HELP;
+This procedure returns non-zero if the specified drawable
+is of type { Gray, GrayA }.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    @outargs = (
+	{ name => 'is_gray', type => 'boolean',
+	  desc => 'non-zero if the drawable is a grayscale type' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  is_gray = gimp_drawable_is_gray (drawable);
+}
+CODE
+    );
 }
 
 sub drawable_is_indexed {
-    &drawable_type_proc('an indexed', 'Indexed, IndexedA', 'is_indexed');
+    $blurb = 'Returns whether the drawable is an indexed type.';
+
+    $help = <<HELP;
+This procedure returns non-zero if the specified drawable
+is of type { Indexed, IndexedA }.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    @outargs = (
+	{ name => 'is_indexed', type => 'boolean',
+	  desc => 'non-zero if the drawable is an indexed type' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  is_indexed = gimp_drawable_is_indexed (drawable);
+}
+CODE
+    );
 }
 
 sub drawable_bpp {
+    $blurb = 'Returns the bytes per pixel.';
+
     $help = <<'HELP';
 This procedure returns the number of bytes per pixel (or the number of
 channels) for the specified drawable.
 HELP
 
-    &drawable_prop_proc('the bytes per pixel', 'bpp', 'int32', 'bytes',
-			'Bytes per pixel');
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    @outargs = (
+	{ name => 'bpp', type => 'int32',
+	  desc => 'Bytes per pixel' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  bpp = gimp_drawable_bytes (drawable);
+}
+CODE
+    );
 }
 
 sub drawable_width {
-    $help = "This procedure returns the specified drawable's width in pixels.";
+    $blurb = 'Returns the width of the drawable.';
+    $help  = "This procedure returns the specified drawable's width in pixels.";
 
-    &drawable_prop_proc('the width of the drawable', 'width', 'int32',
-			'width', 'Width of drawable',
-                        'item', 'GIMP_ITEM (drawable)');
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    @outargs = (
+	{ name => 'width', type => 'int32',
+	  desc => 'Width of drawable' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  width = gimp_item_width (GIMP_ITEM (drawable));
+}
+CODE
+    );
 }
 
 sub drawable_height {
-    $help = "This procedure returns the specified drawable's height in pixels.";
+    $blurb = 'Returns the height of the drawable.';
+    $help  = "This procedure returns the specified drawable's height in pixels.";
 
-    &drawable_prop_proc('the height of the drawable', 'height', 'int32',
-			'height', 'Height of drawable',
-                        'item', 'GIMP_ITEM (drawable)');
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    @outargs = (
+	{ name => 'height', type => 'int32',
+	  desc => 'Height of drawable' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  height = gimp_item_height (GIMP_ITEM (drawable));
+}
+CODE
+    );
 }
 
 sub drawable_offsets {
@@ -447,48 +518,304 @@ HELP
 	  desc => "y offset of drawable" }
     );
 
-    %invoke = ( code => 'gimp_item_offsets (GIMP_ITEM (drawable), &offset_x, &offset_y);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_item_offsets (GIMP_ITEM (drawable), &offset_x, &offset_y);
+}
+CODE
+    );
 }
 
 sub drawable_is_layer {
-    &drawable_is_proc('layer', 'GIMP_IS_LAYER');
+    $blurb = 'Returns whether the drawable is a layer.';
+
+    $help = <<HELP;
+This procedure returns non-zero if the specified drawable is a layer.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    @outargs = (
+	{ name => 'layer', type => 'boolean',
+	  desc => 'Non-zero if the drawable is a layer' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  layer = GIMP_IS_LAYER (drawable);
+}
+CODE
+    );
 }
 
 sub drawable_is_layer_mask {
-    &drawable_is_proc('layer mask', 'GIMP_IS_LAYER_MASK');
+    $blurb = 'Returns whether the drawable is a layer mask.';
+
+    $help = <<HELP;
+This procedure returns non-zero if the specified drawable is a layer mask.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    @outargs = (
+	{ name => 'layer_mask', type => 'boolean',
+	  desc => 'Non-zero if the drawable is a layer mask' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  layer_mask = GIMP_IS_LAYER_MASK (drawable);
+}
+CODE
+    );
 }
 
 sub drawable_is_channel {
-    &drawable_is_proc('channel', 'GIMP_IS_CHANNEL');
+    $blurb = 'Returns whether the drawable is a channel.';
+
+    $help = <<HELP;
+This procedure returns non-zero if the specified drawable is a channel.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    @outargs = (
+	{ name => 'channel', type => 'boolean',
+	  desc => 'Non-zero if the drawable is a channel' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  channel = GIMP_IS_CHANNEL (drawable);
+}
+CODE
+    );
 }
 
-&drawable_accessors('name', 'string', 'name', 0, [ undef, <<'CODE' ],
-$invoke{code} =~ s/gimp_object_set_name/success = gimp_item_rename/;
-$invoke{code} =~ s/GIMP_OBJECT/GIMP_ITEM/;
+sub drawable_get_name {
+    $blurb = "Get the name of the specified drawable.";
+
+    $help = "This procedure returns the specified drawable's name.";
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    @outargs = (
+	{ name => 'name', type => 'string',
+	  desc => "The drawable name" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  name = g_strdup (gimp_object_get_name (GIMP_OBJECT (drawable)));
+}
 CODE
-                 'object', 'GIMP_OBJECT (drawable)');
+    );
+}
 
-&drawable_accessors('visible', 'boolean', 'visibility', 1, undef,
-                    'item', 'GIMP_ITEM (drawable)');
+sub drawable_set_name {
+    $blurb = "Set the name of the specified drawable.";
 
-&drawable_accessors('linked', 'boolean', 'linked state', 1,
-                    <<'CODE', 'item', 'GIMP_ITEM (drawable)');
+    $help = "This procedure sets the specified drawable's name.";
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'name', type => 'string',
+	  desc => "The new drawable name" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  success = gimp_item_rename (GIMP_ITEM (drawable), name);
+}
+CODE
+    );
+}
+
+sub drawable_get_visible {
+    $blurb = "Get the visibility of the specified drawable.";
+
+    $help = "This procedure returns the specified drawable's visibility.";
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    @outargs = (
+	{ name => 'visible', type => 'boolean',
+	  desc => "The drawable visibility" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  visible = gimp_item_get_visible (GIMP_ITEM (drawable));
+}
+CODE
+    );
+}
+
+sub drawable_set_visible {
+    $blurb = "Set the visibility of the specified drawable.";
+
+    $help = "This procedure sets the specified drawable's visibility.";
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'visible', type => 'boolean',
+	  desc => "The new drawable visibility" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_item_set_visible (GIMP_ITEM (drawable), visible, TRUE);
+}
+CODE
+    );
+}
+
+sub drawable_get_linked {
+    $blurb = "Get the linked state of the specified drawable.";
+
+    $help = "This procedure returns the specified drawable's linked state.";
+
     &wolfgang_pdb_misc('1998');
 
-    if (scalar @outargs) {
-        $outargs[0]->{desc} .= ' (for moves)'
-    }
-CODE
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
 
-&drawable_accessors('tattoo', 'tattoo', 'tattoo', 0,
-                    <<'CODE', 'item', 'GIMP_ITEM (drawable)');
-    $help .= <<'HELP';
-A tattoo is a unique and permanent identifier attached to a drawable that can be
-used to uniquely identify a drawable within an image even between sessions
+    @outargs = (
+	{ name => 'linked', type => 'boolean',
+	  desc => "The drawable linked state (for moves)" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  linked = gimp_item_get_linked (GIMP_ITEM (drawable));
+}
+CODE
+    );
+}
+
+sub drawable_set_linked {
+    $blurb = "Set the linked state of the specified drawable.";
+
+    $help = "This procedure sets the specified drawable's linked state.";
+
+    &wolfgang_pdb_misc('1998');
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'linked', type => 'boolean',
+	  desc => "The new drawable linked state" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_item_set_linked (GIMP_ITEM (drawable), linked, TRUE);
+}
+CODE
+    );
+}
+
+sub drawable_get_tattoo {
+    $blurb = "Get the tattoo of the specified drawable.";
+
+    $help = <<'HELP';
+This procedure returns the specified drawable's tattoo. A tattoo is a
+unique and permanent identifier attached to a drawable that can be
+used to uniquely identify a drawable within an image even between
+sessions.
 HELP
 
     &jay_pdb_misc('1998');
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    @outargs = (
+	{ name => 'tattoo', type => 'tattoo',
+	  desc => "The drawable tattoo" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  tattoo = gimp_item_get_tattoo (GIMP_ITEM (drawable));
+}
 CODE
+    );
+}
+
+sub drawable_set_tattoo {
+    $blurb = "Set the tattoo of the specified drawable.";
+
+    $help = <<'HELP';
+This procedure sets the specified drawable's tattoo. A tattoo is a
+unique and permanent identifier attached to a drawable that can be
+used to uniquely identify a drawable within an image even between
+sessions.
+HELP
+
+    &jay_pdb_misc('1998');
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'tattoo', type => 'tattoo',
+	  desc => "The new drawable tattoo" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_item_set_tattoo (GIMP_ITEM (drawable), tattoo);
+}
+CODE
+    );
+}
 
 sub drawable_get_pixel {
     $blurb = 'Gets the value of the pixel at the specified coordinates.';
