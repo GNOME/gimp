@@ -32,26 +32,31 @@ sub plugins_query {
 
     @outargs = (
 	{ name => 'menu_path', type => 'stringarray',
-	  desc => 'The menu path of the plugin' },
+	  desc => 'The menu path of the plugin',
+	  array => { name => 'num_plugins',
+		     desc => 'The number of plugins' } },
 	{ name => 'plugin_accelerator', type => 'stringarray',
 	  desc => 'String representing keyboard accelerator (could be empty
-		   string)' },
+		   string)',
+	  array => { name => 'num_plugins', no_declare => 1,
+		     desc => 'The number of plugins' } },
 	{ name => 'plugin_location', type => 'stringarray',
-	  desc => 'Location of the plugin program' },
+	  desc => 'Location of the plugin program',
+	  array => { name => 'num_plugins', no_declare => 1,
+		     desc => 'The number of plugins' } },
 	{ name => 'plugin_image_type', type => 'stringarray',
-	  desc => 'Type of image that this plugin will work on' },
+	  desc => 'Type of image that this plugin will work on',
+	  array => { name => 'num_plugins', no_declare => 1,
+		     desc => 'The number of plugins' } },
 	{ name => 'plugin_install_time', type => 'int32array',
-	  desc => 'Time that the plugin was installed' },
+	  desc => 'Time that the plugin was installed',
+	  array => { name => 'num_plugins', no_declare => 1,
+		     desc => 'The number of plugins' } },
 	{ name => 'plugin_real_name', type => 'stringarray',
-	  desc => 'The internal name of the plugin' }
+	  desc => 'The internal name of the plugin',
+	  array => { name => 'num_plugins', no_declare => 1,
+		     desc => 'The number of plugins' } }
     );
-
-    foreach (@outargs) {
-	$_->{array} = { name => 'num_plugins', no_declare => 1,
-			desc => 'The number of plugins' }
-    }
-
-    delete $outargs[0]->{array}->{no_declare};
 
     %invoke = (
 	code => <<'CODE'

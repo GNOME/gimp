@@ -1,3 +1,11 @@
+2006-03-18  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/pdb/progress.pdb: got rid of the unused
+	arg->no_id_lookup.
+
+	* tools/pdbgen/pdb/plug_in.pdb: flattened a forgotten foreach().
+
 2006-03-18  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/plug-in-actions.c

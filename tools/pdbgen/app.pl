@@ -116,9 +116,7 @@ sub declare_args {
 	    }
 
 	    unless (exists $_->{no_declare}) {
-		my $type = exists $_->{no_id_lookup} ? 'gint32 ' : $arg->{type};
-
-		$result .= ' ' x 2 . $type . &arg_vname($_);
+		$result .= ' ' x 2 . $arg->{type} . &arg_vname($_);
 		if ($init) {
 		    $result .= " = $arg->{init_value}";
 		}
@@ -202,7 +200,7 @@ sub marshal_inargs {
 	my $var = &arg_vname($_);
 	my $value = &arg_value($arg, $argc++);
 	
-	if (exists $arg->{id_func} && !exists $_->{no_id_lookup}) {
+	if (exists $arg->{id_func}) {
 	    my $id_func = $arg->{id_func};
 	    $id_func = $_->{id_func} if exists $_->{id_func};
 
