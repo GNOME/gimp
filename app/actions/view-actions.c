@@ -70,7 +70,8 @@ static GimpActionEntry view_actions[] =
     GIMP_HELP_VIEW_CHANGE_SCREEN },
 
   { "view-new", GTK_STOCK_NEW,
-    N_("_New View"), "", NULL,
+    N_("_New View"), "",
+    N_("Create another view on this image"),
     G_CALLBACK (view_new_cmd_callback),
     GIMP_HELP_VIEW_NEW },
 
@@ -82,23 +83,25 @@ static GimpActionEntry view_actions[] =
 
   { "view-zoom-fit-in", GTK_STOCK_ZOOM_FIT,
     N_("_Fit Image in Window"), "<control><shift>E",
-    N_("Fit image in window"),
+    N_("Adjust the zoom ratio so that the image becomes fully visible"),
     G_CALLBACK (view_zoom_fit_in_cmd_callback),
     GIMP_HELP_VIEW_ZOOM_FIT_IN },
 
   { "view-zoom-fit-to", GTK_STOCK_ZOOM_FIT,
     N_("Fit Image _to Window"), NULL,
-    N_("Fit image to window"),
+    N_("Adjust the zoom ratio so that the window is used optimally"),
     G_CALLBACK (view_zoom_fit_to_cmd_callback),
     GIMP_HELP_VIEW_ZOOM_FIT_TO },
 
   { "view-navigation-window", GIMP_STOCK_NAVIGATION,
-    N_("Na_vigation Window"), NULL, NULL,
+    N_("Na_vigation Window"), NULL,
+    N_("Show an overview window for this image"),
     G_CALLBACK (view_navigation_window_cmd_callback),
     GIMP_HELP_NAVIGATION_DIALOG },
 
   { "view-display-filters", GIMP_STOCK_DISPLAY_FILTER,
-    N_("Display _Filters..."), NULL, NULL,
+    N_("Display _Filters..."), NULL,
+    N_("Configure filters applied to this view"),
     G_CALLBACK (view_display_filters_cmd_callback),
     GIMP_HELP_DISPLAY_FILTER_DIALOG },
 
@@ -119,7 +122,7 @@ static GimpToggleActionEntry view_toggle_actions[] =
 {
   { "view-dot-for-dot", NULL,
     N_("_Dot for Dot"), NULL,
-    N_("A Pixel on the screen represents an image pixel"),
+    N_("A pixel on the screen represents an image pixel"),
     G_CALLBACK (view_dot_for_dot_cmd_callback),
     TRUE,
     GIMP_HELP_VIEW_DOT_FOR_DOT },

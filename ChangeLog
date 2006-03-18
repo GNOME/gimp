@@ -1,3 +1,9 @@
+2006-03-18  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/plug-in-actions.c
+	* app/actions/select-actions.c
+	* app/actions/view-actions.c: added more action blurbs.
+
 2006-03-18  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/unit.pdb: got rid of all perl utility
