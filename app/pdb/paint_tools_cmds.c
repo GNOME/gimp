@@ -84,6 +84,8 @@ paint_tools_stroke (Gimp             *gimp,
   gboolean       retval;
   gint           i;
 
+  n_strokes /= 2;  /* #doubles -> #points */
+
   /*  undefine the paint-relevant context properties and get them
    *  from the current context
    */
@@ -138,9 +140,7 @@ airbrush_invoker (Gimp         *gimp,
     success = FALSE;
 
   num_strokes = args[2].value.pdb_int;
-  if (!(num_strokes < 2))
-    num_strokes /= 2;
-  else
+  if (num_strokes < 2)
     success = FALSE;
 
   strokes = (gdouble *) args[3].value.pdb_pointer;
@@ -226,9 +226,7 @@ airbrush_default_invoker (Gimp         *gimp,
     success = FALSE;
 
   num_strokes = args[1].value.pdb_int;
-  if (!(num_strokes < 2))
-    num_strokes /= 2;
-  else
+  if (num_strokes < 2)
     success = FALSE;
 
   strokes = (gdouble *) args[2].value.pdb_pointer;
@@ -321,9 +319,7 @@ clone_invoker (Gimp         *gimp,
   src_y = args[4].value.pdb_float;
 
   num_strokes = args[5].value.pdb_int;
-  if (!(num_strokes < 2))
-    num_strokes /= 2;
-  else
+  if (num_strokes < 2)
     success = FALSE;
 
   strokes = (gdouble *) args[6].value.pdb_pointer;
@@ -435,9 +431,7 @@ clone_default_invoker (Gimp         *gimp,
     success = FALSE;
 
   num_strokes = args[1].value.pdb_int;
-  if (!(num_strokes < 2))
-    num_strokes /= 2;
-  else
+  if (num_strokes < 2)
     success = FALSE;
 
   strokes = (gdouble *) args[2].value.pdb_pointer;
@@ -524,9 +518,7 @@ convolve_invoker (Gimp         *gimp,
     success = FALSE;
 
   num_strokes = args[3].value.pdb_int;
-  if (!(num_strokes < 2))
-    num_strokes /= 2;
-  else
+  if (num_strokes < 2)
     success = FALSE;
 
   strokes = (gdouble *) args[4].value.pdb_pointer;
@@ -618,9 +610,7 @@ convolve_default_invoker (Gimp         *gimp,
     success = FALSE;
 
   num_strokes = args[1].value.pdb_int;
-  if (!(num_strokes < 2))
-    num_strokes /= 2;
-  else
+  if (num_strokes < 2)
     success = FALSE;
 
   strokes = (gdouble *) args[2].value.pdb_pointer;
@@ -712,9 +702,7 @@ dodgeburn_invoker (Gimp         *gimp,
     success = FALSE;
 
   num_strokes = args[4].value.pdb_int;
-  if (!(num_strokes < 2))
-    num_strokes /= 2;
-  else
+  if (num_strokes < 2)
     success = FALSE;
 
   strokes = (gdouble *) args[5].value.pdb_pointer;
@@ -812,9 +800,7 @@ dodgeburn_default_invoker (Gimp         *gimp,
     success = FALSE;
 
   num_strokes = args[1].value.pdb_int;
-  if (!(num_strokes < 2))
-    num_strokes /= 2;
-  else
+  if (num_strokes < 2)
     success = FALSE;
 
   strokes = (gdouble *) args[2].value.pdb_pointer;
@@ -893,9 +879,7 @@ eraser_invoker (Gimp         *gimp,
     success = FALSE;
 
   num_strokes = args[1].value.pdb_int;
-  if (!(num_strokes < 2))
-    num_strokes /= 2;
-  else
+  if (num_strokes < 2)
     success = FALSE;
 
   strokes = (gdouble *) args[2].value.pdb_pointer;
@@ -995,9 +979,7 @@ eraser_default_invoker (Gimp         *gimp,
     success = FALSE;
 
   num_strokes = args[1].value.pdb_int;
-  if (!(num_strokes < 2))
-    num_strokes /= 2;
-  else
+  if (num_strokes < 2)
     success = FALSE;
 
   strokes = (gdouble *) args[2].value.pdb_pointer;
@@ -1081,9 +1063,7 @@ paintbrush_invoker (Gimp         *gimp,
     success = FALSE;
 
   num_strokes = args[2].value.pdb_int;
-  if (!(num_strokes < 2))
-    num_strokes /= 2;
-  else
+  if (num_strokes < 2)
     success = FALSE;
 
   strokes = (gdouble *) args[3].value.pdb_pointer;
@@ -1191,9 +1171,7 @@ paintbrush_default_invoker (Gimp         *gimp,
     success = FALSE;
 
   num_strokes = args[1].value.pdb_int;
-  if (!(num_strokes < 2))
-    num_strokes /= 2;
-  else
+  if (num_strokes < 2)
     success = FALSE;
 
   strokes = (gdouble *) args[2].value.pdb_pointer;
@@ -1270,9 +1248,7 @@ pencil_invoker (Gimp         *gimp,
     success = FALSE;
 
   num_strokes = args[1].value.pdb_int;
-  if (!(num_strokes < 2))
-    num_strokes /= 2;
-  else
+  if (num_strokes < 2)
     success = FALSE;
 
   strokes = (gdouble *) args[2].value.pdb_pointer;
@@ -1354,9 +1330,7 @@ smudge_invoker (Gimp         *gimp,
     success = FALSE;
 
   num_strokes = args[2].value.pdb_int;
-  if (!(num_strokes < 2))
-    num_strokes /= 2;
-  else
+  if (num_strokes < 2)
     success = FALSE;
 
   strokes = (gdouble *) args[3].value.pdb_pointer;
@@ -1442,9 +1416,7 @@ smudge_default_invoker (Gimp         *gimp,
     success = FALSE;
 
   num_strokes = args[1].value.pdb_int;
-  if (!(num_strokes < 2))
-    num_strokes /= 2;
-  else
+  if (num_strokes < 2)
     success = FALSE;
 
   strokes = (gdouble *) args[2].value.pdb_pointer;

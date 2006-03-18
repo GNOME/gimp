@@ -1,3 +1,19 @@
+2006-03-18  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/app.pl: removed support for arg->on_success and
+	arg->on_fail.
+
+	* tools/pdbgen/pdb/gradient_select.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/paint_tools.pdb
+	* tools/pdbgen/pdb/selection_tools.pdb: moved their logic to the C
+	code.
+
+	* app/pdb/gradient_select_cmds.c
+	* app/pdb/gradients_cmds.c
+	* app/pdb/paint_tools_cmds.c
+	* app/pdb/selection_tools_cmds.c: regenerated.
+
 2006-03-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/lic.c: applied a patch from Karine Delvare that

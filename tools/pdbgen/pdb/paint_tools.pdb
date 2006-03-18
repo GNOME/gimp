@@ -25,7 +25,7 @@ sub stroke_arg () {
     { name => 'strokes', type => 'floatarray',
       desc => 'Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ...,
 	       sn.x, sn.y }',
-      array => { type => '2 <= int32', on_success => 'num_strokes /= 2;',
+      array => { type => '2 <= int32',
 		 desc => 'Number of stroke control points (count each
 			  coordinate as 2 points)' } }
 }
@@ -802,6 +802,8 @@ paint_tools_stroke (Gimp             *gimp,
   GimpCoords    *coords;
   gboolean       retval;
   gint           i;
+
+  n_strokes /= 2;  /* #doubles -> #points */
 
   /*  undefine the paint-relevant context properties and get them
    *  from the current context

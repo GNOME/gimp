@@ -32,16 +32,18 @@ sub gradients_popup {
 	{ name => 'initial_gradient', type => 'string',
 	  desc => 'The name of the pattern to set as the first selected',
 	  null_ok => 1 },
-	{ name => 'sample_size', type => '0 < int32 <= 10000',
+	{ name => 'sample_size', type => '1 <= int32 <= 10000',
 	  desc => 'Size of the sample to return when the gradient is changed
 		   (%%desc%%)',
-	  on_fail => 'sample_size = GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE;',
 	  no_success => 1 }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
+  if (sample_size < 1 || sample_size > 10000)
+    sample_size = GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE;
+
   if (gimp->no_interface ||
       ! procedural_db_lookup (gimp, gradient_callback) ||
       ! gimp_pdb_dialog_new (gimp, context, gimp->gradient_factory->container,

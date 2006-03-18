@@ -78,38 +78,20 @@ sub make_arg_test {
     my ($arg, $reverse, $test) = @_;
     my $result = "";
 
-    my $yes = exists $arg->{on_success};
-    my $no  = !exists $arg->{no_success} || exists $arg->{on_fail};
-
-    if ($yes || $no) {
-	&$reverse(\$test) if $yes;
-
+    if (!exists $arg->{no_success}) {
 	if (exists $arg->{cond}) {
 	    my $cond = "";
 	    foreach (@{$arg->{cond}}) {
-		$cond .= '!' if $yes;
 		$cond .= /\W/ ? "($_)" : $_;
-		$cond .= $yes ? ' !! ' : ' && ';
+		$cond .= ' && ';
 	    }
 	    $test = "$cond($test)";
 	}
 
 	$result = ' ' x 2 . "if ($test)\n";
 
-	$result .= &format_code_frag($arg->{on_success}, 1) if $yes;
-
-	if ($no) {
-	    $result .= ' ' x 2 . "else\n" if $yes;
-
-	    if (!exists $arg->{no_success}) {
-		$success = 1;
-		$result .= ' ' x 4 . "success = FALSE;\n";
-	    }
-
-	    if (exists $arg->{on_fail}) {
-		$result .= &format_code_frag($_->{on_fail}, 1);
-	    }
-	}
+	$success = 1;
+	$result .= ' ' x 4 . "success = FALSE;\n";
     }
 
     $result;
@@ -284,8 +266,7 @@ sub marshal_inargs {
 					  '_gimp_unit_get_number_of_units (gimp)');
 	    }
 	    elsif ($pdbtype eq 'enum' && !$enums{$typeinfo[0]}->{contig}) {
-		if (!exists $_->{no_success} || exists $_->{on_success} ||
-		     exists $_->{on_fail}) {
+		if (!exists $_->{no_success}) {
 		    my %vals; my $symbols = $enums{pop @typeinfo}->{symbols};
 		    @vals{@$symbols}++; delete @vals{@typeinfo};
 
@@ -299,27 +280,11 @@ sub marshal_inargs {
 			}
 		    }
 
-		    sub format_switch_frag {
-			my ($arg, $key) = @_;
-			my $frag = "";
-			if (exists $arg->{$key}) {
-			    $frag = &format_code_frag($arg->{$key}, 1);
-			    $frag =~ s/\t/' ' x 8/eg;
-			    $frag =~ s/^/' ' x 2/meg;
-			}
-			$frag;
-		    }
-
-		    $okvals .= &format_switch_frag($_, 'on_success');
-		    chomp $okvals;
-
 		    $failvals .= "default:\n";
 		    if (!exists $_->{no_success}) {
 			$success = 1;
 			$failvals .= ' ' x 6 . "success = FALSE;\n"
 		    }
-		    $failvals .=  &format_switch_frag($_, 'on_fail');
-		    chomp $failvals;
 
 		    $result .= <<CODE;
   switch ($var)

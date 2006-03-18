@@ -313,9 +313,7 @@ free_select_invoker (Gimp         *gimp,
     success = FALSE;
 
   num_segs = args[1].value.pdb_int;
-  if (!(num_segs < 2))
-    num_segs /= 2;
-  else
+  if (num_segs < 2)
     success = FALSE;
 
   segs = (gdouble *) args[2].value.pdb_pointer;
@@ -334,7 +332,7 @@ free_select_invoker (Gimp         *gimp,
     {
       gimp_channel_select_polygon (gimp_image_get_mask (gimage),
                                    _("Free Select"),
-                                   num_segs,
+                                   num_segs / 2,
                                    (GimpVector2 *) segs,
                                    operation,
                                    antialias,

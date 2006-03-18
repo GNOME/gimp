@@ -171,10 +171,9 @@ sub gradients_get_gradient_data {
 	{ name => 'name', type => 'string',
 	  desc => 'The gradient name ("" means current active gradient)',
           null_ok => '1' },
-	{ name => 'sample_size', type => '0 < int32 <= 10000',
+	{ name => 'sample_size', type => '1 <= int32 <= 10000',
 	  desc => 'Size of the sample to return when the gradient is changed
 	           (%%desc%%)',
-	  on_fail => 'sample_size = GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE;',
 	  no_success => 1 },
 	{ name => 'reverse', type => 'boolean',
 	  desc => 'Use the reverse gradient (%%desc%%)' }
@@ -193,6 +192,9 @@ sub gradients_get_gradient_data {
 	code => <<"CODE"
 {
   GimpGradient *gradient;
+
+  if (sample_size < 1 || sample_size > 10000)
+    sample_size = GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE;
 
   if (name && strlen (name))
     {

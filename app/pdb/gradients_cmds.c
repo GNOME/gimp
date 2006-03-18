@@ -386,14 +386,15 @@ gradients_get_gradient_data_invoker (Gimp         *gimp,
     success = FALSE;
 
   sample_size = args[1].value.pdb_int;
-  if (sample_size <= 0 || sample_size > 10000)
-    sample_size = GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE;
 
   reverse = args[2].value.pdb_int ? TRUE : FALSE;
 
   if (success)
     {
       GimpGradient *gradient;
+
+      if (sample_size < 1 || sample_size > 10000)
+        sample_size = GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE;
 
       if (name && strlen (name))
         {
@@ -460,7 +461,7 @@ static ProcArg gradients_get_gradient_data_inargs[] =
   {
     GIMP_PDB_INT32,
     "sample-size",
-    "Size of the sample to return when the gradient is changed (0 < sample_size <= 10000)"
+    "Size of the sample to return when the gradient is changed (1 <= sample_size <= 10000)"
   },
   {
     GIMP_PDB_INT32,

@@ -150,7 +150,7 @@ HELP
         { name => 'segs', type => 'floatarray',
           desc => 'Array of points: { p1.x, p1.y, p2.x, p2.y, ...,
                    pn.x, pn.y}',
-          array => { type => '2 <= int32', on_success => 'num_segs /= 2;',
+          array => { type => '2 <= int32',
                      desc => 'Number of points (count 1 coordinate as two
                               points)' } },
 	{ name => 'operation', type => 'enum GimpChannelOps',
@@ -167,7 +167,7 @@ HELP
 {
   gimp_channel_select_polygon (gimp_image_get_mask (gimage),
                                _("Free Select"),
-                               num_segs,
+                               num_segs / 2,
                                (GimpVector2 *) segs,
                                operation,
                                antialias,
