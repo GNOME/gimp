@@ -278,15 +278,21 @@ unit_get_deletion_flag_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpUnit unit_id;
+  gboolean deletion_flag = FALSE;
 
   unit_id = args[0].value.pdb_int;
   if (unit_id < GIMP_UNIT_PIXEL || unit_id >= _gimp_unit_get_number_of_units (gimp))
     success = FALSE;
 
+  if (success)
+    {
+      deletion_flag = _gimp_unit_get_deletion_flag (gimp, unit_id);
+    }
+
   return_args = procedural_db_return_args (&unit_get_deletion_flag_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = _gimp_unit_get_deletion_flag (gimp, unit_id);
+    return_args[1].value.pdb_int = deletion_flag;
 
   return return_args;
 }
@@ -392,15 +398,21 @@ unit_get_identifier_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpUnit unit_id;
+  gchar *identifier = NULL;
 
   unit_id = args[0].value.pdb_int;
   if (unit_id < GIMP_UNIT_PIXEL || unit_id >= _gimp_unit_get_number_of_units (gimp))
     success = FALSE;
 
+  if (success)
+    {
+      identifier = g_strdup (_gimp_unit_get_identifier (gimp, unit_id));
+    }
+
   return_args = procedural_db_return_args (&unit_get_identifier_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (_gimp_unit_get_identifier (gimp, unit_id));
+    return_args[1].value.pdb_pointer = identifier;
 
   return return_args;
 }
@@ -450,15 +462,21 @@ unit_get_factor_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpUnit unit_id;
+  gdouble factor = 0.0;
 
   unit_id = args[0].value.pdb_int;
   if (unit_id < GIMP_UNIT_PIXEL || unit_id >= _gimp_unit_get_number_of_units (gimp))
     success = FALSE;
 
+  if (success)
+    {
+      factor = _gimp_unit_get_factor (gimp, unit_id);
+    }
+
   return_args = procedural_db_return_args (&unit_get_factor_proc, success);
 
   if (success)
-    return_args[1].value.pdb_float = _gimp_unit_get_factor (gimp, unit_id);
+    return_args[1].value.pdb_float = factor;
 
   return return_args;
 }
@@ -508,15 +526,21 @@ unit_get_digits_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpUnit unit_id;
+  gint32 digits = 0;
 
   unit_id = args[0].value.pdb_int;
   if (unit_id < GIMP_UNIT_PIXEL || unit_id >= _gimp_unit_get_number_of_units (gimp))
     success = FALSE;
 
+  if (success)
+    {
+      digits = _gimp_unit_get_digits (gimp, unit_id);
+    }
+
   return_args = procedural_db_return_args (&unit_get_digits_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = _gimp_unit_get_digits (gimp, unit_id);
+    return_args[1].value.pdb_int = digits;
 
   return return_args;
 }
@@ -566,15 +590,21 @@ unit_get_symbol_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpUnit unit_id;
+  gchar *symbol = NULL;
 
   unit_id = args[0].value.pdb_int;
   if (unit_id < GIMP_UNIT_PIXEL || unit_id >= _gimp_unit_get_number_of_units (gimp))
     success = FALSE;
 
+  if (success)
+    {
+      symbol = g_strdup (_gimp_unit_get_symbol (gimp, unit_id));
+    }
+
   return_args = procedural_db_return_args (&unit_get_symbol_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (_gimp_unit_get_symbol (gimp, unit_id));
+    return_args[1].value.pdb_pointer = symbol;
 
   return return_args;
 }
@@ -624,15 +654,21 @@ unit_get_abbreviation_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpUnit unit_id;
+  gchar *abbreviation = NULL;
 
   unit_id = args[0].value.pdb_int;
   if (unit_id < GIMP_UNIT_PIXEL || unit_id >= _gimp_unit_get_number_of_units (gimp))
     success = FALSE;
 
+  if (success)
+    {
+      abbreviation = g_strdup (_gimp_unit_get_abbreviation (gimp, unit_id));
+    }
+
   return_args = procedural_db_return_args (&unit_get_abbreviation_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (_gimp_unit_get_abbreviation (gimp, unit_id));
+    return_args[1].value.pdb_pointer = abbreviation;
 
   return return_args;
 }
@@ -682,15 +718,21 @@ unit_get_singular_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpUnit unit_id;
+  gchar *singular = NULL;
 
   unit_id = args[0].value.pdb_int;
   if (unit_id < GIMP_UNIT_PIXEL || unit_id >= _gimp_unit_get_number_of_units (gimp))
     success = FALSE;
 
+  if (success)
+    {
+      singular = g_strdup (_gimp_unit_get_singular (gimp, unit_id));
+    }
+
   return_args = procedural_db_return_args (&unit_get_singular_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (_gimp_unit_get_singular (gimp, unit_id));
+    return_args[1].value.pdb_pointer = singular;
 
   return return_args;
 }
@@ -740,15 +782,21 @@ unit_get_plural_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpUnit unit_id;
+  gchar *plural = NULL;
 
   unit_id = args[0].value.pdb_int;
   if (unit_id < GIMP_UNIT_PIXEL || unit_id >= _gimp_unit_get_number_of_units (gimp))
     success = FALSE;
 
+  if (success)
+    {
+      plural = g_strdup (_gimp_unit_get_plural (gimp, unit_id));
+    }
+
   return_args = procedural_db_return_args (&unit_get_plural_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (_gimp_unit_get_plural (gimp, unit_id));
+    return_args[1].value.pdb_pointer = plural;
 
   return return_args;
 }

@@ -1,5 +1,12 @@
 2006-03-18  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/unit.pdb: got rid of all perl utility
+	functions.
+
+	* app/pdb/unit_cmds.c: regenerated.
+
+2006-03-18  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/drawable.pdb: got rid of all perl utility
 	functions.
 
