@@ -62,12 +62,14 @@ static GimpActionEntry context_actions[] =
   { "context-brush-angle-menu",    NULL,                  N_("A_ngle")      },
 
   { "context-colors-default", GIMP_STOCK_DEFAULT_COLORS,
-    N_("_Default Colors"), "D", NULL,
+    N_("_Default Colors"), "D",
+    N_("Set foreground color to black, background color to white"),
     G_CALLBACK (context_colors_default_cmd_callback),
     GIMP_HELP_TOOLBOX_DEFAULT_COLORS },
 
   { "context-colors-swap", GIMP_STOCK_SWAP_COLORS,
-    N_("S_wap Colors"), "X", NULL,
+    N_("S_wap Colors"), "X",
+    N_("Exchange foreground and background colors"),
     G_CALLBACK (context_colors_swap_cmd_callback),
     GIMP_HELP_TOOLBOX_SWAP_COLORS }
 };

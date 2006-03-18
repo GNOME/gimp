@@ -1,3 +1,10 @@
+2006-03-18  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/context-actions.c: added more action blurbs.
+
+	* menus/image-menu.xml.in: moved toolbox and fg/bg color actions
+	to the bottom of the Tools menu.
+
 2006-03-18  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/app.pl
