@@ -1434,14 +1434,10 @@ vectors_bezier_stroke_new_moveto_invoker (Gimp         *gimp,
   if (success)
     {
       GimpStroke *stroke;
-      GimpCoords  coord0;
+      GimpCoords  coord0 = GIMP_COORDS_DEFAULT_VALUES;
 
-      coord0.x        = x0;
-      coord0.y        = y0;
-      coord0.pressure = GIMP_COORDS_DEFAULT_PRESSURE;
-      coord0.xtilt    = GIMP_COORDS_DEFAULT_TILT;
-      coord0.ytilt    = GIMP_COORDS_DEFAULT_TILT;
-      coord0.wheel    = GIMP_COORDS_DEFAULT_WHEEL;
+      coord0.x = x0;
+      coord0.y = y0;
 
       stroke = gimp_bezier_stroke_new_moveto (&coord0);
       gimp_vectors_stroke_add (vectors, stroke);
@@ -1530,14 +1526,10 @@ vectors_bezier_stroke_lineto_invoker (Gimp         *gimp,
 
       if (stroke)
         {
-          GimpCoords coord0;
+          GimpCoords coord0 = GIMP_COORDS_DEFAULT_VALUES;
 
-          coord0.x        = x0;
-          coord0.y        = y0;
-          coord0.pressure = GIMP_COORDS_DEFAULT_PRESSURE;
-          coord0.xtilt    = GIMP_COORDS_DEFAULT_TILT;
-          coord0.ytilt    = GIMP_COORDS_DEFAULT_TILT;
-          coord0.wheel    = GIMP_COORDS_DEFAULT_WHEEL;
+          coord0.x = x0;
+          coord0.y = y0;
 
           gimp_bezier_stroke_lineto (stroke, &coord0);
         }
@@ -1626,16 +1618,12 @@ vectors_bezier_stroke_conicto_invoker (Gimp         *gimp,
 
       if (stroke)
         {
-          GimpCoords  coord0, coord1;
+          GimpCoords coord0 = GIMP_COORDS_DEFAULT_VALUES;
+          GimpCoords coord1 = GIMP_COORDS_DEFAULT_VALUES;
 
-          coord0.x        = x0;
-          coord0.y        = y0;
-          coord0.pressure = GIMP_COORDS_DEFAULT_PRESSURE;
-          coord0.xtilt    = GIMP_COORDS_DEFAULT_TILT;
-          coord0.ytilt    = GIMP_COORDS_DEFAULT_TILT;
-          coord0.wheel    = GIMP_COORDS_DEFAULT_WHEEL;
+          coord0.x = x0;
+          coord0.y = y0;
 
-          coord1   = coord0;
           coord1.x = x1;
           coord1.y = y1;
 
@@ -1742,20 +1730,16 @@ vectors_bezier_stroke_cubicto_invoker (Gimp         *gimp,
 
       if (stroke)
         {
-          GimpCoords coord0, coord1, coord2;
+          GimpCoords coord0 = GIMP_COORDS_DEFAULT_VALUES;
+          GimpCoords coord1 = GIMP_COORDS_DEFAULT_VALUES;
+          GimpCoords coord2 = GIMP_COORDS_DEFAULT_VALUES;
 
-          coord0.x        = x0;
-          coord0.y        = y0;
-          coord0.pressure = GIMP_COORDS_DEFAULT_PRESSURE;
-          coord0.xtilt    = GIMP_COORDS_DEFAULT_TILT;
-          coord0.ytilt    = GIMP_COORDS_DEFAULT_TILT;
-          coord0.wheel    = GIMP_COORDS_DEFAULT_WHEEL;
+          coord0.x = x0;
+          coord0.y = y0;
 
-          coord1   = coord0;
           coord1.x = x1;
           coord1.y = y1;
 
-          coord2   = coord0;
           coord2.x = x2;
           coord2.y = y2;
 
@@ -1865,14 +1849,10 @@ vectors_bezier_stroke_new_ellipse_invoker (Gimp         *gimp,
   if (success)
     {
       GimpStroke *stroke;
-      GimpCoords  coord0;
+      GimpCoords  coord0 = GIMP_COORDS_DEFAULT_VALUES;
 
-      coord0.x        = x0;
-      coord0.y        = y0;
-      coord0.pressure = GIMP_COORDS_DEFAULT_PRESSURE;
-      coord0.xtilt    = GIMP_COORDS_DEFAULT_TILT;
-      coord0.ytilt    = GIMP_COORDS_DEFAULT_TILT;
-      coord0.wheel    = GIMP_COORDS_DEFAULT_WHEEL;
+      coord0.x = x0;
+      coord0.y = y0;
 
       stroke = gimp_bezier_stroke_new_ellipse (&coord0, radius_x, radius_y, angle);
       gimp_vectors_stroke_add (vectors, stroke);

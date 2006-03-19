@@ -71,6 +71,8 @@ register_paint_tools_procs (Gimp *gimp)
   procedural_db_register (gimp, &smudge_default_proc);
 }
 
+static const GimpCoords default_coords = GIMP_COORDS_DEFAULT_VALUES;
+
 static gboolean
 paint_tools_stroke (Gimp             *gimp,
                     GimpContext      *context,
@@ -100,12 +102,9 @@ paint_tools_stroke (Gimp             *gimp,
 
   for (i = 0; i < n_strokes; i++)
     {
-      coords[i].x        = strokes[2 * i];
-      coords[i].y        = strokes[2 * i + 1];
-      coords[i].pressure = GIMP_COORDS_DEFAULT_PRESSURE;
-      coords[i].xtilt    = GIMP_COORDS_DEFAULT_TILT;
-      coords[i].ytilt    = GIMP_COORDS_DEFAULT_TILT;
-      coords[i].wheel    = GIMP_COORDS_DEFAULT_WHEEL;
+      coords[i]   = default_coords;
+      coords[i].x = strokes[2 * i];
+      coords[i].y = strokes[2 * i + 1];
     }
 
   retval = gimp_paint_core_stroke (core, drawable, options,

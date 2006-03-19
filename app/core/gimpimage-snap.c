@@ -535,12 +535,8 @@ gimp_image_snap_rectangle (GimpImage *gimage,
     {
       GimpVectors *vectors = gimp_image_get_active_vectors (gimage);
       GimpStroke  *stroke  = NULL;
-      GimpCoords   coords1 = { 0, 0,
-                               GIMP_COORDS_DEFAULT_PRESSURE,
-                               GIMP_COORDS_DEFAULT_TILT,
-                               GIMP_COORDS_DEFAULT_TILT,
-                               GIMP_COORDS_DEFAULT_WHEEL };
-      GimpCoords   coords2 = coords1;
+      GimpCoords   coords1 = GIMP_COORDS_DEFAULT_VALUES;
+      GimpCoords   coords2 = GIMP_COORDS_DEFAULT_VALUES;
 
       while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
         {

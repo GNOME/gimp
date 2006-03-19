@@ -1680,11 +1680,7 @@ arcto_ellipsesegment (gdouble     radius_x,
                       GimpCoords *ellips)
 {
   gdouble       phi_s, phi_e;
-  GimpCoords    template    = { 0, 0,
-                                GIMP_COORDS_DEFAULT_PRESSURE,
-                                GIMP_COORDS_DEFAULT_TILT,
-                                GIMP_COORDS_DEFAULT_TILT,
-                                GIMP_COORDS_DEFAULT_WHEEL };
+  GimpCoords    template    = GIMP_COORDS_DEFAULT_VALUES;
   const gdouble circlemagic = 4.0 * (G_SQRT2 - 1.0) / 3.0;
   gdouble       y[4];
   gdouble       h0, h1;

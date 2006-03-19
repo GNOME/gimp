@@ -1,3 +1,18 @@
+2006-03-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-types.h: define GIMP_COORDS_DEFAULT_VALUES, a
+	struct initializer for GimpCoords.
+
+	* app/core/gimpimage-snap.c
+	* app/paint/gimppaintcore-stroke.c
+	* app/vectors/gimpbezierstroke.c
+	* app/vectors/gimpvectors-compat.c
+	* tools/pdbgen/pdb/paint_tools.pdb
+	* tools/pdbgen/pdb/vectors.pdb: use it here.
+
+	* app/pdb/paint_tools_cmds.c
+	* app/pdb/vectors_cmds.c: regenerated.
+
 2006-03-19  DindinX  <dindinx@gimp.org>
 
 	* libgimp/gimpzoompreview.c: untabbified.

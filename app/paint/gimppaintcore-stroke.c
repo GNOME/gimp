@@ -34,6 +34,9 @@
 #include "gimppaintoptions.h"
 
 
+static const GimpCoords default_coords = GIMP_COORDS_DEFAULT_VALUES;
+
+
 gboolean
 gimp_paint_core_stroke (GimpPaintCore    *core,
                         GimpDrawable     *drawable,
@@ -126,12 +129,9 @@ gimp_paint_core_stroke_boundary (GimpPaintCore    *core,
 
   /* we offset all coordinates by 0.5 to align the brush with the path */
 
-  coords[n_coords].x        = (gdouble) (stroke_segs[0].x1 - off_x + 0.5);
-  coords[n_coords].y        = (gdouble) (stroke_segs[0].y1 - off_y + 0.5);
-  coords[n_coords].pressure = GIMP_COORDS_DEFAULT_PRESSURE;
-  coords[n_coords].xtilt    = GIMP_COORDS_DEFAULT_TILT;
-  coords[n_coords].ytilt    = GIMP_COORDS_DEFAULT_TILT;
-  coords[n_coords].wheel    = GIMP_COORDS_DEFAULT_WHEEL;
+  coords[n_coords]   = default_coords;
+  coords[n_coords].x = (gdouble) (stroke_segs[0].x1 - off_x + 0.5);
+  coords[n_coords].y = (gdouble) (stroke_segs[0].y1 - off_y + 0.5);
 
   n_coords++;
 
@@ -142,14 +142,9 @@ gimp_paint_core_stroke_boundary (GimpPaintCore    *core,
              stroke_segs[seg].y1 != -1 ||
              stroke_segs[seg].y2 != -1)
 	{
-          coords[n_coords].x        = (gdouble) (stroke_segs[seg].x1 -
-                                                 off_x + 0.5);
-          coords[n_coords].y        = (gdouble) (stroke_segs[seg].y1 -
-                                                 off_y + 0.5);
-          coords[n_coords].pressure = GIMP_COORDS_DEFAULT_PRESSURE;
-          coords[n_coords].xtilt    = GIMP_COORDS_DEFAULT_TILT;
-          coords[n_coords].ytilt    = GIMP_COORDS_DEFAULT_TILT;
-          coords[n_coords].wheel    = GIMP_COORDS_DEFAULT_WHEEL;
+          coords[n_coords]   = default_coords;
+          coords[n_coords].x = (gdouble) (stroke_segs[seg].x1 - off_x + 0.5);
+          coords[n_coords].y = (gdouble) (stroke_segs[seg].y1 - off_y + 0.5);
 
           n_coords++;
 	  seg++;
@@ -190,12 +185,9 @@ gimp_paint_core_stroke_boundary (GimpPaintCore    *core,
       n_coords = 0;
       seg++;
 
-      coords[n_coords].x        = (gdouble) (stroke_segs[seg].x1 - off_x + 0.5);
-      coords[n_coords].y        = (gdouble) (stroke_segs[seg].y1 - off_y + 0.5);
-      coords[n_coords].pressure = GIMP_COORDS_DEFAULT_PRESSURE;
-      coords[n_coords].xtilt    = GIMP_COORDS_DEFAULT_TILT;
-      coords[n_coords].ytilt    = GIMP_COORDS_DEFAULT_TILT;
-      coords[n_coords].wheel    = GIMP_COORDS_DEFAULT_WHEEL;
+      coords[n_coords]   = default_coords;
+      coords[n_coords].x = (gdouble) (stroke_segs[seg].x1 - off_x + 0.5);
+      coords[n_coords].y = (gdouble) (stroke_segs[seg].y1 - off_y + 0.5);
 
       n_coords++;
     }

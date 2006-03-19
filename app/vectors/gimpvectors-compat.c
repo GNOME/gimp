@@ -42,6 +42,8 @@ enum
 };
 
 
+static const GimpCoords default_coords = GIMP_COORDS_DEFAULT_VALUES;
+
 
 GimpVectors *
 gimp_vectors_compat_new (GimpImage              *gimage,
@@ -73,12 +75,10 @@ gimp_vectors_compat_new (GimpImage              *gimage,
 
   for (i = 0; i < n_points; i++)
     {
-      curr_coord->x        = points[i].x;
-      curr_coord->y        = points[i].y;
-      curr_coord->pressure = GIMP_COORDS_DEFAULT_PRESSURE;
-      curr_coord->xtilt    = GIMP_COORDS_DEFAULT_TILT;
-      curr_coord->ytilt    = GIMP_COORDS_DEFAULT_TILT;
-      curr_coord->wheel    = GIMP_COORDS_DEFAULT_WHEEL;
+      *curr_coord = default_coords;
+
+      curr_coord->x = points[i].x;
+      curr_coord->y = points[i].y;
 
       /*  copy the first anchor to be the first control point  */
       if (curr_coord == curr_stroke + 1)
