@@ -202,7 +202,6 @@ sub marshal_inargs {
 	
 	if (exists $arg->{id_func}) {
 	    my $id_func = $arg->{id_func};
-	    $id_func = $_->{id_func} if exists $_->{id_func};
 
 	    $result .= "  $var = $id_func (gimp, $value);\n";
 
@@ -646,8 +645,6 @@ GPL
 	my $out = $out{$group};
 
 	foreach (@{$main::grp{$group}->{headers}}) { $out->{headers}->{$_}++ }
-	delete $out->{headers}->{q/"procedural_db.h"/};
-	delete $out->{headers}->{q/"config.h"/};
 
 	my @headers = sort {
 	    my ($x, $y) = ($a, $b);
