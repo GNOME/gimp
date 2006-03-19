@@ -1,3 +1,7 @@
+2006-03-19  DindinX  <dindinx@gimp.org>
+
+	* libgimp/gimpzoompreview.c: untabbified.
+
 2006-03-19  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/app.pl: remove some code that has no effect on the

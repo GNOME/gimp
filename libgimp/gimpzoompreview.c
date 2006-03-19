@@ -51,19 +51,18 @@ typedef struct GimpZoomPreviewPrivate
 #define GIMP_ZOOM_PREVIEW_GET_PRIVATE(obj) \
   ((GimpZoomPreviewPrivate *) ((GimpZoomPreview *) (obj))->priv)
 
-
 static GObject * gimp_zoom_preview_constructor (GType                  type,
-						guint                  n_params,
-						GObjectConstructParam *params);
+                                                guint                  n_params,
+                                                GObjectConstructParam *params);
 
 static void     gimp_zoom_preview_get_property    (GObject         *object,
-						   guint            property_id,
-						   GValue          *value,
-						   GParamSpec      *pspec);
+                                                   guint            property_id,
+                                                   GValue          *value,
+                                                   GParamSpec      *pspec);
 static void     gimp_zoom_preview_set_property    (GObject         *object,
-						   guint            property_id,
-						   const GValue    *value,
-						   GParamSpec      *pspec);
+                                                   guint            property_id,
+                                                   const GValue    *value,
+                                                   GParamSpec      *pspec);
 static void     gimp_zoom_preview_set_adjustments (GimpZoomPreview *preview,
                                                    gdouble          old_factor,
                                                    gdouble          new_factor);
@@ -86,7 +85,7 @@ static void     gimp_zoom_preview_draw_thumb      (GimpPreview     *preview,
 static void     gimp_zoom_preview_set_cursor      (GimpPreview     *preview);
 
 static void     gimp_zoom_preview_set_drawable    (GimpZoomPreview *preview,
-						   GimpDrawable    *drawable);
+                                                   GimpDrawable    *drawable);
 
 
 G_DEFINE_TYPE (GimpZoomPreview, gimp_zoom_preview, GIMP_TYPE_SCROLLED_PREVIEW)
@@ -114,8 +113,8 @@ gimp_zoom_preview_class_init (GimpZoomPreviewClass *klass)
 
   g_object_class_install_property (object_class, PROP_DRAWABLE,
                                    g_param_spec_pointer ("drawable", NULL, NULL,
-							 GIMP_PARAM_READWRITE |
-							 G_PARAM_CONSTRUCT_ONLY));
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -175,8 +174,8 @@ gimp_zoom_preview_init (GimpZoomPreview *preview)
 
 static GObject *
 gimp_zoom_preview_constructor (GType                  type,
-			       guint                  n_params,
-			       GObjectConstructParam *params)
+                               guint                  n_params,
+                               GObjectConstructParam *params)
 {
   GObject *object;
 
@@ -189,9 +188,9 @@ gimp_zoom_preview_constructor (GType                  type,
 
 static void
 gimp_zoom_preview_get_property (GObject    *object,
-				guint       property_id,
-				GValue     *value,
-				GParamSpec *pspec)
+                                guint       property_id,
+                                GValue     *value,
+                                GParamSpec *pspec)
 {
   GimpZoomPreview *preview = GIMP_ZOOM_PREVIEW (object);
 
@@ -209,9 +208,9 @@ gimp_zoom_preview_get_property (GObject    *object,
 
 static void
 gimp_zoom_preview_set_property (GObject      *object,
-				guint         property_id,
-				const GValue *value,
-				GParamSpec   *pspec)
+                                guint         property_id,
+                                const GValue *value,
+                                GParamSpec   *pspec)
 {
   GimpZoomPreview *preview = GIMP_ZOOM_PREVIEW (object);
 
@@ -219,7 +218,7 @@ gimp_zoom_preview_set_property (GObject      *object,
     {
     case PROP_DRAWABLE:
       gimp_zoom_preview_set_drawable (preview,
-				      g_value_get_pointer (value));
+                                      g_value_get_pointer (value));
       break;
 
     default:
@@ -510,7 +509,7 @@ gimp_zoom_preview_set_cursor (GimpPreview *preview)
 
 static void
 gimp_zoom_preview_set_drawable (GimpZoomPreview *preview,
-				GimpDrawable    *drawable)
+                                GimpDrawable    *drawable)
 {
   GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
   gint                    width, height;
@@ -571,8 +570,8 @@ GtkWidget *
 gimp_zoom_preview_new (GimpDrawable *drawable)
 {
   return g_object_new (GIMP_TYPE_ZOOM_PREVIEW,
-		       "drawable", drawable,
-		       NULL);
+                       "drawable", drawable,
+                       NULL);
 }
 
 /**
