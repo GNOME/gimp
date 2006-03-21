@@ -1,5 +1,10 @@
 2006-03-21  Karine Delvare  <kdelvare@nerim.net>
 
+	* app/tools/gimprectangletool.c: removed properties that are
+	rather internal states.
+
+2006-03-21  Karine Delvare  <kdelvare@nerim.net>
+
 	* app/tools/gimpnewrectselecttool.c
 	* app/tools/gimprectangleoptions.[ch]
 	* app/tools/gimprectangletool.[ch]: hide properties accessors.
