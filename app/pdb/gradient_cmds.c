@@ -102,6 +102,54 @@ register_gradient_procs (Gimp *gimp)
   procedural_db_register (gimp, &gradient_segment_range_move_proc);
 }
 
+GimpGradient *
+gradient_get (Gimp                 *gimp,
+              const gchar          *name,
+              gint                  segment,
+              GimpGradientSegment **seg)
+{
+  GimpGradient *gradient = (GimpGradient *)
+    gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+
+  *seg = NULL;
+
+  if (gradient)
+    *seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
+
+  return gradient;
+}
+
+GimpGradient *
+gradient_get_range (Gimp                 *gimp,
+                    const gchar          *name,
+                    gint                  start_segment,
+                    gint                  end_segment,
+                    GimpGradientSegment **start_seg,
+                    GimpGradientSegment **end_seg)
+{
+  GimpGradient *gradient = (GimpGradient *)
+    gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+
+  *start_seg = NULL;
+  *end_seg   = NULL;
+
+  if (end_segment >= 0 && end_segment < start_segment)
+    return NULL;
+
+  if (gradient)
+    {
+      *start_seg = gimp_gradient_segment_get_nth (gradient->segments,
+                                                  start_segment);
+
+      if (*start_seg && end_segment >= 0)
+        *end_seg = gimp_gradient_segment_get_nth (*start_seg,
+                                                  end_segment -
+                                                  start_segment);
+    }
+
+  return gradient;
+}
+
 static Argument *
 gradient_new_invoker (Gimp         *gimp,
                       GimpContext  *context,
@@ -312,7 +360,7 @@ static ProcRecord gradient_is_editable_proc =
   "gimp-gradient-is-editable",
   "gimp-gradient-is-editable",
   "Tests if gradient can be edited",
-  "Returns True if you have permission to change the gradient",
+  "Returns TRUE if you have permission to change the gradient",
   "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
   "Bill Skaggs",
   "2004",
@@ -614,7 +662,7 @@ gradient_get_custom_samples_invoker (Gimp         *gimp,
     success = FALSE;
 
   num_samples = args[1].value.pdb_int;
-  if (num_samples <= 0)
+  if (num_samples < 1)
     success = FALSE;
 
   positions = (gdouble *) args[2].value.pdb_pointer;
@@ -744,22 +792,15 @@ gradient_segment_get_left_color_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient        *gradient;
+      GimpGradientSegment *seg;
 
-      if (gradient)
+      gradient = gradient_get (gimp, name, segment, &seg);
+
+      if (seg)
         {
-          GimpGradientSegment *seg;
-
-          seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-
-          if (seg)
-            {
-              gimp_gradient_segment_get_left_color (gradient, seg, &color);
-              opacity = color.a * 100.0;
-            }
-          else
-            success = FALSE;
+          gimp_gradient_segment_get_left_color (gradient, seg, &color);
+          opacity = color.a * 100.0;
         }
       else
         success = FALSE;
@@ -808,7 +849,7 @@ static ProcRecord gradient_segment_get_left_color_proc =
 {
   "gimp-gradient-segment-get-left-color",
   "gimp-gradient-segment-get-left-color",
-  "Retrieves the left endpoint color of the specified gradient and segment",
+  "Retrieves the left endpoint color of the specified segment",
   "This procedure retrieves the left endpoint color of the specified segment of the specified gradient.",
   "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
@@ -850,22 +891,15 @@ gradient_segment_set_left_color_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient        *gradient;
+      GimpGradientSegment *seg;
 
-      if (gradient)
+      gradient = gradient_get (gimp, name, segment, &seg);
+
+      if (seg && GIMP_DATA (gradient)->writable)
         {
-          GimpGradientSegment *seg;
-
-          seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-
-          if (seg)
-            {
-              color.a = opacity / 100.0;
-              gimp_gradient_segment_set_left_color (gradient, seg, &color);
-            }
-          else
-            success = FALSE;
+          color.a = opacity / 100.0;
+          gimp_gradient_segment_set_left_color (gradient, seg, &color);
         }
       else
         success = FALSE;
@@ -902,7 +936,7 @@ static ProcRecord gradient_segment_set_left_color_proc =
 {
   "gimp-gradient-segment-set-left-color",
   "gimp-gradient-segment-set-left-color",
-  "Retrieves the left endpoint color of the specified gradient and segment",
+  "Retrieves the left endpoint color of the specified segment",
   "This procedure retrieves the left endpoint color of the specified segment of the specified gradient.",
   "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
@@ -939,22 +973,15 @@ gradient_segment_get_right_color_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient        *gradient;
+      GimpGradientSegment *seg;
 
-      if (gradient)
+      gradient = gradient_get (gimp, name, segment, &seg);
+
+      if (seg)
         {
-          GimpGradientSegment *seg;
-
-          seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-
-          if (seg)
-            {
-              gimp_gradient_segment_get_right_color (gradient, seg, &color);
-              opacity = color.a * 100.0;
-            }
-          else
-            success = FALSE;
+          gimp_gradient_segment_get_right_color (gradient, seg, &color);
+          opacity = color.a * 100.0;
         }
       else
         success = FALSE;
@@ -1003,7 +1030,7 @@ static ProcRecord gradient_segment_get_right_color_proc =
 {
   "gimp-gradient-segment-get-right-color",
   "gimp-gradient-segment-get-right-color",
-  "Retrieves the right endpoint color of the specified gradient and segment",
+  "Retrieves the right endpoint color of the specified segment",
   "This procedure retrieves the right endpoint color of the specified segment of the specified gradient.",
   "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
@@ -1045,22 +1072,15 @@ gradient_segment_set_right_color_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient        *gradient;
+      GimpGradientSegment *seg;
 
-      if (gradient)
+      gradient = gradient_get (gimp, name, segment, &seg);
+
+      if (seg && GIMP_DATA (gradient)->writable)
         {
-          GimpGradientSegment *seg;
-
-          seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-
-          if (seg)
-            {
-              color.a = opacity / 100.0;
-              gimp_gradient_segment_set_right_color (gradient, seg, &color);
-            }
-          else
-            success = FALSE;
+          color.a = opacity / 100.0;
+          gimp_gradient_segment_set_right_color (gradient, seg, &color);
         }
       else
         success = FALSE;
@@ -1097,7 +1117,7 @@ static ProcRecord gradient_segment_set_right_color_proc =
 {
   "gimp-gradient-segment-set-right-color",
   "gimp-gradient-segment-set-right-color",
-  "Retrieves the right endpoint color of the specified gradient and segment",
+  "Retrieves the right endpoint color of the specified segment",
   "This procedure retrieves the right endpoint color of the specified segment of the specified gradient.",
   "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
@@ -1133,21 +1153,14 @@ gradient_segment_get_left_pos_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient        *gradient;
+      GimpGradientSegment *seg;
 
-      if (gradient)
+      gradient = gradient_get (gimp, name, segment, &seg);
+
+      if (seg)
         {
-          GimpGradientSegment *seg;
-
-          seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-
-          if (seg)
-            {
-              pos = gimp_gradient_segment_get_left_pos (gradient, seg);
-            }
-          else
-            success = FALSE;
+          pos = gimp_gradient_segment_get_left_pos (gradient, seg);
         }
       else
         success = FALSE;
@@ -1188,7 +1201,7 @@ static ProcRecord gradient_segment_get_left_pos_proc =
 {
   "gimp-gradient-segment-get-left-pos",
   "gimp-gradient-segment-get-left-pos",
-  "Retrieves the left endpoint position of the specified gradient and segment",
+  "Retrieves the left endpoint position of the specified segment",
   "This procedure retrieves the left endpoint position of the specified segment of the specified gradient.",
   "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
@@ -1229,22 +1242,14 @@ gradient_segment_set_left_pos_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient        *gradient;
+      GimpGradientSegment *seg;
 
-      if (gradient)
+      gradient = gradient_get (gimp, name, segment, &seg);
+
+      if (seg && GIMP_DATA (gradient)->writable)
         {
-          GimpGradientSegment *seg;
-
-          seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-
-          if (seg)
-            {
-              final_pos =
-                gimp_gradient_segment_set_left_pos (gradient, seg, pos);
-            }
-          else
-            success = FALSE;
+          final_pos = gimp_gradient_segment_set_left_pos (gradient, seg, pos);
         }
       else
         success = FALSE;
@@ -1273,7 +1278,7 @@ static ProcArg gradient_segment_set_left_pos_inargs[] =
   {
     GIMP_PDB_FLOAT,
     "pos",
-    "The position to set the guidepoint in."
+    "The position to set the guidepoint to"
   }
 };
 
@@ -1290,7 +1295,7 @@ static ProcRecord gradient_segment_set_left_pos_proc =
 {
   "gimp-gradient-segment-set-left-pos",
   "gimp-gradient-segment-set-left-pos",
-  "Sets the left endpoint position of the specified gradient and segment",
+  "Sets the left endpoint position of the specified segment",
   "This procedure sets the left endpoint position of the specified segment of the specified gradient. The final position will be between the position of the middle point to the left to the middle point of the current segement. This procedure returns the final position.",
   "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
@@ -1326,21 +1331,14 @@ gradient_segment_get_middle_pos_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient        *gradient;
+      GimpGradientSegment *seg;
 
-      if (gradient)
+      gradient = gradient_get (gimp, name, segment, &seg);
+
+      if (seg)
         {
-          GimpGradientSegment *seg;
-
-          seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-
-          if (seg)
-            {
-              pos = gimp_gradient_segment_get_middle_pos (gradient, seg);
-            }
-          else
-            success = FALSE;
+          pos = gimp_gradient_segment_get_middle_pos (gradient, seg);
         }
       else
         success = FALSE;
@@ -1381,7 +1379,7 @@ static ProcRecord gradient_segment_get_middle_pos_proc =
 {
   "gimp-gradient-segment-get-middle-pos",
   "gimp-gradient-segment-get-middle-pos",
-  "Retrieves the middle point position of the specified gradient and segment",
+  "Retrieves the middle point position of the specified segment",
   "This procedure retrieves the middle point position of the specified segment of the specified gradient.",
   "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
@@ -1422,22 +1420,15 @@ gradient_segment_set_middle_pos_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient        *gradient;
+      GimpGradientSegment *seg;
 
-      if (gradient)
+      gradient = gradient_get (gimp, name, segment, &seg);
+
+      if (seg && GIMP_DATA (gradient)->writable)
         {
-          GimpGradientSegment *seg;
-
-          seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-
-          if (seg)
-            {
-              final_pos =
-                gimp_gradient_segment_set_middle_pos (gradient, seg, pos);
-            }
-          else
-            success = FALSE;
+          final_pos =
+            gimp_gradient_segment_set_middle_pos (gradient, seg, pos);
         }
       else
         success = FALSE;
@@ -1466,7 +1457,7 @@ static ProcArg gradient_segment_set_middle_pos_inargs[] =
   {
     GIMP_PDB_FLOAT,
     "pos",
-    "The position to set the guidepoint in."
+    "The position to set the guidepoint to"
   }
 };
 
@@ -1483,7 +1474,7 @@ static ProcRecord gradient_segment_set_middle_pos_proc =
 {
   "gimp-gradient-segment-set-middle-pos",
   "gimp-gradient-segment-set-middle-pos",
-  "Sets the middle point position of the specified gradient and segment",
+  "Sets the middle point position of the specified segment",
   "This procedure sets the middle point position of the specified segment of the specified gradient. The final position will be between the two endpoints of the segment. This procedure returns the final position.",
   "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
@@ -1519,21 +1510,14 @@ gradient_segment_get_right_pos_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient        *gradient;
+      GimpGradientSegment *seg;
 
-      if (gradient)
+      gradient = gradient_get (gimp, name, segment, &seg);
+
+      if (seg)
         {
-          GimpGradientSegment *seg;
-
-          seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-
-          if (seg)
-            {
-              pos = gimp_gradient_segment_get_right_pos (gradient, seg);
-            }
-          else
-            success = FALSE;
+          pos = gimp_gradient_segment_get_right_pos (gradient, seg);
         }
       else
         success = FALSE;
@@ -1574,7 +1558,7 @@ static ProcRecord gradient_segment_get_right_pos_proc =
 {
   "gimp-gradient-segment-get-right-pos",
   "gimp-gradient-segment-get-right-pos",
-  "Retrieves the right endpoint position of the specified gradient and segment",
+  "Retrieves the right endpoint position of the specified segment",
   "This procedure retrieves the right endpoint position of the specified segment of the specified gradient.",
   "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
@@ -1615,22 +1599,15 @@ gradient_segment_set_right_pos_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient        *gradient;
+      GimpGradientSegment *seg;
 
-      if (gradient)
+      gradient = gradient_get (gimp, name, segment, &seg);
+
+      if (seg && GIMP_DATA (gradient)->writable)
         {
-          GimpGradientSegment *seg;
-
-          seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-
-          if (seg)
-            {
-              final_pos =
-                gimp_gradient_segment_set_right_pos (gradient, seg, pos);
-            }
-          else
-            success = FALSE;
+          final_pos =
+            gimp_gradient_segment_set_right_pos (gradient, seg, pos);
         }
       else
         success = FALSE;
@@ -1659,7 +1636,7 @@ static ProcArg gradient_segment_set_right_pos_inargs[] =
   {
     GIMP_PDB_FLOAT,
     "pos",
-    "The position to set the guidepoint in."
+    "The position to set the guidepoint to"
   }
 };
 
@@ -1676,7 +1653,7 @@ static ProcRecord gradient_segment_set_right_pos_proc =
 {
   "gimp-gradient-segment-set-right-pos",
   "gimp-gradient-segment-set-right-pos",
-  "Sets the right endpoint position of the specified gradient and segment",
+  "Sets the right endpoint position of the specified segment",
   "This procedure sets the right endpoint position of the specified segment of the specified gradient. The final position will be between the position of the middle point of the current segment and the middle point of the segment to the right. This procedure returns the final position.",
   "Shlomi Fish <shlomif@iglu.org.il>",
   "Shlomi Fish",
@@ -1712,22 +1689,14 @@ gradient_segment_get_blending_function_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient        *gradient;
+      GimpGradientSegment *seg;
 
-      if (gradient)
+      gradient = gradient_get (gimp, name, segment, &seg);
+
+      if (seg)
         {
-          GimpGradientSegment *seg;
-
-          seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-
-          if (seg)
-            {
-              blend_func =
-                gimp_gradient_segment_get_blending_function (gradient, seg);
-            }
-          else
-            success = FALSE;
+          blend_func = gimp_gradient_segment_get_blending_function (gradient, seg);
         }
       else
         success = FALSE;
@@ -1804,22 +1773,14 @@ gradient_segment_get_coloring_type_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient        *gradient;
+      GimpGradientSegment *seg;
 
-      if (gradient)
+      gradient = gradient_get (gimp, name, segment, &seg);
+
+      if (seg)
         {
-          GimpGradientSegment *seg;
-
-          seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
-
-          if (seg)
-            {
-              coloring_type =
-                gimp_gradient_segment_get_coloring_type (gradient, seg);
-            }
-          else
-            success = FALSE;
+          coloring_type = gimp_gradient_segment_get_coloring_type (gradient, seg);
         }
       else
         success = FALSE;
@@ -1902,47 +1863,21 @@ gradient_segment_range_set_blending_function_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient        *gradient;
+      GimpGradientSegment *start_seg;
+      GimpGradientSegment *end_seg;
 
-      if (gradient)
+      gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+                                     &start_seg, &end_seg);
+
+      if (start_seg && GIMP_DATA (gradient)->writable)
         {
-          GimpGradientSegment *start_seg, *end_seg;
-
-          start_seg = gimp_gradient_segment_get_nth (gradient->segments,
-                                                     start_segment);
-          if (start_seg)
-            {
-              if ((end_segment < start_segment) && (end_segment >= 0))
-                {
-                  /* Do Nothing */
-                  success = FALSE;
-                }
-              else
-                {
-                  if (end_segment < 0)
-                    {
-                      end_seg = NULL;
-                    }
-                  else
-                    {
-                      end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                               end_segment -
-                                                               start_segment);
-                    }
-
-                  /* Success */
-                  gimp_gradient_segment_range_set_blending_function (gradient,
-                                                                     start_seg,
-                                                                     end_seg,
-                                                                     blending_function);
-                }
-            }
-          else
-            {
-              success = FALSE;
-            }
+          gimp_gradient_segment_range_set_blending_function (gradient,
+                                                             start_seg, end_seg,
+                                                             blending_function);
         }
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&gradient_segment_range_set_blending_function_proc, success);
@@ -2018,47 +1953,21 @@ gradient_segment_range_set_coloring_type_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient        *gradient;
+      GimpGradientSegment *start_seg;
+      GimpGradientSegment *end_seg;
 
-      if (gradient)
+      gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+                                     &start_seg, &end_seg);
+
+      if (start_seg && GIMP_DATA (gradient)->writable)
         {
-          GimpGradientSegment *start_seg, *end_seg;
-
-          start_seg = gimp_gradient_segment_get_nth (gradient->segments,
-                                                     start_segment);
-          if (start_seg)
-            {
-              if ((end_segment < start_segment) && (end_segment >= 0))
-                {
-                  /* Do Nothing */
-                  success = FALSE;
-                }
-              else
-                {
-                  if (end_segment < 0)
-                    {
-                      end_seg = NULL;
-                    }
-                  else
-                    {
-                      end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                               end_segment -
-                                                               start_segment);
-                    }
-
-                  /* Success */
-                  gimp_gradient_segment_range_set_coloring_type (gradient,
-                                                                 start_seg,
-                                                                 end_seg,
-                                                                 coloring_type);
-                }
-            }
-          else
-            {
-              success = FALSE;
-            }
+          gimp_gradient_segment_range_set_coloring_type (gradient,
+                                                         start_seg, end_seg,
+                                                         coloring_type);
         }
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&gradient_segment_range_set_coloring_type_proc, success);
@@ -2129,47 +2038,21 @@ gradient_segment_range_flip_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient        *gradient;
+      GimpGradientSegment *start_seg;
+      GimpGradientSegment *end_seg;
 
-      if (gradient)
+      gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+                                     &start_seg, &end_seg);
+
+      if (start_seg && GIMP_DATA (gradient)->writable)
         {
-          GimpGradientSegment *start_seg, *end_seg;
-
-          start_seg = gimp_gradient_segment_get_nth (gradient->segments,
-                                                     start_segment);
-          if (start_seg)
-            {
-              if ((end_segment < start_segment) && (end_segment >= 0))
-                {
-                  /* Do Nothing */
-                  success = FALSE;
-                }
-              else
-                {
-                  if (end_segment < 0)
-                    {
-                      end_seg = NULL;
-                    }
-                  else
-                    {
-                      end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                               end_segment -
-                                                               start_segment);
-                    }
-
-                  /* Success */
-                  gimp_gradient_segment_range_flip (gradient,
-                                                    start_seg,
-                                                    end_seg,
-                                                    NULL, NULL);
-                }
-            }
-          else
-            {
-              success = FALSE;
-            }
+          gimp_gradient_segment_range_flip (gradient,
+                                            start_seg, end_seg,
+                                            NULL, NULL);
         }
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&gradient_segment_range_flip_proc, success);
@@ -2240,48 +2123,22 @@ gradient_segment_range_replicate_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient        *gradient;
+      GimpGradientSegment *start_seg;
+      GimpGradientSegment *end_seg;
 
-      if (gradient)
+      gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+                                     &start_seg, &end_seg);
+
+      if (start_seg && GIMP_DATA (gradient)->writable)
         {
-          GimpGradientSegment *start_seg, *end_seg;
-
-          start_seg = gimp_gradient_segment_get_nth (gradient->segments,
-                                                     start_segment);
-          if (start_seg)
-            {
-              if ((end_segment < start_segment) && (end_segment >= 0))
-                {
-                  /* Do Nothing */
-                  success = FALSE;
-                }
-              else
-                {
-                  if (end_segment < 0)
-                    {
-                      end_seg = NULL;
-                    }
-                  else
-                    {
-                      end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                               end_segment -
-                                                               start_segment);
-                    }
-
-                  /* Success */
-                  gimp_gradient_segment_range_replicate (gradient,
-                                                         start_seg,
-                                                         end_seg,
-                                                         replicate_times,
-                                                         NULL, NULL);
-                }
-            }
-          else
-            {
-              success = FALSE;
-            }
+          gimp_gradient_segment_range_replicate (gradient,
+                                                 start_seg, end_seg,
+                                                 replicate_times,
+                                                 NULL, NULL);
         }
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&gradient_segment_range_replicate_proc, success);
@@ -2352,47 +2209,21 @@ gradient_segment_range_split_midpoint_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient        *gradient;
+      GimpGradientSegment *start_seg;
+      GimpGradientSegment *end_seg;
 
-      if (gradient)
+      gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+                                     &start_seg, &end_seg);
+
+      if (start_seg && GIMP_DATA (gradient)->writable)
         {
-          GimpGradientSegment *start_seg, *end_seg;
-
-          start_seg = gimp_gradient_segment_get_nth (gradient->segments,
-                                                     start_segment);
-          if (start_seg)
-            {
-              if ((end_segment < start_segment) && (end_segment >= 0))
-                {
-                  /* Do Nothing */
-                  success = FALSE;
-                }
-              else
-                {
-                  if (end_segment < 0)
-                    {
-                      end_seg = NULL;
-                    }
-                  else
-                    {
-                      end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                               end_segment -
-                                                               start_segment);
-                    }
-
-                  /* Success */
-                  gimp_gradient_segment_range_split_midpoint (gradient,
-                                                              start_seg,
-                                                              end_seg,
-                                                              NULL, NULL);
-                }
-            }
-          else
-            {
-              success = FALSE;
-            }
+          gimp_gradient_segment_range_split_midpoint (gradient,
+                                                      start_seg, end_seg,
+                                                      NULL, NULL);
         }
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&gradient_segment_range_split_midpoint_proc, success);
@@ -2463,48 +2294,22 @@ gradient_segment_range_split_uniform_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient        *gradient;
+      GimpGradientSegment *start_seg;
+      GimpGradientSegment *end_seg;
 
-      if (gradient)
+      gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+                                     &start_seg, &end_seg);
+
+      if (start_seg && GIMP_DATA (gradient)->writable)
         {
-          GimpGradientSegment *start_seg, *end_seg;
-
-          start_seg = gimp_gradient_segment_get_nth (gradient->segments,
-                                                     start_segment);
-          if (start_seg)
-            {
-              if ((end_segment < start_segment) && (end_segment >= 0))
-                {
-                  /* Do Nothing */
-                  success = FALSE;
-                }
-              else
-                {
-                  if (end_segment < 0)
-                    {
-                      end_seg = NULL;
-                    }
-                  else
-                    {
-                      end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                               end_segment -
-                                                               start_segment);
-                    }
-
-                  /* Success */
-                  gimp_gradient_segment_range_split_uniform (gradient,
-                                                             start_seg,
-                                                             end_seg,
-                                                             split_parts,
-                                                             NULL, NULL);
-                }
-            }
-          else
-            {
-              success = FALSE;
-            }
+          gimp_gradient_segment_range_split_uniform (gradient,
+                                                     start_seg, end_seg,
+                                                     split_parts,
+                                                     NULL, NULL);
         }
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&gradient_segment_range_split_uniform_proc, success);
@@ -2575,47 +2380,21 @@ gradient_segment_range_delete_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient        *gradient;
+      GimpGradientSegment *start_seg;
+      GimpGradientSegment *end_seg;
 
-      if (gradient)
+      gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+                                     &start_seg, &end_seg);
+
+      if (start_seg && GIMP_DATA (gradient)->writable)
         {
-          GimpGradientSegment *start_seg, *end_seg;
-
-          start_seg = gimp_gradient_segment_get_nth (gradient->segments,
-                                                     start_segment);
-          if (start_seg)
-            {
-              if ((end_segment < start_segment) && (end_segment >= 0))
-                {
-                  /* Do Nothing */
-                  success = FALSE;
-                }
-              else
-                {
-                  if (end_segment < 0)
-                    {
-                      end_seg = NULL;
-                    }
-                  else
-                    {
-                      end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                               end_segment -
-                                                               start_segment);
-                    }
-
-                  /* Success */
-                  gimp_gradient_segment_range_delete (gradient,
-                                                      start_seg,
-                                                      end_seg,
-                                                      NULL, NULL);
-                }
-            }
-          else
-            {
-              success = FALSE;
-            }
+          gimp_gradient_segment_range_delete (gradient,
+                                              start_seg, end_seg,
+                                              NULL, NULL);
         }
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&gradient_segment_range_delete_proc, success);
@@ -2681,46 +2460,20 @@ gradient_segment_range_redistribute_handles_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient        *gradient;
+      GimpGradientSegment *start_seg;
+      GimpGradientSegment *end_seg;
 
-      if (gradient)
+      gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+                                     &start_seg, &end_seg);
+
+      if (start_seg && GIMP_DATA (gradient)->writable)
         {
-          GimpGradientSegment *start_seg, *end_seg;
-
-          start_seg = gimp_gradient_segment_get_nth (gradient->segments,
-                                                     start_segment);
-          if (start_seg)
-            {
-              if ((end_segment < start_segment) && (end_segment >= 0))
-                {
-                  /* Do Nothing */
-                  success = FALSE;
-                }
-              else
-                {
-                  if (end_segment < 0)
-                    {
-                      end_seg = NULL;
-                    }
-                  else
-                    {
-                      end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                               end_segment -
-                                                               start_segment);
-                    }
-
-                  /* Success */
-                  gimp_gradient_segment_range_redistribute_handles (gradient,
-                                                                    start_seg,
-                                                                    end_seg);
-                }
-            }
-          else
-            {
-              success = FALSE;
-            }
+          gimp_gradient_segment_range_redistribute_handles (gradient,
+                                                            start_seg, end_seg);
         }
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&gradient_segment_range_redistribute_handles_proc, success);
@@ -2786,48 +2539,23 @@ gradient_segment_range_blend_colors_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient        *gradient;
+      GimpGradientSegment *start_seg;
+      GimpGradientSegment *end_seg;
 
-      if (gradient)
+      gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+                                     &start_seg, &end_seg);
+
+      if (start_seg && GIMP_DATA (gradient)->writable)
         {
-          GimpGradientSegment *start_seg, *end_seg;
-
-          start_seg = gimp_gradient_segment_get_nth (gradient->segments,
-                                                     start_segment);
-          if (start_seg)
-            {
-              if ((end_segment < start_segment) && (end_segment >= 0))
-                {
-                  /* Do Nothing */
-                  success = FALSE;
-                }
-              else
-                {
-                  if (end_segment < 0)
-                    {
-                      end_seg = NULL;
-                    }
-                  else
-                    {
-                      end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                               end_segment -
-                                                               start_segment);
-                    }
-
-                  /* Success */
-                  gimp_gradient_segment_range_blend (gradient,
-                                                     start_seg, end_seg,
-                                                     &start_seg->left_color,
-                                                     &end_seg->right_color,
-                                                     TRUE, FALSE);
-                }
-            }
-          else
-            {
-              success = FALSE;
-            }
+          gimp_gradient_segment_range_blend (gradient,
+                                             start_seg, end_seg,
+                                             &start_seg->left_color,
+                                             &end_seg->right_color,
+                                             TRUE, FALSE);
         }
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&gradient_segment_range_blend_colors_proc, success);
@@ -2893,48 +2621,23 @@ gradient_segment_range_blend_opacity_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient        *gradient;
+      GimpGradientSegment *start_seg;
+      GimpGradientSegment *end_seg;
 
-      if (gradient)
+      gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+                                     &start_seg, &end_seg);
+
+      if (start_seg && GIMP_DATA (gradient)->writable)
         {
-          GimpGradientSegment *start_seg, *end_seg;
-
-          start_seg = gimp_gradient_segment_get_nth (gradient->segments,
-                                                     start_segment);
-          if (start_seg)
-            {
-              if ((end_segment < start_segment) && (end_segment >= 0))
-                {
-                  /* Do Nothing */
-                  success = FALSE;
-                }
-              else
-                {
-                  if (end_segment < 0)
-                    {
-                      end_seg = NULL;
-                    }
-                  else
-                    {
-                      end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                               end_segment -
-                                                               start_segment);
-                    }
-
-                  /* Success */
-                  gimp_gradient_segment_range_blend (gradient,
-                                                     start_seg, end_seg,
-                                                     &start_seg->left_color,
-                                                     &end_seg->right_color,
-                                                     FALSE, TRUE);
-                }
-            }
-          else
-            {
-              success = FALSE;
-            }
+          gimp_gradient_segment_range_blend (gradient,
+                                             start_seg, end_seg,
+                                             &start_seg->left_color,
+                                             &end_seg->right_color,
+                                             FALSE, TRUE);
         }
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&gradient_segment_range_blend_opacity_proc, success);
@@ -3010,49 +2713,22 @@ gradient_segment_range_move_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient        *gradient;
+      GimpGradientSegment *start_seg;
+      GimpGradientSegment *end_seg;
 
-      if (gradient)
+      gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+                                     &start_seg, &end_seg);
+
+      if (start_seg && GIMP_DATA (gradient)->writable)
         {
-          GimpGradientSegment *start_seg, *end_seg;
-
-          start_seg = gimp_gradient_segment_get_nth (gradient->segments,
-                                                     start_segment);
-          if (start_seg)
-            {
-              if ((end_segment < start_segment) && (end_segment >= 0))
-                {
-                  /* Do Nothing */
-                  success = FALSE;
-                }
-              else
-                {
-                  if (end_segment < 0)
-                    {
-                      end_seg = NULL;
-                    }
-                  else
-                    {
-                      end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                               end_segment -
-                                                               start_segment);
-                    }
-
-                  /* Success */
-                  final_delta = gimp_gradient_segment_range_move (gradient,
-                                                                  start_seg,
-                                                                  end_seg,
-                                                                  delta,
-                                                                  control_compress);
-
-                }
-            }
-          else
-            {
-              success = FALSE;
-            }
+          final_delta = gimp_gradient_segment_range_move (gradient,
+                                                          start_seg, end_seg,
+                                                          delta,
+                                                          control_compress);
         }
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&gradient_segment_range_move_proc, success);

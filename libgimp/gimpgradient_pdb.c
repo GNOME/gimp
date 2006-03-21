@@ -97,7 +97,7 @@ gimp_gradient_duplicate (const gchar *name)
  *
  * Tests if gradient can be edited
  *
- * Returns True if you have permission to change the gradient
+ * Returns TRUE if you have permission to change the gradient
  *
  * Returns: True if the gradient can be edited.
  *
@@ -314,8 +314,7 @@ gimp_gradient_get_custom_samples (const gchar    *name,
  * @color: The return color.
  * @opacity: The opacity of the endpoint.
  *
- * Retrieves the left endpoint color of the specified gradient and
- * segment
+ * Retrieves the left endpoint color of the specified segment
  *
  * This procedure retrieves the left endpoint color of the specified
  * segment of the specified gradient.
@@ -362,8 +361,7 @@ gimp_gradient_segment_get_left_color (const gchar *name,
  * @color: The color to set.
  * @opacity: The opacity to set for the endpoint.
  *
- * Retrieves the left endpoint color of the specified gradient and
- * segment
+ * Retrieves the left endpoint color of the specified segment
  *
  * This procedure retrieves the left endpoint color of the specified
  * segment of the specified gradient.
@@ -404,8 +402,7 @@ gimp_gradient_segment_set_left_color (const gchar   *name,
  * @color: The return color.
  * @opacity: The opacity of the endpoint.
  *
- * Retrieves the right endpoint color of the specified gradient and
- * segment
+ * Retrieves the right endpoint color of the specified segment
  *
  * This procedure retrieves the right endpoint color of the specified
  * segment of the specified gradient.
@@ -452,8 +449,7 @@ gimp_gradient_segment_get_right_color (const gchar *name,
  * @color: The color to set.
  * @opacity: The opacity to set for the endpoint.
  *
- * Retrieves the right endpoint color of the specified gradient and
- * segment
+ * Retrieves the right endpoint color of the specified segment
  *
  * This procedure retrieves the right endpoint color of the specified
  * segment of the specified gradient.
@@ -493,8 +489,7 @@ gimp_gradient_segment_set_right_color (const gchar   *name,
  * @segment: The index of the segment within the gradient.
  * @pos: The return position.
  *
- * Retrieves the left endpoint position of the specified gradient and
- * segment
+ * Retrieves the left endpoint position of the specified segment
  *
  * This procedure retrieves the left endpoint position of the specified
  * segment of the specified gradient.
@@ -534,11 +529,10 @@ gimp_gradient_segment_get_left_pos (const gchar *name,
  * gimp_gradient_segment_set_left_pos:
  * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
- * @pos: The position to set the guidepoint in.
+ * @pos: The position to set the guidepoint to.
  * @final_pos: The return position.
  *
- * Sets the left endpoint position of the specified gradient and
- * segment
+ * Sets the left endpoint position of the specified segment
  *
  * This procedure sets the left endpoint position of the specified
  * segment of the specified gradient. The final position will be
@@ -585,8 +579,7 @@ gimp_gradient_segment_set_left_pos (const gchar *name,
  * @segment: The index of the segment within the gradient.
  * @pos: The return position.
  *
- * Retrieves the middle point position of the specified gradient and
- * segment
+ * Retrieves the middle point position of the specified segment
  *
  * This procedure retrieves the middle point position of the specified
  * segment of the specified gradient.
@@ -626,10 +619,10 @@ gimp_gradient_segment_get_middle_pos (const gchar *name,
  * gimp_gradient_segment_set_middle_pos:
  * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
- * @pos: The position to set the guidepoint in.
+ * @pos: The position to set the guidepoint to.
  * @final_pos: The return position.
  *
- * Sets the middle point position of the specified gradient and segment
+ * Sets the middle point position of the specified segment
  *
  * This procedure sets the middle point position of the specified
  * segment of the specified gradient. The final position will be
@@ -675,8 +668,7 @@ gimp_gradient_segment_set_middle_pos (const gchar *name,
  * @segment: The index of the segment within the gradient.
  * @pos: The return position.
  *
- * Retrieves the right endpoint position of the specified gradient and
- * segment
+ * Retrieves the right endpoint position of the specified segment
  *
  * This procedure retrieves the right endpoint position of the
  * specified segment of the specified gradient.
@@ -716,11 +708,10 @@ gimp_gradient_segment_get_right_pos (const gchar *name,
  * gimp_gradient_segment_set_right_pos:
  * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
- * @pos: The position to set the guidepoint in.
+ * @pos: The position to set the guidepoint to.
  * @final_pos: The return position.
  *
- * Sets the right endpoint position of the specified gradient and
- * segment
+ * Sets the right endpoint position of the specified segment
  *
  * This procedure sets the right endpoint position of the specified
  * segment of the specified gradient. The final position will be
