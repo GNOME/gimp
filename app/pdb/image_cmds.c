@@ -1669,14 +1669,18 @@ image_pick_color_invoker (Gimp         *gimp,
   sample_average = args[5].value.pdb_int ? TRUE : FALSE;
 
   average_radius = args[6].value.pdb_float;
-  if (sample_average && (average_radius <= 0.0))
-    success = FALSE;
 
   if (success)
     {
       if (!sample_merged)
         if (!drawable || (gimp_item_get_image (GIMP_ITEM (drawable)) != gimage))
           success = FALSE;
+
+      if (success && sample_average)
+        {
+          if (average_radius <= 0.0)
+            success = FALSE;
+        }
 
       if (success)
         {

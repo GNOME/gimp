@@ -552,9 +552,8 @@ HELP
 	{ name => 'sample_average', type => 'boolean',
 	  desc => 'Average the color of all the pixels in a specified
 		   radius' },
-	{ name => 'average_radius', type => '0 < float',
-	  desc => 'The radius of pixels to average',
-	  cond => [ 'sample_average' ] }
+	{ name => 'average_radius', type => '0 < float', no_success => 1,
+	  desc => 'The radius of pixels to average' }
     );
     $inargs[1]->{no_success} = 1;
 
@@ -570,6 +569,12 @@ HELP
   if (!sample_merged)
     if (!drawable || (gimp_item_get_image (GIMP_ITEM (drawable)) != gimage))
       success = FALSE;
+
+  if (success && sample_average)
+    {
+      if (average_radius <= 0.0)
+        success = FALSE;
+    }
 
   if (success)
     {

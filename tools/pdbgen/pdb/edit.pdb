@@ -626,12 +626,10 @@ HELP
 	  desc => 'Use the reverse gradient (%%desc%%)' },
 	{ name => 'supersample', type => 'boolean',
 	  desc => 'Do adaptive supersampling (%%desc%%)' },
-	{ name => 'max_depth', type => '1 <= int32 <= 9',
-	  desc => 'Maximum recursion levels for supersampling',
-	  cond => [ 'supersample' ] },
-	{ name => 'threshold', type => '0 <= float <= 4',
-	  desc => 'Supersampling threshold',
-	  cond => [ 'supersample' ] },
+	{ name => 'max_depth', type => '1 <= int32 <= 9', no_success => 1,
+	  desc => 'Maximum recursion levels for supersampling' },
+	{ name => 'threshold', type => '0 <= float <= 4', no_success => 1,
+	  desc => 'Supersampling threshold' },
 	{ name => 'dither', type => 'boolean',
 	  desc => 'Use dithering to reduce banding (%%desc%%)' },
 	{ name => 'x1', type => 'float',
@@ -649,6 +647,15 @@ HELP
 	code => <<'CODE'
 {
   success = gimp_item_is_attached (GIMP_ITEM (drawable));
+
+  if (success && supersample)
+    {
+      if (max_depth < 1 || max_depth > 9)
+        success = FALSE;
+
+      if (threshold < 0.0 || threshold > 4.0)
+        success = FALSE;
+    }
 
   if (success)
     {

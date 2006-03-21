@@ -1155,12 +1155,8 @@ edit_blend_invoker (Gimp         *gimp,
   supersample = args[8].value.pdb_int ? TRUE : FALSE;
 
   max_depth = args[9].value.pdb_int;
-  if (supersample && (max_depth < 1 || max_depth > 9))
-    success = FALSE;
 
   threshold = args[10].value.pdb_float;
-  if (supersample && (threshold < 0.0 || threshold > 4.0))
-    success = FALSE;
 
   dither = args[11].value.pdb_int ? TRUE : FALSE;
 
@@ -1175,6 +1171,15 @@ edit_blend_invoker (Gimp         *gimp,
   if (success)
     {
       success = gimp_item_is_attached (GIMP_ITEM (drawable));
+
+      if (success && supersample)
+        {
+          if (max_depth < 1 || max_depth > 9)
+            success = FALSE;
+
+          if (threshold < 0.0 || threshold > 4.0)
+            success = FALSE;
+        }
 
       if (success)
         {

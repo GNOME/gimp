@@ -1,3 +1,13 @@
+2006-03-21  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/app.pl: removed support for arg->cond.
+
+	* tools/pdbgen/edit.pdb
+	* tools/pdbgen/image.pdb: move its logic into the C code.
+
+	* app/pdb/edit_cmds.c
+	* app/pdb/image_cmds.c: regenerated.
+
 2006-03-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/core-types.h: define GIMP_COORDS_DEFAULT_VALUES, a

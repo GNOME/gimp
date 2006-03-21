@@ -79,19 +79,10 @@ sub make_arg_test {
     my $result = "";
 
     if (!exists $arg->{no_success}) {
-	if (exists $arg->{cond}) {
-	    my $cond = "";
-	    foreach (@{$arg->{cond}}) {
-		$cond .= /\W/ ? "($_)" : $_;
-		$cond .= ' && ';
-	    }
-	    $test = "$cond($test)";
-	}
-
-	$result = ' ' x 2 . "if ($test)\n";
+	$result .= ' ' x 2 . "if ($test)\n";
+	$result .= ' ' x 4 . "success = FALSE;\n";
 
 	$success = 1;
-	$result .= ' ' x 4 . "success = FALSE;\n";
     }
 
     $result;
