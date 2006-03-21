@@ -270,6 +270,7 @@ gimp_new_rect_select_tool_execute (GimpRectangleTool  *rectangle,
   GimpChannel          *selection_mask;
   gint                  x1, y1;
   gint                  x2, y2;
+  gint                  pressx, pressy;
   guchar               *val_ptr;
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
@@ -317,9 +318,14 @@ gimp_new_rect_select_tool_execute (GimpRectangleTool  *rectangle,
       return TRUE;
     }
 
+  g_object_get (rectangle,
+                "pressx", &pressx,
+                "pressy", &pressy,
+                NULL);
+
   if ((val_ptr = gimp_pickable_get_color_at (GIMP_PICKABLE (selection_mask),
-                                             gimp_rectangle_tool_get_pressx (rectangle),
-                                             gimp_rectangle_tool_get_pressy (rectangle))))
+                                             pressx,
+                                             pressy)))
     val = *val_ptr;
   else
     val = 0;
@@ -360,20 +366,24 @@ gimp_new_rect_select_tool_execute (GimpRectangleTool  *rectangle,
                 }
             }
 
-          gimp_rectangle_tool_set_x1 (rectangle, x1);
-          gimp_rectangle_tool_set_y1 (rectangle, y1);
-          gimp_rectangle_tool_set_x2 (rectangle, x2);
-          gimp_rectangle_tool_set_y2 (rectangle, y2);
+          g_object_set (rectangle,
+                        "x1", x1,
+                        "y1", y1,
+                        "x2", x2,
+                        "y2", y2,
+                        NULL);
         }
       else
         {
-          gimp_rectangle_tool_set_x1 (rectangle, 0);
-          gimp_rectangle_tool_set_y1 (rectangle, 0);
-          gimp_rectangle_tool_set_x2 (rectangle, gimage->width);
-          gimp_rectangle_tool_set_y2 (rectangle, gimage->height);
+          g_object_set (rectangle,
+                        "x1", 0,
+                        "y1", 0,
+                        "x2", gimage->width,
+                        "y2", gimage->height,
+                        NULL);
         }
 
-      gimp_rectangle_tool_set_function (rectangle, RECT_MOVING);
+      g_object_set (rectangle, "function", RECT_MOVING, NULL);
 
       return FALSE;
     }

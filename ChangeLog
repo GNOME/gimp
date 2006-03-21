@@ -1,5 +1,11 @@
 2006-03-21  Karine Delvare  <kdelvare@nerim.net>
 
+	* app/tools/gimpnewrectselecttool.c
+	* app/tools/gimprectangleoptions.[ch]
+	* app/tools/gimprectangletool.[ch]: hide properties accessors.
+
+2006-03-21  Karine Delvare  <kdelvare@nerim.net>
+
 	* app/tools/gimpcropoptions.c: use GIMP_RECTANGLE_OPTIONS_PROP_LAST
 	instead of duplicating properties.
 

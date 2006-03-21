@@ -55,45 +55,6 @@ struct _GimpRectangleOptionsInterface
 
 GType       gimp_rectangle_options_interface_get_type  (void) G_GNUC_CONST;
 
-void        gimp_rectangle_options_set_highlight       (GimpRectangleOptions *options,
-                                                        gboolean              highlight);
-gboolean    gimp_rectangle_options_get_highlight       (GimpRectangleOptions *options);
-
-void        gimp_rectangle_options_set_fixed_width     (GimpRectangleOptions *options,
-                                                        gboolean              fixed_width);
-gboolean    gimp_rectangle_options_get_fixed_width     (GimpRectangleOptions *options);
-void        gimp_rectangle_options_set_width           (GimpRectangleOptions *options,
-                                                        gdouble               width);
-gdouble     gimp_rectangle_options_get_width           (GimpRectangleOptions *options);
-
-void        gimp_rectangle_options_set_fixed_height    (GimpRectangleOptions *options,
-                                                        gboolean              fixed_height);
-gboolean    gimp_rectangle_options_get_fixed_height    (GimpRectangleOptions *options);
-void        gimp_rectangle_options_set_height          (GimpRectangleOptions *options,
-                                                        gdouble               height);
-gdouble     gimp_rectangle_options_get_height          (GimpRectangleOptions *options);
-
-void        gimp_rectangle_options_set_fixed_aspect    (GimpRectangleOptions *options,
-                                                        gboolean              fixed_aspect);
-gboolean    gimp_rectangle_options_get_fixed_aspect    (GimpRectangleOptions *options);
-void        gimp_rectangle_options_set_aspect          (GimpRectangleOptions *options,
-                                                        gdouble               aspect);
-gdouble     gimp_rectangle_options_get_aspect          (GimpRectangleOptions *options);
-
-void        gimp_rectangle_options_set_fixed_center    (GimpRectangleOptions *options,
-                                                        gboolean              fixed_center);
-gboolean    gimp_rectangle_options_get_fixed_center    (GimpRectangleOptions *options);
-void        gimp_rectangle_options_set_center_x        (GimpRectangleOptions *options,
-                                                        gdouble               center_x);
-gdouble     gimp_rectangle_options_get_center_x        (GimpRectangleOptions *options);
-void        gimp_rectangle_options_set_center_y        (GimpRectangleOptions *options,
-                                                        gdouble               center_y);
-gdouble     gimp_rectangle_options_get_center_y        (GimpRectangleOptions *options);
-
-void        gimp_rectangle_options_set_unit            (GimpRectangleOptions *options,
-                                                        GimpUnit              unit);
-GimpUnit    gimp_rectangle_options_get_unit            (GimpRectangleOptions *options);
-
 GtkWidget * gimp_rectangle_options_gui                 (GimpToolOptions *tool_options);
 
 
