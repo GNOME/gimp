@@ -1,3 +1,8 @@
+2006-03-21  Karine Delvare  <kdelvare@nerim.net>
+
+	* app/tools/gimpcropoptions.c: use GIMP_RECTANGLE_OPTIONS_PROP_LAST
+	instead of duplicating properties.
+
 2006-03-21  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/app.pl: removed support for arg->cond.
