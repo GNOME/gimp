@@ -767,7 +767,7 @@ siox_init (TileManager      *pixels,
 #ifdef SIOX_DEBUG
   g_printerr ("siox.c: siox_init (bpp=%d, "
               "x=%d, y=%d, width=%d, height=%d, offset_x=%d, offset_y=%d)\n",
-              bpp, x, y, width, height, offset_x, offset_y);
+              state->bpp, x, y, width, height, offset_x, offset_y);
 #endif
 
   return state;
@@ -818,15 +818,16 @@ siox_foreground_extract (SioxState          *state,
   lab         *surefg      = NULL;
   gint         surebgcount = 0;
   gint         surefgcount = 0;
-  gint         n, tiles;
+  gint         n;
+  gint         pixels, total;
   gfloat       limits[3];
 
   g_return_if_fail (state != NULL);
   g_return_if_fail (mask != NULL && tile_manager_bpp (mask) == 1);
   g_return_if_fail (x1 >= 0);
-  g_return_if_fail (x2 > x1 && x2 < tile_manager_width (mask));
+  g_return_if_fail (x2 > x1 && x2 <= tile_manager_width (mask));
   g_return_if_fail (y1 >= 0);
-  g_return_if_fail (y2 > y1 && y2 < tile_manager_height (mask));
+  g_return_if_fail (y2 > y1 && y2 <= tile_manager_height (mask));
   g_return_if_fail (smoothness >= 0);
   g_return_if_fail (progress_data == NULL || progress_callback != NULL);
 
@@ -1058,9 +1059,9 @@ siox_foreground_extract (SioxState          *state,
                      FALSE);
   pixel_region_init (&mapPR, mask, x, y, width, height, TRUE);
 
-  tiles = (1 + width / TILE_WIDTH) * (1 + height / TILE_HEIGHT);
+  total = width * height;
 
-  for (pr = pixel_regions_register (2, &srcPR, &mapPR), n = 0;
+  for (pr = pixel_regions_register (2, &srcPR, &mapPR), n = 0, pixels = 0;
        pr != NULL;
        pr = pixel_regions_process (pr), n++)
     {
@@ -1151,9 +1152,11 @@ siox_foreground_extract (SioxState          *state,
           map += mapPR.rowstride;
         }
 
+      pixels += mapPR.w * mapPR.h;
+
       if (n % 8 == 0)
         siox_progress_update (progress_callback, progress_data,
-                              0.4 + 0.4 * ((gdouble) n / (gdouble) tiles));
+                              0.4 + 0.4 * ((gdouble) pixels / (gdouble) total));
     }
 
 #ifdef SIOX_DEBUG
