@@ -16,10 +16,11 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 sub vectors_new {
-    $blurb = 'Creates a new empty vectors object. Needs to be added to an image using gimp_image_add_vectors.';
+    $blurb = 'Creates a new empty vectors object.';
 
     $help = <<'HELP';
-Creates a new empty vectors object. Needs to be added to an image using gimp_image_add_vectors.
+Creates a new empty vectors object. Needs to be added to an image
+using gimp_image_add_vectors.
 HELP
 
     &simon_pdb_misc('2005', '2.4');
@@ -52,7 +53,9 @@ sub vectors_get_current {
 
     &simon_pdb_misc('2005', '2.4');
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
     $inargs[0]->{desc} = 'The ID of the image to get the current path from.';
 
     @outargs = (
@@ -875,10 +878,9 @@ CODE
 }
 
 
-@headers = qw(<string.h> "core/gimp.h" "core/gimplist.h"
-              "core/gimpimage.h"
+@headers = qw(<string.h> "core/gimp.h" "core/gimplist.h" "core/gimpimage.h"
               "vectors/gimpanchor.h" "vectors/gimpbezierstroke.h"
-              "vectors/gimpvectors.h" "vectors/gimpvectors-compat.h"
+              "vectors/gimpvectors.h"
               "gimp-intl.h");
 
 @procs = qw(vectors_new vectors_get_strokes vectors_get_image

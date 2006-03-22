@@ -1096,6 +1096,216 @@ gimp_image_lower_layer_to_bottom (gint32 image_ID,
 }
 
 /**
+ * gimp_image_add_channel:
+ * @image_ID: The image.
+ * @channel_ID: The channel.
+ * @position: The channel position.
+ *
+ * Add the specified channel to the image.
+ *
+ * This procedure adds the specified channel to the image. The position
+ * channel is not currently used, so the channel is always inserted at
+ * the top of the channel stack.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_add_channel (gint32 image_ID,
+			gint32 channel_ID,
+			gint   position)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-add-channel",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_INT32, position,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_remove_channel:
+ * @image_ID: The image.
+ * @channel_ID: The channel.
+ *
+ * Remove the specified channel from the image.
+ *
+ * This procedure removes the specified channel from the image. If the
+ * channel doesn't exist, an error is returned.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_remove_channel (gint32 image_ID,
+			   gint32 channel_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-remove-channel",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_raise_channel:
+ * @image_ID: The image.
+ * @channel_ID: The channel to raise.
+ *
+ * Raise the specified channel in the image's channel stack
+ *
+ * This procedure raises the specified channel one step in the existing
+ * channel stack. It will not move the channel if there is no channel
+ * above it.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_raise_channel (gint32 image_ID,
+			  gint32 channel_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-raise-channel",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_lower_channel:
+ * @image_ID: The image.
+ * @channel_ID: The channel to lower.
+ *
+ * Lower the specified channel in the image's channel stack
+ *
+ * This procedure lowers the specified channel one step in the existing
+ * channel stack. It will not move the channel if there is no channel
+ * below it.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_lower_channel (gint32 image_ID,
+			  gint32 channel_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-lower-channel",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_add_vectors:
+ * @image_ID: The image.
+ * @vectors_ID: The vectors object.
+ * @position: The vectors objects position.
+ *
+ * Add the specified vectors object to the image.
+ *
+ * This procedure adds the specified vectors object to the gimage at
+ * the given position. If the position is specified as -1, then the
+ * vectors object is inserted at the top of the vectors stack.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_add_vectors (gint32 image_ID,
+			gint32 vectors_ID,
+			gint   position)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-add-vectors",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
+				    GIMP_PDB_INT32, position,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_remove_vectors:
+ * @image_ID: The image.
+ * @vectors_ID: The vectors object.
+ *
+ * Remove the specified path from the image.
+ *
+ * This procedure removes the specified path from the image. If the
+ * path doesn't exist, an error is returned.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_image_remove_vectors (gint32 image_ID,
+			   gint32 vectors_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-remove-vectors",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_image_raise_vectors:
  * @image_ID: The image.
  * @vectors_ID: The vectors object to raise.
@@ -1232,216 +1442,6 @@ gimp_image_lower_vectors_to_bottom (gint32 image_ID,
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_VECTORS, vectors_ID,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_image_add_channel:
- * @image_ID: The image.
- * @channel_ID: The channel.
- * @position: The channel position.
- *
- * Add the specified channel to the image.
- *
- * This procedure adds the specified channel to the image. The position
- * channel is not currently used, so the channel is always inserted at
- * the top of the channel stack.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_image_add_channel (gint32 image_ID,
-			gint32 channel_ID,
-			gint   position)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-image-add-channel",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_CHANNEL, channel_ID,
-				    GIMP_PDB_INT32, position,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_image_remove_channel:
- * @image_ID: The image.
- * @channel_ID: The channel.
- *
- * Remove the specified channel from the image.
- *
- * This procedure removes the specified channel from the image. If the
- * channel doesn't exist, an error is returned.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_image_remove_channel (gint32 image_ID,
-			   gint32 channel_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-image-remove-channel",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_CHANNEL, channel_ID,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_image_add_vectors:
- * @image_ID: The image.
- * @vectors_ID: The vectors object.
- * @position: The vectors objects position.
- *
- * Add the specified vectors object to the image.
- *
- * This procedure adds the specified vectors object to the gimage at
- * the given position. If the position is specified as -1, then the
- * vectors object is inserted at the top of the vectors stack.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_image_add_vectors (gint32 image_ID,
-			gint32 vectors_ID,
-			gint   position)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-image-add-vectors",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_VECTORS, vectors_ID,
-				    GIMP_PDB_INT32, position,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_image_remove_vectors:
- * @image_ID: The image.
- * @vectors_ID: The vectors object.
- *
- * Remove the specified path from the image.
- *
- * This procedure removes the specified path from the image. If the
- * path doesn't exist, an error is returned.
- *
- * Returns: TRUE on success.
- *
- * Since: GIMP 2.4
- */
-gboolean
-gimp_image_remove_vectors (gint32 image_ID,
-			   gint32 vectors_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-image-remove-vectors",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_VECTORS, vectors_ID,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_image_raise_channel:
- * @image_ID: The image.
- * @channel_ID: The channel to raise.
- *
- * Raise the specified channel in the image's channel stack
- *
- * This procedure raises the specified channel one step in the existing
- * channel stack. It will not move the channel if there is no channel
- * above it.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_image_raise_channel (gint32 image_ID,
-			  gint32 channel_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-image-raise-channel",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_CHANNEL, channel_ID,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_image_lower_channel:
- * @image_ID: The image.
- * @channel_ID: The channel to lower.
- *
- * Lower the specified channel in the image's channel stack
- *
- * This procedure lowers the specified channel one step in the existing
- * channel stack. It will not move the channel if there is no channel
- * below it.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_image_lower_channel (gint32 image_ID,
-			  gint32 channel_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-image-lower-channel",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_CHANNEL, channel_ID,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

@@ -29,6 +29,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+#ifndef GIMP_DISABLE_DEPRECATED
 gchar**  gimp_path_list              (gint32           image_ID,
 				      gint            *num_paths);
 gchar*   gimp_path_get_current       (gint32           image_ID);
@@ -36,6 +37,7 @@ gboolean gimp_path_set_current       (gint32           image_ID,
 				      const gchar     *name);
 gboolean gimp_path_delete            (gint32           image_ID,
 				      const gchar     *name);
+#endif /* GIMP_DISABLE_DEPRECATED */
 gint     gimp_path_get_points        (gint32           image_ID,
 				      const gchar     *name,
 				      gint            *path_closed,
@@ -51,6 +53,7 @@ gint     gimp_path_get_point_at_dist (gint32           image_ID,
 				      gdouble          distance,
 				      gint            *y_point,
 				      gdouble         *slope);
+#ifndef GIMP_DISABLE_DEPRECATED
 gint     gimp_path_get_tattoo        (gint32           image_ID,
 				      const gchar     *name);
 gboolean gimp_path_set_tattoo        (gint32           image_ID,
@@ -63,11 +66,7 @@ gboolean gimp_path_get_locked        (gint32           image_ID,
 gboolean gimp_path_set_locked        (gint32           image_ID,
 				      const gchar     *name,
 				      gboolean         locked);
-gboolean gimp_path_get_visible       (gint32           image_ID,
-				      const gchar     *name);
-gboolean gimp_path_set_visible       (gint32           image_ID,
-				      const gchar     *name,
-				      gboolean         visible);
+#endif /* GIMP_DISABLE_DEPRECATED */
 gboolean gimp_path_to_selection      (gint32           image_ID,
 				      const gchar     *name,
 				      GimpChannelOps   op,

@@ -82,16 +82,16 @@ static ProcRecord image_raise_layer_proc;
 static ProcRecord image_lower_layer_proc;
 static ProcRecord image_raise_layer_to_top_proc;
 static ProcRecord image_lower_layer_to_bottom_proc;
+static ProcRecord image_add_channel_proc;
+static ProcRecord image_remove_channel_proc;
+static ProcRecord image_raise_channel_proc;
+static ProcRecord image_lower_channel_proc;
+static ProcRecord image_add_vectors_proc;
+static ProcRecord image_remove_vectors_proc;
 static ProcRecord image_raise_vectors_proc;
 static ProcRecord image_lower_vectors_proc;
 static ProcRecord image_raise_vectors_to_top_proc;
 static ProcRecord image_lower_vectors_to_bottom_proc;
-static ProcRecord image_add_channel_proc;
-static ProcRecord image_remove_channel_proc;
-static ProcRecord image_add_vectors_proc;
-static ProcRecord image_remove_vectors_proc;
-static ProcRecord image_raise_channel_proc;
-static ProcRecord image_lower_channel_proc;
 static ProcRecord image_flatten_proc;
 static ProcRecord image_merge_visible_layers_proc;
 static ProcRecord image_merge_down_proc;
@@ -158,16 +158,16 @@ register_image_procs (Gimp *gimp)
   procedural_db_register (gimp, &image_lower_layer_proc);
   procedural_db_register (gimp, &image_raise_layer_to_top_proc);
   procedural_db_register (gimp, &image_lower_layer_to_bottom_proc);
+  procedural_db_register (gimp, &image_add_channel_proc);
+  procedural_db_register (gimp, &image_remove_channel_proc);
+  procedural_db_register (gimp, &image_raise_channel_proc);
+  procedural_db_register (gimp, &image_lower_channel_proc);
+  procedural_db_register (gimp, &image_add_vectors_proc);
+  procedural_db_register (gimp, &image_remove_vectors_proc);
   procedural_db_register (gimp, &image_raise_vectors_proc);
   procedural_db_register (gimp, &image_lower_vectors_proc);
   procedural_db_register (gimp, &image_raise_vectors_to_top_proc);
   procedural_db_register (gimp, &image_lower_vectors_to_bottom_proc);
-  procedural_db_register (gimp, &image_add_channel_proc);
-  procedural_db_register (gimp, &image_remove_channel_proc);
-  procedural_db_register (gimp, &image_add_vectors_proc);
-  procedural_db_register (gimp, &image_remove_vectors_proc);
-  procedural_db_register (gimp, &image_raise_channel_proc);
-  procedural_db_register (gimp, &image_lower_channel_proc);
   procedural_db_register (gimp, &image_flatten_proc);
   procedural_db_register (gimp, &image_merge_visible_layers_proc);
   procedural_db_register (gimp, &image_merge_down_proc);
@@ -2221,6 +2221,373 @@ static ProcRecord image_lower_layer_to_bottom_proc =
 };
 
 static Argument *
+image_add_channel_invoker (Gimp         *gimp,
+                           GimpContext  *context,
+                           GimpProgress *progress,
+                           Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  GimpChannel *channel;
+  gint32 position;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
+    success = FALSE;
+
+  position = args[2].value.pdb_int;
+
+  if (success)
+    {
+      success = gimp_item_is_floating (GIMP_ITEM (channel));
+
+      if (success)
+        success = gimp_image_add_channel (gimage, channel, MAX (position, -1));
+    }
+
+  return procedural_db_return_args (&image_add_channel_proc, success);
+}
+
+static ProcArg image_add_channel_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_CHANNEL,
+    "channel",
+    "The channel"
+  },
+  {
+    GIMP_PDB_INT32,
+    "position",
+    "The channel position"
+  }
+};
+
+static ProcRecord image_add_channel_proc =
+{
+  "gimp-image-add-channel",
+  "gimp-image-add-channel",
+  "Add the specified channel to the image.",
+  "This procedure adds the specified channel to the image. The position channel is not currently used, so the channel is always inserted at the top of the channel stack.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  NULL,
+  GIMP_INTERNAL,
+  3,
+  image_add_channel_inargs,
+  0,
+  NULL,
+  { { image_add_channel_invoker } }
+};
+
+static Argument *
+image_remove_channel_invoker (Gimp         *gimp,
+                              GimpContext  *context,
+                              GimpProgress *progress,
+                              Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  GimpChannel *channel;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
+    success = FALSE;
+
+  if (success)
+    {
+      gimp_image_remove_channel (gimage, channel);
+    }
+
+  return procedural_db_return_args (&image_remove_channel_proc, success);
+}
+
+static ProcArg image_remove_channel_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_CHANNEL,
+    "channel",
+    "The channel"
+  }
+};
+
+static ProcRecord image_remove_channel_proc =
+{
+  "gimp-image-remove-channel",
+  "gimp-image-remove-channel",
+  "Remove the specified channel from the image.",
+  "This procedure removes the specified channel from the image. If the channel doesn't exist, an error is returned.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  image_remove_channel_inargs,
+  0,
+  NULL,
+  { { image_remove_channel_invoker } }
+};
+
+static Argument *
+image_raise_channel_invoker (Gimp         *gimp,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  GimpChannel *channel;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
+    success = FALSE;
+
+  if (success)
+    {
+      success = gimp_image_raise_channel (gimage, channel);
+    }
+
+  return procedural_db_return_args (&image_raise_channel_proc, success);
+}
+
+static ProcArg image_raise_channel_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_CHANNEL,
+    "channel",
+    "The channel to raise"
+  }
+};
+
+static ProcRecord image_raise_channel_proc =
+{
+  "gimp-image-raise-channel",
+  "gimp-image-raise-channel",
+  "Raise the specified channel in the image's channel stack",
+  "This procedure raises the specified channel one step in the existing channel stack. It will not move the channel if there is no channel above it.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  image_raise_channel_inargs,
+  0,
+  NULL,
+  { { image_raise_channel_invoker } }
+};
+
+static Argument *
+image_lower_channel_invoker (Gimp         *gimp,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  GimpChannel *channel;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
+    success = FALSE;
+
+  if (success)
+    {
+      success = gimp_image_lower_channel (gimage, channel);
+    }
+
+  return procedural_db_return_args (&image_lower_channel_proc, success);
+}
+
+static ProcArg image_lower_channel_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_CHANNEL,
+    "channel",
+    "The channel to lower"
+  }
+};
+
+static ProcRecord image_lower_channel_proc =
+{
+  "gimp-image-lower-channel",
+  "gimp-image-lower-channel",
+  "Lower the specified channel in the image's channel stack",
+  "This procedure lowers the specified channel one step in the existing channel stack. It will not move the channel if there is no channel below it.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  image_lower_channel_inargs,
+  0,
+  NULL,
+  { { image_lower_channel_invoker } }
+};
+
+static Argument *
+image_add_vectors_invoker (Gimp         *gimp,
+                           GimpContext  *context,
+                           GimpProgress *progress,
+                           Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  GimpVectors *vectors;
+  gint32 position;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
+    success = FALSE;
+
+  position = args[2].value.pdb_int;
+
+  if (success)
+    {
+        success = gimp_image_add_vectors (gimage, vectors, MAX (position, -1));
+    }
+
+  return procedural_db_return_args (&image_add_vectors_proc, success);
+}
+
+static ProcArg image_add_vectors_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_VECTORS,
+    "vectors",
+    "The vectors object"
+  },
+  {
+    GIMP_PDB_INT32,
+    "position",
+    "The vectors objects position"
+  }
+};
+
+static ProcRecord image_add_vectors_proc =
+{
+  "gimp-image-add-vectors",
+  "gimp-image-add-vectors",
+  "Add the specified vectors object to the image.",
+  "This procedure adds the specified vectors object to the gimage at the given position. If the position is specified as -1, then the vectors object is inserted at the top of the vectors stack.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  NULL,
+  GIMP_INTERNAL,
+  3,
+  image_add_vectors_inargs,
+  0,
+  NULL,
+  { { image_add_vectors_invoker } }
+};
+
+static Argument *
+image_remove_vectors_invoker (Gimp         *gimp,
+                              GimpContext  *context,
+                              GimpProgress *progress,
+                              Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  GimpVectors *vectors;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
+    success = FALSE;
+
+  if (success)
+    {
+      gimp_image_remove_vectors (gimage, vectors);
+    }
+
+  return procedural_db_return_args (&image_remove_vectors_proc, success);
+}
+
+static ProcArg image_remove_vectors_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_VECTORS,
+    "vectors",
+    "The vectors object"
+  }
+};
+
+static ProcRecord image_remove_vectors_proc =
+{
+  "gimp-image-remove-vectors",
+  "gimp-image-remove-vectors",
+  "Remove the specified path from the image.",
+  "This procedure removes the specified path from the image. If the path doesn't exist, an error is returned.",
+  "Simon Budig",
+  "Simon Budig",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  image_remove_vectors_inargs,
+  0,
+  NULL,
+  { { image_remove_vectors_invoker } }
+};
+
+static Argument *
 image_raise_vectors_invoker (Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
@@ -2450,373 +2817,6 @@ static ProcRecord image_lower_vectors_to_bottom_proc =
   0,
   NULL,
   { { image_lower_vectors_to_bottom_invoker } }
-};
-
-static Argument *
-image_add_channel_invoker (Gimp         *gimp,
-                           GimpContext  *context,
-                           GimpProgress *progress,
-                           Argument     *args)
-{
-  gboolean success = TRUE;
-  GimpImage *gimage;
-  GimpChannel *channel;
-  gint32 position;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
-    success = FALSE;
-
-  position = args[2].value.pdb_int;
-
-  if (success)
-    {
-      success = gimp_item_is_floating (GIMP_ITEM (channel));
-
-      if (success)
-        success = gimp_image_add_channel (gimage, channel, MAX (position, -1));
-    }
-
-  return procedural_db_return_args (&image_add_channel_proc, success);
-}
-
-static ProcArg image_add_channel_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  },
-  {
-    GIMP_PDB_CHANNEL,
-    "channel",
-    "The channel"
-  },
-  {
-    GIMP_PDB_INT32,
-    "position",
-    "The channel position"
-  }
-};
-
-static ProcRecord image_add_channel_proc =
-{
-  "gimp-image-add-channel",
-  "gimp-image-add-channel",
-  "Add the specified channel to the image.",
-  "This procedure adds the specified channel to the image. The position channel is not currently used, so the channel is always inserted at the top of the channel stack.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  3,
-  image_add_channel_inargs,
-  0,
-  NULL,
-  { { image_add_channel_invoker } }
-};
-
-static Argument *
-image_remove_channel_invoker (Gimp         *gimp,
-                              GimpContext  *context,
-                              GimpProgress *progress,
-                              Argument     *args)
-{
-  gboolean success = TRUE;
-  GimpImage *gimage;
-  GimpChannel *channel;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
-    success = FALSE;
-
-  if (success)
-    {
-      gimp_image_remove_channel (gimage, channel);
-    }
-
-  return procedural_db_return_args (&image_remove_channel_proc, success);
-}
-
-static ProcArg image_remove_channel_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  },
-  {
-    GIMP_PDB_CHANNEL,
-    "channel",
-    "The channel"
-  }
-};
-
-static ProcRecord image_remove_channel_proc =
-{
-  "gimp-image-remove-channel",
-  "gimp-image-remove-channel",
-  "Remove the specified channel from the image.",
-  "This procedure removes the specified channel from the image. If the channel doesn't exist, an error is returned.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  2,
-  image_remove_channel_inargs,
-  0,
-  NULL,
-  { { image_remove_channel_invoker } }
-};
-
-static Argument *
-image_add_vectors_invoker (Gimp         *gimp,
-                           GimpContext  *context,
-                           GimpProgress *progress,
-                           Argument     *args)
-{
-  gboolean success = TRUE;
-  GimpImage *gimage;
-  GimpVectors *vectors;
-  gint32 position;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
-
-  position = args[2].value.pdb_int;
-
-  if (success)
-    {
-        success = gimp_image_add_vectors (gimage, vectors, MAX (position, -1));
-    }
-
-  return procedural_db_return_args (&image_add_vectors_proc, success);
-}
-
-static ProcArg image_add_vectors_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  },
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  },
-  {
-    GIMP_PDB_INT32,
-    "position",
-    "The vectors objects position"
-  }
-};
-
-static ProcRecord image_add_vectors_proc =
-{
-  "gimp-image-add-vectors",
-  "gimp-image-add-vectors",
-  "Add the specified vectors object to the image.",
-  "This procedure adds the specified vectors object to the gimage at the given position. If the position is specified as -1, then the vectors object is inserted at the top of the vectors stack.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  3,
-  image_add_vectors_inargs,
-  0,
-  NULL,
-  { { image_add_vectors_invoker } }
-};
-
-static Argument *
-image_remove_vectors_invoker (Gimp         *gimp,
-                              GimpContext  *context,
-                              GimpProgress *progress,
-                              Argument     *args)
-{
-  gboolean success = TRUE;
-  GimpImage *gimage;
-  GimpVectors *vectors;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
-
-  if (success)
-    {
-      gimp_image_remove_vectors (gimage, vectors);
-    }
-
-  return procedural_db_return_args (&image_remove_vectors_proc, success);
-}
-
-static ProcArg image_remove_vectors_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  },
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  }
-};
-
-static ProcRecord image_remove_vectors_proc =
-{
-  "gimp-image-remove-vectors",
-  "gimp-image-remove-vectors",
-  "Remove the specified path from the image.",
-  "This procedure removes the specified path from the image. If the path doesn't exist, an error is returned.",
-  "Simon Budig",
-  "Simon Budig",
-  "2005",
-  NULL,
-  GIMP_INTERNAL,
-  2,
-  image_remove_vectors_inargs,
-  0,
-  NULL,
-  { { image_remove_vectors_invoker } }
-};
-
-static Argument *
-image_raise_channel_invoker (Gimp         *gimp,
-                             GimpContext  *context,
-                             GimpProgress *progress,
-                             Argument     *args)
-{
-  gboolean success = TRUE;
-  GimpImage *gimage;
-  GimpChannel *channel;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
-    success = FALSE;
-
-  if (success)
-    {
-      success = gimp_image_raise_channel (gimage, channel);
-    }
-
-  return procedural_db_return_args (&image_raise_channel_proc, success);
-}
-
-static ProcArg image_raise_channel_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  },
-  {
-    GIMP_PDB_CHANNEL,
-    "channel",
-    "The channel to raise"
-  }
-};
-
-static ProcRecord image_raise_channel_proc =
-{
-  "gimp-image-raise-channel",
-  "gimp-image-raise-channel",
-  "Raise the specified channel in the image's channel stack",
-  "This procedure raises the specified channel one step in the existing channel stack. It will not move the channel if there is no channel above it.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  2,
-  image_raise_channel_inargs,
-  0,
-  NULL,
-  { { image_raise_channel_invoker } }
-};
-
-static Argument *
-image_lower_channel_invoker (Gimp         *gimp,
-                             GimpContext  *context,
-                             GimpProgress *progress,
-                             Argument     *args)
-{
-  gboolean success = TRUE;
-  GimpImage *gimage;
-  GimpChannel *channel;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
-    success = FALSE;
-
-  if (success)
-    {
-      success = gimp_image_lower_channel (gimage, channel);
-    }
-
-  return procedural_db_return_args (&image_lower_channel_proc, success);
-}
-
-static ProcArg image_lower_channel_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  },
-  {
-    GIMP_PDB_CHANNEL,
-    "channel",
-    "The channel to lower"
-  }
-};
-
-static ProcRecord image_lower_channel_proc =
-{
-  "gimp-image-lower-channel",
-  "gimp-image-lower-channel",
-  "Lower the specified channel in the image's channel stack",
-  "This procedure lowers the specified channel one step in the existing channel stack. It will not move the channel if there is no channel below it.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  2,
-  image_lower_channel_inargs,
-  0,
-  NULL,
-  { { image_lower_channel_invoker } }
 };
 
 static Argument *

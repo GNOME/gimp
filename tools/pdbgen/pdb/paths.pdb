@@ -18,12 +18,11 @@
 # "Perlized" from C source by Andy Thomas <alt@gimp.org>
 
 sub path_list {
-    $blurb = 'List the paths associated with the passed image.';
-    $help  = 'List the paths associated with the passed image.';
+    &std_pdb_deprecated('gimp-image-get-vectors');
 
-    &andy_pdb_misc('1999');
-
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
     $inargs[0]->{desc} = 'The ID of the image to list the paths from';
 
     @outargs = (
@@ -120,10 +119,7 @@ CODE
 }
 
 sub path_get_current {
-    $blurb = 'The name of the current path. Error if no paths.';
-    $help  = 'The name of the current path. Error if no paths.';
-
-    &andy_pdb_misc('1999');
+    &std_pdb_deprecated('gimp-image-get-active-vectors');
 
     @inargs = (
 	&std_image_arg
@@ -150,10 +146,7 @@ CODE
 }
 
 sub path_set_current {
-    $blurb = 'Sets the current path associated with the passed image.';
-    $help  = 'Sets a named path as the current path.';
-
-    &andy_pdb_misc('1999');
+    &std_pdb_deprecated('gimp-image-set-active-vectors');
 
     @inargs = (
 	&std_image_arg,
@@ -388,15 +381,7 @@ CODE
 }
 
 sub path_get_tattoo {
-    $blurb = 'Returns the tattoo associated with the name path.';
-
-    $help = <<'HELP';
-This procedure returns the tattoo associated with the specified path.  A
-tattoo is a unique and permanent identifier attached to a path that can
-be used to uniquely identify a path within an image even between sessions.
-HELP
-
-    &andy_pdb_misc('1999');
+    &std_pdb_deprecated('gimp-vectors-get-tattoo');
 
     @inargs = (
 	&std_image_arg,
@@ -424,17 +409,7 @@ CODE
 }
 
 sub path_set_tattoo {
-    $blurb = 'Sets the tattoo associated with the named path.';
-
-    $help = <<'HELP';
-This procedure sets the tattoo associated with the specified path.  A
-tattoo is a unique and permenant identifier attached to a path that
-can be used to uniquely identify a path within an image even between
-sessions. Note that the value passed to this function must have been
-obtained from a previous call to path_get_tattoo.
-HELP
-
-    &andy_pdb_misc('1999');
+    &std_pdb_deprecated('gimp-vectors-set-tattoo');
 
     @inargs = (
 	&std_image_arg,
@@ -460,16 +435,7 @@ CODE
 }
 
 sub get_path_by_tattoo {
-    $blurb = 'Return the name of the path with the given tattoo.';
-
-    $help = <<'HELP';
-The procedure returns the name of the path in the specified image
-which has the passed tattoo. The tattoos are unique within the image
-and will be preserved across sessions and through renaming of the path.
-An error is returned if no path with the specified tattoo can be found.
-HELP
-
-    &andy_pdb_misc('1999');
+    &std_pdb_deprecated('gimp-image-get-vectors-by-tattoo');
 
     @inargs = (
 	&std_image_arg,
@@ -497,10 +463,7 @@ CODE
 }
 
 sub path_delete {
-    $blurb = 'Delete the named path associated with the passed image.';
-    $help  = 'Delete the named path.';
-
-    &andy_pdb_misc('1999');
+    &std_pdb_deprecated('gimp-image-remove-vectors');
 
     @inargs = (
 	&std_image_arg,
@@ -524,15 +487,7 @@ CODE
 }
 
 sub path_get_locked {
-    $blurb = 'Returns the locked status associated with the named path.';
-
-    $help = <<'HELP';
-This procedure returns the lock status associated with the specified
-path.  A path can be "locked" which means that the transformation
-tool operations will also apply to the path.
-HELP
-
-    &andy_pdb_misc('1999');
+    &std_pdb_deprecated('gimp-vectors-get-linked');
 
     @inargs = (
 	&std_image_arg,
@@ -561,15 +516,7 @@ CODE
 }
 
 sub path_set_locked {
-    $blurb = 'Set the locked status associated with the named path.';
-
-    $help = <<'HELP';
-This procedure sets the lock status associated with the specified path.  A
-path can be "locked" which means that the transformation tool operations
-will also apply to the path.
-HELP
-
-    &andy_pdb_misc('1999');
+    &std_pdb_deprecated('gimp-vectors-set-linked');
 
     @inargs = (
 	&std_image_arg,
@@ -586,65 +533,6 @@ HELP
 
   if (vectors)
     gimp_item_set_linked (GIMP_ITEM (vectors), locked, TRUE);
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub path_get_visible {
-    $blurb = 'Get the visibility of the named path.';
-    $help  = 'This procedure returns the visibility of the specified path.';
-
-    &andy_pdb_misc('1999');
-
-    @inargs = (
-	&std_image_arg,
-	{ name => 'name', type => 'string',
-	  desc => 'The name of the path whose visibility should be obtained.' }
-    );
-
-    @outargs = (
-	{ name => 'visible', type => 'boolean',
-	  desc => 'TRUE if the path is visible, FALSE otherwise' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
-
-  if (vectors)
-    visible = gimp_item_get_visible (GIMP_ITEM (vectors));
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub path_set_visible {
-    $blurb = 'Sets the visibility of the named path.';
-    $help  = "This procedure sets the specified path's visibility.";
-
-    &neo_pdb_misc('2005', '2.4');
-
-    @inargs = (
-	&std_image_arg,
-	{ name => 'name', type => 'string',
-	  desc => 'The name of the path whose visibility should be set' },
-	{ name => 'visible', type => 'boolean',
-	  desc => 'The new path visibility' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
-
-  if (vectors)
-    gimp_item_set_visible (GIMP_ITEM (vectors), visible, TRUE);
   else
     success = FALSE;
 }
@@ -774,7 +662,6 @@ CODE
             path_stroke_current path_get_point_at_dist
 	    path_get_tattoo path_set_tattoo get_path_by_tattoo
             path_get_locked path_set_locked
-            path_get_visible path_set_visible
             path_to_selection path_import path_import_string);
 %exports = (app => [@procs], lib => [@procs]);
 

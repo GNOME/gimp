@@ -32,8 +32,7 @@
  * @image_ID: The image.
  * @name: the name of the new vector object.
  *
- * Creates a new empty vectors object. Needs to be added to an image
- * using gimp_image_add_vectors.
+ * Creates a new empty vectors object.
  *
  * Creates a new empty vectors object. Needs to be added to an image
  * using gimp_image_add_vectors.

@@ -159,6 +159,151 @@ gimp_parasite_list (gint    *num_parasites,
 }
 
 /**
+ * gimp_image_parasite_find:
+ * @image_ID: The image.
+ * @name: The name of the parasite to find.
+ *
+ * Finds the named parasite in an image
+ *
+ * Finds and returns the named parasite that was previously attached to
+ * an image.
+ *
+ * Returns: The found parasite.
+ */
+GimpParasite *
+gimp_image_parasite_find (gint32       image_ID,
+			  const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpParasite *parasite = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-image-parasite-find",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    parasite = gimp_parasite_copy (&return_vals[1].data.d_parasite);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return parasite;
+}
+
+/**
+ * gimp_image_parasite_attach:
+ * @image_ID: The image.
+ * @parasite: The parasite to attach to an image.
+ *
+ * Add a parasite to an image.
+ *
+ * This procedure attaches a parasite to an image. It has no return
+ * values.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_parasite_attach (gint32        image_ID,
+			    GimpParasite *parasite)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-parasite-attach",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_PARASITE, parasite,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_parasite_detach:
+ * @image_ID: The image.
+ * @name: The name of the parasite to detach from an image.
+ *
+ * Removes a parasite from an image.
+ *
+ * This procedure detaches a parasite from an image. It has no return
+ * values.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_parasite_detach (gint32       image_ID,
+			    const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-parasite-detach",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_parasite_list:
+ * @image_ID: The image.
+ * @num_parasites: The number of attached parasites.
+ * @parasites: The names of currently attached parasites.
+ *
+ * List all parasites.
+ *
+ * Returns a list of all currently attached parasites.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_parasite_list (gint32    image_ID,
+			  gint     *num_parasites,
+			  gchar  ***parasites)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+  gint i;
+
+  return_vals = gimp_run_procedure ("gimp-image-parasite-list",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
+
+  *num_parasites = 0;
+  *parasites = NULL;
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
+    {
+      *num_parasites = return_vals[1].data.d_int32;
+      *parasites = g_new (gchar *, *num_parasites);
+      for (i = 0; i < *num_parasites; i++)
+	(*parasites)[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_drawable_parasite_find:
  * @drawable_ID: The drawable.
  * @name: The name of the parasite to find.
@@ -304,28 +449,30 @@ gimp_drawable_parasite_list (gint32    drawable_ID,
 }
 
 /**
- * gimp_image_parasite_find:
- * @image_ID: The image.
+ * gimp_vectors_parasite_find:
+ * @vectors_ID: The vectors object.
  * @name: The name of the parasite to find.
  *
- * Finds the named parasite in an image
+ * Finds the named parasite in a vectors object
  *
  * Finds and returns the named parasite that was previously attached to
- * an image.
+ * a vectors object.
  *
  * Returns: The found parasite.
+ *
+ * Since: GIMP 2.4
  */
 GimpParasite *
-gimp_image_parasite_find (gint32       image_ID,
-			  const gchar *name)
+gimp_vectors_parasite_find (gint32       vectors_ID,
+			    const gchar *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   GimpParasite *parasite = NULL;
 
-  return_vals = gimp_run_procedure ("gimp-image-parasite-find",
+  return_vals = gimp_run_procedure ("gimp-vectors-parasite-find",
 				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);
 
@@ -338,28 +485,30 @@ gimp_image_parasite_find (gint32       image_ID,
 }
 
 /**
- * gimp_image_parasite_attach:
- * @image_ID: The image.
- * @parasite: The parasite to attach to an image.
+ * gimp_vectors_parasite_attach:
+ * @vectors_ID: The vectors object.
+ * @parasite: The parasite to attach to a vectors object.
  *
- * Add a parasite to an image.
+ * Add a parasite to a vectors object
  *
- * This procedure attaches a parasite to an image. It has no return
- * values.
+ * This procedure attaches a parasite to a vectors object. It has no
+ * return values.
  *
  * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
  */
 gboolean
-gimp_image_parasite_attach (gint32        image_ID,
-			    GimpParasite *parasite)
+gimp_vectors_parasite_attach (gint32        vectors_ID,
+			      GimpParasite *parasite)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-image-parasite-attach",
+  return_vals = gimp_run_procedure ("gimp-vectors-parasite-attach",
 				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_PARASITE, parasite,
 				    GIMP_PDB_END);
 
@@ -371,28 +520,30 @@ gimp_image_parasite_attach (gint32        image_ID,
 }
 
 /**
- * gimp_image_parasite_detach:
- * @image_ID: The image.
- * @name: The name of the parasite to detach from an image.
+ * gimp_vectors_parasite_detach:
+ * @vectors_ID: The vectors object.
+ * @name: The name of the parasite to detach from a vectors object.
  *
- * Removes a parasite from an image.
+ * Removes a parasite from a vectors object
  *
- * This procedure detaches a parasite from an image. It has no return
- * values.
+ * This procedure detaches a parasite from a vectors object. It has no
+ * return values.
  *
  * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
  */
 gboolean
-gimp_image_parasite_detach (gint32       image_ID,
-			    const gchar *name)
+gimp_vectors_parasite_detach (gint32       vectors_ID,
+			      const gchar *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-image-parasite-detach",
+  return_vals = gimp_run_procedure ("gimp-vectors-parasite-detach",
 				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);
 
@@ -404,8 +555,8 @@ gimp_image_parasite_detach (gint32       image_ID,
 }
 
 /**
- * gimp_image_parasite_list:
- * @image_ID: The image.
+ * gimp_vectors_parasite_list:
+ * @vectors_ID: The vectors object.
  * @num_parasites: The number of attached parasites.
  * @parasites: The names of currently attached parasites.
  *
@@ -414,20 +565,22 @@ gimp_image_parasite_detach (gint32       image_ID,
  * Returns a list of all currently attached parasites.
  *
  * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
  */
 gboolean
-gimp_image_parasite_list (gint32    image_ID,
-			  gint     *num_parasites,
-			  gchar  ***parasites)
+gimp_vectors_parasite_list (gint32    vectors_ID,
+			    gint     *num_parasites,
+			    gchar  ***parasites)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
   gint i;
 
-  return_vals = gimp_run_procedure ("gimp-image-parasite-list",
+  return_vals = gimp_run_procedure ("gimp-vectors-parasite-list",
 				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_VECTORS, vectors_ID,
 				    GIMP_PDB_END);
 
   *num_parasites = 0;

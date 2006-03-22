@@ -33,7 +33,6 @@
 #include "gimp-intl.h"
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpbezierstroke.h"
-#include "vectors/gimpvectors-compat.h"
 #include "vectors/gimpvectors.h"
 
 static ProcRecord vectors_new_proc;
@@ -148,7 +147,7 @@ static ProcRecord vectors_new_proc =
 {
   "gimp-vectors-new",
   "gimp-vectors-new",
-  "Creates a new empty vectors object. Needs to be added to an image using gimp_image_add_vectors.",
+  "Creates a new empty vectors object.",
   "Creates a new empty vectors object. Needs to be added to an image using gimp_image_add_vectors.",
   "Simon Budig",
   "Simon Budig",

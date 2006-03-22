@@ -2358,12 +2358,11 @@ CODE
             image_add_layer image_remove_layer
             image_raise_layer image_lower_layer
             image_raise_layer_to_top image_lower_layer_to_bottom
+            image_add_channel image_remove_channel
+            image_raise_channel image_lower_channel
+            image_add_vectors image_remove_vectors
             image_raise_vectors image_lower_vectors
             image_raise_vectors_to_top image_lower_vectors_to_bottom
-            image_add_channel image_remove_channel
-            image_add_vectors
-            image_remove_vectors
-            image_raise_channel image_lower_channel
             image_flatten image_merge_visible_layers image_merge_down
             image_add_layer_mask image_remove_layer_mask
             image_get_colormap image_set_colormap

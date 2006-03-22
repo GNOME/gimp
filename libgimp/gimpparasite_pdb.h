@@ -34,6 +34,15 @@ gboolean      gimp_parasite_attach          (GimpParasite   *parasite);
 gboolean      gimp_parasite_detach          (const gchar    *name);
 gboolean      gimp_parasite_list            (gint           *num_parasites,
 					     gchar        ***parasites);
+GimpParasite* gimp_image_parasite_find      (gint32          image_ID,
+					     const gchar    *name);
+gboolean      gimp_image_parasite_attach    (gint32          image_ID,
+					     GimpParasite   *parasite);
+gboolean      gimp_image_parasite_detach    (gint32          image_ID,
+					     const gchar    *name);
+gboolean      gimp_image_parasite_list      (gint32          image_ID,
+					     gint           *num_parasites,
+					     gchar        ***parasites);
 GimpParasite* gimp_drawable_parasite_find   (gint32          drawable_ID,
 					     const gchar    *name);
 gboolean      gimp_drawable_parasite_attach (gint32          drawable_ID,
@@ -43,13 +52,13 @@ gboolean      gimp_drawable_parasite_detach (gint32          drawable_ID,
 gboolean      gimp_drawable_parasite_list   (gint32          drawable_ID,
 					     gint           *num_parasites,
 					     gchar        ***parasites);
-GimpParasite* gimp_image_parasite_find      (gint32          image_ID,
+GimpParasite* gimp_vectors_parasite_find    (gint32          vectors_ID,
 					     const gchar    *name);
-gboolean      gimp_image_parasite_attach    (gint32          image_ID,
+gboolean      gimp_vectors_parasite_attach  (gint32          vectors_ID,
 					     GimpParasite   *parasite);
-gboolean      gimp_image_parasite_detach    (gint32          image_ID,
+gboolean      gimp_vectors_parasite_detach  (gint32          vectors_ID,
 					     const gchar    *name);
-gboolean      gimp_image_parasite_list      (gint32          image_ID,
+gboolean      gimp_vectors_parasite_list    (gint32          vectors_ID,
 					     gint           *num_parasites,
 					     gchar        ***parasites);
 

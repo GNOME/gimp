@@ -52,8 +52,6 @@ static ProcRecord path_set_tattoo_proc;
 static ProcRecord get_path_by_tattoo_proc;
 static ProcRecord path_get_locked_proc;
 static ProcRecord path_set_locked_proc;
-static ProcRecord path_get_visible_proc;
-static ProcRecord path_set_visible_proc;
 static ProcRecord path_to_selection_proc;
 static ProcRecord path_import_proc;
 static ProcRecord path_import_string_proc;
@@ -74,8 +72,6 @@ register_paths_procs (Gimp *gimp)
   procedural_db_register (gimp, &get_path_by_tattoo_proc);
   procedural_db_register (gimp, &path_get_locked_proc);
   procedural_db_register (gimp, &path_set_locked_proc);
-  procedural_db_register (gimp, &path_get_visible_proc);
-  procedural_db_register (gimp, &path_set_visible_proc);
   procedural_db_register (gimp, &path_to_selection_proc);
   procedural_db_register (gimp, &path_import_proc);
   procedural_db_register (gimp, &path_import_string_proc);
@@ -140,12 +136,12 @@ static ProcRecord path_list_proc =
 {
   "gimp-path-list",
   "gimp-path-list",
-  "List the paths associated with the passed image.",
-  "List the paths associated with the passed image.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1999",
-  NULL,
+  "This procedure is deprecated! Use 'gimp-image-get-vectors' instead.",
+  "This procedure is deprecated! Use 'gimp-image-get-vectors' instead.",
+  "",
+  "",
+  "",
+  "gimp-image-get-vectors",
   GIMP_INTERNAL,
   1,
   path_list_inargs,
@@ -209,12 +205,12 @@ static ProcRecord path_get_current_proc =
 {
   "gimp-path-get-current",
   "gimp-path-get-current",
-  "The name of the current path. Error if no paths.",
-  "The name of the current path. Error if no paths.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1999",
-  NULL,
+  "This procedure is deprecated! Use 'gimp-image-get-active-vectors' instead.",
+  "This procedure is deprecated! Use 'gimp-image-get-active-vectors' instead.",
+  "",
+  "",
+  "",
+  "gimp-image-get-active-vectors",
   GIMP_INTERNAL,
   1,
   path_get_current_inargs,
@@ -272,12 +268,12 @@ static ProcRecord path_set_current_proc =
 {
   "gimp-path-set-current",
   "gimp-path-set-current",
-  "Sets the current path associated with the passed image.",
-  "Sets a named path as the current path.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1999",
-  NULL,
+  "This procedure is deprecated! Use 'gimp-image-set-active-vectors' instead.",
+  "This procedure is deprecated! Use 'gimp-image-set-active-vectors' instead.",
+  "",
+  "",
+  "",
+  "gimp-image-set-active-vectors",
   GIMP_INTERNAL,
   2,
   path_set_current_inargs,
@@ -335,12 +331,12 @@ static ProcRecord path_delete_proc =
 {
   "gimp-path-delete",
   "gimp-path-delete",
-  "Delete the named path associated with the passed image.",
-  "Delete the named path.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1999",
-  NULL,
+  "This procedure is deprecated! Use 'gimp-image-remove-vectors' instead.",
+  "This procedure is deprecated! Use 'gimp-image-remove-vectors' instead.",
+  "",
+  "",
+  "",
+  "gimp-image-remove-vectors",
   GIMP_INTERNAL,
   2,
   path_delete_inargs,
@@ -867,12 +863,12 @@ static ProcRecord path_get_tattoo_proc =
 {
   "gimp-path-get-tattoo",
   "gimp-path-get-tattoo",
-  "Returns the tattoo associated with the name path.",
-  "This procedure returns the tattoo associated with the specified path. A tattoo is a unique and permanent identifier attached to a path that can be used to uniquely identify a path within an image even between sessions.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1999",
-  NULL,
+  "This procedure is deprecated! Use 'gimp-vectors-get-tattoo' instead.",
+  "This procedure is deprecated! Use 'gimp-vectors-get-tattoo' instead.",
+  "",
+  "",
+  "",
+  "gimp-vectors-get-tattoo",
   GIMP_INTERNAL,
   2,
   path_get_tattoo_inargs,
@@ -938,12 +934,12 @@ static ProcRecord path_set_tattoo_proc =
 {
   "gimp-path-set-tattoo",
   "gimp-path-set-tattoo",
-  "Sets the tattoo associated with the named path.",
-  "This procedure sets the tattoo associated with the specified path. A tattoo is a unique and permenant identifier attached to a path that can be used to uniquely identify a path within an image even between sessions. Note that the value passed to this function must have been obtained from a previous call to path_get_tattoo.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1999",
-  NULL,
+  "This procedure is deprecated! Use 'gimp-vectors-set-tattoo' instead.",
+  "This procedure is deprecated! Use 'gimp-vectors-set-tattoo' instead.",
+  "",
+  "",
+  "",
+  "gimp-vectors-set-tattoo",
   GIMP_INTERNAL,
   3,
   path_set_tattoo_inargs,
@@ -1015,12 +1011,12 @@ static ProcRecord get_path_by_tattoo_proc =
 {
   "gimp-get-path-by-tattoo",
   "gimp-get-path-by-tattoo",
-  "Return the name of the path with the given tattoo.",
-  "The procedure returns the name of the path in the specified image which has the passed tattoo. The tattoos are unique within the image and will be preserved across sessions and through renaming of the path. An error is returned if no path with the specified tattoo can be found.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1999",
-  NULL,
+  "This procedure is deprecated! Use 'gimp-image-get-vectors-by-tattoo' instead.",
+  "This procedure is deprecated! Use 'gimp-image-get-vectors-by-tattoo' instead.",
+  "",
+  "",
+  "",
+  "gimp-image-get-vectors-by-tattoo",
   GIMP_INTERNAL,
   2,
   get_path_by_tattoo_inargs,
@@ -1094,12 +1090,12 @@ static ProcRecord path_get_locked_proc =
 {
   "gimp-path-get-locked",
   "gimp-path-get-locked",
-  "Returns the locked status associated with the named path.",
-  "This procedure returns the lock status associated with the specified path. A path can be \"locked\" which means that the transformation tool operations will also apply to the path.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1999",
-  NULL,
+  "This procedure is deprecated! Use 'gimp-vectors-get-linked' instead.",
+  "This procedure is deprecated! Use 'gimp-vectors-get-linked' instead.",
+  "",
+  "",
+  "",
+  "gimp-vectors-get-linked",
   GIMP_INTERNAL,
   2,
   path_get_locked_inargs,
@@ -1165,168 +1161,18 @@ static ProcRecord path_set_locked_proc =
 {
   "gimp-path-set-locked",
   "gimp-path-set-locked",
-  "Set the locked status associated with the named path.",
-  "This procedure sets the lock status associated with the specified path. A path can be \"locked\" which means that the transformation tool operations will also apply to the path.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1999",
-  NULL,
+  "This procedure is deprecated! Use 'gimp-vectors-set-linked' instead.",
+  "This procedure is deprecated! Use 'gimp-vectors-set-linked' instead.",
+  "",
+  "",
+  "",
+  "gimp-vectors-set-linked",
   GIMP_INTERNAL,
   3,
   path_set_locked_inargs,
   0,
   NULL,
   { { path_set_locked_invoker } }
-};
-
-static Argument *
-path_get_visible_invoker (Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  GimpImage *gimage;
-  gchar *name;
-  gboolean visible = FALSE;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  if (success)
-    {
-      GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
-
-      if (vectors)
-        visible = gimp_item_get_visible (GIMP_ITEM (vectors));
-      else
-        success = FALSE;
-    }
-
-  return_args = procedural_db_return_args (&path_get_visible_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = visible;
-
-  return return_args;
-}
-
-static ProcArg path_get_visible_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  },
-  {
-    GIMP_PDB_STRING,
-    "name",
-    "The name of the path whose visibility should be obtained."
-  }
-};
-
-static ProcArg path_get_visible_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "visible",
-    "TRUE if the path is visible, FALSE otherwise"
-  }
-};
-
-static ProcRecord path_get_visible_proc =
-{
-  "gimp-path-get-visible",
-  "gimp-path-get-visible",
-  "Get the visibility of the named path.",
-  "This procedure returns the visibility of the specified path.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  2,
-  path_get_visible_inargs,
-  1,
-  path_get_visible_outargs,
-  { { path_get_visible_invoker } }
-};
-
-static Argument *
-path_set_visible_invoker (Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
-{
-  gboolean success = TRUE;
-  GimpImage *gimage;
-  gchar *name;
-  gboolean visible;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  visible = args[2].value.pdb_int ? TRUE : FALSE;
-
-  if (success)
-    {
-      GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
-
-      if (vectors)
-        gimp_item_set_visible (GIMP_ITEM (vectors), visible, TRUE);
-      else
-        success = FALSE;
-    }
-
-  return procedural_db_return_args (&path_set_visible_proc, success);
-}
-
-static ProcArg path_set_visible_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  },
-  {
-    GIMP_PDB_STRING,
-    "name",
-    "The name of the path whose visibility should be set"
-  },
-  {
-    GIMP_PDB_INT32,
-    "visible",
-    "The new path visibility"
-  }
-};
-
-static ProcRecord path_set_visible_proc =
-{
-  "gimp-path-set-visible",
-  "gimp-path-set-visible",
-  "Sets the visibility of the named path.",
-  "This procedure sets the specified path's visibility.",
-  "Sven Neumann <sven@gimp.org>",
-  "Sven Neumann",
-  "2005",
-  NULL,
-  GIMP_INTERNAL,
-  3,
-  path_set_visible_inargs,
-  0,
-  NULL,
-  { { path_set_visible_invoker } }
 };
 
 static Argument *

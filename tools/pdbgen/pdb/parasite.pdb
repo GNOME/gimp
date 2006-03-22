@@ -17,34 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub drawable_arg () {{
-    name => 'drawable',
-    type => 'drawable',
-    desc => 'The drawable'
-}}
-
-sub convert_proc {
-    my ($pdb_type, $arg, $var, $core_type) = @_;
-    my $desc = ($pdb_type =~ /^[aeiou]/ ? 'an ' : 'a ') . $pdb_type;
-
-    foreach ($blurb, $help, $inargs[0]->{desc}) { s/the gimp/$desc/e }
-
-    unshift @inargs, $arg;
-
-    # ugly double substitution
-    # gimp_parasite_copy -> GIMP_parasite_copy -> gimp_parasite_copy
-    # because of a lack op perl knowledge :)  --Mitch
-
-    $invoke{code} =~ s/gimp_parasite_copy/GIMP_parasite_copy/;
-
-    $invoke{code} =~ s/gimp_/"gimp_$core_type\_"/e;
-    $invoke{code} =~ s/gimp, /"$var, "/e;
-
-    $invoke{code} =~ s/GIMP_parasite_copy/gimp_parasite_copy/;
-}
-
-# The defs
-
 sub parasite_find {
     $blurb = 'Finds the named parasite.';
 
@@ -68,7 +40,9 @@ HELP
 	code => <<'CODE'
 {
   parasite = gimp_parasite_copy (gimp_parasite_find (gimp, name));
-  success = parasite != NULL;
+
+  if (! parasite)
+    success = FALSE;
 }
 CODE
     );
@@ -88,7 +62,13 @@ HELP
 	  desc => 'The parasite to attach to the gimp' }
     );
 
-    %invoke = ( code => 'gimp_parasite_attach (gimp, parasite);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_parasite_attach (gimp, parasite);
+}
+CODE
+    );
 }
 
 sub parasite_detach {
@@ -105,7 +85,13 @@ HELP
 	  desc => 'The name of the parasite to detach from the gimp.' }
     );
 
-    %invoke = ( code => 'gimp_parasite_detach (gimp, name);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_parasite_detach (gimp, name);
+}
+CODE
+    );
 }
 
 sub parasite_list {
@@ -120,45 +106,356 @@ sub parasite_list {
 	  array => { desc => 'The number of attached parasites' } }
     );
 
-    %invoke = ( code => 'parasites = gimp_parasite_list (gimp, &num_parasites);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  parasites = gimp_parasite_list (gimp, &num_parasites);
+}
+CODE
+    );
+}
+
+sub image_parasite_find {
+    $blurb = 'Finds the named parasite in an image';
+
+    $help = <<'HELP';
+Finds and returns the named parasite that was previously attached to an image.
+HELP
+
+    &jay_pdb_misc('1998');
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the parasite to find' }
+    );
+
+    @outargs = (
+	{ name => 'parasite', type => 'parasite',
+	  desc => 'The found parasite' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  parasite = gimp_parasite_copy (gimp_image_parasite_find (gimage, name));
+
+  if (! parasite)
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub image_parasite_attach {
+    $blurb = 'Add a parasite to an image.';
+
+    $help = <<'HELP';
+This procedure attaches a parasite to an image. It has no return values.
+HELP
+
+    &jay_pdb_misc('1998');
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'parasite', type => 'parasite',
+	  desc => 'The parasite to attach to an image' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_image_parasite_attach (gimage, parasite);
+}
+CODE
+    );
+}
+
+sub image_parasite_detach {
+    $blurb = 'Removes a parasite from an image.';
+
+    $help = <<'HELP';
+This procedure detaches a parasite from an image. It has no return values.
+HELP
+
+    &jay_pdb_misc('1998');
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the parasite to detach from an image.' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_image_parasite_detach (gimage, name);
+}
+CODE
+    );
+}
+
+sub image_parasite_list {
+    $blurb = 'List all parasites.';
+    $help  = 'Returns a list of all currently attached parasites.';
+
+    &marc_pdb_misc('1999');
+
+    @inargs = (
+	&std_image_arg
+    );
+
+    @outargs = (
+	{ name => 'parasites', type => 'stringarray', void_ret => 1,
+	  desc => 'The names of currently attached parasites',
+	  array => { desc => 'The number of attached parasites' } }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  parasites = gimp_image_parasite_list (gimage, &num_parasites);
+}
+CODE
+    );
+}
+
+sub drawable_parasite_find {
+    $blurb = 'Finds the named parasite in a drawable';
+
+    $help = <<'HELP';
+Finds and returns the named parasite that was previously attached to a drawable.
+HELP
+
+    &jay_pdb_misc('1998');
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the parasite to find' }
+    );
+
+    @outargs = (
+	{ name => 'parasite', type => 'parasite',
+	  desc => 'The found parasite' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  parasite = gimp_parasite_copy (gimp_item_parasite_find (GIMP_ITEM (drawable),
+                                                          name));
+
+  if (! parasite)
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub drawable_parasite_attach {
+    $blurb = 'Add a parasite to a drawable.';
+
+    $help = <<'HELP';
+This procedure attaches a parasite to a drawable. It has no return values.
+HELP
+
+    &jay_pdb_misc('1998');
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'parasite', type => 'parasite',
+	  desc => 'The parasite to attach to a drawable' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_item_parasite_attach (GIMP_ITEM (drawable), parasite);
+}
+CODE
+    );
+}
+
+sub drawable_parasite_detach {
+    $blurb = 'Removes a parasite from a drawable.';
+
+    $help = <<'HELP';
+This procedure detaches a parasite from a drawable. It has no return values.
+HELP
+
+    &jay_pdb_misc('1998');
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the parasite to detach from a drawable.' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_item_parasite_detach (GIMP_ITEM (drawable), name);
+}
+CODE
+    );
+}
+
+sub drawable_parasite_list {
+    $blurb = 'List all parasites.';
+    $help  = 'Returns a list of all currently attached parasites.';
+
+    &marc_pdb_misc('1999');
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    @outargs = (
+	{ name => 'parasites', type => 'stringarray', void_ret => 1,
+	  desc => 'The names of currently attached parasites',
+	  array => { desc => 'The number of attached parasites' } }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  parasites = gimp_item_parasite_list (GIMP_ITEM (drawable), &num_parasites);
+}
+CODE
+    );
+}
+
+sub vectors_parasite_find {
+    $blurb = 'Finds the named parasite in a vectors object';
+
+    $help = <<'HELP';
+Finds and returns the named parasite that was previously attached
+to a vectors object.
+HELP
+
+    &mitch_pdb_misc('2006', '2.4');
+
+    @inargs = (
+	{ name => 'vectors', type => 'vectors',
+	  desc => 'The vectors object' },
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the parasite to find' }
+    );
+
+    @outargs = (
+	{ name => 'parasite', type => 'parasite',
+	  desc => 'The found parasite' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  parasite = gimp_parasite_copy (gimp_item_parasite_find (GIMP_ITEM (vectors),
+                                                          name));
+
+  if (! parasite)
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub vectors_parasite_attach {
+    $blurb = 'Add a parasite to a vectors object';
+
+    $help = <<'HELP';
+This procedure attaches a parasite to a vectors object. It has no return values.
+HELP
+
+    &mitch_pdb_misc('2006', '2.4');
+
+    @inargs = (
+	{ name => 'vectors', type => 'vectors',
+	  desc => 'The vectors object' },
+	{ name => 'parasite', type => 'parasite',
+	  desc => 'The parasite to attach to a vectors object' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_item_parasite_attach (GIMP_ITEM (vectors), parasite);
+}
+CODE
+    );
+}
+
+sub vectors_parasite_detach {
+    $blurb = 'Removes a parasite from a vectors object';
+
+    $help = <<'HELP';
+This procedure detaches a parasite from a vectors object.
+It has no return values.
+HELP
+
+    &mitch_pdb_misc('2006', '2.4');
+
+    @inargs = (
+	{ name => 'vectors', type => 'vectors',
+	  desc => 'The vectors object' },
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the parasite to detach from a vectors object.' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_item_parasite_detach (GIMP_ITEM (vectors), name);
+}
+CODE
+    );
+}
+
+sub vectors_parasite_list {
+    $blurb = 'List all parasites.';
+    $help  = 'Returns a list of all currently attached parasites.';
+
+    &mitch_pdb_misc('2006', '2.4');
+
+    @inargs = (
+	{ name => 'vectors', type => 'vectors',
+	  desc => 'The vectors object' }
+    );
+
+    @outargs = (
+	{ name => 'parasites', type => 'stringarray', void_ret => 1,
+	  desc => 'The names of currently attached parasites',
+	  array => { desc => 'The number of attached parasites' } }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  parasites = gimp_item_parasite_list (GIMP_ITEM (vectors), &num_parasites);
+}
+CODE
+    );
 }
 
 @headers = qw("core/gimp-parasites.h");
 
-@procs = qw(parasite_find parasite_attach parasite_detach parasite_list);
-
-@types = (
-    ['drawable', '&drawable_arg' , 'GIMP_ITEM (drawable)', 'item'  ],
-    ['image'   , '&std_image_arg', 'gimage',               'image' ]
-);
-
-foreach $type (@types) {
-    foreach (@procs[0..3]) {
-        my $desc = ($type->[0] =~ /^[aeiou]/ ? 'an ' : 'a ') . $type->[0];
-        my $args = join(', ', map { /^&/ ? $_ : "'$_'" } @$type);
-	my $pre = ""; my $post = "";
-
-	if (/find/) { 
-	    $pre = "\$blurb =~ s/\\.\$/ in $desc/;";
-	}
-	elsif (/list/) {
-	    $pre = "\@inargs = ( $type->[1] );";
-    	    $post = "\@inargs = ( $type->[1] );";
-	}
-
-	eval <<SUB;
-sub $type->[0]_$_ {
-    \&$_;
-    $pre
-    &convert_proc($args);
-    $post;
-}
-SUB
-
-	push @procs, "$type->[0]_$_";
-    }
-}
-
+@procs = qw(parasite_find
+            parasite_attach parasite_detach
+            parasite_list
+	    image_parasite_find
+	    image_parasite_attach image_parasite_detach
+	    image_parasite_list
+	    drawable_parasite_find
+	    drawable_parasite_attach drawable_parasite_detach
+	    drawable_parasite_list
+	    vectors_parasite_find
+	    vectors_parasite_attach vectors_parasite_detach
+	    vectors_parasite_list);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Parasite procedures';

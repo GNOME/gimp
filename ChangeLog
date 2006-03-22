@@ -1,5 +1,32 @@
 2006-03-22  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/image.pdb: reordered vectors procedures.
+
+	* tools/pdbgen/pdb/parasite.pdb: removed all utility functions
+	and added parasite procedures for vectors.
+
+	* tools/pdbgen/pdb/paths.pdb: removed get_visible() and
+	set_visible(), deprecated all procedures that are already
+	implemented in the vectors namespace.
+
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/vectors.pdb: minor cleanup.
+
+	* libgimp/gimp.def: changed accordingly.
+
+	* app/pdb/channel_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/internal_procs.c
+	* app/pdb/parasite_cmds.c
+	* app/pdb/paths_cmds.c
+	* app/pdb/vectors_cmds.c
+	* libgimp/gimpimage_pdb.[ch]
+	* libgimp/gimpparasite_pdb.[ch]
+	* libgimp/gimppaths_pdb.[ch]
+	* libgimp/gimpvectors_pdb.c: regenerated.
+
+2006-03-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/core-enums.h: export GimpBrushGeneratedShape to the PDB.
 
 	* tools/pdbgen/pdb/brush.pdb: use it instead of int32.

@@ -32,9 +32,7 @@
  * @image_ID: The ID of the image to list the paths from.
  * @num_paths: The number of paths returned.
  *
- * List the paths associated with the passed image.
- *
- * List the paths associated with the passed image.
+ * This procedure is deprecated! Use gimp_image_get_vectors() instead.
  *
  * Returns: List of the paths belonging to this image.
  */
@@ -71,9 +69,8 @@ gimp_path_list (gint32  image_ID,
  * gimp_path_get_current:
  * @image_ID: The ID of the image to get the current path from.
  *
- * The name of the current path. Error if no paths.
- *
- * The name of the current path. Error if no paths.
+ * This procedure is deprecated! Use gimp_image_get_active_vectors()
+ * instead.
  *
  * Returns: The name of the current path.
  */
@@ -102,9 +99,8 @@ gimp_path_get_current (gint32 image_ID)
  * @image_ID: The ID of the image in which a path will become current.
  * @name: The name of the path to make current.
  *
- * Sets the current path associated with the passed image.
- *
- * Sets a named path as the current path.
+ * This procedure is deprecated! Use gimp_image_set_active_vectors()
+ * instead.
  *
  * Returns: TRUE on success.
  */
@@ -134,9 +130,8 @@ gimp_path_set_current (gint32       image_ID,
  * @image_ID: The ID of the image to delete the path from.
  * @name: The name of the path to delete.
  *
- * Delete the named path associated with the passed image.
- *
- * Delete the named path.
+ * This procedure is deprecated! Use gimp_image_remove_vectors()
+ * instead.
  *
  * Returns: TRUE on success.
  */
@@ -330,12 +325,7 @@ gimp_path_get_point_at_dist (gint32   image_ID,
  * @image_ID: The image.
  * @name: The name of the path whose tattoo should be obtained.
  *
- * Returns the tattoo associated with the name path.
- *
- * This procedure returns the tattoo associated with the specified
- * path. A tattoo is a unique and permanent identifier attached to a
- * path that can be used to uniquely identify a path within an image
- * even between sessions.
+ * This procedure is deprecated! Use gimp_vectors_get_tattoo() instead.
  *
  * Returns: The tattoo associated with the named path.
  */
@@ -367,13 +357,7 @@ gimp_path_get_tattoo (gint32       image_ID,
  * @name: the name of the path whose tattoo should be set.
  * @tattovalue: The tattoo associated with the name path. Only values returned from 'path_get_tattoo' should be used here.
  *
- * Sets the tattoo associated with the named path.
- *
- * This procedure sets the tattoo associated with the specified path. A
- * tattoo is a unique and permenant identifier attached to a path that
- * can be used to uniquely identify a path within an image even between
- * sessions. Note that the value passed to this function must have been
- * obtained from a previous call to path_get_tattoo.
+ * This procedure is deprecated! Use gimp_vectors_set_tattoo() instead.
  *
  * Returns: TRUE on success.
  */
@@ -405,13 +389,8 @@ gimp_path_set_tattoo (gint32       image_ID,
  * @image_ID: The image.
  * @tattoo: The tattoo of the required path.
  *
- * Return the name of the path with the given tattoo.
- *
- * The procedure returns the name of the path in the specified image
- * which has the passed tattoo. The tattoos are unique within the image
- * and will be preserved across sessions and through renaming of the
- * path. An error is returned if no path with the specified tattoo can
- * be found.
+ * This procedure is deprecated! Use gimp_image_get_vectors_by_tattoo()
+ * instead.
  *
  * Returns: The name of the path with the specified tattoo.
  */
@@ -442,11 +421,7 @@ gimp_get_path_by_tattoo (gint32 image_ID,
  * @image_ID: The image.
  * @name: The name of the path whose locked status should be obtained.
  *
- * Returns the locked status associated with the named path.
- *
- * This procedure returns the lock status associated with the specified
- * path. A path can be \"locked\" which means that the transformation
- * tool operations will also apply to the path.
+ * This procedure is deprecated! Use gimp_vectors_get_linked() instead.
  *
  * Returns: TRUE if the path is locked, FALSE otherwise.
  */
@@ -478,11 +453,7 @@ gimp_path_get_locked (gint32       image_ID,
  * @name: the name of the path whose locked status should be set.
  * @locked: Whether the path is locked.
  *
- * Set the locked status associated with the named path.
- *
- * This procedure sets the lock status associated with the specified
- * path. A path can be \"locked\" which means that the transformation
- * tool operations will also apply to the path.
+ * This procedure is deprecated! Use gimp_vectors_set_linked() instead.
  *
  * Returns: TRUE on success.
  */
@@ -500,76 +471,6 @@ gimp_path_set_locked (gint32       image_ID,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_INT32, locked,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_path_get_visible:
- * @image_ID: The image.
- * @name: The name of the path whose visibility should be obtained.
- *
- * Get the visibility of the named path.
- *
- * This procedure returns the visibility of the specified path.
- *
- * Returns: TRUE if the path is visible, FALSE otherwise.
- */
-gboolean
-gimp_path_get_visible (gint32       image_ID,
-		       const gchar *name)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean visible = FALSE;
-
-  return_vals = gimp_run_procedure ("gimp-path-get-visible",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    visible = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return visible;
-}
-
-/**
- * gimp_path_set_visible:
- * @image_ID: The image.
- * @name: The name of the path whose visibility should be set.
- * @visible: The new path visibility.
- *
- * Sets the visibility of the named path.
- *
- * This procedure sets the specified path's visibility.
- *
- * Returns: TRUE on success.
- *
- * Since: GIMP 2.4
- */
-gboolean
-gimp_path_set_visible (gint32       image_ID,
-		       const gchar *name,
-		       gboolean     visible)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-path-set-visible",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_INT32, visible,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

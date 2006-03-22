@@ -89,7 +89,9 @@ HELP
 {
   channel_copy = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (channel),
                                G_TYPE_FROM_INSTANCE (channel), FALSE));
-  success = (channel_copy != NULL);
+
+  if (! channel_copy)
+    success = FALSE;
 }
 CODE
     );
@@ -113,11 +115,11 @@ HELP
 	{ name => 'operation', type => 'enum GimpChannelOps',
 	  desc => 'The selection operation: { %%desc%% }' },
 	{ name => 'offx', type => 'int32',
-	  desc => "x offset between upper left corner of
-                   channels: (second - first)" },
+	  desc => 'x offset between upper left corner of
+                   channels: (second - first)' },
 	{ name => 'offy', type => 'int32',
-	  desc => "y offset between upper left corner of
-                   channels: (second - first)" }
+	  desc => 'y offset between upper left corner of
+                   channels: (second - first)' }
     );
 
     %invoke = (

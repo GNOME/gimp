@@ -284,7 +284,9 @@ channel_copy_invoker (Gimp         *gimp,
     {
       channel_copy = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (channel),
                                    G_TYPE_FROM_INSTANCE (channel), FALSE));
-      success = (channel_copy != NULL);
+
+      if (! channel_copy)
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&channel_copy_proc, success);
