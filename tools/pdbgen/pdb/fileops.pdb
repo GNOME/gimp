@@ -428,45 +428,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  ProcRecord    *proc;
-  PlugInProcDef *file_proc;
-  gchar         *canonical;
-
-  success = FALSE;
-
-  canonical = gimp_canonicalize_identifier (procedure_name);
-
-  proc = procedural_db_lookup (gimp, canonical);
-
-  if (proc && ((proc->num_args < 3) ||
-	       (proc->num_values < 1) ||
-	       (proc->args[0].arg_type != GIMP_PDB_INT32) ||
-	       (proc->args[1].arg_type != GIMP_PDB_STRING) ||
-	       (proc->args[2].arg_type != GIMP_PDB_STRING) ||
-	       (proc->values[0].arg_type != GIMP_PDB_IMAGE)))
-    {
-      g_message ("load handler \"%s\" does not take the standard load handler args",
-		 canonical);
-      goto done;
-    }
-
-  file_proc = plug_ins_file_register_magic (gimp, canonical,
-                                            extensions, prefixes, magics);
-
-  if (! file_proc)
-    {
-      g_message ("attempt to register nonexistent load handler \"%s\"",
-		 canonical);
-      goto done;
-    }
-
-  if (! g_slist_find (gimp->load_procs, file_proc))
-    gimp->load_procs = g_slist_prepend (gimp->load_procs, file_proc);
-
-  success = TRUE;
-
-done:
-  g_free (canonical);
+  success = fileops_register_magic_load_handler (gimp,
+                                                 procedure_name,
+                                                 extensions, prefixes, magics);
 }
 CODE
     );
@@ -493,10 +457,15 @@ HELP
 		   can load (i.e. "http:,ftp:")' }
     );
 
+
     %invoke = (
-	pass_through => 'register_magic_load_handler',
-	pass_args => [ 0..2 ],
-	make_args => [ { type => 'string', code => '%%arg%% = NULL;' } ]
+	code => <<'CODE'
+{
+  success = fileops_register_magic_load_handler (gimp,
+                                                 procedure_name,
+                                                 extensions, prefixes, NULL);
+}
+CODE
     );
 }
 
@@ -636,6 +605,59 @@ HELP
 CODE
     );
 }
+
+
+$extra{app}->{code} = <<'CODE';
+static gboolean
+fileops_register_magic_load_handler (Gimp        *gimp,
+                                     const gchar *procedure_name,
+                                     const gchar *extensions,
+                                     const gchar *prefixes,
+                                     const gchar *magics)
+{
+  ProcRecord    *proc;
+  PlugInProcDef *file_proc;
+  gchar         *canonical;
+  gboolean       success = FALSE;
+
+  canonical = gimp_canonicalize_identifier (procedure_name);
+
+  proc = procedural_db_lookup (gimp, canonical);
+
+  if (proc && ((proc->num_args < 3) ||
+	       (proc->num_values < 1) ||
+	       (proc->args[0].arg_type != GIMP_PDB_INT32) ||
+	       (proc->args[1].arg_type != GIMP_PDB_STRING) ||
+	       (proc->args[2].arg_type != GIMP_PDB_STRING) ||
+	       (proc->values[0].arg_type != GIMP_PDB_IMAGE)))
+    {
+      g_message ("load handler \"%s\" does not take the standard load handler args",
+		 canonical);
+      goto done;
+    }
+
+  file_proc = plug_ins_file_register_magic (gimp, canonical,
+                                            extensions, prefixes, magics);
+
+  if (! file_proc)
+    {
+      g_message ("attempt to register nonexistent load handler \"%s\"",
+		 canonical);
+      goto done;
+    }
+
+  if (! g_slist_find (gimp->load_procs, file_proc))
+    gimp->load_procs = g_slist_prepend (gimp->load_procs, file_proc);
+
+  success = TRUE;
+
+done:
+  g_free (canonical);
+
+  return success;
+}
+CODE
+
 
 @headers = qw(<sys/types.h> <unistd.h> <gdk-pixbuf/gdk-pixbuf.h>
               "libgimpbase/gimpbase.h" "libgimpconfig/gimpconfig.h"

@@ -84,6 +84,55 @@ register_fileops_procs (Gimp *gimp)
   procedural_db_register (gimp, &register_thumbnail_loader_proc);
 }
 
+static gboolean
+fileops_register_magic_load_handler (Gimp        *gimp,
+                                     const gchar *procedure_name,
+                                     const gchar *extensions,
+                                     const gchar *prefixes,
+                                     const gchar *magics)
+{
+  ProcRecord    *proc;
+  PlugInProcDef *file_proc;
+  gchar         *canonical;
+  gboolean       success = FALSE;
+
+  canonical = gimp_canonicalize_identifier (procedure_name);
+
+  proc = procedural_db_lookup (gimp, canonical);
+
+  if (proc && ((proc->num_args < 3) ||
+	       (proc->num_values < 1) ||
+	       (proc->args[0].arg_type != GIMP_PDB_INT32) ||
+	       (proc->args[1].arg_type != GIMP_PDB_STRING) ||
+	       (proc->args[2].arg_type != GIMP_PDB_STRING) ||
+	       (proc->values[0].arg_type != GIMP_PDB_IMAGE)))
+    {
+      g_message ("load handler \"%s\" does not take the standard load handler args",
+		 canonical);
+      goto done;
+    }
+
+  file_proc = plug_ins_file_register_magic (gimp, canonical,
+                                            extensions, prefixes, magics);
+
+  if (! file_proc)
+    {
+      g_message ("attempt to register nonexistent load handler \"%s\"",
+		 canonical);
+      goto done;
+    }
+
+  if (! g_slist_find (gimp->load_procs, file_proc))
+    gimp->load_procs = g_slist_prepend (gimp->load_procs, file_proc);
+
+  success = TRUE;
+
+done:
+  g_free (canonical);
+
+  return success;
+}
+
 static Argument *
 file_load_invoker (Gimp         *gimp,
                    GimpContext  *context,
@@ -687,45 +736,9 @@ register_magic_load_handler_invoker (Gimp         *gimp,
 
   if (success)
     {
-      ProcRecord    *proc;
-      PlugInProcDef *file_proc;
-      gchar         *canonical;
-
-      success = FALSE;
-
-      canonical = gimp_canonicalize_identifier (procedure_name);
-
-      proc = procedural_db_lookup (gimp, canonical);
-
-      if (proc && ((proc->num_args < 3) ||
-                   (proc->num_values < 1) ||
-                   (proc->args[0].arg_type != GIMP_PDB_INT32) ||
-                   (proc->args[1].arg_type != GIMP_PDB_STRING) ||
-                   (proc->args[2].arg_type != GIMP_PDB_STRING) ||
-                   (proc->values[0].arg_type != GIMP_PDB_IMAGE)))
-        {
-          g_message ("load handler \"%s\" does not take the standard load handler args",
-                     canonical);
-          goto done;
-        }
-
-      file_proc = plug_ins_file_register_magic (gimp, canonical,
-                                                extensions, prefixes, magics);
-
-      if (! file_proc)
-        {
-          g_message ("attempt to register nonexistent load handler \"%s\"",
-                     canonical);
-          goto done;
-        }
-
-      if (! g_slist_find (gimp->load_procs, file_proc))
-        gimp->load_procs = g_slist_prepend (gimp->load_procs, file_proc);
-
-      success = TRUE;
-
-    done:
-      g_free (canonical);
+      success = fileops_register_magic_load_handler (gimp,
+                                                     procedure_name,
+                                                     extensions, prefixes, magics);
     }
 
   return procedural_db_return_args (&register_magic_load_handler_proc, success);
@@ -779,16 +792,27 @@ register_load_handler_invoker (Gimp         *gimp,
                                GimpProgress *progress,
                                Argument     *args)
 {
-  int i;
-  Argument argv[4];
+  gboolean success = TRUE;
+  gchar *procedure_name;
+  gchar *extensions;
+  gchar *prefixes;
 
-  for (i = 0; i < 3; i++)
-    argv[i] = args[i];
+  procedure_name = (gchar *) args[0].value.pdb_pointer;
+  if (procedure_name == NULL || !g_utf8_validate (procedure_name, -1, NULL))
+    success = FALSE;
 
-  argv[3].arg_type = GIMP_PDB_STRING;
-  argv[3].value.pdb_pointer = NULL;
+  extensions = (gchar *) args[1].value.pdb_pointer;
 
-  return register_magic_load_handler_invoker (gimp, context, progress, argv);
+  prefixes = (gchar *) args[2].value.pdb_pointer;
+
+  if (success)
+    {
+      success = fileops_register_magic_load_handler (gimp,
+                                                     procedure_name,
+                                                     extensions, prefixes, NULL);
+    }
+
+  return procedural_db_return_args (&register_load_handler_proc, success);
 }
 
 static ProcArg register_load_handler_inargs[] =

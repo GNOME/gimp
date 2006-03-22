@@ -1,5 +1,16 @@
 2006-03-22  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/app.pl: removed support for invoke->pass_through.
+
+	* tools/pdbgen/pdb/fileops.pdb: added a C utility function and
+	call it from both register_load_handler() and
+	register_magic_load_handler() instead of letting the generated
+	invokers call each other.
+
+	* app/pdb/fileops_cmds.c: regenerated.
+
+2006-03-22  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/buffer.pdb
 	* tools/pdbgen/pdb/color.pdb
 	* tools/pdbgen/pdb/display.pdb
