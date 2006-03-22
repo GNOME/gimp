@@ -123,6 +123,9 @@ gimp_drawable_foreground_extract_siox (GimpDrawable       *mask,
                                        gboolean            multiblob,
                                        GimpProgress       *progress)
 {
+  gint x1, y1;
+  gint x2, y2;
+
   g_return_if_fail (GIMP_IS_DRAWABLE (mask));
   g_return_if_fail (gimp_drawable_bytes (mask) == 1);
 
@@ -133,7 +136,20 @@ gimp_drawable_foreground_extract_siox (GimpDrawable       *mask,
   if (progress)
     gimp_progress_start (progress, _("Foreground Extraction"), FALSE);
 
-  siox_foreground_extract (state, refinement, gimp_drawable_data (mask),
+  if (GIMP_IS_CHANNEL (mask))
+    {
+      gimp_channel_bounds (GIMP_CHANNEL (mask), &x1, &y1, &x2, &y2);
+    }
+  else
+    {
+      x1 = 0;
+      y1 = 0;
+      x2 = gimp_item_width (GIMP_ITEM (mask));
+      y2 = gimp_item_height (GIMP_ITEM (mask));
+    }
+
+  siox_foreground_extract (state, refinement,
+                           gimp_drawable_data (mask), x1, y1, x2, y2,
                            smoothness, sensitivity, multiblob,
                            (SioxProgressFunc) gimp_progress_set_value,
                            progress);
@@ -141,10 +157,7 @@ gimp_drawable_foreground_extract_siox (GimpDrawable       *mask,
   if (progress)
     gimp_progress_end (progress);
 
-  gimp_drawable_update (mask,
-                        0, 0,
-                        gimp_item_width (GIMP_ITEM (mask)),
-                        gimp_item_height (GIMP_ITEM (mask)));
+  gimp_drawable_update (mask, x1, y1, x2, y2);
 }
 
 void

@@ -1,3 +1,12 @@
+2006-03-22  Sven Neumann  <sven@gimp.org>
+
+	* app/base/siox.[ch] (siox_foreground_extract): let the caller
+	specify a region of interest. Call the progress function more often.
+
+	* app/core/gimpdrawable-foreground-extract.c
+	(gimp_drawable_foreground_extract_siox): pass a region of interest
+	to siox_foreground_extract() to speed up the SIOX tool.
+
 2006-03-22  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/image.pdb: reordered vectors procedures.
