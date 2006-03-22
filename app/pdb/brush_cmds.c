@@ -942,7 +942,7 @@ static ProcArg brush_get_shape_outargs[] =
   {
     GIMP_PDB_INT32,
     "shape",
-    "An enumerated value representing the brush shape"
+    "The brush shape"
   }
 };
 
@@ -1331,13 +1331,15 @@ brush_set_shape_invoker (Gimp         *gimp,
     success = FALSE;
 
   shape_in = args[1].value.pdb_int;
+  if (shape_in < GIMP_BRUSH_GENERATED_CIRCLE || shape_in > GIMP_BRUSH_GENERATED_DIAMOND)
+    success = FALSE;
 
   if (success)
     {
       GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-      if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
+      if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
         {
           gimp_brush_generated_set_shape (GIMP_BRUSH_GENERATED (brush),
                                           shape_in);
@@ -1365,7 +1367,7 @@ static ProcArg brush_set_shape_inargs[] =
   {
     GIMP_PDB_INT32,
     "shape-in",
-    "An enumerated value representing the desired brush shape"
+    "The brush shape: { GIMP_BRUSH_GENERATED_CIRCLE (0), GIMP_BRUSH_GENERATED_SQUARE (1), GIMP_BRUSH_GENERATED_DIAMOND (2) }"
   }
 };
 
@@ -1419,7 +1421,7 @@ brush_set_radius_invoker (Gimp         *gimp,
       GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-      if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
+      if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
         {
           gimp_brush_generated_set_radius (GIMP_BRUSH_GENERATED (brush),
                                            radius_in);
@@ -1501,7 +1503,7 @@ brush_set_spikes_invoker (Gimp         *gimp,
       GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-      if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
+      if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
         {
           gimp_brush_generated_set_spikes (GIMP_BRUSH_GENERATED (brush),
                                            spikes_in);
@@ -1583,7 +1585,7 @@ brush_set_hardness_invoker (Gimp         *gimp,
       GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-      if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
+      if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
         {
           gimp_brush_generated_set_hardness (GIMP_BRUSH_GENERATED (brush),
                                              hardness_in);
@@ -1665,7 +1667,7 @@ brush_set_aspect_ratio_invoker (Gimp         *gimp,
       GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-      if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
+      if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
         {
           gimp_brush_generated_set_aspect_ratio (GIMP_BRUSH_GENERATED (brush),
                                                  aspect_ratio_in);
@@ -1747,7 +1749,7 @@ brush_set_angle_invoker (Gimp         *gimp,
       GimpBrush *brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-      if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
+      if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
         {
           gimp_brush_generated_set_angle (GIMP_BRUSH_GENERATED (brush),
                                           angle_in);

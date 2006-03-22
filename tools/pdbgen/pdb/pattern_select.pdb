@@ -29,9 +29,8 @@ sub patterns_popup {
 		   made' },
 	{ name => 'popup_title', type => 'string',
 	  desc => 'Title to give the pattern popup window' },
-	{ name => 'initial_pattern', type => 'string',
-	  desc => 'The name of the pattern to set as the first selected',
-	  null_ok => 1 }
+	{ name => 'initial_pattern', type => 'string', null_ok => 1,
+	  desc => 'The name of the pattern to set as the first selected' }
     );
 
     %invoke = (

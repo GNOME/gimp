@@ -39,7 +39,7 @@ HELP
     );
 
     %invoke = (
-	code => <<CODE
+	code => <<'CODE'
 {
   if (! help_domain && gimp->current_plug_in)
     help_domain = (gchar *)

@@ -89,7 +89,15 @@ HELP
     );
 
     %invoke = (
-	code => 'success = (layer_copy = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer), G_TYPE_FROM_INSTANCE (layer), add_alpha))) != NULL;'
+	code => <<'CODE'
+{
+  layer_copy = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer),
+                                                G_TYPE_FROM_INSTANCE (layer),
+                                                add_alpha));
+  if (! layer_copy)
+    success = FALSE;
+}
+CODE
     );
 }
 
@@ -124,7 +132,12 @@ HELP
 
     %invoke = (
 	code => <<'CODE'
-success = (mask = gimp_layer_create_mask (layer, (GimpAddMaskType) mask_type)) != NULL;
+{
+  mask = gimp_layer_create_mask (layer, (GimpAddMaskType) mask_type);
+
+  if (! mask)
+    success = FALSE;
+}
 CODE
     );
 }
@@ -283,7 +296,8 @@ HELP
 	  desc => 'The layer to resize' }
     );
 
-    %invoke = ( code => <<'CODE' );
+    %invoke = (
+	code => <<'CODE'
 {
   success = gimp_item_is_attached (GIMP_ITEM (layer));
 
@@ -291,6 +305,7 @@ HELP
     gimp_layer_resize_to_image (layer, context);
 }
 CODE
+    );
 }
 
 sub layer_translate {
@@ -315,7 +330,8 @@ HELP
 	  desc => "Offset in y direction" }
     );
 
-    %invoke = ( code => <<'CODE');
+    %invoke = (
+	code => <<'CODE'
 {
   GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
@@ -330,6 +346,7 @@ HELP
   gimp_image_undo_group_end (gimage);
 }
 CODE
+    );
 }
 
 sub layer_add_alpha {
@@ -352,7 +369,8 @@ HELP
 	  desc => 'The layer' }
     );
 
-    %invoke = ( code => <<'CODE'
+    %invoke = (
+	code => <<'CODE'
 {
   gimp_layer_add_alpha (layer);
 }

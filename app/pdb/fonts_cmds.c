@@ -86,7 +86,10 @@ fonts_get_list_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    font_list = gimp_container_get_filtered_name_array (gimp->fonts, filter, &num_fonts);
+    {
+      font_list = gimp_container_get_filtered_name_array (gimp->fonts,
+                                                          filter, &num_fonts);
+    }
 
   return_args = procedural_db_return_args (&fonts_get_list_proc, success);
 

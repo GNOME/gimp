@@ -1,3 +1,54 @@
+2006-03-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-enums.h: export GimpBrushGeneratedShape to the PDB.
+
+	* tools/pdbgen/pdb/brush.pdb: use it instead of int32.
+
+	* libgimp/gimp.def: add gimp_brush_generated_shape_get_type().
+
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/display.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/floating_sel.pdb
+	* tools/pdbgen/pdb/font_select.pdb
+	* tools/pdbgen/pdb/fonts.pdb
+	* tools/pdbgen/pdb/gimprc.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/help.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/message.pdb
+	* tools/pdbgen/pdb/misc.pdb
+	* tools/pdbgen/pdb/paint_tools.pdb
+	* tools/pdbgen/pdb/palette.pdb
+	* tools/pdbgen/pdb/palette_select.pdb
+	* tools/pdbgen/pdb/palettes.pdb
+	* tools/pdbgen/pdb/paths.pdb
+	* tools/pdbgen/pdb/pattern_select.pdb
+	* tools/pdbgen/pdb/patterns.pdb
+	* tools/pdbgen/pdb/plug_in.pdb
+	* tools/pdbgen/pdb/text_tool.pdb: more perl/C code separation,
+	removed some more utility functions, cleanup.
+
+	* app/pdb/brush_cmds.c
+	* app/pdb/brushes_cmds.c
+	* app/pdb/display_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/fonts_cmds.c
+	* app/pdb/gimprc_cmds.c
+	* app/pdb/gradients_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/palettes_cmds.c
+	* app/pdb/paths_cmds.c
+	* app/pdb/patterns_cmds.c
+	* tools/pdbgen/enums.pl
+	* libgimp/gimpbrush_pdb.[ch]
+	* libgimp/gimpenums.c.tail
+	* libgimp/gimpenums.h: regenerated.
+
 2006-03-21  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/gradient.pdb: removed all perl utility

@@ -98,7 +98,10 @@ brushes_get_list_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    brush_list = gimp_container_get_filtered_name_array (gimp->brush_factory->container, filter, &num_brushes);
+    {
+      brush_list = gimp_container_get_filtered_name_array (gimp->brush_factory->container,
+                                                           filter, &num_brushes);
+    }
 
   return_args = procedural_db_return_args (&brushes_get_list_proc, success);
 
@@ -298,7 +301,9 @@ brushes_set_spacing_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    gimp_brush_set_spacing (gimp_context_get_brush (context), spacing);
+    {
+      gimp_brush_set_spacing (gimp_context_get_brush (context), spacing);
+    }
 
   return procedural_db_return_args (&brushes_set_spacing_proc, success);
 }

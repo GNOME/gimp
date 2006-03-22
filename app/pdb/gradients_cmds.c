@@ -95,7 +95,10 @@ gradients_get_list_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    gradient_list = gimp_container_get_filtered_name_array (gimp->gradient_factory->container, filter, &num_gradients);
+    {
+      gradient_list = gimp_container_get_filtered_name_array (gimp->gradient_factory->container,
+                                                              filter, &num_gradients);
+    }
 
   return_args = procedural_db_return_args (&gradients_get_list_proc, success);
 

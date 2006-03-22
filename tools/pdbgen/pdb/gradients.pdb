@@ -28,8 +28,12 @@ HELP
     &mitch_pdb_misc('2002');
 
     %invoke = (
-        code => 'gimp_data_factory_data_refresh (gimp->gradient_factory);'
-    )
+        code => <<'CODE'
+{
+  gimp_data_factory_data_refresh (gimp->gradient_factory);
+}
+CODE
+    );
 }
 
 sub gradients_get_list {
@@ -57,7 +61,12 @@ HELP
 
     %invoke = (
         headers => [ qw("core/gimpcontainer-filter.h") ],
-	code => 'gradient_list = gimp_container_get_filtered_name_array (gimp->gradient_factory->container, filter, &num_gradients);'
+	code => <<'CODE'
+{
+  gradient_list = gimp_container_get_filtered_name_array (gimp->gradient_factory->container,
+                                                          filter, &num_gradients);
+}
+CODE
     );
 }
 

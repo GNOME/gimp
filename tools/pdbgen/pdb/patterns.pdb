@@ -28,8 +28,12 @@ HELP
     &mitch_pdb_misc('2002');
 
     %invoke = (
-        code => 'gimp_data_factory_data_refresh (gimp->pattern_factory);'
-    )
+        code => <<'CODE'
+{
+  gimp_data_factory_data_refresh (gimp->pattern_factory);
+}
+CODE
+    );
 }
 
 sub patterns_get_list {
@@ -56,7 +60,12 @@ HELP
 
     %invoke = (
         headers => [ qw("core/gimpcontainer-filter.h") ],
-	code => 'pattern_list = gimp_container_get_filtered_name_array (gimp->pattern_factory->container, filter, &num_patterns);'
+	code => <<'CODE'
+{
+  pattern_list = gimp_container_get_filtered_name_array (gimp->pattern_factory->container,
+                                                         filter, &num_patterns);
+}
+CODE
     );
 }
 
@@ -73,7 +82,7 @@ sub patterns_get_pattern {
     );
 
     %invoke = (
-	code =><<'CODE'
+	code => <<'CODE'
 {
   GimpPattern *pattern = gimp_context_get_pattern (context);
 
@@ -94,9 +103,8 @@ sub patterns_get_pattern_data {
     &std_pdb_deprecated ('gimp-pattern-get-pixels');
 
     @inargs = (
-	{ name => 'name', type => 'string',
-	  desc => 'The pattern name ("" means currently active pattern)',
-	  null_ok => '1' }
+	{ name => 'name', type => 'string', null_ok => 1,
+	  desc => 'The pattern name ("" means currently active pattern)' }
     );
 
     @outargs = (

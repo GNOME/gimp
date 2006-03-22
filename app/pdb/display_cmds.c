@@ -130,7 +130,9 @@ display_delete_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    gimp_delete_display (gimp, display);
+    {
+      gimp_delete_display (gimp, display);
+    }
 
   return procedural_db_return_args (&display_delete_proc, success);
 }
@@ -178,7 +180,9 @@ display_get_window_handle_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    window = (gint32) gimp_get_display_window (gimp, display);
+    {
+      window = (gint32) gimp_get_display_window (gimp, display);
+    }
 
   return_args = procedural_db_return_args (&display_get_window_handle_proc, success);
 

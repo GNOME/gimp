@@ -36,6 +36,18 @@ typedef enum
 } GimpBrushApplicationMode;
 
 
+#define GIMP_TYPE_BRUSH_GENERATED_SHAPE (gimp_brush_generated_shape_get_type ())
+
+GType gimp_brush_generated_shape_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_BRUSH_GENERATED_CIRCLE,
+  GIMP_BRUSH_GENERATED_SQUARE,
+  GIMP_BRUSH_GENERATED_DIAMOND
+} GimpBrushGeneratedShape;
+
+
 #define GIMP_TYPE_CONVERT_DITHER_TYPE (gimp_convert_dither_type_get_type ())
 
 GType gimp_convert_dither_type_get_type (void) G_GNUC_CONST;

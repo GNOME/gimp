@@ -331,7 +331,13 @@ layer_copy_invoker (Gimp         *gimp,
   add_alpha = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    success = (layer_copy = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer), G_TYPE_FROM_INSTANCE (layer), add_alpha))) != NULL;
+    {
+      layer_copy = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer),
+                                                    G_TYPE_FROM_INSTANCE (layer),
+                                                    add_alpha));
+      if (! layer_copy)
+        success = FALSE;
+    }
 
   return_args = procedural_db_return_args (&layer_copy_proc, success);
 
@@ -819,7 +825,12 @@ layer_create_mask_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    success = (mask = gimp_layer_create_mask (layer, (GimpAddMaskType) mask_type)) != NULL;
+    {
+      mask = gimp_layer_create_mask (layer, (GimpAddMaskType) mask_type);
+
+      if (! mask)
+        success = FALSE;
+    }
 
   return_args = procedural_db_return_args (&layer_create_mask_proc, success);
 

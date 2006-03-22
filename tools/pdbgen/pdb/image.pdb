@@ -143,7 +143,8 @@ HELP
 	&std_image_arg
     );
 
-    %invoke = ( code => <<'CODE' );
+    %invoke = (
+	code => <<'CODE'
 {
   if (gimage->disp_count == 0)
     g_object_unref (gimage);
@@ -151,6 +152,7 @@ HELP
     success = FALSE;
 }
 CODE
+    );
 }
 
 sub image_resize {
@@ -171,15 +173,15 @@ HELP
     @inargs = (
         &std_image_arg,
 	{ name => 'new_width', type => '0 < int32',
-	  desc => "New image width: %%desc%%" },
+	  desc => 'New image width: %%desc%%' },
 	{ name => 'new_height', type => '0 < int32',
-	  desc => "New image height: %%desc%%" },
+	  desc => 'New image height: %%desc%%' },
 	{ name => 'offx', type => 'int32',
-	  desc => "x offset between upper left corner of old and
-		   new images: (new - old)" },
+	  desc => 'x offset between upper left corner of old and
+		   new images: (new - old)' },
 	{ name => 'offy', type => 'int32',
-	  desc => "y offset between upper left corner of old and
-		   new images: (new - old)" }
+	  desc => 'y offset between upper left corner of old and
+		   new images: (new - old)' }
     );
 
     %invoke = (
@@ -237,9 +239,9 @@ HELP
     @inargs = (
         &std_image_arg,
 	{ name => 'new_width', type => '0 < int32',
-	  desc => "New image width: %%desc%%" },
+	  desc => 'New image width: %%desc%%' },
 	{ name => 'new_height', type => '0 < int32',
-	  desc => "New image height: %%desc%%" }
+	  desc => 'New image height: %%desc%%' }
     );
 
     %invoke = (
@@ -383,10 +385,10 @@ HELP
     );
 
     @outargs = (
-	{ name => "layer_ids", type => 'int32array',
-	  desc => "The list of layers contained in the image",
-	  array => { name => "num_layers",
-		     desc => "The number of layers contained in the image" } }
+	{ name => 'layer_ids', type => 'int32array',
+	  desc => 'The list of layers contained in the image',
+	  array => { name => 'num_layers',
+		     desc => 'The number of layers contained in the image' } }
     );
 
     %invoke = (
@@ -426,10 +428,10 @@ HELP
     );
 
     @outargs = (
-	{ name => "channel_ids", type => 'int32array',
-	  desc => "The list of channels contained in the image",
-	  array => { name => "num_channels",
-		     desc => "The number of channels contained in the image" } }
+	{ name => 'channel_ids', type => 'int32array',
+	  desc => 'The list of channels contained in the image',
+	  array => { name => 'num_channels',
+		     desc => 'The number of channels contained in the image' } }
     );
 
     %invoke = (
@@ -467,10 +469,10 @@ HELP
     );
 
     @outargs = (
-	{ name => "vector_ids", type => 'int32array',
-	  desc => "The list of vectors contained in the image",
-	  array => { name => "num_vectors",
-		     desc => "The number of vectors contained in the image" } }
+	{ name => 'vector_ids', type => 'int32array',
+	  desc => 'The list of vectors contained in the image',
+	  array => { name => 'num_vectors',
+		     desc => 'The number of vectors contained in the image' } }
     );
 
     %invoke = (
@@ -1328,7 +1330,7 @@ HELP
     @inargs = (
 	&std_image_arg,
 	{ name => 'colormap', type => 'int8array', wrap => 1,
-	  desc => "The new colormap values",
+	  desc => 'The new colormap values',
 	  array => { name => 'num_bytes', type => '0 <= int32 <= 768',
 		     desc => 'Number of bytes in the colormap array:
 			      %%desc%%' } }

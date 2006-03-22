@@ -25,8 +25,7 @@ sub fonts_popup {
 
     @inargs = (
 	{ name => 'font_callback', type => 'string',
-	  desc => 'The callback PDB proc to call when font selection is
-		   made' },
+	  desc => 'The callback PDB proc to call when font selection is made' },
 	{ name => 'popup_title', type => 'string',
 	  desc => 'Title to give the font popup window' },
 	{ name => 'initial_font', type => 'string',

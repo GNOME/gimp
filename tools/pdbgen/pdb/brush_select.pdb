@@ -17,18 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub brush_args {(
-    { name => 'opacity',
-      type => '0 <= float <= 100',
-      desc => 'The initial opacity of the brush' },
-    { name => 'spacing',
-      type => 'int32 <= 1000',
-      desc => 'The initial spacing of the brush (if < 0 then use brush default
-	       spacing)' },
-    { name => 'paint_mode', type => 'enum GimpLayerModeEffects',
-      desc => 'The initial paint mode: { %%desc%% }'  }
-)}
-
 sub brushes_popup {
     $blurb = 'Invokes the Gimp brush selection.';
     $help  = 'This procedure popups the brush selection dialog.';
@@ -44,7 +32,13 @@ sub brushes_popup {
 	{ name => 'initial_brush', type => 'string',
 	  desc => 'The name of the brush to set as the first selected',
 	  null_ok => 1 },
-	&brush_args
+	{ name => 'opacity', type => '0 <= float <= 100',
+	  desc => 'The initial opacity of the brush' },
+	{ name => 'spacing', type => 'int32 <= 1000',
+	  desc => 'The initial spacing of the brush (if < 0 then use brush
+                   default spacing)' },
+	{ name => 'paint_mode', type => 'enum GimpLayerModeEffects',
+	  desc => 'The initial paint mode: { %%desc%% }' }
     );
 
     %invoke = (
@@ -99,7 +93,13 @@ sub brushes_set_popup {
 	  desc => 'The name of the callback registered for this popup' },
 	{ name => 'brush_name', type => 'string',
 	  desc => 'The name of the brush to set as selected' },
-	&brush_args
+	{ name => 'opacity', type => '0 <= float <= 100',
+	  desc => 'The initial opacity of the brush' },
+	{ name => 'spacing', type => 'int32 <= 1000',
+	  desc => 'The initial spacing of the brush (if < 0 then use brush
+                   default spacing)' },
+	{ name => 'paint_mode', type => 'enum GimpLayerModeEffects',
+	  desc => 'The initial paint mode: { %%desc%% }' }
     );
 
     %invoke = (

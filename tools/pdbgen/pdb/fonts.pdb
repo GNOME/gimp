@@ -28,7 +28,11 @@ HELP
     &neo_pdb_misc('2003');
 
     %invoke = (
-	code => 'gimp_fonts_load (gimp);'
+	code => <<'CODE'
+{
+  gimp_fonts_load (gimp);
+}
+CODE
     );
 }
 
@@ -55,7 +59,12 @@ HELP
 
     %invoke = (
         headers => [ qw("core/gimpcontainer-filter.h") ],
-	code => 'font_list = gimp_container_get_filtered_name_array (gimp->fonts, filter, &num_fonts);'
+	code => <<'CODE'
+{
+  font_list = gimp_container_get_filtered_name_array (gimp->fonts,
+                                                      filter, &num_fonts);
+}
+CODE
     );
 }
 

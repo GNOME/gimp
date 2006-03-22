@@ -35,7 +35,7 @@ HELP
     );
 
     %invoke = (
-	code => <<CODE
+	code => <<'CODE'
 {
   if (gimp_layer_is_floating_sel (floating_sel))
     floating_sel_remove (floating_sel);
@@ -65,7 +65,7 @@ HELP
     );
 
     %invoke = (
-	code => <<CODE
+	code => <<'CODE'
 {
   if (gimp_layer_is_floating_sel (floating_sel))
     floating_sel_anchor (floating_sel);
@@ -97,7 +97,7 @@ HELP
     );
 
     %invoke = (
-	code => <<CODE
+	code => <<'CODE'
 {
   if (gimp_layer_is_floating_sel (floating_sel))
     floating_sel_to_layer (floating_sel);
@@ -127,7 +127,7 @@ HELP
     );
 
     %invoke = (
-	code => <<CODE
+	code => <<'CODE'
 {
   if (gimp_item_is_attached (GIMP_ITEM (drawable)))
     floating_sel_attach (layer, drawable);
@@ -152,7 +152,7 @@ sub floating_sel_rigor {
     );
 
     %invoke = (
-	code => <<CODE
+	code => <<'CODE'
 {
   if (gimp_layer_is_floating_sel (floating_sel))
     floating_sel_rigor (floating_sel, undo);
@@ -177,7 +177,7 @@ sub floating_sel_relax {
     );
 
     %invoke = (
-	code => <<CODE
+	code => <<'CODE'
 {
   if (gimp_layer_is_floating_sel (floating_sel))
     floating_sel_relax (floating_sel, undo);

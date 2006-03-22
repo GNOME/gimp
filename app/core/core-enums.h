@@ -195,7 +195,7 @@ typedef enum  /*< pdb-skip >*/
 
 GType gimp_brush_generated_shape_get_type (void) G_GNUC_CONST;
 
-typedef enum  /*< pdb-skip >*/
+typedef enum
 {
   GIMP_BRUSH_GENERATED_CIRCLE,  /*< desc="Circle"  >*/
   GIMP_BRUSH_GENERATED_SQUARE,  /*< desc="Square"  >*/

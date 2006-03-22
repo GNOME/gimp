@@ -28,8 +28,12 @@ HELP
     &adrian_pdb_misc('1998');
 
     %invoke = (
-        code => 'gimp_data_factory_data_refresh (gimp->palette_factory);'
-    )
+        code => <<'CODE'
+{
+  gimp_data_factory_data_refresh (gimp->palette_factory);
+}
+CODE
+    );
 }
 
 sub palettes_get_list {
@@ -56,7 +60,12 @@ HELP
 
     %invoke = (
         headers => [ qw("core/gimpcontainer-filter.h") ],
-        code => 'palette_list = gimp_container_get_filtered_name_array (gimp->palette_factory->container, filter, &num_palettes);'
+        code    => <<'CODE'
+{
+  palette_list = gimp_container_get_filtered_name_array (gimp->palette_factory->container,
+                                                         filter, &num_palettes);
+}
+CODE
     );
 }
 
@@ -91,9 +100,8 @@ sub palettes_get_palette_entry {
     &std_pdb_deprecated ('gimp-palette-entry-get-color');
 
     @inargs = (
-	{ name => 'name', type => 'string',
-	  desc => 'The palette name ("" means currently active palette)',
-	  null_ok => '1' },
+	{ name => 'name', type => 'string', null_ok => 1,
+	  desc => 'The palette name ("" means currently active palette)' },
         { name => 'entry_num', type => 'int32',
           desc => 'The entry to retrieve' }
     );
@@ -108,7 +116,7 @@ sub palettes_get_palette_entry {
     );
 
     %invoke = (
-	code => <<"CODE"
+	code => <<'CODE'
 {
   GimpPalette *palette;
 

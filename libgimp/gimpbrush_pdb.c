@@ -435,16 +435,16 @@ gimp_brush_set_spacing (const gchar *name,
  * (GIMP_BRUSH_GENERATED_DIAMOND). Other shapes are likely to be added
  * in the future.
  *
- * Returns: An enumerated value representing the brush shape.
+ * Returns: The brush shape.
  *
  * Since: GIMP 2.4
  */
-gint
+GimpBrushGeneratedShape
 gimp_brush_get_shape (const gchar *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gint shape = 0;
+  GimpBrushGeneratedShape shape = 0;
 
   return_vals = gimp_run_procedure ("gimp-brush-get-shape",
 				    &nreturn_vals,
@@ -628,7 +628,7 @@ gimp_brush_get_angle (const gchar *name)
 /**
  * gimp_brush_set_shape:
  * @name: The brush name.
- * @shape_in: An enumerated value representing the desired brush shape.
+ * @shape_in: The brush shape.
  *
  * Set the shape of a generated brush.
  *
@@ -643,13 +643,13 @@ gimp_brush_get_angle (const gchar *name)
  *
  * Since: GIMP 2.4
  */
-gint
-gimp_brush_set_shape (const gchar *name,
-		      gint         shape_in)
+GimpBrushGeneratedShape
+gimp_brush_set_shape (const gchar             *name,
+		      GimpBrushGeneratedShape  shape_in)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gint shape_out = 0;
+  GimpBrushGeneratedShape shape_out = 0;
 
   return_vals = gimp_run_procedure ("gimp-brush-set-shape",
 				    &nreturn_vals,

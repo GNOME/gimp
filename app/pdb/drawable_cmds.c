@@ -1025,7 +1025,9 @@ drawable_get_image_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    success = (gimage = gimp_item_get_image (GIMP_ITEM (drawable))) != NULL;
+    {
+      success = (gimage = gimp_item_get_image (GIMP_ITEM (drawable))) != NULL;
+    }
 
   return_args = procedural_db_return_args (&drawable_get_image_proc, success);
 

@@ -17,8 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-# The defs
-
 sub display_new {
     $blurb = 'Create a new display for the specified image.';
 
@@ -32,7 +30,9 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
 
     @outargs = (
 	{ name => 'display', type => 'display',
@@ -69,7 +69,12 @@ HELP
 	  desc => 'The display to delete' }
     );
 
-    %invoke = ( code => 'gimp_delete_display (gimp, display);' );
+    %invoke = ( code => <<'CODE'
+{
+  gimp_delete_display (gimp, display);
+}
+CODE
+    );
 }
 
 sub display_get_window_handle {
@@ -94,7 +99,12 @@ HELP
           desc => 'The native window handle or 0' }
     );
 
-    %invoke = ( code => 'window = (gint32) gimp_get_display_window (gimp, display);' );
+    %invoke = ( code => <<'CODE'
+{
+  window = (gint32) gimp_get_display_window (gimp, display);
+}
+CODE
+    );
 }
 
 sub displays_flush {
@@ -110,7 +120,12 @@ HELP
 
     %invoke = (
         headers => [ qw("core/gimpcontainer.h") ],
-        code => 'gimp_container_foreach (gimp->images, (GFunc) gimp_image_flush, NULL);'
+        code    => <<'CODE'
+
+{
+  gimp_container_foreach (gimp->images, (GFunc) gimp_image_flush, NULL);
+}
+CODE
     );
 }
 

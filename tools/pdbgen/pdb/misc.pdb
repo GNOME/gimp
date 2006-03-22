@@ -85,7 +85,7 @@ HELP
 
     %invoke = (
 	headers => [ qw("core/gimp.h") ],
-	code => <<'CODE'
+	code    => <<'CODE'
 {
   gimp_exit (gimp, force);
 }

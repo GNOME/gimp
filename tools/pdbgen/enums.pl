@@ -432,6 +432,16 @@ package Gimp::CodeGen::enums;
 		       GIMP_TRANSPARENT_FILL => '3',
 		       GIMP_PATTERN_FILL => '4' }
 	},
+    GimpBrushGeneratedShape =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_BRUSH_GENERATED_CIRCLE
+			  GIMP_BRUSH_GENERATED_SQUARE
+			  GIMP_BRUSH_GENERATED_DIAMOND) ],
+	  mapping => { GIMP_BRUSH_GENERATED_CIRCLE => '0',
+		       GIMP_BRUSH_GENERATED_SQUARE => '1',
+		       GIMP_BRUSH_GENERATED_DIAMOND => '2' }
+	},
     GimpOrientationType =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',

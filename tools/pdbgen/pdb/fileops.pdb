@@ -603,7 +603,12 @@ sub register_thumbnail_loader {
     $blurb = 'Associates a thumbnail loader with a file load procedure.';
 
     $help = <<'HELP';
-Some file formats allow for embedded thumbnails, other file formats contain a scalable image or provide the image data in different resolutions. A file plug-in for such a format may register a special procedure that allows GIMP to load a thumbnail preview of the image. This procedure is then associated with the standard load procedure using this function.
+Some file formats allow for embedded thumbnails, other file formats
+contain a scalable image or provide the image data in different
+resolutions. A file plug-in for such a format may register a special
+procedure that allows GIMP to load a thumbnail preview of the
+image. This procedure is then associated with the standard load
+procedure using this function.
 HELP
 
     &neo_pdb_misc('2004', '2.2');

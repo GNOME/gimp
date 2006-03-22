@@ -94,7 +94,10 @@ patterns_get_list_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    pattern_list = gimp_container_get_filtered_name_array (gimp->pattern_factory->container, filter, &num_patterns);
+    {
+      pattern_list = gimp_container_get_filtered_name_array (gimp->pattern_factory->container,
+                                                             filter, &num_patterns);
+    }
 
   return_args = procedural_db_return_args (&patterns_get_list_proc, success);
 

@@ -29,9 +29,8 @@ sub palettes_popup {
 		   made' },
 	{ name => 'popup_title', type => 'string',
 	  desc => 'Title to give the palette popup window' },
-	{ name => 'initial_palette', type => 'string',
-	  desc => 'The name of the palette to set as the first selected',
-	  null_ok => 1 },
+	{ name => 'initial_palette', type => 'string', null_ok => 1,
+	  desc => 'The name of the palette to set as the first selected' }
     );
 
     %invoke = (

@@ -98,7 +98,9 @@ path_list_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    path_list = gimp_container_get_name_array (gimage->vectors, &num_paths);
+    {
+      path_list = gimp_container_get_name_array (gimage->vectors, &num_paths);
+    }
 
   return_args = procedural_db_return_args (&path_list_proc, success);
 
@@ -1464,7 +1466,9 @@ path_import_invoker (Gimp         *gimp,
   scale = args[3].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    success = gimp_vectors_import_file (gimage, filename, merge, scale, -1, NULL);
+    {
+      success = gimp_vectors_import_file (gimage, filename, merge, scale, -1, NULL);
+    }
 
   return procedural_db_return_args (&path_import_proc, success);
 }
@@ -1539,7 +1543,10 @@ path_import_string_invoker (Gimp         *gimp,
   scale = args[4].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    success = gimp_vectors_import_buffer (gimage, string, length, merge, scale, -1, NULL);
+    {
+      success = gimp_vectors_import_buffer (gimage, string, length,
+                                            merge, scale, -1, NULL);
+    }
 
   return procedural_db_return_args (&path_import_string_proc, success);
 }

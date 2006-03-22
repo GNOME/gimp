@@ -28,7 +28,7 @@ HELP
     &yosh_pdb_misc('1998');
 
     @inargs = (
-	{ name => 'message', type => 'string', const => 1,
+	{ name => 'message', type => 'string',
 	  desc => 'Message to display in the dialog' }
     );
 

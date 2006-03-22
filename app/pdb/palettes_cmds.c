@@ -95,7 +95,10 @@ palettes_get_list_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    palette_list = gimp_container_get_filtered_name_array (gimp->palette_factory->container, filter, &num_palettes);
+    {
+      palette_list = gimp_container_get_filtered_name_array (gimp->palette_factory->container,
+                                                             filter, &num_palettes);
+    }
 
   return_args = procedural_db_return_args (&palettes_get_list_proc, success);
 

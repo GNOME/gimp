@@ -539,9 +539,6 @@ HELP
 
     &std_pdb_misc;
 
-    my $validity = 'This parameter is only valid when there is no selection in
-		    the specified image.';
-
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
@@ -554,16 +551,19 @@ HELP
 	{ name => 'threshold', type => '0 <= float <= 255',
 	  desc => "The threshold determines how extensive the seed fill will
 		   be. It's value is specified in terms of intensity levels
-		   (%%desc%%). $validity" },
+		   (%%desc%%). This parameter is only valid when there is
+                   no selection in the specified image." },
 	{ name => 'sample_merged', type => 'boolean',
-	  desc => 'Use the composite image, not the drawable' }
+	  desc => 'Use the composite image, not the drawable' },
+	{ name => 'x', type => 'float',
+	  desc => "The x coordinate of this bucket fill's application.
+		   This parameter is only valid when there is no selection
+		   in the specified image." },
+	{ name => 'y', type => 'float',
+	  desc => "The y coordinate of this bucket fill's application.
+		   This parameter is only valid when there is no selection
+		   in the specified image." }
     );
-
-    foreach (qw(x y)) {
-	push @inargs, { name => $_, type => 'float',
-			desc => "The $_ coordinate of this bucket fill's
-				 application. $validity" }
-    }
 
     %invoke = (
         headers => [ qw ("core/gimpdrawable-bucket-fill.h"

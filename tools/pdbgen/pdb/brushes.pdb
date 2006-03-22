@@ -28,8 +28,12 @@ HELP
     &seth_pdb_misc('1997');
 
     %invoke = (
-	code => 'gimp_data_factory_data_refresh (gimp->brush_factory);'
-    )
+	code => <<'CODE'
+{
+  gimp_data_factory_data_refresh (gimp->brush_factory);
+}
+CODE
+    );
 }
 
 sub brushes_get_list {
@@ -57,7 +61,12 @@ HELP
 
     %invoke = (
         headers => [ qw("core/gimpcontainer-filter.h") ],
-	code => 'brush_list = gimp_container_get_filtered_name_array (gimp->brush_factory->container, filter, &num_brushes);'
+	code    => <<'CODE'
+{
+  brush_list = gimp_container_get_filtered_name_array (gimp->brush_factory->container,
+                                                       filter, &num_brushes);
+}
+CODE
     );
 }
 
@@ -76,7 +85,7 @@ sub brushes_get_brush {
     );
 
     %invoke = (
-	code =><<'CODE'
+	code => <<'CODE'
 {
   GimpBrush *brush = gimp_context_get_brush (context);
 
@@ -125,7 +134,11 @@ sub brushes_set_spacing {
     );
 
     %invoke = (
-	code => 'gimp_brush_set_spacing (gimp_context_get_brush (context), spacing);'
+	code => <<'CODE'
+{
+  gimp_brush_set_spacing (gimp_context_get_brush (context), spacing);
+}
+CODE
     );
 }
 

@@ -17,10 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-# Tools
-
-# shortcuts
-
 sub stroke_arg () {
     { name => 'strokes', type => 'floatarray',
       desc => 'Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ...,

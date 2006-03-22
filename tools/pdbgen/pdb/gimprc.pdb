@@ -53,9 +53,12 @@ HELP
     {
       /*  use edit_config because unknown tokens are set there  */
       value = gimp_rc_query (GIMP_RC (gimp->edit_config), token);
-    }
 
-  success = (value != NULL);
+      if (! value)
+        success = FALSE;
+    }
+  else
+    success = FALSE;
 }
 CODE
     );

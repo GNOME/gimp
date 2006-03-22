@@ -49,13 +49,6 @@ sub font_prop_args {
    @result;
 }
 
-sub extents_outargs {
-    foreach (qw(width height ascent descent)) {
-	push @outargs, { name => $_, type => 'int32',
-			 desc => "The $_ of the specified font" }
-    }
-}
-
 sub text_fontname {
     $blurb = <<'BLURB';
 Add text at the specified location as a floating selection or a new layer.
@@ -134,8 +127,16 @@ HELP
 	  desc => 'The name of the font' }
     );
 
-    &extents_outargs;
-    $outargs[0]->{void_ret} = 1;
+    @outargs = (
+	{ name => 'width', type => 'int32', void_ret => 1,
+	  desc => 'The width of the specified font' },
+	{ name => 'height', type => 'int32',
+	  desc => 'The height of the specified font' },
+	{ name => 'ascent', type => 'int32',
+	  desc => 'The ascent of the specified font' },
+	{ name => 'descent', type => 'int32',
+	  desc => 'The descent of the specified font' }
+    );
 
     %invoke = (
 	code => <<'CODE'
@@ -199,8 +200,16 @@ sub text_get_extents {
 	&font_prop_args
     );
 
-    &extents_outargs;
-    $outargs[0]->{void_ret} = 1;
+    @outargs = (
+	{ name => 'width', type => 'int32', void_ret => 1,
+	  desc => 'The width of the specified font' },
+	{ name => 'height', type => 'int32',
+	  desc => 'The height of the specified font' },
+	{ name => 'ascent', type => 'int32',
+	  desc => 'The ascent of the specified font' },
+	{ name => 'descent', type => 'int32',
+	  desc => 'The descent of the specified font' }
+    );
 
     %invoke = (
 	code => <<'CODE'

@@ -19,10 +19,7 @@
 
 sub path_list {
     $blurb = 'List the paths associated with the passed image.';
-
-    $help = <<'HELP';
-List the paths associated with the passed image.
-HELP
+    $help  = 'List the paths associated with the passed image.';
 
     &andy_pdb_misc('1999');
 
@@ -37,16 +34,17 @@ HELP
     );
 
     %invoke = (
-	code => 'path_list = gimp_container_get_name_array (gimage->vectors, &num_paths);'
+	code => <<'CODE'
+{
+  path_list = gimp_container_get_name_array (gimage->vectors, &num_paths);
+}
+CODE
     );
 }
 
 sub path_get_points {
     $blurb = 'List the points associated with the named path.';
-
-    $help = <<'HELP';
-List the points associated with the named path.
-HELP
+    $help  = 'List the points associated with the named path.';
 
     &andy_pdb_misc('1999');
 
@@ -123,14 +121,13 @@ CODE
 
 sub path_get_current {
     $blurb = 'The name of the current path. Error if no paths.';
-
-    $help = <<'HELP';
-The name of the current path. Error if no paths.
-HELP
+    $help  = 'The name of the current path. Error if no paths.';
 
     &andy_pdb_misc('1999');
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
     $inargs[0]->{desc} = 'The ID of the image to get the current path from.';
 
     @outargs = (
@@ -154,10 +151,7 @@ CODE
 
 sub path_set_current {
     $blurb = 'Sets the current path associated with the passed image.';
-
-    $help = <<'HELP';
-Sets a named path as the current path.
-HELP
+    $help  = 'Sets a named path as the current path.';
 
     &andy_pdb_misc('1999');
 
@@ -184,10 +178,7 @@ CODE
 
 sub path_set_points {
     $blurb = 'Set the points associated with the named path.';
-
-    $help = <<'HELP';
-Set the points associated with the named path.
-HELP
+    $help  = 'Set the points associated with the named path.';
 
     &andy_pdb_misc('1999');
 
@@ -275,20 +266,19 @@ CODE
 
 sub path_stroke_current {
     $blurb = 'Stroke the current path in the passed image.';
-
-    $help = <<'HELP';
-Stroke the current path in the passed image.
-HELP
+    $help  = 'Stroke the current path in the passed image.';
 
     &andy_pdb_misc('1999');
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	&std_image_arg
+    );
     $inargs[0]->{desc} = 'The ID of the image which contains the path to
 			  stroke.';
 
     %invoke = (
 	headers => [ qw("core/gimpstrokedesc.h") ],
-	code => <<'CODE'
+	code    => <<'CODE'
 {
   GimpVectors  *vectors  = gimp_image_get_active_vectors (gimage);
   GimpDrawable *drawable = gimp_image_active_drawable (gimage);
@@ -469,7 +459,6 @@ CODE
     );
 }
 
-
 sub get_path_by_tattoo {
     $blurb = 'Return the name of the path with the given tattoo.';
 
@@ -509,10 +498,7 @@ CODE
 
 sub path_delete {
     $blurb = 'Delete the named path associated with the passed image.';
-
-    $help = <<'HELP';
-Delete the named path.
-HELP
+    $help  = 'Delete the named path.';
 
     &andy_pdb_misc('1999');
 
@@ -609,10 +595,7 @@ CODE
 
 sub path_get_visible {
     $blurb = 'Get the visibility of the named path.';
-
-    $help = <<'HELP';
-This procedure returns the visibility of the specified path.
-HELP
+    $help  = 'This procedure returns the visibility of the specified path.';
 
     &andy_pdb_misc('1999');
 
@@ -643,10 +626,7 @@ CODE
 
 sub path_set_visible {
     $blurb = 'Sets the visibility of the named path.';
-
-    $help = <<'HELP';
-This procedure sets the specified path's visibility.
-HELP
+    $help  = "This procedure sets the specified path's visibility.";
 
     &neo_pdb_misc('2005', '2.4');
 
@@ -740,7 +720,11 @@ HELP
 
     %invoke = (
         headers => [ qw("vectors/gimpvectors-import.h") ],
-	code    => 'success = gimp_vectors_import_file (gimage, filename, merge, scale, -1, NULL);'
+	code    => <<'CODE'
+{
+  success = gimp_vectors_import_file (gimage, filename, merge, scale, -1, NULL);
+}
+CODE
     );
 }
 
@@ -760,7 +744,8 @@ HELP
 	{ name => 'string', type => 'string', no_validate => 1,
 	  desc => 'A string that must be a complete and valid SVG document.' },
 	{ name => 'length', type => 'int32',
-	  desc => 'Number of bytes in string or -1 if the string is NULL terminated.' },
+	  desc => 'Number of bytes in string or -1 if the string is NULL
+                   terminated.' },
 	{ name => 'merge', type => 'boolean',
 	  desc => 'Merge paths into a single vectors object.' },
 	{ name => 'scale', type => 'boolean',
@@ -769,7 +754,12 @@ HELP
 
     %invoke = (
         headers => [ qw("vectors/gimpvectors-import.h") ],
-	code    => 'success = gimp_vectors_import_buffer (gimage, string, length, merge, scale, -1, NULL);'
+	code    => <<'CODE'
+{
+  success = gimp_vectors_import_buffer (gimage, string, length,
+                                        merge, scale, -1, NULL);
+}
+CODE
     );
 }
 
