@@ -1,3 +1,11 @@
+2006-03-22  Simon Budig  <simon@gimp.org>
+
+	* tools/pdbgen/pdb/paths.pdb: deprecated path_get_point_at_dist()
+
+	* app/pdb/paths_cmds.c
+	* devel-docs/libgimp/tmpl/gimppaths.sgml
+	* libgimp/gimppaths_pdb.[ch]: regenerated.
+
 2006-03-22  Sven Neumann  <sven@gimp.org>
 
 	* app/base/siox.[ch] (siox_foreground_extract): let the caller

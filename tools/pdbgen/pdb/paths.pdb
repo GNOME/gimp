@@ -295,7 +295,7 @@ CODE
 }
 
 sub  path_get_point_at_dist {
-    $blurb = 'Get point on a path at a specified distance along the path.';
+    &std_pdb_deprecated('gimp-vectors-stroke-get-point-at-dist');
 
     $help = <<'HELP';
 This will return the x,y position of a point at a given distance along the

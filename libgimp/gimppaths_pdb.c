@@ -281,14 +281,8 @@ gimp_path_stroke_current (gint32 image_ID)
  * @y_point: The y position of the point.
  * @slope: The slope (dy / dx) at the specified point.
  *
- * Get point on a path at a specified distance along the path.
- *
- * This will return the x,y position of a point at a given distance
- * along the bezier curve. The distance will be obtained by first
- * digitizing the curve internally and then walking along the curve.
- * For a closed curve the start of the path is the first point on the
- * path that was created. This might not be obvious. Note the current
- * path is used.
+ * This procedure is deprecated! Use
+ * gimp_vectors_stroke_get_point_at_dist() instead.
  *
  * Returns: The x position of the point.
  */

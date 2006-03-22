@@ -144,27 +144,6 @@ Operations related to paths.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_path_get_visible ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@name: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_path_set_visible ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@name: 
-@visible: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_path_set_tattoo ##### -->
 <para>
 
