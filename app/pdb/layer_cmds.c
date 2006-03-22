@@ -756,7 +756,10 @@ layer_set_offsets_invoker (Gimp         *gimp,
       gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
                                    _("Move Layer"));
 
-      gimp_item_translate (GIMP_ITEM (layer), offx - GIMP_ITEM (layer)->offset_x, offy - GIMP_ITEM (layer)->offset_y, TRUE);
+      offx -= GIMP_ITEM (layer)->offset_x;
+      offy -= GIMP_ITEM (layer)->offset_y;
+
+      gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
 
       if (gimp_item_get_linked (GIMP_ITEM (layer)))
         gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);

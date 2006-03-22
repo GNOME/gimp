@@ -56,7 +56,7 @@ gboolean gimp_selection_border      (gint32          image_ID,
 gboolean gimp_selection_grow        (gint32          image_ID,
 				     gint            steps);
 gboolean gimp_selection_shrink      (gint32          image_ID,
-				     gint            radius);
+				     gint            steps);
 gboolean gimp_selection_layer_alpha (gint32          layer_ID);
 gboolean gimp_selection_load        (gint32          channel_ID);
 gint32   gimp_selection_save        (gint32          image_ID);

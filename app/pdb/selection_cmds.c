@@ -477,7 +477,9 @@ selection_invert_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    gimp_channel_invert (gimp_image_get_mask (gimage), TRUE);
+    {
+      gimp_channel_invert (gimp_image_get_mask (gimage), TRUE);
+    }
 
   return procedural_db_return_args (&selection_invert_proc, success);
 }
@@ -523,7 +525,9 @@ selection_sharpen_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    gimp_channel_sharpen (gimp_image_get_mask (gimage), TRUE);
+    {
+      gimp_channel_sharpen (gimp_image_get_mask (gimage), TRUE);
+    }
 
   return procedural_db_return_args (&selection_sharpen_proc, success);
 }
@@ -569,7 +573,9 @@ selection_all_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    gimp_channel_all (gimp_image_get_mask (gimage), TRUE);
+    {
+      gimp_channel_all (gimp_image_get_mask (gimage), TRUE);
+    }
 
   return procedural_db_return_args (&selection_all_proc, success);
 }
@@ -615,7 +621,9 @@ selection_none_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    gimp_channel_clear (gimp_image_get_mask (gimage), NULL, TRUE);
+    {
+      gimp_channel_clear (gimp_image_get_mask (gimage), NULL, TRUE);
+    }
 
   return procedural_db_return_args (&selection_none_proc, success);
 }
@@ -666,7 +674,10 @@ selection_feather_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    gimp_channel_feather (gimp_image_get_mask (gimage), radius, radius, TRUE);
+    {
+      gimp_channel_feather (gimp_image_get_mask (gimage),
+                            radius, radius, TRUE);
+    }
 
   return procedural_db_return_args (&selection_feather_proc, success);
 }
@@ -722,7 +733,10 @@ selection_border_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    gimp_channel_border (gimp_image_get_mask (gimage), radius, radius, TRUE);
+    {
+      gimp_channel_border (gimp_image_get_mask (gimage),
+                           radius, radius, TRUE);
+    }
 
   return procedural_db_return_args (&selection_border_proc, success);
 }
@@ -778,7 +792,10 @@ selection_grow_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    gimp_channel_grow (gimp_image_get_mask (gimage), steps, steps, TRUE);
+    {
+      gimp_channel_grow (gimp_image_get_mask (gimage),
+                         steps, steps, TRUE);
+    }
 
   return procedural_db_return_args (&selection_grow_proc, success);
 }
@@ -823,18 +840,21 @@ selection_shrink_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   GimpImage *gimage;
-  gint32 radius;
+  gint32 steps;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
-  radius = args[1].value.pdb_int;
-  if (radius < 0)
+  steps = args[1].value.pdb_int;
+  if (steps < 0)
     success = FALSE;
 
   if (success)
-    gimp_channel_shrink (gimp_image_get_mask (gimage), radius, radius, FALSE, TRUE);
+    {
+      gimp_channel_shrink (gimp_image_get_mask (gimage),
+                           steps, steps, FALSE, TRUE);
+    }
 
   return procedural_db_return_args (&selection_shrink_proc, success);
 }
@@ -848,8 +868,8 @@ static ProcArg selection_shrink_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "radius",
-    "Radius of shrink (in pixels)"
+    "steps",
+    "Steps of shrink (in pixels)"
   }
 };
 
@@ -998,7 +1018,12 @@ selection_save_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    success = (channel = gimp_selection_save (gimp_image_get_mask (gimage))) != NULL;
+    {
+      channel = gimp_selection_save (gimp_image_get_mask (gimage));
+
+      if (! channel)
+        success = FALSE;
+    }
 
   return_args = procedural_db_return_args (&selection_save_proc, success);
 

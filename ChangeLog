@@ -1,3 +1,27 @@
+2006-03-22  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/buffer.pdb
+	* tools/pdbgen/pdb/color.pdb
+	* tools/pdbgen/pdb/display.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/drawable_transform.pdb
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/font_select.pdb
+	* tools/pdbgen/pdb/gimprc.pdb
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/selection.pdb
+	* tools/pdbgen/pdb/text_tool.pdb
+	* tools/pdbgen/pdb/transform_tools.pdb: more perl stuff flattened,
+	cleanup, nitpickyness.
+
+	* app/pdb/buffer_cmds.c
+	* app/pdb/color_cmds.c
+	* app/pdb/display_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/selection_cmds.c
+	* libgimp/gimpselection_pdb.[ch]: regenerated.
+
 2006-03-22  Sven Neumann  <sven@gimp.org>
 
 	* app/base/siox.c (siox_foreground_extract): fixed assertions and

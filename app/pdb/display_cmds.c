@@ -65,11 +65,14 @@ display_new_invoker (Gimp         *gimp,
     {
       display = gimp_create_display (gimp, gimage, GIMP_UNIT_PIXEL, 1.0);
 
-      success = (display != NULL);
-
-      /* the first display takes ownership of the image */
-      if (success && gimage->disp_count == 1)
-        g_object_unref (gimage);
+      if (display)
+        {
+          /* the first display takes ownership of the image */
+          if (gimage->disp_count == 1)
+            g_object_unref (gimage);
+        }
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&display_new_proc, success);

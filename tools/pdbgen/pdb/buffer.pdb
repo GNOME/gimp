@@ -39,7 +39,12 @@ HELP
     );
 
     %invoke = (
-	code => 'buffer_list = gimp_container_get_filtered_name_array (gimp->named_buffers, filter, &num_buffers);'
+	code => <<'CODE'
+{
+  buffer_list = gimp_container_get_filtered_name_array (gimp->named_buffers,
+                                                        filter, &num_buffers);
+}
+CODE
     );
 }
 
@@ -62,18 +67,18 @@ sub buffer_rename {
     );
 
     %invoke = (
-	code => <<CODE
+	code => <<'CODE'
 {
   GimpBuffer *buffer = (GimpBuffer *)
     gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
-  success = (buffer != NULL && strlen (new_name) > 0);
-
-  if (success)
+  if (buffer && strlen (new_name))
     {
       gimp_object_set_name (GIMP_OBJECT (buffer), new_name);
       real_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (buffer)));
     }
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -93,15 +98,15 @@ sub buffer_delete {
     );
 
     %invoke = (
-	code => <<CODE
+	code => <<'CODE'
 {
   GimpBuffer *buffer = (GimpBuffer *)
     gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
-  success = (buffer != NULL);
-
-  if (success)
+  if (buffer)
     success = gimp_container_remove (gimp->named_buffers, GIMP_OBJECT (buffer));
+  else
+    success = FALSE;
 }
 CODE
     );

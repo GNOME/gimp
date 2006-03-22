@@ -17,37 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub selection_simple_proc {
-    my $op = shift;
-
-    &std_pdb_misc;
-
-    @inargs = (
-	&std_image_arg
-    );
-
-    %invoke = ( code => "gimp_channel_$op (gimp_image_get_mask (gimage), TRUE);" );
-}
-
-sub selection_change_proc {
-    my ($op, $arg, $type, $edge_lock) = @_;
-
-    $blurb = "\u$op the image's selection";
-    $help  = "This procedure ${op}s the selection. ";
-
-    &std_pdb_misc;
-
-    @inargs = (
-	&std_image_arg,
-	{ name => $arg, type => "0 <= $type",
-	  desc => "\u$arg of $op (in pixels)" }
-    );
-
-    %invoke = ( code => "gimp_channel_$op (gimp_image_get_mask (gimage), $arg, $arg$edge_lock, TRUE);" );
-}
-
-# The defs
-
 sub selection_bounds {
     $blurb = 'Find the bounding box of the current selection.';
 
@@ -217,19 +186,29 @@ CODE
 }
 
 sub selection_invert {
-    &selection_simple_proc('invert');
-
     $blurb = 'Invert the selection mask.';
 
     $help = <<'HELP';
 This procedure inverts the selection mask. For every pixel in the selection
 channel, its new value is calculated as (255 - old_value).
 HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_channel_invert (gimp_image_get_mask (gimage), TRUE);
+}
+CODE
+    );
 }
 
 sub selection_sharpen {
-    &selection_simple_proc('sharpen');
-
     $blurb = 'Sharpen the selection mask.';
 
     $help = <<'HELP';
@@ -237,17 +216,43 @@ This procedure sharpens the selection mask. For every pixel in the selection
 channel, if the value is > 0, the new pixel is assigned a value of 255. This
 removes any "anti-aliasing" that might exist in the selection mask's boundary.
 HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_channel_sharpen (gimp_image_get_mask (gimage), TRUE);
+}
+CODE
+    );
 }
 
 sub selection_all {
-    &selection_simple_proc('all');
-
     $blurb = 'Select all of the image.';
 
     $help = <<'HELP';
 This procedure sets the selection mask to completely encompass the image. Every
 pixel in the selection channel is set to 255.
 HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_channel_all (gimp_image_get_mask (gimage), TRUE);
+}
+CODE
+    );
 }
 
 sub selection_none {
@@ -264,40 +269,119 @@ HELP
 	&std_image_arg
     );
 
-    %invoke = ( code => "gimp_channel_clear (gimp_image_get_mask (gimage), NULL, TRUE);" );
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_channel_clear (gimp_image_get_mask (gimage), NULL, TRUE);
+}
+CODE
+    );
 }
 
 sub selection_feather {
-    &selection_change_proc('feather', 'radius', 'float', '');
+    $blurb = "Feather the image's selection";
 
-    $help .= 'Feathering is implemented using a gaussian blur.';
+    $help = <<'HELP';
+This procedure feathers the selection. Feathering is implemented
+using a gaussian blur.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'radius', type => '0 <= float',
+	  desc => 'Radius of feather (in pixels)' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_channel_feather (gimp_image_get_mask (gimage),
+                        radius, radius, TRUE);
+}
+CODE
+    );
 }
 
 sub selection_border {
-    &selection_change_proc('border', 'radius', 'int32', '');
+    $blurb = "Border the image's selection";
 
     $help .= <<'HELP';
-Bordering creates a new selection which is defined along the boundary of the
-previous selection at every point within the specified radius.
+This procedure borders the selection. Bordering creates a new
+selection which is defined along the boundary of the previous
+selection at every point within the specified radius.
 HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'radius', type => '0 <= int32',
+	  desc => 'Radius of border (in pixels)' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_channel_border (gimp_image_get_mask (gimage),
+                       radius, radius, TRUE);
+}
+CODE
+    );
 }
 
 sub selection_grow {
-    &selection_change_proc('grow', 'steps', 'int32', '');
+    $blurb = "Grow the image's selection";
 
     $help .= <<'HELP';
-Growing involves expanding the boundary in all directions by the specified
-pixel amount.
+This procedure grows the selection. Growing involves expanding the
+boundary in all directions by the specified pixel amount.
 HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'steps', type => '0 <= int32',
+	  desc => 'Steps of grow (in pixels)' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_channel_grow (gimp_image_get_mask (gimage),
+                     steps, steps, TRUE);
+}
+CODE
+    );
 }
 
 sub selection_shrink {
-    &selection_change_proc('shrink', 'radius', 'int32', ', FALSE');
+    $blurb = "Shrink the image's selection";
 
     $help .= <<'HELP';
-Shrinking invovles trimming the existing selection boundary on all sides by the
-specified number of pixels.
+This procedure shrinks the selection. Shrinking invovles trimming the
+existing selection boundary on all sides by the specified number of
+pixels.
 HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'steps', type => '0 <= int32',
+	  desc => 'Steps of shrink (in pixels)' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_channel_shrink (gimp_image_get_mask (gimage),
+                       steps, steps, FALSE, TRUE);
+}
+CODE
+    );
 }
 
 sub selection_layer_alpha {
@@ -425,7 +509,14 @@ HELP
 
     %invoke = (
         headers => [qw("core/gimpselection.h") ],
-	code => 'success = (channel = gimp_selection_save (gimp_image_get_mask (gimage))) != NULL;'
+	code    => <<'CODE'
+{
+  channel = gimp_selection_save (gimp_image_get_mask (gimage));
+
+  if (! channel)
+    success = FALSE;
+}
+CODE
     );
 }
 

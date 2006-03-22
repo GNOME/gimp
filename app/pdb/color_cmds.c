@@ -241,11 +241,9 @@ levels_invoker (Gimp         *gimp,
       if (success)
         gimp_drawable_levels (drawable, context,
                               channel,
-                              low_input,
-                              high_input,
+                              low_input, high_input,
                               gamma,
-                              low_output,
-                              high_output);
+                              low_output, high_output);
     }
 
   return procedural_db_return_args (&levels_proc, success);
@@ -580,7 +578,7 @@ desaturate_full_invoker (Gimp         *gimp,
         success = FALSE;
 
       if (success)
-        gimp_drawable_desaturate (drawable, (GimpDesaturateMode) desaturate_mode);
+        gimp_drawable_desaturate (drawable, desaturate_mode);
     }
 
   return procedural_db_return_args (&desaturate_full_proc, success);

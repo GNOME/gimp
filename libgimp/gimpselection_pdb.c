@@ -459,7 +459,7 @@ gimp_selection_grow (gint32 image_ID,
 /**
  * gimp_selection_shrink:
  * @image_ID: The image.
- * @radius: Radius of shrink (in pixels).
+ * @steps: Steps of shrink (in pixels).
  *
  * Shrink the image's selection
  *
@@ -471,7 +471,7 @@ gimp_selection_grow (gint32 image_ID,
  */
 gboolean
 gimp_selection_shrink (gint32 image_ID,
-		       gint   radius)
+		       gint   steps)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -480,7 +480,7 @@ gimp_selection_shrink (gint32 image_ID,
   return_vals = gimp_run_procedure ("gimp-selection-shrink",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_INT32, radius,
+				    GIMP_PDB_INT32, steps,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

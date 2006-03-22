@@ -131,11 +131,9 @@ HELP
   if (success)
     gimp_drawable_levels (drawable, context,
                           channel,
-                          low_input,
-                          high_input,
+                          low_input, high_input,
                           gamma,
-                          low_output,
-                          high_output);
+                          low_output, high_output);
 }
 CODE
     );
@@ -177,8 +175,6 @@ HELP
 CODE
     );
 }
-
-
 
 sub levels_auto {
     &std_pdb_deprecated ('gimp_levels_stretch');
@@ -294,11 +290,14 @@ CODE
 }
 
 sub desaturate_full {
-    $blurb = 'Desaturate the contents of the specified drawable, with the specified formula.';
+    $blurb = <<'BLURB';
+Desaturate the contents of the specified drawable, with the specified formula.
+BLURB
 
     $help = <<'HELP';
-This procedure desaturates the contents of the specified drawable, with the specified
-formula. This procedure only works on drawables of type RGB color.
+This procedure desaturates the contents of the specified drawable,
+with the specified formula. This procedure only works on drawables of
+type RGB color.
 HELP
 
     $author = $copyright = 'Karine Delvare';
@@ -321,7 +320,7 @@ HELP
     success = FALSE;
 
   if (success)
-    gimp_drawable_desaturate (drawable, (GimpDesaturateMode) desaturate_mode);
+    gimp_drawable_desaturate (drawable, desaturate_mode);
 }
 CODE
     );

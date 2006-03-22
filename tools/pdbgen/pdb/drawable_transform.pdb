@@ -305,21 +305,32 @@ HELP
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
-	  desc => 'The affected drawable' }
-    );
-
-    my $pos = 0;
-    foreach $where (qw(upper-left upper-right lower-left lower-right)) {
-        foreach (qw(x y)) {
-            push @inargs,
-                 { name => "$_$pos", type => 'float',
-                   desc => "The new $_ coordinate of $where corner of original
-                            bounding box" }
-        }
-        $pos++;
-    }
-    @inargs = (@inargs,
-        &transform_options_args
+	  desc => 'The affected drawable' },
+	{ name => 'x0', type => 'float',
+	  desc => 'The new x coordinate of upper-left corner of original
+		   bounding box' },
+	{ name => 'y0', type => 'float',
+	  desc => 'The new y coordinate of upper-left corner of original
+		   bounding box' },
+	{ name => 'x1', type => 'float',
+	  desc => 'The new x coordinate of upper-right corner of original
+		   bounding box' },
+	{ name => 'y1', type => 'float',
+	  desc => 'The new y coordinate of upper-right corner of original
+		   bounding box' },
+	{ name => 'x2', type => 'float',
+	  desc => 'The new x coordinate of lower-left corner of original
+		   bounding box' },
+	{ name => 'y2', type => 'float',
+	  desc => 'The new y coordinate of lower-left corner of original
+		   bounding box' },
+	{ name => 'x3', type => 'float',
+	  desc => 'The new x coordinate of lower-right corner of original
+		   bounding box' },
+	{ name => 'y3', type => 'float',
+	  desc => 'The new y coordinate of lower-right corner of original
+		   bounding box' },
+	&transform_options_args
     );
 
     @outargs = (
@@ -354,21 +365,32 @@ HELP
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
-	  desc => 'The affected drawable' }
-    );
-
-    my $pos = 0;
-    foreach $where (qw(upper-left upper-right lower-left lower-right)) {
-        foreach (qw(x y)) {
-            push @inargs,
-                 { name => "$_$pos", type => 'float',
-                   desc => "The new $_ coordinate of $where corner of original
-                            bounding box" }
-        }
-        $pos++;
-    }
-    @inargs = (@inargs,
-        &transform_options_default_args
+	  desc => 'The affected drawable' },
+	{ name => 'x0', type => 'float',
+	  desc => 'The new x coordinate of upper-left corner of original
+		   bounding box' },
+	{ name => 'y0', type => 'float',
+	  desc => 'The new y coordinate of upper-left corner of original
+		   bounding box' },
+	{ name => 'x1', type => 'float',
+	  desc => 'The new x coordinate of upper-right corner of original
+		   bounding box' },
+	{ name => 'y1', type => 'float',
+	  desc => 'The new y coordinate of upper-right corner of original
+		   bounding box' },
+	{ name => 'x2', type => 'float',
+	  desc => 'The new x coordinate of lower-left corner of original
+		   bounding box' },
+	{ name => 'y2', type => 'float',
+	  desc => 'The new y coordinate of lower-left corner of original
+		   bounding box' },
+	{ name => 'x3', type => 'float',
+	  desc => 'The new x coordinate of lower-right corner of original
+		   bounding box' },
+	{ name => 'y3', type => 'float',
+	  desc => 'The new y coordinate of lower-right corner of original
+		   bounding box' },
+	&transform_options_default_args
     );
 
     @outargs = (

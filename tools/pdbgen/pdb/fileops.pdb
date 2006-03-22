@@ -42,7 +42,9 @@ HELP
 	  desc => 'The name as entered by the user' }
     );
 
-    @outargs = ( &std_image_arg );
+    @outargs = (
+	&std_image_arg
+    );
     $outargs[0]->{desc} = 'The output image';
 
     %invoke = (

@@ -28,9 +28,8 @@ sub fonts_popup {
 	  desc => 'The callback PDB proc to call when font selection is made' },
 	{ name => 'popup_title', type => 'string',
 	  desc => 'Title to give the font popup window' },
-	{ name => 'initial_font', type => 'string',
-	  desc => 'The name of the font to set as the first selected',
-	  null_ok => 1 }
+	{ name => 'initial_font', type => 'string', null_ok => 1,
+	  desc => 'The name of the font to set as the first selected' }
     );
 
     %invoke = (

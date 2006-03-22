@@ -70,7 +70,10 @@ buffers_get_list_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    buffer_list = gimp_container_get_filtered_name_array (gimp->named_buffers, filter, &num_buffers);
+    {
+      buffer_list = gimp_container_get_filtered_name_array (gimp->named_buffers,
+                                                            filter, &num_buffers);
+    }
 
   return_args = procedural_db_return_args (&buffers_get_list_proc, success);
 
@@ -149,13 +152,13 @@ buffer_rename_invoker (Gimp         *gimp,
       GimpBuffer *buffer = (GimpBuffer *)
         gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
-      success = (buffer != NULL && strlen (new_name) > 0);
-
-      if (success)
+      if (buffer && strlen (new_name))
         {
           gimp_object_set_name (GIMP_OBJECT (buffer), new_name);
           real_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (buffer)));
         }
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&buffer_rename_proc, success);
@@ -225,10 +228,10 @@ buffer_delete_invoker (Gimp         *gimp,
       GimpBuffer *buffer = (GimpBuffer *)
         gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
-      success = (buffer != NULL);
-
-      if (success)
+      if (buffer)
         success = gimp_container_remove (gimp->named_buffers, GIMP_OBJECT (buffer));
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&buffer_delete_proc, success);

@@ -17,7 +17,28 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub render_args () {(
+sub text_fontname {
+    $blurb = <<'BLURB';
+Add text at the specified location as a floating selection or a new layer.
+BLURB
+
+    $help = <<'HELP';
+This tool requires a fontname matching an installed PangoFT2 font.
+You can specify the fontsize in units of pixels
+or points, and the appropriate metric is specified using the size_type
+argument. The x and y parameters together control the placement of the new
+text by specifying the upper left corner of the text bounding box. If the
+specified drawable parameter is valid, the text will be created as a floating
+selection attached to the drawable. If the drawable parameter is not valid
+(-1), the text will appear as a new layer. Finally, a border can be specified
+around the final rendered text. The border is measured in pixels.
+HELP
+
+    &std_pdb_misc;
+    $author = 'Martin Edlman & Sven Neumann';
+    $date = '1998- 2001';
+
+    @inargs = (
 	&std_image_arg,
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable: (-1 for a new text layer)',
@@ -34,45 +55,7 @@ sub render_args () {(
 	{ name => 'size', type => '0 < float',
 	  desc => 'The size of text in either pixels or points' },
 	{ name => 'size_type', type => 'enum GimpSizeType',
-	  desc => 'The units of specified size: %%desc%%' }
-)}
-
-@props = qw(foundry family weight slant set_width spacing registry encoding);
-
-sub font_prop_args {
-   my @result;
-   foreach (@props) {
-	(my $desc = $_) =~ s/_/-/g;
-	push @result, { name => $_, type => 'string', no_validate => 1,
-			desc => qq/The font $desc/ }
-   }
-   @result;
-}
-
-sub text_fontname {
-    $blurb = <<'BLURB';
-Add text at the specified location as a floating selection or a new layer.
-BLURB
-
-    $help = <<'HELP';
-This tool requires a fontname matching an installed PangoFT2 font.
-You can specify the fontsize in units of pixels
-or points, and the appropriate metric is specified using the size_type
-argument. The x and y parameters together control the placement of the new
-text by specifying the upper left corner of the text bounding box. If the
-specified drawable parameter is valid, the text will be created as a floating
-selection attached to the drawable. If the drawable parameter is not valid
-(-1), the text will appear as a new layer. Finally, a border can be specified
-around the final rendered text. The border is measured in pixels.
-
-HELP
-
-    &std_pdb_misc;
-    $author = 'Martin Edlman & Sven Neumann';
-    $date = '1998- 2001';
-
-    @inargs = (
-        &render_args,
+	  desc => 'The units of specified size: %%desc%%' },
 	{ name => 'fontname', type => 'string',
 	  desc => 'The name of the font' }
     );
@@ -157,8 +140,39 @@ sub text {
     &std_pdb_deprecated ('gimp-text-fontname');
 
     @inargs = (
-	&render_args,
-        &font_prop_args
+	&std_image_arg,
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The affected drawable: (-1 for a new text layer)',
+	  no_success => 1 },
+	{ name => 'x', type => 'float',
+	  desc => 'The x coordinate for the left of the text bounding box' },
+	{ name => 'y', type => 'float',
+	  desc => 'The y coordinate for the top of the text bounding box' },
+	{ name => 'text', type => 'string',
+	  desc => 'The text to generate (in UTF-8 encoding)' },
+	{ name => 'border', type => '-1 <= int32',
+	  desc => 'The size of the border: %%desc%%' },
+	&std_antialias_arg,
+	{ name => 'size', type => '0 < float',
+	  desc => 'The size of text in either pixels or points' },
+	{ name => 'size_type', type => 'enum GimpSizeType',
+	  desc => 'The units of specified size: %%desc%%' },
+	{ name => 'foundry', type => 'string', no_validate => 1,
+	  desc => 'The font foundry' },
+	{ name => 'family', type => 'string', no_validate => 1,
+	  desc => 'The font family' },
+	{ name => 'weight', type => 'string', no_validate => 1,
+	  desc => 'The font weight' },
+	{ name => 'slant', type => 'string', no_validate => 1,
+	  desc => 'The font slant' },
+	{ name => 'set_width', type => 'string', no_validate => 1,
+	  desc => 'The font set-width' },
+	{ name => 'spacing', type => 'string', no_validate => 1,
+	  desc => 'The font spacing' },
+	{ name => 'registry', type => 'string', no_validate => 1,
+	  desc => 'The font registry' },
+	{ name => 'encoding', type => 'string', no_validate => 1,
+	  desc => 'The font encoding' }
     );
 
     @outargs = (
@@ -197,7 +211,22 @@ sub text_get_extents {
 	  desc => 'The size of text in either pixels or points' },
 	{ name => 'size_type', type => 'enum GimpSizeType',
 	  desc => 'The units of specified size: %%desc%%' },
-	&font_prop_args
+	{ name => 'foundry', type => 'string', no_validate => 1,
+	  desc => 'The font foundry' },
+	{ name => 'family', type => 'string', no_validate => 1,
+	  desc => 'The font family' },
+	{ name => 'weight', type => 'string', no_validate => 1,
+	  desc => 'The font weight' },
+	{ name => 'slant', type => 'string', no_validate => 1,
+	  desc => 'The font slant' },
+	{ name => 'set_width', type => 'string', no_validate => 1,
+	  desc => 'The font set-width' },
+	{ name => 'spacing', type => 'string', no_validate => 1,
+	  desc => 'The font spacing' },
+	{ name => 'registry', type => 'string', no_validate => 1,
+	  desc => 'The font registry' },
+	{ name => 'encoding', type => 'string', no_validate => 1,
+	  desc => 'The font encoding' }
     );
 
     @outargs = (

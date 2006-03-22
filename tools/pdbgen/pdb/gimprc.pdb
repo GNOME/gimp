@@ -85,7 +85,7 @@ HELP
     );
 
     %invoke = ( 
-	code =>  <<'CODE'
+	code => <<'CODE'
 {
   if (strlen (token))
     {

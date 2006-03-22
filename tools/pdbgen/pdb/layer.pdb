@@ -379,8 +379,6 @@ CODE
 }
 
 sub layer_set_offsets {
-    &layer_translate;
-
     $blurb = 'Set the layer offsets.';
 
     $help = <<'HELP';
@@ -389,10 +387,37 @@ relative to the image origin and can be any values. This operation is valid
 only on layers which have been added to an image.
 HELP
 
-    foreach (qw(x y)) {
-	$invoke{code} =~
-	    s/(off$_),/$1 - GIMP_ITEM (layer)->offset_$_,/;
-    }
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
+	{ name => 'offx', type => 'int32',
+	  desc => "Offset in x direction" },
+	{ name => 'offy', type => 'int32',
+	  desc => "Offset in y direction" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
+
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                               _("Move Layer"));
+
+  offx -= GIMP_ITEM (layer)->offset_x;
+  offy -= GIMP_ITEM (layer)->offset_y;
+
+  gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+
+  if (gimp_item_get_linked (GIMP_ITEM (layer)))
+    gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+
+  gimp_image_undo_group_end (gimage);
+}
+CODE
+    );
 }
 
 sub layer_get_mask {
