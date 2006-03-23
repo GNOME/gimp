@@ -88,7 +88,7 @@
 /*
  *  progress meter update frequency
  */
-#define PROG_UPDATE_TIME ((row % 10) == 0)
+#define PROG_UPDATE_TIME ((row % 12) == 0)
 
 gchar *PLUG_IN_PROC[] =
 {
@@ -97,11 +97,11 @@ gchar *PLUG_IN_PROC[] =
   "plug-in-randomize-slur",
 };
 
-gchar *RNDM_VERSION[] =
+gchar *RNDM_NAME[] =
 {
-  N_("Random Hurl 1.7"),
-  N_("Random Pick 1.7"),
-  N_("Random Slur 1.7"),
+  N_("Random Hurl"),
+  N_("Random Pick"),
+  N_("Random Slur"),
 };
 
 #define RNDM_HURL      1
@@ -282,7 +282,6 @@ run (const gchar      *name,
   GimpDrawable      *drawable;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;        /* assume the best! */
-  gchar             *rndm_type_str = "";
   static GimpParam   values[1];
   GRand             *gr; /* The GRand object which generates the
                           * random numbers */
@@ -376,21 +375,11 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
 	{
-	  /*
-	   *  JUST DO IT!
-	   */
-	  switch (rndm_type)
-	    {
-	    case RNDM_HURL: rndm_type_str = "hurl"; break;
-	    case RNDM_PICK: rndm_type_str = "pick"; break;
-	    case RNDM_SLUR: rndm_type_str = "slur"; break;
-            }
-
-          gimp_progress_init_printf ("%s (%s)",
-                                     gettext (RNDM_VERSION[rndm_type - 1]),
-                                     gettext (rndm_type_str));
 	  gimp_tile_cache_ntiles (2 *
                                   (drawable->width / gimp_tile_width () + 1));
+
+          gimp_progress_init_printf ("%s", gettext (RNDM_NAME[rndm_type - 1]));
+
 	  /*
 	   *  Initialize the g_rand() function seed
 	   */
@@ -540,15 +529,15 @@ randomize (GimpDrawable *drawable,
       /*
        *  prepare the first row and previous row
        */
-      randomize_prepare_row(sp, pr, x1, y1 - 1, (x2 - x1));
-      randomize_prepare_row(dp, cr, x1, y1, (x2 - x1));
+      randomize_prepare_row (sp, pr, x1, y1 - 1, (x2 - x1));
+      randomize_prepare_row (dp, cr, x1, y1, (x2 - x1));
       /*
        *  loop through the rows, applying the selected convolution
        */
       for (row = y1; row < y2; row++)
 	{
 	  /*  prepare the next row  */
-	  randomize_prepare_row(sp, nr, x1, row + 1, (x2 - x1));
+	  randomize_prepare_row (sp, nr, x1, row + 1, (x2 - x1));
 
 	  d = dest;
 	  ind = 0;
@@ -650,7 +639,7 @@ randomize (GimpDrawable *drawable,
 	   *  Save the modified row, shuffle the row pointers, and every
 	   *  so often, update the progress meter.
 	   */
-	  gimp_pixel_rgn_set_row(dp, dest, x1, row, (x2 - x1));
+	  gimp_pixel_rgn_set_row (dp, dest, x1, row, (x2 - x1));
 
 	  tmp = pr;
 	  pr = cr;
@@ -658,8 +647,11 @@ randomize (GimpDrawable *drawable,
 	  nr = tmp;
 
 	  if (PROG_UPDATE_TIME)
-	    gimp_progress_update ((double) row / (double) (y2 - y1));
+	    gimp_progress_update ((cnt - 1 +
+                                   (double) row / (double) (y2 - y1)) /
+                                  pivals.rndm_rcount);
         }
+
       /*
        *  if we have more cycles to perform, swap the src and dest Pixel Regions
        */
@@ -679,13 +671,16 @@ randomize (GimpDrawable *drawable,
             }
         }
     }
-  gimp_progress_update ((double) 100);
+
+  gimp_progress_update (1.0);
+
   /*
    *  update the randomized region
    */
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
   gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+
   /*
    *  clean up after ourselves.
    */
@@ -720,7 +715,7 @@ randomize_dialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dlg = gimp_dialog_new (gettext (RNDM_VERSION[rndm_type - 1]), PLUG_IN_BINARY,
+  dlg = gimp_dialog_new (gettext (RNDM_NAME[rndm_type - 1]), PLUG_IN_BINARY,
                          NULL, 0,
 			 gimp_standard_help_func, PLUG_IN_PROC[rndm_type - 1],
 

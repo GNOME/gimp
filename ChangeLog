@@ -1,3 +1,8 @@
+2006-03-23  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/randomize.c: removed version number from dialog
+	title, improved progress update.
+
 2006-03-22  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/app.pl: removed support for invoke->pass_through.
