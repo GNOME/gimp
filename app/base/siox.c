@@ -729,14 +729,14 @@ siox_cache_remove_fg (gpointer key,
  * function calls of this module as it maintaines the state.
  */
 SioxState *
-siox_init (TileManager      *pixels,
-           const guchar     *colormap,
-           gint              offset_x,
-           gint              offset_y,
-           gint              x,
-           gint              y,
-           gint              width,
-           gint              height)
+siox_init (TileManager  *pixels,
+           const guchar *colormap,
+           gint          offset_x,
+           gint          offset_y,
+           gint          x,
+           gint          y,
+           gint          width,
+           gint          height)
 {
   SioxState *state;
 
@@ -847,6 +847,12 @@ siox_foreground_extract (SioxState          *state,
 
   siox_progress_update (progress_callback, progress_data, 0.0);
 
+  if (refinement & SIOX_REFINEMENT_ADD_FOREGROUND)
+    g_hash_table_foreach_remove (state->cache, siox_cache_remove_bg, NULL);
+
+  if (refinement & SIOX_REFINEMENT_ADD_BACKGROUND)
+    g_hash_table_foreach_remove (state->cache, siox_cache_remove_fg, NULL);
+
   if (refinement & SIOX_REFINEMENT_CHANGE_SENSITIVITY)
     {
       refinement = SIOX_REFINEMENT_RECALCULATE;
@@ -864,11 +870,6 @@ siox_foreground_extract (SioxState          *state,
   if (refinement & (SIOX_REFINEMENT_ADD_FOREGROUND |
                     SIOX_REFINEMENT_ADD_BACKGROUND))
     {
-      g_hash_table_foreach_remove (state->cache,
-                                   refinement & SIOX_REFINEMENT_ADD_FOREGROUND ?
-                                   siox_cache_remove_bg : siox_cache_remove_fg,
-                                   NULL);
-
       /* count given foreground and background pixels */
       pixel_region_init (&mapPR, mask, x, y, width, height, FALSE);
 
@@ -920,7 +921,7 @@ siox_foreground_extract (SioxState          *state,
         {
           gint i = 0;
 
-          for (;pr != NULL; pr = pixel_regions_process (pr))
+          for (; pr != NULL; pr = pixel_regions_process (pr))
             {
               const guchar *src = srcPR.data;
               const guchar *map = mapPR.data;
@@ -948,7 +949,7 @@ siox_foreground_extract (SioxState          *state,
         {
           gint i = 0;
 
-          for ( ;pr != NULL; pr = pixel_regions_process (pr))
+          for (; pr != NULL; pr = pixel_regions_process (pr))
             {
               const guchar *src = srcPR.data;
               const guchar *map = mapPR.data;
@@ -977,7 +978,7 @@ siox_foreground_extract (SioxState          *state,
           gint i = 0;
           gint j = 0;
 
-          for ( ;pr != NULL; pr = pixel_regions_process (pr))
+          for (; pr != NULL; pr = pixel_regions_process (pr))
             {
               const guchar *src = srcPR.data;
               const guchar *map = mapPR.data;
@@ -1011,7 +1012,6 @@ siox_foreground_extract (SioxState          *state,
 
       if (refinement & SIOX_REFINEMENT_ADD_BACKGROUND)
         {
-
           /* Create color signature for the background */
           state->bgsig = create_signature (surebg, surebgcount,
                                            &state->bgsiglen, limits,

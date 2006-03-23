@@ -1,5 +1,11 @@
 2006-03-23  Sven Neumann  <sven@gimp.org>
 
+	* app/base/siox.c (siox_foreground_extract): fixed the potential
+	problem that the cache wouldn't have been cleared correctly if
+	both background and foreground areas are added at the same time.
+
+2006-03-23  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/randomize.c: removed version number from dialog
 	title, improved progress update.
 
