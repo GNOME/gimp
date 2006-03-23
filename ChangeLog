@@ -1,5 +1,13 @@
 2006-03-23  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayoptions.c: avoid code duplication by
+	using a #define.
+
+	* app/config/gimpdisplayconfig.c: for fullscreen mode, default to
+	the same settings as we do for normal editing mode.
+
+2006-03-23  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/psd.c
 	* plug-ins/common/psd_save.c: converted shorts to gint16 and longs
 	to gint32 to fix 64bit problems as reported in bug #335130.

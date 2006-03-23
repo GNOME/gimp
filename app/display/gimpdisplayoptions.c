@@ -73,6 +73,8 @@ G_DEFINE_TYPE_WITH_CODE (GimpDisplayOptions,
 typedef struct _GimpDisplayOptions      GimpDisplayOptionsFullscreen;
 typedef struct _GimpDisplayOptionsClass GimpDisplayOptionsFullscreenClass;
 
+#define gimp_display_options_fullscreen_init gimp_display_options_init
+
 G_DEFINE_TYPE_WITH_CODE (GimpDisplayOptionsFullscreen,
                          gimp_display_options_fullscreen,
                          GIMP_TYPE_DISPLAY_OPTIONS,
@@ -197,12 +199,6 @@ gimp_display_options_fullscreen_class_init (GimpDisplayOptionsFullscreenClass *k
 
 static void
 gimp_display_options_init (GimpDisplayOptions *options)
-{
-  options->padding_mode_set = FALSE;
-}
-
-static void
-gimp_display_options_fullscreen_init (GimpDisplayOptionsFullscreen *options)
 {
   options->padding_mode_set = FALSE;
 }
