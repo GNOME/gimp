@@ -730,7 +730,8 @@ CODE
             edit_paste edit_paste_as_new
             edit_named_cut edit_named_copy edit_named_copy_visible
             edit_named_paste edit_named_paste_as_new
-            edit_clear edit_fill edit_bucket_fill edit_blend edit_stroke );
+            edit_clear edit_fill edit_bucket_fill edit_blend edit_stroke);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Edit procedures';

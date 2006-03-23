@@ -17,24 +17,22 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-
-sub image_add_guide {
-    my ($desc, $type, $max, $pos) = @_;
-
-    $blurb = "Add a $desc guide to an image.";
+sub image_add_hguide {
+    $blurb = 'Add a horizontal guide to an image.';
 
     $help = <<HELP;
-This procedure adds a $desc guide to an image. It takes the input image and the
-$type-position of the new guide as parameters. It returns the guide ID of the
-new guide.
+This procedure adds a horizontal guide to an image. It takes the input
+image and the y-position of the new guide as parameters. It returns
+the guide ID of the new guide.
 HELP
 
     &adam_pdb_misc('1998');
 
     @inargs = (
-	&std_image_arg,
-	{ name => "${type}position", type => '0 <= int32',
-	  desc => "The guide's ${type}-offset from $pos of image" }
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'yposition', type => '0 <= int32',
+	  desc => "The guide's y-offset from top of image" }
     );
 
     @outargs = (
@@ -42,15 +40,14 @@ HELP
 	  desc => 'The new guide' }
     );
 
-    my $func = substr($desc, 0, 1);
     %invoke = (
-	code => <<CODE
+	code => <<'CODE'
 {
-  if (${type}position <= gimage->$max)
+  if (yposition <= image->height)
     {
       GimpGuide *g;
 
-      g = gimp_image_add_${func}guide (gimage, ${type}position, TRUE);
+      g = gimp_image_add_hguide (image, yposition, TRUE);
       guide = g->guide_ID;
     }
   else
@@ -60,14 +57,44 @@ CODE
     );
 }
 
-# The defs
-
-sub image_add_hguide {
-    &image_add_guide('horizontal', 'y', 'height', 'top');
-}
-
 sub image_add_vguide {
-    &image_add_guide('vertical', 'x', 'width', 'left');
+    $blurb = 'Add a vertical guide to an image.';
+
+    $help = <<HELP;
+This procedure adds a vertical guide to an image. It takes the input
+image and the x-position of the new guide as parameters. It returns
+the guide ID of the new guide.
+HELP
+
+    &adam_pdb_misc('1998');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'xposition', type => '0 <= int32',
+	  desc => "The guide's x-offset from left of image" }
+    );
+
+    @outargs = (
+	{ name => 'guide', type => 'guide',
+	  desc => 'The new guide' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (xposition <= image->width)
+    {
+      GimpGuide *g;
+
+      g = gimp_image_add_vguide (image, xposition, TRUE);
+      guide = g->guide_ID;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
 }
 
 sub image_delete_guide {
@@ -81,7 +108,8 @@ HELP
     &adam_pdb_misc('1998');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'guide', type => 'guide',
 	  desc => 'The ID of the guide to be removed' }
     );
@@ -89,10 +117,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGuide *g = gimp_image_get_guide (gimage, guide);
+  GimpGuide *g = gimp_image_get_guide (image, guide);
 
   if (g)
-    gimp_image_remove_guide (gimage, g, TRUE);
+    gimp_image_remove_guide (image, g, TRUE);
   else
     success = FALSE;
 }
@@ -113,7 +141,8 @@ HELP
     &adam_pdb_misc('1998');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'guide', type => 'guide',
 	  desc => 'The ID of the current guide (0 if first invocation)' }
     );
@@ -126,7 +155,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGuide *g = gimp_image_get_next_guide (gimage, guide, &success);
+  GimpGuide *g = gimp_image_get_next_guide (image, guide, &success);
 
   if (g)
     next_guide = g->guide_ID;
@@ -146,13 +175,15 @@ HELP
     &adam_pdb_misc('1998');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'guide', type => 'guide',
 	  desc => 'The guide' }
     );
 
     @outargs = (
-	{ name => 'orientation', type => &std_orientation_enum,
+	{ name => 'orientation',
+	  type => 'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)',
 	  desc => "The guide's orientation: { %%desc%% }",
 	  libdef => 'GIMP_ORIENTATION_UNKNOWN' }
     );
@@ -160,7 +191,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGuide *g = gimp_image_get_guide (gimage, guide);
+  GimpGuide *g = gimp_image_get_guide (image, guide);
 
   if (g)
     orientation = g->orientation;
@@ -182,7 +213,8 @@ HELP
     &adam_pdb_misc('1998');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'guide', type => 'guide',
 	  desc => 'The guide' }
     );
@@ -195,7 +227,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGuide *g = gimp_image_get_guide (gimage, guide);
+  GimpGuide *g = gimp_image_get_guide (image, guide);
 
   if (g)
     position = g->position;
@@ -206,11 +238,13 @@ CODE
     );
 }
 
+
 @headers = qw("core/gimpimage-guides.h" "core/gimpimage-undo-push.h");
 
 @procs = qw(image_add_hguide image_add_vguide image_delete_guide
 	    image_find_next_guide image_get_guide_orientation
 	    image_get_guide_position);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Guide procedures';

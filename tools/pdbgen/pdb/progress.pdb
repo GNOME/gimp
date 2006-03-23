@@ -256,11 +256,13 @@ CODE
     );
 }
 
+
 @headers = qw("core/gimp.h" "plug-in/plug-in.h" "plug-in/plug-in-progress.h");
 
 @procs = qw(progress_init progress_update progress_pulse progress_set_text
             progress_get_window_handle
             progress_install progress_uninstall progress_cancel);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Progress';

@@ -211,11 +211,13 @@ CODE
     );
 }
 
+
 @headers = qw(<string.h> "core/gimp.h" "config/gimprc.h");
 
 @procs = qw(gimprc_query gimprc_set 
 	    get_default_comment get_monitor_resolution get_theme_dir
             get_color_configuration get_module_load_inhibit);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Gimprc procedures';

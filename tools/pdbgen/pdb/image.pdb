@@ -105,7 +105,8 @@ HELP
     $date = '1997';
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -117,7 +118,7 @@ HELP
 	headers => [ qw("core/gimpimage-duplicate.h") ],
         code => <<'CODE'
 {
-  new_image = gimp_image_duplicate (gimage);
+  new_image = gimp_image_duplicate (image);
 
   if (! new_image)
     success = FALSE;
@@ -140,14 +141,15 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimage->disp_count == 0)
-    g_object_unref (gimage);
+  if (image->disp_count == 0)
+    g_object_unref (image);
   else
     success = FALSE;
 }
@@ -171,7 +173,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-        &std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'new_width', type => '0 < int32',
 	  desc => 'New image width: %%desc%%' },
 	{ name => 'new_height', type => '0 < int32',
@@ -188,7 +191,7 @@ HELP
 	headers => [ qw("core/gimpimage-resize.h") ],
 	code => <<'CODE'
 {
-  gimp_image_resize (gimage, context,
+  gimp_image_resize (image, context,
                      new_width, new_height, offx, offy, NULL);
 }
 CODE
@@ -208,14 +211,15 @@ HELP
     &simon_pdb_misc('2004', '2.2');
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     %invoke = (
 	headers => [ qw("core/gimpimage-resize.h") ],
 	code => <<'CODE'
 {
-  gimp_image_resize_to_layers (gimage, context, NULL);
+  gimp_image_resize_to_layers (image, context, NULL);
 }
 CODE
     );
@@ -237,7 +241,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-        &std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'new_width', type => '0 < int32',
 	  desc => 'New image width: %%desc%%' },
 	{ name => 'new_height', type => '0 < int32',
@@ -248,7 +253,7 @@ HELP
 	headers => [ qw("config/gimpcoreconfig.h" "core/gimpimage-scale.h") ],
 	code => <<'CODE'
 {
-  gimp_image_scale (gimage, new_width, new_height,
+  gimp_image_scale (image, new_width, new_height,
                     gimp->config->interpolation_type,
                     NULL);
 }
@@ -270,7 +275,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'new_width', type => '0 < int32',
 	  desc => 'New image width: (0 < new_width <= width)' },
 	{ name => 'new_height', type => '0 < int32',
@@ -285,13 +291,13 @@ HELP
 	headers => [ qw("core/gimpimage-crop.h") ],
 	code => <<'CODE'
 {
-  if (new_width  > gimage->width          ||
-      new_height > gimage->height         ||
-      offx > (gimage->width  - new_width) ||
-      offy > (gimage->height - new_height))
+  if (new_width  > image->width          ||
+      new_height > image->height         ||
+      offx > (image->width  - new_width) ||
+      offy > (image->height - new_height))
     success = FALSE;
   else
-    gimp_image_crop (gimage, context,
+    gimp_image_crop (image, context,
                      offx, offy, offx + new_width, offy + new_height,
 		     FALSE, TRUE);
 }
@@ -309,8 +315,10 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-        &std_image_arg,
-	{ name => 'flip_type', type => &std_orientation_enum,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'flip_type',
+	  type => 'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)',
 	  desc => 'Type of flip: %%desc%%' }
     );
 
@@ -318,7 +326,7 @@ HELP
 	headers => [ qw("core/gimpimage-flip.h") ],
 	code => <<'CODE'
 {
-  gimp_image_flip (gimage, context, flip_type, NULL);
+  gimp_image_flip (image, context, flip_type, NULL);
 }
 CODE
     );
@@ -331,7 +339,8 @@ sub image_rotate {
     &mitch_pdb_misc('2003');
 
     @inargs = (
-        &std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'rotate_type', type => 'enum GimpRotationType',
 	  desc => 'Angle of rotation: %%desc%%' }
     );
@@ -340,7 +349,7 @@ sub image_rotate {
 	headers => [ qw("core/gimpimage-rotate.h") ],
 	code => <<'CODE'
 {
-  gimp_image_rotate (gimage, context, rotate_type, NULL);
+  gimp_image_rotate (image, context, rotate_type, NULL);
 }
 CODE
     );
@@ -358,13 +367,14 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_image_free_shadow (gimage);
+  gimp_image_free_shadow (image);
 }
 CODE
     );
@@ -381,7 +391,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -394,7 +405,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GList *list = GIMP_LIST (gimage->layers)->list;
+  GList *list = GIMP_LIST (image->layers)->list;
 
   num_layers = g_list_length (list);
 
@@ -424,7 +435,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -437,7 +449,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GList *list = GIMP_LIST (gimage->channels)->list;
+  GList *list = GIMP_LIST (image->channels)->list;
 
   num_channels = g_list_length (list);
 
@@ -465,7 +477,8 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -478,7 +491,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GList *list = GIMP_LIST (gimage->vectors)->list;
+  GList *list = GIMP_LIST (image->vectors)->list;
 
   num_vectors = g_list_length (list);
 
@@ -508,13 +521,14 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_image_unset_active_channel (gimage);
+  gimp_image_unset_active_channel (image);
 }
 CODE
     );
@@ -542,7 +556,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'drawable', type => 'drawable',
           desc => 'The drawable to pick from' },
 	{ name => 'x', type => 'float',
@@ -569,7 +584,7 @@ HELP
 	code => <<'CODE'
 {
   if (!sample_merged)
-    if (!drawable || (gimp_item_get_image (GIMP_ITEM (drawable)) != gimage))
+    if (!drawable || (gimp_item_get_image (GIMP_ITEM (drawable)) != image))
       success = FALSE;
 
   if (success && sample_average)
@@ -581,11 +596,11 @@ HELP
   if (success)
     {
       if (sample_merged)
-        gimp_pickable_flush (GIMP_PICKABLE (gimage->projection));
+        gimp_pickable_flush (GIMP_PICKABLE (image->projection));
       else
         gimp_pickable_flush (GIMP_PICKABLE (drawable));
 
-      success = gimp_image_pick_color (gimage,
+      success = gimp_image_pick_color (image,
                                        drawable,
                                        (gint) x, (gint) y,
                                        sample_merged,
@@ -613,7 +628,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'x', type => 'int32',
 	  desc => 'The x coordinate for the pick' },
 	{ name => 'y', type => 'int32',
@@ -628,7 +644,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  layer = gimp_image_pick_correlate_layer (gimage, x, y);
+  layer = gimp_image_pick_correlate_layer (image, x, y);
 }
 CODE
     );
@@ -645,7 +661,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer to raise' }
     );
@@ -653,7 +670,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_raise_layer (gimage, layer);
+  success = gimp_image_raise_layer (image, layer);
 }
 CODE
     );
@@ -670,7 +687,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer to lower' }
     );
@@ -678,7 +696,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_lower_layer (gimage, layer);
+  success = gimp_image_lower_layer (image, layer);
 }
 CODE
     );
@@ -698,7 +716,8 @@ HELP
     $author .= ", Sven Neumann";
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer to raise to top' }
     );
@@ -706,7 +725,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_raise_layer_to_top (gimage, layer);
+  success = gimp_image_raise_layer_to_top (image, layer);
 }
 CODE
     );
@@ -726,7 +745,8 @@ HELP
     $author .= ", Sven Neumann";
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer to lower to bottom' }
     );
@@ -734,7 +754,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_lower_layer_to_bottom (gimage, layer);
+  success = gimp_image_lower_layer_to_bottom (image, layer);
 }
 CODE
     );
@@ -755,7 +775,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'merge_type',
 	  type => 'enum GimpMergeType (no GIMP_FLATTEN_IMAGE)',
 	  desc => 'The type of merge: { %%desc%% }' }
@@ -770,8 +791,10 @@ HELP
 	headers => [ qw("core/gimpimage-merge.h") ],
 	code => <<'CODE'
 {
-  layer = gimp_image_merge_visible_layers (gimage, context, merge_type);
-  success = layer != NULL;
+  layer = gimp_image_merge_visible_layers (image, context, merge_type);
+
+  if (! layer)
+    success = FALSE;
 }
 CODE
     );
@@ -792,7 +815,8 @@ HELP
     &larry_pdb_misc('1998');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'merge_layer', type => 'layer',
 	  desc => 'The layer to merge down from' },
 	{ name => 'merge_type',
@@ -809,8 +833,10 @@ HELP
 	headers => [ qw("core/gimpimage-merge.h") ],
 	code => <<'CODE'
 {
-  layer = gimp_image_merge_down (gimage, merge_layer, context, merge_type);
-  success = layer != NULL;
+  layer = gimp_image_merge_down (image, merge_layer, context, merge_type);
+
+  if (! layer)
+    success = FALSE;
 }
 CODE
     );
@@ -830,8 +856,9 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
-    );
+ 	{ name => 'image', type => 'image',
+	  desc => 'The image' }
+   );
 
     @outargs = (
 	{ name => 'layer', type => 'layer',
@@ -842,7 +869,7 @@ HELP
 	headers => [ qw("core/gimpimage-merge.h") ],
 	code => <<'CODE'
 {
-  layer = gimp_image_flatten (gimage, context);
+  layer = gimp_image_flatten (image, context);
 
   if (! layer)
     success = FALSE;
@@ -855,7 +882,7 @@ sub image_add_layer {
     $blurb = 'Add the specified layer to the image.';
 
     $help = <<'HELP';
-This procedure adds the specified layer to the gimage at the given position. If
+This procedure adds the specified layer to the image at the given position. If
 the position is specified as -1, then the layer is inserted at the top of the
 layer stack. If the layer to be added has no alpha channel, it must be added at
 position 0. The layer type must be compatible with the image base type.
@@ -864,7 +891,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer' },
 	{ name => 'position', type => 'int32',
@@ -875,13 +903,13 @@ HELP
 {
   if (! gimp_item_is_floating (GIMP_ITEM (layer)) ||
       GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))) !=
-      gimp_image_base_type (gimage))
+      gimp_image_base_type (image))
     {
       success = FALSE;
     }
   else
     {
-      success = gimp_image_add_layer (gimage, layer, MAX (position, -1));
+      success = gimp_image_add_layer (image, layer, MAX (position, -1));
     }
 }
 CODE
@@ -900,7 +928,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer' }
     );
@@ -908,7 +937,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_image_remove_layer (gimage, layer);
+  gimp_image_remove_layer (image, layer);
 }
 CODE
     );
@@ -918,7 +947,8 @@ sub image_add_layer_mask {
     &std_pdb_deprecated ('gimp-layer-add-mask');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer to receive the mask' },
 	{ name => 'mask', type => 'layer_mask',
@@ -928,7 +958,8 @@ sub image_add_layer_mask {
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_layer_add_mask (layer, mask, TRUE) != NULL;
+  if (! gimp_layer_add_mask (layer, mask, TRUE))
+    success = FALSE;
 }
 CODE
     );
@@ -938,7 +969,8 @@ sub image_remove_layer_mask {
     &std_pdb_deprecated ('gimp-layer-remove-mask');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer from which to remove mask' },
 	{ name => 'mode', type => 'enum GimpMaskApplyMode',
@@ -966,7 +998,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'channel', type => 'channel',
 	  desc => 'The channel to raise' }
     );
@@ -974,7 +1007,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_raise_channel (gimage, channel);
+  success = gimp_image_raise_channel (image, channel);
 }
 CODE
     );
@@ -992,7 +1025,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'channel', type => 'channel',
 	  desc => 'The channel to lower' }
     );
@@ -1000,7 +1034,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_lower_channel (gimage, channel);
+  success = gimp_image_lower_channel (image, channel);
 }
 CODE
     );
@@ -1018,7 +1052,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'channel', type => 'channel',
 	  desc => 'The channel' },
 	{ name => 'position', type => 'int32',
@@ -1031,7 +1066,7 @@ HELP
   success = gimp_item_is_floating (GIMP_ITEM (channel));
 
   if (success)
-    success = gimp_image_add_channel (gimage, channel, MAX (position, -1));
+    success = gimp_image_add_channel (image, channel, MAX (position, -1));
 }
 CODE
     );
@@ -1048,7 +1083,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'channel', type => 'channel',
 	  desc => 'The channel' }
     );
@@ -1056,7 +1092,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_image_remove_channel (gimage, channel);
+  gimp_image_remove_channel (image, channel);
 }
 CODE
     );
@@ -1066,7 +1102,7 @@ sub image_add_vectors {
     $blurb = 'Add the specified vectors object to the image.';
 
     $help = <<'HELP';
-This procedure adds the specified vectors object to the gimage at the given
+This procedure adds the specified vectors object to the image at the given
 position. If the position is specified as -1, then the vectors object is
 inserted at the top of the vectors stack.
 HELP
@@ -1074,7 +1110,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'vectors', type => 'vectors',
 	  desc => 'The vectors object' },
 	{ name => 'position', type => 'int32',
@@ -1083,7 +1120,7 @@ HELP
 
     $invoke{code} = <<'CODE';
 {
-    success = gimp_image_add_vectors (gimage, vectors, MAX (position, -1));
+    success = gimp_image_add_vectors (image, vectors, MAX (position, -1));
 }
 CODE
 }
@@ -1099,7 +1136,8 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'vectors', type => 'vectors',
 	  desc => 'The vectors object' }
     );
@@ -1107,7 +1145,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_image_remove_vectors (gimage, vectors);
+  gimp_image_remove_vectors (image, vectors);
 }
 CODE
     );
@@ -1125,7 +1163,8 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'vectors', type => 'vectors',
 	  desc => 'The vectors object to raise' }
     );
@@ -1133,7 +1172,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_raise_vectors (gimage, vectors);
+  success = gimp_image_raise_vectors (image, vectors);
 }
 CODE
     );
@@ -1151,7 +1190,8 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'vectors', type => 'vectors',
 	  desc => 'The vectors object to lower' }
     );
@@ -1159,7 +1199,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_lower_vectors (gimage, vectors);
+  success = gimp_image_lower_vectors (image, vectors);
 }
 CODE
     );
@@ -1179,7 +1219,8 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'vectors', type => 'vectors',
 	  desc => 'The vectors object to raise to top' }
     );
@@ -1187,7 +1228,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_raise_vectors_to_top (gimage, vectors);
+  success = gimp_image_raise_vectors_to_top (image, vectors);
 }
 CODE
     );
@@ -1207,7 +1248,8 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'vectors', type => 'vectors',
 	  desc => 'The vectors object to lower to bottom' }
     );
@@ -1215,7 +1257,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_lower_vectors_to_bottom (gimage, vectors);
+  success = gimp_image_lower_vectors_to_bottom (image, vectors);
 }
 CODE
     );
@@ -1235,7 +1277,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -1246,7 +1289,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  drawable = gimp_image_active_drawable (gimage);
+  drawable = gimp_image_active_drawable (image);
 }
 CODE
     );
@@ -1263,7 +1306,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -1274,7 +1318,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  base_type = gimp_image_base_type (gimage);
+  base_type = gimp_image_base_type (image);
 }
 CODE
     );
@@ -1293,7 +1337,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -1308,8 +1353,8 @@ HELP
 	headers => [ qw("core/gimpimage-colormap.h") ],
 	code => <<'CODE'
 {
-  num_bytes = 3 * gimp_image_get_colormap_size (gimage);
-  colormap = g_memdup (gimp_image_get_colormap (gimage), num_bytes);
+  num_bytes = 3 * gimp_image_get_colormap_size (image);
+  colormap = g_memdup (gimp_image_get_colormap (image), num_bytes);
 }
 CODE
     );
@@ -1328,7 +1373,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'colormap', type => 'int8array', wrap => 1,
 	  desc => 'The new colormap values',
 	  array => { name => 'num_bytes', type => '0 <= int32 <= 768',
@@ -1340,7 +1386,7 @@ HELP
 	headers => [ qw("core/gimpimage-colormap.h") ],
         code => <<'CODE'
 {
-  gimp_image_set_colormap (gimage, colormap, num_bytes / 3, TRUE);
+  gimp_image_set_colormap (image, colormap, num_bytes / 3, TRUE);
 }
 CODE
     );
@@ -1361,13 +1407,14 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_image_clean_all (gimage);
+  gimp_image_clean_all (image);
 }
 CODE
     );
@@ -1386,7 +1433,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -1397,7 +1445,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  dirty = (gimage->dirty != 0);
+  dirty = (image->dirty != 0);
 }
 CODE
     );
@@ -1414,7 +1462,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -1425,7 +1474,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  floating_sel = gimp_image_floating_sel (gimage);
+  floating_sel = gimp_image_floating_sel (image);
 }
 CODE
     );
@@ -1442,7 +1491,8 @@ HELP
     &wolfgang_pdb_misc('1998');
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -1453,7 +1503,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpLayer *floating_sel = gimp_image_floating_sel (gimage);
+  GimpLayer *floating_sel = gimp_image_floating_sel (image);
 
   if (floating_sel)
     drawable = GIMP_DRAWABLE (GIMP_LAYER (floating_sel)->fs.drawable);
@@ -1475,7 +1525,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -1486,7 +1537,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  width = gimp_image_get_width (gimage);
+  width = gimp_image_get_width (image);
 }
 CODE
     );
@@ -1503,7 +1554,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -1514,7 +1566,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  height = gimp_image_get_height (gimage);
+  height = gimp_image_get_height (image);
 }
 CODE
     );
@@ -1532,7 +1584,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -1543,7 +1596,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  active_layer = gimp_image_get_active_layer (gimage);
+  active_layer = gimp_image_get_active_layer (image);
 }
 CODE
     );
@@ -1562,7 +1615,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'active_layer', type => 'layer',
 	  desc => 'The new image active layer' }
     );
@@ -1570,7 +1624,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_image_set_active_layer (gimage, active_layer) != active_layer)
+  if (gimp_image_set_active_layer (image, active_layer) != active_layer)
     success = FALSE;
 }
 CODE
@@ -1587,7 +1641,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -1598,7 +1653,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  active_channel = gimp_image_get_active_channel (gimage);
+  active_channel = gimp_image_get_active_channel (image);
 }
 CODE
     );
@@ -1617,7 +1672,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'active_channel', type => 'channel',
 	  desc => 'The new image active channel' }
     );
@@ -1625,7 +1681,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_image_set_active_channel (gimage, active_channel) != active_channel)
+  if (gimp_image_set_active_channel (image, active_channel) != active_channel)
     success = FALSE;
 }
 CODE
@@ -1642,7 +1698,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -1653,7 +1710,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  active_vectors = gimp_image_get_active_vectors (gimage);
+  active_vectors = gimp_image_get_active_vectors (image);
 }
 CODE
     );
@@ -1669,7 +1726,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'active_vectors', type => 'vectors',
 	  desc => 'The new image active vectors' }
     );
@@ -1677,7 +1735,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_image_set_active_vectors (gimage, active_vectors) != active_vectors)
+  if (gimp_image_set_active_vectors (image, active_vectors) != active_vectors)
     success = FALSE;
 }
 CODE
@@ -1695,7 +1753,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -1706,7 +1765,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  selection = gimp_image_get_mask (gimage);
+  selection = gimp_image_get_mask (image);
 
   if (! selection)
     success = FALSE;
@@ -1728,7 +1787,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'component', type => 'enum GimpChannelType',
 	  desc => 'The image component: { %%desc%% }' }
     );
@@ -1742,14 +1802,14 @@ HELP
 	code => <<'CODE'
 {
   if (component == GIMP_GRAY_CHANNEL)
-    success = gimp_image_base_type (gimage) == GIMP_GRAY;
+    success = gimp_image_base_type (image) == GIMP_GRAY;
   else if (component == GIMP_INDEXED_CHANNEL)
-    success = gimp_image_base_type (gimage) == GIMP_INDEXED;
+    success = gimp_image_base_type (image) == GIMP_INDEXED;
   else
-    success = gimp_image_base_type (gimage) == GIMP_RGB;
+    success = gimp_image_base_type (image) == GIMP_RGB;
 
   if (success)
-    active = gimp_image_get_component_active (gimage, component);
+    active = gimp_image_get_component_active (image, component);
 }
 CODE
     );
@@ -1768,7 +1828,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'component', type => 'enum GimpChannelType',
 	  desc => 'The image component: { %%desc%% }' },
 	{ name => 'active', type => 'boolean',
@@ -1779,14 +1840,14 @@ HELP
 	code => <<'CODE'
 {
   if (component == GIMP_GRAY_CHANNEL)
-    success = gimp_image_base_type (gimage) == GIMP_GRAY;
+    success = gimp_image_base_type (image) == GIMP_GRAY;
   else if (component == GIMP_INDEXED_CHANNEL)
-    success = gimp_image_base_type (gimage) == GIMP_INDEXED;
+    success = gimp_image_base_type (image) == GIMP_INDEXED;
   else
-    success = gimp_image_base_type (gimage) == GIMP_RGB;
+    success = gimp_image_base_type (image) == GIMP_RGB;
 
   if (success)
-    gimp_image_set_component_active (gimage, component, active);
+    gimp_image_set_component_active (image, component, active);
 }
 CODE
     );
@@ -1805,7 +1866,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'component', type => 'enum GimpChannelType',
 	  desc => 'The image component: { %%desc%% }' }
     );
@@ -1819,14 +1881,14 @@ HELP
 	code => <<'CODE'
 {
   if (component == GIMP_GRAY_CHANNEL)
-    success = gimp_image_base_type (gimage) == GIMP_GRAY;
+    success = gimp_image_base_type (image) == GIMP_GRAY;
   else if (component == GIMP_INDEXED_CHANNEL)
-    success = gimp_image_base_type (gimage) == GIMP_INDEXED;
+    success = gimp_image_base_type (image) == GIMP_INDEXED;
   else
-    success = gimp_image_base_type (gimage) == GIMP_RGB;
+    success = gimp_image_base_type (image) == GIMP_RGB;
 
   if (success)
-    visible = gimp_image_get_component_visible (gimage, component);
+    visible = gimp_image_get_component_visible (image, component);
 }
 CODE
     );
@@ -1845,7 +1907,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'component', type => 'enum GimpChannelType',
 	  desc => 'The image component: { %%desc%% }' },
 	{ name => 'visible', type => 'boolean',
@@ -1856,14 +1919,14 @@ HELP
 	code => <<'CODE'
 {
   if (component == GIMP_GRAY_CHANNEL)
-    success = gimp_image_base_type (gimage) == GIMP_GRAY;
+    success = gimp_image_base_type (image) == GIMP_GRAY;
   else if (component == GIMP_INDEXED_CHANNEL)
-    success = gimp_image_base_type (gimage) == GIMP_INDEXED;
+    success = gimp_image_base_type (image) == GIMP_INDEXED;
   else
-    success = gimp_image_base_type (gimage) == GIMP_RGB;
+    success = gimp_image_base_type (image) == GIMP_RGB;
 
   if (success)
-    gimp_image_set_component_visible (gimage, component, visible);
+    gimp_image_set_component_visible (image, component, visible);
 }
 CODE
     );
@@ -1881,7 +1944,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -1892,7 +1956,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  filename = gimp_image_get_filename (gimage);
+  filename = gimp_image_get_filename (image);
 }
 CODE
     );
@@ -1909,7 +1973,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'filename', type => 'string',
 	  desc => 'The new image filename', no_validate => 1 }
     );
@@ -1935,7 +2000,7 @@ HELP
     success = FALSE;
 
   if (success)
-    gimp_image_set_filename (gimage, filename);
+    gimp_image_set_filename (image, filename);
 }
 CODE
     );
@@ -1948,7 +2013,8 @@ sub image_get_name {
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -1959,7 +2025,7 @@ sub image_get_name {
     %invoke = (
 	code => <<'CODE'
 {
-  gchar *filename = gimp_image_get_filename (gimage);
+  gchar *filename = gimp_image_get_filename (image);
 
   if (filename)
     name = g_filename_display_basename (filename);
@@ -1981,7 +2047,8 @@ HELP
     &austin_pdb_misc('1998');
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -1994,7 +2061,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_image_get_resolution (gimage, &xresolution, &yresolution);
+  gimp_image_get_resolution (image, &xresolution, &yresolution);
 }
 CODE
     );
@@ -2012,7 +2079,8 @@ HELP
     &austin_pdb_misc('1998');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'xresolution', type => 'float',
 	  desc => 'The new image resolution in the x-axis, in dots per inch' },
 	{ name => 'yresolution', type => 'float',
@@ -2033,7 +2101,7 @@ HELP
     }
   else
     {
-      gimp_image_set_resolution (gimage, xresolution, yresolution);
+      gimp_image_set_resolution (image, xresolution, yresolution);
     }
 }
 CODE
@@ -2053,7 +2121,8 @@ HELP
     &mitch_pdb_misc('1998');
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -2064,7 +2133,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  unit = gimp_image_get_unit (gimage);
+  unit = gimp_image_get_unit (image);
 }
 CODE
     );
@@ -2083,7 +2152,8 @@ HELP
     &mitch_pdb_misc('1998');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'unit', type => 'unit (min GIMP_UNIT_INCH)',
 	  desc => 'The new image unit' }
     );
@@ -2091,7 +2161,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_image_set_unit (gimage, unit);
+  gimp_image_set_unit (image, unit);
 }
 CODE
     );
@@ -2109,7 +2179,8 @@ HELP
     &andy_pdb_misc('2000');
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -2120,7 +2191,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  tattoo_state = gimp_image_get_tattoo_state (gimage);
+  tattoo_state = gimp_image_get_tattoo_state (image);
 }
 CODE
     );
@@ -2146,7 +2217,8 @@ HELP
     &andy_pdb_misc('2000');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'tattoo_state', type => 'tattoo',
 	  desc => 'The new image tattoo state' }
     );
@@ -2154,7 +2226,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_image_set_tattoo_state (gimage, tattoo_state);
+  gimp_image_set_tattoo_state (image, tattoo_state);
 }
 CODE
     );
@@ -2170,7 +2242,8 @@ HELP
     &jay_pdb_misc('1998');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'tattoo', type => 'tattoo',
 	  desc => 'The tattoo of the layer to find' }
     );
@@ -2183,7 +2256,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  layer = gimp_image_get_layer_by_tattoo (gimage, tattoo);
+  layer = gimp_image_get_layer_by_tattoo (image, tattoo);
 }
 CODE
     );
@@ -2199,7 +2272,8 @@ HELP
     &jay_pdb_misc('1998');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'tattoo', type => 'tattoo',
 	  desc => 'The tattoo of the channel to find' }
     );
@@ -2212,7 +2286,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  channel = gimp_image_get_channel_by_tattoo (gimage, tattoo);
+  channel = gimp_image_get_channel_by_tattoo (image, tattoo);
 }
 CODE
     );
@@ -2228,7 +2302,8 @@ HELP
     &jay_pdb_misc('1998');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'tattoo', type => 'tattoo',
 	  desc => 'The tattoo of the vectors to find' }
     );
@@ -2241,7 +2316,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  vectors = gimp_image_get_vectors_by_tattoo (gimage, tattoo);
+  vectors = gimp_image_get_vectors_by_tattoo (image, tattoo);
 }
 CODE
     );
@@ -2260,7 +2335,8 @@ HELP
     &andy_pdb_misc('1999');
 
     @inargs = (
-    	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'width', type => '0 < int32 <= 1024',
 	  desc => 'The requested thumbnail width' },
 	{ name => 'height', type => '0 < int32 <= 1024',
@@ -2289,21 +2365,21 @@ HELP
   g_assert (GIMP_VIEWABLE_MAX_PREVIEW_SIZE >= 1024);
 
   /* Adjust the width/height ratio */
-  dwidth  = gimp_image_get_width  (gimage);
-  dheight = gimp_image_get_height (gimage);
+  dwidth  = gimp_image_get_width  (image);
+  dheight = gimp_image_get_height (image);
 
   if (dwidth > dheight)
     height = MAX (1, (width * dheight) / dwidth);
   else
     width  = MAX (1, (height * dwidth) / dheight);
 
-  if (gimage->gimp->config->layer_previews)
-    buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (gimage),
+  if (image->gimp->config->layer_previews)
+    buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (image),
                                          width, height);
   else
-    buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (gimage),
+    buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (image),
                                            width, height,
-                                           gimp_image_has_alpha (gimage) ?
+                                           gimp_image_has_alpha (image) ?
                                            4 : 3);
 
   if (buf)
@@ -2327,10 +2403,6 @@ CODE
 }
 
 
-@headers = qw("core/gimp.h" "core/gimplist.h" "core/gimpunit.h"
-              "base/temp-buf.h" "libgimpmath/gimpmath.h"
-              "libgimpbase/gimpbase.h" "gimp-intl.h");
-
 $extra{app}->{code} = <<'CODE';
 #if defined (HAVE_FINITE)
 #define FINITE(x) finite(x)
@@ -2342,6 +2414,10 @@ $extra{app}->{code} = <<'CODE';
 #error "no FINITE() implementation available?!"
 #endif
 CODE
+
+@headers = qw("core/gimp.h" "core/gimplist.h" "core/gimpunit.h"
+              "base/temp-buf.h" "libgimpmath/gimpmath.h"
+              "libgimpbase/gimpbase.h" "gimp-intl.h");
 
 @procs = qw(image_list image_new image_duplicate image_delete
             image_base_type
@@ -2382,6 +2458,7 @@ CODE
             image_get_layer_by_tattoo
             image_get_channel_by_tattoo
             image_get_vectors_by_tattoo);
+
 %exports = (app => [@procs], lib => [@procs[0..41,44..70]]);
 
 $desc = 'Image';

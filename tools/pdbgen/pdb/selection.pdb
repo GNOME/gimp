@@ -33,7 +33,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -50,7 +51,12 @@ HELP
     );
 
     %invoke = (
-	code => 'non_empty = gimp_channel_bounds (gimp_image_get_mask (gimage), &x1, &y1, &x2, &y2);'
+	code => <<'CODE'
+{
+  non_empty = gimp_channel_bounds (gimp_image_get_mask (image),
+                                   &x1, &y1, &x2, &y2);
+}
+CODE
     );
 }
 
@@ -65,7 +71,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'x', type => 'int32',
 	  desc => 'x coordinate of value' },
 	{ name => 'y', type => 'int32',
@@ -80,7 +87,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  value = gimp_pickable_get_opacity_at (GIMP_PICKABLE (gimp_image_get_mask (gimage)), x, y);
+  value = gimp_pickable_get_opacity_at (GIMP_PICKABLE (gimp_image_get_mask (image)), x, y);
 }
 CODE
     );
@@ -97,7 +104,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -108,7 +116,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  is_empty = gimp_channel_is_empty (gimp_image_get_mask (gimage));
+  is_empty = gimp_channel_is_empty (gimp_image_get_mask (image));
 }
 CODE
     );
@@ -127,14 +135,22 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'offx', type => 'int32',
 	  desc => 'x offset for translation' },
 	{ name => 'offy', type => 'int32',
 	  desc => 'y offset for translation' }
     );
 
-    %invoke = ( code => 'gimp_item_translate (GIMP_ITEM (gimp_image_get_mask (gimage)), offx, offy, TRUE);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_item_translate (GIMP_ITEM (gimp_image_get_mask (image)),
+                       offx, offy, TRUE);
+}
+CODE
+    );
 }
 
 sub selection_float {
@@ -173,9 +189,9 @@ HELP
 
   if (success)
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-      layer = gimp_selection_float (gimp_image_get_mask (gimage),
+      layer = gimp_selection_float (gimp_image_get_mask (image),
                                     drawable, context, TRUE, offx, offy);
       if (! layer)
         success = FALSE;
@@ -196,13 +212,14 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_channel_invert (gimp_image_get_mask (gimage), TRUE);
+  gimp_channel_invert (gimp_image_get_mask (image), TRUE);
 }
 CODE
     );
@@ -220,13 +237,14 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_channel_sharpen (gimp_image_get_mask (gimage), TRUE);
+  gimp_channel_sharpen (gimp_image_get_mask (image), TRUE);
 }
 CODE
     );
@@ -243,13 +261,14 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_channel_all (gimp_image_get_mask (gimage), TRUE);
+  gimp_channel_all (gimp_image_get_mask (image), TRUE);
 }
 CODE
     );
@@ -266,13 +285,14 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_channel_clear (gimp_image_get_mask (gimage), NULL, TRUE);
+  gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
 }
 CODE
     );
@@ -289,7 +309,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'radius', type => '0 <= float',
 	  desc => 'Radius of feather (in pixels)' }
     );
@@ -297,7 +318,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_channel_feather (gimp_image_get_mask (gimage),
+  gimp_channel_feather (gimp_image_get_mask (image),
                         radius, radius, TRUE);
 }
 CODE
@@ -316,7 +337,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'radius', type => '0 <= int32',
 	  desc => 'Radius of border (in pixels)' }
     );
@@ -324,7 +346,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_channel_border (gimp_image_get_mask (gimage),
+  gimp_channel_border (gimp_image_get_mask (image),
                        radius, radius, TRUE);
 }
 CODE
@@ -342,7 +364,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'steps', type => '0 <= int32',
 	  desc => 'Steps of grow (in pixels)' }
     );
@@ -350,7 +373,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_channel_grow (gimp_image_get_mask (gimage),
+  gimp_channel_grow (gimp_image_get_mask (image),
                      steps, steps, TRUE);
 }
 CODE
@@ -369,7 +392,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'steps', type => '0 <= int32',
 	  desc => 'Steps of shrink (in pixels)' }
     );
@@ -377,7 +401,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_channel_shrink (gimp_image_get_mask (gimage),
+  gimp_channel_shrink (gimp_image_get_mask (image),
                        steps, steps, FALSE, TRUE);
 }
 CODE
@@ -407,9 +431,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
+  GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
 
-  gimp_channel_select_alpha (gimp_image_get_mask (gimage),
+  gimp_channel_select_alpha (gimp_image_get_mask (image),
                              GIMP_DRAWABLE (layer),
                              GIMP_CHANNEL_OP_REPLACE, FALSE, 0.0, 0.0);
 }
@@ -434,13 +458,13 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpImage *gimage;
+  GimpImage *image;
   gint       off_x, off_y;
 
-  gimage = gimp_item_get_image (GIMP_ITEM (channel));
+  image = gimp_item_get_image (GIMP_ITEM (channel));
   gimp_item_offsets (GIMP_ITEM (channel), &off_x, &off_y);
 
-  gimp_channel_select_channel (gimp_image_get_mask (gimage),
+  gimp_channel_select_channel (gimp_image_get_mask (image),
                                _("Channel to Selection"),
                                channel,
                                off_x, off_y,
@@ -470,13 +494,13 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpImage *gimage;
+  GimpImage *image;
   gint       off_x, off_y;
 
-  gimage = gimp_item_get_image (GIMP_ITEM (channel));
+  image = gimp_item_get_image (GIMP_ITEM (channel));
   gimp_item_offsets (GIMP_ITEM (channel), &off_x, &off_y);
 
-  gimp_channel_select_channel (gimp_image_get_mask (gimage),
+  gimp_channel_select_channel (gimp_image_get_mask (image),
                                _("Channel to Selection"),
                                channel,
                                off_x, off_y,
@@ -499,7 +523,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -511,7 +536,7 @@ HELP
         headers => [qw("core/gimpselection.h") ],
 	code    => <<'CODE'
 {
-  channel = gimp_selection_save (gimp_image_get_mask (gimage));
+  channel = gimp_selection_save (gimp_image_get_mask (image));
 
   if (! channel)
     success = FALSE;
@@ -519,6 +544,7 @@ HELP
 CODE
     );
 }
+
 
 @headers = qw("core/gimpchannel-select.h" "core/gimppickable.h"
               "gimp-intl.h");
@@ -529,6 +555,7 @@ CODE
 	    selection_feather selection_border selection_grow selection_shrink
 	    selection_layer_alpha selection_load selection_save
 	    selection_combine);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Image mask';

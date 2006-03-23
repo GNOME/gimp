@@ -39,7 +39,8 @@ HELP
     $date = '1998- 2001';
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable: (-1 for a new text layer)',
 	  no_success => 1 },
@@ -51,7 +52,8 @@ HELP
 	  desc => 'The text to generate (in UTF-8 encoding)' },
 	{ name => 'border', type => '-1 <= int32',
 	  desc => 'The size of the border: %%desc%%' },
-	&std_antialias_arg,
+	{ name => 'antialias', type => 'boolean',
+	  desc => 'Antialiasing (%%desc%%)' },
 	{ name => 'size', type => '0 < float',
 	  desc => 'The size of text in either pixels or points' },
 	{ name => 'size_type', type => 'enum GimpSizeType',
@@ -75,7 +77,7 @@ HELP
     {
       gchar *real_fontname = g_strdup_printf ("%s %d", fontname, (gint) size);
 
-      text_layer = text_render (gimage, drawable, context,
+      text_layer = text_render (image, drawable, context,
                                 x, y, real_fontname, text,
                                 border, antialias);
 
@@ -140,7 +142,8 @@ sub text {
     &std_pdb_deprecated ('gimp-text-fontname');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable: (-1 for a new text layer)',
 	  no_success => 1 },
@@ -152,7 +155,8 @@ sub text {
 	  desc => 'The text to generate (in UTF-8 encoding)' },
 	{ name => 'border', type => '-1 <= int32',
 	  desc => 'The size of the border: %%desc%%' },
-	&std_antialias_arg,
+	{ name => 'antialias', type => 'boolean',
+	  desc => 'Antialiasing (%%desc%%)' },
 	{ name => 'size', type => '0 < float',
 	  desc => 'The size of text in either pixels or points' },
 	{ name => 'size_type', type => 'enum GimpSizeType',
@@ -190,7 +194,7 @@ sub text {
     {
       gchar *real_fontname = g_strdup_printf ("%s %d", family, (gint) size);
 
-      text_layer = text_render (gimage, drawable, context,
+      text_layer = text_render (image, drawable, context,
                                 x, y, real_fontname, text,
                                 border, antialias);
 
@@ -255,9 +259,12 @@ CODE
     );
 }
 
+
 @headers = qw("libgimpbase/gimpbase.h" "text/gimptext-compat.h");
 
-@procs = qw(text_fontname text_get_extents_fontname text text_get_extents);
+@procs = qw(text_fontname text_get_extents_fontname
+            text text_get_extents);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Text procedures';

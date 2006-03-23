@@ -21,9 +21,9 @@ sub path_list {
     &std_pdb_deprecated('gimp-image-get-vectors');
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image to list the paths from' }
     );
-    $inargs[0]->{desc} = 'The ID of the image to list the paths from';
 
     @outargs = (
 	{ name => 'path_list', type => 'stringarray',
@@ -35,7 +35,7 @@ sub path_list {
     %invoke = (
 	code => <<'CODE'
 {
-  path_list = gimp_container_get_name_array (gimage->vectors, &num_paths);
+  path_list = gimp_container_get_name_array (image->vectors, &num_paths);
 }
 CODE
     );
@@ -48,11 +48,11 @@ sub path_get_points {
     &andy_pdb_misc('1999');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image to list the paths from' },
 	{ name => 'name', type => 'string',
 	  desc => 'The name of the path whose points should be listed.' }
     );
-    $inargs[0]->{desc} = 'The ID of the image to list the paths from.';
 
     @outargs = (
 	{ name => 'path_type', type => 'int32',
@@ -76,7 +76,7 @@ sub path_get_points {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
+  GimpVectors *vectors = gimp_image_get_vectors_by_name (image, name);
 
   if (vectors)
     {
@@ -122,9 +122,9 @@ sub path_get_current {
     &std_pdb_deprecated('gimp-image-get-active-vectors');
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image to get the current path from' },
     );
-    $inargs[0]->{desc} = 'The ID of the image to get the current path from.';
 
     @outargs = (
 	{ name => 'name', type => 'string',
@@ -134,7 +134,7 @@ sub path_get_current {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpVectors *vectors = gimp_image_get_active_vectors (gimage);
+  GimpVectors *vectors = gimp_image_get_active_vectors (image);
 
   if (vectors)
     name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
@@ -149,19 +149,19 @@ sub path_set_current {
     &std_pdb_deprecated('gimp-image-set-active-vectors');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image in which a path will become current' },
 	{ name => 'name', type => 'string',
 	  desc => 'The name of the path to make current.' }
     );
-    $inargs[0]->{desc} = 'The ID of the image in which a path will become current.';
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
+  GimpVectors *vectors = gimp_image_get_vectors_by_name (image, name);
 
   if (vectors)
-    gimp_image_set_active_vectors (gimage, vectors);
+    gimp_image_set_active_vectors (image, vectors);
   else
     success = FALSE;
 }
@@ -176,7 +176,8 @@ sub path_set_points {
     &andy_pdb_misc('1999');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image to set the paths in' },
 	{ name => 'name', type => 'string',
 	  desc => 'The name of the path to create. If it exists then a unique
 		   name will be created - query the list of paths if you want
@@ -209,7 +210,6 @@ sub path_set_points {
 			      assumed to be closed and the points are
 			      ACCACCACCACC.' } }
     );
-    $inargs[0]->{desc} = 'The ID of the image to set the paths in.';
 
     %invoke = (
 	code  => <<'CODE'
@@ -242,13 +242,13 @@ sub path_set_points {
           points[i].type = curr_point_pair[2];
         }
 
-      vectors = gimp_vectors_compat_new (gimage, name, points, n_points,
+      vectors = gimp_vectors_compat_new (image, name, points, n_points,
                                          closed);
 
       g_free (points);
 
       if (vectors)
-        gimp_image_add_vectors (gimage, vectors, 0);
+        gimp_image_add_vectors (image, vectors, 0);
       else
         success = FALSE;
     }
@@ -264,17 +264,16 @@ sub path_stroke_current {
     &andy_pdb_misc('1999');
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image which contains the path to stroke' },
     );
-    $inargs[0]->{desc} = 'The ID of the image which contains the path to
-			  stroke.';
 
     %invoke = (
 	headers => [ qw("core/gimpstrokedesc.h") ],
 	code    => <<'CODE'
 {
-  GimpVectors  *vectors  = gimp_image_get_active_vectors (gimage);
-  GimpDrawable *drawable = gimp_image_active_drawable (gimage);
+  GimpVectors  *vectors  = gimp_image_get_active_vectors (image);
+  GimpDrawable *drawable = gimp_image_active_drawable (image);
 
   if (vectors && drawable)
     {
@@ -308,11 +307,11 @@ HELP
     &andy_pdb_misc('1999');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image the paths belongs to' },
 	{ name => 'distance', type => 'float',
 	  desc => 'The distance along the path.' }
     );
-    $inargs[0]->{desc} = 'The ID of the image the paths belongs to';
 
     @outargs = (
 	{ name => 'x_point', type => 'int32',
@@ -333,7 +332,7 @@ HELP
   gdouble      stroke_distance;
   GimpCoords   position;
 
-  vectors = gimp_image_get_active_vectors (gimage);
+  vectors = gimp_image_get_active_vectors (image);
 
   if (vectors)
     {
@@ -384,7 +383,8 @@ sub path_get_tattoo {
     &std_pdb_deprecated('gimp-vectors-get-tattoo');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'name', type => 'string',
 	  desc => 'The name of the path whose tattoo should be obtained.' }
     );
@@ -397,7 +397,7 @@ sub path_get_tattoo {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
+  GimpVectors *vectors = gimp_image_get_vectors_by_name (image, name);
 
   if (vectors)
     tattoo = gimp_item_get_tattoo (GIMP_ITEM (vectors));
@@ -412,7 +412,8 @@ sub path_set_tattoo {
     &std_pdb_deprecated('gimp-vectors-set-tattoo');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'name', type => 'string',
 	  desc => 'the name of the path whose tattoo should be set' },
         { name => 'tattovalue', type => 'int32',
@@ -423,7 +424,7 @@ sub path_set_tattoo {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
+  GimpVectors *vectors = gimp_image_get_vectors_by_name (image, name);
 
   if (vectors)
     gimp_item_set_tattoo (GIMP_ITEM (vectors), tattovalue);
@@ -438,7 +439,8 @@ sub get_path_by_tattoo {
     &std_pdb_deprecated('gimp-image-get-vectors-by-tattoo');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'tattoo', type => 'int32',
 	  desc => 'The tattoo of the required path.' }
     );
@@ -451,7 +453,7 @@ sub get_path_by_tattoo {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpVectors *vectors = gimp_image_get_vectors_by_tattoo (gimage, tattoo);
+  GimpVectors *vectors = gimp_image_get_vectors_by_tattoo (image, tattoo);
 
   if (vectors)
     name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
@@ -466,19 +468,19 @@ sub path_delete {
     &std_pdb_deprecated('gimp-image-remove-vectors');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image to delete the path from' },
 	{ name => 'name', type => 'string',
 	  desc => 'The name of the path to delete.' }
     );
-    $inargs[0]->{desc} = 'The ID of the image to delete the path from.';
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
+  GimpVectors *vectors = gimp_image_get_vectors_by_name (image, name);
 
   if (vectors)
-    gimp_image_remove_vectors (gimage, vectors);
+    gimp_image_remove_vectors (image, vectors);
   else
     success = FALSE;
 }
@@ -490,7 +492,8 @@ sub path_get_locked {
     &std_pdb_deprecated('gimp-vectors-get-linked');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'name', type => 'string',
 	  desc => 'The name of the path whose locked status should be
 		   obtained.' }
@@ -504,7 +507,7 @@ sub path_get_locked {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
+  GimpVectors *vectors = gimp_image_get_vectors_by_name (image, name);
 
   if (vectors)
     locked = gimp_item_get_linked (GIMP_ITEM (vectors));
@@ -519,7 +522,8 @@ sub path_set_locked {
     &std_pdb_deprecated('gimp-vectors-set-linked');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'name', type => 'string',
 	  desc => 'the name of the path whose locked status should be set' },
 	{ name => 'locked', type => 'boolean',
@@ -529,7 +533,7 @@ sub path_set_locked {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
+  GimpVectors *vectors = gimp_image_get_vectors_by_name (image, name);
 
   if (vectors)
     gimp_item_set_linked (GIMP_ITEM (vectors), locked, TRUE);
@@ -550,7 +554,8 @@ HELP
     &joao_pdb_misc('2003');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'name', type => 'string',
 	  desc => 'The name of the path which should be made into selection.' },
         { name => 'op', type => 'enum GimpChannelOps',
@@ -568,10 +573,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
+  GimpVectors *vectors = gimp_image_get_vectors_by_name (image, name);
 
   if (vectors)
-    gimp_channel_select_vectors (gimp_image_get_mask (gimage),
+    gimp_channel_select_vectors (gimp_image_get_mask (image),
                                  _("Path to Selection"),
                                  vectors,
                                  op,
@@ -597,7 +602,8 @@ HELP
     &neo_pdb_misc('2003');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'filename', type => 'string', no_validate => 1,
 	  desc => 'The name of the SVG file to import.' },
 	{ name => 'merge', type => 'boolean',
@@ -610,7 +616,7 @@ HELP
         headers => [ qw("vectors/gimpvectors-import.h") ],
 	code    => <<'CODE'
 {
-  success = gimp_vectors_import_file (gimage, filename, merge, scale, -1, NULL);
+  success = gimp_vectors_import_file (image, filename, merge, scale, -1, NULL);
 }
 CODE
     );
@@ -628,7 +634,8 @@ HELP
     &neo_pdb_misc('2005', '2.4');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'string', type => 'string', no_validate => 1,
 	  desc => 'A string that must be a complete and valid SVG document.' },
 	{ name => 'length', type => 'int32',
@@ -644,12 +651,13 @@ HELP
         headers => [ qw("vectors/gimpvectors-import.h") ],
 	code    => <<'CODE'
 {
-  success = gimp_vectors_import_buffer (gimage, string, length,
+  success = gimp_vectors_import_buffer (image, string, length,
                                         merge, scale, -1, NULL);
 }
 CODE
     );
 }
+
 
 @headers = qw(<string.h> "core/gimp.h" "core/gimplist.h"
               "core/gimpchannel-select.h"
@@ -663,6 +671,7 @@ CODE
 	    path_get_tattoo path_set_tattoo get_path_by_tattoo
             path_get_locked path_set_locked
             path_to_selection path_import path_import_string);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Paths';

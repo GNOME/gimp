@@ -61,7 +61,6 @@ CODE
     );
 }
 
-
 sub unit_new {
     $blurb = "Creates a new unit and returns it's integer ID.";
 
@@ -357,6 +356,7 @@ CODE
     );
 }
 
+
 @headers = qw("libgimpbase/gimpbase.h" "core/gimpunit.h");
 
 @procs = qw(unit_get_number_of_units unit_get_number_of_built_in_units
@@ -364,6 +364,7 @@ CODE
             unit_get_identifier unit_get_factor unit_get_digits
             unit_get_symbol unit_get_abbreviation unit_get_singular
             unit_get_plural);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Units';

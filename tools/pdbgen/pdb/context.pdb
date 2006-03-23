@@ -679,6 +679,7 @@ CODE
     );
 }
 
+
 @headers = qw("core/gimp.h" "core/gimpcontainer.h" "core/gimpcontext.h"
               "core/gimpdatafactory.h"
               "plug-in/plug-in.h" "plug-in/plug-in-context.h");
@@ -695,6 +696,7 @@ CODE
             context_get_gradient context_set_gradient
             context_get_palette context_set_palette
             context_get_font context_set_font);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Context';

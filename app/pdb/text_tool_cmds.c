@@ -55,7 +55,7 @@ text_fontname_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   GimpDrawable *drawable;
   gdouble x;
   gdouble y;
@@ -67,8 +67,8 @@ text_fontname_invoker (Gimp         *gimp,
   gchar *fontname;
   GimpLayer *text_layer = NULL;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
@@ -108,7 +108,7 @@ text_fontname_invoker (Gimp         *gimp,
         {
           gchar *real_fontname = g_strdup_printf ("%s %d", fontname, (gint) size);
 
-          text_layer = text_render (gimage, drawable, context,
+          text_layer = text_render (image, drawable, context,
                                     x, y, real_fontname, text,
                                     border, antialias);
 
@@ -336,7 +336,7 @@ text_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   GimpDrawable *drawable;
   gdouble x;
   gdouble y;
@@ -355,8 +355,8 @@ text_invoker (Gimp         *gimp,
   gchar *encoding;
   GimpLayer *text_layer = NULL;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
@@ -424,7 +424,7 @@ text_invoker (Gimp         *gimp,
         {
           gchar *real_fontname = g_strdup_printf ("%s %d", family, (gint) size);
 
-          text_layer = text_render (gimage, drawable, context,
+          text_layer = text_render (image, drawable, context,
                                     x, y, real_fontname, text,
                                     border, antialias);
 

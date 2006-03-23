@@ -118,6 +118,10 @@ sub simon_pdb_misc {
     contrib_pdb_misc('Simon Budig', '', @_);
 }
 
+sub sylvain_pdb_misc {
+    contrib_pdb_misc('Sylvain Foret', '', @_);
+}
+
 sub wolfgang_pdb_misc {
     contrib_pdb_misc('Wolfgang Hofer', '', @_);
 }
@@ -135,23 +139,6 @@ sub std_pdb_deprecated {
         $deprecated = "NONE";
     }
     $author = $copyright = $date = '';
-}
-
-sub std_image_arg () {{
-    name  => 'image',	
-    type  => 'image',
-    desc  => 'The image',
-    alias => 'gimage'
-}}
-
-sub std_antialias_arg () {{
-    name => 'antialias',
-    type => 'boolean',
-    desc => 'Antialiasing (%%desc%%)'
-}}
-
-sub std_orientation_enum () {
-    'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)'
 }
 
 1;

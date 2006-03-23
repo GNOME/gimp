@@ -58,10 +58,10 @@ image_undo_group_start_invoker (Gimp         *gimp,
                                 Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   if (success)
@@ -71,7 +71,7 @@ image_undo_group_start_invoker (Gimp         *gimp,
       if (gimp->current_plug_in)
         undo_desc = plug_in_get_undo_desc (gimp->current_plug_in);
 
-      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_MISC, undo_desc);
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_MISC, undo_desc);
 
       if (undo_desc)
         g_free (undo_desc);
@@ -114,14 +114,16 @@ image_undo_group_end_invoker (Gimp         *gimp,
                               Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   if (success)
-    gimp_image_undo_group_end (gimage);
+    {
+      gimp_image_undo_group_end (image);
+    }
 
   return procedural_db_return_args (&image_undo_group_end_proc, success);
 }
@@ -161,15 +163,17 @@ image_undo_is_enabled_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gboolean enabled = FALSE;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   if (success)
-    enabled = gimp_image_undo_is_enabled (gimage);
+    {
+      enabled = gimp_image_undo_is_enabled (image);
+    }
 
   return_args = procedural_db_return_args (&image_undo_is_enabled_proc, success);
 
@@ -223,15 +227,17 @@ image_undo_disable_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gboolean disabled = FALSE;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   if (success)
-    disabled = gimp_image_undo_disable (gimage);
+    {
+      disabled = gimp_image_undo_disable (image);
+    }
 
   return_args = procedural_db_return_args (&image_undo_disable_proc, success);
 
@@ -285,15 +291,17 @@ image_undo_enable_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gboolean enabled = FALSE;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   if (success)
-    enabled = gimp_image_undo_enable (gimage);
+    {
+      enabled = gimp_image_undo_enable (image);
+    }
 
   return_args = procedural_db_return_args (&image_undo_enable_proc, success);
 
@@ -347,15 +355,17 @@ image_undo_freeze_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gboolean frozen = FALSE;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   if (success)
-    frozen = gimp_image_undo_freeze (gimage);
+    {
+      frozen = gimp_image_undo_freeze (image);
+    }
 
   return_args = procedural_db_return_args (&image_undo_freeze_proc, success);
 
@@ -409,15 +419,17 @@ image_undo_thaw_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gboolean thawed = FALSE;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   if (success)
-    thawed = gimp_image_undo_thaw (gimage);
+    {
+      thawed = gimp_image_undo_thaw (image);
+    }
 
   return_args = procedural_db_return_args (&image_undo_thaw_proc, success);
 

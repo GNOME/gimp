@@ -34,7 +34,7 @@
  * Delete a drawable.
  *
  * This procedure deletes the specified drawable. This must not be done
- * if the gimage containing this drawable was already deleted or if the
+ * if the image containing this drawable was already deleted or if the
  * drawable was already removed from the image. The only case in which
  * this procedure is useful is if you want to get rid of a drawable
  * which has not yet been added to an image.

@@ -1392,6 +1392,7 @@ gradient_get_range (Gimp                 *gimp,
 }
 CODE
 
+
 @headers = qw(<string.h> "core/gimp.h" "core/gimpcontext.h"
               "core/gimpgradient.h" "core/gimpcontainer.h"
               "core/gimpdatafactory.h" "core/gimplist.h");
@@ -1417,6 +1418,7 @@ CODE
             gradient_segment_range_blend_colors
             gradient_segment_range_blend_opacity
             gradient_segment_range_move);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Gradient';

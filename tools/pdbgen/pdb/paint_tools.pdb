@@ -781,9 +781,6 @@ sub ink {
     );
 }
 
-@headers = qw("libgimpmath/gimpmath.h"
-              "paint/gimppaintcore-stroke.h" "paint/gimppaintoptions.h"
-              "core/gimp.h" "core/gimpcontainer.h" "core/gimppaintinfo.h");
 
 $extra{app}->{code} = <<'CODE';
 static const GimpCoords default_coords = GIMP_COORDS_DEFAULT_VALUES;
@@ -833,6 +830,11 @@ paint_tools_stroke (Gimp             *gimp,
   return retval;
 }
 CODE
+
+
+@headers = qw("libgimpmath/gimpmath.h"
+              "paint/gimppaintcore-stroke.h" "paint/gimppaintoptions.h"
+              "core/gimp.h" "core/gimpcontainer.h" "core/gimppaintinfo.h");
 
 @procs = qw(airbrush airbrush_default
             clone clone_default

@@ -119,6 +119,7 @@ CODE
               "core/gimpdatafactory.h" "core/gimppattern.h" );
 
 @procs = qw(pattern_get_info pattern_get_pixels);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Pattern';

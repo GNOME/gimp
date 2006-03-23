@@ -31,7 +31,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -42,13 +43,13 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  display = gimp_create_display (gimp, gimage, GIMP_UNIT_PIXEL, 1.0);
+  display = gimp_create_display (gimp, image, GIMP_UNIT_PIXEL, 1.0);
 
   if (display)
     {
       /* the first display takes ownership of the image */
-      if (gimage->disp_count == 1)
-        g_object_unref (gimage);
+      if (image->disp_count == 1)
+        g_object_unref (image);
     }
   else
     success = FALSE;
@@ -170,10 +171,12 @@ CODE
     );
 }
 
+
 @headers = qw("core/gimp.h");
 
 @procs = qw(display_new display_delete display_get_window_handle
             displays_flush displays_reconnect);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Display procedures';

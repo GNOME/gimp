@@ -125,7 +125,8 @@ HELP
     &jay_pdb_misc('1998');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'name', type => 'string',
 	  desc => 'The name of the parasite to find' }
     );
@@ -138,7 +139,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  parasite = gimp_parasite_copy (gimp_image_parasite_find (gimage, name));
+  parasite = gimp_parasite_copy (gimp_image_parasite_find (image, name));
 
   if (! parasite)
     success = FALSE;
@@ -157,7 +158,8 @@ HELP
     &jay_pdb_misc('1998');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'parasite', type => 'parasite',
 	  desc => 'The parasite to attach to an image' }
     );
@@ -165,7 +167,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_image_parasite_attach (gimage, parasite);
+  gimp_image_parasite_attach (image, parasite);
 }
 CODE
     );
@@ -181,7 +183,8 @@ HELP
     &jay_pdb_misc('1998');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'name', type => 'string',
 	  desc => 'The name of the parasite to detach from an image.' }
     );
@@ -189,7 +192,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_image_parasite_detach (gimage, name);
+  gimp_image_parasite_detach (image, name);
 }
 CODE
     );
@@ -202,7 +205,8 @@ sub image_parasite_list {
     &marc_pdb_misc('1999');
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     @outargs = (
@@ -214,7 +218,7 @@ sub image_parasite_list {
     %invoke = (
 	code => <<'CODE'
 {
-  parasites = gimp_image_parasite_list (gimage, &num_parasites);
+  parasites = gimp_image_parasite_list (image, &num_parasites);
 }
 CODE
     );
@@ -442,6 +446,7 @@ CODE
     );
 }
 
+
 @headers = qw("core/gimp-parasites.h");
 
 @procs = qw(parasite_find
@@ -456,6 +461,7 @@ CODE
 	    vectors_parasite_find
 	    vectors_parasite_attach vectors_parasite_detach
 	    vectors_parasite_list);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Parasite procedures';

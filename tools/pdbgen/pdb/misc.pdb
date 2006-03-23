@@ -93,7 +93,9 @@ CODE
     );
 }
 
+
 @procs = qw(version getpid quit);
+
 %exports = (app => [@procs], lib => [@procs[0..1]]);
 
 $desc = 'Miscellaneous';

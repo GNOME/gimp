@@ -32,7 +32,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image to which to add the channel' },
 	{ name => 'width', type => '0 < int32',
 	  desc => 'The channel width: (%%desc%%)' },
 	{ name => 'height', type => '0 < int32',
@@ -45,7 +46,6 @@ HELP
 	  desc => 'The channel compositing color'
 	}
     );
-    $inargs[0]->{desc} .= ' to which to add the channel';
 
     @outargs = (
 	{ name => 'channel', type => 'channel', wrap => 1,
@@ -58,8 +58,10 @@ HELP
   GimpRGB rgb_color = color;
 
   rgb_color.a = opacity / 100.0;
-  channel = gimp_channel_new (gimage, width, height, name, &rgb_color);
-  success = channel != NULL;
+  channel = gimp_channel_new (image, width, height, name, &rgb_color);
+
+  if (! channel)
+    success = FALSE;
 }
 CODE
     );
@@ -142,13 +144,13 @@ HELP
     &shlomi_pdb_misc('2005', '2.4');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image to which to add the channel' },
 	{ name => 'component', type => 'enum GimpChannelType',
 	  desc => 'The image component: { %%desc%% }' },
 	{ name => 'name', type => 'string',
 	  desc => 'The channel name' },
     );
-    $inargs[0]->{desc} .= ' to which to add the channel';
 
     @outargs = (
 	{ name => 'channel', type => 'channel',
@@ -158,8 +160,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_image_get_component_index (gimage, component) != -1)
-    channel = gimp_channel_new_from_component (gimage,
+  if (gimp_image_get_component_index (image, component) != -1)
+    channel = gimp_channel_new_from_component (image,
                                                component, name, NULL);
 
   if (channel)
@@ -337,11 +339,13 @@ CODE
     );
 }
 
+
 @procs = qw(channel_new channel_new_from_component channel_copy
             channel_combine_masks
             channel_get_show_masked channel_set_show_masked
             channel_get_opacity channel_set_opacity
             channel_get_color channel_set_color);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Channel';

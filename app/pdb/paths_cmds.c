@@ -85,17 +85,17 @@ path_list_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gint32 num_paths = 0;
   gchar **path_list = NULL;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   if (success)
     {
-      path_list = gimp_container_get_name_array (gimage->vectors, &num_paths);
+      path_list = gimp_container_get_name_array (image->vectors, &num_paths);
     }
 
   return_args = procedural_db_return_args (&path_list_proc, success);
@@ -114,7 +114,7 @@ static ProcArg path_list_inargs[] =
   {
     GIMP_PDB_IMAGE,
     "image",
-    "The ID of the image to list the paths from"
+    "The image to list the paths from"
   }
 };
 
@@ -158,16 +158,16 @@ path_get_current_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gchar *name = NULL;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   if (success)
     {
-      GimpVectors *vectors = gimp_image_get_active_vectors (gimage);
+      GimpVectors *vectors = gimp_image_get_active_vectors (image);
 
       if (vectors)
         name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
@@ -188,7 +188,7 @@ static ProcArg path_get_current_inargs[] =
   {
     GIMP_PDB_IMAGE,
     "image",
-    "The ID of the image to get the current path from."
+    "The image to get the current path from"
   }
 };
 
@@ -226,11 +226,11 @@ path_set_current_invoker (Gimp         *gimp,
                           Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
   gchar *name;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
@@ -239,10 +239,10 @@ path_set_current_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
+      GimpVectors *vectors = gimp_image_get_vectors_by_name (image, name);
 
       if (vectors)
-        gimp_image_set_active_vectors (gimage, vectors);
+        gimp_image_set_active_vectors (image, vectors);
       else
         success = FALSE;
     }
@@ -255,7 +255,7 @@ static ProcArg path_set_current_inargs[] =
   {
     GIMP_PDB_IMAGE,
     "image",
-    "The ID of the image in which a path will become current."
+    "The image in which a path will become current"
   },
   {
     GIMP_PDB_STRING,
@@ -289,11 +289,11 @@ path_delete_invoker (Gimp         *gimp,
                      Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
   gchar *name;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
@@ -302,10 +302,10 @@ path_delete_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
+      GimpVectors *vectors = gimp_image_get_vectors_by_name (image, name);
 
       if (vectors)
-        gimp_image_remove_vectors (gimage, vectors);
+        gimp_image_remove_vectors (image, vectors);
       else
         success = FALSE;
     }
@@ -318,7 +318,7 @@ static ProcArg path_delete_inargs[] =
   {
     GIMP_PDB_IMAGE,
     "image",
-    "The ID of the image to delete the path from."
+    "The image to delete the path from"
   },
   {
     GIMP_PDB_STRING,
@@ -353,15 +353,15 @@ path_get_points_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gchar *name;
   gint32 path_type = 0;
   gint32 path_closed = 0;
   gint32 num_path_point_details = 0;
   gdouble *points_pairs = NULL;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
@@ -370,7 +370,7 @@ path_get_points_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
+      GimpVectors *vectors = gimp_image_get_vectors_by_name (image, name);
 
       if (vectors)
         {
@@ -427,7 +427,7 @@ static ProcArg path_get_points_inargs[] =
   {
     GIMP_PDB_IMAGE,
     "image",
-    "The ID of the image to list the paths from."
+    "The image to list the paths from"
   },
   {
     GIMP_PDB_STRING,
@@ -485,14 +485,14 @@ path_set_points_invoker (Gimp         *gimp,
                          Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
   gchar *name;
   gint32 ptype;
   gint32 num_path_points;
   gdouble *points_pairs;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
@@ -537,13 +537,13 @@ path_set_points_invoker (Gimp         *gimp,
               points[i].type = curr_point_pair[2];
             }
 
-          vectors = gimp_vectors_compat_new (gimage, name, points, n_points,
+          vectors = gimp_vectors_compat_new (image, name, points, n_points,
                                              closed);
 
           g_free (points);
 
           if (vectors)
-            gimp_image_add_vectors (gimage, vectors, 0);
+            gimp_image_add_vectors (image, vectors, 0);
           else
             success = FALSE;
         }
@@ -557,7 +557,7 @@ static ProcArg path_set_points_inargs[] =
   {
     GIMP_PDB_IMAGE,
     "image",
-    "The ID of the image to set the paths in."
+    "The image to set the paths in"
   },
   {
     GIMP_PDB_STRING,
@@ -606,16 +606,16 @@ path_stroke_current_invoker (Gimp         *gimp,
                              Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   if (success)
     {
-      GimpVectors  *vectors  = gimp_image_get_active_vectors (gimage);
-      GimpDrawable *drawable = gimp_image_active_drawable (gimage);
+      GimpVectors  *vectors  = gimp_image_get_active_vectors (image);
+      GimpDrawable *drawable = gimp_image_active_drawable (image);
 
       if (vectors && drawable)
         {
@@ -640,7 +640,7 @@ static ProcArg path_stroke_current_inargs[] =
   {
     GIMP_PDB_IMAGE,
     "image",
-    "The ID of the image which contains the path to stroke."
+    "The image which contains the path to stroke"
   }
 };
 
@@ -670,14 +670,14 @@ path_get_point_at_dist_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gdouble distance;
   gint32 x_point = 0;
   gint32 y_point = 0;
   gdouble slope = 0.0;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   distance = args[1].value.pdb_float;
@@ -691,7 +691,7 @@ path_get_point_at_dist_invoker (Gimp         *gimp,
       gdouble      stroke_distance;
       GimpCoords   position;
 
-      vectors = gimp_image_get_active_vectors (gimage);
+      vectors = gimp_image_get_active_vectors (image);
 
       if (vectors)
         {
@@ -752,7 +752,7 @@ static ProcArg path_get_point_at_dist_inargs[] =
   {
     GIMP_PDB_IMAGE,
     "image",
-    "The ID of the image the paths belongs to"
+    "The image the paths belongs to"
   },
   {
     GIMP_PDB_FLOAT,
@@ -806,12 +806,12 @@ path_get_tattoo_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gchar *name;
   gint32 tattoo = 0;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
@@ -820,7 +820,7 @@ path_get_tattoo_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
+      GimpVectors *vectors = gimp_image_get_vectors_by_name (image, name);
 
       if (vectors)
         tattoo = gimp_item_get_tattoo (GIMP_ITEM (vectors));
@@ -884,12 +884,12 @@ path_set_tattoo_invoker (Gimp         *gimp,
                          Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
   gchar *name;
   gint32 tattovalue;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
@@ -900,7 +900,7 @@ path_set_tattoo_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
+      GimpVectors *vectors = gimp_image_get_vectors_by_name (image, name);
 
       if (vectors)
         gimp_item_set_tattoo (GIMP_ITEM (vectors), tattovalue);
@@ -956,19 +956,19 @@ get_path_by_tattoo_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gint32 tattoo;
   gchar *name = NULL;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   tattoo = args[1].value.pdb_int;
 
   if (success)
     {
-      GimpVectors *vectors = gimp_image_get_vectors_by_tattoo (gimage, tattoo);
+      GimpVectors *vectors = gimp_image_get_vectors_by_tattoo (image, tattoo);
 
       if (vectors)
         name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
@@ -1033,12 +1033,12 @@ path_get_locked_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gchar *name;
   gboolean locked = FALSE;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
@@ -1047,7 +1047,7 @@ path_get_locked_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
+      GimpVectors *vectors = gimp_image_get_vectors_by_name (image, name);
 
       if (vectors)
         locked = gimp_item_get_linked (GIMP_ITEM (vectors));
@@ -1111,12 +1111,12 @@ path_set_locked_invoker (Gimp         *gimp,
                          Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
   gchar *name;
   gboolean locked;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
@@ -1127,7 +1127,7 @@ path_set_locked_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
+      GimpVectors *vectors = gimp_image_get_vectors_by_name (image, name);
 
       if (vectors)
         gimp_item_set_linked (GIMP_ITEM (vectors), locked, TRUE);
@@ -1182,7 +1182,7 @@ path_to_selection_invoker (Gimp         *gimp,
                            Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
   gchar *name;
   gint32 op;
   gboolean antialias;
@@ -1190,8 +1190,8 @@ path_to_selection_invoker (Gimp         *gimp,
   gdouble feather_radius_x;
   gdouble feather_radius_y;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
@@ -1212,10 +1212,10 @@ path_to_selection_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpVectors *vectors = gimp_image_get_vectors_by_name (gimage, name);
+      GimpVectors *vectors = gimp_image_get_vectors_by_name (image, name);
 
       if (vectors)
-        gimp_channel_select_vectors (gimp_image_get_mask (gimage),
+        gimp_channel_select_vectors (gimp_image_get_mask (image),
                                      _("Path to Selection"),
                                      vectors,
                                      op,
@@ -1294,13 +1294,13 @@ path_import_invoker (Gimp         *gimp,
                      Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
   gchar *filename;
   gboolean merge;
   gboolean scale;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   filename = (gchar *) args[1].value.pdb_pointer;
@@ -1313,7 +1313,7 @@ path_import_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = gimp_vectors_import_file (gimage, filename, merge, scale, -1, NULL);
+      success = gimp_vectors_import_file (image, filename, merge, scale, -1, NULL);
     }
 
   return procedural_db_return_args (&path_import_proc, success);
@@ -1368,14 +1368,14 @@ path_import_string_invoker (Gimp         *gimp,
                             Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
   gchar *string;
   gint32 length;
   gboolean merge;
   gboolean scale;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   string = (gchar *) args[1].value.pdb_pointer;
@@ -1390,7 +1390,7 @@ path_import_string_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = gimp_vectors_import_buffer (gimage, string, length,
+      success = gimp_vectors_import_buffer (image, string, length,
                                             merge, scale, -1, NULL);
     }
 

@@ -155,7 +155,7 @@ static ProcRecord drawable_delete_proc =
   "gimp-drawable-delete",
   "gimp-drawable-delete",
   "Delete a drawable.",
-  "This procedure deletes the specified drawable. This must not be done if the gimage containing this drawable was already deleted or if the drawable was already removed from the image. The only case in which this procedure is useful is if you want to get rid of a drawable which has not yet been added to an image.",
+  "This procedure deletes the specified drawable. This must not be done if the image containing this drawable was already deleted or if the drawable was already removed from the image. The only case in which this procedure is useful is if you want to get rid of a drawable which has not yet been added to an image.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -1018,7 +1018,7 @@ drawable_get_image_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
-  GimpImage *gimage = NULL;
+  GimpImage *image = NULL;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -1026,13 +1026,13 @@ drawable_get_image_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+      image = gimp_item_get_image (GIMP_ITEM (drawable));
     }
 
   return_args = procedural_db_return_args (&drawable_get_image_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimage ? gimp_image_get_ID (gimage) : -1;
+    return_args[1].value.pdb_int = image ? gimp_image_get_ID (image) : -1;
 
   return return_args;
 }
@@ -1081,19 +1081,19 @@ drawable_set_image_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  GimpImage *gimage;
+  GimpImage *image;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
     success = FALSE;
 
-  gimage = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   if (success)
     {
-      if (gimage != gimp_item_get_image (GIMP_ITEM (drawable)))
+      if (image != gimp_item_get_image (GIMP_ITEM (drawable)))
         success = FALSE;
     }
 
@@ -2353,7 +2353,7 @@ drawable_thumbnail_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
       TempBuf   *buf;
       gint       dwidth, dheight;
 
@@ -2366,7 +2366,7 @@ drawable_thumbnail_invoker (Gimp         *gimp,
       else
         width  = MAX (1, (height * dwidth) / dheight);
 
-      if (gimage->gimp->config->layer_previews)
+      if (image->gimp->config->layer_previews)
         buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (drawable),
                                              width, height);
       else
@@ -2526,10 +2526,10 @@ drawable_sub_thumbnail_invoker (Gimp         *gimp,
 
       if (success)
         {
-          GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
           TempBuf   *buf;
 
-          if (gimage->gimp->config->layer_previews)
+          if (image->gimp->config->layer_previews)
             buf = gimp_drawable_get_sub_preview (drawable,
                                                  src_x, src_y,
                                                  src_width, src_height,

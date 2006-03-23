@@ -31,7 +31,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image to which to add the layer' },
 	{ name => 'width', type => '0 < int32',
 	  desc => 'The layer width: (%%desc%%)' },
 	{ name => 'height', type => '0 < int32',
@@ -45,7 +46,6 @@ HELP
 	{ name => 'mode', type => 'enum GimpLayerModeEffects',
 	  desc => 'The layer combination mode: { %%desc%% }' }
     );
-    $inargs[0]->{desc} .= ' to which to add the layer';
 
     @outargs = (
 	{ name => 'layer', type => 'layer', wrap => 1,
@@ -55,9 +55,11 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  layer = gimp_layer_new (gimage, width, height, type, name,
+  layer = gimp_layer_new (image, width, height, type, name,
 			  opacity / 100.0, mode);
-  success = (layer != NULL);
+
+  if (! layer)
+    success = FALSE;
 }
 CODE
     );
@@ -333,9 +335,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
+  GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
 
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
                                _("Move Layer"));
 
   gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
@@ -343,7 +345,7 @@ HELP
   if (gimp_item_get_linked (GIMP_ITEM (layer)))
     gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
 
-  gimp_image_undo_group_end (gimage);
+  gimp_image_undo_group_end (image);
 }
 CODE
     );
@@ -401,9 +403,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
+  GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
 
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
                                _("Move Layer"));
 
   offx -= GIMP_ITEM (layer)->offset_x;
@@ -414,7 +416,7 @@ HELP
   if (gimp_item_get_linked (GIMP_ITEM (layer)))
     gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
 
-  gimp_image_undo_group_end (gimage);
+  gimp_image_undo_group_end (image);
 }
 CODE
     );
@@ -899,6 +901,7 @@ CODE
     );
 }
 
+
 @headers = qw("config/gimpcoreconfig.h" "core/gimp.h" "core/gimpimage-undo.h"
               "core/gimpitem-linked.h" "gimp-intl.h");
 
@@ -915,6 +918,7 @@ CODE
             layer_get_edit_mask layer_set_edit_mask
             layer_get_opacity layer_set_opacity
             layer_get_mode layer_set_mode);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Layer';

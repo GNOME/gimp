@@ -934,6 +934,7 @@ CODE
     );
 }
 
+
 @headers = qw("base/gimphistogram.h"
               "base/gimplut.h" "base/lut-funcs.h"
 	      "base/pixel-region.h" "base/pixel-processor.h"
@@ -944,6 +945,7 @@ CODE
             desaturate desaturate_full equalize invert curves_spline
             curves_explicit color_balance colorize histogram hue_saturation
             threshold);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Color';

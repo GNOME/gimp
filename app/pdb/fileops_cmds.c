@@ -552,11 +552,11 @@ file_save_thumbnail_invoker (Gimp         *gimp,
                              Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
   gchar *filename;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   filename = (gchar *) args[1].value.pdb_pointer;
@@ -565,7 +565,7 @@ file_save_thumbnail_invoker (Gimp         *gimp,
 
   if (success)
     {
-      const gchar *image_uri = gimp_object_get_name (GIMP_OBJECT (gimage));
+      const gchar *image_uri = gimp_object_get_name (GIMP_OBJECT (image));
 
       if (! image_uri)
         success = FALSE;
@@ -587,7 +587,7 @@ file_save_thumbnail_invoker (Gimp         *gimp,
                   GimpImagefile *imagefile;
 
                   imagefile = gimp_imagefile_new (gimp, uri);
-                  success = gimp_imagefile_save_thumbnail (imagefile, NULL, gimage);
+                  success = gimp_imagefile_save_thumbnail (imagefile, NULL, image);
                   g_object_unref (imagefile);
                 }
 

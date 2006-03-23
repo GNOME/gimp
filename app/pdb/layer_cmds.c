@@ -104,7 +104,7 @@ layer_new_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gint32 width;
   gint32 height;
   gint32 type;
@@ -113,8 +113,8 @@ layer_new_invoker (Gimp         *gimp,
   gint32 mode;
   GimpLayer *layer = NULL;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   width = args[1].value.pdb_int;
@@ -143,9 +143,11 @@ layer_new_invoker (Gimp         *gimp,
 
   if (success)
     {
-      layer = gimp_layer_new (gimage, width, height, type, name,
+      layer = gimp_layer_new (image, width, height, type, name,
                               opacity / 100.0, mode);
-      success = (layer != NULL);
+
+      if (! layer)
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&layer_new_proc, success);
@@ -677,9 +679,9 @@ layer_translate_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
 
-      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
                                    _("Move Layer"));
 
       gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
@@ -687,7 +689,7 @@ layer_translate_invoker (Gimp         *gimp,
       if (gimp_item_get_linked (GIMP_ITEM (layer)))
         gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
 
-      gimp_image_undo_group_end (gimage);
+      gimp_image_undo_group_end (image);
     }
 
   return procedural_db_return_args (&layer_translate_proc, success);
@@ -751,9 +753,9 @@ layer_set_offsets_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
 
-      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
                                    _("Move Layer"));
 
       offx -= GIMP_ITEM (layer)->offset_x;
@@ -764,7 +766,7 @@ layer_set_offsets_invoker (Gimp         *gimp,
       if (gimp_item_get_linked (GIMP_ITEM (layer)))
         gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
 
-      gimp_image_undo_group_end (gimage);
+      gimp_image_undo_group_end (image);
     }
 
   return procedural_db_return_args (&layer_set_offsets_proc, success);

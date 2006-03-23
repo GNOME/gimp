@@ -43,9 +43,9 @@ HELP
     );
 
     @outargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The output image' }
     );
-    $outargs[0]->{desc} = 'The output image';
 
     %invoke = (
 	proc => [ 'proc->name', 'new_args' ],
@@ -313,7 +313,8 @@ HELP
     &josh_pdb_misc('1997');
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'filename', type => 'string', no_validate => 1,
 	  desc => 'The name of the file the thumbnail belongs to' },
     );
@@ -321,7 +322,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  const gchar *image_uri = gimp_object_get_name (GIMP_OBJECT (gimage));
+  const gchar *image_uri = gimp_object_get_name (GIMP_OBJECT (image));
 
   if (! image_uri)
     success = FALSE;
@@ -343,7 +344,7 @@ HELP
               GimpImagefile *imagefile;
 
               imagefile = gimp_imagefile_new (gimp, uri);
-              success = gimp_imagefile_save_thumbnail (imagefile, NULL, gimage);
+              success = gimp_imagefile_save_thumbnail (imagefile, NULL, image);
               g_object_unref (imagefile);
             }
 
@@ -672,6 +673,7 @@ CODE
 	    temp_name register_magic_load_handler register_load_handler
 	    register_save_handler register_file_handler_mime
             register_thumbnail_loader);
+
 %exports = (app => [@procs], lib => [@procs[0,1,3,5..10]]);
 
 $desc = 'File Operations';

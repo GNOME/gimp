@@ -891,7 +891,7 @@ gimp_image_pick_correlate_layer (gint32 image_ID,
  *
  * Add the specified layer to the image.
  *
- * This procedure adds the specified layer to the gimage at the given
+ * This procedure adds the specified layer to the image at the given
  * position. If the position is specified as -1, then the layer is
  * inserted at the top of the layer stack. If the layer to be added has
  * no alpha channel, it must be added at position 0. The layer type
@@ -1241,9 +1241,9 @@ gimp_image_lower_channel (gint32 image_ID,
  *
  * Add the specified vectors object to the image.
  *
- * This procedure adds the specified vectors object to the gimage at
- * the given position. If the position is specified as -1, then the
- * vectors object is inserted at the top of the vectors stack.
+ * This procedure adds the specified vectors object to the image at the
+ * given position. If the position is specified as -1, then the vectors
+ * object is inserted at the top of the vectors stack.
  *
  * Returns: TRUE on success.
  */

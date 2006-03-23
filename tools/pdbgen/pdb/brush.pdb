@@ -886,6 +886,7 @@ CODE
             brush_set_shape brush_set_radius
             brush_set_spikes brush_set_hardness
             brush_set_aspect_ratio brush_set_angle);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Brush';

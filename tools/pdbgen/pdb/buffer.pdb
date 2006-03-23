@@ -236,6 +236,7 @@ CODE
     );
 }
 
+
 @headers = qw(<string.h> "core/gimp.h" "core/gimpbuffer.h"
               "core/gimpcontainer.h" "core/gimpcontainer-filter.h"
 	      "gimp-intl.h");
@@ -244,6 +245,7 @@ CODE
             buffer_rename buffer_delete
 	    buffer_get_width buffer_get_height
             buffer_get_bytes buffer_get_image_type);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Buffer procedures';

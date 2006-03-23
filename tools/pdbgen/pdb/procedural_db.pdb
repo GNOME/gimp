@@ -390,6 +390,7 @@ CODE
     );
 }
 
+
 @headers = qw("libgimpbase/gimpbase.h" "core/gimp.h" "plug-in/plug-in-data.h"
               "procedural-db-query.h");
 
@@ -398,6 +399,7 @@ CODE
 	    procedural_db_proc_arg procedural_db_proc_val
 	    procedural_db_get_data procedural_db_get_data_size
 	    procedural_db_set_data);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Procedural database';

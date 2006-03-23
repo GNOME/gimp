@@ -1,3 +1,37 @@
+2006-03-23  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/stddefs.pdb: removed std_image_arg(),
+	std_antialias_arg() and std_orientation_enum().
+
+	* tools/pdbgen/pdb/*.pdb: changed accordingly. Did a global
+	s/gimage/image/. Some more cleanup.
+
+	* tools/pdbgen/pdb/grid.pdb
+	* tools/pdbgen/pdb/guides.pdb: removed utility functions.
+
+	* tools/pdbgen/pdb/vectors.pdb: reordered procedures. Removed
+	obsolete procedure.
+
+	* app/pdb/channel_cmds.c
+	* app/pdb/convert_cmds.c
+	* app/pdb/display_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/fileops_cmds.c
+	* app/pdb/grid_cmds.c
+	* app/pdb/guides_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/parasite_cmds.c
+	* app/pdb/paths_cmds.c
+	* app/pdb/selection_cmds.c
+	* app/pdb/selection_tools_cmds.c
+	* app/pdb/text_tool_cmds.c
+	* app/pdb/undo_cmds.c
+	* app/pdb/vectors_cmds.c
+	* libgimp/gimpdrawable_pdb.c
+	* libgimp/gimpimage_pdb.[ch]
+	* libgimp/gimpvectors_pdb.[ch]: regenerated.
+
 2006-03-23  Sven Neumann  <sven@gimp.org>
 
 	* themes/Small/gtkrc: commented out the hardcoded font setting.

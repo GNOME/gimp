@@ -23,7 +23,8 @@ sub flip {
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
-	{ name => 'flip_type', type => &std_orientation_enum,
+	{ name => 'flip_type',
+	  type => 'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)',
 	  desc => 'Type of flip: %%desc%%' }
     );
 
@@ -266,7 +267,8 @@ sub shear {
 	  desc => 'The affected drawable' },
 	{ name => 'interpolation', type => 'boolean',
 	  desc => 'Whether to use interpolation' },
-	{ name => 'shear_type', type => &std_orientation_enum,
+	{ name => 'shear_type',
+	  type => 'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)',
 	  desc => 'Type of shear: %%desc%%' },
 	{ name => 'magnitude', type => 'float',
 	  desc => 'The magnitude of the shear' }
@@ -385,6 +387,7 @@ sub transform_2d {
 CODE
     );
 }
+
 
 @headers = qw("libgimpmath/gimpmath.h" "config/gimpcoreconfig.h"
               "core/gimp.h" "core/gimp-transform-utils.h" "core/gimpimage.h"

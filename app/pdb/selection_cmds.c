@@ -83,19 +83,22 @@ selection_bounds_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gboolean non_empty = FALSE;
   gint32 x1 = 0;
   gint32 y1 = 0;
   gint32 x2 = 0;
   gint32 y2 = 0;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   if (success)
-    non_empty = gimp_channel_bounds (gimp_image_get_mask (gimage), &x1, &y1, &x2, &y2);
+    {
+      non_empty = gimp_channel_bounds (gimp_image_get_mask (image),
+                                       &x1, &y1, &x2, &y2);
+    }
 
   return_args = procedural_db_return_args (&selection_bounds_proc, success);
 
@@ -175,13 +178,13 @@ selection_value_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gint32 x;
   gint32 y;
   gint32 value = 0;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   x = args[1].value.pdb_int;
@@ -190,7 +193,7 @@ selection_value_invoker (Gimp         *gimp,
 
   if (success)
     {
-      value = gimp_pickable_get_opacity_at (GIMP_PICKABLE (gimp_image_get_mask (gimage)), x, y);
+      value = gimp_pickable_get_opacity_at (GIMP_PICKABLE (gimp_image_get_mask (image)), x, y);
     }
 
   return_args = procedural_db_return_args (&selection_value_proc, success);
@@ -255,16 +258,16 @@ selection_is_empty_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gboolean is_empty = FALSE;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   if (success)
     {
-      is_empty = gimp_channel_is_empty (gimp_image_get_mask (gimage));
+      is_empty = gimp_channel_is_empty (gimp_image_get_mask (image));
     }
 
   return_args = procedural_db_return_args (&selection_is_empty_proc, success);
@@ -318,12 +321,12 @@ selection_translate_invoker (Gimp         *gimp,
                              Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
   gint32 offx;
   gint32 offy;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   offx = args[1].value.pdb_int;
@@ -331,7 +334,10 @@ selection_translate_invoker (Gimp         *gimp,
   offy = args[2].value.pdb_int;
 
   if (success)
-    gimp_item_translate (GIMP_ITEM (gimp_image_get_mask (gimage)), offx, offy, TRUE);
+    {
+      gimp_item_translate (GIMP_ITEM (gimp_image_get_mask (image)),
+                           offx, offy, TRUE);
+    }
 
   return procedural_db_return_args (&selection_translate_proc, success);
 }
@@ -400,9 +406,9 @@ selection_float_invoker (Gimp         *gimp,
 
       if (success)
         {
-          GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-          layer = gimp_selection_float (gimp_image_get_mask (gimage),
+          layer = gimp_selection_float (gimp_image_get_mask (image),
                                         drawable, context, TRUE, offx, offy);
           if (! layer)
             success = FALSE;
@@ -470,15 +476,15 @@ selection_invert_invoker (Gimp         *gimp,
                           Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   if (success)
     {
-      gimp_channel_invert (gimp_image_get_mask (gimage), TRUE);
+      gimp_channel_invert (gimp_image_get_mask (image), TRUE);
     }
 
   return procedural_db_return_args (&selection_invert_proc, success);
@@ -518,15 +524,15 @@ selection_sharpen_invoker (Gimp         *gimp,
                            Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   if (success)
     {
-      gimp_channel_sharpen (gimp_image_get_mask (gimage), TRUE);
+      gimp_channel_sharpen (gimp_image_get_mask (image), TRUE);
     }
 
   return procedural_db_return_args (&selection_sharpen_proc, success);
@@ -566,15 +572,15 @@ selection_all_invoker (Gimp         *gimp,
                        Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   if (success)
     {
-      gimp_channel_all (gimp_image_get_mask (gimage), TRUE);
+      gimp_channel_all (gimp_image_get_mask (image), TRUE);
     }
 
   return procedural_db_return_args (&selection_all_proc, success);
@@ -614,15 +620,15 @@ selection_none_invoker (Gimp         *gimp,
                         Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   if (success)
     {
-      gimp_channel_clear (gimp_image_get_mask (gimage), NULL, TRUE);
+      gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
     }
 
   return procedural_db_return_args (&selection_none_proc, success);
@@ -662,11 +668,11 @@ selection_feather_invoker (Gimp         *gimp,
                            Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
   gdouble radius;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   radius = args[1].value.pdb_float;
@@ -675,7 +681,7 @@ selection_feather_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gimp_channel_feather (gimp_image_get_mask (gimage),
+      gimp_channel_feather (gimp_image_get_mask (image),
                             radius, radius, TRUE);
     }
 
@@ -721,11 +727,11 @@ selection_border_invoker (Gimp         *gimp,
                           Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
   gint32 radius;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   radius = args[1].value.pdb_int;
@@ -734,7 +740,7 @@ selection_border_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gimp_channel_border (gimp_image_get_mask (gimage),
+      gimp_channel_border (gimp_image_get_mask (image),
                            radius, radius, TRUE);
     }
 
@@ -780,11 +786,11 @@ selection_grow_invoker (Gimp         *gimp,
                         Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
   gint32 steps;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   steps = args[1].value.pdb_int;
@@ -793,7 +799,7 @@ selection_grow_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gimp_channel_grow (gimp_image_get_mask (gimage),
+      gimp_channel_grow (gimp_image_get_mask (image),
                          steps, steps, TRUE);
     }
 
@@ -839,11 +845,11 @@ selection_shrink_invoker (Gimp         *gimp,
                           Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
   gint32 steps;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   steps = args[1].value.pdb_int;
@@ -852,7 +858,7 @@ selection_shrink_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gimp_channel_shrink (gimp_image_get_mask (gimage),
+      gimp_channel_shrink (gimp_image_get_mask (image),
                            steps, steps, FALSE, TRUE);
     }
 
@@ -906,9 +912,9 @@ selection_layer_alpha_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
 
-      gimp_channel_select_alpha (gimp_image_get_mask (gimage),
+      gimp_channel_select_alpha (gimp_image_get_mask (image),
                                  GIMP_DRAWABLE (layer),
                                  GIMP_CHANNEL_OP_REPLACE, FALSE, 0.0, 0.0);
     }
@@ -958,13 +964,13 @@ selection_load_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpImage *gimage;
+      GimpImage *image;
       gint       off_x, off_y;
 
-      gimage = gimp_item_get_image (GIMP_ITEM (channel));
+      image = gimp_item_get_image (GIMP_ITEM (channel));
       gimp_item_offsets (GIMP_ITEM (channel), &off_x, &off_y);
 
-      gimp_channel_select_channel (gimp_image_get_mask (gimage),
+      gimp_channel_select_channel (gimp_image_get_mask (image),
                                    _("Channel to Selection"),
                                    channel,
                                    off_x, off_y,
@@ -1010,16 +1016,16 @@ selection_save_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   GimpChannel *channel = NULL;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   if (success)
     {
-      channel = gimp_selection_save (gimp_image_get_mask (gimage));
+      channel = gimp_selection_save (gimp_image_get_mask (image));
 
       if (! channel)
         success = FALSE;
@@ -1089,13 +1095,13 @@ selection_combine_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpImage *gimage;
+      GimpImage *image;
       gint       off_x, off_y;
 
-      gimage = gimp_item_get_image (GIMP_ITEM (channel));
+      image = gimp_item_get_image (GIMP_ITEM (channel));
       gimp_item_offsets (GIMP_ITEM (channel), &off_x, &off_y);
 
-      gimp_channel_select_channel (gimp_image_get_mask (gimage),
+      gimp_channel_select_channel (gimp_image_get_mask (image),
                                    _("Channel to Selection"),
                                    channel,
                                    off_x, off_y,

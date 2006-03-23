@@ -29,14 +29,15 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_image_base_type (gimage) != GIMP_RGB)
-    gimp_image_convert (gimage, GIMP_RGB, 0, 0, FALSE, FALSE, 0, NULL, NULL);
+  if (gimp_image_base_type (image) != GIMP_RGB)
+    gimp_image_convert (image, GIMP_RGB, 0, 0, FALSE, FALSE, 0, NULL, NULL);
   else
     success = FALSE;
 }
@@ -56,14 +57,15 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_image_base_type (gimage) != GIMP_GRAY)
-    gimp_image_convert (gimage, GIMP_GRAY, 0, 0, FALSE, FALSE, 0, NULL, NULL);
+  if (gimp_image_base_type (image) != GIMP_GRAY)
+    gimp_image_convert (image, GIMP_GRAY, 0, 0, FALSE, FALSE, 0, NULL, NULL);
   else
     success = FALSE;
 }
@@ -93,7 +95,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	&std_image_arg,
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
 	{ name => 'dither_type', type => 'enum GimpConvertDitherType',
 	  desc => 'The dither type to use: { %%desc%% }' },
 	{ name => 'palette_type', type => 'enum GimpConvertPaletteType',
@@ -116,7 +119,7 @@ HELP
 {
   GimpPalette *pal = NULL;
 
-  if (gimp_image_base_type (gimage) != GIMP_INDEXED)
+  if (gimp_image_base_type (image) != GIMP_INDEXED)
     {
       switch (palette_type)
 	{
@@ -141,7 +144,7 @@ HELP
     success = FALSE;
 
   if (success)
-    gimp_image_convert (gimage, GIMP_INDEXED, num_cols, dither_type,
+    gimp_image_convert (image, GIMP_INDEXED, num_cols, dither_type,
 		        alpha_dither, remove_unused, palette_type, pal,
                         NULL);
 }
@@ -149,11 +152,15 @@ CODE
     );
 }
 
+
 @headers = qw("core/gimp.h" "core/gimpcontainer.h" "core/gimpdatafactory.h"
               "core/gimpimage.h" "core/gimpimage-convert.h"
               "core/gimppalette.h");
 
-@procs = qw(image_convert_rgb image_convert_grayscale image_convert_indexed);
+@procs = qw(image_convert_rgb
+            image_convert_grayscale
+            image_convert_indexed);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Convert';

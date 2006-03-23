@@ -66,7 +66,7 @@ channel_new_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gint32 width;
   gint32 height;
   gchar *name;
@@ -74,8 +74,8 @@ channel_new_invoker (Gimp         *gimp,
   GimpRGB color;
   GimpChannel *channel = NULL;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   width = args[1].value.pdb_int;
@@ -101,8 +101,10 @@ channel_new_invoker (Gimp         *gimp,
       GimpRGB rgb_color = color;
 
       rgb_color.a = opacity / 100.0;
-      channel = gimp_channel_new (gimage, width, height, name, &rgb_color);
-      success = channel != NULL;
+      channel = gimp_channel_new (image, width, height, name, &rgb_color);
+
+      if (! channel)
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&channel_new_proc, success);
@@ -182,13 +184,13 @@ channel_new_from_component_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gint32 component;
   gchar *name;
   GimpChannel *channel = NULL;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   component = args[1].value.pdb_int;
@@ -201,8 +203,8 @@ channel_new_from_component_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (gimp_image_get_component_index (gimage, component) != -1)
-        channel = gimp_channel_new_from_component (gimage,
+      if (gimp_image_get_component_index (image, component) != -1)
+        channel = gimp_channel_new_from_component (image,
                                                    component, name, NULL);
 
       if (channel)

@@ -258,6 +258,7 @@ CODE
 @procs = qw(gradients_refresh gradients_get_list
 	    gradients_sample_uniform gradients_sample_custom
             gradients_get_gradient_data);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Gradients';

@@ -576,6 +576,7 @@ CODE
             palette_add_entry palette_delete_entry
             palette_entry_get_color palette_entry_set_color
             palette_entry_get_name palette_entry_set_name);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Palette';

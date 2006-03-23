@@ -52,16 +52,16 @@ image_convert_rgb_invoker (Gimp         *gimp,
                            Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   if (success)
     {
-      if (gimp_image_base_type (gimage) != GIMP_RGB)
-        gimp_image_convert (gimage, GIMP_RGB, 0, 0, FALSE, FALSE, 0, NULL, NULL);
+      if (gimp_image_base_type (image) != GIMP_RGB)
+        gimp_image_convert (image, GIMP_RGB, 0, 0, FALSE, FALSE, 0, NULL, NULL);
       else
         success = FALSE;
     }
@@ -103,16 +103,16 @@ image_convert_grayscale_invoker (Gimp         *gimp,
                                  Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   if (success)
     {
-      if (gimp_image_base_type (gimage) != GIMP_GRAY)
-        gimp_image_convert (gimage, GIMP_GRAY, 0, 0, FALSE, FALSE, 0, NULL, NULL);
+      if (gimp_image_base_type (image) != GIMP_GRAY)
+        gimp_image_convert (image, GIMP_GRAY, 0, 0, FALSE, FALSE, 0, NULL, NULL);
       else
         success = FALSE;
     }
@@ -154,7 +154,7 @@ image_convert_indexed_invoker (Gimp         *gimp,
                                Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
   gint32 dither_type;
   gint32 palette_type;
   gint32 num_cols;
@@ -162,8 +162,8 @@ image_convert_indexed_invoker (Gimp         *gimp,
   gboolean remove_unused;
   gchar *palette;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   dither_type = args[1].value.pdb_int;
@@ -188,7 +188,7 @@ image_convert_indexed_invoker (Gimp         *gimp,
     {
       GimpPalette *pal = NULL;
 
-      if (gimp_image_base_type (gimage) != GIMP_INDEXED)
+      if (gimp_image_base_type (image) != GIMP_INDEXED)
         {
           switch (palette_type)
             {
@@ -213,7 +213,7 @@ image_convert_indexed_invoker (Gimp         *gimp,
         success = FALSE;
 
       if (success)
-        gimp_image_convert (gimage, GIMP_INDEXED, num_cols, dither_type,
+        gimp_image_convert (image, GIMP_INDEXED, num_cols, dither_type,
                             alpha_dither, remove_unused, palette_type, pal,
                             NULL);
     }

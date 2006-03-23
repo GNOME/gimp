@@ -23,26 +23,6 @@
 
 # shortcuts
 
-sub transform_options_args () {
-    { name => 'transform_direction', type => 'enum GimpTransformDirection',
-      desc => 'Direction of Transformation: { %%desc%% }' },
-    { name => 'interpolation', type => 'enum GimpInterpolationType',
-      desc => 'Type of interpolation: { %%desc%% }' },
-    { name => 'supersample', type => 'boolean',
-      desc => 'Whether to perform supersample' },
-    { name => 'recursion_level', type => '0 < int32',
-      desc => 'Level of recursion (3 is a nice default)' },
-    { name => 'clip_result', type => 'boolean',
-      desc => 'Whether to clip results' }
-}
-
-sub transform_options_default_args () {
-    { name => 'interpolate', type => 'boolean',
-      desc => 'Whether to use interpolation and supersampling' },
-    { name => 'clip_result', type => 'boolean',
-      desc => 'Whether to clip results' }
-}
-
 sub transform_invoke {
     my ($progress_text, $assemble_matrix, $check) = @_;
     my $success_check = 'gimp_item_is_attached (GIMP_ITEM (drawable));';
@@ -155,7 +135,8 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
-        { name => 'flip_type', type => &std_orientation_enum,
+        { name => 'flip_type',
+	  type => 'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)',
           desc => 'Type of flip: %%desc%%' },
         { name => 'auto_center', type => 'boolean',
           desc => 'Whether to automatically position the axis in the selection center' },
@@ -222,7 +203,16 @@ HELP
           desc => 'horz. coord. of other end of axis' },
         { name => 'y1', type => 'float',
           desc => 'vert. coord. of other end of axis' },
-        &transform_options_args
+	{ name => 'transform_direction', type => 'enum GimpTransformDirection',
+	  desc => 'Direction of Transformation: { %%desc%% }' },
+	{ name => 'interpolation', type => 'enum GimpInterpolationType',
+	  desc => 'Type of interpolation: { %%desc%% }' },
+	{ name => 'supersample', type => 'boolean',
+	  desc => 'Whether to perform supersample' },
+	{ name => 'recursion_level', type => '0 < int32',
+	  desc => 'Level of recursion (3 is a nice default)' },
+	{ name => 'clip_result', type => 'boolean',
+	  desc => 'Whether to clip results' }
     );
 
     @outargs = (
@@ -262,7 +252,10 @@ HELP
           desc => 'horz. coord. of other end of axis' },
         { name => 'y1', type => 'float',
           desc => 'vert. coord. of other end of axis' },
-        &transform_options_default_args
+	{ name => 'interpolate', type => 'boolean',
+	  desc => 'Whether to use interpolation and supersampling' },
+	{ name => 'clip_result', type => 'boolean',
+	  desc => 'Whether to clip results' }
     );
 
     @outargs = (
@@ -330,7 +323,16 @@ HELP
 	{ name => 'y3', type => 'float',
 	  desc => 'The new y coordinate of lower-right corner of original
 		   bounding box' },
-	&transform_options_args
+	{ name => 'transform_direction', type => 'enum GimpTransformDirection',
+	  desc => 'Direction of Transformation: { %%desc%% }' },
+	{ name => 'interpolation', type => 'enum GimpInterpolationType',
+	  desc => 'Type of interpolation: { %%desc%% }' },
+	{ name => 'supersample', type => 'boolean',
+	  desc => 'Whether to perform supersample' },
+	{ name => 'recursion_level', type => '0 < int32',
+	  desc => 'Level of recursion (3 is a nice default)' },
+	{ name => 'clip_result', type => 'boolean',
+	  desc => 'Whether to clip results' }
     );
 
     @outargs = (
@@ -390,7 +392,10 @@ HELP
 	{ name => 'y3', type => 'float',
 	  desc => 'The new y coordinate of lower-right corner of original
 		   bounding box' },
-	&transform_options_default_args
+	{ name => 'interpolate', type => 'boolean',
+	  desc => 'Whether to use interpolation and supersampling' },
+	{ name => 'clip_result', type => 'boolean',
+	  desc => 'Whether to clip results' }
     );
 
     @outargs = (
@@ -495,7 +500,16 @@ HELP
           desc => 'The hor. coordinate of the center of rotation' },
         { name => 'center_y', type => 'int32',
           desc => 'The vert. coordinate of the center of rotation' },
-        &transform_options_args
+	{ name => 'transform_direction', type => 'enum GimpTransformDirection',
+	  desc => 'Direction of Transformation: { %%desc%% }' },
+	{ name => 'interpolation', type => 'enum GimpInterpolationType',
+	  desc => 'Type of interpolation: { %%desc%% }' },
+	{ name => 'supersample', type => 'boolean',
+	  desc => 'Whether to perform supersample' },
+	{ name => 'recursion_level', type => '0 < int32',
+	  desc => 'Level of recursion (3 is a nice default)' },
+	{ name => 'clip_result', type => 'boolean',
+	  desc => 'Whether to clip results' }
     );
 
     @outargs = (
@@ -538,7 +552,10 @@ HELP
           desc => 'The hor. coordinate of the center of rotation' },
         { name => 'center_y', type => 'int32',
           desc => 'The vert. coordinate of the center of rotation' },
-        &transform_options_default_args
+	{ name => 'interpolate', type => 'boolean',
+	  desc => 'Whether to use interpolation and supersampling' },
+	{ name => 'clip_result', type => 'boolean',
+	  desc => 'Whether to clip results' }
     );
 
     @outargs = (
@@ -587,7 +604,16 @@ HELP
 	{ name => 'y1', type => 'float',
 	  desc => 'The new y coordinate of the lower-right corner of the
 		    scaled region' },
-	&transform_options_args
+	{ name => 'transform_direction', type => 'enum GimpTransformDirection',
+	  desc => 'Direction of Transformation: { %%desc%% }' },
+	{ name => 'interpolation', type => 'enum GimpInterpolationType',
+	  desc => 'Type of interpolation: { %%desc%% }' },
+	{ name => 'supersample', type => 'boolean',
+	  desc => 'Whether to perform supersample' },
+	{ name => 'recursion_level', type => '0 < int32',
+	  desc => 'Level of recursion (3 is a nice default)' },
+	{ name => 'clip_result', type => 'boolean',
+	  desc => 'Whether to clip results' }
     );
 
     @outargs = (
@@ -632,8 +658,11 @@ HELP
 	{ name => 'y1', type => 'float',
 	  desc => 'The new y coordinate of the lower-right corner of the
 		    scaled region' },
-        &transform_options_default_args
-    );
+	{ name => 'interpolate', type => 'boolean',
+	  desc => 'Whether to use interpolation and supersampling' },
+	{ name => 'clip_result', type => 'boolean',
+	  desc => 'Whether to clip results' }
+     );
 
     @outargs = (
 	{ name => 'drawable', type => 'drawable', no_declare => 1,
@@ -674,11 +703,21 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
-        { name => 'shear_type', type => &std_orientation_enum,
+        { name => 'shear_type',
+	  type => 'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)',
           desc => 'Type of shear: %%desc%%' },
         { name => 'magnitude', type => 'float',
           desc => 'The magnitude of the shear' },
-        &transform_options_args
+	{ name => 'transform_direction', type => 'enum GimpTransformDirection',
+	  desc => 'Direction of Transformation: { %%desc%% }' },
+	{ name => 'interpolation', type => 'enum GimpInterpolationType',
+	  desc => 'Type of interpolation: { %%desc%% }' },
+	{ name => 'supersample', type => 'boolean',
+	  desc => 'Whether to perform supersample' },
+	{ name => 'recursion_level', type => '0 < int32',
+	  desc => 'Level of recursion (3 is a nice default)' },
+	{ name => 'clip_result', type => 'boolean',
+	  desc => 'Whether to clip results' }
     );
 
     @outargs = (
@@ -711,11 +750,15 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
-        { name => 'shear_type', type => &std_orientation_enum,
+        { name => 'shear_type',
+	  type => 'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)',
           desc => 'Type of shear: %%desc%%' },
         { name => 'magnitude', type => 'float',
           desc => 'The magnitude of the shear' },
-        &transform_options_default_args
+	{ name => 'interpolate', type => 'boolean',
+	  desc => 'Whether to use interpolation and supersampling' },
+	{ name => 'clip_result', type => 'boolean',
+	  desc => 'Whether to clip results' }
     );
 
     @outargs = (
@@ -770,7 +813,16 @@ HELP
           desc => 'X coordinate of where the center goes' },
         { name => 'dest_y', type => 'float',
           desc => 'Y coordinate of where the center goes' },
-        &transform_options_args
+	{ name => 'transform_direction', type => 'enum GimpTransformDirection',
+	  desc => 'Direction of Transformation: { %%desc%% }' },
+	{ name => 'interpolation', type => 'enum GimpInterpolationType',
+	  desc => 'Type of interpolation: { %%desc%% }' },
+	{ name => 'supersample', type => 'boolean',
+	  desc => 'Whether to perform supersample' },
+	{ name => 'recursion_level', type => '0 < int32',
+	  desc => 'Level of recursion (3 is a nice default)' },
+	{ name => 'clip_result', type => 'boolean',
+	  desc => 'Whether to clip results' }
     );
 
     @outargs = (
@@ -818,7 +870,10 @@ HELP
           desc => 'X coordinate of where the center goes' },
         { name => 'dest_y', type => 'float',
           desc => 'Y coordinate of where the center goes' },
-        &transform_options_default_args
+	{ name => 'interpolate', type => 'boolean',
+	  desc => 'Whether to use interpolation and supersampling' },
+	{ name => 'clip_result', type => 'boolean',
+	  desc => 'Whether to clip results' }
     );
 
     @outargs = (
@@ -875,7 +930,16 @@ HELP
           desc => 'coefficient (2,1) of the transformation matrix' },
         { name => 'coeff_2_2', type => 'float',
           desc => 'coefficient (2,2) of the transformation matrix' },
-        &transform_options_args
+	{ name => 'transform_direction', type => 'enum GimpTransformDirection',
+	  desc => 'Direction of Transformation: { %%desc%% }' },
+	{ name => 'interpolation', type => 'enum GimpInterpolationType',
+	  desc => 'Type of interpolation: { %%desc%% }' },
+	{ name => 'supersample', type => 'boolean',
+	  desc => 'Whether to perform supersample' },
+	{ name => 'recursion_level', type => '0 < int32',
+	  desc => 'Level of recursion (3 is a nice default)' },
+	{ name => 'clip_result', type => 'boolean',
+	  desc => 'Whether to clip results' }
     );
 
     @outargs = (
@@ -931,7 +995,10 @@ HELP
           desc => 'coefficient (2,1) of the transformation matrix' },
         { name => 'coeff_2_2', type => 'float',
           desc => 'coefficient (2,2) of the transformation matrix' },
-        &transform_options_default_args
+	{ name => 'interpolate', type => 'boolean',
+	  desc => 'Whether to use interpolation and supersampling' },
+	{ name => 'clip_result', type => 'boolean',
+	  desc => 'Whether to clip results' }
     );
 
     @outargs = (

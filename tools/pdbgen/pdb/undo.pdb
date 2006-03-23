@@ -29,18 +29,21 @@ HELP
     &std_pdb_misc;
     $date = '1997';
 
-    @inargs = ( &std_image_arg );
-    $inargs[0]->{desc} = 'The ID of the image in which to open an undo group';
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The ID of the image in which to open an undo group' }
+    );
 
-    %invoke = ( headers => [ qw("core/gimp.h" "plug-in/plug-in.h") ],
-                code => <<CODE
+    %invoke = (
+	headers => [ qw("core/gimp.h" "plug-in/plug-in.h") ],
+	code    => <<'CODE'
 {
   gchar *undo_desc = NULL;
 
   if (gimp->current_plug_in)
     undo_desc = plug_in_get_undo_desc (gimp->current_plug_in);
 
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_MISC, undo_desc);
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_MISC, undo_desc);
 
   if (undo_desc)
     g_free (undo_desc);
@@ -60,10 +63,18 @@ HELP
     &std_pdb_misc;
     $date = '1997';
 
-    @inargs = ( &std_image_arg );
-    $inargs[0]->{desc} = 'The ID of the image in which to close an undo group';
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The ID of the image in which to close an undo group' }
+    );
 
-    %invoke = ( code => 'gimp_image_undo_group_end (gimage);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_image_undo_group_end (image);
+}
+CODE
+    );
 }
 
 sub image_undo_is_enabled {
@@ -78,14 +89,23 @@ HELP
 
     &raphael_pdb_misc('1999');
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc  => 'The image' }
+    );
 
     @outargs = (
 	{ name => 'enabled', type => 'boolean',
 	  desc => 'True if undo is enabled for this image' }
     );
 
-    %invoke = ( code => 'enabled = gimp_image_undo_is_enabled (gimage);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  enabled = gimp_image_undo_is_enabled (image);
+}
+CODE
+    );
 }
 
 sub image_undo_disable {
@@ -100,14 +120,23 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
+    );
 
     @outargs = (
 	{ name => 'disabled', type => 'boolean',
 	  desc => 'True if the image undo has been disabled' }
     );
 
-    %invoke = ( code => 'disabled = gimp_image_undo_disable (gimage);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  disabled = gimp_image_undo_disable (image);
+}
+CODE
+    );
 }
 
 sub image_undo_enable {
@@ -121,14 +150,23 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
+    );
 
     @outargs = (
 	{ name => 'enabled', type => 'boolean',
 	  desc => 'True if the image undo has been enabled' }
     );
 
-    %invoke = ( code => 'enabled = gimp_image_undo_enable (gimage);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  enabled = gimp_image_undo_enable (image);
+}
+CODE
+    );
 }
 
 sub image_undo_freeze {
@@ -148,14 +186,23 @@ that the image is back to the same state it was frozen in before thawing, else
 'undo' behaviour is undefined.
 HELP
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
+    );
 
     @outargs = (
 	{ name => 'frozen', type => 'boolean',
 	  desc => 'True if the image undo has been frozen' }
     );
 
-    %invoke = ( code => 'frozen = gimp_image_undo_freeze (gimage);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  frozen = gimp_image_undo_freeze (image);
+}
+CODE
+    );
 }
 
 sub image_undo_thaw {
@@ -175,15 +222,25 @@ in-situ plugin previews.  Balancing freezes and thaws and ensuring image
 consistancy is the responsibility of the caller.
 HELP
 
-    @inargs = ( &std_image_arg );
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
+    );
 
     @outargs = (
 	{ name => 'thawed', type => 'boolean',
 	  desc => 'True if the image undo has been thawed' }
     );
 
-    %invoke = ( code => 'thawed = gimp_image_undo_thaw (gimage);' );
+    %invoke = (
+	code => <<'CODE'
+{
+  thawed = gimp_image_undo_thaw (image);
 }
+CODE
+    );
+}
+
 
 @headers = qw("core/gimpimage-undo.h");
 
@@ -191,6 +248,7 @@ HELP
             image_undo_is_enabled
             image_undo_disable image_undo_enable
             image_undo_freeze image_undo_thaw);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Undo';

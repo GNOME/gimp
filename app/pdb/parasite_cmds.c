@@ -294,12 +294,12 @@ image_parasite_find_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gchar *name;
   GimpParasite *parasite = NULL;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
@@ -308,7 +308,7 @@ image_parasite_find_invoker (Gimp         *gimp,
 
   if (success)
     {
-      parasite = gimp_parasite_copy (gimp_image_parasite_find (gimage, name));
+      parasite = gimp_parasite_copy (gimp_image_parasite_find (image, name));
 
       if (! parasite)
         success = FALSE;
@@ -370,11 +370,11 @@ image_parasite_attach_invoker (Gimp         *gimp,
                                Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
   GimpParasite *parasite;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   parasite = (GimpParasite *) args[1].value.pdb_pointer;
@@ -383,7 +383,7 @@ image_parasite_attach_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gimp_image_parasite_attach (gimage, parasite);
+      gimp_image_parasite_attach (image, parasite);
     }
 
   return procedural_db_return_args (&image_parasite_attach_proc, success);
@@ -428,11 +428,11 @@ image_parasite_detach_invoker (Gimp         *gimp,
                                Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
   gchar *name;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
@@ -441,7 +441,7 @@ image_parasite_detach_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gimp_image_parasite_detach (gimage, name);
+      gimp_image_parasite_detach (image, name);
     }
 
   return procedural_db_return_args (&image_parasite_detach_proc, success);
@@ -487,17 +487,17 @@ image_parasite_list_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gint32 num_parasites = 0;
   gchar **parasites = NULL;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   if (success)
     {
-      parasites = gimp_image_parasite_list (gimage, &num_parasites);
+      parasites = gimp_image_parasite_list (image, &num_parasites);
     }
 
   return_args = procedural_db_return_args (&image_parasite_list_proc, success);

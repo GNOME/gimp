@@ -36,16 +36,16 @@
 #include "vectors/gimpvectors.h"
 
 static ProcRecord vectors_new_proc;
-static ProcRecord vectors_get_strokes_proc;
 static ProcRecord vectors_get_image_proc;
-static ProcRecord vectors_get_linked_proc;
-static ProcRecord vectors_set_linked_proc;
-static ProcRecord vectors_get_visible_proc;
-static ProcRecord vectors_set_visible_proc;
 static ProcRecord vectors_get_name_proc;
 static ProcRecord vectors_set_name_proc;
+static ProcRecord vectors_get_visible_proc;
+static ProcRecord vectors_set_visible_proc;
+static ProcRecord vectors_get_linked_proc;
+static ProcRecord vectors_set_linked_proc;
 static ProcRecord vectors_get_tattoo_proc;
 static ProcRecord vectors_set_tattoo_proc;
+static ProcRecord vectors_get_strokes_proc;
 static ProcRecord vectors_stroke_get_length_proc;
 static ProcRecord vectors_stroke_get_point_at_dist_proc;
 static ProcRecord vectors_stroke_remove_proc;
@@ -63,16 +63,16 @@ void
 register_vectors_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &vectors_new_proc);
-  procedural_db_register (gimp, &vectors_get_strokes_proc);
   procedural_db_register (gimp, &vectors_get_image_proc);
-  procedural_db_register (gimp, &vectors_get_linked_proc);
-  procedural_db_register (gimp, &vectors_set_linked_proc);
-  procedural_db_register (gimp, &vectors_get_visible_proc);
-  procedural_db_register (gimp, &vectors_set_visible_proc);
   procedural_db_register (gimp, &vectors_get_name_proc);
   procedural_db_register (gimp, &vectors_set_name_proc);
+  procedural_db_register (gimp, &vectors_get_visible_proc);
+  procedural_db_register (gimp, &vectors_set_visible_proc);
+  procedural_db_register (gimp, &vectors_get_linked_proc);
+  procedural_db_register (gimp, &vectors_set_linked_proc);
   procedural_db_register (gimp, &vectors_get_tattoo_proc);
   procedural_db_register (gimp, &vectors_set_tattoo_proc);
+  procedural_db_register (gimp, &vectors_get_strokes_proc);
   procedural_db_register (gimp, &vectors_stroke_get_length_proc);
   procedural_db_register (gimp, &vectors_stroke_get_point_at_dist_proc);
   procedural_db_register (gimp, &vectors_stroke_remove_proc);
@@ -95,12 +95,12 @@ vectors_new_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gchar *name;
   GimpVectors *vectors = NULL;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
@@ -109,7 +109,7 @@ vectors_new_invoker (Gimp         *gimp,
 
   if (success)
     {
-      vectors = gimp_vectors_new (gimage, name);
+      vectors = gimp_vectors_new (image, name);
     }
 
   return_args = procedural_db_return_args (&vectors_new_proc, success);
@@ -159,95 +159,6 @@ static ProcRecord vectors_new_proc =
   1,
   vectors_new_outargs,
   { { vectors_new_invoker } }
-};
-
-static Argument *
-vectors_get_strokes_invoker (Gimp         *gimp,
-                             GimpContext  *context,
-                             GimpProgress *progress,
-                             Argument     *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  GimpVectors *vectors;
-  gint32 num_strokes = 0;
-  gint32 *stroke_ids = NULL;
-
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
-
-  if (success)
-    {
-      num_strokes = gimp_vectors_get_n_strokes (vectors);
-
-      if (num_strokes)
-        {
-          GimpStroke *cur_stroke;
-          gint        i = 0;
-
-          stroke_ids = g_new (gint32, num_strokes);
-
-          for (cur_stroke = gimp_vectors_stroke_get_next (vectors, NULL);
-               cur_stroke;
-               cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))
-            {
-              stroke_ids[i] = gimp_stroke_get_ID (cur_stroke);
-              i++;
-            }
-        }
-    }
-
-  return_args = procedural_db_return_args (&vectors_get_strokes_proc, success);
-
-  if (success)
-    {
-      return_args[1].value.pdb_int = num_strokes;
-      return_args[2].value.pdb_pointer = stroke_ids;
-    }
-
-  return return_args;
-}
-
-static ProcArg vectors_get_strokes_inargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  }
-};
-
-static ProcArg vectors_get_strokes_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "num-strokes",
-    "The number of strokes returned."
-  },
-  {
-    GIMP_PDB_INT32ARRAY,
-    "stroke-ids",
-    "List of the strokes belonging to the path."
-  }
-};
-
-static ProcRecord vectors_get_strokes_proc =
-{
-  "gimp-vectors-get-strokes",
-  "gimp-vectors-get-strokes",
-  "List the strokes associated with the passed path.",
-  "Returns an Array with the stroke-IDs associated with the passed path.",
-  "Simon Budig",
-  "Simon Budig",
-  "2005",
-  NULL,
-  GIMP_INTERNAL,
-  1,
-  vectors_get_strokes_inargs,
-  2,
-  vectors_get_strokes_outargs,
-  { { vectors_get_strokes_invoker } }
 };
 
 static Argument *
@@ -315,15 +226,15 @@ static ProcRecord vectors_get_image_proc =
 };
 
 static Argument *
-vectors_get_linked_invoker (Gimp         *gimp,
-                            GimpContext  *context,
-                            GimpProgress *progress,
-                            Argument     *args)
+vectors_get_name_invoker (Gimp         *gimp,
+                          GimpContext  *context,
+                          GimpProgress *progress,
+                          Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
   GimpVectors *vectors;
-  gboolean linked = FALSE;
+  gchar *name = NULL;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
@@ -331,18 +242,18 @@ vectors_get_linked_invoker (Gimp         *gimp,
 
   if (success)
     {
-      linked = gimp_item_get_linked (GIMP_ITEM (vectors));
+      name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
     }
 
-  return_args = procedural_db_return_args (&vectors_get_linked_proc, success);
+  return_args = procedural_db_return_args (&vectors_get_name_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = linked;
+    return_args[1].value.pdb_pointer = name;
 
   return return_args;
 }
 
-static ProcArg vectors_get_linked_inargs[] =
+static ProcArg vectors_get_name_inargs[] =
 {
   {
     GIMP_PDB_VECTORS,
@@ -351,58 +262,60 @@ static ProcArg vectors_get_linked_inargs[] =
   }
 };
 
-static ProcArg vectors_get_linked_outargs[] =
+static ProcArg vectors_get_name_outargs[] =
 {
   {
-    GIMP_PDB_INT32,
-    "linked",
-    "TRUE if the path is linked, FALSE otherwise"
+    GIMP_PDB_STRING,
+    "name",
+    "The name of the vectors object"
   }
 };
 
-static ProcRecord vectors_get_linked_proc =
+static ProcRecord vectors_get_name_proc =
 {
-  "gimp-vectors-get-linked",
-  "gimp-vectors-get-linked",
-  "Gets the linked state of the vectors object.",
-  "Gets the linked state of the vectors object.",
+  "gimp-vectors-get-name",
+  "gimp-vectors-get-name",
+  "Gets the name of the vectors object.",
+  "Gets the name of the vectors object.",
   "Simon Budig",
   "Simon Budig",
   "2005",
   NULL,
   GIMP_INTERNAL,
   1,
-  vectors_get_linked_inargs,
+  vectors_get_name_inargs,
   1,
-  vectors_get_linked_outargs,
-  { { vectors_get_linked_invoker } }
+  vectors_get_name_outargs,
+  { { vectors_get_name_invoker } }
 };
 
 static Argument *
-vectors_set_linked_invoker (Gimp         *gimp,
-                            GimpContext  *context,
-                            GimpProgress *progress,
-                            Argument     *args)
+vectors_set_name_invoker (Gimp         *gimp,
+                          GimpContext  *context,
+                          GimpProgress *progress,
+                          Argument     *args)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
-  gboolean linked;
+  gchar *name;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
     success = FALSE;
 
-  linked = args[1].value.pdb_int ? TRUE : FALSE;
+  name = (gchar *) args[1].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
 
   if (success)
     {
-      gimp_item_set_linked (GIMP_ITEM (vectors), linked, TRUE);
+      success = gimp_item_rename (GIMP_ITEM (vectors), name);
     }
 
-  return procedural_db_return_args (&vectors_set_linked_proc, success);
+  return procedural_db_return_args (&vectors_set_name_proc, success);
 }
 
-static ProcArg vectors_set_linked_inargs[] =
+static ProcArg vectors_set_name_inargs[] =
 {
   {
     GIMP_PDB_VECTORS,
@@ -410,28 +323,28 @@ static ProcArg vectors_set_linked_inargs[] =
     "The vectors object"
   },
   {
-    GIMP_PDB_INT32,
-    "linked",
-    "Whether the path is linked"
+    GIMP_PDB_STRING,
+    "name",
+    "the new name of the path"
   }
 };
 
-static ProcRecord vectors_set_linked_proc =
+static ProcRecord vectors_set_name_proc =
 {
-  "gimp-vectors-set-linked",
-  "gimp-vectors-set-linked",
-  "Sets the linked state of the vectors object.",
-  "Sets the linked state of the vectors object.",
+  "gimp-vectors-set-name",
+  "gimp-vectors-set-name",
+  "Sets the name of the vectors object.",
+  "Sets the name of the vectors object.",
   "Simon Budig",
   "Simon Budig",
   "2005",
   NULL,
   GIMP_INTERNAL,
   2,
-  vectors_set_linked_inargs,
+  vectors_set_name_inargs,
   0,
   NULL,
-  { { vectors_set_linked_invoker } }
+  { { vectors_set_name_invoker } }
 };
 
 static Argument *
@@ -555,15 +468,15 @@ static ProcRecord vectors_set_visible_proc =
 };
 
 static Argument *
-vectors_get_name_invoker (Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+vectors_get_linked_invoker (Gimp         *gimp,
+                            GimpContext  *context,
+                            GimpProgress *progress,
+                            Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
   GimpVectors *vectors;
-  gchar *name = NULL;
+  gboolean linked = FALSE;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
@@ -571,18 +484,18 @@ vectors_get_name_invoker (Gimp         *gimp,
 
   if (success)
     {
-      name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
+      linked = gimp_item_get_linked (GIMP_ITEM (vectors));
     }
 
-  return_args = procedural_db_return_args (&vectors_get_name_proc, success);
+  return_args = procedural_db_return_args (&vectors_get_linked_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = name;
+    return_args[1].value.pdb_int = linked;
 
   return return_args;
 }
 
-static ProcArg vectors_get_name_inargs[] =
+static ProcArg vectors_get_linked_inargs[] =
 {
   {
     GIMP_PDB_VECTORS,
@@ -591,61 +504,58 @@ static ProcArg vectors_get_name_inargs[] =
   }
 };
 
-static ProcArg vectors_get_name_outargs[] =
+static ProcArg vectors_get_linked_outargs[] =
 {
   {
-    GIMP_PDB_STRING,
-    "name",
-    "The name of the vectors object"
+    GIMP_PDB_INT32,
+    "linked",
+    "TRUE if the path is linked, FALSE otherwise"
   }
 };
 
-static ProcRecord vectors_get_name_proc =
+static ProcRecord vectors_get_linked_proc =
 {
-  "gimp-vectors-get-name",
-  "gimp-vectors-get-name",
-  "Gets the name of the vectors object.",
-  "Gets the name of the vectors object.",
+  "gimp-vectors-get-linked",
+  "gimp-vectors-get-linked",
+  "Gets the linked state of the vectors object.",
+  "Gets the linked state of the vectors object.",
   "Simon Budig",
   "Simon Budig",
   "2005",
   NULL,
   GIMP_INTERNAL,
   1,
-  vectors_get_name_inargs,
+  vectors_get_linked_inargs,
   1,
-  vectors_get_name_outargs,
-  { { vectors_get_name_invoker } }
+  vectors_get_linked_outargs,
+  { { vectors_get_linked_invoker } }
 };
 
 static Argument *
-vectors_set_name_invoker (Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+vectors_set_linked_invoker (Gimp         *gimp,
+                            GimpContext  *context,
+                            GimpProgress *progress,
+                            Argument     *args)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
-  gchar *name;
+  gboolean linked;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
     success = FALSE;
 
-  name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  linked = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
     {
-      if (!gimp_item_rename (GIMP_ITEM (vectors), name))
-        success = FALSE;
+      gimp_item_set_linked (GIMP_ITEM (vectors), linked, TRUE);
     }
 
-  return procedural_db_return_args (&vectors_set_name_proc, success);
+  return procedural_db_return_args (&vectors_set_linked_proc, success);
 }
 
-static ProcArg vectors_set_name_inargs[] =
+static ProcArg vectors_set_linked_inargs[] =
 {
   {
     GIMP_PDB_VECTORS,
@@ -653,28 +563,28 @@ static ProcArg vectors_set_name_inargs[] =
     "The vectors object"
   },
   {
-    GIMP_PDB_STRING,
-    "name",
-    "the new name of the path"
+    GIMP_PDB_INT32,
+    "linked",
+    "Whether the path is linked"
   }
 };
 
-static ProcRecord vectors_set_name_proc =
+static ProcRecord vectors_set_linked_proc =
 {
-  "gimp-vectors-set-name",
-  "gimp-vectors-set-name",
-  "Sets the name of the vectors object.",
-  "Sets the name of the vectors object.",
+  "gimp-vectors-set-linked",
+  "gimp-vectors-set-linked",
+  "Sets the linked state of the vectors object.",
+  "Sets the linked state of the vectors object.",
   "Simon Budig",
   "Simon Budig",
   "2005",
   NULL,
   GIMP_INTERNAL,
   2,
-  vectors_set_name_inargs,
+  vectors_set_linked_inargs,
   0,
   NULL,
-  { { vectors_set_name_invoker } }
+  { { vectors_set_linked_invoker } }
 };
 
 static Argument *
@@ -795,6 +705,95 @@ static ProcRecord vectors_set_tattoo_proc =
   0,
   NULL,
   { { vectors_set_tattoo_invoker } }
+};
+
+static Argument *
+vectors_get_strokes_invoker (Gimp         *gimp,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpVectors *vectors;
+  gint32 num_strokes = 0;
+  gint32 *stroke_ids = NULL;
+
+  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
+    success = FALSE;
+
+  if (success)
+    {
+      num_strokes = gimp_vectors_get_n_strokes (vectors);
+
+      if (num_strokes)
+        {
+          GimpStroke *cur_stroke;
+          gint        i = 0;
+
+          stroke_ids = g_new (gint32, num_strokes);
+
+          for (cur_stroke = gimp_vectors_stroke_get_next (vectors, NULL);
+               cur_stroke;
+               cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))
+            {
+              stroke_ids[i] = gimp_stroke_get_ID (cur_stroke);
+              i++;
+            }
+        }
+    }
+
+  return_args = procedural_db_return_args (&vectors_get_strokes_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_int = num_strokes;
+      return_args[2].value.pdb_pointer = stroke_ids;
+    }
+
+  return return_args;
+}
+
+static ProcArg vectors_get_strokes_inargs[] =
+{
+  {
+    GIMP_PDB_VECTORS,
+    "vectors",
+    "The vectors object"
+  }
+};
+
+static ProcArg vectors_get_strokes_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "num-strokes",
+    "The number of strokes returned."
+  },
+  {
+    GIMP_PDB_INT32ARRAY,
+    "stroke-ids",
+    "List of the strokes belonging to the path."
+  }
+};
+
+static ProcRecord vectors_get_strokes_proc =
+{
+  "gimp-vectors-get-strokes",
+  "gimp-vectors-get-strokes",
+  "List the strokes associated with the passed path.",
+  "Returns an Array with the stroke-IDs associated with the passed path.",
+  "Simon Budig",
+  "Simon Budig",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  vectors_get_strokes_inargs,
+  2,
+  vectors_get_strokes_outargs,
+  { { vectors_get_strokes_invoker } }
 };
 
 static Argument *

@@ -94,10 +94,12 @@ CODE
     );
 }
 
+
 @headers = qw(<string.h> "core/gimp.h" "plug-in/plug-in.h"
               "plug-in/plug-in-progress.h" "gimp-intl.h");
 
 @procs = qw(message message_get_handler message_set_handler);
+
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Message procedures';

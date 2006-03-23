@@ -54,22 +54,22 @@ display_new_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   GimpObject *display = NULL;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   if (success)
     {
-      display = gimp_create_display (gimp, gimage, GIMP_UNIT_PIXEL, 1.0);
+      display = gimp_create_display (gimp, image, GIMP_UNIT_PIXEL, 1.0);
 
       if (display)
         {
           /* the first display takes ownership of the image */
-          if (gimage->disp_count == 1)
-            g_object_unref (gimage);
+          if (image->disp_count == 1)
+            g_object_unref (image);
         }
       else
         success = FALSE;

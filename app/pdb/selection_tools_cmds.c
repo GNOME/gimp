@@ -84,14 +84,16 @@ by_color_select_invoker (Gimp         *gimp,
   feather = args[5].value.pdb_int ? TRUE : FALSE;
 
   feather_radius = args[6].value.pdb_float;
+  if (feather_radius < 0.0)
+    success = FALSE;
 
   sample_merged = args[7].value.pdb_int ? TRUE : FALSE;
 
   if (success)
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-      gimp_channel_select_by_color (gimp_image_get_mask (gimage), drawable,
+      gimp_channel_select_by_color (gimp_image_get_mask (image), drawable,
                                     sample_merged,
                                     &color,
                                     threshold,
@@ -175,7 +177,7 @@ ellipse_select_invoker (Gimp         *gimp,
                         Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
   gdouble x;
   gdouble y;
   gdouble width;
@@ -185,8 +187,8 @@ ellipse_select_invoker (Gimp         *gimp,
   gboolean feather;
   gdouble feather_radius;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   x = args[1].value.pdb_float;
@@ -210,10 +212,12 @@ ellipse_select_invoker (Gimp         *gimp,
   feather = args[7].value.pdb_int ? TRUE : FALSE;
 
   feather_radius = args[8].value.pdb_float;
+  if (feather_radius < 0.0)
+    success = FALSE;
 
   if (success)
     {
-      gimp_channel_select_ellipse (gimp_image_get_mask (gimage),
+      gimp_channel_select_ellipse (gimp_image_get_mask (image),
                                    (gint) x, (gint) y,
                                    (gint) width, (gint) height,
                                    operation,
@@ -300,7 +304,7 @@ free_select_invoker (Gimp         *gimp,
                      Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
   gint32 num_segs;
   gdouble *segs;
   gint32 operation;
@@ -308,8 +312,8 @@ free_select_invoker (Gimp         *gimp,
   gboolean feather;
   gdouble feather_radius;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   num_segs = args[1].value.pdb_int;
@@ -327,10 +331,12 @@ free_select_invoker (Gimp         *gimp,
   feather = args[5].value.pdb_int ? TRUE : FALSE;
 
   feather_radius = args[6].value.pdb_float;
+  if (feather_radius < 0.0)
+    success = FALSE;
 
   if (success)
     {
-      gimp_channel_select_polygon (gimp_image_get_mask (gimage),
+      gimp_channel_select_polygon (gimp_image_get_mask (image),
                                    _("Free Select"),
                                    num_segs / 2,
                                    (GimpVector2 *) segs,
@@ -439,14 +445,16 @@ fuzzy_select_invoker (Gimp         *gimp,
   feather = args[6].value.pdb_int ? TRUE : FALSE;
 
   feather_radius = args[7].value.pdb_float;
+  if (feather_radius < 0.0)
+    success = FALSE;
 
   sample_merged = args[8].value.pdb_int ? TRUE : FALSE;
 
   if (success)
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-      gimp_channel_select_fuzzy (gimp_image_get_mask (gimage),
+      gimp_channel_select_fuzzy (gimp_image_get_mask (image),
                                  drawable,
                                  sample_merged,
                                  x, y,
@@ -537,7 +545,7 @@ rect_select_invoker (Gimp         *gimp,
                      Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
   gdouble x;
   gdouble y;
   gdouble width;
@@ -546,8 +554,8 @@ rect_select_invoker (Gimp         *gimp,
   gboolean feather;
   gdouble feather_radius;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   x = args[1].value.pdb_float;
@@ -569,10 +577,12 @@ rect_select_invoker (Gimp         *gimp,
   feather = args[6].value.pdb_int ? TRUE : FALSE;
 
   feather_radius = args[7].value.pdb_float;
+  if (feather_radius < 0.0)
+    success = FALSE;
 
   if (success)
     {
-      gimp_channel_select_rectangle (gimp_image_get_mask (gimage),
+      gimp_channel_select_rectangle (gimp_image_get_mask (image),
                                      (gint) x, (gint) y,
                                      (gint) width, (gint) height,
                                      operation,

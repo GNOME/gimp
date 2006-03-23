@@ -56,12 +56,12 @@ image_add_hguide_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gint32 yposition;
   gint32 guide = 0;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   yposition = args[1].value.pdb_int;
@@ -70,11 +70,11 @@ image_add_hguide_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (yposition <= gimage->height)
+      if (yposition <= image->height)
         {
           GimpGuide *g;
 
-          g = gimp_image_add_hguide (gimage, yposition, TRUE);
+          g = gimp_image_add_hguide (image, yposition, TRUE);
           guide = g->guide_ID;
         }
       else
@@ -138,12 +138,12 @@ image_add_vguide_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gint32 xposition;
   gint32 guide = 0;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   xposition = args[1].value.pdb_int;
@@ -152,11 +152,11 @@ image_add_vguide_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (xposition <= gimage->width)
+      if (xposition <= image->width)
         {
           GimpGuide *g;
 
-          g = gimp_image_add_vguide (gimage, xposition, TRUE);
+          g = gimp_image_add_vguide (image, xposition, TRUE);
           guide = g->guide_ID;
         }
       else
@@ -219,21 +219,21 @@ image_delete_guide_invoker (Gimp         *gimp,
                             Argument     *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage;
+  GimpImage *image;
   gint32 guide;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   guide = args[1].value.pdb_int;
 
   if (success)
     {
-      GimpGuide *g = gimp_image_get_guide (gimage, guide);
+      GimpGuide *g = gimp_image_get_guide (image, guide);
 
       if (g)
-        gimp_image_remove_guide (gimage, g, TRUE);
+        gimp_image_remove_guide (image, g, TRUE);
       else
         success = FALSE;
     }
@@ -281,19 +281,19 @@ image_find_next_guide_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gint32 guide;
   gint32 next_guide = 0;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   guide = args[1].value.pdb_int;
 
   if (success)
     {
-      GimpGuide *g = gimp_image_get_next_guide (gimage, guide, &success);
+      GimpGuide *g = gimp_image_get_next_guide (image, guide, &success);
 
       if (g)
         next_guide = g->guide_ID;
@@ -356,19 +356,19 @@ image_get_guide_orientation_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gint32 guide;
   gint32 orientation = 0;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   guide = args[1].value.pdb_int;
 
   if (success)
     {
-      GimpGuide *g = gimp_image_get_guide (gimage, guide);
+      GimpGuide *g = gimp_image_get_guide (image, guide);
 
       if (g)
         orientation = g->orientation;
@@ -433,19 +433,19 @@ image_get_guide_position_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpImage *gimage;
+  GimpImage *image;
   gint32 guide;
   gint32 position = 0;
 
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
     success = FALSE;
 
   guide = args[1].value.pdb_int;
 
   if (success)
     {
-      GimpGuide *g = gimp_image_get_guide (gimage, guide);
+      GimpGuide *g = gimp_image_get_guide (image, guide);
 
       if (g)
         position = g->position;
