@@ -291,7 +291,7 @@ typedef struct PsdImage
 
   gint           type;
 
-  gulong         colmaplen;
+  guint          colmaplen;
   guchar        *colmapdata;
 
   guint          num_aux_channels;
@@ -342,18 +342,18 @@ static PSDimage psd_image;
 static struct
 {
   gchar    signature[4];
-  gushort  version;
+  guint16  version;
   guchar   reserved[6];
-  gushort  channels;
-  gulong   rows;
-  gulong   columns;
-  gushort  bpp;
-  gushort  mode;
-  gulong   imgreslen;
-  gulong   miscsizelen;
-  gushort  compression;
-  gushort *rowlength;
-  long     imgdatalen;
+  guint16  channels;
+  guint32  rows;
+  guint32  columns;
+  guint16  bpp;
+  guint16  mode;
+  guint32  imgreslen;
+  guint32  miscsizelen;
+  guint16  compression;
+  guint16 *rowlength;
+  glong    imgdatalen;
 } PSDheader;
 
 
@@ -403,9 +403,9 @@ static void   bitmap2gray                  (guchar  *src,
                                             long     h);
 static guchar getguchar                    (FILE    *fd,
                                             gchar   *why);
-static gshort getgshort                    (FILE    *fd,
+static gint16 getgint16                    (FILE    *fd,
                                             gchar   *why);
-static glong  getglong                     (FILE    *fd,
+static gint32  getgint32                     (FILE    *fd,
                                             gchar   *why);
 static void   xfread                       (FILE    *fd,
                                             void    *buf,
@@ -608,7 +608,7 @@ psd_unit_to_gimp_unit (int psdunit)
 }
 
 static GimpImageBaseType
-psd_mode_to_gimp_base_type (gushort psdtype)
+psd_mode_to_gimp_base_type (guint16 psdtype)
 {
   switch(psdtype)
     {
@@ -800,7 +800,7 @@ dispatch_resID (guint    ID,
       case 0x0400:
 	{
 	  IFDBG printf("\t\tLAYER STATE INFO:\n");
-	  psd_image.active_layer_num = getgshort(fd, "ID target_layer_num");
+	  psd_image.active_layer_num = getgint16(fd, "ID target_layer_num");
 
 	  IFDBG printf("\t\t\ttarget: %d\n",(gint)psd_image.active_layer_num);
 	  (*offset) += 2;
@@ -825,16 +825,16 @@ dispatch_resID (guint    ID,
 
 	  if (Size > 0)
 	    {
-	      gshort magic1, magic2, magic3, magic4, magic5, magic6;
-	      glong num_guides;
+	      gint16 magic1, magic2, magic3, magic4, magic5, magic6;
+	      gint32 num_guides;
 	      PSDguide *guide;
 
-	      magic1 = getgshort(fd, "guide"); (*offset) += 2;
-	      magic2 = getgshort(fd, "guide"); (*offset) += 2;
-	      magic3 = getgshort(fd, "guide"); (*offset) += 2;
-	      magic4 = getgshort(fd, "guide"); (*offset) += 2;
-	      magic5 = getgshort(fd, "guide"); (*offset) += 2;
-	      magic6 = getgshort(fd, "guide"); (*offset) += 2;
+	      magic1 = getgint16(fd, "guide"); (*offset) += 2;
+	      magic2 = getgint16(fd, "guide"); (*offset) += 2;
+	      magic3 = getgint16(fd, "guide"); (*offset) += 2;
+	      magic4 = getgint16(fd, "guide"); (*offset) += 2;
+	      magic5 = getgint16(fd, "guide"); (*offset) += 2;
+	      magic6 = getgint16(fd, "guide"); (*offset) += 2;
 	      remaining -= 12;
 
 	      IFDBG printf("\t\t\tSize: %d\n", Size);
@@ -844,7 +844,7 @@ dispatch_resID (guint    ID,
 	      IFDBG printf("\t\t\tMagic: 0x%04x 0x%04x 0x%04x 0x%04x 0x%04x 0x%04x\n",
 			   magic1, magic2, magic3, magic4, magic5, magic6);
 
-	      num_guides = getglong(fd, "guide");
+	      num_guides = getgint32(fd, "guide");
 	      (*offset) += 4; remaining -= 4;
 
 	      if (remaining != num_guides*5)
@@ -854,14 +854,14 @@ dispatch_resID (guint    ID,
 		  goto funny_amount_of_guide_data;
 		}
 
-	      IFDBG printf("\t\t\tNumber of guides is %ld\n", num_guides);
+	      IFDBG printf("\t\t\tNumber of guides is %d\n", num_guides);
 	      psd_image.num_guides = num_guides;
 	      psd_image.guides = g_new(PSDguide, num_guides);
 	      guide = psd_image.guides;
 
 	      for (i = 0; i < num_guides; i++, guide++)
 		{
-		  guide->position = getglong(fd, "guide");
+		  guide->position = getgint32(fd, "guide");
 		  IFDBG printf ("Position: %d     %x\n", guide->position,
 				guide->position);
 		  guide->horizontal = (1 == getguchar(fd, "guide"));
@@ -909,12 +909,12 @@ dispatch_resID (guint    ID,
 	  IFDBG printf ("\t\tResolution Info:\n");
 	  psd_image.resolution_is_set = 1;
 
-	  psd_image.resolution.hRes = getglong(fd, "hRes");
-	  psd_image.resolution.hRes_unit = getgshort(fd, "hRes_unit");
-	  psd_image.resolution.widthUnit = getgshort(fd, "WidthUnit");
-	  psd_image.resolution.vRes = getglong(fd, "vRes");
-	  psd_image.resolution.vRes_unit = getgshort(fd, "vRes_unit");
-	  psd_image.resolution.heightUnit = getgshort(fd, "HeightUnit");
+	  psd_image.resolution.hRes = getgint32(fd, "hRes");
+	  psd_image.resolution.hRes_unit = getgint16(fd, "hRes_unit");
+	  psd_image.resolution.widthUnit = getgint16(fd, "WidthUnit");
+	  psd_image.resolution.vRes = getgint32(fd, "vRes");
+	  psd_image.resolution.vRes_unit = getgint16(fd, "vRes_unit");
+	  psd_image.resolution.heightUnit = getgint16(fd, "HeightUnit");
 	  (*offset) += Size;
 	  IFDBG  printf("\t\t\tres = %f, %f\n",
 			psd_image.resolution.hRes / 65536.0,
@@ -1005,13 +1005,13 @@ do_layer_record (FILE    *fd,
   layer = psd_image.layer + layernum;
 
   /* table 11-12 */
-  top = getglong (fd, "layer top");
+  top = getgint32 (fd, "layer top");
   (*offset)+=4;
-  left = getglong (fd, "layer left");
+  left = getgint32 (fd, "layer left");
   (*offset)+=4;
-  bottom = getglong (fd, "layer bottom");
+  bottom = getgint32 (fd, "layer bottom");
   (*offset)+=4;
-  right = getglong (fd, "layer right");
+  right = getgint32 (fd, "layer right");
   (*offset)+=4;
 
   layer->x      = left;
@@ -1022,7 +1022,7 @@ do_layer_record (FILE    *fd,
   IFDBG printf("\t\t\t\tLayer extents: (%d,%d) -> (%d,%d)\n",
 	       left,top,right,bottom);
 
-  layer->num_channels = getgshort (fd, "layer num_channels");
+  layer->num_channels = getgint16 (fd, "layer num_channels");
   (*offset)+=2;
 
   IFDBG printf("\t\t\t\tNumber of channels: %d\n",
@@ -1039,11 +1039,11 @@ do_layer_record (FILE    *fd,
 	  /* table 11-13 */
 	  IFDBG printf("\t\t\t\tCHANNEL LENGTH INFO (%d)\n", i);
 
-	  channel->type = getgshort(fd, "channel id");
+	  channel->type = getgint16(fd, "channel id");
 	  (*offset)+=2;
 	  IFDBG printf("\t\t\t\t\tChannel TYPE: %d\n", channel->type);
 
-	  channel->compressedsize = getglong(fd, "channeldatalength");
+	  channel->compressedsize = getgint32(fd, "channeldatalength");
 	  (*offset)+=4;
 	  IFDBG printf("\t\t\t\t\tChannel Data Length: %d\n",
 		       channel->compressedsize);
@@ -1097,7 +1097,7 @@ do_layer_record (FILE    *fd,
   getguchar(fd, "layer record filler");
   (*offset)++;
 
-  extradatasize = getglong(fd, "layer extra data size");
+  extradatasize = getgint32(fd, "layer extra data size");
   (*offset)+=4;
   IFDBG printf("\t\t\t\tEXTRA DATA SIZE: %d\n",extradatasize);
 
@@ -1108,7 +1108,7 @@ do_layer_record (FILE    *fd,
   totaloff = (*offset) + extradatasize;
 
   /* table 11-14 */
-  layermaskdatasize = getglong(fd, "layer mask data size");
+  layermaskdatasize = getgint32(fd, "layer mask data size");
   (*offset)+=4;
   IFDBG printf("\t\t\t\t\tLAYER MASK DATA SIZE: %d\n", layermaskdatasize);
 
@@ -1118,13 +1118,13 @@ do_layer_record (FILE    *fd,
       guchar flags;
       int    o = 0;
 
-      top    = getglong(fd, "lmask top");
+      top    = getgint32(fd, "lmask top");
       o += 4;
-      left   = getglong(fd, "lmask left");
+      left   = getgint32(fd, "lmask left");
       o += 4;
-      bottom = getglong(fd, "lmask bottom");
+      bottom = getgint32(fd, "lmask bottom");
       o += 4;
-      right  = getglong(fd, "lmask right");
+      right  = getgint32(fd, "lmask right");
       o += 4;
 
       layer->lm_x = left;
@@ -1151,7 +1151,7 @@ do_layer_record (FILE    *fd,
       (*offset) += layermaskdatasize;
     }
 
-  layerrangesdatasize = getglong (fd, "layer ranges data size");
+  layerrangesdatasize = getgint32 (fd, "layer ranges data size");
   (*offset) += 4;
   IFDBG printf("\t\t\t\t\t\tLAYER RANGES DATA SIZE: %d\n", layermaskdatasize);
 
@@ -1208,7 +1208,7 @@ do_layer_struct (FILE    *fd,
 
   IFDBG printf ("\t\tLAYER STRUCTURE SECTION\n");
 
-  psd_image.num_layers = getgshort (fd, "layer struct numlayers");
+  psd_image.num_layers = getgint16 (fd, "layer struct numlayers");
   (*offset)+=2;
 
   IFDBG printf("\t\t\tCanonical number of layers: %d%s\n",
@@ -1280,7 +1280,7 @@ seek_to_and_unpack_pixeldata (FILE *fd,
 
   fsetpos(fd, &channel->fpos);
 
-  compression = getgshort(fd, "layer channel compression type");
+  compression = getgint16(fd, "layer channel compression type");
   offset+=2;
 
   width  = channel->width;
@@ -1371,7 +1371,7 @@ do_layers (FILE    *fd,
 {
   guint32 section_length;
 
-  section_length = getglong (fd, "layerinfo sectionlength");
+  section_length = getgint32 (fd, "layerinfo sectionlength");
   (*offset)+=4;
 
   IFDBG printf ("\tLAYER INFO SECTION\n");
@@ -1453,7 +1453,7 @@ do_image_resources (FILE *fd)
       /* generic information about a block ID */
 
 
-      ID = getgshort (fd, "ID num");
+      ID = getgint16 (fd, "ID num");
       offset += 2;
       IFDBG printf ("\tID: 0x%04x / ",ID);
 
@@ -1478,7 +1478,7 @@ do_image_resources (FILE *fd)
 	  offset++;
 	}
 
-      Size = getglong (fd, "ID Size");
+      Size = getgint32 (fd, "ID Size");
       offset += 4;
       IFDBG printf ("Size: %d\n", Size);
 
@@ -2296,7 +2296,7 @@ load_image (const gchar *name)
 	      if (psd_image.colmaplen == 0)
 		printf("PSD: Indexed image has no colourmap!\n");
 	      if (psd_image.colmaplen != 768)
-		printf("PSD: Warning: Indexed image is %ld!=256 colours.\n",
+		printf("PSD: Warning: Indexed image is %d!=256 colours.\n",
 		       psd_image.colmaplen / 3);
 	      if (psd_image.colmaplen == 768)
 		{
@@ -2488,7 +2488,7 @@ load_image (const gchar *name)
   gimp_displays_flush ();
 
   IFDBG printf ("--- %d layers : pos %ld : a-alph %d ---\n",
-                psd_image.num_layers, (long int)ftell(fd),
+                psd_image.num_layers, (glong) ftell(fd),
                 psd_image.absolute_alpha);
 
   return image_ID;
@@ -2503,7 +2503,7 @@ decode (long    clen,
 {
   gint     i, j;
   gint32   l;
-  gushort *w;
+  guint16 *w;
 
   l = clen;
   for (i = 0; i < PSDheader.rows*PSDheader.channels; ++i)
@@ -2512,7 +2512,7 @@ decode (long    clen,
     }
   if (l)
     {
-      g_warning("decode: %ld should be zero\n", (long)l);
+      g_warning("decode: %d should be zero\n", l);
     }
 
   w = PSDheader.rowlength;
@@ -2862,8 +2862,8 @@ getguchar (FILE  *fd,
   return tmp;
 }
 
-static gshort
-getgshort (FILE  *fd,
+static gint16
+getgint16 (FILE  *fd,
            gchar *why)
 {
   guchar b1, b2;
@@ -2871,11 +2871,11 @@ getgshort (FILE  *fd,
   b1 = getguchar (fd, why);
   b2 = getguchar (fd, why);
 
-  return (gshort) ((b1 * 256) + b2);
+  return (gint16) ((b1 * 256) + b2);
 }
 
-static glong
-getglong (FILE  *fd,
+static gint32
+getgint32 (FILE  *fd,
           gchar *why)
 {
   guchar s1, s2, s3, s4;
@@ -2885,7 +2885,7 @@ getglong (FILE  *fd,
   s3 = getguchar (fd, why);
   s4 = getguchar (fd, why);
 
-  return (glong) ((s1 * 256 * 256 * 256) +
+  return (gint32) ((s1 * 256 * 256 * 256) +
                   (s2 * 256 * 256) +
                   (s3 * 256) +
                    s4);
@@ -2942,13 +2942,13 @@ read_whole_file (FILE *fd)
     gint    i;
 
     xfread (fd, &PSDheader.signature, 4, "signature");
-    PSDheader.version  = getgshort (fd, "version");
+    PSDheader.version  = getgint16 (fd, "version");
     xfread (fd, &dummy, 6, "reserved");
-    PSDheader.channels = getgshort (fd, "channels");
-    PSDheader.rows     = getglong (fd, "rows");
-    PSDheader.columns  = getglong (fd, "columns");
-    PSDheader.bpp      = getgshort (fd, "depth");
-    PSDheader.mode     = getgshort (fd, "mode");
+    PSDheader.channels = getgint16 (fd, "channels");
+    PSDheader.rows     = getgint32 (fd, "rows");
+    PSDheader.columns  = getgint32 (fd, "columns");
+    PSDheader.bpp      = getgint16 (fd, "depth");
+    PSDheader.mode     = getgint16 (fd, "mode");
 
 
     psd_image.num_layers       = 0;
@@ -2958,7 +2958,7 @@ read_whole_file (FILE *fd)
     psd_image.num_guides       = 0;
 
 
-    psd_image.colmaplen = getglong (fd, "color data length");
+    psd_image.colmaplen = getgint32 (fd, "color data length");
 
     if (psd_image.colmaplen > 0)
       {
@@ -2967,29 +2967,29 @@ read_whole_file (FILE *fd)
       }
 
 
-    PSDheader.imgreslen = getglong (fd, "image resource length");
+    PSDheader.imgreslen = getgint32 (fd, "image resource length");
     if (PSDheader.imgreslen > 0)
       {
 	do_image_resources (fd);
       }
 
 
-    PSDheader.miscsizelen = getglong (fd, "misc size data length");
+    PSDheader.miscsizelen = getgint32 (fd, "misc size data length");
     if (PSDheader.miscsizelen > 0)
       {
 	do_layer_and_mask (fd);
       }
 
 
-    PSDheader.compression = getgshort (fd, "compression");
+    PSDheader.compression = getgint16 (fd, "compression");
     IFDBG printf("<<compr:%d>>", (int) PSDheader.compression);
     if (PSDheader.compression == 1) /* RLE */
       {
 	PSDheader.rowlength = g_malloc (PSDheader.rows *
-                                        PSDheader.channels * sizeof(gushort));
+                                        PSDheader.channels * sizeof(guint16));
 
 	for (i = 0; i < PSDheader.rows * PSDheader.channels; ++i)
-	  PSDheader.rowlength[i] = getgshort (fd, "x");
+	  PSDheader.rowlength[i] = getgint16 (fd, "x");
       }
     pos = ftell (fd);
     fseek (fd, 0, SEEK_END);
@@ -3009,14 +3009,14 @@ read_whole_file (FILE *fd)
       }
     w = PSDheader.mode;
     IFDBG printf ("HEAD:\n"
-                  "\tChannels %d\n\tRows %ld\n\tColumns %ld\n\tDepth %d\n\tMode %d (%s)\n"
-                  "\tColour data %ld guchars\n",
+                  "\tChannels %d\n\tRows %d\n\tColumns %d\n\tDepth %d\n\tMode %d (%s)\n"
+                  "\tColour data %d guchars\n",
                   PSDheader.channels, PSDheader.rows,
                   PSDheader.columns, PSDheader.bpp,
                   w, modename[w < 10 ? w : 10],
                   psd_image.colmaplen);
     /*    printf("\tImage resource length: %lu\n", PSDheader.imgreslen);*/
-    IFDBG printf ("\tLayer/Mask Data length: %lu\n", PSDheader.miscsizelen);
+    IFDBG printf ("\tLayer/Mask Data length: %u\n", PSDheader.miscsizelen);
     w = PSDheader.compression;
     IFDBG printf ("\tCompression %d (%s)\n", w, w ? "RLE" : "raw");
 }
