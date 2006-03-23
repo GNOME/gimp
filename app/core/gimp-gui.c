@@ -346,13 +346,14 @@ gimp_menus_create_branch (Gimp        *gimp,
 }
 
 GimpProgress *
-gimp_new_progress (Gimp *gimp,
-                   gint  display_ID)
+gimp_new_progress (Gimp       *gimp,
+                   GimpObject *display)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (display == NULL || GIMP_IS_OBJECT (display), NULL);
 
   if (gimp->gui.progress_new)
-    return gimp->gui.progress_new (gimp, display_ID);
+    return gimp->gui.progress_new (gimp, display);
 
   return NULL;
 }

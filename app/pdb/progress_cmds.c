@@ -60,13 +60,13 @@ progress_init_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   gchar *message;
-  gint32 gdisplay;
+  GimpObject *gdisplay;
 
   message = (gchar *) args[0].value.pdb_pointer;
   if (message && !g_utf8_validate (message, -1, NULL))
     success = FALSE;
 
-  gdisplay = args[1].value.pdb_int;
+  gdisplay = gimp_get_display_by_ID (gimp, args[1].value.pdb_int);
 
   if (success)
     {
@@ -90,7 +90,7 @@ static ProcArg progress_init_inargs[] =
     "Message to use in the progress dialog"
   },
   {
-    GIMP_PDB_INT32,
+    GIMP_PDB_DISPLAY,
     "gdisplay",
     "GimpDisplay to update progressbar in, or -1 for a seperate window"
   }

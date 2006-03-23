@@ -1,5 +1,17 @@
 2006-03-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimp-gui.[ch]
+	* app/gui/gui-vtable.c
+	* app/plug-in/plug-in-progress.[ch]: pass displays around as
+	GimpObject, not as integer IDs.
+
+	* tools/pdbgen/pdb/progress.pdb: changed accordingly.
+
+	* app/pdb/progress_cmds.c
+	* libgimp/gimpprogress_pdb.c: regenerated.
+
+2006-03-23  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/stddefs.pdb: removed std_image_arg(),
 	std_antialias_arg() and std_orientation_enum().
 

@@ -30,7 +30,7 @@ HELP
     @inargs = (
 	{ name => 'message', type => 'string', null_ok => 1, wrap => 1,
 	  desc => 'Message to use in the progress dialog' },
-	{ name => 'gdisplay', type => 'int32',
+	{ name => 'gdisplay', type => 'display', no_success => 1,
 	  desc => 'GimpDisplay to update progressbar in, or -1 for a seperate
 		   window',
 	  implicit_fill => 'gimp_default_display ()' }
@@ -42,7 +42,7 @@ HELP
   if (gimp->current_plug_in && gimp->current_plug_in->open)
     {
       if (! gimp->no_interface)
-	plug_in_progress_start (gimp->current_plug_in, message, gdisplay);
+        plug_in_progress_start (gimp->current_plug_in, message, gdisplay);
     }
   else
     success = FALSE;

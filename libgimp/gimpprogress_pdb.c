@@ -47,7 +47,7 @@ _gimp_progress_init (const gchar *message)
   return_vals = gimp_run_procedure ("gimp-progress-init",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, message,
-				    GIMP_PDB_INT32, gimp_default_display (),
+				    GIMP_PDB_DISPLAY, gimp_default_display (),
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

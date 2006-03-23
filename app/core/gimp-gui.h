@@ -69,7 +69,7 @@ struct _GimpGui
                                           const gchar   *menu_label);
 
   GimpProgress * (* progress_new)        (Gimp          *gimp,
-                                          gint           display_ID);
+                                          GimpObject    *display);
   void           (* progress_free)       (Gimp          *gimp,
                                           GimpProgress  *progress);
 
@@ -138,7 +138,7 @@ void           gimp_menus_create_branch  (Gimp               *gimp,
                                           const gchar        *menu_label);
 
 GimpProgress * gimp_new_progress         (Gimp               *gimp,
-                                          gint                display_ID);
+                                          GimpObject         *display);
 void           gimp_free_progress        (Gimp               *gimp,
                                           GimpProgress       *progress);
 

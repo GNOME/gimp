@@ -24,7 +24,7 @@
 
 void       plug_in_progress_start      (PlugIn      *plug_in,
                                         const gchar *message,
-                                        gint         display_ID);
+                                        GimpObject  *display);
 void       plug_in_progress_end        (PlugIn      *plug_in);
 void       plug_in_progress_set_text   (PlugIn      *plug_in,
                                         const gchar *message);

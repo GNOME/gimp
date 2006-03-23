@@ -45,17 +45,18 @@ static void   plug_in_progress_cancel_callback (GimpProgress *progress,
 void
 plug_in_progress_start (PlugIn      *plug_in,
                         const gchar *message,
-                        gint         display_ID)
+                        GimpObject  *display)
 {
   PlugInProcFrame *proc_frame;
 
   g_return_if_fail (plug_in != NULL);
+  g_return_if_fail (display == NULL || GIMP_IS_OBJECT (display));
 
   proc_frame = plug_in_get_proc_frame (plug_in);
 
   if (! proc_frame->progress)
     {
-      proc_frame->progress = gimp_new_progress (plug_in->gimp, display_ID);
+      proc_frame->progress = gimp_new_progress (plug_in->gimp, display);
 
       if (proc_frame->progress)
         {
@@ -148,7 +149,7 @@ plug_in_progress_set_value (PlugIn  *plug_in,
       ! gimp_progress_is_active (proc_frame->progress) ||
       ! proc_frame->progress_cancel_id)
     {
-      plug_in_progress_start (plug_in, NULL, -1);
+      plug_in_progress_start (plug_in, NULL, NULL);
     }
 
   if (proc_frame->progress && gimp_progress_is_active (proc_frame->progress))
@@ -168,7 +169,7 @@ plug_in_progress_pulse (PlugIn  *plug_in)
       ! gimp_progress_is_active (proc_frame->progress) ||
       ! proc_frame->progress_cancel_id)
     {
-      plug_in_progress_start (plug_in, NULL, -1);
+      plug_in_progress_start (plug_in, NULL, NULL);
     }
 
   if (proc_frame->progress && gimp_progress_is_active (proc_frame->progress))

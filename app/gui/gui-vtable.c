@@ -115,7 +115,7 @@ static void           gui_menus_create_branch  (Gimp          *gimp,
                                                 const gchar   *menu_path,
                                                 const gchar   *menu_label);
 static GimpProgress * gui_new_progress         (Gimp          *gimp,
-                                                gint           display_ID);
+                                                GimpObject    *display);
 static void           gui_free_progress        (Gimp          *gimp,
                                                 GimpProgress  *progress);
 static gboolean       gui_pdb_dialog_new       (Gimp          *gimp,
@@ -549,13 +549,10 @@ gui_menus_create_branch (Gimp        *gimp,
 }
 
 static GimpProgress *
-gui_new_progress (Gimp *gimp,
-                  gint  display_ID)
+gui_new_progress (Gimp       *gimp,
+                  GimpObject *display)
 {
-  GimpDisplay *display = NULL;
-
-  if (display_ID > 0)
-    display = gimp_display_get_by_ID (gimp, display_ID);
+  g_return_val_if_fail (display == NULL || GIMP_IS_DISPLAY (display), NULL);
 
   if (display)
     return GIMP_PROGRESS (display);
