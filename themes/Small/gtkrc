@@ -30,7 +30,7 @@ style "gimp-default-style"
       { "../Default/images/stock-warning-64.png", *, *, "gtk-dialog" }
     }
 
-  font_name = "sans 8"
+# font_name = "sans 8"
 
 # Enabling the following line for some reason breaks toolbox resize
 # increment calculation. You can enable it to get an even smaller GUI

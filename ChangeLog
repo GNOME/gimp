@@ -1,5 +1,10 @@
 2006-03-23  Sven Neumann  <sven@gimp.org>
 
+	* themes/Small/gtkrc: commented out the hardcoded font setting.
+	It's just wrong to do this until bug #325767 has been addressed.
+
+2006-03-23  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayoptions.c: avoid code duplication by
 	using a #define.
 
