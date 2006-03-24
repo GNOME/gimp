@@ -10587,7 +10587,7 @@ msgstr "_Join style:"
 
 #: ../app/widgets/gimpstrokeeditor.c:237
 msgid "_Miter limit:"
-msgstr "_Miter limit:"
+msgstr "_Mitre limit:"
 
 #: ../app/widgets/gimpstrokeeditor.c:244
 msgid "Dash pattern:"
