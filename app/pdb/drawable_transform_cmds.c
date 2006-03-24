@@ -225,7 +225,7 @@ drawable_transform_flip_invoker (Gimp         *gimp,
   supersample = args[7].value.pdb_int ? TRUE : FALSE;
 
   recursion_level = args[8].value.pdb_int;
-  if (recursion_level <= 0)
+  if (recursion_level < 1)
     success = FALSE;
 
   clip_result = args[9].value.pdb_int ? TRUE : FALSE;
@@ -545,7 +545,7 @@ drawable_transform_perspective_invoker (Gimp         *gimp,
   supersample = args[11].value.pdb_int ? TRUE : FALSE;
 
   recursion_level = args[12].value.pdb_int;
-  if (recursion_level <= 0)
+  if (recursion_level < 1)
     success = FALSE;
 
   clip_result = args[13].value.pdb_int ? TRUE : FALSE;
@@ -1029,7 +1029,7 @@ drawable_transform_rotate_invoker (Gimp         *gimp,
   supersample = args[7].value.pdb_int ? TRUE : FALSE;
 
   recursion_level = args[8].value.pdb_int;
-  if (recursion_level <= 0)
+  if (recursion_level < 1)
     success = FALSE;
 
   clip_result = args[9].value.pdb_int ? TRUE : FALSE;
@@ -1343,7 +1343,7 @@ drawable_transform_scale_invoker (Gimp         *gimp,
   supersample = args[7].value.pdb_int ? TRUE : FALSE;
 
   recursion_level = args[8].value.pdb_int;
-  if (recursion_level <= 0)
+  if (recursion_level < 1)
     success = FALSE;
 
   clip_result = args[9].value.pdb_int ? TRUE : FALSE;
@@ -1653,7 +1653,7 @@ drawable_transform_shear_invoker (Gimp         *gimp,
   supersample = args[5].value.pdb_int ? TRUE : FALSE;
 
   recursion_level = args[6].value.pdb_int;
-  if (recursion_level <= 0)
+  if (recursion_level < 1)
     success = FALSE;
 
   clip_result = args[7].value.pdb_int ? TRUE : FALSE;
@@ -1948,7 +1948,7 @@ drawable_transform_2d_invoker (Gimp         *gimp,
   supersample = args[10].value.pdb_int ? TRUE : FALSE;
 
   recursion_level = args[11].value.pdb_int;
-  if (recursion_level <= 0)
+  if (recursion_level < 1)
     success = FALSE;
 
   clip_result = args[12].value.pdb_int ? TRUE : FALSE;
@@ -2314,7 +2314,7 @@ drawable_transform_matrix_invoker (Gimp         *gimp,
   supersample = args[12].value.pdb_int ? TRUE : FALSE;
 
   recursion_level = args[13].value.pdb_int;
-  if (recursion_level <= 0)
+  if (recursion_level < 1)
     success = FALSE;
 
   clip_result = args[14].value.pdb_int ? TRUE : FALSE;

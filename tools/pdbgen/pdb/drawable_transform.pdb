@@ -209,7 +209,7 @@ HELP
 	  desc => 'Type of interpolation: %%desc%%' },
 	{ name => 'supersample', type => 'boolean',
 	  desc => 'Whether to perform supersample' },
-	{ name => 'recursion_level', type => '0 < int32',
+	{ name => 'recursion_level', type => '1 <= int32',
 	  desc => 'Level of recursion (3 is a nice default)' },
 	{ name => 'clip_result', type => 'boolean',
 	  desc => 'Whether to clip results' }
@@ -329,7 +329,7 @@ HELP
 	  desc => 'Type of interpolation: %%desc%%' },
 	{ name => 'supersample', type => 'boolean',
 	  desc => 'Whether to perform supersample' },
-	{ name => 'recursion_level', type => '0 < int32',
+	{ name => 'recursion_level', type => '1 <= int32',
 	  desc => 'Level of recursion (3 is a nice default)' },
 	{ name => 'clip_result', type => 'boolean',
 	  desc => 'Whether to clip results' }
@@ -506,7 +506,7 @@ HELP
 	  desc => 'Type of interpolation: %%desc%%' },
 	{ name => 'supersample', type => 'boolean',
 	  desc => 'Whether to perform supersample' },
-	{ name => 'recursion_level', type => '0 < int32',
+	{ name => 'recursion_level', type => '1 <= int32',
 	  desc => 'Level of recursion (3 is a nice default)' },
 	{ name => 'clip_result', type => 'boolean',
 	  desc => 'Whether to clip results' }
@@ -610,7 +610,7 @@ HELP
 	  desc => 'Type of interpolation: %%desc%%' },
 	{ name => 'supersample', type => 'boolean',
 	  desc => 'Whether to perform supersample' },
-	{ name => 'recursion_level', type => '0 < int32',
+	{ name => 'recursion_level', type => '1 <= int32',
 	  desc => 'Level of recursion (3 is a nice default)' },
 	{ name => 'clip_result', type => 'boolean',
 	  desc => 'Whether to clip results' }
@@ -714,7 +714,7 @@ HELP
 	  desc => 'Type of interpolation: %%desc%%' },
 	{ name => 'supersample', type => 'boolean',
 	  desc => 'Whether to perform supersample' },
-	{ name => 'recursion_level', type => '0 < int32',
+	{ name => 'recursion_level', type => '1 <= int32',
 	  desc => 'Level of recursion (3 is a nice default)' },
 	{ name => 'clip_result', type => 'boolean',
 	  desc => 'Whether to clip results' }
@@ -819,7 +819,7 @@ HELP
 	  desc => 'Type of interpolation: %%desc%%' },
 	{ name => 'supersample', type => 'boolean',
 	  desc => 'Whether to perform supersample' },
-	{ name => 'recursion_level', type => '0 < int32',
+	{ name => 'recursion_level', type => '1 <= int32',
 	  desc => 'Level of recursion (3 is a nice default)' },
 	{ name => 'clip_result', type => 'boolean',
 	  desc => 'Whether to clip results' }
@@ -936,7 +936,7 @@ HELP
 	  desc => 'Type of interpolation: %%desc%%' },
 	{ name => 'supersample', type => 'boolean',
 	  desc => 'Whether to perform supersample' },
-	{ name => 'recursion_level', type => '0 < int32',
+	{ name => 'recursion_level', type => '1 <= int32',
 	  desc => 'Level of recursion (3 is a nice default)' },
 	{ name => 'clip_result', type => 'boolean',
 	  desc => 'Whether to clip results' }

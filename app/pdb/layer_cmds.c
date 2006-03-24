@@ -118,11 +118,11 @@ layer_new_invoker (Gimp         *gimp,
     success = FALSE;
 
   width = args[1].value.pdb_int;
-  if (width <= 0)
+  if (width < 1)
     success = FALSE;
 
   height = args[2].value.pdb_int;
-  if (height <= 0)
+  if (height < 1)
     success = FALSE;
 
   type = args[3].value.pdb_int;
@@ -168,12 +168,12 @@ static ProcArg layer_new_inargs[] =
   {
     GIMP_PDB_INT32,
     "width",
-    "The layer width: (0 < width)"
+    "The layer width: (1 <= width)"
   },
   {
     GIMP_PDB_INT32,
     "height",
-    "The layer height: (0 < height)"
+    "The layer height: (1 <= height)"
   },
   {
     GIMP_PDB_INT32,
@@ -455,11 +455,11 @@ layer_scale_invoker (Gimp         *gimp,
     success = FALSE;
 
   new_width = args[1].value.pdb_int;
-  if (new_width <= 0)
+  if (new_width < 1)
     success = FALSE;
 
   new_height = args[2].value.pdb_int;
-  if (new_height <= 0)
+  if (new_height < 1)
     success = FALSE;
 
   local_origin = args[3].value.pdb_int ? TRUE : FALSE;
@@ -487,12 +487,12 @@ static ProcArg layer_scale_inargs[] =
   {
     GIMP_PDB_INT32,
     "new-width",
-    "New layer width: (0 < new_width)"
+    "New layer width: (1 <= new_width)"
   },
   {
     GIMP_PDB_INT32,
     "new-height",
-    "New layer height: (0 < new_height)"
+    "New layer height: (1 <= new_height)"
   },
   {
     GIMP_PDB_INT32,
@@ -537,11 +537,11 @@ layer_resize_invoker (Gimp         *gimp,
     success = FALSE;
 
   new_width = args[1].value.pdb_int;
-  if (new_width <= 0)
+  if (new_width < 1)
     success = FALSE;
 
   new_height = args[2].value.pdb_int;
-  if (new_height <= 0)
+  if (new_height < 1)
     success = FALSE;
 
   offx = args[3].value.pdb_int;
@@ -570,12 +570,12 @@ static ProcArg layer_resize_inargs[] =
   {
     GIMP_PDB_INT32,
     "new-width",
-    "New layer width: (0 < new_width)"
+    "New layer width: (1 <= new_width)"
   },
   {
     GIMP_PDB_INT32,
     "new-height",
-    "New layer height: (0 < new_height)"
+    "New layer height: (1 <= new_height)"
   },
   {
     GIMP_PDB_INT32,

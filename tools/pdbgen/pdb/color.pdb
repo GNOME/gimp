@@ -416,7 +416,7 @@ HELP
 	{ name => 'control_pts', type => 'int8array',
 	  desc => 'The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y,
 		   ... }',
-	  array => { name => 'num_points', type => '3 < int32 <= 34',
+	  array => { name => 'num_points', type => '4 <= int32 <= 34',
 		     desc => 'The number of values in the control point array
 			      (%%desc%%)' } }
     );

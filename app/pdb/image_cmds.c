@@ -291,11 +291,11 @@ image_new_invoker (Gimp         *gimp,
   GimpImage *image = NULL;
 
   width = args[0].value.pdb_int;
-  if (width <= 0)
+  if (width < 1)
     success = FALSE;
 
   height = args[1].value.pdb_int;
-  if (height <= 0)
+  if (height < 1)
     success = FALSE;
 
   type = args[2].value.pdb_int;
@@ -740,11 +740,11 @@ image_resize_invoker (Gimp         *gimp,
     success = FALSE;
 
   new_width = args[1].value.pdb_int;
-  if (new_width <= 0)
+  if (new_width < 1)
     success = FALSE;
 
   new_height = args[2].value.pdb_int;
-  if (new_height <= 0)
+  if (new_height < 1)
     success = FALSE;
 
   offx = args[3].value.pdb_int;
@@ -770,12 +770,12 @@ static ProcArg image_resize_inargs[] =
   {
     GIMP_PDB_INT32,
     "new-width",
-    "New image width: 0 < new_width"
+    "New image width: 1 <= new_width"
   },
   {
     GIMP_PDB_INT32,
     "new-height",
-    "New image height: 0 < new_height"
+    "New image height: 1 <= new_height"
   },
   {
     GIMP_PDB_INT32,
@@ -871,11 +871,11 @@ image_scale_invoker (Gimp         *gimp,
     success = FALSE;
 
   new_width = args[1].value.pdb_int;
-  if (new_width <= 0)
+  if (new_width < 1)
     success = FALSE;
 
   new_height = args[2].value.pdb_int;
-  if (new_height <= 0)
+  if (new_height < 1)
     success = FALSE;
 
   if (success)
@@ -898,12 +898,12 @@ static ProcArg image_scale_inargs[] =
   {
     GIMP_PDB_INT32,
     "new-width",
-    "New image width: 0 < new_width"
+    "New image width: 1 <= new_width"
   },
   {
     GIMP_PDB_INT32,
     "new-height",
-    "New image height: 0 < new_height"
+    "New image height: 1 <= new_height"
   }
 };
 
@@ -943,11 +943,11 @@ image_crop_invoker (Gimp         *gimp,
     success = FALSE;
 
   new_width = args[1].value.pdb_int;
-  if (new_width <= 0)
+  if (new_width < 1)
     success = FALSE;
 
   new_height = args[2].value.pdb_int;
-  if (new_height <= 0)
+  if (new_height < 1)
     success = FALSE;
 
   offx = args[3].value.pdb_int;
@@ -3464,11 +3464,11 @@ image_thumbnail_invoker (Gimp         *gimp,
     success = FALSE;
 
   width = args[1].value.pdb_int;
-  if (width <= 0 || width > 1024)
+  if (width < 1 || width > 1024)
     success = FALSE;
 
   height = args[2].value.pdb_int;
-  if (height <= 0 || height > 1024)
+  if (height < 1 || height > 1024)
     success = FALSE;
 
   if (success)

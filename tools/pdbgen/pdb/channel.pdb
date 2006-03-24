@@ -34,9 +34,9 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image to which to add the channel' },
-	{ name => 'width', type => '0 < int32',
+	{ name => 'width', type => '1 <= int32',
 	  desc => 'The channel width: (%%desc%%)' },
-	{ name => 'height', type => '0 < int32',
+	{ name => 'height', type => '1 <= int32',
 	  desc => 'The channel height: (%%desc%%)' },
 	{ name => 'name', type => 'string',
 	  desc => 'The channel name' },

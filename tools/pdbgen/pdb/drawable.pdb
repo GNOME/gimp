@@ -978,9 +978,9 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
-	{ name => 'width', type => '0 < int32 <= 512',
+	{ name => 'width', type => '1 <= int32 <= 512',
 	  desc => 'The requested thumbnail width' },
-	{ name => 'height', type => '0 < int32 <= 512',
+	{ name => 'height', type => '1 <= int32 <= 512',
 	  desc => 'The requested thumbnail height' }
     );
 
@@ -1059,13 +1059,13 @@ HELP
           desc => 'The x coordinate of the area' },
         { name => 'src_y', type => '0 <= int32',
           desc => 'The y coordinate of the area' },
-        { name => 'src_width', type => '0 < int32',
+        { name => 'src_width', type => '1 <= int32',
           desc => 'The width of the area' },
-        { name => 'src_height', type => '0 < int32',
+        { name => 'src_height', type => '1 <= int32',
           desc => 'The height of the area' },
-	{ name => 'dest_width', type => '0 < int32 <= 512',
+	{ name => 'dest_width', type => '1 <= int32 <= 512',
 	  desc => 'The thumbnail width' },
-	{ name => 'dest_height', type => '0 < int32 <= 512',
+	{ name => 'dest_height', type => '1 <= int32 <= 512',
 	  desc => 'The thumbnail height' }
     );
 

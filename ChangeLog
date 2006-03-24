@@ -1,5 +1,26 @@
 2006-03-24  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/color.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/drawable_transform.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/plug_in.pdb
+	* tools/pdbgen/pdb/procedural_db.pdb: replace '<' by '<=' in all
+	int32 ranges so they specify min and max values.
+
+	* app/pdb/channel_cmds.c
+	* app/pdb/color_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/drawable_transform_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/plug_in_cmds.c
+	* app/pdb/procedural_db_cmds.c: regenerated.
+
+2006-03-24  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/brush.pdb
 	* tools/pdbgen/pdb/brushes.pdb
 	* tools/pdbgen/pdb/channel.pdb

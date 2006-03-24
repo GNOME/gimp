@@ -79,11 +79,11 @@ channel_new_invoker (Gimp         *gimp,
     success = FALSE;
 
   width = args[1].value.pdb_int;
-  if (width <= 0)
+  if (width < 1)
     success = FALSE;
 
   height = args[2].value.pdb_int;
-  if (height <= 0)
+  if (height < 1)
     success = FALSE;
 
   name = (gchar *) args[3].value.pdb_pointer;
@@ -125,12 +125,12 @@ static ProcArg channel_new_inargs[] =
   {
     GIMP_PDB_INT32,
     "width",
-    "The channel width: (0 < width)"
+    "The channel width: (1 <= width)"
   },
   {
     GIMP_PDB_INT32,
     "height",
-    "The channel height: (0 < height)"
+    "The channel height: (1 <= height)"
   },
   {
     GIMP_PDB_STRING,

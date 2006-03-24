@@ -33,9 +33,9 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image to which to add the layer' },
-	{ name => 'width', type => '0 < int32',
+	{ name => 'width', type => '1 <= int32',
 	  desc => 'The layer width: (%%desc%%)' },
-	{ name => 'height', type => '0 < int32',
+	{ name => 'height', type => '1 <= int32',
 	  desc => 'The layer height: (%%desc%%)' },
 	{ name => 'type', type => 'enum GimpImageType',
 	  desc => 'The layer type: %%desc%%' },
@@ -221,9 +221,9 @@ HELP
     @inargs = (
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer' },
-	{ name => 'new_width', type => '0 < int32',
+	{ name => 'new_width', type => '1 <= int32',
 	  desc => 'New layer width: (%%desc%%)' },
-	{ name => 'new_height', type => '0 < int32',
+	{ name => 'new_height', type => '1 <= int32',
 	  desc => 'New layer height: (%%desc%%)' },
 	{ name => 'local_origin', type => 'boolean',
 	  desc => 'Use a local origin (as opposed to the image origin)' }
@@ -258,9 +258,9 @@ HELP
     @inargs = (
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer' },
-	{ name => 'new_width', type => '0 < int32',
+	{ name => 'new_width', type => '1 <= int32',
 	  desc => 'New layer width: (%%desc%%)' },
-	{ name => 'new_height', type => '0 < int32',
+	{ name => 'new_height', type => '1 <= int32',
 	  desc => 'New layer height: (%%desc%%)' },
 	{ name => 'offx', type => 'int32',
 	  desc => 'x offset between upper left corner of old and

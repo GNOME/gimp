@@ -293,7 +293,7 @@ HELP
 	{ name  => 'data', type  => 'int8array',
 	  desc  => 'A byte array containing data', wrap => 1,
 	  void_ret => 1,
-	  array => { name => 'bytes', type => '0 < int32',
+	  array => { name => 'bytes', type => '1 <= int32',
 		     desc => 'The number of bytes in the data' } }
     );
 
@@ -335,7 +335,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'bytes', type => '0 < int32',
+	{ name => 'bytes', type => '1 <= int32',
 	  desc => 'The number of bytes in the data' }
     );
 
@@ -375,7 +375,7 @@ HELP
 	  desc => 'The identifier associated with data' },
 	{ name  => 'data', type  => 'int8array',
 	  desc  => 'A byte array containing data', wrap => 1,
-	  array => { name => 'bytes', type => '0 < int32',
+	  array => { name => 'bytes', type => '1 <= int32',
 		     desc => 'The number of bytes in the data' } }
     );
 

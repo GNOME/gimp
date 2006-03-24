@@ -2344,11 +2344,11 @@ drawable_thumbnail_invoker (Gimp         *gimp,
     success = FALSE;
 
   width = args[1].value.pdb_int;
-  if (width <= 0 || width > 512)
+  if (width < 1 || width > 512)
     success = FALSE;
 
   height = args[2].value.pdb_int;
-  if (height <= 0 || height > 512)
+  if (height < 1 || height > 512)
     success = FALSE;
 
   if (success)
@@ -2504,19 +2504,19 @@ drawable_sub_thumbnail_invoker (Gimp         *gimp,
     success = FALSE;
 
   src_width = args[3].value.pdb_int;
-  if (src_width <= 0)
+  if (src_width < 1)
     success = FALSE;
 
   src_height = args[4].value.pdb_int;
-  if (src_height <= 0)
+  if (src_height < 1)
     success = FALSE;
 
   dest_width = args[5].value.pdb_int;
-  if (dest_width <= 0 || dest_width > 512)
+  if (dest_width < 1 || dest_width > 512)
     success = FALSE;
 
   dest_height = args[6].value.pdb_int;
-  if (dest_height <= 0 || dest_height > 512)
+  if (dest_height < 1 || dest_height > 512)
     success = FALSE;
 
   if (success)

@@ -820,7 +820,7 @@ procedural_db_set_data_invoker (Gimp         *gimp,
     success = FALSE;
 
   bytes = args[1].value.pdb_int;
-  if (bytes <= 0)
+  if (bytes < 1)
     success = FALSE;
 
   data = (guint8 *) args[2].value.pdb_pointer;
