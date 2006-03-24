@@ -132,10 +132,10 @@ drawable_delete_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = gimp_item_is_floating (GIMP_ITEM (drawable));
-
-      if (success)
+      if (gimp_item_is_floating (GIMP_ITEM (drawable)))
         gimp_item_sink (GIMP_ITEM (drawable));
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&drawable_delete_proc, success);
@@ -210,7 +210,7 @@ static ProcArg drawable_is_layer_outargs[] =
   {
     GIMP_PDB_INT32,
     "layer",
-    "Non-zero if the drawable is a layer"
+    "TRUE if the drawable is a layer"
   }
 };
 
@@ -219,7 +219,7 @@ static ProcRecord drawable_is_layer_proc =
   "gimp-drawable-is-layer",
   "gimp-drawable-is-layer",
   "Returns whether the drawable is a layer.",
-  "This procedure returns non-zero if the specified drawable is a layer.",
+  "This procedure returns TRUE if the specified drawable is a layer.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -274,7 +274,7 @@ static ProcArg drawable_is_layer_mask_outargs[] =
   {
     GIMP_PDB_INT32,
     "layer-mask",
-    "Non-zero if the drawable is a layer mask"
+    "TRUE if the drawable is a layer mask"
   }
 };
 
@@ -283,7 +283,7 @@ static ProcRecord drawable_is_layer_mask_proc =
   "gimp-drawable-is-layer-mask",
   "gimp-drawable-is-layer-mask",
   "Returns whether the drawable is a layer mask.",
-  "This procedure returns non-zero if the specified drawable is a layer mask.",
+  "This procedure returns TRUE if the specified drawable is a layer mask.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -338,7 +338,7 @@ static ProcArg drawable_is_channel_outargs[] =
   {
     GIMP_PDB_INT32,
     "channel",
-    "Non-zero if the drawable is a channel"
+    "TRUE if the drawable is a channel"
   }
 };
 
@@ -347,7 +347,7 @@ static ProcRecord drawable_is_channel_proc =
   "gimp-drawable-is-channel",
   "gimp-drawable-is-channel",
   "Returns whether the drawable is a channel.",
-  "This procedure returns non-zero if the specified drawable is a channel.",
+  "This procedure returns TRUE if the specified drawable is a channel.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -538,7 +538,7 @@ static ProcRecord drawable_has_alpha_proc =
 {
   "gimp-drawable-has-alpha",
   "gimp-drawable-has-alpha",
-  "Returns non-zero if the drawable has an alpha channel.",
+  "Returns TRUE if the drawable has an alpha channel.",
   "This procedure returns whether the specified drawable has an alpha channel. This can only be true for layers, and the associated type will be one of: { RGBA , GRAYA, INDEXEDA }.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
@@ -594,7 +594,7 @@ static ProcArg drawable_is_rgb_outargs[] =
   {
     GIMP_PDB_INT32,
     "is-rgb",
-    "non-zero if the drawable is an RGB type"
+    "TRUE if the drawable is an RGB type"
   }
 };
 
@@ -603,7 +603,7 @@ static ProcRecord drawable_is_rgb_proc =
   "gimp-drawable-is-rgb",
   "gimp-drawable-is-rgb",
   "Returns whether the drawable is an RGB type.",
-  "This procedure returns non-zero if the specified drawable is of type { RGB, RGBA }.",
+  "This procedure returns TRUE if the specified drawable is of type { RGB, RGBA }.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -658,7 +658,7 @@ static ProcArg drawable_is_gray_outargs[] =
   {
     GIMP_PDB_INT32,
     "is-gray",
-    "non-zero if the drawable is a grayscale type"
+    "TRUE if the drawable is a grayscale type"
   }
 };
 
@@ -667,7 +667,7 @@ static ProcRecord drawable_is_gray_proc =
   "gimp-drawable-is-gray",
   "gimp-drawable-is-gray",
   "Returns whether the drawable is a grayscale type.",
-  "This procedure returns non-zero if the specified drawable is of type { Gray, GrayA }.",
+  "This procedure returns TRUE if the specified drawable is of type { Gray, GrayA }.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -722,7 +722,7 @@ static ProcArg drawable_is_indexed_outargs[] =
   {
     GIMP_PDB_INT32,
     "is-indexed",
-    "non-zero if the drawable is an indexed type"
+    "TRUE if the drawable is an indexed type"
   }
 };
 
@@ -731,7 +731,7 @@ static ProcRecord drawable_is_indexed_proc =
   "gimp-drawable-is-indexed",
   "gimp-drawable-is-indexed",
   "Returns whether the drawable is an indexed type.",
-  "This procedure returns non-zero if the specified drawable is of type { Indexed, IndexedA }.",
+  "This procedure returns TRUE if the specified drawable is of type { Indexed, IndexedA }.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -1822,9 +1822,7 @@ drawable_merge_shadow_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
-
-      if (success)
+      if (gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           gchar *undo_desc = NULL;
 
@@ -1838,6 +1836,8 @@ drawable_merge_shadow_invoker (Gimp         *gimp,
 
           g_free (undo_desc);
         }
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&drawable_merge_shadow_proc, success);
@@ -2214,7 +2214,7 @@ static ProcArg drawable_fill_inargs[] =
   {
     GIMP_PDB_INT32,
     "fill-type",
-    "The type of fill: GIMP_FOREGROUND_FILL (0), GIMP_BACKGROUND_FILL (1), GIMP_WHITE_FILL (2), GIMP_TRANSPARENT_FILL (3), GIMP_PATTERN_FILL (4)"
+    "The type of fill: { GIMP_FOREGROUND_FILL (0), GIMP_BACKGROUND_FILL (1), GIMP_WHITE_FILL (2), GIMP_TRANSPARENT_FILL (3), GIMP_PATTERN_FILL (4) }"
   }
 };
 
@@ -2265,11 +2265,11 @@ drawable_offset_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
-
-      if (success)
+      if (gimp_item_is_attached (GIMP_ITEM (drawable)))
         gimp_drawable_offset (drawable, context, wrap_around, fill_type,
                               offset_x, offset_y);
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&drawable_offset_proc, success);
@@ -2290,7 +2290,7 @@ static ProcArg drawable_offset_inargs[] =
   {
     GIMP_PDB_INT32,
     "fill-type",
-    "fill vacated regions of drawable with background or transparent: GIMP_OFFSET_BACKGROUND (0) or GIMP_OFFSET_TRANSPARENT (1)"
+    "fill vacated regions of drawable with background or transparent: { GIMP_OFFSET_BACKGROUND (0), GIMP_OFFSET_TRANSPARENT (1) }"
   },
   {
     GIMP_PDB_INT32,
@@ -2521,10 +2521,8 @@ drawable_sub_thumbnail_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = ((src_x + src_width)  <= gimp_item_width  (GIMP_ITEM (drawable)) &&
-                 (src_y + src_height) <= gimp_item_height (GIMP_ITEM (drawable)));
-
-      if (success)
+      if ((src_x + src_width)  <= gimp_item_width  (GIMP_ITEM (drawable)) &&
+          (src_y + src_height) <= gimp_item_height (GIMP_ITEM (drawable)))
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
           TempBuf   *buf;
@@ -2552,10 +2550,10 @@ drawable_sub_thumbnail_invoker (Gimp         *gimp,
               temp_buf_free (buf);
             }
           else
-            {
-              success = FALSE;
-            }
+            success = FALSE;
         }
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&drawable_sub_thumbnail_proc, success);
@@ -2683,10 +2681,10 @@ drawable_foreground_extract_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
-
-      if (success)
+      if (gimp_item_is_attached (GIMP_ITEM (drawable)))
         gimp_drawable_foreground_extract (drawable, mode, mask, progress);
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&drawable_foreground_extract_proc, success);
@@ -2702,7 +2700,7 @@ static ProcArg drawable_foreground_extract_inargs[] =
   {
     GIMP_PDB_INT32,
     "mode",
-    "The algorithm to use: GIMP_FOREGROUND_EXTRACT_SIOX (0)"
+    "The algorithm to use: { GIMP_FOREGROUND_EXTRACT_SIOX (0) }"
   },
   {
     GIMP_PDB_DRAWABLE,

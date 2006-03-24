@@ -181,7 +181,7 @@ sub gradients_get_gradient_data {
 	  desc => 'The gradient name ("" means current active gradient)',
           null_ok => '1' },
 	{ name => 'sample_size', type => '1 <= int32 <= 10000',
-	  desc => 'Size of the sample to return when the gradient is changed
+	  desc => 'Size of the sample to return when the gradient is changed:
 	           (%%desc%%)',
 	  no_success => 1 },
 	{ name => 'reverse', type => 'boolean',
@@ -226,7 +226,7 @@ sub gradients_get_gradient_data {
       pos   = 0.0;
       delta = 1.0 / (sample_size - 1);
 
-      actual_name = g_strdup (GIMP_OBJECT (gradient)->name);
+      actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (gradient)));
       grad_data   = g_new (gdouble, sample_size * 4);
       width       = sample_size * 4;
 

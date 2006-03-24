@@ -488,7 +488,7 @@ gimp_edit_fill (gint32       drawable_ID,
  * is executed at the specified coordinates and extends outward in
  * keeping with the threshold parameter. If there is a selection in the
  * target image, the threshold, sample merged, x, and y arguments are
- * unused. If the sample_merged parameter is non-zero, the data of the
+ * unused. If the sample_merged parameter is TRUE, the data of the
  * composite image will be used instead of that for the specified
  * drawable. This is equivalent to sampling for colors after merging
  * all visible layers. In the case of merged sampling, the x and y

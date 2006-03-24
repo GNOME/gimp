@@ -43,7 +43,7 @@ HELP
     @outargs = (
 	{ name => "${type}_type",
 	  type => 'enum GimpPDBArgType (no GIMP_PDB_END)',
-	  desc => "The type of $long_type { %%desc%% }", void_ret => 1 },
+	  desc => "The type of $long_type: %%desc%%", void_ret => 1 },
 	{ name => "${type}_name", type => 'string',
 	  desc => "The name of the $long_type" },
 	{ name => "${type}_desc", type => 'string',
@@ -237,7 +237,7 @@ HELP
 	{ name => 'date', type => 'string',
 	  desc => 'Copyright date' },
         { name => 'proc_type', type => 'enum GimpPDBProcType',
-	  desc => 'The procedure type: { %%desc%% }' },
+	  desc => 'The procedure type: %%desc%%' },
         { name => 'num_args', type => 'int32',
 	  desc => 'The number of input arguments' },
         { name => 'num_values', type => 'int32',
@@ -306,12 +306,13 @@ HELP
   canonical = gimp_canonicalize_identifier (identifier);
 
   orig_data = plug_in_data_get (gimp, canonical, &bytes);
-  success = (orig_data != NULL);
 
   g_free (canonical);
 
-  if (success)
+  if (orig_data)
     data = g_memdup (orig_data, bytes);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -347,9 +348,12 @@ HELP
   canonical = gimp_canonicalize_identifier (identifier);
 
   data = plug_in_data_get (gimp, canonical, &bytes);
-  success = (data != NULL);
 
   g_free (canonical);
+
+  if (! data)
+    success = FALSE;
+
 }
 CODE
     );

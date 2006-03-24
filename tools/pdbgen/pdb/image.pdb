@@ -73,7 +73,7 @@ HELP
 	{ name => 'height', type => '0 < int32',
 	  desc => 'The height of the image' },
 	{ name => 'type', type => 'enum GimpImageBaseType',
-	  desc => 'The type of image: { %%desc%% }' }
+	  desc => 'The type of image: %%desc%%' }
     );
 
     @outargs = (
@@ -546,7 +546,7 @@ drawables. If the coordinates lie outside of the extents of the
 specified drawable, then an error is returned. If the drawable has an
 alpha channel, the algorithm examines the alpha value of the drawable
 at the coordinates. If the alpha value is completely transparent (0),
-then an error is returned. If the sample_merged parameter is non-zero,
+then an error is returned. If the sample_merged parameter is TRUE,
 the data of the composite image will be used instead of that for the
 specified drawable. This is equivalent to sampling for colors after
 merging all visible layers. In the case of a merged sampling, the
@@ -558,7 +558,7 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
-	{ name => 'drawable', type => 'drawable',
+	{ name => 'drawable', type => 'drawable', no_success => 1,
           desc => 'The drawable to pick from' },
 	{ name => 'x', type => 'float',
 	  desc => 'x coordinate of upper-left corner of rectangle' },
@@ -572,7 +572,6 @@ HELP
 	{ name => 'average_radius', type => '0 < float', no_success => 1,
 	  desc => 'The radius of pixels to average' }
     );
-    $inargs[1]->{no_success} = 1;
 
     @outargs = (
 	{ name => 'color', type => 'color', void_ret => 1,
@@ -779,7 +778,7 @@ HELP
 	  desc => 'The image' },
 	{ name => 'merge_type',
 	  type => 'enum GimpMergeType (no GIMP_FLATTEN_IMAGE)',
-	  desc => 'The type of merge: { %%desc%% }' }
+	  desc => 'The type of merge: %%desc%%' }
     );
 
     @outargs = (
@@ -821,7 +820,7 @@ HELP
 	  desc => 'The layer to merge down from' },
 	{ name => 'merge_type',
 	  type => 'enum GimpMergeType (no GIMP_FLATTEN_IMAGE)',
-	  desc => 'The type of merge: { %%desc%% }' }
+	  desc => 'The type of merge: %%desc%%' }
     );
 
     @outargs = (
@@ -974,7 +973,7 @@ sub image_remove_layer_mask {
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer from which to remove mask' },
 	{ name => 'mode', type => 'enum GimpMaskApplyMode',
-	  desc => 'Removal mode: { %%desc%% }' }
+	  desc => 'Removal mode: %%desc%%' }
     );
 
     %invoke = (
@@ -1063,10 +1062,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_item_is_floating (GIMP_ITEM (channel));
-
-  if (success)
+  if (gimp_item_is_floating (GIMP_ITEM (channel)))
     success = gimp_image_add_channel (image, channel, MAX (position, -1));
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -1120,7 +1119,10 @@ HELP
 
     $invoke{code} = <<'CODE';
 {
+  if (gimp_item_is_floating (GIMP_ITEM (vectors)))
     success = gimp_image_add_vectors (image, vectors, MAX (position, -1));
+  else
+    success = FALSE;
 }
 CODE
 }
@@ -1312,7 +1314,7 @@ HELP
 
     @outargs = (
 	{ name => 'base_type', type => 'enum GimpImageBaseType',
-	  desc => "The image's base type: { %%desc%% }" }
+	  desc => "The image's base type: %%desc%%" }
     );
 
     %invoke = (
@@ -1439,7 +1441,7 @@ HELP
 
     @outargs = (
 	{ name => 'dirty', type => 'boolean',
-	  desc => 'True if the image has unsaved changes.' }
+	  desc => 'TRUE if the image has unsaved changes.' }
     );
 
     %invoke = (
@@ -1790,7 +1792,7 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
 	{ name => 'component', type => 'enum GimpChannelType',
-	  desc => 'The image component: { %%desc%% }' }
+	  desc => 'The image component: %%desc%%' }
     );
 
     @outargs = (
@@ -1831,7 +1833,7 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
 	{ name => 'component', type => 'enum GimpChannelType',
-	  desc => 'The image component: { %%desc%% }' },
+	  desc => 'The image component: %%desc%%' },
 	{ name => 'active', type => 'boolean',
 	  desc => 'Component is active (%%desc%%)' }
     );
@@ -1869,7 +1871,7 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
 	{ name => 'component', type => 'enum GimpChannelType',
-	  desc => 'The image component: { %%desc%% }' }
+	  desc => 'The image component: %%desc%%' }
     );
 
     @outargs = (
@@ -1910,7 +1912,7 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
 	{ name => 'component', type => 'enum GimpChannelType',
-	  desc => 'The image component: { %%desc%% }' },
+	  desc => 'The image component: %%desc%%' },
 	{ name => 'visible', type => 'boolean',
 	  desc => 'Component is visible (%%desc%%)' }
     );
@@ -2394,9 +2396,7 @@ HELP
       temp_buf_free (buf);
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );

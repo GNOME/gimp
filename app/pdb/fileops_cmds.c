@@ -182,7 +182,7 @@ static ProcArg file_load_inargs[] =
   {
     GIMP_PDB_INT32,
     "run-mode",
-    "The run mode: GIMP_RUN_INTERACTIVE (0) or GIMP_RUN_NONINTERACTIVE (1)"
+    "The run mode: { GIMP_RUN_INTERACTIVE (0), GIMP_RUN_NONINTERACTIVE (1) }"
   },
   {
     GIMP_PDB_STRING,
@@ -250,18 +250,20 @@ file_load_layer_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpPDBStatusType  status;
-      gchar             *uri;
+      gchar *uri = file_utils_filename_to_uri (gimp->load_procs, filename, NULL);
 
-      uri = file_utils_filename_to_uri (gimp->load_procs, filename, NULL);
-      if (! uri)
+      if (uri)
+        {
+          GimpPDBStatusType status;
+
+          layer = file_open_layer (gimp, context, progress,
+                                   image, uri, run_mode, NULL, &status, NULL);
+
+          if (! layer)
+            success = FALSE;
+        }
+      else
         success = FALSE;
-
-      if (success)
-        layer = file_open_layer (gimp, context, progress,
-                                 image, uri, run_mode, NULL, &status, NULL);
-
-      success = layer != NULL;
     }
 
   return_args = procedural_db_return_args (&file_load_layer_proc, success);
@@ -277,7 +279,7 @@ static ProcArg file_load_layer_inargs[] =
   {
     GIMP_PDB_INT32,
     "run-mode",
-    "The run mode: GIMP_RUN_INTERACTIVE (0) or GIMP_RUN_NONINTERACTIVE (1)"
+    "The run mode: { GIMP_RUN_INTERACTIVE (0), GIMP_RUN_NONINTERACTIVE (1) }"
   },
   {
     GIMP_PDB_IMAGE,
@@ -379,15 +381,11 @@ file_load_thumbnail_invoker (Gimp         *gimp,
                                        thumb_data_count);
 
           g_object_unref (pixbuf);
-
-          success = TRUE;
         }
       else
-        {
-          success = FALSE;
-        }
+        success = FALSE;
 
-        g_free (uri);
+      g_free (uri);
     }
 
   return_args = procedural_db_return_args (&file_load_thumbnail_proc, success);
@@ -503,7 +501,7 @@ static ProcArg file_save_inargs[] =
   {
     GIMP_PDB_INT32,
     "run-mode",
-    "The run mode: GIMP_RUN_INTERACTIVE (0) or GIMP_RUN_NONINTERACTIVE (1)"
+    "The run mode: { GIMP_RUN_INTERACTIVE (0), GIMP_RUN_NONINTERACTIVE (1) }"
   },
   {
     GIMP_PDB_IMAGE,
@@ -567,22 +565,13 @@ file_save_thumbnail_invoker (Gimp         *gimp,
     {
       const gchar *image_uri = gimp_object_get_name (GIMP_OBJECT (image));
 
-      if (! image_uri)
-        success = FALSE;
-
-      if (success)
+      if (image_uri)
         {
           gchar *uri = g_filename_to_uri (filename, NULL, NULL);
 
-          if (! uri)
-            success = FALSE;
-
-          if (success)
+          if (uri)
             {
-              if (strcmp (uri, image_uri))
-                success = FALSE;
-
-              if (success)
+              if (! strcmp (uri, image_uri))
                 {
                   GimpImagefile *imagefile;
 
@@ -590,10 +579,16 @@ file_save_thumbnail_invoker (Gimp         *gimp,
                   success = gimp_imagefile_save_thumbnail (imagefile, NULL, image);
                   g_object_unref (imagefile);
                 }
+              else
+                success = FALSE;
 
               g_free (uri);
             }
+          else
+            success = FALSE;
         }
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&file_save_thumbnail_proc, success);
@@ -978,7 +973,8 @@ register_file_handler_mime_invoker (Gimp         *gimp,
 
       canonical = gimp_canonicalize_identifier (procedure_name);
 
-      success = (plug_ins_file_register_mime (gimp, canonical, mime_type) != NULL);
+      if (! plug_ins_file_register_mime (gimp, canonical, mime_type))
+        success = FALSE;
 
       g_free (canonical);
     }
@@ -1042,8 +1038,8 @@ register_thumbnail_loader_invoker (Gimp         *gimp,
 
       canonical = gimp_canonicalize_identifier (load_proc);
 
-      success = (plug_ins_file_register_thumb_loader (gimp, canonical,
-                                                      thumb_proc) != NULL);
+      if (! plug_ins_file_register_thumb_loader (gimp, canonical, thumb_proc))
+        success = FALSE;
 
       g_free (canonical);
     }

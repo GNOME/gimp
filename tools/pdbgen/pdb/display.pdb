@@ -73,7 +73,8 @@ HELP
 	  desc => 'The display to delete' }
     );
 
-    %invoke = ( code => <<'CODE'
+    %invoke = (
+	code => <<'CODE'
 {
   gimp_delete_display (gimp, display);
 }
@@ -103,7 +104,8 @@ HELP
           desc => 'The native window handle or 0' }
     );
 
-    %invoke = ( code => <<'CODE'
+    %invoke = (
+	code => <<'CODE'
 {
   window = (gint32) gimp_get_display_window (gimp, display);
 }
@@ -152,7 +154,8 @@ HELP
 	  desc => 'The new image (must not have a display)' }
      );
 
-    %invoke = ( code => <<'CODE'
+    %invoke = (
+	code => <<'CODE'
 {
   success = (old_image != new_image    &&
              old_image->disp_count > 0 &&

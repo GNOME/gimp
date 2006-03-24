@@ -335,7 +335,7 @@ HELP
 
     @outargs = (
         { name => 'paint_mode', type => 'enum GimpLayerModeEffects',
-          desc => 'The paint mode: { %%desc%% }' }
+          desc => 'The paint mode: %%desc%%' }
     );
 
     %invoke = (
@@ -358,7 +358,7 @@ HELP
 
     @inargs = (
         { name => 'paint_mode', type => 'enum GimpLayerModeEffects',
-          desc => 'The paint mode: { %%desc%% }' }
+          desc => 'The paint mode: %%desc%%' }
     );
 
     %invoke = (

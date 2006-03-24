@@ -98,16 +98,16 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
 	{ name => 'dither_type', type => 'enum GimpConvertDitherType',
-	  desc => 'The dither type to use: { %%desc%% }' },
+	  desc => 'The dither type to use: %%desc%%' },
 	{ name => 'palette_type', type => 'enum GimpConvertPaletteType',
-	  desc => 'The type of palette to use: { %%desc%% }' },
+	  desc => 'The type of palette to use: %%desc%%' },
 	{ name => 'num_cols', type => 'int32',
 	  desc => 'The number of colors to quantize to, ignored unless
 		   (palette_type == GIMP_MAKE_PALETTE)' },
 	{ name => 'alpha_dither', type => 'boolean',
 	  desc => 'Dither transparency to fake partial opacity' },
 	{ name => 'remove_unused', type => 'boolean',
-	  desc => 'Remove unused or duplicate colour entries from final
+	  desc => 'Remove unused or duplicate color entries from final
 		   palette, ignored if (palette_type == GIMP_MAKE_PALETTE)' },
 	{ name => 'palette', type => 'string',
 	  desc => 'The name of the custom palette to use, ignored unless

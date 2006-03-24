@@ -559,7 +559,7 @@ HELP
 	{ name => 'name', type => 'string',
 	  desc => 'The name of the path which should be made into selection.' },
         { name => 'op', type => 'enum GimpChannelOps',
-	  desc => 'The desired operation with current selection.' },
+	  desc => 'The desired operation with current selection: %%desc%%' },
 	{ name => 'antialias', type => 'boolean',
 	  desc => 'Antialias selection.' },
 	{ name => 'feather', type => 'boolean',

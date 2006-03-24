@@ -38,7 +38,7 @@
  * This procedure flips the specified drawable if no selection exists.
  * If a selection exists, the portion of the drawable which lies under
  * the selection is cut from the drawable and made into a floating
- * selection which is then flipped. If auto_center is set to true, the
+ * selection which is then flipped. If auto_center is set to TRUE, the
  * flip is around the selection's center. Otherwise, the coordinate of
  * the axis needs to be specified. The return value is the ID of the
  * flipped drawable. If there was no selection, this will be equal to

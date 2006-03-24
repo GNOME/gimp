@@ -172,7 +172,7 @@ brushes_get_brush_invoker (Gimp         *gimp,
 
   if (brush)
     {
-      name    = g_strdup (GIMP_OBJECT (brush)->name);
+      name    = g_strdup (gimp_object_get_name (GIMP_OBJECT (brush)));
       width   = brush->mask->width;
       height  = brush->mask->height;
       spacing = gimp_brush_get_spacing (brush);
@@ -373,7 +373,7 @@ brushes_get_brush_data_invoker (Gimp         *gimp,
 
       if (brush)
         {
-          actual_name = g_strdup (GIMP_OBJECT (brush)->name);
+          actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (brush)));
           opacity     = 1.0;
           spacing     = gimp_brush_get_spacing (brush);
           paint_mode  = 0;

@@ -1111,7 +1111,7 @@ static ProcRecord color_balance_proc =
   "gimp-color-balance",
   "gimp-color-balance",
   "Modify the color balance of the specified drawable.",
-  "Modify the color balance of the specified drawable. There are three axis which can be modified: cyan-red, magenta-green, and yellow-blue. Negative values increase the amount of the former, positive values increase the amount of the latter. Color balance can be controlled with the 'transfer_mode' setting, which allows shadows, midtones, and highlights in an image to be affected differently. The 'preserve_lum' parameter, if non-zero, ensures that the luminosity of each pixel remains fixed.",
+  "Modify the color balance of the specified drawable. There are three axis which can be modified: cyan-red, magenta-green, and yellow-blue. Negative values increase the amount of the former, positive values increase the amount of the latter. Color balance can be controlled with the 'transfer_mode' setting, which allows shadows, midtones, and highlights in an image to be affected differently. The 'preserve_lum' parameter, if TRUE, ensures that the luminosity of each pixel remains fixed.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",

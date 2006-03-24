@@ -66,10 +66,9 @@ gimp_drawable_delete (gint32 drawable_ID)
  *
  * Returns whether the drawable is a layer.
  *
- * This procedure returns non-zero if the specified drawable is a
- * layer.
+ * This procedure returns TRUE if the specified drawable is a layer.
  *
- * Returns: Non-zero if the drawable is a layer.
+ * Returns: TRUE if the drawable is a layer.
  */
 gboolean
 gimp_drawable_is_layer (gint32 drawable_ID)
@@ -97,10 +96,10 @@ gimp_drawable_is_layer (gint32 drawable_ID)
  *
  * Returns whether the drawable is a layer mask.
  *
- * This procedure returns non-zero if the specified drawable is a layer
+ * This procedure returns TRUE if the specified drawable is a layer
  * mask.
  *
- * Returns: Non-zero if the drawable is a layer mask.
+ * Returns: TRUE if the drawable is a layer mask.
  */
 gboolean
 gimp_drawable_is_layer_mask (gint32 drawable_ID)
@@ -128,10 +127,9 @@ gimp_drawable_is_layer_mask (gint32 drawable_ID)
  *
  * Returns whether the drawable is a channel.
  *
- * This procedure returns non-zero if the specified drawable is a
- * channel.
+ * This procedure returns TRUE if the specified drawable is a channel.
  *
- * Returns: Non-zero if the drawable is a channel.
+ * Returns: TRUE if the drawable is a channel.
  */
 gboolean
 gimp_drawable_is_channel (gint32 drawable_ID)
@@ -220,7 +218,7 @@ gimp_drawable_type_with_alpha (gint32 drawable_ID)
  * gimp_drawable_has_alpha:
  * @drawable_ID: The drawable.
  *
- * Returns non-zero if the drawable has an alpha channel.
+ * Returns TRUE if the drawable has an alpha channel.
  *
  * This procedure returns whether the specified drawable has an alpha
  * channel. This can only be true for layers, and the associated type
@@ -254,10 +252,10 @@ gimp_drawable_has_alpha (gint32 drawable_ID)
  *
  * Returns whether the drawable is an RGB type.
  *
- * This procedure returns non-zero if the specified drawable is of type
- * { RGB, RGBA }.
+ * This procedure returns TRUE if the specified drawable is of type {
+ * RGB, RGBA }.
  *
- * Returns: non-zero if the drawable is an RGB type.
+ * Returns: TRUE if the drawable is an RGB type.
  */
 gboolean
 gimp_drawable_is_rgb (gint32 drawable_ID)
@@ -285,10 +283,10 @@ gimp_drawable_is_rgb (gint32 drawable_ID)
  *
  * Returns whether the drawable is a grayscale type.
  *
- * This procedure returns non-zero if the specified drawable is of type
- * { Gray, GrayA }.
+ * This procedure returns TRUE if the specified drawable is of type {
+ * Gray, GrayA }.
  *
- * Returns: non-zero if the drawable is a grayscale type.
+ * Returns: TRUE if the drawable is a grayscale type.
  */
 gboolean
 gimp_drawable_is_gray (gint32 drawable_ID)
@@ -316,10 +314,10 @@ gimp_drawable_is_gray (gint32 drawable_ID)
  *
  * Returns whether the drawable is an indexed type.
  *
- * This procedure returns non-zero if the specified drawable is of type
- * { Indexed, IndexedA }.
+ * This procedure returns TRUE if the specified drawable is of type {
+ * Indexed, IndexedA }.
  *
- * Returns: non-zero if the drawable is an indexed type.
+ * Returns: TRUE if the drawable is an indexed type.
  */
 gboolean
 gimp_drawable_is_indexed (gint32 drawable_ID)

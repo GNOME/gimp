@@ -305,7 +305,7 @@ HELP
 
     @outargs = (
         { name => 'style', type => 'enum GimpGridStyle',
-          desc => "The image's grid style" }
+          desc => "The image's grid style: %%desc%%" }
     );
 
     %invoke = (
@@ -336,7 +336,7 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
         { name => 'style', type => 'enum GimpGridStyle',
-          desc => "The image's grid style" }
+          desc => "The image's grid style: %%desc%%" }
     );
 
     %invoke = (

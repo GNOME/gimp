@@ -177,7 +177,7 @@ static ProcArg airbrush_inargs[] =
   {
     GIMP_PDB_FLOAT,
     "pressure",
-    "The pressure of the airbrush strokes (0 <= pressure <= 100)"
+    "The pressure of the airbrush strokes: (0 <= pressure <= 100)"
   },
   {
     GIMP_PDB_INT32,
@@ -741,7 +741,7 @@ static ProcArg dodgeburn_inargs[] =
   {
     GIMP_PDB_FLOAT,
     "exposure",
-    "The exposer of the strokes (0 <= exposure <= 100)"
+    "The exposure of the strokes: (0 <= exposure <= 100)"
   },
   {
     GIMP_PDB_INT32,
@@ -935,12 +935,12 @@ static ProcArg eraser_inargs[] =
   {
     GIMP_PDB_INT32,
     "hardness",
-    "GIMP_BRUSH_HARD (0) or GIMP_BRUSH_SOFT (1)"
+    "{ GIMP_BRUSH_HARD (0), GIMP_BRUSH_SOFT (1) }"
   },
   {
     GIMP_PDB_INT32,
     "method",
-    "GIMP_PAINT_CONSTANT (0) or GIMP_PAINT_INCREMENTAL (1)"
+    "{ GIMP_PAINT_CONSTANT (0), GIMP_PAINT_INCREMENTAL (1) }"
   }
 };
 
@@ -1127,7 +1127,7 @@ static ProcArg paintbrush_inargs[] =
   {
     GIMP_PDB_INT32,
     "method",
-    "GIMP_PAINT_CONSTANT (0) or GIMP_PAINT_INCREMENTAL (1)"
+    "{ GIMP_PAINT_CONSTANT (0), GIMP_PAINT_INCREMENTAL (1) }"
   },
   {
     GIMP_PDB_FLOAT,
@@ -1367,7 +1367,7 @@ static ProcArg smudge_inargs[] =
   {
     GIMP_PDB_FLOAT,
     "pressure",
-    "The pressure of the smudge strokes (0 <= pressure <= 100)"
+    "The pressure of the smudge strokes: (0 <= pressure <= 100)"
   },
   {
     GIMP_PDB_INT32,

@@ -39,7 +39,7 @@ HELP
 
     @outargs = (
 	{ name => 'non_empty', type => 'boolean', void_ret => 1,
-	  desc => 'True if there is a selection' },
+	  desc => 'TRUE if there is a selection' },
 	{ name => 'x1', type => 'int32',
 	  desc => 'x coordinate of upper left corner of selection bounds' },
 	{ name => 'y1', type => 'int32',
@@ -97,7 +97,7 @@ sub selection_is_empty {
     $blurb = 'Determine whether the selection is empty.';
 
     $help = <<'HELP';
-This procedure returns non-zero if the selection for the specified image is not
+This procedure returns TRUE if the selection for the specified image is not
 empty.
 HELP
 
@@ -185,9 +185,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_item_is_attached (GIMP_ITEM (drawable));
-
-  if (success)
+  if (gimp_item_is_attached (GIMP_ITEM (drawable)))
     {
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -196,6 +194,8 @@ HELP
       if (! layer)
         success = FALSE;
     }
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -488,7 +488,7 @@ HELP
 	{ name => 'channel', type => 'channel',
 	  desc => 'The channel' },
 	{ name => 'operation', type => 'enum GimpChannelOps',
-	  desc => 'The selection operation: { %%desc%% }' }
+	  desc => 'The selection operation: %%desc%%' }
     );
 
     %invoke = (

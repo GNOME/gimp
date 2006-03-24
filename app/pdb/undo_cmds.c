@@ -197,7 +197,7 @@ static ProcArg image_undo_is_enabled_outargs[] =
   {
     GIMP_PDB_INT32,
     "enabled",
-    "True if undo is enabled for this image"
+    "TRUE if undo is enabled for this image"
   }
 };
 
@@ -261,7 +261,7 @@ static ProcArg image_undo_disable_outargs[] =
   {
     GIMP_PDB_INT32,
     "disabled",
-    "True if the image undo has been disabled"
+    "TRUE if the image undo has been disabled"
   }
 };
 
@@ -325,7 +325,7 @@ static ProcArg image_undo_enable_outargs[] =
   {
     GIMP_PDB_INT32,
     "enabled",
-    "True if the image undo has been enabled"
+    "TRUE if the image undo has been enabled"
   }
 };
 
@@ -389,7 +389,7 @@ static ProcArg image_undo_freeze_outargs[] =
   {
     GIMP_PDB_INT32,
     "frozen",
-    "True if the image undo has been frozen"
+    "TRUE if the image undo has been frozen"
   }
 };
 
@@ -453,7 +453,7 @@ static ProcArg image_undo_thaw_outargs[] =
   {
     GIMP_PDB_INT32,
     "thawed",
-    "True if the image undo has been thawed"
+    "TRUE if the image undo has been thawed"
   }
 };
 

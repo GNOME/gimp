@@ -38,13 +38,13 @@ HELP
 	{ name => 'height', type => '0 < int32',
 	  desc => 'The layer height: (%%desc%%)' },
 	{ name => 'type', type => 'enum GimpImageType',
-	  desc => 'The layer type: { %%desc%% }' },
+	  desc => 'The layer type: %%desc%%' },
 	{ name => 'name', type => 'string',
 	  desc => 'The layer name', null_ok => 1 },
 	{ name => 'opacity', type => '0 <= float <= 100',
 	  desc => 'The layer opacity: (%%desc%%)' },
 	{ name => 'mode', type => 'enum GimpLayerModeEffects',
-	  desc => 'The layer combination mode: { %%desc%% }' }
+	  desc => 'The layer combination mode: %%desc%%' }
     );
 
     @outargs = (
@@ -124,7 +124,7 @@ HELP
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer to which to add the mask' },
  	{ name => 'mask_type', type => 'enum GimpAddMaskType',
-	  desc => 'The type of mask: { %%desc%% }' }
+	  desc => 'The type of mask: %%desc%%' }
     );
 
     @outargs = (
@@ -167,10 +167,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_item_is_attached (GIMP_ITEM (layer));
-
-  if (success)
+  if (gimp_item_is_attached (GIMP_ITEM (layer)))
     gimp_layer_add_mask (layer, mask, TRUE);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -190,16 +190,16 @@ HELP
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer from which to remove mask' },
 	{ name => 'mode', type => 'enum GimpMaskApplyMode',
-	  desc => 'Removal mode: { %%desc%% }' }
+	  desc => 'Removal mode: %%desc%%' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_item_is_attached (GIMP_ITEM (layer));
-
-  if (success)
+  if (gimp_item_is_attached (GIMP_ITEM (layer)))
     gimp_layer_apply_mask (layer, mode, TRUE);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -232,12 +232,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_item_is_attached (GIMP_ITEM (layer));
-
-  if (success)
+  if (gimp_item_is_attached (GIMP_ITEM (layer)))
     gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
                                gimp->config->interpolation_type, NULL,
                                local_origin);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -273,11 +273,11 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_item_is_attached (GIMP_ITEM (layer));
-
-  if (success)
+  if (gimp_item_is_attached (GIMP_ITEM (layer)))
     gimp_item_resize (GIMP_ITEM (layer), context,
                       new_width, new_height, offx, offy);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -301,10 +301,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_item_is_attached (GIMP_ITEM (layer));
-
-  if (success)
+  if (gimp_item_is_attached (GIMP_ITEM (layer)))
     gimp_layer_resize_to_image (layer, context);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -500,7 +500,7 @@ HELP
 
     @outargs = (
 	{ name => 'is_floating_sel', type => 'boolean',
-	  desc => 'Non-zero if the layer is a floating selection' }
+	  desc => 'TRUE if the layer is a floating selection' }
     );
 
     %invoke = (
@@ -619,7 +619,7 @@ sub layer_get_apply_mask {
 
     $help = <<'HELP';
 This procedure returns the specified layer's apply mask setting. If
-the value is non-zero, then the layer mask for this layer is currently
+the value is TRUE, then the layer mask for this layer is currently
 being composited with the layer's alpha channel.
 HELP
 
@@ -683,8 +683,8 @@ sub layer_get_show_mask {
 
     $help = <<'HELP';
 This procedure returns the specified layer's show mask setting. This
-controls whether the layer or its mask is visible. Non-zero values
-indicate that the mask should be visible. If the layer has no mask,
+controls whether the layer or its mask is visible. TRUE indicates
+that the mask should be visible. If the layer has no mask,
 then this function returns an error.
 HELP
 
@@ -748,7 +748,7 @@ sub layer_get_edit_mask {
 
     $help = <<'HELP';
 This procedure returns the specified layer's edit mask setting. If
-the value is non-zero, then the layer mask for this layer is currently
+the value is TRUE, then the layer mask for this layer is currently
 active, and not the layer.
 HELP
 
@@ -867,7 +867,7 @@ sub layer_get_mode {
 
     @outargs = (
 	{ name => 'mode', type => 'enum GimpLayerModeEffects',
-	  desc => 'The layer combination mode' }
+	  desc => 'The layer combination mode: %%desc%%' }
     );
 
     %invoke = (
@@ -889,7 +889,7 @@ sub layer_set_mode {
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer' },
 	{ name => 'mode', type => 'enum GimpLayerModeEffects',
-	  desc => 'The new layer combination mode (%%desc%%)' }
+	  desc => 'The new layer combination mode: %%desc%%' }
     );
 
     %invoke = (

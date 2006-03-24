@@ -98,7 +98,7 @@ gimp_image_undo_group_end (gint32 image_ID)
  * each other and want to check if their caller has already used
  * 'gimp_image_undo_disable' or 'gimp_image_undo_freeze'.
  *
- * Returns: True if undo is enabled for this image.
+ * Returns: TRUE if undo is enabled for this image.
  */
 gboolean
 gimp_image_undo_is_enabled (gint32 image_ID)
@@ -132,7 +132,7 @@ gimp_image_undo_is_enabled (gint32 image_ID)
  * image undo stack. This is advantageous because saving undo steps can
  * be time and memory intensive.
  *
- * Returns: True if the image undo has been disabled.
+ * Returns: TRUE if the image undo has been disabled.
  */
 gboolean
 gimp_image_undo_disable (gint32 image_ID)
@@ -165,7 +165,7 @@ gimp_image_undo_disable (gint32 image_ID)
  * conjunction with 'gimp_image_undo_disable' to temporarily disable an
  * image undo stack.
  *
- * Returns: True if the image undo has been enabled.
+ * Returns: TRUE if the image undo has been enabled.
  */
 gboolean
 gimp_image_undo_enable (gint32 image_ID)
@@ -204,7 +204,7 @@ gimp_image_undo_enable (gint32 image_ID)
  * image is back to the same state it was frozen in before thawing,
  * else 'undo' behaviour is undefined.
  *
- * Returns: True if the image undo has been frozen.
+ * Returns: TRUE if the image undo has been frozen.
  */
 gboolean
 gimp_image_undo_freeze (gint32 image_ID)
@@ -243,7 +243,7 @@ gimp_image_undo_freeze (gint32 image_ID)
  * freezes and thaws and ensuring image consistancy is the
  * responsibility of the caller.
  *
- * Returns: True if the image undo has been thawed.
+ * Returns: TRUE if the image undo has been thawed.
  */
 gboolean
 gimp_image_undo_thaw (gint32 image_ID)

@@ -123,7 +123,7 @@ static ProcArg by_color_select_inargs[] =
   {
     GIMP_PDB_INT32,
     "threshold",
-    "Threshold in intensity levels 0 <= threshold <= 255"
+    "Threshold in intensity levels: 0 <= threshold <= 255"
   },
   {
     GIMP_PDB_INT32,
@@ -157,7 +157,7 @@ static ProcRecord by_color_select_proc =
   "gimp-by-color-select",
   "gimp-by-color-select",
   "Create a selection by selecting all pixels (in the specified drawable) with the same (or similar) color to that specified.",
-  "This tool creates a selection over the specified image. A by-color selection is determined by the supplied color under the constraints of the specified threshold. Essentially, all pixels (in the drawable) that have color sufficiently close to the specified color (as determined by the threshold value) are included in the selection. The antialiasing parameter allows the final selection mask to contain intermediate values based on close misses to the threshold bar. Feathering can be enabled optionally and is controlled with the \"feather_radius\" parameter. If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored.",
+  "This tool creates a selection over the specified image. A by-color selection is determined by the supplied color under the constraints of the specified threshold. Essentially, all pixels (in the drawable) that have color sufficiently close to the specified color (as determined by the threshold value) are included in the selection. The antialiasing parameter allows the final selection mask to contain intermediate values based on close misses to the threshold bar. Feathering can be enabled optionally and is controlled with the \"feather_radius\" parameter. If the sample_merged parameter is TRUE, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -490,7 +490,7 @@ static ProcArg fuzzy_select_inargs[] =
   {
     GIMP_PDB_INT32,
     "threshold",
-    "Threshold in intensity levels 0 <= threshold <= 255"
+    "Threshold in intensity levels: 0 <= threshold <= 255"
   },
   {
     GIMP_PDB_INT32,
@@ -524,8 +524,8 @@ static ProcRecord fuzzy_select_proc =
   "gimp-fuzzy-select",
   "gimp-fuzzy-select",
   "Create a fuzzy selection starting at the specified coordinates on the specified drawable.",
-  "This tool creates a fuzzy selection over the specified image. A fuzzy selection is determined by a seed fill under the constraints of the specified threshold. Essentially, the color at the specified coordinates (in the drawable) is measured and the selection expands outwards from that point to any adjacent pixels which are not significantly different (as determined by the threshold value). This process continues until no more expansion is possible. The antialiasing parameter allows the final selection mask to contain intermediate values based on close misses to the threshold bar at pixels along the seed fill boundary. Feathering can be enabled optionally and is controlled with the \"feather_radius\" paramter. If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored."
-  "If the sample is merged, the specified coordinates are relative to the image origin; otherwise, they are relative to the drawable's origin.",
+  "This tool creates a fuzzy selection over the specified image. A fuzzy selection is determined by a seed fill under the constraints of the specified threshold. Essentially, the color at the specified coordinates (in the drawable) is measured and the selection expands outwards from that point to any adjacent pixels which are not significantly different (as determined by the threshold value). This process continues until no more expansion is possible. The antialiasing parameter allows the final selection mask to contain intermediate values based on close misses to the threshold bar at pixels along the seed fill boundary. Feathering can be enabled optionally and is controlled with the \"feather_radius\" paramter. If the sample_merged parameter is TRUE, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored. If"
+  "the sample is merged, the specified coordinates are relative to the image origin; otherwise, they are relative to the drawable's origin.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

@@ -290,7 +290,7 @@ gimp_convolve_default (gint32         drawable_ID,
 /**
  * gimp_dodgeburn:
  * @drawable_ID: The affected drawable.
- * @exposure: The exposer of the strokes.
+ * @exposure: The exposure of the strokes.
  * @dodgeburn_type: The type either dodge or burn.
  * @dodgeburn_mode: The mode.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).

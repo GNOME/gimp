@@ -79,7 +79,7 @@ HELP
 
     @inargs = (
 	{ name => 'force', type => 'boolean',
-	  desc => 'Flag specifying whether to force the gimp to  or exit
+	  desc => 'Flag specifying whether to force the gimp to or exit
 		   normally' }
     );
 

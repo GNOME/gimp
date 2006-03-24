@@ -119,18 +119,20 @@ HELP
         headers => [ qw("file/file-open.h") ],
 	code    => <<'CODE'
 {
-  GimpPDBStatusType  status;
-  gchar             *uri;
+  gchar *uri = file_utils_filename_to_uri (gimp->load_procs, filename, NULL);
 
-  uri = file_utils_filename_to_uri (gimp->load_procs, filename, NULL);
-  if (! uri)
+  if (uri)
+    {
+      GimpPDBStatusType status;
+
+      layer = file_open_layer (gimp, context, progress,
+                               image, uri, run_mode, NULL, &status, NULL);
+
+      if (! layer)
+        success = FALSE;
+    }
+  else
     success = FALSE;
-
-  if (success)
-    layer = file_open_layer (gimp, context, progress,
-			     image, uri, run_mode, NULL, &status, NULL);
-
-  success = layer != NULL;
 }
 CODE
     );
@@ -226,7 +228,7 @@ HELP
 
     @inargs = (
 	{ name => 'filename', type => 'string', no_validate => 1,
-	  desc => 'The name of the file that owns the thumbnail to load' },
+	  desc => 'The name of the file that owns the thumbnail to load' }
     );
 
     @outargs = (
@@ -284,15 +286,11 @@ HELP
                                    thumb_data_count);
 
       g_object_unref (pixbuf);
-
-      success = TRUE;
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 
-    g_free (uri);
+  g_free (uri);
 }
 CODE
     );
@@ -324,22 +322,13 @@ HELP
 {
   const gchar *image_uri = gimp_object_get_name (GIMP_OBJECT (image));
 
-  if (! image_uri)
-    success = FALSE;
-
-  if (success)
+  if (image_uri)
     {
       gchar *uri = g_filename_to_uri (filename, NULL, NULL);
 
-      if (! uri)
-        success = FALSE;
-
-      if (success)
+      if (uri)
         {
-          if (strcmp (uri, image_uri))
-            success = FALSE;
-
-          if (success)
+          if (! strcmp (uri, image_uri))
             {
               GimpImagefile *imagefile;
 
@@ -347,10 +336,16 @@ HELP
               success = gimp_imagefile_save_thumbnail (imagefile, NULL, image);
               g_object_unref (imagefile);
             }
+          else
+            success = FALSE;
 
           g_free (uri);
         }
+      else
+        success = FALSE;
     }
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -563,7 +558,8 @@ HELP
 
   canonical = gimp_canonicalize_identifier (procedure_name);
 
-  success = (plug_ins_file_register_mime (gimp, canonical, mime_type) != NULL);
+  if (! plug_ins_file_register_mime (gimp, canonical, mime_type))
+    success = FALSE;
 
   g_free (canonical);
 }
@@ -598,8 +594,8 @@ HELP
 
   canonical = gimp_canonicalize_identifier (load_proc);
 
-  success = (plug_ins_file_register_thumb_loader (gimp, canonical,
-                                                  thumb_proc) != NULL);
+  if (! plug_ins_file_register_thumb_loader (gimp, canonical, thumb_proc))
+    success = FALSE;
 
   g_free (canonical);
 }

@@ -91,7 +91,7 @@ palette_new_invoker (Gimp         *gimp,
           GimpData *data = gimp_data_factory_data_new (gimp->palette_factory, name);
 
           if (data)
-            actual_name = g_strdup (GIMP_OBJECT (data)->name);
+            actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (data)));
           else
             success = FALSE;
         }
@@ -170,7 +170,7 @@ palette_duplicate_invoker (Gimp         *gimp,
                                               GIMP_DATA (palette));
 
           if (palette_copy)
-            copy_name = g_strdup (GIMP_OBJECT (palette_copy)->name);
+            copy_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (palette_copy)));
           else
             success = FALSE;
         }
@@ -250,7 +250,7 @@ palette_rename_invoker (Gimp         *gimp,
       if (palette && GIMP_DATA (palette)->writable)
         {
           gimp_object_set_name (GIMP_OBJECT (palette), new_name);
-          actual_name = g_strdup (GIMP_OBJECT (palette)->name);
+          actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (palette)));
         }
       else
         success = FALSE;
@@ -419,7 +419,7 @@ static ProcArg palette_is_editable_outargs[] =
   {
     GIMP_PDB_INT32,
     "editable",
-    "True if the palette can be edited"
+    "TRUE if the palette can be edited"
   }
 };
 
@@ -428,7 +428,7 @@ static ProcRecord palette_is_editable_proc =
   "gimp-palette-is-editable",
   "gimp-palette-is-editable",
   "Tests if palette can be edited",
-  "Returns True if you have permission to change the palette",
+  "Returns TRUE if you have permission to change the palette",
   "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
   "Bill Skaggs",
   "2004",

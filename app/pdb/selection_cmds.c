@@ -128,7 +128,7 @@ static ProcArg selection_bounds_outargs[] =
   {
     GIMP_PDB_INT32,
     "non-empty",
-    "True if there is a selection"
+    "TRUE if there is a selection"
   },
   {
     GIMP_PDB_INT32,
@@ -301,7 +301,7 @@ static ProcRecord selection_is_empty_proc =
   "gimp-selection-is-empty",
   "gimp-selection-is-empty",
   "Determine whether the selection is empty.",
-  "This procedure returns non-zero if the selection for the specified image is not empty.",
+  "This procedure returns TRUE if the selection for the specified image is not empty.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -402,9 +402,7 @@ selection_float_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
-
-      if (success)
+      if (gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -413,6 +411,8 @@ selection_float_invoker (Gimp         *gimp,
           if (! layer)
             success = FALSE;
         }
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&selection_float_proc, success);

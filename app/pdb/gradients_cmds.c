@@ -420,7 +420,7 @@ gradients_get_gradient_data_invoker (Gimp         *gimp,
           pos   = 0.0;
           delta = 1.0 / (sample_size - 1);
 
-          actual_name = g_strdup (GIMP_OBJECT (gradient)->name);
+          actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (gradient)));
           grad_data   = g_new (gdouble, sample_size * 4);
           width       = sample_size * 4;
 
@@ -464,7 +464,7 @@ static ProcArg gradients_get_gradient_data_inargs[] =
   {
     GIMP_PDB_INT32,
     "sample-size",
-    "Size of the sample to return when the gradient is changed (1 <= sample_size <= 10000)"
+    "Size of the sample to return when the gradient is changed: (1 <= sample_size <= 10000)"
   },
   {
     GIMP_PDB_INT32,

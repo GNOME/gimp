@@ -496,7 +496,7 @@ static ProcArg procedural_db_proc_arg_outargs[] =
   {
     GIMP_PDB_INT32,
     "arg-type",
-    "The type of argument { GIMP_PDB_INT32 (0), GIMP_PDB_INT16 (1), GIMP_PDB_INT8 (2), GIMP_PDB_FLOAT (3), GIMP_PDB_STRING (4), GIMP_PDB_INT32ARRAY (5), GIMP_PDB_INT16ARRAY (6), GIMP_PDB_INT8ARRAY (7), GIMP_PDB_FLOATARRAY (8), GIMP_PDB_STRINGARRAY (9), GIMP_PDB_COLOR (10), GIMP_PDB_REGION (11), GIMP_PDB_DISPLAY (12), GIMP_PDB_IMAGE (13), GIMP_PDB_LAYER (14), GIMP_PDB_CHANNEL (15), GIMP_PDB_DRAWABLE (16), GIMP_PDB_SELECTION (17), GIMP_PDB_BOUNDARY (18), GIMP_PDB_VECTORS (19), GIMP_PDB_PARASITE (20), GIMP_PDB_STATUS (21), GIMP_PDB_PATH (GIMP_PDB_VECTORS) }"
+    "The type of argument: { GIMP_PDB_INT32 (0), GIMP_PDB_INT16 (1), GIMP_PDB_INT8 (2), GIMP_PDB_FLOAT (3), GIMP_PDB_STRING (4), GIMP_PDB_INT32ARRAY (5), GIMP_PDB_INT16ARRAY (6), GIMP_PDB_INT8ARRAY (7), GIMP_PDB_FLOATARRAY (8), GIMP_PDB_STRINGARRAY (9), GIMP_PDB_COLOR (10), GIMP_PDB_REGION (11), GIMP_PDB_DISPLAY (12), GIMP_PDB_IMAGE (13), GIMP_PDB_LAYER (14), GIMP_PDB_CHANNEL (15), GIMP_PDB_DRAWABLE (16), GIMP_PDB_SELECTION (17), GIMP_PDB_BOUNDARY (18), GIMP_PDB_VECTORS (19), GIMP_PDB_PARASITE (20), GIMP_PDB_STATUS (21), GIMP_PDB_PATH (GIMP_PDB_VECTORS) }"
   },
   {
     GIMP_PDB_STRING,
@@ -612,7 +612,7 @@ static ProcArg procedural_db_proc_val_outargs[] =
   {
     GIMP_PDB_INT32,
     "val-type",
-    "The type of return value { GIMP_PDB_INT32 (0), GIMP_PDB_INT16 (1), GIMP_PDB_INT8 (2), GIMP_PDB_FLOAT (3), GIMP_PDB_STRING (4), GIMP_PDB_INT32ARRAY (5), GIMP_PDB_INT16ARRAY (6), GIMP_PDB_INT8ARRAY (7), GIMP_PDB_FLOATARRAY (8), GIMP_PDB_STRINGARRAY (9), GIMP_PDB_COLOR (10), GIMP_PDB_REGION (11), GIMP_PDB_DISPLAY (12), GIMP_PDB_IMAGE (13), GIMP_PDB_LAYER (14), GIMP_PDB_CHANNEL (15), GIMP_PDB_DRAWABLE (16), GIMP_PDB_SELECTION (17), GIMP_PDB_BOUNDARY (18), GIMP_PDB_VECTORS (19), GIMP_PDB_PARASITE (20), GIMP_PDB_STATUS (21), GIMP_PDB_PATH (GIMP_PDB_VECTORS) }"
+    "The type of return value: { GIMP_PDB_INT32 (0), GIMP_PDB_INT16 (1), GIMP_PDB_INT8 (2), GIMP_PDB_FLOAT (3), GIMP_PDB_STRING (4), GIMP_PDB_INT32ARRAY (5), GIMP_PDB_INT16ARRAY (6), GIMP_PDB_INT8ARRAY (7), GIMP_PDB_FLOATARRAY (8), GIMP_PDB_STRINGARRAY (9), GIMP_PDB_COLOR (10), GIMP_PDB_REGION (11), GIMP_PDB_DISPLAY (12), GIMP_PDB_IMAGE (13), GIMP_PDB_LAYER (14), GIMP_PDB_CHANNEL (15), GIMP_PDB_DRAWABLE (16), GIMP_PDB_SELECTION (17), GIMP_PDB_BOUNDARY (18), GIMP_PDB_VECTORS (19), GIMP_PDB_PARASITE (20), GIMP_PDB_STATUS (21), GIMP_PDB_PATH (GIMP_PDB_VECTORS) }"
   },
   {
     GIMP_PDB_STRING,
@@ -668,12 +668,13 @@ procedural_db_get_data_invoker (Gimp         *gimp,
       canonical = gimp_canonicalize_identifier (identifier);
 
       orig_data = plug_in_data_get (gimp, canonical, &bytes);
-      success = (orig_data != NULL);
 
       g_free (canonical);
 
-      if (success)
+      if (orig_data)
         data = g_memdup (orig_data, bytes);
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&procedural_db_get_data_proc, success);
@@ -751,9 +752,12 @@ procedural_db_get_data_size_invoker (Gimp         *gimp,
       canonical = gimp_canonicalize_identifier (identifier);
 
       data = plug_in_data_get (gimp, canonical, &bytes);
-      success = (data != NULL);
 
       g_free (canonical);
+
+      if (! data)
+        success = FALSE;
+
     }
 
   return_args = procedural_db_return_args (&procedural_db_get_data_size_proc, success);

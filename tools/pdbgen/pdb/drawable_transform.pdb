@@ -121,7 +121,7 @@ BLURB
 This procedure flips the specified drawable if no selection exists. If
 a selection exists, the portion of the drawable which lies under the
 selection is cut from the drawable and made into a floating selection
-which is then flipped.  If auto_center is set to true, the flip is
+which is then flipped.  If auto_center is set to TRUE, the flip is
 around the selection's center. Otherwise, the coordinate of the axis
 needs to be specified.
 
@@ -204,9 +204,9 @@ HELP
         { name => 'y1', type => 'float',
           desc => 'vert. coord. of other end of axis' },
 	{ name => 'transform_direction', type => 'enum GimpTransformDirection',
-	  desc => 'Direction of Transformation: { %%desc%% }' },
+	  desc => 'Direction of Transformation: %%desc%%' },
 	{ name => 'interpolation', type => 'enum GimpInterpolationType',
-	  desc => 'Type of interpolation: { %%desc%% }' },
+	  desc => 'Type of interpolation: %%desc%%' },
 	{ name => 'supersample', type => 'boolean',
 	  desc => 'Whether to perform supersample' },
 	{ name => 'recursion_level', type => '0 < int32',
@@ -324,9 +324,9 @@ HELP
 	  desc => 'The new y coordinate of lower-right corner of original
 		   bounding box' },
 	{ name => 'transform_direction', type => 'enum GimpTransformDirection',
-	  desc => 'Direction of Transformation: { %%desc%% }' },
+	  desc => 'Direction of Transformation: %%desc%%' },
 	{ name => 'interpolation', type => 'enum GimpInterpolationType',
-	  desc => 'Type of interpolation: { %%desc%% }' },
+	  desc => 'Type of interpolation: %%desc%%' },
 	{ name => 'supersample', type => 'boolean',
 	  desc => 'Whether to perform supersample' },
 	{ name => 'recursion_level', type => '0 < int32',
@@ -501,9 +501,9 @@ HELP
         { name => 'center_y', type => 'int32',
           desc => 'The vert. coordinate of the center of rotation' },
 	{ name => 'transform_direction', type => 'enum GimpTransformDirection',
-	  desc => 'Direction of Transformation: { %%desc%% }' },
+	  desc => 'Direction of Transformation: %%desc%%' },
 	{ name => 'interpolation', type => 'enum GimpInterpolationType',
-	  desc => 'Type of interpolation: { %%desc%% }' },
+	  desc => 'Type of interpolation: %%desc%%' },
 	{ name => 'supersample', type => 'boolean',
 	  desc => 'Whether to perform supersample' },
 	{ name => 'recursion_level', type => '0 < int32',
@@ -605,9 +605,9 @@ HELP
 	  desc => 'The new y coordinate of the lower-right corner of the
 		    scaled region' },
 	{ name => 'transform_direction', type => 'enum GimpTransformDirection',
-	  desc => 'Direction of Transformation: { %%desc%% }' },
+	  desc => 'Direction of Transformation: %%desc%%' },
 	{ name => 'interpolation', type => 'enum GimpInterpolationType',
-	  desc => 'Type of interpolation: { %%desc%% }' },
+	  desc => 'Type of interpolation: %%desc%%' },
 	{ name => 'supersample', type => 'boolean',
 	  desc => 'Whether to perform supersample' },
 	{ name => 'recursion_level', type => '0 < int32',
@@ -709,9 +709,9 @@ HELP
         { name => 'magnitude', type => 'float',
           desc => 'The magnitude of the shear' },
 	{ name => 'transform_direction', type => 'enum GimpTransformDirection',
-	  desc => 'Direction of Transformation: { %%desc%% }' },
+	  desc => 'Direction of Transformation: %%desc%%' },
 	{ name => 'interpolation', type => 'enum GimpInterpolationType',
-	  desc => 'Type of interpolation: { %%desc%% }' },
+	  desc => 'Type of interpolation: %%desc%%' },
 	{ name => 'supersample', type => 'boolean',
 	  desc => 'Whether to perform supersample' },
 	{ name => 'recursion_level', type => '0 < int32',
@@ -814,9 +814,9 @@ HELP
         { name => 'dest_y', type => 'float',
           desc => 'Y coordinate of where the center goes' },
 	{ name => 'transform_direction', type => 'enum GimpTransformDirection',
-	  desc => 'Direction of Transformation: { %%desc%% }' },
+	  desc => 'Direction of Transformation: %%desc%%' },
 	{ name => 'interpolation', type => 'enum GimpInterpolationType',
-	  desc => 'Type of interpolation: { %%desc%% }' },
+	  desc => 'Type of interpolation: %%desc%%' },
 	{ name => 'supersample', type => 'boolean',
 	  desc => 'Whether to perform supersample' },
 	{ name => 'recursion_level', type => '0 < int32',
@@ -931,9 +931,9 @@ HELP
         { name => 'coeff_2_2', type => 'float',
           desc => 'coefficient (2,2) of the transformation matrix' },
 	{ name => 'transform_direction', type => 'enum GimpTransformDirection',
-	  desc => 'Direction of Transformation: { %%desc%% }' },
+	  desc => 'Direction of Transformation: %%desc%%' },
 	{ name => 'interpolation', type => 'enum GimpInterpolationType',
-	  desc => 'Type of interpolation: { %%desc%% }' },
+	  desc => 'Type of interpolation: %%desc%%' },
 	{ name => 'supersample', type => 'boolean',
 	  desc => 'Whether to perform supersample' },
 	{ name => 'recursion_level', type => '0 < int32',

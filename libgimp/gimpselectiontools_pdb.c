@@ -29,7 +29,7 @@
  * gimp_by_color_select:
  * @drawable_ID: The affected drawable.
  * @color: The color to select.
- * @threshold: Threshold in intensity levels %%desc%%.
+ * @threshold: Threshold in intensity levels.
  * @operation: The selection operation.
  * @antialias: Antialiasing.
  * @feather: Feather option for selections.
@@ -48,7 +48,7 @@
  * mask to contain intermediate values based on close misses to the
  * threshold bar. Feathering can be enabled optionally and is
  * controlled with the \"feather_radius\" parameter. If the
- * sample_merged parameter is non-zero, the data of the composite image
+ * sample_merged parameter is TRUE, the data of the composite image
  * will be used instead of that for the specified drawable. This is
  * equivalent to sampling for colors after merging all visible layers.
  * In the case of a merged sampling, the supplied drawable is ignored.
@@ -211,7 +211,7 @@ gimp_free_select (gint32          image_ID,
  * @drawable_ID: The affected drawable.
  * @x: x coordinate of initial seed fill point: (image coordinates).
  * @y: y coordinate of initial seed fill point: (image coordinates).
- * @threshold: Threshold in intensity levels %%desc%%.
+ * @threshold: Threshold in intensity levels.
  * @operation: The selection operation.
  * @antialias: Antialiasing.
  * @feather: Feather option for selections.
@@ -232,13 +232,13 @@ gimp_free_select (gint32          image_ID,
  * intermediate values based on close misses to the threshold bar at
  * pixels along the seed fill boundary. Feathering can be enabled
  * optionally and is controlled with the \"feather_radius\" paramter.
- * If the sample_merged parameter is non-zero, the data of the
- * composite image will be used instead of that for the specified
- * drawable. This is equivalent to sampling for colors after merging
- * all visible layers. In the case of a merged sampling, the supplied
- * drawable is ignored. If the sample is merged, the specified
- * coordinates are relative to the image origin; otherwise, they are
- * relative to the drawable's origin.
+ * If the sample_merged parameter is TRUE, the data of the composite
+ * image will be used instead of that for the specified drawable. This
+ * is equivalent to sampling for colors after merging all visible
+ * layers. In the case of a merged sampling, the supplied drawable is
+ * ignored. If the sample is merged, the specified coordinates are
+ * relative to the image origin; otherwise, they are relative to the
+ * drawable's origin.
  *
  * Returns: TRUE on success.
  */

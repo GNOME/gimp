@@ -33,7 +33,7 @@ sub gradients_popup {
 	  desc => 'The name of the pattern to set as the first selected',
 	  null_ok => 1 },
 	{ name => 'sample_size', type => '1 <= int32 <= 10000',
-	  desc => 'Size of the sample to return when the gradient is changed
+	  desc => 'Size of the sample to return when the gradient is changed:
 		   (%%desc%%)',
 	  no_success => 1 }
     );

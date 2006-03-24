@@ -106,7 +106,7 @@ static ProcArg flip_inargs[] =
   {
     GIMP_PDB_INT32,
     "flip-type",
-    "Type of flip: GIMP_ORIENTATION_HORIZONTAL (0) or GIMP_ORIENTATION_VERTICAL (1)"
+    "Type of flip: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }"
   }
 };
 
@@ -636,7 +636,7 @@ static ProcArg shear_inargs[] =
   {
     GIMP_PDB_INT32,
     "shear-type",
-    "Type of shear: GIMP_ORIENTATION_HORIZONTAL (0) or GIMP_ORIENTATION_VERTICAL (1)"
+    "Type of shear: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }"
   },
   {
     GIMP_PDB_FLOAT,

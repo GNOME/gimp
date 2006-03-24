@@ -1057,7 +1057,7 @@ static ProcArg image_flip_inargs[] =
   {
     GIMP_PDB_INT32,
     "flip-type",
-    "Type of flip: GIMP_ORIENTATION_HORIZONTAL (0) or GIMP_ORIENTATION_VERTICAL (1)"
+    "Type of flip: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }"
   }
 };
 
@@ -1115,7 +1115,7 @@ static ProcArg image_rotate_inargs[] =
   {
     GIMP_PDB_INT32,
     "rotate-type",
-    "Angle of rotation: GIMP_ROTATE_90 (0), GIMP_ROTATE_180 (1), GIMP_ROTATE_270 (2)"
+    "Angle of rotation: { GIMP_ROTATE_90 (0), GIMP_ROTATE_180 (1), GIMP_ROTATE_270 (2) }"
   }
 };
 
@@ -1762,7 +1762,7 @@ static ProcRecord image_pick_color_proc =
   "gimp-image-pick-color",
   "gimp-image-pick-color",
   "Determine the color at the given drawable coordinates",
-  "This tool determines the color at the specified coordinates. The returned color is an RGB triplet even for grayscale and indexed drawables. If the coordinates lie outside of the extents of the specified drawable, then an error is returned. If the drawable has an alpha channel, the algorithm examines the alpha value of the drawable at the coordinates. If the alpha value is completely transparent (0), then an error is returned. If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored.",
+  "This tool determines the color at the specified coordinates. The returned color is an RGB triplet even for grayscale and indexed drawables. If the coordinates lie outside of the extents of the specified drawable, then an error is returned. If the drawable has an alpha channel, the algorithm examines the alpha value of the drawable at the coordinates. If the alpha value is completely transparent (0), then an error is returned. If the sample_merged parameter is TRUE, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -2243,10 +2243,10 @@ image_add_channel_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = gimp_item_is_floating (GIMP_ITEM (channel));
-
-      if (success)
+      if (gimp_item_is_floating (GIMP_ITEM (channel)))
         success = gimp_image_add_channel (image, channel, MAX (position, -1));
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&image_add_channel_proc, success);
@@ -2486,7 +2486,10 @@ image_add_vectors_invoker (Gimp         *gimp,
 
   if (success)
     {
+      if (gimp_item_is_floating (GIMP_ITEM (vectors)))
         success = gimp_image_add_vectors (image, vectors, MAX (position, -1));
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&image_add_vectors_proc, success);
@@ -3417,7 +3420,7 @@ static ProcArg image_is_dirty_outargs[] =
   {
     GIMP_PDB_INT32,
     "dirty",
-    "True if the image has unsaved changes."
+    "TRUE if the image has unsaved changes."
   }
 };
 
@@ -3505,9 +3508,7 @@ image_thumbnail_invoker (Gimp         *gimp,
           temp_buf_free (buf);
         }
       else
-        {
-          success = FALSE;
-        }
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&image_thumbnail_proc, success);

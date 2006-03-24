@@ -99,7 +99,7 @@ gimp_gradient_duplicate (const gchar *name)
  *
  * Returns TRUE if you have permission to change the gradient
  *
- * Returns: True if the gradient can be edited.
+ * Returns: TRUE if the gradient can be edited.
  *
  * Since: GIMP 2.4
  */

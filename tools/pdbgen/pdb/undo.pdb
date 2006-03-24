@@ -96,7 +96,7 @@ HELP
 
     @outargs = (
 	{ name => 'enabled', type => 'boolean',
-	  desc => 'True if undo is enabled for this image' }
+	  desc => 'TRUE if undo is enabled for this image' }
     );
 
     %invoke = (
@@ -127,7 +127,7 @@ HELP
 
     @outargs = (
 	{ name => 'disabled', type => 'boolean',
-	  desc => 'True if the image undo has been disabled' }
+	  desc => 'TRUE if the image undo has been disabled' }
     );
 
     %invoke = (
@@ -157,7 +157,7 @@ HELP
 
     @outargs = (
 	{ name => 'enabled', type => 'boolean',
-	  desc => 'True if the image undo has been enabled' }
+	  desc => 'TRUE if the image undo has been enabled' }
     );
 
     %invoke = (
@@ -193,7 +193,7 @@ HELP
 
     @outargs = (
 	{ name => 'frozen', type => 'boolean',
-	  desc => 'True if the image undo has been frozen' }
+	  desc => 'TRUE if the image undo has been frozen' }
     );
 
     %invoke = (
@@ -229,7 +229,7 @@ HELP
 
     @outargs = (
 	{ name => 'thawed', type => 'boolean',
-	  desc => 'True if the image undo has been thawed' }
+	  desc => 'TRUE if the image undo has been thawed' }
     );
 
     %invoke = (

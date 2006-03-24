@@ -115,7 +115,7 @@ HELP
 	{ name => 'channel2', type => 'channel',
 	  desc => 'The channel2' },
 	{ name => 'operation', type => 'enum GimpChannelOps',
-	  desc => 'The selection operation: { %%desc%% }' },
+	  desc => 'The selection operation: %%desc%%' },
 	{ name => 'offx', type => 'int32',
 	  desc => 'x offset between upper left corner of
                    channels: (second - first)' },
@@ -147,7 +147,7 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image to which to add the channel' },
 	{ name => 'component', type => 'enum GimpChannelType',
-	  desc => 'The image component: { %%desc%% }' },
+	  desc => 'The image component: %%desc%%' },
 	{ name => 'name', type => 'string',
 	  desc => 'The channel name' },
     );
@@ -178,7 +178,7 @@ sub channel_get_show_masked {
 
     $help = <<'HELP';
 This procedure returns the specified channel's composite method. If
-it is non-zero, then the channel is composited with the image so that
+it is TRUE, then the channel is composited with the image so that
 masked regions are shown. Otherwise, selected regions are shown.
 HELP
 
@@ -208,7 +208,7 @@ sub channel_set_show_masked {
 
     $help = <<'HELP';
 This procedure sets the specified channel's composite method. If
-it is non-zero, then the channel is composited with the image so that
+it is TRUE, then the channel is composited with the image so that
 masked regions are shown. Otherwise, selected regions are shown.
 HELP
 

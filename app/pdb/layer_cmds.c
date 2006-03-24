@@ -466,12 +466,12 @@ layer_scale_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = gimp_item_is_attached (GIMP_ITEM (layer));
-
-      if (success)
+      if (gimp_item_is_attached (GIMP_ITEM (layer)))
         gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
                                    gimp->config->interpolation_type, NULL,
                                    local_origin);
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&layer_scale_proc, success);
@@ -550,11 +550,11 @@ layer_resize_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = gimp_item_is_attached (GIMP_ITEM (layer));
-
-      if (success)
+      if (gimp_item_is_attached (GIMP_ITEM (layer)))
         gimp_item_resize (GIMP_ITEM (layer), context,
                           new_width, new_height, offx, offy);
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&layer_resize_proc, success);
@@ -622,10 +622,10 @@ layer_resize_to_image_size_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = gimp_item_is_attached (GIMP_ITEM (layer));
-
-      if (success)
+      if (gimp_item_is_attached (GIMP_ITEM (layer)))
         gimp_layer_resize_to_image (layer, context);
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&layer_resize_to_image_size_proc, success);
@@ -1034,10 +1034,10 @@ layer_add_mask_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = gimp_item_is_attached (GIMP_ITEM (layer));
-
-      if (success)
+      if (gimp_item_is_attached (GIMP_ITEM (layer)))
         gimp_layer_add_mask (layer, mask, TRUE);
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&layer_add_mask_proc, success);
@@ -1095,10 +1095,10 @@ layer_remove_mask_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = gimp_item_is_attached (GIMP_ITEM (layer));
-
-      if (success)
+      if (gimp_item_is_attached (GIMP_ITEM (layer)))
         gimp_layer_apply_mask (layer, mode, TRUE);
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&layer_remove_mask_proc, success);
@@ -1178,7 +1178,7 @@ static ProcArg layer_is_floating_sel_outargs[] =
   {
     GIMP_PDB_INT32,
     "is-floating-sel",
-    "Non-zero if the layer is a floating selection"
+    "TRUE if the layer is a floating selection"
   }
 };
 
@@ -1374,7 +1374,7 @@ static ProcRecord layer_get_apply_mask_proc =
   "gimp-layer-get-apply-mask",
   "gimp-layer-get-apply-mask",
   "Get the apply mask setting of the specified layer.",
-  "This procedure returns the specified layer's apply mask setting. If the value is non-zero, then the layer mask for this layer is currently being composited with the layer's alpha channel.",
+  "This procedure returns the specified layer's apply mask setting. If the value is TRUE, then the layer mask for this layer is currently being composited with the layer's alpha channel.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -1500,7 +1500,7 @@ static ProcRecord layer_get_show_mask_proc =
   "gimp-layer-get-show-mask",
   "gimp-layer-get-show-mask",
   "Get the show mask setting of the specified layer.",
-  "This procedure returns the specified layer's show mask setting. This controls whether the layer or its mask is visible. Non-zero values indicate that the mask should be visible. If the layer has no mask, then this function returns an error.",
+  "This procedure returns the specified layer's show mask setting. This controls whether the layer or its mask is visible. TRUE indicates that the mask should be visible. If the layer has no mask, then this function returns an error.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -1626,7 +1626,7 @@ static ProcRecord layer_get_edit_mask_proc =
   "gimp-layer-get-edit-mask",
   "gimp-layer-get-edit-mask",
   "Get the edit mask setting of the specified layer.",
-  "This procedure returns the specified layer's edit mask setting. If the value is non-zero, then the layer mask for this layer is currently active, and not the layer.",
+  "This procedure returns the specified layer's edit mask setting. If the value is TRUE, then the layer mask for this layer is currently active, and not the layer.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -1862,7 +1862,7 @@ static ProcArg layer_get_mode_outargs[] =
   {
     GIMP_PDB_INT32,
     "mode",
-    "The layer combination mode"
+    "The layer combination mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }"
   }
 };
 
@@ -1920,7 +1920,7 @@ static ProcArg layer_set_mode_inargs[] =
   {
     GIMP_PDB_INT32,
     "mode",
-    "The new layer combination mode (GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22))"
+    "The new layer combination mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }"
   }
 };
 

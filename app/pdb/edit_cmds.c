@@ -93,14 +93,14 @@ edit_cut_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
-
-      if (success)
+      if (gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
           non_empty = gimp_edit_cut (image, drawable, context) != NULL;
         }
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&edit_cut_proc, success);
@@ -164,14 +164,14 @@ edit_copy_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
-
-      if (success)
+      if (gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
           non_empty = gimp_edit_copy (image, drawable, context) != NULL;
         }
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&edit_copy_proc, success);
@@ -302,17 +302,17 @@ edit_paste_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = (gimp_item_is_attached (GIMP_ITEM (drawable)) &&
-                 gimp->global_buffer != NULL);
-
-      if (success)
+      if (gimp->global_buffer && gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           floating_sel = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
                                           drawable, gimp->global_buffer,
                                           paste_into, -1, -1, -1, -1);
+
           if (! floating_sel)
             success = FALSE;
         }
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&edit_paste_proc, success);
@@ -374,14 +374,15 @@ edit_paste_as_new_invoker (Gimp         *gimp,
   Argument *return_args;
   GimpImage *image = NULL;
 
-  success = (gimp->global_buffer != NULL);
-
-  if (success)
+  if (gimp->global_buffer)
     {
       image = gimp_edit_paste_as_new (gimp, NULL, gimp->global_buffer);
+
       if (! image)
         success = FALSE;
     }
+  else
+    success = FALSE;
 
   return_args = procedural_db_return_args (&edit_paste_as_new_proc, success);
 
@@ -440,21 +441,20 @@ edit_named_cut_invoker (Gimp         *gimp,
 
   if (success)
     {
-       success = (strlen (buffer_name) > 0 &&
-                  gimp_item_is_attached (GIMP_ITEM (drawable)));
+      if (strlen (buffer_name) && gimp_item_is_attached (GIMP_ITEM (drawable)))
+        {
+           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-       if (success)
-         {
-            GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+           real_name = (gchar *) gimp_edit_named_cut (image, buffer_name,
+                                                      drawable, context);
 
-            real_name = (gchar *) gimp_edit_named_cut (image, buffer_name,
-                                                       drawable, context);
-
-            if (real_name)
-              real_name = g_strdup (real_name);
-            else
-              success = FALSE;
-         }
+           if (real_name)
+             real_name = g_strdup (real_name);
+           else
+             success = FALSE;
+        }
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&edit_named_cut_proc, success);
@@ -528,21 +528,20 @@ edit_named_copy_invoker (Gimp         *gimp,
 
   if (success)
     {
-       success = (strlen (buffer_name) > 0 &&
-                  gimp_item_is_attached (GIMP_ITEM (drawable)));
+      if (strlen (buffer_name) && gimp_item_is_attached (GIMP_ITEM (drawable)))
+        {
+           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-       if (success)
-         {
-            GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+           real_name = (gchar *) gimp_edit_named_copy (image, buffer_name,
+                                                       drawable, context);
 
-            real_name = (gchar *) gimp_edit_named_copy (image, buffer_name,
-                                                        drawable, context);
-
-            if (real_name)
-              real_name = g_strdup (real_name);
-            else
-              success = FALSE;
-         }
+           if (real_name)
+             real_name = g_strdup (real_name);
+           else
+             success = FALSE;
+        }
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&edit_named_copy_proc, success);
@@ -616,18 +615,18 @@ edit_named_copy_visible_invoker (Gimp         *gimp,
 
   if (success)
     {
-       success = (strlen (buffer_name) > 0);
+      if (strlen (buffer_name))
+        {
+          real_name = (gchar *) gimp_edit_named_copy_visible (image, buffer_name,
+                                                              context);
 
-       if (success)
-         {
-           real_name = (gchar *) gimp_edit_named_copy_visible (image, buffer_name,
-                                                               context);
-
-           if (real_name)
-             real_name = g_strdup (real_name);
-           else
-             success = FALSE;
-         }
+          if (real_name)
+            real_name = g_strdup (real_name);
+          else
+            success = FALSE;
+        }
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&edit_named_copy_visible_proc, success);
@@ -704,14 +703,10 @@ edit_named_paste_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpBuffer *buffer;
-
-      buffer = (GimpBuffer *)
+      GimpBuffer *buffer = (GimpBuffer *)
         gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
-      success = (buffer != NULL && gimp_item_is_attached (GIMP_ITEM (drawable)));
-
-      if (success)
+      if (buffer && gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           floating_sel = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
                                           drawable, buffer,
@@ -719,6 +714,8 @@ edit_named_paste_invoker (Gimp         *gimp,
           if (! floating_sel)
             success = FALSE;
         }
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&edit_named_paste_proc, success);
@@ -792,19 +789,18 @@ edit_named_paste_as_new_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpBuffer *buffer;
-
-      buffer = (GimpBuffer *)
+      GimpBuffer *buffer = (GimpBuffer *)
         gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
-      success = (buffer != NULL);
-
-      if (success)
+      if (buffer)
         {
           image = gimp_edit_paste_as_new (gimp, NULL, buffer);
+
           if (! image)
             success = FALSE;
         }
+      else
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&edit_named_paste_as_new_proc, success);
@@ -866,14 +862,14 @@ edit_clear_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
-
-      if (success)
+      if (gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
           success = gimp_edit_clear (image, drawable, context);
         }
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&edit_clear_proc, success);
@@ -926,15 +922,15 @@ edit_fill_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
-
-      if (success)
+      if (gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
           success = gimp_edit_fill (image, drawable, context,
                                     (GimpFillType) fill_type);
         }
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&edit_fill_proc, success);
@@ -950,7 +946,7 @@ static ProcArg edit_fill_inargs[] =
   {
     GIMP_PDB_INT32,
     "fill-type",
-    "The type of fill: GIMP_FOREGROUND_FILL (0), GIMP_BACKGROUND_FILL (1), GIMP_WHITE_FILL (2), GIMP_TRANSPARENT_FILL (3), GIMP_PATTERN_FILL (4)"
+    "The type of fill: { GIMP_FOREGROUND_FILL (0), GIMP_BACKGROUND_FILL (1), GIMP_WHITE_FILL (2), GIMP_TRANSPARENT_FILL (3), GIMP_PATTERN_FILL (4) }"
   }
 };
 
@@ -1016,9 +1012,7 @@ edit_bucket_fill_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
-
-      if (success)
+      if (gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
           gboolean   do_seed_fill;
@@ -1031,6 +1025,8 @@ edit_bucket_fill_invoker (Gimp         *gimp,
                                      FALSE /* don't fill transparent */,
                                      threshold, sample_merged, x, y);
         }
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&edit_bucket_fill_proc, success);
@@ -1085,7 +1081,7 @@ static ProcRecord edit_bucket_fill_proc =
   "gimp-edit-bucket-fill",
   "gimp-edit-bucket-fill",
   "Fill the area specified either by the current selection if there is one, or by a seed fill starting at the specified coordinates.",
-  "This tool requires information on the paint application mode, and the fill mode, which can either be in the foreground color, or in the currently active pattern. If there is no selection, a seed fill is executed at the specified coordinates and extends outward in keeping with the threshold parameter. If there is a selection in the target image, the threshold, sample merged, x, and y arguments are unused. If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of merged sampling, the x and y coordinates are relative to the image's origin; otherwise, they are relative to the drawable's origin.",
+  "This tool requires information on the paint application mode, and the fill mode, which can either be in the foreground color, or in the currently active pattern. If there is no selection, a seed fill is executed at the specified coordinates and extends outward in keeping with the threshold parameter. If there is a selection in the target image, the threshold, sample merged, x, and y arguments are unused. If the sample_merged parameter is TRUE, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of merged sampling, the x and y coordinates are relative to the image's origin; otherwise, they are relative to the drawable's origin.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -1323,9 +1319,7 @@ edit_stroke_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
-
-      if (success)
+      if (gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpImage      *image = gimp_item_get_image (GIMP_ITEM (drawable));
           GimpStrokeDesc *desc  = gimp_stroke_desc_new (gimp, context);
@@ -1337,6 +1331,8 @@ edit_stroke_invoker (Gimp         *gimp,
 
           g_object_unref (desc);
         }
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&edit_stroke_proc, success);

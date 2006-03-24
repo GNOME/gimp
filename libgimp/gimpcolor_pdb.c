@@ -456,8 +456,8 @@ gimp_curves_explicit (gint32                drawable_ID,
  * positive values increase the amount of the latter. Color balance can
  * be controlled with the 'transfer_mode' setting, which allows
  * shadows, midtones, and highlights in an image to be affected
- * differently. The 'preserve_lum' parameter, if non-zero, ensures that
- * the luminosity of each pixel remains fixed.
+ * differently. The 'preserve_lum' parameter, if TRUE, ensures that the
+ * luminosity of each pixel remains fixed.
  *
  * Returns: TRUE on success.
  */

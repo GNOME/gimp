@@ -91,7 +91,7 @@ sub brushes_get_brush {
 
   if (brush)
     {
-      name    = g_strdup (GIMP_OBJECT (brush)->name);
+      name    = g_strdup (gimp_object_get_name (GIMP_OBJECT (brush)));
       width   = brush->mask->width;
       height  = brush->mask->height;
       spacing = gimp_brush_get_spacing (brush);
@@ -159,7 +159,7 @@ sub brushes_get_brush_data {
 	{ name => 'spacing', type => '0 <= int32 <= 1000',
 	  desc => 'The brush spacing: %%desc%%' },
 	{ name => 'paint_mode', type => 'enum GimpLayerModeEffects',
-	  desc => 'The paint mode: { %%desc%% }' },
+	  desc => 'The paint mode: %%desc%%' },
 	{ name => 'width', type => 'int32',
 	  desc => 'The brush width' },
 	{ name => 'height', type => 'int32',
@@ -187,7 +187,7 @@ sub brushes_get_brush_data {
 
   if (brush)
     {
-      actual_name = g_strdup (GIMP_OBJECT (brush)->name);
+      actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (brush)));
       opacity     = 1.0;
       spacing     = gimp_brush_get_spacing (brush);
       paint_mode  = 0;

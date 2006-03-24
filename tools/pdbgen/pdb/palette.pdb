@@ -41,7 +41,7 @@ sub palette_new {
       GimpData *data = gimp_data_factory_data_new (gimp->palette_factory, name);
 
       if (data)
-        actual_name = g_strdup (GIMP_OBJECT (data)->name);
+        actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (data)));
       else
         success = FALSE;
     }
@@ -54,7 +54,7 @@ CODE
 
 sub palette_is_editable {
     $blurb = "Tests if palette can be edited";
-    $help  = "Returns True if you have permission to change the palette";
+    $help  = "Returns TRUE if you have permission to change the palette";
 
     &bill_pdb_misc('2004', '2.4');
 
@@ -65,7 +65,7 @@ sub palette_is_editable {
 
     @outargs = (
 	{ name => 'editable', type => 'boolean',
-	  desc => "True if the palette can be edited" }
+	  desc => "TRUE if the palette can be edited" }
     );
 
     %invoke = (
@@ -112,7 +112,7 @@ sub palette_duplicate {
                                           GIMP_DATA (palette));
 
       if (palette_copy)
-        copy_name = g_strdup (GIMP_OBJECT (palette_copy)->name);
+        copy_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (palette_copy)));
       else
         success = FALSE;
     }
@@ -150,7 +150,7 @@ sub palette_rename {
   if (palette && GIMP_DATA (palette)->writable)
     {
       gimp_object_set_name (GIMP_OBJECT (palette), new_name);
-      actual_name = g_strdup (GIMP_OBJECT (palette)->name);
+      actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (palette)));
     }
   else
     success = FALSE;

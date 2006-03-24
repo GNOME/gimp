@@ -390,9 +390,7 @@ HELP
       y_point = valid ? coord.y : 0;
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );
@@ -580,14 +578,10 @@ HELP
           num_coords *= 2;
         }
       else
-        {
-          success = FALSE;
-        }
+        success = FALSE;
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );
@@ -669,9 +663,7 @@ HELP
       gimp_bezier_stroke_lineto (stroke, &coord0);
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );
@@ -722,9 +714,7 @@ HELP
       gimp_bezier_stroke_conicto (stroke, &coord0, &coord1);
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );
@@ -781,9 +771,7 @@ HELP
       gimp_bezier_stroke_cubicto (stroke, &coord0, &coord1, &coord2);
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );

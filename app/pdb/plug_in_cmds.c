@@ -526,7 +526,7 @@ static ProcArg plugin_icon_register_inargs[] =
   {
     GIMP_PDB_INT32,
     "icon-type",
-    "The type of the icon"
+    "The type of the icon: { GIMP_ICON_TYPE_STOCK_ID (0), GIMP_ICON_TYPE_INLINE_PIXBUF (1), GIMP_ICON_TYPE_IMAGE_FILE (2) }"
   },
   {
     GIMP_PDB_INT32,

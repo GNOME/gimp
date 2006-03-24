@@ -922,9 +922,7 @@ vectors_stroke_get_point_at_dist_invoker (Gimp         *gimp,
           y_point = valid ? coord.y : 0;
         }
       else
-        {
-          success = FALSE;
-        }
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&vectors_stroke_get_point_at_dist_proc, success);
@@ -1330,14 +1328,10 @@ vectors_stroke_interpolate_invoker (Gimp         *gimp,
               num_coords *= 2;
             }
           else
-            {
-              success = FALSE;
-            }
+            success = FALSE;
         }
       else
-        {
-          success = FALSE;
-        }
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&vectors_stroke_interpolate_proc, success);
@@ -1532,9 +1526,7 @@ vectors_bezier_stroke_lineto_invoker (Gimp         *gimp,
           gimp_bezier_stroke_lineto (stroke, &coord0);
         }
       else
-        {
-          success = FALSE;
-        }
+        success = FALSE;
     }
 
   return procedural_db_return_args (&vectors_bezier_stroke_lineto_proc, success);
@@ -1628,9 +1620,7 @@ vectors_bezier_stroke_conicto_invoker (Gimp         *gimp,
           gimp_bezier_stroke_conicto (stroke, &coord0, &coord1);
         }
       else
-        {
-          success = FALSE;
-        }
+        success = FALSE;
     }
 
   return procedural_db_return_args (&vectors_bezier_stroke_conicto_proc, success);
@@ -1744,9 +1734,7 @@ vectors_bezier_stroke_cubicto_invoker (Gimp         *gimp,
           gimp_bezier_stroke_cubicto (stroke, &coord0, &coord1, &coord2);
         }
       else
-        {
-          success = FALSE;
-        }
+        success = FALSE;
     }
 
   return procedural_db_return_args (&vectors_bezier_stroke_cubicto_proc, success);

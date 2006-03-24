@@ -41,7 +41,7 @@ sub brush_new {
       GimpData *data = gimp_data_factory_data_new (gimp->brush_factory, name);
 
       if (data)
-        actual_name = g_strdup (GIMP_OBJECT (data)->name);
+        actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (data)));
       else
         success = FALSE;
     }
@@ -81,7 +81,7 @@ sub brush_duplicate {
                                           GIMP_DATA (brush));
 
       if (brush_copy)
-        copy_name = g_strdup (GIMP_OBJECT (brush_copy)->name);
+        copy_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (brush_copy)));
       else
         success = FALSE;
     }
@@ -93,8 +93,8 @@ CODE
 }
 
 sub brush_is_generated {
-    $blurb = "Tests if generated";
-    $help  = "Returns True if this brush is parametric, False for other types";
+    $blurb = "Tests if brush is generated";
+    $help  = "Returns TRUE if this brush is parametric, FALSE for other types";
 
     &bill_pdb_misc('2004', '2.4');
 
@@ -105,7 +105,7 @@ sub brush_is_generated {
 
     @outargs = (
 	{ name => 'generated', type => 'boolean',
-	  desc => 'True if the brush is generated' }
+	  desc => 'TRUE if the brush is generated' }
     );
 
     %invoke = (
@@ -125,7 +125,7 @@ CODE
 
 sub brush_is_editable {
     $blurb = "Tests if brush can be edited";
-    $help  = "Returns True if you have permission to change the brush";
+    $help  = "Returns TRUE if you have permission to change the brush";
 
     &bill_pdb_misc('2004', '2.4');
 
@@ -136,7 +136,7 @@ sub brush_is_editable {
 
     @outargs = (
 	{ name => 'editable', type => 'boolean',
-	  desc => 'True if the brush can be edited' }
+	  desc => 'TRUE if the brush can be edited' }
     );
 
     %invoke = (
@@ -181,7 +181,7 @@ sub brush_rename {
   if (brush && GIMP_DATA (brush)->writable)
     {
       gimp_object_set_name (GIMP_OBJECT (brush), new_name);
-      actual_name = g_strdup (GIMP_OBJECT (brush)->name);
+      actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (brush)));
     }
   else
     success = FALSE;
@@ -393,7 +393,7 @@ HELP
 
     @outargs = (
 	{ name => 'shape', type => 'enum GimpBrushGeneratedShape',
-          desc => 'The brush shape' }
+          desc => 'The brush shape: %%desc%%' }
     );
 
     %invoke = (
@@ -638,12 +638,12 @@ HELP
 	{ name => 'name', type => 'string',
 	  desc => 'The brush name' },
 	{ name => 'shape_in', type => 'enum GimpBrushGeneratedShape',
-          desc => 'The brush shape: { %%desc%% }' }
+          desc => 'The brush shape: %%desc%%' }
     );
 
     @outargs = (
 	{ name => 'shape_out', type => 'enum GimpBrushGeneratedShape',
-          desc => 'The brush shape actually assigned' }
+          desc => 'The brush shape actually assigned: %%desc%%' }
     );
 
     %invoke = (

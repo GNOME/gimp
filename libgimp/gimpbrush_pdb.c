@@ -95,11 +95,11 @@ gimp_brush_duplicate (const gchar *name)
  * gimp_brush_is_generated:
  * @name: The brush name.
  *
- * Tests if generated
+ * Tests if brush is generated
  *
- * Returns True if this brush is parametric, False for other types
+ * Returns TRUE if this brush is parametric, FALSE for other types
  *
- * Returns: True if the brush is generated.
+ * Returns: TRUE if the brush is generated.
  *
  * Since: GIMP 2.4
  */
@@ -195,9 +195,9 @@ gimp_brush_delete (const gchar *name)
  *
  * Tests if brush can be edited
  *
- * Returns True if you have permission to change the brush
+ * Returns TRUE if you have permission to change the brush
  *
- * Returns: True if the brush can be edited.
+ * Returns: TRUE if the brush can be edited.
  *
  * Since: GIMP 2.4
  */

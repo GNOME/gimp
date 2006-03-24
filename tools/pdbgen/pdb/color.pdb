@@ -102,7 +102,7 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
 	{ name => 'channel', type => 'enum GimpHistogramChannel',
-	  desc => 'The channel to modify: { %%desc%% }' },
+	  desc => 'The channel to modify: %%desc%%' },
 	{ name => 'low_input', type => '0 <= int32 <= 255',
 	  desc => "Intensity of lowest input: (%%desc%%)" },
 	{ name => 'high_input', type => '0 <= int32 <= 255',
@@ -412,7 +412,7 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
 	{ name => 'channel', type => 'enum GimpHistogramChannel',
-	  desc => 'The channel to modify: { %%desc%% }' },
+	  desc => 'The channel to modify: %%desc%%' },
 	{ name => 'control_pts', type => 'int8array',
 	  desc => 'The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y,
 		   ... }',
@@ -509,7 +509,7 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
 	{ name => 'channel', type => 'enum GimpHistogramChannel',
-	  desc => 'The channel to modify: { %%desc%% }' },
+	  desc => 'The channel to modify: %%desc%%' },
 	{ name => 'curve', type => 'int8array',
 	  desc => 'The explicit curve',
 	  array => { name => 'num_bytes',
@@ -587,7 +587,7 @@ can be modified: cyan-red, magenta-green, and yellow-blue. Negative values
 increase the amount of the former, positive values increase the amount of the
 latter. Color balance can be controlled with the 'transfer_mode' setting, which
 allows shadows, midtones, and highlights in an image to be affected
-differently. The 'preserve_lum' parameter, if non-zero, ensures that the
+differently. The 'preserve_lum' parameter, if TRUE, ensures that the
 luminosity of each pixel remains fixed.
 HELP
 
@@ -598,7 +598,7 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
 	{ name => 'transfer_mode', type => 'enum GimpTransferMode',
-	  desc => 'Transfer mode: { %%desc%% }' },
+	  desc => 'Transfer mode: %%desc%%' },
 	{ name => 'preserve_lum', type => 'boolean',
 	  desc => 'Preserve luminosity values at each pixel' },
 	{ name => 'cyan_red', type => '-100 <= float <= 100',
@@ -744,7 +744,7 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
 	{ name => 'channel', type => 'enum GimpHistogramChannel',
-	  desc => 'The channel to modify: { %%desc%% }' },
+	  desc => 'The channel to modify: %%desc%%' },
 	{ name => 'start_range', type => '0 <= int32 < 256',
 	  desc => 'Start of the intensity measurement range' },
 	{ name => 'end_range', type => '0 <= int32 < 256',
@@ -820,7 +820,7 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
 	{ name => 'hue_range', type => 'enum GimpHueRange',
-	  desc => 'Range of affected hues: { %%desc%% }' },
+	  desc => 'Range of affected hues: %%desc%%' },
 	{ name => 'hue_offset', type => '-180 <= float <= 180',
 	  desc => 'Hue offset in degrees: (%%desc%%)' },
 	{ name => 'lightness', type => '-100 <= float <= 100',

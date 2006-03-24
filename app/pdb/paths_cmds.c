@@ -1245,7 +1245,7 @@ static ProcArg path_to_selection_inargs[] =
   {
     GIMP_PDB_INT32,
     "op",
-    "The desired operation with current selection."
+    "The desired operation with current selection: { GIMP_CHANNEL_OP_ADD (0), GIMP_CHANNEL_OP_SUBTRACT (1), GIMP_CHANNEL_OP_REPLACE (2), GIMP_CHANNEL_OP_INTERSECT (3) }"
   },
   {
     GIMP_PDB_INT32,

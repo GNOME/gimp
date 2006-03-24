@@ -107,7 +107,7 @@ brush_new_invoker (Gimp         *gimp,
           GimpData *data = gimp_data_factory_data_new (gimp->brush_factory, name);
 
           if (data)
-            actual_name = g_strdup (GIMP_OBJECT (data)->name);
+            actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (data)));
           else
             success = FALSE;
         }
@@ -186,7 +186,7 @@ brush_duplicate_invoker (Gimp         *gimp,
                                               GIMP_DATA (brush));
 
           if (brush_copy)
-            copy_name = g_strdup (GIMP_OBJECT (brush_copy)->name);
+            copy_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (brush_copy)));
           else
             success = FALSE;
         }
@@ -286,7 +286,7 @@ static ProcArg brush_is_generated_outargs[] =
   {
     GIMP_PDB_INT32,
     "generated",
-    "True if the brush is generated"
+    "TRUE if the brush is generated"
   }
 };
 
@@ -294,8 +294,8 @@ static ProcRecord brush_is_generated_proc =
 {
   "gimp-brush-is-generated",
   "gimp-brush-is-generated",
-  "Tests if generated",
-  "Returns True if this brush is parametric, False for other types",
+  "Tests if brush is generated",
+  "Returns TRUE if this brush is parametric, FALSE for other types",
   "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
   "Bill Skaggs",
   "2004",
@@ -336,7 +336,7 @@ brush_rename_invoker (Gimp         *gimp,
       if (brush && GIMP_DATA (brush)->writable)
         {
           gimp_object_set_name (GIMP_OBJECT (brush), new_name);
-          actual_name = g_strdup (GIMP_OBJECT (brush)->name);
+          actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (brush)));
         }
       else
         success = FALSE;
@@ -505,7 +505,7 @@ static ProcArg brush_is_editable_outargs[] =
   {
     GIMP_PDB_INT32,
     "editable",
-    "True if the brush can be edited"
+    "TRUE if the brush can be edited"
   }
 };
 
@@ -514,7 +514,7 @@ static ProcRecord brush_is_editable_proc =
   "gimp-brush-is-editable",
   "gimp-brush-is-editable",
   "Tests if brush can be edited",
-  "Returns True if you have permission to change the brush",
+  "Returns TRUE if you have permission to change the brush",
   "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
   "Bill Skaggs",
   "2004",
@@ -942,7 +942,7 @@ static ProcArg brush_get_shape_outargs[] =
   {
     GIMP_PDB_INT32,
     "shape",
-    "The brush shape"
+    "The brush shape: { GIMP_BRUSH_GENERATED_CIRCLE (0), GIMP_BRUSH_GENERATED_SQUARE (1), GIMP_BRUSH_GENERATED_DIAMOND (2) }"
   }
 };
 
@@ -1376,7 +1376,7 @@ static ProcArg brush_set_shape_outargs[] =
   {
     GIMP_PDB_INT32,
     "shape-out",
-    "The brush shape actually assigned"
+    "The brush shape actually assigned: { GIMP_BRUSH_GENERATED_CIRCLE (0), GIMP_BRUSH_GENERATED_SQUARE (1), GIMP_BRUSH_GENERATED_DIAMOND (2) }"
   }
 };
 

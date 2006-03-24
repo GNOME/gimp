@@ -522,7 +522,7 @@ static ProcArg buffer_get_image_type_outargs[] =
   {
     GIMP_PDB_INT32,
     "image-type",
-    "The buffer image type"
+    "The buffer image type: { GIMP_RGB (0), GIMP_GRAY (1), GIMP_INDEXED (2) }"
   }
 };
 

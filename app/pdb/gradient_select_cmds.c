@@ -105,7 +105,7 @@ static ProcArg gradients_popup_inargs[] =
   {
     GIMP_PDB_INT32,
     "sample-size",
-    "Size of the sample to return when the gradient is changed (1 <= sample_size <= 10000)"
+    "Size of the sample to return when the gradient is changed: (1 <= sample_size <= 10000)"
   }
 };
 

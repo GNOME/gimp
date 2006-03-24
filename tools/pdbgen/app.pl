@@ -147,15 +147,12 @@ sub make_arg_recs {
 		    /boolean/   && do { $info = 'TRUE or FALSE';	 last };
 		    /int|float/ && do { $info =~ s/$type/$arg->{name}/e; last };
 		    /enum/      && do { my $enum = $enums{$name};
-					$info = $enum->{info};
+					$info = '{ ' . $enum->{info};
 					foreach (@remove) {
 					    $info =~ s/$_ \(.*?\)(, )?//
 					}				 
 					$info =~ s/, $//;
-					if (!$#{[$info =~ /,/g]} &&
-					     $desc !~ /{ %%desc%% }/) {
-					    $info =~ s/,/ or/
-					}				 last };
+					$info .= ' }';                   last };
 		}
 
 		$desc =~ s/%%desc%%/$info/eg;

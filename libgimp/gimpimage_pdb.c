@@ -801,7 +801,7 @@ gimp_image_floating_sel_attached_to (gint32 image_ID)
  * an alpha channel, the algorithm examines the alpha value of the
  * drawable at the coordinates. If the alpha value is completely
  * transparent (0), then an error is returned. If the sample_merged
- * parameter is non-zero, the data of the composite image will be used
+ * parameter is TRUE, the data of the composite image will be used
  * instead of that for the specified drawable. This is equivalent to
  * sampling for colors after merging all visible layers. In the case of
  * a merged sampling, the supplied drawable is ignored.
@@ -1691,7 +1691,7 @@ gimp_image_clean_all (gint32 image_ID)
  * set the dirty count to 0, you need to call gimp-image-clean-all
  * after calling a save procedure to make the image clean.
  *
- * Returns: True if the image has unsaved changes.
+ * Returns: TRUE if the image has unsaved changes.
  */
 gboolean
 gimp_image_is_dirty (gint32 image_ID)

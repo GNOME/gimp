@@ -251,7 +251,7 @@ static ProcArg image_convert_indexed_inargs[] =
   {
     GIMP_PDB_INT32,
     "remove-unused",
-    "Remove unused or duplicate colour entries from final palette, ignored if (palette_type == GIMP_MAKE_PALETTE)"
+    "Remove unused or duplicate color entries from final palette, ignored if (palette_type == GIMP_MAKE_PALETTE)"
   },
   {
     GIMP_PDB_STRING,

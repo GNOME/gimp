@@ -172,7 +172,7 @@ gradient_new_invoker (Gimp         *gimp,
           GimpData *data = gimp_data_factory_data_new (gimp->gradient_factory, name);
 
           if (data)
-            actual_name = g_strdup (GIMP_OBJECT (data)->name);
+            actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (data)));
           else
             success = FALSE;
         }
@@ -251,7 +251,7 @@ gradient_duplicate_invoker (Gimp         *gimp,
                                               GIMP_DATA (gradient));
 
           if (gradient_copy)
-            copy_name = g_strdup (GIMP_OBJECT (gradient_copy)->name);
+            copy_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (gradient_copy)));
           else
             success = FALSE;
         }
@@ -351,7 +351,7 @@ static ProcArg gradient_is_editable_outargs[] =
   {
     GIMP_PDB_INT32,
     "editable",
-    "True if the gradient can be edited"
+    "TRUE if the gradient can be edited"
   }
 };
 
@@ -401,7 +401,7 @@ gradient_rename_invoker (Gimp         *gimp,
       if (gradient && GIMP_DATA (gradient)->writable)
         {
           gimp_object_set_name (GIMP_OBJECT (gradient), new_name);
-          actual_name = g_strdup (GIMP_OBJECT (gradient)->name);
+          actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (gradient)));
         }
       else
         success = FALSE;

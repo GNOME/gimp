@@ -167,7 +167,7 @@ patterns_get_pattern_invoker (Gimp         *gimp,
 
   if (pattern)
     {
-      name   = g_strdup (GIMP_OBJECT (pattern)->name);
+      name   = g_strdup (gimp_object_get_name (GIMP_OBJECT (pattern)));
       width  = pattern->mask->width;
       height = pattern->mask->height;
     }
@@ -260,7 +260,7 @@ patterns_get_pattern_data_invoker (Gimp         *gimp,
 
       if (pattern)
         {
-          actual_name = g_strdup (GIMP_OBJECT (pattern)->name);
+          actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (pattern)));
           width       = pattern->mask->width;
           height      = pattern->mask->height;
           mask_bpp    = pattern->mask->bytes;

@@ -28,7 +28,7 @@
 /**
  * gimp_selection_bounds:
  * @image_ID: The image.
- * @non_empty: True if there is a selection.
+ * @non_empty: TRUE if there is a selection.
  * @x1: x coordinate of upper left corner of selection bounds.
  * @y1: y coordinate of upper left corner of selection bounds.
  * @x2: x coordinate of lower right corner of selection bounds.
@@ -129,8 +129,8 @@ gimp_selection_value (gint32 image_ID,
  *
  * Determine whether the selection is empty.
  *
- * This procedure returns non-zero if the selection for the specified
- * image is not empty.
+ * This procedure returns TRUE if the selection for the specified image
+ * is not empty.
  *
  * Returns: Is the selection empty?
  */

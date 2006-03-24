@@ -46,7 +46,7 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
 	{ name => 'pressure', type => '0 <= float <= 100',
-	  desc => 'The pressure of the airbrush strokes (%%desc%%)' },
+	  desc => 'The pressure of the airbrush strokes: (%%desc%%)' },
 	&stroke_arg
     );
 
@@ -141,7 +141,7 @@ HELP
 	{ name => 'src_drawable', type => 'drawable',
 	  desc => 'The source drawable' },
 	{ name => 'clone_type', type => 'enum GimpCloneType',
-	  desc => 'The type of clone: { %%desc%% }' },
+	  desc => 'The type of clone: %%desc%%' },
 	{ name => 'src_x', type => 'float',
 	  desc => 'The x coordinate in the source image' },
 	{ name => 'src_y', type => 'float',
@@ -283,7 +283,7 @@ HELP
 	{ name => 'pressure', type => '0 <= float <= 100',
 	  desc => 'The pressure: %%desc%%' },
 	{ name => 'convolve_type', type => 'enum GimpConvolveType',
-	  desc => 'Convolve type: { %%desc%% }' },
+	  desc => 'Convolve type: %%desc%%' },
 	&stroke_arg
     );
 
@@ -607,7 +607,7 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
 	 { name => 'pressure', type => '0 <= float <= 100',
-	   desc => 'The pressure of the smudge strokes (%%desc%%)' },
+	   desc => 'The pressure of the smudge strokes: (%%desc%%)' },
 	&stroke_arg
     );
 
@@ -690,11 +690,11 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
 	 { name => 'exposure', type => '0 <= float <= 100',
-	   desc => 'The exposer of the  strokes (%%desc%%)' },
+	   desc => 'The exposure of the  strokes: (%%desc%%)' },
         { name => 'dodgeburn_type', type => 'enum GimpDodgeBurnType',
-	  desc => 'The type either dodge or burn: { %%desc%% }' },
+	  desc => 'The type either dodge or burn: %%desc%%' },
         { name => 'dodgeburn_mode', type => 'enum GimpTransferMode',
-	  desc => 'The mode: { %%desc%% }' },
+	  desc => 'The mode: %%desc%%' },
 	&stroke_arg
     );
 

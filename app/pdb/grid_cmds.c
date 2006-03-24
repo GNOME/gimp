@@ -672,7 +672,7 @@ static ProcArg image_grid_get_style_outargs[] =
   {
     GIMP_PDB_INT32,
     "style",
-    "The image's grid style"
+    "The image's grid style: { GIMP_GRID_DOTS (0), GIMP_GRID_INTERSECTIONS (1), GIMP_GRID_ON_OFF_DASH (2), GIMP_GRID_DOUBLE_DASH (3), GIMP_GRID_SOLID (4) }"
   }
 };
 
@@ -735,7 +735,7 @@ static ProcArg image_grid_set_style_inargs[] =
   {
     GIMP_PDB_INT32,
     "style",
-    "The image's grid style"
+    "The image's grid style: { GIMP_GRID_DOTS (0), GIMP_GRID_INTERSECTIONS (1), GIMP_GRID_ON_OFF_DASH (2), GIMP_GRID_DOUBLE_DASH (3), GIMP_GRID_SOLID (4) }"
   }
 };
 

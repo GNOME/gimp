@@ -137,7 +137,7 @@ static ProcArg drawable_transform_flip_simple_inargs[] =
   {
     GIMP_PDB_INT32,
     "flip-type",
-    "Type of flip: GIMP_ORIENTATION_HORIZONTAL (0) or GIMP_ORIENTATION_VERTICAL (1)"
+    "Type of flip: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }"
   },
   {
     GIMP_PDB_INT32,
@@ -170,7 +170,7 @@ static ProcRecord drawable_transform_flip_simple_proc =
   "gimp-drawable-transform-flip-simple",
   "gimp-drawable-transform-flip-simple",
   "Flip the specified drawable either vertically or horizontally.",
-  "This procedure flips the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipped. If auto_center is set to true, the flip is around the selection's center. Otherwise, the coordinate of the axis needs to be specified. The return value is the ID of the flipped drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and flipped drawable.",
+  "This procedure flips the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipped. If auto_center is set to TRUE, the flip is around the selection's center. Otherwise, the coordinate of the axis needs to be specified. The return value is the ID of the flipped drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and flipped drawable.",
   "Jo\xc3\xa3o S. O. Bueno Calligaris",
   "Jo\xc3\xa3o S. O. Bueno Calligaris",
   "2004",
@@ -936,7 +936,7 @@ static ProcArg drawable_transform_rotate_simple_inargs[] =
   {
     GIMP_PDB_INT32,
     "rotate-type",
-    "Type of rotation: GIMP_ROTATE_90 (0), GIMP_ROTATE_180 (1), GIMP_ROTATE_270 (2)"
+    "Type of rotation: { GIMP_ROTATE_90 (0), GIMP_ROTATE_180 (1), GIMP_ROTATE_270 (2) }"
   },
   {
     GIMP_PDB_INT32,
@@ -1708,7 +1708,7 @@ static ProcArg drawable_transform_shear_inargs[] =
   {
     GIMP_PDB_INT32,
     "shear-type",
-    "Type of shear: GIMP_ORIENTATION_HORIZONTAL (0) or GIMP_ORIENTATION_VERTICAL (1)"
+    "Type of shear: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }"
   },
   {
     GIMP_PDB_FLOAT,
@@ -1851,7 +1851,7 @@ static ProcArg drawable_transform_shear_default_inargs[] =
   {
     GIMP_PDB_INT32,
     "shear-type",
-    "Type of shear: GIMP_ORIENTATION_HORIZONTAL (0) or GIMP_ORIENTATION_VERTICAL (1)"
+    "Type of shear: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }"
   },
   {
     GIMP_PDB_FLOAT,

@@ -161,9 +161,9 @@ gimp_palette_delete (const gchar *name)
  *
  * Tests if palette can be edited
  *
- * Returns True if you have permission to change the palette
+ * Returns TRUE if you have permission to change the palette
  *
- * Returns: True if the palette can be edited.
+ * Returns: TRUE if the palette can be edited.
  *
  * Since: GIMP 2.4
  */

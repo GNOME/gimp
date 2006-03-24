@@ -169,7 +169,7 @@ static ProcArg text_fontname_inargs[] =
   {
     GIMP_PDB_INT32,
     "size-type",
-    "The units of specified size: GIMP_PIXELS (0) or GIMP_POINTS (1)"
+    "The units of specified size: { GIMP_PIXELS (0), GIMP_POINTS (1) }"
   },
   {
     GIMP_PDB_STRING,
@@ -277,7 +277,7 @@ static ProcArg text_get_extents_fontname_inargs[] =
   {
     GIMP_PDB_INT32,
     "size-type",
-    "The units of specified size: GIMP_PIXELS (0) or GIMP_POINTS (1)"
+    "The units of specified size: { GIMP_PIXELS (0), GIMP_POINTS (1) }"
   },
   {
     GIMP_PDB_STRING,
@@ -485,7 +485,7 @@ static ProcArg text_inargs[] =
   {
     GIMP_PDB_INT32,
     "size-type",
-    "The units of specified size: GIMP_PIXELS (0) or GIMP_POINTS (1)"
+    "The units of specified size: { GIMP_PIXELS (0), GIMP_POINTS (1) }"
   },
   {
     GIMP_PDB_STRING,
@@ -663,7 +663,7 @@ static ProcArg text_get_extents_inargs[] =
   {
     GIMP_PDB_INT32,
     "size-type",
-    "The units of specified size: GIMP_PIXELS (0) or GIMP_POINTS (1)"
+    "The units of specified size: { GIMP_PIXELS (0), GIMP_POINTS (1) }"
   },
   {
     GIMP_PDB_STRING,
