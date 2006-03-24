@@ -924,6 +924,8 @@ load_thumbnail_image (const gchar *filename,
    */
   jpeg_destroy_decompress (&cinfo);
 
+  fclose (infile);
+
   if (exif_data)
     {
       exif_data_unref (exif_data);
