@@ -1,5 +1,10 @@
 2006-03-25  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/app.pl: factored out a utility function. I need it
+	in another pretty messed up tree ;)
+
+2006-03-25  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/brush.pdb
 	* tools/pdbgen/pdb/brushes.pdb
 	* tools/pdbgen/pdb/channel.pdb

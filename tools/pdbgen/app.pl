@@ -125,6 +125,31 @@ sub declare_args {
     $result;
 }
 
+sub make_desc {
+    my $arg = shift;
+    my ($type, $name, @remove) = &arg_parse($arg->{type});
+    my $desc = $arg->{desc};
+    my $info = $arg->{type};
+
+    for ($type) {
+	/array/     && do { 				     last };
+	/boolean/   && do { $info = '(TRUE or FALSE)';	     last };
+	/int|float/ && do { $info =~ s/$type/$arg->{name}/e;
+			    $info = '('. $info . ')';        last };
+	/enum/      && do { my $enum = $enums{$name};
+			    $info = '{ ' . $enum->{info};
+			    foreach (@remove) {
+				$info =~ s/$_ \(.*?\)(, )?//
+			    }				 
+			    $info =~ s/, $//;
+			    $info .= ' }';                   last };
+    }
+
+    $desc =~ s/%%desc%%/$info/eg;
+
+    $desc;
+}
+
 sub make_arg_recs {
     my $proc = shift;
 
@@ -138,25 +163,8 @@ sub make_arg_recs {
 	    $result .= "\nstatic ProcArg $proc->{name}_${_}\[] =\n{\n";
 
 	    foreach $arg (@{$proc->{$_}}) {
-		my ($type, $name, @remove) = &arg_parse($arg->{type});
-		my $desc = $arg->{desc};
-		my $info = $arg->{type};
-
-		for ($type) {
-		    /array/     && do { 				 last };
-		    /boolean/   && do { $info = '(TRUE or FALSE)';	 last };
-		    /int|float/ && do { $info =~ s/$type/$arg->{name}/e;
-					$info = '('. $info . ')';        last };
-		    /enum/      && do { my $enum = $enums{$name};
-					$info = '{ ' . $enum->{info};
-					foreach (@remove) {
-					    $info =~ s/$_ \(.*?\)(, )?//
-					}				 
-					$info =~ s/, $//;
-					$info .= ' }';                   last };
-		}
-
-		$desc =~ s/%%desc%%/$info/eg;
+		my ($type, $name) = &arg_parse($arg->{type});
+		my $desc = &make_desc($arg);
 
 		$result .= <<CODE;
   {
