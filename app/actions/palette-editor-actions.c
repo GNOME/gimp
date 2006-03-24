@@ -70,13 +70,13 @@ static GimpEnumActionEntry palette_editor_new_actions[] =
 {
   { "palette-editor-new-color-fg", GTK_STOCK_NEW,
     N_("New Color from _FG"), "",
-    N_("New color from FG"),
+    N_("New color from foreground color"),
     FALSE, FALSE,
     GIMP_HELP_PALETTE_EDITOR_NEW },
 
   { "palette-editor-new-color-bg", GTK_STOCK_NEW,
     N_("New Color from _BG"), "",
-    N_("New color from BG"),
+    N_("New color from background color"),
     TRUE, FALSE,
     GIMP_HELP_PALETTE_EDITOR_NEW }
 };

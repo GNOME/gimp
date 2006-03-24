@@ -441,11 +441,11 @@ gimp_edit_fill (GimpImage    *gimage,
   switch (fill_type)
     {
     case GIMP_FOREGROUND_FILL:
-      undo_desc = _("Fill with FG Color");
+      undo_desc = _("Fill with Foreground Color");
       break;
 
     case GIMP_BACKGROUND_FILL:
-      undo_desc = _("Fill with BG Color");
+      undo_desc = _("Fill with Background Color");
       break;
 
     case GIMP_WHITE_FILL:
@@ -465,9 +465,7 @@ gimp_edit_fill (GimpImage    *gimage,
 
     default:
       g_warning ("%s: unknown fill type", G_STRFUNC);
-      fill_type = GIMP_BACKGROUND_FILL;
-      undo_desc = _("Fill with BG Color");
-      break;
+      return gimp_edit_fill (gimage, drawable, context, GIMP_BACKGROUND_FILL);
     }
 
   return gimp_edit_fill_internal (gimage, drawable, context,

@@ -1,5 +1,15 @@
 2006-03-24  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/colormap-editor-actions.c
+	* app/actions/gradient-editor-actions.c
+	* app/actions/palette-editor-actions.c
+	* app/core/gimp-edit.c
+	* app/core/gimpchannel-select.c: some more string changes, mainly
+	avoiding the use of FG and BG in labels where there's no need for
+	being concise.
+
+2006-03-24  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimprectselecttool.c: renamed from "Rect Select" to
 	"Rectangle Select" (bug #335715).
 

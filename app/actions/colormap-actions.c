@@ -54,13 +54,13 @@ static GimpEnumActionEntry colormap_editor_add_color_actions[] =
 {
   { "colormap-editor-add-color-from-fg", GTK_STOCK_ADD,
     N_("_Add Color from FG"), "",
-    N_("Add color from FG"),
+    N_("Add current foreground color"),
     FALSE, FALSE,
     GIMP_HELP_INDEXED_PALETTE_ADD },
 
   { "colormap-editor-add-color-from-bg", GTK_STOCK_ADD,
     N_("_Add Color from BG"), "",
-    N_("Add color from BG"),
+    N_("Add current background color"),
     TRUE, FALSE,
     GIMP_HELP_INDEXED_PALETTE_ADD }
 };

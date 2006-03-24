@@ -159,12 +159,12 @@ static GimpEnumActionEntry gradient_editor_load_left_actions[] =
     GIMP_HELP_GRADIENT_EDITOR_LEFT_LOAD },
 
   { "gradient-editor-load-left-fg", NULL,
-    N_("_FG Color"), NULL, NULL,
+    N_("_Foreground Color"), NULL, NULL,
     GRADIENT_EDITOR_COLOR_FOREGROUND, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_LEFT_LOAD },
 
   { "gradient-editor-load-left-bg", NULL,
-    N_("_BG Color"), NULL, NULL,
+    N_("_Background Color"), NULL, NULL,
     GRADIENT_EDITOR_COLOR_BACKGROUND, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_LEFT_LOAD },
 
@@ -207,12 +207,12 @@ static GimpEnumActionEntry gradient_editor_load_right_actions[] =
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_LOAD },
 
   { "gradient-editor-load-right-fg", NULL,
-    N_("_FG Color"), NULL, NULL,
+    N_("_Foreground Color"), NULL, NULL,
     GRADIENT_EDITOR_COLOR_FOREGROUND, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_LOAD },
 
   { "gradient-editor-load-right-bg", NULL,
-    N_("_BG Color"), NULL, NULL,
+    N_("_Background Color"), NULL, NULL,
     GRADIENT_EDITOR_COLOR_BACKGROUND, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_LOAD },
 
