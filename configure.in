@@ -928,8 +928,8 @@ AC_SUBST(DOC_SHOOTER)
 
 have_libtiff=no
 AC_ARG_WITH(libtiff,  [  --without-libtiff       build without TIFF support])
-  have_libtiff=yes
   if test x$with_libtiff != xno && test -z "$LIBTIFF"; then
+    have_libtiff=yes
     AC_CHECK_LIB(tiff, TIFFReadScanline,
       [AC_CHECK_HEADER(tiffio.h,
 	TIFF='tiff$(EXEEXT)'; LIBTIFF='-ltiff',

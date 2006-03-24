@@ -135,7 +135,7 @@ query (void)
                           "Dom Lachowicz, Sven Neumann",
                           "Dom Lachowicz <cinamod@hotmail.com>",
                           SVG_VERSION,
-			  N_("Scalable SVG image"),
+			  N_("SVG image"),
 			  NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),

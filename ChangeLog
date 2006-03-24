@@ -1,3 +1,17 @@
+2006-03-24  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprectselecttool.c: renamed from "Rect Select" to
+	"Rectangle Select" (bug #335715).
+
+	* app/core/gimpchannel-select.c (gimp_channel_select_rectangle):
+	string change (bug #335715).
+
+	* plug-ins/common/svg.c: follow the change to the file format
+	label done in the shared-mime-info package (bug #335716).
+
+	* configure.in: fixed the --without-libtiff case in the summary
+	(bug #335764).
+
 2006-03-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp-gui.[ch]

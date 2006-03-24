@@ -52,7 +52,7 @@ gimp_channel_select_rectangle (GimpChannel    *channel,
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
 
-  gimp_channel_push_undo (channel, _("Rect Select"));
+  gimp_channel_push_undo (channel, _("Select rectangular region"));
 
   /*  if applicable, replace the current selection  */
   if (op == GIMP_CHANNEL_OP_REPLACE)
