@@ -81,7 +81,7 @@ HELP
 
     @outargs = (
 	{ name => 'value', type => '0 <= int32 <= 255',
-	  desc => 'Value of the selection: (%%desc%%)' }
+	  desc => 'Value of the selection %%desc%%' }
     );
 
     %invoke = (

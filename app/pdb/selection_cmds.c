@@ -228,7 +228,7 @@ static ProcArg selection_value_outargs[] =
   {
     GIMP_PDB_INT32,
     "value",
-    "Value of the selection: (0 <= value <= 255)"
+    "Value of the selection (0 <= value <= 255)"
   }
 };
 

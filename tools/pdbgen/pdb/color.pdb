@@ -33,9 +33,9 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
 	{ name => 'brightness', type => '-127 <= int32 <= 127',
-	  desc => 'Brightness adjustment: (%%desc%%)' },
+	  desc => 'Brightness adjustment %%desc%%' },
 	{ name => 'contrast', type => '-127 <= int32 <= 127',
-	  desc => 'Contrast adjustment: (%%desc%%)' }
+	  desc => 'Contrast adjustment %%desc%%' }
     );
 
     %invoke = (
@@ -104,15 +104,15 @@ HELP
 	{ name => 'channel', type => 'enum GimpHistogramChannel',
 	  desc => 'The channel to modify: %%desc%%' },
 	{ name => 'low_input', type => '0 <= int32 <= 255',
-	  desc => "Intensity of lowest input: (%%desc%%)" },
+	  desc => "Intensity of lowest input %%desc%%" },
 	{ name => 'high_input', type => '0 <= int32 <= 255',
-	  desc => "Intensity of highest input: (%%desc%%)" },
+	  desc => "Intensity of highest input %%desc%%" },
 	{ name => 'gamma', type => '0.1 <= float <= 10',
-	  desc => 'Gamma correction factor: (%%desc%%)' },
+	  desc => 'Gamma correction factor %%desc%%' },
 	{ name => 'low_output', type => '0 <= int32 <= 255',
-	  desc => "Intensity of lowest output: (%%desc%%)" },
+	  desc => "Intensity of lowest output %%desc%%" },
 	{ name => 'high_output', type => '0 <= int32 <= 255',
-	  desc => "Intensity of highest output: (%%desc%%)" }
+	  desc => "Intensity of highest output %%desc%%" }
     );
 
     %invoke = (
@@ -217,7 +217,7 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
 	{ name => 'levels', type => '2 <= int32 <= 255',
-	  desc => 'Levels of posterization: (%%desc%%)' }
+	  desc => 'Levels of posterization %%desc%%' }
     );
 
     %invoke = (
@@ -418,7 +418,7 @@ HELP
 		   ... }',
 	  array => { name => 'num_points', type => '4 <= int32 <= 34',
 		     desc => 'The number of values in the control point array
-			      (%%desc%%)' } }
+			      %%desc%%' } }
     );
 
     %invoke = (
@@ -602,11 +602,11 @@ HELP
 	{ name => 'preserve_lum', type => 'boolean',
 	  desc => 'Preserve luminosity values at each pixel' },
 	{ name => 'cyan_red', type => '-100 <= float <= 100',
-	  desc => 'Cyan-Red color balance: (%%desc%%)' },
+	  desc => 'Cyan-Red color balance %%desc%%' },
 	{ name => 'magenta_green', type => '-100 <= float <= 100',
-	  desc => 'Magenta-Green color balance: (%%desc%%)' },
+	  desc => 'Magenta-Green color balance %%desc%%' },
 	{ name => 'yellow_blue', type => '-100 <= float <= 100',
-	  desc => 'Yellow-Blue color balance: (%%desc%%)' }
+	  desc => 'Yellow-Blue color balance %%desc%%' }
     );
 
     %invoke = (
@@ -669,11 +669,11 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
 	{ name => 'hue', type => '0 <= float <= 360',
-	  desc => 'Hue in degrees: (%%desc%%)' },
+	  desc => 'Hue in degrees %%desc%%' },
 	{ name => 'saturation', type => '0 <= float <= 100',
-	  desc => 'Saturation in percent: (%%desc%%)' },
+	  desc => 'Saturation in percent %%desc%%' },
 	{ name => 'lightness', type => '-100 <= float <= 100',
-	  desc => 'Lightness in percent: (%%desc%%)' }
+	  desc => 'Lightness in percent %%desc%%' }
     );
 
     %invoke = (
@@ -822,11 +822,11 @@ HELP
 	{ name => 'hue_range', type => 'enum GimpHueRange',
 	  desc => 'Range of affected hues: %%desc%%' },
 	{ name => 'hue_offset', type => '-180 <= float <= 180',
-	  desc => 'Hue offset in degrees: (%%desc%%)' },
+	  desc => 'Hue offset in degrees %%desc%%' },
 	{ name => 'lightness', type => '-100 <= float <= 100',
-	  desc => 'Lightness modification: (%%desc%%)' },
+	  desc => 'Lightness modification %%desc%%' },
 	{ name => 'saturation', type => '-100 <= float <= 100',
-	  desc => 'Saturation modification: (%%desc%%)' }
+	  desc => 'Saturation modification %%desc%%' }
     );
 
     %invoke = (
@@ -889,9 +889,9 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
 	{ name => 'low_threshold', type => '0 <= int32 <= 255',
-	  desc => 'The low threshold value: %%desc%%' },
+	  desc => 'The low threshold value %%desc%%' },
 	{ name => 'high_threshold', type => '0 <= int32 <= 255',
-	  desc => 'The high threshold value: %%desc%%' }
+	  desc => 'The high threshold value %%desc%%' }
     );
 
     %invoke = (

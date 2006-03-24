@@ -81,7 +81,7 @@ sub brushes_get_brush {
 	{ name => 'height', type => 'int32',
 	  desc => 'The brush height' },
 	{ name => 'spacing', type => '0 <= int32 <= 1000',
-	  desc => 'The brush spacing: %%desc%%' }
+	  desc => 'The brush spacing %%desc%%' }
     );
 
     %invoke = (
@@ -108,7 +108,7 @@ sub brushes_get_spacing {
 
     @outargs = (
 	{ name => 'spacing', type => '0 <= int32 <= 1000',
-	  desc => 'The brush spacing: %%desc%%' }
+	  desc => 'The brush spacing %%desc%%' }
     );
 
     %invoke = (
@@ -130,7 +130,7 @@ sub brushes_set_spacing {
 
     @inargs = (
 	{ name => 'spacing', type => '0 <= int32 <= 1000',
-	  desc => 'The brush spacing: %%desc%%' }
+	  desc => 'The brush spacing %%desc%%' }
     );
 
     %invoke = (
@@ -155,9 +155,9 @@ sub brushes_get_brush_data {
 	{ name => 'actual_name', type => 'string',
 	  desc => 'The brush name' },
 	{ name => 'opacity', type => '0 <= float <= 100',
-	  desc => 'The brush opacity: %%desc%%' },
+	  desc => 'The brush opacity %%desc%%' },
 	{ name => 'spacing', type => '0 <= int32 <= 1000',
-	  desc => 'The brush spacing: %%desc%%' },
+	  desc => 'The brush spacing %%desc%%' },
 	{ name => 'paint_mode', type => 'enum GimpLayerModeEffects',
 	  desc => 'The paint mode: %%desc%%' },
 	{ name => 'width', type => 'int32',

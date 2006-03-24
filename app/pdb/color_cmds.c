@@ -158,12 +158,12 @@ static ProcArg brightness_contrast_inargs[] =
   {
     GIMP_PDB_INT32,
     "brightness",
-    "Brightness adjustment: (-127 <= brightness <= 127)"
+    "Brightness adjustment (-127 <= brightness <= 127)"
   },
   {
     GIMP_PDB_INT32,
     "contrast",
-    "Contrast adjustment: (-127 <= contrast <= 127)"
+    "Contrast adjustment (-127 <= contrast <= 127)"
   }
 };
 
@@ -264,27 +264,27 @@ static ProcArg levels_inargs[] =
   {
     GIMP_PDB_INT32,
     "low-input",
-    "Intensity of lowest input: (0 <= low_input <= 255)"
+    "Intensity of lowest input (0 <= low_input <= 255)"
   },
   {
     GIMP_PDB_INT32,
     "high-input",
-    "Intensity of highest input: (0 <= high_input <= 255)"
+    "Intensity of highest input (0 <= high_input <= 255)"
   },
   {
     GIMP_PDB_FLOAT,
     "gamma",
-    "Gamma correction factor: (0.1 <= gamma <= 10)"
+    "Gamma correction factor (0.1 <= gamma <= 10)"
   },
   {
     GIMP_PDB_INT32,
     "low-output",
-    "Intensity of lowest output: (0 <= low_output <= 255)"
+    "Intensity of lowest output (0 <= low_output <= 255)"
   },
   {
     GIMP_PDB_INT32,
     "high-output",
-    "Intensity of highest output: (0 <= high_output <= 255)"
+    "Intensity of highest output (0 <= high_output <= 255)"
   }
 };
 
@@ -478,7 +478,7 @@ static ProcArg posterize_inargs[] =
   {
     GIMP_PDB_INT32,
     "levels",
-    "Levels of posterization: (2 <= levels <= 255)"
+    "Levels of posterization (2 <= levels <= 255)"
   }
 };
 
@@ -1092,17 +1092,17 @@ static ProcArg color_balance_inargs[] =
   {
     GIMP_PDB_FLOAT,
     "cyan-red",
-    "Cyan-Red color balance: (-100 <= cyan_red <= 100)"
+    "Cyan-Red color balance (-100 <= cyan_red <= 100)"
   },
   {
     GIMP_PDB_FLOAT,
     "magenta-green",
-    "Magenta-Green color balance: (-100 <= magenta_green <= 100)"
+    "Magenta-Green color balance (-100 <= magenta_green <= 100)"
   },
   {
     GIMP_PDB_FLOAT,
     "yellow-blue",
-    "Yellow-Blue color balance: (-100 <= yellow_blue <= 100)"
+    "Yellow-Blue color balance (-100 <= yellow_blue <= 100)"
   }
 };
 
@@ -1203,17 +1203,17 @@ static ProcArg colorize_inargs[] =
   {
     GIMP_PDB_FLOAT,
     "hue",
-    "Hue in degrees: (0 <= hue <= 360)"
+    "Hue in degrees (0 <= hue <= 360)"
   },
   {
     GIMP_PDB_FLOAT,
     "saturation",
-    "Saturation in percent: (0 <= saturation <= 100)"
+    "Saturation in percent (0 <= saturation <= 100)"
   },
   {
     GIMP_PDB_FLOAT,
     "lightness",
-    "Lightness in percent: (-100 <= lightness <= 100)"
+    "Lightness in percent (-100 <= lightness <= 100)"
   }
 };
 
@@ -1482,17 +1482,17 @@ static ProcArg hue_saturation_inargs[] =
   {
     GIMP_PDB_FLOAT,
     "hue-offset",
-    "Hue offset in degrees: (-180 <= hue_offset <= 180)"
+    "Hue offset in degrees (-180 <= hue_offset <= 180)"
   },
   {
     GIMP_PDB_FLOAT,
     "lightness",
-    "Lightness modification: (-100 <= lightness <= 100)"
+    "Lightness modification (-100 <= lightness <= 100)"
   },
   {
     GIMP_PDB_FLOAT,
     "saturation",
-    "Saturation modification: (-100 <= saturation <= 100)"
+    "Saturation modification (-100 <= saturation <= 100)"
   }
 };
 
@@ -1585,12 +1585,12 @@ static ProcArg threshold_inargs[] =
   {
     GIMP_PDB_INT32,
     "low-threshold",
-    "The low threshold value: 0 <= low_threshold <= 255"
+    "The low threshold value (0 <= low_threshold <= 255)"
   },
   {
     GIMP_PDB_INT32,
     "high-threshold",
-    "The high threshold value: 0 <= high_threshold <= 255"
+    "The high threshold value (0 <= high_threshold <= 255)"
   }
 };
 

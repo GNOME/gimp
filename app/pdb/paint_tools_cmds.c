@@ -177,7 +177,7 @@ static ProcArg airbrush_inargs[] =
   {
     GIMP_PDB_FLOAT,
     "pressure",
-    "The pressure of the airbrush strokes: (0 <= pressure <= 100)"
+    "The pressure of the airbrush strokes (0 <= pressure <= 100)"
   },
   {
     GIMP_PDB_INT32,
@@ -556,7 +556,7 @@ static ProcArg convolve_inargs[] =
   {
     GIMP_PDB_FLOAT,
     "pressure",
-    "The pressure: 0 <= pressure <= 100"
+    "The pressure (0 <= pressure <= 100)"
   },
   {
     GIMP_PDB_INT32,
@@ -741,7 +741,7 @@ static ProcArg dodgeburn_inargs[] =
   {
     GIMP_PDB_FLOAT,
     "exposure",
-    "The exposure of the strokes: (0 <= exposure <= 100)"
+    "The exposure of the strokes (0 <= exposure <= 100)"
   },
   {
     GIMP_PDB_INT32,
@@ -1112,7 +1112,7 @@ static ProcArg paintbrush_inargs[] =
   {
     GIMP_PDB_FLOAT,
     "fade-out",
-    "Fade out parameter: 0 <= fade_out"
+    "Fade out parameter (0 <= fade_out)"
   },
   {
     GIMP_PDB_INT32,
@@ -1132,7 +1132,7 @@ static ProcArg paintbrush_inargs[] =
   {
     GIMP_PDB_FLOAT,
     "gradient-length",
-    "Length of gradient to draw: 0 <= gradient_length"
+    "Length of gradient to draw (0 <= gradient_length)"
   }
 };
 
@@ -1367,7 +1367,7 @@ static ProcArg smudge_inargs[] =
   {
     GIMP_PDB_FLOAT,
     "pressure",
-    "The pressure of the smudge strokes: (0 <= pressure <= 100)"
+    "The pressure of the smudge strokes (0 <= pressure <= 100)"
   },
   {
     GIMP_PDB_INT32,

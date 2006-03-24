@@ -125,12 +125,12 @@ static ProcArg channel_new_inargs[] =
   {
     GIMP_PDB_INT32,
     "width",
-    "The channel width: (1 <= width)"
+    "The channel width (1 <= width)"
   },
   {
     GIMP_PDB_INT32,
     "height",
-    "The channel height: (1 <= height)"
+    "The channel height (1 <= height)"
   },
   {
     GIMP_PDB_STRING,
@@ -140,7 +140,7 @@ static ProcArg channel_new_inargs[] =
   {
     GIMP_PDB_FLOAT,
     "opacity",
-    "The channel opacity: (0 <= opacity <= 100)"
+    "The channel opacity (0 <= opacity <= 100)"
   },
   {
     GIMP_PDB_COLOR,

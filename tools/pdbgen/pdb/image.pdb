@@ -176,9 +176,9 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
 	{ name => 'new_width', type => '1 <= int32',
-	  desc => 'New image width: %%desc%%' },
+	  desc => 'New image width %%desc%%' },
 	{ name => 'new_height', type => '1 <= int32',
-	  desc => 'New image height: %%desc%%' },
+	  desc => 'New image height %%desc%%' },
 	{ name => 'offx', type => 'int32',
 	  desc => 'x offset between upper left corner of old and
 		   new images: (new - old)' },
@@ -244,9 +244,9 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
 	{ name => 'new_width', type => '1 <= int32',
-	  desc => 'New image width: %%desc%%' },
+	  desc => 'New image width %%desc%%' },
 	{ name => 'new_height', type => '1 <= int32',
-	  desc => 'New image height: %%desc%%' }
+	  desc => 'New image height %%desc%%' }
     );
 
     %invoke = (
@@ -1347,7 +1347,7 @@ HELP
 	{ name => 'colormap', type => 'int8array', wrap => 1,
 	  desc => "The image's colormap",
 	  array => { name => 'num_bytes',
-		     desc => 'Number of bytes in the colormap array:
+		     desc => 'Number of bytes in the colormap array
 			      %%desc%%' } }
     );
 
@@ -1380,7 +1380,7 @@ HELP
 	{ name => 'colormap', type => 'int8array', wrap => 1,
 	  desc => 'The new colormap values',
 	  array => { name => 'num_bytes', type => '0 <= int32 <= 768',
-		     desc => 'Number of bytes in the colormap array:
+		     desc => 'Number of bytes in the colormap array
 			      %%desc%%' } }
     );
 
@@ -1797,7 +1797,7 @@ HELP
 
     @outargs = (
 	{ name => 'active', type => 'boolean',
-	  desc => 'Component is active (%%desc%%)' }
+	  desc => 'Component is active %%desc%%' }
     );
 
     %invoke = (
@@ -1835,7 +1835,7 @@ HELP
 	{ name => 'component', type => 'enum GimpChannelType',
 	  desc => 'The image component: %%desc%%' },
 	{ name => 'active', type => 'boolean',
-	  desc => 'Component is active (%%desc%%)' }
+	  desc => 'Component is active %%desc%%' }
     );
 
     %invoke = (
@@ -1876,7 +1876,7 @@ HELP
 
     @outargs = (
 	{ name => 'visible', type => 'boolean',
-	  desc => 'Component is visible (%%desc%%)' }
+	  desc => 'Component is visible %%desc%%' }
     );
 
     %invoke = (
@@ -1914,7 +1914,7 @@ HELP
 	{ name => 'component', type => 'enum GimpChannelType',
 	  desc => 'The image component: %%desc%%' },
 	{ name => 'visible', type => 'boolean',
-	  desc => 'Component is visible (%%desc%%)' }
+	  desc => 'Component is visible %%desc%%' }
     );
 
     %invoke = (

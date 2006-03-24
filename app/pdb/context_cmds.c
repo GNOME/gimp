@@ -511,7 +511,7 @@ static ProcArg context_get_opacity_outargs[] =
   {
     GIMP_PDB_FLOAT,
     "opacity",
-    "The opacity: 0 <= opacity <= 100"
+    "The opacity (0 <= opacity <= 100)"
   }
 };
 
@@ -559,7 +559,7 @@ static ProcArg context_set_opacity_inargs[] =
   {
     GIMP_PDB_FLOAT,
     "opacity",
-    "The opacity: 0 <= opacity <= 100"
+    "The opacity (0 <= opacity <= 100)"
   }
 };
 

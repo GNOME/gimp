@@ -123,7 +123,7 @@ static ProcArg by_color_select_inargs[] =
   {
     GIMP_PDB_INT32,
     "threshold",
-    "Threshold in intensity levels: 0 <= threshold <= 255"
+    "Threshold in intensity levels (0 <= threshold <= 255)"
   },
   {
     GIMP_PDB_INT32,
@@ -250,12 +250,12 @@ static ProcArg ellipse_select_inargs[] =
   {
     GIMP_PDB_FLOAT,
     "width",
-    "The width of the ellipse: 0 < width"
+    "The width of the ellipse (0 < width)"
   },
   {
     GIMP_PDB_FLOAT,
     "height",
-    "The height of the ellipse: 0 < height"
+    "The height of the ellipse (0 < height)"
   },
   {
     GIMP_PDB_INT32,
@@ -490,7 +490,7 @@ static ProcArg fuzzy_select_inargs[] =
   {
     GIMP_PDB_INT32,
     "threshold",
-    "Threshold in intensity levels: 0 <= threshold <= 255"
+    "Threshold in intensity levels (0 <= threshold <= 255)"
   },
   {
     GIMP_PDB_INT32,
@@ -614,12 +614,12 @@ static ProcArg rect_select_inargs[] =
   {
     GIMP_PDB_FLOAT,
     "width",
-    "The width of the rectangle: 0 < width"
+    "The width of the rectangle (0 < width)"
   },
   {
     GIMP_PDB_FLOAT,
     "height",
-    "The height of the rectangle: 0 < height"
+    "The height of the rectangle (0 < height)"
   },
   {
     GIMP_PDB_INT32,

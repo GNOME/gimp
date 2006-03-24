@@ -531,7 +531,7 @@ static ProcArg plugin_icon_register_inargs[] =
   {
     GIMP_PDB_INT32,
     "icon-data-length",
-    "The length of 'icon_data': 1 <= icon_data_length"
+    "The length of 'icon-data' (1 <= icon_data_length)"
   },
   {
     GIMP_PDB_INT8ARRAY,

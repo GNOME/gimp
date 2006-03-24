@@ -168,12 +168,12 @@ static ProcArg layer_new_inargs[] =
   {
     GIMP_PDB_INT32,
     "width",
-    "The layer width: (1 <= width)"
+    "The layer width (1 <= width)"
   },
   {
     GIMP_PDB_INT32,
     "height",
-    "The layer height: (1 <= height)"
+    "The layer height (1 <= height)"
   },
   {
     GIMP_PDB_INT32,
@@ -188,7 +188,7 @@ static ProcArg layer_new_inargs[] =
   {
     GIMP_PDB_FLOAT,
     "opacity",
-    "The layer opacity: (0 <= opacity <= 100)"
+    "The layer opacity (0 <= opacity <= 100)"
   },
   {
     GIMP_PDB_INT32,
@@ -487,12 +487,12 @@ static ProcArg layer_scale_inargs[] =
   {
     GIMP_PDB_INT32,
     "new-width",
-    "New layer width: (1 <= new_width)"
+    "New layer width (1 <= new_width)"
   },
   {
     GIMP_PDB_INT32,
     "new-height",
-    "New layer height: (1 <= new_height)"
+    "New layer height (1 <= new_height)"
   },
   {
     GIMP_PDB_INT32,
@@ -570,12 +570,12 @@ static ProcArg layer_resize_inargs[] =
   {
     GIMP_PDB_INT32,
     "new-width",
-    "New layer width: (1 <= new_width)"
+    "New layer width (1 <= new_width)"
   },
   {
     GIMP_PDB_INT32,
     "new-height",
-    "New layer height: (1 <= new_height)"
+    "New layer height (1 <= new_height)"
   },
   {
     GIMP_PDB_INT32,

@@ -215,7 +215,7 @@ HELP
 	{ name => 'num_samples', type => '2 <= int32',
 	  desc => 'The number of samples to take' },
 	{ name => 'reverse', type => 'boolean',
-	  desc => 'Use the reverse gradient (%%desc%%)' }
+	  desc => 'Use the reverse gradient %%desc%%' }
     );
 
     @outargs = (
@@ -285,7 +285,7 @@ HELP
 	  array => { name => 'num_samples', type => '1 <= int32',
 		     desc => 'The number of samples to take' } },
 	{ name => 'reverse', type => 'boolean',
-	  desc => 'Use the reverse gradient (%%desc%%)' }
+	  desc => 'Use the reverse gradient %%desc%%' }
     );
 
     @outargs = (

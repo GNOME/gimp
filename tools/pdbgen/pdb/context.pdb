@@ -286,7 +286,7 @@ HELP
 
     @outargs = (
         { name => 'opacity', type => '0 <= float <= 100',
-          desc => 'The opacity: %%desc%%' }
+          desc => 'The opacity %%desc%%' }
     );
 
     %invoke = (
@@ -310,7 +310,7 @@ HELP
 
     @inargs = (
         { name => 'opacity', type => '0 <= float <= 100',
-          desc => 'The opacity: %%desc%%' }
+          desc => 'The opacity %%desc%%' }
     );
 
     %invoke = (

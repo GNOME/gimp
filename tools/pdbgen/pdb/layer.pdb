@@ -34,15 +34,15 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image to which to add the layer' },
 	{ name => 'width', type => '1 <= int32',
-	  desc => 'The layer width: (%%desc%%)' },
+	  desc => 'The layer width %%desc%%' },
 	{ name => 'height', type => '1 <= int32',
-	  desc => 'The layer height: (%%desc%%)' },
+	  desc => 'The layer height %%desc%%' },
 	{ name => 'type', type => 'enum GimpImageType',
 	  desc => 'The layer type: %%desc%%' },
 	{ name => 'name', type => 'string',
 	  desc => 'The layer name', null_ok => 1 },
 	{ name => 'opacity', type => '0 <= float <= 100',
-	  desc => 'The layer opacity: (%%desc%%)' },
+	  desc => 'The layer opacity %%desc%%' },
 	{ name => 'mode', type => 'enum GimpLayerModeEffects',
 	  desc => 'The layer combination mode: %%desc%%' }
     );
@@ -222,9 +222,9 @@ HELP
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer' },
 	{ name => 'new_width', type => '1 <= int32',
-	  desc => 'New layer width: (%%desc%%)' },
+	  desc => 'New layer width %%desc%%' },
 	{ name => 'new_height', type => '1 <= int32',
-	  desc => 'New layer height: (%%desc%%)' },
+	  desc => 'New layer height %%desc%%' },
 	{ name => 'local_origin', type => 'boolean',
 	  desc => 'Use a local origin (as opposed to the image origin)' }
     );
@@ -259,9 +259,9 @@ HELP
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer' },
 	{ name => 'new_width', type => '1 <= int32',
-	  desc => 'New layer width: (%%desc%%)' },
+	  desc => 'New layer width %%desc%%' },
 	{ name => 'new_height', type => '1 <= int32',
-	  desc => 'New layer height: (%%desc%%)' },
+	  desc => 'New layer height %%desc%%' },
 	{ name => 'offx', type => 'int32',
 	  desc => 'x offset between upper left corner of old and
 		   new layers: (old - new)' },
@@ -842,7 +842,7 @@ sub layer_set_opacity {
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer' },
 	{ name => 'opacity', type => '0 <= float <= 100',
-	  desc => 'The new layer opacity (%%desc%%)' }
+	  desc => 'The new layer opacity %%desc%%' }
     );
 
     %invoke = (

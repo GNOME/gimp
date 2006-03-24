@@ -1,3 +1,45 @@
+2006-03-25  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/brush.pdb
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/color.pdb
+	* tools/pdbgen/pdb/context.pdb
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/gradient.pdb
+	* tools/pdbgen/pdb/gradient_select.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/paint_tools.pdb
+	* tools/pdbgen/pdb/plug_in.pdb
+	* tools/pdbgen/pdb/selection.pdb
+	* tools/pdbgen/pdb/selection_tools.pdb
+	* tools/pdbgen/pdb/text_tool.pdb: removed all ':' before and all
+	'()' around %%desc%%.
+
+	* tools/pdbgen/app.pl: add () to int32, float and boolean
+	descriptions automatically. They all look the same now.
+
+	* tools/pdbgen/lib.pl: tweaked regex so %%desc%% doesn't appear in
+	libgimp API docs.
+
+	* app/pdb/brush_cmds.c
+	* app/pdb/brushes_cmds.c
+	* app/pdb/channel_cmds.c
+	* app/pdb/color_cmds.c
+	* app/pdb/context_cmds.c
+	* app/pdb/floating_sel_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/paint_tools_cmds.c
+	* app/pdb/plug_in_cmds.c
+	* app/pdb/selection_cmds.c
+	* app/pdb/selection_tools_cmds.c
+	* app/pdb/text_tool_cmds.c
+	* libgimp/gimpedit_pdb.c
+	* libgimp/gimpplugin_pdb.c: regenerated.
+
 2006-03-24  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/channel.pdb

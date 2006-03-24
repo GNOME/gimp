@@ -299,7 +299,7 @@ static ProcArg floating_sel_rigor_inargs[] =
   {
     GIMP_PDB_INT32,
     "undo",
-    "TRUE or FALSE"
+    "(TRUE or FALSE)"
   }
 };
 
@@ -358,7 +358,7 @@ static ProcArg floating_sel_relax_inargs[] =
   {
     GIMP_PDB_INT32,
     "undo",
-    "TRUE or FALSE"
+    "(TRUE or FALSE)"
   }
 };
 

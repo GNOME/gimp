@@ -474,7 +474,7 @@ gimp_edit_fill (gint32       drawable_ID,
  * @fill_mode: The type of fill.
  * @paint_mode: The paint application mode.
  * @opacity: The opacity of the final bucket fill.
- * @threshold: The threshold determines how extensive the seed fill will be. It's value is specified in terms of intensity levels . This parameter is only valid when there is no selection in the specified image.
+ * @threshold: The threshold determines how extensive the seed fill will be. It's value is specified in terms of intensity levels. This parameter is only valid when there is no selection in the specified image.
  * @sample_merged: Use the composite image, not the drawable.
  * @x: The x coordinate of this bucket fill's application. This parameter is only valid when there is no selection in the specified image.
  * @y: The y coordinate of this bucket fill's application. This parameter is only valid when there is no selection in the specified image.

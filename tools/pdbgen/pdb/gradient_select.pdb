@@ -34,7 +34,7 @@ sub gradients_popup {
 	  null_ok => 1 },
 	{ name => 'sample_size', type => '1 <= int32 <= 10000',
 	  desc => 'Size of the sample to return when the gradient is changed:
-		   (%%desc%%)',
+		   %%desc%%',
 	  no_success => 1 }
     );
 

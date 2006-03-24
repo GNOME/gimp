@@ -240,7 +240,7 @@ HELP
 	  desc => "The procedure's icon. The format depends on the
                    'icon_type' parameter",
 	  array => { name => 'icon_data_length', type => '1 <= int32',
-                     desc => "The length of 'icon_data': %%desc%%" } }
+                     desc => "The length of 'icon-data' %%desc%%" } }
     );
 
     %invoke = (

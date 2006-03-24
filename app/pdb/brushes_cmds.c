@@ -213,7 +213,7 @@ static ProcArg brushes_get_brush_outargs[] =
   {
     GIMP_PDB_INT32,
     "spacing",
-    "The brush spacing: 0 <= spacing <= 1000"
+    "The brush spacing (0 <= spacing <= 1000)"
   }
 };
 
@@ -265,7 +265,7 @@ static ProcArg brushes_get_spacing_outargs[] =
   {
     GIMP_PDB_INT32,
     "spacing",
-    "The brush spacing: 0 <= spacing <= 1000"
+    "The brush spacing (0 <= spacing <= 1000)"
   }
 };
 
@@ -313,7 +313,7 @@ static ProcArg brushes_set_spacing_inargs[] =
   {
     GIMP_PDB_INT32,
     "spacing",
-    "The brush spacing: 0 <= spacing <= 1000"
+    "The brush spacing (0 <= spacing <= 1000)"
   }
 };
 
@@ -422,12 +422,12 @@ static ProcArg brushes_get_brush_data_outargs[] =
   {
     GIMP_PDB_FLOAT,
     "opacity",
-    "The brush opacity: 0 <= opacity <= 100"
+    "The brush opacity (0 <= opacity <= 100)"
   },
   {
     GIMP_PDB_INT32,
     "spacing",
-    "The brush spacing: 0 <= spacing <= 1000"
+    "The brush spacing (0 <= spacing <= 1000)"
   },
   {
     GIMP_PDB_INT32,

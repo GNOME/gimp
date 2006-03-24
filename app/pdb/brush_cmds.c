@@ -808,7 +808,7 @@ static ProcArg brush_get_spacing_outargs[] =
   {
     GIMP_PDB_INT32,
     "spacing",
-    "The brush spacing: 0 <= spacing <= 1000"
+    "The brush spacing (0 <= spacing <= 1000)"
   }
 };
 
@@ -872,7 +872,7 @@ static ProcArg brush_set_spacing_inargs[] =
   {
     GIMP_PDB_INT32,
     "spacing",
-    "The brush spacing: 0 <= spacing <= 1000"
+    "The brush spacing (0 <= spacing <= 1000)"
   }
 };
 

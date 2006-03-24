@@ -144,8 +144,9 @@ sub make_arg_recs {
 
 		for ($type) {
 		    /array/     && do { 				 last };
-		    /boolean/   && do { $info = 'TRUE or FALSE';	 last };
-		    /int|float/ && do { $info =~ s/$type/$arg->{name}/e; last };
+		    /boolean/   && do { $info = '(TRUE or FALSE)';	 last };
+		    /int|float/ && do { $info =~ s/$type/$arg->{name}/e;
+					$info = '('. $info . ')';        last };
 		    /enum/      && do { my $enum = $enums{$name};
 					$info = '{ ' . $enum->{info};
 					foreach (@remove) {

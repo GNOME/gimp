@@ -43,7 +43,7 @@ sub desc_wrap {
 sub desc_clean {
     my ($str) = @_;
     $str =~ s/\(\s*%%desc%%\s*\)//g;
-    $str =~ s/:\s*%%desc%%//g;
+    $str =~ s/:*\s+%%desc%%//g;
     $str =~ s/\{\s*%%desc%%\s*\}//g;
     $str =~ s/\s*$//g;
     $str =~ s/:$//g;

@@ -770,12 +770,12 @@ static ProcArg image_resize_inargs[] =
   {
     GIMP_PDB_INT32,
     "new-width",
-    "New image width: 1 <= new_width"
+    "New image width (1 <= new_width)"
   },
   {
     GIMP_PDB_INT32,
     "new-height",
-    "New image height: 1 <= new_height"
+    "New image height (1 <= new_height)"
   },
   {
     GIMP_PDB_INT32,
@@ -898,12 +898,12 @@ static ProcArg image_scale_inargs[] =
   {
     GIMP_PDB_INT32,
     "new-width",
-    "New image width: 1 <= new_width"
+    "New image width (1 <= new_width)"
   },
   {
     GIMP_PDB_INT32,
     "new-height",
-    "New image height: 1 <= new_height"
+    "New image height (1 <= new_height)"
   }
 };
 
@@ -3237,7 +3237,7 @@ static ProcArg image_get_colormap_outargs[] =
   {
     GIMP_PDB_INT32,
     "num-bytes",
-    "Number of bytes in the colormap array: 0 < num_bytes"
+    "Number of bytes in the colormap array (0 < num_bytes)"
   },
   {
     GIMP_PDB_INT8ARRAY,
@@ -3303,7 +3303,7 @@ static ProcArg image_set_colormap_inargs[] =
   {
     GIMP_PDB_INT32,
     "num-bytes",
-    "Number of bytes in the colormap array: 0 <= num_bytes <= 768"
+    "Number of bytes in the colormap array (0 <= num_bytes <= 768)"
   },
   {
     GIMP_PDB_INT8ARRAY,

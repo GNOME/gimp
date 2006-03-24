@@ -46,7 +46,7 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
 	{ name => 'pressure', type => '0 <= float <= 100',
-	  desc => 'The pressure of the airbrush strokes: (%%desc%%)' },
+	  desc => 'The pressure of the airbrush strokes %%desc%%' },
 	&stroke_arg
     );
 
@@ -281,7 +281,7 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
 	{ name => 'pressure', type => '0 <= float <= 100',
-	  desc => 'The pressure: %%desc%%' },
+	  desc => 'The pressure %%desc%%' },
 	{ name => 'convolve_type', type => 'enum GimpConvolveType',
 	  desc => 'Convolve type: %%desc%%' },
 	&stroke_arg
@@ -470,12 +470,12 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
 	{ name => 'fade_out', type => '0 <= float',
-	  desc => 'Fade out parameter: %%desc%%' },
+	  desc => 'Fade out parameter %%desc%%' },
 	&stroke_arg,
 	{ name => 'method', type => 'enum GimpPaintApplicationMode',
 	  desc => '%%desc%%' },
 	{ name => 'gradient_length', type => '0 <= float',
-	  desc => 'Length of gradient to draw: %%desc%%' }
+	  desc => 'Length of gradient to draw %%desc%%' }
     );
 
     %invoke = (
@@ -607,7 +607,7 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
 	 { name => 'pressure', type => '0 <= float <= 100',
-	   desc => 'The pressure of the smudge strokes: (%%desc%%)' },
+	   desc => 'The pressure of the smudge strokes %%desc%%' },
 	&stroke_arg
     );
 
@@ -690,7 +690,7 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
 	 { name => 'exposure', type => '0 <= float <= 100',
-	   desc => 'The exposure of the  strokes: (%%desc%%)' },
+	   desc => 'The exposure of the  strokes %%desc%%' },
         { name => 'dodgeburn_type', type => 'enum GimpDodgeBurnType',
 	  desc => 'The type either dodge or burn: %%desc%%' },
         { name => 'dodgeburn_mode', type => 'enum GimpTransferMode',

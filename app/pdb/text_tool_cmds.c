@@ -154,7 +154,7 @@ static ProcArg text_fontname_inargs[] =
   {
     GIMP_PDB_INT32,
     "border",
-    "The size of the border: -1 <= border"
+    "The size of the border (-1 <= border)"
   },
   {
     GIMP_PDB_INT32,
@@ -470,7 +470,7 @@ static ProcArg text_inargs[] =
   {
     GIMP_PDB_INT32,
     "border",
-    "The size of the border: -1 <= border"
+    "The size of the border (-1 <= border)"
   },
   {
     GIMP_PDB_INT32,
