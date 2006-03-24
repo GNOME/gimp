@@ -478,7 +478,7 @@ warp_dialog (GimpDrawable *drawable)
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  toggle_hbox = gtk_hbox_new (FALSE, 4);
+  toggle_hbox = gtk_hbox_new (FALSE, 6);
   gtk_table_attach (GTK_TABLE (table), toggle_hbox, 1, 3, 2, 3,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (toggle_hbox);
@@ -528,7 +528,7 @@ warp_dialog (GimpDrawable *drawable)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dvals.wrap_type == BLACK);
 
-  toggle = gtk_radio_button_new_with_label (group, _("FG color"));
+  toggle = gtk_radio_button_new_with_label (group, _("Foreground color"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);

@@ -1,5 +1,10 @@
 2006-03-24  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/mapcolor.c
+	* plug-ins/common/warp.c: avoid using FG and BG.
+
+2006-03-24  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/colormap-editor-actions.c
 	* app/actions/gradient-editor-actions.c
 	* app/actions/palette-editor-actions.c

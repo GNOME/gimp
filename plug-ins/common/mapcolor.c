@@ -148,7 +148,7 @@ query (void)
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           dversio,
-                          N_("Adjust _FG-BG"),
+                          N_("Adjust _Foreground & Background"),
                           "RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (adjust_args), 0,
@@ -232,7 +232,7 @@ run (const gchar      *name,
 
           plvals.map_mode = 0;
 
-          gimp_progress_init (_("Adjusting FG-BG"));
+          gimp_progress_init (_("Adjusting foreground and background colors"));
 
           color_mapping (drawable);
           break;
