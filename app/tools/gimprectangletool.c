@@ -130,6 +130,10 @@ static void     gimp_rectangle_tool_notify_height   (GimpRectangleOptions  *opti
 static void     gimp_rectangle_tool_notify_aspect   (GimpRectangleOptions  *options,
                                                      GParamSpec            *pspec,
                                                      GimpRectangleTool     *rectangle);
+static void     gimp_rectangle_tool_notify_highlight (GimpRectangleOptions  *options,
+                                                      GParamSpec            *pspec,
+                                                      GimpRectangleTool     *rectangle);
+
 
 /* Internal state */
 static gint startx;     /*  starting x coord            */
@@ -667,6 +671,10 @@ gimp_rectangle_tool_constructor (GObject *object)
   g_signal_connect_object (options, "notify::aspect",
                            G_CALLBACK (gimp_rectangle_tool_notify_aspect),
                            rectangle, 0);
+  g_signal_connect_object (options, "notify::highlight",
+                           G_CALLBACK (gimp_rectangle_tool_notify_highlight),
+                           rectangle, 0);
+
 
   controls_container = GTK_CONTAINER (g_object_get_data (options,
                                                          "controls-container"));
@@ -701,6 +709,9 @@ gimp_rectangle_tool_dispose (GObject *object)
                                         rectangle);
   g_signal_handlers_disconnect_by_func (options,
                                         G_CALLBACK (gimp_rectangle_tool_notify_aspect),
+                                        rectangle);
+  g_signal_handlers_disconnect_by_func (options,
+                                        G_CALLBACK (gimp_rectangle_tool_notify_highlight),
                                         rectangle);
 }
 
@@ -1936,6 +1947,10 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rectangle,
   g_signal_handlers_block_by_func (options,
                                    gimp_rectangle_tool_notify_aspect,
                                    rectangle);
+  g_signal_handlers_block_by_func (options,
+                                   gimp_rectangle_tool_notify_highlight,
+                                   rectangle);
+
 
   if (! fixed_width)
     g_object_set (options,
@@ -1961,6 +1976,10 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rectangle,
   g_signal_handlers_unblock_by_func (options,
                                      gimp_rectangle_tool_notify_aspect,
                                      rectangle);
+  g_signal_handlers_unblock_by_func (options,
+                                     gimp_rectangle_tool_notify_highlight,
+                                     rectangle);
+
 
   g_object_set (options,
                 "center-x", center_x,
@@ -2152,3 +2171,37 @@ gimp_rectangle_tool_notify_aspect (GimpRectangleOptions *options,
                               GIMP_TOOL (rectangle)->gdisp);
 }
 
+static void
+gimp_rectangle_tool_notify_highlight (GimpRectangleOptions *options,
+                                      GParamSpec           *pspec,
+                                      GimpRectangleTool    *rectangle)
+{
+  GimpTool             *tool     = GIMP_TOOL (rectangle);
+  GimpDisplayShell     *shell    = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
+  gboolean              highlight;
+  gint                  x1, y1;
+  gint                  x2, y2;
+
+  g_object_get (options, "highlight", &highlight, NULL);
+
+  g_object_get (rectangle,
+                "x1", &x1,
+                "y1", &y1,
+                "x2", &x2,
+                "y2", &y2,
+                NULL);
+
+  if (highlight)
+    {
+      GdkRectangle rect;
+
+      rect.x      = x1;
+      rect.y      = y1;
+      rect.width  = x2 - x1;
+      rect.height = y2 - y1;
+
+      gimp_display_shell_set_highlight (shell, &rect);
+    }
+  else
+    gimp_display_shell_set_highlight (shell, NULL);
+}
