@@ -32,7 +32,6 @@
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
 
 #include "gimpeditselectiontool.h"
 #include "gimpselectiontool.h"
@@ -53,6 +52,7 @@ static void   gimp_selection_tool_modifier_key  (GimpTool        *tool,
 static void   gimp_selection_tool_oper_update   (GimpTool        *tool,
                                                  GimpCoords      *coords,
                                                  GdkModifierType  state,
+                                                 gboolean         proximity,
                                                  GimpDisplay     *gdisp);
 static void   gimp_selection_tool_cursor_update (GimpTool        *tool,
                                                  GimpCoords      *coords,
@@ -154,6 +154,7 @@ static void
 gimp_selection_tool_oper_update (GimpTool        *tool,
                                  GimpCoords      *coords,
                                  GdkModifierType  state,
+                                 gboolean         proximity,
                                  GimpDisplay     *gdisp)
 {
   GimpSelectionTool    *selection_tool = GIMP_SELECTION_TOOL (tool);
@@ -221,7 +222,7 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
 
   gimp_tool_pop_status (tool, gdisp);
 
-  if (GIMP_DISPLAY_SHELL (gdisp->shell)->proximity)
+  if (proximity)
     {
       const gchar *status = NULL;
 

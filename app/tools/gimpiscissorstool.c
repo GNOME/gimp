@@ -145,6 +145,7 @@ static void   gimp_iscissors_tool_motion         (GimpTool          *tool,
 static void   gimp_iscissors_tool_oper_update    (GimpTool          *tool,
                                                   GimpCoords        *coords,
                                                   GdkModifierType    state,
+                                                  gboolean           proximity,
                                                   GimpDisplay       *gdisp);
 static void   gimp_iscissors_tool_cursor_update  (GimpTool          *tool,
                                                   GimpCoords        *coords,
@@ -931,11 +932,13 @@ static void
 gimp_iscissors_tool_oper_update (GimpTool        *tool,
                                  GimpCoords      *coords,
                                  GdkModifierType  state,
+                                 gboolean         proximity,
                                  GimpDisplay     *gdisp)
 {
   GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (tool);
 
-  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
+                                               gdisp);
 
   if (mouse_over_vertex (iscissors, coords->x, coords->y))
     {

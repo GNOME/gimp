@@ -94,6 +94,7 @@ struct _GimpToolClass
   void     (* oper_update)    (GimpTool        *tool,
                                GimpCoords      *coords,
                                GdkModifierType  state,
+                               gboolean         proximity,
                                GimpDisplay     *gdisp);
   void     (* cursor_update)  (GimpTool        *tool,
                                GimpCoords      *coords,
@@ -139,6 +140,7 @@ void          gimp_tool_set_modifier_state (GimpTool            *tool,
 void          gimp_tool_oper_update        (GimpTool            *tool,
                                             GimpCoords          *coords,
                                             GdkModifierType      state,
+                                            gboolean             proximity,
                                             GimpDisplay         *gdisp);
 void          gimp_tool_cursor_update      (GimpTool            *tool,
                                             GimpCoords          *coords,

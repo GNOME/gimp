@@ -1,5 +1,32 @@
 2006-03-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimptool.[ch]
+	* app/tools/tool_manager.[ch]: add "gboolean proximity" parameter
+	to GimpTool::oper_update() in order to emphasize its importance
+	and to avoid peeking around in the GimpDisplayShell struct.
+
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpcolortool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpforegroundselecttool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimpnewrectselecttool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimprectangletool.[ch]
+	* app/tools/gimpselectiontool.c
+	* app/tools/gimptransformtool.c
+	* app/tools/gimpvectortool.c: changed accordingly. Got rid of
+	quite some "display/gimpdisplayshell.h" includes.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): pass shell->proximity to
+	tool_manager_oper_update_active().
+
+2006-03-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpclonetool.c
 	* app/tools/gimpcurvestool.c
 	* app/tools/gimpforegroundselecttool.c

@@ -73,6 +73,7 @@ static void   gimp_foreground_select_tool_control        (GimpTool        *tool,
 static void   gimp_foreground_select_tool_oper_update    (GimpTool        *tool,
                                                           GimpCoords      *coords,
                                                           GdkModifierType  state,
+                                                          gboolean         proximity,
                                                           GimpDisplay     *gdisp);
 static void   gimp_foreground_select_tool_cursor_update  (GimpTool        *tool,
                                                           GimpCoords      *coords,
@@ -270,6 +271,7 @@ static void
 gimp_foreground_select_tool_oper_update (GimpTool        *tool,
                                          GimpCoords      *coords,
                                          GdkModifierType  state,
+                                         gboolean         proximity,
                                          GimpDisplay     *gdisp)
 {
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
@@ -281,7 +283,8 @@ gimp_foreground_select_tool_oper_update (GimpTool        *tool,
 
   GIMP_FREE_SELECT_TOOL (tool)->last_coords = *coords;
 
-  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
+                                               gdisp);
 
   if (fg_select->mask)
     {
@@ -316,7 +319,7 @@ gimp_foreground_select_tool_oper_update (GimpTool        *tool,
         }
     }
 
-  if (GIMP_DISPLAY_SHELL (gdisp->shell)->proximity)
+  if (proximity)
     {
       if (status)
         gimp_tool_replace_status (tool, gdisp, status);

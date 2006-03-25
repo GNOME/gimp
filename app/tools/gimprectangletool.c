@@ -1357,6 +1357,7 @@ void
 gimp_rectangle_tool_oper_update (GimpTool        *tool,
                                  GimpCoords      *coords,
                                  GdkModifierType  state,
+                                 gboolean         proximity,
                                  GimpDisplay     *gdisp)
 {
   GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (tool);

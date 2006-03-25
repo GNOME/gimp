@@ -386,6 +386,7 @@ void
 tool_manager_oper_update_active (Gimp            *gimp,
                                  GimpCoords      *coords,
                                  GdkModifierType  state,
+                                 gboolean         proximity,
                                  GimpDisplay     *gdisp)
 {
   GimpToolManager *tool_manager;
@@ -397,7 +398,7 @@ tool_manager_oper_update_active (Gimp            *gimp,
   if (tool_manager->active_tool)
     {
       gimp_tool_oper_update (tool_manager->active_tool,
-                             coords, state,
+                             coords, state, proximity,
                              gdisp);
     }
 }

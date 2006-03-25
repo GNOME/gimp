@@ -66,6 +66,7 @@ void       tool_manager_modifier_state_active (Gimp             *gimp,
 void       tool_manager_oper_update_active    (Gimp             *gimp,
                                                GimpCoords       *coords,
                                                GdkModifierType   state,
+                                               gboolean          proximity,
                                                GimpDisplay      *gdisp);
 void       tool_manager_cursor_update_active  (Gimp             *gimp,
                                                GimpCoords       *coords,

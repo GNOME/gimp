@@ -85,6 +85,7 @@ static void   gimp_move_tool_modifier_key   (GimpTool          *tool,
 static void   gimp_move_tool_oper_update    (GimpTool          *tool,
                                              GimpCoords        *coords,
                                              GdkModifierType    state,
+                                             gboolean           proximity,
                                              GimpDisplay       *gdisp);
 static void   gimp_move_tool_cursor_update  (GimpTool          *tool,
                                              GimpCoords        *coords,
@@ -609,6 +610,7 @@ static void
 gimp_move_tool_oper_update (GimpTool        *tool,
                             GimpCoords      *coords,
                             GdkModifierType  state,
+                            gboolean         proximity,
                             GimpDisplay     *gdisp)
 {
   GimpMoveTool     *move    = GIMP_MOVE_TOOL (tool);
@@ -619,7 +621,7 @@ gimp_move_tool_oper_update (GimpTool        *tool,
   if (options->move_type == GIMP_TRANSFORM_TYPE_LAYER &&
       ! options->move_current                         &&
       gimp_display_shell_get_show_guides (shell)      &&
-      shell->proximity)
+      proximity)
     {
       gint snap_distance;
 

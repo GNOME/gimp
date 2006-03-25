@@ -47,7 +47,6 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
-#include "display/gimpstatusbar.h"
 
 #include "gimpcoloroptions.h"
 #include "gimpcolorpickertool.h"
@@ -93,6 +92,7 @@ static void   gimp_paint_tool_modifier_key   (GimpTool            *tool,
 static void   gimp_paint_tool_oper_update    (GimpTool            *tool,
                                               GimpCoords          *coords,
                                               GdkModifierType      state,
+                                              gboolean             proximity,
                                               GimpDisplay         *gdisp);
 static void   gimp_paint_tool_cursor_update  (GimpTool            *tool,
                                               GimpCoords          *coords,
@@ -580,6 +580,7 @@ static void
 gimp_paint_tool_oper_update (GimpTool        *tool,
                              GimpCoords      *coords,
                              GdkModifierType  state,
+                             gboolean         proximity,
                              GimpDisplay     *gdisp)
 {
   GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (tool);
@@ -593,7 +594,8 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
 
   if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (draw_tool)))
     {
-      GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, gdisp);
+      GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state,
+                                                   proximity, gdisp);
       return;
     }
 
@@ -621,7 +623,7 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  if (drawable && shell->proximity)
+  if (drawable && proximity)
     {
       if (gdisp == tool->gdisp && (state & GDK_SHIFT_MASK))
         {
@@ -702,7 +704,8 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
       gimp_draw_tool_start (draw_tool, gdisp);
     }
 
-  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
+                                               gdisp);
 }
 
 static void

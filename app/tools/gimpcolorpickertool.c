@@ -68,6 +68,7 @@ static void      gimp_color_picker_tool_modifier_key (GimpTool        *tool,
 static void      gimp_color_picker_tool_oper_update  (GimpTool        *tool,
                                                       GimpCoords      *coords,
                                                       GdkModifierType  state,
+                                                      gboolean         proximity,
                                                       GimpDisplay     *gdisp);
 
 static void      gimp_color_picker_tool_picked       (GimpColorTool   *color_tool,
@@ -227,6 +228,7 @@ static void
 gimp_color_picker_tool_oper_update (GimpTool        *tool,
                                     GimpCoords      *coords,
                                     GdkModifierType  state,
+                                    gboolean         proximity,
                                     GimpDisplay     *gdisp)
 {
   GimpColorPickerOptions *options;
@@ -235,7 +237,8 @@ gimp_color_picker_tool_oper_update (GimpTool        *tool,
 
   GIMP_COLOR_TOOL (tool)->pick_mode = options->pick_mode;
 
-  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
+                                               gdisp);
 }
 
 static void

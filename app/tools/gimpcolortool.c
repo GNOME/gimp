@@ -79,6 +79,7 @@ static void       gimp_color_tool_motion         (GimpTool        *tool,
 static void       gimp_color_tool_oper_update    (GimpTool        *tool,
                                                   GimpCoords      *coords,
                                                   GdkModifierType  state,
+                                                  gboolean         proximity,
                                                   GimpDisplay     *gdisp);
 static void       gimp_color_tool_cursor_update  (GimpTool        *tool,
                                                   GimpCoords      *coords,
@@ -442,6 +443,7 @@ static void
 gimp_color_tool_oper_update (GimpTool        *tool,
                              GimpCoords      *coords,
                              GdkModifierType  state,
+                             gboolean         proximity,
                              GimpDisplay     *gdisp)
 {
   GimpColorTool    *color_tool   = GIMP_COLOR_TOOL (tool);
@@ -449,7 +451,7 @@ gimp_color_tool_oper_update (GimpTool        *tool,
   GimpSamplePoint  *sample_point = NULL;
 
   if (color_tool->enabled &&
-      gimp_display_shell_get_show_sample_points (shell) && shell->proximity)
+      gimp_display_shell_get_show_sample_points (shell) && proximity)
     {
       gint snap_distance;
 

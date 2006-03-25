@@ -78,6 +78,7 @@ static void     gimp_new_rect_select_tool_button_release (GimpTool        *tool,
 static void     gimp_new_rect_select_tool_oper_update    (GimpTool        *tool,
                                                           GimpCoords      *coords,
                                                           GdkModifierType  state,
+                                                          gboolean         proximity,
                                                           GimpDisplay     *gdisp);
 static gboolean gimp_new_rect_select_tool_execute        (GimpRectangleTool *rect_tool,
                                                           gint             x,
@@ -233,11 +234,13 @@ static void
 gimp_new_rect_select_tool_oper_update (GimpTool        *tool,
                                        GimpCoords      *coords,
                                        GdkModifierType  state,
+                                       gboolean         proximity,
                                        GimpDisplay     *gdisp)
 {
-  gimp_rectangle_tool_oper_update (tool, coords, state, gdisp);
+  gimp_rectangle_tool_oper_update (tool, coords, state, proximity, gdisp);
 
-  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
+                                               gdisp);
 }
 
 /*

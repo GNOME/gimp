@@ -111,6 +111,7 @@ static void     gimp_transform_tool_modifier_key   (GimpTool          *tool,
 static void     gimp_transform_tool_oper_update    (GimpTool          *tool,
                                                     GimpCoords        *coords,
                                                     GdkModifierType    state,
+                                                    gboolean           proximity,
                                                     GimpDisplay       *gdisp);
 static void     gimp_transform_tool_cursor_update  (GimpTool          *tool,
                                                     GimpCoords        *coords,
@@ -395,7 +396,7 @@ gimp_transform_tool_button_press (GimpTool        *tool,
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
   if (tr_tool->function == TRANSFORM_CREATING && tr_tool->use_grid)
-    gimp_transform_tool_oper_update (tool, coords, state, gdisp);
+    gimp_transform_tool_oper_update (tool, coords, state, TRUE, gdisp);
 
   tr_tool->lastx = tr_tool->startx = coords->x;
   tr_tool->lasty = tr_tool->starty = coords->y;
@@ -549,6 +550,7 @@ static void
 gimp_transform_tool_oper_update (GimpTool        *tool,
                                  GimpCoords      *coords,
                                  GdkModifierType  state,
+                                 gboolean         proximity,
                                  GimpDisplay     *gdisp)
 {
   GimpTransformTool *tr_tool   = GIMP_TRANSFORM_TOOL (tool);

@@ -82,6 +82,7 @@ static void     gimp_tool_real_modifier_key   (GimpTool        *tool,
 static void     gimp_tool_real_oper_update    (GimpTool        *tool,
                                                GimpCoords      *coords,
                                                GdkModifierType  state,
+                                               gboolean         proximity,
                                                GimpDisplay     *gdisp);
 static void     gimp_tool_real_cursor_update  (GimpTool        *tool,
                                                GimpCoords      *coords,
@@ -266,6 +267,7 @@ static void
 gimp_tool_real_oper_update (GimpTool        *tool,
                             GimpCoords      *coords,
                             GdkModifierType  state,
+                            gboolean         proximity,
                             GimpDisplay     *gdisp)
 {
 }
@@ -471,13 +473,15 @@ void
 gimp_tool_oper_update (GimpTool        *tool,
                        GimpCoords      *coords,
                        GdkModifierType  state,
+                       gboolean         proximity,
                        GimpDisplay     *gdisp)
 {
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (coords != NULL);
   g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
-  GIMP_TOOL_GET_CLASS (tool)->oper_update (tool, coords, state, gdisp);
+  GIMP_TOOL_GET_CLASS (tool)->oper_update (tool, coords, state, proximity,
+                                           gdisp);
 }
 
 void

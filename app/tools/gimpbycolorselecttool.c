@@ -55,6 +55,7 @@ static void   gimp_by_color_select_tool_button_release (GimpTool        *tool,
 static void   gimp_by_color_select_tool_oper_update    (GimpTool        *tool,
                                                         GimpCoords      *coords,
                                                         GdkModifierType  state,
+                                                        gboolean         proximity,
                                                         GimpDisplay     *gdisp);
 static void   gimp_by_color_select_tool_cursor_update  (GimpTool        *tool,
                                                         GimpCoords      *coords,
@@ -202,6 +203,7 @@ static void
 gimp_by_color_select_tool_oper_update (GimpTool        *tool,
                                        GimpCoords      *coords,
                                        GdkModifierType  state,
+                                       gboolean         proximity,
                                        GimpDisplay     *gdisp)
 {
   GimpSelectionTool    *sel_tool = GIMP_SELECTION_TOOL (tool);

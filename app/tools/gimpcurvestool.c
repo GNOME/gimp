@@ -49,7 +49,6 @@
 #include "widgets/gimphistogramview.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
 
 #include "gimpcurvestool.h"
 #include "gimphistogramoptions.h"
@@ -86,6 +85,7 @@ static gboolean gimp_curves_tool_key_press      (GimpTool         *tool,
 static void     gimp_curves_tool_oper_update    (GimpTool         *tool,
                                                  GimpCoords       *coords,
                                                  GdkModifierType   state,
+                                                 gboolean          proximity,
                                                  GimpDisplay      *gdisp);
 
 static void     gimp_curves_tool_color_picked   (GimpColorTool    *color_tool,
@@ -340,12 +340,14 @@ static void
 gimp_curves_tool_oper_update (GimpTool        *tool,
                               GimpCoords      *coords,
                               GdkModifierType  state,
+                              gboolean         proximity,
                               GimpDisplay     *gdisp)
 {
   GimpColorPickMode  mode   = GIMP_COLOR_PICK_MODE_NONE;
   const gchar       *status = NULL;
 
-  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
+                                               gdisp);
 
   gimp_tool_pop_status (tool, gdisp);
 
@@ -362,7 +364,7 @@ gimp_curves_tool_oper_update (GimpTool        *tool,
 
   GIMP_COLOR_TOOL (tool)->pick_mode = mode;
 
-  if (status && GIMP_DISPLAY_SHELL (gdisp->shell)->proximity)
+  if (status && proximity)
     gimp_tool_push_status (tool, gdisp, status);
 }
 

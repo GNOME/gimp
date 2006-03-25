@@ -528,6 +528,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         tool_manager_oper_update_active (gimp,
                                          &image_coords, state,
+                                         shell->proximity,
                                          gdisp);
       }
       break;
@@ -544,6 +545,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         tool_manager_oper_update_active (gimp,
                                          &image_coords, state,
+                                         shell->proximity,
                                          gdisp);
       }
       break;
@@ -551,6 +553,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
     case GDK_PROXIMITY_IN:
       tool_manager_oper_update_active (gimp,
                                        &image_coords, state,
+                                       shell->proximity,
                                        gdisp);
       break;
 
@@ -560,6 +563,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
       tool_manager_oper_update_active (gimp,
                                        &image_coords, state,
+                                       shell->proximity,
                                        gdisp);
       break;
 
@@ -583,6 +587,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
                 tool_manager_oper_update_active (gimp,
                                                  &image_coords, state,
+                                                 shell->proximity,
                                                  gdisp);
               }
           }
@@ -600,6 +605,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
             tool_manager_oper_update_active (gimp,
                                              &image_coords, 0,
+                                             shell->proximity,
                                              gdisp);
           }
 
@@ -625,6 +631,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
             tool_manager_oper_update_active (gimp,
                                              &image_coords, state,
+                                             shell->proximity,
                                              gdisp);
 
             active_tool = tool_manager_get_active (gimp);
@@ -806,6 +813,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
             tool_manager_oper_update_active (gimp,
                                              &image_coords, state,
+                                             shell->proximity,
                                              gdisp);
 
             gtk_grab_remove (canvas);
@@ -825,6 +833,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
                 tool_manager_oper_update_active (gimp,
                                                  &image_coords, state,
+                                                 shell->proximity,
                                                  gdisp);
 
                 shell->space_release_pending = FALSE;
@@ -950,6 +959,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         tool_manager_oper_update_active (gimp,
                                          &image_coords, state,
+                                         shell->proximity,
                                          gdisp);
 
         return_val = TRUE;
@@ -1116,6 +1126,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           {
             tool_manager_oper_update_active (gimp,
                                              &image_coords, state,
+                                             shell->proximity,
                                              gdisp);
           }
       }
@@ -1237,6 +1248,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         tool_manager_oper_update_active (gimp,
                                          &image_coords, state,
+                                         shell->proximity,
                                          gdisp);
       }
       break;
@@ -1294,6 +1306,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         tool_manager_oper_update_active (gimp,
                                          &image_coords, state,
+                                         shell->proximity,
                                          gdisp);
       }
       break;

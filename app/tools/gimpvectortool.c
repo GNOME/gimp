@@ -97,9 +97,11 @@ static void     gimp_vector_tool_modifier_key    (GimpTool        *tool,
 static void     gimp_vector_tool_oper_update     (GimpTool        *tool,
                                                   GimpCoords      *coords,
                                                   GdkModifierType  state,
+                                                  gboolean         proximity,
                                                   GimpDisplay     *gdisp);
 static void     gimp_vector_tool_status_update   (GimpTool        *tool,
-                                                  GimpDisplay     *gdisp);
+                                                  GimpDisplay     *gdisp,
+                                                  gboolean         proximity);
 static void     gimp_vector_tool_cursor_update   (GimpTool        *tool,
                                                   GimpCoords      *coords,
                                                   GdkModifierType  state,
@@ -895,6 +897,7 @@ static void
 gimp_vector_tool_oper_update (GimpTool        *tool,
                               GimpCoords      *coords,
                               GdkModifierType  state,
+                              gboolean         proximity,
                               GimpDisplay     *gdisp)
 {
   GimpVectorTool    *vector_tool = GIMP_VECTOR_TOOL (tool);
@@ -1130,19 +1133,20 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
       break;
     }
 
-  gimp_vector_tool_status_update (tool, gdisp);
+  gimp_vector_tool_status_update (tool, gdisp, proximity);
 }
 
 
 static void
 gimp_vector_tool_status_update (GimpTool    *tool,
-                                GimpDisplay *gdisp)
+                                GimpDisplay *gdisp,
+                                gboolean     proximity)
 {
   GimpVectorTool *vector_tool = GIMP_VECTOR_TOOL (tool);
 
   gimp_tool_pop_status (tool, gdisp);
 
-  if (GIMP_DISPLAY_SHELL (gdisp->shell)->proximity)
+  if (proximity)
     {
       const gchar *status = NULL;
 

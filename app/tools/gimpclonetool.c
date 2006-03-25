@@ -37,7 +37,6 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
 
 #include "gimpclonetool.h"
 #include "gimppaintoptions-gui.h"
@@ -68,6 +67,7 @@ static void   gimp_clone_tool_cursor_update (GimpTool        *tool,
 static void   gimp_clone_tool_oper_update   (GimpTool        *tool,
                                              GimpCoords      *coords,
                                              GdkModifierType  state,
+                                             gboolean         proximity,
                                              GimpDisplay     *gdisp);
 
 static void   gimp_clone_tool_draw          (GimpDrawTool    *draw_tool);
@@ -227,15 +227,17 @@ static void
 gimp_clone_tool_oper_update (GimpTool        *tool,
                              GimpCoords      *coords,
                              GdkModifierType  state,
+                             gboolean         proximity,
                              GimpDisplay     *gdisp)
 {
   GimpToolOptions *options = tool->tool_info->tool_options;
 
-  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
+                                               gdisp);
 
   if (GIMP_CLONE_OPTIONS (options)->clone_type == GIMP_IMAGE_CLONE    &&
       GIMP_CLONE (GIMP_PAINT_TOOL (tool)->core)->src_drawable == NULL &&
-      GIMP_DISPLAY_SHELL (gdisp->shell)->proximity)
+      proximity)
     {
       gimp_tool_replace_status (tool, gdisp,
                                 _("Ctrl-Click to set a clone source."));
