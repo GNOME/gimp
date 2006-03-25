@@ -49,6 +49,7 @@
 #include "widgets/gimphistogramview.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpcurvestool.h"
 #include "gimphistogramoptions.h"
@@ -361,7 +362,7 @@ gimp_curves_tool_oper_update (GimpTool        *tool,
 
   GIMP_COLOR_TOOL (tool)->pick_mode = mode;
 
-  if (status)
+  if (status && GIMP_DISPLAY_SHELL (gdisp->shell)->proximity)
     gimp_tool_push_status (tool, gdisp, status);
 }
 

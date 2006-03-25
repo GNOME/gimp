@@ -316,11 +316,13 @@ gimp_foreground_select_tool_oper_update (GimpTool        *tool,
         }
     }
 
-  if (status)
-    gimp_tool_replace_status (tool, gdisp, status);
-
   if (GIMP_DISPLAY_SHELL (gdisp->shell)->proximity)
-    gimp_draw_tool_start (draw_tool, gdisp);
+    {
+      if (status)
+        gimp_tool_replace_status (tool, gdisp, status);
+
+      gimp_draw_tool_start (draw_tool, gdisp);
+    }
 }
 
 static void

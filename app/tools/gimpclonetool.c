@@ -37,6 +37,7 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpclonetool.h"
 #include "gimppaintoptions-gui.h"
@@ -232,8 +233,9 @@ gimp_clone_tool_oper_update (GimpTool        *tool,
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, gdisp);
 
-  if (GIMP_CLONE_OPTIONS (options)->clone_type == GIMP_IMAGE_CLONE &&
-      GIMP_CLONE (GIMP_PAINT_TOOL (tool)->core)->src_drawable == NULL)
+  if (GIMP_CLONE_OPTIONS (options)->clone_type == GIMP_IMAGE_CLONE    &&
+      GIMP_CLONE (GIMP_PAINT_TOOL (tool)->core)->src_drawable == NULL &&
+      GIMP_DISPLAY_SHELL (gdisp->shell)->proximity)
     {
       gimp_tool_replace_status (tool, gdisp,
                                 _("Ctrl-Click to set a clone source."));

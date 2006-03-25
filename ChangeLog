@@ -1,3 +1,14 @@
+2006-03-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpforegroundselecttool.c
+	* app/tools/gimpselectiontool.c
+	* app/tools/gimpvectortool.c (GimpTool::oper_update): don't push
+	status messages when shell->proximity is FALSE. Make sure the old
+	status message gets popped regardless of shell->proximity's
+	value. Fixes stuck status bar messages.
+
 2006-03-25  Karine Delvare  <edhel@gimp.org>
 
 	* app/tools/gimprectangletool.c: react to highlight notification.

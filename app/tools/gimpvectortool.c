@@ -897,21 +897,18 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
                               GdkModifierType  state,
                               GimpDisplay     *gdisp)
 {
-  GimpVectorTool    *vector_tool;
-  GimpDrawTool      *draw_tool;
+  GimpVectorTool    *vector_tool = GIMP_VECTOR_TOOL (tool);
+  GimpDrawTool      *draw_tool   = GIMP_DRAW_TOOL (tool);
   GimpVectorOptions *options;
-  GimpAnchor        *anchor     = NULL;
-  GimpAnchor        *anchor2    = NULL;
-  GimpStroke        *stroke     = NULL;
-  gdouble            position   = -1;
-  gboolean           on_handle  = FALSE;
-  gboolean           on_curve   = FALSE;
-  gboolean           on_vectors = FALSE;
+  GimpAnchor        *anchor      = NULL;
+  GimpAnchor        *anchor2     = NULL;
+  GimpStroke        *stroke      = NULL;
+  gdouble            position    = -1;
+  gboolean           on_handle   = FALSE;
+  gboolean           on_curve    = FALSE;
+  gboolean           on_vectors  = FALSE;
 
-  vector_tool = GIMP_VECTOR_TOOL (tool);
-  options     = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
-
-  draw_tool = GIMP_DRAW_TOOL (tool);
+  options = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
 
   vector_tool->modifier_lock = FALSE;
 
@@ -1141,17 +1138,16 @@ static void
 gimp_vector_tool_status_update (GimpTool    *tool,
                                 GimpDisplay *gdisp)
 {
-  GimpVectorTool   *vector_tool = GIMP_VECTOR_TOOL (tool);
-  GimpDisplayShell *shell;
+  GimpVectorTool *vector_tool = GIMP_VECTOR_TOOL (tool);
 
-  shell = tool->gdisp ? GIMP_DISPLAY_SHELL (tool->gdisp->shell) : NULL;
+  gimp_tool_pop_status (tool, gdisp);
 
-  if (shell && shell->proximity)
+  if (GIMP_DISPLAY_SHELL (gdisp->shell)->proximity)
     {
       const gchar *status = NULL;
 
       switch (vector_tool->function)
-      {
+        {
         case VECTORS_SELECT_VECTOR:
           status = _("Click to pick path to edit.");
           break;
@@ -1210,8 +1206,6 @@ gimp_vector_tool_status_update (GimpTool    *tool,
 
       if (status)
         gimp_tool_push_status (tool, gdisp, status);
-      else
-        gimp_tool_pop_status (tool, gdisp);
     }
 }
 
@@ -1221,12 +1215,10 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
                                 GdkModifierType  state,
                                 GimpDisplay     *gdisp)
 {
-  GimpVectorTool     *vector_tool;
+  GimpVectorTool     *vector_tool = GIMP_VECTOR_TOOL (tool);
   GimpCursorType      cursor;
   GimpToolCursorType  tool_cursor;
   GimpCursorModifier  cmodifier;
-
-  vector_tool = GIMP_VECTOR_TOOL (tool);
 
   cursor      = GIMP_CURSOR_MOUSE;
   tool_cursor = GIMP_TOOL_CURSOR_PATHS;

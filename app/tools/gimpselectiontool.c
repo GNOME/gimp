@@ -32,6 +32,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpeditselectiontool.h"
 #include "gimpselectiontool.h"
@@ -160,7 +161,6 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
   GimpChannel          *selection;
   GimpLayer            *layer;
   GimpLayer            *floating_sel;
-  const gchar          *status            = NULL;
   gboolean              move_layer        = FALSE;
   gboolean              move_floating_sel = FALSE;
 
@@ -219,33 +219,41 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
       selection_tool->op = options->operation;
     }
 
-  if (! gimp_enum_get_value (GIMP_TYPE_CHANNEL_OPS, selection_tool->op,
-                             NULL, NULL, &status, NULL))
+  gimp_tool_pop_status (tool, gdisp);
+
+  if (GIMP_DISPLAY_SHELL (gdisp->shell)->proximity)
     {
-      switch (selection_tool->op)
+      const gchar *status = NULL;
+
+      if (! gimp_enum_get_value (GIMP_TYPE_CHANNEL_OPS, selection_tool->op,
+                                 NULL, NULL, &status, NULL))
         {
-        case SELECTION_MOVE_MASK:
-          status = _("Move the selection mask");
-          break;
+          switch (selection_tool->op)
+            {
+            case SELECTION_MOVE_MASK:
+              status = _("Move the selection mask");
+              break;
 
-        case SELECTION_MOVE:
-          status = _("Move the selected pixels");
-          break;
+            case SELECTION_MOVE:
+              status = _("Move the selected pixels");
+              break;
 
-        case SELECTION_MOVE_COPY:
-          status = _("Move a copy of the selected pixels");
-          break;
+            case SELECTION_MOVE_COPY:
+              status = _("Move a copy of the selected pixels");
+              break;
 
-        case SELECTION_ANCHOR:
-          status = _("Anchor the floating selection");
-          break;
+            case SELECTION_ANCHOR:
+              status = _("Anchor the floating selection");
+              break;
 
-        default:
-          g_return_if_reached ();
+            default:
+              g_return_if_reached ();
+            }
         }
-    }
 
-  gimp_tool_push_status (tool, gdisp, status);
+      if (status)
+        gimp_tool_push_status (tool, gdisp, status);
+    }
 }
 
 static void
