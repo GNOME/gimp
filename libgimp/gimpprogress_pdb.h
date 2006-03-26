@@ -29,7 +29,8 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean _gimp_progress_init             (const gchar *message) G_GNUC_INTERNAL;
+gboolean _gimp_progress_init             (const gchar *message,
+					  gint32       gdisplay_ID) G_GNUC_INTERNAL;
 gboolean _gimp_progress_update           (gdouble      percentage) G_GNUC_INTERNAL;
 gboolean gimp_progress_pulse             (void);
 gboolean gimp_progress_set_text          (const gchar *message);

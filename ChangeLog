@@ -1,3 +1,17 @@
+2006-03-26  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/lib.pl: removed support for arg->implicit_fill.
+
+	* tools/pdbgen/pdb/progress.pdb (progress_init): remove it without
+	replacement, the generated function on the libgimp side is
+	internal anyway.
+	
+	* libgimp/gimpprogress_pdb.[ch] (_gimp_progress_init): rgenerated
+	with a display_ID parameter.
+
+	* libgimp/gimpprogress.c (gimp_progress_init): pass
+	gimp_default_display() to _gimp_progress_init().
+
 2006-03-26  Karine Delvare  <edhel@gimp.org>
 
 	* app/tools/gimpcropoptions.c

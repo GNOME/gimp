@@ -138,36 +138,26 @@ sub generate {
 
 	    $usednames{$_->{name}}++;
 
-	    if (exists $_->{implicit_fill}) {
-		$privatevars++;
+	    if ($type eq 'string' ||
+		$type eq 'color' ||
+		$type =~ /array$/) {
+		$arglist .= 'const '
 	    }
-	    else {
-		if ($type eq 'string' ||
-		    $type eq 'color' ||
-		    $type =~ /array$/) {
-		    $arglist .= 'const '
-		}
-		$arglist .= &libtype($_);
-		$arglist .= $_->{name};
-		$arglist .= '_ID' if $id;
-		$arglist .= ', ';
+	    $arglist .= &libtype($_);
+	    $arglist .= $_->{name};
+	    $arglist .= '_ID' if $id;
+	    $arglist .= ', ';
 
-		$argdesc .= " * \@$_->{name}";
-		$argdesc .= '_ID' if $id;
-		$argdesc .= ": $desc";
-	    }
+	    $argdesc .= " * \@$_->{name}";
+	    $argdesc .= '_ID' if $id;
+	    $argdesc .= ": $desc";
 
 	    # This is what's passed into gimp_run_procedure
 	    $argpass .= "\n\t\t\t\t" . ' ' x 4;
 	    $argpass .= "GIMP_PDB_$arg->{name}, ";
 
-	    if (exists $_->{implicit_fill}) {
-		$argpass .= $_->{implicit_fill};
-	    }
-	    else {
-		$argpass .= "$_->{name}";
-		$argpass .= '_ID' if $id;
-	    }
+	    $argpass .= "$_->{name}";
+	    $argpass .= '_ID' if $id;
 
 	    $argpass .= ',';
 

@@ -234,7 +234,7 @@ gimp_progress_init (const gchar  *message)
 {
   gimp_progress_current = 0.0;
 
-  return _gimp_progress_init (message);
+  return _gimp_progress_init (message, gimp_default_display ());
 }
 
 /**

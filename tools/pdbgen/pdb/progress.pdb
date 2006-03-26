@@ -32,8 +32,7 @@ HELP
 	  desc => 'Message to use in the progress dialog' },
 	{ name => 'gdisplay', type => 'display', no_success => 1,
 	  desc => 'GimpDisplay to update progressbar in, or -1 for a seperate
-		   window',
-	  implicit_fill => 'gimp_default_display ()' }
+		   window' }
     );
 
     %invoke = (
