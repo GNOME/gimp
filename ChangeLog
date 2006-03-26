@@ -1,3 +1,15 @@
+2006-03-26  Karine Delvare  <edhel@gimp.org>
+
+	* app/tools/gimpcropoptions.c
+	* app/tools/gimprectangleoptions.[ch]
+	* app/tools/gimprectangletool.[ch]: moved options gui creation
+	from the tool to the options.
+
+	* app/tools/gimpselectionoptions.c
+	* app/tools/gimpnewrectselecttool.[ch]
+	* app/tools/gimpellipseselecttool.[ch]: ported ellipse selection
+	tool to the new rectangle interface.
+
 2006-03-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptool.[ch]

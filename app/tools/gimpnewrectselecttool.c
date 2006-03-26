@@ -85,6 +85,11 @@ static gboolean gimp_new_rect_select_tool_execute        (GimpRectangleTool *rec
                                                           gint             y,
                                                           gint             w,
                                                           gint             h);
+static void     gimp_new_rect_select_tool_real_rect_select (GimpNewRectSelectTool *rect_select,
+                                                            gint                   x,
+                                                            gint                   y,
+                                                            gint                   w,
+                                                            gint                   h);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpNewRectSelectTool, gimp_new_rect_select_tool,
@@ -138,6 +143,8 @@ gimp_new_rect_select_tool_class_init (GimpNewRectSelectToolClass *klass)
   tool_class->cursor_update  = gimp_rectangle_tool_cursor_update;
 
   draw_tool_class->draw      = gimp_rectangle_tool_draw;
+
+  klass->rect_select         = gimp_new_rect_select_tool_real_rect_select;
 }
 
 static void
@@ -263,18 +270,19 @@ gimp_new_rect_select_tool_execute (GimpRectangleTool  *rectangle,
                                    gint                w,
                                    gint                h)
 {
-  GimpTool             *tool     = GIMP_TOOL (rectangle);
-  GimpSelectionOptions *options;
-  GimpImage            *gimage;
-  gint                  max_x, max_y;
-  gboolean              rectangle_exists;
-  gboolean              selected;
-  gint                  val;
-  GimpChannel          *selection_mask;
-  gint                  x1, y1;
-  gint                  x2, y2;
-  gint                  pressx, pressy;
-  guchar               *val_ptr;
+  GimpTool              *tool        = GIMP_TOOL (rectangle);
+  GimpNewRectSelectTool *rect_select = GIMP_NEW_RECT_SELECT_TOOL (rectangle);
+  GimpSelectionOptions  *options;
+  GimpImage             *gimage;
+  gint                   max_x, max_y;
+  gboolean               rectangle_exists;
+  gboolean               selected;
+  gint                   val;
+  GimpChannel           *selection_mask;
+  gint                   x1, y1;
+  gint                   x2, y2;
+  gint                   pressx, pressy;
+  guchar                *val_ptr;
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
@@ -310,14 +318,8 @@ gimp_new_rect_select_tool_execute (GimpRectangleTool  *rectangle,
   /* if rectangle exists, turn it into a selection */
   if (rectangle_exists)
     {
-      GimpChannel  *selection_mask = gimp_image_get_mask (gimage);
+      GIMP_NEW_RECT_SELECT_TOOL_GET_CLASS (rect_select)->rect_select (rect_select, x, y, w, h);
 
-      gimp_channel_select_rectangle (selection_mask,
-                                     x, y, w, h,
-                                     options->operation,
-                                     options->feather,
-                                     options->feather_radius,
-                                     options->feather_radius);
       return TRUE;
     }
 
@@ -395,4 +397,24 @@ gimp_new_rect_select_tool_execute (GimpRectangleTool  *rectangle,
   gimp_channel_clear (selection_mask, NULL, TRUE);
 
   return TRUE;
+}
+
+static void
+gimp_new_rect_select_tool_real_rect_select (GimpNewRectSelectTool *rect_select,
+                                            gint                   x,
+                                            gint                   y,
+                                            gint                   w,
+                                            gint                   h)
+{
+  GimpTool             *tool     = GIMP_TOOL (rect_select);
+  GimpSelectionOptions *options;
+
+  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+
+  gimp_channel_select_rectangle (gimp_image_get_mask (tool->gdisp->gimage),
+                                 x, y, w, h,
+                                 options->operation,
+                                 options->feather,
+                                 options->feather_radius,
+                                 options->feather_radius);
 }

@@ -112,6 +112,7 @@ gimp_crop_options_set_property (GObject      *object,
     case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_X:
     case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_Y:
     case GIMP_RECTANGLE_OPTIONS_PROP_UNIT:
+    case GIMP_RECTANGLE_OPTIONS_PROP_DIMENSIONS_ENTRY:
       gimp_rectangle_options_set_property (object, property_id, value, pspec);
       break;
     case PROP_LAYER_ONLY:
@@ -147,6 +148,7 @@ gimp_crop_options_get_property (GObject    *object,
     case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_X:
     case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_Y:
     case GIMP_RECTANGLE_OPTIONS_PROP_UNIT:
+    case GIMP_RECTANGLE_OPTIONS_PROP_DIMENSIONS_ENTRY:
       gimp_rectangle_options_get_property (object, property_id, value, pspec);
       break;
     case PROP_LAYER_ONLY:

@@ -26,7 +26,7 @@
 #define GIMP_NEW_RECT_SELECT_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_NEW_RECT_SELECT_TOOL, GimpNewRectSelectTool))
 #define GIMP_NEW_RECT_SELECT_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_NEW_RECT_SELECT_TOOL, GimpNewRectSelectToolClass))
 #define GIMP_IS_NEW_RECT_SELECT_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_NEW_RECT_SELECT_TOOL))
-#define GIMP_IS_NEW_RECT_SELECT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_NEW_RECT_SELECT_TOOL))
+#define GIMP_IS_NEW_RECT_SELECT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_NEW_RECT_SELECT_TOOL))
 #define GIMP_NEW_RECT_SELECT_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_NEW_RECT_SELECT_TOOL, GimpNewRectSelectToolClass))
 
 
@@ -41,6 +41,12 @@ struct _GimpNewRectSelectTool
 struct _GimpNewRectSelectToolClass
 {
   GimpSelectionToolClass parent_class;
+
+  void (* rect_select) (GimpNewRectSelectTool *rect_select,
+                        gint                   x,
+                        gint                   y,
+                        gint                   w,
+                        gint                   h);
 };
 
 

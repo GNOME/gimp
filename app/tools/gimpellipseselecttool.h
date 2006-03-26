@@ -20,7 +20,7 @@
 #define __GIMP_ELLIPSE_SELECT_TOOL_H__
 
 
-#include "gimprectselecttool.h"
+#include "gimpnewrectselecttool.h"
 
 
 #define GIMP_TYPE_ELLIPSE_SELECT_TOOL            (gimp_ellipse_select_tool_get_type ())
@@ -36,12 +36,12 @@ typedef struct _GimpEllipseSelectToolClass GimpEllipseSelectToolClass;
 
 struct _GimpEllipseSelectTool
 {
-  GimpRectSelectTool  parent_instance;
+  GimpNewRectSelectTool  parent_instance;
 };
 
 struct _GimpEllipseSelectToolClass
 {
-  GimpRectSelectToolClass parent_class;
+  GimpNewRectSelectToolClass parent_class;
 };
 
 

@@ -37,6 +37,7 @@
 #include "gimpellipseselecttool.h"
 #include "gimpforegroundselecttool.h"
 #include "gimpnewrectselecttool.h"
+#include "gimprectselecttool.h"
 #include "gimpfuzzyselecttool.h"
 #include "gimpiscissorstool.h"
 #include "gimpselectionoptions.h"
@@ -504,6 +505,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
 
   /*  widgets for fixed size select  */
   if (tool_options->tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL ||
+      tool_options->tool_info->tool_type == GIMP_TYPE_NEW_RECT_SELECT_TOOL ||
       tool_options->tool_info->tool_type == GIMP_TYPE_ELLIPSE_SELECT_TOOL)
     {
       GtkWidget *frame;
@@ -537,51 +539,54 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
-      frame = gimp_frame_new (NULL);
-      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
+      if (tool_options->tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL)
+        {
+          frame = gimp_frame_new (NULL);
+          gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+          gtk_widget_show (frame);
 
-      combo = gimp_prop_enum_combo_box_new (config, "fixed-mode", 0, 0);
-      gtk_frame_set_label_widget (GTK_FRAME (frame), combo);
-      gtk_widget_show (combo);
+          combo = gimp_prop_enum_combo_box_new (config, "fixed-mode", 0, 0);
+          gtk_frame_set_label_widget (GTK_FRAME (frame), combo);
+          gtk_widget_show (combo);
 
-      table = gtk_table_new (2, 3, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-      gtk_container_add (GTK_CONTAINER (frame), table);
+          table = gtk_table_new (2, 3, FALSE);
+          gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+          gtk_container_add (GTK_CONTAINER (frame), table);
 
-      gtk_widget_set_sensitive (table,
-                                options->fixed_mode != GIMP_RECT_SELECT_MODE_FREE);
-      g_signal_connect (config, "notify::fixed-mode",
-                        G_CALLBACK (selection_options_fixed_mode_notify),
-                        table);
+          gtk_widget_set_sensitive (table,
+                                    options->fixed_mode != GIMP_RECT_SELECT_MODE_FREE);
+          g_signal_connect (config, "notify::fixed-mode",
+                            G_CALLBACK (selection_options_fixed_mode_notify),
+                            table);
 
-      width_spinbutton = gimp_prop_spin_button_new (config, "fixed-width",
-                                                    1.0, 50.0, 0);
-      gtk_entry_set_width_chars (GTK_ENTRY (width_spinbutton), 6);
+          width_spinbutton = gimp_prop_spin_button_new (config, "fixed-width",
+                                                        1.0, 50.0, 0);
+          gtk_entry_set_width_chars (GTK_ENTRY (width_spinbutton), 6);
 
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                 _("Width:"), 0.0, 0.5,
-                                 width_spinbutton, 1, FALSE);
+          gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                                     _("Width:"), 0.0, 0.5,
+                                     width_spinbutton, 1, FALSE);
 
-      height_spinbutton = gimp_prop_spin_button_new (config, "fixed-height",
-                                                     1.0, 50.0, 0);
-      gtk_entry_set_width_chars (GTK_ENTRY (height_spinbutton), 6);
+          height_spinbutton = gimp_prop_spin_button_new (config, "fixed-height",
+                                                         1.0, 50.0, 0);
+          gtk_entry_set_width_chars (GTK_ENTRY (height_spinbutton), 6);
 
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                                 _("Height:"), 0.0, 0.5,
-                                 height_spinbutton, 1, FALSE);
+          gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                                     _("Height:"), 0.0, 0.5,
+                                     height_spinbutton, 1, FALSE);
 
-      menu = gimp_prop_unit_menu_new (config, "fixed-unit", "%a");
-      gtk_table_attach (GTK_TABLE (table), menu, 2, 3, 1, 2,
-                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (menu);
+          menu = gimp_prop_unit_menu_new (config, "fixed-unit", "%a");
+          gtk_table_attach (GTK_TABLE (table), menu, 2, 3, 1, 2,
+                            GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+          gtk_widget_show (menu);
 
-      g_object_set_data (G_OBJECT (menu), "set_digits", width_spinbutton);
-      g_object_set_data (G_OBJECT (width_spinbutton), "set_digits",
-                         height_spinbutton);
-      gimp_unit_menu_set_pixel_digits (GIMP_UNIT_MENU (menu), 0);
+          g_object_set_data (G_OBJECT (menu), "set_digits", width_spinbutton);
+          g_object_set_data (G_OBJECT (width_spinbutton), "set_digits",
+                             height_spinbutton);
+          gimp_unit_menu_set_pixel_digits (GIMP_UNIT_MENU (menu), 0);
 
-      gtk_widget_show (table);
+          gtk_widget_show (table);
+        }
     }
 
   return vbox;
