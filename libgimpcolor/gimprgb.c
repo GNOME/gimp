@@ -542,7 +542,7 @@ gimp_param_rgb_init (GParamSpec *pspec)
 {
   GimpParamSpecRGB *cspec = GIMP_PARAM_SPEC_RGB (pspec);
 
-  gimp_rgba_set (&cspec->default_value, 0.0, 0.0, 0.0, 0.0);
+  gimp_rgba_set (&cspec->default_value, 0.0, 0.0, 0.0, 1.0);
 }
 
 static void
@@ -639,12 +639,11 @@ gimp_param_spec_rgb (const gchar   *name,
 {
   GimpParamSpecRGB *cspec;
 
-  g_return_val_if_fail (default_value != NULL, NULL);
-
   cspec = g_param_spec_internal (GIMP_TYPE_PARAM_RGB,
                                  name, nick, blurb, flags);
 
-  cspec->default_value = *default_value;
+  if (default_value)
+    cspec->default_value = *default_value;
 
   return G_PARAM_SPEC (cspec);
 }
