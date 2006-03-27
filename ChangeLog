@@ -1,5 +1,9 @@
 2006-03-27  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/enums.pl: was reordered by the commit below.
+
+2006-03-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/base/base-enums.h
 	* app/core/core-enums.h
 	* app/plug-in/plug-in-enums.h: register some more enums.

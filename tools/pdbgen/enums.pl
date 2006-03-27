@@ -375,15 +375,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_GRAIN_MERGE_MODE => '21',
 		       GIMP_COLOR_ERASE_MODE => '22' }
 	},
-    GimpConvolutionType =>
-	{ contig => 1,
-	  header => 'base/base-enums.h',
-	  symbols => [ qw(GIMP_NORMAL_CONVOL GIMP_ABSOLUTE_CONVOL
-			  GIMP_NEGATIVE_CONVOL) ],
-	  mapping => { GIMP_NORMAL_CONVOL => '0',
-		       GIMP_ABSOLUTE_CONVOL => '1',
-		       GIMP_NEGATIVE_CONVOL => '2' }
-	},
     GimpHueRange =>
 	{ contig => 1,
 	  header => 'base/base-enums.h',
@@ -397,6 +388,15 @@ package Gimp::CodeGen::enums;
 		       GIMP_CYAN_HUES => '4',
 		       GIMP_BLUE_HUES => '5',
 		       GIMP_MAGENTA_HUES => '6' }
+	},
+    GimpConvolutionType =>
+	{ contig => 1,
+	  header => 'base/base-enums.h',
+	  symbols => [ qw(GIMP_NORMAL_CONVOL GIMP_ABSOLUTE_CONVOL
+			  GIMP_NEGATIVE_CONVOL) ],
+	  mapping => { GIMP_NORMAL_CONVOL => '0',
+		       GIMP_ABSOLUTE_CONVOL => '1',
+		       GIMP_NEGATIVE_CONVOL => '2' }
 	},
     GimpConvertDitherType =>
 	{ contig => 1,
@@ -459,6 +459,13 @@ package Gimp::CodeGen::enums;
 		       GIMP_ROTATE_180 => '1',
 		       GIMP_ROTATE_270 => '2' }
 	},
+    GimpOffsetType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_OFFSET_BACKGROUND GIMP_OFFSET_TRANSPARENT) ],
+	  mapping => { GIMP_OFFSET_BACKGROUND => '0',
+		       GIMP_OFFSET_TRANSPARENT => '1' }
+	},
     GimpGradientSegmentType =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
@@ -499,13 +506,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_CLIP_TO_IMAGE => '1',
 		       GIMP_CLIP_TO_BOTTOM_LAYER => '2',
 		       GIMP_FLATTEN_IMAGE => '3' }
-	},
-    GimpOffsetType =>
-	{ contig => 1,
-	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_OFFSET_BACKGROUND GIMP_OFFSET_TRANSPARENT) ],
-	  mapping => { GIMP_OFFSET_BACKGROUND => '0',
-		       GIMP_OFFSET_TRANSPARENT => '1' }
 	},
     GimpConvolveType =>
 	{ contig => 1,
