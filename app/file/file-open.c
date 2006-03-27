@@ -152,7 +152,7 @@ file_open_image (Gimp               *gimp,
   *status  = return_vals[0].value.pdb_int;
   image_id = return_vals[1].value.pdb_int;
 
-  procedural_db_destroy_args (return_vals, proc->num_values);
+  procedural_db_destroy_args (return_vals, n_return_vals);
 
   if (*status == GIMP_PDB_SUCCESS)
     {
@@ -246,7 +246,7 @@ file_open_thumbnail (Gimp          *gimp,
           *image_height = MAX (0, return_vals[3].value.pdb_int);
         }
 
-      procedural_db_destroy_args (return_vals, proc->num_values);
+      procedural_db_destroy_args (return_vals, n_return_vals);
 
       if (status == GIMP_PDB_SUCCESS && image_id != -1)
         {
