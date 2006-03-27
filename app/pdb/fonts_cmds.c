@@ -42,13 +42,14 @@ register_fonts_procs (Gimp *gimp)
 }
 
 static Argument *
-fonts_refresh_invoker (Gimp         *gimp,
+fonts_refresh_invoker (ProcRecord   *proc_record,
+                       Gimp         *gimp,
                        GimpContext  *context,
                        GimpProgress *progress,
                        Argument     *args)
 {
   gimp_fonts_load (gimp);
-  return procedural_db_return_args (&fonts_refresh_proc, TRUE);
+  return procedural_db_return_args (proc_record, TRUE);
 }
 
 static ProcRecord fonts_refresh_proc =
@@ -70,7 +71,8 @@ static ProcRecord fonts_refresh_proc =
 };
 
 static Argument *
-fonts_get_list_invoker (Gimp         *gimp,
+fonts_get_list_invoker (ProcRecord   *proc_record,
+                        Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         Argument     *args)
@@ -91,7 +93,7 @@ fonts_get_list_invoker (Gimp         *gimp,
                                                           filter, &num_fonts);
     }
 
-  return_args = procedural_db_return_args (&fonts_get_list_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {

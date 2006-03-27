@@ -46,7 +46,8 @@ register_convert_procs (Gimp *gimp)
 }
 
 static Argument *
-image_convert_rgb_invoker (Gimp         *gimp,
+image_convert_rgb_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -66,7 +67,7 @@ image_convert_rgb_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&image_convert_rgb_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg image_convert_rgb_inargs[] =
@@ -97,7 +98,8 @@ static ProcRecord image_convert_rgb_proc =
 };
 
 static Argument *
-image_convert_grayscale_invoker (Gimp         *gimp,
+image_convert_grayscale_invoker (ProcRecord   *proc_record,
+                                 Gimp         *gimp,
                                  GimpContext  *context,
                                  GimpProgress *progress,
                                  Argument     *args)
@@ -117,7 +119,7 @@ image_convert_grayscale_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&image_convert_grayscale_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg image_convert_grayscale_inargs[] =
@@ -148,7 +150,8 @@ static ProcRecord image_convert_grayscale_proc =
 };
 
 static Argument *
-image_convert_indexed_invoker (Gimp         *gimp,
+image_convert_indexed_invoker (ProcRecord   *proc_record,
+                               Gimp         *gimp,
                                GimpContext  *context,
                                GimpProgress *progress,
                                Argument     *args)
@@ -218,7 +221,7 @@ image_convert_indexed_invoker (Gimp         *gimp,
                             NULL);
     }
 
-  return procedural_db_return_args (&image_convert_indexed_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg image_convert_indexed_inargs[] =

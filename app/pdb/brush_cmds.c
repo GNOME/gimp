@@ -86,7 +86,8 @@ register_brush_procs (Gimp *gimp)
 }
 
 static Argument *
-brush_new_invoker (Gimp         *gimp,
+brush_new_invoker (ProcRecord   *proc_record,
+                   Gimp         *gimp,
                    GimpContext  *context,
                    GimpProgress *progress,
                    Argument     *args)
@@ -115,7 +116,7 @@ brush_new_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&brush_new_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = actual_name;
@@ -160,7 +161,8 @@ static ProcRecord brush_new_proc =
 };
 
 static Argument *
-brush_duplicate_invoker (Gimp         *gimp,
+brush_duplicate_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -194,7 +196,7 @@ brush_duplicate_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&brush_duplicate_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = copy_name;
@@ -239,7 +241,8 @@ static ProcRecord brush_duplicate_proc =
 };
 
 static Argument *
-brush_is_generated_invoker (Gimp         *gimp,
+brush_is_generated_invoker (ProcRecord   *proc_record,
+                            Gimp         *gimp,
                             GimpContext  *context,
                             GimpProgress *progress,
                             Argument     *args)
@@ -264,7 +267,7 @@ brush_is_generated_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&brush_is_generated_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = generated;
@@ -309,7 +312,8 @@ static ProcRecord brush_is_generated_proc =
 };
 
 static Argument *
-brush_rename_invoker (Gimp         *gimp,
+brush_rename_invoker (ProcRecord   *proc_record,
+                      Gimp         *gimp,
                       GimpContext  *context,
                       GimpProgress *progress,
                       Argument     *args)
@@ -342,7 +346,7 @@ brush_rename_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&brush_rename_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = actual_name;
@@ -392,7 +396,8 @@ static ProcRecord brush_rename_proc =
 };
 
 static Argument *
-brush_delete_invoker (Gimp         *gimp,
+brush_delete_invoker (ProcRecord   *proc_record,
+                      Gimp         *gimp,
                       GimpContext  *context,
                       GimpProgress *progress,
                       Argument     *args)
@@ -427,7 +432,7 @@ brush_delete_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&brush_delete_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg brush_delete_inargs[] =
@@ -458,7 +463,8 @@ static ProcRecord brush_delete_proc =
 };
 
 static Argument *
-brush_is_editable_invoker (Gimp         *gimp,
+brush_is_editable_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -483,7 +489,7 @@ brush_is_editable_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&brush_is_editable_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = editable;
@@ -528,7 +534,8 @@ static ProcRecord brush_is_editable_proc =
 };
 
 static Argument *
-brush_get_info_invoker (Gimp         *gimp,
+brush_get_info_invoker (ProcRecord   *proc_record,
+                        Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         Argument     *args)
@@ -561,7 +568,7 @@ brush_get_info_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&brush_get_info_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -626,7 +633,8 @@ static ProcRecord brush_get_info_proc =
 };
 
 static Argument *
-brush_get_pixels_invoker (Gimp         *gimp,
+brush_get_pixels_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -672,7 +680,7 @@ brush_get_pixels_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&brush_get_pixels_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -761,7 +769,8 @@ static ProcRecord brush_get_pixels_proc =
 };
 
 static Argument *
-brush_get_spacing_invoker (Gimp         *gimp,
+brush_get_spacing_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -786,7 +795,7 @@ brush_get_spacing_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&brush_get_spacing_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = spacing;
@@ -831,7 +840,8 @@ static ProcRecord brush_get_spacing_proc =
 };
 
 static Argument *
-brush_set_spacing_invoker (Gimp         *gimp,
+brush_set_spacing_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -859,7 +869,7 @@ brush_set_spacing_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&brush_set_spacing_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg brush_set_spacing_inargs[] =
@@ -895,7 +905,8 @@ static ProcRecord brush_set_spacing_proc =
 };
 
 static Argument *
-brush_get_shape_invoker (Gimp         *gimp,
+brush_get_shape_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -920,7 +931,7 @@ brush_get_shape_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&brush_get_shape_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = shape;
@@ -965,7 +976,8 @@ static ProcRecord brush_get_shape_proc =
 };
 
 static Argument *
-brush_get_radius_invoker (Gimp         *gimp,
+brush_get_radius_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -990,7 +1002,7 @@ brush_get_radius_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&brush_get_radius_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_float = radius;
@@ -1035,7 +1047,8 @@ static ProcRecord brush_get_radius_proc =
 };
 
 static Argument *
-brush_get_spikes_invoker (Gimp         *gimp,
+brush_get_spikes_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -1060,7 +1073,7 @@ brush_get_spikes_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&brush_get_spikes_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = spikes;
@@ -1105,7 +1118,8 @@ static ProcRecord brush_get_spikes_proc =
 };
 
 static Argument *
-brush_get_hardness_invoker (Gimp         *gimp,
+brush_get_hardness_invoker (ProcRecord   *proc_record,
+                            Gimp         *gimp,
                             GimpContext  *context,
                             GimpProgress *progress,
                             Argument     *args)
@@ -1130,7 +1144,7 @@ brush_get_hardness_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&brush_get_hardness_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_float = hardness;
@@ -1175,7 +1189,8 @@ static ProcRecord brush_get_hardness_proc =
 };
 
 static Argument *
-brush_get_aspect_ratio_invoker (Gimp         *gimp,
+brush_get_aspect_ratio_invoker (ProcRecord   *proc_record,
+                                Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
                                 Argument     *args)
@@ -1200,7 +1215,7 @@ brush_get_aspect_ratio_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&brush_get_aspect_ratio_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_float = aspect_ratio;
@@ -1245,7 +1260,8 @@ static ProcRecord brush_get_aspect_ratio_proc =
 };
 
 static Argument *
-brush_get_angle_invoker (Gimp         *gimp,
+brush_get_angle_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -1270,7 +1286,7 @@ brush_get_angle_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&brush_get_angle_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_float = angle;
@@ -1315,7 +1331,8 @@ static ProcRecord brush_get_angle_proc =
 };
 
 static Argument *
-brush_set_shape_invoker (Gimp         *gimp,
+brush_set_shape_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -1349,7 +1366,7 @@ brush_set_shape_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&brush_set_shape_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = shape_out;
@@ -1399,7 +1416,8 @@ static ProcRecord brush_set_shape_proc =
 };
 
 static Argument *
-brush_set_radius_invoker (Gimp         *gimp,
+brush_set_radius_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -1431,7 +1449,7 @@ brush_set_radius_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&brush_set_radius_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_float = radius_out;
@@ -1481,7 +1499,8 @@ static ProcRecord brush_set_radius_proc =
 };
 
 static Argument *
-brush_set_spikes_invoker (Gimp         *gimp,
+brush_set_spikes_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -1513,7 +1532,7 @@ brush_set_spikes_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&brush_set_spikes_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = spikes_out;
@@ -1563,7 +1582,8 @@ static ProcRecord brush_set_spikes_proc =
 };
 
 static Argument *
-brush_set_hardness_invoker (Gimp         *gimp,
+brush_set_hardness_invoker (ProcRecord   *proc_record,
+                            Gimp         *gimp,
                             GimpContext  *context,
                             GimpProgress *progress,
                             Argument     *args)
@@ -1595,7 +1615,7 @@ brush_set_hardness_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&brush_set_hardness_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_float = hardness_out;
@@ -1645,7 +1665,8 @@ static ProcRecord brush_set_hardness_proc =
 };
 
 static Argument *
-brush_set_aspect_ratio_invoker (Gimp         *gimp,
+brush_set_aspect_ratio_invoker (ProcRecord   *proc_record,
+                                Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
                                 Argument     *args)
@@ -1677,7 +1698,7 @@ brush_set_aspect_ratio_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&brush_set_aspect_ratio_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_float = aspect_ratio_out;
@@ -1727,7 +1748,8 @@ static ProcRecord brush_set_aspect_ratio_proc =
 };
 
 static Argument *
-brush_set_angle_invoker (Gimp         *gimp,
+brush_set_angle_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -1759,7 +1781,7 @@ brush_set_angle_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&brush_set_angle_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_float = angle_out;

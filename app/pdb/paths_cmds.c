@@ -78,7 +78,8 @@ register_paths_procs (Gimp *gimp)
 }
 
 static Argument *
-path_list_invoker (Gimp         *gimp,
+path_list_invoker (ProcRecord   *proc_record,
+                   Gimp         *gimp,
                    GimpContext  *context,
                    GimpProgress *progress,
                    Argument     *args)
@@ -98,7 +99,7 @@ path_list_invoker (Gimp         *gimp,
       path_list = gimp_container_get_name_array (image->vectors, &num_paths);
     }
 
-  return_args = procedural_db_return_args (&path_list_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -151,7 +152,8 @@ static ProcRecord path_list_proc =
 };
 
 static Argument *
-path_get_current_invoker (Gimp         *gimp,
+path_get_current_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -175,7 +177,7 @@ path_get_current_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&path_get_current_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = name;
@@ -220,7 +222,8 @@ static ProcRecord path_get_current_proc =
 };
 
 static Argument *
-path_set_current_invoker (Gimp         *gimp,
+path_set_current_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -247,7 +250,7 @@ path_set_current_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&path_set_current_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg path_set_current_inargs[] =
@@ -283,7 +286,8 @@ static ProcRecord path_set_current_proc =
 };
 
 static Argument *
-path_delete_invoker (Gimp         *gimp,
+path_delete_invoker (ProcRecord   *proc_record,
+                     Gimp         *gimp,
                      GimpContext  *context,
                      GimpProgress *progress,
                      Argument     *args)
@@ -310,7 +314,7 @@ path_delete_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&path_delete_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg path_delete_inargs[] =
@@ -346,7 +350,8 @@ static ProcRecord path_delete_proc =
 };
 
 static Argument *
-path_get_points_invoker (Gimp         *gimp,
+path_get_points_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -409,7 +414,7 @@ path_get_points_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&path_get_points_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -479,7 +484,8 @@ static ProcRecord path_get_points_proc =
 };
 
 static Argument *
-path_set_points_invoker (Gimp         *gimp,
+path_set_points_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -549,7 +555,7 @@ path_set_points_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&path_set_points_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg path_set_points_inargs[] =
@@ -600,7 +606,8 @@ static ProcRecord path_set_points_proc =
 };
 
 static Argument *
-path_stroke_current_invoker (Gimp         *gimp,
+path_stroke_current_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -632,7 +639,7 @@ path_stroke_current_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&path_stroke_current_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg path_stroke_current_inargs[] =
@@ -663,7 +670,8 @@ static ProcRecord path_stroke_current_proc =
 };
 
 static Argument *
-path_get_point_at_dist_invoker (Gimp         *gimp,
+path_get_point_at_dist_invoker (ProcRecord   *proc_record,
+                                Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
                                 Argument     *args)
@@ -735,7 +743,7 @@ path_get_point_at_dist_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&path_get_point_at_dist_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -799,7 +807,8 @@ static ProcRecord path_get_point_at_dist_proc =
 };
 
 static Argument *
-path_get_tattoo_invoker (Gimp         *gimp,
+path_get_tattoo_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -828,7 +837,7 @@ path_get_tattoo_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&path_get_tattoo_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = tattoo;
@@ -878,7 +887,8 @@ static ProcRecord path_get_tattoo_proc =
 };
 
 static Argument *
-path_set_tattoo_invoker (Gimp         *gimp,
+path_set_tattoo_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -908,7 +918,7 @@ path_set_tattoo_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&path_set_tattoo_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg path_set_tattoo_inargs[] =
@@ -949,7 +959,8 @@ static ProcRecord path_set_tattoo_proc =
 };
 
 static Argument *
-get_path_by_tattoo_invoker (Gimp         *gimp,
+get_path_by_tattoo_invoker (ProcRecord   *proc_record,
+                            Gimp         *gimp,
                             GimpContext  *context,
                             GimpProgress *progress,
                             Argument     *args)
@@ -976,7 +987,7 @@ get_path_by_tattoo_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&get_path_by_tattoo_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = name;
@@ -1026,7 +1037,8 @@ static ProcRecord get_path_by_tattoo_proc =
 };
 
 static Argument *
-path_get_locked_invoker (Gimp         *gimp,
+path_get_locked_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -1055,7 +1067,7 @@ path_get_locked_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&path_get_locked_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = locked;
@@ -1105,7 +1117,8 @@ static ProcRecord path_get_locked_proc =
 };
 
 static Argument *
-path_set_locked_invoker (Gimp         *gimp,
+path_set_locked_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -1135,7 +1148,7 @@ path_set_locked_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&path_set_locked_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg path_set_locked_inargs[] =
@@ -1176,7 +1189,8 @@ static ProcRecord path_set_locked_proc =
 };
 
 static Argument *
-path_to_selection_invoker (Gimp         *gimp,
+path_to_selection_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -1227,7 +1241,7 @@ path_to_selection_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&path_to_selection_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg path_to_selection_inargs[] =
@@ -1288,7 +1302,8 @@ static ProcRecord path_to_selection_proc =
 };
 
 static Argument *
-path_import_invoker (Gimp         *gimp,
+path_import_invoker (ProcRecord   *proc_record,
+                     Gimp         *gimp,
                      GimpContext  *context,
                      GimpProgress *progress,
                      Argument     *args)
@@ -1316,7 +1331,7 @@ path_import_invoker (Gimp         *gimp,
       success = gimp_vectors_import_file (image, filename, merge, scale, -1, NULL);
     }
 
-  return procedural_db_return_args (&path_import_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg path_import_inargs[] =
@@ -1362,7 +1377,8 @@ static ProcRecord path_import_proc =
 };
 
 static Argument *
-path_import_string_invoker (Gimp         *gimp,
+path_import_string_invoker (ProcRecord   *proc_record,
+                            Gimp         *gimp,
                             GimpContext  *context,
                             GimpProgress *progress,
                             Argument     *args)
@@ -1394,7 +1410,7 @@ path_import_string_invoker (Gimp         *gimp,
                                             merge, scale, -1, NULL);
     }
 
-  return procedural_db_return_args (&path_import_string_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg path_import_string_inargs[] =

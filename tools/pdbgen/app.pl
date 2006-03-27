@@ -363,7 +363,7 @@ sub marshal_outargs {
     my $proc = shift;
 
     my $result = <<CODE;
-  return_args = procedural_db_return_args (\&$proc->{name}_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 CODE
 
     my $argc = 0;
@@ -434,40 +434,16 @@ CODE
 	}
 
 	$out->{code} .= "\nstatic Argument *\n";
-	$out->{code} .= "${name}_invoker (Gimp         *gimp,\n";
+	$out->{code} .= "${name}_invoker (ProcRecord   *proc_record,\n";
+	$out->{code} .=  ' ' x length($name) . "          Gimp         *gimp,\n";
 	$out->{code} .=  ' ' x length($name) . "          GimpContext  *context,\n";
 	$out->{code} .=  ' ' x length($name) . "          GimpProgress *progress,\n";
 	$out->{code} .=  ' ' x length($name) . "          Argument     *args)\n{\n";
 
 	my $code = "";
 
-	if (exists $proc->{invoke}->{proc}) {
-	    my ($procname, $args) = @{$proc->{invoke}->{proc}};
-	    my ($exec, $fail, $argtype);
-	    my $custom = $proc->{invoke}->{code};
-
-	    $exec = "procedural_db_execute (gimp, context, progress, $procname, $args)";
-	    $fail = "procedural_db_return_args (\&${name}_proc, FALSE)";
-
-	    $argtype = 'Argument';
-	    if (exists $proc->{invoke}->{args}) {
-		foreach (@{$proc->{invoke}->{args}}) {
-		    $code .= "  $argtype *$_;\n";
-		}
-	    }
-
-	    foreach (qw(exec fail argtype)) { $custom =~ s/%%$_%%/"\$$_"/eeg }
-
-	    my $pos = 0;
-	    foreach (@{$proc->{inargs}}) {
-		my $arg = $arg_types{(&arg_parse($_->{type}))[0]};
-		my $var = &arg_vname($_);
-		$custom =~ s/%%$var%%/&arg_value($arg, $pos)/e;
-		$pos++;
-	    }
-
-	    $code .= "\n" if length($code);
-	    $code .= &format_code_frag($custom, 0) . "}\n";
+	if (exists $proc->{invoke}->{no_marshalling}) {
+	    $code .= &format_code_frag($proc->{invoke}->{code}, 0) . "}\n";
 	}
 	else {
 	    my $invoker = "";

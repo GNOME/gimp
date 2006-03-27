@@ -55,7 +55,8 @@ register_gimprc_procs (Gimp *gimp)
 }
 
 static Argument *
-gimprc_query_invoker (Gimp         *gimp,
+gimprc_query_invoker (ProcRecord   *proc_record,
+                      Gimp         *gimp,
                       GimpContext  *context,
                       GimpProgress *progress,
                       Argument     *args)
@@ -83,7 +84,7 @@ gimprc_query_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&gimprc_query_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = value;
@@ -128,7 +129,8 @@ static ProcRecord gimprc_query_proc =
 };
 
 static Argument *
-gimprc_set_invoker (Gimp         *gimp,
+gimprc_set_invoker (ProcRecord   *proc_record,
+                    Gimp         *gimp,
                     GimpContext  *context,
                     GimpProgress *progress,
                     Argument     *args)
@@ -156,7 +158,7 @@ gimprc_set_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&gimprc_set_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg gimprc_set_inargs[] =
@@ -192,7 +194,8 @@ static ProcRecord gimprc_set_proc =
 };
 
 static Argument *
-get_default_comment_invoker (Gimp         *gimp,
+get_default_comment_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -202,7 +205,7 @@ get_default_comment_invoker (Gimp         *gimp,
 
   comment = g_strdup (gimp->config->default_image->comment);
 
-  return_args = procedural_db_return_args (&get_default_comment_proc, TRUE);
+  return_args = procedural_db_return_args (proc_record, TRUE);
   return_args[1].value.pdb_pointer = comment;
 
   return return_args;
@@ -236,7 +239,8 @@ static ProcRecord get_default_comment_proc =
 };
 
 static Argument *
-get_monitor_resolution_invoker (Gimp         *gimp,
+get_monitor_resolution_invoker (ProcRecord   *proc_record,
+                                Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
                                 Argument     *args)
@@ -248,7 +252,7 @@ get_monitor_resolution_invoker (Gimp         *gimp,
   xres = GIMP_DISPLAY_CONFIG (gimp->config)->monitor_xres;
   yres = GIMP_DISPLAY_CONFIG (gimp->config)->monitor_yres;
 
-  return_args = procedural_db_return_args (&get_monitor_resolution_proc, TRUE);
+  return_args = procedural_db_return_args (proc_record, TRUE);
 
   return_args[1].value.pdb_float = xres;
   return_args[2].value.pdb_float = yres;
@@ -289,7 +293,8 @@ static ProcRecord get_monitor_resolution_proc =
 };
 
 static Argument *
-get_theme_dir_invoker (Gimp         *gimp,
+get_theme_dir_invoker (ProcRecord   *proc_record,
+                       Gimp         *gimp,
                        GimpContext  *context,
                        GimpProgress *progress,
                        Argument     *args)
@@ -299,7 +304,7 @@ get_theme_dir_invoker (Gimp         *gimp,
 
   theme_dir = g_strdup (gimp_get_theme_dir (gimp));
 
-  return_args = procedural_db_return_args (&get_theme_dir_proc, TRUE);
+  return_args = procedural_db_return_args (proc_record, TRUE);
   return_args[1].value.pdb_pointer = theme_dir;
 
   return return_args;
@@ -333,7 +338,8 @@ static ProcRecord get_theme_dir_proc =
 };
 
 static Argument *
-get_color_configuration_invoker (Gimp         *gimp,
+get_color_configuration_invoker (ProcRecord   *proc_record,
+                                 Gimp         *gimp,
                                  GimpContext  *context,
                                  GimpProgress *progress,
                                  Argument     *args)
@@ -343,7 +349,7 @@ get_color_configuration_invoker (Gimp         *gimp,
 
   config = gimp_config_serialize_to_string (GIMP_CONFIG (gimp->config->color_management), NULL);
 
-  return_args = procedural_db_return_args (&get_color_configuration_proc, TRUE);
+  return_args = procedural_db_return_args (proc_record, TRUE);
   return_args[1].value.pdb_pointer = config;
 
   return return_args;
@@ -377,7 +383,8 @@ static ProcRecord get_color_configuration_proc =
 };
 
 static Argument *
-get_module_load_inhibit_invoker (Gimp         *gimp,
+get_module_load_inhibit_invoker (ProcRecord   *proc_record,
+                                 Gimp         *gimp,
                                  GimpContext  *context,
                                  GimpProgress *progress,
                                  Argument     *args)
@@ -387,7 +394,7 @@ get_module_load_inhibit_invoker (Gimp         *gimp,
 
   load_inhibit = g_strdup (gimp_module_db_get_load_inhibit (gimp->module_db));
 
-  return_args = procedural_db_return_args (&get_module_load_inhibit_proc, TRUE);
+  return_args = procedural_db_return_args (proc_record, TRUE);
   return_args[1].value.pdb_pointer = load_inhibit;
 
   return return_args;

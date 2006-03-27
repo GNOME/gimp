@@ -295,7 +295,8 @@ procedural_db_execute (Gimp         *gimp,
         {
         case GIMP_INTERNAL:
           return_args =
-            (* procedure->exec_method.internal.marshal_func) (gimp, context,
+            (* procedure->exec_method.internal.marshal_func) (procedure,
+                                                              gimp, context,
                                                               progress,
                                                               args);
           break;

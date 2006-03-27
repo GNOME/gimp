@@ -45,7 +45,8 @@ register_message_procs (Gimp *gimp)
 }
 
 static Argument *
-message_invoker (Gimp         *gimp,
+message_invoker (ProcRecord   *proc_record,
+                 Gimp         *gimp,
                  GimpContext  *context,
                  GimpProgress *progress,
                  Argument     *args)
@@ -65,7 +66,7 @@ message_invoker (Gimp         *gimp,
         gimp_message (gimp, NULL, message);
     }
 
-  return procedural_db_return_args (&message_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg message_inargs[] =
@@ -96,7 +97,8 @@ static ProcRecord message_proc =
 };
 
 static Argument *
-message_get_handler_invoker (Gimp         *gimp,
+message_get_handler_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -106,7 +108,7 @@ message_get_handler_invoker (Gimp         *gimp,
 
   handler = gimp->message_handler;
 
-  return_args = procedural_db_return_args (&message_get_handler_proc, TRUE);
+  return_args = procedural_db_return_args (proc_record, TRUE);
   return_args[1].value.pdb_int = handler;
 
   return return_args;
@@ -140,7 +142,8 @@ static ProcRecord message_get_handler_proc =
 };
 
 static Argument *
-message_set_handler_invoker (Gimp         *gimp,
+message_set_handler_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -157,7 +160,7 @@ message_set_handler_invoker (Gimp         *gimp,
       gimp->message_handler = handler;
     }
 
-  return procedural_db_return_args (&message_set_handler_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg message_set_handler_inargs[] =

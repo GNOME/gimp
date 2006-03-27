@@ -53,7 +53,8 @@ register_progress_procs (Gimp *gimp)
 }
 
 static Argument *
-progress_init_invoker (Gimp         *gimp,
+progress_init_invoker (ProcRecord   *proc_record,
+                       Gimp         *gimp,
                        GimpContext  *context,
                        GimpProgress *progress,
                        Argument     *args)
@@ -79,7 +80,7 @@ progress_init_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&progress_init_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg progress_init_inargs[] =
@@ -115,7 +116,8 @@ static ProcRecord progress_init_proc =
 };
 
 static Argument *
-progress_update_invoker (Gimp         *gimp,
+progress_update_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -133,7 +135,7 @@ progress_update_invoker (Gimp         *gimp,
   else
     success = FALSE;
 
-  return procedural_db_return_args (&progress_update_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg progress_update_inargs[] =
@@ -164,7 +166,8 @@ static ProcRecord progress_update_proc =
 };
 
 static Argument *
-progress_pulse_invoker (Gimp         *gimp,
+progress_pulse_invoker (ProcRecord   *proc_record,
+                        Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         Argument     *args)
@@ -177,7 +180,7 @@ progress_pulse_invoker (Gimp         *gimp,
     }
   else
     success = FALSE;
-  return procedural_db_return_args (&progress_pulse_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcRecord progress_pulse_proc =
@@ -199,7 +202,8 @@ static ProcRecord progress_pulse_proc =
 };
 
 static Argument *
-progress_set_text_invoker (Gimp         *gimp,
+progress_set_text_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -222,7 +226,7 @@ progress_set_text_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&progress_set_text_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg progress_set_text_inargs[] =
@@ -253,7 +257,8 @@ static ProcRecord progress_set_text_proc =
 };
 
 static Argument *
-progress_get_window_handle_invoker (Gimp         *gimp,
+progress_get_window_handle_invoker (ProcRecord   *proc_record,
+                                    Gimp         *gimp,
                                     GimpContext  *context,
                                     GimpProgress *progress,
                                     Argument     *args)
@@ -270,7 +275,7 @@ progress_get_window_handle_invoker (Gimp         *gimp,
   else
     success = FALSE;
 
-  return_args = procedural_db_return_args (&progress_get_window_handle_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = window;
@@ -306,7 +311,8 @@ static ProcRecord progress_get_window_handle_proc =
 };
 
 static Argument *
-progress_install_invoker (Gimp         *gimp,
+progress_install_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -327,7 +333,7 @@ progress_install_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&progress_install_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg progress_install_inargs[] =
@@ -358,7 +364,8 @@ static ProcRecord progress_install_proc =
 };
 
 static Argument *
-progress_uninstall_invoker (Gimp         *gimp,
+progress_uninstall_invoker (ProcRecord   *proc_record,
+                            Gimp         *gimp,
                             GimpContext  *context,
                             GimpProgress *progress,
                             Argument     *args)
@@ -379,7 +386,7 @@ progress_uninstall_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&progress_uninstall_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg progress_uninstall_inargs[] =
@@ -410,7 +417,8 @@ static ProcRecord progress_uninstall_proc =
 };
 
 static Argument *
-progress_cancel_invoker (Gimp         *gimp,
+progress_cancel_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -431,7 +439,7 @@ progress_cancel_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&progress_cancel_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg progress_cancel_inargs[] =

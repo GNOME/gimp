@@ -54,13 +54,14 @@ register_brushes_procs (Gimp *gimp)
 }
 
 static Argument *
-brushes_refresh_invoker (Gimp         *gimp,
+brushes_refresh_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
 {
   gimp_data_factory_data_refresh (gimp->brush_factory);
-  return procedural_db_return_args (&brushes_refresh_proc, TRUE);
+  return procedural_db_return_args (proc_record, TRUE);
 }
 
 static ProcRecord brushes_refresh_proc =
@@ -82,7 +83,8 @@ static ProcRecord brushes_refresh_proc =
 };
 
 static Argument *
-brushes_get_list_invoker (Gimp         *gimp,
+brushes_get_list_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -103,7 +105,7 @@ brushes_get_list_invoker (Gimp         *gimp,
                                                            filter, &num_brushes);
     }
 
-  return_args = procedural_db_return_args (&brushes_get_list_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -156,7 +158,8 @@ static ProcRecord brushes_get_list_proc =
 };
 
 static Argument *
-brushes_get_brush_invoker (Gimp         *gimp,
+brushes_get_brush_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -180,7 +183,7 @@ brushes_get_brush_invoker (Gimp         *gimp,
   else
     success = FALSE;
 
-  return_args = procedural_db_return_args (&brushes_get_brush_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -236,7 +239,8 @@ static ProcRecord brushes_get_brush_proc =
 };
 
 static Argument *
-brushes_get_spacing_invoker (Gimp         *gimp,
+brushes_get_spacing_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -252,7 +256,7 @@ brushes_get_spacing_invoker (Gimp         *gimp,
   else
     success = FALSE;
 
-  return_args = procedural_db_return_args (&brushes_get_spacing_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = spacing;
@@ -288,7 +292,8 @@ static ProcRecord brushes_get_spacing_proc =
 };
 
 static Argument *
-brushes_set_spacing_invoker (Gimp         *gimp,
+brushes_set_spacing_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -305,7 +310,7 @@ brushes_set_spacing_invoker (Gimp         *gimp,
       gimp_brush_set_spacing (gimp_context_get_brush (context), spacing);
     }
 
-  return procedural_db_return_args (&brushes_set_spacing_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg brushes_set_spacing_inargs[] =
@@ -336,7 +341,8 @@ static ProcRecord brushes_set_spacing_proc =
 };
 
 static Argument *
-brushes_get_brush_data_invoker (Gimp         *gimp,
+brushes_get_brush_data_invoker (ProcRecord   *proc_record,
+                                Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
                                 Argument     *args)
@@ -386,7 +392,7 @@ brushes_get_brush_data_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&brushes_get_brush_data_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {

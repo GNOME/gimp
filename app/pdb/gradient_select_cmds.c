@@ -43,7 +43,8 @@ register_gradient_select_procs (Gimp *gimp)
 }
 
 static Argument *
-gradients_popup_invoker (Gimp         *gimp,
+gradients_popup_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -82,7 +83,7 @@ gradients_popup_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&gradients_popup_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg gradients_popup_inargs[] =
@@ -128,7 +129,8 @@ static ProcRecord gradients_popup_proc =
 };
 
 static Argument *
-gradients_close_popup_invoker (Gimp         *gimp,
+gradients_close_popup_invoker (ProcRecord   *proc_record,
+                               Gimp         *gimp,
                                GimpContext  *context,
                                GimpProgress *progress,
                                Argument     *args)
@@ -149,7 +151,7 @@ gradients_close_popup_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&gradients_close_popup_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg gradients_close_popup_inargs[] =
@@ -180,7 +182,8 @@ static ProcRecord gradients_close_popup_proc =
 };
 
 static Argument *
-gradients_set_popup_invoker (Gimp         *gimp,
+gradients_set_popup_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -207,7 +210,7 @@ gradients_set_popup_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&gradients_set_popup_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg gradients_set_popup_inargs[] =

@@ -49,7 +49,8 @@ register_guides_procs (Gimp *gimp)
 }
 
 static Argument *
-image_add_hguide_invoker (Gimp         *gimp,
+image_add_hguide_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -81,7 +82,7 @@ image_add_hguide_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&image_add_hguide_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = guide;
@@ -131,7 +132,8 @@ static ProcRecord image_add_hguide_proc =
 };
 
 static Argument *
-image_add_vguide_invoker (Gimp         *gimp,
+image_add_vguide_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -163,7 +165,7 @@ image_add_vguide_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&image_add_vguide_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = guide;
@@ -213,7 +215,8 @@ static ProcRecord image_add_vguide_proc =
 };
 
 static Argument *
-image_delete_guide_invoker (Gimp         *gimp,
+image_delete_guide_invoker (ProcRecord   *proc_record,
+                            Gimp         *gimp,
                             GimpContext  *context,
                             GimpProgress *progress,
                             Argument     *args)
@@ -238,7 +241,7 @@ image_delete_guide_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&image_delete_guide_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg image_delete_guide_inargs[] =
@@ -274,7 +277,8 @@ static ProcRecord image_delete_guide_proc =
 };
 
 static Argument *
-image_find_next_guide_invoker (Gimp         *gimp,
+image_find_next_guide_invoker (ProcRecord   *proc_record,
+                               Gimp         *gimp,
                                GimpContext  *context,
                                GimpProgress *progress,
                                Argument     *args)
@@ -299,7 +303,7 @@ image_find_next_guide_invoker (Gimp         *gimp,
         next_guide = g->guide_ID;
     }
 
-  return_args = procedural_db_return_args (&image_find_next_guide_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = next_guide;
@@ -349,7 +353,8 @@ static ProcRecord image_find_next_guide_proc =
 };
 
 static Argument *
-image_get_guide_orientation_invoker (Gimp         *gimp,
+image_get_guide_orientation_invoker (ProcRecord   *proc_record,
+                                     Gimp         *gimp,
                                      GimpContext  *context,
                                      GimpProgress *progress,
                                      Argument     *args)
@@ -376,7 +381,7 @@ image_get_guide_orientation_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&image_get_guide_orientation_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = orientation;
@@ -426,7 +431,8 @@ static ProcRecord image_get_guide_orientation_proc =
 };
 
 static Argument *
-image_get_guide_position_invoker (Gimp         *gimp,
+image_get_guide_position_invoker (ProcRecord   *proc_record,
+                                  Gimp         *gimp,
                                   GimpContext  *context,
                                   GimpProgress *progress,
                                   Argument     *args)
@@ -453,7 +459,7 @@ image_get_guide_position_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&image_get_guide_position_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = position;

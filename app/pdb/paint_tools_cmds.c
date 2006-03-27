@@ -119,7 +119,8 @@ paint_tools_stroke (Gimp             *gimp,
 }
 
 static Argument *
-airbrush_invoker (Gimp         *gimp,
+airbrush_invoker (ProcRecord   *proc_record,
+                  Gimp         *gimp,
                   GimpContext  *context,
                   GimpProgress *progress,
                   Argument     *args)
@@ -164,7 +165,7 @@ airbrush_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&airbrush_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg airbrush_inargs[] =
@@ -210,7 +211,8 @@ static ProcRecord airbrush_proc =
 };
 
 static Argument *
-airbrush_default_invoker (Gimp         *gimp,
+airbrush_default_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -246,7 +248,7 @@ airbrush_default_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&airbrush_default_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg airbrush_default_inargs[] =
@@ -287,7 +289,8 @@ static ProcRecord airbrush_default_proc =
 };
 
 static Argument *
-clone_invoker (Gimp         *gimp,
+clone_invoker (ProcRecord   *proc_record,
+               Gimp         *gimp,
                GimpContext  *context,
                GimpProgress *progress,
                Argument     *args)
@@ -354,7 +357,7 @@ clone_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&clone_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg clone_inargs[] =
@@ -415,7 +418,8 @@ static ProcRecord clone_proc =
 };
 
 static Argument *
-clone_default_invoker (Gimp         *gimp,
+clone_default_invoker (ProcRecord   *proc_record,
+                       Gimp         *gimp,
                        GimpContext  *context,
                        GimpProgress *progress,
                        Argument     *args)
@@ -451,7 +455,7 @@ clone_default_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&clone_default_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg clone_default_inargs[] =
@@ -492,7 +496,8 @@ static ProcRecord clone_default_proc =
 };
 
 static Argument *
-convolve_invoker (Gimp         *gimp,
+convolve_invoker (ProcRecord   *proc_record,
+                  Gimp         *gimp,
                   GimpContext  *context,
                   GimpProgress *progress,
                   Argument     *args)
@@ -543,7 +548,7 @@ convolve_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&convolve_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg convolve_inargs[] =
@@ -594,7 +599,8 @@ static ProcRecord convolve_proc =
 };
 
 static Argument *
-convolve_default_invoker (Gimp         *gimp,
+convolve_default_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -630,7 +636,7 @@ convolve_default_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&convolve_default_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg convolve_default_inargs[] =
@@ -671,7 +677,8 @@ static ProcRecord convolve_default_proc =
 };
 
 static Argument *
-dodgeburn_invoker (Gimp         *gimp,
+dodgeburn_invoker (ProcRecord   *proc_record,
+                   Gimp         *gimp,
                    GimpContext  *context,
                    GimpProgress *progress,
                    Argument     *args)
@@ -728,7 +735,7 @@ dodgeburn_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&dodgeburn_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg dodgeburn_inargs[] =
@@ -784,7 +791,8 @@ static ProcRecord dodgeburn_proc =
 };
 
 static Argument *
-dodgeburn_default_invoker (Gimp         *gimp,
+dodgeburn_default_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -820,7 +828,7 @@ dodgeburn_default_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&dodgeburn_default_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg dodgeburn_default_inargs[] =
@@ -861,7 +869,8 @@ static ProcRecord dodgeburn_default_proc =
 };
 
 static Argument *
-eraser_invoker (Gimp         *gimp,
+eraser_invoker (ProcRecord   *proc_record,
+                Gimp         *gimp,
                 GimpContext  *context,
                 GimpProgress *progress,
                 Argument     *args)
@@ -912,7 +921,7 @@ eraser_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&eraser_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg eraser_inargs[] =
@@ -963,7 +972,8 @@ static ProcRecord eraser_proc =
 };
 
 static Argument *
-eraser_default_invoker (Gimp         *gimp,
+eraser_default_invoker (ProcRecord   *proc_record,
+                        Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         Argument     *args)
@@ -999,7 +1009,7 @@ eraser_default_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&eraser_default_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg eraser_default_inargs[] =
@@ -1040,7 +1050,8 @@ static ProcRecord eraser_default_proc =
 };
 
 static Argument *
-paintbrush_invoker (Gimp         *gimp,
+paintbrush_invoker (ProcRecord   *proc_record,
+                    Gimp         *gimp,
                     GimpContext  *context,
                     GimpProgress *progress,
                     Argument     *args)
@@ -1099,7 +1110,7 @@ paintbrush_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&paintbrush_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg paintbrush_inargs[] =
@@ -1155,7 +1166,8 @@ static ProcRecord paintbrush_proc =
 };
 
 static Argument *
-paintbrush_default_invoker (Gimp         *gimp,
+paintbrush_default_invoker (ProcRecord   *proc_record,
+                            Gimp         *gimp,
                             GimpContext  *context,
                             GimpProgress *progress,
                             Argument     *args)
@@ -1191,7 +1203,7 @@ paintbrush_default_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&paintbrush_default_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg paintbrush_default_inargs[] =
@@ -1232,7 +1244,8 @@ static ProcRecord paintbrush_default_proc =
 };
 
 static Argument *
-pencil_invoker (Gimp         *gimp,
+pencil_invoker (ProcRecord   *proc_record,
+                Gimp         *gimp,
                 GimpContext  *context,
                 GimpProgress *progress,
                 Argument     *args)
@@ -1268,7 +1281,7 @@ pencil_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&pencil_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg pencil_inargs[] =
@@ -1309,7 +1322,8 @@ static ProcRecord pencil_proc =
 };
 
 static Argument *
-smudge_invoker (Gimp         *gimp,
+smudge_invoker (ProcRecord   *proc_record,
+                Gimp         *gimp,
                 GimpContext  *context,
                 GimpProgress *progress,
                 Argument     *args)
@@ -1354,7 +1368,7 @@ smudge_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&smudge_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg smudge_inargs[] =
@@ -1400,7 +1414,8 @@ static ProcRecord smudge_proc =
 };
 
 static Argument *
-smudge_default_invoker (Gimp         *gimp,
+smudge_default_invoker (ProcRecord   *proc_record,
+                        Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         Argument     *args)
@@ -1436,7 +1451,7 @@ smudge_default_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&smudge_default_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg smudge_default_inargs[] =

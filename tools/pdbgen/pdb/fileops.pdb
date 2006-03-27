@@ -48,31 +48,33 @@ HELP
     );
 
     %invoke = (
-	proc => [ 'proc->name', 'new_args' ],
-	args => [ 'new_args', 'return_vals' ],
+	no_marshalling => 1,
 	code => <<'CODE'
 {
+  Argument         *new_args;
+  Argument         *return_vals;
   PlugInProcDef    *file_proc;
   const ProcRecord *proc;
   gchar            *uri;
   gint              i;
 
-  uri = file_utils_filename_to_uri (gimp->load_procs, %%filename%%, NULL);
+  uri = file_utils_filename_to_uri (gimp->load_procs, args[1].value.pdb_pointer,
+                                    NULL);
 
   if (! uri)
-    return %%fail%%;
+    return procedural_db_return_args (proc_record, FALSE);
 
   file_proc = file_utils_find_proc (gimp->load_procs, uri);
 
   g_free (uri);
 
   if (! file_proc)
-    return %%fail%%;
+    return procedural_db_return_args (proc_record, FALSE);
 
   proc = plug_in_proc_def_get_proc (file_proc);
 
-  new_args = g_new0 (%%argtype%%, proc->num_args);
-  memcpy (new_args, args, sizeof (%%argtype%%) * 3);
+  new_args = g_new0 (Argument, proc->num_args);
+  memcpy (new_args, args, sizeof (Argument) * 3);
 
   for (i = 3; i < proc->num_args; i++)
     {
@@ -81,7 +83,8 @@ HELP
         new_args[i].value.pdb_pointer = g_strdup ("");
     }
 
-  return_vals = %%exec%%;
+  return_vals = procedural_db_execute (gimp, context, progress,
+                                       proc->name, new_args);
   g_free (new_args);
 
   return return_vals;
@@ -169,31 +172,33 @@ HELP
 
     %invoke = (
 	headers => [ qw(<string.h>) ],
-	proc => [ 'proc->name', 'new_args' ],
-	args => [ 'new_args', 'return_vals' ],
+	no_marshalling => 1,
 	code => <<'CODE'
 {
+  Argument         *new_args;
+  Argument         *return_vals;
   PlugInProcDef    *file_proc;
   const ProcRecord *proc;
   gchar            *uri;
   gint              i;
 
-  uri = file_utils_filename_to_uri (gimp->load_procs, %%filename%%, NULL);
+  uri = file_utils_filename_to_uri (gimp->load_procs, args[1].value.pdb_pointer,
+                                    NULL);
 
   if (! uri)
-    return %%fail%%;
+    return procedural_db_return_args (proc_record, FALSE);
 
   file_proc = file_utils_find_proc (gimp->save_procs, uri);
 
   g_free (uri);
 
   if (! file_proc)
-    return %%fail%%;
+    return procedural_db_return_args (proc_record, FALSE);
 
   proc = plug_in_proc_def_get_proc (file_proc);
 
-  new_args = g_new0 (%%argtype%%, proc->num_args);
-  memcpy (new_args, args, sizeof (%%argtype%%) * 5);
+  new_args = g_new0 (Argument, proc->num_args);
+  memcpy (new_args, args, sizeof (Argument) * 5);
 
   for (i = 5; i < proc->num_args; i++)
     {
@@ -202,7 +207,8 @@ HELP
         new_args[i].value.pdb_pointer = g_strdup ("");
     }
 
-  return_vals = %%exec%%;
+  return_vals = procedural_db_execute (gimp, context, progress,
+                                       proc->name, new_args);
   g_free (new_args);
 
   return return_vals;

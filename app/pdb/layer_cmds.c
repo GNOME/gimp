@@ -97,7 +97,8 @@ register_layer_procs (Gimp *gimp)
 }
 
 static Argument *
-layer_new_invoker (Gimp         *gimp,
+layer_new_invoker (ProcRecord   *proc_record,
+                   Gimp         *gimp,
                    GimpContext  *context,
                    GimpProgress *progress,
                    Argument     *args)
@@ -150,7 +151,7 @@ layer_new_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&layer_new_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = layer ? gimp_item_get_ID (GIMP_ITEM (layer)) : -1;
@@ -225,7 +226,8 @@ static ProcRecord layer_new_proc =
 };
 
 static Argument *
-layer_new_from_drawable_invoker (Gimp         *gimp,
+layer_new_from_drawable_invoker (ProcRecord   *proc_record,
+                                 Gimp         *gimp,
                                  GimpContext  *context,
                                  GimpProgress *progress,
                                  Argument     *args)
@@ -265,7 +267,7 @@ layer_new_from_drawable_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&layer_new_from_drawable_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = layer_copy ? gimp_item_get_ID (GIMP_ITEM (layer_copy)) : -1;
@@ -315,7 +317,8 @@ static ProcRecord layer_new_from_drawable_proc =
 };
 
 static Argument *
-layer_copy_invoker (Gimp         *gimp,
+layer_copy_invoker (ProcRecord   *proc_record,
+                    Gimp         *gimp,
                     GimpContext  *context,
                     GimpProgress *progress,
                     Argument     *args)
@@ -341,7 +344,7 @@ layer_copy_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&layer_copy_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = layer_copy ? gimp_item_get_ID (GIMP_ITEM (layer_copy)) : -1;
@@ -391,7 +394,8 @@ static ProcRecord layer_copy_proc =
 };
 
 static Argument *
-layer_add_alpha_invoker (Gimp         *gimp,
+layer_add_alpha_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -408,7 +412,7 @@ layer_add_alpha_invoker (Gimp         *gimp,
       gimp_layer_add_alpha (layer);
     }
 
-  return procedural_db_return_args (&layer_add_alpha_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg layer_add_alpha_inargs[] =
@@ -439,7 +443,8 @@ static ProcRecord layer_add_alpha_proc =
 };
 
 static Argument *
-layer_scale_invoker (Gimp         *gimp,
+layer_scale_invoker (ProcRecord   *proc_record,
+                     Gimp         *gimp,
                      GimpContext  *context,
                      GimpProgress *progress,
                      Argument     *args)
@@ -474,7 +479,7 @@ layer_scale_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&layer_scale_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg layer_scale_inargs[] =
@@ -520,7 +525,8 @@ static ProcRecord layer_scale_proc =
 };
 
 static Argument *
-layer_resize_invoker (Gimp         *gimp,
+layer_resize_invoker (ProcRecord   *proc_record,
+                      Gimp         *gimp,
                       GimpContext  *context,
                       GimpProgress *progress,
                       Argument     *args)
@@ -557,7 +563,7 @@ layer_resize_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&layer_resize_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg layer_resize_inargs[] =
@@ -608,7 +614,8 @@ static ProcRecord layer_resize_proc =
 };
 
 static Argument *
-layer_resize_to_image_size_invoker (Gimp         *gimp,
+layer_resize_to_image_size_invoker (ProcRecord   *proc_record,
+                                    Gimp         *gimp,
                                     GimpContext  *context,
                                     GimpProgress *progress,
                                     Argument     *args)
@@ -628,7 +635,7 @@ layer_resize_to_image_size_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&layer_resize_to_image_size_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg layer_resize_to_image_size_inargs[] =
@@ -659,7 +666,8 @@ static ProcRecord layer_resize_to_image_size_proc =
 };
 
 static Argument *
-layer_translate_invoker (Gimp         *gimp,
+layer_translate_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -692,7 +700,7 @@ layer_translate_invoker (Gimp         *gimp,
       gimp_image_undo_group_end (image);
     }
 
-  return procedural_db_return_args (&layer_translate_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg layer_translate_inargs[] =
@@ -733,7 +741,8 @@ static ProcRecord layer_translate_proc =
 };
 
 static Argument *
-layer_set_offsets_invoker (Gimp         *gimp,
+layer_set_offsets_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -769,7 +778,7 @@ layer_set_offsets_invoker (Gimp         *gimp,
       gimp_image_undo_group_end (image);
     }
 
-  return procedural_db_return_args (&layer_set_offsets_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg layer_set_offsets_inargs[] =
@@ -810,7 +819,8 @@ static ProcRecord layer_set_offsets_proc =
 };
 
 static Argument *
-layer_create_mask_invoker (Gimp         *gimp,
+layer_create_mask_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -837,7 +847,7 @@ layer_create_mask_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&layer_create_mask_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = mask ? gimp_item_get_ID (GIMP_ITEM (mask)) : -1;
@@ -887,7 +897,8 @@ static ProcRecord layer_create_mask_proc =
 };
 
 static Argument *
-layer_get_mask_invoker (Gimp         *gimp,
+layer_get_mask_invoker (ProcRecord   *proc_record,
+                        Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         Argument     *args)
@@ -906,7 +917,7 @@ layer_get_mask_invoker (Gimp         *gimp,
       mask = gimp_layer_get_mask (layer);
     }
 
-  return_args = procedural_db_return_args (&layer_get_mask_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = mask ? gimp_item_get_ID (GIMP_ITEM (mask)) : -1;
@@ -951,7 +962,8 @@ static ProcRecord layer_get_mask_proc =
 };
 
 static Argument *
-layer_from_mask_invoker (Gimp         *gimp,
+layer_from_mask_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -970,7 +982,7 @@ layer_from_mask_invoker (Gimp         *gimp,
       layer = gimp_layer_mask_get_layer (mask);
     }
 
-  return_args = procedural_db_return_args (&layer_from_mask_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = layer ? gimp_item_get_ID (GIMP_ITEM (layer)) : -1;
@@ -1015,7 +1027,8 @@ static ProcRecord layer_from_mask_proc =
 };
 
 static Argument *
-layer_add_mask_invoker (Gimp         *gimp,
+layer_add_mask_invoker (ProcRecord   *proc_record,
+                        Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         Argument     *args)
@@ -1040,7 +1053,7 @@ layer_add_mask_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&layer_add_mask_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg layer_add_mask_inargs[] =
@@ -1076,7 +1089,8 @@ static ProcRecord layer_add_mask_proc =
 };
 
 static Argument *
-layer_remove_mask_invoker (Gimp         *gimp,
+layer_remove_mask_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -1101,7 +1115,7 @@ layer_remove_mask_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&layer_remove_mask_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg layer_remove_mask_inargs[] =
@@ -1137,7 +1151,8 @@ static ProcRecord layer_remove_mask_proc =
 };
 
 static Argument *
-layer_is_floating_sel_invoker (Gimp         *gimp,
+layer_is_floating_sel_invoker (ProcRecord   *proc_record,
+                               Gimp         *gimp,
                                GimpContext  *context,
                                GimpProgress *progress,
                                Argument     *args)
@@ -1156,7 +1171,7 @@ layer_is_floating_sel_invoker (Gimp         *gimp,
       is_floating_sel = gimp_layer_is_floating_sel (layer);
     }
 
-  return_args = procedural_db_return_args (&layer_is_floating_sel_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = is_floating_sel;
@@ -1201,7 +1216,8 @@ static ProcRecord layer_is_floating_sel_proc =
 };
 
 static Argument *
-layer_get_lock_alpha_invoker (Gimp         *gimp,
+layer_get_lock_alpha_invoker (ProcRecord   *proc_record,
+                              Gimp         *gimp,
                               GimpContext  *context,
                               GimpProgress *progress,
                               Argument     *args)
@@ -1220,7 +1236,7 @@ layer_get_lock_alpha_invoker (Gimp         *gimp,
       lock_alpha = gimp_layer_get_lock_alpha (layer);
     }
 
-  return_args = procedural_db_return_args (&layer_get_lock_alpha_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = lock_alpha;
@@ -1265,7 +1281,8 @@ static ProcRecord layer_get_lock_alpha_proc =
 };
 
 static Argument *
-layer_set_lock_alpha_invoker (Gimp         *gimp,
+layer_set_lock_alpha_invoker (ProcRecord   *proc_record,
+                              Gimp         *gimp,
                               GimpContext  *context,
                               GimpProgress *progress,
                               Argument     *args)
@@ -1285,7 +1302,7 @@ layer_set_lock_alpha_invoker (Gimp         *gimp,
       gimp_layer_set_lock_alpha (layer, lock_alpha, TRUE);
     }
 
-  return procedural_db_return_args (&layer_set_lock_alpha_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg layer_set_lock_alpha_inargs[] =
@@ -1321,7 +1338,8 @@ static ProcRecord layer_set_lock_alpha_proc =
 };
 
 static Argument *
-layer_get_apply_mask_invoker (Gimp         *gimp,
+layer_get_apply_mask_invoker (ProcRecord   *proc_record,
+                              Gimp         *gimp,
                               GimpContext  *context,
                               GimpProgress *progress,
                               Argument     *args)
@@ -1343,7 +1361,7 @@ layer_get_apply_mask_invoker (Gimp         *gimp,
         apply_mask = FALSE;
     }
 
-  return_args = procedural_db_return_args (&layer_get_apply_mask_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = apply_mask;
@@ -1388,7 +1406,8 @@ static ProcRecord layer_get_apply_mask_proc =
 };
 
 static Argument *
-layer_set_apply_mask_invoker (Gimp         *gimp,
+layer_set_apply_mask_invoker (ProcRecord   *proc_record,
+                              Gimp         *gimp,
                               GimpContext  *context,
                               GimpProgress *progress,
                               Argument     *args)
@@ -1411,7 +1430,7 @@ layer_set_apply_mask_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&layer_set_apply_mask_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg layer_set_apply_mask_inargs[] =
@@ -1447,7 +1466,8 @@ static ProcRecord layer_set_apply_mask_proc =
 };
 
 static Argument *
-layer_get_show_mask_invoker (Gimp         *gimp,
+layer_get_show_mask_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -1469,7 +1489,7 @@ layer_get_show_mask_invoker (Gimp         *gimp,
         show_mask = FALSE;
     }
 
-  return_args = procedural_db_return_args (&layer_get_show_mask_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = show_mask;
@@ -1514,7 +1534,8 @@ static ProcRecord layer_get_show_mask_proc =
 };
 
 static Argument *
-layer_set_show_mask_invoker (Gimp         *gimp,
+layer_set_show_mask_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -1537,7 +1558,7 @@ layer_set_show_mask_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&layer_set_show_mask_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg layer_set_show_mask_inargs[] =
@@ -1573,7 +1594,8 @@ static ProcRecord layer_set_show_mask_proc =
 };
 
 static Argument *
-layer_get_edit_mask_invoker (Gimp         *gimp,
+layer_get_edit_mask_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -1595,7 +1617,7 @@ layer_get_edit_mask_invoker (Gimp         *gimp,
         edit_mask = FALSE;
     }
 
-  return_args = procedural_db_return_args (&layer_get_edit_mask_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = edit_mask;
@@ -1640,7 +1662,8 @@ static ProcRecord layer_get_edit_mask_proc =
 };
 
 static Argument *
-layer_set_edit_mask_invoker (Gimp         *gimp,
+layer_set_edit_mask_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -1663,7 +1686,7 @@ layer_set_edit_mask_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&layer_set_edit_mask_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg layer_set_edit_mask_inargs[] =
@@ -1699,7 +1722,8 @@ static ProcRecord layer_set_edit_mask_proc =
 };
 
 static Argument *
-layer_get_opacity_invoker (Gimp         *gimp,
+layer_get_opacity_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -1718,7 +1742,7 @@ layer_get_opacity_invoker (Gimp         *gimp,
       opacity = gimp_layer_get_opacity (layer) * 100.0;
     }
 
-  return_args = procedural_db_return_args (&layer_get_opacity_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_float = opacity;
@@ -1763,7 +1787,8 @@ static ProcRecord layer_get_opacity_proc =
 };
 
 static Argument *
-layer_set_opacity_invoker (Gimp         *gimp,
+layer_set_opacity_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -1785,7 +1810,7 @@ layer_set_opacity_invoker (Gimp         *gimp,
       gimp_layer_set_opacity (layer, opacity / 100.0, TRUE);
     }
 
-  return procedural_db_return_args (&layer_set_opacity_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg layer_set_opacity_inargs[] =
@@ -1821,7 +1846,8 @@ static ProcRecord layer_set_opacity_proc =
 };
 
 static Argument *
-layer_get_mode_invoker (Gimp         *gimp,
+layer_get_mode_invoker (ProcRecord   *proc_record,
+                        Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         Argument     *args)
@@ -1840,7 +1866,7 @@ layer_get_mode_invoker (Gimp         *gimp,
       mode = gimp_layer_get_mode (layer);
     }
 
-  return_args = procedural_db_return_args (&layer_get_mode_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = mode;
@@ -1885,7 +1911,8 @@ static ProcRecord layer_get_mode_proc =
 };
 
 static Argument *
-layer_set_mode_invoker (Gimp         *gimp,
+layer_set_mode_invoker (ProcRecord   *proc_record,
+                        Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         Argument     *args)
@@ -1907,7 +1934,7 @@ layer_set_mode_invoker (Gimp         *gimp,
       gimp_layer_set_mode (layer, mode, TRUE);
     }
 
-  return procedural_db_return_args (&layer_set_mode_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg layer_set_mode_inargs[] =

@@ -51,13 +51,14 @@ register_gradients_procs (Gimp *gimp)
 }
 
 static Argument *
-gradients_refresh_invoker (Gimp         *gimp,
+gradients_refresh_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
 {
   gimp_data_factory_data_refresh (gimp->gradient_factory);
-  return procedural_db_return_args (&gradients_refresh_proc, TRUE);
+  return procedural_db_return_args (proc_record, TRUE);
 }
 
 static ProcRecord gradients_refresh_proc =
@@ -79,7 +80,8 @@ static ProcRecord gradients_refresh_proc =
 };
 
 static Argument *
-gradients_get_list_invoker (Gimp         *gimp,
+gradients_get_list_invoker (ProcRecord   *proc_record,
+                            Gimp         *gimp,
                             GimpContext  *context,
                             GimpProgress *progress,
                             Argument     *args)
@@ -100,7 +102,7 @@ gradients_get_list_invoker (Gimp         *gimp,
                                                               filter, &num_gradients);
     }
 
-  return_args = procedural_db_return_args (&gradients_get_list_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -153,7 +155,8 @@ static ProcRecord gradients_get_list_proc =
 };
 
 static Argument *
-gradients_sample_uniform_invoker (Gimp         *gimp,
+gradients_sample_uniform_invoker (ProcRecord   *proc_record,
+                                  Gimp         *gimp,
                                   GimpContext  *context,
                                   GimpProgress *progress,
                                   Argument     *args)
@@ -201,7 +204,7 @@ gradients_sample_uniform_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&gradients_sample_uniform_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -259,7 +262,8 @@ static ProcRecord gradients_sample_uniform_proc =
 };
 
 static Argument *
-gradients_sample_custom_invoker (Gimp         *gimp,
+gradients_sample_custom_invoker (ProcRecord   *proc_record,
+                                 Gimp         *gimp,
                                  GimpContext  *context,
                                  GimpProgress *progress,
                                  Argument     *args)
@@ -307,7 +311,7 @@ gradients_sample_custom_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&gradients_sample_custom_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -370,7 +374,8 @@ static ProcRecord gradients_sample_custom_proc =
 };
 
 static Argument *
-gradients_get_gradient_data_invoker (Gimp         *gimp,
+gradients_get_gradient_data_invoker (ProcRecord   *proc_record,
+                                     Gimp         *gimp,
                                      GimpContext  *context,
                                      GimpProgress *progress,
                                      Argument     *args)
@@ -442,7 +447,7 @@ gradients_get_gradient_data_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&gradients_get_gradient_data_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {

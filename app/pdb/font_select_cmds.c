@@ -41,7 +41,8 @@ register_font_select_procs (Gimp *gimp)
 }
 
 static Argument *
-fonts_popup_invoker (Gimp         *gimp,
+fonts_popup_invoker (ProcRecord   *proc_record,
+                     Gimp         *gimp,
                      GimpContext  *context,
                      GimpProgress *progress,
                      Argument     *args)
@@ -73,7 +74,7 @@ fonts_popup_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&fonts_popup_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg fonts_popup_inargs[] =
@@ -114,7 +115,8 @@ static ProcRecord fonts_popup_proc =
 };
 
 static Argument *
-fonts_close_popup_invoker (Gimp         *gimp,
+fonts_close_popup_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -134,7 +136,7 @@ fonts_close_popup_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&fonts_close_popup_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg fonts_close_popup_inargs[] =
@@ -165,7 +167,8 @@ static ProcRecord fonts_close_popup_proc =
 };
 
 static Argument *
-fonts_set_popup_invoker (Gimp         *gimp,
+fonts_set_popup_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -191,7 +194,7 @@ fonts_set_popup_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&fonts_set_popup_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg fonts_set_popup_inargs[] =

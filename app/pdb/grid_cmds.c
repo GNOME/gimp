@@ -60,7 +60,8 @@ register_grid_procs (Gimp *gimp)
 }
 
 static Argument *
-image_grid_get_spacing_invoker (Gimp         *gimp,
+image_grid_get_spacing_invoker (ProcRecord   *proc_record,
+                                Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
                                 Argument     *args)
@@ -88,7 +89,7 @@ image_grid_get_spacing_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&image_grid_get_spacing_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -141,7 +142,8 @@ static ProcRecord image_grid_get_spacing_proc =
 };
 
 static Argument *
-image_grid_set_spacing_invoker (Gimp         *gimp,
+image_grid_set_spacing_invoker (ProcRecord   *proc_record,
+                                Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
                                 Argument     *args)
@@ -172,7 +174,7 @@ image_grid_set_spacing_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&image_grid_set_spacing_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg image_grid_set_spacing_inargs[] =
@@ -213,7 +215,8 @@ static ProcRecord image_grid_set_spacing_proc =
 };
 
 static Argument *
-image_grid_get_offset_invoker (Gimp         *gimp,
+image_grid_get_offset_invoker (ProcRecord   *proc_record,
+                               Gimp         *gimp,
                                GimpContext  *context,
                                GimpProgress *progress,
                                Argument     *args)
@@ -241,7 +244,7 @@ image_grid_get_offset_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&image_grid_get_offset_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -294,7 +297,8 @@ static ProcRecord image_grid_get_offset_proc =
 };
 
 static Argument *
-image_grid_set_offset_invoker (Gimp         *gimp,
+image_grid_set_offset_invoker (ProcRecord   *proc_record,
+                               Gimp         *gimp,
                                GimpContext  *context,
                                GimpProgress *progress,
                                Argument     *args)
@@ -325,7 +329,7 @@ image_grid_set_offset_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&image_grid_set_offset_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg image_grid_set_offset_inargs[] =
@@ -366,7 +370,8 @@ static ProcRecord image_grid_set_offset_proc =
 };
 
 static Argument *
-image_grid_get_foreground_color_invoker (Gimp         *gimp,
+image_grid_get_foreground_color_invoker (ProcRecord   *proc_record,
+                                         Gimp         *gimp,
                                          GimpContext  *context,
                                          GimpProgress *progress,
                                          Argument     *args)
@@ -390,7 +395,7 @@ image_grid_get_foreground_color_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&image_grid_get_foreground_color_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_color = fgcolor;
@@ -435,7 +440,8 @@ static ProcRecord image_grid_get_foreground_color_proc =
 };
 
 static Argument *
-image_grid_set_foreground_color_invoker (Gimp         *gimp,
+image_grid_set_foreground_color_invoker (ProcRecord   *proc_record,
+                                         Gimp         *gimp,
                                          GimpContext  *context,
                                          GimpProgress *progress,
                                          Argument     *args)
@@ -460,7 +466,7 @@ image_grid_set_foreground_color_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&image_grid_set_foreground_color_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg image_grid_set_foreground_color_inargs[] =
@@ -496,7 +502,8 @@ static ProcRecord image_grid_set_foreground_color_proc =
 };
 
 static Argument *
-image_grid_get_background_color_invoker (Gimp         *gimp,
+image_grid_get_background_color_invoker (ProcRecord   *proc_record,
+                                         Gimp         *gimp,
                                          GimpContext  *context,
                                          GimpProgress *progress,
                                          Argument     *args)
@@ -520,7 +527,7 @@ image_grid_get_background_color_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&image_grid_get_background_color_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_color = bgcolor;
@@ -565,7 +572,8 @@ static ProcRecord image_grid_get_background_color_proc =
 };
 
 static Argument *
-image_grid_set_background_color_invoker (Gimp         *gimp,
+image_grid_set_background_color_invoker (ProcRecord   *proc_record,
+                                         Gimp         *gimp,
                                          GimpContext  *context,
                                          GimpProgress *progress,
                                          Argument     *args)
@@ -590,7 +598,7 @@ image_grid_set_background_color_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&image_grid_set_background_color_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg image_grid_set_background_color_inargs[] =
@@ -626,7 +634,8 @@ static ProcRecord image_grid_set_background_color_proc =
 };
 
 static Argument *
-image_grid_get_style_invoker (Gimp         *gimp,
+image_grid_get_style_invoker (ProcRecord   *proc_record,
+                              Gimp         *gimp,
                               GimpContext  *context,
                               GimpProgress *progress,
                               Argument     *args)
@@ -650,7 +659,7 @@ image_grid_get_style_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&image_grid_get_style_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = style;
@@ -695,7 +704,8 @@ static ProcRecord image_grid_get_style_proc =
 };
 
 static Argument *
-image_grid_set_style_invoker (Gimp         *gimp,
+image_grid_set_style_invoker (ProcRecord   *proc_record,
+                              Gimp         *gimp,
                               GimpContext  *context,
                               GimpProgress *progress,
                               Argument     *args)
@@ -722,7 +732,7 @@ image_grid_set_style_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&image_grid_set_style_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg image_grid_set_style_inargs[] =

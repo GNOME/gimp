@@ -47,7 +47,8 @@ register_display_procs (Gimp *gimp)
 }
 
 static Argument *
-display_new_invoker (Gimp         *gimp,
+display_new_invoker (ProcRecord   *proc_record,
+                     Gimp         *gimp,
                      GimpContext  *context,
                      GimpProgress *progress,
                      Argument     *args)
@@ -75,7 +76,7 @@ display_new_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&display_new_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = display ? gimp_get_display_ID (gimp, display) : -1;
@@ -120,7 +121,8 @@ static ProcRecord display_new_proc =
 };
 
 static Argument *
-display_delete_invoker (Gimp         *gimp,
+display_delete_invoker (ProcRecord   *proc_record,
+                        Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         Argument     *args)
@@ -137,7 +139,7 @@ display_delete_invoker (Gimp         *gimp,
       gimp_delete_display (gimp, display);
     }
 
-  return procedural_db_return_args (&display_delete_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg display_delete_inargs[] =
@@ -168,7 +170,8 @@ static ProcRecord display_delete_proc =
 };
 
 static Argument *
-display_get_window_handle_invoker (Gimp         *gimp,
+display_get_window_handle_invoker (ProcRecord   *proc_record,
+                                   Gimp         *gimp,
                                    GimpContext  *context,
                                    GimpProgress *progress,
                                    Argument     *args)
@@ -187,7 +190,7 @@ display_get_window_handle_invoker (Gimp         *gimp,
       window = (gint32) gimp_get_display_window (gimp, display);
     }
 
-  return_args = procedural_db_return_args (&display_get_window_handle_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = window;
@@ -232,13 +235,14 @@ static ProcRecord display_get_window_handle_proc =
 };
 
 static Argument *
-displays_flush_invoker (Gimp         *gimp,
+displays_flush_invoker (ProcRecord   *proc_record,
+                        Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         Argument     *args)
 {
   gimp_container_foreach (gimp->images, (GFunc) gimp_image_flush, NULL);
-  return procedural_db_return_args (&displays_flush_proc, TRUE);
+  return procedural_db_return_args (proc_record, TRUE);
 }
 
 static ProcRecord displays_flush_proc =
@@ -260,7 +264,8 @@ static ProcRecord displays_flush_proc =
 };
 
 static Argument *
-displays_reconnect_invoker (Gimp         *gimp,
+displays_reconnect_invoker (ProcRecord   *proc_record,
+                            Gimp         *gimp,
                             GimpContext  *context,
                             GimpProgress *progress,
                             Argument     *args)
@@ -293,7 +298,7 @@ displays_reconnect_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&displays_reconnect_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg displays_reconnect_inargs[] =

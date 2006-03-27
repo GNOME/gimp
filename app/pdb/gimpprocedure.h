@@ -35,10 +35,11 @@ struct _Argument
 
 
 /*  Argument marshalling procedures  */
-typedef Argument * (* ArgMarshal) (Gimp         *gimp,
+typedef Argument * (* ArgMarshal) (ProcRecord   *procedure,
+                                   Gimp         *gimp,
                                    GimpContext  *context,
                                    GimpProgress *progress,
-				   Argument     *args);
+                                   Argument     *args);
 
 
 /*  Execution types  */

@@ -55,7 +55,8 @@ register_misc_procs (Gimp *gimp)
 }
 
 static Argument *
-version_invoker (Gimp         *gimp,
+version_invoker (ProcRecord   *proc_record,
+                 Gimp         *gimp,
                  GimpContext  *context,
                  GimpProgress *progress,
                  Argument     *args)
@@ -65,7 +66,7 @@ version_invoker (Gimp         *gimp,
 
   version = g_strdup (GIMP_VERSION);
 
-  return_args = procedural_db_return_args (&version_proc, TRUE);
+  return_args = procedural_db_return_args (proc_record, TRUE);
   return_args[1].value.pdb_pointer = version;
 
   return return_args;
@@ -99,7 +100,8 @@ static ProcRecord version_proc =
 };
 
 static Argument *
-getpid_invoker (Gimp         *gimp,
+getpid_invoker (ProcRecord   *proc_record,
+                Gimp         *gimp,
                 GimpContext  *context,
                 GimpProgress *progress,
                 Argument     *args)
@@ -109,7 +111,7 @@ getpid_invoker (Gimp         *gimp,
 
   pid = getpid ();
 
-  return_args = procedural_db_return_args (&getpid_proc, TRUE);
+  return_args = procedural_db_return_args (proc_record, TRUE);
   return_args[1].value.pdb_int = pid;
 
   return return_args;
@@ -143,7 +145,8 @@ static ProcRecord getpid_proc =
 };
 
 static Argument *
-quit_invoker (Gimp         *gimp,
+quit_invoker (ProcRecord   *proc_record,
+              Gimp         *gimp,
               GimpContext  *context,
               GimpProgress *progress,
               Argument     *args)
@@ -154,7 +157,7 @@ quit_invoker (Gimp         *gimp,
 
   gimp_exit (gimp, force);
 
-  return procedural_db_return_args (&quit_proc, TRUE);
+  return procedural_db_return_args (proc_record, TRUE);
 }
 
 static ProcArg quit_inargs[] =

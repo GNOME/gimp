@@ -58,7 +58,8 @@ register_plug_in_procs (Gimp *gimp)
 }
 
 static Argument *
-plugins_query_invoker (Gimp         *gimp,
+plugins_query_invoker (ProcRecord   *proc_record,
+                       Gimp         *gimp,
                        GimpContext  *context,
                        GimpProgress *progress,
                        Argument     *args)
@@ -83,7 +84,7 @@ plugins_query_invoker (Gimp         *gimp,
                                 &plugin_real_name,
                                 &plugin_install_time);
 
-  return_args = procedural_db_return_args (&plugins_query_proc, TRUE);
+  return_args = procedural_db_return_args (proc_record, TRUE);
 
   return_args[1].value.pdb_int = num_plugins;
   return_args[2].value.pdb_pointer = menu_path;
@@ -193,7 +194,8 @@ static ProcRecord plugins_query_proc =
 };
 
 static Argument *
-plugin_domain_register_invoker (Gimp         *gimp,
+plugin_domain_register_invoker (ProcRecord   *proc_record,
+                                Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
                                 Argument     *args)
@@ -221,7 +223,7 @@ plugin_domain_register_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&plugin_domain_register_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg plugin_domain_register_inargs[] =
@@ -257,7 +259,8 @@ static ProcRecord plugin_domain_register_proc =
 };
 
 static Argument *
-plugin_help_register_invoker (Gimp         *gimp,
+plugin_help_register_invoker (ProcRecord   *proc_record,
+                              Gimp         *gimp,
                               GimpContext  *context,
                               GimpProgress *progress,
                               Argument     *args)
@@ -287,7 +290,7 @@ plugin_help_register_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&plugin_help_register_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg plugin_help_register_inargs[] =
@@ -323,7 +326,8 @@ static ProcRecord plugin_help_register_proc =
 };
 
 static Argument *
-plugin_menu_register_invoker (Gimp         *gimp,
+plugin_menu_register_invoker (ProcRecord   *proc_record,
+                              Gimp         *gimp,
                               GimpContext  *context,
                               GimpProgress *progress,
                               Argument     *args)
@@ -356,7 +360,7 @@ plugin_menu_register_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&plugin_menu_register_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg plugin_menu_register_inargs[] =
@@ -392,7 +396,8 @@ static ProcRecord plugin_menu_register_proc =
 };
 
 static Argument *
-plugin_menu_branch_register_invoker (Gimp         *gimp,
+plugin_menu_branch_register_invoker (ProcRecord   *proc_record,
+                                     Gimp         *gimp,
                                      GimpContext  *context,
                                      GimpProgress *progress,
                                      Argument     *args)
@@ -428,7 +433,7 @@ plugin_menu_branch_register_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&plugin_menu_branch_register_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg plugin_menu_branch_register_inargs[] =
@@ -464,7 +469,8 @@ static ProcRecord plugin_menu_branch_register_proc =
 };
 
 static Argument *
-plugin_icon_register_invoker (Gimp         *gimp,
+plugin_icon_register_invoker (ProcRecord   *proc_record,
+                              Gimp         *gimp,
                               GimpContext  *context,
                               GimpProgress *progress,
                               Argument     *args)
@@ -513,7 +519,7 @@ plugin_icon_register_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&plugin_icon_register_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg plugin_icon_register_inargs[] =

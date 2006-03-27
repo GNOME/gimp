@@ -42,7 +42,8 @@ register_pattern_select_procs (Gimp *gimp)
 }
 
 static Argument *
-patterns_popup_invoker (Gimp         *gimp,
+patterns_popup_invoker (ProcRecord   *proc_record,
+                        Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         Argument     *args)
@@ -74,7 +75,7 @@ patterns_popup_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&patterns_popup_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg patterns_popup_inargs[] =
@@ -115,7 +116,8 @@ static ProcRecord patterns_popup_proc =
 };
 
 static Argument *
-patterns_close_popup_invoker (Gimp         *gimp,
+patterns_close_popup_invoker (ProcRecord   *proc_record,
+                              Gimp         *gimp,
                               GimpContext  *context,
                               GimpProgress *progress,
                               Argument     *args)
@@ -136,7 +138,7 @@ patterns_close_popup_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&patterns_close_popup_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg patterns_close_popup_inargs[] =
@@ -167,7 +169,8 @@ static ProcRecord patterns_close_popup_proc =
 };
 
 static Argument *
-patterns_set_popup_invoker (Gimp         *gimp,
+patterns_set_popup_invoker (ProcRecord   *proc_record,
+                            Gimp         *gimp,
                             GimpContext  *context,
                             GimpProgress *progress,
                             Argument     *args)
@@ -194,7 +197,7 @@ patterns_set_popup_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&patterns_set_popup_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg patterns_set_popup_inargs[] =

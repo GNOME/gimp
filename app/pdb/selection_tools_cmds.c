@@ -50,7 +50,8 @@ register_selection_tools_procs (Gimp *gimp)
 }
 
 static Argument *
-by_color_select_invoker (Gimp         *gimp,
+by_color_select_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -105,7 +106,7 @@ by_color_select_invoker (Gimp         *gimp,
                                     feather_radius);
     }
 
-  return procedural_db_return_args (&by_color_select_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg by_color_select_inargs[] =
@@ -171,7 +172,8 @@ static ProcRecord by_color_select_proc =
 };
 
 static Argument *
-ellipse_select_invoker (Gimp         *gimp,
+ellipse_select_invoker (ProcRecord   *proc_record,
+                        Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         Argument     *args)
@@ -227,7 +229,7 @@ ellipse_select_invoker (Gimp         *gimp,
                                    feather_radius);
     }
 
-  return procedural_db_return_args (&ellipse_select_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg ellipse_select_inargs[] =
@@ -298,7 +300,8 @@ static ProcRecord ellipse_select_proc =
 };
 
 static Argument *
-free_select_invoker (Gimp         *gimp,
+free_select_invoker (ProcRecord   *proc_record,
+                     Gimp         *gimp,
                      GimpContext  *context,
                      GimpProgress *progress,
                      Argument     *args)
@@ -347,7 +350,7 @@ free_select_invoker (Gimp         *gimp,
                                    feather_radius);
     }
 
-  return procedural_db_return_args (&free_select_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg free_select_inargs[] =
@@ -408,7 +411,8 @@ static ProcRecord free_select_proc =
 };
 
 static Argument *
-fuzzy_select_invoker (Gimp         *gimp,
+fuzzy_select_invoker (ProcRecord   *proc_record,
+                      Gimp         *gimp,
                       GimpContext  *context,
                       GimpProgress *progress,
                       Argument     *args)
@@ -467,7 +471,7 @@ fuzzy_select_invoker (Gimp         *gimp,
                                  feather_radius);
     }
 
-  return procedural_db_return_args (&fuzzy_select_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg fuzzy_select_inargs[] =
@@ -539,7 +543,8 @@ static ProcRecord fuzzy_select_proc =
 };
 
 static Argument *
-rect_select_invoker (Gimp         *gimp,
+rect_select_invoker (ProcRecord   *proc_record,
+                     Gimp         *gimp,
                      GimpContext  *context,
                      GimpProgress *progress,
                      Argument     *args)
@@ -591,7 +596,7 @@ rect_select_invoker (Gimp         *gimp,
                                      feather_radius);
     }
 
-  return procedural_db_return_args (&rect_select_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg rect_select_inargs[] =

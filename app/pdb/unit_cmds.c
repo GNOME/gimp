@@ -61,7 +61,8 @@ register_unit_procs (Gimp *gimp)
 }
 
 static Argument *
-unit_get_number_of_units_invoker (Gimp         *gimp,
+unit_get_number_of_units_invoker (ProcRecord   *proc_record,
+                                  Gimp         *gimp,
                                   GimpContext  *context,
                                   GimpProgress *progress,
                                   Argument     *args)
@@ -71,7 +72,7 @@ unit_get_number_of_units_invoker (Gimp         *gimp,
 
   num_units = _gimp_unit_get_number_of_units (gimp);
 
-  return_args = procedural_db_return_args (&unit_get_number_of_units_proc, TRUE);
+  return_args = procedural_db_return_args (proc_record, TRUE);
   return_args[1].value.pdb_int = num_units;
 
   return return_args;
@@ -105,7 +106,8 @@ static ProcRecord unit_get_number_of_units_proc =
 };
 
 static Argument *
-unit_get_number_of_built_in_units_invoker (Gimp         *gimp,
+unit_get_number_of_built_in_units_invoker (ProcRecord   *proc_record,
+                                           Gimp         *gimp,
                                            GimpContext  *context,
                                            GimpProgress *progress,
                                            Argument     *args)
@@ -115,7 +117,7 @@ unit_get_number_of_built_in_units_invoker (Gimp         *gimp,
 
   num_units = _gimp_unit_get_number_of_built_in_units (gimp);
 
-  return_args = procedural_db_return_args (&unit_get_number_of_built_in_units_proc, TRUE);
+  return_args = procedural_db_return_args (proc_record, TRUE);
   return_args[1].value.pdb_int = num_units;
 
   return return_args;
@@ -149,7 +151,8 @@ static ProcRecord unit_get_number_of_built_in_units_proc =
 };
 
 static Argument *
-unit_new_invoker (Gimp         *gimp,
+unit_new_invoker (ProcRecord   *proc_record,
+                  Gimp         *gimp,
                   GimpContext  *context,
                   GimpProgress *progress,
                   Argument     *args)
@@ -195,7 +198,7 @@ unit_new_invoker (Gimp         *gimp,
                                 symbol, abbreviation, singular, plural);
     }
 
-  return_args = procedural_db_return_args (&unit_new_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = unit_id;
@@ -270,7 +273,8 @@ static ProcRecord unit_new_proc =
 };
 
 static Argument *
-unit_get_deletion_flag_invoker (Gimp         *gimp,
+unit_get_deletion_flag_invoker (ProcRecord   *proc_record,
+                                Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
                                 Argument     *args)
@@ -289,7 +293,7 @@ unit_get_deletion_flag_invoker (Gimp         *gimp,
       deletion_flag = _gimp_unit_get_deletion_flag (gimp, unit_id);
     }
 
-  return_args = procedural_db_return_args (&unit_get_deletion_flag_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = deletion_flag;
@@ -334,7 +338,8 @@ static ProcRecord unit_get_deletion_flag_proc =
 };
 
 static Argument *
-unit_set_deletion_flag_invoker (Gimp         *gimp,
+unit_set_deletion_flag_invoker (ProcRecord   *proc_record,
+                                Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
                                 Argument     *args)
@@ -354,7 +359,7 @@ unit_set_deletion_flag_invoker (Gimp         *gimp,
       _gimp_unit_set_deletion_flag (gimp, unit_id, deletion_flag);
     }
 
-  return procedural_db_return_args (&unit_set_deletion_flag_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg unit_set_deletion_flag_inargs[] =
@@ -390,7 +395,8 @@ static ProcRecord unit_set_deletion_flag_proc =
 };
 
 static Argument *
-unit_get_identifier_invoker (Gimp         *gimp,
+unit_get_identifier_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -409,7 +415,7 @@ unit_get_identifier_invoker (Gimp         *gimp,
       identifier = g_strdup (_gimp_unit_get_identifier (gimp, unit_id));
     }
 
-  return_args = procedural_db_return_args (&unit_get_identifier_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = identifier;
@@ -454,7 +460,8 @@ static ProcRecord unit_get_identifier_proc =
 };
 
 static Argument *
-unit_get_factor_invoker (Gimp         *gimp,
+unit_get_factor_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -473,7 +480,7 @@ unit_get_factor_invoker (Gimp         *gimp,
       factor = _gimp_unit_get_factor (gimp, unit_id);
     }
 
-  return_args = procedural_db_return_args (&unit_get_factor_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_float = factor;
@@ -518,7 +525,8 @@ static ProcRecord unit_get_factor_proc =
 };
 
 static Argument *
-unit_get_digits_invoker (Gimp         *gimp,
+unit_get_digits_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -537,7 +545,7 @@ unit_get_digits_invoker (Gimp         *gimp,
       digits = _gimp_unit_get_digits (gimp, unit_id);
     }
 
-  return_args = procedural_db_return_args (&unit_get_digits_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = digits;
@@ -582,7 +590,8 @@ static ProcRecord unit_get_digits_proc =
 };
 
 static Argument *
-unit_get_symbol_invoker (Gimp         *gimp,
+unit_get_symbol_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -601,7 +610,7 @@ unit_get_symbol_invoker (Gimp         *gimp,
       symbol = g_strdup (_gimp_unit_get_symbol (gimp, unit_id));
     }
 
-  return_args = procedural_db_return_args (&unit_get_symbol_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = symbol;
@@ -646,7 +655,8 @@ static ProcRecord unit_get_symbol_proc =
 };
 
 static Argument *
-unit_get_abbreviation_invoker (Gimp         *gimp,
+unit_get_abbreviation_invoker (ProcRecord   *proc_record,
+                               Gimp         *gimp,
                                GimpContext  *context,
                                GimpProgress *progress,
                                Argument     *args)
@@ -665,7 +675,7 @@ unit_get_abbreviation_invoker (Gimp         *gimp,
       abbreviation = g_strdup (_gimp_unit_get_abbreviation (gimp, unit_id));
     }
 
-  return_args = procedural_db_return_args (&unit_get_abbreviation_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = abbreviation;
@@ -710,7 +720,8 @@ static ProcRecord unit_get_abbreviation_proc =
 };
 
 static Argument *
-unit_get_singular_invoker (Gimp         *gimp,
+unit_get_singular_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -729,7 +740,7 @@ unit_get_singular_invoker (Gimp         *gimp,
       singular = g_strdup (_gimp_unit_get_singular (gimp, unit_id));
     }
 
-  return_args = procedural_db_return_args (&unit_get_singular_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = singular;
@@ -774,7 +785,8 @@ static ProcRecord unit_get_singular_proc =
 };
 
 static Argument *
-unit_get_plural_invoker (Gimp         *gimp,
+unit_get_plural_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -793,7 +805,7 @@ unit_get_plural_invoker (Gimp         *gimp,
       plural = g_strdup (_gimp_unit_get_plural (gimp, unit_id));
     }
 
-  return_args = procedural_db_return_args (&unit_get_plural_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = plural;

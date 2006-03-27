@@ -76,7 +76,8 @@ register_selection_procs (Gimp *gimp)
 }
 
 static Argument *
-selection_bounds_invoker (Gimp         *gimp,
+selection_bounds_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -100,7 +101,7 @@ selection_bounds_invoker (Gimp         *gimp,
                                        &x1, &y1, &x2, &y2);
     }
 
-  return_args = procedural_db_return_args (&selection_bounds_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -171,7 +172,8 @@ static ProcRecord selection_bounds_proc =
 };
 
 static Argument *
-selection_value_invoker (Gimp         *gimp,
+selection_value_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -196,7 +198,7 @@ selection_value_invoker (Gimp         *gimp,
       value = gimp_pickable_get_opacity_at (GIMP_PICKABLE (gimp_image_get_mask (image)), x, y);
     }
 
-  return_args = procedural_db_return_args (&selection_value_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = value;
@@ -251,7 +253,8 @@ static ProcRecord selection_value_proc =
 };
 
 static Argument *
-selection_is_empty_invoker (Gimp         *gimp,
+selection_is_empty_invoker (ProcRecord   *proc_record,
+                            Gimp         *gimp,
                             GimpContext  *context,
                             GimpProgress *progress,
                             Argument     *args)
@@ -270,7 +273,7 @@ selection_is_empty_invoker (Gimp         *gimp,
       is_empty = gimp_channel_is_empty (gimp_image_get_mask (image));
     }
 
-  return_args = procedural_db_return_args (&selection_is_empty_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = is_empty;
@@ -315,7 +318,8 @@ static ProcRecord selection_is_empty_proc =
 };
 
 static Argument *
-selection_translate_invoker (Gimp         *gimp,
+selection_translate_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -339,7 +343,7 @@ selection_translate_invoker (Gimp         *gimp,
                            offx, offy, TRUE);
     }
 
-  return procedural_db_return_args (&selection_translate_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg selection_translate_inargs[] =
@@ -380,7 +384,8 @@ static ProcRecord selection_translate_proc =
 };
 
 static Argument *
-selection_float_invoker (Gimp         *gimp,
+selection_float_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -415,7 +420,7 @@ selection_float_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&selection_float_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = layer ? gimp_item_get_ID (GIMP_ITEM (layer)) : -1;
@@ -470,7 +475,8 @@ static ProcRecord selection_float_proc =
 };
 
 static Argument *
-selection_invert_invoker (Gimp         *gimp,
+selection_invert_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -487,7 +493,7 @@ selection_invert_invoker (Gimp         *gimp,
       gimp_channel_invert (gimp_image_get_mask (image), TRUE);
     }
 
-  return procedural_db_return_args (&selection_invert_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg selection_invert_inargs[] =
@@ -518,7 +524,8 @@ static ProcRecord selection_invert_proc =
 };
 
 static Argument *
-selection_sharpen_invoker (Gimp         *gimp,
+selection_sharpen_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -535,7 +542,7 @@ selection_sharpen_invoker (Gimp         *gimp,
       gimp_channel_sharpen (gimp_image_get_mask (image), TRUE);
     }
 
-  return procedural_db_return_args (&selection_sharpen_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg selection_sharpen_inargs[] =
@@ -566,7 +573,8 @@ static ProcRecord selection_sharpen_proc =
 };
 
 static Argument *
-selection_all_invoker (Gimp         *gimp,
+selection_all_invoker (ProcRecord   *proc_record,
+                       Gimp         *gimp,
                        GimpContext  *context,
                        GimpProgress *progress,
                        Argument     *args)
@@ -583,7 +591,7 @@ selection_all_invoker (Gimp         *gimp,
       gimp_channel_all (gimp_image_get_mask (image), TRUE);
     }
 
-  return procedural_db_return_args (&selection_all_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg selection_all_inargs[] =
@@ -614,7 +622,8 @@ static ProcRecord selection_all_proc =
 };
 
 static Argument *
-selection_none_invoker (Gimp         *gimp,
+selection_none_invoker (ProcRecord   *proc_record,
+                        Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         Argument     *args)
@@ -631,7 +640,7 @@ selection_none_invoker (Gimp         *gimp,
       gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
     }
 
-  return procedural_db_return_args (&selection_none_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg selection_none_inargs[] =
@@ -662,7 +671,8 @@ static ProcRecord selection_none_proc =
 };
 
 static Argument *
-selection_feather_invoker (Gimp         *gimp,
+selection_feather_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -685,7 +695,7 @@ selection_feather_invoker (Gimp         *gimp,
                             radius, radius, TRUE);
     }
 
-  return procedural_db_return_args (&selection_feather_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg selection_feather_inargs[] =
@@ -721,7 +731,8 @@ static ProcRecord selection_feather_proc =
 };
 
 static Argument *
-selection_border_invoker (Gimp         *gimp,
+selection_border_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -744,7 +755,7 @@ selection_border_invoker (Gimp         *gimp,
                            radius, radius, TRUE);
     }
 
-  return procedural_db_return_args (&selection_border_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg selection_border_inargs[] =
@@ -780,7 +791,8 @@ static ProcRecord selection_border_proc =
 };
 
 static Argument *
-selection_grow_invoker (Gimp         *gimp,
+selection_grow_invoker (ProcRecord   *proc_record,
+                        Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         Argument     *args)
@@ -803,7 +815,7 @@ selection_grow_invoker (Gimp         *gimp,
                          steps, steps, TRUE);
     }
 
-  return procedural_db_return_args (&selection_grow_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg selection_grow_inargs[] =
@@ -839,7 +851,8 @@ static ProcRecord selection_grow_proc =
 };
 
 static Argument *
-selection_shrink_invoker (Gimp         *gimp,
+selection_shrink_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -862,7 +875,7 @@ selection_shrink_invoker (Gimp         *gimp,
                            steps, steps, FALSE, TRUE);
     }
 
-  return procedural_db_return_args (&selection_shrink_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg selection_shrink_inargs[] =
@@ -898,7 +911,8 @@ static ProcRecord selection_shrink_proc =
 };
 
 static Argument *
-selection_layer_alpha_invoker (Gimp         *gimp,
+selection_layer_alpha_invoker (ProcRecord   *proc_record,
+                               Gimp         *gimp,
                                GimpContext  *context,
                                GimpProgress *progress,
                                Argument     *args)
@@ -919,7 +933,7 @@ selection_layer_alpha_invoker (Gimp         *gimp,
                                  GIMP_CHANNEL_OP_REPLACE, FALSE, 0.0, 0.0);
     }
 
-  return procedural_db_return_args (&selection_layer_alpha_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg selection_layer_alpha_inargs[] =
@@ -950,7 +964,8 @@ static ProcRecord selection_layer_alpha_proc =
 };
 
 static Argument *
-selection_load_invoker (Gimp         *gimp,
+selection_load_invoker (ProcRecord   *proc_record,
+                        Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         Argument     *args)
@@ -978,7 +993,7 @@ selection_load_invoker (Gimp         *gimp,
                                    FALSE, 0.0, 0.0);
     }
 
-  return procedural_db_return_args (&selection_load_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg selection_load_inargs[] =
@@ -1009,7 +1024,8 @@ static ProcRecord selection_load_proc =
 };
 
 static Argument *
-selection_save_invoker (Gimp         *gimp,
+selection_save_invoker (ProcRecord   *proc_record,
+                        Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         Argument     *args)
@@ -1031,7 +1047,7 @@ selection_save_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&selection_save_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = channel ? gimp_item_get_ID (GIMP_ITEM (channel)) : -1;
@@ -1076,7 +1092,8 @@ static ProcRecord selection_save_proc =
 };
 
 static Argument *
-selection_combine_invoker (Gimp         *gimp,
+selection_combine_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -1109,7 +1126,7 @@ selection_combine_invoker (Gimp         *gimp,
                                    FALSE, 0.0, 0.0);
     }
 
-  return procedural_db_return_args (&selection_combine_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg selection_combine_inargs[] =

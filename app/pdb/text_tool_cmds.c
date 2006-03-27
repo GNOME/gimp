@@ -48,7 +48,8 @@ register_text_tool_procs (Gimp *gimp)
 }
 
 static Argument *
-text_fontname_invoker (Gimp         *gimp,
+text_fontname_invoker (ProcRecord   *proc_record,
+                       Gimp         *gimp,
                        GimpContext  *context,
                        GimpProgress *progress,
                        Argument     *args)
@@ -116,7 +117,7 @@ text_fontname_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&text_fontname_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = text_layer ? gimp_item_get_ID (GIMP_ITEM (text_layer)) : -1;
@@ -206,7 +207,8 @@ static ProcRecord text_fontname_proc =
 };
 
 static Argument *
-text_get_extents_fontname_invoker (Gimp         *gimp,
+text_get_extents_fontname_invoker (ProcRecord   *proc_record,
+                                   Gimp         *gimp,
                                    GimpContext  *context,
                                    GimpProgress *progress,
                                    Argument     *args)
@@ -249,7 +251,7 @@ text_get_extents_fontname_invoker (Gimp         *gimp,
       g_free (real_fontname);
     }
 
-  return_args = procedural_db_return_args (&text_get_extents_fontname_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -329,7 +331,8 @@ static ProcRecord text_get_extents_fontname_proc =
 };
 
 static Argument *
-text_invoker (Gimp         *gimp,
+text_invoker (ProcRecord   *proc_record,
+              Gimp         *gimp,
               GimpContext  *context,
               GimpProgress *progress,
               Argument     *args)
@@ -432,7 +435,7 @@ text_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&text_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = text_layer ? gimp_item_get_ID (GIMP_ITEM (text_layer)) : -1;
@@ -557,7 +560,8 @@ static ProcRecord text_proc =
 };
 
 static Argument *
-text_get_extents_invoker (Gimp         *gimp,
+text_get_extents_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -635,7 +639,7 @@ text_get_extents_invoker (Gimp         *gimp,
       g_free (real_fontname);
     }
 
-  return_args = procedural_db_return_args (&text_get_extents_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {

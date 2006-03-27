@@ -59,7 +59,8 @@ register_channel_procs (Gimp *gimp)
 }
 
 static Argument *
-channel_new_invoker (Gimp         *gimp,
+channel_new_invoker (ProcRecord   *proc_record,
+                     Gimp         *gimp,
                      GimpContext  *context,
                      GimpProgress *progress,
                      Argument     *args)
@@ -107,7 +108,7 @@ channel_new_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&channel_new_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = channel ? gimp_item_get_ID (GIMP_ITEM (channel)) : -1;
@@ -177,7 +178,8 @@ static ProcRecord channel_new_proc =
 };
 
 static Argument *
-channel_new_from_component_invoker (Gimp         *gimp,
+channel_new_from_component_invoker (ProcRecord   *proc_record,
+                                    Gimp         *gimp,
                                     GimpContext  *context,
                                     GimpProgress *progress,
                                     Argument     *args)
@@ -213,7 +215,7 @@ channel_new_from_component_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&channel_new_from_component_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = channel ? gimp_item_get_ID (GIMP_ITEM (channel)) : -1;
@@ -268,7 +270,8 @@ static ProcRecord channel_new_from_component_proc =
 };
 
 static Argument *
-channel_copy_invoker (Gimp         *gimp,
+channel_copy_invoker (ProcRecord   *proc_record,
+                      Gimp         *gimp,
                       GimpContext  *context,
                       GimpProgress *progress,
                       Argument     *args)
@@ -291,7 +294,7 @@ channel_copy_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&channel_copy_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = channel_copy ? gimp_item_get_ID (GIMP_ITEM (channel_copy)) : -1;
@@ -336,7 +339,8 @@ static ProcRecord channel_copy_proc =
 };
 
 static Argument *
-channel_combine_masks_invoker (Gimp         *gimp,
+channel_combine_masks_invoker (ProcRecord   *proc_record,
+                               Gimp         *gimp,
                                GimpContext  *context,
                                GimpProgress *progress,
                                Argument     *args)
@@ -369,7 +373,7 @@ channel_combine_masks_invoker (Gimp         *gimp,
       gimp_channel_combine_mask (channel1, channel2, operation, offx, offy);
     }
 
-  return procedural_db_return_args (&channel_combine_masks_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg channel_combine_masks_inargs[] =
@@ -420,7 +424,8 @@ static ProcRecord channel_combine_masks_proc =
 };
 
 static Argument *
-channel_get_show_masked_invoker (Gimp         *gimp,
+channel_get_show_masked_invoker (ProcRecord   *proc_record,
+                                 Gimp         *gimp,
                                  GimpContext  *context,
                                  GimpProgress *progress,
                                  Argument     *args)
@@ -439,7 +444,7 @@ channel_get_show_masked_invoker (Gimp         *gimp,
       show_masked = gimp_channel_get_show_masked (channel);
     }
 
-  return_args = procedural_db_return_args (&channel_get_show_masked_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = show_masked;
@@ -484,7 +489,8 @@ static ProcRecord channel_get_show_masked_proc =
 };
 
 static Argument *
-channel_set_show_masked_invoker (Gimp         *gimp,
+channel_set_show_masked_invoker (ProcRecord   *proc_record,
+                                 Gimp         *gimp,
                                  GimpContext  *context,
                                  GimpProgress *progress,
                                  Argument     *args)
@@ -504,7 +510,7 @@ channel_set_show_masked_invoker (Gimp         *gimp,
       gimp_channel_set_show_masked (channel, show_masked);
     }
 
-  return procedural_db_return_args (&channel_set_show_masked_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg channel_set_show_masked_inargs[] =
@@ -540,7 +546,8 @@ static ProcRecord channel_set_show_masked_proc =
 };
 
 static Argument *
-channel_get_opacity_invoker (Gimp         *gimp,
+channel_get_opacity_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -559,7 +566,7 @@ channel_get_opacity_invoker (Gimp         *gimp,
       opacity = gimp_channel_get_opacity (channel) * 100;
     }
 
-  return_args = procedural_db_return_args (&channel_get_opacity_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_float = opacity;
@@ -604,7 +611,8 @@ static ProcRecord channel_get_opacity_proc =
 };
 
 static Argument *
-channel_set_opacity_invoker (Gimp         *gimp,
+channel_set_opacity_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -626,7 +634,7 @@ channel_set_opacity_invoker (Gimp         *gimp,
       gimp_channel_set_opacity (channel, opacity / 100.0, TRUE);
     }
 
-  return procedural_db_return_args (&channel_set_opacity_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg channel_set_opacity_inargs[] =
@@ -662,7 +670,8 @@ static ProcRecord channel_set_opacity_proc =
 };
 
 static Argument *
-channel_get_color_invoker (Gimp         *gimp,
+channel_get_color_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -681,7 +690,7 @@ channel_get_color_invoker (Gimp         *gimp,
       gimp_channel_get_color (channel, &color);
     }
 
-  return_args = procedural_db_return_args (&channel_get_color_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_color = color;
@@ -726,7 +735,8 @@ static ProcRecord channel_get_color_proc =
 };
 
 static Argument *
-channel_set_color_invoker (Gimp         *gimp,
+channel_set_color_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -749,7 +759,7 @@ channel_set_color_invoker (Gimp         *gimp,
       gimp_channel_set_color (channel, &rgb_color, TRUE);
     }
 
-  return procedural_db_return_args (&channel_set_color_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg channel_set_color_inargs[] =

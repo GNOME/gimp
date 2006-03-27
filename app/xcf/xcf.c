@@ -50,11 +50,13 @@ typedef GimpImage * GimpXcfLoaderFunc (Gimp    *gimp,
 				       XcfInfo *info);
 
 
-static Argument * xcf_load_invoker (Gimp         *gimp,
+static Argument * xcf_load_invoker (ProcRecord   *procedure,
+                                    Gimp         *gimp,
                                     GimpContext  *context,
                                     GimpProgress *progress,
 				    Argument     *args);
-static Argument * xcf_save_invoker (Gimp         *gimp,
+static Argument * xcf_save_invoker (ProcRecord   *procedure,
+                                    Gimp         *gimp,
                                     GimpContext  *context,
                                     GimpProgress *progress,
 				    Argument     *args);
@@ -219,7 +221,8 @@ xcf_exit (Gimp *gimp)
 }
 
 static Argument*
-xcf_load_invoker (Gimp         *gimp,
+xcf_load_invoker (ProcRecord   *procedure,
+                  Gimp         *gimp,
                   GimpContext  *context,
                   GimpProgress *progress,
 		  Argument     *args)
@@ -295,8 +298,7 @@ xcf_load_invoker (Gimp         *gimp,
     g_message (_("Could not open '%s' for reading: %s"),
 	       gimp_filename_to_utf8 (filename), g_strerror (errno));
 
-  return_args = procedural_db_return_args (&xcf_plug_in_load_proc.db_info,
-					   success);
+  return_args = procedural_db_return_args (procedure, success);
 
   if (success)
     return_args[1].value.pdb_int = gimp_image_get_ID (gimage);
@@ -307,7 +309,8 @@ xcf_load_invoker (Gimp         *gimp,
 }
 
 static Argument *
-xcf_save_invoker (Gimp         *gimp,
+xcf_save_invoker (ProcRecord   *procedure,
+                  Gimp         *gimp,
                   GimpContext  *context,
                   GimpProgress *progress,
 		  Argument     *args)
@@ -352,8 +355,7 @@ xcf_save_invoker (Gimp         *gimp,
     g_message (_("Could not open '%s' for writing: %s"),
 	       gimp_filename_to_utf8 (filename), g_strerror (errno));
 
-  return_args = procedural_db_return_args (&xcf_plug_in_save_proc.db_info,
-					   success);
+  return_args = procedural_db_return_args (procedure, success);
 
   gimp_unset_busy (gimp);
 

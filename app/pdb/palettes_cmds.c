@@ -51,13 +51,14 @@ register_palettes_procs (Gimp *gimp)
 }
 
 static Argument *
-palettes_refresh_invoker (Gimp         *gimp,
+palettes_refresh_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
 {
   gimp_data_factory_data_refresh (gimp->palette_factory);
-  return procedural_db_return_args (&palettes_refresh_proc, TRUE);
+  return procedural_db_return_args (proc_record, TRUE);
 }
 
 static ProcRecord palettes_refresh_proc =
@@ -79,7 +80,8 @@ static ProcRecord palettes_refresh_proc =
 };
 
 static Argument *
-palettes_get_list_invoker (Gimp         *gimp,
+palettes_get_list_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -100,7 +102,7 @@ palettes_get_list_invoker (Gimp         *gimp,
                                                              filter, &num_palettes);
     }
 
-  return_args = procedural_db_return_args (&palettes_get_list_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -153,7 +155,8 @@ static ProcRecord palettes_get_list_proc =
 };
 
 static Argument *
-palettes_get_palette_invoker (Gimp         *gimp,
+palettes_get_palette_invoker (ProcRecord   *proc_record,
+                              Gimp         *gimp,
                               GimpContext  *context,
                               GimpProgress *progress,
                               Argument     *args)
@@ -173,7 +176,7 @@ palettes_get_palette_invoker (Gimp         *gimp,
   else
     success = FALSE;
 
-  return_args = procedural_db_return_args (&palettes_get_palette_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -217,7 +220,8 @@ static ProcRecord palettes_get_palette_proc =
 };
 
 static Argument *
-palettes_get_palette_entry_invoker (Gimp         *gimp,
+palettes_get_palette_entry_invoker (ProcRecord   *proc_record,
+                                    Gimp         *gimp,
                                     GimpContext  *context,
                                     GimpProgress *progress,
                                     Argument     *args)
@@ -268,7 +272,7 @@ palettes_get_palette_entry_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&palettes_get_palette_entry_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {

@@ -134,30 +134,31 @@ done:
 }
 
 static Argument *
-file_load_invoker (Gimp         *gimp,
+file_load_invoker (ProcRecord   *proc_record,
+                   Gimp         *gimp,
                    GimpContext  *context,
                    GimpProgress *progress,
                    Argument     *args)
 {
-  Argument *new_args;
-  Argument *return_vals;
-
+  Argument         *new_args;
+  Argument         *return_vals;
   PlugInProcDef    *file_proc;
   const ProcRecord *proc;
   gchar            *uri;
   gint              i;
 
-  uri = file_utils_filename_to_uri (gimp->load_procs, (gchar *) args[1].value.pdb_pointer, NULL);
+  uri = file_utils_filename_to_uri (gimp->load_procs, args[1].value.pdb_pointer,
+                                    NULL);
 
   if (! uri)
-    return procedural_db_return_args (&file_load_proc, FALSE);
+    return procedural_db_return_args (proc_record, FALSE);
 
   file_proc = file_utils_find_proc (gimp->load_procs, uri);
 
   g_free (uri);
 
   if (! file_proc)
-    return procedural_db_return_args (&file_load_proc, FALSE);
+    return procedural_db_return_args (proc_record, FALSE);
 
   proc = plug_in_proc_def_get_proc (file_proc);
 
@@ -171,7 +172,8 @@ file_load_invoker (Gimp         *gimp,
         new_args[i].value.pdb_pointer = g_strdup ("");
     }
 
-  return_vals = procedural_db_execute (gimp, context, progress, proc->name, new_args);
+  return_vals = procedural_db_execute (gimp, context, progress,
+                                       proc->name, new_args);
   g_free (new_args);
 
   return return_vals;
@@ -224,7 +226,8 @@ static ProcRecord file_load_proc =
 };
 
 static Argument *
-file_load_layer_invoker (Gimp         *gimp,
+file_load_layer_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -266,7 +269,7 @@ file_load_layer_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&file_load_layer_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = layer ? gimp_item_get_ID (GIMP_ITEM (layer)) : -1;
@@ -321,7 +324,8 @@ static ProcRecord file_load_layer_proc =
 };
 
 static Argument *
-file_load_thumbnail_invoker (Gimp         *gimp,
+file_load_thumbnail_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -388,7 +392,7 @@ file_load_thumbnail_invoker (Gimp         *gimp,
       g_free (uri);
     }
 
-  return_args = procedural_db_return_args (&file_load_thumbnail_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -453,30 +457,31 @@ static ProcRecord file_load_thumbnail_proc =
 };
 
 static Argument *
-file_save_invoker (Gimp         *gimp,
+file_save_invoker (ProcRecord   *proc_record,
+                   Gimp         *gimp,
                    GimpContext  *context,
                    GimpProgress *progress,
                    Argument     *args)
 {
-  Argument *new_args;
-  Argument *return_vals;
-
+  Argument         *new_args;
+  Argument         *return_vals;
   PlugInProcDef    *file_proc;
   const ProcRecord *proc;
   gchar            *uri;
   gint              i;
 
-  uri = file_utils_filename_to_uri (gimp->load_procs, (gchar *) args[3].value.pdb_pointer, NULL);
+  uri = file_utils_filename_to_uri (gimp->load_procs, args[1].value.pdb_pointer,
+                                    NULL);
 
   if (! uri)
-    return procedural_db_return_args (&file_save_proc, FALSE);
+    return procedural_db_return_args (proc_record, FALSE);
 
   file_proc = file_utils_find_proc (gimp->save_procs, uri);
 
   g_free (uri);
 
   if (! file_proc)
-    return procedural_db_return_args (&file_save_proc, FALSE);
+    return procedural_db_return_args (proc_record, FALSE);
 
   proc = plug_in_proc_def_get_proc (file_proc);
 
@@ -490,7 +495,8 @@ file_save_invoker (Gimp         *gimp,
         new_args[i].value.pdb_pointer = g_strdup ("");
     }
 
-  return_vals = procedural_db_execute (gimp, context, progress, proc->name, new_args);
+  return_vals = procedural_db_execute (gimp, context, progress,
+                                       proc->name, new_args);
   g_free (new_args);
 
   return return_vals;
@@ -544,7 +550,8 @@ static ProcRecord file_save_proc =
 };
 
 static Argument *
-file_save_thumbnail_invoker (Gimp         *gimp,
+file_save_thumbnail_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -591,7 +598,7 @@ file_save_thumbnail_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&file_save_thumbnail_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg file_save_thumbnail_inargs[] =
@@ -627,7 +634,8 @@ static ProcRecord file_save_thumbnail_proc =
 };
 
 static Argument *
-temp_name_invoker (Gimp         *gimp,
+temp_name_invoker (ProcRecord   *proc_record,
+                   Gimp         *gimp,
                    GimpContext  *context,
                    GimpProgress *progress,
                    Argument     *args)
@@ -663,7 +671,7 @@ temp_name_invoker (Gimp         *gimp,
       g_free (filename);
     }
 
-  return_args = procedural_db_return_args (&temp_name_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = name;
@@ -708,7 +716,8 @@ static ProcRecord temp_name_proc =
 };
 
 static Argument *
-register_magic_load_handler_invoker (Gimp         *gimp,
+register_magic_load_handler_invoker (ProcRecord   *proc_record,
+                                     Gimp         *gimp,
                                      GimpContext  *context,
                                      GimpProgress *progress,
                                      Argument     *args)
@@ -736,7 +745,7 @@ register_magic_load_handler_invoker (Gimp         *gimp,
                                                      extensions, prefixes, magics);
     }
 
-  return procedural_db_return_args (&register_magic_load_handler_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg register_magic_load_handler_inargs[] =
@@ -782,7 +791,8 @@ static ProcRecord register_magic_load_handler_proc =
 };
 
 static Argument *
-register_load_handler_invoker (Gimp         *gimp,
+register_load_handler_invoker (ProcRecord   *proc_record,
+                               Gimp         *gimp,
                                GimpContext  *context,
                                GimpProgress *progress,
                                Argument     *args)
@@ -807,7 +817,7 @@ register_load_handler_invoker (Gimp         *gimp,
                                                      extensions, prefixes, NULL);
     }
 
-  return procedural_db_return_args (&register_load_handler_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg register_load_handler_inargs[] =
@@ -848,7 +858,8 @@ static ProcRecord register_load_handler_proc =
 };
 
 static Argument *
-register_save_handler_invoker (Gimp         *gimp,
+register_save_handler_invoker (ProcRecord   *proc_record,
+                               Gimp         *gimp,
                                GimpContext  *context,
                                GimpProgress *progress,
                                Argument     *args)
@@ -909,7 +920,7 @@ register_save_handler_invoker (Gimp         *gimp,
       g_free (canonical);
     }
 
-  return procedural_db_return_args (&register_save_handler_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg register_save_handler_inargs[] =
@@ -950,7 +961,8 @@ static ProcRecord register_save_handler_proc =
 };
 
 static Argument *
-register_file_handler_mime_invoker (Gimp         *gimp,
+register_file_handler_mime_invoker (ProcRecord   *proc_record,
+                                    Gimp         *gimp,
                                     GimpContext  *context,
                                     GimpProgress *progress,
                                     Argument     *args)
@@ -979,7 +991,7 @@ register_file_handler_mime_invoker (Gimp         *gimp,
       g_free (canonical);
     }
 
-  return procedural_db_return_args (&register_file_handler_mime_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg register_file_handler_mime_inargs[] =
@@ -1015,7 +1027,8 @@ static ProcRecord register_file_handler_mime_proc =
 };
 
 static Argument *
-register_thumbnail_loader_invoker (Gimp         *gimp,
+register_thumbnail_loader_invoker (ProcRecord   *proc_record,
+                                   Gimp         *gimp,
                                    GimpContext  *context,
                                    GimpProgress *progress,
                                    Argument     *args)
@@ -1044,7 +1057,7 @@ register_thumbnail_loader_invoker (Gimp         *gimp,
       g_free (canonical);
     }
 
-  return procedural_db_return_args (&register_thumbnail_loader_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg register_thumbnail_loader_inargs[] =

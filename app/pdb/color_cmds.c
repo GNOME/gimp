@@ -86,7 +86,8 @@ register_color_procs (Gimp *gimp)
 }
 
 static Argument *
-brightness_contrast_invoker (Gimp         *gimp,
+brightness_contrast_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -145,7 +146,7 @@ brightness_contrast_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&brightness_contrast_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg brightness_contrast_inargs[] =
@@ -186,7 +187,8 @@ static ProcRecord brightness_contrast_proc =
 };
 
 static Argument *
-levels_invoker (Gimp         *gimp,
+levels_invoker (ProcRecord   *proc_record,
+                Gimp         *gimp,
                 GimpContext  *context,
                 GimpProgress *progress,
                 Argument     *args)
@@ -246,7 +248,7 @@ levels_invoker (Gimp         *gimp,
                               low_output, high_output);
     }
 
-  return procedural_db_return_args (&levels_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg levels_inargs[] =
@@ -307,7 +309,8 @@ static ProcRecord levels_proc =
 };
 
 static Argument *
-levels_auto_invoker (Gimp         *gimp,
+levels_auto_invoker (ProcRecord   *proc_record,
+                     Gimp         *gimp,
                      GimpContext  *context,
                      GimpProgress *progress,
                      Argument     *args)
@@ -329,7 +332,7 @@ levels_auto_invoker (Gimp         *gimp,
         gimp_drawable_levels_stretch (drawable, context);
     }
 
-  return procedural_db_return_args (&levels_auto_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg levels_auto_inargs[] =
@@ -360,7 +363,8 @@ static ProcRecord levels_auto_proc =
 };
 
 static Argument *
-levels_stretch_invoker (Gimp         *gimp,
+levels_stretch_invoker (ProcRecord   *proc_record,
+                        Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         Argument     *args)
@@ -382,7 +386,7 @@ levels_stretch_invoker (Gimp         *gimp,
         gimp_drawable_levels_stretch (drawable, context);
     }
 
-  return procedural_db_return_args (&levels_stretch_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg levels_stretch_inargs[] =
@@ -413,7 +417,8 @@ static ProcRecord levels_stretch_proc =
 };
 
 static Argument *
-posterize_invoker (Gimp         *gimp,
+posterize_invoker (ProcRecord   *proc_record,
+                   Gimp         *gimp,
                    GimpContext  *context,
                    GimpProgress *progress,
                    Argument     *args)
@@ -465,7 +470,7 @@ posterize_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&posterize_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg posterize_inargs[] =
@@ -501,7 +506,8 @@ static ProcRecord posterize_proc =
 };
 
 static Argument *
-desaturate_invoker (Gimp         *gimp,
+desaturate_invoker (ProcRecord   *proc_record,
+                    Gimp         *gimp,
                     GimpContext  *context,
                     GimpProgress *progress,
                     Argument     *args)
@@ -523,7 +529,7 @@ desaturate_invoker (Gimp         *gimp,
         gimp_drawable_desaturate (drawable, GIMP_DESATURATE_LIGHTNESS);
     }
 
-  return procedural_db_return_args (&desaturate_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg desaturate_inargs[] =
@@ -554,7 +560,8 @@ static ProcRecord desaturate_proc =
 };
 
 static Argument *
-desaturate_full_invoker (Gimp         *gimp,
+desaturate_full_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -581,7 +588,7 @@ desaturate_full_invoker (Gimp         *gimp,
         gimp_drawable_desaturate (drawable, desaturate_mode);
     }
 
-  return procedural_db_return_args (&desaturate_full_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg desaturate_full_inargs[] =
@@ -617,7 +624,8 @@ static ProcRecord desaturate_full_proc =
 };
 
 static Argument *
-equalize_invoker (Gimp         *gimp,
+equalize_invoker (ProcRecord   *proc_record,
+                  Gimp         *gimp,
                   GimpContext  *context,
                   GimpProgress *progress,
                   Argument     *args)
@@ -642,7 +650,7 @@ equalize_invoker (Gimp         *gimp,
         gimp_drawable_equalize (drawable, mask_only);
     }
 
-  return procedural_db_return_args (&equalize_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg equalize_inargs[] =
@@ -678,7 +686,8 @@ static ProcRecord equalize_proc =
 };
 
 static Argument *
-invert_invoker (Gimp         *gimp,
+invert_invoker (ProcRecord   *proc_record,
+                Gimp         *gimp,
                 GimpContext  *context,
                 GimpProgress *progress,
                 Argument     *args)
@@ -700,7 +709,7 @@ invert_invoker (Gimp         *gimp,
         gimp_drawable_invert (drawable);
     }
 
-  return procedural_db_return_args (&invert_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg invert_inargs[] =
@@ -731,7 +740,8 @@ static ProcRecord invert_proc =
 };
 
 static Argument *
-curves_spline_invoker (Gimp         *gimp,
+curves_spline_invoker (ProcRecord   *proc_record,
+                       Gimp         *gimp,
                        GimpContext  *context,
                        GimpProgress *progress,
                        Argument     *args)
@@ -821,7 +831,7 @@ curves_spline_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&curves_spline_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg curves_spline_inargs[] =
@@ -867,7 +877,8 @@ static ProcRecord curves_spline_proc =
 };
 
 static Argument *
-curves_explicit_invoker (Gimp         *gimp,
+curves_explicit_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -948,7 +959,7 @@ curves_explicit_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&curves_explicit_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg curves_explicit_inargs[] =
@@ -994,7 +1005,8 @@ static ProcRecord curves_explicit_proc =
 };
 
 static Argument *
-color_balance_invoker (Gimp         *gimp,
+color_balance_invoker (ProcRecord   *proc_record,
+                       Gimp         *gimp,
                        GimpContext  *context,
                        GimpProgress *progress,
                        Argument     *args)
@@ -1069,7 +1081,7 @@ color_balance_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&color_balance_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg color_balance_inargs[] =
@@ -1125,7 +1137,8 @@ static ProcRecord color_balance_proc =
 };
 
 static Argument *
-colorize_invoker (Gimp         *gimp,
+colorize_invoker (ProcRecord   *proc_record,
+                  Gimp         *gimp,
                   GimpContext  *context,
                   GimpProgress *progress,
                   Argument     *args)
@@ -1190,7 +1203,7 @@ colorize_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&colorize_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg colorize_inargs[] =
@@ -1236,7 +1249,8 @@ static ProcRecord colorize_proc =
 };
 
 static Argument *
-histogram_invoker (Gimp         *gimp,
+histogram_invoker (ProcRecord   *proc_record,
+                   Gimp         *gimp,
                    GimpContext  *context,
                    GimpProgress *progress,
                    Argument     *args)
@@ -1301,7 +1315,7 @@ histogram_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&histogram_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -1393,7 +1407,8 @@ static ProcRecord histogram_proc =
 };
 
 static Argument *
-hue_saturation_invoker (Gimp         *gimp,
+hue_saturation_invoker (ProcRecord   *proc_record,
+                        Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         Argument     *args)
@@ -1464,7 +1479,7 @@ hue_saturation_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&hue_saturation_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg hue_saturation_inargs[] =
@@ -1515,7 +1530,8 @@ static ProcRecord hue_saturation_proc =
 };
 
 static Argument *
-threshold_invoker (Gimp         *gimp,
+threshold_invoker (ProcRecord   *proc_record,
+                   Gimp         *gimp,
                    GimpContext  *context,
                    GimpProgress *progress,
                    Argument     *args)
@@ -1572,7 +1588,7 @@ threshold_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&threshold_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg threshold_inargs[] =

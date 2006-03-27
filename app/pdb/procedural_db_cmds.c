@@ -57,7 +57,8 @@ register_procedural_db_procs (Gimp *gimp)
 }
 
 static Argument *
-procedural_db_temp_name_invoker (Gimp         *gimp,
+procedural_db_temp_name_invoker (ProcRecord   *proc_record,
+                                 Gimp         *gimp,
                                  GimpContext  *context,
                                  GimpProgress *progress,
                                  Argument     *args)
@@ -69,7 +70,7 @@ procedural_db_temp_name_invoker (Gimp         *gimp,
 
   temp_name = g_strdup_printf ("temp-procedure-number-%d", proc_number++);
 
-  return_args = procedural_db_return_args (&procedural_db_temp_name_proc, TRUE);
+  return_args = procedural_db_return_args (proc_record, TRUE);
   return_args[1].value.pdb_pointer = temp_name;
 
   return return_args;
@@ -103,7 +104,8 @@ static ProcRecord procedural_db_temp_name_proc =
 };
 
 static Argument *
-procedural_db_dump_invoker (Gimp         *gimp,
+procedural_db_dump_invoker (ProcRecord   *proc_record,
+                            Gimp         *gimp,
                             GimpContext  *context,
                             GimpProgress *progress,
                             Argument     *args)
@@ -120,7 +122,7 @@ procedural_db_dump_invoker (Gimp         *gimp,
       success = procedural_db_dump (gimp, filename);
     }
 
-  return procedural_db_return_args (&procedural_db_dump_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg procedural_db_dump_inargs[] =
@@ -151,7 +153,8 @@ static ProcRecord procedural_db_dump_proc =
 };
 
 static Argument *
-procedural_db_query_invoker (Gimp         *gimp,
+procedural_db_query_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -204,7 +207,7 @@ procedural_db_query_invoker (Gimp         *gimp,
                                      &num_matches, &procedure_names);
     }
 
-  return_args = procedural_db_return_args (&procedural_db_query_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -287,7 +290,8 @@ static ProcRecord procedural_db_query_proc =
 };
 
 static Argument *
-procedural_db_proc_info_invoker (Gimp         *gimp,
+procedural_db_proc_info_invoker (ProcRecord   *proc_record,
+                                 Gimp         *gimp,
                                  GimpContext  *context,
                                  GimpProgress *progress,
                                  Argument     *args)
@@ -324,7 +328,7 @@ procedural_db_proc_info_invoker (Gimp         *gimp,
       g_free (canonical);
     }
 
-  return_args = procedural_db_return_args (&procedural_db_proc_info_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -413,7 +417,8 @@ static ProcRecord procedural_db_proc_info_proc =
 };
 
 static Argument *
-procedural_db_proc_arg_invoker (Gimp         *gimp,
+procedural_db_proc_arg_invoker (ProcRecord   *proc_record,
+                                Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
                                 Argument     *args)
@@ -465,7 +470,7 @@ procedural_db_proc_arg_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&procedural_db_proc_arg_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -529,7 +534,8 @@ static ProcRecord procedural_db_proc_arg_proc =
 };
 
 static Argument *
-procedural_db_proc_val_invoker (Gimp         *gimp,
+procedural_db_proc_val_invoker (ProcRecord   *proc_record,
+                                Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
                                 Argument     *args)
@@ -581,7 +587,7 @@ procedural_db_proc_val_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&procedural_db_proc_val_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -645,7 +651,8 @@ static ProcRecord procedural_db_proc_val_proc =
 };
 
 static Argument *
-procedural_db_get_data_invoker (Gimp         *gimp,
+procedural_db_get_data_invoker (ProcRecord   *proc_record,
+                                Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
                                 Argument     *args)
@@ -677,7 +684,7 @@ procedural_db_get_data_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&procedural_db_get_data_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -730,7 +737,8 @@ static ProcRecord procedural_db_get_data_proc =
 };
 
 static Argument *
-procedural_db_get_data_size_invoker (Gimp         *gimp,
+procedural_db_get_data_size_invoker (ProcRecord   *proc_record,
+                                     Gimp         *gimp,
                                      GimpContext  *context,
                                      GimpProgress *progress,
                                      Argument     *args)
@@ -760,7 +768,7 @@ procedural_db_get_data_size_invoker (Gimp         *gimp,
 
     }
 
-  return_args = procedural_db_return_args (&procedural_db_get_data_size_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = bytes;
@@ -805,7 +813,8 @@ static ProcRecord procedural_db_get_data_size_proc =
 };
 
 static Argument *
-procedural_db_set_data_invoker (Gimp         *gimp,
+procedural_db_set_data_invoker (ProcRecord   *proc_record,
+                                Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
                                 Argument     *args)
@@ -836,7 +845,7 @@ procedural_db_set_data_invoker (Gimp         *gimp,
       g_free (canonical);
     }
 
-  return procedural_db_return_args (&procedural_db_set_data_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg procedural_db_set_data_inargs[] =

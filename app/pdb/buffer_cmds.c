@@ -54,7 +54,8 @@ register_buffer_procs (Gimp *gimp)
 }
 
 static Argument *
-buffers_get_list_invoker (Gimp         *gimp,
+buffers_get_list_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -75,7 +76,7 @@ buffers_get_list_invoker (Gimp         *gimp,
                                                             filter, &num_buffers);
     }
 
-  return_args = procedural_db_return_args (&buffers_get_list_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -128,7 +129,8 @@ static ProcRecord buffers_get_list_proc =
 };
 
 static Argument *
-buffer_rename_invoker (Gimp         *gimp,
+buffer_rename_invoker (ProcRecord   *proc_record,
+                       Gimp         *gimp,
                        GimpContext  *context,
                        GimpProgress *progress,
                        Argument     *args)
@@ -161,7 +163,7 @@ buffer_rename_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&buffer_rename_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = real_name;
@@ -211,7 +213,8 @@ static ProcRecord buffer_rename_proc =
 };
 
 static Argument *
-buffer_delete_invoker (Gimp         *gimp,
+buffer_delete_invoker (ProcRecord   *proc_record,
+                       Gimp         *gimp,
                        GimpContext  *context,
                        GimpProgress *progress,
                        Argument     *args)
@@ -234,7 +237,7 @@ buffer_delete_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&buffer_delete_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg buffer_delete_inargs[] =
@@ -265,7 +268,8 @@ static ProcRecord buffer_delete_proc =
 };
 
 static Argument *
-buffer_get_width_invoker (Gimp         *gimp,
+buffer_get_width_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -290,7 +294,7 @@ buffer_get_width_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&buffer_get_width_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = width;
@@ -335,7 +339,8 @@ static ProcRecord buffer_get_width_proc =
 };
 
 static Argument *
-buffer_get_height_invoker (Gimp         *gimp,
+buffer_get_height_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -360,7 +365,7 @@ buffer_get_height_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&buffer_get_height_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = height;
@@ -405,7 +410,8 @@ static ProcRecord buffer_get_height_proc =
 };
 
 static Argument *
-buffer_get_bytes_invoker (Gimp         *gimp,
+buffer_get_bytes_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -430,7 +436,7 @@ buffer_get_bytes_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&buffer_get_bytes_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = bytes;
@@ -475,7 +481,8 @@ static ProcRecord buffer_get_bytes_proc =
 };
 
 static Argument *
-buffer_get_image_type_invoker (Gimp         *gimp,
+buffer_get_image_type_invoker (ProcRecord   *proc_record,
+                               Gimp         *gimp,
                                GimpContext  *context,
                                GimpProgress *progress,
                                Argument     *args)
@@ -500,7 +507,7 @@ buffer_get_image_type_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&buffer_get_image_type_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = image_type;

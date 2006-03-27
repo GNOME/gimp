@@ -50,13 +50,14 @@ register_patterns_procs (Gimp *gimp)
 }
 
 static Argument *
-patterns_refresh_invoker (Gimp         *gimp,
+patterns_refresh_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
 {
   gimp_data_factory_data_refresh (gimp->pattern_factory);
-  return procedural_db_return_args (&patterns_refresh_proc, TRUE);
+  return procedural_db_return_args (proc_record, TRUE);
 }
 
 static ProcRecord patterns_refresh_proc =
@@ -78,7 +79,8 @@ static ProcRecord patterns_refresh_proc =
 };
 
 static Argument *
-patterns_get_list_invoker (Gimp         *gimp,
+patterns_get_list_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -99,7 +101,7 @@ patterns_get_list_invoker (Gimp         *gimp,
                                                              filter, &num_patterns);
     }
 
-  return_args = procedural_db_return_args (&patterns_get_list_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -152,7 +154,8 @@ static ProcRecord patterns_get_list_proc =
 };
 
 static Argument *
-patterns_get_pattern_invoker (Gimp         *gimp,
+patterns_get_pattern_invoker (ProcRecord   *proc_record,
+                              Gimp         *gimp,
                               GimpContext  *context,
                               GimpProgress *progress,
                               Argument     *args)
@@ -174,7 +177,7 @@ patterns_get_pattern_invoker (Gimp         *gimp,
   else
     success = FALSE;
 
-  return_args = procedural_db_return_args (&patterns_get_pattern_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -224,7 +227,8 @@ static ProcRecord patterns_get_pattern_proc =
 };
 
 static Argument *
-patterns_get_pattern_data_invoker (Gimp         *gimp,
+patterns_get_pattern_data_invoker (ProcRecord   *proc_record,
+                                   Gimp         *gimp,
                                    GimpContext  *context,
                                    GimpProgress *progress,
                                    Argument     *args)
@@ -272,7 +276,7 @@ patterns_get_pattern_data_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&patterns_get_pattern_data_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {

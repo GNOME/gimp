@@ -77,7 +77,8 @@ register_edit_procs (Gimp *gimp)
 }
 
 static Argument *
-edit_cut_invoker (Gimp         *gimp,
+edit_cut_invoker (ProcRecord   *proc_record,
+                  Gimp         *gimp,
                   GimpContext  *context,
                   GimpProgress *progress,
                   Argument     *args)
@@ -103,7 +104,7 @@ edit_cut_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&edit_cut_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = non_empty;
@@ -148,7 +149,8 @@ static ProcRecord edit_cut_proc =
 };
 
 static Argument *
-edit_copy_invoker (Gimp         *gimp,
+edit_copy_invoker (ProcRecord   *proc_record,
+                   Gimp         *gimp,
                    GimpContext  *context,
                    GimpProgress *progress,
                    Argument     *args)
@@ -174,7 +176,7 @@ edit_copy_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&edit_copy_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = non_empty;
@@ -219,7 +221,8 @@ static ProcRecord edit_copy_proc =
 };
 
 static Argument *
-edit_copy_visible_invoker (Gimp         *gimp,
+edit_copy_visible_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -238,7 +241,7 @@ edit_copy_visible_invoker (Gimp         *gimp,
       non_empty = gimp_edit_copy_visible (image, context) != NULL;
     }
 
-  return_args = procedural_db_return_args (&edit_copy_visible_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = non_empty;
@@ -283,7 +286,8 @@ static ProcRecord edit_copy_visible_proc =
 };
 
 static Argument *
-edit_paste_invoker (Gimp         *gimp,
+edit_paste_invoker (ProcRecord   *proc_record,
+                    Gimp         *gimp,
                     GimpContext  *context,
                     GimpProgress *progress,
                     Argument     *args)
@@ -315,7 +319,7 @@ edit_paste_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&edit_paste_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = floating_sel ? gimp_item_get_ID (GIMP_ITEM (floating_sel)) : -1;
@@ -365,7 +369,8 @@ static ProcRecord edit_paste_proc =
 };
 
 static Argument *
-edit_paste_as_new_invoker (Gimp         *gimp,
+edit_paste_as_new_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -384,7 +389,7 @@ edit_paste_as_new_invoker (Gimp         *gimp,
   else
     success = FALSE;
 
-  return_args = procedural_db_return_args (&edit_paste_as_new_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = image ? gimp_image_get_ID (image) : -1;
@@ -420,7 +425,8 @@ static ProcRecord edit_paste_as_new_proc =
 };
 
 static Argument *
-edit_named_cut_invoker (Gimp         *gimp,
+edit_named_cut_invoker (ProcRecord   *proc_record,
+                        Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         Argument     *args)
@@ -457,7 +463,7 @@ edit_named_cut_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&edit_named_cut_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = real_name;
@@ -507,7 +513,8 @@ static ProcRecord edit_named_cut_proc =
 };
 
 static Argument *
-edit_named_copy_invoker (Gimp         *gimp,
+edit_named_copy_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -544,7 +551,7 @@ edit_named_copy_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&edit_named_copy_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = real_name;
@@ -594,7 +601,8 @@ static ProcRecord edit_named_copy_proc =
 };
 
 static Argument *
-edit_named_copy_visible_invoker (Gimp         *gimp,
+edit_named_copy_visible_invoker (ProcRecord   *proc_record,
+                                 Gimp         *gimp,
                                  GimpContext  *context,
                                  GimpProgress *progress,
                                  Argument     *args)
@@ -629,7 +637,7 @@ edit_named_copy_visible_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&edit_named_copy_visible_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = real_name;
@@ -679,7 +687,8 @@ static ProcRecord edit_named_copy_visible_proc =
 };
 
 static Argument *
-edit_named_paste_invoker (Gimp         *gimp,
+edit_named_paste_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -718,7 +727,7 @@ edit_named_paste_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&edit_named_paste_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = floating_sel ? gimp_item_get_ID (GIMP_ITEM (floating_sel)) : -1;
@@ -773,7 +782,8 @@ static ProcRecord edit_named_paste_proc =
 };
 
 static Argument *
-edit_named_paste_as_new_invoker (Gimp         *gimp,
+edit_named_paste_as_new_invoker (ProcRecord   *proc_record,
+                                 Gimp         *gimp,
                                  GimpContext  *context,
                                  GimpProgress *progress,
                                  Argument     *args)
@@ -803,7 +813,7 @@ edit_named_paste_as_new_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&edit_named_paste_as_new_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = image ? gimp_image_get_ID (image) : -1;
@@ -848,7 +858,8 @@ static ProcRecord edit_named_paste_as_new_proc =
 };
 
 static Argument *
-edit_clear_invoker (Gimp         *gimp,
+edit_clear_invoker (ProcRecord   *proc_record,
+                    Gimp         *gimp,
                     GimpContext  *context,
                     GimpProgress *progress,
                     Argument     *args)
@@ -872,7 +883,7 @@ edit_clear_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&edit_clear_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg edit_clear_inargs[] =
@@ -903,7 +914,8 @@ static ProcRecord edit_clear_proc =
 };
 
 static Argument *
-edit_fill_invoker (Gimp         *gimp,
+edit_fill_invoker (ProcRecord   *proc_record,
+                   Gimp         *gimp,
                    GimpContext  *context,
                    GimpProgress *progress,
                    Argument     *args)
@@ -933,7 +945,7 @@ edit_fill_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&edit_fill_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg edit_fill_inargs[] =
@@ -969,7 +981,8 @@ static ProcRecord edit_fill_proc =
 };
 
 static Argument *
-edit_bucket_fill_invoker (Gimp         *gimp,
+edit_bucket_fill_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -1029,7 +1042,7 @@ edit_bucket_fill_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&edit_bucket_fill_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg edit_bucket_fill_inargs[] =
@@ -1095,7 +1108,8 @@ static ProcRecord edit_bucket_fill_proc =
 };
 
 static Argument *
-edit_blend_invoker (Gimp         *gimp,
+edit_blend_invoker (ProcRecord   *proc_record,
+                    Gimp         *gimp,
                     GimpContext  *context,
                     GimpProgress *progress,
                     Argument     *args)
@@ -1199,7 +1213,7 @@ edit_blend_invoker (Gimp         *gimp,
         }
     }
 
-  return procedural_db_return_args (&edit_blend_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg edit_blend_inargs[] =
@@ -1305,7 +1319,8 @@ static ProcRecord edit_blend_proc =
 };
 
 static Argument *
-edit_stroke_invoker (Gimp         *gimp,
+edit_stroke_invoker (ProcRecord   *proc_record,
+                     Gimp         *gimp,
                      GimpContext  *context,
                      GimpProgress *progress,
                      Argument     *args)
@@ -1335,7 +1350,7 @@ edit_stroke_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&edit_stroke_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg edit_stroke_inargs[] =

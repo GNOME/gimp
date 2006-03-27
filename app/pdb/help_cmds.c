@@ -39,7 +39,8 @@ register_help_procs (Gimp *gimp)
 }
 
 static Argument *
-help_invoker (Gimp         *gimp,
+help_invoker (ProcRecord   *proc_record,
+              Gimp         *gimp,
               GimpContext  *context,
               GimpProgress *progress,
               Argument     *args)
@@ -65,7 +66,7 @@ help_invoker (Gimp         *gimp,
       gimp_help (gimp, help_domain, help_id);
     }
 
-  return procedural_db_return_args (&help_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg help_inargs[] =

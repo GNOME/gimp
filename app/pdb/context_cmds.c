@@ -90,7 +90,8 @@ register_context_procs (Gimp *gimp)
 }
 
 static Argument *
-context_push_invoker (Gimp         *gimp,
+context_push_invoker (ProcRecord   *proc_record,
+                      Gimp         *gimp,
                       GimpContext  *context,
                       GimpProgress *progress,
                       Argument     *args)
@@ -100,7 +101,7 @@ context_push_invoker (Gimp         *gimp,
     success = plug_in_context_push (gimp->current_plug_in);
   else
     success = FALSE;
-  return procedural_db_return_args (&context_push_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcRecord context_push_proc =
@@ -122,7 +123,8 @@ static ProcRecord context_push_proc =
 };
 
 static Argument *
-context_pop_invoker (Gimp         *gimp,
+context_pop_invoker (ProcRecord   *proc_record,
+                     Gimp         *gimp,
                      GimpContext  *context,
                      GimpProgress *progress,
                      Argument     *args)
@@ -132,7 +134,7 @@ context_pop_invoker (Gimp         *gimp,
     success = plug_in_context_pop (gimp->current_plug_in);
   else
     success = FALSE;
-  return procedural_db_return_args (&context_pop_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcRecord context_pop_proc =
@@ -154,7 +156,8 @@ static ProcRecord context_pop_proc =
 };
 
 static Argument *
-context_get_paint_method_invoker (Gimp         *gimp,
+context_get_paint_method_invoker (ProcRecord   *proc_record,
+                                  Gimp         *gimp,
                                   GimpContext  *context,
                                   GimpProgress *progress,
                                   Argument     *args)
@@ -170,7 +173,7 @@ context_get_paint_method_invoker (Gimp         *gimp,
   else
     success = FALSE;
 
-  return_args = procedural_db_return_args (&context_get_paint_method_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = name;
@@ -206,7 +209,8 @@ static ProcRecord context_get_paint_method_proc =
 };
 
 static Argument *
-context_set_paint_method_invoker (Gimp         *gimp,
+context_set_paint_method_invoker (ProcRecord   *proc_record,
+                                  Gimp         *gimp,
                                   GimpContext  *context,
                                   GimpProgress *progress,
                                   Argument     *args)
@@ -229,7 +233,7 @@ context_set_paint_method_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&context_set_paint_method_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg context_set_paint_method_inargs[] =
@@ -260,7 +264,8 @@ static ProcRecord context_set_paint_method_proc =
 };
 
 static Argument *
-context_get_foreground_invoker (Gimp         *gimp,
+context_get_foreground_invoker (ProcRecord   *proc_record,
+                                Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
                                 Argument     *args)
@@ -270,7 +275,7 @@ context_get_foreground_invoker (Gimp         *gimp,
 
   gimp_context_get_foreground (context, &foreground);
 
-  return_args = procedural_db_return_args (&context_get_foreground_proc, TRUE);
+  return_args = procedural_db_return_args (proc_record, TRUE);
   return_args[1].value.pdb_color = foreground;
 
   return return_args;
@@ -304,7 +309,8 @@ static ProcRecord context_get_foreground_proc =
 };
 
 static Argument *
-context_set_foreground_invoker (Gimp         *gimp,
+context_set_foreground_invoker (ProcRecord   *proc_record,
+                                Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
                                 Argument     *args)
@@ -316,7 +322,7 @@ context_set_foreground_invoker (Gimp         *gimp,
   gimp_rgb_set_alpha (&foreground, 1.0);
   gimp_context_set_foreground (context, &foreground);
 
-  return procedural_db_return_args (&context_set_foreground_proc, TRUE);
+  return procedural_db_return_args (proc_record, TRUE);
 }
 
 static ProcArg context_set_foreground_inargs[] =
@@ -347,7 +353,8 @@ static ProcRecord context_set_foreground_proc =
 };
 
 static Argument *
-context_get_background_invoker (Gimp         *gimp,
+context_get_background_invoker (ProcRecord   *proc_record,
+                                Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
                                 Argument     *args)
@@ -357,7 +364,7 @@ context_get_background_invoker (Gimp         *gimp,
 
   gimp_context_get_background (context, &background);
 
-  return_args = procedural_db_return_args (&context_get_background_proc, TRUE);
+  return_args = procedural_db_return_args (proc_record, TRUE);
   return_args[1].value.pdb_color = background;
 
   return return_args;
@@ -391,7 +398,8 @@ static ProcRecord context_get_background_proc =
 };
 
 static Argument *
-context_set_background_invoker (Gimp         *gimp,
+context_set_background_invoker (ProcRecord   *proc_record,
+                                Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
                                 Argument     *args)
@@ -403,7 +411,7 @@ context_set_background_invoker (Gimp         *gimp,
   gimp_rgb_set_alpha (&background, 1.0);
   gimp_context_set_background (context, &background);
 
-  return procedural_db_return_args (&context_set_background_proc, TRUE);
+  return procedural_db_return_args (proc_record, TRUE);
 }
 
 static ProcArg context_set_background_inargs[] =
@@ -434,13 +442,14 @@ static ProcRecord context_set_background_proc =
 };
 
 static Argument *
-context_set_default_colors_invoker (Gimp         *gimp,
+context_set_default_colors_invoker (ProcRecord   *proc_record,
+                                    Gimp         *gimp,
                                     GimpContext  *context,
                                     GimpProgress *progress,
                                     Argument     *args)
 {
   gimp_context_set_default_colors (context);
-  return procedural_db_return_args (&context_set_default_colors_proc, TRUE);
+  return procedural_db_return_args (proc_record, TRUE);
 }
 
 static ProcRecord context_set_default_colors_proc =
@@ -462,13 +471,14 @@ static ProcRecord context_set_default_colors_proc =
 };
 
 static Argument *
-context_swap_colors_invoker (Gimp         *gimp,
+context_swap_colors_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
 {
   gimp_context_swap_colors (context);
-  return procedural_db_return_args (&context_swap_colors_proc, TRUE);
+  return procedural_db_return_args (proc_record, TRUE);
 }
 
 static ProcRecord context_swap_colors_proc =
@@ -490,7 +500,8 @@ static ProcRecord context_swap_colors_proc =
 };
 
 static Argument *
-context_get_opacity_invoker (Gimp         *gimp,
+context_get_opacity_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -500,7 +511,7 @@ context_get_opacity_invoker (Gimp         *gimp,
 
   opacity = gimp_context_get_opacity (context) * 100.0;
 
-  return_args = procedural_db_return_args (&context_get_opacity_proc, TRUE);
+  return_args = procedural_db_return_args (proc_record, TRUE);
   return_args[1].value.pdb_float = opacity;
 
   return return_args;
@@ -534,7 +545,8 @@ static ProcRecord context_get_opacity_proc =
 };
 
 static Argument *
-context_set_opacity_invoker (Gimp         *gimp,
+context_set_opacity_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -551,7 +563,7 @@ context_set_opacity_invoker (Gimp         *gimp,
       gimp_context_set_opacity (context, opacity / 100.0);
     }
 
-  return procedural_db_return_args (&context_set_opacity_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg context_set_opacity_inargs[] =
@@ -582,7 +594,8 @@ static ProcRecord context_set_opacity_proc =
 };
 
 static Argument *
-context_get_paint_mode_invoker (Gimp         *gimp,
+context_get_paint_mode_invoker (ProcRecord   *proc_record,
+                                Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
                                 Argument     *args)
@@ -592,7 +605,7 @@ context_get_paint_mode_invoker (Gimp         *gimp,
 
   paint_mode = gimp_context_get_paint_mode (context);
 
-  return_args = procedural_db_return_args (&context_get_paint_mode_proc, TRUE);
+  return_args = procedural_db_return_args (proc_record, TRUE);
   return_args[1].value.pdb_int = paint_mode;
 
   return return_args;
@@ -626,7 +639,8 @@ static ProcRecord context_get_paint_mode_proc =
 };
 
 static Argument *
-context_set_paint_mode_invoker (Gimp         *gimp,
+context_set_paint_mode_invoker (ProcRecord   *proc_record,
+                                Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
                                 Argument     *args)
@@ -643,7 +657,7 @@ context_set_paint_mode_invoker (Gimp         *gimp,
       gimp_context_set_paint_mode (context, paint_mode);
     }
 
-  return procedural_db_return_args (&context_set_paint_mode_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg context_set_paint_mode_inargs[] =
@@ -674,7 +688,8 @@ static ProcRecord context_set_paint_mode_proc =
 };
 
 static Argument *
-context_get_brush_invoker (Gimp         *gimp,
+context_get_brush_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -690,7 +705,7 @@ context_get_brush_invoker (Gimp         *gimp,
   else
     success = FALSE;
 
-  return_args = procedural_db_return_args (&context_get_brush_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = name;
@@ -726,7 +741,8 @@ static ProcRecord context_get_brush_proc =
 };
 
 static Argument *
-context_set_brush_invoker (Gimp         *gimp,
+context_set_brush_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -749,7 +765,7 @@ context_set_brush_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&context_set_brush_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg context_set_brush_inargs[] =
@@ -780,7 +796,8 @@ static ProcRecord context_set_brush_proc =
 };
 
 static Argument *
-context_get_pattern_invoker (Gimp         *gimp,
+context_get_pattern_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -796,7 +813,7 @@ context_get_pattern_invoker (Gimp         *gimp,
   else
     success = FALSE;
 
-  return_args = procedural_db_return_args (&context_get_pattern_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = name;
@@ -832,7 +849,8 @@ static ProcRecord context_get_pattern_proc =
 };
 
 static Argument *
-context_set_pattern_invoker (Gimp         *gimp,
+context_set_pattern_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -855,7 +873,7 @@ context_set_pattern_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&context_set_pattern_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg context_set_pattern_inargs[] =
@@ -886,7 +904,8 @@ static ProcRecord context_set_pattern_proc =
 };
 
 static Argument *
-context_get_gradient_invoker (Gimp         *gimp,
+context_get_gradient_invoker (ProcRecord   *proc_record,
+                              Gimp         *gimp,
                               GimpContext  *context,
                               GimpProgress *progress,
                               Argument     *args)
@@ -902,7 +921,7 @@ context_get_gradient_invoker (Gimp         *gimp,
   else
     success = FALSE;
 
-  return_args = procedural_db_return_args (&context_get_gradient_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = name;
@@ -938,7 +957,8 @@ static ProcRecord context_get_gradient_proc =
 };
 
 static Argument *
-context_set_gradient_invoker (Gimp         *gimp,
+context_set_gradient_invoker (ProcRecord   *proc_record,
+                              Gimp         *gimp,
                               GimpContext  *context,
                               GimpProgress *progress,
                               Argument     *args)
@@ -961,7 +981,7 @@ context_set_gradient_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&context_set_gradient_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg context_set_gradient_inargs[] =
@@ -992,7 +1012,8 @@ static ProcRecord context_set_gradient_proc =
 };
 
 static Argument *
-context_get_palette_invoker (Gimp         *gimp,
+context_get_palette_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -1008,7 +1029,7 @@ context_get_palette_invoker (Gimp         *gimp,
   else
     success = FALSE;
 
-  return_args = procedural_db_return_args (&context_get_palette_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = name;
@@ -1044,7 +1065,8 @@ static ProcRecord context_get_palette_proc =
 };
 
 static Argument *
-context_set_palette_invoker (Gimp         *gimp,
+context_set_palette_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -1067,7 +1089,7 @@ context_set_palette_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&context_set_palette_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg context_set_palette_inargs[] =
@@ -1098,7 +1120,8 @@ static ProcRecord context_set_palette_proc =
 };
 
 static Argument *
-context_get_font_invoker (Gimp         *gimp,
+context_get_font_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -1114,7 +1137,7 @@ context_get_font_invoker (Gimp         *gimp,
   else
     success = FALSE;
 
-  return_args = procedural_db_return_args (&context_get_font_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = name;
@@ -1150,7 +1173,8 @@ static ProcRecord context_get_font_proc =
 };
 
 static Argument *
-context_set_font_invoker (Gimp         *gimp,
+context_set_font_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -1173,7 +1197,7 @@ context_set_font_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&context_set_font_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg context_set_font_inargs[] =

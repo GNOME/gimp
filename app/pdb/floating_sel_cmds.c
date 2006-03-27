@@ -49,7 +49,8 @@ register_floating_sel_procs (Gimp *gimp)
 }
 
 static Argument *
-floating_sel_remove_invoker (Gimp         *gimp,
+floating_sel_remove_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -69,7 +70,7 @@ floating_sel_remove_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&floating_sel_remove_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg floating_sel_remove_inargs[] =
@@ -100,7 +101,8 @@ static ProcRecord floating_sel_remove_proc =
 };
 
 static Argument *
-floating_sel_anchor_invoker (Gimp         *gimp,
+floating_sel_anchor_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -120,7 +122,7 @@ floating_sel_anchor_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&floating_sel_anchor_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg floating_sel_anchor_inargs[] =
@@ -151,7 +153,8 @@ static ProcRecord floating_sel_anchor_proc =
 };
 
 static Argument *
-floating_sel_to_layer_invoker (Gimp         *gimp,
+floating_sel_to_layer_invoker (ProcRecord   *proc_record,
+                               Gimp         *gimp,
                                GimpContext  *context,
                                GimpProgress *progress,
                                Argument     *args)
@@ -171,7 +174,7 @@ floating_sel_to_layer_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&floating_sel_to_layer_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg floating_sel_to_layer_inargs[] =
@@ -202,7 +205,8 @@ static ProcRecord floating_sel_to_layer_proc =
 };
 
 static Argument *
-floating_sel_attach_invoker (Gimp         *gimp,
+floating_sel_attach_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -227,7 +231,7 @@ floating_sel_attach_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&floating_sel_attach_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg floating_sel_attach_inargs[] =
@@ -263,7 +267,8 @@ static ProcRecord floating_sel_attach_proc =
 };
 
 static Argument *
-floating_sel_rigor_invoker (Gimp         *gimp,
+floating_sel_rigor_invoker (ProcRecord   *proc_record,
+                            Gimp         *gimp,
                             GimpContext  *context,
                             GimpProgress *progress,
                             Argument     *args)
@@ -286,7 +291,7 @@ floating_sel_rigor_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&floating_sel_rigor_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg floating_sel_rigor_inargs[] =
@@ -322,7 +327,8 @@ static ProcRecord floating_sel_rigor_proc =
 };
 
 static Argument *
-floating_sel_relax_invoker (Gimp         *gimp,
+floating_sel_relax_invoker (ProcRecord   *proc_record,
+                            Gimp         *gimp,
                             GimpContext  *context,
                             GimpProgress *progress,
                             Argument     *args)
@@ -345,7 +351,7 @@ floating_sel_relax_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&floating_sel_relax_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg floating_sel_relax_inargs[] =

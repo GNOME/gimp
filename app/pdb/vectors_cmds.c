@@ -88,7 +88,8 @@ register_vectors_procs (Gimp *gimp)
 }
 
 static Argument *
-vectors_new_invoker (Gimp         *gimp,
+vectors_new_invoker (ProcRecord   *proc_record,
+                     Gimp         *gimp,
                      GimpContext  *context,
                      GimpProgress *progress,
                      Argument     *args)
@@ -112,7 +113,7 @@ vectors_new_invoker (Gimp         *gimp,
       vectors = gimp_vectors_new (image, name);
     }
 
-  return_args = procedural_db_return_args (&vectors_new_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = vectors ? gimp_item_get_ID (GIMP_ITEM (vectors)) : -1;
@@ -162,7 +163,8 @@ static ProcRecord vectors_new_proc =
 };
 
 static Argument *
-vectors_get_image_invoker (Gimp         *gimp,
+vectors_get_image_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -181,7 +183,7 @@ vectors_get_image_invoker (Gimp         *gimp,
       image = gimp_item_get_image (GIMP_ITEM (vectors));
     }
 
-  return_args = procedural_db_return_args (&vectors_get_image_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = image ? gimp_image_get_ID (image) : -1;
@@ -226,7 +228,8 @@ static ProcRecord vectors_get_image_proc =
 };
 
 static Argument *
-vectors_get_name_invoker (Gimp         *gimp,
+vectors_get_name_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -245,7 +248,7 @@ vectors_get_name_invoker (Gimp         *gimp,
       name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
     }
 
-  return_args = procedural_db_return_args (&vectors_get_name_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = name;
@@ -290,7 +293,8 @@ static ProcRecord vectors_get_name_proc =
 };
 
 static Argument *
-vectors_set_name_invoker (Gimp         *gimp,
+vectors_set_name_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -312,7 +316,7 @@ vectors_set_name_invoker (Gimp         *gimp,
       success = gimp_item_rename (GIMP_ITEM (vectors), name);
     }
 
-  return procedural_db_return_args (&vectors_set_name_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg vectors_set_name_inargs[] =
@@ -348,7 +352,8 @@ static ProcRecord vectors_set_name_proc =
 };
 
 static Argument *
-vectors_get_visible_invoker (Gimp         *gimp,
+vectors_get_visible_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -367,7 +372,7 @@ vectors_get_visible_invoker (Gimp         *gimp,
       visible = gimp_item_get_visible (GIMP_ITEM (vectors));
     }
 
-  return_args = procedural_db_return_args (&vectors_get_visible_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = visible;
@@ -412,7 +417,8 @@ static ProcRecord vectors_get_visible_proc =
 };
 
 static Argument *
-vectors_set_visible_invoker (Gimp         *gimp,
+vectors_set_visible_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -432,7 +438,7 @@ vectors_set_visible_invoker (Gimp         *gimp,
       gimp_item_set_visible (GIMP_ITEM (vectors), visible, TRUE);
     }
 
-  return procedural_db_return_args (&vectors_set_visible_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg vectors_set_visible_inargs[] =
@@ -468,7 +474,8 @@ static ProcRecord vectors_set_visible_proc =
 };
 
 static Argument *
-vectors_get_linked_invoker (Gimp         *gimp,
+vectors_get_linked_invoker (ProcRecord   *proc_record,
+                            Gimp         *gimp,
                             GimpContext  *context,
                             GimpProgress *progress,
                             Argument     *args)
@@ -487,7 +494,7 @@ vectors_get_linked_invoker (Gimp         *gimp,
       linked = gimp_item_get_linked (GIMP_ITEM (vectors));
     }
 
-  return_args = procedural_db_return_args (&vectors_get_linked_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = linked;
@@ -532,7 +539,8 @@ static ProcRecord vectors_get_linked_proc =
 };
 
 static Argument *
-vectors_set_linked_invoker (Gimp         *gimp,
+vectors_set_linked_invoker (ProcRecord   *proc_record,
+                            Gimp         *gimp,
                             GimpContext  *context,
                             GimpProgress *progress,
                             Argument     *args)
@@ -552,7 +560,7 @@ vectors_set_linked_invoker (Gimp         *gimp,
       gimp_item_set_linked (GIMP_ITEM (vectors), linked, TRUE);
     }
 
-  return procedural_db_return_args (&vectors_set_linked_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg vectors_set_linked_inargs[] =
@@ -588,7 +596,8 @@ static ProcRecord vectors_set_linked_proc =
 };
 
 static Argument *
-vectors_get_tattoo_invoker (Gimp         *gimp,
+vectors_get_tattoo_invoker (ProcRecord   *proc_record,
+                            Gimp         *gimp,
                             GimpContext  *context,
                             GimpProgress *progress,
                             Argument     *args)
@@ -607,7 +616,7 @@ vectors_get_tattoo_invoker (Gimp         *gimp,
       tattoo = gimp_item_get_tattoo (GIMP_ITEM (vectors));
     }
 
-  return_args = procedural_db_return_args (&vectors_get_tattoo_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = tattoo;
@@ -652,7 +661,8 @@ static ProcRecord vectors_get_tattoo_proc =
 };
 
 static Argument *
-vectors_set_tattoo_invoker (Gimp         *gimp,
+vectors_set_tattoo_invoker (ProcRecord   *proc_record,
+                            Gimp         *gimp,
                             GimpContext  *context,
                             GimpProgress *progress,
                             Argument     *args)
@@ -672,7 +682,7 @@ vectors_set_tattoo_invoker (Gimp         *gimp,
       gimp_item_set_tattoo (GIMP_ITEM (vectors), tattoo);
     }
 
-  return procedural_db_return_args (&vectors_set_tattoo_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg vectors_set_tattoo_inargs[] =
@@ -708,7 +718,8 @@ static ProcRecord vectors_set_tattoo_proc =
 };
 
 static Argument *
-vectors_get_strokes_invoker (Gimp         *gimp,
+vectors_get_strokes_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -744,7 +755,7 @@ vectors_get_strokes_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&vectors_get_strokes_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -797,7 +808,8 @@ static ProcRecord vectors_get_strokes_proc =
 };
 
 static Argument *
-vectors_stroke_get_length_invoker (Gimp         *gimp,
+vectors_stroke_get_length_invoker (ProcRecord   *proc_record,
+                                   Gimp         *gimp,
                                    GimpContext  *context,
                                    GimpProgress *progress,
                                    Argument     *args)
@@ -827,7 +839,7 @@ vectors_stroke_get_length_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&vectors_stroke_get_length_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_float = length;
@@ -882,7 +894,8 @@ static ProcRecord vectors_stroke_get_length_proc =
 };
 
 static Argument *
-vectors_stroke_get_point_at_dist_invoker (Gimp         *gimp,
+vectors_stroke_get_point_at_dist_invoker (ProcRecord   *proc_record,
+                                          Gimp         *gimp,
                                           GimpContext  *context,
                                           GimpProgress *progress,
                                           Argument     *args)
@@ -925,7 +938,7 @@ vectors_stroke_get_point_at_dist_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&vectors_stroke_get_point_at_dist_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -1005,7 +1018,8 @@ static ProcRecord vectors_stroke_get_point_at_dist_proc =
 };
 
 static Argument *
-vectors_stroke_remove_invoker (Gimp         *gimp,
+vectors_stroke_remove_invoker (ProcRecord   *proc_record,
+                               Gimp         *gimp,
                                GimpContext  *context,
                                GimpProgress *progress,
                                Argument     *args)
@@ -1030,7 +1044,7 @@ vectors_stroke_remove_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&vectors_stroke_remove_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg vectors_stroke_remove_inargs[] =
@@ -1066,7 +1080,8 @@ static ProcRecord vectors_stroke_remove_proc =
 };
 
 static Argument *
-vectors_stroke_close_invoker (Gimp         *gimp,
+vectors_stroke_close_invoker (ProcRecord   *proc_record,
+                              Gimp         *gimp,
                               GimpContext  *context,
                               GimpProgress *progress,
                               Argument     *args)
@@ -1091,7 +1106,7 @@ vectors_stroke_close_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&vectors_stroke_close_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg vectors_stroke_close_inargs[] =
@@ -1127,7 +1142,8 @@ static ProcRecord vectors_stroke_close_proc =
 };
 
 static Argument *
-vectors_stroke_translate_invoker (Gimp         *gimp,
+vectors_stroke_translate_invoker (ProcRecord   *proc_record,
+                                  Gimp         *gimp,
                                   GimpContext  *context,
                                   GimpProgress *progress,
                                   Argument     *args)
@@ -1158,7 +1174,7 @@ vectors_stroke_translate_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&vectors_stroke_translate_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg vectors_stroke_translate_inargs[] =
@@ -1204,7 +1220,8 @@ static ProcRecord vectors_stroke_translate_proc =
 };
 
 static Argument *
-vectors_stroke_scale_invoker (Gimp         *gimp,
+vectors_stroke_scale_invoker (ProcRecord   *proc_record,
+                              Gimp         *gimp,
                               GimpContext  *context,
                               GimpProgress *progress,
                               Argument     *args)
@@ -1235,7 +1252,7 @@ vectors_stroke_scale_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&vectors_stroke_scale_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg vectors_stroke_scale_inargs[] =
@@ -1281,7 +1298,8 @@ static ProcRecord vectors_stroke_scale_proc =
 };
 
 static Argument *
-vectors_stroke_interpolate_invoker (Gimp         *gimp,
+vectors_stroke_interpolate_invoker (ProcRecord   *proc_record,
+                                    Gimp         *gimp,
                                     GimpContext  *context,
                                     GimpProgress *progress,
                                     Argument     *args)
@@ -1334,7 +1352,7 @@ vectors_stroke_interpolate_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&vectors_stroke_interpolate_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     {
@@ -1403,7 +1421,8 @@ static ProcRecord vectors_stroke_interpolate_proc =
 };
 
 static Argument *
-vectors_bezier_stroke_new_moveto_invoker (Gimp         *gimp,
+vectors_bezier_stroke_new_moveto_invoker (ProcRecord   *proc_record,
+                                          Gimp         *gimp,
                                           GimpContext  *context,
                                           GimpProgress *progress,
                                           Argument     *args)
@@ -1436,7 +1455,7 @@ vectors_bezier_stroke_new_moveto_invoker (Gimp         *gimp,
       stroke_id = gimp_stroke_get_ID (stroke);
     }
 
-  return_args = procedural_db_return_args (&vectors_bezier_stroke_new_moveto_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = stroke_id;
@@ -1491,7 +1510,8 @@ static ProcRecord vectors_bezier_stroke_new_moveto_proc =
 };
 
 static Argument *
-vectors_bezier_stroke_lineto_invoker (Gimp         *gimp,
+vectors_bezier_stroke_lineto_invoker (ProcRecord   *proc_record,
+                                      Gimp         *gimp,
                                       GimpContext  *context,
                                       GimpProgress *progress,
                                       Argument     *args)
@@ -1529,7 +1549,7 @@ vectors_bezier_stroke_lineto_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&vectors_bezier_stroke_lineto_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg vectors_bezier_stroke_lineto_inargs[] =
@@ -1575,7 +1595,8 @@ static ProcRecord vectors_bezier_stroke_lineto_proc =
 };
 
 static Argument *
-vectors_bezier_stroke_conicto_invoker (Gimp         *gimp,
+vectors_bezier_stroke_conicto_invoker (ProcRecord   *proc_record,
+                                       Gimp         *gimp,
                                        GimpContext  *context,
                                        GimpProgress *progress,
                                        Argument     *args)
@@ -1623,7 +1644,7 @@ vectors_bezier_stroke_conicto_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&vectors_bezier_stroke_conicto_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg vectors_bezier_stroke_conicto_inargs[] =
@@ -1679,7 +1700,8 @@ static ProcRecord vectors_bezier_stroke_conicto_proc =
 };
 
 static Argument *
-vectors_bezier_stroke_cubicto_invoker (Gimp         *gimp,
+vectors_bezier_stroke_cubicto_invoker (ProcRecord   *proc_record,
+                                       Gimp         *gimp,
                                        GimpContext  *context,
                                        GimpProgress *progress,
                                        Argument     *args)
@@ -1737,7 +1759,7 @@ vectors_bezier_stroke_cubicto_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&vectors_bezier_stroke_cubicto_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg vectors_bezier_stroke_cubicto_inargs[] =
@@ -1803,7 +1825,8 @@ static ProcRecord vectors_bezier_stroke_cubicto_proc =
 };
 
 static Argument *
-vectors_bezier_stroke_new_ellipse_invoker (Gimp         *gimp,
+vectors_bezier_stroke_new_ellipse_invoker (ProcRecord   *proc_record,
+                                           Gimp         *gimp,
                                            GimpContext  *context,
                                            GimpProgress *progress,
                                            Argument     *args)
@@ -1845,7 +1868,7 @@ vectors_bezier_stroke_new_ellipse_invoker (Gimp         *gimp,
       stroke_id = gimp_stroke_get_ID (stroke);
     }
 
-  return_args = procedural_db_return_args (&vectors_bezier_stroke_new_ellipse_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = stroke_id;

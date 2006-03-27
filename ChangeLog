@@ -1,3 +1,21 @@
+2006-03-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/pdb/procedural_db.h (ArgMarshal): pass the ProcRecord as
+	first parameter, so marshallers have access to their ProcRecord
+	without the need for global variables.
+
+	* app/pdb/procedural_db.c
+	* tools/pdbgen/app.pl: changed addordingly.
+
+	* tools/pdbgen/app.pl: removed support for invoke->proc. Introduce
+	invoke->no_marshalling instead which indicates that invoke->code
+	should be used literally as marshaller code, without any
+	substitutions or generated variables.
+
+	* tools/pdbgen/pdb/fileops.pdb: changed accordingly.
+
+	* app/pdb/*_cmds.c: regenerated.
+
 2006-03-27  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpforegroundselectoptions.c

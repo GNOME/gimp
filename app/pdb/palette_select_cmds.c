@@ -42,7 +42,8 @@ register_palette_select_procs (Gimp *gimp)
 }
 
 static Argument *
-palettes_popup_invoker (Gimp         *gimp,
+palettes_popup_invoker (ProcRecord   *proc_record,
+                        Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         Argument     *args)
@@ -74,7 +75,7 @@ palettes_popup_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&palettes_popup_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg palettes_popup_inargs[] =
@@ -115,7 +116,8 @@ static ProcRecord palettes_popup_proc =
 };
 
 static Argument *
-palettes_close_popup_invoker (Gimp         *gimp,
+palettes_close_popup_invoker (ProcRecord   *proc_record,
+                              Gimp         *gimp,
                               GimpContext  *context,
                               GimpProgress *progress,
                               Argument     *args)
@@ -136,7 +138,7 @@ palettes_close_popup_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&palettes_close_popup_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg palettes_close_popup_inargs[] =
@@ -167,7 +169,8 @@ static ProcRecord palettes_close_popup_proc =
 };
 
 static Argument *
-palettes_set_popup_invoker (Gimp         *gimp,
+palettes_set_popup_invoker (ProcRecord   *proc_record,
+                            Gimp         *gimp,
                             GimpContext  *context,
                             GimpProgress *progress,
                             Argument     *args)
@@ -194,7 +197,7 @@ palettes_set_popup_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&palettes_set_popup_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg palettes_set_popup_inargs[] =

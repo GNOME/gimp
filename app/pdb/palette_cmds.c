@@ -70,7 +70,8 @@ register_palette_procs (Gimp *gimp)
 }
 
 static Argument *
-palette_new_invoker (Gimp         *gimp,
+palette_new_invoker (ProcRecord   *proc_record,
+                     Gimp         *gimp,
                      GimpContext  *context,
                      GimpProgress *progress,
                      Argument     *args)
@@ -99,7 +100,7 @@ palette_new_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&palette_new_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = actual_name;
@@ -144,7 +145,8 @@ static ProcRecord palette_new_proc =
 };
 
 static Argument *
-palette_duplicate_invoker (Gimp         *gimp,
+palette_duplicate_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -178,7 +180,7 @@ palette_duplicate_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&palette_duplicate_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = copy_name;
@@ -223,7 +225,8 @@ static ProcRecord palette_duplicate_proc =
 };
 
 static Argument *
-palette_rename_invoker (Gimp         *gimp,
+palette_rename_invoker (ProcRecord   *proc_record,
+                        Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         Argument     *args)
@@ -256,7 +259,7 @@ palette_rename_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&palette_rename_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = actual_name;
@@ -306,7 +309,8 @@ static ProcRecord palette_rename_proc =
 };
 
 static Argument *
-palette_delete_invoker (Gimp         *gimp,
+palette_delete_invoker (ProcRecord   *proc_record,
+                        Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         Argument     *args)
@@ -341,7 +345,7 @@ palette_delete_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&palette_delete_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg palette_delete_inargs[] =
@@ -372,7 +376,8 @@ static ProcRecord palette_delete_proc =
 };
 
 static Argument *
-palette_is_editable_invoker (Gimp         *gimp,
+palette_is_editable_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -397,7 +402,7 @@ palette_is_editable_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&palette_is_editable_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = editable;
@@ -442,7 +447,8 @@ static ProcRecord palette_is_editable_proc =
 };
 
 static Argument *
-palette_get_info_invoker (Gimp         *gimp,
+palette_get_info_invoker (ProcRecord   *proc_record,
+                          Gimp         *gimp,
                           GimpContext  *context,
                           GimpProgress *progress,
                           Argument     *args)
@@ -467,7 +473,7 @@ palette_get_info_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&palette_get_info_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = num_colors;
@@ -512,7 +518,8 @@ static ProcRecord palette_get_info_proc =
 };
 
 static Argument *
-palette_get_columns_invoker (Gimp         *gimp,
+palette_get_columns_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -537,7 +544,7 @@ palette_get_columns_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&palette_get_columns_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = num_columns;
@@ -582,7 +589,8 @@ static ProcRecord palette_get_columns_proc =
 };
 
 static Argument *
-palette_set_columns_invoker (Gimp         *gimp,
+palette_set_columns_invoker (ProcRecord   *proc_record,
+                             Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
                              Argument     *args)
@@ -610,7 +618,7 @@ palette_set_columns_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&palette_set_columns_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg palette_set_columns_inargs[] =
@@ -646,7 +654,8 @@ static ProcRecord palette_set_columns_proc =
 };
 
 static Argument *
-palette_add_entry_invoker (Gimp         *gimp,
+palette_add_entry_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -684,7 +693,7 @@ palette_add_entry_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&palette_add_entry_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = entry_num;
@@ -739,7 +748,8 @@ static ProcRecord palette_add_entry_proc =
 };
 
 static Argument *
-palette_delete_entry_invoker (Gimp         *gimp,
+palette_delete_entry_invoker (ProcRecord   *proc_record,
+                              Gimp         *gimp,
                               GimpContext  *context,
                               GimpProgress *progress,
                               Argument     *args)
@@ -774,7 +784,7 @@ palette_delete_entry_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&palette_delete_entry_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg palette_delete_entry_inargs[] =
@@ -810,7 +820,8 @@ static ProcRecord palette_delete_entry_proc =
 };
 
 static Argument *
-palette_entry_get_color_invoker (Gimp         *gimp,
+palette_entry_get_color_invoker (ProcRecord   *proc_record,
+                                 Gimp         *gimp,
                                  GimpContext  *context,
                                  GimpProgress *progress,
                                  Argument     *args)
@@ -847,7 +858,7 @@ palette_entry_get_color_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&palette_entry_get_color_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_color = color;
@@ -897,7 +908,8 @@ static ProcRecord palette_entry_get_color_proc =
 };
 
 static Argument *
-palette_entry_set_color_invoker (Gimp         *gimp,
+palette_entry_set_color_invoker (ProcRecord   *proc_record,
+                                 Gimp         *gimp,
                                  GimpContext  *context,
                                  GimpProgress *progress,
                                  Argument     *args)
@@ -937,7 +949,7 @@ palette_entry_set_color_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&palette_entry_set_color_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg palette_entry_set_color_inargs[] =
@@ -978,7 +990,8 @@ static ProcRecord palette_entry_set_color_proc =
 };
 
 static Argument *
-palette_entry_get_name_invoker (Gimp         *gimp,
+palette_entry_get_name_invoker (ProcRecord   *proc_record,
+                                Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
                                 Argument     *args)
@@ -1015,7 +1028,7 @@ palette_entry_get_name_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (&palette_entry_get_name_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_pointer = entry_name;
@@ -1065,7 +1078,8 @@ static ProcRecord palette_entry_get_name_proc =
 };
 
 static Argument *
-palette_entry_set_name_invoker (Gimp         *gimp,
+palette_entry_set_name_invoker (ProcRecord   *proc_record,
+                                Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
                                 Argument     *args)
@@ -1108,7 +1122,7 @@ palette_entry_set_name_invoker (Gimp         *gimp,
         success = FALSE;
     }
 
-  return procedural_db_return_args (&palette_entry_set_name_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg palette_entry_set_name_inargs[] =

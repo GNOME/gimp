@@ -56,7 +56,8 @@ register_transform_tools_procs (Gimp *gimp)
 }
 
 static Argument *
-flip_invoker (Gimp         *gimp,
+flip_invoker (ProcRecord   *proc_record,
+              Gimp         *gimp,
               GimpContext  *context,
               GimpProgress *progress,
               Argument     *args)
@@ -88,7 +89,7 @@ flip_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&flip_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
@@ -138,7 +139,8 @@ static ProcRecord flip_proc =
 };
 
 static Argument *
-perspective_invoker (Gimp         *gimp,
+perspective_invoker (ProcRecord   *proc_record,
+                     Gimp         *gimp,
                      GimpContext  *context,
                      GimpProgress *progress,
                      Argument     *args)
@@ -217,7 +219,7 @@ perspective_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&perspective_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
@@ -307,7 +309,8 @@ static ProcRecord perspective_proc =
 };
 
 static Argument *
-rotate_invoker (Gimp         *gimp,
+rotate_invoker (ProcRecord   *proc_record,
+                Gimp         *gimp,
                 GimpContext  *context,
                 GimpProgress *progress,
                 Argument     *args)
@@ -361,7 +364,7 @@ rotate_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&rotate_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
@@ -416,7 +419,8 @@ static ProcRecord rotate_proc =
 };
 
 static Argument *
-scale_invoker (Gimp         *gimp,
+scale_invoker (ProcRecord   *proc_record,
+               Gimp         *gimp,
                GimpContext  *context,
                GimpProgress *progress,
                Argument     *args)
@@ -483,7 +487,7 @@ scale_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&scale_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
@@ -553,7 +557,8 @@ static ProcRecord scale_proc =
 };
 
 static Argument *
-shear_invoker (Gimp         *gimp,
+shear_invoker (ProcRecord   *proc_record,
+               Gimp         *gimp,
                GimpContext  *context,
                GimpProgress *progress,
                Argument     *args)
@@ -613,7 +618,7 @@ shear_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&shear_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
@@ -673,7 +678,8 @@ static ProcRecord shear_proc =
 };
 
 static Argument *
-transform_2d_invoker (Gimp         *gimp,
+transform_2d_invoker (ProcRecord   *proc_record,
+                      Gimp         *gimp,
                       GimpContext  *context,
                       GimpProgress *progress,
                       Argument     *args)
@@ -746,7 +752,7 @@ transform_2d_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&transform_2d_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;

@@ -52,7 +52,8 @@ register_undo_procs (Gimp *gimp)
 }
 
 static Argument *
-image_undo_group_start_invoker (Gimp         *gimp,
+image_undo_group_start_invoker (ProcRecord   *proc_record,
+                                Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
                                 Argument     *args)
@@ -77,7 +78,7 @@ image_undo_group_start_invoker (Gimp         *gimp,
         g_free (undo_desc);
     }
 
-  return procedural_db_return_args (&image_undo_group_start_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg image_undo_group_start_inargs[] =
@@ -108,7 +109,8 @@ static ProcRecord image_undo_group_start_proc =
 };
 
 static Argument *
-image_undo_group_end_invoker (Gimp         *gimp,
+image_undo_group_end_invoker (ProcRecord   *proc_record,
+                              Gimp         *gimp,
                               GimpContext  *context,
                               GimpProgress *progress,
                               Argument     *args)
@@ -125,7 +127,7 @@ image_undo_group_end_invoker (Gimp         *gimp,
       gimp_image_undo_group_end (image);
     }
 
-  return procedural_db_return_args (&image_undo_group_end_proc, success);
+  return procedural_db_return_args (proc_record, success);
 }
 
 static ProcArg image_undo_group_end_inargs[] =
@@ -156,7 +158,8 @@ static ProcRecord image_undo_group_end_proc =
 };
 
 static Argument *
-image_undo_is_enabled_invoker (Gimp         *gimp,
+image_undo_is_enabled_invoker (ProcRecord   *proc_record,
+                               Gimp         *gimp,
                                GimpContext  *context,
                                GimpProgress *progress,
                                Argument     *args)
@@ -175,7 +178,7 @@ image_undo_is_enabled_invoker (Gimp         *gimp,
       enabled = gimp_image_undo_is_enabled (image);
     }
 
-  return_args = procedural_db_return_args (&image_undo_is_enabled_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = enabled;
@@ -220,7 +223,8 @@ static ProcRecord image_undo_is_enabled_proc =
 };
 
 static Argument *
-image_undo_disable_invoker (Gimp         *gimp,
+image_undo_disable_invoker (ProcRecord   *proc_record,
+                            Gimp         *gimp,
                             GimpContext  *context,
                             GimpProgress *progress,
                             Argument     *args)
@@ -239,7 +243,7 @@ image_undo_disable_invoker (Gimp         *gimp,
       disabled = gimp_image_undo_disable (image);
     }
 
-  return_args = procedural_db_return_args (&image_undo_disable_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = disabled;
@@ -284,7 +288,8 @@ static ProcRecord image_undo_disable_proc =
 };
 
 static Argument *
-image_undo_enable_invoker (Gimp         *gimp,
+image_undo_enable_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -303,7 +308,7 @@ image_undo_enable_invoker (Gimp         *gimp,
       enabled = gimp_image_undo_enable (image);
     }
 
-  return_args = procedural_db_return_args (&image_undo_enable_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = enabled;
@@ -348,7 +353,8 @@ static ProcRecord image_undo_enable_proc =
 };
 
 static Argument *
-image_undo_freeze_invoker (Gimp         *gimp,
+image_undo_freeze_invoker (ProcRecord   *proc_record,
+                           Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
                            Argument     *args)
@@ -367,7 +373,7 @@ image_undo_freeze_invoker (Gimp         *gimp,
       frozen = gimp_image_undo_freeze (image);
     }
 
-  return_args = procedural_db_return_args (&image_undo_freeze_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = frozen;
@@ -412,7 +418,8 @@ static ProcRecord image_undo_freeze_proc =
 };
 
 static Argument *
-image_undo_thaw_invoker (Gimp         *gimp,
+image_undo_thaw_invoker (ProcRecord   *proc_record,
+                         Gimp         *gimp,
                          GimpContext  *context,
                          GimpProgress *progress,
                          Argument     *args)
@@ -431,7 +438,7 @@ image_undo_thaw_invoker (Gimp         *gimp,
       thawed = gimp_image_undo_thaw (image);
     }
 
-  return_args = procedural_db_return_args (&image_undo_thaw_proc, success);
+  return_args = procedural_db_return_args (proc_record, success);
 
   if (success)
     return_args[1].value.pdb_int = thawed;
