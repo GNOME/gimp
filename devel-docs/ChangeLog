@@ -1,3 +1,7 @@
+2006-03-27  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/tmpl/gimpselection.sgml: regenerated.
+
 2006-03-17  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/tmpl/gimpimage.sgml: regenerated.
