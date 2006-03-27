@@ -507,19 +507,19 @@ package Gimp::CodeGen::enums;
 		       GIMP_CLIP_TO_BOTTOM_LAYER => '2',
 		       GIMP_FLATTEN_IMAGE => '3' }
 	},
-    GimpConvolveType =>
-	{ contig => 1,
-	  header => 'paint/paint-enums.h',
-	  symbols => [ qw(GIMP_BLUR_CONVOLVE GIMP_SHARPEN_CONVOLVE) ],
-	  mapping => { GIMP_BLUR_CONVOLVE => '0',
-		       GIMP_SHARPEN_CONVOLVE => '1' }
-	},
     GimpBrushApplicationMode =>
 	{ contig => 1,
 	  header => 'paint/paint-enums.h',
 	  symbols => [ qw(GIMP_BRUSH_HARD GIMP_BRUSH_SOFT) ],
 	  mapping => { GIMP_BRUSH_HARD => '0',
 		       GIMP_BRUSH_SOFT => '1' }
+	},
+    GimpConvolveType =>
+	{ contig => 1,
+	  header => 'paint/paint-enums.h',
+	  symbols => [ qw(GIMP_BLUR_CONVOLVE GIMP_SHARPEN_CONVOLVE) ],
+	  mapping => { GIMP_BLUR_CONVOLVE => '0',
+		       GIMP_SHARPEN_CONVOLVE => '1' }
 	},
     GimpRunMode =>
 	{ contig => 1,

@@ -35,6 +35,18 @@
  * these enums that are registered with the type system
  */
 
+#define GIMP_TYPE_BRUSH_APPLICATION_MODE (gimp_brush_application_mode_get_type ())
+
+GType gimp_brush_application_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_BRUSH_HARD,
+  GIMP_BRUSH_SOFT,
+  GIMP_BRUSH_PRESSURE  /*< pdb-skip, skip >*/
+} GimpBrushApplicationMode;
+
+
 #define GIMP_TYPE_CLONE_ALIGN_MODE (gimp_clone_align_mode_get_type ())
 
 GType gimp_clone_align_mode_get_type (void) G_GNUC_CONST;
@@ -75,13 +87,6 @@ typedef enum  /*< pdb-skip >*/
 /*
  * non-registered enums; register them if needed
  */
-
-typedef enum  /*< skip >*/
-{
-  GIMP_BRUSH_HARD,
-  GIMP_BRUSH_SOFT,
-  GIMP_BRUSH_PRESSURE  /*< pdb-skip, skip >*/
-} GimpBrushApplicationMode;
 
 typedef enum  /*< skip, pdb-skip >*/
 {

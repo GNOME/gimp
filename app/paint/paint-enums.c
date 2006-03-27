@@ -9,6 +9,34 @@
 
 /* enumerations from "./paint-enums.h" */
 GType
+gimp_brush_application_mode_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_BRUSH_HARD, "GIMP_BRUSH_HARD", "hard" },
+    { GIMP_BRUSH_SOFT, "GIMP_BRUSH_SOFT", "soft" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_BRUSH_HARD, "GIMP_BRUSH_HARD", NULL },
+    { GIMP_BRUSH_SOFT, "GIMP_BRUSH_SOFT", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpBrushApplicationMode", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_clone_align_mode_get_type (void)
 {
   static const GEnumValue values[] =
