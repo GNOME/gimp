@@ -29,6 +29,8 @@
 
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "gimpforegroundselectoptions.h"
 #include "gimptooloptions-gui.h"
 
@@ -224,6 +226,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   GtkWidget *inner_frame;
   GtkWidget *table;
   GtkObject *adj;
+  gchar     *title;
   gint       row = 0;
 
   /*  single / multiple objects  */
@@ -232,10 +235,13 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (button);
 
   /*  foreground / background  */
-  frame = gimp_prop_boolean_radio_frame_new (config, "background",
-                                             _("Interactive refinement"),
+  title = g_strdup_printf (_("Interactive refinement  (%s)"),
+                           gimp_get_mod_string (GDK_CONTROL_MASK));
+
+  frame = gimp_prop_boolean_radio_frame_new (config, "background", title,
                                              _("Mark background"),
                                              _("Mark foreground"));
+  g_free (title);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);

@@ -75,6 +75,11 @@ static void   gimp_foreground_select_tool_oper_update    (GimpTool        *tool,
                                                           GdkModifierType  state,
                                                           gboolean         proximity,
                                                           GimpDisplay     *gdisp);
+static void   gimp_foreground_select_tool_modifier_key   (GimpTool        *tool,
+                                                          GdkModifierType  key,
+                                                          gboolean         press,
+                                                          GdkModifierType  state,
+                                                          GimpDisplay     *gdisp);
 static void   gimp_foreground_select_tool_cursor_update  (GimpTool        *tool,
                                                           GimpCoords      *coords,
                                                           GdkModifierType  state,
@@ -159,6 +164,7 @@ gimp_foreground_select_tool_class_init (GimpForegroundSelectToolClass *klass)
 
   tool_class->control            = gimp_foreground_select_tool_control;
   tool_class->oper_update        = gimp_foreground_select_tool_oper_update;
+  tool_class->modifier_key       = gimp_foreground_select_tool_modifier_key;
   tool_class->cursor_update      = gimp_foreground_select_tool_cursor_update;
   tool_class->key_press          = gimp_foreground_select_tool_key_press;
   tool_class->button_press       = gimp_foreground_select_tool_button_press;
@@ -325,6 +331,25 @@ gimp_foreground_select_tool_oper_update (GimpTool        *tool,
         gimp_tool_replace_status (tool, gdisp, status);
 
       gimp_draw_tool_start (draw_tool, gdisp);
+    }
+}
+
+static void
+gimp_foreground_select_tool_modifier_key (GimpTool        *tool,
+                                          GdkModifierType  key,
+                                          gboolean         press,
+                                          GdkModifierType  state,
+                                          GimpDisplay     *gdisp)
+{
+  if (key == GDK_CONTROL_MASK)
+    {
+      GimpForegroundSelectOptions *options;
+
+      options = GIMP_FOREGROUND_SELECT_OPTIONS (tool->tool_info->tool_options);
+
+      g_object_set (options,
+                    "background", ! options->background,
+                    NULL);
     }
 }
 
