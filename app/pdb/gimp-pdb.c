@@ -409,8 +409,13 @@ procedural_db_run_proc (Gimp         *gimp,
           g_free (expected);
           g_free (got);
 
-          *nreturn_vals = 0;
-          return NULL;
+          *nreturn_vals = 1;
+
+          return_vals = g_new (Argument, 1);
+          return_vals->arg_type      = GIMP_PDB_STATUS;
+          return_vals->value.pdb_int = GIMP_PDB_CALLING_ERROR;
+
+          return return_vals;
         }
 
       switch (proc->args[i].arg_type)

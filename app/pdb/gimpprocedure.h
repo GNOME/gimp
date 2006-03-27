@@ -46,7 +46,6 @@ typedef struct _IntExec    IntExec;
 typedef struct _PlugInExec PlugInExec;
 typedef struct _ExtExec    ExtExec;
 typedef struct _TempExec   TempExec;
-typedef struct _NetExec    NetExec;
 
 
 struct _IntExec
@@ -67,12 +66,6 @@ struct _ExtExec
 struct _TempExec
 {
   void       *plug_in;        /*  Plug-in that registered this temp proc  */
-};
-
-struct _NetExec
-{
-  gchar      *host;           /*  Host responsible for procedure execution  */
-  gint32      port;           /*  Port on host to send data to  */
 };
 
 

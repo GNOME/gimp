@@ -1,3 +1,10 @@
+2006-03-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/pdb/procedural_db.c (procedural_db_run_proc): return a
+	proper CALLING_ERROR on parameter type mispatch, not just NULL.
+
+	* app/pdb/procedural_db.h: removed unused struct NetExec.
+
 2006-03-27  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/fade-outline.scm: simplified blurb.
