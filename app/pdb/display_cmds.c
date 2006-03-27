@@ -54,7 +54,7 @@ display_new_invoker (ProcRecord   *proc_record,
                      Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   GimpObject *display = NULL;
 
@@ -76,12 +76,12 @@ display_new_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = display ? gimp_get_display_ID (gimp, display) : -1;
+    return_vals[1].value.pdb_int = display ? gimp_get_display_ID (gimp, display) : -1;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg display_new_inargs[] =
@@ -139,7 +139,7 @@ display_delete_invoker (ProcRecord   *proc_record,
       gimp_delete_display (gimp, display);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg display_delete_inargs[] =
@@ -177,7 +177,7 @@ display_get_window_handle_invoker (ProcRecord   *proc_record,
                                    Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpObject *display;
   gint32 window = 0;
 
@@ -190,12 +190,12 @@ display_get_window_handle_invoker (ProcRecord   *proc_record,
       window = (gint32) gimp_get_display_window (gimp, display);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = window;
+    return_vals[1].value.pdb_int = window;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg display_get_window_handle_inargs[] =
@@ -242,7 +242,7 @@ displays_flush_invoker (ProcRecord   *proc_record,
                         Argument     *args)
 {
   gimp_container_foreach (gimp->images, (GFunc) gimp_image_flush, NULL);
-  return procedural_db_return_args (proc_record, TRUE);
+  return procedural_db_return_values (proc_record, TRUE);
 }
 
 static ProcRecord displays_flush_proc =
@@ -298,7 +298,7 @@ displays_reconnect_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg displays_reconnect_inargs[] =

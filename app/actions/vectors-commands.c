@@ -330,19 +330,16 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
   gdisp = gimp_context_get_display (action_data_get_context (data));
 
   /*  plug-in arguments as if called by <Image>/Filters/...  */
-  args = g_new (Argument, 3);
+  args = procedural_db_arguments (proc_rec);
 
-  args[0].arg_type      = GIMP_PDB_INT32;
   args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
-  args[1].arg_type      = GIMP_PDB_IMAGE;
   args[1].value.pdb_int = (gint32) gimp_image_get_ID (gimage);
-  args[2].arg_type      = GIMP_PDB_DRAWABLE;
   args[2].value.pdb_int = -1;  /*  unused  */
 
   plug_in_run (gimage->gimp, action_data_get_context (data),
                GIMP_PROGRESS (gdisp),
-               proc_rec, args, 3, FALSE, TRUE,
-	       gdisp ? gimp_display_get_ID (gdisp) : 0);
+               proc_rec, args, 3 /* not proc_rec->num_args */,
+               FALSE, TRUE, gdisp ? gimp_display_get_ID (gdisp) : 0);
 
   g_free (args);
 }

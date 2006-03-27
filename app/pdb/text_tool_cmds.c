@@ -55,7 +55,7 @@ text_fontname_invoker (ProcRecord   *proc_record,
                        Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   GimpDrawable *drawable;
   gdouble x;
@@ -117,12 +117,12 @@ text_fontname_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = text_layer ? gimp_item_get_ID (GIMP_ITEM (text_layer)) : -1;
+    return_vals[1].value.pdb_int = text_layer ? gimp_item_get_ID (GIMP_ITEM (text_layer)) : -1;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg text_fontname_inargs[] =
@@ -214,7 +214,7 @@ text_get_extents_fontname_invoker (ProcRecord   *proc_record,
                                    Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *text;
   gdouble size;
   gint32 size_type;
@@ -251,17 +251,17 @@ text_get_extents_fontname_invoker (ProcRecord   *proc_record,
       g_free (real_fontname);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = width;
-      return_args[2].value.pdb_int = height;
-      return_args[3].value.pdb_int = ascent;
-      return_args[4].value.pdb_int = descent;
+      return_vals[1].value.pdb_int = width;
+      return_vals[2].value.pdb_int = height;
+      return_vals[3].value.pdb_int = ascent;
+      return_vals[4].value.pdb_int = descent;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg text_get_extents_fontname_inargs[] =
@@ -338,7 +338,7 @@ text_invoker (ProcRecord   *proc_record,
               Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   GimpDrawable *drawable;
   gdouble x;
@@ -435,12 +435,12 @@ text_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = text_layer ? gimp_item_get_ID (GIMP_ITEM (text_layer)) : -1;
+    return_vals[1].value.pdb_int = text_layer ? gimp_item_get_ID (GIMP_ITEM (text_layer)) : -1;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg text_inargs[] =
@@ -567,7 +567,7 @@ text_get_extents_invoker (ProcRecord   *proc_record,
                           Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *text;
   gdouble size;
   gint32 size_type;
@@ -639,17 +639,17 @@ text_get_extents_invoker (ProcRecord   *proc_record,
       g_free (real_fontname);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = width;
-      return_args[2].value.pdb_int = height;
-      return_args[3].value.pdb_int = ascent;
-      return_args[4].value.pdb_int = descent;
+      return_vals[1].value.pdb_int = width;
+      return_vals[2].value.pdb_int = height;
+      return_vals[3].value.pdb_int = ascent;
+      return_vals[4].value.pdb_int = descent;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg text_get_extents_inargs[] =

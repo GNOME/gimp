@@ -57,7 +57,7 @@ patterns_refresh_invoker (ProcRecord   *proc_record,
                           Argument     *args)
 {
   gimp_data_factory_data_refresh (gimp->pattern_factory);
-  return procedural_db_return_args (proc_record, TRUE);
+  return procedural_db_return_values (proc_record, TRUE);
 }
 
 static ProcRecord patterns_refresh_proc =
@@ -86,7 +86,7 @@ patterns_get_list_invoker (ProcRecord   *proc_record,
                            Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *filter;
   gint32 num_patterns = 0;
   gchar **pattern_list = NULL;
@@ -101,15 +101,15 @@ patterns_get_list_invoker (ProcRecord   *proc_record,
                                                              filter, &num_patterns);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = num_patterns;
-      return_args[2].value.pdb_pointer = pattern_list;
+      return_vals[1].value.pdb_int = num_patterns;
+      return_vals[2].value.pdb_pointer = pattern_list;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg patterns_get_list_inargs[] =
@@ -161,7 +161,7 @@ patterns_get_pattern_invoker (ProcRecord   *proc_record,
                               Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name = NULL;
   gint32 width = 0;
   gint32 height = 0;
@@ -177,16 +177,16 @@ patterns_get_pattern_invoker (ProcRecord   *proc_record,
   else
     success = FALSE;
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = name;
-      return_args[2].value.pdb_int = width;
-      return_args[3].value.pdb_int = height;
+      return_vals[1].value.pdb_pointer = name;
+      return_vals[2].value.pdb_int = width;
+      return_vals[3].value.pdb_int = height;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg patterns_get_pattern_outargs[] =
@@ -234,7 +234,7 @@ patterns_get_pattern_data_invoker (ProcRecord   *proc_record,
                                    Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gchar *actual_name = NULL;
   gint32 width = 0;
@@ -276,19 +276,19 @@ patterns_get_pattern_data_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = actual_name;
-      return_args[2].value.pdb_int = width;
-      return_args[3].value.pdb_int = height;
-      return_args[4].value.pdb_int = mask_bpp;
-      return_args[5].value.pdb_int = length;
-      return_args[6].value.pdb_pointer = mask_data;
+      return_vals[1].value.pdb_pointer = actual_name;
+      return_vals[2].value.pdb_int = width;
+      return_vals[3].value.pdb_int = height;
+      return_vals[4].value.pdb_int = mask_bpp;
+      return_vals[5].value.pdb_int = length;
+      return_vals[6].value.pdb_pointer = mask_data;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg patterns_get_pattern_data_inargs[] =

@@ -58,7 +58,7 @@ gradients_refresh_invoker (ProcRecord   *proc_record,
                            Argument     *args)
 {
   gimp_data_factory_data_refresh (gimp->gradient_factory);
-  return procedural_db_return_args (proc_record, TRUE);
+  return procedural_db_return_values (proc_record, TRUE);
 }
 
 static ProcRecord gradients_refresh_proc =
@@ -87,7 +87,7 @@ gradients_get_list_invoker (ProcRecord   *proc_record,
                             Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *filter;
   gint32 num_gradients = 0;
   gchar **gradient_list = NULL;
@@ -102,15 +102,15 @@ gradients_get_list_invoker (ProcRecord   *proc_record,
                                                               filter, &num_gradients);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = num_gradients;
-      return_args[2].value.pdb_pointer = gradient_list;
+      return_vals[1].value.pdb_int = num_gradients;
+      return_vals[2].value.pdb_pointer = gradient_list;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg gradients_get_list_inargs[] =
@@ -162,7 +162,7 @@ gradients_sample_uniform_invoker (ProcRecord   *proc_record,
                                   Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gint32 num_samples;
   gboolean reverse;
   gint32 array_length = 0;
@@ -204,15 +204,15 @@ gradients_sample_uniform_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = array_length;
-      return_args[2].value.pdb_pointer = color_samples;
+      return_vals[1].value.pdb_int = array_length;
+      return_vals[2].value.pdb_pointer = color_samples;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg gradients_sample_uniform_inargs[] =
@@ -269,7 +269,7 @@ gradients_sample_custom_invoker (ProcRecord   *proc_record,
                                  Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gint32 num_samples;
   gdouble *positions;
   gboolean reverse;
@@ -311,15 +311,15 @@ gradients_sample_custom_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = array_length;
-      return_args[2].value.pdb_pointer = color_samples;
+      return_vals[1].value.pdb_int = array_length;
+      return_vals[2].value.pdb_pointer = color_samples;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg gradients_sample_custom_inargs[] =
@@ -381,7 +381,7 @@ gradients_get_gradient_data_invoker (ProcRecord   *proc_record,
                                      Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 sample_size;
   gboolean reverse;
@@ -447,16 +447,16 @@ gradients_get_gradient_data_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = actual_name;
-      return_args[2].value.pdb_int = width;
-      return_args[3].value.pdb_pointer = grad_data;
+      return_vals[1].value.pdb_pointer = actual_name;
+      return_vals[2].value.pdb_int = width;
+      return_vals[3].value.pdb_pointer = grad_data;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg gradients_get_gradient_data_inargs[] =

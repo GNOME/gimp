@@ -158,7 +158,7 @@ gradient_new_invoker (ProcRecord   *proc_record,
                       Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gchar *actual_name = NULL;
 
@@ -181,12 +181,12 @@ gradient_new_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = actual_name;
+    return_vals[1].value.pdb_pointer = actual_name;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg gradient_new_inargs[] =
@@ -233,7 +233,7 @@ gradient_duplicate_invoker (ProcRecord   *proc_record,
                             Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gchar *copy_name = NULL;
 
@@ -261,12 +261,12 @@ gradient_duplicate_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = copy_name;
+    return_vals[1].value.pdb_pointer = copy_name;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg gradient_duplicate_inargs[] =
@@ -313,7 +313,7 @@ gradient_is_editable_invoker (ProcRecord   *proc_record,
                               Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gboolean editable = FALSE;
 
@@ -332,12 +332,12 @@ gradient_is_editable_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = editable;
+    return_vals[1].value.pdb_int = editable;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg gradient_is_editable_inargs[] =
@@ -384,7 +384,7 @@ gradient_rename_invoker (ProcRecord   *proc_record,
                          Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gchar *new_name;
   gchar *actual_name = NULL;
@@ -411,12 +411,12 @@ gradient_rename_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = actual_name;
+    return_vals[1].value.pdb_pointer = actual_name;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg gradient_rename_inargs[] =
@@ -497,7 +497,7 @@ gradient_delete_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg gradient_delete_inargs[] =
@@ -535,7 +535,7 @@ gradient_get_uniform_samples_invoker (ProcRecord   *proc_record,
                                       Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 num_samples;
   gboolean reverse;
@@ -586,15 +586,15 @@ gradient_get_uniform_samples_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = num_color_samples;
-      return_args[2].value.pdb_pointer = color_samples;
+      return_vals[1].value.pdb_int = num_color_samples;
+      return_vals[2].value.pdb_pointer = color_samples;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg gradient_get_uniform_samples_inargs[] =
@@ -656,7 +656,7 @@ gradient_get_custom_samples_invoker (ProcRecord   *proc_record,
                                      Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 num_samples;
   gdouble *positions;
@@ -709,15 +709,15 @@ gradient_get_custom_samples_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = num_color_samples;
-      return_args[2].value.pdb_pointer = color_samples;
+      return_vals[1].value.pdb_int = num_color_samples;
+      return_vals[2].value.pdb_pointer = color_samples;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg gradient_get_custom_samples_inargs[] =
@@ -784,7 +784,7 @@ gradient_segment_get_left_color_invoker (ProcRecord   *proc_record,
                                          Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 segment;
   GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
@@ -814,15 +814,15 @@ gradient_segment_get_left_color_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_color = color;
-      return_args[2].value.pdb_float = opacity;
+      return_vals[1].value.pdb_color = color;
+      return_vals[2].value.pdb_float = opacity;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg gradient_segment_get_left_color_inargs[] =
@@ -914,7 +914,7 @@ gradient_segment_set_left_color_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg gradient_segment_set_left_color_inargs[] =
@@ -967,7 +967,7 @@ gradient_segment_get_right_color_invoker (ProcRecord   *proc_record,
                                           Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 segment;
   GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
@@ -997,15 +997,15 @@ gradient_segment_get_right_color_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_color = color;
-      return_args[2].value.pdb_float = opacity;
+      return_vals[1].value.pdb_color = color;
+      return_vals[2].value.pdb_float = opacity;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg gradient_segment_get_right_color_inargs[] =
@@ -1097,7 +1097,7 @@ gradient_segment_set_right_color_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg gradient_segment_set_right_color_inargs[] =
@@ -1150,7 +1150,7 @@ gradient_segment_get_left_pos_invoker (ProcRecord   *proc_record,
                                        Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 segment;
   gdouble pos = 0.0;
@@ -1178,12 +1178,12 @@ gradient_segment_get_left_pos_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_float = pos;
+    return_vals[1].value.pdb_float = pos;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg gradient_segment_get_left_pos_inargs[] =
@@ -1235,7 +1235,7 @@ gradient_segment_set_left_pos_invoker (ProcRecord   *proc_record,
                                        Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 segment;
   gdouble pos;
@@ -1268,12 +1268,12 @@ gradient_segment_set_left_pos_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_float = final_pos;
+    return_vals[1].value.pdb_float = final_pos;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg gradient_segment_set_left_pos_inargs[] =
@@ -1330,7 +1330,7 @@ gradient_segment_get_middle_pos_invoker (ProcRecord   *proc_record,
                                          Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 segment;
   gdouble pos = 0.0;
@@ -1358,12 +1358,12 @@ gradient_segment_get_middle_pos_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_float = pos;
+    return_vals[1].value.pdb_float = pos;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg gradient_segment_get_middle_pos_inargs[] =
@@ -1415,7 +1415,7 @@ gradient_segment_set_middle_pos_invoker (ProcRecord   *proc_record,
                                          Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 segment;
   gdouble pos;
@@ -1449,12 +1449,12 @@ gradient_segment_set_middle_pos_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_float = final_pos;
+    return_vals[1].value.pdb_float = final_pos;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg gradient_segment_set_middle_pos_inargs[] =
@@ -1511,7 +1511,7 @@ gradient_segment_get_right_pos_invoker (ProcRecord   *proc_record,
                                         Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 segment;
   gdouble pos = 0.0;
@@ -1539,12 +1539,12 @@ gradient_segment_get_right_pos_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_float = pos;
+    return_vals[1].value.pdb_float = pos;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg gradient_segment_get_right_pos_inargs[] =
@@ -1596,7 +1596,7 @@ gradient_segment_set_right_pos_invoker (ProcRecord   *proc_record,
                                         Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 segment;
   gdouble pos;
@@ -1630,12 +1630,12 @@ gradient_segment_set_right_pos_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_float = final_pos;
+    return_vals[1].value.pdb_float = final_pos;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg gradient_segment_set_right_pos_inargs[] =
@@ -1692,7 +1692,7 @@ gradient_segment_get_blending_function_invoker (ProcRecord   *proc_record,
                                                 Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 segment;
   gint32 blend_func = 0;
@@ -1720,12 +1720,12 @@ gradient_segment_get_blending_function_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = blend_func;
+    return_vals[1].value.pdb_int = blend_func;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg gradient_segment_get_blending_function_inargs[] =
@@ -1777,7 +1777,7 @@ gradient_segment_get_coloring_type_invoker (ProcRecord   *proc_record,
                                             Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 segment;
   gint32 coloring_type = 0;
@@ -1805,12 +1805,12 @@ gradient_segment_get_coloring_type_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = coloring_type;
+    return_vals[1].value.pdb_int = coloring_type;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg gradient_segment_get_coloring_type_inargs[] =
@@ -1900,7 +1900,7 @@ gradient_segment_range_set_blending_function_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg gradient_segment_range_set_blending_function_inargs[] =
@@ -1991,7 +1991,7 @@ gradient_segment_range_set_coloring_type_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg gradient_segment_range_set_coloring_type_inargs[] =
@@ -2077,7 +2077,7 @@ gradient_segment_range_flip_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg gradient_segment_range_flip_inargs[] =
@@ -2164,7 +2164,7 @@ gradient_segment_range_replicate_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg gradient_segment_range_replicate_inargs[] =
@@ -2250,7 +2250,7 @@ gradient_segment_range_split_midpoint_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg gradient_segment_range_split_midpoint_inargs[] =
@@ -2337,7 +2337,7 @@ gradient_segment_range_split_uniform_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg gradient_segment_range_split_uniform_inargs[] =
@@ -2423,7 +2423,7 @@ gradient_segment_range_delete_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg gradient_segment_range_delete_inargs[] =
@@ -2503,7 +2503,7 @@ gradient_segment_range_redistribute_handles_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg gradient_segment_range_redistribute_handles_inargs[] =
@@ -2586,7 +2586,7 @@ gradient_segment_range_blend_colors_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg gradient_segment_range_blend_colors_inargs[] =
@@ -2669,7 +2669,7 @@ gradient_segment_range_blend_opacity_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg gradient_segment_range_blend_opacity_inargs[] =
@@ -2717,7 +2717,7 @@ gradient_segment_range_move_invoker (ProcRecord   *proc_record,
                                      Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 start_segment;
   gint32 end_segment;
@@ -2761,12 +2761,12 @@ gradient_segment_range_move_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_float = final_delta;
+    return_vals[1].value.pdb_float = final_delta;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg gradient_segment_range_move_inargs[] =

@@ -386,11 +386,7 @@ procedural_db_run_proc (Gimp         *gimp,
       return return_vals;
     }
 
-  /*  allocate the parameter array  */
-  params = g_new0 (Argument, proc->num_args);
-
-  for (i = 0; i < proc->num_args; i++)
-    params[i].arg_type = proc->args[i].arg_type;
+  params = procedural_db_arguments (proc);
 
   va_start (args, nreturn_vals);
 
@@ -482,28 +478,44 @@ procedural_db_run_proc (Gimp         *gimp,
 }
 
 Argument *
-procedural_db_return_args (ProcRecord *procedure,
-                           gboolean    success)
+procedural_db_arguments (ProcRecord *procedure)
 {
-  Argument *return_args;
+  Argument *args;
   gint      i;
 
   g_return_val_if_fail (procedure != NULL, NULL);
 
-  return_args = g_new0 (Argument, procedure->num_values + 1);
+  args = g_new0 (Argument, procedure->num_args);
 
-  return_args[0].arg_type = GIMP_PDB_STATUS;
+  for (i = 0; i < procedure->num_args; i++)
+    args[i].arg_type = procedure->values[i].arg_type;
+
+  return args;
+}
+
+Argument *
+procedural_db_return_values (ProcRecord *procedure,
+                             gboolean    success)
+{
+  Argument *args;
+  gint      i;
+
+  g_return_val_if_fail (procedure != NULL, NULL);
+
+  args = g_new0 (Argument, procedure->num_values + 1);
+
+  args[0].arg_type = GIMP_PDB_STATUS;
 
   if (success)
-    return_args[0].value.pdb_int = GIMP_PDB_SUCCESS;
+    args[0].value.pdb_int = GIMP_PDB_SUCCESS;
   else
-    return_args[0].value.pdb_int = GIMP_PDB_EXECUTION_ERROR;
+    args[0].value.pdb_int = GIMP_PDB_EXECUTION_ERROR;
 
   /*  Set the arg types for the return values  */
   for (i = 0; i < procedure->num_values; i++)
-    return_args[i + 1].arg_type = procedure->values[i].arg_type;
+    args[i + 1].arg_type = procedure->values[i].arg_type;
 
-  return return_args;
+  return args;
 }
 
 void

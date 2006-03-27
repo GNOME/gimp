@@ -78,7 +78,7 @@ image_undo_group_start_invoker (ProcRecord   *proc_record,
         g_free (undo_desc);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg image_undo_group_start_inargs[] =
@@ -127,7 +127,7 @@ image_undo_group_end_invoker (ProcRecord   *proc_record,
       gimp_image_undo_group_end (image);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg image_undo_group_end_inargs[] =
@@ -165,7 +165,7 @@ image_undo_is_enabled_invoker (ProcRecord   *proc_record,
                                Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   gboolean enabled = FALSE;
 
@@ -178,12 +178,12 @@ image_undo_is_enabled_invoker (ProcRecord   *proc_record,
       enabled = gimp_image_undo_is_enabled (image);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = enabled;
+    return_vals[1].value.pdb_int = enabled;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg image_undo_is_enabled_inargs[] =
@@ -230,7 +230,7 @@ image_undo_disable_invoker (ProcRecord   *proc_record,
                             Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   gboolean disabled = FALSE;
 
@@ -243,12 +243,12 @@ image_undo_disable_invoker (ProcRecord   *proc_record,
       disabled = gimp_image_undo_disable (image);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = disabled;
+    return_vals[1].value.pdb_int = disabled;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg image_undo_disable_inargs[] =
@@ -295,7 +295,7 @@ image_undo_enable_invoker (ProcRecord   *proc_record,
                            Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   gboolean enabled = FALSE;
 
@@ -308,12 +308,12 @@ image_undo_enable_invoker (ProcRecord   *proc_record,
       enabled = gimp_image_undo_enable (image);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = enabled;
+    return_vals[1].value.pdb_int = enabled;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg image_undo_enable_inargs[] =
@@ -360,7 +360,7 @@ image_undo_freeze_invoker (ProcRecord   *proc_record,
                            Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   gboolean frozen = FALSE;
 
@@ -373,12 +373,12 @@ image_undo_freeze_invoker (ProcRecord   *proc_record,
       frozen = gimp_image_undo_freeze (image);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = frozen;
+    return_vals[1].value.pdb_int = frozen;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg image_undo_freeze_inargs[] =
@@ -425,7 +425,7 @@ image_undo_thaw_invoker (ProcRecord   *proc_record,
                          Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   gboolean thawed = FALSE;
 
@@ -438,12 +438,12 @@ image_undo_thaw_invoker (ProcRecord   *proc_record,
       thawed = gimp_image_undo_thaw (image);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = thawed;
+    return_vals[1].value.pdb_int = thawed;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg image_undo_thaw_inargs[] =

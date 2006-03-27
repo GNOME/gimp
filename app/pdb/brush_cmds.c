@@ -93,7 +93,7 @@ brush_new_invoker (ProcRecord   *proc_record,
                    Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gchar *actual_name = NULL;
 
@@ -116,12 +116,12 @@ brush_new_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = actual_name;
+    return_vals[1].value.pdb_pointer = actual_name;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brush_new_inargs[] =
@@ -168,7 +168,7 @@ brush_duplicate_invoker (ProcRecord   *proc_record,
                          Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gchar *copy_name = NULL;
 
@@ -196,12 +196,12 @@ brush_duplicate_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = copy_name;
+    return_vals[1].value.pdb_pointer = copy_name;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brush_duplicate_inargs[] =
@@ -248,7 +248,7 @@ brush_is_generated_invoker (ProcRecord   *proc_record,
                             Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gboolean generated = FALSE;
 
@@ -267,12 +267,12 @@ brush_is_generated_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = generated;
+    return_vals[1].value.pdb_int = generated;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brush_is_generated_inargs[] =
@@ -319,7 +319,7 @@ brush_rename_invoker (ProcRecord   *proc_record,
                       Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gchar *new_name;
   gchar *actual_name = NULL;
@@ -346,12 +346,12 @@ brush_rename_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = actual_name;
+    return_vals[1].value.pdb_pointer = actual_name;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brush_rename_inargs[] =
@@ -432,7 +432,7 @@ brush_delete_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg brush_delete_inargs[] =
@@ -470,7 +470,7 @@ brush_is_editable_invoker (ProcRecord   *proc_record,
                            Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gboolean editable = FALSE;
 
@@ -489,12 +489,12 @@ brush_is_editable_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = editable;
+    return_vals[1].value.pdb_int = editable;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brush_is_editable_inargs[] =
@@ -541,7 +541,7 @@ brush_get_info_invoker (ProcRecord   *proc_record,
                         Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 width = 0;
   gint32 height = 0;
@@ -568,17 +568,17 @@ brush_get_info_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = width;
-      return_args[2].value.pdb_int = height;
-      return_args[3].value.pdb_int = mask_bpp;
-      return_args[4].value.pdb_int = color_bpp;
+      return_vals[1].value.pdb_int = width;
+      return_vals[2].value.pdb_int = height;
+      return_vals[3].value.pdb_int = mask_bpp;
+      return_vals[4].value.pdb_int = color_bpp;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brush_get_info_inargs[] =
@@ -640,7 +640,7 @@ brush_get_pixels_invoker (ProcRecord   *proc_record,
                           Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 width = 0;
   gint32 height = 0;
@@ -680,21 +680,21 @@ brush_get_pixels_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = width;
-      return_args[2].value.pdb_int = height;
-      return_args[3].value.pdb_int = mask_bpp;
-      return_args[4].value.pdb_int = num_mask_bytes;
-      return_args[5].value.pdb_pointer = mask_bytes;
-      return_args[6].value.pdb_int = color_bpp;
-      return_args[7].value.pdb_int = num_color_bytes;
-      return_args[8].value.pdb_pointer = color_bytes;
+      return_vals[1].value.pdb_int = width;
+      return_vals[2].value.pdb_int = height;
+      return_vals[3].value.pdb_int = mask_bpp;
+      return_vals[4].value.pdb_int = num_mask_bytes;
+      return_vals[5].value.pdb_pointer = mask_bytes;
+      return_vals[6].value.pdb_int = color_bpp;
+      return_vals[7].value.pdb_int = num_color_bytes;
+      return_vals[8].value.pdb_pointer = color_bytes;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brush_get_pixels_inargs[] =
@@ -776,7 +776,7 @@ brush_get_spacing_invoker (ProcRecord   *proc_record,
                            Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 spacing = 0;
 
@@ -795,12 +795,12 @@ brush_get_spacing_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = spacing;
+    return_vals[1].value.pdb_int = spacing;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brush_get_spacing_inargs[] =
@@ -869,7 +869,7 @@ brush_set_spacing_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg brush_set_spacing_inargs[] =
@@ -912,7 +912,7 @@ brush_get_shape_invoker (ProcRecord   *proc_record,
                          Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 shape = 0;
 
@@ -931,12 +931,12 @@ brush_get_shape_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = shape;
+    return_vals[1].value.pdb_int = shape;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brush_get_shape_inargs[] =
@@ -983,7 +983,7 @@ brush_get_radius_invoker (ProcRecord   *proc_record,
                           Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gdouble radius = 0.0;
 
@@ -1002,12 +1002,12 @@ brush_get_radius_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_float = radius;
+    return_vals[1].value.pdb_float = radius;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brush_get_radius_inargs[] =
@@ -1054,7 +1054,7 @@ brush_get_spikes_invoker (ProcRecord   *proc_record,
                           Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 spikes = 0;
 
@@ -1073,12 +1073,12 @@ brush_get_spikes_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = spikes;
+    return_vals[1].value.pdb_int = spikes;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brush_get_spikes_inargs[] =
@@ -1125,7 +1125,7 @@ brush_get_hardness_invoker (ProcRecord   *proc_record,
                             Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gdouble hardness = 0.0;
 
@@ -1144,12 +1144,12 @@ brush_get_hardness_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_float = hardness;
+    return_vals[1].value.pdb_float = hardness;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brush_get_hardness_inargs[] =
@@ -1196,7 +1196,7 @@ brush_get_aspect_ratio_invoker (ProcRecord   *proc_record,
                                 Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gdouble aspect_ratio = 0.0;
 
@@ -1215,12 +1215,12 @@ brush_get_aspect_ratio_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_float = aspect_ratio;
+    return_vals[1].value.pdb_float = aspect_ratio;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brush_get_aspect_ratio_inargs[] =
@@ -1267,7 +1267,7 @@ brush_get_angle_invoker (ProcRecord   *proc_record,
                          Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gdouble angle = 0.0;
 
@@ -1286,12 +1286,12 @@ brush_get_angle_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_float = angle;
+    return_vals[1].value.pdb_float = angle;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brush_get_angle_inargs[] =
@@ -1338,7 +1338,7 @@ brush_set_shape_invoker (ProcRecord   *proc_record,
                          Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 shape_in;
   gint32 shape_out = 0;
@@ -1366,12 +1366,12 @@ brush_set_shape_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = shape_out;
+    return_vals[1].value.pdb_int = shape_out;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brush_set_shape_inargs[] =
@@ -1423,7 +1423,7 @@ brush_set_radius_invoker (ProcRecord   *proc_record,
                           Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gdouble radius_in;
   gdouble radius_out = 0.0;
@@ -1449,12 +1449,12 @@ brush_set_radius_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_float = radius_out;
+    return_vals[1].value.pdb_float = radius_out;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brush_set_radius_inargs[] =
@@ -1506,7 +1506,7 @@ brush_set_spikes_invoker (ProcRecord   *proc_record,
                           Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 spikes_in;
   gint32 spikes_out = 0;
@@ -1532,12 +1532,12 @@ brush_set_spikes_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = spikes_out;
+    return_vals[1].value.pdb_int = spikes_out;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brush_set_spikes_inargs[] =
@@ -1589,7 +1589,7 @@ brush_set_hardness_invoker (ProcRecord   *proc_record,
                             Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gdouble hardness_in;
   gdouble hardness_out = 0.0;
@@ -1615,12 +1615,12 @@ brush_set_hardness_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_float = hardness_out;
+    return_vals[1].value.pdb_float = hardness_out;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brush_set_hardness_inargs[] =
@@ -1672,7 +1672,7 @@ brush_set_aspect_ratio_invoker (ProcRecord   *proc_record,
                                 Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gdouble aspect_ratio_in;
   gdouble aspect_ratio_out = 0.0;
@@ -1698,12 +1698,12 @@ brush_set_aspect_ratio_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_float = aspect_ratio_out;
+    return_vals[1].value.pdb_float = aspect_ratio_out;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brush_set_aspect_ratio_inargs[] =
@@ -1755,7 +1755,7 @@ brush_set_angle_invoker (ProcRecord   *proc_record,
                          Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gdouble angle_in;
   gdouble angle_out = 0.0;
@@ -1781,12 +1781,12 @@ brush_set_angle_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_float = angle_out;
+    return_vals[1].value.pdb_float = angle_out;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brush_set_angle_inargs[] =

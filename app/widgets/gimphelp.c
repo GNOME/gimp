@@ -193,9 +193,8 @@ gimp_help_browser (Gimp *gimp)
 	  return FALSE;
 	}
 
-      args = g_new (Argument, 1);
+      args = procedural_db_arguments (proc_rec);
 
-      args[0].arg_type      = GIMP_PDB_INT32;
       args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
 
       plug_in_run (gimp, gimp_get_user_context (gimp), NULL,
@@ -279,15 +278,11 @@ gimp_help_call (Gimp        *gimp,
 
       n_domains = plug_ins_help_domains (gimp, &help_domains, &help_uris);
 
-      args = g_new (Argument, 4);
+      args = procedural_db_arguments (proc_rec);
 
-      args[0].arg_type          = GIMP_PDB_INT32;
       args[0].value.pdb_int     = n_domains;
-      args[1].arg_type          = GIMP_PDB_STRINGARRAY;
       args[1].value.pdb_pointer = help_domains;
-      args[2].arg_type          = GIMP_PDB_INT32;
       args[2].value.pdb_int     = n_domains;
-      args[3].arg_type          = GIMP_PDB_STRINGARRAY;
       args[3].value.pdb_pointer = help_uris;
 
       plug_in_run (gimp, gimp_get_user_context (gimp), NULL,

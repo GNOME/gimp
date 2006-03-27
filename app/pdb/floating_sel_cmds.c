@@ -70,7 +70,7 @@ floating_sel_remove_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg floating_sel_remove_inargs[] =
@@ -122,7 +122,7 @@ floating_sel_anchor_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg floating_sel_anchor_inargs[] =
@@ -174,7 +174,7 @@ floating_sel_to_layer_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg floating_sel_to_layer_inargs[] =
@@ -231,7 +231,7 @@ floating_sel_attach_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg floating_sel_attach_inargs[] =
@@ -291,7 +291,7 @@ floating_sel_rigor_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg floating_sel_rigor_inargs[] =
@@ -351,7 +351,7 @@ floating_sel_relax_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg floating_sel_relax_inargs[] =

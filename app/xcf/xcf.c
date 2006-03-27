@@ -220,7 +220,7 @@ xcf_exit (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 }
 
-static Argument*
+static Argument *
 xcf_load_invoker (ProcRecord   *procedure,
                   Gimp         *gimp,
                   GimpContext  *context,
@@ -228,7 +228,7 @@ xcf_load_invoker (ProcRecord   *procedure,
 		  Argument     *args)
 {
   XcfInfo      info;
-  Argument    *return_args;
+  Argument    *return_vals;
   GimpImage   *gimage   = NULL;
   const gchar *filename;
   gboolean     success  = FALSE;
@@ -298,14 +298,14 @@ xcf_load_invoker (ProcRecord   *procedure,
     g_message (_("Could not open '%s' for reading: %s"),
 	       gimp_filename_to_utf8 (filename), g_strerror (errno));
 
-  return_args = procedural_db_return_args (procedure, success);
+  return_vals = procedural_db_return_values (procedure, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_image_get_ID (gimage);
+    return_vals[1].value.pdb_int = gimp_image_get_ID (gimage);
 
   gimp_unset_busy (gimp);
 
-  return return_args;
+  return return_vals;
 }
 
 static Argument *
@@ -316,7 +316,7 @@ xcf_save_invoker (ProcRecord   *procedure,
 		  Argument     *args)
 {
   XcfInfo      info;
-  Argument    *return_args;
+  Argument    *return_vals;
   GimpImage   *gimage;
   const gchar *filename;
   gboolean     success  = FALSE;
@@ -355,9 +355,9 @@ xcf_save_invoker (ProcRecord   *procedure,
     g_message (_("Could not open '%s' for writing: %s"),
 	       gimp_filename_to_utf8 (filename), g_strerror (errno));
 
-  return_args = procedural_db_return_args (procedure, success);
+  return_vals = procedural_db_return_values (procedure, success);
 
   gimp_unset_busy (gimp);
 
-  return return_args;
+  return return_vals;
 }

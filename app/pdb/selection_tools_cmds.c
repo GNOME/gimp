@@ -106,7 +106,7 @@ by_color_select_invoker (ProcRecord   *proc_record,
                                     feather_radius);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg by_color_select_inargs[] =
@@ -229,7 +229,7 @@ ellipse_select_invoker (ProcRecord   *proc_record,
                                    feather_radius);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg ellipse_select_inargs[] =
@@ -350,7 +350,7 @@ free_select_invoker (ProcRecord   *proc_record,
                                    feather_radius);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg free_select_inargs[] =
@@ -471,7 +471,7 @@ fuzzy_select_invoker (ProcRecord   *proc_record,
                                  feather_radius);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg fuzzy_select_inargs[] =
@@ -596,7 +596,7 @@ rect_select_invoker (ProcRecord   *proc_record,
                                      feather_radius);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg rect_select_inargs[] =

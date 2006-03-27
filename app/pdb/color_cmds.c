@@ -146,7 +146,7 @@ brightness_contrast_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg brightness_contrast_inargs[] =
@@ -248,7 +248,7 @@ levels_invoker (ProcRecord   *proc_record,
                               low_output, high_output);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg levels_inargs[] =
@@ -332,7 +332,7 @@ levels_auto_invoker (ProcRecord   *proc_record,
         gimp_drawable_levels_stretch (drawable, context);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg levels_auto_inargs[] =
@@ -386,7 +386,7 @@ levels_stretch_invoker (ProcRecord   *proc_record,
         gimp_drawable_levels_stretch (drawable, context);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg levels_stretch_inargs[] =
@@ -470,7 +470,7 @@ posterize_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg posterize_inargs[] =
@@ -529,7 +529,7 @@ desaturate_invoker (ProcRecord   *proc_record,
         gimp_drawable_desaturate (drawable, GIMP_DESATURATE_LIGHTNESS);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg desaturate_inargs[] =
@@ -588,7 +588,7 @@ desaturate_full_invoker (ProcRecord   *proc_record,
         gimp_drawable_desaturate (drawable, desaturate_mode);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg desaturate_full_inargs[] =
@@ -650,7 +650,7 @@ equalize_invoker (ProcRecord   *proc_record,
         gimp_drawable_equalize (drawable, mask_only);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg equalize_inargs[] =
@@ -709,7 +709,7 @@ invert_invoker (ProcRecord   *proc_record,
         gimp_drawable_invert (drawable);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg invert_inargs[] =
@@ -831,7 +831,7 @@ curves_spline_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg curves_spline_inargs[] =
@@ -959,7 +959,7 @@ curves_explicit_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg curves_explicit_inargs[] =
@@ -1081,7 +1081,7 @@ color_balance_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg color_balance_inargs[] =
@@ -1203,7 +1203,7 @@ colorize_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg colorize_inargs[] =
@@ -1256,7 +1256,7 @@ histogram_invoker (ProcRecord   *proc_record,
                    Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpDrawable *drawable;
   gint32 channel;
   gint32 start_range;
@@ -1315,19 +1315,19 @@ histogram_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_float = mean;
-      return_args[2].value.pdb_float = std_dev;
-      return_args[3].value.pdb_float = median;
-      return_args[4].value.pdb_float = pixels;
-      return_args[5].value.pdb_float = count;
-      return_args[6].value.pdb_float = percentile;
+      return_vals[1].value.pdb_float = mean;
+      return_vals[2].value.pdb_float = std_dev;
+      return_vals[3].value.pdb_float = median;
+      return_vals[4].value.pdb_float = pixels;
+      return_vals[5].value.pdb_float = count;
+      return_vals[6].value.pdb_float = percentile;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg histogram_inargs[] =
@@ -1479,7 +1479,7 @@ hue_saturation_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg hue_saturation_inargs[] =
@@ -1588,7 +1588,7 @@ threshold_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg threshold_inargs[] =

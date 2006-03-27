@@ -66,7 +66,7 @@ message_invoker (ProcRecord   *proc_record,
         gimp_message (gimp, NULL, message);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg message_inargs[] =
@@ -103,15 +103,15 @@ message_get_handler_invoker (ProcRecord   *proc_record,
                              GimpProgress *progress,
                              Argument     *args)
 {
-  Argument *return_args;
+  Argument *return_vals;
   gint32 handler = 0;
 
   handler = gimp->message_handler;
 
-  return_args = procedural_db_return_args (proc_record, TRUE);
-  return_args[1].value.pdb_int = handler;
+  return_vals = procedural_db_return_values (proc_record, TRUE);
+  return_vals[1].value.pdb_int = handler;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg message_get_handler_outargs[] =
@@ -160,7 +160,7 @@ message_set_handler_invoker (ProcRecord   *proc_record,
       gimp->message_handler = handler;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg message_set_handler_inargs[] =

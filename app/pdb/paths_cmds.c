@@ -85,7 +85,7 @@ path_list_invoker (ProcRecord   *proc_record,
                    Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   gint32 num_paths = 0;
   gchar **path_list = NULL;
@@ -99,15 +99,15 @@ path_list_invoker (ProcRecord   *proc_record,
       path_list = gimp_container_get_name_array (image->vectors, &num_paths);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = num_paths;
-      return_args[2].value.pdb_pointer = path_list;
+      return_vals[1].value.pdb_int = num_paths;
+      return_vals[2].value.pdb_pointer = path_list;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg path_list_inargs[] =
@@ -159,7 +159,7 @@ path_get_current_invoker (ProcRecord   *proc_record,
                           Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   gchar *name = NULL;
 
@@ -177,12 +177,12 @@ path_get_current_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = name;
+    return_vals[1].value.pdb_pointer = name;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg path_get_current_inargs[] =
@@ -250,7 +250,7 @@ path_set_current_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg path_set_current_inargs[] =
@@ -314,7 +314,7 @@ path_delete_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg path_delete_inargs[] =
@@ -357,7 +357,7 @@ path_get_points_invoker (ProcRecord   *proc_record,
                          Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   gchar *name;
   gint32 path_type = 0;
@@ -414,17 +414,17 @@ path_get_points_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = path_type;
-      return_args[2].value.pdb_int = path_closed;
-      return_args[3].value.pdb_int = num_path_point_details;
-      return_args[4].value.pdb_pointer = points_pairs;
+      return_vals[1].value.pdb_int = path_type;
+      return_vals[2].value.pdb_int = path_closed;
+      return_vals[3].value.pdb_int = num_path_point_details;
+      return_vals[4].value.pdb_pointer = points_pairs;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg path_get_points_inargs[] =
@@ -555,7 +555,7 @@ path_set_points_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg path_set_points_inargs[] =
@@ -639,7 +639,7 @@ path_stroke_current_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg path_stroke_current_inargs[] =
@@ -677,7 +677,7 @@ path_get_point_at_dist_invoker (ProcRecord   *proc_record,
                                 Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   gdouble distance;
   gint32 x_point = 0;
@@ -743,16 +743,16 @@ path_get_point_at_dist_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = x_point;
-      return_args[2].value.pdb_int = y_point;
-      return_args[3].value.pdb_float = slope;
+      return_vals[1].value.pdb_int = x_point;
+      return_vals[2].value.pdb_int = y_point;
+      return_vals[3].value.pdb_float = slope;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg path_get_point_at_dist_inargs[] =
@@ -814,7 +814,7 @@ path_get_tattoo_invoker (ProcRecord   *proc_record,
                          Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   gchar *name;
   gint32 tattoo = 0;
@@ -837,12 +837,12 @@ path_get_tattoo_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = tattoo;
+    return_vals[1].value.pdb_int = tattoo;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg path_get_tattoo_inargs[] =
@@ -918,7 +918,7 @@ path_set_tattoo_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg path_set_tattoo_inargs[] =
@@ -966,7 +966,7 @@ get_path_by_tattoo_invoker (ProcRecord   *proc_record,
                             Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   gint32 tattoo;
   gchar *name = NULL;
@@ -987,12 +987,12 @@ get_path_by_tattoo_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = name;
+    return_vals[1].value.pdb_pointer = name;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg get_path_by_tattoo_inargs[] =
@@ -1044,7 +1044,7 @@ path_get_locked_invoker (ProcRecord   *proc_record,
                          Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   gchar *name;
   gboolean locked = FALSE;
@@ -1067,12 +1067,12 @@ path_get_locked_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = locked;
+    return_vals[1].value.pdb_int = locked;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg path_get_locked_inargs[] =
@@ -1148,7 +1148,7 @@ path_set_locked_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg path_set_locked_inargs[] =
@@ -1241,7 +1241,7 @@ path_to_selection_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg path_to_selection_inargs[] =
@@ -1331,7 +1331,7 @@ path_import_invoker (ProcRecord   *proc_record,
       success = gimp_vectors_import_file (image, filename, merge, scale, -1, NULL);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg path_import_inargs[] =
@@ -1410,7 +1410,7 @@ path_import_string_invoker (ProcRecord   *proc_record,
                                             merge, scale, -1, NULL);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg path_import_string_inargs[] =

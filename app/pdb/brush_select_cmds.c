@@ -93,7 +93,7 @@ brushes_popup_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg brushes_popup_inargs[] =
@@ -171,7 +171,7 @@ brushes_close_popup_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg brushes_close_popup_inargs[] =
@@ -248,7 +248,7 @@ brushes_set_popup_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg brushes_set_popup_inargs[] =

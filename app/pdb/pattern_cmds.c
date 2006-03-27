@@ -52,7 +52,7 @@ pattern_get_info_invoker (ProcRecord   *proc_record,
                           Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 width = 0;
   gint32 height = 0;
@@ -77,16 +77,16 @@ pattern_get_info_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = width;
-      return_args[2].value.pdb_int = height;
-      return_args[3].value.pdb_int = bpp;
+      return_vals[1].value.pdb_int = width;
+      return_vals[2].value.pdb_int = height;
+      return_vals[3].value.pdb_int = bpp;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg pattern_get_info_inargs[] =
@@ -143,7 +143,7 @@ pattern_get_pixels_invoker (ProcRecord   *proc_record,
                             Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 width = 0;
   gint32 height = 0;
@@ -174,18 +174,18 @@ pattern_get_pixels_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = width;
-      return_args[2].value.pdb_int = height;
-      return_args[3].value.pdb_int = bpp;
-      return_args[4].value.pdb_int = num_color_bytes;
-      return_args[5].value.pdb_pointer = color_bytes;
+      return_vals[1].value.pdb_int = width;
+      return_vals[2].value.pdb_int = height;
+      return_vals[3].value.pdb_int = bpp;
+      return_vals[4].value.pdb_int = num_color_bytes;
+      return_vals[5].value.pdb_pointer = color_bytes;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg pattern_get_pixels_inargs[] =

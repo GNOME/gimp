@@ -56,7 +56,7 @@ image_add_hguide_invoker (ProcRecord   *proc_record,
                           Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   gint32 yposition;
   gint32 guide = 0;
@@ -82,12 +82,12 @@ image_add_hguide_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = guide;
+    return_vals[1].value.pdb_int = guide;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg image_add_hguide_inargs[] =
@@ -139,7 +139,7 @@ image_add_vguide_invoker (ProcRecord   *proc_record,
                           Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   gint32 xposition;
   gint32 guide = 0;
@@ -165,12 +165,12 @@ image_add_vguide_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = guide;
+    return_vals[1].value.pdb_int = guide;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg image_add_vguide_inargs[] =
@@ -241,7 +241,7 @@ image_delete_guide_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg image_delete_guide_inargs[] =
@@ -284,7 +284,7 @@ image_find_next_guide_invoker (ProcRecord   *proc_record,
                                Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   gint32 guide;
   gint32 next_guide = 0;
@@ -303,12 +303,12 @@ image_find_next_guide_invoker (ProcRecord   *proc_record,
         next_guide = g->guide_ID;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = next_guide;
+    return_vals[1].value.pdb_int = next_guide;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg image_find_next_guide_inargs[] =
@@ -360,7 +360,7 @@ image_get_guide_orientation_invoker (ProcRecord   *proc_record,
                                      Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   gint32 guide;
   gint32 orientation = 0;
@@ -381,12 +381,12 @@ image_get_guide_orientation_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = orientation;
+    return_vals[1].value.pdb_int = orientation;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg image_get_guide_orientation_inargs[] =
@@ -438,7 +438,7 @@ image_get_guide_position_invoker (ProcRecord   *proc_record,
                                   Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   gint32 guide;
   gint32 position = 0;
@@ -459,12 +459,12 @@ image_get_guide_position_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = position;
+    return_vals[1].value.pdb_int = position;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg image_get_guide_position_inargs[] =

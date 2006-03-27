@@ -143,7 +143,8 @@ Argument     * procedural_db_run_proc      (Gimp         *gimp,
                                             gint         *nreturn_vals,
                                             ...);
 
-Argument     * procedural_db_return_args   (ProcRecord   *procedure,
+Argument     * procedural_db_arguments     (ProcRecord   *procedure);
+Argument     * procedural_db_return_values (ProcRecord   *procedure,
                                             gboolean      success);
 void           procedural_db_destroy_args  (Argument     *args,
                                             gint          nargs);

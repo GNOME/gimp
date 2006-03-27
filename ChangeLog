@@ -1,5 +1,22 @@
 2006-03-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/procedural_db.[ch]: renamed procedural_db_return_args()
+	to procedural_db_return_values() and added
+	procedural_db_arguments(), which returns a newly allocated,
+	initialized array of the procedure's arguments.
+
+	* app/actions/plug-in-commands.c
+	* app/actions/vectors-commands.c
+	* app/plug-in/plug-in-run.c
+	* app/widgets/gimphelp.c
+	* app/xcf/xcf.c
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/pdb/fileops.pdb: changed accordingly, some cleanup.
+
+	* app/pdb/*_cmds.c: regenerated.
+
+2006-03-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/pdb/procedural_db.h (ArgMarshal): pass the ProcRecord as
 	first parameter, so marshallers have access to their ProcRecord
 	without the need for global variables.

@@ -67,7 +67,7 @@ image_convert_rgb_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg image_convert_rgb_inargs[] =
@@ -119,7 +119,7 @@ image_convert_grayscale_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg image_convert_grayscale_inargs[] =
@@ -221,7 +221,7 @@ image_convert_indexed_invoker (ProcRecord   *proc_record,
                             NULL);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg image_convert_indexed_inargs[] =

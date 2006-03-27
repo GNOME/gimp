@@ -63,17 +63,17 @@ procedural_db_temp_name_invoker (ProcRecord   *proc_record,
                                  GimpProgress *progress,
                                  Argument     *args)
 {
-  Argument *return_args;
+  Argument *return_vals;
   gchar *temp_name = NULL;
 
   static gint proc_number = 0;
 
   temp_name = g_strdup_printf ("temp-procedure-number-%d", proc_number++);
 
-  return_args = procedural_db_return_args (proc_record, TRUE);
-  return_args[1].value.pdb_pointer = temp_name;
+  return_vals = procedural_db_return_values (proc_record, TRUE);
+  return_vals[1].value.pdb_pointer = temp_name;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg procedural_db_temp_name_outargs[] =
@@ -122,7 +122,7 @@ procedural_db_dump_invoker (ProcRecord   *proc_record,
       success = procedural_db_dump (gimp, filename);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg procedural_db_dump_inargs[] =
@@ -160,7 +160,7 @@ procedural_db_query_invoker (ProcRecord   *proc_record,
                              Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gchar *blurb;
   gchar *help;
@@ -207,15 +207,15 @@ procedural_db_query_invoker (ProcRecord   *proc_record,
                                      &num_matches, &procedure_names);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = num_matches;
-      return_args[2].value.pdb_pointer = procedure_names;
+      return_vals[1].value.pdb_int = num_matches;
+      return_vals[2].value.pdb_pointer = procedure_names;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg procedural_db_query_inargs[] =
@@ -297,7 +297,7 @@ procedural_db_proc_info_invoker (ProcRecord   *proc_record,
                                  Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *procedure;
   gchar *blurb = NULL;
   gchar *help = NULL;
@@ -328,21 +328,21 @@ procedural_db_proc_info_invoker (ProcRecord   *proc_record,
       g_free (canonical);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = blurb;
-      return_args[2].value.pdb_pointer = help;
-      return_args[3].value.pdb_pointer = author;
-      return_args[4].value.pdb_pointer = copyright;
-      return_args[5].value.pdb_pointer = date;
-      return_args[6].value.pdb_int = proc_type;
-      return_args[7].value.pdb_int = num_args;
-      return_args[8].value.pdb_int = num_values;
+      return_vals[1].value.pdb_pointer = blurb;
+      return_vals[2].value.pdb_pointer = help;
+      return_vals[3].value.pdb_pointer = author;
+      return_vals[4].value.pdb_pointer = copyright;
+      return_vals[5].value.pdb_pointer = date;
+      return_vals[6].value.pdb_int = proc_type;
+      return_vals[7].value.pdb_int = num_args;
+      return_vals[8].value.pdb_int = num_values;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg procedural_db_proc_info_inargs[] =
@@ -424,7 +424,7 @@ procedural_db_proc_arg_invoker (ProcRecord   *proc_record,
                                 Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *procedure;
   gint32 arg_num;
   gint32 arg_type = 0;
@@ -470,16 +470,16 @@ procedural_db_proc_arg_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = arg_type;
-      return_args[2].value.pdb_pointer = arg_name;
-      return_args[3].value.pdb_pointer = arg_desc;
+      return_vals[1].value.pdb_int = arg_type;
+      return_vals[2].value.pdb_pointer = arg_name;
+      return_vals[3].value.pdb_pointer = arg_desc;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg procedural_db_proc_arg_inargs[] =
@@ -541,7 +541,7 @@ procedural_db_proc_val_invoker (ProcRecord   *proc_record,
                                 Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *procedure;
   gint32 val_num;
   gint32 val_type = 0;
@@ -587,16 +587,16 @@ procedural_db_proc_val_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = val_type;
-      return_args[2].value.pdb_pointer = val_name;
-      return_args[3].value.pdb_pointer = val_desc;
+      return_vals[1].value.pdb_int = val_type;
+      return_vals[2].value.pdb_pointer = val_name;
+      return_vals[3].value.pdb_pointer = val_desc;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg procedural_db_proc_val_inargs[] =
@@ -658,7 +658,7 @@ procedural_db_get_data_invoker (ProcRecord   *proc_record,
                                 Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *identifier;
   gint32 bytes = 0;
   guint8 *data = NULL;
@@ -684,15 +684,15 @@ procedural_db_get_data_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = bytes;
-      return_args[2].value.pdb_pointer = data;
+      return_vals[1].value.pdb_int = bytes;
+      return_vals[2].value.pdb_pointer = data;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg procedural_db_get_data_inargs[] =
@@ -744,7 +744,7 @@ procedural_db_get_data_size_invoker (ProcRecord   *proc_record,
                                      Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *identifier;
   gint32 bytes = 0;
 
@@ -768,12 +768,12 @@ procedural_db_get_data_size_invoker (ProcRecord   *proc_record,
 
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = bytes;
+    return_vals[1].value.pdb_int = bytes;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg procedural_db_get_data_size_inargs[] =
@@ -845,7 +845,7 @@ procedural_db_set_data_invoker (ProcRecord   *proc_record,
       g_free (canonical);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg procedural_db_set_data_inargs[] =

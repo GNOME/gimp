@@ -80,7 +80,7 @@ progress_init_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg progress_init_inargs[] =
@@ -135,7 +135,7 @@ progress_update_invoker (ProcRecord   *proc_record,
   else
     success = FALSE;
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg progress_update_inargs[] =
@@ -180,7 +180,7 @@ progress_pulse_invoker (ProcRecord   *proc_record,
     }
   else
     success = FALSE;
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcRecord progress_pulse_proc =
@@ -226,7 +226,7 @@ progress_set_text_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg progress_set_text_inargs[] =
@@ -264,7 +264,7 @@ progress_get_window_handle_invoker (ProcRecord   *proc_record,
                                     Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gint32 window = 0;
 
   if (gimp->current_plug_in && gimp->current_plug_in->open)
@@ -275,12 +275,12 @@ progress_get_window_handle_invoker (ProcRecord   *proc_record,
   else
     success = FALSE;
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = window;
+    return_vals[1].value.pdb_int = window;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg progress_get_window_handle_outargs[] =
@@ -333,7 +333,7 @@ progress_install_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg progress_install_inargs[] =
@@ -386,7 +386,7 @@ progress_uninstall_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg progress_uninstall_inargs[] =
@@ -439,7 +439,7 @@ progress_cancel_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg progress_cancel_inargs[] =

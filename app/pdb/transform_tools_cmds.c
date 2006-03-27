@@ -63,7 +63,7 @@ flip_invoker (ProcRecord   *proc_record,
               Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpDrawable *drawable;
   gint32 flip_type;
 
@@ -89,12 +89,12 @@ flip_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
+    return_vals[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg flip_inargs[] =
@@ -146,7 +146,7 @@ perspective_invoker (ProcRecord   *proc_record,
                      Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpDrawable *drawable;
   gboolean interpolation;
   gdouble x0;
@@ -219,12 +219,12 @@ perspective_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
+    return_vals[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg perspective_inargs[] =
@@ -316,7 +316,7 @@ rotate_invoker (ProcRecord   *proc_record,
                 Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpDrawable *drawable;
   gboolean interpolation;
   gdouble angle;
@@ -364,12 +364,12 @@ rotate_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
+    return_vals[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg rotate_inargs[] =
@@ -426,7 +426,7 @@ scale_invoker (ProcRecord   *proc_record,
                Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpDrawable *drawable;
   gboolean interpolation;
   gdouble x0;
@@ -487,12 +487,12 @@ scale_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
+    return_vals[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg scale_inargs[] =
@@ -564,7 +564,7 @@ shear_invoker (ProcRecord   *proc_record,
                Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpDrawable *drawable;
   gboolean interpolation;
   gint32 shear_type;
@@ -618,12 +618,12 @@ shear_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
+    return_vals[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg shear_inargs[] =
@@ -685,7 +685,7 @@ transform_2d_invoker (ProcRecord   *proc_record,
                       Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpDrawable *drawable;
   gboolean interpolation;
   gdouble source_x;
@@ -752,12 +752,12 @@ transform_2d_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
+    return_vals[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg transform_2d_inargs[] =

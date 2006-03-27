@@ -64,7 +64,7 @@ plugins_query_invoker (ProcRecord   *proc_record,
                        GimpProgress *progress,
                        Argument     *args)
 {
-  Argument *return_args;
+  Argument *return_vals;
   gchar *search_string;
   gint32 num_plugins = 0;
   gchar **menu_path = NULL;
@@ -84,22 +84,22 @@ plugins_query_invoker (ProcRecord   *proc_record,
                                 &plugin_real_name,
                                 &plugin_install_time);
 
-  return_args = procedural_db_return_args (proc_record, TRUE);
+  return_vals = procedural_db_return_values (proc_record, TRUE);
 
-  return_args[1].value.pdb_int = num_plugins;
-  return_args[2].value.pdb_pointer = menu_path;
-  return_args[3].value.pdb_int = num_plugins;
-  return_args[4].value.pdb_pointer = plugin_accelerator;
-  return_args[5].value.pdb_int = num_plugins;
-  return_args[6].value.pdb_pointer = plugin_location;
-  return_args[7].value.pdb_int = num_plugins;
-  return_args[8].value.pdb_pointer = plugin_image_type;
-  return_args[9].value.pdb_int = num_plugins;
-  return_args[10].value.pdb_pointer = plugin_install_time;
-  return_args[11].value.pdb_int = num_plugins;
-  return_args[12].value.pdb_pointer = plugin_real_name;
+  return_vals[1].value.pdb_int = num_plugins;
+  return_vals[2].value.pdb_pointer = menu_path;
+  return_vals[3].value.pdb_int = num_plugins;
+  return_vals[4].value.pdb_pointer = plugin_accelerator;
+  return_vals[5].value.pdb_int = num_plugins;
+  return_vals[6].value.pdb_pointer = plugin_location;
+  return_vals[7].value.pdb_int = num_plugins;
+  return_vals[8].value.pdb_pointer = plugin_image_type;
+  return_vals[9].value.pdb_int = num_plugins;
+  return_vals[10].value.pdb_pointer = plugin_install_time;
+  return_vals[11].value.pdb_int = num_plugins;
+  return_vals[12].value.pdb_pointer = plugin_real_name;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg plugins_query_inargs[] =
@@ -223,7 +223,7 @@ plugin_domain_register_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg plugin_domain_register_inargs[] =
@@ -290,7 +290,7 @@ plugin_help_register_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg plugin_help_register_inargs[] =
@@ -360,7 +360,7 @@ plugin_menu_register_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg plugin_menu_register_inargs[] =
@@ -433,7 +433,7 @@ plugin_menu_branch_register_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg plugin_menu_branch_register_inargs[] =
@@ -519,7 +519,7 @@ plugin_icon_register_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg plugin_icon_register_inargs[] =

@@ -62,7 +62,7 @@ gimprc_query_invoker (ProcRecord   *proc_record,
                       Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *token;
   gchar *value = NULL;
 
@@ -84,12 +84,12 @@ gimprc_query_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = value;
+    return_vals[1].value.pdb_pointer = value;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg gimprc_query_inargs[] =
@@ -158,7 +158,7 @@ gimprc_set_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg gimprc_set_inargs[] =
@@ -200,15 +200,15 @@ get_default_comment_invoker (ProcRecord   *proc_record,
                              GimpProgress *progress,
                              Argument     *args)
 {
-  Argument *return_args;
+  Argument *return_vals;
   gchar *comment = NULL;
 
   comment = g_strdup (gimp->config->default_image->comment);
 
-  return_args = procedural_db_return_args (proc_record, TRUE);
-  return_args[1].value.pdb_pointer = comment;
+  return_vals = procedural_db_return_values (proc_record, TRUE);
+  return_vals[1].value.pdb_pointer = comment;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg get_default_comment_outargs[] =
@@ -245,19 +245,19 @@ get_monitor_resolution_invoker (ProcRecord   *proc_record,
                                 GimpProgress *progress,
                                 Argument     *args)
 {
-  Argument *return_args;
+  Argument *return_vals;
   gdouble xres = 0.0;
   gdouble yres = 0.0;
 
   xres = GIMP_DISPLAY_CONFIG (gimp->config)->monitor_xres;
   yres = GIMP_DISPLAY_CONFIG (gimp->config)->monitor_yres;
 
-  return_args = procedural_db_return_args (proc_record, TRUE);
+  return_vals = procedural_db_return_values (proc_record, TRUE);
 
-  return_args[1].value.pdb_float = xres;
-  return_args[2].value.pdb_float = yres;
+  return_vals[1].value.pdb_float = xres;
+  return_vals[2].value.pdb_float = yres;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg get_monitor_resolution_outargs[] =
@@ -299,15 +299,15 @@ get_theme_dir_invoker (ProcRecord   *proc_record,
                        GimpProgress *progress,
                        Argument     *args)
 {
-  Argument *return_args;
+  Argument *return_vals;
   gchar *theme_dir = NULL;
 
   theme_dir = g_strdup (gimp_get_theme_dir (gimp));
 
-  return_args = procedural_db_return_args (proc_record, TRUE);
-  return_args[1].value.pdb_pointer = theme_dir;
+  return_vals = procedural_db_return_values (proc_record, TRUE);
+  return_vals[1].value.pdb_pointer = theme_dir;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg get_theme_dir_outargs[] =
@@ -344,15 +344,15 @@ get_color_configuration_invoker (ProcRecord   *proc_record,
                                  GimpProgress *progress,
                                  Argument     *args)
 {
-  Argument *return_args;
+  Argument *return_vals;
   gchar *config = NULL;
 
   config = gimp_config_serialize_to_string (GIMP_CONFIG (gimp->config->color_management), NULL);
 
-  return_args = procedural_db_return_args (proc_record, TRUE);
-  return_args[1].value.pdb_pointer = config;
+  return_vals = procedural_db_return_values (proc_record, TRUE);
+  return_vals[1].value.pdb_pointer = config;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg get_color_configuration_outargs[] =
@@ -389,15 +389,15 @@ get_module_load_inhibit_invoker (ProcRecord   *proc_record,
                                  GimpProgress *progress,
                                  Argument     *args)
 {
-  Argument *return_args;
+  Argument *return_vals;
   gchar *load_inhibit = NULL;
 
   load_inhibit = g_strdup (gimp_module_db_get_load_inhibit (gimp->module_db));
 
-  return_args = procedural_db_return_args (proc_record, TRUE);
-  return_args[1].value.pdb_pointer = load_inhibit;
+  return_vals = procedural_db_return_values (proc_record, TRUE);
+  return_vals[1].value.pdb_pointer = load_inhibit;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg get_module_load_inhibit_outargs[] =

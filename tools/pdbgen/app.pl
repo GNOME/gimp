@@ -363,7 +363,7 @@ sub marshal_outargs {
     my $proc = shift;
 
     my $result = <<CODE;
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 CODE
 
     my $argc = 0;
@@ -384,7 +384,7 @@ CODE
 		$var = eval qq/"$arg->{id_ret_func}"/;
 	    }
 
-	    $outargs .= "return_args[$argc].value.pdb_$type = $var;\n";
+	    $outargs .= "return_vals[$argc].value.pdb_$type = $var;\n";
 	}
 
 	$outargs =~ s/^/' ' x 2/meg if $success;
@@ -395,10 +395,10 @@ CODE
 	$result .= ' ' x 4 . "{\n" if $success && $argc > 1;
 	$result .= $outargs;
 	$result .= ' ' x 4 . "}\n" if $success && $argc > 1;
-        $result .= "\n" . ' ' x 2 . "return return_args;\n";
+        $result .= "\n" . ' ' x 2 . "return return_vals;\n";
     }
     else {
-	$result =~ s/_args =//;
+	$result =~ s/_vals =//;
     }
 
     $result =~ s/, success\);$/, TRUE);/m unless $success;
@@ -448,7 +448,7 @@ CODE
 	else {
 	    my $invoker = "";
 	
-	    $invoker .= ' ' x 2 . "Argument *return_args;\n" if scalar @outargs;
+	    $invoker .= ' ' x 2 . "Argument *return_vals;\n" if scalar @outargs;
 	    $invoker .= &declare_args($proc, $out, 0, qw(inargs));
 	    $invoker .= &declare_args($proc, $out, 1, qw(outargs));
 

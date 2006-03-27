@@ -49,7 +49,7 @@ fonts_refresh_invoker (ProcRecord   *proc_record,
                        Argument     *args)
 {
   gimp_fonts_load (gimp);
-  return procedural_db_return_args (proc_record, TRUE);
+  return procedural_db_return_values (proc_record, TRUE);
 }
 
 static ProcRecord fonts_refresh_proc =
@@ -78,7 +78,7 @@ fonts_get_list_invoker (ProcRecord   *proc_record,
                         Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *filter;
   gint32 num_fonts = 0;
   gchar **font_list = NULL;
@@ -93,15 +93,15 @@ fonts_get_list_invoker (ProcRecord   *proc_record,
                                                           filter, &num_fonts);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = num_fonts;
-      return_args[2].value.pdb_pointer = font_list;
+      return_vals[1].value.pdb_int = num_fonts;
+      return_vals[2].value.pdb_pointer = font_list;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg fonts_get_list_inargs[] =

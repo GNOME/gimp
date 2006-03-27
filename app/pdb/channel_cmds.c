@@ -66,7 +66,7 @@ channel_new_invoker (ProcRecord   *proc_record,
                      Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   gint32 width;
   gint32 height;
@@ -108,12 +108,12 @@ channel_new_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = channel ? gimp_item_get_ID (GIMP_ITEM (channel)) : -1;
+    return_vals[1].value.pdb_int = channel ? gimp_item_get_ID (GIMP_ITEM (channel)) : -1;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg channel_new_inargs[] =
@@ -185,7 +185,7 @@ channel_new_from_component_invoker (ProcRecord   *proc_record,
                                     Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   gint32 component;
   gchar *name;
@@ -215,12 +215,12 @@ channel_new_from_component_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = channel ? gimp_item_get_ID (GIMP_ITEM (channel)) : -1;
+    return_vals[1].value.pdb_int = channel ? gimp_item_get_ID (GIMP_ITEM (channel)) : -1;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg channel_new_from_component_inargs[] =
@@ -277,7 +277,7 @@ channel_copy_invoker (ProcRecord   *proc_record,
                       Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpChannel *channel;
   GimpChannel *channel_copy = NULL;
 
@@ -294,12 +294,12 @@ channel_copy_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = channel_copy ? gimp_item_get_ID (GIMP_ITEM (channel_copy)) : -1;
+    return_vals[1].value.pdb_int = channel_copy ? gimp_item_get_ID (GIMP_ITEM (channel_copy)) : -1;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg channel_copy_inargs[] =
@@ -373,7 +373,7 @@ channel_combine_masks_invoker (ProcRecord   *proc_record,
       gimp_channel_combine_mask (channel1, channel2, operation, offx, offy);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg channel_combine_masks_inargs[] =
@@ -431,7 +431,7 @@ channel_get_show_masked_invoker (ProcRecord   *proc_record,
                                  Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpChannel *channel;
   gboolean show_masked = FALSE;
 
@@ -444,12 +444,12 @@ channel_get_show_masked_invoker (ProcRecord   *proc_record,
       show_masked = gimp_channel_get_show_masked (channel);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = show_masked;
+    return_vals[1].value.pdb_int = show_masked;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg channel_get_show_masked_inargs[] =
@@ -510,7 +510,7 @@ channel_set_show_masked_invoker (ProcRecord   *proc_record,
       gimp_channel_set_show_masked (channel, show_masked);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg channel_set_show_masked_inargs[] =
@@ -553,7 +553,7 @@ channel_get_opacity_invoker (ProcRecord   *proc_record,
                              Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpChannel *channel;
   gdouble opacity = 0.0;
 
@@ -566,12 +566,12 @@ channel_get_opacity_invoker (ProcRecord   *proc_record,
       opacity = gimp_channel_get_opacity (channel) * 100;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_float = opacity;
+    return_vals[1].value.pdb_float = opacity;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg channel_get_opacity_inargs[] =
@@ -634,7 +634,7 @@ channel_set_opacity_invoker (ProcRecord   *proc_record,
       gimp_channel_set_opacity (channel, opacity / 100.0, TRUE);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg channel_set_opacity_inargs[] =
@@ -677,7 +677,7 @@ channel_get_color_invoker (ProcRecord   *proc_record,
                            Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpChannel *channel;
   GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
 
@@ -690,12 +690,12 @@ channel_get_color_invoker (ProcRecord   *proc_record,
       gimp_channel_get_color (channel, &color);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_color = color;
+    return_vals[1].value.pdb_color = color;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg channel_get_color_inargs[] =
@@ -759,7 +759,7 @@ channel_set_color_invoker (ProcRecord   *proc_record,
       gimp_channel_set_color (channel, &rgb_color, TRUE);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg channel_set_color_inargs[] =

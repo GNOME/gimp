@@ -151,14 +151,14 @@ file_load_invoker (ProcRecord   *proc_record,
                                     NULL);
 
   if (! uri)
-    return procedural_db_return_args (proc_record, FALSE);
+    return procedural_db_return_values (proc_record, FALSE);
 
   file_proc = file_utils_find_proc (gimp->load_procs, uri);
 
   g_free (uri);
 
   if (! file_proc)
-    return procedural_db_return_args (proc_record, FALSE);
+    return procedural_db_return_values (proc_record, FALSE);
 
   proc = plug_in_proc_def_get_proc (file_proc);
 
@@ -233,7 +233,7 @@ file_load_layer_invoker (ProcRecord   *proc_record,
                          Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gint32 run_mode;
   GimpImage *image;
   gchar *filename;
@@ -269,12 +269,12 @@ file_load_layer_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = layer ? gimp_item_get_ID (GIMP_ITEM (layer)) : -1;
+    return_vals[1].value.pdb_int = layer ? gimp_item_get_ID (GIMP_ITEM (layer)) : -1;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg file_load_layer_inargs[] =
@@ -331,7 +331,7 @@ file_load_thumbnail_invoker (ProcRecord   *proc_record,
                              Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *filename;
   gint32 width = 0;
   gint32 height = 0;
@@ -392,17 +392,17 @@ file_load_thumbnail_invoker (ProcRecord   *proc_record,
       g_free (uri);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = width;
-      return_args[2].value.pdb_int = height;
-      return_args[3].value.pdb_int = thumb_data_count;
-      return_args[4].value.pdb_pointer = thumb_data;
+      return_vals[1].value.pdb_int = width;
+      return_vals[2].value.pdb_int = height;
+      return_vals[3].value.pdb_int = thumb_data_count;
+      return_vals[4].value.pdb_pointer = thumb_data;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg file_load_thumbnail_inargs[] =
@@ -474,14 +474,14 @@ file_save_invoker (ProcRecord   *proc_record,
                                     NULL);
 
   if (! uri)
-    return procedural_db_return_args (proc_record, FALSE);
+    return procedural_db_return_values (proc_record, FALSE);
 
   file_proc = file_utils_find_proc (gimp->save_procs, uri);
 
   g_free (uri);
 
   if (! file_proc)
-    return procedural_db_return_args (proc_record, FALSE);
+    return procedural_db_return_values (proc_record, FALSE);
 
   proc = plug_in_proc_def_get_proc (file_proc);
 
@@ -598,7 +598,7 @@ file_save_thumbnail_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg file_save_thumbnail_inargs[] =
@@ -641,7 +641,7 @@ temp_name_invoker (ProcRecord   *proc_record,
                    Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *extension;
   gchar *name = NULL;
 
@@ -671,12 +671,12 @@ temp_name_invoker (ProcRecord   *proc_record,
       g_free (filename);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = name;
+    return_vals[1].value.pdb_pointer = name;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg temp_name_inargs[] =
@@ -745,7 +745,7 @@ register_magic_load_handler_invoker (ProcRecord   *proc_record,
                                                      extensions, prefixes, magics);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg register_magic_load_handler_inargs[] =
@@ -817,7 +817,7 @@ register_load_handler_invoker (ProcRecord   *proc_record,
                                                      extensions, prefixes, NULL);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg register_load_handler_inargs[] =
@@ -920,7 +920,7 @@ register_save_handler_invoker (ProcRecord   *proc_record,
       g_free (canonical);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg register_save_handler_inargs[] =
@@ -991,7 +991,7 @@ register_file_handler_mime_invoker (ProcRecord   *proc_record,
       g_free (canonical);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg register_file_handler_mime_inargs[] =
@@ -1057,7 +1057,7 @@ register_thumbnail_loader_invoker (ProcRecord   *proc_record,
       g_free (canonical);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg register_thumbnail_loader_inargs[] =

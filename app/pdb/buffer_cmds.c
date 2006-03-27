@@ -61,7 +61,7 @@ buffers_get_list_invoker (ProcRecord   *proc_record,
                           Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *filter;
   gint32 num_buffers = 0;
   gchar **buffer_list = NULL;
@@ -76,15 +76,15 @@ buffers_get_list_invoker (ProcRecord   *proc_record,
                                                             filter, &num_buffers);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = num_buffers;
-      return_args[2].value.pdb_pointer = buffer_list;
+      return_vals[1].value.pdb_int = num_buffers;
+      return_vals[2].value.pdb_pointer = buffer_list;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg buffers_get_list_inargs[] =
@@ -136,7 +136,7 @@ buffer_rename_invoker (ProcRecord   *proc_record,
                        Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *buffer_name;
   gchar *new_name;
   gchar *real_name = NULL;
@@ -163,12 +163,12 @@ buffer_rename_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = real_name;
+    return_vals[1].value.pdb_pointer = real_name;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg buffer_rename_inargs[] =
@@ -237,7 +237,7 @@ buffer_delete_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg buffer_delete_inargs[] =
@@ -275,7 +275,7 @@ buffer_get_width_invoker (ProcRecord   *proc_record,
                           Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *buffer_name;
   gint32 width = 0;
 
@@ -294,12 +294,12 @@ buffer_get_width_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = width;
+    return_vals[1].value.pdb_int = width;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg buffer_get_width_inargs[] =
@@ -346,7 +346,7 @@ buffer_get_height_invoker (ProcRecord   *proc_record,
                            Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *buffer_name;
   gint32 height = 0;
 
@@ -365,12 +365,12 @@ buffer_get_height_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = height;
+    return_vals[1].value.pdb_int = height;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg buffer_get_height_inargs[] =
@@ -417,7 +417,7 @@ buffer_get_bytes_invoker (ProcRecord   *proc_record,
                           Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *buffer_name;
   gint32 bytes = 0;
 
@@ -436,12 +436,12 @@ buffer_get_bytes_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = bytes;
+    return_vals[1].value.pdb_int = bytes;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg buffer_get_bytes_inargs[] =
@@ -488,7 +488,7 @@ buffer_get_image_type_invoker (ProcRecord   *proc_record,
                                Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *buffer_name;
   gint32 image_type = 0;
 
@@ -507,12 +507,12 @@ buffer_get_image_type_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = image_type;
+    return_vals[1].value.pdb_int = image_type;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg buffer_get_image_type_inargs[] =

@@ -83,7 +83,7 @@ gradients_popup_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg gradients_popup_inargs[] =
@@ -151,7 +151,7 @@ gradients_close_popup_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg gradients_close_popup_inargs[] =
@@ -210,7 +210,7 @@ gradients_set_popup_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg gradients_set_popup_inargs[] =

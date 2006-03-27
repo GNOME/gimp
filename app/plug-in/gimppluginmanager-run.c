@@ -55,7 +55,7 @@ static Argument * plug_in_temp_run        (ProcRecord      *proc_rec,
                                            GimpContext     *context,
                                            GimpProgress    *progress,
                                            Argument        *args,
-                                           gint             argc);
+                                           gint             n_args);
 static Argument * plug_in_get_return_vals (PlugIn          *plug_in,
                                            PlugInProcFrame *proc_frame);
 
@@ -68,7 +68,7 @@ plug_in_run (Gimp         *gimp,
              GimpProgress *progress,
              ProcRecord   *proc_rec,
 	     Argument     *args,
-	     gint          argc,
+	     gint          n_args,
 	     gboolean      synchronous,
 	     gboolean      destroy_return_vals,
 	     gint          gdisp_ID)
@@ -80,11 +80,11 @@ plug_in_run (Gimp         *gimp,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (proc_rec != NULL, NULL);
-  g_return_val_if_fail (argc == 0 || args != NULL, NULL);
+  g_return_val_if_fail (n_args == 0 || args != NULL, NULL);
 
   if (proc_rec->proc_type == GIMP_TEMPORARY)
     {
-      return_vals = plug_in_temp_run (proc_rec, context, progress, args, argc);
+      return_vals = plug_in_temp_run (proc_rec, context, progress, args, n_args);
       goto done;
     }
 
@@ -128,14 +128,14 @@ plug_in_run (Gimp         *gimp,
       config.monitor_number   = monitor;
 
       proc_run.name    = proc_rec->original_name;
-      proc_run.nparams = argc;
-      proc_run.params  = plug_in_args_to_params (args, argc, FALSE);
+      proc_run.nparams = n_args;
+      proc_run.params  = plug_in_args_to_params (args, n_args, FALSE);
 
       if (! gp_config_write (plug_in->my_write, &config, plug_in)     ||
           ! gp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
           ! gimp_wire_flush (plug_in->my_write, plug_in))
         {
-          return_vals = procedural_db_return_args (proc_rec, FALSE);
+          return_vals = procedural_db_return_values (proc_rec, FALSE);
 
           g_free (config.display_name);
 
@@ -206,7 +206,6 @@ plug_in_repeat (Gimp         *gimp,
 {
   PlugInProcDef *proc_def;
   Argument      *args;
-  gint           i;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (index >= 0);
@@ -218,13 +217,8 @@ plug_in_repeat (Gimp         *gimp,
   if (proc_def)
     {
       /* construct the procedures arguments */
-      args = g_new (Argument, 3);
+      args = procedural_db_arguments (&proc_def->db_info);
 
-      /* initialize the first three argument types */
-      for (i = 0; i < 3; i++)
-	args[i].arg_type = proc_def->db_info.args[i].arg_type;
-
-      /* initialize the first three plug-in arguments  */
       args[0].value.pdb_int = (with_interface ?
                                GIMP_RUN_INTERACTIVE : GIMP_RUN_WITH_LAST_VALS);
       args[1].value.pdb_int = image_ID;
@@ -232,7 +226,8 @@ plug_in_repeat (Gimp         *gimp,
 
       /* run the plug-in procedure */
       plug_in_run (gimp, context, progress, &proc_def->db_info,
-                   args, 3, FALSE, TRUE, display_ID);
+                   args, 3 /* not proc_def->db_info.num_args */,
+                   FALSE, TRUE, display_ID);
 
       g_free (args);
     }
@@ -246,7 +241,7 @@ plug_in_temp_run (ProcRecord   *proc_rec,
                   GimpContext  *context,
                   GimpProgress *progress,
 		  Argument     *args,
-		  gint          argc)
+		  gint          n_args)
 {
   Argument *return_vals = NULL;
   PlugIn   *plug_in;
@@ -262,13 +257,13 @@ plug_in_temp_run (ProcRecord   *proc_rec,
                                             proc_rec);
 
       proc_run.name    = proc_rec->original_name;
-      proc_run.nparams = argc;
-      proc_run.params  = plug_in_args_to_params (args, argc, FALSE);
+      proc_run.nparams = n_args;
+      proc_run.params  = plug_in_args_to_params (args, n_args, FALSE);
 
       if (! gp_temp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
 	  ! gimp_wire_flush (plug_in->my_write, plug_in))
 	{
-	  return_vals = procedural_db_return_args (proc_rec, FALSE);
+	  return_vals = procedural_db_return_values (proc_rec, FALSE);
 
           plug_in_proc_frame_pop (plug_in);
 
@@ -316,7 +311,7 @@ plug_in_get_return_vals (PlugIn          *plug_in,
   else if (proc_frame->return_vals)
     {
       /* Allocate new return values of the correct size. */
-      return_vals = procedural_db_return_args (proc_frame->proc_rec, FALSE);
+      return_vals = procedural_db_return_values (proc_frame->proc_rec, FALSE);
 
       /* Copy all of the arguments we can. */
       memcpy (return_vals, proc_frame->return_vals,
@@ -331,7 +326,7 @@ plug_in_get_return_vals (PlugIn          *plug_in,
   else
     {
       /* Just return a dummy set of values. */
-      return_vals = procedural_db_return_args (proc_frame->proc_rec, FALSE);
+      return_vals = procedural_db_return_values (proc_frame->proc_rec, FALSE);
     }
 
   /* We have consumed any saved values, so clear them. */

@@ -61,7 +61,7 @@ brushes_refresh_invoker (ProcRecord   *proc_record,
                          Argument     *args)
 {
   gimp_data_factory_data_refresh (gimp->brush_factory);
-  return procedural_db_return_args (proc_record, TRUE);
+  return procedural_db_return_values (proc_record, TRUE);
 }
 
 static ProcRecord brushes_refresh_proc =
@@ -90,7 +90,7 @@ brushes_get_list_invoker (ProcRecord   *proc_record,
                           Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *filter;
   gint32 num_brushes = 0;
   gchar **brush_list = NULL;
@@ -105,15 +105,15 @@ brushes_get_list_invoker (ProcRecord   *proc_record,
                                                            filter, &num_brushes);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = num_brushes;
-      return_args[2].value.pdb_pointer = brush_list;
+      return_vals[1].value.pdb_int = num_brushes;
+      return_vals[2].value.pdb_pointer = brush_list;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brushes_get_list_inargs[] =
@@ -165,7 +165,7 @@ brushes_get_brush_invoker (ProcRecord   *proc_record,
                            Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name = NULL;
   gint32 width = 0;
   gint32 height = 0;
@@ -183,17 +183,17 @@ brushes_get_brush_invoker (ProcRecord   *proc_record,
   else
     success = FALSE;
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = name;
-      return_args[2].value.pdb_int = width;
-      return_args[3].value.pdb_int = height;
-      return_args[4].value.pdb_int = spacing;
+      return_vals[1].value.pdb_pointer = name;
+      return_vals[2].value.pdb_int = width;
+      return_vals[3].value.pdb_int = height;
+      return_vals[4].value.pdb_int = spacing;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brushes_get_brush_outargs[] =
@@ -246,7 +246,7 @@ brushes_get_spacing_invoker (ProcRecord   *proc_record,
                              Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gint32 spacing = 0;
 
   GimpBrush *brush = gimp_context_get_brush (context);
@@ -256,12 +256,12 @@ brushes_get_spacing_invoker (ProcRecord   *proc_record,
   else
     success = FALSE;
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = spacing;
+    return_vals[1].value.pdb_int = spacing;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brushes_get_spacing_outargs[] =
@@ -310,7 +310,7 @@ brushes_set_spacing_invoker (ProcRecord   *proc_record,
       gimp_brush_set_spacing (gimp_context_get_brush (context), spacing);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg brushes_set_spacing_inargs[] =
@@ -348,7 +348,7 @@ brushes_get_brush_data_invoker (ProcRecord   *proc_record,
                                 Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gchar *actual_name = NULL;
   gdouble opacity = 0.0;
@@ -392,21 +392,21 @@ brushes_get_brush_data_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = actual_name;
-      return_args[2].value.pdb_float = opacity;
-      return_args[3].value.pdb_int = spacing;
-      return_args[4].value.pdb_int = paint_mode;
-      return_args[5].value.pdb_int = width;
-      return_args[6].value.pdb_int = height;
-      return_args[7].value.pdb_int = length;
-      return_args[8].value.pdb_pointer = mask_data;
+      return_vals[1].value.pdb_pointer = actual_name;
+      return_vals[2].value.pdb_float = opacity;
+      return_vals[3].value.pdb_int = spacing;
+      return_vals[4].value.pdb_int = paint_mode;
+      return_vals[5].value.pdb_int = width;
+      return_vals[6].value.pdb_int = height;
+      return_vals[7].value.pdb_int = length;
+      return_vals[8].value.pdb_pointer = mask_data;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg brushes_get_brush_data_inargs[] =

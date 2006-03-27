@@ -66,7 +66,7 @@ help_invoker (ProcRecord   *proc_record,
       gimp_help (gimp, help_domain, help_id);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg help_inargs[] =

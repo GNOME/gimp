@@ -77,7 +77,7 @@ palette_new_invoker (ProcRecord   *proc_record,
                      Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gchar *actual_name = NULL;
 
@@ -100,12 +100,12 @@ palette_new_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = actual_name;
+    return_vals[1].value.pdb_pointer = actual_name;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg palette_new_inargs[] =
@@ -152,7 +152,7 @@ palette_duplicate_invoker (ProcRecord   *proc_record,
                            Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gchar *copy_name = NULL;
 
@@ -180,12 +180,12 @@ palette_duplicate_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = copy_name;
+    return_vals[1].value.pdb_pointer = copy_name;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg palette_duplicate_inargs[] =
@@ -232,7 +232,7 @@ palette_rename_invoker (ProcRecord   *proc_record,
                         Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gchar *new_name;
   gchar *actual_name = NULL;
@@ -259,12 +259,12 @@ palette_rename_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = actual_name;
+    return_vals[1].value.pdb_pointer = actual_name;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg palette_rename_inargs[] =
@@ -345,7 +345,7 @@ palette_delete_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg palette_delete_inargs[] =
@@ -383,7 +383,7 @@ palette_is_editable_invoker (ProcRecord   *proc_record,
                              Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gboolean editable = FALSE;
 
@@ -402,12 +402,12 @@ palette_is_editable_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = editable;
+    return_vals[1].value.pdb_int = editable;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg palette_is_editable_inargs[] =
@@ -454,7 +454,7 @@ palette_get_info_invoker (ProcRecord   *proc_record,
                           Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 num_colors = 0;
 
@@ -473,12 +473,12 @@ palette_get_info_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = num_colors;
+    return_vals[1].value.pdb_int = num_colors;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg palette_get_info_inargs[] =
@@ -525,7 +525,7 @@ palette_get_columns_invoker (ProcRecord   *proc_record,
                              Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 num_columns = 0;
 
@@ -544,12 +544,12 @@ palette_get_columns_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = num_columns;
+    return_vals[1].value.pdb_int = num_columns;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg palette_get_columns_inargs[] =
@@ -618,7 +618,7 @@ palette_set_columns_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg palette_set_columns_inargs[] =
@@ -661,7 +661,7 @@ palette_add_entry_invoker (ProcRecord   *proc_record,
                            Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gchar *entry_name;
   GimpRGB color;
@@ -693,12 +693,12 @@ palette_add_entry_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = entry_num;
+    return_vals[1].value.pdb_int = entry_num;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg palette_add_entry_inargs[] =
@@ -784,7 +784,7 @@ palette_delete_entry_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg palette_delete_entry_inargs[] =
@@ -827,7 +827,7 @@ palette_entry_get_color_invoker (ProcRecord   *proc_record,
                                  Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 entry_num;
   GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
@@ -858,12 +858,12 @@ palette_entry_get_color_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_color = color;
+    return_vals[1].value.pdb_color = color;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg palette_entry_get_color_inargs[] =
@@ -949,7 +949,7 @@ palette_entry_set_color_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg palette_entry_set_color_inargs[] =
@@ -997,7 +997,7 @@ palette_entry_get_name_invoker (ProcRecord   *proc_record,
                                 Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 entry_num;
   gchar *entry_name = NULL;
@@ -1028,12 +1028,12 @@ palette_entry_get_name_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = entry_name;
+    return_vals[1].value.pdb_pointer = entry_name;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg palette_entry_get_name_inargs[] =
@@ -1122,7 +1122,7 @@ palette_entry_set_name_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg palette_entry_set_name_inargs[] =

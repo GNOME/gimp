@@ -62,14 +62,14 @@ HELP
                                     NULL);
 
   if (! uri)
-    return procedural_db_return_args (proc_record, FALSE);
+    return procedural_db_return_values (proc_record, FALSE);
 
   file_proc = file_utils_find_proc (gimp->load_procs, uri);
 
   g_free (uri);
 
   if (! file_proc)
-    return procedural_db_return_args (proc_record, FALSE);
+    return procedural_db_return_values (proc_record, FALSE);
 
   proc = plug_in_proc_def_get_proc (file_proc);
 
@@ -186,14 +186,14 @@ HELP
                                     NULL);
 
   if (! uri)
-    return procedural_db_return_args (proc_record, FALSE);
+    return procedural_db_return_values (proc_record, FALSE);
 
   file_proc = file_utils_find_proc (gimp->save_procs, uri);
 
   g_free (uri);
 
   if (! file_proc)
-    return procedural_db_return_args (proc_record, FALSE);
+    return procedural_db_return_values (proc_record, FALSE);
 
   proc = plug_in_proc_def_get_proc (file_proc);
 

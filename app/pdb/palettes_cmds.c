@@ -58,7 +58,7 @@ palettes_refresh_invoker (ProcRecord   *proc_record,
                           Argument     *args)
 {
   gimp_data_factory_data_refresh (gimp->palette_factory);
-  return procedural_db_return_args (proc_record, TRUE);
+  return procedural_db_return_values (proc_record, TRUE);
 }
 
 static ProcRecord palettes_refresh_proc =
@@ -87,7 +87,7 @@ palettes_get_list_invoker (ProcRecord   *proc_record,
                            Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *filter;
   gint32 num_palettes = 0;
   gchar **palette_list = NULL;
@@ -102,15 +102,15 @@ palettes_get_list_invoker (ProcRecord   *proc_record,
                                                              filter, &num_palettes);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = num_palettes;
-      return_args[2].value.pdb_pointer = palette_list;
+      return_vals[1].value.pdb_int = num_palettes;
+      return_vals[2].value.pdb_pointer = palette_list;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg palettes_get_list_inargs[] =
@@ -162,7 +162,7 @@ palettes_get_palette_invoker (ProcRecord   *proc_record,
                               Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name = NULL;
   gint32 num_colors = 0;
 
@@ -176,15 +176,15 @@ palettes_get_palette_invoker (ProcRecord   *proc_record,
   else
     success = FALSE;
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = name;
-      return_args[2].value.pdb_int = num_colors;
+      return_vals[1].value.pdb_pointer = name;
+      return_vals[2].value.pdb_int = num_colors;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg palettes_get_palette_outargs[] =
@@ -227,7 +227,7 @@ palettes_get_palette_entry_invoker (ProcRecord   *proc_record,
                                     Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   gint32 entry_num;
   gchar *actual_name = NULL;
@@ -272,16 +272,16 @@ palettes_get_palette_entry_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = actual_name;
-      return_args[2].value.pdb_int = num_colors;
-      return_args[3].value.pdb_color = color;
+      return_vals[1].value.pdb_pointer = actual_name;
+      return_vals[2].value.pdb_int = num_colors;
+      return_vals[3].value.pdb_color = color;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg palettes_get_palette_entry_inargs[] =

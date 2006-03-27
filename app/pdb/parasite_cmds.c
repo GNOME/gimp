@@ -79,7 +79,7 @@ parasite_find_invoker (ProcRecord   *proc_record,
                        Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *name;
   GimpParasite *parasite = NULL;
 
@@ -95,12 +95,12 @@ parasite_find_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = parasite;
+    return_vals[1].value.pdb_pointer = parasite;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg parasite_find_inargs[] =
@@ -158,7 +158,7 @@ parasite_attach_invoker (ProcRecord   *proc_record,
       gimp_parasite_attach (gimp, parasite);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg parasite_attach_inargs[] =
@@ -207,7 +207,7 @@ parasite_detach_invoker (ProcRecord   *proc_record,
       gimp_parasite_detach (gimp, name);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg parasite_detach_inargs[] =
@@ -244,18 +244,18 @@ parasite_list_invoker (ProcRecord   *proc_record,
                        GimpProgress *progress,
                        Argument     *args)
 {
-  Argument *return_args;
+  Argument *return_vals;
   gint32 num_parasites = 0;
   gchar **parasites = NULL;
 
   parasites = gimp_parasite_list (gimp, &num_parasites);
 
-  return_args = procedural_db_return_args (proc_record, TRUE);
+  return_vals = procedural_db_return_values (proc_record, TRUE);
 
-  return_args[1].value.pdb_int = num_parasites;
-  return_args[2].value.pdb_pointer = parasites;
+  return_vals[1].value.pdb_int = num_parasites;
+  return_vals[2].value.pdb_pointer = parasites;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg parasite_list_outargs[] =
@@ -298,7 +298,7 @@ image_parasite_find_invoker (ProcRecord   *proc_record,
                              Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   gchar *name;
   GimpParasite *parasite = NULL;
@@ -319,12 +319,12 @@ image_parasite_find_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = parasite;
+    return_vals[1].value.pdb_pointer = parasite;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg image_parasite_find_inargs[] =
@@ -392,7 +392,7 @@ image_parasite_attach_invoker (ProcRecord   *proc_record,
       gimp_image_parasite_attach (image, parasite);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg image_parasite_attach_inargs[] =
@@ -451,7 +451,7 @@ image_parasite_detach_invoker (ProcRecord   *proc_record,
       gimp_image_parasite_detach (image, name);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg image_parasite_detach_inargs[] =
@@ -494,7 +494,7 @@ image_parasite_list_invoker (ProcRecord   *proc_record,
                              Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   gint32 num_parasites = 0;
   gchar **parasites = NULL;
@@ -508,15 +508,15 @@ image_parasite_list_invoker (ProcRecord   *proc_record,
       parasites = gimp_image_parasite_list (image, &num_parasites);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = num_parasites;
-      return_args[2].value.pdb_pointer = parasites;
+      return_vals[1].value.pdb_int = num_parasites;
+      return_vals[2].value.pdb_pointer = parasites;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg image_parasite_list_inargs[] =
@@ -568,7 +568,7 @@ drawable_parasite_find_invoker (ProcRecord   *proc_record,
                                 Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpDrawable *drawable;
   gchar *name;
   GimpParasite *parasite = NULL;
@@ -590,12 +590,12 @@ drawable_parasite_find_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = parasite;
+    return_vals[1].value.pdb_pointer = parasite;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg drawable_parasite_find_inargs[] =
@@ -663,7 +663,7 @@ drawable_parasite_attach_invoker (ProcRecord   *proc_record,
       gimp_item_parasite_attach (GIMP_ITEM (drawable), parasite);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg drawable_parasite_attach_inargs[] =
@@ -722,7 +722,7 @@ drawable_parasite_detach_invoker (ProcRecord   *proc_record,
       gimp_item_parasite_detach (GIMP_ITEM (drawable), name);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg drawable_parasite_detach_inargs[] =
@@ -765,7 +765,7 @@ drawable_parasite_list_invoker (ProcRecord   *proc_record,
                                 Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpDrawable *drawable;
   gint32 num_parasites = 0;
   gchar **parasites = NULL;
@@ -779,15 +779,15 @@ drawable_parasite_list_invoker (ProcRecord   *proc_record,
       parasites = gimp_item_parasite_list (GIMP_ITEM (drawable), &num_parasites);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = num_parasites;
-      return_args[2].value.pdb_pointer = parasites;
+      return_vals[1].value.pdb_int = num_parasites;
+      return_vals[2].value.pdb_pointer = parasites;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg drawable_parasite_list_inargs[] =
@@ -839,7 +839,7 @@ vectors_parasite_find_invoker (ProcRecord   *proc_record,
                                Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpVectors *vectors;
   gchar *name;
   GimpParasite *parasite = NULL;
@@ -861,12 +861,12 @@ vectors_parasite_find_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = parasite;
+    return_vals[1].value.pdb_pointer = parasite;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg vectors_parasite_find_inargs[] =
@@ -934,7 +934,7 @@ vectors_parasite_attach_invoker (ProcRecord   *proc_record,
       gimp_item_parasite_attach (GIMP_ITEM (vectors), parasite);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg vectors_parasite_attach_inargs[] =
@@ -993,7 +993,7 @@ vectors_parasite_detach_invoker (ProcRecord   *proc_record,
       gimp_item_parasite_detach (GIMP_ITEM (vectors), name);
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg vectors_parasite_detach_inargs[] =
@@ -1036,7 +1036,7 @@ vectors_parasite_list_invoker (ProcRecord   *proc_record,
                                Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpVectors *vectors;
   gint32 num_parasites = 0;
   gchar **parasites = NULL;
@@ -1050,15 +1050,15 @@ vectors_parasite_list_invoker (ProcRecord   *proc_record,
       parasites = gimp_item_parasite_list (GIMP_ITEM (vectors), &num_parasites);
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = num_parasites;
-      return_args[2].value.pdb_pointer = parasites;
+      return_vals[1].value.pdb_int = num_parasites;
+      return_vals[2].value.pdb_pointer = parasites;
     }
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg vectors_parasite_list_inargs[] =

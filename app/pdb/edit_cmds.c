@@ -84,7 +84,7 @@ edit_cut_invoker (ProcRecord   *proc_record,
                   Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpDrawable *drawable;
   gboolean non_empty = FALSE;
 
@@ -104,12 +104,12 @@ edit_cut_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = non_empty;
+    return_vals[1].value.pdb_int = non_empty;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg edit_cut_inargs[] =
@@ -156,7 +156,7 @@ edit_copy_invoker (ProcRecord   *proc_record,
                    Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpDrawable *drawable;
   gboolean non_empty = FALSE;
 
@@ -176,12 +176,12 @@ edit_copy_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = non_empty;
+    return_vals[1].value.pdb_int = non_empty;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg edit_copy_inargs[] =
@@ -228,7 +228,7 @@ edit_copy_visible_invoker (ProcRecord   *proc_record,
                            Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   gboolean non_empty = FALSE;
 
@@ -241,12 +241,12 @@ edit_copy_visible_invoker (ProcRecord   *proc_record,
       non_empty = gimp_edit_copy_visible (image, context) != NULL;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = non_empty;
+    return_vals[1].value.pdb_int = non_empty;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg edit_copy_visible_inargs[] =
@@ -293,7 +293,7 @@ edit_paste_invoker (ProcRecord   *proc_record,
                     Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpDrawable *drawable;
   gboolean paste_into;
   GimpLayer *floating_sel = NULL;
@@ -319,12 +319,12 @@ edit_paste_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = floating_sel ? gimp_item_get_ID (GIMP_ITEM (floating_sel)) : -1;
+    return_vals[1].value.pdb_int = floating_sel ? gimp_item_get_ID (GIMP_ITEM (floating_sel)) : -1;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg edit_paste_inargs[] =
@@ -376,7 +376,7 @@ edit_paste_as_new_invoker (ProcRecord   *proc_record,
                            Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image = NULL;
 
   if (gimp->global_buffer)
@@ -389,12 +389,12 @@ edit_paste_as_new_invoker (ProcRecord   *proc_record,
   else
     success = FALSE;
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = image ? gimp_image_get_ID (image) : -1;
+    return_vals[1].value.pdb_int = image ? gimp_image_get_ID (image) : -1;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg edit_paste_as_new_outargs[] =
@@ -432,7 +432,7 @@ edit_named_cut_invoker (ProcRecord   *proc_record,
                         Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpDrawable *drawable;
   gchar *buffer_name;
   gchar *real_name = NULL;
@@ -463,12 +463,12 @@ edit_named_cut_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = real_name;
+    return_vals[1].value.pdb_pointer = real_name;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg edit_named_cut_inargs[] =
@@ -520,7 +520,7 @@ edit_named_copy_invoker (ProcRecord   *proc_record,
                          Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpDrawable *drawable;
   gchar *buffer_name;
   gchar *real_name = NULL;
@@ -551,12 +551,12 @@ edit_named_copy_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = real_name;
+    return_vals[1].value.pdb_pointer = real_name;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg edit_named_copy_inargs[] =
@@ -608,7 +608,7 @@ edit_named_copy_visible_invoker (ProcRecord   *proc_record,
                                  Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpImage *image;
   gchar *buffer_name;
   gchar *real_name = NULL;
@@ -637,12 +637,12 @@ edit_named_copy_visible_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = real_name;
+    return_vals[1].value.pdb_pointer = real_name;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg edit_named_copy_visible_inargs[] =
@@ -694,7 +694,7 @@ edit_named_paste_invoker (ProcRecord   *proc_record,
                           Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   GimpDrawable *drawable;
   gchar *buffer_name;
   gboolean paste_into;
@@ -727,12 +727,12 @@ edit_named_paste_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = floating_sel ? gimp_item_get_ID (GIMP_ITEM (floating_sel)) : -1;
+    return_vals[1].value.pdb_int = floating_sel ? gimp_item_get_ID (GIMP_ITEM (floating_sel)) : -1;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg edit_named_paste_inargs[] =
@@ -789,7 +789,7 @@ edit_named_paste_as_new_invoker (ProcRecord   *proc_record,
                                  Argument     *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
+  Argument *return_vals;
   gchar *buffer_name;
   GimpImage *image = NULL;
 
@@ -813,12 +813,12 @@ edit_named_paste_as_new_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_args = procedural_db_return_args (proc_record, success);
+  return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_args[1].value.pdb_int = image ? gimp_image_get_ID (image) : -1;
+    return_vals[1].value.pdb_int = image ? gimp_image_get_ID (image) : -1;
 
-  return return_args;
+  return return_vals;
 }
 
 static ProcArg edit_named_paste_as_new_inargs[] =
@@ -883,7 +883,7 @@ edit_clear_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg edit_clear_inargs[] =
@@ -945,7 +945,7 @@ edit_fill_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg edit_fill_inargs[] =
@@ -1042,7 +1042,7 @@ edit_bucket_fill_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg edit_bucket_fill_inargs[] =
@@ -1213,7 +1213,7 @@ edit_blend_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg edit_blend_inargs[] =
@@ -1350,7 +1350,7 @@ edit_stroke_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_args (proc_record, success);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcArg edit_stroke_inargs[] =

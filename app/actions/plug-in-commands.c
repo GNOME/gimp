@@ -67,7 +67,6 @@ plug_in_run_cmd_callback (GtkAction     *action,
   Argument      *args;
   gint           n_args = 0;
   GimpDisplay   *gdisp  = NULL;
-  gint           i;
 
   gimp = action_data_get_gimp (data);
   if (! gimp)
@@ -75,12 +74,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
 
   proc_rec = &proc_def->db_info;
 
-  /* construct the procedures arguments */
-  args = g_new0 (Argument, proc_rec->num_args);
-
-  /* initialize the argument types */
-  for (i = 0; i < proc_rec->num_args; i++)
-    args[i].arg_type = proc_rec->args[i].arg_type;
+  args = procedural_db_arguments (proc_rec);
 
   /* initialize the first argument  */
   args[n_args].value.pdb_int = GIMP_RUN_INTERACTIVE;
