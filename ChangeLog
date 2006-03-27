@@ -1,5 +1,13 @@
 2006-03-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/file/file-open.c
+	* app/file/file-save.c
+	* app/plug-in/plug-ins.c: use procedural_db_run_proc() instead of
+	procedural_db_execute(). execute() should be avoided for anything
+	but PDB-internal calls.
+
+2006-03-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/pdb/procedural_db.c (procedural_db_run_proc): some fixes and
 	more robustness:
 

@@ -85,11 +85,10 @@ file_open_image (Gimp               *gimp,
                  GError            **error)
 {
   const ProcRecord *proc;
-  Argument         *args;
   Argument         *return_vals;
-  gint              image_id;
-  gint              i;
+  gint              n_return_vals;
   gchar            *filename;
+  gint              image_id;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -133,29 +132,27 @@ file_open_image (Gimp               *gimp,
             }
         }
     }
+  else
+    {
+      filename = g_strdup (uri);
+    }
 
   proc = plug_in_proc_def_get_proc (file_proc);
 
-  args = g_new0 (Argument, proc->num_args);
+  return_vals = procedural_db_run_proc (gimp, context, progress,
+                                        proc->name,
+                                        &n_return_vals,
+                                        GIMP_PDB_INT32,  run_mode,
+                                        GIMP_PDB_STRING, filename,
+                                        GIMP_PDB_STRING, entered_filename,
+                                        GIMP_PDB_END);
 
-  for (i = 0; i < proc->num_args; i++)
-    args[i].arg_type = proc->args[i].arg_type;
-
-  args[0].value.pdb_int     = run_mode;
-  args[1].value.pdb_pointer = filename ? filename : (gchar *) uri;
-  args[2].value.pdb_pointer = (gchar *) entered_filename;
-
-  return_vals = procedural_db_execute (gimp, context, progress,
-                                       proc->name, args);
-
-  if (filename)
-    g_free (filename);
+  g_free (filename);
 
   *status  = return_vals[0].value.pdb_int;
   image_id = return_vals[1].value.pdb_int;
 
   procedural_db_destroy_args (return_vals, proc->num_values);
-  g_free (args);
 
   if (*status == GIMP_PDB_SUCCESS)
     {
@@ -221,27 +218,24 @@ file_open_thumbnail (Gimp          *gimp,
   if (proc && proc->num_args >= 2 && proc->num_values >= 1)
     {
       GimpPDBStatusType  status;
-      Argument          *args;
       Argument          *return_vals;
+      gint               n_return_vals;
       gchar             *filename;
       gint               image_id;
-      gint               i;
 
       filename = file_utils_filename_from_uri (uri);
 
-      args = g_new0 (Argument, proc->num_args);
+      if (! filename)
+        filename = g_strdup (uri);
 
-      for (i = 0; i < proc->num_args; i++)
-        args[i].arg_type = proc->args[i].arg_type;
+      return_vals = procedural_db_run_proc (gimp, context, progress,
+                                            proc->name,
+                                            &n_return_vals,
+                                            GIMP_PDB_STRING, filename,
+                                            GIMP_PDB_INT32,  size,
+                                            GIMP_PDB_END);
 
-      args[0].value.pdb_pointer = filename ? filename : (gchar *) uri;
-      args[1].value.pdb_int     = size;
-
-      return_vals = procedural_db_execute (gimp, context, progress,
-                                           proc->name, args);
-
-      if (filename)
-        g_free (filename);
+      g_free (filename);
 
       status   = return_vals[0].value.pdb_int;
       image_id = return_vals[1].value.pdb_int;
@@ -253,7 +247,6 @@ file_open_thumbnail (Gimp          *gimp,
         }
 
       procedural_db_destroy_args (return_vals, proc->num_values);
-      g_free (args);
 
       if (status == GIMP_PDB_SUCCESS && image_id != -1)
         {

@@ -1055,25 +1055,34 @@ plug_ins_add_to_db (Gimp        *gimp,
 
       if (proc_def->file_proc)
         {
-          Argument args[4];
+          Argument *return_vals;
+          gint      n_return_vals;
 
-          args[0].arg_type          = GIMP_PDB_STRING;
-          args[0].value.pdb_pointer = proc_def->db_info.name;
+          if (proc_def->image_types)
+            {
+              return_vals =
+                procedural_db_run_proc (gimp, context, NULL,
+                                        "gimp-register-save-handler",
+                                        &n_return_vals,
+                                        GIMP_PDB_STRING, proc_def->db_info.name,
+                                        GIMP_PDB_STRING, proc_def->extensions,
+                                        GIMP_PDB_STRING, proc_def->prefixes,
+                                        GIMP_PDB_END);
+            }
+          else
+            {
+              return_vals =
+                procedural_db_run_proc (gimp, context, NULL,
+                                        "gimp-register-magic-load-handler",
+                                        &n_return_vals,
+                                        GIMP_PDB_STRING, proc_def->db_info.name,
+                                        GIMP_PDB_STRING, proc_def->extensions,
+                                        GIMP_PDB_STRING, proc_def->prefixes,
+                                        GIMP_PDB_STRING, proc_def->magics,
+                                        GIMP_PDB_END);
+            }
 
-          args[1].arg_type          = GIMP_PDB_STRING;
-          args[1].value.pdb_pointer = proc_def->extensions;
-
-	  args[2].arg_type          = GIMP_PDB_STRING;
-	  args[2].value.pdb_pointer = proc_def->prefixes;
-
-	  args[3].arg_type          = GIMP_PDB_STRING;
-	  args[3].value.pdb_pointer = proc_def->magics;
-
-          g_free (procedural_db_execute (gimp, context, NULL,
-                                         proc_def->image_types ?
-                                         "gimp-register-save-handler" :
-                                         "gimp-register-magic-load-handler",
-                                         args));
+          procedural_db_destroy_args (return_vals, n_return_vals);
 	}
     }
 }

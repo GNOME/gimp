@@ -78,11 +78,10 @@ file_save (GimpImage      *gimage,
            GError        **error)
 {
   const ProcRecord  *proc;
-  Argument          *args;
   Argument          *return_vals;
+  gint               n_return_vals;
   GimpPDBStatusType  status;
-  gint               i;
-  gchar             *filename = NULL;
+  gchar             *filename;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), GIMP_PDB_CALLING_ERROR);
@@ -120,28 +119,30 @@ file_save (GimpImage      *gimage,
             }
         }
     }
+  else
+    {
+      filename = g_strdup (uri);
+    }
 
   /* ref the image, so it can't get deleted during save */
   g_object_ref (gimage);
 
   proc = plug_in_proc_def_get_proc (file_proc);
 
-  args = g_new0 (Argument, proc->num_args);
-
-  for (i = 0; i < proc->num_args; i++)
-    args[i].arg_type = proc->args[i].arg_type;
-
-  args[0].value.pdb_int = run_mode;
-  args[1].value.pdb_int = gimp_image_get_ID (gimage);
-  args[2].value.pdb_int =
-    gimp_item_get_ID (GIMP_ITEM (gimp_image_active_drawable (gimage)));
-  args[3].value.pdb_pointer = filename ? filename : (gchar *) uri;
-  args[4].value.pdb_pointer = (gchar *) uri;
-
-  return_vals = procedural_db_execute (gimage->gimp, context, progress,
-                                       proc->name, args);
+  return_vals =
+    procedural_db_run_proc (gimage->gimp, context, progress,
+                            proc->name,
+                            &n_return_vals,
+                            GIMP_PDB_INT32,    run_mode,
+                            GIMP_PDB_IMAGE,    gimp_image_get_ID (gimage),
+                            GIMP_PDB_DRAWABLE, gimp_item_get_ID (GIMP_ITEM (gimp_image_active_drawable (gimage))),
+                            GIMP_PDB_STRING,   filename,
+                            GIMP_PDB_STRING,   uri,
+                            GIMP_PDB_END);
 
   status = return_vals[0].value.pdb_int;
+
+  procedural_db_destroy_args (return_vals, n_return_vals);
 
   if (status == GIMP_PDB_SUCCESS)
     {
@@ -182,9 +183,6 @@ file_save (GimpImage      *gimage,
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Plug-In could not save image"));
     }
-
-  g_free (return_vals);
-  g_free (args);
 
   g_object_unref (gimage);
 
