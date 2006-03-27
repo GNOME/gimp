@@ -112,6 +112,17 @@ typedef struct
 } classresult;
 
 
+/* Progressbar update callback */
+static inline void
+siox_progress_update (SioxProgressFunc  progress_callback,
+                      gpointer          progress_data,
+                      gdouble           value)
+{
+  if (progress_data)
+    progress_callback (progress_data, value);
+}
+
+
 /* Converts any pixel format to LAB */
 static void
 calc_lab (const guchar *src,
@@ -359,11 +370,14 @@ get_clustersize (const gfloat *limits)
 
 /* Creates a color signature for a given set of pixels */
 static lab *
-create_signature (lab          *input,
-                  gint          length,
-                  gint         *returnlength,
-                  const gfloat *limits,
-                  const gint    dims)
+create_signature (lab                *input,
+                  gint                length,
+                  gint               *returnlength,
+                  const gfloat       *limits,
+                  const gint          dims,
+		  SioxProgressFunc    progress_callback,
+                  gpointer            progress_data,
+		  gdouble             progress_value)
 {
   gint size1 = 0;
   gint size2 = 0;
@@ -379,6 +393,8 @@ create_signature (lab          *input,
 #ifdef SIOX_DEBUG
   g_printerr ("siox.c: step #1 -> %d clusters\n", size1);
 #endif
+
+  siox_progress_update (progress_callback, progress_data, progress_value);
 
   stagetwo (input, 0, size1, 0, &size2, limits, length * 0.001, dims);
 
@@ -488,13 +504,14 @@ threshold_mask (TileManager *mask,
 /* a struct that contains information about a blob */
 struct blob
 {
-  gint     seedx, seedy;
+  gint     seedx;
+  gint     seedy;
   gint     size;
   gboolean mustkeep;
 };
 
 /* This method checks out the neighbourhood of the pixel at position
- * (pos_x,pos_y) in the TileManager mask, it adds the sourrounding
+ * (x,y) in the TileManager mask, it adds the sourrounding
  * pixels to the queue to allow further processing it uses maskVal to
  * determine if the sourounding pixels have already been visited x,y
  * are passed from above.
@@ -561,7 +578,9 @@ depth_first_search (TileManager *mask,
               ++xx;
             }
           else if (xx > x)
-            --xx;
+            {
+              --xx;
+            }
         }
     }
 }
@@ -586,7 +605,7 @@ find_max_blob (TileManager *mask,
                gint         y,
                gint         width,
                gint         height,
-               const gint   sizeFactorToKeep)
+               const gint   size_factor)
 {
   GSList     *list = NULL;
   GSList     *iter;
@@ -644,8 +663,7 @@ find_max_blob (TileManager *mask,
       struct blob *b = iter->data;
 
       depth_first_search (mask, x, y, x + width, y + height, b,
-                          (b->mustkeep
-                           || (b->size * sizeFactorToKeep >= maxsize)) ?
+                          (b->mustkeep || (b->size * size_factor >= maxsize)) ?
                           FIND_BLOB_FINAL : 0);
       g_free (b);
     }
@@ -669,6 +687,7 @@ create_key (const guchar *src,
       if (colormap)             /* INDEXED(A) */
         {
           gint i = *src * 3;
+
           return (colormap[i + RED_PIX]   << 16 |
                   colormap[i + GREEN_PIX] << 8  |
                   colormap[i + BLUE_PIX]);
@@ -680,16 +699,6 @@ create_key (const guchar *src,
     default:
       return 0;
     }
-}
-
-/* Progressbar update callback */
-static inline void
-siox_progress_update (SioxProgressFunc  progress_callback,
-                      gpointer          progress_data,
-                      gdouble           value)
-{
-  if (progress_data)
-    progress_callback (progress_data, value);
 }
 
 /* Clear hashtable entries that get invalid due to refinement */
@@ -846,6 +855,7 @@ siox_foreground_extract (SioxState          *state,
   clustersize = get_clustersize (limits);
 
   siox_progress_update (progress_callback, progress_data, 0.0);
+  total = width * height;
 
   if (refinement & SIOX_REFINEMENT_ADD_FOREGROUND)
     g_hash_table_foreach_remove (state->cache, siox_cache_remove_bg, NULL);
@@ -872,10 +882,11 @@ siox_foreground_extract (SioxState          *state,
     {
       /* count given foreground and background pixels */
       pixel_region_init (&mapPR, mask, x, y, width, height, FALSE);
+      total = width * height;
 
-      for (pr = pixel_regions_register (1, &mapPR);
+      for (pr = pixel_regions_register (1, &mapPR), pixels = 0, n = 0;
            pr != NULL;
-           pr = pixel_regions_process (pr))
+           pr = pixel_regions_process (pr),n++)
         {
           const guchar *map = mapPR.data;
 
@@ -886,14 +897,24 @@ siox_foreground_extract (SioxState          *state,
               for (col = 0; col < mapPR.w; col++, m++)
                 {
                   if (*m < SIOX_LOW)
-                    surebgcount++;
+                    {
+                      surebgcount++;
+                    }
                   else if (*m > SIOX_HIGH)
-                    surefgcount++;
+                    {
+                      surefgcount++;
+                    }
                 }
 
               map += mapPR.rowstride;
             }
-        }
+
+	    pixels += mapPR.w * mapPR.h;
+
+	    if (n % 16 == 0)
+	      siox_progress_update (progress_callback, progress_data,
+				    0.1 * ((gdouble) pixels / (gdouble) total));
+	}
 
 #ifdef SIOX_DEBUG
       g_printerr ("siox.c: usermask #surebg=%d #surefg=%d\n",
@@ -906,7 +927,6 @@ siox_foreground_extract (SioxState          *state,
       if (refinement & SIOX_REFINEMENT_ADD_BACKGROUND)
         surebg = g_new (lab, surebgcount);
 
-      siox_progress_update (progress_callback, progress_data, 0.1);
 
       /* create inputs for color signatures */
       pixel_region_init (&srcPR, state->pixels,
@@ -921,7 +941,7 @@ siox_foreground_extract (SioxState          *state,
         {
           gint i = 0;
 
-          for (; pr != NULL; pr = pixel_regions_process (pr))
+          for (pixels = 0, n = 0; pr != NULL; pr = pixel_regions_process (pr))
             {
               const guchar *src = srcPR.data;
               const guchar *map = mapPR.data;
@@ -943,13 +963,20 @@ siox_foreground_extract (SioxState          *state,
                   src += srcPR.rowstride;
                   map += mapPR.rowstride;
                 }
+
+              pixels += mapPR.w * mapPR.h;
+
+              if (n % 16 == 0)
+                siox_progress_update (progress_callback, progress_data,
+                                      0.1 + 0.1 * ((gdouble) pixels /
+                                                   (gdouble) total));
             }
         }
       else if (! (refinement & SIOX_REFINEMENT_ADD_BACKGROUND))
         {
           gint i = 0;
 
-          for (; pr != NULL; pr = pixel_regions_process (pr))
+          for (pixels = 0, n = 0; pr != NULL; pr = pixel_regions_process (pr))
             {
               const guchar *src = srcPR.data;
               const guchar *map = mapPR.data;
@@ -971,6 +998,13 @@ siox_foreground_extract (SioxState          *state,
                   src += srcPR.rowstride;
                   map += mapPR.rowstride;
                 }
+
+              pixels += mapPR.w * mapPR.h;
+
+              if (n % 16 == 0)
+                siox_progress_update (progress_callback, progress_data,
+                                      0.1 + 0.1 * ((gdouble) pixels /
+                                                   (gdouble) total));
             }
         }
       else   /* both changed */
@@ -978,7 +1012,7 @@ siox_foreground_extract (SioxState          *state,
           gint i = 0;
           gint j = 0;
 
-          for (; pr != NULL; pr = pixel_regions_process (pr))
+          for (pixels = 0, n = 0; pr != NULL; pr = pixel_regions_process (pr))
             {
               const guchar *src = srcPR.data;
               const guchar *map = mapPR.data;
@@ -1005,10 +1039,15 @@ siox_foreground_extract (SioxState          *state,
                   src += srcPR.rowstride;
                   map += mapPR.rowstride;
                 }
+
+              pixels += mapPR.w * mapPR.h;
+
+              if (n % 16 == 0)
+                siox_progress_update (progress_callback, progress_data,
+                                      0.1 + 0.1 * ((gdouble) pixels /
+                                                   (gdouble) total));
             }
         }
-
-      siox_progress_update (progress_callback, progress_data, 0.2);
 
       if (refinement & SIOX_REFINEMENT_ADD_BACKGROUND)
         {
@@ -1016,7 +1055,10 @@ siox_foreground_extract (SioxState          *state,
           state->bgsig = create_signature (surebg, surebgcount,
                                            &state->bgsiglen, limits,
                                            state->bpp == 1 ?
-                                           SIOX_GRAY_DIMS : SIOX_COLOR_DIMS);
+                                           SIOX_GRAY_DIMS : SIOX_COLOR_DIMS,
+					   progress_callback,
+				           progress_data,
+					   0.3);
           g_free (surebg);
 
           if (state->bgsiglen < 1)
@@ -1026,7 +1068,7 @@ siox_foreground_extract (SioxState          *state,
             }
         }
 
-      siox_progress_update (progress_callback, progress_data, 0.3);
+      siox_progress_update (progress_callback, progress_data, 0.4);
 
       if (refinement & SIOX_REFINEMENT_ADD_FOREGROUND)
         {
@@ -1034,12 +1076,15 @@ siox_foreground_extract (SioxState          *state,
           state->fgsig = create_signature (surefg, surefgcount,
                                            &state->fgsiglen, limits,
                                            state->bpp == 1 ?
-                                           SIOX_GRAY_DIMS : SIOX_COLOR_DIMS);
+                                           SIOX_GRAY_DIMS : SIOX_COLOR_DIMS,
+					   progress_callback,
+					   progress_data,
+                                           0.45);
           g_free (surefg);
         }
-    }
+  }
 
-  siox_progress_update (progress_callback, progress_data, 0.4);
+  siox_progress_update (progress_callback, progress_data, 0.5);
 
   /* Reduce the working area to the region of interest */
   x      = x1;
@@ -1156,7 +1201,7 @@ siox_foreground_extract (SioxState          *state,
 
       if (n % 8 == 0)
         siox_progress_update (progress_callback, progress_data,
-                              0.4 + 0.4 * ((gdouble) pixels / (gdouble) total));
+                              0.5 + 0.3 * ((gdouble) pixels / (gdouble) total));
     }
 
 #ifdef SIOX_DEBUG
@@ -1167,7 +1212,6 @@ siox_foreground_extract (SioxState          *state,
               ((gfloat) hits) / miss);
 #endif
 
-  siox_progress_update (progress_callback, progress_data, 0.8);
 
   /* smooth a bit for error killing */
   smooth_mask (mask, x, y, width, height);

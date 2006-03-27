@@ -1,3 +1,8 @@
+2006-03-27  Sven Neumann  <sven@gimp.org>
+
+	* app/base/siox.c: applied changes from Kristian Jantz that
+	improve the progress update from the SIOX routine.
+
 2006-03-26  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/lib.pl: removed support for arg->implicit_fill.
