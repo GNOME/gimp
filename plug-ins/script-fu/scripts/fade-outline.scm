@@ -155,7 +155,7 @@
 
 (script-fu-register "script-fu-fade-outline"
 		    _"_Fade to Layer Mask..."
-		    "Blend the Layers outline border from one alpha value (opaque) to another (transparent) by generating a Layermask"
+		    "Fade out using a layer mask"
 		    "Wolfgang Hofer <hof@hotbot.com>"
 		    "Wolfgang Hofer"
 		    "10 Nov 1999"

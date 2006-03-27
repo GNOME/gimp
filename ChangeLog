@@ -1,5 +1,9 @@
 2006-03-27  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/fade-outline.scm: simplified blurb.
+
+2006-03-27  Sven Neumann  <sven@gimp.org>
+
 	* app/base/siox.c: applied changes from Kristian Jantz that
 	improve the progress update from the SIOX routine.
 
