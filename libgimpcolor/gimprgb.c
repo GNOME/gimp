@@ -647,5 +647,3 @@ gimp_param_spec_rgb (const gchar   *name,
 
   return G_PARAM_SPEC (cspec);
 }
-
-
