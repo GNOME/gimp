@@ -96,6 +96,22 @@ typedef enum
 } GimpLayerModeEffects;
 
 
+#define GIMP_TYPE_HUE_RANGE (gimp_hue_range_get_type ())
+
+GType gimp_hue_range_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_ALL_HUES,
+  GIMP_RED_HUES,
+  GIMP_YELLOW_HUES,
+  GIMP_GREEN_HUES,
+  GIMP_CYAN_HUES,
+  GIMP_BLUE_HUES,
+  GIMP_MAGENTA_HUES
+} GimpHueRange;
+
+
 /*
  * non-registered enums; register them if needed
  */
@@ -106,17 +122,6 @@ typedef enum  /*< skip >*/
   GIMP_ABSOLUTE_CONVOL,    /*  Absolute value              */
   GIMP_NEGATIVE_CONVOL     /*  add 127 to values           */
 } GimpConvolutionType;
-
-typedef enum  /*< skip >*/
-{
-  GIMP_ALL_HUES,
-  GIMP_RED_HUES,
-  GIMP_YELLOW_HUES,
-  GIMP_GREEN_HUES,
-  GIMP_CYAN_HUES,
-  GIMP_BLUE_HUES,
-  GIMP_MAGENTA_HUES
-} GimpHueRange;
 
 typedef enum  /*< pdb-skip, skip >*/
 {

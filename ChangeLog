@@ -1,5 +1,17 @@
 2006-03-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/base/base-enums.h
+	* app/core/core-enums.h
+	* app/plug-in/plug-in-enums.h: register some more enums.
+
+	* app/plug-in/Makefile.am: added rules to generate plug-in-enums.c
+
+	* app/base/base-enums.c
+	* app/core/core-enums.c
+	* app/plug-in/plug-in-enums.c: (re)generated.
+
+2006-03-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/file/file-open.c
 	* app/file/file-save.c
 	* app/plug-in/plug-ins.c: use procedural_db_run_proc() instead of

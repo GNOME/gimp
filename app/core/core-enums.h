@@ -449,6 +449,67 @@ typedef enum  /*< pdb-skip >*/
 } GimpDirtyMask;
 
 
+#define GIMP_TYPE_OFFSET_TYPE (gimp_offset_type_get_type ())
+
+GType gimp_offset_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_OFFSET_BACKGROUND,
+  GIMP_OFFSET_TRANSPARENT
+} GimpOffsetType;
+
+
+#define GIMP_TYPE_GRADIENT_SEGMENT_TYPE (gimp_gradient_segment_type_get_type ())
+
+GType gimp_gradient_segment_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_GRADIENT_SEGMENT_LINEAR,
+  GIMP_GRADIENT_SEGMENT_CURVED,
+  GIMP_GRADIENT_SEGMENT_SINE,
+  GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING,
+  GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING
+} GimpGradientSegmentType;
+
+
+#define GIMP_TYPE_GRADIENT_SEGMENT_COLOR (gimp_gradient_segment_color_get_type ())
+
+GType gimp_gradient_segment_color_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_GRADIENT_SEGMENT_RGB,      /* normal RGB           */
+  GIMP_GRADIENT_SEGMENT_HSV_CCW,  /* counterclockwise hue */
+  GIMP_GRADIENT_SEGMENT_HSV_CW    /* clockwise hue        */
+} GimpGradientSegmentColor;
+
+
+#define GIMP_TYPE_MASK_APPLY_MODE (gimp_mask_apply_mode_get_type ())
+
+GType gimp_mask_apply_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_MASK_APPLY,
+  GIMP_MASK_DISCARD
+} GimpMaskApplyMode;
+
+
+#define GIMP_TYPE_MERGE_TYPE (gimp_merge_type_get_type ())
+
+GType gimp_merge_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_EXPAND_AS_NECESSARY,
+  GIMP_CLIP_TO_IMAGE,
+  GIMP_CLIP_TO_BOTTOM_LAYER,
+  GIMP_FLATTEN_IMAGE
+} GimpMergeType;
+
+
 /*
  * non-registered enums; register them if needed
  */
@@ -515,42 +576,6 @@ typedef enum  /*< pdb-skip, skip >*/
                                    GIMP_CONTEXT_TEMPLATE_MASK   |
                                    GIMP_CONTEXT_PAINT_PROPS_MASK)
 } GimpContextPropMask;
-
-typedef enum  /*< skip >*/
-{
-  GIMP_GRADIENT_SEGMENT_LINEAR,
-  GIMP_GRADIENT_SEGMENT_CURVED,
-  GIMP_GRADIENT_SEGMENT_SINE,
-  GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING,
-  GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING
-} GimpGradientSegmentType;
-
-typedef enum  /*< skip >*/
-{
-  GIMP_GRADIENT_SEGMENT_RGB,      /* normal RGB           */
-  GIMP_GRADIENT_SEGMENT_HSV_CCW,  /* counterclockwise hue */
-  GIMP_GRADIENT_SEGMENT_HSV_CW    /* clockwise hue        */
-} GimpGradientSegmentColor;
-
-typedef enum  /*< skip >*/
-{
-  GIMP_MASK_APPLY,
-  GIMP_MASK_DISCARD
-} GimpMaskApplyMode;
-
-typedef enum  /*< skip >*/
-{
-  GIMP_EXPAND_AS_NECESSARY,
-  GIMP_CLIP_TO_IMAGE,
-  GIMP_CLIP_TO_BOTTOM_LAYER,
-  GIMP_FLATTEN_IMAGE
-} GimpMergeType;
-
-typedef enum  /*< skip >*/
-{
-  GIMP_OFFSET_BACKGROUND,
-  GIMP_OFFSET_TRANSPARENT
-} GimpOffsetType;
 
 typedef enum  /*< pdb-skip, skip >*/
 {
