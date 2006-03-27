@@ -75,6 +75,11 @@ static void     gimp_new_rect_select_tool_button_release (GimpTool        *tool,
                                                           guint32          time,
                                                           GdkModifierType  state,
                                                           GimpDisplay     *gdisp);
+static void     gimp_new_rect_select_tool_modifier_key   (GimpTool        *tool,
+                                                          GdkModifierType  key,
+                                                          gboolean         press,
+                                                          GdkModifierType  state,
+                                                          GimpDisplay     *gdisp);
 static void     gimp_new_rect_select_tool_oper_update    (GimpTool        *tool,
                                                           GimpCoords      *coords,
                                                           GdkModifierType  state,
@@ -138,7 +143,7 @@ gimp_new_rect_select_tool_class_init (GimpNewRectSelectToolClass *klass)
   tool_class->button_release = gimp_new_rect_select_tool_button_release;
   tool_class->motion         = gimp_rectangle_tool_motion;
   tool_class->key_press      = gimp_rectangle_tool_key_press;
-  tool_class->modifier_key   = gimp_rectangle_tool_modifier_key;
+  tool_class->modifier_key   = gimp_new_rect_select_tool_modifier_key;
   tool_class->oper_update    = gimp_new_rect_select_tool_oper_update;
   tool_class->cursor_update  = gimp_rectangle_tool_cursor_update;
 
@@ -235,6 +240,19 @@ gimp_new_rect_select_tool_button_release (GimpTool        *tool,
                          _("Click or press enter to create the selection."));
 
   gimp_rectangle_tool_button_release (tool, coords, time, state, gdisp);
+}
+
+static void
+gimp_new_rect_select_tool_modifier_key (GimpTool        *tool,
+                                        GdkModifierType  key,
+                                        gboolean         press,
+                                        GdkModifierType  state,
+                                        GimpDisplay     *gdisp)
+{
+  gimp_rectangle_tool_modifier_key (tool, key, press, state, gdisp);
+
+  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state,
+                                                gdisp);
 }
 
 static void

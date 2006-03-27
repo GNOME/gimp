@@ -1,3 +1,7 @@
+2006-03-27  Karine Delvare  <edhel@gimp.org>
+
+	* app/tools/gimpnewrectselecttool.c: allow modifier keys to work.
+
 2006-03-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/Makefile.am
