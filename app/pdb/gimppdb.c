@@ -488,7 +488,7 @@ procedural_db_arguments (ProcRecord *procedure)
   args = g_new0 (Argument, procedure->num_args);
 
   for (i = 0; i < procedure->num_args; i++)
-    args[i].arg_type = procedure->values[i].arg_type;
+    args[i].arg_type = procedure->args[i].arg_type;
 
   return args;
 }

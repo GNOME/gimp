@@ -1,3 +1,8 @@
+2006-03-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/pdb/procedural_db.c (procedural_db_arguments): argh, get
+	types from procedure->args, not procedure->values.
+
 2006-03-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/procedural_db.[ch]: renamed procedural_db_return_args()
