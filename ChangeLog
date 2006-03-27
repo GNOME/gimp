@@ -1,5 +1,18 @@
 2006-03-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/procedural_db.c (procedural_db_run_proc): some fixes and
+	more robustness:
+
+	- Procedures return proc->num_values + 1 return values, not only
+	  proc->num_values.
+	- Allocate the Argment array with g_new0 and initialize all its
+	  types before parsing the va_list.
+	- Stop parsing the va_list on GIMP_PDB_END, so passing less
+	  parameters is possible.
+	- Cleanup switch() cases.
+
+2006-03-27  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpcolor/gimprgb.c (gimp_param_rgb_init): default to fully
 	opaque black instead of fully transparent.
 
