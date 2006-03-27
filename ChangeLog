@@ -1,5 +1,11 @@
 2006-03-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/Makefile.am
+	* app/core/gimpparamspecs.[ch]: new unused files. Checked in so
+	they can be easily reviewed.
+
+2006-03-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/paint-enums.h: register GimpBrushApplicationMode.
 
 	* app/paint/paint-enums.c
