@@ -21,7 +21,7 @@
 
 
 gboolean   gimp_paint_core_real_push_undo (GimpPaintCore *core,
-                                           GimpImage     *gimage,
+                                           GimpImage     *image,
                                            const gchar   *undo_desc);
 
 

@@ -51,7 +51,7 @@ image_merge_layers_dialog_new (GimpImage     *image,
 
   dialog = g_new0 (ImageMergeLayersDialog, 1);
 
-  dialog->gimage     = image;
+  dialog->image      = image;
   dialog->context    = context;
   dialog->merge_type = GIMP_EXPAND_AS_NECESSARY;
 

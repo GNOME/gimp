@@ -143,14 +143,14 @@ gimp_toolbox_drop_uri_list (GtkWidget *widget,
   for (list = uri_list; list; list = g_list_next (list))
     {
       const gchar       *uri   = list->data;
-      GimpImage         *gimage;
+      GimpImage         *image;
       GimpPDBStatusType  status;
       GError            *error = NULL;
 
-      gimage = file_open_with_display (context->gimp, context, NULL,
+      image = file_open_with_display (context->gimp, context, NULL,
                                        uri, &status, &error);
 
-      if (! gimage && status != GIMP_PDB_CANCEL)
+      if (! image && status != GIMP_PDB_CANCEL)
         {
           gchar *filename = file_utils_uri_display_name (uri);
 
@@ -173,7 +173,7 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
   GimpContext       *context = GIMP_CONTEXT (data);
   GimpDrawable      *drawable;
   GimpItem          *item;
-  GimpImage         *gimage;
+  GimpImage         *image;
   GimpImage         *new_image;
   GimpLayer         *new_layer;
   GType              new_type;
@@ -187,7 +187,7 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
 
   drawable = GIMP_DRAWABLE (viewable);
   item     = GIMP_ITEM (viewable);
-  gimage   = gimp_item_get_image (item);
+  image   = gimp_item_get_image (item);
 
   width  = gimp_item_width  (item);
   height = gimp_item_height (item);
@@ -195,19 +195,19 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
 
   type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
 
-  new_image = gimp_create_image (gimage->gimp, width, height, type, FALSE);
+  new_image = gimp_create_image (image->gimp, width, height, type, FALSE);
   gimp_image_undo_disable (new_image);
 
   if (type == GIMP_INDEXED)
     gimp_image_set_colormap (new_image,
-                             gimp_image_get_colormap (gimage),
-                             gimp_image_get_colormap_size (gimage),
+                             gimp_image_get_colormap (image),
+                             gimp_image_get_colormap_size (image),
                              FALSE);
 
   gimp_image_set_resolution (new_image,
-			     gimage->xresolution, gimage->yresolution);
+			     image->xresolution, image->yresolution);
   gimp_image_set_unit (new_image,
-                       gimp_image_get_unit (gimage));
+                       gimp_image_get_unit (image));
 
   if (GIMP_IS_LAYER (drawable))
     new_type = G_TYPE_FROM_INSTANCE (drawable);
@@ -227,7 +227,7 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
 
   gimp_image_undo_enable (new_image);
 
-  gimp_create_display (gimage->gimp, new_image, GIMP_UNIT_PIXEL, 1.0);
+  gimp_create_display (image->gimp, new_image, GIMP_UNIT_PIXEL, 1.0);
   g_object_unref (new_image);
 }
 

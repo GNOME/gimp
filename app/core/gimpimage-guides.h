@@ -29,34 +29,34 @@ struct _GimpGuide
 };
 
 
-GimpGuide * gimp_image_add_hguide     (GimpImage *gimage,
+GimpGuide * gimp_image_add_hguide     (GimpImage *image,
                                        gint       position,
                                        gboolean   push_undo);
-GimpGuide * gimp_image_add_vguide     (GimpImage *gimage,
+GimpGuide * gimp_image_add_vguide     (GimpImage *image,
                                        gint       position,
                                        gboolean   push_undo);
 
 GimpGuide * gimp_image_guide_ref      (GimpGuide *guide);
 void        gimp_image_guide_unref    (GimpGuide *guide);
 
-void        gimp_image_add_guide      (GimpImage *gimage,
+void        gimp_image_add_guide      (GimpImage *image,
                                        GimpGuide *guide,
                                        gint       position);
-void        gimp_image_remove_guide   (GimpImage *gimage,
+void        gimp_image_remove_guide   (GimpImage *image,
                                        GimpGuide *guide,
                                        gboolean   push_undo);
-void        gimp_image_move_guide     (GimpImage *gimage,
+void        gimp_image_move_guide     (GimpImage *image,
                                        GimpGuide *guide,
                                        gint       position,
                                        gboolean   push_undo);
 
-GimpGuide * gimp_image_get_guide      (GimpImage *gimage,
+GimpGuide * gimp_image_get_guide      (GimpImage *image,
                                        guint32    id);
-GimpGuide * gimp_image_get_next_guide (GimpImage *gimage,
+GimpGuide * gimp_image_get_next_guide (GimpImage *image,
                                        guint32    id,
                                        gboolean  *guide_found);
 
-GimpGuide * gimp_image_find_guide     (GimpImage *gimage,
+GimpGuide * gimp_image_find_guide     (GimpImage *image,
                                        gdouble    x,
                                        gdouble    y,
                                        gdouble    epsilon_x,

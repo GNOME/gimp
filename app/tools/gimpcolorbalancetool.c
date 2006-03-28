@@ -146,7 +146,7 @@ gimp_color_balance_tool_initialize (GimpTool    *tool,
   GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (tool);
   GimpDrawable         *drawable;
 
-  drawable = gimp_image_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->image);
 
   if (! drawable)
     return FALSE;

@@ -359,16 +359,16 @@ gimp_drawable_translate (GimpItem *item,
                          gboolean  push_undo)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
-  GimpImage    *gimage   = gimp_item_get_image (item);
+  GimpImage    *image    = gimp_item_get_image (item);
 
   if (gimp_drawable_has_floating_sel (drawable))
-    floating_sel_relax (gimp_image_floating_sel (gimage), FALSE);
+    floating_sel_relax (gimp_image_floating_sel (image), FALSE);
 
   GIMP_ITEM_CLASS (parent_class)->translate (item, offset_x, offset_y,
                                              push_undo);
 
   if (gimp_drawable_has_floating_sel (drawable))
-    floating_sel_rigor (gimp_image_floating_sel (gimage), FALSE);
+    floating_sel_rigor (gimp_image_floating_sel (image), FALSE);
 }
 
 static void
@@ -592,7 +592,7 @@ gimp_drawable_get_color_at (GimpPickable *pickable,
                             gint          y)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (pickable);
-  GimpImage    *gimage   = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpImage    *image    = gimp_item_get_image (GIMP_ITEM (drawable));
   Tile         *tile;
   guchar       *src;
   guchar       *dest;
@@ -608,7 +608,7 @@ gimp_drawable_get_color_at (GimpPickable *pickable,
                                 TRUE, FALSE);
   src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
 
-  gimp_image_get_color (gimage, gimp_drawable_type (drawable), src, dest);
+  gimp_image_get_color (image, gimp_drawable_type (drawable), src, dest);
 
   if (gimp_drawable_is_indexed (drawable))
     dest[4] = src[0];
@@ -782,7 +782,7 @@ gimp_drawable_real_swap_pixels (GimpDrawable      *drawable,
 
 void
 gimp_drawable_configure (GimpDrawable  *drawable,
-                         GimpImage     *gimage,
+                         GimpImage     *image,
                          gint           offset_x,
                          gint           offset_y,
                          gint           width,
@@ -791,10 +791,10 @@ gimp_drawable_configure (GimpDrawable  *drawable,
                          const gchar   *name)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (width > 0 && height > 0);
 
-  gimp_item_configure (GIMP_ITEM (drawable), gimage,
+  gimp_item_configure (GIMP_ITEM (drawable), image,
                        offset_x, offset_y, width, height, name);
 
   drawable->type      = type;
@@ -934,14 +934,14 @@ gimp_drawable_set_tiles_full (GimpDrawable       *drawable,
                               gint                offset_y)
 {
   GimpItem  *item;
-  GimpImage *gimage;
+  GimpImage *image;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (tiles != NULL);
   g_return_if_fail (tile_manager_bpp (tiles) == GIMP_IMAGE_TYPE_BYTES (type));
 
-  item   = GIMP_ITEM (drawable);
-  gimage = gimp_item_get_image (item);
+  item  = GIMP_ITEM (drawable);
+  image = gimp_item_get_image (item);
 
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
     push_undo = FALSE;
@@ -955,7 +955,7 @@ gimp_drawable_set_tiles_full (GimpDrawable       *drawable,
     }
 
   if (gimp_drawable_has_floating_sel (drawable))
-    floating_sel_relax (gimp_image_floating_sel (gimage), FALSE);
+    floating_sel_relax (gimp_image_floating_sel (image), FALSE);
 
   GIMP_DRAWABLE_GET_CLASS (drawable)->set_tiles (drawable,
                                                  push_undo, undo_desc,
@@ -963,7 +963,7 @@ gimp_drawable_set_tiles_full (GimpDrawable       *drawable,
                                                  offset_x, offset_y);
 
   if (gimp_drawable_has_floating_sel (drawable))
-    floating_sel_rigor (gimp_image_floating_sel (gimage), FALSE);
+    floating_sel_rigor (gimp_image_floating_sel (image), FALSE);
 
   gimp_drawable_update (drawable, 0, 0, item->width, item->height);
 }
@@ -1051,15 +1051,15 @@ gimp_drawable_merge_shadow (GimpDrawable *drawable,
                             gboolean      push_undo,
                             const gchar  *undo_desc)
 {
-  GimpImage *gimage;
+  GimpImage *image;
   gint       x, y, width, height;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  g_return_if_fail (gimage->shadow != NULL);
+  g_return_if_fail (image->shadow != NULL);
 
   /*  A useful optimization here is to limit the update to the
    *  extents of the selection mask, as it cannot extend beyond
@@ -1069,7 +1069,7 @@ gimp_drawable_merge_shadow (GimpDrawable *drawable,
     {
       PixelRegion shadowPR;
 
-      pixel_region_init (&shadowPR, gimage->shadow,
+      pixel_region_init (&shadowPR, image->shadow,
                          x, y, width, height, FALSE);
       gimp_drawable_apply_region (drawable, &shadowPR,
                                   push_undo, undo_desc,
@@ -1084,7 +1084,7 @@ gimp_drawable_fill (GimpDrawable      *drawable,
                     const GimpPattern *pattern)
 {
   GimpItem      *item;
-  GimpImage     *gimage;
+  GimpImage     *image;
   GimpImageType  drawable_type;
   PixelRegion    destPR;
 
@@ -1093,7 +1093,7 @@ gimp_drawable_fill (GimpDrawable      *drawable,
   g_return_if_fail (pattern == NULL || GIMP_IS_PATTERN (pattern));
 
   item   = GIMP_ITEM (drawable);
-  gimage = gimp_item_get_image (item);
+  image = gimp_item_get_image (item);
 
   drawable_type = gimp_drawable_type (drawable);
 
@@ -1112,7 +1112,7 @@ gimp_drawable_fill (GimpDrawable      *drawable,
                            &tmp[BLUE_PIX],
                            &tmp[ALPHA_PIX]);
 
-      gimp_image_transform_color (gimage, drawable, c, GIMP_RGB, tmp);
+      gimp_image_transform_color (image, drawable, c, GIMP_RGB, tmp);
 
       if (GIMP_IMAGE_TYPE_HAS_ALPHA (drawable_type))
         c[GIMP_IMAGE_TYPE_BYTES (drawable_type) - 1] = tmp[ALPHA_PIX];
@@ -1126,7 +1126,7 @@ gimp_drawable_fill (GimpDrawable      *drawable,
       TempBuf  *pat_buf;
       gboolean  new_buf;
 
-      pat_buf = gimp_image_transform_temp_buf (gimage, drawable,
+      pat_buf = gimp_image_transform_temp_buf (image, drawable,
                                                pattern->mask, &new_buf);
 
       pattern_region (&destPR, NULL, pat_buf, 0, 0);
@@ -1192,7 +1192,7 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
                            gint         *y2)
 {
   GimpItem    *item;
-  GimpImage   *gimage;
+  GimpImage   *image;
   GimpChannel *selection;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
@@ -1210,8 +1210,8 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
 
   g_return_val_if_fail (gimp_item_is_attached (item), FALSE);
 
-  gimage    = gimp_item_get_image (item);
-  selection = gimp_image_get_mask (gimage);
+  image    = gimp_item_get_image (item);
+  selection = gimp_image_get_mask (image);
 
   if (GIMP_DRAWABLE (selection) != drawable &&
       gimp_channel_bounds (selection, x1, y1, x2, y2))
@@ -1244,7 +1244,7 @@ gimp_drawable_mask_intersect (GimpDrawable *drawable,
                               gint         *height)
 {
   GimpItem    *item;
-  GimpImage   *gimage;
+  GimpImage   *image;
   GimpChannel *selection;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
@@ -1262,8 +1262,8 @@ gimp_drawable_mask_intersect (GimpDrawable *drawable,
 
   g_return_val_if_fail (gimp_item_is_attached (item), FALSE);
 
-  gimage    = gimp_item_get_image (item);
-  selection = gimp_image_get_mask (gimage);
+  image    = gimp_item_get_image (item);
+  selection = gimp_image_get_mask (image);
 
   if (GIMP_DRAWABLE (selection) != drawable &&
       gimp_channel_bounds (selection, x, y, width, height))
@@ -1380,14 +1380,14 @@ gimp_drawable_bytes_without_alpha (const GimpDrawable *drawable)
 gboolean
 gimp_drawable_has_floating_sel (const GimpDrawable *drawable)
 {
-  GimpImage *gimage;
+  GimpImage *image;
   GimpLayer *floating_sel;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  floating_sel = gimp_image_floating_sel (gimage);
+  floating_sel = gimp_image_floating_sel (image);
 
   return (floating_sel && floating_sel->fs.drawable == drawable);
 }
@@ -1403,14 +1403,14 @@ gimp_drawable_data (const GimpDrawable *drawable)
 guchar *
 gimp_drawable_cmap (const GimpDrawable *drawable)
 {
-  GimpImage *gimage;
+  GimpImage *image;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  if (gimage)
-    return gimage->cmap;
+  if (image)
+    return image->cmap;
 
   return NULL;
 }

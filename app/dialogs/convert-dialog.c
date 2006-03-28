@@ -46,7 +46,7 @@ typedef struct
 {
   GtkWidget              *dialog;
 
-  GimpImage              *gimage;
+  GimpImage              *image;
   GimpProgress           *progress;
   GimpContext            *context;
   GimpContainer          *container;
@@ -84,7 +84,7 @@ static GimpPalette            *saved_palette      = NULL;
 /*  public functions  */
 
 GtkWidget *
-convert_dialog_new (GimpImage    *gimage,
+convert_dialog_new (GimpImage    *image,
                     GtkWidget    *parent,
                     GimpProgress *progress)
 {
@@ -101,13 +101,13 @@ convert_dialog_new (GimpImage    *gimage,
   GtkWidget     *palette_box;
   GtkWidget     *combo;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
 
   dialog = g_new0 (IndexedDialog, 1);
 
-  dialog->gimage       = gimage;
+  dialog->image        = image;
   dialog->progress     = progress;
   dialog->dither_type  = saved_dither_type;
   dialog->alpha_dither = saved_alpha_dither;
@@ -116,7 +116,7 @@ convert_dialog_new (GimpImage    *gimage,
   dialog->palette_type = saved_palette_type;
 
   dialog->dialog =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (image),
                               _("Indexed Color Conversion"),
                               "gimp-image-convert-indexed",
                               GIMP_STOCK_CONVERT_INDEXED,
@@ -183,7 +183,7 @@ convert_dialog_new (GimpImage    *gimage,
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  if (dialog->num_colors == 256 && gimp_image_has_alpha (gimage))
+  if (dialog->num_colors == 256 && gimp_image_has_alpha (image))
     dialog->num_colors = 255;
 
   spinbutton = gimp_spin_button_new (&adjustment, dialog->num_colors,
@@ -277,7 +277,7 @@ convert_dialog_response (GtkWidget     *widget,
                                       _("Converting to indexed"), FALSE);
 
       /*  Convert the image to indexed color  */
-      gimp_image_convert (dialog->gimage,
+      gimp_image_convert (dialog->image,
                           GIMP_INDEXED,
                           dialog->num_colors,
                           dialog->dither_type,
@@ -290,7 +290,7 @@ convert_dialog_response (GtkWidget     *widget,
       if (progress)
         gimp_progress_end (progress);
 
-      gimp_image_flush (dialog->gimage);
+      gimp_image_flush (dialog->image);
 
       /* Save defaults for next time */
       saved_dither_type  = dialog->dither_type;
@@ -307,7 +307,7 @@ convert_dialog_response (GtkWidget     *widget,
 static GtkWidget *
 convert_dialog_palette_box (IndexedDialog *dialog)
 {
-  Gimp        *gimp = dialog->gimage->gimp;
+  Gimp        *gimp = dialog->image->gimp;
   GList       *list;
   GimpPalette *palette;
   GimpPalette *web_palette   = NULL;

@@ -63,10 +63,10 @@ drawable_desaturate_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
   DesaturateDialog *dialog;
-  GimpImage        *gimage;
+  GimpImage        *image;
   GimpDrawable     *drawable;
   GtkWidget        *widget;
-  return_if_no_drawable (gimage, drawable, data);
+  return_if_no_drawable (image, drawable, data);
   return_if_no_widget (widget, data);
 
   if (! gimp_drawable_is_rgb (drawable))
@@ -88,9 +88,9 @@ void
 drawable_equalize_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
-  GimpImage    *gimage;
+  GimpImage    *image;
   GimpDrawable *drawable;
-  return_if_no_drawable (gimage, drawable, data);
+  return_if_no_drawable (image, drawable, data);
 
   if (gimp_drawable_is_indexed (drawable))
     {
@@ -99,16 +99,16 @@ drawable_equalize_cmd_callback (GtkAction *action,
     }
 
   gimp_drawable_equalize (drawable, TRUE);
-  gimp_image_flush (gimage);
+  gimp_image_flush (image);
 }
 
 void
 drawable_invert_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
-  GimpImage    *gimage;
+  GimpImage    *image;
   GimpDrawable *drawable;
-  return_if_no_drawable (gimage, drawable, data);
+  return_if_no_drawable (image, drawable, data);
 
   if (gimp_drawable_is_indexed (drawable))
     {
@@ -117,17 +117,17 @@ drawable_invert_cmd_callback (GtkAction *action,
     }
 
   gimp_drawable_invert (drawable);
-  gimp_image_flush (gimage);
+  gimp_image_flush (image);
 }
 
 void
 drawable_levels_stretch_cmd_callback (GtkAction *action,
                                       gpointer   data)
 {
-  GimpImage    *gimage;
+  GimpImage    *image;
   GimpDrawable *drawable;
   GimpContext  *context;
-  return_if_no_drawable (gimage, drawable, data);
+  return_if_no_drawable (image, drawable, data);
   return_if_no_context (context, data);
 
   if (! gimp_drawable_is_rgb (drawable))
@@ -137,18 +137,18 @@ drawable_levels_stretch_cmd_callback (GtkAction *action,
     }
 
   gimp_drawable_levels_stretch (drawable, context);
-  gimp_image_flush (gimage);
+  gimp_image_flush (image);
 }
 
 void
 drawable_offset_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
-  GimpImage    *gimage;
+  GimpImage    *image;
   GimpDrawable *drawable;
   GtkWidget    *widget;
   GtkWidget    *dialog;
-  return_if_no_drawable (gimage, drawable, data);
+  return_if_no_drawable (image, drawable, data);
   return_if_no_widget (widget, data);
 
   dialog = offset_dialog_new (drawable, widget);
@@ -160,10 +160,10 @@ void
 drawable_linked_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
-  GimpImage    *gimage;
+  GimpImage    *image;
   GimpDrawable *drawable;
   gboolean      linked;
-  return_if_no_drawable (gimage, drawable, data);
+  return_if_no_drawable (image, drawable, data);
 
   linked = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
@@ -176,14 +176,14 @@ drawable_linked_cmd_callback (GtkAction *action,
       GimpUndo *undo;
       gboolean  push_undo = TRUE;
 
-      undo = gimp_image_undo_can_compress (gimage, GIMP_TYPE_ITEM_UNDO,
+      undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
                                            GIMP_UNDO_ITEM_LINKED);
 
       if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (drawable))
         push_undo = FALSE;
 
       gimp_item_set_linked (GIMP_ITEM (drawable), linked, push_undo);
-      gimp_image_flush (gimage);
+      gimp_image_flush (image);
     }
 }
 
@@ -191,10 +191,10 @@ void
 drawable_visible_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
-  GimpImage    *gimage;
+  GimpImage    *image;
   GimpDrawable *drawable;
   gboolean      visible;
-  return_if_no_drawable (gimage, drawable, data);
+  return_if_no_drawable (image, drawable, data);
 
   visible = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
@@ -207,14 +207,14 @@ drawable_visible_cmd_callback (GtkAction *action,
       GimpUndo *undo;
       gboolean  push_undo = TRUE;
 
-      undo = gimp_image_undo_can_compress (gimage, GIMP_TYPE_ITEM_UNDO,
+      undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
                                            GIMP_UNDO_ITEM_VISIBILITY);
 
       if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (drawable))
         push_undo = FALSE;
 
       gimp_item_set_visible (GIMP_ITEM (drawable), visible, push_undo);
-      gimp_image_flush (gimage);
+      gimp_image_flush (image);
     }
 }
 
@@ -224,13 +224,13 @@ drawable_flip_cmd_callback (GtkAction *action,
                             gint       value,
                             gpointer   data)
 {
-  GimpImage    *gimage;
+  GimpImage    *image;
   GimpDrawable *drawable;
   GimpItem     *item;
   GimpContext  *context;
   gint          off_x, off_y;
   gdouble       axis = 0.0;
-  return_if_no_drawable (gimage, drawable, data);
+  return_if_no_drawable (image, drawable, data);
   return_if_no_context (context, data);
 
   item = GIMP_ITEM (drawable);
@@ -252,7 +252,7 @@ drawable_flip_cmd_callback (GtkAction *action,
     }
 
   if (gimp_item_get_linked (item))
-    gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
+    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
                                  GIMP_ITEM_GET_CLASS (item)->flip_desc);
 
   gimp_item_flip (item, context, (GimpOrientationType) value, axis, FALSE);
@@ -261,10 +261,10 @@ drawable_flip_cmd_callback (GtkAction *action,
     {
       gimp_item_linked_flip (item, context, (GimpOrientationType) action, axis,
                              FALSE);
-      gimp_image_undo_group_end (gimage);
+      gimp_image_undo_group_end (image);
     }
 
-  gimp_image_flush (gimage);
+  gimp_image_flush (image);
 }
 
 void
@@ -272,14 +272,14 @@ drawable_rotate_cmd_callback (GtkAction *action,
                               gint       value,
                               gpointer   data)
 {
-  GimpImage    *gimage;
+  GimpImage    *image;
   GimpDrawable *drawable;
   GimpContext  *context;
   GimpItem     *item;
   gint          off_x, off_y;
   gdouble       center_x, center_y;
   gboolean      clip_result = FALSE;
-  return_if_no_drawable (gimage, drawable, data);
+  return_if_no_drawable (image, drawable, data);
   return_if_no_context (context, data);
 
   item = GIMP_ITEM (drawable);
@@ -290,7 +290,7 @@ drawable_rotate_cmd_callback (GtkAction *action,
   center_y = ((gdouble) off_y + (gdouble) gimp_item_height (item) / 2.0);
 
   if (gimp_item_get_linked (item))
-    gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
+    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
                                  GIMP_ITEM_GET_CLASS (item)->rotate_desc);
 
   if (GIMP_IS_CHANNEL (item))
@@ -303,10 +303,10 @@ drawable_rotate_cmd_callback (GtkAction *action,
     {
       gimp_item_linked_rotate (item, context, (GimpRotationType) value,
                                center_x, center_y, FALSE);
-      gimp_image_undo_group_end (gimage);
+      gimp_image_undo_group_end (image);
     }
 
-  gimp_image_flush (gimage);
+  gimp_image_flush (image);
 }
 
 /*  private functions  */
@@ -319,14 +319,14 @@ desaturate_response (GtkWidget        *widget,
   if (response_id == GTK_RESPONSE_OK)
     {
       GimpDrawable *drawable = dialog->drawable;
-      GimpImage    *gimage   = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpImage    *image   = gimp_item_get_image (GIMP_ITEM (drawable));
 
       /*  remember for next invocation of the dialog  */
       desaturate_mode = dialog->mode;
 
       gimp_drawable_desaturate (drawable, desaturate_mode);
 
-      gimp_image_flush (gimage);
+      gimp_image_flush (image);
     }
 
   gtk_widget_destroy (dialog->dialog);

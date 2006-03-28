@@ -189,14 +189,14 @@ void
 plug_in_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
-  GimpImage     *gimage = action_data_get_image (data);
+  GimpImage     *image = action_data_get_image (data);
   GimpImageType  type   = -1;
   GSList        *list;
   gint           i;
 
-  if (gimage)
+  if (image)
     {
-      GimpDrawable *drawable = gimp_image_active_drawable (gimage);
+      GimpDrawable *drawable = gimp_image_active_drawable (image);
 
       if (drawable)
         type = gimp_drawable_type (drawable);

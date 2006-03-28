@@ -62,7 +62,7 @@ static void      gimp_image_prop_view_get_property (GObject           *object,
 static GtkWidget * gimp_image_prop_view_add_label  (GtkTable          *table,
                                                     gint               row,
                                                     const gchar       *text);
-static void        gimp_image_prop_view_undo_event (GimpImage         *gimage,
+static void        gimp_image_prop_view_undo_event (GimpImage         *image,
                                                     GimpUndoEvent      event,
                                                     GimpUndo          *undo,
                                                     GimpImagePropView *view);
@@ -299,7 +299,7 @@ gimp_image_prop_view_label_set_undo (GtkWidget     *label,
 }
 
 static void
-gimp_image_prop_view_undo_event (GimpImage         *gimage,
+gimp_image_prop_view_undo_event (GimpImage         *image,
                                  GimpUndoEvent      event,
                                  GimpUndo          *undo,
                                  GimpImagePropView *view)

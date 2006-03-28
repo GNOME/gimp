@@ -220,25 +220,25 @@ void
 edit_actions_update (GimpActionGroup *group,
                      gpointer         data)
 {
-  GimpImage    *gimage       = action_data_get_image (data);
+  GimpImage    *image       = action_data_get_image (data);
   GimpDrawable *drawable     = NULL;
   gchar        *undo_name    = NULL;
   gchar        *redo_name    = NULL;
   gboolean      undo_enabled = FALSE;
 
-  if (gimage)
+  if (image)
     {
       GimpUndo *undo;
       GimpUndo *redo;
 
-      drawable = gimp_image_active_drawable (gimage);
+      drawable = gimp_image_active_drawable (image);
 
-      undo_enabled = gimp_image_undo_is_enabled (gimage);
+      undo_enabled = gimp_image_undo_is_enabled (image);
 
       if (undo_enabled)
         {
-          undo = gimp_undo_stack_peek (gimage->undo_stack);
-          redo = gimp_undo_stack_peek (gimage->redo_stack);
+          undo = gimp_undo_stack_peek (image->undo_stack);
+          redo = gimp_undo_stack_peek (image->redo_stack);
 
           if (undo)
             undo_name =
@@ -270,14 +270,14 @@ edit_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("edit-cut",          drawable);
   SET_SENSITIVE ("edit-copy",         drawable);
-  SET_SENSITIVE ("edit-copy-visible", gimage);
+  SET_SENSITIVE ("edit-copy-visible", image);
   /*             "edit-paste" is always enabled  */
-  SET_SENSITIVE ("edit-paste-into",   gimage);
+  SET_SENSITIVE ("edit-paste-into",   image);
 
   SET_SENSITIVE ("edit-named-cut",          drawable);
   SET_SENSITIVE ("edit-named-copy",         drawable);
   SET_SENSITIVE ("edit-named-copy-visible", drawable);
-  SET_SENSITIVE ("edit-named-paste",        gimage);
+  SET_SENSITIVE ("edit-named-paste",        image);
 
   SET_SENSITIVE ("edit-clear",        drawable);
   SET_SENSITIVE ("edit-fill-fg",      drawable);

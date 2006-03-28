@@ -223,7 +223,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
   g_return_if_fail (w > 0 && h > 0);
 
-  projection = shell->gdisp->gimage->projection;
+  projection = shell->gdisp->image->projection;
 
   render_image_init_info_full (&info, shell, x, y, w, h, projection);
 
@@ -437,7 +437,7 @@ render_image_indexed (RenderInfo *info)
   gint          x, xe;
   gboolean      initial = TRUE;
 
-  cmap = gimp_image_get_colormap (info->shell->gdisp->gimage);
+  cmap = gimp_image_get_colormap (info->shell->gdisp->image);
 
   y  = info->y;
   ye = info->y + info->h;
@@ -495,7 +495,7 @@ static void
 render_image_indexed_a (RenderInfo *info)
 {
   const guint  *alpha = info->alpha;
-  const guchar *cmap  = gimp_image_get_colormap (info->shell->gdisp->gimage);
+  const guchar *cmap  = gimp_image_get_colormap (info->shell->gdisp->image);
   gint          y, ye;
   gint          x, xe;
   gboolean      initial = TRUE;

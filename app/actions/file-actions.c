@@ -206,21 +206,21 @@ void
 file_actions_update (GimpActionGroup *group,
                      gpointer         data)
 {
-  GimpImage    *gimage   = action_data_get_image (data);
+  GimpImage    *image   = action_data_get_image (data);
   GimpDrawable *drawable = NULL;
 
-  if (gimage)
-    drawable = gimp_image_active_drawable (gimage);
+  if (image)
+    drawable = gimp_image_active_drawable (image);
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("file-open-as-layer",    gimage);
-  SET_SENSITIVE ("file-save",             gimage && drawable);
-  SET_SENSITIVE ("file-save-as",          gimage && drawable);
-  SET_SENSITIVE ("file-save-a-copy",      gimage && drawable);
-  SET_SENSITIVE ("file-save-as-template", gimage);
-  SET_SENSITIVE ("file-revert",           gimage && GIMP_OBJECT (gimage)->name);
+  SET_SENSITIVE ("file-open-as-layer",    image);
+  SET_SENSITIVE ("file-save",             image && drawable);
+  SET_SENSITIVE ("file-save-as",          image && drawable);
+  SET_SENSITIVE ("file-save-a-copy",      image && drawable);
+  SET_SENSITIVE ("file-save-as-template", image);
+  SET_SENSITIVE ("file-revert",           image && GIMP_OBJECT (image)->name);
 
 #undef SET_SENSITIVE
 }

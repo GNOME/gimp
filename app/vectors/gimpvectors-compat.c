@@ -46,7 +46,7 @@ static const GimpCoords default_coords = GIMP_COORDS_DEFAULT_VALUES;
 
 
 GimpVectors *
-gimp_vectors_compat_new (GimpImage              *gimage,
+gimp_vectors_compat_new (GimpImage              *image,
                          const gchar            *name,
                          GimpVectorsCompatPoint *points,
                          gint                    n_points,
@@ -59,12 +59,12 @@ gimp_vectors_compat_new (GimpImage              *gimage,
   GimpCoords  *curr_coord;
   gint         i;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (points != NULL || n_points == 0, NULL);
   g_return_val_if_fail (n_points >= 0, NULL);
 
-  vectors = gimp_vectors_new (gimage, name);
+  vectors = gimp_vectors_new (image, name);
 
   coords = g_new0 (GimpCoords, n_points + 1);
 
@@ -126,14 +126,15 @@ gimp_vectors_compat_new (GimpImage              *gimage,
 }
 
 gboolean
-gimp_vectors_compat_is_compatible (GimpImage *gimage)
+gimp_vectors_compat_is_compatible (GimpImage *image)
 {
-  GList *list, *strokes;
+  GList       *list;
+  GList       *strokes;
   GimpVectors *vectors;
-  GimpStroke *stroke;
-  gint open_count;
+  GimpStroke  *stroke;
+  gint         open_count;
 
-  for (list = GIMP_LIST (gimage->vectors)->list;
+  for (list = GIMP_LIST (image->vectors)->list;
        list;
        list = g_list_next (list))
     {

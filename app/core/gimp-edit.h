@@ -20,15 +20,15 @@
 #define __GIMP_EDIT_H__
 
 
-const GimpBuffer * gimp_edit_cut                (GimpImage    *gimage,
+const GimpBuffer * gimp_edit_cut                (GimpImage    *image,
                                                  GimpDrawable *drawable,
                                                  GimpContext  *context);
-const GimpBuffer * gimp_edit_copy               (GimpImage    *gimage,
+const GimpBuffer * gimp_edit_copy               (GimpImage    *image,
                                                  GimpDrawable *drawable,
                                                  GimpContext  *context);
-const GimpBuffer * gimp_edit_copy_visible       (GimpImage    *gimage,
+const GimpBuffer * gimp_edit_copy_visible       (GimpImage    *image,
                                                  GimpContext  *context);
-GimpLayer        * gimp_edit_paste              (GimpImage    *gimage,
+GimpLayer        * gimp_edit_paste              (GimpImage    *image,
                                                  GimpDrawable *drawable,
                                                  GimpBuffer   *paste,
                                                  gboolean      paste_into,
@@ -37,25 +37,25 @@ GimpLayer        * gimp_edit_paste              (GimpImage    *gimage,
                                                  gint          viewport_width,
                                                  gint          viewport_height);
 GimpImage        * gimp_edit_paste_as_new       (Gimp         *gimp,
-                                                 GimpImage    *gimage,
+                                                 GimpImage    *image,
                                                  GimpBuffer   *paste);
 
-const gchar      * gimp_edit_named_cut          (GimpImage    *gimage,
+const gchar      * gimp_edit_named_cut          (GimpImage    *image,
                                                  const gchar  *name,
                                                  GimpDrawable *drawable,
                                                  GimpContext  *context);
-const gchar      * gimp_edit_named_copy         (GimpImage    *gimage,
+const gchar      * gimp_edit_named_copy         (GimpImage    *image,
                                                  const gchar  *name,
                                                  GimpDrawable *drawable,
                                                  GimpContext  *context);
-const gchar      * gimp_edit_named_copy_visible (GimpImage    *gimage,
+const gchar      * gimp_edit_named_copy_visible (GimpImage    *image,
                                                  const gchar  *name,
                                                  GimpContext  *context);
 
-gboolean           gimp_edit_clear              (GimpImage    *gimage,
+gboolean           gimp_edit_clear              (GimpImage    *image,
                                                  GimpDrawable *drawable,
                                                  GimpContext  *context);
-gboolean           gimp_edit_fill               (GimpImage    *gimage,
+gboolean           gimp_edit_fill               (GimpImage    *image,
                                                  GimpDrawable *drawable,
                                                  GimpContext  *context,
                                                  GimpFillType  fill_type);

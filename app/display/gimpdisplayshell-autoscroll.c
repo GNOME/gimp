@@ -133,7 +133,7 @@ gimp_display_shell_autoscroll_timeout (gpointer data)
   if (dx || dy)
     {
       GimpDisplay *gdisp       = shell->gdisp;
-      GimpTool    *active_tool = tool_manager_get_active (gdisp->gimage->gimp);
+      GimpTool    *active_tool = tool_manager_get_active (gdisp->image->gimp);
 
       info->time += AUTOSCROLL_DT;
 
@@ -158,7 +158,7 @@ gimp_display_shell_autoscroll_timeout (gpointer data)
                                           x, y, width, height);
         }
 
-      tool_manager_motion_active (gdisp->gimage->gimp,
+      tool_manager_motion_active (gdisp->image->gimp,
                                   &image_coords,
                                   info->time, info->state,
                                   gdisp);

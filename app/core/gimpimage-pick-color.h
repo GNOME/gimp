@@ -20,7 +20,7 @@
 #define  __GIMP_IMAGE_PICK_COLOR_H__
 
 
-gboolean   gimp_image_pick_color (GimpImage     *gimage,
+gboolean   gimp_image_pick_color (GimpImage     *image,
                                   GimpDrawable  *drawable,
                                   gint           x,
                                   gint           y,

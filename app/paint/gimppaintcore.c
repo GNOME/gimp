@@ -313,13 +313,13 @@ gimp_paint_core_finish (GimpPaintCore *core,
                         GimpDrawable  *drawable)
 {
   GimpPaintInfo *paint_info;
-  GimpImage     *gimage;
+  GimpImage     *image;
 
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   /*  Determine if any part of the image has been altered--
    *  if nothing has, then just return...
@@ -328,13 +328,13 @@ gimp_paint_core_finish (GimpPaintCore *core,
     return;
 
   paint_info = (GimpPaintInfo *)
-    gimp_container_get_child_by_name (gimage->gimp->paint_info_list,
+    gimp_container_get_child_by_name (image->gimp->paint_info_list,
                                       g_type_name (G_TYPE_FROM_INSTANCE (core)));
 
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_PAINT,
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT,
                                paint_info ? paint_info->blurb : _("Paint"));
 
-  GIMP_PAINT_CORE_GET_CLASS (core)->push_undo (core, gimage, NULL);
+  GIMP_PAINT_CORE_GET_CLASS (core)->push_undo (core, image, NULL);
 
   gimp_drawable_push_undo (drawable, NULL,
                            core->x1, core->y1,
@@ -345,7 +345,7 @@ gimp_paint_core_finish (GimpPaintCore *core,
   tile_manager_unref (core->undo_tiles);
   core->undo_tiles = NULL;
 
-  gimp_image_undo_group_end (gimage);
+  gimp_image_undo_group_end (image);
 
   if (core->saved_proj_tiles)
     {
@@ -357,7 +357,7 @@ gimp_paint_core_finish (GimpPaintCore *core,
    *  it is not done during the actual painting.
    */
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (drawable));
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
 }
 
 static void
@@ -695,13 +695,13 @@ gimp_paint_core_paste (GimpPaintCore            *core,
 		       GimpLayerModeEffects      paint_mode,
 		       GimpPaintApplicationMode  mode)
 {
-  GimpImage   *gimage;
+  GimpImage   *image;
   PixelRegion  srcPR;
   TileManager *alt = NULL;
   gint         offx;
   gint         offy;
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   /*  set undo blocks  */
   gimp_paint_core_validate_undo_tiles (core, drawable,
@@ -712,7 +712,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
 
   if (core->use_saved_proj)
     {
-      GimpPickable *pickable = GIMP_PICKABLE (gimage->projection);
+      GimpPickable *pickable = GIMP_PICKABLE (image->projection);
       gint          off_x;
       gint          off_y;
 
@@ -762,7 +762,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
                               core->canvas_buf->width,
                               core->canvas_buf->height);
 
-  /*  apply the paint area to the gimage  */
+  /*  apply the paint area to the image  */
   gimp_drawable_apply_region (drawable, &srcPR,
                               FALSE, NULL,
                               image_opacity, paint_mode,
@@ -776,12 +776,12 @@ gimp_paint_core_paste (GimpPaintCore            *core,
   core->x2 = MAX (core->x2, core->canvas_buf->x + core->canvas_buf->width);
   core->y2 = MAX (core->y2, core->canvas_buf->y + core->canvas_buf->height);
 
-  /*  Update the gimage -- It is important to call gimp_image_update()
+  /*  Update the image -- It is important to call gimp_image_update()
    *  instead of gimp_drawable_update() because we don't want the
    *  drawable and image previews to be constantly invalidated
    */
   gimp_item_offsets (GIMP_ITEM (drawable), &offx, &offy);
-  gimp_image_update (gimage,
+  gimp_image_update (image,
                      core->canvas_buf->x + offx,
                      core->canvas_buf->y + offy,
                      core->canvas_buf->width,
@@ -804,7 +804,7 @@ gimp_paint_core_replace (GimpPaintCore            *core,
                          gdouble                   image_opacity,
                          GimpPaintApplicationMode  mode)
 {
-  GimpImage   *gimage;
+  GimpImage   *image;
   PixelRegion  srcPR;
   gint         offx;
   gint         offy;
@@ -818,7 +818,7 @@ gimp_paint_core_replace (GimpPaintCore            *core,
       return;
     }
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   /*  set undo blocks  */
   gimp_paint_core_validate_undo_tiles (core, drawable,
@@ -864,7 +864,7 @@ gimp_paint_core_replace (GimpPaintCore            *core,
                               core->canvas_buf->width,
                               core->canvas_buf->height);
 
-  /*  apply the paint area to the gimage  */
+  /*  apply the paint area to the image  */
   gimp_drawable_replace_region (drawable, &srcPR,
                                 FALSE, NULL,
                                 image_opacity,
@@ -878,12 +878,12 @@ gimp_paint_core_replace (GimpPaintCore            *core,
   core->x2 = MAX (core->x2, core->canvas_buf->x + core->canvas_buf->width) ;
   core->y2 = MAX (core->y2, core->canvas_buf->y + core->canvas_buf->height) ;
 
-  /*  Update the gimage -- It is important to call gimp_image_update()
+  /*  Update the image -- It is important to call gimp_image_update()
    *  instead of gimp_drawable_update() because we don't want the
    *  drawable and image previews to be constantly invalidated
    */
   gimp_item_offsets (GIMP_ITEM (drawable), &offx, &offy);
-  gimp_image_update (gimage,
+  gimp_image_update (image,
                      core->canvas_buf->x + offx,
                      core->canvas_buf->y + offy,
                      core->canvas_buf->width,

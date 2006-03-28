@@ -90,10 +90,10 @@ image_scale_dialog_new (GimpImage                *image,
   if (! unit)
     unit = GIMP_DISPLAY_SHELL (display->shell)->unit;
 
-  dialog->gimage  = image;
+  dialog->image   = image;
   dialog->gdisp   = display;
   dialog->context = context;
-  dialog->dialog  = scale_dialog_new (GIMP_VIEWABLE (display->gimage),
+  dialog->dialog  = scale_dialog_new (GIMP_VIEWABLE (display->image),
                                       _("Scale Image"), "gimp-image-scale",
                                       parent,
                                       gimp_standard_help_func,

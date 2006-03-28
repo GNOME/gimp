@@ -230,11 +230,11 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
         }
 
       offset_x = (new_scale * ((x1 + x2) / 2)
-                  * SCREEN_XRES (shell) / gdisp->gimage->xresolution
+                  * SCREEN_XRES (shell) / gdisp->image->xresolution
                   - (win_width  / 2));
 
       offset_y = (new_scale * ((y1 + y2) / 2)
-                  * SCREEN_YRES (shell) / gdisp->gimage->yresolution
+                  * SCREEN_YRES (shell) / gdisp->image->yresolution
                   - (win_height / 2));
 
       gimp_display_shell_scale_by_values (shell,

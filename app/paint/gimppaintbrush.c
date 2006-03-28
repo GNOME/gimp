@@ -108,15 +108,15 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   GimpBrushCore            *brush_core       = GIMP_BRUSH_CORE (paint_core);
   GimpContext              *context          = GIMP_CONTEXT (paint_options);
   GimpPressureOptions      *pressure_options = paint_options->pressure_options;
-  GimpImage                *gimage;
+  GimpImage                *image;
   GimpRGB                   gradient_color;
   TempBuf                  *area;
   guchar                    col[MAX_CHANNELS];
   GimpPaintApplicationMode  paint_appl_mode;
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  opacity *= gimp_paint_options_get_fade (paint_options, gimage,
+  opacity *= gimp_paint_options_get_fade (paint_options, image,
                                           paint_core->pixel_dist);
   if (opacity == 0.0)
     return;
@@ -127,7 +127,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   if (! area)
     return;
 
-  if (gimp_paint_options_get_gradient_color (paint_options, gimage,
+  if (gimp_paint_options_get_gradient_color (paint_options, image,
                                              paint_core->cur_coords.pressure,
                                              paint_core->pixel_dist,
                                              &gradient_color))
@@ -149,7 +149,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   else if (brush_core->brush && brush_core->brush->pixmap)
     {
       /* if it's a pixmap, do pixmap stuff */
-      gimp_brush_core_color_area_with_pixmap (brush_core, gimage, drawable,
+      gimp_brush_core_color_area_with_pixmap (brush_core, image, drawable,
                                               area,
                                               brush_core->scale,
                                               gimp_paint_options_get_brush_mode (paint_options));
@@ -158,7 +158,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
     }
   else
     {
-      gimp_image_get_foreground (gimage, drawable, context, col);
+      gimp_image_get_foreground (image, drawable, context, col);
       col[area->bytes - 1] = OPAQUE_OPACITY;
       color_pixels (temp_buf_data (area), col,
                     area->width * area->height,

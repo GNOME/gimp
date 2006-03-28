@@ -216,7 +216,7 @@ gimp_vectors_tree_view_drop_svg (GimpContainerTreeView   *tree_view,
                                  GtkTreeViewDropPosition  drop_pos)
 {
   GimpItemTreeView *view  = GIMP_ITEM_TREE_VIEW (tree_view);
-  GimpImage        *image = view->gimage;
+  GimpImage        *image = view->image;
   gint              index = -1;
   GError           *error = NULL;
 
@@ -261,18 +261,18 @@ gimp_vectors_tree_view_drag_svg (GtkWidget *widget,
                                  gsize     *svg_data_len,
                                  gpointer   data)
 {
-  GimpItemTreeView *view   = GIMP_ITEM_TREE_VIEW (data);
-  GimpImage        *gimage = view->gimage;
+  GimpItemTreeView *view  = GIMP_ITEM_TREE_VIEW (data);
+  GimpImage        *image = view->image;
   GimpItem         *item;
   gchar            *svg_data = NULL;
 
-  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (gimage);
+  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (image);
 
   *svg_data_len = 0;
 
   if (item)
     {
-      svg_data = gimp_vectors_export_string (gimage, GIMP_VECTORS (item));
+      svg_data = gimp_vectors_export_string (image, GIMP_VECTORS (item));
 
       if (svg_data)
         *svg_data_len = strlen (svg_data);

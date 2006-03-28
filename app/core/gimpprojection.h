@@ -52,7 +52,7 @@ struct _GimpProjection
 {
   GimpObject                parent_instance;
 
-  GimpImage                *gimage;
+  GimpImage                *image;
 
   GimpImageType             type;
   gint                      bytes;
@@ -68,7 +68,7 @@ struct _GimpProjectionClass
 {
   GimpObjectClass  parent_class;
 
-  void (* update) (GimpProjection *gimage,
+  void (* update) (GimpProjection *image,
                    gboolean        now,
                    gint            x,
                    gint            y,
@@ -79,7 +79,7 @@ struct _GimpProjectionClass
 
 GType            gimp_projection_get_type       (void) G_GNUC_CONST;
 
-GimpProjection * gimp_projection_new            (GimpImage            *gimage);
+GimpProjection * gimp_projection_new            (GimpImage            *image);
 
 TileManager    * gimp_projection_get_tiles      (GimpProjection       *proj);
 GimpImage      * gimp_projection_get_image      (const GimpProjection *proj);

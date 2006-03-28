@@ -30,31 +30,31 @@ struct _GimpSamplePoint
 };
 
 
-GimpSamplePoint * gimp_image_add_sample_point_at_pos (GimpImage        *gimage,
+GimpSamplePoint * gimp_image_add_sample_point_at_pos (GimpImage        *image,
                                                       gint              x,
                                                       gint              y,
                                                       gboolean          push_undo);
 GimpSamplePoint * gimp_image_sample_point_ref        (GimpSamplePoint *sample_point);
 void              gimp_image_sample_point_unref      (GimpSamplePoint *sample_point);
 
-void              gimp_image_add_sample_point        (GimpImage       *gimage,
+void              gimp_image_add_sample_point        (GimpImage       *image,
                                                       GimpSamplePoint *sample_point,
                                                       gint             x,
                                                       gint             y);
-void              gimp_image_remove_sample_point     (GimpImage       *gimage,
+void              gimp_image_remove_sample_point     (GimpImage       *image,
                                                       GimpSamplePoint *sample_point,
                                                       gboolean         push_undo);
-void              gimp_image_move_sample_point       (GimpImage       *gimage,
+void              gimp_image_move_sample_point       (GimpImage       *image,
                                                       GimpSamplePoint *sample_point,
                                                       gint             x,
                                                       gint             y,
                                                       gboolean         push_undo);
 
-GimpSamplePoint * gimp_image_find_sample_point       (GimpImage       *gimage,
-                                                      gdouble         x,
-                                                      gdouble         y,
-                                                      gdouble         epsilon_x,
-                                                      gdouble         epsilon_y);
+GimpSamplePoint * gimp_image_find_sample_point       (GimpImage       *image,
+                                                      gdouble          x,
+                                                      gdouble          y,
+                                                      gdouble          epsilon_x,
+                                                      gdouble          epsilon_y);
 
 
 #endif /* __GIMP_IMAGE_SAMPLE_POINTS_H__ */

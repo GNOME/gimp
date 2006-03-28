@@ -35,7 +35,7 @@ struct _ColorHash
 {
   gint       pixel;   /*  R << 16 | G << 8 | B  */
   gint       index;   /*  colormap index        */
-  GimpImage *gimage;
+  GimpImage *image;
 };
 
 
@@ -54,7 +54,7 @@ gimp_image_color_hash_init (void)
     {
       color_hash_table[i].pixel  = 0;
       color_hash_table[i].index  = 0;
-      color_hash_table[i].gimage = NULL;
+      color_hash_table[i].image = NULL;
     }
 
   color_hash_misses = 0;
@@ -76,38 +76,38 @@ gimp_image_color_hash_exit (void)
 }
 
 void
-gimp_image_color_hash_invalidate (GimpImage *gimage,
+gimp_image_color_hash_invalidate (GimpImage *image,
 				  gint       index)
 {
   gint i;
 
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_IMAGE (image));
 
   if (index == -1) /* invalidate all entries */
     {
       for (i = 0; i < HASH_TABLE_SIZE; i++)
-	if (color_hash_table[i].gimage == gimage)
+	if (color_hash_table[i].image == image)
           {
             color_hash_table[i].pixel  = 0;
             color_hash_table[i].index  = 0;
-            color_hash_table[i].gimage = NULL;
+            color_hash_table[i].image = NULL;
           }
     }
   else
     {
       for (i = 0; i < HASH_TABLE_SIZE; i++)
-	if (color_hash_table[i].gimage == gimage &&
+	if (color_hash_table[i].image == image &&
 	    color_hash_table[i].index  == index)
           {
             color_hash_table[i].pixel  = 0;
             color_hash_table[i].index  = 0;
-            color_hash_table[i].gimage = NULL;
+            color_hash_table[i].image = NULL;
           }
     }
 }
 
 gint
-gimp_image_color_hash_rgb_to_indexed (const GimpImage *gimage,
+gimp_image_color_hash_rgb_to_indexed (const GimpImage *image,
 				      gint             r,
 				      gint             g,
 				      gint             b)
@@ -118,12 +118,12 @@ gimp_image_color_hash_rgb_to_indexed (const GimpImage *gimage,
   gint    hash_index;
   gint    cmap_index;
 
-  cmap       = gimage->cmap;
-  num_cols   = gimage->num_cols;
+  cmap       = image->cmap;
+  num_cols   = image->num_cols;
   pixel      = (r << 16) | (g << 8) | b;
   hash_index = pixel % HASH_TABLE_SIZE;
 
-  if (color_hash_table[hash_index].gimage == gimage &&
+  if (color_hash_table[hash_index].image == image &&
       color_hash_table[hash_index].pixel  == pixel)
     {
       /*  Hash table lookup hit  */
@@ -164,7 +164,7 @@ gimp_image_color_hash_rgb_to_indexed (const GimpImage *gimage,
       /*  update the hash table  */
       color_hash_table[hash_index].pixel  = pixel;
       color_hash_table[hash_index].index  = cmap_index;
-      color_hash_table[hash_index].gimage = (GimpImage *) gimage;
+      color_hash_table[hash_index].image = (GimpImage *) image;
       color_hash_misses++;
     }
 

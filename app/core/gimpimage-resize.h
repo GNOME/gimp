@@ -20,7 +20,7 @@
 #define __GIMP_IMAGE_RESIZE_H__
 
 
-void   gimp_image_resize             (GimpImage             *gimage,
+void   gimp_image_resize             (GimpImage             *image,
                                       GimpContext           *context,
                                       gint                   new_width,
                                       gint                   new_height,
@@ -28,7 +28,7 @@ void   gimp_image_resize             (GimpImage             *gimage,
                                       gint                   offset_y,
                                       GimpProgress          *progress);
 
-void   gimp_image_resize_with_layers (GimpImage             *gimage,
+void   gimp_image_resize_with_layers (GimpImage             *image,
                                       GimpContext           *context,
                                       gint                   new_width,
                                       gint                   new_height,
@@ -37,7 +37,7 @@ void   gimp_image_resize_with_layers (GimpImage             *gimage,
                                       GimpImageResizeLayers  resize_layers,
                                       GimpProgress          *progress);
 
-void   gimp_image_resize_to_layers   (GimpImage             *gimage,
+void   gimp_image_resize_to_layers   (GimpImage             *image,
                                       GimpContext           *context,
                                       GimpProgress          *progress);
 

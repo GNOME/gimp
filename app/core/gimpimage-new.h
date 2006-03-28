@@ -21,7 +21,7 @@
 
 
 GimpTemplate * gimp_image_new_get_last_template (Gimp         *gimp,
-                                                 GimpImage    *gimage);
+                                                 GimpImage    *image);
 void           gimp_image_new_set_last_template (Gimp         *gimp,
                                                  GimpTemplate *template);
 

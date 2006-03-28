@@ -226,13 +226,13 @@ gimp_image_map_new (GimpDrawable *drawable,
                     const gchar  *undo_desc)
 {
   GimpImageMap *image_map;
-  GimpImage    *gimage;
+  GimpImage    *image;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   image_map = g_object_new (GIMP_TYPE_IMAGE_MAP, NULL);
 
@@ -365,7 +365,7 @@ gimp_image_map_apply (GimpImageMap          *image_map,
 void
 gimp_image_map_commit (GimpImageMap *image_map)
 {
-  GimpImage *gimage;
+  GimpImage *image;
   gint       x1, y1, x2, y2;
 
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
@@ -380,9 +380,9 @@ gimp_image_map_commit (GimpImageMap *image_map)
     }
 
   /*  Make sure the drawable is still valid  */
-  gimage = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
+  image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
 
-  if (! gimage)
+  if (! image)
     return;
 
   /*  Register an undo step  */
@@ -408,7 +408,7 @@ gimp_image_map_commit (GimpImageMap *image_map)
 void
 gimp_image_map_clear (GimpImageMap *image_map)
 {
-  GimpImage   *gimage;
+  GimpImage   *image;
   PixelRegion  srcPR, destPR;
 
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
@@ -423,9 +423,9 @@ gimp_image_map_clear (GimpImageMap *image_map)
     }
 
   /*  Make sure the drawable is still valid  */
-  gimage = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
+  image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
 
-  if (! gimage)
+  if (! image)
     return;
 
   /*  restore the original image  */
@@ -474,13 +474,13 @@ gimp_image_map_clear (GimpImageMap *image_map)
 void
 gimp_image_map_abort (GimpImageMap *image_map)
 {
-  GimpImage *gimage;
+  GimpImage *image;
 
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
 
-  gimage = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
+  image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
 
-  if (! gimage)
+  if (! image)
     return;
 
   gimp_image_map_clear (image_map);
@@ -494,13 +494,13 @@ gimp_image_map_abort (GimpImageMap *image_map)
 static gboolean
 gimp_image_map_do (GimpImageMap *image_map)
 {
-  GimpImage   *gimage;
+  GimpImage   *image;
   PixelRegion  shadowPR;
   gint         i;
 
-  gimage = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
+  image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
 
-  if (! gimage)
+  if (! image)
     {
       image_map->idle_id = 0;
 
@@ -523,7 +523,7 @@ gimp_image_map_do (GimpImageMap *image_map)
       w = image_map->destPR.w;
       h = image_map->destPR.h;
 
-      pixel_region_init (&shadowPR, gimage->shadow, x, y, w, h, FALSE);
+      pixel_region_init (&shadowPR, image->shadow, x, y, w, h, FALSE);
 
       gimp_drawable_apply_region (image_map->drawable, &shadowPR,
                                   FALSE, NULL,
@@ -539,7 +539,7 @@ gimp_image_map_do (GimpImageMap *image_map)
         {
           image_map->idle_id = 0;
 
-          gimp_image_flush (gimage);
+          gimp_image_flush (image);
 
           return FALSE;
         }

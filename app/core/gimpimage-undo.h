@@ -20,17 +20,17 @@
 #define __GIMP_IMAGE_UNDO_H__
 
 
-gboolean   gimp_image_undo              (GimpImage        *gimage);
-gboolean   gimp_image_redo              (GimpImage        *gimage);
+gboolean   gimp_image_undo              (GimpImage        *image);
+gboolean   gimp_image_redo              (GimpImage        *image);
 
-void       gimp_image_undo_free         (GimpImage        *gimage);
+void       gimp_image_undo_free         (GimpImage        *image);
 
-gboolean   gimp_image_undo_group_start  (GimpImage        *gimage,
+gboolean   gimp_image_undo_group_start  (GimpImage        *image,
                                          GimpUndoType      undo_type,
                                          const gchar      *name);
-gboolean   gimp_image_undo_group_end    (GimpImage        *gimage);
+gboolean   gimp_image_undo_group_end    (GimpImage        *image);
 
-GimpUndo * gimp_image_undo_push         (GimpImage        *gimage,
+GimpUndo * gimp_image_undo_push         (GimpImage        *image,
                                          GType             object_type,
                                          gint64            size,
                                          gsize             struct_size,
@@ -41,7 +41,7 @@ GimpUndo * gimp_image_undo_push         (GimpImage        *gimage,
                                          GimpUndoFreeFunc  free_func,
                                          ...) G_GNUC_NULL_TERMINATED;
 
-GimpUndo * gimp_image_undo_can_compress (GimpImage        *gimage,
+GimpUndo * gimp_image_undo_can_compress (GimpImage        *image,
                                          GType             object_type,
                                          GimpUndoType      undo_type);
 

@@ -28,7 +28,7 @@ struct _ImageScaleDialog
 {
   GtkWidget                *dialog;
 
-  GimpImage                *gimage;
+  GimpImage                *image;
   GimpDisplay              *gdisp;
   GimpContext              *context;
 

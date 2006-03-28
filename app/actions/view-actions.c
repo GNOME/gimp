@@ -500,13 +500,11 @@ view_actions_update (GimpActionGroup *group,
   GimpDisplay        *gdisp      = action_data_get_display (data);
   GimpDisplayShell   *shell      = NULL;
   GimpDisplayOptions *options    = NULL;
-  GimpImage          *gimage     = NULL;
   gboolean            fullscreen = FALSE;
 
   if (gdisp)
     {
-      shell  = GIMP_DISPLAY_SHELL (gdisp->shell);
-      gimage = gdisp->gimage;
+      shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
       fullscreen = gimp_display_shell_get_fullscreen (shell);
 

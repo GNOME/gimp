@@ -45,27 +45,27 @@ gimp_item_get_preview_size (GimpViewable *viewable,
                             gint         *height)
 {
   GimpItem  *item;
-  GimpImage *gimage;
+  GimpImage *image;
 
   item   = GIMP_ITEM (viewable);
-  gimage = gimp_item_get_image (item);
+  image = gimp_item_get_image (item);
 
-  if (gimage && ! gimage->gimp->config->layer_previews && ! is_popup)
+  if (image && ! image->gimp->config->layer_previews && ! is_popup)
     {
       *width  = size;
       *height = size;
       return;
     }
 
-  if (gimage && ! is_popup)
+  if (image && ! is_popup)
     {
-      gimp_viewable_calc_preview_size (gimage->width,
-                                       gimage->height,
+      gimp_viewable_calc_preview_size (image->width,
+                                       image->height,
                                        size,
                                        size,
                                        dot_for_dot,
-                                       gimage->xresolution,
-                                       gimage->yresolution,
+                                       image->xresolution,
+                                       image->yresolution,
                                        width,
                                        height,
                                        NULL);
@@ -92,12 +92,12 @@ gimp_item_get_popup_size (GimpViewable *viewable,
                           gint         *popup_height)
 {
   GimpItem  *item;
-  GimpImage *gimage;
+  GimpImage *image;
 
   item   = GIMP_ITEM (viewable);
-  gimage = gimp_item_get_image (item);
+  image = gimp_item_get_image (item);
 
-  if (gimage && ! gimage->gimp->config->layer_previews)
+  if (image && ! image->gimp->config->layer_previews)
     return FALSE;
 
   if (item->width > width || item->height > height)
@@ -109,8 +109,8 @@ gimp_item_get_popup_size (GimpViewable *viewable,
                                        width  * 2,
                                        height * 2,
                                        dot_for_dot,
-                                       gimage ? gimage->xresolution : 1.0,
-                                       gimage ? gimage->yresolution : 1.0,
+                                       image ? image->xresolution : 1.0,
+                                       image ? image->yresolution : 1.0,
                                        popup_width,
                                        popup_height,
                                        &scaling_up);

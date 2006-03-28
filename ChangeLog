@@ -1,3 +1,7 @@
+2006-03-28  Sven Neumann  <sven@gimp.org>
+
+	* app/*: did a global gimage -> image substitution.
+
 2006-03-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpparamspecs.[ch] (gimp_param_spec_string): reordered

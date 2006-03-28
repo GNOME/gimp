@@ -760,7 +760,7 @@ color_quicksort (const void *c1,
 }
 
 void
-gimp_image_convert (GimpImage              *gimage,
+gimp_image_convert (GimpImage              *image,
                     GimpImageBaseType       new_type,
                     /* The following are only used for new_type == GIMP_INDEXED
                      */
@@ -781,8 +781,8 @@ gimp_image_convert (GimpImage              *gimage,
   const gchar       *undo_desc = NULL;
   gint               nth_layer, n_layers;
 
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (new_type != gimp_image_base_type (gimage));
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (new_type != gimp_image_base_type (image));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   if (palette_type == GIMP_CUSTOM_PALETTE)
@@ -802,9 +802,9 @@ gimp_image_convert (GimpImage              *gimage,
 
   theCustomPalette = custom_palette;
 
-  gimp_set_busy (gimage->gimp);
+  gimp_set_busy (image->gimp);
 
-  n_layers = g_list_length (GIMP_LIST (gimage->layers)->list);
+  n_layers = g_list_length (GIMP_LIST (image->layers)->list);
 
   switch (new_type)
     {
@@ -821,21 +821,21 @@ gimp_image_convert (GimpImage              *gimage,
       break;
     }
 
-  g_object_freeze_notify (G_OBJECT (gimage));
+  g_object_freeze_notify (G_OBJECT (image));
 
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_CONVERT,
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CONVERT,
                                undo_desc);
 
-  if (gimp_image_floating_sel (gimage))
-    floating_sel_relax (gimp_image_floating_sel (gimage), TRUE);
+  if (gimp_image_floating_sel (image))
+    floating_sel_relax (gimp_image_floating_sel (image), TRUE);
 
   /*  Push the image type to the stack  */
-  gimp_image_undo_push_image_type (gimage, NULL);
+  gimp_image_undo_push_image_type (image, NULL);
 
   /*  Set the new base type  */
-  old_type = gimage->base_type;
+  old_type = image->base_type;
 
-  g_object_set (gimage, "base-type", new_type, NULL);
+  g_object_set (image, "base-type", new_type, NULL);
 
   /* initialize the colour conversion routines */
   cpercep_init ();
@@ -876,7 +876,7 @@ gimp_image_convert (GimpImage              *gimage,
           num_found_cols = 0;
 
           /*  Build the histogram  */
-          for (list = GIMP_LIST (gimage->layers)->list, nth_layer = 0;
+          for (list = GIMP_LIST (image->layers)->list, nth_layer = 0;
                list;
                list = g_list_next (list), nth_layer++)
             {
@@ -961,7 +961,7 @@ gimp_image_convert (GimpImage              *gimage,
   if (quantobj)
     quantobj->n_layers = n_layers;
 
-  for (list = GIMP_LIST (gimage->layers)->list, nth_layer = 0;
+  for (list = GIMP_LIST (image->layers)->list, nth_layer = 0;
        list;
        list = g_list_next (list), nth_layer++)
     {
@@ -1010,13 +1010,13 @@ gimp_image_convert (GimpImage              *gimage,
     case GIMP_RGB:
     case GIMP_GRAY:
       if (old_type == GIMP_INDEXED)
-        gimp_image_set_colormap (gimage, NULL, 0, TRUE);
+        gimp_image_set_colormap (image, NULL, 0, TRUE);
       break;
 
     case GIMP_INDEXED:
-      gimp_image_undo_push_image_colormap (gimage, NULL);
+      gimp_image_undo_push_image_colormap (image, NULL);
 
-      gimage->cmap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
+      image->cmap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
 
       if (remove_dups && ((palette_type == GIMP_WEB_PALETTE) ||
                           (palette_type == GIMP_CUSTOM_PALETTE)))
@@ -1043,7 +1043,7 @@ gimp_image_convert (GimpImage              *gimage,
                             remap_table, &num_entries);
 
           /*  Convert all layers  */
-          for (list = GIMP_LIST (gimage->layers)->list;
+          for (list = GIMP_LIST (image->layers)->list;
                list;
                list = g_list_next (list))
             {
@@ -1055,12 +1055,12 @@ gimp_image_convert (GimpImage              *gimage,
 
           for (i = 0, j = 0; i < num_entries; i++)
             {
-              gimage->cmap[j] = new_palette[j]; j++;
-              gimage->cmap[j] = new_palette[j]; j++;
-              gimage->cmap[j] = new_palette[j]; j++;
+              image->cmap[j] = new_palette[j]; j++;
+              image->cmap[j] = new_palette[j]; j++;
+              image->cmap[j] = new_palette[j]; j++;
             }
 
-          gimage->num_cols = num_entries;
+          image->num_cols = num_entries;
         }
       else
         {
@@ -1068,15 +1068,15 @@ gimp_image_convert (GimpImage              *gimage,
 
           for (i = 0, j = 0; i < quantobj->actual_number_of_colors; i++)
             {
-              gimage->cmap[j++] = quantobj->cmap[i].red;
-              gimage->cmap[j++] = quantobj->cmap[i].green;
-              gimage->cmap[j++] = quantobj->cmap[i].blue;
+              image->cmap[j++] = quantobj->cmap[i].red;
+              image->cmap[j++] = quantobj->cmap[i].green;
+              image->cmap[j++] = quantobj->cmap[i].blue;
             }
 
-          gimage->num_cols = quantobj->actual_number_of_colors;
+          image->num_cols = quantobj->actual_number_of_colors;
         }
 
-      gimp_image_colormap_changed (gimage, -1);
+      gimp_image_colormap_changed (image, -1);
       break;
     }
 
@@ -1084,16 +1084,16 @@ gimp_image_convert (GimpImage              *gimage,
   if (quantobj)
     quantobj->delete_func (quantobj);
 
-  if (gimp_image_floating_sel (gimage))
-    floating_sel_rigor (gimp_image_floating_sel (gimage), TRUE);
+  if (gimp_image_floating_sel (image))
+    floating_sel_rigor (gimp_image_floating_sel (image), TRUE);
 
-  gimp_image_undo_group_end (gimage);
+  gimp_image_undo_group_end (image);
 
-  gimp_image_invalidate_layer_previews (gimage);
-  gimp_image_mode_changed (gimage);
-  g_object_thaw_notify (G_OBJECT (gimage));
+  gimp_image_invalidate_layer_previews (image);
+  gimp_image_mode_changed (image);
+  g_object_thaw_notify (G_OBJECT (image));
 
-  gimp_unset_busy (gimage->gimp);
+  gimp_unset_busy (image->gimp);
 }
 
 

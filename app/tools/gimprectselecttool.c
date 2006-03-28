@@ -163,16 +163,16 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
       break;
     case GIMP_UNIT_PERCENT:
       rect_sel->fixed_width =
-        gdisp->gimage->width * rect_sel->fixed_width / 100;
+        gdisp->image->width * rect_sel->fixed_width / 100;
       rect_sel->fixed_height =
-        gdisp->gimage->height * rect_sel->fixed_height / 100;
+        gdisp->image->height * rect_sel->fixed_height / 100;
       break;
     default:
       unit_factor = _gimp_unit_get_factor (tool->tool_info->gimp, unit);
       rect_sel->fixed_width =
-        rect_sel->fixed_width * gdisp->gimage->xresolution / unit_factor;
+        rect_sel->fixed_width * gdisp->image->xresolution / unit_factor;
       rect_sel->fixed_height =
-        rect_sel->fixed_height * gdisp->gimage->yresolution / unit_factor;
+        rect_sel->fixed_height * gdisp->image->yresolution / unit_factor;
       break;
     }
 
@@ -209,14 +209,14 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
       if (rect_sel->w == 0 || rect_sel->h == 0)
         {
           /*  If there is a floating selection, anchor it  */
-          if (gimp_image_floating_sel (gdisp->gimage))
-            floating_sel_anchor (gimp_image_floating_sel (gdisp->gimage));
+          if (gimp_image_floating_sel (gdisp->image))
+            floating_sel_anchor (gimp_image_floating_sel (gdisp->image));
           /*  Otherwise, clear the selection mask  */
           else
-            gimp_channel_clear (gimp_image_get_mask (gdisp->gimage), NULL,
+            gimp_channel_clear (gimp_image_get_mask (gdisp->image), NULL,
                                 TRUE);
 
-          gimp_image_flush (gdisp->gimage);
+          gimp_image_flush (gdisp->image);
           return;
         }
 
@@ -225,7 +225,7 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
                                          rect_sel->w, rect_sel->h);
 
       /*  show selection on all views  */
-      gimp_image_flush (gdisp->gimage);
+      gimp_image_flush (gdisp->image);
     }
 }
 
@@ -388,7 +388,7 @@ gimp_rect_select_tool_real_rect_select (GimpRectSelectTool *rect_tool,
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  gimp_channel_select_rectangle (gimp_image_get_mask (tool->gdisp->gimage),
+  gimp_channel_select_rectangle (gimp_image_get_mask (tool->gdisp->image),
                                  x, y, w, h,
                                  sel_tool->op,
                                  options->feather,
@@ -419,8 +419,8 @@ gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
 
       if (! gimp_rectangle_intersect (x, y, w, h,
                                       0, 0,
-                                      tool->gdisp->gimage->width,
-                                      tool->gdisp->gimage->height,
+                                      tool->gdisp->image->width,
+                                      tool->gdisp->image->height,
                                       &x, &y, &w, &h))
         {
           return;
@@ -431,7 +431,7 @@ gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
           GimpItem *item;
           gint      width, height;
 
-          item = GIMP_ITEM (gimp_image_active_drawable (tool->gdisp->gimage));
+          item = GIMP_ITEM (gimp_image_active_drawable (tool->gdisp->image));
 
           gimp_item_offsets (item, &off_x, &off_y);
           width  = gimp_item_width  (item);
@@ -448,7 +448,7 @@ gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
           y -= off_y;
         }
 
-      if (gimp_image_crop_auto_shrink (tool->gdisp->gimage,
+      if (gimp_image_crop_auto_shrink (tool->gdisp->image,
                                        x, y,
                                        x + w, y + h,
                                        ! options->shrink_merged,
@@ -487,7 +487,7 @@ gimp_rect_select_tool_update_options (GimpRectSelectTool *rect_sel,
     }
   else
     {
-      GimpImage *image = gdisp->gimage;
+      GimpImage *image = gdisp->image;
 
       width  = (rect_sel->w *
                 _gimp_unit_get_factor (image->gimp,

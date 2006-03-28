@@ -26,7 +26,7 @@ struct _ImageMergeLayersDialog
 {
   GtkWidget     *dialog;
 
-  GimpImage     *gimage;
+  GimpImage     *image;
   GimpContext   *context;
   GimpMergeType  merge_type;
 };

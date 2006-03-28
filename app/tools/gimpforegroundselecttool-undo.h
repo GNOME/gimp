@@ -20,7 +20,7 @@
 #define __GIMP_FOREGROUND_SELECT_TOOL_UNDO_H__
 
 
-gboolean   gimp_foreground_select_tool_push_undo (GimpImage   *gimage,
+gboolean   gimp_foreground_select_tool_push_undo (GimpImage   *image,
                                                   const gchar *undo_desc,
                                                   gint         tool_ID);
 

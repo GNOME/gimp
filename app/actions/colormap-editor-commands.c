@@ -54,17 +54,17 @@ colormap_editor_edit_color_cmd_callback (GtkAction *action,
                                          gpointer   data)
 {
   GimpColormapEditor *editor;
-  GimpImage          *gimage;
+  GimpImage          *image;
   GimpRGB             color;
   gchar              *desc;
-  return_if_no_image (gimage, data);
+  return_if_no_image (image, data);
 
   editor = GIMP_COLORMAP_EDITOR (data);
 
   gimp_rgba_set_uchar (&color,
-                       gimage->cmap[editor->col_index * 3],
-                       gimage->cmap[editor->col_index * 3 + 1],
-                       gimage->cmap[editor->col_index * 3 + 2],
+                       image->cmap[editor->col_index * 3],
+                       image->cmap[editor->col_index * 3 + 1],
+                       image->cmap[editor->col_index * 3 + 2],
                        OPAQUE_OPACITY);
 
   desc = g_strdup_printf (_("Edit colormap entry #%d"), editor->col_index);
@@ -72,7 +72,7 @@ colormap_editor_edit_color_cmd_callback (GtkAction *action,
   if (! editor->color_dialog)
     {
       editor->color_dialog =
-        gimp_color_dialog_new (GIMP_VIEWABLE (gimage),
+        gimp_color_dialog_new (GIMP_VIEWABLE (image),
                                _("Edit Colormap Entry"),
                                GIMP_STOCK_INDEXED_PALETTE,
                                desc,
@@ -93,7 +93,7 @@ colormap_editor_edit_color_cmd_callback (GtkAction *action,
   else
     {
       gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (editor->color_dialog),
-                                         GIMP_VIEWABLE (gimage));
+                                         GIMP_VIEWABLE (image));
       g_object_set (editor->color_dialog, "description", desc, NULL);
       gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (editor->color_dialog),
                                    &color);
@@ -110,11 +110,11 @@ colormap_editor_add_color_cmd_callback (GtkAction *action,
                                         gpointer   data)
 {
   GimpContext *context;
-  GimpImage   *gimage;
+  GimpImage   *image;
   return_if_no_context (context, data);
-  return_if_no_image (gimage, data);
+  return_if_no_image (image, data);
 
-  if (gimage->num_cols < 256)
+  if (image->num_cols < 256)
     {
       GimpRGB color;
 
@@ -123,8 +123,8 @@ colormap_editor_add_color_cmd_callback (GtkAction *action,
       else
         gimp_context_get_foreground (context, &color);
 
-      gimp_image_add_colormap_entry (gimage, &color);
-      gimp_image_flush (gimage);
+      gimp_image_add_colormap_entry (image, &color);
+      gimp_image_flush (image);
     }
 }
 
@@ -137,7 +137,7 @@ colormap_editor_edit_color_update (GimpColorDialog      *dialog,
                                    GimpColorDialogState  state,
                                    GimpColormapEditor   *editor)
 {
-  GimpImage *gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
+  GimpImage *image = GIMP_IMAGE_EDITOR (editor)->image;
 
   switch (state)
     {
@@ -145,8 +145,8 @@ colormap_editor_edit_color_update (GimpColorDialog      *dialog,
       break;
 
     case GIMP_COLOR_DIALOG_OK:
-      gimp_image_set_colormap_entry (gimage, editor->col_index, color, TRUE);
-      gimp_image_flush (gimage);
+      gimp_image_set_colormap_entry (image, editor->col_index, color, TRUE);
+      gimp_image_flush (image);
       /* Fall through */
 
     case GIMP_COLOR_DIALOG_CANCEL:

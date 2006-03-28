@@ -20,14 +20,14 @@
 #define __GIMP_IMAGE_SCALE_H__
 
 
-void   gimp_image_scale         (GimpImage             *gimage,
+void   gimp_image_scale         (GimpImage             *image,
                                  gint                   new_width,
                                  gint                   new_height,
                                  GimpInterpolationType  interpolation_type,
                                  GimpProgress          *progress);
 
 GimpImageScaleCheckType
-       gimp_image_scale_check   (const GimpImage       *gimage,
+       gimp_image_scale_check   (const GimpImage       *image,
                                  gint                   new_width,
                                  gint                   new_height,
                                  gint64                 max_memsize,

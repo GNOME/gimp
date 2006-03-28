@@ -327,7 +327,7 @@ gimp_transform_tool_initialize (GimpTool    *tool,
 
       /*  Set the pointer to the active display  */
       tool->gdisp    = gdisp;
-      tool->drawable = gimp_image_active_drawable (gdisp->gimage);
+      tool->drawable = gimp_image_active_drawable (gdisp->image);
 
       /*  Initialize the transform tool dialog */
       if (! tr_tool->info_dialog)
@@ -622,14 +622,14 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
 
   if (tr_tool->use_grid)
     {
-      GimpChannel        *selection = gimp_image_get_mask (gdisp->gimage);
+      GimpChannel        *selection = gimp_image_get_mask (gdisp->image);
       GimpCursorType      cursor    = GIMP_CURSOR_MOUSE;
       GimpCursorModifier  modifier  = GIMP_CURSOR_MODIFIER_NONE;
 
       switch (options->type)
         {
         case GIMP_TRANSFORM_TYPE_LAYER:
-          if (gimp_image_coords_in_active_drawable (gdisp->gimage, coords))
+          if (gimp_image_coords_in_active_drawable (gdisp->image, coords))
             {
               if (gimp_channel_is_empty (selection) ||
                   gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection),
@@ -650,7 +650,7 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
           break;
 
         case GIMP_TRANSFORM_TYPE_PATH:
-          if (gimp_image_get_active_vectors (gdisp->gimage))
+          if (gimp_image_get_active_vectors (gdisp->image))
             cursor = GIMP_CURSOR_MOUSE;
           else
             cursor = GIMP_CURSOR_BAD;
@@ -779,7 +779,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
       GimpStroke  *stroke = NULL;
       GimpMatrix3  matrix = tr_tool->transform;
 
-      vectors = gimp_image_get_active_vectors (tool->gdisp->gimage);
+      vectors = gimp_image_get_active_vectors (tool->gdisp->image);
 
       if (vectors)
         {
@@ -933,22 +933,22 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
   switch (options->type)
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
-      active_item = (GimpItem *) gimp_image_active_drawable (gdisp->gimage);
+      active_item = (GimpItem *) gimp_image_active_drawable (gdisp->image);
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
-      active_item = (GimpItem *) gimp_image_get_mask (gdisp->gimage);
+      active_item = (GimpItem *) gimp_image_get_mask (gdisp->image);
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
-      active_item = (GimpItem *) gimp_image_get_active_vectors (gdisp->gimage);
+      active_item = (GimpItem *) gimp_image_get_active_vectors (gdisp->image);
       break;
     }
 
   if (! active_item)
     return;
 
-  mask_empty = gimp_channel_is_empty (gimp_image_get_mask (gdisp->gimage));
+  mask_empty = gimp_channel_is_empty (gimp_image_get_mask (gdisp->image));
 
   if (gimp_display_shell_get_show_transform (GIMP_DISPLAY_SHELL (gdisp->shell)))
     {
@@ -959,7 +959,7 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
       gimp_transform_tool_expose_preview (tr_tool);
     }
 
-  gimp_set_busy (gdisp->gimage->gimp);
+  gimp_set_busy (gdisp->image->gimp);
 
   /* undraw the tool before we muck around with the transform matrix */
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tr_tool));
@@ -968,7 +968,7 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
   gimp_tool_control_set_preserve (tool->control, TRUE);
 
   /*  Start a transform undo group  */
-  gimp_image_undo_group_start (gdisp->gimage, GIMP_UNDO_GROUP_TRANSFORM,
+  gimp_image_undo_group_start (gdisp->image, GIMP_UNDO_GROUP_TRANSFORM,
                                tool->tool_info->blurb);
 
   /* With the old UI, if original is NULL, then this is the
@@ -980,7 +980,7 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
    *  selection pointer, so that the original source can be repeatedly
    *  modified.
    */
-  tool->drawable = gimp_image_active_drawable (gdisp->gimage);
+  tool->drawable = gimp_image_active_drawable (gdisp->image);
 
   switch (options->type)
     {
@@ -1016,7 +1016,7 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
     case GIMP_TRANSFORM_TYPE_LAYER:
       if (new_tiles)
         {
-          /*  paste the new transformed image to the gimage...also implement
+          /*  paste the new transformed image to the image...also implement
            *  undo...
            */
           gimp_drawable_transform_paste (tool->drawable,
@@ -1048,25 +1048,25 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
   /*  Make a note of the new current drawable (since we may have
    *  a floating selection, etc now.
    */
-  tool->drawable = gimp_image_active_drawable (gdisp->gimage);
+  tool->drawable = gimp_image_active_drawable (gdisp->image);
 
-  gimp_transform_tool_push_undo (gdisp->gimage, NULL,
+  gimp_transform_tool_push_undo (gdisp->image, NULL,
                                  tool->ID,
                                  G_TYPE_FROM_INSTANCE (tool),
                                  tr_tool->old_trans_info,
                                  NULL);
 
   /*  push the undo group end  */
-  gimp_image_undo_group_end (gdisp->gimage);
+  gimp_image_undo_group_end (gdisp->image);
 
   /*  We're done dirtying the image, and would like to be restarted
    *  if the image gets dirty while the tool exists
    */
   gimp_tool_control_set_preserve (tool->control, FALSE);
 
-  gimp_unset_busy (gdisp->gimage->gimp);
+  gimp_unset_busy (gdisp->image->gimp);
 
-  gimp_image_flush (gdisp->gimage);
+  gimp_image_flush (gdisp->image);
 
   gimp_transform_tool_halt (tr_tool);
 }
@@ -1259,7 +1259,7 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
         {
         case GIMP_TRANSFORM_TYPE_LAYER:
           {
-            GimpDrawable *drawable = gimp_image_active_drawable (gdisp->gimage);
+            GimpDrawable *drawable = gimp_image_active_drawable (gdisp->image);
             gint          offset_x;
             gint          offset_y;
 
@@ -1277,7 +1277,7 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
 
         case GIMP_TRANSFORM_TYPE_SELECTION:
         case GIMP_TRANSFORM_TYPE_PATH:
-          gimp_channel_bounds (gimp_image_get_mask (gdisp->gimage),
+          gimp_channel_bounds (gimp_image_get_mask (gdisp->image),
                                &tr_tool->x1, &tr_tool->y1,
                                &tr_tool->x2, &tr_tool->y2);
           break;
@@ -1462,7 +1462,7 @@ gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
   if (tr_tool->info_dialog)
     {
       gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (tr_tool->info_dialog->shell),
-                                         GIMP_VIEWABLE (gimp_image_active_drawable (gdisp->gimage)));
+                                         GIMP_VIEWABLE (gimp_image_active_drawable (gdisp->image)));
 
       gtk_widget_set_sensitive (GTK_WIDGET (tr_tool->info_dialog->shell), TRUE);
     }

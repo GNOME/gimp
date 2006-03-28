@@ -124,7 +124,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                                       gboolean                clip_result,
                                       GimpProgress           *progress)
 {
-  GimpImage     *gimage;
+  GimpImage     *image;
   PixelRegion    destPR;
   TileManager   *new_tiles;
   GimpMatrix3    m;
@@ -164,7 +164,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
   g_return_val_if_fail (matrix != NULL, NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   m   = *matrix;
   inv = *matrix;
@@ -176,7 +176,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
     interpolation_type = GIMP_INTERPOLATION_NONE;
 
   /*  Get the background color  */
-  gimp_image_get_background (gimage, drawable, context, bg_color);
+  gimp_image_get_background (image, drawable, context, bg_color);
 
   switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable)))
     {
@@ -191,7 +191,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
     case GIMP_INDEXED:
       bg_color[ALPHA_I_PIX] = TRANSPARENT_OPACITY;
       alpha = ALPHA_I_PIX;
-      /*  If the gimage is indexed color, ignore interpolation value  */
+      /*  If the image is indexed color, ignore interpolation value  */
       interpolation_type = GIMP_INTERPOLATION_NONE;
       break;
     default:
@@ -511,7 +511,7 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
                                     gdouble              axis,
                                     gboolean             clip_result)
 {
-  GimpImage   *gimage;
+  GimpImage   *image;
   TileManager *new_tiles;
   PixelRegion  srcPR, destPR;
   gint         orig_x, orig_y;
@@ -526,7 +526,7 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (orig_tiles != NULL, NULL);
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   orig_width  = tile_manager_width (orig_tiles);
   orig_height = tile_manager_height (orig_tiles);
@@ -564,7 +564,7 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
 
       tile_manager_set_offsets (new_tiles, orig_x, orig_y);
 
-      gimp_image_get_background (gimage, drawable, context, bg_color);
+      gimp_image_get_background (image, drawable, context, bg_color);
 
       /*  "Outside" a channel is transparency, not the bg color  */
       if (GIMP_IS_CHANNEL (drawable))
@@ -672,7 +672,7 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
                                       gdouble           center_y,
                                       gboolean          clip_result)
 {
-  GimpImage   *gimage;
+  GimpImage   *image;
   TileManager *new_tiles;
   PixelRegion  srcPR, destPR;
   guchar      *buf = NULL;
@@ -688,7 +688,7 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (orig_tiles != NULL, NULL);
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   orig_width  = tile_manager_width (orig_tiles);
   orig_height = tile_manager_height (orig_tiles);
@@ -741,7 +741,7 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
 
       tile_manager_set_offsets (new_tiles, orig_x, orig_y);
 
-      gimp_image_get_background (gimage, drawable, context, bg_color);
+      gimp_image_get_background (image, drawable, context, bg_color);
 
       /*  "Outside" a channel is transparency, not the bg color  */
       if (GIMP_IS_CHANNEL (drawable))
@@ -893,7 +893,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
                                 gboolean                clip_result,
                                 GimpProgress           *progress)
 {
-  GimpImage   *gimage;
+  GimpImage   *image;
   TileManager *orig_tiles;
   gboolean     new_layer;
   gboolean     success = FALSE;
@@ -904,10 +904,10 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
   g_return_val_if_fail (matrix != NULL, FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   /* Start a transform undo group */
-  gimp_image_undo_group_start (gimage,
+  gimp_image_undo_group_start (image,
 			       GIMP_UNDO_GROUP_TRANSFORM, _("Transform"));
 
   /* Cut/Copy from the specified drawable */
@@ -944,7 +944,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
     }
 
   /*  push the undo group end  */
-  gimp_image_undo_group_end (gimage);
+  gimp_image_undo_group_end (image);
 
   return success;
 }
@@ -957,7 +957,7 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
                               gdouble              axis,
                               gboolean             clip_result)
 {
-  GimpImage   *gimage;
+  GimpImage   *image;
   TileManager *orig_tiles;
   gboolean     new_layer;
   gboolean     success = FALSE;
@@ -966,10 +966,10 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   /* Start a transform undo group */
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM, _("Flip"));
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM, _("Flip"));
 
   /* Cut/Copy from the specified drawable */
   orig_tiles = gimp_drawable_transform_cut (drawable, context, &new_layer);
@@ -1027,7 +1027,7 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
     }
 
   /*  push the undo group end  */
-  gimp_image_undo_group_end (gimage);
+  gimp_image_undo_group_end (image);
 
   return success;
 }
@@ -1041,7 +1041,7 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
                                 gdouble           center_y,
                                 gboolean          clip_result)
 {
-  GimpImage   *gimage;
+  GimpImage   *image;
   TileManager *orig_tiles;
   gboolean     new_layer;
   gboolean     success = FALSE;
@@ -1050,10 +1050,10 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   /* Start a transform undo group */
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM, _("Rotate"));
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM, _("Rotate"));
 
   /* Cut/Copy from the specified drawable */
   orig_tiles = gimp_drawable_transform_cut (drawable, context, &new_layer);
@@ -1098,7 +1098,7 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
     }
 
   /*  push the undo group end  */
-  gimp_image_undo_group_end (gimage);
+  gimp_image_undo_group_end (image);
 
   return success;
 }
@@ -1108,7 +1108,7 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
                              GimpContext  *context,
                              gboolean     *new_layer)
 {
-  GimpImage   *gimage;
+  GimpImage   *image;
   TileManager *tiles;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
@@ -1116,10 +1116,10 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (new_layer != NULL, NULL);
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   /*  extract the selected mask if there is a selection  */
-  if (! gimp_channel_is_empty (gimp_image_get_mask (gimage)))
+  if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
     {
       gint x, y, w, h;
 
@@ -1129,7 +1129,7 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
        */
       if (gimp_drawable_mask_intersect (drawable, &x, &y, &w, &h))
         {
-          tiles = gimp_selection_extract (gimp_image_get_mask (gimage),
+          tiles = gimp_selection_extract (gimp_image_get_mask (image),
                                           drawable, context, TRUE, FALSE, TRUE);
 
           *new_layer = TRUE;
@@ -1143,10 +1143,10 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
   else  /*  otherwise, just copy the layer  */
     {
       if (GIMP_IS_LAYER (drawable))
-        tiles = gimp_selection_extract (gimp_image_get_mask (gimage),
+        tiles = gimp_selection_extract (gimp_image_get_mask (image),
                                         drawable, context, FALSE, TRUE, TRUE);
       else
-        tiles = gimp_selection_extract (gimp_image_get_mask (gimage),
+        tiles = gimp_selection_extract (gimp_image_get_mask (image),
                                         drawable, context, FALSE, TRUE, FALSE);
 
       *new_layer = FALSE;
@@ -1160,7 +1160,7 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
                                TileManager  *tiles,
                                gboolean      new_layer)
 {
-  GimpImage   *gimage;
+  GimpImage   *image;
   GimpLayer   *layer     = NULL;
   const gchar *undo_desc = NULL;
   gint         offset_x;
@@ -1170,7 +1170,7 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (tiles != NULL, FALSE);
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (GIMP_IS_LAYER (drawable))
     undo_desc = _("Transform Layer");
@@ -1181,12 +1181,12 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
 
   tile_manager_get_offsets (tiles, &offset_x, &offset_y);
 
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_PASTE, undo_desc);
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE, undo_desc);
 
   if (new_layer)
     {
       layer =
-        gimp_layer_new_from_tiles (tiles, gimage,
+        gimp_layer_new_from_tiles (tiles, image,
                                    gimp_drawable_type_with_alpha (drawable),
                                    _("Transformation"),
                                    GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
@@ -1215,7 +1215,7 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
                                     offset_x, offset_y);
     }
 
-  gimp_image_undo_group_end (gimage);
+  gimp_image_undo_group_end (image);
 
   return TRUE;
 }

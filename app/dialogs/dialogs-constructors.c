@@ -705,14 +705,14 @@ dialogs_indexed_palette_selected (GimpColormapEditor *editor,
 {
   GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
 
-  if (image_editor->gimage)
+  if (image_editor->image)
     {
       GimpRGB color;
       gint    index;
 
       index = gimp_colormap_editor_col_index (editor);
 
-      gimp_image_get_colormap_entry (image_editor->gimage, index, &color);
+      gimp_image_get_colormap_entry (image_editor->image, index, &color);
 
       if (state & GDK_CONTROL_MASK)
         gimp_context_set_background (image_editor->context, &color);

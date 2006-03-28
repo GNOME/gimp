@@ -25,7 +25,7 @@
 
 /* convenience functions that provide the 1.2 API, only used by the PDB */
 
-GimpLayer * text_render      (GimpImage    *gimage,
+GimpLayer * text_render      (GimpImage    *image,
 			      GimpDrawable *drawable,
                               GimpContext  *context,
 			      gint          text_x,

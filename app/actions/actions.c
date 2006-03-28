@@ -251,7 +251,7 @@ action_data_get_gimp (gpointer data)
     return NULL;
 
   if (GIMP_IS_DISPLAY (data))
-    return ((GimpDisplay *) data)->gimage->gimp;
+    return ((GimpDisplay *) data)->image->gimp;
   else if (GIMP_IS_GIMP (data))
     return data;
   else if (GIMP_IS_DOCK (data))
@@ -280,7 +280,7 @@ action_data_get_context (gpointer data)
     return NULL;
 
   if (GIMP_IS_DISPLAY (data))
-    return gimp_get_user_context (((GimpDisplay *) data)->gimage->gimp);
+    return gimp_get_user_context (((GimpDisplay *) data)->image->gimp);
   else if (GIMP_IS_GIMP (data))
     return gimp_get_user_context (data);
   else if (GIMP_IS_DOCK (data))
@@ -308,15 +308,15 @@ action_data_get_image (gpointer data)
     return NULL;
 
   if (GIMP_IS_DISPLAY (data))
-    return ((GimpDisplay *) data)->gimage;
+    return ((GimpDisplay *) data)->image;
   else if (GIMP_IS_GIMP (data))
     context = gimp_get_user_context (data);
   else if (GIMP_IS_DOCK (data))
     context = ((GimpDock *) data)->context;
   else if (GIMP_IS_ITEM_TREE_VIEW (data))
-    return ((GimpItemTreeView *) data)->gimage;
+    return ((GimpItemTreeView *) data)->image;
   else if (GIMP_IS_IMAGE_EDITOR (data))
-    return ((GimpImageEditor *) data)->gimage;
+    return ((GimpImageEditor *) data)->image;
   else if (GIMP_IS_NAVIGATION_EDITOR (data))
     context = ((GimpNavigationEditor *) data)->context;
 

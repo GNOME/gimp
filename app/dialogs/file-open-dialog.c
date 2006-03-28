@@ -54,7 +54,7 @@ static gboolean   file_open_dialog_open_image (GtkWidget     *open_dialog,
                                                const gchar   *entered_filename,
                                                PlugInProcDef *load_proc);
 static gboolean   file_open_dialog_open_layer (GtkWidget     *open_dialog,
-                                               GimpImage     *gimage,
+                                               GimpImage     *image,
                                                const gchar   *uri,
                                                const gchar   *entered_filename,
                                                PlugInProcDef *load_proc);
@@ -117,7 +117,7 @@ file_open_dialog_response (GtkWidget *open_dialog,
   /*  open layers in reverse order so they appear in the same
    *  order as in the file dialog
    */
-  if (dialog->gimage)
+  if (dialog->image)
     uris = g_slist_reverse (uris);
 
   for (list = uris; list; list = g_slist_next (list))
@@ -134,10 +134,10 @@ file_open_dialog_response (GtkWidget *open_dialog,
             continue;
         }
 
-      if (dialog->gimage)
+      if (dialog->image)
         {
           if (file_open_dialog_open_layer (open_dialog,
-                                           dialog->gimage,
+                                           dialog->image,
                                            list->data,
                                            list->data,
                                            dialog->file_proc))
@@ -167,8 +167,8 @@ file_open_dialog_response (GtkWidget *open_dialog,
     {
       gtk_widget_hide (open_dialog);
 
-      if (dialog->gimage)
-        gimp_image_flush (dialog->gimage);
+      if (dialog->image)
+        gimp_image_flush (dialog->image);
     }
 
   gimp_file_dialog_set_sensitive (dialog, TRUE);
@@ -184,20 +184,20 @@ file_open_dialog_open_image (GtkWidget     *open_dialog,
                              const gchar   *entered_filename,
                              PlugInProcDef *load_proc)
 {
-  GimpImage         *gimage;
+  GimpImage         *image;
   GimpPDBStatusType  status;
   GError            *error = NULL;
 
-  gimage = file_open_with_proc_and_display (gimp,
-                                            gimp_get_user_context (gimp),
-                                            GIMP_PROGRESS (open_dialog),
-                                            uri,
-                                            entered_filename,
-                                            load_proc,
-                                            &status,
-                                            &error);
+  image = file_open_with_proc_and_display (gimp,
+                                           gimp_get_user_context (gimp),
+                                           GIMP_PROGRESS (open_dialog),
+                                           uri,
+                                           entered_filename,
+                                           load_proc,
+                                           &status,
+                                           &error);
 
-  if (gimage)
+  if (image)
     {
       return TRUE;
     }
@@ -217,7 +217,7 @@ file_open_dialog_open_image (GtkWidget     *open_dialog,
 
 static gboolean
 file_open_dialog_open_layer (GtkWidget     *open_dialog,
-                             GimpImage     *gimage,
+                             GimpImage     *image,
                              const gchar   *uri,
                              const gchar   *entered_filename,
                              PlugInProcDef *load_proc)
@@ -226,10 +226,10 @@ file_open_dialog_open_layer (GtkWidget     *open_dialog,
   GimpPDBStatusType  status;
   GError            *error = NULL;
 
-  new_layer = file_open_layer (gimage->gimp,
-                               gimp_get_user_context (gimage->gimp),
+  new_layer = file_open_layer (image->gimp,
+                               gimp_get_user_context (image->gimp),
                                GIMP_PROGRESS (open_dialog),
-                               gimage, uri, GIMP_RUN_INTERACTIVE, load_proc,
+                               image, uri, GIMP_RUN_INTERACTIVE, load_proc,
                                &status, &error);
 
   if (new_layer)
@@ -238,8 +238,8 @@ file_open_dialog_open_layer (GtkWidget     *open_dialog,
       gint      width, height;
       gint      off_x, off_y;
 
-      width  = gimp_image_get_width (gimage);
-      height = gimp_image_get_height (gimage);
+      width  = gimp_image_get_width (image);
+      height = gimp_image_get_height (image);
 
       gimp_item_offsets (new_item, &off_x, &off_y);
 
@@ -248,7 +248,7 @@ file_open_dialog_open_layer (GtkWidget     *open_dialog,
 
       gimp_item_translate (new_item, off_x, off_y, FALSE);
 
-      gimp_image_add_layer (gimage, new_layer, -1);
+      gimp_image_add_layer (image, new_layer, -1);
 
       return TRUE;
     }

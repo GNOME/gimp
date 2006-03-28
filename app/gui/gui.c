@@ -121,7 +121,7 @@ static void       gui_menu_hide_tooltip         (GimpUIManager      *manager,
 static void       gui_display_changed           (GimpContext        *context,
                                                  GimpDisplay        *display,
                                                  Gimp               *gimp);
-static void       gui_image_disconnect          (GimpImage          *gimage,
+static void       gui_image_disconnect          (GimpImage          *image,
                                                  Gimp               *gimp);
 
 
@@ -653,7 +653,7 @@ gui_display_changed (GimpContext *context,
             {
               GimpDisplay *display2 = list->data;
 
-              if (display2->gimage == image)
+              if (display2->image == image)
                 {
                   gimp_context_set_display (context, display2);
 
@@ -673,12 +673,12 @@ gui_display_changed (GimpContext *context,
 }
 
 static void
-gui_image_disconnect (GimpImage *gimage,
+gui_image_disconnect (GimpImage *image,
 		      Gimp      *gimp)
 {
   /*  check if this is the last image and if it had a display  */
   if (gimp_container_num_children (gimp->images) == 1 &&
-      gimage->instance_count                      > 0)
+      image->instance_count > 0)
     {
       dialogs_show_toolbox ();
     }

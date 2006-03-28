@@ -229,7 +229,7 @@ gimp_levels_tool_initialize (GimpTool    *tool,
   GimpLevelsTool *l_tool = GIMP_LEVELS_TOOL (tool);
   GimpDrawable   *drawable;
 
-  drawable = gimp_image_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->image);
 
   if (! drawable)
     return FALSE;

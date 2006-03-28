@@ -20,7 +20,7 @@
 #define __GIMP_IMAGE_CROP_H__
 
 
-void       gimp_image_crop             (GimpImage   *gimage,
+void       gimp_image_crop             (GimpImage   *image,
                                         GimpContext *context,
 					gint         x1,
 					gint         y1,
@@ -29,7 +29,7 @@ void       gimp_image_crop             (GimpImage   *gimage,
 					gboolean     active_layer_only,
 					gboolean     crop_layers);
 
-gboolean   gimp_image_crop_auto_shrink (GimpImage   *gimage,
+gboolean   gimp_image_crop_auto_shrink (GimpImage   *image,
 					gint         x1,
 					gint         y1,
 					gint         x2,

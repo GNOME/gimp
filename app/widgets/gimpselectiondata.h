@@ -47,7 +47,7 @@ const guchar  * gimp_selection_data_get_stream    (GtkSelectionData *selection,
 /*  image  */
 
 void            gimp_selection_data_set_image     (GtkSelectionData *selection,
-                                                   GimpImage        *gimage);
+                                                   GimpImage        *image);
 GimpImage     * gimp_selection_data_get_image     (GtkSelectionData *selection,
                                                    Gimp             *gimp);
 
@@ -55,7 +55,7 @@ GimpImage     * gimp_selection_data_get_image     (GtkSelectionData *selection,
 /*  component  */
 
 void            gimp_selection_data_set_component (GtkSelectionData *selection,
-                                                   GimpImage        *gimage,
+                                                   GimpImage        *image,
                                                    GimpChannelType   channel);
 GimpImage     * gimp_selection_data_get_component (GtkSelectionData *selection,
                                                    Gimp             *gimp,

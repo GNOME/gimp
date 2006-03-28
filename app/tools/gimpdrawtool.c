@@ -995,7 +995,7 @@ gimp_draw_tool_on_vectors (GimpDrawTool      *draw_tool,
   if (ret_stroke)        *ret_stroke         = NULL;
   if (ret_vectors)       *ret_vectors        = NULL;
 
-  for (list = GIMP_LIST (gdisp->gimage->vectors)->list;
+  for (list = GIMP_LIST (gdisp->image->vectors)->list;
        list;
        list = g_list_next (list))
     {

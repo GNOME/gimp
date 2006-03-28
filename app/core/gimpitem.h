@@ -40,7 +40,7 @@ struct _GimpItem
   gint              ID;                 /*  provides a unique ID     */
   guint32           tattoo;             /*  provides a permanent ID  */
 
-  GimpImage        *gimage;             /*  gimage owner             */
+  GimpImage        *image;              /*  item owner               */
 
   GimpParasiteList *parasites;          /*  Plug-in parasite data    */
 
@@ -137,7 +137,7 @@ gboolean        gimp_item_is_removed       (const GimpItem *item);
 gboolean        gimp_item_is_attached      (GimpItem       *item);
 
 void            gimp_item_configure        (GimpItem       *item,
-                                            GimpImage      *gimage,
+                                            GimpImage      *image,
                                             gint            offset_x,
                                             gint            offset_y,
                                             gint            width,
@@ -231,7 +231,7 @@ void            gimp_item_set_tattoo       (GimpItem       *item,
 
 GimpImage     * gimp_item_get_image        (const GimpItem *item);
 void            gimp_item_set_image        (GimpItem       *item,
-                                            GimpImage      *gimage);
+                                            GimpImage      *image);
 
 void            gimp_item_parasite_attach  (GimpItem       *item,
                                             GimpParasite   *parasite);

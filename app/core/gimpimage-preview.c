@@ -47,22 +47,22 @@ gimp_image_get_preview_size (GimpViewable *viewable,
                              gint         *width,
                              gint         *height)
 {
-  GimpImage *gimage = GIMP_IMAGE (viewable);
+  GimpImage *image = GIMP_IMAGE (viewable);
 
-  if (! gimage->gimp->config->layer_previews && ! is_popup)
+  if (! image->gimp->config->layer_previews && ! is_popup)
     {
       *width  = size;
       *height = size;
       return;
     }
 
-  gimp_viewable_calc_preview_size (gimage->width,
-                                   gimage->height,
+  gimp_viewable_calc_preview_size (image->width,
+                                   image->height,
                                    size,
                                    size,
                                    dot_for_dot,
-                                   gimage->xresolution,
-                                   gimage->yresolution,
+                                   image->xresolution,
+                                   image->yresolution,
                                    width,
                                    height,
                                    NULL);
@@ -76,17 +76,17 @@ gimp_image_get_popup_size (GimpViewable *viewable,
                            gint         *popup_width,
                            gint         *popup_height)
 {
-  GimpImage *gimage = GIMP_IMAGE (viewable);
+  GimpImage *image = GIMP_IMAGE (viewable);
 
-  if (! gimage->gimp->config->layer_previews)
+  if (! image->gimp->config->layer_previews)
     return FALSE;
 
-  if (gimage->width > width || gimage->height > height)
+  if (image->width > width || image->height > height)
     {
       gboolean scaling_up;
 
-      gimp_viewable_calc_preview_size (gimage->width,
-                                       gimage->height,
+      gimp_viewable_calc_preview_size (image->width,
+                                       image->height,
                                        width  * 2,
                                        height * 2,
                                        dot_for_dot, 1.0, 1.0,
@@ -96,8 +96,8 @@ gimp_image_get_popup_size (GimpViewable *viewable,
 
       if (scaling_up)
         {
-          *popup_width  = gimage->width;
-          *popup_height = gimage->height;
+          *popup_width  = image->width;
+          *popup_height = image->height;
         }
 
       return TRUE;
@@ -111,34 +111,34 @@ gimp_image_get_preview (GimpViewable *viewable,
 			gint          width,
 			gint          height)
 {
-  GimpImage *gimage = GIMP_IMAGE (viewable);
+  GimpImage *image = GIMP_IMAGE (viewable);
 
-  if (! gimage->gimp->config->layer_previews)
+  if (! image->gimp->config->layer_previews)
     return NULL;
 
-  if (gimage->comp_preview_valid            &&
-      gimage->comp_preview->width  == width &&
-      gimage->comp_preview->height == height)
+  if (image->comp_preview_valid            &&
+      image->comp_preview->width  == width &&
+      image->comp_preview->height == height)
     {
       /*  The easy way  */
-      return gimage->comp_preview;
+      return image->comp_preview;
     }
   else
     {
       /*  The hard way  */
-      if (gimage->comp_preview)
-	temp_buf_free (gimage->comp_preview);
+      if (image->comp_preview)
+	temp_buf_free (image->comp_preview);
 
       /*  Actually construct the composite preview from the layer previews!
        *  This might seem ridiculous, but it's actually the best way, given
        *  a number of unsavory alternatives.
        */
-      gimage->comp_preview = gimp_image_get_new_preview (viewable,
+      image->comp_preview = gimp_image_get_new_preview (viewable,
 							 width, height);
 
-      gimage->comp_preview_valid = TRUE;
+      image->comp_preview_valid = TRUE;
 
-      return gimage->comp_preview;
+      return image->comp_preview;
     }
 }
 
@@ -147,7 +147,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 			    gint          width,
 			    gint          height)
 {
-  GimpImage   *gimage;
+  GimpImage   *image;
   GimpLayer   *layer;
   GimpLayer   *floating_sel;
   PixelRegion  src1PR, src2PR, maskPR;
@@ -165,14 +165,14 @@ gimp_image_get_new_preview (GimpViewable *viewable,
   gboolean     visible_components[MAX_CHANNELS] = { TRUE, TRUE, TRUE, TRUE };
   gint         off_x, off_y;
 
-  gimage = GIMP_IMAGE (viewable);
+  image = GIMP_IMAGE (viewable);
 
-  if (! gimage->gimp->config->layer_previews)
+  if (! image->gimp->config->layer_previews)
     return NULL;
 
-  ratio = (gdouble) width / (gdouble) gimage->width;
+  ratio = (gdouble) width / (gdouble) image->width;
 
-  switch (gimp_image_base_type (gimage))
+  switch (gimp_image_base_type (image))
     {
     case GIMP_RGB:
     case GIMP_INDEXED:
@@ -193,7 +193,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 
   floating_sel = NULL;
 
-  for (list = GIMP_LIST (gimage->layers)->list;
+  for (list = GIMP_LIST (image->layers)->list;
        list;
        list = g_list_next (list))
     {
@@ -238,7 +238,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
                                       gimp_item_width  (GIMP_ITEM (layer)),
                                       gimp_item_height (GIMP_ITEM (layer)),
                                       -off_x, -off_y,
-                                      gimage->width, gimage->height,
+                                      image->width, image->height,
                                       &src_x, &src_y,
                                       &src_width, &src_height))
         {

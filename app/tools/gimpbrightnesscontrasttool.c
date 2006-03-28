@@ -154,7 +154,7 @@ gimp_brightness_contrast_tool_initialize (GimpTool    *tool,
   GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (tool);
   GimpDrawable               *drawable;
 
-  drawable = gimp_image_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->image);
 
   if (! drawable)
     return FALSE;

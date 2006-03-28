@@ -62,21 +62,21 @@ gimp_drawable_get_preview (GimpViewable *viewable,
                            gint          height)
 {
   GimpDrawable *drawable;
-  GimpImage    *gimage;
+  GimpImage    *image;
 
   drawable = GIMP_DRAWABLE (viewable);
-  gimage   = gimp_item_get_image (GIMP_ITEM (drawable));
+  image   = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  if (! gimage->gimp->config->layer_previews)
+  if (! image->gimp->config->layer_previews)
     return NULL;
 
   /* Ok prime the cache with a large preview if the cache is invalid */
   if (! drawable->preview_valid                  &&
       width  <= PREVIEW_CACHE_PRIME_WIDTH        &&
       height <= PREVIEW_CACHE_PRIME_HEIGHT       &&
-      gimage                                     &&
-      gimage->width  > PREVIEW_CACHE_PRIME_WIDTH &&
-      gimage->height > PREVIEW_CACHE_PRIME_HEIGHT)
+      image                                     &&
+      image->width  > PREVIEW_CACHE_PRIME_WIDTH &&
+      image->height > PREVIEW_CACHE_PRIME_HEIGHT)
     {
       TempBuf *tb = gimp_drawable_preview_private (drawable,
                                                    PREVIEW_CACHE_PRIME_WIDTH,
@@ -127,7 +127,7 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
                                gint          dest_height)
 {
   GimpItem    *item;
-  GimpImage   *gimage;
+  GimpImage   *image;
   TempBuf     *preview_buf;
   PixelRegion  srcPR;
   PixelRegion  destPR;
@@ -147,9 +147,9 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
   g_return_val_if_fail ((src_x + src_width)  <= gimp_item_width  (item), NULL);
   g_return_val_if_fail ((src_y + src_height) <= gimp_item_height (item), NULL);
 
-  gimage = gimp_item_get_image (item);
+  image = gimp_item_get_image (item);
 
-  if (! gimage->gimp->config->layer_previews)
+  if (! image->gimp->config->layer_previews)
     return NULL;
 
   bytes = gimp_drawable_preview_bytes (drawable);
@@ -173,7 +173,7 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
   if (GIMP_IS_LAYER (drawable))
     {
       gimp_drawable_preview_scale (gimp_drawable_type (drawable),
-                                   gimp_image_get_colormap (gimage),
+                                   gimp_image_get_colormap (image),
                                    &srcPR, &destPR,
                                    subsample);
     }

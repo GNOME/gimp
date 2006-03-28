@@ -101,14 +101,14 @@ gimp_display_shell_events (GtkWidget        *widget,
                            GdkEvent         *event,
                            GimpDisplayShell *shell)
 {
-  Gimp        *gimp;
-  gboolean     set_display = FALSE;
+  Gimp     *gimp;
+  gboolean  set_display = FALSE;
 
   /*  are we in destruction?  */
   if (! shell->gdisp || ! shell->gdisp->shell)
     return TRUE;
 
-  gimp = shell->gdisp->gimage->gimp;
+  gimp = shell->gdisp->image->gimp;
 
   switch (event->type)
     {
@@ -252,7 +252,7 @@ gimp_display_shell_events (GtkWidget        *widget,
 
   if (set_display)
     {
-      Gimp *gimp = shell->gdisp->gimage->gimp;
+      Gimp *gimp = shell->gdisp->image->gimp;
 
       /*  Setting the context's display automatically sets the image, too  */
       gimp_context_set_display (gimp_get_user_context (gimp), shell->gdisp);
@@ -271,7 +271,7 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
   GimpRGB                padding_color;
 
   gdisp  = shell->gdisp;
-  config = GIMP_DISPLAY_CONFIG (gdisp->gimage->gimp->config);
+  config = GIMP_DISPLAY_CONFIG (gdisp->image->gimp->config);
 
   gtk_widget_grab_focus (shell->canvas);
 
@@ -438,7 +438,7 @@ gimp_display_shell_check_device_cursor (GimpDisplayShell *shell)
 {
   GdkDevice *current_device;
 
-  current_device = gimp_devices_get_current (shell->gdisp->gimage->gimp);
+  current_device = gimp_devices_get_current (shell->gdisp->image->gimp);
 
   shell->draw_cursor = ! current_device->has_cursor;
 }
@@ -449,7 +449,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                        GimpDisplayShell *shell)
 {
   GimpDisplay         *gdisp;
-  GimpImage           *gimage;
+  GimpImage           *image;
   Gimp                *gimp;
   GdkDisplay          *gdk_display;
   GimpTool            *active_tool;
@@ -472,9 +472,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   if (gimp_display_shell_events (canvas, event, shell))
     return TRUE;
 
-  gdisp  = shell->gdisp;
-  gimage = gdisp->gimage;
-  gimp   = gimage->gimp;
+  gdisp = shell->gdisp;
+  image = gdisp->image;
+  gimp  = image->gimp;
 
   gdk_display = gtk_widget_get_display (canvas);
 
@@ -638,7 +638,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
             if (active_tool)
               {
-                if ((! gimp_image_is_empty (gimage) ||
+                if ((! gimp_image_is_empty (image) ||
                      gimp_tool_control_get_handle_empty_image (active_tool->control)) &&
                     (bevent->button == 1 ||
                      bevent->button == 2 ||
@@ -648,7 +648,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                        &image_coords, state,
                                                        gdisp);
                   }
-                else if (gimp_image_is_empty (gimage) &&
+                else if (gimp_image_is_empty (image) &&
                          ! gimp_tool_control_get_handle_empty_image (active_tool->control))
                   {
                     gimp_display_shell_set_cursor (shell,
@@ -709,7 +709,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               gdk_keyboard_grab (canvas->window, FALSE, time);
 
             if (active_tool &&
-                (! gimp_image_is_empty (gimage) ||
+                (! gimp_image_is_empty (image) ||
                  gimp_tool_control_get_handle_empty_image (active_tool->control)))
               {
                 gboolean initialized = TRUE;
@@ -721,7 +721,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                     initialized = tool_manager_initialize_active (gimp, gdisp);
                   }
                 else if ((active_tool->drawable !=
-                          gimp_image_active_drawable (gimage)) &&
+                          gimp_image_active_drawable (image)) &&
                          ! gimp_tool_control_get_preserve (active_tool->control))
                   {
                     /*  create a new one, deleting the current
@@ -793,7 +793,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             gtk_grab_add (canvas);
 
             if (active_tool &&
-                (! gimp_image_is_empty (gimage) ||
+                (! gimp_image_is_empty (image) ||
                  gimp_tool_control_get_handle_empty_image (active_tool->control)))
               {
                 if (gimp_tool_control_is_active (active_tool->control))
@@ -1035,7 +1035,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           {
             if (active_tool                                        &&
                 gimp_tool_control_is_active (active_tool->control) &&
-                (! gimp_image_is_empty (gimage) ||
+                (! gimp_image_is_empty (image) ||
                  gimp_tool_control_get_handle_empty_image (active_tool->control)))
               {
                 GdkTimeCoord **history_events;
@@ -1149,7 +1149,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           case GDK_Right:
           case GDK_Up:
           case GDK_Down:
-            if (gimp_image_is_empty (gimage) ||
+            if (gimp_image_is_empty (image) ||
                 ! tool_manager_key_press_active (gimp,
                                                  kevent,
                                                  gdisp))
@@ -1207,7 +1207,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           case GDK_ISO_Left_Tab:
             if (state & GDK_CONTROL_MASK)
               {
-                if (! gimp_image_is_empty (gimage))
+                if (! gimp_image_is_empty (image))
                   {
                     if (kevent->keyval == GDK_Tab)
                       gimp_display_shell_layer_select_init (shell,
@@ -1239,7 +1239,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                *  oper_update method so tools can choose if they are interested
                *  in the release itself or only in the resulting state
                */
-              if (! gimp_image_is_empty (gimage))
+              if (! gimp_image_is_empty (image))
                 tool_manager_modifier_state_active (gimp, state, gdisp);
             }
 
@@ -1297,7 +1297,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                *  oper_update method so tools can choose if they are interested
                *  in the press itself or only in the resulting state
                */
-              if (! gimp_image_is_empty (gimage))
+              if (! gimp_image_is_empty (image))
                 tool_manager_modifier_state_active (gimp, state, gdisp);
             }
 
@@ -1327,7 +1327,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
       if (active_tool)
         {
-          if ((! gimp_image_is_empty (gimage) ||
+          if ((! gimp_image_is_empty (image) ||
                gimp_tool_control_get_handle_empty_image (active_tool->control)) &&
               ! (state & (GDK_BUTTON1_MASK |
                           GDK_BUTTON2_MASK |
@@ -1337,7 +1337,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                  &image_coords, state,
                                                  gdisp);
             }
-          else if (gimp_image_is_empty (gimage) &&
+          else if (gimp_image_is_empty (image) &&
                    ! gimp_tool_control_get_handle_empty_image (active_tool->control))
             {
               gimp_display_shell_set_cursor (shell,
@@ -1373,7 +1373,7 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
 {
   GimpDisplay *gdisp = shell->gdisp;
 
-  if (gdisp->gimage->gimp->busy)
+  if (gdisp->image->gimp->busy)
     return TRUE;
 
   if (event->type == GDK_BUTTON_PRESS && event->button == 1)
@@ -1381,7 +1381,7 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
       GimpTool *active_tool;
       gboolean  sample_point;
 
-      active_tool  = tool_manager_get_active (gdisp->gimage->gimp);
+      active_tool  = tool_manager_get_active (gdisp->image->gimp);
       sample_point = (event->state & GDK_CONTROL_MASK);
 
       if (! ((sample_point   && GIMP_IS_COLOR_TOOL (active_tool)) ||
@@ -1390,17 +1390,17 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
           GimpToolInfo *tool_info;
 
           tool_info = (GimpToolInfo *)
-            gimp_container_get_child_by_name (gdisp->gimage->gimp->tool_info_list,
+            gimp_container_get_child_by_name (gdisp->image->gimp->tool_info_list,
                                               sample_point ?
                                               "gimp-color-picker-tool" :
                                               "gimp-move-tool");
 
           if (tool_info)
-            gimp_context_set_tool (gimp_get_user_context (gdisp->gimage->gimp),
+            gimp_context_set_tool (gimp_get_user_context (gdisp->image->gimp),
                                    tool_info);
         }
 
-      active_tool = tool_manager_get_active (gdisp->gimage->gimp);
+      active_tool = tool_manager_get_active (gdisp->image->gimp);
 
       if (active_tool)
         {
@@ -1445,7 +1445,7 @@ gimp_display_shell_origin_button_press (GtkWidget        *widget,
                                         GdkEventButton   *event,
                                         GimpDisplayShell *shell)
 {
-  if (! shell->gdisp->gimage->gimp->busy)
+  if (! shell->gdisp->image->gimp->busy)
     {
       if (event->button == 1)
         {
@@ -1483,12 +1483,12 @@ gimp_display_shell_quick_mask_toggled (GtkWidget        *widget,
                                        GimpDisplayShell *shell)
 {
   if (GTK_TOGGLE_BUTTON (widget)->active !=
-      gimp_image_get_quick_mask_state (shell->gdisp->gimage))
+      gimp_image_get_quick_mask_state (shell->gdisp->image))
     {
-      gimp_image_set_quick_mask_state (shell->gdisp->gimage,
+      gimp_image_set_quick_mask_state (shell->gdisp->image,
                                        GTK_TOGGLE_BUTTON (widget)->active);
 
-      gimp_image_flush (shell->gdisp->gimage);
+      gimp_image_flush (shell->gdisp->image);
     }
 }
 

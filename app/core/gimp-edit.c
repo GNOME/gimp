@@ -51,16 +51,16 @@
 
 /*  local function protypes  */
 
-static GimpBuffer * gimp_edit_extract         (GimpImage            *gimage,
+static GimpBuffer * gimp_edit_extract         (GimpImage            *image,
                                                GimpDrawable         *drawable,
                                                GimpContext          *context,
                                                gboolean              cut_pixels);
-static GimpBuffer * gimp_edit_extract_visible (GimpImage            *gimage,
+static GimpBuffer * gimp_edit_extract_visible (GimpImage            *image,
                                                GimpContext          *context);
 static GimpBuffer * gimp_edit_make_buffer     (Gimp                 *gimp,
                                                TileManager          *tiles,
                                                gboolean              mask_empty);
-static gboolean     gimp_edit_fill_internal   (GimpImage            *gimage,
+static gboolean     gimp_edit_fill_internal   (GimpImage            *image,
                                                GimpDrawable         *drawable,
                                                GimpContext          *context,
                                                GimpFillType          fill_type,
@@ -72,79 +72,79 @@ static gboolean     gimp_edit_fill_internal   (GimpImage            *gimage,
 /*  public functions  */
 
 const GimpBuffer *
-gimp_edit_cut (GimpImage    *gimage,
+gimp_edit_cut (GimpImage    *image,
 	       GimpDrawable *drawable,
                GimpContext  *context)
 {
   GimpBuffer *buffer;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  buffer = gimp_edit_extract (gimage, drawable, context, TRUE);
+  buffer = gimp_edit_extract (image, drawable, context, TRUE);
 
   if (buffer)
     {
-      gimp_set_global_buffer (gimage->gimp, buffer);
+      gimp_set_global_buffer (image->gimp, buffer);
       g_object_unref (buffer);
 
-      return gimage->gimp->global_buffer;
+      return image->gimp->global_buffer;
     }
 
   return NULL;
 }
 
 const GimpBuffer *
-gimp_edit_copy (GimpImage    *gimage,
+gimp_edit_copy (GimpImage    *image,
 		GimpDrawable *drawable,
                 GimpContext  *context)
 {
   GimpBuffer *buffer;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  buffer = gimp_edit_extract (gimage, drawable, context, FALSE);
+  buffer = gimp_edit_extract (image, drawable, context, FALSE);
 
   if (buffer)
     {
-      gimp_set_global_buffer (gimage->gimp, buffer);
+      gimp_set_global_buffer (image->gimp, buffer);
       g_object_unref (buffer);
 
-      return gimage->gimp->global_buffer;
+      return image->gimp->global_buffer;
     }
 
   return NULL;
 }
 
 const GimpBuffer *
-gimp_edit_copy_visible (GimpImage   *gimage,
+gimp_edit_copy_visible (GimpImage   *image,
                         GimpContext *context)
 {
   GimpBuffer *buffer;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  buffer = gimp_edit_extract_visible (gimage, context);
+  buffer = gimp_edit_extract_visible (image, context);
 
   if (buffer)
     {
-      gimp_set_global_buffer (gimage->gimp, buffer);
+      gimp_set_global_buffer (image->gimp, buffer);
       g_object_unref (buffer);
 
-      return gimage->gimp->global_buffer;
+      return image->gimp->global_buffer;
     }
 
   return NULL;
 }
 
 GimpLayer *
-gimp_edit_paste (GimpImage    *gimage,
+gimp_edit_paste (GimpImage    *image,
 		 GimpDrawable *drawable,
 		 GimpBuffer   *paste,
 		 gboolean      paste_into,
@@ -162,7 +162,7 @@ gimp_edit_paste (GimpImage    *gimage,
   gint           width;
   gint           height;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (drawable == NULL ||
                         gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
@@ -175,9 +175,9 @@ gimp_edit_paste (GimpImage    *gimage,
   if (drawable)
     type = gimp_drawable_type_with_alpha (drawable);
   else
-    type = gimp_image_base_type_with_alpha (gimage);
+    type = gimp_image_base_type_with_alpha (image);
 
-  layer = gimp_layer_new_from_tiles (paste->tiles, gimage, type,
+  layer = gimp_layer_new_from_tiles (paste->tiles, image, type,
                                      _("Pasted Layer"),
                                      GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
@@ -227,8 +227,8 @@ gimp_edit_paste (GimpImage    *gimage,
     {
       /*  otherwise the offsets to the center of the image  */
 
-      center_x = gimage->width  / 2;
-      center_y = gimage->height / 2;
+      center_x = image->width  / 2;
+      center_y = image->height / 2;
     }
 
   width  = gimp_item_width  (GIMP_ITEM (layer));
@@ -240,8 +240,8 @@ gimp_edit_paste (GimpImage    *gimage,
   /*  Ensure that the pasted layer is always within the image, if it
    *  fits and aligned at top left if it doesn't. (See bug #142944).
    */
-  offset_x = MIN (offset_x, gimage->width  - width);
-  offset_y = MIN (offset_y, gimage->height - height);
+  offset_x = MIN (offset_x, image->width  - width);
+  offset_y = MIN (offset_y, image->height - height);
   offset_x = MAX (offset_x, 0);
   offset_y = MAX (offset_y, 0);
 
@@ -249,24 +249,24 @@ gimp_edit_paste (GimpImage    *gimage,
   GIMP_ITEM (layer)->offset_y = offset_y;
 
   /*  Start a group undo  */
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                _("Paste"));
 
   /*  If there is a selection mask clear it--
    *  this might not always be desired, but in general,
    *  it seems like the correct behavior.
    */
-  if (! gimp_channel_is_empty (gimp_image_get_mask (gimage)) && ! paste_into)
-    gimp_channel_clear (gimp_image_get_mask (gimage), NULL, TRUE);
+  if (! gimp_channel_is_empty (gimp_image_get_mask (image)) && ! paste_into)
+    gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
 
   /*  if there's a drawable, add a new floating selection  */
   if (drawable)
     floating_sel_attach (layer, drawable);
   else
-    gimp_image_add_layer (gimage, layer, 0);
+    gimp_image_add_layer (image, layer, 0);
 
   /*  end the group undo  */
-  gimp_image_undo_group_end (gimage);
+  gimp_image_undo_group_end (image);
 
   return layer;
 }
@@ -276,7 +276,7 @@ gimp_edit_paste_as_new (Gimp       *gimp,
 			GimpImage  *invoke,
 			GimpBuffer *paste)
 {
-  GimpImage     *gimage;
+  GimpImage     *image;
   GimpLayer     *layer;
   GimpImageType  type;
 
@@ -296,58 +296,58 @@ gimp_edit_paste_as_new (Gimp       *gimp,
     }
 
   /*  create a new image  (always of type GIMP_RGB)  */
-  gimage = gimp_create_image (gimp,
+  image = gimp_create_image (gimp,
 			      gimp_buffer_get_width (paste),
                               gimp_buffer_get_height (paste),
 			      GIMP_IMAGE_TYPE_BASE_TYPE (type),
 			      TRUE);
-  gimp_image_undo_disable (gimage);
+  gimp_image_undo_disable (image);
 
   if (invoke)
     {
-      gimp_image_set_resolution (gimage,
+      gimp_image_set_resolution (image,
 				 invoke->xresolution, invoke->yresolution);
-      gimp_image_set_unit (gimage,
+      gimp_image_set_unit (image,
                            gimp_image_get_unit (invoke));
     }
 
-  layer = gimp_layer_new_from_tiles (paste->tiles, gimage, type,
+  layer = gimp_layer_new_from_tiles (paste->tiles, image, type,
 				     _("Pasted Layer"),
 				     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
   if (! layer)
     {
-      g_object_unref (gimage);
+      g_object_unref (image);
       return NULL;
     }
 
-  gimp_image_add_layer (gimage, layer, 0);
+  gimp_image_add_layer (image, layer, 0);
 
-  gimp_image_undo_enable (gimage);
+  gimp_image_undo_enable (image);
 
-  return gimage;
+  return image;
 }
 
 const gchar *
-gimp_edit_named_cut (GimpImage    *gimage,
+gimp_edit_named_cut (GimpImage    *image,
                      const gchar  *name,
                      GimpDrawable *drawable,
                      GimpContext  *context)
 {
   GimpBuffer *buffer;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  buffer = gimp_edit_extract (gimage, drawable, context, TRUE);
+  buffer = gimp_edit_extract (image, drawable, context, TRUE);
 
   if (buffer)
     {
       gimp_object_set_name (GIMP_OBJECT (buffer), name);
-      gimp_container_add (gimage->gimp->named_buffers, GIMP_OBJECT (buffer));
+      gimp_container_add (image->gimp->named_buffers, GIMP_OBJECT (buffer));
       g_object_unref (buffer);
 
       return gimp_object_get_name (GIMP_OBJECT (buffer));
@@ -357,25 +357,25 @@ gimp_edit_named_cut (GimpImage    *gimage,
 }
 
 const gchar *
-gimp_edit_named_copy (GimpImage    *gimage,
+gimp_edit_named_copy (GimpImage    *image,
                       const gchar  *name,
                       GimpDrawable *drawable,
                       GimpContext  *context)
 {
   GimpBuffer *buffer;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  buffer = gimp_edit_extract (gimage, drawable, context, FALSE);
+  buffer = gimp_edit_extract (image, drawable, context, FALSE);
 
   if (buffer)
     {
       gimp_object_set_name (GIMP_OBJECT (buffer), name);
-      gimp_container_add (gimage->gimp->named_buffers, GIMP_OBJECT (buffer));
+      gimp_container_add (image->gimp->named_buffers, GIMP_OBJECT (buffer));
       g_object_unref (buffer);
 
       return gimp_object_get_name (GIMP_OBJECT (buffer));
@@ -385,22 +385,22 @@ gimp_edit_named_copy (GimpImage    *gimage,
 }
 
 const gchar *
-gimp_edit_named_copy_visible (GimpImage   *gimage,
+gimp_edit_named_copy_visible (GimpImage   *image,
                               const gchar *name,
                               GimpContext *context)
 {
   GimpBuffer *buffer;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  buffer = gimp_edit_extract_visible (gimage, context);
+  buffer = gimp_edit_extract_visible (image, context);
 
   if (buffer)
     {
       gimp_object_set_name (GIMP_OBJECT (buffer), name);
-      gimp_container_add (gimage->gimp->named_buffers, GIMP_OBJECT (buffer));
+      gimp_container_add (image->gimp->named_buffers, GIMP_OBJECT (buffer));
       g_object_unref (buffer);
 
       return gimp_object_get_name (GIMP_OBJECT (buffer));
@@ -410,30 +410,30 @@ gimp_edit_named_copy_visible (GimpImage   *gimage,
 }
 
 gboolean
-gimp_edit_clear (GimpImage    *gimage,
+gimp_edit_clear (GimpImage    *image,
 		 GimpDrawable *drawable,
                  GimpContext  *context)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
 
-  return gimp_edit_fill_internal (gimage, drawable, context,
+  return gimp_edit_fill_internal (image, drawable, context,
                                   GIMP_TRANSPARENT_FILL,
                                   GIMP_OPACITY_OPAQUE, GIMP_ERASE_MODE,
                                   _("Clear"));
 }
 
 gboolean
-gimp_edit_fill (GimpImage    *gimage,
+gimp_edit_fill (GimpImage    *image,
 		GimpDrawable *drawable,
                 GimpContext  *context,
 		GimpFillType  fill_type)
 {
   const gchar *undo_desc;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
@@ -465,10 +465,10 @@ gimp_edit_fill (GimpImage    *gimage,
 
     default:
       g_warning ("%s: unknown fill type", G_STRFUNC);
-      return gimp_edit_fill (gimage, drawable, context, GIMP_BACKGROUND_FILL);
+      return gimp_edit_fill (image, drawable, context, GIMP_BACKGROUND_FILL);
     }
 
-  return gimp_edit_fill_internal (gimage, drawable, context,
+  return gimp_edit_fill_internal (image, drawable, context,
                                   fill_type,
                                   GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
                                   undo_desc);
@@ -478,7 +478,7 @@ gimp_edit_fill (GimpImage    *gimage,
 /*  private functions  */
 
 static GimpBuffer *
-gimp_edit_extract (GimpImage    *gimage,
+gimp_edit_extract (GimpImage    *image,
                    GimpDrawable *drawable,
                    GimpContext  *context,
                    gboolean      cut_pixels)
@@ -486,24 +486,24 @@ gimp_edit_extract (GimpImage    *gimage,
   TileManager *tiles;
   gboolean     empty;
 
-  /*  See if the gimage mask is empty  */
-  empty = gimp_channel_is_empty (gimp_image_get_mask (gimage));
+  /*  See if the image mask is empty  */
+  empty = gimp_channel_is_empty (gimp_image_get_mask (image));
 
   if (cut_pixels)
-    gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_CUT, _("Cut"));
+    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_CUT, _("Cut"));
 
-  /*  Cut/copy the mask portion from the gimage  */
-  tiles = gimp_selection_extract (gimp_image_get_mask (gimage),
+  /*  Cut/copy the mask portion from the image  */
+  tiles = gimp_selection_extract (gimp_image_get_mask (image),
                                   drawable, context, cut_pixels, FALSE, FALSE);
 
   if (cut_pixels)
-    gimp_image_undo_group_end (gimage);
+    gimp_image_undo_group_end (image);
 
-  return gimp_edit_make_buffer (gimage->gimp, tiles, empty);
+  return gimp_edit_make_buffer (image->gimp, tiles, empty);
 }
 
 static GimpBuffer *
-gimp_edit_extract_visible (GimpImage   *gimage,
+gimp_edit_extract_visible (GimpImage   *image,
                            GimpContext *context)
 {
   GimpPickable *pickable;
@@ -512,7 +512,7 @@ gimp_edit_extract_visible (GimpImage   *gimage,
   gboolean      non_empty;
   gint          x1, y1, x2, y2;
 
-  non_empty = gimp_channel_bounds (gimp_image_get_mask (gimage),
+  non_empty = gimp_channel_bounds (gimp_image_get_mask (image),
                                    &x1, &y1, &x2, &y2);
   if ((x1 == x2) || (y1 == y2))
     {
@@ -521,7 +521,7 @@ gimp_edit_extract_visible (GimpImage   *gimage,
       return NULL;
     }
 
-  pickable = GIMP_PICKABLE (gimage->projection);
+  pickable = GIMP_PICKABLE (image->projection);
 
   gimp_pickable_flush (pickable);
 
@@ -544,7 +544,7 @@ gimp_edit_extract_visible (GimpImage   *gimage,
    */
   copy_region_nocow (&srcPR, &destPR);
 
-  return gimp_edit_make_buffer (gimage->gimp, tiles, ! non_empty);
+  return gimp_edit_make_buffer (image->gimp, tiles, ! non_empty);
 }
 
 static GimpBuffer *
@@ -552,7 +552,7 @@ gimp_edit_make_buffer (Gimp        *gimp,
                        TileManager *tiles,
                        gboolean     mask_empty)
 {
-  /*  Only crop if the gimage mask wasn't empty  */
+  /*  Only crop if the image mask wasn't empty  */
   if (tiles && ! mask_empty)
     {
       TileManager *crop = tile_manager_crop (tiles, 0);
@@ -571,7 +571,7 @@ gimp_edit_make_buffer (Gimp        *gimp,
 }
 
 static gboolean
-gimp_edit_fill_internal (GimpImage            *gimage,
+gimp_edit_fill_internal (GimpImage            *image,
                          GimpDrawable         *drawable,
                          GimpContext          *context,
                          GimpFillType          fill_type,
@@ -595,12 +595,12 @@ gimp_edit_fill_internal (GimpImage            *gimage,
   switch (fill_type)
     {
     case GIMP_FOREGROUND_FILL:
-      gimp_image_get_foreground (gimage, drawable, context, col);
+      gimp_image_get_foreground (image, drawable, context, col);
       break;
 
     case GIMP_BACKGROUND_FILL:
     case GIMP_TRANSPARENT_FILL:
-      gimp_image_get_background (gimage, drawable, context, col);
+      gimp_image_get_background (image, drawable, context, col);
       break;
 
     case GIMP_WHITE_FILL:
@@ -610,7 +610,7 @@ gimp_edit_fill_internal (GimpImage            *gimage,
         tmp_col[RED_PIX]   = 255;
         tmp_col[GREEN_PIX] = 255;
         tmp_col[BLUE_PIX]  = 255;
-        gimp_image_transform_color (gimage, drawable, col, GIMP_RGB, tmp_col);
+        gimp_image_transform_color (image, drawable, col, GIMP_RGB, tmp_col);
       }
       break;
 
@@ -618,7 +618,7 @@ gimp_edit_fill_internal (GimpImage            *gimage,
       {
         GimpPattern *pattern = gimp_context_get_pattern (context);
 
-        pat_buf = gimp_image_transform_temp_buf (gimage, drawable,
+        pat_buf = gimp_image_transform_temp_buf (image, drawable,
                                                  pattern->mask, &new_buf);
 
         if (! gimp_drawable_has_alpha (drawable) &&

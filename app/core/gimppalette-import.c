@@ -325,7 +325,7 @@ gimp_palette_import_extract (GimpImage     *image,
 }
 
 GimpPalette *
-gimp_palette_import_from_image (GimpImage   *gimage,
+gimp_palette_import_from_image (GimpImage   *image,
 				const gchar *palette_name,
 				gint         n_colors,
 				gint         threshold)
@@ -333,19 +333,19 @@ gimp_palette_import_from_image (GimpImage   *gimage,
   GimpPickable *pickable;
   GHashTable   *colors;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
   g_return_val_if_fail (n_colors > 1, NULL);
   g_return_val_if_fail (threshold > 0, NULL);
 
-  pickable = GIMP_PICKABLE (gimage->projection);
+  pickable = GIMP_PICKABLE (image->projection);
 
   gimp_pickable_flush (pickable);
 
-  colors = gimp_palette_import_extract (gimage,
+  colors = gimp_palette_import_extract (image,
                                         gimp_pickable_get_tiles (pickable),
                                         gimp_pickable_get_image_type (pickable),
-                                        0, 0, gimage->width, gimage->height,
+                                        0, 0, image->width, image->height,
                                         n_colors, threshold);
 
   return gimp_palette_import_make_palette (colors, palette_name, n_colors);
@@ -354,29 +354,29 @@ gimp_palette_import_from_image (GimpImage   *gimage,
 /*  create a palette from an indexed image  **********************************/
 
 GimpPalette *
-gimp_palette_import_from_indexed_image (GimpImage   *gimage,
+gimp_palette_import_from_indexed_image (GimpImage   *image,
 					const gchar *palette_name)
 {
   GimpPalette *palette;
   gint         count;
   GimpRGB      color;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-  g_return_val_if_fail (gimp_image_base_type (gimage) == GIMP_INDEXED, NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (gimp_image_base_type (image) == GIMP_INDEXED, NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
 
   palette = GIMP_PALETTE (gimp_palette_new (palette_name));
 
-  for (count = 0; count < gimage->num_cols; ++count)
+  for (count = 0; count < image->num_cols; ++count)
     {
       gchar name[256];
 
       g_snprintf (name, sizeof (name), _("Index %d"), count);
 
       gimp_rgba_set_uchar (&color,
-			   gimage->cmap[count * 3],
-			   gimage->cmap[count * 3 + 1],
-			   gimage->cmap[count * 3 + 2],
+			   image->cmap[count * 3 + 0],
+			   image->cmap[count * 3 + 1],
+			   image->cmap[count * 3 + 2],
 			   255);
 
       gimp_palette_add_entry (palette, -1, name, &color);

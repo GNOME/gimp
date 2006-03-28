@@ -70,7 +70,7 @@ static GdkPixbuf * gimp_imagefile_load_thumb       (GimpImagefile  *imagefile,
                                                     gint            width,
                                                     gint            height);
 static gboolean    gimp_imagefile_save_thumb       (GimpImagefile  *imagefile,
-                                                    GimpImage      *gimage,
+                                                    GimpImage      *image,
                                                     gint            size,
                                                     gboolean        replace,
                                                     GError        **error);
@@ -369,24 +369,24 @@ gimp_imagefile_check_thumbnail (GimpImagefile *imagefile)
 gboolean
 gimp_imagefile_save_thumbnail (GimpImagefile *imagefile,
                                const gchar   *mime_type,
-                               GimpImage     *gimage)
+                               GimpImage     *image)
 {
   gint      size;
   gboolean  success = TRUE;
   GError   *error   = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGEFILE (imagefile), FALSE);
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
   size = imagefile->gimp->config->thumbnail_size;
 
   if (size > 0)
     {
       gimp_thumbnail_set_info_from_image (imagefile->thumbnail,
-                                          mime_type, gimage);
+                                          mime_type, image);
 
       success = gimp_imagefile_save_thumb (imagefile,
-                                           gimage, size, FALSE,
+                                           image, size, FALSE,
                                            &error);
       if (! success)
         {
@@ -724,7 +724,7 @@ gimp_imagefile_load_thumb (GimpImagefile *imagefile,
 
 static gboolean
 gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
-                           GimpImage      *gimage,
+                           GimpImage      *image,
                            gint            size,
                            gboolean        replace,
                            GError        **error)
@@ -737,28 +737,28 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
   if (size < 1)
     return TRUE;
 
-  if (gimage->width <= size && gimage->height <= size)
+  if (image->width <= size && image->height <= size)
     {
-      width  = gimage->width;
-      height = gimage->height;
+      width  = image->width;
+      height = image->height;
 
       size = MAX (width, height);
     }
   else
     {
-      if (gimage->width < gimage->height)
+      if (image->width < image->height)
         {
           height = size;
-          width  = MAX (1, (size * gimage->width) / gimage->height);
+          width  = MAX (1, (size * image->width) / image->height);
         }
       else
         {
           width  = size;
-          height = MAX (1, (size * gimage->height) / gimage->width);
+          height = MAX (1, (size * image->height) / image->width);
         }
     }
 
-  pixbuf = gimp_viewable_get_new_pixbuf (GIMP_VIEWABLE (gimage), width, height);
+  pixbuf = gimp_viewable_get_new_pixbuf (GIMP_VIEWABLE (image), width, height);
 
   /*  when layer previews are disabled, we won't get a pixbuf  */
   if (! pixbuf)

@@ -79,10 +79,10 @@ static void   gimp_menu_dock_factory_display_changed (GimpContext    *context,
                                                       GimpObject     *display,
                                                       GimpDock       *dock);
 static void   gimp_menu_dock_factory_image_changed   (GimpContext    *context,
-                                                      GimpImage      *gimage,
+                                                      GimpImage      *image,
                                                       GimpDock       *dock);
 static void   gimp_menu_dock_image_changed           (GimpContext    *context,
-                                                      GimpImage      *gimage,
+                                                      GimpImage      *image,
                                                       GimpDock       *dock);
 static void   gimp_menu_dock_auto_clicked            (GtkWidget      *widget,
                                                       GimpDock       *dock);
@@ -540,36 +540,36 @@ gimp_menu_dock_factory_display_changed (GimpContext *context,
 
 static void
 gimp_menu_dock_factory_image_changed (GimpContext *context,
-                                      GimpImage   *gimage,
+                                      GimpImage   *image,
                                       GimpDock    *dock)
 {
   GimpMenuDock *menu_dock = GIMP_MENU_DOCK (dock);
 
   /*  won't do anything if we already set the display above  */
-  if (gimage && menu_dock->auto_follow_active)
-    gimp_context_set_image (dock->context, gimage);
+  if (image && menu_dock->auto_follow_active)
+    gimp_context_set_image (dock->context, image);
 }
 
 static void
 gimp_menu_dock_image_changed (GimpContext *context,
-                              GimpImage   *gimage,
+                              GimpImage   *image,
                               GimpDock    *dock)
 {
   GimpMenuDock  *menu_dock         = GIMP_MENU_DOCK (dock);
   GimpContainer *image_container   = menu_dock->image_container;
   GimpContainer *display_container = menu_dock->display_container;
 
-  if (gimage == NULL && ! gimp_container_is_empty (image_container))
+  if (image == NULL && ! gimp_container_is_empty (image_container))
     {
-      gimage = GIMP_IMAGE (gimp_container_get_child_by_index (image_container,
+      image = GIMP_IMAGE (gimp_container_get_child_by_index (image_container,
                                                               0));
 
-      if (gimage)
+      if (image)
 	{
 	  /*  this invokes this function recursively but we don't enter
 	   *  the if() branch the second time
 	   */
-	  gimp_context_set_image (context, gimage);
+	  gimp_context_set_image (context, image);
 
 	  /*  stop the emission of the original signal (the emission of
 	   *  the recursive signal is finished)
@@ -577,23 +577,23 @@ gimp_menu_dock_image_changed (GimpContext *context,
 	  g_signal_stop_emission_by_name (context, "image-changed");
 	}
     }
-  else if (gimage != NULL && ! gimp_container_is_empty (display_container))
+  else if (image != NULL && ! gimp_container_is_empty (display_container))
     {
       GimpObject *gdisp;
-      GimpImage  *gdisp_gimage;
+      GimpImage  *gdisp_image;
       gboolean    find_display = TRUE;
 
       gdisp = gimp_context_get_display (context);
 
       if (gdisp)
         {
-          g_object_get (gdisp, "image", &gdisp_gimage, NULL);
+          g_object_get (gdisp, "image", &gdisp_image, NULL);
 
-          if (gdisp_gimage)
+          if (gdisp_image)
             {
-              g_object_unref (gdisp_gimage);
+              g_object_unref (gdisp_image);
 
-              if (gdisp_gimage == gimage)
+              if (gdisp_image == image)
                 find_display = FALSE;
             }
         }
@@ -608,13 +608,13 @@ gimp_menu_dock_image_changed (GimpContext *context,
             {
               gdisp = GIMP_OBJECT (list->data);
 
-              g_object_get (gdisp, "image", &gdisp_gimage, NULL);
+              g_object_get (gdisp, "image", &gdisp_image, NULL);
 
-              if (gdisp_gimage)
+              if (gdisp_image)
                 {
-                  g_object_unref (gdisp_gimage);
+                  g_object_unref (gdisp_image);
 
-                  if (gdisp_gimage == gimage)
+                  if (gdisp_image == image)
                     {
                       /*  this invokes this function recursively but we
                        *  don't enter the if(find_display) branch the

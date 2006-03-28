@@ -57,7 +57,7 @@ static GObject * gimp_selection_editor_constructor (GType                type,
                                                     GObjectConstructParam *params);
 
 static void   gimp_selection_editor_set_image      (GimpImageEditor     *editor,
-                                                    GimpImage           *gimage);
+                                                    GimpImage           *image);
 
 static gboolean gimp_selection_view_button_press   (GtkWidget           *widget,
                                                     GdkEventButton      *bevent,
@@ -68,7 +68,7 @@ static void   gimp_selection_editor_drop_color     (GtkWidget           *widget,
                                                     const GimpRGB       *color,
                                                     gpointer             data);
 
-static void   gimp_selection_editor_mask_changed   (GimpImage           *gimage,
+static void   gimp_selection_editor_mask_changed   (GimpImage           *image,
                                                     GimpSelectionEditor *editor);
 
 
@@ -169,27 +169,27 @@ gimp_selection_editor_constructor (GType                  type,
 
 static void
 gimp_selection_editor_set_image (GimpImageEditor *image_editor,
-                                 GimpImage       *gimage)
+                                 GimpImage       *image)
 {
   GimpSelectionEditor *editor = GIMP_SELECTION_EDITOR (image_editor);
 
-  if (image_editor->gimage)
+  if (image_editor->image)
     {
-      g_signal_handlers_disconnect_by_func (image_editor->gimage,
+      g_signal_handlers_disconnect_by_func (image_editor->image,
                                             gimp_selection_editor_mask_changed,
                                             editor);
     }
 
-  GIMP_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, gimage);
+  GIMP_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, image);
 
-  if (gimage)
+  if (image)
     {
-      g_signal_connect (gimage, "mask-changed",
+      g_signal_connect (image, "mask-changed",
                         G_CALLBACK (gimp_selection_editor_mask_changed),
                         editor);
 
       gimp_view_set_viewable (GIMP_VIEW (editor->view),
-                              GIMP_VIEWABLE (gimp_image_get_mask (gimage)));
+                              GIMP_VIEWABLE (gimp_image_get_mask (image)));
     }
   else
     {
@@ -226,13 +226,13 @@ gimp_selection_view_button_press (GtkWidget           *widget,
   gint                  x, y;
   GimpRGB               color;
 
-  if (! image_editor->gimage)
+  if (! image_editor->image)
     return TRUE;
 
   renderer = GIMP_VIEW (editor->view)->renderer;
 
   tool_info = (GimpToolInfo *)
-    gimp_container_get_child_by_name (image_editor->gimage->gimp->tool_info_list,
+    gimp_container_get_child_by_name (image_editor->image->gimp->tool_info_list,
                                       "gimp-by-color-select-tool");
 
   if (! tool_info)
@@ -240,7 +240,7 @@ gimp_selection_view_button_press (GtkWidget           *widget,
 
   options = GIMP_SELECTION_OPTIONS (tool_info->tool_options);
 
-  drawable = gimp_image_active_drawable (image_editor->gimage);
+  drawable = gimp_image_active_drawable (image_editor->image);
 
   if (! drawable)
     return TRUE;
@@ -261,16 +261,16 @@ gimp_selection_view_button_press (GtkWidget           *widget,
       operation = SELECTION_SUBTRACT;
     }
 
-  x = image_editor->gimage->width  * bevent->x / renderer->width;
-  y = image_editor->gimage->height * bevent->y / renderer->height;
+  x = image_editor->image->width  * bevent->x / renderer->width;
+  y = image_editor->image->height * bevent->y / renderer->height;
 
-  if (gimp_image_pick_color (image_editor->gimage, drawable, x, y,
+  if (gimp_image_pick_color (image_editor->image, drawable, x, y,
                              options->sample_merged,
                              FALSE, 0.0,
                              NULL,
                              &color, NULL))
     {
-      gimp_channel_select_by_color (gimp_image_get_mask (image_editor->gimage),
+      gimp_channel_select_by_color (gimp_image_get_mask (image_editor->image),
                                     drawable,
                                     options->sample_merged,
                                     &color,
@@ -281,7 +281,7 @@ gimp_selection_view_button_press (GtkWidget           *widget,
                                     options->feather,
                                     options->feather_radius,
                                     options->feather_radius);
-      gimp_image_flush (image_editor->gimage);
+      gimp_image_flush (image_editor->image);
     }
 
   return TRUE;
@@ -299,11 +299,11 @@ gimp_selection_editor_drop_color (GtkWidget     *widget,
   GimpSelectionOptions *options;
   GimpDrawable         *drawable;
 
-  if (! editor->gimage)
+  if (! editor->image)
     return;
 
   tool_info = (GimpToolInfo *)
-    gimp_container_get_child_by_name (editor->gimage->gimp->tool_info_list,
+    gimp_container_get_child_by_name (editor->image->gimp->tool_info_list,
                                       "gimp-by-color-select-tool");
 
   if (! tool_info)
@@ -311,12 +311,12 @@ gimp_selection_editor_drop_color (GtkWidget     *widget,
 
   options = GIMP_SELECTION_OPTIONS (tool_info->tool_options);
 
-  drawable = gimp_image_active_drawable (editor->gimage);
+  drawable = gimp_image_active_drawable (editor->image);
 
   if (! drawable)
     return;
 
-  gimp_channel_select_by_color (gimp_image_get_mask (editor->gimage),
+  gimp_channel_select_by_color (gimp_image_get_mask (editor->image),
                                 drawable,
                                 options->sample_merged,
                                 color,
@@ -327,11 +327,11 @@ gimp_selection_editor_drop_color (GtkWidget     *widget,
                                 options->feather,
                                 options->feather_radius,
                                 options->feather_radius);
-  gimp_image_flush (editor->gimage);
+  gimp_image_flush (editor->image);
 }
 
 static void
-gimp_selection_editor_mask_changed (GimpImage           *gimage,
+gimp_selection_editor_mask_changed (GimpImage           *image,
                                     GimpSelectionEditor *editor)
 {
   gimp_view_renderer_invalidate (GIMP_VIEW (editor->view)->renderer);

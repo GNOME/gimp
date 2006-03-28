@@ -304,7 +304,7 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
       gtk_widget_show (vbox);
     }
 
-  drawable = gimp_image_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->image);
 
   gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (image_map_tool->shell),
                                      GIMP_VIEWABLE (drawable));
@@ -448,7 +448,7 @@ gimp_image_map_tool_flush (GimpImageMap     *image_map,
 {
   GimpTool *tool = GIMP_TOOL (image_map_tool);
 
-  gimp_projection_flush_now (tool->gdisp->gimage->projection);
+  gimp_projection_flush_now (tool->gdisp->image->projection);
   gimp_display_flush_now (tool->gdisp);
 }
 
@@ -485,7 +485,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
 
           gimp_tool_control_set_preserve (tool->control, FALSE);
 
-          gimp_image_flush (tool->gdisp->gimage);
+          gimp_image_flush (tool->gdisp->image);
         }
 
       tool->gdisp    = NULL;
@@ -504,7 +504,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
 
           gimp_tool_control_set_preserve (tool->control, FALSE);
 
-          gimp_image_flush (tool->gdisp->gimage);
+          gimp_image_flush (tool->gdisp->image);
         }
 
       tool->gdisp    = NULL;
@@ -539,7 +539,7 @@ gimp_image_map_tool_notify_preview (GObject          *config,
 
           gimp_tool_control_set_preserve (tool->control, FALSE);
 
-          gimp_image_flush (tool->gdisp->gimage);
+          gimp_image_flush (tool->gdisp->image);
         }
     }
 }

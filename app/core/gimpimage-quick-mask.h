@@ -26,18 +26,18 @@
 #define GIMP_IMAGE_QUICK_MASK_NAME "Qmask"
 
 
-void          gimp_image_set_quick_mask_state (GimpImage       *gimage,
+void          gimp_image_set_quick_mask_state (GimpImage       *image,
                                                gboolean         quick_mask_state);
-gboolean      gimp_image_get_quick_mask_state (const GimpImage *gimage);
+gboolean      gimp_image_get_quick_mask_state (const GimpImage *image);
 
-void          gimp_image_set_quick_mask_color (GimpImage       *gimage,
+void          gimp_image_set_quick_mask_color (GimpImage       *image,
                                                const GimpRGB   *color);
-void          gimp_image_get_quick_mask_color (const GimpImage *gimage,
+void          gimp_image_get_quick_mask_color (const GimpImage *image,
                                                GimpRGB         *color);
 
-GimpChannel * gimp_image_get_quick_mask       (const GimpImage *gimage);
+GimpChannel * gimp_image_get_quick_mask       (const GimpImage *image);
 
-void          gimp_image_quick_mask_invert    (GimpImage       *gimage);
+void          gimp_image_quick_mask_invert    (GimpImage       *image);
 
 
 #endif /* __GIMP_IMAGE_QUICK_MASK_H__ */

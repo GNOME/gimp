@@ -39,7 +39,7 @@
 
 
 void
-gimp_image_scale (GimpImage             *gimage,
+gimp_image_scale (GimpImage             *image,
 		  gint                   new_width,
 		  gint                   new_height,
                   GimpInterpolationType  interpolation_type,
@@ -55,38 +55,38 @@ gimp_image_scale (GimpImage             *gimage,
   gdouble   progress_max;
   gdouble   progress_current = 1.0;
 
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (new_width > 0 && new_height > 0);
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  gimp_set_busy (gimage->gimp);
+  gimp_set_busy (image->gimp);
 
-  progress_max = (gimage->channels->num_children +
-                  gimage->layers->num_children   +
-                  gimage->vectors->num_children  +
+  progress_max = (image->channels->num_children +
+                  image->layers->num_children   +
+                  image->vectors->num_children  +
                   1 /* selection */);
 
-  g_object_freeze_notify (G_OBJECT (gimage));
+  g_object_freeze_notify (G_OBJECT (image));
 
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_SCALE,
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_SCALE,
                                _("Scale Image"));
 
   /*  Push the image size to the stack  */
-  gimp_image_undo_push_image_size (gimage, NULL);
+  gimp_image_undo_push_image_size (image, NULL);
 
-  old_width      = gimage->width;
-  old_height     = gimage->height;
+  old_width      = image->width;
+  old_height     = image->height;
   img_scale_w    = (gdouble) new_width  / (gdouble) old_width;
   img_scale_h    = (gdouble) new_height / (gdouble) old_height;
 
   /*  Set the new width and height  */
-  g_object_set (gimage,
+  g_object_set (image,
                 "width",  new_width,
                 "height", new_height,
                 NULL);
 
   /*  Scale all channels  */
-  for (list = GIMP_LIST (gimage->channels)->list;
+  for (list = GIMP_LIST (image->channels)->list;
        list;
        list = g_list_next (list))
     {
@@ -101,7 +101,7 @@ gimp_image_scale (GimpImage             *gimage,
     }
 
   /*  Scale all vectors  */
-  for (list = GIMP_LIST (gimage->vectors)->list;
+  for (list = GIMP_LIST (image->vectors)->list;
        list;
        list = g_list_next (list))
     {
@@ -116,7 +116,7 @@ gimp_image_scale (GimpImage             *gimage,
     }
 
   /*  Don't forget the selection mask!  */
-  gimp_item_scale (GIMP_ITEM (gimp_image_get_mask (gimage)),
+  gimp_item_scale (GIMP_ITEM (gimp_image_get_mask (image)),
                    new_width, new_height, 0, 0,
                    interpolation_type, NULL);
 
@@ -124,7 +124,7 @@ gimp_image_scale (GimpImage             *gimage,
     gimp_progress_set_value (progress, progress_current++ / progress_max);
 
   /*  Scale all layers  */
-  for (list = GIMP_LIST (gimage->layers)->list;
+  for (list = GIMP_LIST (image->layers)->list;
        list;
        list = g_list_next (list))
     {
@@ -147,7 +147,7 @@ gimp_image_scale (GimpImage             *gimage,
     }
 
   /* We defer removing layers lost to scaling until now so as not to mix
-   * the operations of iterating over and removal from gimage->layers.
+   * the operations of iterating over and removal from image->layers.
    */
   remove = g_list_reverse (remove);
 
@@ -155,25 +155,25 @@ gimp_image_scale (GimpImage             *gimage,
     {
       GimpLayer *layer = list->data;
 
-      gimp_image_remove_layer (gimage, layer);
+      gimp_image_remove_layer (image, layer);
     }
 
   g_list_free (remove);
 
   /*  Scale all Guides  */
-  for (list = gimage->guides; list; list = g_list_next (list))
+  for (list = image->guides; list; list = g_list_next (list))
     {
       GimpGuide *guide = list->data;
 
       switch (guide->orientation)
 	{
 	case GIMP_ORIENTATION_HORIZONTAL:
-	  gimp_image_undo_push_image_guide (gimage, NULL, guide);
+	  gimp_image_undo_push_image_guide (image, NULL, guide);
 	  guide->position = (guide->position * new_height) / old_height;
 	  break;
 
 	case GIMP_ORIENTATION_VERTICAL:
-	  gimp_image_undo_push_image_guide (gimage, NULL, guide);
+	  gimp_image_undo_push_image_guide (image, NULL, guide);
 	  guide->position = (guide->position * new_width) / old_width;
 	  break;
 
@@ -183,32 +183,32 @@ gimp_image_scale (GimpImage             *gimage,
     }
 
   /*  Scale all sample points  */
-  for (list = gimage->sample_points; list; list = g_list_next (list))
+  for (list = image->sample_points; list; list = g_list_next (list))
     {
       GimpSamplePoint *sample_point = list->data;
 
-      gimp_image_undo_push_image_sample_point (gimage, NULL, sample_point);
+      gimp_image_undo_push_image_sample_point (image, NULL, sample_point);
       sample_point->x = sample_point->x * new_width / old_width;
       sample_point->y = sample_point->y * new_height / old_height;
     }
 
-  gimp_image_undo_group_end (gimage);
+  gimp_image_undo_group_end (image);
 
-  gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
-  g_object_thaw_notify (G_OBJECT (gimage));
+  gimp_viewable_size_changed (GIMP_VIEWABLE (image));
+  g_object_thaw_notify (G_OBJECT (image));
 
-  gimp_unset_busy (gimage->gimp);
+  gimp_unset_busy (image->gimp);
 }
 
 /**
  * gimp_image_scale_check:
- * @gimage:      A #GimpImage.
+ * @image:      A #GimpImage.
  * @new_width:   The new width.
  * @new_height:  The new height.
  * @max_memsize: The maximum new memory size.
  * @new_memsize: The new memory size.
  *
- * Inventory the layer list in gimage and check that it may be
+ * Inventory the layer list in image and check that it may be
  * scaled to @new_height and @new_width without problems.
  *
  * Return value: #GIMP_IMAGE_SCALE_OK if scaling the image will shrink none
@@ -220,7 +220,7 @@ gimp_image_scale (GimpImage             *gimage,
  *               exceed the maximum specified in the preferences.
  **/
 GimpImageScaleCheckType
-gimp_image_scale_check (const GimpImage *gimage,
+gimp_image_scale_check (const GimpImage *image,
                         gint             new_width,
                         gint             new_height,
                         gint64           max_memsize,
@@ -234,20 +234,20 @@ gimp_image_scale_check (const GimpImage *gimage,
   gint64  fixed_size;
   gint64  new_size;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_IMAGE_SCALE_TOO_SMALL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_IMAGE_SCALE_TOO_SMALL);
   g_return_val_if_fail (new_memsize != NULL, GIMP_IMAGE_SCALE_TOO_SMALL);
 
-  current_size = gimp_object_get_memsize (GIMP_OBJECT (gimage), NULL);
+  current_size = gimp_object_get_memsize (GIMP_OBJECT (image), NULL);
 
   /*  the part of the image's memsize that scales linearly with the image  */
   scalable_size =
-    gimp_object_get_memsize (GIMP_OBJECT (gimage->layers), NULL)         +
-    gimp_object_get_memsize (GIMP_OBJECT (gimage->channels), NULL)       +
-    gimp_object_get_memsize (GIMP_OBJECT (gimage->selection_mask), NULL) +
-    gimp_object_get_memsize (GIMP_OBJECT (gimage->projection), NULL);
+    gimp_object_get_memsize (GIMP_OBJECT (image->layers), NULL)         +
+    gimp_object_get_memsize (GIMP_OBJECT (image->channels), NULL)       +
+    gimp_object_get_memsize (GIMP_OBJECT (image->selection_mask), NULL) +
+    gimp_object_get_memsize (GIMP_OBJECT (image->projection), NULL);
 
-  undo_size = gimp_object_get_memsize (GIMP_OBJECT (gimage->undo_stack), NULL);
-  redo_size = gimp_object_get_memsize (GIMP_OBJECT (gimage->redo_stack), NULL);
+  undo_size = gimp_object_get_memsize (GIMP_OBJECT (image->undo_stack), NULL);
+  redo_size = gimp_object_get_memsize (GIMP_OBJECT (image->redo_stack), NULL);
 
   /*  the fixed part of the image's memsize w/o any undo information  */
   fixed_size = current_size - undo_size - redo_size - scalable_size;
@@ -255,15 +255,15 @@ gimp_image_scale_check (const GimpImage *gimage,
   /*  calculate the new size, which is:  */
   new_size = (fixed_size  +    /*  the fixed part                */
               scalable_size *  /*  plus the part that scales...  */
-              ((gdouble) new_width  / gimp_image_get_width  (gimage)) *
-              ((gdouble) new_height / gimp_image_get_height (gimage)));
+              ((gdouble) new_width  / gimp_image_get_width  (image)) *
+              ((gdouble) new_height / gimp_image_get_height (image)));
 
   *new_memsize = new_size;
 
   if (new_size > current_size && new_size > max_memsize)
     return GIMP_IMAGE_SCALE_TOO_BIG;
 
-  for (list = GIMP_LIST (gimage->layers)->list;
+  for (list = GIMP_LIST (image->layers)->list;
        list;
        list = g_list_next (list))
     {

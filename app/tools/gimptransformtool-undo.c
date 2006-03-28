@@ -58,7 +58,7 @@ static void     undo_free_transform (GimpUndo            *undo,
                                      GimpUndoMode         undo_mode);
 
 gboolean
-gimp_transform_tool_push_undo (GimpImage   *gimage,
+gimp_transform_tool_push_undo (GimpImage   *image,
                                const gchar *undo_desc,
                                gint         tool_ID,
                                GType        tool_type,
@@ -67,7 +67,7 @@ gimp_transform_tool_push_undo (GimpImage   *gimage,
 {
   GimpUndo *new;
 
-  if ((new = gimp_image_undo_push (gimage, GIMP_TYPE_UNDO,
+  if ((new = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
                                    sizeof (TransformUndo),
                                    sizeof (TransformUndo),
                                    GIMP_UNDO_TRANSFORM, undo_desc,
@@ -101,7 +101,7 @@ undo_pop_transform (GimpUndo            *undo,
 {
   GimpTool *active_tool;
 
-  active_tool = tool_manager_get_active (undo->gimage->gimp);
+  active_tool = tool_manager_get_active (undo->image->gimp);
 
   if (GIMP_IS_TRANSFORM_TOOL (active_tool))
     {

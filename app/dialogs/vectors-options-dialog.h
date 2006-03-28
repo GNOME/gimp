@@ -27,12 +27,12 @@ struct _VectorsOptionsDialog
   GtkWidget   *dialog;
   GtkWidget   *name_entry;
 
-  GimpImage   *gimage;
+  GimpImage   *image;
   GimpVectors *vectors;
 };
 
 
-VectorsOptionsDialog * vectors_options_dialog_new (GimpImage   *gimage,
+VectorsOptionsDialog * vectors_options_dialog_new (GimpImage   *image,
                                                    GimpVectors *vectors,
                                                    GtkWidget   *parent,
                                                    const gchar *vectors_name,

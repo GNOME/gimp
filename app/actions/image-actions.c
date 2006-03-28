@@ -232,7 +232,7 @@ void
 image_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
-  GimpImage *gimage     = action_data_get_image (data);
+  GimpImage *image     = action_data_get_image (data);
   gboolean   is_rgb     = FALSE;
   gboolean   is_gray    = FALSE;
   gboolean   is_indexed = FALSE;
@@ -241,45 +241,45 @@ image_actions_update (GimpActionGroup *group,
   gboolean   lp         = FALSE;
   gboolean   sel        = FALSE;
 
-  if (gimage)
+  if (image)
     {
       GimpImageBaseType base_type;
 
-      base_type = gimp_image_base_type (gimage);
+      base_type = gimp_image_base_type (image);
 
       is_rgb     = (base_type == GIMP_RGB);
       is_gray    = (base_type == GIMP_GRAY);
       is_indexed = (base_type == GIMP_INDEXED);
 
-      fs  = (gimp_image_floating_sel (gimage) != NULL);
-      aux = (gimp_image_get_active_channel (gimage) != NULL);
-      lp  = ! gimp_image_is_empty (gimage);
-      sel = ! gimp_channel_is_empty (gimp_image_get_mask (gimage));
+      fs  = (gimp_image_floating_sel (image) != NULL);
+      aux = (gimp_image_get_active_channel (image) != NULL);
+      lp  = ! gimp_image_is_empty (image);
+      sel = ! gimp_channel_is_empty (gimp_image_get_mask (image));
     }
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("image-convert-rgb",       gimage && ! is_rgb);
-  SET_SENSITIVE ("image-convert-grayscale", gimage && ! is_gray);
-  SET_SENSITIVE ("image-convert-indexed",   gimage && ! is_indexed);
+  SET_SENSITIVE ("image-convert-rgb",       image && ! is_rgb);
+  SET_SENSITIVE ("image-convert-grayscale", image && ! is_gray);
+  SET_SENSITIVE ("image-convert-indexed",   image && ! is_indexed);
 
-  SET_SENSITIVE ("image-flip-horizontal", gimage);
-  SET_SENSITIVE ("image-flip-vertical",   gimage);
-  SET_SENSITIVE ("image-rotate-90",       gimage);
-  SET_SENSITIVE ("image-rotate-180",      gimage);
-  SET_SENSITIVE ("image-rotate-270",      gimage);
+  SET_SENSITIVE ("image-flip-horizontal", image);
+  SET_SENSITIVE ("image-flip-vertical",   image);
+  SET_SENSITIVE ("image-rotate-90",       image);
+  SET_SENSITIVE ("image-rotate-180",      image);
+  SET_SENSITIVE ("image-rotate-270",      image);
 
-  SET_SENSITIVE ("image-resize",           gimage);
-  SET_SENSITIVE ("image-resize-to-layers", gimage);
-  SET_SENSITIVE ("image-print-size",       gimage);
-  SET_SENSITIVE ("image-scale",            gimage);
-  SET_SENSITIVE ("image-crop",             gimage && sel);
-  SET_SENSITIVE ("image-duplicate",        gimage);
-  SET_SENSITIVE ("image-merge-layers",     gimage && !fs && !aux && lp);
-  SET_SENSITIVE ("image-flatten",          gimage && !fs && !aux && lp);
-  SET_SENSITIVE ("image-configure-grid",   gimage);
-  SET_SENSITIVE ("image-properties",       gimage);
+  SET_SENSITIVE ("image-resize",           image);
+  SET_SENSITIVE ("image-resize-to-layers", image);
+  SET_SENSITIVE ("image-print-size",       image);
+  SET_SENSITIVE ("image-scale",            image);
+  SET_SENSITIVE ("image-crop",             image && sel);
+  SET_SENSITIVE ("image-duplicate",        image);
+  SET_SENSITIVE ("image-merge-layers",     image && !fs && !aux && lp);
+  SET_SENSITIVE ("image-flatten",          image && !fs && !aux && lp);
+  SET_SENSITIVE ("image-configure-grid",   image);
+  SET_SENSITIVE ("image-properties",       image);
 
 #undef SET_SENSITIVE
 }

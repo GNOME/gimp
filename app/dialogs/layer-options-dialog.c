@@ -48,7 +48,7 @@ static void   layer_options_dialog_toggle_rename (GtkWidget          *widget,
 /*  public functions  */
 
 LayerOptionsDialog *
-layer_options_dialog_new (GimpImage    *gimage,
+layer_options_dialog_new (GimpImage    *image,
                           GimpContext  *context,
                           GimpLayer    *layer,
                           GtkWidget    *parent,
@@ -72,16 +72,15 @@ layer_options_dialog_new (GimpImage    *gimage,
 
   options = g_new0 (LayerOptionsDialog, 1);
 
-  options->gimage    = gimage;
+  options->image     = image;
   options->context   = context;
   options->layer     = layer;
-
   options->fill_type = layer_fill_type;
 
   if (layer)
     viewable = GIMP_VIEWABLE (layer);
   else
-    viewable = GIMP_VIEWABLE (gimage);
+    viewable = GIMP_VIEWABLE (image);
 
   options->dialog =
     gimp_viewable_dialog_new (viewable, title, role, stock_id, desc,
@@ -163,9 +162,9 @@ layer_options_dialog_new (GimpImage    *gimage,
                                 GIMP_UNIT_PIXEL);
 
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options->size_se), 0,
-                                      gimage->xresolution, FALSE);
+                                      image->xresolution, FALSE);
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options->size_se), 1,
-                                      gimage->yresolution, FALSE);
+                                      image->yresolution, FALSE);
 
       gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (options->size_se), 0,
                                              GIMP_MIN_IMAGE_SIZE,
@@ -175,14 +174,14 @@ layer_options_dialog_new (GimpImage    *gimage,
                                              GIMP_MAX_IMAGE_SIZE);
 
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options->size_se), 0,
-                                0, gimage->width);
+                                0, image->width);
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options->size_se), 1,
-                                0, gimage->height);
+                                0, image->height);
 
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (options->size_se), 0,
-                                  gimage->width);
+                                  image->width);
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (options->size_se), 1,
-                                  gimage->height);
+                                  image->height);
 
       /*  The radio frame  */
       frame = gimp_enum_radio_frame_new_with_range (GIMP_TYPE_FILL_TYPE,

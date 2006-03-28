@@ -68,7 +68,7 @@ GType          gimp_template_get_type        (void) G_GNUC_CONST;
 GimpTemplate * gimp_template_new             (const gchar    *name);
 
 void           gimp_template_set_from_image  (GimpTemplate   *template,
-                                              GimpImage      *gimage);
+                                              GimpImage      *image);
 
 GimpImage    * gimp_template_create_image    (Gimp           *gimp,
                                               GimpTemplate   *template,

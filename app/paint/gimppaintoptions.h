@@ -114,17 +114,17 @@ GType              gimp_paint_options_get_type (void) G_GNUC_CONST;
 GimpPaintOptions * gimp_paint_options_new      (GimpPaintInfo    *paint_info);
 
 gdouble            gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
-                                                GimpImage        *gimage,
+                                                GimpImage        *image,
                                                 gdouble           pixel_dist);
 
 gboolean gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
-                                                GimpImage        *gimage,
+                                                GimpImage        *image,
                                                 gdouble           pressure,
                                                 gdouble           pixel_dist,
                                                 GimpRGB          *color);
 
 gdouble          gimp_paint_options_get_jitter (GimpPaintOptions *paint_options,
-                                                GimpImage        *gimage);
+                                                GimpImage        *image);
 
 GimpBrushApplicationMode
              gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options);

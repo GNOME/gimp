@@ -105,7 +105,7 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
       GimpTransformTool *tr_tool;
       gdouble            z1, z2, z3, z4;
 
-      tool = tool_manager_get_active (shell->gdisp->gimage->gimp);
+      tool = tool_manager_get_active (shell->gdisp->image->gimp);
 
       if (! GIMP_IS_TRANSFORM_TOOL (tool) ||
           ! GIMP_IS_DRAWABLE (tool->drawable))
@@ -150,7 +150,7 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
                                          &mask_x1, &mask_y1,
                                          &mask_x2, &mask_y2))
             {
-              mask = gimp_image_get_mask (shell->gdisp->gimage);
+              mask = gimp_image_get_mask (shell->gdisp->image);
 
               gimp_item_offsets (GIMP_ITEM (tool->drawable),
                                  &mask_offx, &mask_offy);

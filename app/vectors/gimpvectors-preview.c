@@ -51,8 +51,8 @@ gimp_vectors_get_new_preview (GimpViewable *viewable,
   vectors = GIMP_VECTORS (viewable);
   item    = GIMP_ITEM (viewable);
 
-  xscale = ((gdouble) width)  / gimp_image_get_width  (item->gimage);
-  yscale = ((gdouble) height) / gimp_image_get_height (item->gimage);
+  xscale = ((gdouble) width)  / gimp_image_get_width  (item->image);
+  yscale = ((gdouble) height) / gimp_image_get_height (item->image);
 
   temp_buf = temp_buf_new (width, height, 1, 0, 0, white);
   data = temp_buf_data (temp_buf);

@@ -1979,13 +1979,13 @@ gimp_dnd_get_image_data (GtkWidget        *widget,
                          gpointer          get_image_data,
                          GtkSelectionData *selection)
 {
-  GimpImage *gimage;
+  GimpImage *image;
 
-  gimage = (GimpImage *)
+  image = (GimpImage *)
     (* (GimpDndDragViewableFunc) get_image_func) (widget, get_image_data);
 
-  if (gimage)
-    gimp_selection_data_set_image (selection, gimage);
+  if (image)
+    gimp_selection_data_set_image (selection, image);
 }
 
 static gboolean
@@ -1996,13 +1996,13 @@ gimp_dnd_set_image_data (GtkWidget        *widget,
                          gpointer          set_image_data,
                          GtkSelectionData *selection)
 {
-  GimpImage *gimage = gimp_selection_data_get_image (selection, the_dnd_gimp);
+  GimpImage *image = gimp_selection_data_get_image (selection, the_dnd_gimp);
 
-  if (! gimage)
+  if (! image)
     return FALSE;
 
   (* (GimpDndDropViewableFunc) set_image_func) (widget, x, y,
-                                                GIMP_VIEWABLE (gimage),
+                                                GIMP_VIEWABLE (image),
                                                 set_image_data);
 
   return TRUE;

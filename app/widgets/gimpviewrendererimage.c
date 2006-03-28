@@ -63,21 +63,21 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
                                  GtkWidget        *widget)
 {
   GimpViewRendererImage *rendererimage = GIMP_VIEW_RENDERER_IMAGE (renderer);
-  GimpImage             *gimage;
+  GimpImage             *image;
   gint                   view_width;
   gint                   view_height;
   gboolean               scaling_up;
   TempBuf               *render_buf = NULL;
 
-  gimage = GIMP_IMAGE (renderer->viewable);
+  image = GIMP_IMAGE (renderer->viewable);
 
-  gimp_viewable_calc_preview_size (gimage->width,
-                                   gimage->height,
+  gimp_viewable_calc_preview_size (image->width,
+                                   image->height,
                                    renderer->width,
                                    renderer->height,
                                    renderer->dot_for_dot,
-                                   gimage->xresolution,
-                                   gimage->yresolution,
+                                   image->xresolution,
+                                   image->yresolution,
                                    &view_width,
                                    &view_height,
                                    &scaling_up);
@@ -87,7 +87,7 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
       TempBuf *temp_buf;
 
       temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
-                                                gimage->width, gimage->height);
+                                                image->width, image->height);
 
       if (temp_buf)
         {
@@ -127,7 +127,7 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
 
       if (rendererimage->channel != -1)
         component_index =
-          gimp_image_get_component_index (gimage, rendererimage->channel);
+          gimp_image_get_component_index (image, rendererimage->channel);
 
       gimp_view_renderer_render_buffer (renderer, render_buf,
                                         component_index,

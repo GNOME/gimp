@@ -29,7 +29,7 @@
 
 
 gboolean
-gimp_image_pick_color (GimpImage     *gimage,
+gimp_image_pick_color (GimpImage     *image,
                        GimpDrawable  *drawable,
                        gint           x,
                        gint           y,
@@ -42,16 +42,16 @@ gimp_image_pick_color (GimpImage     *gimage,
 {
   GimpPickable *pickable;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (drawable == NULL ||
-                        gimp_item_get_image (GIMP_ITEM (drawable)) == gimage,
+                        gimp_item_get_image (GIMP_ITEM (drawable)) == image,
                         FALSE);
 
   if (! sample_merged)
     {
       if (! drawable)
-        drawable = gimp_image_active_drawable (gimage);
+        drawable = gimp_image_active_drawable (image);
 
       if (! drawable)
         return FALSE;
@@ -59,7 +59,7 @@ gimp_image_pick_color (GimpImage     *gimage,
 
   if (sample_merged)
     {
-      pickable = GIMP_PICKABLE (gimage->projection);
+      pickable = GIMP_PICKABLE (image->projection);
     }
   else
     {

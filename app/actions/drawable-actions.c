@@ -152,7 +152,7 @@ void
 drawable_actions_update (GimpActionGroup *group,
                          gpointer         data)
 {
-  GimpImage    *gimage;
+  GimpImage    *image;
   GimpDrawable *drawable   = NULL;
   gboolean      is_rgb     = FALSE;
   gboolean      is_gray    = FALSE;
@@ -160,11 +160,11 @@ drawable_actions_update (GimpActionGroup *group,
   gboolean      visible    = FALSE;
   gboolean      linked     = FALSE;
 
-  gimage = action_data_get_image (data);
+  image = action_data_get_image (data);
 
-  if (gimage)
+  if (image)
     {
-      drawable = gimp_image_active_drawable (gimage);
+      drawable = gimp_image_active_drawable (image);
 
       if (drawable)
         {

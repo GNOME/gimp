@@ -29,13 +29,13 @@ struct _ChannelOptionsDialog
   GtkWidget   *color_panel;
   GtkWidget   *save_sel_checkbutton;
 
-  GimpImage   *gimage;
+  GimpImage   *image;
   GimpContext *context;
   GimpChannel *channel;
 };
 
 
-ChannelOptionsDialog * channel_options_dialog_new (GimpImage     *gimage,
+ChannelOptionsDialog * channel_options_dialog_new (GimpImage     *image,
                                                    GimpContext   *context,
                                                    GimpChannel   *channel,
                                                    GtkWidget     *parent,

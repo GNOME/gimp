@@ -208,7 +208,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
                                    GimpScanConvert   *scan_convert)
 {
   GimpContext *context = GIMP_CONTEXT (options);
-  GimpImage   *gimage;
+  GimpImage   *image;
   gdouble      width;
   TileManager *base;
   TileManager *mask;
@@ -218,13 +218,13 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
   guchar       bg[1] = { 0, };
   PixelRegion  maskPR, basePR;
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   /*  must call gimp_channel_is_empty() instead of relying on
    *  gimp_drawable_mask_intersect() because the selection pretends to
    *  be empty while it is being stroked, to prevent masking itself.
    */
-  if (gimp_channel_is_empty (gimp_image_get_mask (gimage)))
+  if (gimp_channel_is_empty (gimp_image_get_mask (image)))
     {
       x = 0;
       y = 0;
@@ -243,11 +243,11 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
   if (options->unit != GIMP_UNIT_PIXEL)
     {
       gimp_scan_convert_set_pixel_ratio (scan_convert,
-                                         gimage->yresolution /
-                                         gimage->xresolution);
+                                         image->yresolution /
+                                         image->xresolution);
 
-      width *= (gimage->yresolution /
-                _gimp_unit_get_factor (gimage->gimp, options->unit));
+      width *= (image->yresolution /
+                _gimp_unit_get_factor (image->gimp, options->unit));
     }
 
   gimp_scan_convert_stroke (scan_convert, width,
@@ -287,7 +287,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
                             &tmp_col[GREEN_PIX],
                             &tmp_col[BLUE_PIX]);
 
-        gimp_image_transform_color (gimage, drawable,
+        gimp_image_transform_color (image, drawable,
                                     col, GIMP_RGB, tmp_col);
         col[bytes - 1] = OPAQUE_OPACITY;
 
@@ -302,7 +302,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
         gboolean     new_buf;
 
         pattern = gimp_context_get_pattern (context);
-        pat_buf = gimp_image_transform_temp_buf (gimage, drawable,
+        pat_buf = gimp_image_transform_temp_buf (image, drawable,
                                                  pattern->mask, &new_buf);
 
         pattern_region (&basePR, &maskPR, pat_buf, x, y);

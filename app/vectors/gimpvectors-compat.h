@@ -33,13 +33,13 @@ struct _GimpVectorsCompatPoint
 };
 
 
-GimpVectors * gimp_vectors_compat_new (GimpImage              *gimage,
+GimpVectors * gimp_vectors_compat_new (GimpImage              *image,
                                        const gchar            *name,
                                        GimpVectorsCompatPoint *points,
                                        gint                    n_points,
                                        gboolean                closed);
 
-gboolean              gimp_vectors_compat_is_compatible (GimpImage   *gimage);
+gboolean              gimp_vectors_compat_is_compatible (GimpImage   *image);
 
 GimpVectorsCompatPoint * gimp_vectors_compat_get_points (GimpVectors *vectors,
                                                          gint32      *n_points,

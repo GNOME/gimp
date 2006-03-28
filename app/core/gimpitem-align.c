@@ -66,7 +66,7 @@ gimp_item_align (GimpItem          *target,
   if (!target)
     return;
 
-  if (! (reference || target->gimage))
+  if (! (reference || target->image))
     return;
 
   if (reference)
@@ -80,8 +80,8 @@ gimp_item_align (GimpItem          *target,
     {
       reference_offset_x = 0;
       reference_offset_y = 0;
-      reference_height   = gimp_image_get_height (target->gimage);
-      reference_width    = gimp_image_get_width (target->gimage);
+      reference_height   = gimp_image_get_height (target->image);
+      reference_width    = gimp_image_get_width (target->image);
     }
 
   switch (reference_alignment)

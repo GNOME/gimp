@@ -94,20 +94,20 @@ gimp_projection_construct (GimpProjection *proj,
   g_return_if_fail (GIMP_IS_PROJECTION (proj));
 
 #if 0
-  GimpImage *gimage = proj->gimage;
+  GimpImage *image = proj->image;
 
-  if ((gimp_container_num_children (gimage->layers) == 1)) /* a single layer */
+  if ((gimp_container_num_children (image->layers) == 1)) /* a single layer */
     {
       GimpDrawable *layer;
 
-      layer = GIMP_DRAWABLE (gimp_container_get_child_by_index (gimage->layers,
+      layer = GIMP_DRAWABLE (gimp_container_get_child_by_index (image->layers,
                                                                 0));
 
-      if (gimp_drawable_has_alpha (layer)                          &&
-          (gimp_item_get_visible (GIMP_ITEM (layer)))              &&
-          (gimp_item_width (GIMP_ITEM (layer))  == gimage->width)  &&
-          (gimp_item_height (GIMP_ITEM (layer)) == gimage->height) &&
-          (! gimp_drawable_is_indexed (layer))                     &&
+      if (gimp_drawable_has_alpha (layer)                         &&
+          (gimp_item_get_visible (GIMP_ITEM (layer)))             &&
+          (gimp_item_width (GIMP_ITEM (layer))  == image->width)  &&
+          (gimp_item_height (GIMP_ITEM (layer)) == image->height) &&
+          (! gimp_drawable_is_indexed (layer))                    &&
           (gimp_layer_get_opacity (GIMP_LAYER (layer)) == GIMP_OPACITY_OPAQUE))
         {
           gint xoff;
@@ -172,12 +172,12 @@ gimp_projection_construct_layers (GimpProjection *proj,
   gint       off_y;
 
   /*  composite the floating selection if it exists  */
-  if ((layer = gimp_image_floating_sel (proj->gimage)))
+  if ((layer = gimp_image_floating_sel (proj->image)))
     floating_sel_composite (layer, x, y, w, h, FALSE);
 
   reverse_list = NULL;
 
-  for (list = GIMP_LIST (proj->gimage->layers)->list;
+  for (list = GIMP_LIST (proj->image->layers)->list;
        list;
        list = g_list_next (list))
     {
@@ -289,7 +289,7 @@ gimp_projection_construct_channels (GimpProjection *proj,
   GList *reverse_list = NULL;
 
   /*  reverse the channel list  */
-  for (list = GIMP_LIST (proj->gimage->channels)->list;
+  for (list = GIMP_LIST (proj->image->channels)->list;
        list;
        list = g_list_next (list))
     {
@@ -340,7 +340,7 @@ gimp_projection_initialize (GimpProjection *proj,
    *  the projection is initialized to transparent
    */
 
-  for (list = GIMP_LIST (proj->gimage->layers)->list;
+  for (list = GIMP_LIST (proj->image->layers)->list;
        list;
        list = g_list_next (list))
     {
@@ -383,13 +383,13 @@ project_intensity (GimpProjection *proj,
     initial_region (src, dest, mask, NULL,
                     layer->opacity * 255.999,
                     layer->mode,
-                    proj->gimage->visible,
+                    proj->image->visible,
                     INITIAL_INTENSITY);
   else
     combine_regions (dest, src, dest, mask, NULL,
                      layer->opacity * 255.999,
                      layer->mode,
-                     proj->gimage->visible,
+                     proj->image->visible,
                      COMBINE_INTEN_A_INTEN);
 }
 
@@ -404,13 +404,13 @@ project_intensity_alpha (GimpProjection *proj,
     initial_region (src, dest, mask, NULL,
                     layer->opacity * 255.999,
                     layer->mode,
-                    proj->gimage->visible,
+                    proj->image->visible,
                     INITIAL_INTENSITY_ALPHA);
   else
     combine_regions (dest, src, dest, mask, NULL,
                      layer->opacity * 255.999,
                      layer->mode,
-                     proj->gimage->visible,
+                     proj->image->visible,
                      COMBINE_INTEN_A_INTEN_A);
 }
 
@@ -420,13 +420,13 @@ project_indexed (GimpProjection *proj,
 		 PixelRegion    *src,
 		 PixelRegion    *dest)
 {
-  g_return_if_fail (proj->gimage->cmap != NULL);
+  g_return_if_fail (proj->image->cmap != NULL);
 
   if (! proj->construct_flag)
-    initial_region (src, dest, NULL, proj->gimage->cmap,
+    initial_region (src, dest, NULL, proj->image->cmap,
                     layer->opacity * 255.999,
                     layer->mode,
-                    proj->gimage->visible,
+                    proj->image->visible,
                     INITIAL_INDEXED);
   else
     g_warning ("%s: unable to project indexed image.", G_STRFUNC);
@@ -439,19 +439,19 @@ project_indexed_alpha (GimpProjection *proj,
 		       PixelRegion    *dest,
 		       PixelRegion    *mask)
 {
-  g_return_if_fail (proj->gimage->cmap != NULL);
+  g_return_if_fail (proj->image->cmap != NULL);
 
   if (! proj->construct_flag)
-    initial_region (src, dest, mask, proj->gimage->cmap,
+    initial_region (src, dest, mask, proj->image->cmap,
                     layer->opacity * 255.999,
                     layer->mode,
-                    proj->gimage->visible,
+                    proj->image->visible,
                     INITIAL_INDEXED_ALPHA);
   else
-    combine_regions (dest, src, dest, mask, proj->gimage->cmap,
+    combine_regions (dest, src, dest, mask, proj->image->cmap,
                      layer->opacity * 255.999,
                      layer->mode,
-                     proj->gimage->visible,
+                     proj->image->visible,
                      COMBINE_INTEN_A_INDEXED_A);
 }
 

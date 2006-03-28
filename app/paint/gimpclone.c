@@ -220,8 +220,8 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
   GimpCloneOptions    *options          = GIMP_CLONE_OPTIONS (paint_options);
   GimpContext         *context          = GIMP_CONTEXT (paint_options);
   GimpPressureOptions *pressure_options = paint_options->pressure_options;
-  GimpImage           *gimage;
-  GimpImage           *src_gimage       = NULL;
+  GimpImage           *image;
+  GimpImage           *src_image       = NULL;
   GimpPickable        *src_pickable     = NULL;
   guchar              *s;
   guchar              *d;
@@ -236,9 +236,9 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
   gint                 offset_x;
   gint                 offset_y;
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  opacity = gimp_paint_options_get_fade (paint_options, gimage,
+  opacity = gimp_paint_options_get_fade (paint_options, image,
                                          paint_core->pixel_dist);
   if (opacity == 0.0)
     return;
@@ -254,13 +254,13 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
         return;
 
       src_pickable = GIMP_PICKABLE (clone->src_drawable);
-      src_gimage   = gimp_pickable_get_image (src_pickable);
+      src_image   = gimp_pickable_get_image (src_pickable);
 
       if (options->sample_merged)
         {
           gint off_x, off_y;
 
-          src_pickable = GIMP_PICKABLE (src_gimage->projection);
+          src_pickable = GIMP_PICKABLE (src_image->projection);
 
           gimp_item_offsets (GIMP_ITEM (clone->src_drawable), &off_x, &off_y);
 
@@ -295,13 +295,13 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
       if (!(x2 - x1) || !(y2 - y1))
         return;
 
-      /*  If the source gimage is different from the destination,
+      /*  If the source image is different from the destination,
        *  then we should copy straight from the destination image
        *  to the canvas.
        *  Otherwise, we need a call to get_orig_image to make sure
        *  we get a copy of the unblemished (offset) image
        */
-      if ((  options->sample_merged && (src_gimage          != gimage)) ||
+      if ((  options->sample_merged && (src_image          != image)) ||
           (! options->sample_merged && (clone->src_drawable != drawable)))
         {
           pixel_region_init (&srcPR, src_tiles,
@@ -359,7 +359,7 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
           switch (options->clone_type)
             {
             case GIMP_IMAGE_CLONE:
-              gimp_clone_line_image (gimage, src_gimage,
+              gimp_clone_line_image (image, src_image,
                                      drawable, src_pickable,
                                      s, d,
                                      srcPR.bytes, destPR.bytes, destPR.w);
@@ -367,7 +367,7 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
               break;
 
             case GIMP_PATTERN_CLONE:
-              gimp_clone_line_pattern (gimage, drawable,
+              gimp_clone_line_pattern (image, drawable,
                                        pattern, d,
                                        area->x + offset_x,
                                        area->y + y + offset_y,

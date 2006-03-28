@@ -205,9 +205,9 @@ gimp_scale_tool_dialog_update (GimpTransformTool *tr_tool)
                   _gimp_unit_get_digits (gimp, label_unit) + 1,
                   _gimp_unit_get_symbol (gimp, label_unit));
       g_snprintf (scale->orig_width_buf, MAX_INFO_BUF, format_buf,
-                  (x2 - x1) * unit_factor / tool->gdisp->gimage->xresolution);
+                  (x2 - x1) * unit_factor / tool->gdisp->image->xresolution);
       g_snprintf (scale->orig_height_buf, MAX_INFO_BUF, format_buf,
-                  (y2 - y1) * unit_factor / tool->gdisp->gimage->yresolution);
+                  (y2 - y1) * unit_factor / tool->gdisp->image->yresolution);
     }
   else /* unit == GIMP_UNIT_PIXEL */
     {
@@ -276,9 +276,9 @@ gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
                             GIMP_DISPLAY_SHELL (gdisp->shell)->unit);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (scale->sizeentry), 0,
-                                  gdisp->gimage->xresolution, FALSE);
+                                  gdisp->image->xresolution, FALSE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (scale->sizeentry), 1,
-                                  gdisp->gimage->yresolution, FALSE);
+                                  gdisp->image->yresolution, FALSE);
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (scale->sizeentry), 0,
                                          GIMP_MIN_IMAGE_SIZE,

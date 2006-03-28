@@ -235,7 +235,7 @@ void
 vectors_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
-  GimpImage   *gimage     = action_data_get_image (data);
+  GimpImage   *image     = action_data_get_image (data);
   GimpVectors *vectors    = NULL;
   gint         n_vectors  = 0;
   gboolean     mask_empty = TRUE;
@@ -245,13 +245,13 @@ vectors_actions_update (GimpActionGroup *group,
   GList       *next       = NULL;
   GList       *prev       = NULL;
 
-  if (gimage)
+  if (image)
     {
-      n_vectors  = gimp_container_num_children (gimage->vectors);
-      mask_empty = gimp_channel_is_empty (gimp_image_get_mask (gimage));
+      n_vectors  = gimp_container_num_children (image->vectors);
+      mask_empty = gimp_channel_is_empty (gimp_image_get_mask (image));
       global_buf = FALSE;
 
-      vectors = gimp_image_get_active_vectors (gimage);
+      vectors = gimp_image_get_active_vectors (image);
 
       if (vectors)
         {
@@ -261,7 +261,7 @@ vectors_actions_update (GimpActionGroup *group,
           visible = gimp_item_get_visible (item);
           linked  = gimp_item_get_linked  (item);
 
-          list = g_list_find (GIMP_LIST (gimage->vectors)->list, vectors);
+          list = g_list_find (GIMP_LIST (image->vectors)->list, vectors);
 
           if (list)
             {
@@ -279,8 +279,8 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-path-tool",       vectors);
   SET_SENSITIVE ("vectors-edit-attributes", vectors);
 
-  SET_SENSITIVE ("vectors-new",             gimage);
-  SET_SENSITIVE ("vectors-new-last-values", gimage);
+  SET_SENSITIVE ("vectors-new",             image);
+  SET_SENSITIVE ("vectors-new-last-values", image);
   SET_SENSITIVE ("vectors-duplicate",       vectors);
   SET_SENSITIVE ("vectors-delete",          vectors);
   SET_SENSITIVE ("vectors-merge-visible",   n_vectors > 1);
@@ -291,9 +291,9 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-lower-to-bottom", vectors && next);
 
   SET_SENSITIVE ("vectors-copy",   vectors);
-  SET_SENSITIVE ("vectors-paste",  gimage);
+  SET_SENSITIVE ("vectors-paste",  image);
   SET_SENSITIVE ("vectors-export", vectors);
-  SET_SENSITIVE ("vectors-import", gimage);
+  SET_SENSITIVE ("vectors-import", image);
 
   SET_SENSITIVE ("vectors-visible", vectors);
   SET_SENSITIVE ("vectors-linked",  vectors);
@@ -301,9 +301,9 @@ vectors_actions_update (GimpActionGroup *group,
   SET_ACTIVE ("vectors-visible", visible);
   SET_ACTIVE ("vectors-linked",  linked);
 
-  SET_SENSITIVE ("vectors-selection-to-vectors",          gimage && !mask_empty);
-  SET_SENSITIVE ("vectors-selection-to-vectors-short",    gimage && !mask_empty);
-  SET_SENSITIVE ("vectors-selection-to-vectors-advanced", gimage && !mask_empty);
+  SET_SENSITIVE ("vectors-selection-to-vectors",          image && !mask_empty);
+  SET_SENSITIVE ("vectors-selection-to-vectors-short",    image && !mask_empty);
+  SET_SENSITIVE ("vectors-selection-to-vectors-advanced", image && !mask_empty);
   SET_SENSITIVE ("vectors-stroke",                        vectors);
   SET_SENSITIVE ("vectors-stroke-last-values",            vectors);
 

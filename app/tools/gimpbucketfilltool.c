@@ -138,7 +138,7 @@ gimp_bucket_fill_tool_button_press (GimpTool        *tool,
     {
       gint off_x, off_y;
 
-      gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (gdisp->gimage)),
+      gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (gdisp->image)),
                          &off_x, &off_y);
 
       bucket_tool->target_x -= off_x;
@@ -166,7 +166,7 @@ gimp_bucket_fill_tool_button_release (GimpTool        *tool,
   /*  if the 3rd button isn't pressed, fill the selected region  */
   if (! (state & GDK_BUTTON3_MASK))
     {
-      gimp_drawable_bucket_fill (gimp_image_active_drawable (gdisp->gimage),
+      gimp_drawable_bucket_fill (gimp_image_active_drawable (gdisp->image),
                                  context,
                                  options->fill_mode,
                                  gimp_context_get_paint_mode (context),
@@ -178,7 +178,7 @@ gimp_bucket_fill_tool_button_release (GimpTool        *tool,
                                  bucket_tool->target_x,
                                  bucket_tool->target_y);
 
-      gimp_image_flush (gdisp->gimage);
+      gimp_image_flush (gdisp->image);
     }
 
   gimp_tool_control_halt (tool->control);
@@ -228,9 +228,9 @@ gimp_bucket_fill_tool_cursor_update (GimpTool        *tool,
 
   options = GIMP_BUCKET_FILL_OPTIONS (tool->tool_info->tool_options);
 
-  if (gimp_image_coords_in_active_drawable (gdisp->gimage, coords))
+  if (gimp_image_coords_in_active_drawable (gdisp->image, coords))
     {
-      GimpChannel *selection = gimp_image_get_mask (gdisp->gimage);
+      GimpChannel *selection = gimp_image_get_mask (gdisp->image);
 
       /*  One more test--is there a selected region?
        *  if so, is cursor inside?

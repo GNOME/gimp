@@ -66,7 +66,7 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
 {
   GimpDrawable *drawable;
   GimpItem     *item;
-  GimpImage    *gimage;
+  GimpImage    *image;
   gint          width;
   gint          height;
   gint          view_width;
@@ -76,16 +76,16 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
 
   drawable = GIMP_DRAWABLE (renderer->viewable);
   item     = GIMP_ITEM (drawable);
-  gimage   = gimp_item_get_image (item);
+  image   = gimp_item_get_image (item);
 
   width  = renderer->width;
   height = renderer->height;
 
-  if (gimage && ! renderer->is_popup)
+  if (image && ! renderer->is_popup)
     {
-      width  = MAX (1, ROUND ((((gdouble) width / (gdouble) gimage->width) *
+      width  = MAX (1, ROUND ((((gdouble) width / (gdouble) image->width) *
                                (gdouble) item->width)));
-      height = MAX (1, ROUND ((((gdouble) height / (gdouble) gimage->height) *
+      height = MAX (1, ROUND ((((gdouble) height / (gdouble) image->height) *
                               (gdouble) item->height)));
 
       gimp_viewable_calc_preview_size (item->width,
@@ -93,8 +93,8 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
                                        width,
                                        height,
                                        renderer->dot_for_dot,
-                                       gimage->xresolution,
-                                       gimage->yresolution,
+                                       image->xresolution,
+                                       image->yresolution,
                                        &view_width,
                                        &view_height,
                                        &scaling_up);
@@ -106,8 +106,8 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
                                        width,
                                        height,
                                        renderer->dot_for_dot,
-                                       gimage ? gimage->xresolution : 1.0,
-                                       gimage ? gimage->yresolution : 1.0,
+                                       image ? image->xresolution : 1.0,
+                                       image ? image->yresolution : 1.0,
                                        &view_width,
                                        &view_height,
                                        &scaling_up);
@@ -118,7 +118,7 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
 
   if (scaling_up)
     {
-      if (gimage && ! renderer->is_popup)
+      if (image && ! renderer->is_popup)
         {
           gint src_x, src_y;
           gint src_width, src_height;
@@ -126,7 +126,7 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
           if (gimp_rectangle_intersect (0, 0,
                                         item->width, item->height,
                                         -item->offset_x, -item->offset_y,
-                                        gimage->width, gimage->height,
+                                        image->width, image->height,
                                         &src_x, &src_y,
                                         &src_width, &src_height))
             {
@@ -134,10 +134,10 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
               gint dest_height;
 
               dest_width  = ROUND (((gdouble) renderer->width /
-                                    (gdouble) gimage->width) *
+                                    (gdouble) image->width) *
                                    (gdouble) src_width);
               dest_height = ROUND (((gdouble) renderer->height /
-                                    (gdouble) gimage->height) *
+                                    (gdouble) image->height) *
                                    (gdouble) src_height);
 
               if (dest_width  < 1) dest_width  = 1;
@@ -181,16 +181,16 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
 
   if (render_buf)
     {
-      if (gimage && ! renderer->is_popup)
+      if (image && ! renderer->is_popup)
         {
           if (item->offset_x != 0)
             render_buf->x =
-              ROUND ((((gdouble) renderer->width / (gdouble) gimage->width) *
+              ROUND ((((gdouble) renderer->width / (gdouble) image->width) *
                       (gdouble) item->offset_x));
 
           if (item->offset_y != 0)
             render_buf->y =
-              ROUND ((((gdouble) renderer->height / (gdouble) gimage->height) *
+              ROUND ((((gdouble) renderer->height / (gdouble) image->height) *
                       (gdouble) item->offset_y));
 
           if (scaling_up)

@@ -57,12 +57,12 @@ static void      gimp_undo_editor_set_property   (GObject           *object,
                                                   GParamSpec        *pspec);
 
 static void      gimp_undo_editor_set_image      (GimpImageEditor   *editor,
-                                                  GimpImage         *gimage);
+                                                  GimpImage         *image);
 
 static void      gimp_undo_editor_fill           (GimpUndoEditor    *editor);
 static void      gimp_undo_editor_clear          (GimpUndoEditor    *editor);
 
-static void      gimp_undo_editor_undo_event     (GimpImage         *gimage,
+static void      gimp_undo_editor_undo_event     (GimpImage         *image,
                                                   GimpUndoEvent      event,
                                                   GimpUndo          *undo,
                                                   GimpUndoEditor    *editor);
@@ -162,27 +162,27 @@ gimp_undo_editor_set_property (GObject      *object,
 
 static void
 gimp_undo_editor_set_image (GimpImageEditor *image_editor,
-                            GimpImage       *gimage)
+                            GimpImage       *image)
 {
   GimpUndoEditor *editor = GIMP_UNDO_EDITOR (image_editor);
 
-  if (image_editor->gimage)
+  if (image_editor->image)
     {
       gimp_undo_editor_clear (editor);
 
-      g_signal_handlers_disconnect_by_func (image_editor->gimage,
+      g_signal_handlers_disconnect_by_func (image_editor->image,
 					    gimp_undo_editor_undo_event,
 					    editor);
     }
 
-  GIMP_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, gimage);
+  GIMP_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, image);
 
-  if (image_editor->gimage)
+  if (image_editor->image)
     {
-      if (gimp_image_undo_is_enabled (image_editor->gimage))
+      if (gimp_image_undo_is_enabled (image_editor->image))
         gimp_undo_editor_fill (editor);
 
-      g_signal_connect (image_editor->gimage, "undo-event",
+      g_signal_connect (image_editor->image, "undo-event",
 			G_CALLBACK (gimp_undo_editor_undo_event),
 			editor);
     }
@@ -212,21 +212,21 @@ gimp_undo_editor_new (GimpCoreConfig  *config,
 static void
 gimp_undo_editor_fill (GimpUndoEditor *editor)
 {
-  GimpImage *gimage;
+  GimpImage *image;
   GimpUndo  *top_undo_item;
   GList     *list;
 
-  gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
+  image = GIMP_IMAGE_EDITOR (editor)->image;
 
   /*  create a container as model for the undo history list  */
   editor->container = gimp_list_new (GIMP_TYPE_UNDO, FALSE);
   editor->base_item = g_object_new (GIMP_TYPE_UNDO,
-                                    "image", gimage,
+                                    "image", image,
                                     "name",  _("[ Base Image ]"),
                                     NULL);
 
   /*  the list prepends its items, so first add the redo items...  */
-  for (list = GIMP_LIST (gimage->redo_stack->undos)->list;
+  for (list = GIMP_LIST (image->redo_stack->undos)->list;
        list;
        list = g_list_next (list))
     {
@@ -237,7 +237,7 @@ gimp_undo_editor_fill (GimpUndoEditor *editor)
   gimp_list_reverse (GIMP_LIST (editor->container));
 
   /*  ...then add the undo items in descending order...  */
-  for (list = GIMP_LIST (gimage->undo_stack->undos)->list;
+  for (list = GIMP_LIST (image->undo_stack->undos)->list;
        list;
        list = g_list_next (list))
     {
@@ -245,7 +245,7 @@ gimp_undo_editor_fill (GimpUndoEditor *editor)
        *  it will be added upon closing of the group.
        */
       if (list->prev || ! GIMP_IS_UNDO_STACK (list->data) ||
-          gimage->pushing_undo_group == GIMP_UNDO_GROUP_NONE)
+          image->pushing_undo_group == GIMP_UNDO_GROUP_NONE)
         {
           gimp_container_add (editor->container, GIMP_OBJECT (list->data));
         }
@@ -260,7 +260,7 @@ gimp_undo_editor_fill (GimpUndoEditor *editor)
   gimp_container_view_set_container (GIMP_CONTAINER_VIEW (editor->view),
                                      editor->container);
 
-  top_undo_item = gimp_undo_stack_peek (gimage->undo_stack);
+  top_undo_item = gimp_undo_stack_peek (image->undo_stack);
 
   g_signal_handlers_block_by_func (editor->view,
                                    gimp_undo_editor_select_item,
@@ -304,14 +304,14 @@ gimp_undo_editor_clear (GimpUndoEditor *editor)
 }
 
 static void
-gimp_undo_editor_undo_event (GimpImage      *gimage,
+gimp_undo_editor_undo_event (GimpImage      *image,
                              GimpUndoEvent   event,
                              GimpUndo       *undo,
                              GimpUndoEditor *editor)
 {
   GimpUndo *top_undo_item;
 
-  top_undo_item = gimp_undo_stack_peek (gimage->undo_stack);
+  top_undo_item = gimp_undo_stack_peek (image->undo_stack);
 
   switch (event)
     {
@@ -360,7 +360,7 @@ gimp_undo_editor_undo_event (GimpImage      *gimage,
       break;
 
     case GIMP_UNDO_EVENT_UNDO_FREE:
-      if (gimp_image_undo_is_enabled (gimage))
+      if (gimp_image_undo_is_enabled (image))
         gimp_undo_editor_clear (editor);
       break;
 
@@ -380,15 +380,15 @@ gimp_undo_editor_select_item (GimpContainerView *view,
                               gpointer           insert_data,
                               GimpUndoEditor    *editor)
 {
-  GimpImage *gimage;
+  GimpImage *image;
   GimpUndo  *top_undo_item;
 
   if (! undo)
     return;
 
-  gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
+  image = GIMP_IMAGE_EDITOR (editor)->image;
 
-  top_undo_item = gimp_undo_stack_peek (gimage->undo_stack);
+  top_undo_item = gimp_undo_stack_peek (image->undo_stack);
 
   if (undo == editor->base_item)
     {
@@ -396,35 +396,35 @@ gimp_undo_editor_select_item (GimpContainerView *view,
        */
       while (top_undo_item != NULL)
         {
-          gimp_image_undo (gimage);
+          gimp_image_undo (image);
 
-          top_undo_item = gimp_undo_stack_peek (gimage->undo_stack);
+          top_undo_item = gimp_undo_stack_peek (image->undo_stack);
         }
     }
-  else if (gimp_container_have (gimage->undo_stack->undos, GIMP_OBJECT (undo)))
+  else if (gimp_container_have (image->undo_stack->undos, GIMP_OBJECT (undo)))
     {
       /*  the selected item is on the undo stack, pop undos until it
        *  is on top of the undo stack
        */
       while (top_undo_item != undo)
         {
-          gimp_image_undo (gimage);
+          gimp_image_undo (image);
 
-          top_undo_item = gimp_undo_stack_peek (gimage->undo_stack);
+          top_undo_item = gimp_undo_stack_peek (image->undo_stack);
         }
     }
-  else if (gimp_container_have (gimage->redo_stack->undos, GIMP_OBJECT (undo)))
+  else if (gimp_container_have (image->redo_stack->undos, GIMP_OBJECT (undo)))
     {
       /*  the selected item is on the redo stack, pop redos until it
        *  is on top of the undo stack
        */
       while (top_undo_item != undo)
         {
-          gimp_image_redo (gimage);
+          gimp_image_redo (image);
 
-          top_undo_item = gimp_undo_stack_peek (gimage->undo_stack);
+          top_undo_item = gimp_undo_stack_peek (image->undo_stack);
         }
     }
 
-  gimp_image_flush (gimage);
+  gimp_image_flush (image);
 }

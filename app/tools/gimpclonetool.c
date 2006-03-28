@@ -197,9 +197,9 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
 
   options = (GimpCloneOptions *) tool->tool_info->tool_options;
 
-  if (gimp_image_coords_in_active_drawable (gdisp->gimage, coords))
+  if (gimp_image_coords_in_active_drawable (gdisp->image, coords))
     {
-      GimpChannel *selection = gimp_image_get_mask (gdisp->gimage);
+      GimpChannel *selection = gimp_image_get_mask (gdisp->image);
 
       /*  One more test--is there a selected region?
        *  if so, is cursor inside?

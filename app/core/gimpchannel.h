@@ -118,17 +118,17 @@ struct _GimpChannelClass
 
 GType         gimp_channel_get_type           (void) G_GNUC_CONST;
 
-GimpChannel * gimp_channel_new                (GimpImage         *gimage,
+GimpChannel * gimp_channel_new                (GimpImage         *image,
                                                gint               width,
                                                gint               height,
                                                const gchar       *name,
                                                const GimpRGB     *color);
 
-GimpChannel * gimp_channel_new_from_alpha     (GimpImage         *gimage,
+GimpChannel * gimp_channel_new_from_alpha     (GimpImage         *image,
                                                GimpDrawable      *drawable,
                                                const gchar       *name,
                                                const GimpRGB     *color);
-GimpChannel * gimp_channel_new_from_component (GimpImage         *gimage,
+GimpChannel * gimp_channel_new_from_component (GimpImage         *image,
                                                GimpChannelType    type,
                                                const gchar       *name,
                                                const GimpRGB     *color);
@@ -154,7 +154,7 @@ void          gimp_channel_push_undo          (GimpChannel       *mask,
 
 /*  selection mask functions  */
 
-GimpChannel * gimp_channel_new_mask           (GimpImage         *gimage,
+GimpChannel * gimp_channel_new_mask           (GimpImage         *image,
                                                gint               width,
                                                gint               height);
 

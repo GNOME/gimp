@@ -252,7 +252,7 @@ quit_close_all_dialog_image_activated (GimpContainerView *view,
     {
       GimpDisplay *display = list->data;
 
-      if (display->gimage == image)
+      if (display->image == image)
         gtk_window_present (GTK_WINDOW (display->shell));
     }
 }

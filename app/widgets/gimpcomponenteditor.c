@@ -54,7 +54,7 @@ enum
 static void gimp_component_editor_unrealize         (GtkWidget           *widget);
 
 static void gimp_component_editor_set_image         (GimpImageEditor     *editor,
-                                                     GimpImage           *gimage);
+                                                     GimpImage           *image);
 
 static void gimp_component_editor_create_components (GimpComponentEditor *editor);
 static void gimp_component_editor_clear_components  (GimpComponentEditor *editor);
@@ -72,14 +72,14 @@ static gboolean gimp_component_editor_button_press  (GtkWidget           *widget
                                                      GimpComponentEditor *editor);
 static void gimp_component_editor_renderer_update   (GimpViewRenderer    *renderer,
                                                      GimpComponentEditor *editor);
-static void gimp_component_editor_mode_changed      (GimpImage           *gimage,
+static void gimp_component_editor_mode_changed      (GimpImage           *image,
                                                      GimpComponentEditor *editor);
-static void gimp_component_editor_alpha_changed     (GimpImage           *gimage,
+static void gimp_component_editor_alpha_changed     (GimpImage           *image,
                                                      GimpComponentEditor *editor);
-static void gimp_component_editor_visibility_changed(GimpImage           *gimage,
+static void gimp_component_editor_visibility_changed(GimpImage           *image,
                                                      GimpChannelType      channel,
                                                      GimpComponentEditor *editor);
-static void gimp_component_editor_active_changed    (GimpImage           *gimage,
+static void gimp_component_editor_active_changed    (GimpImage           *image,
                                                      GimpChannelType      channel,
                                                      GimpComponentEditor *editor);
 static GimpImage * gimp_component_editor_drag_component (GtkWidget       *widget,
@@ -199,46 +199,46 @@ gimp_component_editor_unrealize (GtkWidget *widget)
 
 static void
 gimp_component_editor_set_image (GimpImageEditor *editor,
-                                 GimpImage       *gimage)
+                                 GimpImage       *image)
 {
   GimpComponentEditor *component_editor;
 
   component_editor = GIMP_COMPONENT_EDITOR (editor);
 
-  if (editor->gimage)
+  if (editor->image)
     {
       gimp_component_editor_clear_components (component_editor);
 
-      g_signal_handlers_disconnect_by_func (editor->gimage,
+      g_signal_handlers_disconnect_by_func (editor->image,
                                             gimp_component_editor_mode_changed,
                                             component_editor);
-      g_signal_handlers_disconnect_by_func (editor->gimage,
+      g_signal_handlers_disconnect_by_func (editor->image,
                                             gimp_component_editor_alpha_changed,
                                             component_editor);
-      g_signal_handlers_disconnect_by_func (editor->gimage,
+      g_signal_handlers_disconnect_by_func (editor->image,
                                             gimp_component_editor_visibility_changed,
                                             component_editor);
-      g_signal_handlers_disconnect_by_func (editor->gimage,
+      g_signal_handlers_disconnect_by_func (editor->image,
                                             gimp_component_editor_active_changed,
                                             component_editor);
     }
 
-  GIMP_IMAGE_EDITOR_CLASS (parent_class)->set_image (editor, gimage);
+  GIMP_IMAGE_EDITOR_CLASS (parent_class)->set_image (editor, image);
 
-  if (editor->gimage)
+  if (editor->image)
     {
       gimp_component_editor_create_components (component_editor);
 
-      g_signal_connect (editor->gimage, "mode-changed",
+      g_signal_connect (editor->image, "mode-changed",
                         G_CALLBACK (gimp_component_editor_mode_changed),
                         component_editor);
-      g_signal_connect (editor->gimage, "alpha-changed",
+      g_signal_connect (editor->image, "alpha-changed",
                         G_CALLBACK (gimp_component_editor_alpha_changed),
                         component_editor);
-      g_signal_connect (editor->gimage, "component-visibility-changed",
+      g_signal_connect (editor->image, "component-visibility-changed",
                         G_CALLBACK (gimp_component_editor_visibility_changed),
                         component_editor);
-      g_signal_connect (editor->gimage, "component-active-changed",
+      g_signal_connect (editor->image, "component-active-changed",
                         G_CALLBACK (gimp_component_editor_active_changed),
                         component_editor);
     }
@@ -314,15 +314,15 @@ gimp_component_editor_set_view_size (GimpComponentEditor *editor,
 static void
 gimp_component_editor_create_components (GimpComponentEditor *editor)
 {
-  GimpImage       *gimage;
+  GimpImage       *image;
   gint             n_components = 0;
   GimpChannelType  components[MAX_CHANNELS];
   GEnumClass      *enum_class;
   gint             i;
 
-  gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
+  image = GIMP_IMAGE_EDITOR (editor)->image;
 
-  switch (gimp_image_base_type (gimage))
+  switch (gimp_image_base_type (image))
     {
     case GIMP_RGB:
       n_components  = 3;
@@ -342,7 +342,7 @@ gimp_component_editor_create_components (GimpComponentEditor *editor)
       break;
     }
 
-  if (gimp_image_has_alpha (gimage))
+  if (gimp_image_has_alpha (image))
     components[n_components++] = GIMP_ALPHA_CHANNEL;
 
   enum_class = g_type_class_ref (GIMP_TYPE_CHANNEL_TYPE);
@@ -355,11 +355,11 @@ gimp_component_editor_create_components (GimpComponentEditor *editor)
       const gchar      *desc;
       gboolean          visible;
 
-      visible = gimp_image_get_component_visible (gimage, components[i]);
+      visible = gimp_image_get_component_visible (image, components[i]);
 
-      renderer = gimp_view_renderer_new (G_TYPE_FROM_INSTANCE (gimage),
+      renderer = gimp_view_renderer_new (G_TYPE_FROM_INSTANCE (image),
                                          editor->view_size, 1, FALSE);
-      gimp_view_renderer_set_viewable (renderer, GIMP_VIEWABLE (gimage));
+      gimp_view_renderer_set_viewable (renderer, GIMP_VIEWABLE (image));
       gimp_view_renderer_remove_idle (renderer);
 
       GIMP_VIEW_RENDERER_IMAGE (renderer)->channel = components[i];
@@ -382,7 +382,7 @@ gimp_component_editor_create_components (GimpComponentEditor *editor)
 
       g_object_unref (renderer);
 
-      if (gimp_image_get_component_active (gimage, components[i]))
+      if (gimp_image_get_component_active (image, components[i]))
         gtk_tree_selection_select_iter (editor->selection, &iter);
     }
 
@@ -413,11 +413,9 @@ gimp_component_editor_clicked (GtkCellRendererToggle *cellrenderertoggle,
 
   if (gtk_tree_model_get_iter (editor->model, &iter, path))
     {
-      GimpImage       *gimage;
+      GimpImage       *image = GIMP_IMAGE_EDITOR (editor)->image;
       GimpChannelType  channel;
       gboolean         active;
-
-      gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
 
       gtk_tree_model_get (editor->model, &iter,
                           COLUMN_CHANNEL, &channel,
@@ -426,8 +424,8 @@ gimp_component_editor_clicked (GtkCellRendererToggle *cellrenderertoggle,
                     "active", &active,
                     NULL);
 
-      gimp_image_set_component_visible (gimage, channel, !active);
-      gimp_image_flush (gimage);
+      gimp_image_set_component_visible (image, channel, !active);
+      gimp_image_flush (image);
     }
 
   gtk_tree_path_free (path);
@@ -452,7 +450,7 @@ gimp_component_editor_select (GtkTreeSelection *selection,
                       COLUMN_CHANNEL, &channel,
                       -1);
 
-  active = gimp_image_get_component_active (GIMP_IMAGE_EDITOR (editor)->gimage,
+  active = gimp_image_get_component_active (GIMP_IMAGE_EDITOR (editor)->image,
                                             channel);
 
   return active != path_currently_selected;
@@ -494,7 +492,7 @@ gimp_component_editor_button_press (GtkWidget           *widget,
         case 1:
           if (column != editor->eye_column && bevent->type == GDK_BUTTON_PRESS)
             {
-              GimpImage *image = GIMP_IMAGE_EDITOR (editor)->gimage;
+              GimpImage *image = GIMP_IMAGE_EDITOR (editor)->image;
 
               gimp_image_set_component_active (image, channel, ! active);
               gimp_image_flush (image);
@@ -523,7 +521,7 @@ gimp_component_editor_get_iter (GimpComponentEditor *editor,
 {
   gint index;
 
-  index = gimp_image_get_component_index (GIMP_IMAGE_EDITOR (editor)->gimage,
+  index = gimp_image_get_component_index (GIMP_IMAGE_EDITOR (editor)->image,
                                           channel);
 
   if (index != -1)
@@ -550,7 +548,7 @@ gimp_component_editor_renderer_update (GimpViewRenderer    *renderer,
 }
 
 static void
-gimp_component_editor_mode_changed (GimpImage           *gimage,
+gimp_component_editor_mode_changed (GimpImage           *image,
                                     GimpComponentEditor *editor)
 {
   gimp_component_editor_clear_components (editor);
@@ -558,7 +556,7 @@ gimp_component_editor_mode_changed (GimpImage           *gimage,
 }
 
 static void
-gimp_component_editor_alpha_changed (GimpImage           *gimage,
+gimp_component_editor_alpha_changed (GimpImage           *image,
                                      GimpComponentEditor *editor)
 {
   gimp_component_editor_clear_components (editor);
@@ -566,7 +564,7 @@ gimp_component_editor_alpha_changed (GimpImage           *gimage,
 }
 
 static void
-gimp_component_editor_visibility_changed (GimpImage           *gimage,
+gimp_component_editor_visibility_changed (GimpImage           *image,
                                           GimpChannelType      channel,
                                           GimpComponentEditor *editor)
 {
@@ -576,7 +574,7 @@ gimp_component_editor_visibility_changed (GimpImage           *gimage,
     {
       gboolean visible;
 
-      visible = gimp_image_get_component_visible (gimage, channel);
+      visible = gimp_image_get_component_visible (image, channel);
 
       gtk_list_store_set (GTK_LIST_STORE (editor->model), &iter,
                           COLUMN_VISIBLE, visible,
@@ -585,7 +583,7 @@ gimp_component_editor_visibility_changed (GimpImage           *gimage,
 }
 
 static void
-gimp_component_editor_active_changed (GimpImage           *gimage,
+gimp_component_editor_active_changed (GimpImage           *image,
                                       GimpChannelType      channel,
                                       GimpComponentEditor *editor)
 {
@@ -595,7 +593,7 @@ gimp_component_editor_active_changed (GimpImage           *gimage,
     {
       gboolean active;
 
-      active = gimp_image_get_component_active (gimage, channel);
+      active = gimp_image_get_component_active (image, channel);
 
       if (gtk_tree_selection_iter_is_selected (editor->selection, &iter) !=
           active)
@@ -615,13 +613,13 @@ gimp_component_editor_drag_component (GtkWidget       *widget,
 {
   GimpComponentEditor *editor = GIMP_COMPONENT_EDITOR (data);
 
-  if (GIMP_IMAGE_EDITOR (editor)->gimage &&
+  if (GIMP_IMAGE_EDITOR (editor)->image &&
       editor->clicked_component != -1)
     {
       if (channel)
         *channel = editor->clicked_component;
 
-      return GIMP_IMAGE_EDITOR (editor)->gimage;
+      return GIMP_IMAGE_EDITOR (editor)->image;
     }
 
   return NULL;

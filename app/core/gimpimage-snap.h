@@ -20,21 +20,21 @@
 #define __GIMP_IMAGE_SNAP_H__
 
 
-gboolean    gimp_image_snap_x         (GimpImage *gimage,
+gboolean    gimp_image_snap_x         (GimpImage *image,
                                        gdouble    x,
                                        gdouble   *tx,
                                        gdouble    epsilon_x,
                                        gboolean   snap_to_guides,
                                        gboolean   snap_to_grid,
                                        gboolean   snap_to_canvas);
-gboolean    gimp_image_snap_y         (GimpImage *gimage,
+gboolean    gimp_image_snap_y         (GimpImage *image,
                                        gdouble    y,
                                        gdouble   *ty,
                                        gdouble    epsilon_y,
                                        gboolean   snap_to_guides,
                                        gboolean   snap_to_grid,
                                        gboolean   snap_to_canvas);
-gboolean    gimp_image_snap_point     (GimpImage *gimage,
+gboolean    gimp_image_snap_point     (GimpImage *image,
                                        gdouble    x,
                                        gdouble    y,
                                        gdouble   *tx,
@@ -45,7 +45,7 @@ gboolean    gimp_image_snap_point     (GimpImage *gimage,
                                        gboolean   snap_to_grid,
                                        gboolean   snap_to_canvas,
                                        gboolean   snap_to_vectors);
-gboolean    gimp_image_snap_rectangle (GimpImage *gimage,
+gboolean    gimp_image_snap_rectangle (GimpImage *image,
                                        gdouble    x1,
                                        gdouble    y1,
                                        gdouble    x2,

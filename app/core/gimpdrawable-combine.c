@@ -42,7 +42,7 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
                                  gint                  x,
                                  gint                  y)
 {
-  GimpImage       *gimage;
+  GimpImage       *image;
   GimpItem        *item;
   GimpChannel     *mask;
   gint             x1, y1, x2, y2;
@@ -53,9 +53,9 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
 
   item = GIMP_ITEM (drawable);
 
-  gimage = gimp_item_get_image (item);
+  image = gimp_item_get_image (item);
 
-  mask = gimp_image_get_mask (gimage);
+  mask = gimp_image_get_mask (image);
 
   /*  don't apply the mask to itself and don't apply an empty mask  */
   if (GIMP_DRAWABLE (mask) == drawable || gimp_channel_is_empty (mask))
@@ -78,7 +78,7 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
   /*  get the layer offsets  */
   gimp_item_offsets (item, &offset_x, &offset_y);
 
-  /*  make sure the image application coordinates are within gimage bounds  */
+  /*  make sure the image application coordinates are within image bounds  */
   x1 = CLAMP (x, 0, gimp_item_width  (item));
   y1 = CLAMP (y, 0, gimp_item_height (item));
   x2 = CLAMP (x + src2PR->w, 0, gimp_item_width  (item));
@@ -164,7 +164,7 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
                                    gint          x,
                                    gint          y)
 {
-  GimpImage       *gimage;
+  GimpImage       *image;
   GimpItem        *item;
   GimpChannel     *mask;
   gint             x1, y1, x2, y2;
@@ -175,9 +175,9 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
 
   item = GIMP_ITEM (drawable);
 
-  gimage = gimp_item_get_image (item);
+  image = gimp_item_get_image (item);
 
-  mask = gimp_image_get_mask (gimage);
+  mask = gimp_image_get_mask (image);
 
   /*  don't apply the mask to itself and don't apply an empty mask  */
   if (GIMP_DRAWABLE (mask) == drawable || gimp_channel_is_empty (mask))
@@ -200,7 +200,7 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
   /*  get the layer offsets  */
   gimp_item_offsets (item, &offset_x, &offset_y);
 
-  /*  make sure the image application coordinates are within gimage bounds  */
+  /*  make sure the image application coordinates are within image bounds  */
   x1 = CLAMP (x, 0, gimp_item_width (item));
   y1 = CLAMP (y, 0, gimp_item_height (item));
   x2 = CLAMP (x + src2PR->w, 0, gimp_item_width (item));

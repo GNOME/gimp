@@ -218,14 +218,14 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
       if (GIMP_SELECTION_TOOL (tool)->op == SELECTION_ANCHOR)
         {
           /*  If there is a floating selection, anchor it  */
-          if (gimp_image_floating_sel (gdisp->gimage))
-            floating_sel_anchor (gimp_image_floating_sel (gdisp->gimage));
+          if (gimp_image_floating_sel (gdisp->image))
+            floating_sel_anchor (gimp_image_floating_sel (gdisp->image));
           /*  Otherwise, clear the selection mask  */
           else
-            gimp_channel_clear (gimp_image_get_mask (gdisp->gimage), NULL,
+            gimp_channel_clear (gimp_image_get_mask (gdisp->image), NULL,
                                 TRUE);
 
-          gimp_image_flush (gdisp->gimage);
+          gimp_image_flush (gdisp->image);
           return;
         }
 
@@ -236,12 +236,12 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
         }
       else
         {
-          GimpDrawable *drawable = gimp_image_active_drawable (gdisp->gimage);
+          GimpDrawable *drawable = gimp_image_active_drawable (gdisp->image);
 
           gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
         }
 
-      gimp_channel_select_channel (gimp_image_get_mask (gdisp->gimage),
+      gimp_channel_select_channel (gimp_image_get_mask (gdisp->image),
                                    tool->tool_info->blurb,
                                    fuzzy_sel->fuzzy_mask,
                                    off_x,
@@ -254,7 +254,7 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
       g_object_unref (fuzzy_sel->fuzzy_mask);
       fuzzy_sel->fuzzy_mask = NULL;
 
-      gimp_image_flush (gdisp->gimage);
+      gimp_image_flush (gdisp->image);
     }
 
   /*  If the segment array is allocated, free it  */
@@ -356,7 +356,7 @@ gimp_fuzzy_select_tool_calculate (GimpFuzzySelectTool *fuzzy_sel,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  drawable = gimp_image_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->image);
 
   gimp_display_shell_set_override_cursor (shell, GDK_WATCH);
 
@@ -373,7 +373,7 @@ gimp_fuzzy_select_tool_calculate (GimpFuzzySelectTool *fuzzy_sel,
       y -= off_y;
     }
 
-  new = gimp_image_contiguous_region_by_seed (gdisp->gimage, drawable,
+  new = gimp_image_contiguous_region_by_seed (gdisp->image, drawable,
                                               options->sample_merged,
                                               options->antialias,
                                               options->threshold,

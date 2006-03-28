@@ -20,7 +20,7 @@
 #define __GIMP_IMAGE_FLIP_H__
 
 
-void   gimp_image_flip (GimpImage           *gimage,
+void   gimp_image_flip (GimpImage           *image,
                         GimpContext         *context,
                         GimpOrientationType  flip_type,
                         GimpProgress        *progress);

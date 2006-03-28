@@ -131,7 +131,7 @@ gimp_display_shell_transform_xy (GimpDisplayShell *shell,
   scaley = SCALEFACTOR_Y (shell);
 
   if (use_offsets)
-    gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (shell->gdisp->gimage)),
+    gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (shell->gdisp->image)),
                        &offset_x, &offset_y);
 
   x = (scalex * (x + offset_x) - shell->offset_x);
@@ -188,7 +188,7 @@ gimp_display_shell_untransform_xy (GimpDisplayShell *shell,
   scaley = SCALEFACTOR_Y (shell);
 
   if (use_offsets)
-    gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (shell->gdisp->gimage)),
+    gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (shell->gdisp->image)),
                        &offset_x, &offset_y);
 
   if (round)
@@ -238,7 +238,7 @@ gimp_display_shell_transform_xy_f  (GimpDisplayShell *shell,
   scaley = SCALEFACTOR_Y (shell);
 
   if (use_offsets)
-    gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (shell->gdisp->gimage)),
+    gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (shell->gdisp->image)),
                        &offset_x, &offset_y);
 
   *nx = scalex * (x + offset_x) - shell->offset_x;
@@ -287,7 +287,7 @@ gimp_display_shell_untransform_xy_f (GimpDisplayShell *shell,
   scaley = SCALEFACTOR_Y (shell);
 
   if (use_offsets)
-    gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (shell->gdisp->gimage)),
+    gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (shell->gdisp->image)),
                        &offset_x, &offset_y);
 
   *nx = (x + shell->offset_x) / scalex - offset_x;
@@ -327,8 +327,8 @@ gimp_display_shell_untransform_viewport (GimpDisplayShell *shell,
 
   if (x1 < 0) x1 = 0;
   if (y1 < 0) y1 = 0;
-  if (x2 > shell->gdisp->gimage->width)  x2 = shell->gdisp->gimage->width;
-  if (y2 > shell->gdisp->gimage->height) y2 = shell->gdisp->gimage->height;
+  if (x2 > shell->gdisp->image->width)  x2 = shell->gdisp->image->width;
+  if (y2 > shell->gdisp->image->height) y2 = shell->gdisp->image->height;
 
   if (x)      *x      = x1;
   if (y)      *y      = y1;

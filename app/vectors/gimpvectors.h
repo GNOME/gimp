@@ -87,7 +87,7 @@ struct _GimpVectorsClass
 
 GType           gimp_vectors_get_type           (void) G_GNUC_CONST;
 
-GimpVectors   * gimp_vectors_new                (GimpImage         *gimage,
+GimpVectors   * gimp_vectors_new                (GimpImage         *image,
                                                  const gchar       *name);
 
 void            gimp_vectors_freeze             (GimpVectors       *vectors);

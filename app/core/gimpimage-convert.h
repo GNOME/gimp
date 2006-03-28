@@ -23,7 +23,7 @@
 #define MAXNUMCOLORS 256
 
 
-void   gimp_image_convert          (GimpImage              *gimage,
+void   gimp_image_convert          (GimpImage              *image,
                                     GimpImageBaseType       new_type,
                                     /* The following params used only for
                                      * new_type == GIMP_INDEXED

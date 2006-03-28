@@ -49,15 +49,15 @@ static void     undo_free_paint (GimpUndo            *undo,
 
 gboolean
 gimp_paint_core_real_push_undo (GimpPaintCore *core,
-                                GimpImage     *gimage,
+                                GimpImage     *image,
                                 const gchar   *undo_desc)
 {
   GimpUndo *new;
 
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), FALSE);
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  if ((new = gimp_image_undo_push (gimage, GIMP_TYPE_UNDO,
+  if ((new = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
                                    sizeof (PaintUndo),
                                    sizeof (PaintUndo),
                                    GIMP_UNDO_PAINT, undo_desc,

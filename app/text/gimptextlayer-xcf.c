@@ -190,10 +190,10 @@ gimp_text_layer_from_layer (GimpLayer *layer,
 
   item->ID        = gimp_item_get_ID (GIMP_ITEM (layer));
   item->tattoo    = gimp_item_get_tattoo (GIMP_ITEM (layer));
-  item->gimage    = gimp_item_get_image (GIMP_ITEM (layer));
+  item->image     = gimp_item_get_image (GIMP_ITEM (layer));
 
   gimp_item_set_image (GIMP_ITEM (layer), NULL);
-  g_hash_table_replace (item->gimage->gimp->item_table,
+  g_hash_table_replace (item->image->gimp->item_table,
                         GINT_TO_POINTER (item->ID),
                         item);
 

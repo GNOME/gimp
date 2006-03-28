@@ -56,7 +56,7 @@ struct _OffsetDialog
 
   GimpOffsetType  fill_type;
 
-  GimpImage      *gimage;
+  GimpImage      *image;
 };
 
 
@@ -92,7 +92,7 @@ offset_dialog_new (GimpDrawable *drawable,
   dialog = g_new0 (OffsetDialog, 1);
 
   dialog->fill_type = gimp_drawable_has_alpha (drawable) | WRAP_AROUND;
-  dialog->gimage    = gimp_item_get_image (GIMP_ITEM (drawable));
+  dialog->image    = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (GIMP_IS_LAYER (drawable))
     title = _("Offset Layer");
@@ -181,21 +181,21 @@ offset_dialog_new (GimpDrawable *drawable,
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (dialog->off_se), GIMP_UNIT_PIXEL);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (dialog->off_se), 0,
-                                  dialog->gimage->xresolution, FALSE);
+                                  dialog->image->xresolution, FALSE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (dialog->off_se), 1,
-                                  dialog->gimage->yresolution, FALSE);
+                                  dialog->image->yresolution, FALSE);
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (dialog->off_se), 0,
-                                         -dialog->gimage->width,
-					 dialog->gimage->width);
+                                         -dialog->image->width,
+					 dialog->image->width);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (dialog->off_se), 1,
-					 -dialog->gimage->height,
-					 dialog->gimage->height);
+					 -dialog->image->height,
+					 dialog->image->height);
 
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (dialog->off_se), 0,
-                            0, dialog->gimage->width);
+                            0, dialog->image->width);
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (dialog->off_se), 1,
-                            0, dialog->gimage->height);
+                            0, dialog->image->height);
 
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se), 0, 0);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se), 1, 0);
@@ -242,14 +242,14 @@ offset_response (GtkWidget    *widget,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpImage    *gimage;
+      GimpImage    *image;
       GimpDrawable *drawable;
       gint          offset_x;
       gint          offset_y;
 
-      if ((gimage = dialog->gimage) != NULL)
+      if ((image = dialog->image) != NULL)
         {
-          drawable = gimp_image_active_drawable (gimage);
+          drawable = gimp_image_active_drawable (image);
 
           offset_x =
             RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (dialog->off_se),
@@ -259,11 +259,11 @@ offset_response (GtkWidget    *widget,
                                               1));
 
           gimp_drawable_offset (drawable,
-                                gimp_get_user_context (gimage->gimp),
+                                gimp_get_user_context (image->gimp),
                                 dialog->fill_type & WRAP_AROUND ? TRUE : FALSE,
                                 dialog->fill_type & FILL_MASK,
                                 offset_x, offset_y);
-          gimp_image_flush (gimage);
+          gimp_image_flush (image);
         }
     }
 
@@ -274,10 +274,10 @@ static void
 offset_halfheight_callback (GtkWidget    *widget,
                             OffsetDialog *dialog)
 {
-  GimpImage *gimage = dialog->gimage;
+  GimpImage *image = dialog->image;
 
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se),
-			      0, gimage->width / 2);
+			      0, image->width / 2);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se),
-			      1, gimage->height / 2);
+			      1, image->height / 2);
 }

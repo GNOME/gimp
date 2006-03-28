@@ -1811,13 +1811,13 @@ gimp_context_real_set_display (GimpContext *context,
 
   if (context->display)
     {
-      GimpImage *gimage;
+      GimpImage *image;
 
-      g_object_get (display, "image", &gimage, NULL);
+      g_object_get (display, "image", &image, NULL);
 
-      gimp_context_real_set_image (context, gimage);
+      gimp_context_real_set_image (context, image);
 
-      g_object_unref (gimage);
+      g_object_unref (image);
     }
 
   g_object_notify (G_OBJECT (context), "display");

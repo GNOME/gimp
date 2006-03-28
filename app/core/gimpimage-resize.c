@@ -38,7 +38,7 @@
 
 
 void
-gimp_image_resize (GimpImage    *gimage,
+gimp_image_resize (GimpImage    *image,
                    GimpContext  *context,
                    gint          new_width,
                    gint          new_height,
@@ -46,14 +46,14 @@ gimp_image_resize (GimpImage    *gimage,
                    gint          offset_y,
                    GimpProgress *progress)
 {
-  gimp_image_resize_with_layers (gimage, context,
+  gimp_image_resize_with_layers (image, context,
                                  new_width, new_height, offset_x, offset_y,
                                  GIMP_IMAGE_RESIZE_LAYERS_NONE,
                                  progress);
 }
 
 void
-gimp_image_resize_with_layers (GimpImage             *gimage,
+gimp_image_resize_with_layers (GimpImage             *image,
                                GimpContext           *context,
                                gint                   new_width,
                                gint                   new_height,
@@ -67,37 +67,37 @@ gimp_image_resize_with_layers (GimpImage             *gimage,
   gdouble  progress_current = 1.0;
   gint     old_width, old_height;
 
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (new_width > 0 && new_height > 0);
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  gimp_set_busy (gimage->gimp);
+  gimp_set_busy (image->gimp);
 
-  progress_max = (gimage->channels->num_children +
-                  gimage->layers->num_children   +
-                  gimage->vectors->num_children  +
+  progress_max = (image->channels->num_children +
+                  image->layers->num_children   +
+                  image->vectors->num_children  +
                   1 /* selection */);
 
-  g_object_freeze_notify (G_OBJECT (gimage));
+  g_object_freeze_notify (G_OBJECT (image));
 
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_RESIZE,
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_RESIZE,
                                _("Resize Image"));
 
-  old_width  = gimage->width;
-  old_height = gimage->height;
+  old_width  = image->width;
+  old_height = image->height;
 
   /*  Push the image size to the stack  */
-  gimp_image_undo_push_image_size (gimage, NULL);
+  gimp_image_undo_push_image_size (image, NULL);
 
   /*  Set the new width and height  */
-  g_object_set (gimage,
+  g_object_set (image,
                 "width",  new_width,
                 "height", new_height,
                 NULL);
 
   /*  Resize all channels  */
-  for (list = GIMP_LIST (gimage->channels)->list;
+  for (list = GIMP_LIST (image->channels)->list;
        list;
        list = g_list_next (list))
     {
@@ -111,7 +111,7 @@ gimp_image_resize_with_layers (GimpImage             *gimage,
     }
 
   /*  Resize all vectors  */
-  for (list = GIMP_LIST (gimage->vectors)->list;
+  for (list = GIMP_LIST (image->vectors)->list;
        list;
        list = g_list_next (list))
     {
@@ -125,14 +125,14 @@ gimp_image_resize_with_layers (GimpImage             *gimage,
     }
 
   /*  Don't forget the selection mask!  */
-  gimp_item_resize (GIMP_ITEM (gimp_image_get_mask (gimage)), context,
+  gimp_item_resize (GIMP_ITEM (gimp_image_get_mask (image)), context,
                     new_width, new_height, offset_x, offset_y);
 
   if (progress)
     gimp_progress_set_value (progress, progress_current++ / progress_max);
 
   /*  Reposition all layers  */
-  for (list = GIMP_LIST (gimage->layers)->list;
+  for (list = GIMP_LIST (image->layers)->list;
        list;
        list = g_list_next (list))
     {
@@ -181,7 +181,7 @@ gimp_image_resize_with_layers (GimpImage             *gimage,
     }
 
   /*  Reposition or remove all guides  */
-  list = gimage->guides;
+  list = image->guides;
   while (list)
     {
       GimpGuide *guide        = list->data;
@@ -209,13 +209,13 @@ gimp_image_resize_with_layers (GimpImage             *gimage,
         }
 
       if (remove_guide)
-        gimp_image_remove_guide (gimage, guide, TRUE);
+        gimp_image_remove_guide (image, guide, TRUE);
       else if (new_position != guide->position)
-        gimp_image_move_guide (gimage, guide, new_position, TRUE);
+        gimp_image_move_guide (image, guide, new_position, TRUE);
     }
 
   /*  Reposition or remove sample points  */
-  list = gimage->sample_points;
+  list = image->sample_points;
   while (list)
     {
       GimpSamplePoint *sample_point        = list->data;
@@ -234,27 +234,27 @@ gimp_image_resize_with_layers (GimpImage             *gimage,
         remove_sample_point = TRUE;
 
       if (remove_sample_point)
-        gimp_image_remove_sample_point (gimage, sample_point, TRUE);
+        gimp_image_remove_sample_point (image, sample_point, TRUE);
       else if (new_x != sample_point->x || new_y != sample_point->y)
-        gimp_image_move_sample_point (gimage, sample_point,
+        gimp_image_move_sample_point (image, sample_point,
                                       new_x, new_y, TRUE);
     }
 
-  gimp_image_undo_group_end (gimage);
+  gimp_image_undo_group_end (image);
 
-  gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
-  g_object_thaw_notify (G_OBJECT (gimage));
+  gimp_viewable_size_changed (GIMP_VIEWABLE (image));
+  g_object_thaw_notify (G_OBJECT (image));
 
-  gimp_unset_busy (gimage->gimp);
+  gimp_unset_busy (image->gimp);
 }
 
 void
-gimp_image_resize_to_layers (GimpImage    *gimage,
+gimp_image_resize_to_layers (GimpImage    *image,
                              GimpContext  *context,
                              GimpProgress *progress)
 {
   gint   min_x, max_x, min_y, max_y;
-  GList *list = GIMP_LIST (gimage->layers)->list;
+  GList *list = GIMP_LIST (image->layers)->list;
   GimpItem *item;
 
   if (!list)
@@ -280,7 +280,7 @@ gimp_image_resize_to_layers (GimpImage    *gimage,
       max_y = MAX (max_y, item->offset_y + item->height);
     }
 
-  gimp_image_resize (gimage, context,
+  gimp_image_resize (image, context,
                      max_x - min_x, max_y - min_y,
                      - min_x, - min_y,
                      progress);

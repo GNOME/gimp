@@ -69,10 +69,10 @@ static void   gimp_drawable_tree_view_drop_color (GimpContainerTreeView *view,
                                                   GtkTreeViewDropPosition  drop_pos);
 
 static void   gimp_drawable_tree_view_set_image  (GimpItemTreeView     *view,
-                                                  GimpImage            *gimage);
+                                                  GimpImage            *image);
 
 static void   gimp_drawable_tree_view_floating_selection_changed
-                                                 (GimpImage            *gimage,
+                                                 (GimpImage            *image,
                                                   GimpDrawableTreeView *view);
 
 static void   gimp_drawable_tree_view_new_pattern_dropped
@@ -172,12 +172,12 @@ gimp_drawable_tree_view_select_item (GimpContainerView *view,
   GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (view);
   gboolean          success   = TRUE;
 
-  if (item_view->gimage)
+  if (item_view->image)
     {
       GimpViewable *floating_sel;
 
       floating_sel = (GimpViewable *)
-        gimp_image_floating_sel (item_view->gimage);
+        gimp_image_floating_sel (item_view->image);
 
       success = (item == NULL || floating_sel == NULL || item == floating_sel);
     }
@@ -244,7 +244,7 @@ gimp_drawable_tree_view_drop_viewable (GimpContainerTreeView   *view,
                                       FALSE, 0.0, FALSE, /* fill params  */
                                       0.0, 0.0,          /* ignored      */
                                       NULL, GIMP_PATTERN (src_viewable));
-      gimp_image_flush (GIMP_ITEM_TREE_VIEW (view)->gimage);
+      gimp_image_flush (GIMP_ITEM_TREE_VIEW (view)->image);
       return;
     }
 
@@ -269,7 +269,7 @@ gimp_drawable_tree_view_drop_color (GimpContainerTreeView   *view,
                                       FALSE, 0.0, FALSE, /* fill params  */
                                       0.0, 0.0,          /* ignored      */
                                       color, NULL);
-      gimp_image_flush (GIMP_ITEM_TREE_VIEW (view)->gimage);
+      gimp_image_flush (GIMP_ITEM_TREE_VIEW (view)->image);
     }
 }
 
@@ -278,17 +278,17 @@ gimp_drawable_tree_view_drop_color (GimpContainerTreeView   *view,
 
 static void
 gimp_drawable_tree_view_set_image (GimpItemTreeView *view,
-                                   GimpImage        *gimage)
+                                   GimpImage        *image)
 {
-  if (view->gimage)
-    g_signal_handlers_disconnect_by_func (view->gimage,
+  if (view->image)
+    g_signal_handlers_disconnect_by_func (view->image,
                                           gimp_drawable_tree_view_floating_selection_changed,
                                           view);
 
-  GIMP_ITEM_TREE_VIEW_CLASS (parent_class)->set_image (view, gimage);
+  GIMP_ITEM_TREE_VIEW_CLASS (parent_class)->set_image (view, image);
 
-  if (view->gimage)
-    g_signal_connect (view->gimage,
+  if (view->image)
+    g_signal_connect (view->image,
                       "floating-selection-changed",
                       G_CALLBACK (gimp_drawable_tree_view_floating_selection_changed),
                       view);
@@ -298,12 +298,12 @@ gimp_drawable_tree_view_set_image (GimpItemTreeView *view,
 /*  callbacks  */
 
 static void
-gimp_drawable_tree_view_floating_selection_changed (GimpImage            *gimage,
+gimp_drawable_tree_view_floating_selection_changed (GimpImage            *image,
 						    GimpDrawableTreeView *view)
 {
   GimpItem *item;
 
-  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (gimage);
+  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (image);
 
   /*  update button states  */
   gimp_container_view_select_item (GIMP_CONTAINER_VIEW (view),
@@ -320,10 +320,10 @@ gimp_drawable_tree_view_new_dropped (GimpItemTreeView   *view,
 {
   GimpItem *item;
 
-  gimp_image_undo_group_start (view->gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
+  gimp_image_undo_group_start (view->image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                _("New Layer"));
 
-  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->new_item (view->gimage);
+  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->new_item (view->image);
 
   if (item)
     {
@@ -333,7 +333,7 @@ gimp_drawable_tree_view_new_dropped (GimpItemTreeView   *view,
 
       /*  Get the bucket fill context  */
       tool_info = (GimpToolInfo *)
-        gimp_container_get_child_by_name (view->gimage->gimp->tool_info_list,
+        gimp_container_get_child_by_name (view->image->gimp->tool_info_list,
                                           "gimp-bucket-fill-tool");
 
       if (tool_info && tool_info->tool_options)
@@ -350,9 +350,9 @@ gimp_drawable_tree_view_new_dropped (GimpItemTreeView   *view,
                                       color, pattern);
     }
 
-  gimp_image_undo_group_end (view->gimage);
+  gimp_image_undo_group_end (view->image);
 
-  gimp_image_flush (view->gimage);
+  gimp_image_flush (view->image);
 }
 
 static void

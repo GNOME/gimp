@@ -23,10 +23,10 @@
 void   gimp_image_color_hash_init           (void);
 void   gimp_image_color_hash_exit           (void);
 
-void   gimp_image_color_hash_invalidate     (GimpImage       *gimage,
+void   gimp_image_color_hash_invalidate     (GimpImage       *image,
 					     gint             index);
 
-gint   gimp_image_color_hash_rgb_to_indexed (const GimpImage *gimage,
+gint   gimp_image_color_hash_rgb_to_indexed (const GimpImage *image,
 					     gint             r,
 					     gint             g,
 					     gint             b);

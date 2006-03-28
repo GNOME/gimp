@@ -21,7 +21,7 @@
 
 
 void   gimp_display_connect    (GimpDisplay *gdisp,
-                                GimpImage   *gimage);
+                                GimpImage   *image);
 void   gimp_display_disconnect (GimpDisplay *gdisp);
 
 

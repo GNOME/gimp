@@ -34,17 +34,17 @@
 
 GimpTemplate *
 gimp_image_new_get_last_template (Gimp      *gimp,
-                                  GimpImage *gimage)
+                                  GimpImage *image)
 {
   GimpTemplate *template;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), NULL);
 
   template = gimp_template_new ("image new values");
 
-  if (gimage)
-    gimp_template_set_from_image (template, gimage);
+  if (image)
+    gimp_template_set_from_image (template, image);
   else
     gimp_config_sync (G_OBJECT (gimp->image_new_last_template),
                       G_OBJECT (template), 0);

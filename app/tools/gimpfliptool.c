@@ -152,9 +152,9 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
 
   options = GIMP_FLIP_OPTIONS (tool->tool_info->tool_options);
 
-  if (gimp_image_coords_in_active_drawable (gdisp->gimage, coords))
+  if (gimp_image_coords_in_active_drawable (gdisp->image, coords))
     {
-      GimpChannel *selection = gimp_image_get_mask (gdisp->gimage);
+      GimpChannel *selection = gimp_image_get_mask (gdisp->image);
 
       /*  Is there a selected region? If so, is cursor inside? */
       if (gimp_channel_is_empty (selection) ||

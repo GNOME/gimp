@@ -62,7 +62,7 @@ static void              tool_manager_set    (Gimp            *gimp,
 static void   tool_manager_tool_changed      (GimpContext     *user_context,
                                               GimpToolInfo    *tool_info,
                                               gpointer         data);
-static void   tool_manager_image_clean_dirty (GimpImage       *gimage,
+static void   tool_manager_image_clean_dirty (GimpImage       *image,
                                               GimpDirtyMask    dirty_mask,
                                               GimpToolManager *tool_manager);
 
@@ -226,7 +226,7 @@ tool_manager_initialize_active (Gimp        *gimp,
 
       if (gimp_tool_initialize (tool, gdisp))
         {
-          tool->drawable = gimp_image_active_drawable (gdisp->gimage);
+          tool->drawable = gimp_image_active_drawable (gdisp->image);
 
           return TRUE;
         }
@@ -542,7 +542,7 @@ tool_manager_tool_changed (GimpContext  *user_context,
 }
 
 static void
-tool_manager_image_clean_dirty (GimpImage       *gimage,
+tool_manager_image_clean_dirty (GimpImage       *image,
                                 GimpDirtyMask    dirty_mask,
                                 GimpToolManager *tool_manager)
 {
@@ -554,11 +554,11 @@ tool_manager_image_clean_dirty (GimpImage       *gimage,
     {
       GimpDisplay *gdisp = active_tool->gdisp;
 
-      if (! gdisp || gdisp->gimage != gimage)
+      if (! gdisp || gdisp->image != image)
         if (GIMP_IS_DRAW_TOOL (active_tool))
           gdisp = GIMP_DRAW_TOOL (active_tool)->gdisp;
 
-      if (gdisp && gdisp->gimage == gimage)
-        gimp_context_tool_changed (gimp_get_user_context (gimage->gimp));
+      if (gdisp && gdisp->image == image)
+        gimp_context_tool_changed (gimp_get_user_context (image->gimp));
     }
 }

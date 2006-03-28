@@ -48,7 +48,7 @@ struct _GimpUndo
 {
   GimpViewable      parent_instance;
 
-  GimpImage        *gimage;         /* the image this undo is part of     */
+  GimpImage        *image;          /* the image this undo is part of     */
   guint             time;           /* time of undo step construction     */
 
   GimpUndoType      undo_type;      /* undo type                          */

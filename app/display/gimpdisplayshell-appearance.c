@@ -60,7 +60,7 @@
 #define IS_ACTIVE_DISPLAY(shell) \
   ((shell)->gdisp == \
    gimp_context_get_display (gimp_get_user_context \
-                             ((shell)->gdisp->gimage->gimp)))
+                             ((shell)->gdisp->image->gimp)))
 
 
 void
@@ -340,7 +340,7 @@ gimp_display_shell_set_show_guides (GimpDisplayShell *shell,
 
   g_object_set (options, "show-guides", show, NULL);
 
-  if (shell->gdisp->gimage->guides)
+  if (shell->gdisp->image->guides)
     gimp_display_shell_expose_full (shell);
 
   SET_ACTIVE (shell->menubar_manager, "view-show-guides", show);
@@ -369,7 +369,7 @@ gimp_display_shell_set_show_grid (GimpDisplayShell *shell,
 
   g_object_set (options, "show-grid", show, NULL);
 
-  if (shell->gdisp->gimage->grid)
+  if (shell->gdisp->image->grid)
     gimp_display_shell_expose_full (shell);
 
   SET_ACTIVE (shell->menubar_manager, "view-show-grid", show);
@@ -398,7 +398,7 @@ gimp_display_shell_set_show_sample_points (GimpDisplayShell *shell,
 
   g_object_set (options, "show-sample-points", show, NULL);
 
-  if (shell->gdisp->gimage->sample_points)
+  if (shell->gdisp->image->sample_points)
     gimp_display_shell_expose_full (shell);
 
   SET_ACTIVE (shell->menubar_manager, "view-show-sample-points", show);

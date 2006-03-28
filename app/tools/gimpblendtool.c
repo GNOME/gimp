@@ -140,7 +140,7 @@ gimp_blend_tool_button_press (GimpTool        *tool,
   GimpDrawable  *drawable;
   gint           off_x, off_y;
 
-  drawable = gimp_image_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->image);
 
   switch (gimp_drawable_type (drawable))
     {
@@ -180,13 +180,13 @@ gimp_blend_tool_button_release (GimpTool        *tool,
   GimpPaintOptions *paint_options;
   GimpBlendOptions *options;
   GimpContext      *context;
-  GimpImage        *gimage;
+  GimpImage        *image;
 
   paint_options = GIMP_PAINT_OPTIONS (tool->tool_info->tool_options);
   options       = GIMP_BLEND_OPTIONS (paint_options);
   context       = GIMP_CONTEXT (options);
 
-  gimage = gdisp->gimage;
+  image = gdisp->image;
 
   gimp_tool_pop_status (tool, gdisp);
 
@@ -204,7 +204,7 @@ gimp_blend_tool_button_release (GimpTool        *tool,
       progress = gimp_progress_start (GIMP_PROGRESS (gdisp),
                                       _("Blending"), FALSE);
 
-      gimp_drawable_blend (gimp_image_active_drawable (gimage),
+      gimp_drawable_blend (gimp_image_active_drawable (image),
                            context,
                            GIMP_CUSTOM_MODE,
                            gimp_context_get_paint_mode (context),
@@ -226,7 +226,7 @@ gimp_blend_tool_button_release (GimpTool        *tool,
       if (progress)
         gimp_progress_end (progress);
 
-      gimp_image_flush (gimage);
+      gimp_image_flush (image);
     }
 }
 
@@ -242,7 +242,7 @@ gimp_blend_tool_motion (GimpTool        *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (gdisp->gimage)),
+  gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (gdisp->image)),
                      &off_x, &off_y);
 
   /*  Get the current coordinates  */
@@ -272,7 +272,7 @@ gimp_blend_tool_cursor_update (GimpTool        *tool,
                                GdkModifierType  state,
                                GimpDisplay     *gdisp)
 {
-  switch (gimp_drawable_type (gimp_image_active_drawable (gdisp->gimage)))
+  switch (gimp_drawable_type (gimp_image_active_drawable (gdisp->image)))
     {
     case GIMP_INDEXED_IMAGE:
     case GIMP_INDEXEDA_IMAGE:

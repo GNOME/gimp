@@ -71,13 +71,13 @@ channels_edit_attributes_cmd_callback (GtkAction *action,
                                        gpointer   data)
 {
   ChannelOptionsDialog *options;
-  GimpImage            *gimage;
+  GimpImage            *image;
   GimpChannel          *channel;
   GtkWidget            *widget;
-  return_if_no_channel (gimage, channel, data);
+  return_if_no_channel (image, channel, data);
   return_if_no_widget (widget, data);
 
-  options = channel_options_dialog_new (gimage,
+  options = channel_options_dialog_new (image,
                                         action_data_get_context (data),
                                         channel,
                                         widget,
@@ -104,12 +104,12 @@ channels_new_cmd_callback (GtkAction *action,
                            gpointer   data)
 {
   ChannelOptionsDialog *options;
-  GimpImage            *gimage;
+  GimpImage            *image;
   GtkWidget            *widget;
-  return_if_no_image (gimage, data);
+  return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  options = channel_options_dialog_new (gimage,
+  options = channel_options_dialog_new (image,
                                         action_data_get_context (data),
                                         NULL,
                                         widget,
@@ -136,11 +136,11 @@ void
 channels_new_last_vals_cmd_callback (GtkAction *action,
                                      gpointer   data)
 {
-  GimpImage   *gimage;
+  GimpImage   *image;
   GimpChannel *new_channel;
   gint         width, height;
   GimpRGB      color;
-  return_if_no_image (gimage, data);
+  return_if_no_image (image, data);
 
   if (GIMP_IS_CHANNEL (GIMP_ACTION (action)->viewable))
     {
@@ -152,15 +152,15 @@ channels_new_last_vals_cmd_callback (GtkAction *action,
     }
   else
     {
-      width  = gimp_image_get_width (gimage);
-      height = gimp_image_get_height (gimage);
+      width  = gimp_image_get_width (image);
+      height = gimp_image_get_height (image);
       color  = channel_color;
     }
 
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                _("New Channel"));
 
-  new_channel = gimp_channel_new (gimage, width, height,
+  new_channel = gimp_channel_new (image, width, height,
                                   channel_name ? channel_name :
                                   _("New Channel"), &color);
 
@@ -168,66 +168,66 @@ channels_new_last_vals_cmd_callback (GtkAction *action,
                               action_data_get_context (data),
                               GIMP_TRANSPARENT_FILL);
 
-  gimp_image_add_channel (gimage, new_channel, -1);
+  gimp_image_add_channel (image, new_channel, -1);
 
-  gimp_image_undo_group_end (gimage);
+  gimp_image_undo_group_end (image);
 
-  gimp_image_flush (gimage);
+  gimp_image_flush (image);
 }
 
 void
 channels_raise_cmd_callback (GtkAction *action,
                              gpointer   data)
 {
-  GimpImage   *gimage;
+  GimpImage   *image;
   GimpChannel *channel;
-  return_if_no_channel (gimage, channel, data);
+  return_if_no_channel (image, channel, data);
 
-  gimp_image_raise_channel (gimage, channel);
-  gimp_image_flush (gimage);
+  gimp_image_raise_channel (image, channel);
+  gimp_image_flush (image);
 }
 
 void
 channels_raise_to_top_cmd_callback (GtkAction *action,
                                     gpointer   data)
 {
-  GimpImage   *gimage;
+  GimpImage   *image;
   GimpChannel *channel;
-  return_if_no_channel (gimage, channel, data);
+  return_if_no_channel (image, channel, data);
 
-  gimp_image_raise_channel_to_top (gimage, channel);
-  gimp_image_flush (gimage);
+  gimp_image_raise_channel_to_top (image, channel);
+  gimp_image_flush (image);
 }
 
 void
 channels_lower_cmd_callback (GtkAction *action,
                              gpointer   data)
 {
-  GimpImage   *gimage;
+  GimpImage   *image;
   GimpChannel *channel;
-  return_if_no_channel (gimage, channel, data);
+  return_if_no_channel (image, channel, data);
 
-  gimp_image_lower_channel (gimage, channel);
-  gimp_image_flush (gimage);
+  gimp_image_lower_channel (image, channel);
+  gimp_image_flush (image);
 }
 
 void
 channels_lower_to_bottom_cmd_callback (GtkAction *action,
                                        gpointer   data)
 {
-  GimpImage   *gimage;
+  GimpImage   *image;
   GimpChannel *channel;
-  return_if_no_channel (gimage, channel, data);
+  return_if_no_channel (image, channel, data);
 
-  gimp_image_lower_channel_to_bottom (gimage, channel);
-  gimp_image_flush (gimage);
+  gimp_image_lower_channel_to_bottom (image, channel);
+  gimp_image_flush (image);
 }
 
 void
 channels_duplicate_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
-  GimpImage   *gimage;
+  GimpImage   *image;
   GimpChannel *new_channel;
 
   if (GIMP_IS_COMPONENT_EDITOR (data))
@@ -235,7 +235,7 @@ channels_duplicate_cmd_callback (GtkAction *action,
       GimpChannelType  component;
       const gchar     *desc;
       gchar           *name;
-      return_if_no_image (gimage, data);
+      return_if_no_image (image, data);
 
       component = GIMP_COMPONENT_EDITOR (data)->clicked_component;
 
@@ -244,7 +244,7 @@ channels_duplicate_cmd_callback (GtkAction *action,
 
       name = g_strdup_printf (_("%s Channel Copy"), desc);
 
-      new_channel = gimp_channel_new_from_component (gimage, component,
+      new_channel = gimp_channel_new_from_component (image, component,
                                                      name, NULL);
 
       /*  copied components are invisible by default so subsequent copies
@@ -257,7 +257,7 @@ channels_duplicate_cmd_callback (GtkAction *action,
   else
     {
       GimpChannel *channel;
-      return_if_no_channel (gimage, channel, data);
+      return_if_no_channel (image, channel, data);
 
       new_channel =
         GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (channel),
@@ -265,20 +265,20 @@ channels_duplicate_cmd_callback (GtkAction *action,
                                            TRUE));
     }
 
-  gimp_image_add_channel (gimage, new_channel, -1);
-  gimp_image_flush (gimage);
+  gimp_image_add_channel (image, new_channel, -1);
+  gimp_image_flush (image);
 }
 
 void
 channels_delete_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
-  GimpImage   *gimage;
+  GimpImage   *image;
   GimpChannel *channel;
-  return_if_no_channel (gimage, channel, data);
+  return_if_no_channel (image, channel, data);
 
-  gimp_image_remove_channel (gimage, channel);
-  gimp_image_flush (gimage);
+  gimp_image_remove_channel (image, channel);
+  gimp_image_flush (image);
 }
 
 void
@@ -287,32 +287,32 @@ channels_to_selection_cmd_callback (GtkAction *action,
                                     gpointer   data)
 {
   GimpChannelOps  op;
-  GimpImage      *gimage;
+  GimpImage      *image;
 
   op = (GimpChannelOps) value;
 
   if (GIMP_IS_COMPONENT_EDITOR (data))
     {
       GimpChannelType component;
-      return_if_no_image (gimage, data);
+      return_if_no_image (image, data);
 
       component = GIMP_COMPONENT_EDITOR (data)->clicked_component;
 
-      gimp_channel_select_component (gimp_image_get_mask (gimage), component,
+      gimp_channel_select_component (gimp_image_get_mask (image), component,
                                      op, FALSE, 0.0, 0.0);
     }
   else
     {
       GimpChannel *channel;
-      return_if_no_channel (gimage, channel, data);
+      return_if_no_channel (image, channel, data);
 
-      gimp_channel_select_channel (gimp_image_get_mask (gimage),
+      gimp_channel_select_channel (gimp_image_get_mask (image),
                                    _("Channel to Selection"),
                                    channel, 0, 0,
                                    op, FALSE, 0.0, 0.0);
     }
 
-  gimp_image_flush (gimage);
+  gimp_image_flush (image);
 }
 
 
@@ -337,7 +337,7 @@ channels_new_channel_response (GtkWidget            *widget,
 
       if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (options->save_sel_checkbutton)))
 	{
-	  GimpChannel *selection = gimp_image_get_mask (options->gimage);
+	  GimpChannel *selection = gimp_image_get_mask (options->image);
 
 	  new_channel =
             GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (selection),
@@ -349,9 +349,9 @@ channels_new_channel_response (GtkWidget            *widget,
 	}
       else
         {
-          new_channel = gimp_channel_new (options->gimage,
-                                          options->gimage->width,
-                                          options->gimage->height,
+          new_channel = gimp_channel_new (options->image,
+                                          options->image->width,
+                                          options->image->height,
                                           channel_name,
                                           &channel_color);
 
@@ -360,8 +360,8 @@ channels_new_channel_response (GtkWidget            *widget,
                                       GIMP_TRANSPARENT_FILL);
         }
 
-      gimp_image_add_channel (options->gimage, new_channel, -1);
-      gimp_image_flush (options->gimage);
+      gimp_image_add_channel (options->image, new_channel, -1);
+      gimp_image_flush (options->image);
     }
 
   gtk_widget_destroy (options->dialog);
@@ -392,7 +392,7 @@ channels_edit_channel_response (GtkWidget            *widget,
         color_changed = TRUE;
 
       if (name_changed && color_changed)
-        gimp_image_undo_group_start (options->gimage,
+        gimp_image_undo_group_start (options->image,
                                      GIMP_UNDO_GROUP_ITEM_PROPERTIES,
                                      _("Channel Attributes"));
 
@@ -403,10 +403,10 @@ channels_edit_channel_response (GtkWidget            *widget,
         gimp_channel_set_color (channel, &color, TRUE);
 
       if (name_changed && color_changed)
-        gimp_image_undo_group_end (options->gimage);
+        gimp_image_undo_group_end (options->image);
 
       if (name_changed || color_changed)
-        gimp_image_flush (options->gimage);
+        gimp_image_flush (options->image);
     }
 
   gtk_widget_destroy (options->dialog);

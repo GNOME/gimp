@@ -22,7 +22,7 @@
 #define __GRID_DIALOG_H__
 
 
-GtkWidget * grid_dialog_new (GimpImage *gimage,
+GtkWidget * grid_dialog_new (GimpImage *image,
                              GtkWidget *parent);
 
 

@@ -235,14 +235,14 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   GimpInk        *ink     = GIMP_INK (paint_core);
   GimpInkOptions *options = GIMP_INK_OPTIONS (paint_options);
   GimpContext    *context = GIMP_CONTEXT (paint_options);
-  GimpImage      *gimage;
+  GimpImage      *image;
   Blob           *blob_union = NULL;
   Blob           *blob_to_render;
   TempBuf        *area;
   guchar          col[MAX_CHANNELS];
   PixelRegion     blob_maskPR;
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (! ink->last_blob)
     {
@@ -329,7 +329,7 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   if (! area)
     return;
 
-  gimp_image_get_foreground (gimage, drawable, context, col);
+  gimp_image_get_foreground (image, drawable, context, col);
 
   /*  set the alpha channel  */
   col[paint_core->canvas_buf->bytes - 1] = OPAQUE_OPACITY;

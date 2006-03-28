@@ -38,7 +38,7 @@ struct _GimpImageEditor
   GimpEditor   parent_instance;
 
   GimpContext *context;
-  GimpImage   *gimage;
+  GimpImage   *image;
 };
 
 struct _GimpImageEditorClass
@@ -47,14 +47,14 @@ struct _GimpImageEditorClass
 
   /*  virtual function  */
   void (* set_image) (GimpImageEditor *editor,
-                      GimpImage       *gimage);
+                      GimpImage       *image);
 };
 
 
 GType   gimp_image_editor_get_type  (void) G_GNUC_CONST;
 
 void    gimp_image_editor_set_image (GimpImageEditor *editor,
-                                     GimpImage       *gimage);
+                                     GimpImage       *image);
 
 
 #endif /* __GIMP_IMAGE_EDITOR_H__ */

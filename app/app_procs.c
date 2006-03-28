@@ -318,16 +318,16 @@ app_run (const gchar         *full_prog_name,
             }
           else
             {
-              GimpImage         *gimage;
+              GimpImage         *image;
               GimpPDBStatusType  status;
 
-              gimage = file_open_with_display (gimp,
-                                               gimp_get_user_context (gimp),
-                                               NULL,
-                                               uri,
-                                               &status, &error);
+              image = file_open_with_display (gimp,
+                                              gimp_get_user_context (gimp),
+                                              NULL,
+                                              uri,
+                                              &status, &error);
 
-              if (! gimage && status != GIMP_PDB_CANCEL)
+              if (! image && status != GIMP_PDB_CANCEL)
                 {
                   gchar *filename = file_utils_uri_to_utf8_filename (uri);
 

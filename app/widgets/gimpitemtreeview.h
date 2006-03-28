@@ -26,21 +26,21 @@
 #include "gimpcontainertreeview.h"
 
 
-typedef GimpContainer * (* GimpGetContainerFunc) (const GimpImage *gimage);
-typedef GimpItem      * (* GimpGetItemFunc)      (const GimpImage *gimage);
-typedef void            (* GimpSetItemFunc)      (GimpImage       *gimage,
+typedef GimpContainer * (* GimpGetContainerFunc) (const GimpImage *image);
+typedef GimpItem      * (* GimpGetItemFunc)      (const GimpImage *image);
+typedef void            (* GimpSetItemFunc)      (GimpImage       *image,
                                                   GimpItem        *item);
-typedef void            (* GimpReorderItemFunc)  (GimpImage       *gimage,
+typedef void            (* GimpReorderItemFunc)  (GimpImage       *image,
                                                   GimpItem        *item,
                                                   gint             new_index,
                                                   gboolean         push_undo,
                                                   const gchar     *undo_desc);
-typedef void            (* GimpAddItemFunc)      (GimpImage       *gimage,
+typedef void            (* GimpAddItemFunc)      (GimpImage       *image,
                                                   GimpItem        *item,
                                                   gint             index);
-typedef void            (* GimpRemoveItemFunc)   (GimpImage       *gimage,
+typedef void            (* GimpRemoveItemFunc)   (GimpImage       *image,
                                                   GimpItem        *item);
-typedef GimpItem      * (* GimpNewItemFunc)      (GimpImage       *gimage);
+typedef GimpItem      * (* GimpNewItemFunc)      (GimpImage       *image);
 
 
 #define GIMP_TYPE_ITEM_TREE_VIEW            (gimp_item_tree_view_get_type ())
@@ -58,7 +58,7 @@ struct _GimpItemTreeView
   GimpContainerTreeView  parent_instance;
 
   GimpContext           *context;
-  GimpImage             *gimage;
+  GimpImage             *image;
 
   GtkWidget             *edit_button;
   GtkWidget             *new_button;
@@ -83,7 +83,7 @@ struct _GimpItemTreeViewClass
 
   /*  signals  */
   void (* set_image) (GimpItemTreeView *view,
-                      GimpImage        *gimage);
+                      GimpImage        *image);
 
   GType                 item_type;
   const gchar          *signal_name;
@@ -120,13 +120,13 @@ GType       gimp_item_tree_view_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_item_tree_view_new      (GType            view_type,
                                           gint             view_size,
                                           gint             view_border_width,
-                                          GimpImage       *gimage,
+                                          GimpImage       *image,
                                           GimpMenuFactory *menu_facotry,
                                           const gchar     *menu_identifier,
                                           const gchar     *ui_identifier);
 
 void       gimp_item_tree_view_set_image (GimpItemTreeView *view,
-                                          GimpImage        *gimage);
+                                          GimpImage        *image);
 
 
 #endif  /*  __GIMP_ITEM_TREE_VIEW_H__  */

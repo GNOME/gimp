@@ -157,13 +157,13 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
                    GimpPaintOptions *paint_options)
 {
   GimpSmudge  *smudge = GIMP_SMUDGE (paint_core);
-  GimpImage   *gimage;
+  GimpImage   *image;
   TempBuf     *area;
   PixelRegion  srcPR;
   gint         bytes;
   gint         x, y, w, h;
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (gimp_drawable_is_indexed (drawable))
     return FALSE;
@@ -233,19 +233,19 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   GimpSmudgeOptions   *options          = GIMP_SMUDGE_OPTIONS (paint_options);
   GimpContext         *context          = GIMP_CONTEXT (paint_options);
   GimpPressureOptions *pressure_options = paint_options->pressure_options;
-  GimpImage           *gimage;
+  GimpImage           *image;
   TempBuf             *area;
   PixelRegion          srcPR, destPR, tempPR;
   gdouble              rate;
   gdouble              opacity;
   gint                 x, y, w, h;
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (gimp_drawable_is_indexed (drawable))
     return;
 
-  opacity = gimp_paint_options_get_fade (paint_options, gimage,
+  opacity = gimp_paint_options_get_fade (paint_options, image,
                                          paint_core->pixel_dist);
   if (opacity == 0.0)
     return;

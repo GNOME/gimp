@@ -40,46 +40,46 @@
 /*  public functions  */
 
 void
-gimp_image_set_quick_mask_state (GimpImage *gimage,
+gimp_image_set_quick_mask_state (GimpImage *image,
                                  gboolean   quick_mask_state)
 {
   GimpChannel *selection;
   GimpChannel *mask;
 
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  if (quick_mask_state == gimage->quick_mask_state)
+  if (quick_mask_state == image->quick_mask_state)
     return;
 
   /*  set image->quick_mask_state early so we can return early when
    *  being called recursively
    */
-  gimage->quick_mask_state = quick_mask_state ? TRUE : FALSE;
+  image->quick_mask_state = quick_mask_state ? TRUE : FALSE;
 
-  selection = gimp_image_get_mask (gimage);
-  mask      = gimp_image_get_quick_mask (gimage);
+  selection = gimp_image_get_mask (image);
+  mask      = gimp_image_get_quick_mask (image);
 
   if (quick_mask_state)
     {
       if (! mask)
         {
-          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_QUICK_MASK,
+          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_QUICK_MASK,
                                        _("Enable Quick Mask"));
 
           if (gimp_channel_is_empty (selection))
             {
               /* if no selection */
 
-              GimpLayer *floating_sel = gimp_image_floating_sel (gimage);
+              GimpLayer *floating_sel = gimp_image_floating_sel (image);
 
               if (floating_sel)
                 floating_sel_to_layer (floating_sel);
 
-              mask = gimp_channel_new (gimage,
-                                       gimage->width,
-                                       gimage->height,
+              mask = gimp_channel_new (image,
+                                       image->width,
+                                       image->height,
                                        GIMP_IMAGE_QUICK_MASK_NAME,
-                                       &gimage->quick_mask_color);
+                                       &image->quick_mask_color);
 
               /* Clear the mask */
               gimp_channel_clear (mask, NULL, FALSE);
@@ -95,97 +95,97 @@ gimp_image_set_quick_mask_state (GimpImage *gimage,
               /* Clear the selection */
               gimp_channel_clear (selection, NULL, TRUE);
 
-              gimp_channel_set_color (mask, &gimage->quick_mask_color, FALSE);
+              gimp_channel_set_color (mask, &image->quick_mask_color, FALSE);
               gimp_item_rename (GIMP_ITEM (mask), GIMP_IMAGE_QUICK_MASK_NAME);
             }
 
-          if (gimage->quick_mask_inverted)
+          if (image->quick_mask_inverted)
             gimp_channel_invert (mask, FALSE);
 
-          gimp_image_add_channel (gimage, mask, 0);
+          gimp_image_add_channel (image, mask, 0);
 
-          gimp_image_undo_group_end (gimage);
+          gimp_image_undo_group_end (image);
         }
     }
   else
     {
       if (mask)
         {
-          GimpLayer *floating_sel = gimp_image_floating_sel (gimage);
+          GimpLayer *floating_sel = gimp_image_floating_sel (image);
 
-          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_QUICK_MASK,
+          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_QUICK_MASK,
                                        _("Disable Quick Mask"));
 
-          if (gimage->quick_mask_inverted)
+          if (image->quick_mask_inverted)
             gimp_channel_invert (mask, TRUE);
 
           if (floating_sel && floating_sel->fs.drawable == GIMP_DRAWABLE (mask))
             floating_sel_anchor (floating_sel);
 
-          gimp_selection_load (gimp_image_get_mask (gimage), mask);
-          gimp_image_remove_channel (gimage, mask);
+          gimp_selection_load (gimp_image_get_mask (image), mask);
+          gimp_image_remove_channel (image, mask);
 
-          gimp_image_undo_group_end (gimage);
+          gimp_image_undo_group_end (image);
         }
     }
 
-  gimp_image_quick_mask_changed (gimage);
+  gimp_image_quick_mask_changed (image);
 }
 
 gboolean
-gimp_image_get_quick_mask_state (const GimpImage *gimage)
+gimp_image_get_quick_mask_state (const GimpImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  return gimage->quick_mask_state;
+  return image->quick_mask_state;
 }
 
 void
-gimp_image_set_quick_mask_color (GimpImage     *gimage,
+gimp_image_set_quick_mask_color (GimpImage     *image,
                                  const GimpRGB *color)
 {
   GimpChannel *quick_mask;
 
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (color != NULL);
 
-  gimage->quick_mask_color = *color;
+  image->quick_mask_color = *color;
 
-  quick_mask = gimp_image_get_quick_mask (gimage);
+  quick_mask = gimp_image_get_quick_mask (image);
   if (quick_mask)
     gimp_channel_set_color (quick_mask, color, TRUE);
 }
 
 void
-gimp_image_get_quick_mask_color (const GimpImage *gimage,
+gimp_image_get_quick_mask_color (const GimpImage *image,
                                  GimpRGB         *color)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (color != NULL);
 
-  *color = gimage->quick_mask_color;
+  *color = image->quick_mask_color;
 }
 
 GimpChannel *
-gimp_image_get_quick_mask (const GimpImage *gimage)
+gimp_image_get_quick_mask (const GimpImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return gimp_image_get_channel_by_name (gimage, GIMP_IMAGE_QUICK_MASK_NAME);
+  return gimp_image_get_channel_by_name (image, GIMP_IMAGE_QUICK_MASK_NAME);
 }
 
 void
-gimp_image_quick_mask_invert (GimpImage *gimage)
+gimp_image_quick_mask_invert (GimpImage *image)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  if (gimage->quick_mask_state)
+  if (image->quick_mask_state)
     {
-      GimpChannel *quick_mask = gimp_image_get_quick_mask (gimage);
+      GimpChannel *quick_mask = gimp_image_get_quick_mask (image);
 
       if (quick_mask)
         gimp_channel_invert (quick_mask, TRUE);
     }
 
-  gimage->quick_mask_inverted = ! gimage->quick_mask_inverted;
+  image->quick_mask_inverted = ! image->quick_mask_inverted;
 }

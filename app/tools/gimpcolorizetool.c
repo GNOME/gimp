@@ -143,7 +143,7 @@ gimp_colorize_tool_initialize (GimpTool    *tool,
   GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (tool);
   GimpDrawable     *drawable;
 
-  drawable = gimp_image_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->image);
 
   if (! drawable)
     return FALSE;

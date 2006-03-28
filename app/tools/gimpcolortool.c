@@ -223,7 +223,7 @@ gimp_color_tool_button_press (GimpTool        *tool,
 
   /*  Make the tool active and set its gdisplay & drawable  */
   tool->gdisp    = gdisp;
-  tool->drawable = gimp_image_active_drawable (gdisp->gimage);
+  tool->drawable = gimp_image_active_drawable (gdisp->image);
   gimp_tool_control_activate (tool->control);
 
   if (! color_tool->enabled)
@@ -305,7 +305,7 @@ gimp_color_tool_button_release (GimpTool        *tool,
         {
           if (color_tool->sample_point)
             {
-              gimp_image_remove_sample_point (gdisp->gimage,
+              gimp_image_remove_sample_point (gdisp->image,
                                               color_tool->sample_point, TRUE);
               color_tool->sample_point = NULL;
             }
@@ -314,7 +314,7 @@ gimp_color_tool_button_release (GimpTool        *tool,
         {
           if (color_tool->sample_point)
             {
-              gimp_image_move_sample_point (gdisp->gimage,
+              gimp_image_move_sample_point (gdisp->image,
                                             color_tool->sample_point,
                                             color_tool->sample_point_x,
                                             color_tool->sample_point_y,
@@ -323,7 +323,7 @@ gimp_color_tool_button_release (GimpTool        *tool,
           else
             {
               color_tool->sample_point =
-                gimp_image_add_sample_point_at_pos (gdisp->gimage,
+                gimp_image_add_sample_point_at_pos (gdisp->image,
                                                     color_tool->sample_point_x,
                                                     color_tool->sample_point_y,
                                                     TRUE);
@@ -331,7 +331,7 @@ gimp_color_tool_button_release (GimpTool        *tool,
         }
 
       gimp_display_shell_selection_visibility (shell, GIMP_SELECTION_RESUME);
-      gimp_image_flush (gdisp->gimage);
+      gimp_image_flush (gdisp->image);
 
       if (color_tool->sample_point)
 	gimp_display_shell_draw_sample_point (shell, color_tool->sample_point,
@@ -456,17 +456,17 @@ gimp_color_tool_oper_update (GimpTool        *tool,
       gint snap_distance;
 
       snap_distance =
-        GIMP_DISPLAY_CONFIG (gdisp->gimage->gimp->config)->snap_distance;
+        GIMP_DISPLAY_CONFIG (gdisp->image->gimp->config)->snap_distance;
 
       sample_point =
-        gimp_image_find_sample_point (gdisp->gimage,
+        gimp_image_find_sample_point (gdisp->image,
                                       coords->x, coords->y,
                                       FUNSCALEX (shell, snap_distance),
                                       FUNSCALEY (shell, snap_distance));
     }
 
   if (color_tool->sample_point && color_tool->sample_point != sample_point)
-    gimp_image_update_sample_point (shell->gdisp->gimage,
+    gimp_image_update_sample_point (shell->gdisp->image,
                                     color_tool->sample_point);
 
   color_tool->sample_point = sample_point;
@@ -498,11 +498,11 @@ gimp_color_tool_cursor_update (GimpTool        *tool,
           GimpCursorType     cursor   = GIMP_CURSOR_BAD;
           GimpCursorModifier modifier = GIMP_CURSOR_MODIFIER_NONE;
 
-          if (coords->x > 0 && coords->x < gdisp->gimage->width  &&
-              coords->y > 0 && coords->y < gdisp->gimage->height &&
+          if (coords->x > 0 && coords->x < gdisp->image->width  &&
+              coords->y > 0 && coords->y < gdisp->image->height &&
 
               (color_tool->options->sample_merged ||
-               gimp_image_coords_in_active_drawable (gdisp->gimage, coords)))
+               gimp_image_coords_in_active_drawable (gdisp->image, coords)))
             {
               cursor = GIMP_CURSOR_MOUSE;
             }
@@ -549,13 +549,13 @@ gimp_color_tool_draw (GimpDrawTool *draw_tool)
         {
           gimp_draw_tool_draw_line (draw_tool,
                                     0, color_tool->sample_point_y + 0.5,
-                                    draw_tool->gdisp->gimage->width,
+                                    draw_tool->gdisp->image->width,
                                     color_tool->sample_point_y + 0.5,
                                     FALSE);
           gimp_draw_tool_draw_line (draw_tool,
                                     color_tool->sample_point_x + 0.5, 0,
                                     color_tool->sample_point_x + 0.5,
-                                    draw_tool->gdisp->gimage->height,
+                                    draw_tool->gdisp->image->height,
                                     FALSE);
         }
     }
@@ -589,7 +589,7 @@ gimp_color_tool_real_pick (GimpColorTool *color_tool,
   g_return_val_if_fail (tool->gdisp != NULL, FALSE);
   g_return_val_if_fail (tool->drawable != NULL, FALSE);
 
-  return gimp_image_pick_color (tool->gdisp->gimage, tool->drawable, x, y,
+  return gimp_image_pick_color (tool->gdisp->image, tool->drawable, x, y,
                                 color_tool->options->sample_merged,
                                 color_tool->options->sample_average,
                                 color_tool->options->average_radius,

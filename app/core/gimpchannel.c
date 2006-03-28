@@ -367,8 +367,8 @@ gimp_channel_get_description (GimpViewable  *viewable,
 static gboolean
 gimp_channel_is_attached (GimpItem *item)
 {
-  return (GIMP_IS_IMAGE (item->gimage) &&
-          gimp_container_have (item->gimage->channels, GIMP_OBJECT (item)));
+  return (GIMP_IS_IMAGE (item->image) &&
+          gimp_container_have (item->image->channels, GIMP_OBJECT (item)));
 }
 
 static GimpItem *
@@ -1465,7 +1465,7 @@ gimp_channel_validate (TileManager *tm,
 /*  public functions  */
 
 GimpChannel *
-gimp_channel_new (GimpImage     *gimage,
+gimp_channel_new (GimpImage     *image,
                   gint           width,
                   gint           height,
                   const gchar   *name,
@@ -1473,12 +1473,12 @@ gimp_channel_new (GimpImage     *gimage,
 {
   GimpChannel *channel;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   channel = g_object_new (GIMP_TYPE_CHANNEL, NULL);
 
   gimp_drawable_configure (GIMP_DRAWABLE (channel),
-                           gimage,
+                           image,
                            0, 0, width, height,
                            GIMP_GRAY_IMAGE, name);
 
@@ -1495,7 +1495,7 @@ gimp_channel_new (GimpImage     *gimage,
 }
 
 GimpChannel *
-gimp_channel_new_from_alpha (GimpImage     *gimage,
+gimp_channel_new_from_alpha (GimpImage     *image,
                              GimpDrawable  *drawable,
                              const gchar   *name,
                              const GimpRGB *color)
@@ -1505,14 +1505,14 @@ gimp_channel_new_from_alpha (GimpImage     *gimage,
   gint         height;
   PixelRegion  srcPR, destPR;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_drawable_has_alpha (drawable), NULL);
 
   width  = gimp_item_width  (GIMP_ITEM (drawable));
   height = gimp_item_height (GIMP_ITEM (drawable));
 
-  channel = gimp_channel_new (gimage, width, height, name, color);
+  channel = gimp_channel_new (image, width, height, name, color);
 
   gimp_channel_clear (channel, NULL, FALSE);
 
@@ -1529,7 +1529,7 @@ gimp_channel_new_from_alpha (GimpImage     *gimage,
 }
 
 GimpChannel *
-gimp_channel_new_from_component (GimpImage       *gimage,
+gimp_channel_new_from_component (GimpImage       *image,
                                  GimpChannelType  type,
                                  const gchar     *name,
                                  const GimpRGB   *color)
@@ -1542,19 +1542,19 @@ gimp_channel_new_from_component (GimpImage       *gimage,
   gint         height;
   gint         pixel;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  pixel = gimp_image_get_component_index (gimage, type);
+  pixel = gimp_image_get_component_index (image, type);
 
   g_return_val_if_fail (pixel != -1, NULL);
 
-  gimp_pickable_flush (GIMP_PICKABLE (gimage->projection));
+  gimp_pickable_flush (GIMP_PICKABLE (image->projection));
 
-  projection = gimp_pickable_get_tiles (GIMP_PICKABLE (gimage->projection));
+  projection = gimp_pickable_get_tiles (GIMP_PICKABLE (image->projection));
   width  = tile_manager_width  (projection);
   height = tile_manager_height (projection);
 
-  channel = gimp_channel_new (gimage, width, height, name, color);
+  channel = gimp_channel_new (image, width, height, name, color);
 
   pixel_region_init (&src, projection,
                      0, 0, width, height, FALSE);
@@ -1578,9 +1578,9 @@ gimp_channel_set_color (GimpChannel   *channel,
     {
       if (push_undo && gimp_item_is_attached (GIMP_ITEM (channel)))
         {
-          GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (channel));
+          GimpImage *image = gimp_item_get_image (GIMP_ITEM (channel));
 
-          gimp_image_undo_push_channel_color (gimage, _("Set Channel Color"),
+          gimp_image_undo_push_channel_color (image, _("Set Channel Color"),
                                               channel);
         }
 
@@ -1626,9 +1626,9 @@ gimp_channel_set_opacity (GimpChannel *channel,
     {
       if (push_undo && gimp_item_is_attached (GIMP_ITEM (channel)))
         {
-          GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (channel));
+          GimpImage *image = gimp_item_get_image (GIMP_ITEM (channel));
 
-          gimp_image_undo_push_channel_color (gimage, _("Set Channel Opacity"),
+          gimp_image_undo_push_channel_color (image, _("Set Channel Opacity"),
                                               channel);
         }
 
@@ -1687,15 +1687,15 @@ gimp_channel_push_undo (GimpChannel *channel,
 /******************************/
 
 GimpChannel *
-gimp_channel_new_mask (GimpImage *gimage,
+gimp_channel_new_mask (GimpImage *image,
                        gint       width,
                        gint       height)
 {
   GimpChannel *new_channel;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  new_channel = gimp_channel_new (gimage, width, height,
+  new_channel = gimp_channel_new (image, width, height,
                                   _("Selection Mask"), NULL);
 
   tile_manager_set_validate_proc (GIMP_DRAWABLE (new_channel)->tiles,

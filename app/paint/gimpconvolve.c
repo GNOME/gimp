@@ -160,7 +160,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   GimpConvolveOptions *options          = GIMP_CONVOLVE_OPTIONS (paint_options);
   GimpContext         *context          = GIMP_CONTEXT (paint_options);
   GimpPressureOptions *pressure_options = paint_options->pressure_options;
-  GimpImage           *gimage;
+  GimpImage           *image;
   TempBuf             *area;
   guchar              *temp_data;
   PixelRegion          srcPR;
@@ -172,7 +172,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   gint                 marginx    = 0;
   gint                 marginy    = 0;
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (gimp_drawable_is_indexed (drawable))
     return;
@@ -182,7 +182,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
       brush_core->brush->mask->height < matrix_size)
     return;
 
-  opacity = gimp_paint_options_get_fade (paint_options, gimage,
+  opacity = gimp_paint_options_get_fade (paint_options, image,
                                          paint_core->pixel_dist);
   if (opacity == 0.0)
     return;

@@ -411,7 +411,7 @@ void
 layers_actions_update (GimpActionGroup *group,
                        gpointer         data)
 {
-  GimpImage     *gimage     = action_data_get_image (data);
+  GimpImage     *image     = action_data_get_image (data);
   GimpLayer     *layer      = NULL;
   GimpLayerMask *mask       = NULL;     /*  layer mask             */
   gboolean       fs         = FALSE;    /*  floating sel           */
@@ -424,14 +424,14 @@ layers_actions_update (GimpActionGroup *group,
   GList         *next       = NULL;
   GList         *prev       = NULL;
 
-  if (gimage)
+  if (image)
     {
-      fs      = (gimp_image_floating_sel (gimage) != NULL);
-      ac      = (gimp_image_get_active_channel (gimage) != NULL);
-      sel     = ! gimp_channel_is_empty (gimp_image_get_mask (gimage));
-      indexed = (gimp_image_base_type (gimage) == GIMP_INDEXED);
+      fs      = (gimp_image_floating_sel (image) != NULL);
+      ac      = (gimp_image_get_active_channel (image) != NULL);
+      sel     = ! gimp_channel_is_empty (gimp_image_get_mask (image));
+      indexed = (gimp_image_base_type (image) == GIMP_INDEXED);
 
-      layer = gimp_image_get_active_layer (gimage);
+      layer = gimp_image_get_active_layer (image);
 
       if (layer)
         {
@@ -441,7 +441,7 @@ layers_actions_update (GimpActionGroup *group,
           lock_alpha = gimp_layer_get_lock_alpha (layer);
           alpha      = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
-          list = g_list_find (GIMP_LIST (gimage->layers)->list, layer);
+          list = g_list_find (GIMP_LIST (image->layers)->list, layer);
 
           if (list)
             {
@@ -464,8 +464,8 @@ layers_actions_update (GimpActionGroup *group,
   SET_VISIBLE   ("layers-text-tool",       text_layer && !ac);
   SET_SENSITIVE ("layers-edit-attributes", layer && !fs && !ac);
 
-  SET_SENSITIVE ("layers-new",             gimage);
-  SET_SENSITIVE ("layers-new-last-values", gimage);
+  SET_SENSITIVE ("layers-new",             image);
+  SET_SENSITIVE ("layers-new-last-values", image);
   SET_SENSITIVE ("layers-duplicate",       layer && !fs && !ac);
   SET_SENSITIVE ("layers-delete",          layer && !ac);
 

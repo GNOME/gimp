@@ -75,9 +75,9 @@ static GObject * gimp_item_tree_view_constructor    (GType              type,
 static void   gimp_item_tree_view_destroy           (GtkObject         *object);
 
 static void   gimp_item_tree_view_real_set_image    (GimpItemTreeView  *view,
-                                                     GimpImage         *gimage);
+                                                     GimpImage         *image);
 
-static void   gimp_item_tree_view_image_flush       (GimpImage         *gimage,
+static void   gimp_item_tree_view_image_flush       (GimpImage         *image,
                                                      GimpItemTreeView  *view);
 
 static void   gimp_item_tree_view_set_container     (GimpContainerView *view,
@@ -113,9 +113,9 @@ static void   gimp_item_tree_view_new_dropped       (GtkWidget         *widget,
                                                      GimpViewable      *viewable,
                                                      gpointer           data);
 
-static void   gimp_item_tree_view_item_changed      (GimpImage         *gimage,
+static void   gimp_item_tree_view_item_changed      (GimpImage         *image,
                                                      GimpItemTreeView  *view);
-static void   gimp_item_tree_view_size_changed      (GimpImage         *gimage,
+static void   gimp_item_tree_view_size_changed      (GimpImage         *image,
                                                      GimpItemTreeView  *view);
 
 static void   gimp_item_tree_view_name_edited       (GtkCellRendererText *cell,
@@ -238,7 +238,7 @@ gimp_item_tree_view_init (GimpItemTreeView *view)
   tree_view->dnd_drop_to_empty = TRUE;
 
   view->context = NULL;
-  view->gimage  = NULL;
+  view->image  = NULL;
 
   view->visible_changed_handler_id = 0;
   view->linked_changed_handler_id  = 0;
@@ -267,8 +267,8 @@ static void
 gimp_item_tree_view_set_context (GimpDocked  *docked,
                                  GimpContext *context)
 {
-  GimpItemTreeView *view   = GIMP_ITEM_TREE_VIEW (docked);
-  GimpImage        *gimage = NULL;
+  GimpItemTreeView *view  = GIMP_ITEM_TREE_VIEW (docked);
+  GimpImage        *image = NULL;
 
   if (view->context)
     {
@@ -288,10 +288,10 @@ gimp_item_tree_view_set_context (GimpDocked  *docked,
                                 G_CALLBACK (gimp_item_tree_view_set_image),
                                 view);
 
-      gimage = gimp_context_get_image (context);
+      image = gimp_context_get_image (context);
     }
 
-  gimp_item_tree_view_set_image (view, gimage);
+  gimp_item_tree_view_set_image (view, image);
 }
 
 static GObject *
@@ -422,7 +422,7 @@ gimp_item_tree_view_destroy (GtkObject *object)
 {
   GimpItemTreeView *view = GIMP_ITEM_TREE_VIEW (object);
 
-  if (view->gimage)
+  if (view->image)
     gimp_item_tree_view_set_image (view, NULL);
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -432,7 +432,7 @@ GtkWidget *
 gimp_item_tree_view_new (GType            view_type,
                          gint             view_size,
                          gint             view_border_width,
-                         GimpImage       *gimage,
+                         GimpImage       *image,
                          GimpMenuFactory *menu_factory,
                          const gchar     *menu_identifier,
                          const gchar     *ui_path)
@@ -445,7 +445,7 @@ gimp_item_tree_view_new (GType            view_type,
   g_return_val_if_fail (view_border_width >= 0 &&
                         view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         NULL);
-  g_return_val_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (menu_identifier != NULL, NULL);
   g_return_val_if_fail (ui_path != NULL, NULL);
@@ -460,75 +460,75 @@ gimp_item_tree_view_new (GType            view_type,
   gimp_container_view_set_view_size (GIMP_CONTAINER_VIEW (item_view),
                                      view_size, view_border_width);
 
-  gimp_item_tree_view_set_image (item_view, gimage);
+  gimp_item_tree_view_set_image (item_view, image);
 
   return GTK_WIDGET (item_view);
 }
 
 void
 gimp_item_tree_view_set_image (GimpItemTreeView *view,
-                               GimpImage        *gimage)
+                               GimpImage        *image)
 {
   g_return_if_fail (GIMP_IS_ITEM_TREE_VIEW (view));
-  g_return_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
 
-  g_signal_emit (view, view_signals[SET_IMAGE], 0, gimage);
+  g_signal_emit (view, view_signals[SET_IMAGE], 0, image);
 
   gimp_ui_manager_update (GIMP_EDITOR (view)->ui_manager, view);
 }
 
 static void
 gimp_item_tree_view_real_set_image (GimpItemTreeView *view,
-                                    GimpImage        *gimage)
+                                    GimpImage        *image)
 {
-  if (view->gimage == gimage)
+  if (view->image == image)
     return;
 
-  if (view->gimage)
+  if (view->image)
     {
-      g_signal_handlers_disconnect_by_func (view->gimage,
+      g_signal_handlers_disconnect_by_func (view->image,
 					    gimp_item_tree_view_item_changed,
 					    view);
-      g_signal_handlers_disconnect_by_func (view->gimage,
+      g_signal_handlers_disconnect_by_func (view->image,
 					    gimp_item_tree_view_size_changed,
 					    view);
 
       gimp_container_view_set_container (GIMP_CONTAINER_VIEW (view), NULL);
 
-      g_signal_handlers_disconnect_by_func (view->gimage,
+      g_signal_handlers_disconnect_by_func (view->image,
                                             gimp_item_tree_view_image_flush,
                                             view);
     }
 
-  view->gimage = gimage;
+  view->image = image;
 
-  if (view->gimage)
+  if (view->image)
     {
       GimpContainer *container;
 
       container =
-        GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_container (view->gimage);
+        GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_container (view->image);
 
       gimp_container_view_set_container (GIMP_CONTAINER_VIEW (view), container);
 
-      g_signal_connect (view->gimage,
+      g_signal_connect (view->image,
                         GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->signal_name,
 			G_CALLBACK (gimp_item_tree_view_item_changed),
 			view);
-      g_signal_connect (view->gimage, "size-changed",
+      g_signal_connect (view->image, "size-changed",
 			G_CALLBACK (gimp_item_tree_view_size_changed),
 			view);
 
-      g_signal_connect (view->gimage, "flush",
+      g_signal_connect (view->image, "flush",
                         G_CALLBACK (gimp_item_tree_view_image_flush),
                         view);
 
-      gimp_item_tree_view_item_changed (view->gimage, view);
+      gimp_item_tree_view_item_changed (view->image, view);
     }
 }
 
 static void
-gimp_item_tree_view_image_flush (GimpImage        *gimage,
+gimp_item_tree_view_image_flush (GimpImage        *image,
                                  GimpItemTreeView *view)
 {
   gimp_ui_manager_update (GIMP_EDITOR (view)->ui_manager, view);
@@ -611,14 +611,14 @@ gimp_item_tree_view_select_item (GimpContainerView *view,
 
       item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (tree_view);
 
-      active_item = item_view_class->get_active_item (tree_view->gimage);
+      active_item = item_view_class->get_active_item (tree_view->image);
 
       if (active_item != (GimpItem *) item)
 	{
-	  item_view_class->set_active_item (tree_view->gimage,
+	  item_view_class->set_active_item (tree_view->image,
                                             GIMP_ITEM (item));
 
-	  gimp_image_flush (tree_view->gimage);
+	  gimp_image_flush (tree_view->image);
 	}
     }
 
@@ -713,7 +713,7 @@ gimp_item_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
 
   item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
 
-  if (item_view->gimage != gimp_item_get_image (GIMP_ITEM (src_viewable)) ||
+  if (item_view->image != gimp_item_get_image (GIMP_ITEM (src_viewable)) ||
       ! g_type_is_a (G_TYPE_FROM_INSTANCE (src_viewable),
                      item_view_class->item_type))
     {
@@ -727,9 +727,9 @@ gimp_item_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
         dest_index++;
 
       new_item = gimp_item_convert (GIMP_ITEM (src_viewable),
-                                    item_view->gimage, item_type, TRUE);
+                                    item_view->image, item_type, TRUE);
 
-      item_view_class->add_item (item_view->gimage, new_item, dest_index);
+      item_view_class->add_item (item_view->image, new_item, dest_index);
     }
   else if (dest_viewable)
     {
@@ -747,14 +747,14 @@ gimp_item_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
           dest_index--;
         }
 
-      item_view_class->reorder_item (item_view->gimage,
+      item_view_class->reorder_item (item_view->image,
                                      GIMP_ITEM (src_viewable),
                                      dest_index,
                                      TRUE,
                                      item_view_class->reorder_desc);
     }
 
-  gimp_image_flush (item_view->gimage);
+  gimp_image_flush (item_view->image);
 }
 
 
@@ -795,19 +795,19 @@ gimp_item_tree_view_new_dropped (GtkWidget    *widget,
 /*  GimpImage callbacks  */
 
 static void
-gimp_item_tree_view_item_changed (GimpImage        *gimage,
+gimp_item_tree_view_item_changed (GimpImage        *image,
                                   GimpItemTreeView *view)
 {
   GimpItem *item;
 
-  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (view->gimage);
+  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (view->image);
 
   gimp_container_view_select_item (GIMP_CONTAINER_VIEW (view),
                                    (GimpViewable *) item);
 }
 
 static void
-gimp_item_tree_view_size_changed (GimpImage        *gimage,
+gimp_item_tree_view_size_changed (GimpImage        *image,
                                   GimpItemTreeView *tree_view)
 {
   GimpContainerView *view = GIMP_CONTAINER_VIEW (tree_view);
@@ -954,7 +954,7 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
   void     (* setter)  (GimpItem       *item,
                         gboolean        value,
                         gboolean        push_undo);
-  gboolean (* pusher)  (GimpImage      *gimage,
+  gboolean (* pusher)  (GimpImage      *image,
                         const gchar    *undo_desc,
                         GimpItem       *item);
 
@@ -986,7 +986,7 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
     {
       GimpViewRenderer *renderer;
       GimpItem         *item;
-      GimpImage        *gimage;
+      GimpImage        *image;
       gboolean          active;
 
       gtk_tree_model_get (tree_view->model, &iter,
@@ -999,7 +999,7 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
       item = GIMP_ITEM (renderer->viewable);
       g_object_unref (renderer);
 
-      gimage = gimp_item_get_image (item);
+      image = gimp_item_get_image (item);
 
       if (state & GDK_SHIFT_MASK)
         {
@@ -1037,7 +1037,7 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
 
               view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (view);
 
-              undo = gimp_image_undo_can_compress (gimage, GIMP_TYPE_UNDO_STACK,
+              undo = gimp_image_undo_can_compress (image, GIMP_TYPE_UNDO_STACK,
                                                    group_type);
 
               if (undo && (g_object_get_data (G_OBJECT (undo), "item-type") ==
@@ -1046,10 +1046,10 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
 
               if (push_undo)
                 {
-                  if (gimp_image_undo_group_start (gimage, group_type,
+                  if (gimp_image_undo_group_start (image, group_type,
                                                    undo_desc))
                     {
-                      undo = gimp_image_undo_can_compress (gimage,
+                      undo = gimp_image_undo_can_compress (image,
                                                            GIMP_TYPE_UNDO_STACK,
                                                            group_type);
 
@@ -1058,15 +1058,15 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
                                            (gpointer) view_class->item_type);
                     }
 
-                  pusher (gimage, NULL, item);
+                  pusher (image, NULL, item);
 
                   for (list = on; list; list = g_list_next (list))
-                    pusher (gimage, NULL, list->data);
+                    pusher (image, NULL, list->data);
 
                   for (list = off; list; list = g_list_next (list))
-                    pusher (gimage, NULL, list->data);
+                    pusher (image, NULL, list->data);
 
-                  gimp_image_undo_group_end (gimage);
+                  gimp_image_undo_group_end (image);
                 }
               else
                 {
@@ -1095,7 +1095,7 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
           GimpUndo *undo;
           gboolean  push_undo = TRUE;
 
-          undo = gimp_image_undo_can_compress (gimage, GIMP_TYPE_ITEM_UNDO,
+          undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
                                                undo_type);
 
           if (undo && GIMP_ITEM_UNDO (undo)->item == item)
@@ -1107,7 +1107,7 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
             gimp_undo_refresh_preview (undo);
         }
 
-      gimp_image_flush (gimage);
+      gimp_image_flush (image);
     }
 
   gtk_tree_path_free (path);

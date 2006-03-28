@@ -83,17 +83,17 @@ static void       gimp_projection_invalidate            (GimpProjection *proj,
 static void       gimp_projection_validate_tile         (TileManager    *tm,
                                                          Tile           *tile);
 
-static void       gimp_projection_image_update          (GimpImage      *gimage,
+static void       gimp_projection_image_update          (GimpImage      *image,
                                                          gint            x,
                                                          gint            y,
                                                          gint            w,
                                                          gint            h,
                                                          GimpProjection *proj);
-static void       gimp_projection_image_size_changed    (GimpImage      *gimage,
+static void       gimp_projection_image_size_changed    (GimpImage      *image,
                                                          GimpProjection *proj);
-static void       gimp_projection_image_mode_changed    (GimpImage      *gimage,
+static void       gimp_projection_image_mode_changed    (GimpImage      *image,
                                                          GimpProjection *proj);
-static void       gimp_projection_image_flush           (GimpImage      *gimage,
+static void       gimp_projection_image_flush           (GimpImage      *image,
                                                          GimpProjection *proj);
 
 
@@ -134,7 +134,7 @@ gimp_projection_class_init (GimpProjectionClass *klass)
 static void
 gimp_projection_init (GimpProjection *proj)
 {
-  proj->gimage                   = NULL;
+  proj->image                    = NULL;
 
   proj->type                     = -1;
   proj->bytes                    = 0;
@@ -219,14 +219,14 @@ gimp_projection_get_color_at (GimpPickable *pickable,
   guchar         *src;
   guchar         *dest;
 
-  if (x < 0 || y < 0 || x >= proj->gimage->width || y >= proj->gimage->height)
+  if (x < 0 || y < 0 || x >= proj->image->width || y >= proj->image->height)
     return NULL;
 
   dest = g_new (guchar, 5);
   tile = tile_manager_get_tile (gimp_projection_get_tiles (proj),
                                 x, y, TRUE, FALSE);
   src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
-  gimp_image_get_color (proj->gimage, gimp_projection_get_image_type (proj),
+  gimp_image_get_color (proj->image, gimp_projection_get_image_type (proj),
                         src, dest);
 
   dest[4] = 0;
@@ -244,26 +244,26 @@ gimp_projection_get_opacity_at (GimpPickable *pickable,
 }
 
 GimpProjection *
-gimp_projection_new (GimpImage *gimage)
+gimp_projection_new (GimpImage *image)
 {
   GimpProjection *proj;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   proj = g_object_new (GIMP_TYPE_PROJECTION, NULL);
 
-  proj->gimage = gimage;
+  proj->image = image;
 
-  g_signal_connect_object (gimage, "update",
+  g_signal_connect_object (image, "update",
                            G_CALLBACK (gimp_projection_image_update),
                            proj, 0);
-  g_signal_connect_object (gimage, "size-changed",
+  g_signal_connect_object (image, "size-changed",
                            G_CALLBACK (gimp_projection_image_size_changed),
                            proj, 0);
-  g_signal_connect_object (gimage, "mode-changed",
+  g_signal_connect_object (image, "mode-changed",
                            G_CALLBACK (gimp_projection_image_mode_changed),
                            proj, 0);
-  g_signal_connect_object (gimage, "flush",
+  g_signal_connect_object (image, "flush",
                            G_CALLBACK (gimp_projection_image_flush),
                            proj, 0);
 
@@ -276,8 +276,8 @@ gimp_projection_get_tiles (GimpProjection *proj)
   g_return_val_if_fail (GIMP_IS_PROJECTION (proj), NULL);
 
   if (proj->tiles == NULL                                      ||
-      tile_manager_width  (proj->tiles) != proj->gimage->width ||
-      tile_manager_height (proj->tiles) != proj->gimage->height)
+      tile_manager_width  (proj->tiles) != proj->image->width ||
+      tile_manager_height (proj->tiles) != proj->image->height)
     {
       gimp_projection_alloc_tiles (proj);
     }
@@ -290,7 +290,7 @@ gimp_projection_get_image (const GimpProjection *proj)
 {
   g_return_val_if_fail (GIMP_IS_PROJECTION (proj), NULL);
 
-  return proj->gimage;
+  return proj->image;
 }
 
 GimpImageType
@@ -368,7 +368,7 @@ gimp_projection_alloc_tiles (GimpProjection *proj)
    *  This includes the intensity channels and an alpha channel
    *  if one doesn't exist.
    */
-  switch (gimp_image_base_type (proj->gimage))
+  switch (gimp_image_base_type (proj->image))
     {
     case GIMP_RGB:
     case GIMP_INDEXED:
@@ -387,10 +387,10 @@ gimp_projection_alloc_tiles (GimpProjection *proj)
 
   if (proj->tiles)
     {
-      if (proj_type            != proj->type                       ||
-          proj_bytes           != proj->bytes                      ||
-          proj->gimage->width  != tile_manager_width (proj->tiles) ||
-          proj->gimage->height != tile_manager_height (proj->tiles))
+      if (proj_type           != proj->type                       ||
+          proj_bytes          != proj->bytes                      ||
+          proj->image->width  != tile_manager_width (proj->tiles) ||
+          proj->image->height != tile_manager_height (proj->tiles))
         {
           tile_manager_unref (proj->tiles);
           proj->tiles = NULL;
@@ -402,8 +402,8 @@ gimp_projection_alloc_tiles (GimpProjection *proj)
       proj->type  = proj_type;
       proj->bytes = proj_bytes;
 
-      proj->tiles = tile_manager_new (proj->gimage->width,
-                                      proj->gimage->height,
+      proj->tiles = tile_manager_new (proj->image->width,
+                                      proj->image->height,
                                       proj->bytes);
       tile_manager_set_user_data (proj->tiles, proj);
       tile_manager_set_validate_proc (proj->tiles,
@@ -422,10 +422,10 @@ gimp_projection_add_update_area (GimpProjection *proj,
 
   g_return_if_fail (GIMP_IS_PROJECTION (proj));
 
-  area = gimp_area_new (CLAMP (x, 0, proj->gimage->width),
-                        CLAMP (y, 0, proj->gimage->height),
-                        CLAMP (x + w, 0, proj->gimage->width),
-                        CLAMP (y + h, 0, proj->gimage->height));
+  area = gimp_area_new (CLAMP (x, 0, proj->image->width),
+                        CLAMP (y, 0, proj->image->height),
+                        CLAMP (x + w, 0, proj->image->width),
+                        CLAMP (y + h, 0, proj->image->height));
 
   proj->update_areas = gimp_area_list_process (proj->update_areas, area);
 }
@@ -614,10 +614,10 @@ gimp_projection_paint_area (GimpProjection *proj,
   gint x1, y1, x2, y2;
 
   /*  Bounds check  */
-  x1 = CLAMP (x,     0, proj->gimage->width);
-  y1 = CLAMP (y,     0, proj->gimage->height);
-  x2 = CLAMP (x + w, 0, proj->gimage->width);
-  y2 = CLAMP (y + h, 0, proj->gimage->height);
+  x1 = CLAMP (x,     0, proj->image->width);
+  y1 = CLAMP (y,     0, proj->image->height);
+  x2 = CLAMP (x + w, 0, proj->image->width);
+  y2 = CLAMP (y + h, 0, proj->image->height);
   x = x1;
   y = y1;
   w = (x2 - x1);
@@ -671,7 +671,7 @@ gimp_projection_validate_tile (TileManager *tm,
 /*  image callbacks  */
 
 static void
-gimp_projection_image_update (GimpImage      *gimage,
+gimp_projection_image_update (GimpImage      *image,
                               gint            x,
                               gint            y,
                               gint            w,
@@ -682,23 +682,23 @@ gimp_projection_image_update (GimpImage      *gimage,
 }
 
 static void
-gimp_projection_image_size_changed (GimpImage      *gimage,
+gimp_projection_image_size_changed (GimpImage      *image,
                                     GimpProjection *proj)
 {
   gimp_projection_alloc_tiles (proj);
-  gimp_projection_add_update_area (proj, 0, 0, gimage->width, gimage->height);
+  gimp_projection_add_update_area (proj, 0, 0, image->width, image->height);
 }
 
 static void
-gimp_projection_image_mode_changed (GimpImage      *gimage,
+gimp_projection_image_mode_changed (GimpImage      *image,
                                     GimpProjection *proj)
 {
   gimp_projection_alloc_tiles (proj);
-  gimp_projection_add_update_area (proj, 0, 0, gimage->width, gimage->height);
+  gimp_projection_add_update_area (proj, 0, 0, image->width, image->height);
 }
 
 static void
-gimp_projection_image_flush (GimpImage      *gimage,
+gimp_projection_image_flush (GimpImage      *image,
                              GimpProjection *proj)
 {
   gimp_projection_flush (proj);

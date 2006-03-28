@@ -40,7 +40,7 @@
 /*  public functions  */
 
 VectorsOptionsDialog *
-vectors_options_dialog_new (GimpImage   *gimage,
+vectors_options_dialog_new (GimpImage   *image,
                             GimpVectors *vectors,
                             GtkWidget   *parent,
                             const gchar *vectors_name,
@@ -56,7 +56,7 @@ vectors_options_dialog_new (GimpImage   *gimage,
   GtkWidget            *vbox;
   GtkWidget            *table;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (title != NULL, NULL);
@@ -67,13 +67,13 @@ vectors_options_dialog_new (GimpImage   *gimage,
 
   options = g_new0 (VectorsOptionsDialog, 1);
 
-  options->gimage  = gimage;
+  options->image  = image;
   options->vectors = vectors;
 
   if (vectors)
     viewable = GIMP_VIEWABLE (vectors);
   else
-    viewable = GIMP_VIEWABLE (gimage);
+    viewable = GIMP_VIEWABLE (image);
 
   options->dialog =
     gimp_viewable_dialog_new (viewable,

@@ -197,16 +197,16 @@ gimp_rotate_tool_prepare (GimpTransformTool *tr_tool,
                             GIMP_DISPLAY_SHELL (gdisp->shell)->unit);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (rotate->sizeentry), 0,
-                                  gdisp->gimage->xresolution, FALSE);
+                                  gdisp->image->xresolution, FALSE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (rotate->sizeentry), 1,
-                                  gdisp->gimage->yresolution, FALSE);
+                                  gdisp->image->yresolution, FALSE);
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (rotate->sizeentry), 0,
                                          -65536,
-                                         65536 + gdisp->gimage->width);
+                                         65536 + gdisp->image->width);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (rotate->sizeentry), 1,
                                          -65536,
-                                         65536 + gdisp->gimage->height);
+                                         65536 + gdisp->image->height);
 
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (rotate->sizeentry), 0,
                             tr_tool->x1, tr_tool->x2);

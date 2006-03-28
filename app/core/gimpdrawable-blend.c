@@ -115,7 +115,7 @@ static gdouble  gradient_calc_shapeburst_spherical_factor (gdouble x,
 static gdouble  gradient_calc_shapeburst_dimpled_factor   (gdouble x,
                                                            gdouble y);
 
-static void     gradient_precalc_shapeburst (GimpImage        *gimage,
+static void     gradient_precalc_shapeburst (GimpImage        *image,
 					     GimpDrawable     *drawable,
                                              PixelRegion      *PR,
                                              gdouble           dist,
@@ -130,7 +130,7 @@ static void     gradient_put_pixel          (gint              x,
                                              GimpRGB          *color,
 					     gpointer          put_pixel_data);
 
-static void     gradient_fill_region        (GimpImage        *gimage,
+static void     gradient_fill_region        (GimpImage        *image,
                                              GimpDrawable     *drawable,
                                              GimpContext      *context,
                                              PixelRegion      *PR,
@@ -200,7 +200,7 @@ gimp_drawable_blend (GimpDrawable         *drawable,
                      gdouble               endy,
                      GimpProgress         *progress)
 {
-  GimpImage   *gimage;
+  GimpImage   *image;
   TileManager *buf_tiles;
   PixelRegion  bufPR;
   gint         bytes;
@@ -211,12 +211,12 @@ gimp_drawable_blend (GimpDrawable         *drawable,
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     return;
 
-  gimp_set_busy (gimage->gimp);
+  gimp_set_busy (image->gimp);
 
   bytes = gimp_drawable_bytes (drawable);
 
@@ -227,7 +227,7 @@ gimp_drawable_blend (GimpDrawable         *drawable,
   buf_tiles = tile_manager_new (width, height, bytes);
   pixel_region_init (&bufPR, buf_tiles, 0, 0, width, height, TRUE);
 
-  gradient_fill_region (gimage, drawable, context,
+  gradient_fill_region (image, drawable, context,
 			&bufPR, width, height,
 			blend_mode, gradient_type, offset, repeat, reverse,
 			supersample, max_depth, threshold, dither,
@@ -253,7 +253,7 @@ gimp_drawable_blend (GimpDrawable         *drawable,
   /*  free the temporary buffer  */
   tile_manager_unref (buf_tiles);
 
-  gimp_unset_busy (gimage->gimp);
+  gimp_unset_busy (image->gimp);
 }
 
 static gdouble
@@ -568,7 +568,7 @@ gradient_calc_shapeburst_dimpled_factor (gdouble x,
 }
 
 static void
-gradient_precalc_shapeburst (GimpImage    *gimage,
+gradient_precalc_shapeburst (GimpImage    *image,
 			     GimpDrawable *drawable,
 			     PixelRegion  *PR,
 			     gdouble       dist,
@@ -589,9 +589,9 @@ gradient_precalc_shapeburst (GimpImage    *gimage,
   tempR.tiles = tile_manager_new (PR->w, PR->h, 1);
   pixel_region_init (&tempR, tempR.tiles, 0, 0, PR->w, PR->h, TRUE);
 
-  mask = gimp_image_get_mask (gimage);
+  mask = gimp_image_get_mask (image);
 
-  /*  If the gimage mask is not empty, use it as the shape burst source  */
+  /*  If the image mask is not empty, use it as the shape burst source  */
   if (! gimp_channel_is_empty (mask))
     {
       PixelRegion maskR;
@@ -843,7 +843,7 @@ gradient_put_pixel (gint      x,
 }
 
 static void
-gradient_fill_region (GimpImage        *gimage,
+gradient_fill_region (GimpImage        *image,
 		      GimpDrawable     *drawable,
                       GimpContext      *context,
 		      PixelRegion      *PR,
@@ -938,7 +938,7 @@ gradient_fill_region (GimpImage        *gimage,
     case GIMP_GRADIENT_SHAPEBURST_SPHERICAL:
     case GIMP_GRADIENT_SHAPEBURST_DIMPLED:
       rbd.dist = sqrt (SQR (ex - sx) + SQR (ey - sy));
-      gradient_precalc_shapeburst (gimage, drawable, PR, rbd.dist, progress);
+      gradient_precalc_shapeburst (image, drawable, PR, rbd.dist, progress);
       break;
 
     default:

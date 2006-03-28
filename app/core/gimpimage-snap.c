@@ -38,7 +38,7 @@
 
 
 gboolean
-gimp_image_snap_x (GimpImage *gimage,
+gimp_image_snap_x (GimpImage *image,
                    gdouble    x,
                    gdouble   *tx,
                    gdouble    epsilon_x,
@@ -50,25 +50,25 @@ gimp_image_snap_x (GimpImage *gimage,
   gdouble    dist;
   gboolean   snapped = FALSE;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (tx != NULL, FALSE);
 
   *tx = x;
 
-  if (! gimage->guides) snap_to_guides = FALSE;
-  if (! gimage->grid)   snap_to_grid   = FALSE;
+  if (! image->guides) snap_to_guides = FALSE;
+  if (! image->grid)   snap_to_grid   = FALSE;
 
   if (! (snap_to_guides || snap_to_grid || snap_to_canvas))
     return FALSE;
 
-  if (x < -epsilon_x || x >= (gimage->width + epsilon_x))
+  if (x < -epsilon_x || x >= (image->width + epsilon_x))
     return FALSE;
 
   if (snap_to_guides)
     {
       GList *list;
 
-      for (list = gimage->guides; list; list = g_list_next (list))
+      for (list = image->guides; list; list = g_list_next (list))
         {
           GimpGuide *guide = list->data;
 
@@ -91,7 +91,7 @@ gimp_image_snap_x (GimpImage *gimage,
 
   if (snap_to_grid)
     {
-      GimpGrid *grid = gimp_image_get_grid (gimage);
+      GimpGrid *grid = gimp_image_get_grid (image);
       gdouble   xspacing;
       gdouble   xoffset;
       gdouble   i;
@@ -101,7 +101,7 @@ gimp_image_snap_x (GimpImage *gimage,
                     "xoffset",  &xoffset,
                     NULL);
 
-      for (i = xoffset; i <= gimage->width; i += xspacing)
+      for (i = xoffset; i <= image->width; i += xspacing)
         {
           if (i < 0)
             continue;
@@ -128,12 +128,12 @@ gimp_image_snap_x (GimpImage *gimage,
           snapped = TRUE;
         }
 
-      dist = ABS (gimage->width - x);
+      dist = ABS (image->width - x);
 
       if (dist < MIN (epsilon_x, mindist))
         {
           mindist = dist;
-          *tx = gimage->width;
+          *tx = image->width;
           snapped = TRUE;
         }
     }
@@ -142,7 +142,7 @@ gimp_image_snap_x (GimpImage *gimage,
 }
 
 gboolean
-gimp_image_snap_y (GimpImage *gimage,
+gimp_image_snap_y (GimpImage *image,
                    gdouble    y,
                    gdouble   *ty,
                    gdouble    epsilon_y,
@@ -154,25 +154,25 @@ gimp_image_snap_y (GimpImage *gimage,
   gdouble    dist;
   gboolean   snapped = FALSE;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (ty != NULL, FALSE);
 
   *ty = y;
 
-  if (! gimage->guides) snap_to_guides = FALSE;
-  if (! gimage->grid)   snap_to_grid   = FALSE;
+  if (! image->guides) snap_to_guides = FALSE;
+  if (! image->grid)   snap_to_grid   = FALSE;
 
   if (! (snap_to_guides || snap_to_grid || snap_to_canvas))
     return FALSE;
 
-  if (y < -epsilon_y || y >= (gimage->height + epsilon_y))
+  if (y < -epsilon_y || y >= (image->height + epsilon_y))
     return FALSE;
 
   if (snap_to_guides)
     {
       GList *list;
 
-      for (list = gimage->guides; list; list = g_list_next (list))
+      for (list = image->guides; list; list = g_list_next (list))
         {
           GimpGuide *guide = list->data;
 
@@ -195,7 +195,7 @@ gimp_image_snap_y (GimpImage *gimage,
 
   if (snap_to_grid)
     {
-      GimpGrid *grid = gimp_image_get_grid (gimage);
+      GimpGrid *grid = gimp_image_get_grid (image);
       gdouble    yspacing;
       gdouble    yoffset;
       gdouble    i;
@@ -205,7 +205,7 @@ gimp_image_snap_y (GimpImage *gimage,
                     "yoffset",  &yoffset,
                     NULL);
 
-      for (i = yoffset; i <= gimage->height; i += yspacing)
+      for (i = yoffset; i <= image->height; i += yspacing)
         {
           if (i < 0)
             continue;
@@ -232,12 +232,12 @@ gimp_image_snap_y (GimpImage *gimage,
           snapped = TRUE;
         }
 
-      dist = ABS (gimage->height - y);
+      dist = ABS (image->height - y);
 
       if (dist < MIN (epsilon_y, mindist))
         {
           mindist = dist;
-          *ty = gimage->height;
+          *ty = image->height;
           snapped = TRUE;
         }
     }
@@ -246,7 +246,7 @@ gimp_image_snap_y (GimpImage *gimage,
 }
 
 gboolean
-gimp_image_snap_point (GimpImage *gimage,
+gimp_image_snap_point (GimpImage *image,
                        gdouble    x,
                        gdouble    y,
                        gdouble   *tx,
@@ -263,22 +263,22 @@ gimp_image_snap_point (GimpImage *gimage,
   gdouble  dist;
   gboolean snapped   = FALSE;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (tx != NULL, FALSE);
   g_return_val_if_fail (ty != NULL, FALSE);
 
   *tx = x;
   *ty = y;
 
-  if (! gimage->guides)         snap_to_guides  = FALSE;
-  if (! gimage->grid)           snap_to_grid    = FALSE;
-  if (! gimage->active_vectors) snap_to_vectors = FALSE;
+  if (! image->guides)         snap_to_guides  = FALSE;
+  if (! image->grid)           snap_to_grid    = FALSE;
+  if (! image->active_vectors) snap_to_vectors = FALSE;
 
   if (! (snap_to_guides || snap_to_grid || snap_to_canvas || snap_to_vectors))
     return FALSE;
 
-  if (x < -epsilon_x || x >= (gimage->width  + epsilon_x) ||
-      y < -epsilon_y || y >= (gimage->height + epsilon_y))
+  if (x < -epsilon_x || x >= (image->width  + epsilon_x) ||
+      y < -epsilon_y || y >= (image->height + epsilon_y))
     {
       return FALSE;
     }
@@ -287,7 +287,7 @@ gimp_image_snap_point (GimpImage *gimage,
     {
       GList *list;
 
-      for (list = gimage->guides; list; list = g_list_next (list))
+      for (list = image->guides; list; list = g_list_next (list))
         {
           GimpGuide *guide = list->data;
 
@@ -326,7 +326,7 @@ gimp_image_snap_point (GimpImage *gimage,
 
   if (snap_to_grid)
     {
-      GimpGrid *grid = gimp_image_get_grid (gimage);
+      GimpGrid *grid = gimp_image_get_grid (image);
       gdouble   xspacing, yspacing;
       gdouble   xoffset, yoffset;
       gdouble   i;
@@ -338,7 +338,7 @@ gimp_image_snap_point (GimpImage *gimage,
                     "yoffset",  &yoffset,
                     NULL);
 
-      for (i = xoffset; i <= gimage->width; i += xspacing)
+      for (i = xoffset; i <= image->width; i += xspacing)
         {
           if (i < 0)
             continue;
@@ -353,7 +353,7 @@ gimp_image_snap_point (GimpImage *gimage,
             }
         }
 
-      for (i = yoffset; i <= gimage->height; i += yspacing)
+      for (i = yoffset; i <= image->height; i += yspacing)
         {
           if (i < 0)
             continue;
@@ -380,12 +380,12 @@ gimp_image_snap_point (GimpImage *gimage,
           snapped = TRUE;
         }
 
-      dist = ABS (gimage->width - x);
+      dist = ABS (image->width - x);
 
       if (dist < MIN (epsilon_x, mindist_x))
         {
           mindist_x = dist;
-          *tx = gimage->width;
+          *tx = image->width;
           snapped = TRUE;
         }
 
@@ -398,19 +398,19 @@ gimp_image_snap_point (GimpImage *gimage,
           snapped = TRUE;
         }
 
-      dist = ABS (gimage->height - y);
+      dist = ABS (image->height - y);
 
       if (dist < MIN (epsilon_y, mindist_y))
         {
           mindist_y = dist;
-          *ty = gimage->height;
+          *ty = image->height;
           snapped = TRUE;
         }
     }
 
   if (snap_to_vectors)
     {
-      GimpVectors *vectors = gimp_image_get_active_vectors (gimage);
+      GimpVectors *vectors = gimp_image_get_active_vectors (image);
       GimpStroke  *stroke  = NULL;
       GimpCoords   coords  = { 0, 0, 0, 0, 0 };
 
@@ -450,7 +450,7 @@ gimp_image_snap_point (GimpImage *gimage,
 }
 
 gboolean
-gimp_image_snap_rectangle (GimpImage *gimage,
+gimp_image_snap_rectangle (GimpImage *image,
                            gdouble    x1,
                            gdouble    y1,
                            gdouble    x2,
@@ -469,22 +469,22 @@ gimp_image_snap_rectangle (GimpImage *gimage,
   gdouble  mindist_y = G_MAXDOUBLE;
   gboolean snapped   = FALSE;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (tx1 != NULL, FALSE);
   g_return_val_if_fail (ty1 != NULL, FALSE);
 
   *tx1 = x1;
   *ty1 = y1;
 
-  if (! gimage->guides)         snap_to_guides  = FALSE;
-  if (! gimage->grid)           snap_to_grid    = FALSE;
-  if (! gimage->active_vectors) snap_to_vectors = FALSE;
+  if (! image->guides)         snap_to_guides  = FALSE;
+  if (! image->grid)           snap_to_grid    = FALSE;
+  if (! image->active_vectors) snap_to_vectors = FALSE;
 
   if (! (snap_to_guides || snap_to_grid || snap_to_canvas || snap_to_vectors))
     return FALSE;
 
   /*  left edge  */
-  if (gimp_image_snap_x (gimage, x1, &nx,
+  if (gimp_image_snap_x (image, x1, &nx,
                          MIN (epsilon_x, mindist_x),
                          snap_to_guides,
                          snap_to_grid,
@@ -496,7 +496,7 @@ gimp_image_snap_rectangle (GimpImage *gimage,
     }
 
   /*  right edge  */
-  if (gimp_image_snap_x (gimage, x2, &nx,
+  if (gimp_image_snap_x (image, x2, &nx,
                          MIN (epsilon_x, mindist_x),
                          snap_to_guides,
                          snap_to_grid,
@@ -508,7 +508,7 @@ gimp_image_snap_rectangle (GimpImage *gimage,
     }
 
   /*  top edge  */
-  if (gimp_image_snap_y (gimage, y1, &ny,
+  if (gimp_image_snap_y (image, y1, &ny,
                          MIN (epsilon_y, mindist_y),
                          snap_to_guides,
                          snap_to_grid,
@@ -520,7 +520,7 @@ gimp_image_snap_rectangle (GimpImage *gimage,
     }
 
   /*  bottom edge  */
-  if (gimp_image_snap_y (gimage, y2, &ny,
+  if (gimp_image_snap_y (image, y2, &ny,
                          MIN (epsilon_y, mindist_y),
                          snap_to_guides,
                          snap_to_grid,
@@ -533,7 +533,7 @@ gimp_image_snap_rectangle (GimpImage *gimage,
 
   if (snap_to_vectors)
     {
-      GimpVectors *vectors = gimp_image_get_active_vectors (gimage);
+      GimpVectors *vectors = gimp_image_get_active_vectors (image);
       GimpStroke  *stroke  = NULL;
       GimpCoords   coords1 = GIMP_COORDS_DEFAULT_VALUES;
       GimpCoords   coords2 = GIMP_COORDS_DEFAULT_VALUES;

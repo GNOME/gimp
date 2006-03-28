@@ -317,7 +317,7 @@ gimp_template_new (const gchar *name)
 
 void
 gimp_template_set_from_image (GimpTemplate *template,
-                              GimpImage    *gimage)
+                              GimpImage    *image)
 {
   gdouble            xresolution;
   gdouble            yresolution;
@@ -326,26 +326,26 @@ gimp_template_set_from_image (GimpTemplate *template,
   gchar             *comment = NULL;
 
   g_return_if_fail (GIMP_IS_TEMPLATE (template));
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  gimp_image_get_resolution (gimage, &xresolution, &yresolution);
+  gimp_image_get_resolution (image, &xresolution, &yresolution);
 
-  image_type = gimp_image_base_type (gimage);
+  image_type = gimp_image_base_type (image);
 
   if (image_type == GIMP_INDEXED)
     image_type = GIMP_RGB;
 
-  parasite =  gimp_image_parasite_find (gimage, "gimp-comment");
+  parasite =  gimp_image_parasite_find (image, "gimp-comment");
   if (parasite)
     comment = g_strndup (gimp_parasite_data (parasite),
                          gimp_parasite_data_size (parasite));
 
   g_object_set (template,
-                "width",           gimp_image_get_width (gimage),
-                "height",          gimp_image_get_height (gimage),
+                "width",           gimp_image_get_width (image),
+                "height",          gimp_image_get_height (image),
                 "xresolution",     xresolution,
                 "yresolution",     yresolution,
-                "resolution-unit", gimp_image_get_unit (gimage),
+                "resolution-unit", gimp_image_get_unit (image),
                 "image-type",      image_type,
                 "comment",         comment,
                 NULL);
@@ -359,7 +359,7 @@ gimp_template_create_image (Gimp         *gimp,
                             GimpTemplate *template,
                             GimpContext  *context)
 {
-  GimpImage     *gimage;
+  GimpImage     *image;
   GimpLayer     *layer;
   GimpImageType  type;
   gint           width, height;
@@ -368,12 +368,12 @@ gimp_template_create_image (Gimp         *gimp,
   g_return_val_if_fail (GIMP_IS_TEMPLATE (template), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  gimage = gimp_create_image (gimp,
+  image = gimp_create_image (gimp,
 			      template->width, template->height,
 			      template->image_type,
 			      FALSE);
 
-  gimp_image_undo_disable (gimage);
+  gimp_image_undo_disable (image);
 
   if (template->comment)
     {
@@ -383,17 +383,17 @@ gimp_template_create_image (Gimp         *gimp,
                                     GIMP_PARASITE_PERSISTENT,
                                     strlen (template->comment) + 1,
                                     template->comment);
-      gimp_image_parasite_attach (gimage, parasite);
+      gimp_image_parasite_attach (image, parasite);
       gimp_parasite_free (parasite);
     }
 
-  gimp_image_set_resolution (gimage,
+  gimp_image_set_resolution (image,
                              template->xresolution, template->yresolution);
 
-  gimp_image_set_unit (gimage, template->resolution_unit);
+  gimp_image_set_unit (image, template->resolution_unit);
 
-  width  = gimp_image_get_width (gimage);
-  height = gimp_image_get_height (gimage);
+  width  = gimp_image_get_width (image);
+  height = gimp_image_get_height (image);
 
   switch (template->fill_type)
     {
@@ -407,21 +407,21 @@ gimp_template_create_image (Gimp         *gimp,
       break;
     }
 
-  layer = gimp_layer_new (gimage, width, height, type,
+  layer = gimp_layer_new (image, width, height, type,
                           _("Background"),
 			  GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
   gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer),
                               context, template->fill_type);
 
-  gimp_image_add_layer (gimage, layer, 0);
+  gimp_image_add_layer (image, layer, 0);
 
-  gimp_image_undo_enable (gimage);
-  gimp_image_clean_all (gimage);
+  gimp_image_undo_enable (image);
+  gimp_image_clean_all (image);
 
-  gimp_create_display (gimp, gimage, template->unit, 1.0);
+  gimp_create_display (gimp, image, template->unit, 1.0);
 
-  g_object_unref (gimage);
+  g_object_unref (image);
 
-  return gimage;
+  return image;
 }

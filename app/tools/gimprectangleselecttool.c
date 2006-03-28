@@ -291,7 +291,7 @@ gimp_new_rect_select_tool_execute (GimpRectangleTool  *rectangle,
   GimpTool              *tool        = GIMP_TOOL (rectangle);
   GimpNewRectSelectTool *rect_select = GIMP_NEW_RECT_SELECT_TOOL (rectangle);
   GimpSelectionOptions  *options;
-  GimpImage             *gimage;
+  GimpImage             *image;
   gint                   max_x, max_y;
   gboolean               rectangle_exists;
   gboolean               selected;
@@ -306,10 +306,10 @@ gimp_new_rect_select_tool_execute (GimpRectangleTool  *rectangle,
 
   gimp_tool_pop_status (tool, tool->gdisp);
 
-  gimage = tool->gdisp->gimage;
-  max_x = gimage->width;
-  max_y = gimage->height;
-  selection_mask = gimp_image_get_mask (gimage);
+  image = tool->gdisp->image;
+  max_x = image->width;
+  max_y = image->height;
+  selection_mask = gimp_image_get_mask (image);
 
   rectangle_exists = (x <= max_x && y <= max_y &&
                       x + w >= 0 && y + h >= 0 &&
@@ -359,7 +359,7 @@ gimp_new_rect_select_tool_execute (GimpRectangleTool  *rectangle,
   /* edges of marching ants.                                 */
   if (selected)
     {
-      GimpChannel    *selection_mask = gimp_image_get_mask (gimage);
+      GimpChannel    *selection_mask = gimp_image_get_mask (image);
       const BoundSeg *segs_in;
       const BoundSeg *segs_out;
       gint            n_segs_in;
@@ -401,8 +401,8 @@ gimp_new_rect_select_tool_execute (GimpRectangleTool  *rectangle,
           g_object_set (rectangle,
                         "x1", 0,
                         "y1", 0,
-                        "x2", gimage->width,
-                        "y2", gimage->height,
+                        "x2", image->width,
+                        "y2", image->height,
                         NULL);
         }
 
@@ -429,7 +429,7 @@ gimp_new_rect_select_tool_real_rect_select (GimpNewRectSelectTool *rect_select,
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  gimp_channel_select_rectangle (gimp_image_get_mask (tool->gdisp->gimage),
+  gimp_channel_select_rectangle (gimp_image_get_mask (tool->gdisp->image),
                                  x, y, w, h,
                                  options->operation,
                                  options->feather,

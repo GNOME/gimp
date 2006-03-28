@@ -324,7 +324,7 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
 
       editor = g_object_new (GIMP_TYPE_NAVIGATION_EDITOR, NULL);
 
-      config = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
+      config = GIMP_DISPLAY_CONFIG (shell->gdisp->image->gimp->config);
       view   = GIMP_VIEW (editor->view);
 
       gimp_view_renderer_set_size (view->renderer,
@@ -444,7 +444,7 @@ gimp_navigation_editor_set_shell (GimpNavigationEditor *editor,
   if (editor->shell)
     {
       gimp_view_set_viewable (GIMP_VIEW (editor->view),
-                              GIMP_VIEWABLE (shell->gdisp->gimage));
+                              GIMP_VIEWABLE (shell->gdisp->image));
 
       g_signal_connect (editor->shell, "scaled",
                         G_CALLBACK (gimp_navigation_editor_shell_scaled),
@@ -626,7 +626,7 @@ gimp_navigation_editor_shell_reconnect (GimpDisplayShell     *shell,
                                         GimpNavigationEditor *editor)
 {
   gimp_view_set_viewable (GIMP_VIEW (editor->view),
-                          GIMP_VIEWABLE (shell->gdisp->gimage));
+                          GIMP_VIEWABLE (shell->gdisp->image));
 
   if (GIMP_EDITOR (editor)->ui_manager)
     gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,

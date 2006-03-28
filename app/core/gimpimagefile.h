@@ -78,7 +78,7 @@ void            gimp_imagefile_create_thumbnail_weak (GimpImagefile *imagefile,
 gboolean        gimp_imagefile_check_thumbnail       (GimpImagefile *imagefile);
 gboolean        gimp_imagefile_save_thumbnail        (GimpImagefile *imagefile,
                                                       const gchar   *mime_type,
-                                                      GimpImage     *gimage);
+                                                      GimpImage     *image);
 const gchar   * gimp_imagefile_get_desc_string       (GimpImagefile *imagefile);
 
 

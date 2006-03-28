@@ -39,9 +39,9 @@ struct _GimpDisplay
 
   gint        ID;               /*  unique identifier for this gdisplay     */
 
-  GimpImage  *gimage;	        /*  pointer to the associated gimage        */
+  GimpImage  *image;            /*  pointer to the associated image        */
   gint        instance;         /*  the instance # of this gdisplay as      */
-                                /*  taken from the gimage at creation       */
+                                /*  taken from the image at creation       */
 
   GtkWidget  *shell;            /*  shell widget for this gdisplay          */
 
@@ -56,7 +56,7 @@ struct _GimpDisplayClass
 
 GType         gimp_display_get_type    (void) G_GNUC_CONST;
 
-GimpDisplay * gimp_display_new         (GimpImage       *gimage,
+GimpDisplay * gimp_display_new         (GimpImage       *image,
                                         GimpUnit         unit,
                                         gdouble          scale,
                                         GimpMenuFactory *menu_factory,
@@ -68,7 +68,7 @@ GimpDisplay * gimp_display_get_by_ID   (Gimp            *gimp,
                                         gint             ID);
 
 void          gimp_display_reconnect   (GimpDisplay     *gdisp,
-                                        GimpImage       *gimage);
+                                        GimpImage       *image);
 
 void          gimp_display_update_area (GimpDisplay     *gdisp,
                                         gboolean         now,

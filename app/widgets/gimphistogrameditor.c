@@ -50,8 +50,8 @@ static void    gimp_histogram_editor_set_aux_info (GimpDocked          *docked,
 static GList * gimp_histogram_editor_get_aux_info (GimpDocked          *docked);
 
 static void  gimp_histogram_editor_set_image      (GimpImageEditor     *editor,
-                                                   GimpImage           *gimage);
-static void  gimp_histogram_editor_layer_changed  (GimpImage           *gimage,
+                                                   GimpImage           *image);
+static void  gimp_histogram_editor_layer_changed  (GimpImage           *image,
                                                    GimpHistogramEditor *editor);
 static void  gimp_histogram_editor_update         (GimpHistogramEditor *editor);
 
@@ -235,12 +235,12 @@ gimp_histogram_editor_get_aux_info (GimpDocked *docked)
 
 static void
 gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
-                                 GimpImage       *gimage)
+                                 GimpImage       *image)
 {
   GimpHistogramEditor *editor = GIMP_HISTOGRAM_EDITOR (image_editor);
   GimpHistogramView   *view   = GIMP_HISTOGRAM_BOX (editor->box)->view;
 
-  if (image_editor->gimage)
+  if (image_editor->image)
     {
       if (editor->idle_id)
         {
@@ -248,10 +248,10 @@ gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
           editor->idle_id = 0;
         }
 
-      g_signal_handlers_disconnect_by_func (image_editor->gimage,
+      g_signal_handlers_disconnect_by_func (image_editor->image,
                                             gimp_histogram_editor_layer_changed,
                                             editor);
-      g_signal_handlers_disconnect_by_func (image_editor->gimage,
+      g_signal_handlers_disconnect_by_func (image_editor->image,
                                             gimp_histogram_editor_menu_update,
                                             editor);
 
@@ -264,26 +264,26 @@ gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
       gimp_histogram_view_set_histogram (view, NULL);
     }
 
-  GIMP_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, gimage);
+  GIMP_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, image);
 
-  if (gimage)
+  if (image)
     {
       editor->histogram = gimp_histogram_new ();
 
       gimp_histogram_view_set_histogram (view, editor->histogram);
 
-      g_signal_connect_object (gimage, "mode-changed",
+      g_signal_connect_object (image, "mode-changed",
                                G_CALLBACK (gimp_histogram_editor_menu_update),
                                editor, G_CONNECT_SWAPPED);
-      g_signal_connect_object (gimage, "active-layer-changed",
+      g_signal_connect_object (image, "active-layer-changed",
                                G_CALLBACK (gimp_histogram_editor_layer_changed),
                                editor, 0);
-      g_signal_connect_object (gimage, "mask-changed",
+      g_signal_connect_object (image, "mask-changed",
                                G_CALLBACK (gimp_histogram_editor_update),
                                editor, G_CONNECT_SWAPPED);
     }
 
-  gimp_histogram_editor_layer_changed (gimage, editor);
+  gimp_histogram_editor_layer_changed (image, editor);
 }
 
 GtkWidget *
@@ -293,7 +293,7 @@ gimp_histogram_editor_new (void)
 }
 
 static void
-gimp_histogram_editor_layer_changed (GimpImage           *gimage,
+gimp_histogram_editor_layer_changed (GimpImage           *image,
                                      GimpHistogramEditor *editor)
 {
   if (editor->drawable)
@@ -310,8 +310,8 @@ gimp_histogram_editor_layer_changed (GimpImage           *gimage,
       editor->drawable = NULL;
     }
 
-  if (gimage)
-    editor->drawable = (GimpDrawable *) gimp_image_get_active_layer (gimage);
+  if (image)
+    editor->drawable = (GimpDrawable *) gimp_image_get_active_layer (image);
 
   gimp_histogram_editor_menu_update (editor);
 

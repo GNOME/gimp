@@ -20,21 +20,21 @@
 #define __GIMP_IMAGE_MERGE_H__
 
 
-GimpLayer   * gimp_image_merge_visible_layers  (GimpImage     *gimage,
+GimpLayer   * gimp_image_merge_visible_layers  (GimpImage     *image,
                                                 GimpContext   *context,
                                                 GimpMergeType  merge_type);
-GimpLayer   * gimp_image_merge_down            (GimpImage     *gimage,
+GimpLayer   * gimp_image_merge_down            (GimpImage     *image,
                                                 GimpLayer     *current_layer,
                                                 GimpContext   *context,
                                                 GimpMergeType  merge_type);
-GimpLayer   * gimp_image_flatten               (GimpImage     *gimage,
+GimpLayer   * gimp_image_flatten               (GimpImage     *image,
                                                 GimpContext   *context);
-GimpLayer   * gimp_image_merge_layers          (GimpImage     *gimage,
+GimpLayer   * gimp_image_merge_layers          (GimpImage     *image,
                                                 GSList        *merge_list,
                                                 GimpContext   *context,
                                                 GimpMergeType  merge_type,
                                                 const gchar   *undo_desc);
-GimpVectors * gimp_image_merge_visible_vectors (GimpImage     *gimage);
+GimpVectors * gimp_image_merge_visible_vectors (GimpImage     *image);
 
 
 #endif /* __GIMP_IMAGE_MERGE_H__ */

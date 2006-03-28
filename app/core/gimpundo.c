@@ -205,7 +205,7 @@ gimp_undo_constructor (GType                  type,
 
   undo = GIMP_UNDO (object);
 
-  g_assert (GIMP_IS_IMAGE (undo->gimage));
+  g_assert (GIMP_IS_IMAGE (undo->image));
 
   return object;
 }
@@ -242,7 +242,7 @@ gimp_undo_set_property (GObject      *object,
     {
     case PROP_IMAGE:
       /* don't ref */
-      undo->gimage = (GimpImage *) g_value_get_object (value);
+      undo->image = (GimpImage *) g_value_get_object (value);
       break;
     case PROP_UNDO_TYPE:
       undo->undo_type = g_value_get_enum (value);
@@ -279,7 +279,7 @@ gimp_undo_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_IMAGE:
-      g_value_set_object (value, undo->gimage);
+      g_value_set_object (value, undo->image);
       break;
     case PROP_UNDO_TYPE:
       g_value_set_enum (value, undo->undo_type);
@@ -404,11 +404,11 @@ gimp_undo_pop (GimpUndo            *undo,
       switch (undo_mode)
         {
         case GIMP_UNDO_MODE_UNDO:
-          gimp_image_clean (undo->gimage, undo->dirty_mask);
+          gimp_image_clean (undo->image, undo->dirty_mask);
           break;
 
         case GIMP_UNDO_MODE_REDO:
-          gimp_image_dirty (undo->gimage, undo->dirty_mask);
+          gimp_image_dirty (undo->image, undo->dirty_mask);
           break;
         }
     }
@@ -445,7 +445,7 @@ gimp_undo_create_preview_idle (gpointer data)
 {
   GimpUndo *undo = GIMP_UNDO (data);
 
-  if (undo == gimp_undo_stack_peek (undo->gimage->undo_stack))
+  if (undo == gimp_undo_stack_peek (undo->image->undo_stack))
     {
       gimp_undo_create_preview_private (undo);
     }
@@ -458,7 +458,7 @@ gimp_undo_create_preview_idle (gpointer data)
 static void
 gimp_undo_create_preview_private (GimpUndo *undo)
 {
-  GimpImage    *image = undo->gimage;
+  GimpImage    *image = undo->image;
   GimpViewable *preview_viewable;
   GimpViewSize  preview_size;
   gint          width;

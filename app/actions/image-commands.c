@@ -137,9 +137,9 @@ image_new_from_image_cmd_callback (GtkAction *action,
 
   if (dialog)
     {
-      GimpImage *gimage = action_data_get_image (data);
+      GimpImage *image = action_data_get_image (data);
 
-      image_new_dialog_set (dialog, gimage, NULL);
+      image_new_dialog_set (dialog, image, NULL);
 
       gtk_window_present (GTK_WINDOW (dialog));
     }
@@ -150,10 +150,10 @@ image_convert_cmd_callback (GtkAction *action,
                             gint       value,
                             gpointer   data)
 {
-  GimpImage   *gimage;
+  GimpImage   *image;
   GtkWidget   *widget;
   GimpDisplay *gdisp;
-  return_if_no_image (gimage, data);
+  return_if_no_image (image, data);
   return_if_no_widget (widget, data);
   return_if_no_display (gdisp, data);
 
@@ -161,13 +161,13 @@ image_convert_cmd_callback (GtkAction *action,
     {
     case GIMP_RGB:
     case GIMP_GRAY:
-      gimp_image_convert (gimage, (GimpImageBaseType) value,
+      gimp_image_convert (image, (GimpImageBaseType) value,
                           0, 0, FALSE, FALSE, 0, NULL, NULL);
-      gimp_image_flush (gimage);
+      gimp_image_flush (image);
       break;
 
     case GIMP_INDEXED:
-      gtk_widget_show (convert_dialog_new (gimage, widget,
+      gtk_widget_show (convert_dialog_new (image, widget,
                                            GIMP_PROGRESS (gdisp)));
       break;
     }
@@ -227,14 +227,14 @@ image_resize_to_layers_cmd_callback (GtkAction *action,
   progress = gimp_progress_start (GIMP_PROGRESS (gdisp),
                                   _("Resizing"), FALSE);
 
-  gimp_image_resize_to_layers (gdisp->gimage,
+  gimp_image_resize_to_layers (gdisp->image,
                                action_data_get_context (data),
                                progress);
 
   if (progress)
     gimp_progress_end (progress);
 
-  gimp_image_flush (gdisp->gimage);
+  gimp_image_flush (gdisp->image);
 }
 
 void
@@ -247,7 +247,7 @@ image_print_size_cmd_callback (GtkAction *action,
   return_if_no_display (gdisp, data);
   return_if_no_widget (widget, data);
 
-  dialog = print_size_dialog_new (gdisp->gimage,
+  dialog = print_size_dialog_new (gdisp->image,
                                   _("Set Image Print Resolution"),
                                   "gimp-image-print-size",
                                   widget,
@@ -273,7 +273,7 @@ image_scale_cmd_callback (GtkAction *action,
   return_if_no_display (gdisp, data);
   return_if_no_widget (widget, data);
 
-  dialog = image_scale_dialog_new (gdisp->gimage, gdisp,
+  dialog = image_scale_dialog_new (gdisp->image, gdisp,
                                    action_data_get_context (data),
                                    widget,
                                    image_scale_callback);
@@ -297,13 +297,13 @@ image_flip_cmd_callback (GtkAction *action,
   progress = gimp_progress_start (GIMP_PROGRESS (gdisp),
                                   _("Flipping"), FALSE);
 
-  gimp_image_flip (gdisp->gimage, action_data_get_context (data),
+  gimp_image_flip (gdisp->image, action_data_get_context (data),
                    (GimpOrientationType) value, progress);
 
   if (progress)
     gimp_progress_end (progress);
 
-  gimp_image_flush (gdisp->gimage);
+  gimp_image_flush (gdisp->image);
 }
 
 void
@@ -318,33 +318,33 @@ image_rotate_cmd_callback (GtkAction *action,
   progress = gimp_progress_start (GIMP_PROGRESS (gdisp),
                                   _("Rotating"), FALSE);
 
-  gimp_image_rotate (gdisp->gimage, action_data_get_context (data),
+  gimp_image_rotate (gdisp->image, action_data_get_context (data),
                      (GimpRotationType) value, progress);
 
   if (progress)
     gimp_progress_end (progress);
 
-  gimp_image_flush (gdisp->gimage);
+  gimp_image_flush (gdisp->image);
 }
 
 void
 image_crop_cmd_callback (GtkAction *action,
                          gpointer   data)
 {
-  GimpImage *gimage;
+  GimpImage *image;
   gint       x1, y1, x2, y2;
-  return_if_no_image (gimage, data);
+  return_if_no_image (image, data);
 
-  if (! gimp_channel_bounds (gimp_image_get_mask (gimage),
+  if (! gimp_channel_bounds (gimp_image_get_mask (image),
                              &x1, &y1, &x2, &y2))
     {
       g_message (_("Cannot crop because the current selection is empty."));
       return;
     }
 
-  gimp_image_crop (gimage, action_data_get_context (data),
+  gimp_image_crop (image, action_data_get_context (data),
                    x1, y1, x2, y2, FALSE, TRUE);
-  gimp_image_flush (gimage);
+  gimp_image_flush (image);
 }
 
 void
@@ -353,19 +353,19 @@ image_duplicate_cmd_callback (GtkAction *action,
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
-  GimpImage        *new_gimage;
+  GimpImage        *new_image;
   return_if_no_display (gdisp, data);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  new_gimage = gimp_image_duplicate (gdisp->gimage);
+  new_image = gimp_image_duplicate (gdisp->image);
 
-  gimp_create_display (new_gimage->gimp,
-                       new_gimage,
+  gimp_create_display (new_image->gimp,
+                       new_image,
                        shell->unit,
                        gimp_zoom_model_get_factor (shell->zoom));
 
-  g_object_unref (new_gimage);
+  g_object_unref (new_image);
 }
 
 void
@@ -373,12 +373,12 @@ image_merge_layers_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
   ImageMergeLayersDialog *dialog;
-  GimpImage              *gimage;
+  GimpImage              *image;
   GtkWidget              *widget;
-  return_if_no_image (gimage, data);
+  return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  dialog = image_merge_layers_dialog_new (gimage,
+  dialog = image_merge_layers_dialog_new (image,
                                           action_data_get_context (data),
                                           widget,
                                           image_merge_layers_type);
@@ -394,11 +394,11 @@ void
 image_flatten_image_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
-  GimpImage *gimage;
-  return_if_no_image (gimage, data);
+  GimpImage *image;
+  return_if_no_image (image, data);
 
-  gimp_image_flatten (gimage, action_data_get_context (data));
-  gimp_image_flush (gimage);
+  gimp_image_flatten (image, action_data_get_context (data));
+  gimp_image_flush (image);
 }
 
 void
@@ -407,15 +407,15 @@ image_configure_grid_cmd_callback (GtkAction *action,
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
-  GimpImage        *gimage;
+  GimpImage        *image;
   return_if_no_display (gdisp, data);
 
   shell  = GIMP_DISPLAY_SHELL (gdisp->shell);
-  gimage = gdisp->gimage;
+  image = gdisp->image;
 
   if (! shell->grid_dialog)
     {
-      shell->grid_dialog = grid_dialog_new (gdisp->gimage, gdisp->shell);
+      shell->grid_dialog = grid_dialog_new (gdisp->image, gdisp->shell);
 
       gtk_window_set_transient_for (GTK_WINDOW (shell->grid_dialog),
                                     GTK_WINDOW (gdisp->shell));
@@ -435,14 +435,14 @@ image_properties_cmd_callback (GtkAction *action,
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
-  GimpImage        *gimage;
+  GimpImage        *image;
   GtkWidget        *dialog;
   return_if_no_display (gdisp, data);
 
   shell  = GIMP_DISPLAY_SHELL (gdisp->shell);
-  gimage = gdisp->gimage;
+  image = gdisp->image;
 
-  dialog = image_properties_dialog_new (gdisp->gimage, gdisp->shell);
+  dialog = image_properties_dialog_new (gdisp->image, gdisp->shell);
 
   gtk_window_set_transient_for (GTK_WINDOW (dialog),
                                 GTK_WINDOW (gdisp->shell));
@@ -535,7 +535,7 @@ image_print_size_callback (GtkWidget *dialog,
 static void
 image_scale_callback (ImageScaleDialog  *dialog)
 {
-  GimpImage *image = dialog->gimage;
+  GimpImage *image = dialog->image;
 
   if (dialog->width           == image->width           &&
       dialog->height          == image->height          &&
@@ -590,10 +590,10 @@ image_merge_layers_response (GtkWidget              *widget,
     {
       image_merge_layers_type = dialog->merge_type;
 
-      gimp_image_merge_visible_layers (dialog->gimage,
+      gimp_image_merge_visible_layers (dialog->image,
                                        dialog->context,
                                        image_merge_layers_type);
-      gimp_image_flush (dialog->gimage);
+      gimp_image_flush (dialog->image);
     }
 
   gtk_widget_destroy (widget);

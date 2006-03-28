@@ -84,8 +84,8 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
   if (! shell->gdisp)
     return;
 
-  image_width  = shell->gdisp->gimage->width;
-  image_height = shell->gdisp->gimage->height;
+  image_width  = shell->gdisp->image->width;
+  image_height = shell->gdisp->image->height;
 
   sx    = SCALEX (shell, image_width);
   sy    = SCALEY (shell, image_height);
@@ -192,7 +192,7 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
 
   if (dot_for_dot != shell->dot_for_dot)
     {
-      Gimp *gimp = shell->gdisp->gimage->gimp;
+      Gimp *gimp = shell->gdisp->image->gimp;
 
       /* freeze the active tool */
       gimp_display_shell_pause (shell);
@@ -304,7 +304,7 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
   offset_x *= scale;
   offset_y *= scale;
 
-  config = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
+  config = GIMP_DISPLAY_CONFIG (shell->gdisp->image->gimp->config);
 
   gimp_display_shell_scale_by_values (shell, scale,
                                       offset_x - x, offset_y - y,
@@ -314,24 +314,24 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
 void
 gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
 {
-  GimpImage *gimage;
+  GimpImage *image;
   gint       image_width;
   gint       image_height;
   gdouble    zoom_factor;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gimage = shell->gdisp->gimage;
+  image = shell->gdisp->image;
 
-  image_width  = gimage->width;
-  image_height = gimage->height;
+  image_width  = image->width;
+  image_height = image->height;
 
   if (! shell->dot_for_dot)
     {
       image_width  = ROUND (image_width *
-                            shell->monitor_xres / gimage->xresolution);
+                            shell->monitor_xres / image->xresolution);
       image_height = ROUND (image_height *
-                            shell->monitor_yres / gimage->yresolution);
+                            shell->monitor_yres / image->yresolution);
     }
 
   zoom_factor = MIN ((gdouble) shell->disp_width  / (gdouble) image_width,
@@ -343,24 +343,24 @@ gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
 void
 gimp_display_shell_scale_fit_to (GimpDisplayShell *shell)
 {
-  GimpImage *gimage;
+  GimpImage *image;
   gint       image_width;
   gint       image_height;
   gdouble    zoom_factor;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gimage = shell->gdisp->gimage;
+  image = shell->gdisp->image;
 
-  image_width  = gimage->width;
-  image_height = gimage->height;
+  image_width  = image->width;
+  image_height = image->height;
 
   if (! shell->dot_for_dot)
     {
       image_width  = ROUND (image_width *
-                            shell->monitor_xres / gimage->xresolution);
+                            shell->monitor_xres / image->xresolution);
       image_height = ROUND (image_height *
-                            shell->monitor_yres / gimage->yresolution);
+                            shell->monitor_yres / image->yresolution);
     }
 
   zoom_factor = MAX ((gdouble) shell->disp_width  / (gdouble) image_width,
@@ -417,7 +417,7 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gimp = shell->gdisp->gimage->gimp;
+  gimp = shell->gdisp->image->gimp;
 
   /* freeze the active tool */
   gimp_display_shell_pause (shell);
@@ -468,7 +468,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
                               NULL);
 
   shell->scale_dialog =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (shell->gdisp->gimage),
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (shell->gdisp->image),
                               _("Zoom Ratio"), "display_scale",
                               GTK_STOCK_ZOOM_100,
                               _("Select Zoom Ratio"),
@@ -652,7 +652,7 @@ img2real (GimpDisplayShell *shell,
           gboolean          xdir,
           gdouble           len)
 {
-  GimpImage *image = shell->gdisp->gimage;
+  GimpImage *image = shell->gdisp->image;
   gdouble    res;
 
   if (shell->unit == GIMP_UNIT_PIXEL)

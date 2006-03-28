@@ -540,14 +540,14 @@ gimp_paint_options_new (GimpPaintInfo *paint_info)
 
 gdouble
 gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
-                             GimpImage        *gimage,
+                             GimpImage        *image,
                              gdouble           pixel_dist)
 {
   GimpFadeOptions *fade_options;
 
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options),
                         GIMP_OPACITY_OPAQUE);
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_OPACITY_OPAQUE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_OPACITY_OPAQUE);
 
   fade_options = paint_options->fade_options;
 
@@ -562,14 +562,14 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
           fade_out = fade_options->fade_length;
           break;
         case GIMP_UNIT_PERCENT:
-          fade_out = (MAX (gimage->width, gimage->height) *
+          fade_out = (MAX (image->width, image->height) *
                       fade_options->fade_length / 100);
           break;
         default:
           unit_factor = gimp_unit_get_factor (fade_options->fade_unit);
           fade_out    = (fade_options->fade_length *
-                         MAX (gimage->xresolution,
-                              gimage->yresolution) / unit_factor);
+                         MAX (image->xresolution,
+                              image->yresolution) / unit_factor);
           break;
         }
 
@@ -592,7 +592,7 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
 
 gdouble
 gimp_paint_options_get_jitter (GimpPaintOptions *paint_options,
-			       GimpImage        *gimage)
+			       GimpImage        *image)
 {
   GimpJitterOptions *jitter_options;
 
@@ -606,7 +606,7 @@ gimp_paint_options_get_jitter (GimpPaintOptions *paint_options,
 
 gboolean
 gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
-                                       GimpImage        *gimage,
+                                       GimpImage        *image,
                                        gdouble           pressure,
                                        gdouble           pixel_dist,
                                        GimpRGB          *color)
@@ -616,7 +616,7 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
   GimpGradient        *gradient;
 
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), FALSE);
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (color != NULL, FALSE);
 
   pressure_options = paint_options->pressure_options;
@@ -644,14 +644,14 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
           gradient_length = gradient_options->gradient_length;
           break;
         case GIMP_UNIT_PERCENT:
-          gradient_length = (MAX (gimage->width, gimage->height) *
+          gradient_length = (MAX (image->width, image->height) *
                              gradient_options->gradient_length / 100);
           break;
         default:
           unit_factor = gimp_unit_get_factor (gradient_options->gradient_unit);
           gradient_length = (gradient_options->gradient_length *
-                             MAX (gimage->xresolution,
-                                  gimage->yresolution) / unit_factor);
+                             MAX (image->xresolution,
+                                  image->yresolution) / unit_factor);
           break;
         }
 

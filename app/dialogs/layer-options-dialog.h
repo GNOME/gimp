@@ -33,13 +33,13 @@ struct _LayerOptionsDialog
   gint          xsize;
   gint          ysize;
 
-  GimpImage    *gimage;
+  GimpImage    *image;
   GimpContext  *context;
   GimpLayer    *layer;
 };
 
 
-LayerOptionsDialog * layer_options_dialog_new (GimpImage    *gimage,
+LayerOptionsDialog * layer_options_dialog_new (GimpImage    *image,
                                                GimpContext  *context,
                                                GimpLayer    *layer,
                                                GtkWidget    *parent,

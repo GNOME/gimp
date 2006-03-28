@@ -282,9 +282,8 @@ gimp_align_tool_button_press (GimpTool        *tool,
 
       GimpLayer *layer;
 
-      if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage,
-                                                         coords->x,
-                                                         coords->y)))
+      if ((layer = gimp_image_pick_correlate_layer (gdisp->image,
+                                                    coords->x, coords->y)))
         {
           item = GIMP_ITEM (layer);
         }
@@ -354,18 +353,18 @@ gimp_align_tool_cursor_update (GimpTool        *tool,
     {
       GimpLayer *layer;
 
-      if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage,
-                                                         coords->x, coords->y)))
+      if ((layer = gimp_image_pick_correlate_layer (gdisp->image,
+                                                    coords->x, coords->y)))
 	{
 	  /*  if there is a floating selection, and this aint it...  */
-	  if (gimp_image_floating_sel (gdisp->gimage) &&
+	  if (gimp_image_floating_sel (gdisp->image) &&
 	      ! gimp_layer_is_floating_sel (layer))
 	    {
               cursor      = GIMP_CURSOR_MOUSE;
               tool_cursor = GIMP_TOOL_CURSOR_MOVE;
               modifier    = GIMP_CURSOR_MODIFIER_ANCHOR;
 	    }
-	  else if (layer == gimp_image_get_active_layer (gdisp->gimage))
+	  else if (layer == gimp_image_get_active_layer (gdisp->image))
 	    {
               cursor = GIMP_CURSOR_MOUSE;
 	    }
@@ -592,7 +591,7 @@ do_horizontal_alignment (GtkWidget *widget,
                      align_tool->horz_offset);
 
   if (GIMP_TOOL (align_tool)->gdisp)
-    gimp_image_flush (GIMP_TOOL (align_tool)->gdisp->gimage);
+    gimp_image_flush (GIMP_TOOL (align_tool)->gdisp->image);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (align_tool));
 }
@@ -614,7 +613,7 @@ do_vertical_alignment (GtkWidget *widget,
                      align_tool->vert_offset);
 
   if (GIMP_TOOL (align_tool)->gdisp)
-      gimp_image_flush (GIMP_TOOL (align_tool)->gdisp->gimage);
+      gimp_image_flush (GIMP_TOOL (align_tool)->gdisp->image);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (align_tool));
 }

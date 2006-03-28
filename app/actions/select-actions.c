@@ -132,17 +132,17 @@ void
 select_actions_update (GimpActionGroup *group,
                        gpointer         data)
 {
-  GimpImage    *gimage   = action_data_get_image (data);
+  GimpImage    *image   = action_data_get_image (data);
   GimpDrawable *drawable = NULL;
   gboolean      fs       = FALSE;
   gboolean      sel      = FALSE;
 
-  if (gimage)
+  if (image)
     {
-      drawable = gimp_image_active_drawable (gimage);
+      drawable = gimp_image_active_drawable (image);
 
-      fs  = (gimp_image_floating_sel (gimage) != NULL);
-      sel = ! gimp_channel_is_empty (gimp_image_get_mask (gimage));
+      fs  = (gimp_image_floating_sel (image) != NULL);
+      sel = ! gimp_channel_is_empty (gimp_image_get_mask (image));
     }
 
 #define SET_SENSITIVE(action,condition) \

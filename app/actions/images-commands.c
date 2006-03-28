@@ -61,7 +61,7 @@ images_raise_views_cmd_callback (GtkAction *action,
         {
           GimpDisplay *display = list->data;
 
-          if (display->gimage == image)
+          if (display->image == image)
             gtk_window_present (GTK_WINDOW (display->shell));
         }
     }

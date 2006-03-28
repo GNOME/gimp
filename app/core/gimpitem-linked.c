@@ -160,7 +160,7 @@ GList *
 gimp_item_linked_get_list (GimpItem           *item,
                            GimpItemLinkedMask  which)
 {
-  GimpImage *gimage;
+  GimpImage *image;
   GimpItem  *linked_item;
   GList     *list;
   GList     *linked_list = NULL;
@@ -169,11 +169,11 @@ gimp_item_linked_get_list (GimpItem           *item,
   g_return_val_if_fail (gimp_item_get_linked (item), NULL);
   g_return_val_if_fail (gimp_item_is_attached (item), NULL);
 
-  gimage = gimp_item_get_image (item);
+  image = gimp_item_get_image (item);
 
   if (which & GIMP_ITEM_LINKED_LAYERS)
     {
-      for (list = GIMP_LIST (gimage->layers)->list;
+      for (list = GIMP_LIST (image->layers)->list;
            list;
            list = g_list_next (list))
         {
@@ -186,7 +186,7 @@ gimp_item_linked_get_list (GimpItem           *item,
 
   if (which & GIMP_ITEM_LINKED_CHANNELS)
     {
-      for (list = GIMP_LIST (gimage->channels)->list;
+      for (list = GIMP_LIST (image->channels)->list;
            list;
            list = g_list_next (list))
         {
@@ -199,7 +199,7 @@ gimp_item_linked_get_list (GimpItem           *item,
 
   if (which & GIMP_ITEM_LINKED_VECTORS)
     {
-      for (list = GIMP_LIST (gimage->vectors)->list;
+      for (list = GIMP_LIST (image->vectors)->list;
            list;
            list = g_list_next (list))
         {

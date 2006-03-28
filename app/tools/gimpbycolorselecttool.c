@@ -116,7 +116,7 @@ gimp_by_color_select_tool_button_press (GimpTool        *tool,
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  tool->drawable = gimp_image_active_drawable (gdisp->gimage);
+  tool->drawable = gimp_image_active_drawable (gdisp->image);
 
   gimp_tool_control_activate (tool->control);
   tool->gdisp = gdisp;
@@ -128,7 +128,7 @@ gimp_by_color_select_tool_button_press (GimpTool        *tool,
     {
       gint off_x, off_y;
 
-      gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (gdisp->gimage)),
+      gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (gdisp->image)),
                          &off_x, &off_y);
 
       by_color_sel->x -= off_x;
@@ -149,7 +149,7 @@ gimp_by_color_select_tool_button_release (GimpTool        *tool,
   GimpDrawable          *drawable;
 
   options  = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
-  drawable = gimp_image_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->image);
 
   gimp_tool_control_halt (tool->control);
 
@@ -166,7 +166,7 @@ gimp_by_color_select_tool_button_release (GimpTool        *tool,
       guchar       *col;
 
       if (options->sample_merged)
-        pickable = GIMP_PICKABLE (gdisp->gimage->projection);
+        pickable = GIMP_PICKABLE (gdisp->image->projection);
       else
         pickable = GIMP_PICKABLE (drawable);
 
@@ -183,7 +183,7 @@ gimp_by_color_select_tool_button_release (GimpTool        *tool,
           gimp_rgba_set_uchar (&color, col[0], col[1], col[2], col[3]);
           g_free (col);
 
-          gimp_channel_select_by_color (gimp_image_get_mask (gdisp->gimage),
+          gimp_channel_select_by_color (gimp_image_get_mask (gdisp->image),
                                         drawable,
                                         options->sample_merged,
                                         &color,
@@ -194,7 +194,7 @@ gimp_by_color_select_tool_button_release (GimpTool        *tool,
                                         options->feather,
                                         options->feather_radius,
                                         options->feather_radius);
-          gimp_image_flush (gdisp->gimage);
+          gimp_image_flush (gdisp->image);
         }
     }
 }
@@ -243,10 +243,10 @@ gimp_by_color_select_tool_cursor_update (GimpTool        *tool,
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  layer = gimp_image_pick_correlate_layer (gdisp->gimage, coords->x, coords->y);
+  layer = gimp_image_pick_correlate_layer (gdisp->image, coords->x, coords->y);
 
   if (! options->sample_merged &&
-      layer && layer != gdisp->gimage->active_layer)
+      layer && layer != gdisp->image->active_layer)
     {
       gimp_tool_control_set_cursor (tool->control, GIMP_CURSOR_BAD);
     }

@@ -66,18 +66,18 @@ static void      undo_free_ink (GimpUndo            *undo,
 
 gboolean
 gimp_ink_push_undo (GimpPaintCore *core,
-                    GimpImage     *gimage,
+                    GimpImage     *image,
                     const gchar   *undo_desc)
 {
   GimpUndo *new;
 
   g_return_val_if_fail (GIMP_IS_INK (core), FALSE);
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  if (! GIMP_PAINT_CORE_CLASS (g_type_class_peek_parent (GIMP_INK_GET_CLASS (core)))->push_undo (core, gimage, undo_desc))
+  if (! GIMP_PAINT_CORE_CLASS (g_type_class_peek_parent (GIMP_INK_GET_CLASS (core)))->push_undo (core, image, undo_desc))
     return FALSE;
 
-  if ((new = gimp_image_undo_push (gimage, GIMP_TYPE_UNDO,
+  if ((new = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
                                    sizeof (InkUndo),
                                    sizeof (InkUndo),
                                    GIMP_UNDO_INK, undo_desc,

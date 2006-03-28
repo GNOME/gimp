@@ -221,40 +221,40 @@ gimp_measure_tool_button_press (GimpTool        *tool,
                                    (mtool->y[i] ==
                                     CLAMP (mtool->y[i],
                                            0,
-                                           gdisp->gimage->height)));
+                                           gdisp->image->height)));
 
                   create_vguide = ((state & GDK_MOD1_MASK) &&
                                    (mtool->x[i] ==
                                     CLAMP (mtool->x[i],
                                            0,
-                                           gdisp->gimage->width)));
+                                           gdisp->image->width)));
 
 		  if (create_hguide && create_vguide)
-		    gimp_image_undo_group_start (gdisp->gimage,
+		    gimp_image_undo_group_start (gdisp->image,
                                                  GIMP_UNDO_GROUP_IMAGE_GUIDE,
                                                  _("Add Guides"));
 
 		  if (create_hguide)
 		    {
-		      guide = gimp_image_add_hguide (gdisp->gimage,
+		      guide = gimp_image_add_hguide (gdisp->image,
                                                      mtool->y[i],
                                                      TRUE);
-		      gimp_image_update_guide (gdisp->gimage, guide);
+		      gimp_image_update_guide (gdisp->image, guide);
 		    }
 
 		  if (create_vguide)
 		    {
-		      guide = gimp_image_add_vguide (gdisp->gimage,
+		      guide = gimp_image_add_vguide (gdisp->image,
                                                      mtool->x[i],
                                                      TRUE);
-		      gimp_image_update_guide (gdisp->gimage, guide);
+		      gimp_image_update_guide (gdisp->image, guide);
 		    }
 
 		  if (create_hguide && create_vguide)
-		    gimp_image_undo_group_end (gdisp->gimage);
+		    gimp_image_undo_group_end (gdisp->image);
 
 		  if (create_hguide || create_vguide)
-                    gimp_image_flush (gdisp->gimage);
+                    gimp_image_flush (gdisp->image);
 
 		  mtool->function = GUIDING;
 		  break;
@@ -332,7 +332,7 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 
   if (mtool->dialog)
     gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (mtool->dialog),
-                                       GIMP_VIEWABLE (tool->gdisp->gimage));
+                                       GIMP_VIEWABLE (tool->gdisp->image));
 }
 
 static void
@@ -698,7 +698,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *mtool,
                                  GimpDisplay     *gdisp)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-  GimpImage        *image = gdisp->gimage;
+  GimpImage        *image = gdisp->image;
   gint              ax, ay;
   gint              bx, by;
   gint              pixel_width;

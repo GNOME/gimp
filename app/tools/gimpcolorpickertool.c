@@ -262,7 +262,7 @@ gimp_color_picker_tool_picked (GimpColorTool      *color_tool,
     gimp_color_picker_tool_info_update (picker_tool, sample_type,
                                         color, color_index);
 
-  user_context = gimp_get_user_context (tool->gdisp->gimage->gimp);
+  user_context = gimp_get_user_context (tool->gdisp->image->gimp);
 
   if ((options->pick_mode == GIMP_COLOR_PICK_MODE_FOREGROUND ||
        options->pick_mode == GIMP_COLOR_PICK_MODE_BACKGROUND) &&

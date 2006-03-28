@@ -167,10 +167,10 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  selection    = gimp_image_get_mask (gdisp->gimage);
-  layer        = gimp_image_pick_correlate_layer (gdisp->gimage,
+  selection    = gimp_image_get_mask (gdisp->image);
+  layer        = gimp_image_pick_correlate_layer (gdisp->image,
                                                   coords->x, coords->y);
-  floating_sel = gimp_image_floating_sel (gdisp->gimage);
+  floating_sel = gimp_image_floating_sel (gdisp->image);
 
   if (layer)
     {

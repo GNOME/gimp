@@ -622,8 +622,8 @@ gimp_rectangle_tool_initialize (GimpTool    *tool,
 
   if (gdisp != tool->gdisp)
     {
-      gint     width  = gimp_image_get_width (gdisp->gimage);
-      gint     height = gimp_image_get_height (gdisp->gimage);
+      gint     width  = gimp_image_get_width (gdisp->image);
+      gint     height = gimp_image_get_height (gdisp->image);
       GimpUnit unit;
       gdouble  xres;
       gdouble  yres;
@@ -638,7 +638,7 @@ gimp_rectangle_tool_initialize (GimpTool    *tool,
       gimp_size_entry_set_size (entry, 2, 0, width);
       gimp_size_entry_set_size (entry, 3, 0, height);
 
-      gimp_image_get_resolution (gdisp->gimage, &xres, &yres);
+      gimp_image_get_resolution (gdisp->image, &xres, &yres);
 
       gimp_size_entry_set_resolution (entry, 0, yres, TRUE);
       gimp_size_entry_set_resolution (entry, 1, xres, TRUE);
@@ -786,8 +786,8 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   min_x = min_y = 0;
-  max_x = gdisp->gimage->width;
-  max_y = gdisp->gimage->height;
+  max_x = gdisp->image->width;
+  max_y = gdisp->image->height;
 
   g_object_get (options,
                 "width", &width,
@@ -1216,8 +1216,8 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   min_x = min_y = 0;
-  max_x = gdisp->gimage->width;
-  max_y = gdisp->gimage->height;
+  max_x = gdisp->image->width;
+  max_y = gdisp->image->height;
 
   g_object_get (rectangle,
                 "x1", &x1,
@@ -1585,7 +1585,7 @@ gimp_rectangle_tool_response (GtkWidget         *widget,
       if (gimp_tool_control_is_active (tool->control))
         gimp_tool_control_halt (tool->control);
 
-      gimp_image_flush (tool->gdisp->gimage);
+      gimp_image_flush (tool->gdisp->image);
 
       tool->gdisp    = NULL;
       tool->drawable = NULL;
@@ -1605,7 +1605,7 @@ rectangle_selection_callback (GtkWidget         *widget,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (rectangle));
 
-  if (gimp_channel_bounds (gimp_image_get_mask (gdisp->gimage),
+  if (gimp_channel_bounds (gimp_image_get_mask (gdisp->image),
                            &x1, &y1,
                            &x2, &y2))
     {
@@ -1621,8 +1621,8 @@ rectangle_selection_callback (GtkWidget         *widget,
       g_object_set (rectangle,
                     "x1", 0,
                     "y1", 0,
-                    "x2", gdisp->gimage->width,
-                    "y2", gdisp->gimage->height,
+                    "x2", gdisp->image->width,
+                    "y2", gdisp->image->height,
                     NULL);
     }
 
@@ -1647,8 +1647,8 @@ rectangle_automatic_callback (GtkWidget         *widget,
 
   gdisp   = GIMP_TOOL (rectangle)->gdisp;
 
-  width    = gdisp->gimage->width;
-  height   = gdisp->gimage->height;
+  width    = gdisp->image->width;
+  height   = gdisp->image->height;
   offset_x = 0;
   offset_y = 0;
 
@@ -1664,7 +1664,7 @@ rectangle_automatic_callback (GtkWidget         *widget,
   y1 = ry1 - offset_y  > 0      ? ry1 - offset_y : 0;
   y2 = ry2 - offset_y  < height ? ry2 - offset_y : height;
 
-  if (gimp_image_crop_auto_shrink (gdisp->gimage,
+  if (gimp_image_crop_auto_shrink (gdisp->image,
                                    x1, y1, x2, y2,
                                    FALSE,
                                    &shrunk_x1,

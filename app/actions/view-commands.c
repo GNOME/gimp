@@ -60,7 +60,7 @@
 
 #define IS_ACTIVE_DISPLAY(gdisp) \
   ((gdisp) == \
-   gimp_context_get_display (gimp_get_user_context ((gdisp)->gimage->gimp)))
+   gimp_context_get_display (gimp_get_user_context ((gdisp)->image->gimp)))
 
 
 /*  local function prototypes  */
@@ -83,8 +83,8 @@ view_new_cmd_callback (GtkAction *action,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gimp_create_display (gdisp->gimage->gimp,
-                       gdisp->gimage,
+  gimp_create_display (gdisp->image->gimp,
+                       gdisp->image,
                        shell->unit, gimp_zoom_model_get_factor (shell->zoom));
 }
 
@@ -565,7 +565,7 @@ view_padding_color_cmd_callback (GtkAction *action,
 
         if (! color_dialog)
           {
-            color_dialog = gimp_color_dialog_new (GIMP_VIEWABLE (gdisp->gimage),
+            color_dialog = gimp_color_dialog_new (GIMP_VIEWABLE (gdisp->image),
                                                   _("Set Canvas Padding Color"),
                                                   GTK_STOCK_SELECT_COLOR,
                                                   _("Set Custom Canvas Padding Color"),
@@ -594,7 +594,7 @@ view_padding_color_cmd_callback (GtkAction *action,
         GimpDisplayConfig  *config;
         GimpDisplayOptions *default_options;
 
-        config = GIMP_DISPLAY_CONFIG (gdisp->gimage->gimp->config);
+        config = GIMP_DISPLAY_CONFIG (gdisp->image->gimp->config);
 
         options->padding_mode_set = FALSE;
 

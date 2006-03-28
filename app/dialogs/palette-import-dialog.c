@@ -95,7 +95,7 @@ static void   palette_import_gradient_changed     (GimpContext   *context,
                                                    GimpGradient  *gradient,
                                                    ImportDialog  *dialog);
 static void   palette_import_image_changed        (GimpContext   *context,
-                                                   GimpImage     *gimage,
+                                                   GimpImage     *image,
                                                    ImportDialog  *dialog);
 static void   palette_import_filename_changed     (GimpFileEntry *file_entry,
                                                    ImportDialog  *dialog);
@@ -113,10 +113,10 @@ static void   palette_import_file_callback        (GtkWidget     *widget,
 static void   palette_import_columns_changed      (GtkAdjustment *adjustment,
                                                    ImportDialog  *dialog);
 static void   palette_import_image_add            (GimpContainer *container,
-                                                   GimpImage     *gimage,
+                                                   GimpImage     *image,
                                                    ImportDialog  *dialog);
 static void   palette_import_image_remove         (GimpContainer *container,
-                                                   GimpImage     *gimage,
+                                                   GimpImage     *image,
                                                    ImportDialog  *dialog);
 static void   palette_import_make_palette         (ImportDialog  *dialog);
 
@@ -468,17 +468,17 @@ palette_import_gradient_changed (GimpContext  *context,
 
 static void
 palette_import_image_changed (GimpContext  *context,
-                              GimpImage    *gimage,
+                              GimpImage    *image,
                               ImportDialog *dialog)
 {
-  if (gimage && dialog->import_type == IMAGE_IMPORT)
+  if (image && dialog->import_type == IMAGE_IMPORT)
     {
       gchar *basename;
       gchar *label;
 
       basename =
-        file_utils_uri_display_basename (gimp_image_get_uri (gimage));
-      label = g_strdup_printf ("%s-%d", basename, gimp_image_get_ID (gimage));
+        file_utils_uri_display_basename (gimp_image_get_uri (image));
+      label = g_strdup_printf ("%s-%d", basename, gimp_image_get_ID (image));
       g_free (basename);
 
       gtk_entry_set_text (GTK_ENTRY (dialog->entry), label);
@@ -580,17 +580,17 @@ static void
 palette_import_image_callback (GtkWidget    *widget,
 			       ImportDialog *dialog)
 {
-  GimpImage *gimage;
+  GimpImage *image;
 
   if (! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     return;
 
   dialog->import_type = IMAGE_IMPORT;
 
-  gimage = gimp_context_get_image (dialog->context);
+  image = gimp_context_get_image (dialog->context);
 
-  if (! gimage)
-    gimage = (GimpImage *)
+  if (! image)
+    image = (GimpImage *)
       gimp_container_get_child_by_index (dialog->context->gimp->images,
                                          0);
 
@@ -598,7 +598,7 @@ palette_import_image_callback (GtkWidget    *widget,
   gtk_widget_set_sensitive (dialog->image_combo,    TRUE);
   gtk_widget_set_sensitive (dialog->filename_entry, FALSE);
 
-  palette_import_image_changed (dialog->context, gimage, dialog);
+  palette_import_image_changed (dialog->context, image, dialog);
 
   gimp_scale_entry_set_sensitive (GTK_OBJECT (dialog->threshold),  TRUE);
   gimp_scale_entry_set_sensitive (GTK_OBJECT (dialog->num_colors), TRUE);
@@ -654,19 +654,19 @@ palette_import_columns_changed (GtkAdjustment *adj,
 
 static void
 palette_import_image_add (GimpContainer *container,
-			  GimpImage     *gimage,
+			  GimpImage     *image,
 			  ImportDialog  *dialog)
 {
   if (! GTK_WIDGET_IS_SENSITIVE (dialog->image_radio))
     {
       gtk_widget_set_sensitive (dialog->image_radio, TRUE);
-      gimp_context_set_image (dialog->context, gimage);
+      gimp_context_set_image (dialog->context, image);
     }
 }
 
 static void
 palette_import_image_remove (GimpContainer *container,
-                             GimpImage     *gimage,
+                             GimpImage     *image,
                              ImportDialog  *dialog)
 {
   if (! gimp_container_num_children (dialog->context->gimp->images))
@@ -714,16 +714,16 @@ palette_import_make_palette (ImportDialog *dialog)
 
     case IMAGE_IMPORT:
       {
-        GimpImage *gimage = gimp_context_get_image (dialog->context);
+        GimpImage *image = gimp_context_get_image (dialog->context);
 
-        if (gimp_image_base_type (gimage) == GIMP_INDEXED)
+        if (gimp_image_base_type (image) == GIMP_INDEXED)
           {
-            palette = gimp_palette_import_from_indexed_image (gimage,
+            palette = gimp_palette_import_from_indexed_image (image,
                                                               palette_name);
           }
         else
           {
-            palette = gimp_palette_import_from_image (gimage,
+            palette = gimp_palette_import_from_image (image,
                                                       palette_name,
                                                       n_colors,
                                                       threshold);

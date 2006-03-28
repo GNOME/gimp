@@ -36,26 +36,26 @@
 
 
 GimpGrid *
-gimp_image_get_grid (GimpImage *gimage)
+gimp_image_get_grid (GimpImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return gimage->grid;
+  return image->grid;
 }
 
 void
-gimp_image_set_grid (GimpImage *gimage,
+gimp_image_set_grid (GimpImage *image,
                      GimpGrid  *grid,
                      gboolean   push_undo)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_GRID (grid));
 
-  if (gimp_config_is_equal_to (GIMP_CONFIG (gimage->grid), GIMP_CONFIG (grid)))
+  if (gimp_config_is_equal_to (GIMP_CONFIG (image->grid), GIMP_CONFIG (grid)))
     return;
 
   if (push_undo)
-    gimp_image_undo_push_image_grid (gimage, _("Grid"), gimage->grid);
+    gimp_image_undo_push_image_grid (image, _("Grid"), image->grid);
 
-  gimp_config_sync (G_OBJECT (grid), G_OBJECT (gimage->grid), 0);
+  gimp_config_sync (G_OBJECT (grid), G_OBJECT (image->grid), 0);
 }

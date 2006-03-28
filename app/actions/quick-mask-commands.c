@@ -53,16 +53,16 @@ void
 quick_mask_toggle_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
-  GimpImage *gimage;
+  GimpImage *image;
   gboolean   active;
-  return_if_no_image (gimage, data);
+  return_if_no_image (image, data);
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-  if (active != gimp_image_get_quick_mask_state (gimage))
+  if (active != gimp_image_get_quick_mask_state (image))
     {
-      gimp_image_set_quick_mask_state (gimage, active);
-      gimp_image_flush (gimage);
+      gimp_image_set_quick_mask_state (image, active);
+      gimp_image_flush (image);
     }
 }
 
@@ -71,16 +71,16 @@ quick_mask_invert_cmd_callback (GtkAction *action,
                                 GtkAction *current,
                                 gpointer   data)
 {
-  GimpImage *gimage;
+  GimpImage *image;
   gint       value;
-  return_if_no_image (gimage, data);
+  return_if_no_image (image, data);
 
   value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
-  if (value != gimage->quick_mask_inverted)
+  if (value != image->quick_mask_inverted)
     {
-      gimp_image_quick_mask_invert (gimage);
-      gimp_image_flush (gimage);
+      gimp_image_quick_mask_invert (image);
+      gimp_image_flush (image);
     }
 }
 
@@ -89,15 +89,15 @@ quick_mask_configure_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
   ChannelOptionsDialog *options;
-  GimpImage            *gimage;
+  GimpImage            *image;
   GtkWidget            *widget;
   GimpRGB               color;
-  return_if_no_image (gimage, data);
+  return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  gimp_image_get_quick_mask_color (gimage, &color);
+  gimp_image_get_quick_mask_color (image, &color);
 
-  options = channel_options_dialog_new (gimage,
+  options = channel_options_dialog_new (image,
                                         action_data_get_context (data),
                                         NULL,
                                         widget,
@@ -132,15 +132,15 @@ quick_mask_configure_response (GtkWidget            *widget,
       GimpRGB old_color;
       GimpRGB new_color;
 
-      gimp_image_get_quick_mask_color (options->gimage, &old_color);
+      gimp_image_get_quick_mask_color (options->image, &old_color);
       gimp_color_button_get_color (GIMP_COLOR_BUTTON (options->color_panel),
                                    &new_color);
 
       if (gimp_rgba_distance (&old_color, &new_color) > 0.0001)
         {
-          gimp_image_set_quick_mask_color (options->gimage, &new_color);
+          gimp_image_set_quick_mask_color (options->image, &new_color);
 
-          gimp_image_flush (options->gimage);
+          gimp_image_flush (options->image);
         }
     }
 

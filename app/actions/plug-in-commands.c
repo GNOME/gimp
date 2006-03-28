@@ -94,7 +94,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
 
           if (gdisp)
             {
-              args[n_args].value.pdb_int = gimp_image_get_ID (gdisp->gimage);
+              args[n_args].value.pdb_int = gimp_image_get_ID (gdisp->image);
               n_args++;
 
               if (proc_rec->num_args > n_args &&
@@ -102,7 +102,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
                 {
                   GimpDrawable *drawable;
 
-                  drawable = gimp_image_active_drawable (gdisp->gimage);
+                  drawable = gimp_image_active_drawable (gdisp->image);
 
                   if (drawable)
                     {
@@ -158,18 +158,18 @@ plug_in_repeat_cmd_callback (GtkAction *action,
   if (! gdisp)
     return;
 
-  drawable = gimp_image_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->image);
   if (! drawable)
     return;
 
   if (strcmp (gtk_action_get_name (action), "plug-in-repeat") == 0)
     interactive = FALSE;
 
-  plug_in_repeat (gdisp->gimage->gimp, value,
-                  gimp_get_user_context (gdisp->gimage->gimp),
+  plug_in_repeat (gdisp->image->gimp, value,
+                  gimp_get_user_context (gdisp->image->gimp),
                   GIMP_PROGRESS (gdisp),
                   gimp_display_get_ID (gdisp),
-                  gimp_image_get_ID (gdisp->gimage),
+                  gimp_image_get_ID (gdisp->image),
                   gimp_item_get_ID (GIMP_ITEM (drawable)),
                   interactive);
 }

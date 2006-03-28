@@ -60,7 +60,7 @@ static gboolean   file_save_dialog_check_uri     (GtkWidget      *save_dialog,
 static gboolean   file_save_dialog_use_extension (GtkWidget      *save_dialog,
                                                   const gchar    *uri);
 static gboolean   file_save_dialog_save_image    (GtkWidget      *save_dialog,
-                                                  GimpImage      *gimage,
+                                                  GimpImage      *image,
                                                   const gchar    *uri,
                                                   PlugInProcDef  *save_proc,
                                                   gboolean        save_a_copy);
@@ -141,7 +141,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
                                   &uri, &basename, &save_proc))
     {
       if (file_save_dialog_save_image (save_dialog,
-                                       dialog->gimage,
+                                       dialog->image,
                                        uri,
                                        save_proc,
                                        dialog->save_a_copy))
@@ -427,7 +427,7 @@ file_save_dialog_use_extension (GtkWidget   *save_dialog,
 
 static gboolean
 file_save_dialog_save_image (GtkWidget     *save_dialog,
-                             GimpImage     *gimage,
+                             GimpImage     *image,
                              const gchar   *uri,
                              PlugInProcDef *save_proc,
                              gboolean       save_a_copy)
@@ -444,18 +444,18 @@ file_save_dialog_save_image (GtkWidget     *save_dialog,
       gimp_action_group_set_action_sensitive (list->data, "file-quit", FALSE);
     }
 
-  g_object_ref (gimage);
+  g_object_ref (image);
 
-  status = file_save (gimage, gimp_get_user_context (gimage->gimp),
+  status = file_save (image, gimp_get_user_context (image->gimp),
                       GIMP_PROGRESS (save_dialog),
                       uri, save_proc,
                       GIMP_RUN_INTERACTIVE, save_a_copy, &error);
 
   if (status == GIMP_PDB_SUCCESS)
-    g_object_set_data_full (G_OBJECT (gimage->gimp), "gimp-file-save-last-uri",
+    g_object_set_data_full (G_OBJECT (image->gimp), "gimp-file-save-last-uri",
                             g_strdup (uri), (GDestroyNotify) g_free);
 
-  g_object_unref (gimage);
+  g_object_unref (image);
 
   if (status != GIMP_PDB_SUCCESS &&
       status != GIMP_PDB_CANCEL)

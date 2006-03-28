@@ -229,9 +229,9 @@ xcf_load_invoker (ProcRecord   *procedure,
 {
   XcfInfo      info;
   Argument    *return_vals;
-  GimpImage   *gimage   = NULL;
+  GimpImage   *image   = NULL;
   const gchar *filename;
-  gboolean     success  = FALSE;
+  gboolean     success = FALSE;
   gchar        id[14];
 
   gimp_set_busy (gimp);
@@ -279,9 +279,9 @@ xcf_load_invoker (ProcRecord   *procedure,
 	{
 	  if (info.file_version < G_N_ELEMENTS (xcf_loaders))
 	    {
-	      gimage = (*(xcf_loaders[info.file_version])) (gimp, &info);
+	      image = (*(xcf_loaders[info.file_version])) (gimp, &info);
 
-	      if (! gimage)
+	      if (! image)
 		success = FALSE;
 	    }
 	  else
@@ -301,7 +301,7 @@ xcf_load_invoker (ProcRecord   *procedure,
   return_vals = procedural_db_return_values (procedure, success);
 
   if (success)
-    return_vals[1].value.pdb_int = gimp_image_get_ID (gimage);
+    return_vals[1].value.pdb_int = gimp_image_get_ID (image);
 
   gimp_unset_busy (gimp);
 
@@ -317,13 +317,13 @@ xcf_save_invoker (ProcRecord   *procedure,
 {
   XcfInfo      info;
   Argument    *return_vals;
-  GimpImage   *gimage;
+  GimpImage   *image;
   const gchar *filename;
   gboolean     success  = FALSE;
 
   gimp_set_busy (gimp);
 
-  gimage   = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
+  image   = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
   filename = args[3].value.pdb_pointer;
 
   info.fp = g_fopen (filename, "wb");
@@ -341,9 +341,9 @@ xcf_save_invoker (ProcRecord   *procedure,
       info.ref_count             = NULL;
       info.compression           = COMPRESS_RLE;
 
-      xcf_save_choose_format (&info, gimage);
+      xcf_save_choose_format (&info, image);
 
-      success = xcf_save_image (&info, gimage);
+      success = xcf_save_image (&info, image);
       if (fclose (info.fp) == EOF)
         {
           g_message (_("Error saving XCF file: %s"), g_strerror (errno));

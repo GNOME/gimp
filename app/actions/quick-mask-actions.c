@@ -94,7 +94,7 @@ void
 quick_mask_actions_update (GimpActionGroup *group,
                            gpointer         data)
 {
-  GimpImage *gimage = action_data_get_image (data);
+  GimpImage *image = action_data_get_image (data);
 
 #define SET_SENSITIVE(action,sensitive) \
         gimp_action_group_set_action_sensitive (group, action, (sensitive) != 0)
@@ -103,21 +103,21 @@ quick_mask_actions_update (GimpActionGroup *group,
 #define SET_COLOR(action,color) \
         gimp_action_group_set_action_color (group, action, (color), FALSE)
 
-  SET_SENSITIVE ("quick-mask-toggle", gimage);
-  SET_ACTIVE    ("quick-mask-toggle", gimage && gimage->quick_mask_state);
+  SET_SENSITIVE ("quick-mask-toggle", image);
+  SET_ACTIVE    ("quick-mask-toggle", image && image->quick_mask_state);
 
-  SET_SENSITIVE ("quick-mask-invert-on",  gimage);
-  SET_SENSITIVE ("quick-mask-invert-off", gimage);
+  SET_SENSITIVE ("quick-mask-invert-on",  image);
+  SET_SENSITIVE ("quick-mask-invert-off", image);
 
-  if (gimage && gimage->quick_mask_inverted)
+  if (image && image->quick_mask_inverted)
     SET_ACTIVE ("quick-mask-invert-on", TRUE);
   else
     SET_ACTIVE ("quick-mask-invert-off", TRUE);
 
-  SET_SENSITIVE ("quick-mask-configure", gimage);
+  SET_SENSITIVE ("quick-mask-configure", image);
 
-  if (gimage)
-    SET_COLOR ("quick-mask-configure", &gimage->quick_mask_color);
+  if (image)
+    SET_COLOR ("quick-mask-configure", &image->quick_mask_color);
 
 #undef SET_SENSITIVE
 #undef SET_ACTIVE

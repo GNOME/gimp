@@ -68,7 +68,7 @@
 /*  public functions  */
 
 GimpPDBStatusType
-file_save (GimpImage      *gimage,
+file_save (GimpImage      *image,
            GimpContext    *context,
            GimpProgress   *progress,
            const gchar    *uri,
@@ -83,7 +83,7 @@ file_save (GimpImage      *gimage,
   GimpPDBStatusType  status;
   gchar             *filename;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_PDB_CALLING_ERROR);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress),
                         GIMP_PDB_CALLING_ERROR);
@@ -92,7 +92,7 @@ file_save (GimpImage      *gimage,
   g_return_val_if_fail (error == NULL || *error == NULL,
                         GIMP_PDB_CALLING_ERROR);
 
-  if (! gimp_image_active_drawable (gimage))
+  if (! gimp_image_active_drawable (image))
     return GIMP_PDB_EXECUTION_ERROR;
 
   filename = file_utils_filename_from_uri (uri);
@@ -125,17 +125,17 @@ file_save (GimpImage      *gimage,
     }
 
   /* ref the image, so it can't get deleted during save */
-  g_object_ref (gimage);
+  g_object_ref (image);
 
   proc = plug_in_proc_def_get_proc (file_proc);
 
   return_vals =
-    procedural_db_run_proc (gimage->gimp, context, progress,
+    procedural_db_run_proc (image->gimp, context, progress,
                             proc->name,
                             &n_return_vals,
                             GIMP_PDB_INT32,    run_mode,
-                            GIMP_PDB_IMAGE,    gimp_image_get_ID (gimage),
-                            GIMP_PDB_DRAWABLE, gimp_item_get_ID (GIMP_ITEM (gimp_image_active_drawable (gimage))),
+                            GIMP_PDB_IMAGE,    gimp_image_get_ID (image),
+                            GIMP_PDB_DRAWABLE, gimp_item_get_ID (GIMP_ITEM (gimp_image_active_drawable (image))),
                             GIMP_PDB_STRING,   filename,
                             GIMP_PDB_STRING,   uri,
                             GIMP_PDB_END);
@@ -152,30 +152,30 @@ file_save (GimpImage      *gimage,
       if (save_a_copy)
         {
           /*  remember the "save-a-copy" filename for the next invocation  */
-          g_object_set_data_full (G_OBJECT (gimage), "gimp-image-save-a-copy",
+          g_object_set_data_full (G_OBJECT (image), "gimp-image-save-a-copy",
                                   g_strdup (uri),
                                   (GDestroyNotify) g_free);
         }
       else
 	{
           /*  reset the "save-a-copy" filename when the image URI changes  */
-          if (strcmp (uri, gimp_image_get_uri (gimage)))
-            g_object_set_data (G_OBJECT (gimage),
+          if (strcmp (uri, gimp_image_get_uri (image)))
+            g_object_set_data (G_OBJECT (image),
                                "gimp-image-save-a-copy", NULL);
 
-	  gimp_image_set_uri (gimage, uri);
-          gimp_image_set_save_proc (gimage, file_proc);
-          gimp_image_clean_all (gimage);
+	  gimp_image_set_uri (image, uri);
+          gimp_image_set_save_proc (image, file_proc);
+          gimp_image_clean_all (image);
 	}
 
-      documents = GIMP_DOCUMENT_LIST (gimage->gimp->documents);
+      documents = GIMP_DOCUMENT_LIST (image->gimp->documents);
       imagefile = gimp_document_list_add_uri (documents,
                                               uri,
                                               file_proc->mime_type);
 
-      gimp_imagefile_save_thumbnail (imagefile, file_proc->mime_type, gimage);
+      gimp_imagefile_save_thumbnail (imagefile, file_proc->mime_type, image);
 
-      if (gimage->gimp->config->save_document_history)
+      if (image->gimp->config->save_document_history)
         gimp_recent_list_add_uri (uri, file_proc->mime_type);
     }
   else if (status != GIMP_PDB_CANCEL)
@@ -184,7 +184,7 @@ file_save (GimpImage      *gimage,
                    _("Plug-In could not save image"));
     }
 
-  g_object_unref (gimage);
+  g_object_unref (image);
 
  out:
   g_free (filename);

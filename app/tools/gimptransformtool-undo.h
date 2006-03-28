@@ -20,7 +20,7 @@
 #define __GIMP_TRANSFORM_TOOL_UNDO_H__
 
 
-gboolean   gimp_transform_tool_push_undo (GimpImage   *gimage,
+gboolean   gimp_transform_tool_push_undo (GimpImage   *image,
                                           const gchar *undo_desc,
                                           gint         tool_ID,
                                           GType        tool_type,

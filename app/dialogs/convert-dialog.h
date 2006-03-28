@@ -20,7 +20,7 @@
 #define __CONVERT_DIALOG_H__
 
 
-GtkWidget * convert_dialog_new (GimpImage    *gimage,
+GtkWidget * convert_dialog_new (GimpImage    *image,
                                 GtkWidget    *parent,
                                 GimpProgress *progress);
 

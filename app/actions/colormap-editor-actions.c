@@ -83,17 +83,17 @@ void
 colormap_editor_actions_update (GimpActionGroup *group,
                                 gpointer         data)
 {
-  GimpImage   *gimage     = action_data_get_image (data);
+  GimpImage   *image     = action_data_get_image (data);
   GimpContext *context    = action_data_get_context (data);
   gboolean     indexed    = FALSE;
   gint         num_colors = 0;
   GimpRGB      fg;
   GimpRGB      bg;
 
-  if (gimage)
+  if (image)
     {
-      indexed    = gimp_image_base_type (gimage) == GIMP_INDEXED;
-      num_colors = gimage->num_cols;
+      indexed    = gimp_image_base_type (image) == GIMP_INDEXED;
+      num_colors = image->num_cols;
     }
 
   if (context)
@@ -108,11 +108,11 @@ colormap_editor_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_color (group, action, color, FALSE);
 
   SET_SENSITIVE ("colormap-editor-edit-color",
-                 gimage && indexed);
+                 image && indexed);
   SET_SENSITIVE ("colormap-editor-add-color-from-fg",
-                 gimage && indexed && num_colors < 256);
+                 image && indexed && num_colors < 256);
   SET_SENSITIVE ("colormap-editor-add-color-from-bg",
-                 gimage && indexed && num_colors < 256);
+                 image && indexed && num_colors < 256);
 
   SET_COLOR ("colormap-editor-add-color-from-fg", context ? &fg : NULL);
   SET_COLOR ("colormap-editor-add-color-from-bg", context ? &bg : NULL);

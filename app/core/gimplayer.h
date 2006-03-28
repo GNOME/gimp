@@ -71,7 +71,7 @@ struct _GimpLayerClass
 
 GType           gimp_layer_get_type            (void) G_GNUC_CONST;
 
-GimpLayer     * gimp_layer_new                 (GimpImage            *gimage,
+GimpLayer     * gimp_layer_new                 (GimpImage            *image,
                                                 gint                  width,
                                                 gint                  height,
                                                 GimpImageType         type,
@@ -80,19 +80,19 @@ GimpLayer     * gimp_layer_new                 (GimpImage            *gimage,
                                                 GimpLayerModeEffects  mode);
 
 GimpLayer     * gimp_layer_new_from_tiles      (TileManager          *tiles,
-                                                GimpImage            *dest_gimage,
+                                                GimpImage            *dest_image,
                                                 GimpImageType         type,
                                                 const gchar          *name,
                                                 gdouble               opacity,
                                                 GimpLayerModeEffects  mode);
 GimpLayer     * gimp_layer_new_from_pixbuf     (GdkPixbuf            *pixbuf,
-                                                GimpImage            *dest_gimage,
+                                                GimpImage            *dest_image,
                                                 GimpImageType         type,
                                                 const gchar          *name,
                                                 gdouble               opacity,
                                                 GimpLayerModeEffects  mode);
 GimpLayer     * gimp_layer_new_from_region     (PixelRegion          *region,
-                                                GimpImage            *dest_gimage,
+                                                GimpImage            *dest_image,
                                                 GimpImageType         type,
                                                 const gchar          *name,
                                                 gdouble               opacity,

@@ -48,7 +48,7 @@
 /*  local function prototypes  */
 
 static void      gimp_display_shell_close_dialog       (GimpDisplayShell *shell,
-                                                        GimpImage        *gimage);
+                                                        GimpImage        *image);
 static void      gimp_display_shell_close_name_changed (GimpImage        *image,
                                                         GimpMessageBox   *box);
 static gboolean  gimp_display_shell_close_time_changed (GimpMessageBox   *box);
@@ -65,28 +65,28 @@ void
 gimp_display_shell_close (GimpDisplayShell *shell,
                           gboolean          kill_it)
 {
-  GimpImage *gimage;
+  GimpImage *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gimage = shell->gdisp->gimage;
+  image = shell->gdisp->image;
 
   /*  FIXME: gimp_busy HACK not really appropriate here because we only
    *  want to prevent the busy image and display to be closed.  --Mitch
    */
-  if (gimage->gimp->busy)
+  if (image->gimp->busy)
     return;
 
   /*  If the image has been modified, give the user a chance to save
    *  it before nuking it--this only applies if its the last view
-   *  to an image canvas.  (a gimage with disp_count = 1)
+   *  to an image canvas.  (a image with disp_count = 1)
    */
-  if (! kill_it               &&
-      gimage->disp_count == 1 &&
-      gimage->dirty           &&
-      GIMP_DISPLAY_CONFIG (gimage->gimp->config)->confirm_on_close)
+  if (! kill_it              &&
+      image->disp_count == 1 &&
+      image->dirty           &&
+      GIMP_DISPLAY_CONFIG (image->gimp->config)->confirm_on_close)
     {
-      gimp_display_shell_close_dialog (shell, gimage);
+      gimp_display_shell_close_dialog (shell, image);
     }
   else
     {
@@ -102,7 +102,7 @@ gimp_display_shell_close (GimpDisplayShell *shell,
 
 static void
 gimp_display_shell_close_dialog (GimpDisplayShell *shell,
-                                 GimpImage        *gimage)
+                                 GimpImage        *image)
 {
   GtkWidget      *dialog;
   GtkWidget      *button;
@@ -118,7 +118,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
       return;
     }
 
-  name = file_utils_uri_display_basename (gimp_image_get_uri (gimage));
+  name = file_utils_uri_display_basename (gimp_image_get_uri (image));
 
   title = g_strdup_printf (_("Close %s"), name);
   g_free (name);
@@ -160,11 +160,11 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
 
   box = GIMP_MESSAGE_DIALOG (dialog)->box;
 
-  g_signal_connect_object (gimage, "name-changed",
+  g_signal_connect_object (image, "name-changed",
                            G_CALLBACK (gimp_display_shell_close_name_changed),
                            box, 0);
 
-  gimp_display_shell_close_name_changed (gimage, box);
+  gimp_display_shell_close_name_changed (image, box);
 
   closure =
     g_cclosure_new_object (G_CALLBACK (gimp_display_shell_close_time_changed),
@@ -178,7 +178,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   /*  The dialog is destroyed with the shell, so it should be safe
    *  to hold an image pointer for the lifetime of the dialog.
    */
-  g_object_set_data (G_OBJECT (box), "gimp-image", gimage);
+  g_object_set_data (G_OBJECT (box), "gimp-image", image);
 
   gimp_display_shell_close_time_changed (box);
 
@@ -257,7 +257,7 @@ gimp_display_shell_close_response (GtkWidget        *widget,
 
         gtk_action_activate (action);
 
-        if (! shell->gdisp->gimage->dirty)
+        if (! shell->gdisp->image->dirty)
           gimp_display_delete (shell->gdisp);
       }
       break;

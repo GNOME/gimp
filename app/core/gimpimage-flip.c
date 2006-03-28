@@ -36,7 +36,7 @@
 
 
 void
-gimp_image_flip (GimpImage           *gimage,
+gimp_image_flip (GimpImage           *image,
                  GimpContext         *context,
                  GimpOrientationType  flip_type,
                  GimpProgress        *progress)
@@ -47,20 +47,20 @@ gimp_image_flip (GimpImage           *gimage,
   gdouble   progress_max;
   gdouble   progress_current = 1.0;
 
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  gimp_set_busy (gimage->gimp);
+  gimp_set_busy (image->gimp);
 
   switch (flip_type)
     {
     case GIMP_ORIENTATION_HORIZONTAL:
-      axis = (gdouble) gimage->width / 2.0;
+      axis = (gdouble) image->width / 2.0;
       break;
 
     case GIMP_ORIENTATION_VERTICAL:
-      axis = (gdouble) gimage->height / 2.0;
+      axis = (gdouble) image->height / 2.0;
       break;
 
     default:
@@ -68,15 +68,15 @@ gimp_image_flip (GimpImage           *gimage,
       return;
     }
 
-  progress_max = (gimage->channels->num_children +
-                  gimage->layers->num_children   +
-                  gimage->vectors->num_children  +
+  progress_max = (image->channels->num_children +
+                  image->layers->num_children   +
+                  image->vectors->num_children  +
                   1 /* selection */);
 
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_FLIP, NULL);
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_FLIP, NULL);
 
   /*  Flip all channels  */
-  for (list = GIMP_LIST (gimage->channels)->list;
+  for (list = GIMP_LIST (image->channels)->list;
        list;
        list = g_list_next (list))
     {
@@ -89,7 +89,7 @@ gimp_image_flip (GimpImage           *gimage,
     }
 
   /*  Flip all vectors  */
-  for (list = GIMP_LIST (gimage->vectors)->list;
+  for (list = GIMP_LIST (image->vectors)->list;
        list;
        list = g_list_next (list))
     {
@@ -102,14 +102,14 @@ gimp_image_flip (GimpImage           *gimage,
     }
 
   /*  Don't forget the selection mask!  */
-  gimp_item_flip (GIMP_ITEM (gimp_image_get_mask (gimage)), context,
+  gimp_item_flip (GIMP_ITEM (gimp_image_get_mask (image)), context,
                   flip_type, axis, TRUE);
 
   if (progress)
     gimp_progress_set_value (progress, progress_current++ / progress_max);
 
   /*  Flip all layers  */
-  for (list = GIMP_LIST (gimage->layers)->list;
+  for (list = GIMP_LIST (image->layers)->list;
        list;
        list = g_list_next (list))
     {
@@ -122,7 +122,7 @@ gimp_image_flip (GimpImage           *gimage,
     }
 
   /*  Flip all Guides  */
-  for (list = gimage->guides; list; list = g_list_next (list))
+  for (list = image->guides; list; list = g_list_next (list))
     {
       GimpGuide *guide = list->data;
 
@@ -130,14 +130,14 @@ gimp_image_flip (GimpImage           *gimage,
 	{
 	case GIMP_ORIENTATION_HORIZONTAL:
           if (flip_type == GIMP_ORIENTATION_VERTICAL)
-            gimp_image_move_guide (gimage, guide,
-                                   gimage->height - guide->position, TRUE);
+            gimp_image_move_guide (image, guide,
+                                   image->height - guide->position, TRUE);
 	  break;
 
 	case GIMP_ORIENTATION_VERTICAL:
           if (flip_type == GIMP_ORIENTATION_HORIZONTAL)
-            gimp_image_move_guide (gimage, guide,
-                                   gimage->width - guide->position, TRUE);
+            gimp_image_move_guide (image, guide,
+                                   image->width - guide->position, TRUE);
 	  break;
 
 	default:
@@ -146,24 +146,24 @@ gimp_image_flip (GimpImage           *gimage,
     }
 
   /*  Flip all sample points  */
-  for (list = gimage->sample_points; list; list = g_list_next (list))
+  for (list = image->sample_points; list; list = g_list_next (list))
     {
       GimpSamplePoint *sample_point = list->data;
 
       if (flip_type == GIMP_ORIENTATION_VERTICAL)
-        gimp_image_move_sample_point (gimage, sample_point,
+        gimp_image_move_sample_point (image, sample_point,
                                       sample_point->x,
-                                      gimage->height - sample_point->y,
+                                      image->height - sample_point->y,
                                       TRUE);
 
       if (flip_type == GIMP_ORIENTATION_HORIZONTAL)
-        gimp_image_move_sample_point (gimage, sample_point,
-                                      gimage->width - sample_point->x,
+        gimp_image_move_sample_point (image, sample_point,
+                                      image->width - sample_point->x,
                                       sample_point->y,
                                       TRUE);
     }
 
-  gimp_image_undo_group_end (gimage);
+  gimp_image_undo_group_end (image);
 
-  gimp_unset_busy (gimage->gimp);
+  gimp_unset_busy (image->gimp);
 }

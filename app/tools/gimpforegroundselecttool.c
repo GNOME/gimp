@@ -607,8 +607,8 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
   GimpForegroundSelectOptions *options;
 
   GimpTool        *tool     = GIMP_TOOL (free_sel);
-  GimpImage       *gimage   = gdisp->gimage;
-  GimpDrawable    *drawable = gimp_image_active_drawable (gimage);
+  GimpImage       *image   = gdisp->image;
+  GimpDrawable    *drawable = gimp_image_active_drawable (image);
   GimpScanConvert *scan_convert;
   GimpChannel     *mask;
 
@@ -629,9 +629,9 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
   gimp_scan_convert_add_polyline (scan_convert,
                                   free_sel->num_points, free_sel->points, TRUE);
 
-  mask = gimp_channel_new (gimage,
-                           gimp_image_get_width (gimage),
-                           gimp_image_get_height (gimage),
+  mask = gimp_channel_new (image,
+                           gimp_image_get_width (image),
+                           gimp_image_get_height (image),
                            "foreground-extraction", NULL);
 
   gimp_scan_convert_render_value (scan_convert,
@@ -643,7 +643,7 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
     {
       GList *list;
 
-      gimp_set_busy (gimage->gimp);
+      gimp_set_busy (image->gimp);
 
       /*  apply foreground and background markers  */
       for (list = fg_select->strokes; list; list = list->next)
@@ -660,7 +660,7 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
 
       fg_select->refinement = SIOX_REFINEMENT_NO_CHANGE;
 
-      gimp_unset_busy (gimage->gimp);
+      gimp_unset_busy (image->gimp);
     }
   else
     {
@@ -748,7 +748,7 @@ gimp_foreground_select_tool_apply (GimpForegroundSelectTool *fg_select,
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  gimp_channel_select_channel (gimp_image_get_mask (gdisp->gimage),
+  gimp_channel_select_channel (gimp_image_get_mask (gdisp->image),
                                tool->tool_info->blurb,
                                fg_select->mask, 0, 0,
                                op,
@@ -758,7 +758,7 @@ gimp_foreground_select_tool_apply (GimpForegroundSelectTool *fg_select,
 
   gimp_tool_control (tool, HALT, gdisp);
 
-  gimp_image_flush (gdisp->gimage);
+  gimp_image_flush (gdisp->image);
 }
 
 static void

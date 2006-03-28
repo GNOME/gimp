@@ -265,8 +265,8 @@ gimp_vectors_get_memsize (GimpObject *object,
 static gboolean
 gimp_vectors_is_attached (GimpItem *item)
 {
-  return (GIMP_IS_IMAGE (item->gimage) &&
-          gimp_container_have (item->gimage->vectors, GIMP_OBJECT (item)));
+  return (GIMP_IS_IMAGE (item->image) &&
+          gimp_container_have (item->image->vectors, GIMP_OBJECT (item)));
 }
 
 static GimpItem *
@@ -541,17 +541,17 @@ gimp_vectors_real_thaw (GimpVectors *vectors)
 /*  public functions  */
 
 GimpVectors *
-gimp_vectors_new (GimpImage   *gimage,
+gimp_vectors_new (GimpImage   *image,
                   const gchar *name)
 {
   GimpVectors *vectors;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   vectors = g_object_new (GIMP_TYPE_VECTORS, NULL);
 
-  gimp_item_configure (GIMP_ITEM (vectors), gimage,
-                       0, 0, gimage->width, gimage->height,
+  gimp_item_configure (GIMP_ITEM (vectors), image,
+                       0, 0, image->width, image->height,
                        name);
 
   return vectors;

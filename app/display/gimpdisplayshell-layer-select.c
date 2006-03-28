@@ -47,14 +47,14 @@ struct _LayerSelect
   GtkWidget *view;
   GtkWidget *label;
 
-  GimpImage *gimage;
+  GimpImage *image;
   GimpLayer *orig_layer;
 };
 
 
 /*  local function prototypes  */
 
-static LayerSelect * layer_select_new       (GimpImage   *gimage,
+static LayerSelect * layer_select_new       (GimpImage   *image,
                                              GimpLayer   *layer,
                                              gint         view_size);
 static void          layer_select_destroy   (LayerSelect *layer_select,
@@ -74,20 +74,20 @@ gimp_display_shell_layer_select_init (GimpDisplayShell *shell,
                                       guint32           time)
 {
   LayerSelect *layer_select;
-  GimpImage   *gimage;
+  GimpImage   *image;
   GimpLayer   *layer;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gimage = shell->gdisp->gimage;
+  image = shell->gdisp->image;
 
-  layer = gimp_image_get_active_layer (gimage);
+  layer = gimp_image_get_active_layer (image);
 
   if (! layer)
     return;
 
-  layer_select = layer_select_new (gimage, layer,
-                                   gimage->gimp->config->layer_preview_size);
+  layer_select = layer_select_new (image, layer,
+                                   image->gimp->config->layer_preview_size);
   layer_select_advance (layer_select, move);
 
   gtk_window_set_screen (GTK_WINDOW (layer_select->shell),
@@ -102,7 +102,7 @@ gimp_display_shell_layer_select_init (GimpDisplayShell *shell,
 /*  private functions  */
 
 static LayerSelect *
-layer_select_new (GimpImage *gimage,
+layer_select_new (GimpImage *image,
                   GimpLayer *layer,
                   gint       view_size)
 {
@@ -114,7 +114,7 @@ layer_select_new (GimpImage *gimage,
 
   layer_select = g_new0 (LayerSelect, 1);
 
-  layer_select->gimage     = gimage;
+  layer_select->image      = image;
   layer_select->orig_layer = layer;
 
   layer_select->shell = gtk_window_new (GTK_WINDOW_POPUP);
@@ -176,9 +176,9 @@ layer_select_destroy (LayerSelect *layer_select,
   gtk_widget_destroy (layer_select->shell);
 
   if (layer_select->orig_layer !=
-      gimp_image_get_active_layer (layer_select->gimage))
+      gimp_image_get_active_layer (layer_select->image))
     {
-      gimp_image_flush (layer_select->gimage);
+      gimp_image_flush (layer_select->image);
     }
 
   g_free (layer_select);
@@ -196,27 +196,27 @@ layer_select_advance (LayerSelect *layer_select,
     return;
 
   /*  If there is a floating selection, allow no advancement  */
-  if (gimp_image_floating_sel (layer_select->gimage))
+  if (gimp_image_floating_sel (layer_select->image))
     return;
 
-  current_layer = gimp_image_get_active_layer (layer_select->gimage);
+  current_layer = gimp_image_get_active_layer (layer_select->image);
 
-  index = gimp_container_get_child_index (layer_select->gimage->layers,
+  index = gimp_container_get_child_index (layer_select->image->layers,
                                           GIMP_OBJECT (current_layer));
 
   index += move;
 
   if (index < 0)
-    index = gimp_container_num_children (layer_select->gimage->layers) - 1;
-  else if (index >= gimp_container_num_children (layer_select->gimage->layers))
+    index = gimp_container_num_children (layer_select->image->layers) - 1;
+  else if (index >= gimp_container_num_children (layer_select->image->layers))
     index = 0;
 
   next_layer = (GimpLayer *)
-    gimp_container_get_child_by_index (layer_select->gimage->layers, index);
+    gimp_container_get_child_by_index (layer_select->image->layers, index);
 
   if (next_layer && next_layer != current_layer)
     {
-      current_layer = gimp_image_set_active_layer (layer_select->gimage,
+      current_layer = gimp_image_set_active_layer (layer_select->image,
                                                    next_layer);
 
       if (current_layer)

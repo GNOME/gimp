@@ -300,11 +300,11 @@ gimp_text_layer_set_tiles (GimpDrawable  *drawable,
                            gint           offset_x,
                            gint           offset_y)
 {
-  GimpTextLayer *layer  = GIMP_TEXT_LAYER (drawable);
-  GimpImage     *gimage = gimp_item_get_image (GIMP_ITEM (layer));
+  GimpTextLayer *layer = GIMP_TEXT_LAYER (drawable);
+  GimpImage     *image = gimp_item_get_image (GIMP_ITEM (layer));
 
   if (push_undo && ! layer->modified)
-    gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_DRAWABLE_MOD,
+    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_DRAWABLE_MOD,
                                  undo_desc);
 
   GIMP_DRAWABLE_CLASS (parent_class)->set_tiles (drawable,
@@ -314,11 +314,11 @@ gimp_text_layer_set_tiles (GimpDrawable  *drawable,
 
   if (push_undo && ! layer->modified)
     {
-      gimp_image_undo_push_text_layer_modified (gimage, NULL, layer);
+      gimp_image_undo_push_text_layer_modified (image, NULL, layer);
 
       g_object_set (drawable, "modified", TRUE, NULL);
 
-      gimp_image_undo_group_end (gimage);
+      gimp_image_undo_group_end (image);
     }
 }
 
@@ -332,11 +332,11 @@ gimp_text_layer_push_undo (GimpDrawable *drawable,
                            gint          width,
                            gint          height)
 {
-  GimpTextLayer *layer  = GIMP_TEXT_LAYER (drawable);
-  GimpImage     *gimage = gimp_item_get_image (GIMP_ITEM (layer));
+  GimpTextLayer *layer = GIMP_TEXT_LAYER (drawable);
+  GimpImage     *image = gimp_item_get_image (GIMP_ITEM (layer));
 
   if (! layer->modified)
-    gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_DRAWABLE, undo_desc);
+    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_DRAWABLE, undo_desc);
 
   GIMP_DRAWABLE_CLASS (parent_class)->push_undo (drawable, undo_desc,
                                                  tiles, sparse,
@@ -344,11 +344,11 @@ gimp_text_layer_push_undo (GimpDrawable *drawable,
 
   if (! layer->modified)
     {
-      gimp_image_undo_push_text_layer_modified (gimage, NULL, layer);
+      gimp_image_undo_push_text_layer_modified (image, NULL, layer);
 
       g_object_set (drawable, "modified", TRUE, NULL);
 
-      gimp_image_undo_group_end (gimage);
+      gimp_image_undo_group_end (image);
     }
 }
 

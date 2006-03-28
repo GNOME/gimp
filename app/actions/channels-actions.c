@@ -144,16 +144,16 @@ void
 channels_actions_update (GimpActionGroup *group,
                          gpointer         data)
 {
-  GimpImage   *gimage    = action_data_get_image (data);
+  GimpImage   *image    = action_data_get_image (data);
   GimpChannel *channel   = NULL;
   gboolean     fs        = FALSE;
   gboolean     component = FALSE;
   GList       *next      = NULL;
   GList       *prev      = NULL;
 
-  if (gimage)
+  if (image)
     {
-      fs = (gimp_image_floating_sel (gimage) != NULL);
+      fs = (gimp_image_floating_sel (image) != NULL);
 
       if (GIMP_IS_COMPONENT_EDITOR (data))
         {
@@ -162,13 +162,13 @@ channels_actions_update (GimpActionGroup *group,
         }
       else
         {
-          channel = gimp_image_get_active_channel (gimage);
+          channel = gimp_image_get_active_channel (image);
 
           if (channel)
             {
               GList *list;
 
-              list = g_list_find (GIMP_LIST (gimage->channels)->list, channel);
+              list = g_list_find (GIMP_LIST (image->channels)->list, channel);
 
               if (list)
                 {
@@ -184,8 +184,8 @@ channels_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("channels-edit-attributes", !fs && channel);
 
-  SET_SENSITIVE ("channels-new",             !fs && gimage);
-  SET_SENSITIVE ("channels-new-last-values", !fs && gimage);
+  SET_SENSITIVE ("channels-new",             !fs && image);
+  SET_SENSITIVE ("channels-new-last-values", !fs && image);
   SET_SENSITIVE ("channels-duplicate",       !fs && (channel || component));
   SET_SENSITIVE ("channels-delete",          !fs && channel);
 

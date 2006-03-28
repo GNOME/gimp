@@ -244,7 +244,7 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
 {
   GimpTool        *tool      = GIMP_TOOL (rectangle);
   GimpCropOptions *options;
-  GimpImage       *gimage;
+  GimpImage       *image;
   gint             max_x, max_y;
   gboolean         rectangle_exists;
 
@@ -252,9 +252,9 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
 
   gimp_tool_pop_status (tool, tool->gdisp);
 
-  gimage = tool->gdisp->gimage;
-  max_x = gimage->width;
-  max_y = gimage->height;
+  image = tool->gdisp->image;
+  max_x = image->width;
+  max_y = image->height;
 
   rectangle_exists = (x <= max_x && y <= max_y &&
                       x + w >= 0 && y + h >= 0 &&
@@ -281,12 +281,12 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
   /* if rectangle exists, crop it */
   if (rectangle_exists)
     {
-      gimp_image_crop (gimage, GIMP_CONTEXT (options),
+      gimp_image_crop (image, GIMP_CONTEXT (options),
                        x, y, w + x, h + y,
                        options->layer_only,
                        options->crop_mode == GIMP_CROP_MODE_CROP);
 
-      gimp_image_flush (gimage);
+      gimp_image_flush (image);
 
       return TRUE;
     }

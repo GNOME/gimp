@@ -60,9 +60,9 @@ GimpObject  * action_select_object    (GimpActionSelectType  select_type,
   if (! context) \
     return
 
-#define return_if_no_image(gimage,data) \
-  gimage = action_data_get_image (data); \
-  if (! gimage) \
+#define return_if_no_image(image,data) \
+  image = action_data_get_image (data); \
+  if (! image) \
     return
 
 #define return_if_no_display(gdisp,data) \
@@ -76,27 +76,27 @@ GimpObject  * action_select_object    (GimpActionSelectType  select_type,
     return
 
 
-#define return_if_no_drawable(gimage,drawable,data) \
-  return_if_no_image (gimage,data); \
-  drawable = gimp_image_active_drawable (gimage); \
+#define return_if_no_drawable(image,drawable,data) \
+  return_if_no_image (image,data); \
+  drawable = gimp_image_active_drawable (image); \
   if (! drawable) \
     return
 
-#define return_if_no_layer(gimage,layer,data) \
-  return_if_no_image (gimage,data); \
-  layer = gimp_image_get_active_layer (gimage); \
+#define return_if_no_layer(image,layer,data) \
+  return_if_no_image (image,data); \
+  layer = gimp_image_get_active_layer (image); \
   if (! layer) \
     return
 
-#define return_if_no_channel(gimage,channel,data) \
-  return_if_no_image (gimage,data); \
-  channel = gimp_image_get_active_channel (gimage); \
+#define return_if_no_channel(image,channel,data) \
+  return_if_no_image (image,data); \
+  channel = gimp_image_get_active_channel (image); \
   if (! channel) \
     return
 
-#define return_if_no_vectors(gimage,vectors,data) \
-  return_if_no_image (gimage,data); \
-  vectors = gimp_image_get_active_vectors (gimage); \
+#define return_if_no_vectors(image,vectors,data) \
+  return_if_no_image (image,data); \
+  vectors = gimp_image_get_active_vectors (image); \
   if (! vectors) \
     return
 

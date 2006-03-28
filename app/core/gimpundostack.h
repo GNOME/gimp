@@ -48,7 +48,7 @@ struct _GimpUndoStackClass
 
 GType           gimp_undo_stack_get_type    (void) G_GNUC_CONST;
 
-GimpUndoStack * gimp_undo_stack_new         (GimpImage           *gimage);
+GimpUndoStack * gimp_undo_stack_new         (GimpImage           *image);
 
 void            gimp_undo_stack_push_undo   (GimpUndoStack       *stack,
                                              GimpUndo            *undo);

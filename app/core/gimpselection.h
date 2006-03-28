@@ -48,7 +48,7 @@ struct _GimpSelectionClass
 
 GType         gimp_selection_get_type   (void) G_GNUC_CONST;
 
-GimpChannel * gimp_selection_new        (GimpImage    *gimage,
+GimpChannel * gimp_selection_new        (GimpImage    *image,
                                          gint          width,
                                          gint          height);
 

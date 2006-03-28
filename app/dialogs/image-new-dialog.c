@@ -159,13 +159,13 @@ image_new_dialog_new (Gimp *gimp)
 
 void
 image_new_dialog_set (GtkWidget    *widget,
-                      GimpImage    *gimage,
+                      GimpImage    *image,
                       GimpTemplate *template)
 {
   ImageNewDialog *dialog;
 
   g_return_if_fail (GTK_IS_WIDGET (widget));
-  g_return_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
   g_return_if_fail (template == NULL || GIMP_IS_TEMPLATE (template));
 
   dialog = g_object_get_data (G_OBJECT (widget), "gimp-image-new-dialog");
@@ -179,7 +179,7 @@ image_new_dialog_set (GtkWidget    *widget,
     }
   else
     {
-      template = gimp_image_new_get_last_template (dialog->gimp, gimage);
+      template = gimp_image_new_get_last_template (dialog->gimp, image);
 
       gimp_config_sync (G_OBJECT (template), G_OBJECT (dialog->template), 0);
 

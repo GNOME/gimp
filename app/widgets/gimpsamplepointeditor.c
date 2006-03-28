@@ -63,18 +63,18 @@ static void   gimp_sample_point_editor_dispose        (GObject               *ob
 static void   gimp_sample_point_editor_style_set      (GtkWidget             *widget,
                                                        GtkStyle              *prev_style);
 static void   gimp_sample_point_editor_set_image      (GimpImageEditor       *editor,
-                                                       GimpImage             *gimage);
+                                                       GimpImage             *image);
 
-static void   gimp_sample_point_editor_point_added    (GimpImage             *gimage,
+static void   gimp_sample_point_editor_point_added    (GimpImage             *image,
                                                        GimpSamplePoint       *sample_point,
                                                        GimpSamplePointEditor *editor);
-static void   gimp_sample_point_editor_point_removed  (GimpImage             *gimage,
+static void   gimp_sample_point_editor_point_removed  (GimpImage             *image,
                                                        GimpSamplePoint       *sample_point,
                                                        GimpSamplePointEditor *editor);
-static void   gimp_sample_point_editor_point_update   (GimpImage             *gimage,
+static void   gimp_sample_point_editor_point_update   (GimpImage             *image,
                                                        GimpSamplePoint       *sample_point,
                                                        GimpSamplePointEditor *editor);
-static void   gimp_sample_point_editor_proj_update    (GimpImage             *gimage,
+static void   gimp_sample_point_editor_proj_update    (GimpImage             *image,
                                                        gboolean               now,
                                                        gint                   x,
                                                        gint                   y,
@@ -254,40 +254,40 @@ gimp_sample_point_editor_style_set (GtkWidget *widget,
 
 static void
 gimp_sample_point_editor_set_image (GimpImageEditor *image_editor,
-                                    GimpImage       *gimage)
+                                    GimpImage       *image)
 {
   GimpSamplePointEditor *editor = GIMP_SAMPLE_POINT_EDITOR (image_editor);
 
-  if (image_editor->gimage)
+  if (image_editor->image)
     {
-      g_signal_handlers_disconnect_by_func (image_editor->gimage,
+      g_signal_handlers_disconnect_by_func (image_editor->image,
                                             gimp_sample_point_editor_point_added,
                                             editor);
-      g_signal_handlers_disconnect_by_func (image_editor->gimage,
+      g_signal_handlers_disconnect_by_func (image_editor->image,
                                             gimp_sample_point_editor_point_removed,
                                             editor);
-      g_signal_handlers_disconnect_by_func (image_editor->gimage,
+      g_signal_handlers_disconnect_by_func (image_editor->image,
                                             gimp_sample_point_editor_point_update,
                                             editor);
-      g_signal_handlers_disconnect_by_func (image_editor->gimage->projection,
+      g_signal_handlers_disconnect_by_func (image_editor->image->projection,
                                             gimp_sample_point_editor_proj_update,
                                             editor);
     }
 
-  GIMP_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, gimage);
+  GIMP_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, image);
 
-  if (gimage)
+  if (image)
     {
-      g_signal_connect (gimage, "sample-point-added",
+      g_signal_connect (image, "sample-point-added",
                         G_CALLBACK (gimp_sample_point_editor_point_added),
                         editor);
-      g_signal_connect (gimage, "sample-point-removed",
+      g_signal_connect (image, "sample-point-removed",
                         G_CALLBACK (gimp_sample_point_editor_point_removed),
                         editor);
-      g_signal_connect (gimage, "update-sample-point",
+      g_signal_connect (image, "update-sample-point",
                         G_CALLBACK (gimp_sample_point_editor_point_update),
                         editor);
-      g_signal_connect (gimage->projection, "update",
+      g_signal_connect (image->projection, "update",
                         G_CALLBACK (gimp_sample_point_editor_proj_update),
                         editor);
     }
@@ -344,7 +344,7 @@ gimp_sample_point_editor_get_sample_merged (GimpSamplePointEditor *editor)
 /*  private functions  */
 
 static void
-gimp_sample_point_editor_point_added (GimpImage             *gimage,
+gimp_sample_point_editor_point_added (GimpImage             *image,
                                       GimpSamplePoint       *sample_point,
                                       GimpSamplePointEditor *editor)
 {
@@ -352,7 +352,7 @@ gimp_sample_point_editor_point_added (GimpImage             *gimage,
 }
 
 static void
-gimp_sample_point_editor_point_removed (GimpImage             *gimage,
+gimp_sample_point_editor_point_removed (GimpImage             *image,
                                         GimpSamplePoint       *sample_point,
                                         GimpSamplePointEditor *editor)
 {
@@ -360,18 +360,18 @@ gimp_sample_point_editor_point_removed (GimpImage             *gimage,
 }
 
 static void
-gimp_sample_point_editor_point_update (GimpImage             *gimage,
+gimp_sample_point_editor_point_update (GimpImage             *image,
                                        GimpSamplePoint       *sample_point,
                                        GimpSamplePointEditor *editor)
 {
-  gint i = g_list_index (gimage->sample_points, sample_point);
+  gint i = g_list_index (image->sample_points, sample_point);
 
   if (i < 4)
     gimp_sample_point_editor_dirty (editor, i);
 }
 
 static void
-gimp_sample_point_editor_proj_update (GimpImage             *gimage,
+gimp_sample_point_editor_proj_update (GimpImage             *image,
                                       gboolean               now,
                                       gint                   x,
                                       gint                   y,
@@ -384,9 +384,9 @@ gimp_sample_point_editor_proj_update (GimpImage             *gimage,
   GList           *list;
   gint             i;
 
-  n_points = MIN (4, g_list_length (image_editor->gimage->sample_points));
+  n_points = MIN (4, g_list_length (image_editor->image->sample_points));
 
-  for (i = 0, list = image_editor->gimage->sample_points;
+  for (i = 0, list = image_editor->image->sample_points;
        i < n_points;
        i++, list = g_list_next (list))
     {
@@ -407,8 +407,8 @@ gimp_sample_point_editor_points_changed (GimpSamplePointEditor *editor)
   gint             n_points     = 0;
   gint             i;
 
-  if (image_editor->gimage)
-    n_points = MIN (4, g_list_length (image_editor->gimage->sample_points));
+  if (image_editor->image)
+    n_points = MIN (4, g_list_length (image_editor->image->sample_points));
 
   for (i = 0; i < n_points; i++)
     {
@@ -452,12 +452,12 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
 
   editor->dirty_idle_id = 0;
 
-  if (! image_editor->gimage)
+  if (! image_editor->image)
     return FALSE;
 
-  n_points = MIN (4, g_list_length (image_editor->gimage->sample_points));
+  n_points = MIN (4, g_list_length (image_editor->image->sample_points));
 
-  for (i = 0, list = image_editor->gimage->sample_points;
+  for (i = 0, list = image_editor->image->sample_points;
        i < n_points;
        i++, list = g_list_next (list))
     {
@@ -473,7 +473,7 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
 
           color_frame = GIMP_COLOR_FRAME (editor->color_frames[i]);
 
-          if (gimp_image_pick_color (image_editor->gimage, NULL,
+          if (gimp_image_pick_color (image_editor->image, NULL,
                                      sample_point->x,
                                      sample_point->y,
                                      editor->sample_merged,

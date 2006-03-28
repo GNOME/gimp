@@ -127,7 +127,7 @@ gimp_posterize_tool_initialize (GimpTool    *tool,
   GimpPosterizeTool *posterize_tool = GIMP_POSTERIZE_TOOL (tool);
   GimpDrawable      *drawable;
 
-  drawable = gimp_image_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->image);
 
   if (! drawable)
     return FALSE;

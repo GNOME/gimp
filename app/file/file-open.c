@@ -67,7 +67,7 @@
 #include "gimp-intl.h"
 
 
-static void  file_open_sanitize_image (GimpImage *gimage);
+static void  file_open_sanitize_image (GimpImage *image);
 
 
 /*  public functions  */
@@ -158,14 +158,14 @@ file_open_image (Gimp               *gimp,
     {
       if (image_id != -1)
         {
-          GimpImage *gimage = gimp_image_get_by_ID (gimp, image_id);
+          GimpImage *image = gimp_image_get_by_ID (gimp, image_id);
 
-          file_open_sanitize_image (gimage);
+          file_open_sanitize_image (image);
 
           if (mime_type)
             *mime_type = file_proc->mime_type;
 
-          return gimage;
+          return image;
         }
       else
         {
@@ -288,7 +288,7 @@ file_open_with_proc_and_display (Gimp               *gimp,
                                  GimpPDBStatusType  *status,
                                  GError            **error)
 {
-  GimpImage   *gimage;
+  GimpImage   *image;
   const gchar *mime_type = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -296,7 +296,7 @@ file_open_with_proc_and_display (Gimp               *gimp,
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (status != NULL, NULL);
 
-  gimage = file_open_image (gimp, context, progress,
+  image = file_open_image (gimp, context, progress,
                             uri,
                             entered_filename,
                             file_proc,
@@ -305,24 +305,24 @@ file_open_with_proc_and_display (Gimp               *gimp,
                             &mime_type,
                             error);
 
-  if (gimage)
+  if (image)
     {
       GimpDocumentList *documents = GIMP_DOCUMENT_LIST (gimp->documents);
       GimpImagefile    *imagefile;
 
-      gimp_create_display (gimage->gimp, gimage, GIMP_UNIT_PIXEL, 1.0);
+      gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
 
       imagefile = gimp_document_list_add_uri (documents, uri, mime_type);
 
       /*  can only create a thumbnail if the passed uri and the
        *  resulting image's uri match.
        */
-      if (strcmp (uri, gimp_image_get_uri (gimage)) == 0)
+      if (strcmp (uri, gimp_image_get_uri (image)) == 0)
         {
           /*  no need to save a thumbnail if there's a good one already  */
           if (! gimp_imagefile_check_thumbnail (imagefile))
             {
-              gimp_imagefile_save_thumbnail (imagefile, mime_type, gimage);
+              gimp_imagefile_save_thumbnail (imagefile, mime_type, image);
             }
         }
 
@@ -330,10 +330,10 @@ file_open_with_proc_and_display (Gimp               *gimp,
         gimp_recent_list_add_uri (uri, mime_type);
 
       /*  the display owns the image now  */
-      g_object_unref (gimage);
+      g_object_unref (image);
     }
 
-  return gimage;
+  return image;
 }
 
 GimpLayer *
@@ -429,19 +429,19 @@ file_open_layer (Gimp               *gimp,
 /*  private functions  */
 
 static void
-file_open_sanitize_image (GimpImage *gimage)
+file_open_sanitize_image (GimpImage *image)
 {
   /* clear all undo steps */
-  gimp_image_undo_free (gimage);
+  gimp_image_undo_free (image);
 
   /* make sure that undo is enabled */
-  while (gimage->undo_freeze_count)
-    gimp_image_undo_thaw (gimage);
+  while (image->undo_freeze_count)
+    gimp_image_undo_thaw (image);
 
   /* set the image to clean  */
-  gimp_image_clean_all (gimage);
+  gimp_image_clean_all (image);
 
-  gimp_image_invalidate_layer_previews (gimage);
-  gimp_image_invalidate_channel_previews (gimage);
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
+  gimp_image_invalidate_layer_previews (image);
+  gimp_image_invalidate_channel_previews (image);
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
 }

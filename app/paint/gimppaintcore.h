@@ -100,7 +100,7 @@ struct _GimpPaintCoreClass
                                 GimpPaintOptions *paint_options);
 
   gboolean  (* push_undo)      (GimpPaintCore    *core,
-                                GimpImage        *gimage,
+                                GimpImage        *image,
                                 const gchar      *undo_desc);
 };
 

@@ -303,16 +303,16 @@ documents_open_image (GimpContext   *context,
                       GimpImagefile *imagefile)
 {
   const gchar        *uri;
-  GimpImage          *gimage;
+  GimpImage          *image;
   GimpPDBStatusType   status;
   GError             *error = NULL;
 
   uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
 
-  gimage = file_open_with_display (context->gimp, context, NULL,
+  image = file_open_with_display (context->gimp, context, NULL,
                                    uri, &status, &error);
 
-  if (! gimage && status != GIMP_PDB_CANCEL)
+  if (! image && status != GIMP_PDB_CANCEL)
     {
       gchar *filename;
 
@@ -333,7 +333,7 @@ documents_raise_display (gpointer data,
   RaiseClosure *closure = user_data;
   const gchar  *uri;
 
-  uri = gimp_object_get_name (GIMP_OBJECT (gdisp->gimage));
+  uri = gimp_object_get_name (GIMP_OBJECT (gdisp->image));
 
   if (uri && ! strcmp (closure->name, uri))
     {

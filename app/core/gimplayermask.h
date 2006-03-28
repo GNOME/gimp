@@ -58,7 +58,7 @@ struct _GimpLayerMaskClass
 
 GType           gimp_layer_mask_get_type    (void) G_GNUC_CONST;
 
-GimpLayerMask * gimp_layer_mask_new	    (GimpImage           *gimage,
+GimpLayerMask * gimp_layer_mask_new	    (GimpImage           *image,
 					     gint                 width,
 					     gint                 height,
 					     const gchar         *name,

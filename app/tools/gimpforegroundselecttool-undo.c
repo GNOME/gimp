@@ -48,13 +48,13 @@ static void     undo_free_foreground_select (GimpUndo            *undo,
 
 
 gboolean
-gimp_foreground_select_tool_push_undo (GimpImage   *gimage,
+gimp_foreground_select_tool_push_undo (GimpImage   *image,
                                        const gchar *undo_desc,
                                        gint         tool_ID)
 {
   GimpUndo *new;
 
-  if ((new = gimp_image_undo_push (gimage, GIMP_TYPE_UNDO,
+  if ((new = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
                                    sizeof (FgSelectUndo),
                                    sizeof (FgSelectUndo),
                                    GIMP_UNDO_FOREGROUND_SELECT, undo_desc,
@@ -80,7 +80,7 @@ undo_pop_foreground_select (GimpUndo            *undo,
 {
   GimpTool *active_tool;
 
-  active_tool = tool_manager_get_active (undo->gimage->gimp);
+  active_tool = tool_manager_get_active (undo->image->gimp);
 
   if (GIMP_IS_FOREGROUND_SELECT_TOOL (active_tool))
     {

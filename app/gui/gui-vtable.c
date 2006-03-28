@@ -95,7 +95,7 @@ static GimpObject   * gui_display_get_by_ID    (Gimp          *gimp,
                                                 gint           ID);
 static gint           gui_display_get_ID       (GimpObject    *display);
 static guint32        gui_display_get_window   (GimpObject    *display);
-static GimpObject   * gui_display_create       (GimpImage     *gimage,
+static GimpObject   * gui_display_create       (GimpImage     *image,
                                                 GimpUnit       unit,
                                                 gdouble        scale);
 static void           gui_display_delete       (GimpObject    *display);
@@ -343,7 +343,7 @@ gui_display_get_window (GimpObject *display)
 }
 
 static GimpObject *
-gui_display_create (GimpImage *gimage,
+gui_display_create (GimpImage *image,
                     GimpUnit   unit,
                     gdouble    scale)
 {
@@ -352,11 +352,11 @@ gui_display_create (GimpImage *gimage,
 
   image_managers = gimp_ui_managers_from_name ("<Image>");
 
-  gdisp = gimp_display_new (gimage, unit, scale,
+  gdisp = gimp_display_new (image, unit, scale,
                             global_menu_factory,
                             image_managers->data);
 
-  gimp_context_set_display (gimp_get_user_context (gimage->gimp), gdisp);
+  gimp_context_set_display (gimp_get_user_context (image->gimp), gdisp);
 
   gimp_ui_manager_update (GIMP_DISPLAY_SHELL (gdisp->shell)->menubar_manager,
                           gdisp);

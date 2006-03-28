@@ -270,7 +270,7 @@ gimp_text_tool_button_press (GimpTool        *tool,
   text_tool->x1 = coords->x;
   text_tool->y1 = coords->y;
 
-  drawable = gimp_image_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->image);
 
   gimp_text_tool_set_drawable (text_tool, drawable, FALSE);
 
@@ -698,7 +698,7 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
       text = gimp_config_duplicate (GIMP_CONFIG (text_tool->proxy));
     }
 
-  image = tool->gdisp->gimage;
+  image = tool->gdisp->image;
   layer = gimp_text_layer_new (image, text);
 
   g_object_unref (text);

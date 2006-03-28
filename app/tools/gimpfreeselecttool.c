@@ -212,14 +212,14 @@ gimp_free_select_tool_button_release (GimpTool        *tool,
   if (free_sel->num_points == 1)
     {
       /*  If there is a floating selection, anchor it  */
-      if (gimp_image_floating_sel (gdisp->gimage))
+      if (gimp_image_floating_sel (gdisp->image))
         {
-          floating_sel_anchor (gimp_image_floating_sel (gdisp->gimage));
+          floating_sel_anchor (gimp_image_floating_sel (gdisp->image));
         }
       /*  Otherwise, clear the selection mask  */
       else
         {
-          gimp_channel_clear (gimp_image_get_mask (gdisp->gimage), NULL, TRUE);
+          gimp_channel_clear (gimp_image_get_mask (gdisp->image), NULL, TRUE);
         }
     }
   else
@@ -227,7 +227,7 @@ gimp_free_select_tool_button_release (GimpTool        *tool,
       GIMP_FREE_SELECT_TOOL_GET_CLASS (free_sel)->select (free_sel, gdisp);
     }
 
-  gimp_image_flush (gdisp->gimage);
+  gimp_image_flush (gdisp->image);
 }
 
 static void
@@ -314,7 +314,7 @@ gimp_free_select_tool_real_select (GimpFreeSelectTool *free_sel,
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  gimp_channel_select_polygon (gimp_image_get_mask (gdisp->gimage),
+  gimp_channel_select_polygon (gimp_image_get_mask (gdisp->image),
                                tool->tool_info->blurb,
                                free_sel->num_points,
                                free_sel->points,
