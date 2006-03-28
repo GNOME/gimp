@@ -29,7 +29,7 @@ struct _ImageScaleDialog
   GtkWidget                *dialog;
 
   GimpImage                *image;
-  GimpDisplay              *gdisp;
+  GimpDisplay              *display;
   GimpContext              *context;
 
   gint                      width;

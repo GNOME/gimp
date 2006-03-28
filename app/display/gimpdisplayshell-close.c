@@ -69,7 +69,7 @@ gimp_display_shell_close (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  image = shell->gdisp->image;
+  image = shell->display->image;
 
   /*  FIXME: gimp_busy HACK not really appropriate here because we only
    *  want to prevent the busy image and display to be closed.  --Mitch
@@ -90,7 +90,7 @@ gimp_display_shell_close (GimpDisplayShell *shell,
     }
   else
     {
-      gimp_display_delete (shell->gdisp);
+      gimp_display_delete (shell->display);
     }
 }
 
@@ -243,7 +243,7 @@ gimp_display_shell_close_response (GtkWidget        *widget,
   switch (response_id)
     {
     case GTK_RESPONSE_CLOSE:
-      gimp_display_delete (shell->gdisp);
+      gimp_display_delete (shell->display);
       break;
 
     case RESPONSE_SAVE:
@@ -257,8 +257,8 @@ gimp_display_shell_close_response (GtkWidget        *widget,
 
         gtk_action_activate (action);
 
-        if (! shell->gdisp->image->dirty)
-          gimp_display_delete (shell->gdisp);
+        if (! shell->display->image->dirty)
+          gimp_display_delete (shell->display);
       }
       break;
 

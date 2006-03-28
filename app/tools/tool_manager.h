@@ -34,44 +34,44 @@ void       tool_manager_pop_tool              (Gimp             *gimp);
 
 
 gboolean   tool_manager_initialize_active     (Gimp             *gimp,
-                                               GimpDisplay      *gdisp);
+                                               GimpDisplay      *display);
 void       tool_manager_control_active        (Gimp             *gimp,
                                                GimpToolAction    action,
-                                               GimpDisplay      *gdisp);
+                                               GimpDisplay      *display);
 void       tool_manager_button_press_active   (Gimp             *gimp,
                                                GimpCoords       *coords,
                                                guint32           time,
                                                GdkModifierType   state,
-                                               GimpDisplay      *gdisp);
+                                               GimpDisplay      *display);
 void       tool_manager_button_release_active (Gimp             *gimp,
                                                GimpCoords       *coords,
                                                guint32           time,
                                                GdkModifierType   state,
-                                               GimpDisplay      *gdisp);
+                                               GimpDisplay      *display);
 void       tool_manager_motion_active         (Gimp             *gimp,
                                                GimpCoords       *coords,
                                                guint32           time,
                                                GdkModifierType   state,
-                                               GimpDisplay      *gdisp);
+                                               GimpDisplay      *display);
 gboolean   tool_manager_key_press_active      (Gimp             *gimp,
                                                GdkEventKey      *kevent,
-                                               GimpDisplay      *gdisp);
+                                               GimpDisplay      *display);
 
 void       tool_manager_focus_display_active  (Gimp             *gimp,
-                                               GimpDisplay      *gdisp);
+                                               GimpDisplay      *display);
 void       tool_manager_modifier_state_active (Gimp             *gimp,
                                                GdkModifierType   state,
-                                               GimpDisplay      *gdisp);
+                                               GimpDisplay      *display);
 
 void       tool_manager_oper_update_active    (Gimp             *gimp,
                                                GimpCoords       *coords,
                                                GdkModifierType   state,
                                                gboolean          proximity,
-                                               GimpDisplay      *gdisp);
+                                               GimpDisplay      *display);
 void       tool_manager_cursor_update_active  (Gimp             *gimp,
                                                GimpCoords       *coords,
                                                GdkModifierType   state,
-                                               GimpDisplay      *gdisp);
+                                               GimpDisplay      *display);
 
 
 #endif  /*  __TOOL_MANAGER_H__  */

@@ -64,27 +64,27 @@ static GObject *
 static void     gimp_new_rect_select_tool_finalize       (GObject         *object);
 static void     gimp_new_rect_select_tool_control        (GimpTool        *tool,
                                                           GimpToolAction   action,
-                                                          GimpDisplay     *gdisp);
+                                                          GimpDisplay     *display);
 static void     gimp_new_rect_select_tool_button_press   (GimpTool        *tool,
                                                           GimpCoords      *coords,
                                                           guint32          time,
                                                           GdkModifierType  state,
-                                                          GimpDisplay     *gdisp);
+                                                          GimpDisplay     *display);
 static void     gimp_new_rect_select_tool_button_release (GimpTool        *tool,
                                                           GimpCoords      *coords,
                                                           guint32          time,
                                                           GdkModifierType  state,
-                                                          GimpDisplay     *gdisp);
+                                                          GimpDisplay     *display);
 static void     gimp_new_rect_select_tool_modifier_key   (GimpTool        *tool,
                                                           GdkModifierType  key,
                                                           gboolean         press,
                                                           GdkModifierType  state,
-                                                          GimpDisplay     *gdisp);
+                                                          GimpDisplay     *display);
 static void     gimp_new_rect_select_tool_oper_update    (GimpTool        *tool,
                                                           GimpCoords      *coords,
                                                           GdkModifierType  state,
                                                           gboolean         proximity,
-                                                          GimpDisplay     *gdisp);
+                                                          GimpDisplay     *display);
 static gboolean gimp_new_rect_select_tool_execute        (GimpRectangleTool *rect_tool,
                                                           gint             x,
                                                           gint             y,
@@ -189,7 +189,7 @@ gimp_new_rect_select_tool_finalize (GObject *object)
 static void
 gimp_new_rect_select_tool_control (GimpTool       *tool,
                                    GimpToolAction  action,
-                                   GimpDisplay    *gdisp)
+                                   GimpDisplay    *display)
 {
   GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (tool);
 
@@ -211,7 +211,7 @@ gimp_new_rect_select_tool_control (GimpTool       *tool,
       break;
     }
 
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void
@@ -219,13 +219,13 @@ gimp_new_rect_select_tool_button_press (GimpTool        *tool,
                                         GimpCoords      *coords,
                                         guint32          time,
                                         GdkModifierType  state,
-                                        GimpDisplay     *gdisp)
+                                        GimpDisplay     *display)
 {
-  if (tool->gdisp && gdisp != tool->gdisp)
+  if (tool->display && display != tool->display)
     gimp_rectangle_tool_response (NULL, GIMP_RECTANGLE_MODE_EXECUTE,
                                   GIMP_RECTANGLE_TOOL (tool));
 
-  gimp_rectangle_tool_button_press (tool, coords, time, state, gdisp);
+  gimp_rectangle_tool_button_press (tool, coords, time, state, display);
 }
 
 static void
@@ -233,13 +233,13 @@ gimp_new_rect_select_tool_button_release (GimpTool        *tool,
                                           GimpCoords      *coords,
                                           guint32          time,
                                           GdkModifierType  state,
-                                          GimpDisplay     *gdisp)
+                                          GimpDisplay     *display)
 {
-  gimp_tool_pop_status (tool, gdisp);
-  gimp_tool_push_status (tool, gdisp,
+  gimp_tool_pop_status (tool, display);
+  gimp_tool_push_status (tool, display,
                          _("Click or press enter to create the selection."));
 
-  gimp_rectangle_tool_button_release (tool, coords, time, state, gdisp);
+  gimp_rectangle_tool_button_release (tool, coords, time, state, display);
 }
 
 static void
@@ -247,12 +247,12 @@ gimp_new_rect_select_tool_modifier_key (GimpTool        *tool,
                                         GdkModifierType  key,
                                         gboolean         press,
                                         GdkModifierType  state,
-                                        GimpDisplay     *gdisp)
+                                        GimpDisplay     *display)
 {
-  gimp_rectangle_tool_modifier_key (tool, key, press, state, gdisp);
+  gimp_rectangle_tool_modifier_key (tool, key, press, state, display);
 
   GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state,
-                                                gdisp);
+                                                display);
 }
 
 static void
@@ -260,12 +260,12 @@ gimp_new_rect_select_tool_oper_update (GimpTool        *tool,
                                        GimpCoords      *coords,
                                        GdkModifierType  state,
                                        gboolean         proximity,
-                                       GimpDisplay     *gdisp)
+                                       GimpDisplay     *display)
 {
-  gimp_rectangle_tool_oper_update (tool, coords, state, proximity, gdisp);
+  gimp_rectangle_tool_oper_update (tool, coords, state, proximity, display);
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
-                                               gdisp);
+                                               display);
 }
 
 /*
@@ -304,9 +304,9 @@ gimp_new_rect_select_tool_execute (GimpRectangleTool  *rectangle,
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  gimp_tool_pop_status (tool, tool->gdisp);
+  gimp_tool_pop_status (tool, tool->display);
 
-  image = tool->gdisp->image;
+  image = tool->display->image;
   max_x = image->width;
   max_y = image->height;
   selection_mask = gimp_image_get_mask (image);
@@ -429,7 +429,7 @@ gimp_new_rect_select_tool_real_rect_select (GimpNewRectSelectTool *rect_select,
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  gimp_channel_select_rectangle (gimp_image_get_mask (tool->gdisp->image),
+  gimp_channel_select_rectangle (gimp_image_get_mask (tool->display->image),
                                  x, y, w, h,
                                  options->operation,
                                  options->feather,

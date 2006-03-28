@@ -42,11 +42,11 @@ static void   gimp_dodge_burn_tool_modifier_key  (GimpTool        *tool,
                                                   GdkModifierType  key,
                                                   gboolean         press,
                                                   GdkModifierType  state,
-                                                  GimpDisplay     *gdisp);
+                                                  GimpDisplay     *display);
 static void   gimp_dodge_burn_tool_cursor_update (GimpTool        *tool,
                                                   GimpCoords      *coords,
                                                   GdkModifierType  state,
-                                                  GimpDisplay     *gdisp);
+                                                  GimpDisplay     *display);
 
 static GtkWidget * gimp_dodge_burn_options_gui   (GimpToolOptions *tool_options);
 
@@ -98,7 +98,7 @@ gimp_dodge_burn_tool_modifier_key (GimpTool        *tool,
                                    GdkModifierType  key,
                                    gboolean         press,
                                    GdkModifierType  state,
-                                   GimpDisplay     *gdisp)
+                                   GimpDisplay     *display)
 {
   GimpDodgeBurnOptions *options;
 
@@ -122,14 +122,14 @@ gimp_dodge_burn_tool_modifier_key (GimpTool        *tool,
         }
     }
 
-  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state, display);
 }
 
 static void
 gimp_dodge_burn_tool_cursor_update (GimpTool        *tool,
                                     GimpCoords      *coords,
                                     GdkModifierType  state,
-                                    GimpDisplay     *gdisp)
+                                    GimpDisplay     *display)
 {
   GimpDodgeBurnOptions *options;
 
@@ -137,7 +137,7 @@ gimp_dodge_burn_tool_cursor_update (GimpTool        *tool,
 
   gimp_tool_control_set_toggled (tool->control, (options->type == GIMP_BURN));
 
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
 

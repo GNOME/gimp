@@ -30,15 +30,15 @@
 
 /* finding the effective screen resolution (double) */
 #define  SCREEN_XRES(s)   ((s)->dot_for_dot ? \
-                           (s)->gdisp->image->xresolution : (s)->monitor_xres)
+                           (s)->display->image->xresolution : (s)->monitor_xres)
 #define  SCREEN_YRES(s)   ((s)->dot_for_dot ? \
-                           (s)->gdisp->image->yresolution : (s)->monitor_yres)
+                           (s)->display->image->yresolution : (s)->monitor_yres)
 
 /* calculate scale factors (double) */
 #define  SCALEFACTOR_X(s) (gimp_zoom_model_get_factor ((s)->zoom) \
-                           * SCREEN_XRES(s) / (s)->gdisp->image->xresolution)
+                           * SCREEN_XRES(s) / (s)->display->image->xresolution)
 #define  SCALEFACTOR_Y(s) (gimp_zoom_model_get_factor ((s)->zoom) \
-                           * SCREEN_YRES(s) / (s)->gdisp->image->yresolution)
+                           * SCREEN_YRES(s) / (s)->display->image->yresolution)
 
 /* scale values */
 #define  SCALEX(s,x)      PROJ_ROUND ((x) * SCALEFACTOR_X(s))
@@ -66,7 +66,7 @@ struct _GimpDisplayShell
 {
   GtkWindow         parent_instance;
 
-  GimpDisplay      *gdisp;
+  GimpDisplay      *display;
 
   GimpUIManager    *menubar_manager;
   GimpUIManager    *popup_manager;
@@ -186,7 +186,7 @@ struct _GimpDisplayShellClass
 
 GType       gimp_display_shell_get_type              (void) G_GNUC_CONST;
 
-GtkWidget * gimp_display_shell_new                   (GimpDisplay      *gdisp,
+GtkWidget * gimp_display_shell_new                   (GimpDisplay      *display,
                                                       GimpUnit          unit,
                                                       gdouble           scale,
                                                       GimpMenuFactory  *menu_factory,

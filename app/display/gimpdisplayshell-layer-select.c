@@ -79,7 +79,7 @@ gimp_display_shell_layer_select_init (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  image = shell->gdisp->image;
+  image = shell->display->image;
 
   layer = gimp_image_get_active_layer (image);
 

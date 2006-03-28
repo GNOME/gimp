@@ -65,8 +65,8 @@ plug_in_run_cmd_callback (GtkAction     *action,
   Gimp          *gimp;
   ProcRecord    *proc_rec;
   Argument      *args;
-  gint           n_args = 0;
-  GimpDisplay   *gdisp  = NULL;
+  gint           n_args  = 0;
+  GimpDisplay   *display = NULL;
 
   gimp = action_data_get_gimp (data);
   if (! gimp)
@@ -90,11 +90,11 @@ plug_in_run_cmd_callback (GtkAction     *action,
       if (proc_rec->num_args > n_args &&
           proc_rec->args[n_args].arg_type == GIMP_PDB_IMAGE)
         {
-          gdisp = action_data_get_display (data);
+          display = action_data_get_display (data);
 
-          if (gdisp)
+          if (display)
             {
-              args[n_args].value.pdb_int = gimp_image_get_ID (gdisp->image);
+              args[n_args].value.pdb_int = gimp_image_get_ID (display->image);
               n_args++;
 
               if (proc_rec->num_args > n_args &&
@@ -102,7 +102,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
                 {
                   GimpDrawable *drawable;
 
-                  drawable = gimp_image_active_drawable (gdisp->image);
+                  drawable = gimp_image_active_drawable (display->image);
 
                   if (drawable)
                     {
@@ -129,9 +129,9 @@ plug_in_run_cmd_callback (GtkAction     *action,
 
   /* run the plug-in procedure */
   plug_in_run (gimp, gimp_get_user_context (gimp),
-               GIMP_PROGRESS (gdisp),
+               GIMP_PROGRESS (display),
                proc_rec, args, n_args, FALSE, TRUE,
-               gdisp ? gimp_display_get_ID (gdisp) : -1);
+               display ? gimp_display_get_ID (display) : -1);
 
   /* remember only "standard" plug-ins */
   if (proc_rec->proc_type == GIMP_PLUGIN           &&
@@ -150,26 +150,26 @@ plug_in_repeat_cmd_callback (GtkAction *action,
                              gint       value,
                              gpointer   data)
 {
-  GimpDisplay  *gdisp;
+  GimpDisplay  *display;
   GimpDrawable *drawable;
   gboolean      interactive = TRUE;
 
-  gdisp = action_data_get_display (data);
-  if (! gdisp)
+  display = action_data_get_display (data);
+  if (! display)
     return;
 
-  drawable = gimp_image_active_drawable (gdisp->image);
+  drawable = gimp_image_active_drawable (display->image);
   if (! drawable)
     return;
 
   if (strcmp (gtk_action_get_name (action), "plug-in-repeat") == 0)
     interactive = FALSE;
 
-  plug_in_repeat (gdisp->image->gimp, value,
-                  gimp_get_user_context (gdisp->image->gimp),
-                  GIMP_PROGRESS (gdisp),
-                  gimp_display_get_ID (gdisp),
-                  gimp_image_get_ID (gdisp->image),
+  plug_in_repeat (display->image->gimp, value,
+                  gimp_get_user_context (display->image->gimp),
+                  GIMP_PROGRESS (display),
+                  gimp_display_get_ID (display),
+                  gimp_image_get_ID (display->image),
                   gimp_item_get_ID (GIMP_ITEM (drawable)),
                   interactive);
 }

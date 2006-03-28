@@ -49,18 +49,18 @@ static GObject * gimp_align_tool_constructor (GType              type,
                                               GObjectConstructParam *params);
 static void   gimp_align_tool_dispose        (GObject           *object);
 static gboolean gimp_align_tool_initialize   (GimpTool          *tool,
-                                              GimpDisplay       *gdisp);
+                                              GimpDisplay       *display);
 static void   gimp_align_tool_finalize       (GObject           *object);
 
 static void   gimp_align_tool_button_press   (GimpTool          *tool,
                                               GimpCoords        *coords,
                                               guint32            time,
                                               GdkModifierType    state,
-                                              GimpDisplay       *gdisp);
+                                              GimpDisplay       *display);
 static void   gimp_align_tool_cursor_update  (GimpTool          *tool,
                                               GimpCoords        *coords,
                                               GdkModifierType    state,
-                                              GimpDisplay       *gdisp);
+                                              GimpDisplay       *display);
 
 static void   gimp_align_tool_draw           (GimpDrawTool      *draw_tool);
 
@@ -220,11 +220,11 @@ gimp_align_tool_finalize (GObject *object)
 
 static gboolean
 gimp_align_tool_initialize (GimpTool    *tool,
-                            GimpDisplay *gdisp)
+                            GimpDisplay *display)
 {
   GimpAlignTool    *align_tool = GIMP_ALIGN_TOOL (tool);
 
-  if (tool->gdisp != gdisp)
+  if (tool->display != display)
     {
 /*       align_tool->target_item     = NULL; */
 /*       align_tool->reference_item  = NULL; */
@@ -238,7 +238,7 @@ gimp_align_tool_button_press (GimpTool        *tool,
                               GimpCoords      *coords,
                               guint32          time,
                               GdkModifierType  state,
-                              GimpDisplay     *gdisp)
+                              GimpDisplay     *display)
 {
   GimpAlignTool    *align_tool  = GIMP_ALIGN_TOOL (tool);
   GimpAlignOptions *options     = GIMP_ALIGN_OPTIONS (tool->tool_info->tool_options);
@@ -246,7 +246,7 @@ gimp_align_tool_button_press (GimpTool        *tool,
 
   /*  If the tool was being used in another image...reset it  */
 
-  if (gdisp != tool->gdisp)
+  if (display != tool->display)
     {
       if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
         gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
@@ -258,10 +258,10 @@ gimp_align_tool_button_press (GimpTool        *tool,
   if (! gimp_tool_control_is_active (tool->control))
     gimp_tool_control_activate (tool->control);
 
-  tool->gdisp = gdisp;
+  tool->display = display;
 
   if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
-    gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
+    gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -269,7 +269,7 @@ gimp_align_tool_button_press (GimpTool        *tool,
     {
       GimpVectors *vectors;
 
-      if (gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), gdisp,
+      if (gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), display,
                                      coords, 7, 7,
                                      NULL, NULL, NULL, NULL, NULL,
                                      &vectors))
@@ -282,7 +282,7 @@ gimp_align_tool_button_press (GimpTool        *tool,
 
       GimpLayer *layer;
 
-      if ((layer = gimp_image_pick_correlate_layer (gdisp->image,
+      if ((layer = gimp_image_pick_correlate_layer (display->image,
                                                     coords->x, coords->y)))
         {
           item = GIMP_ITEM (layer);
@@ -328,7 +328,7 @@ static void
 gimp_align_tool_cursor_update (GimpTool        *tool,
                                GimpCoords      *coords,
                                GdkModifierType  state,
-                               GimpDisplay     *gdisp)
+                               GimpDisplay     *display)
 {
   GimpAlignOptions  *options = GIMP_ALIGN_OPTIONS (tool->tool_info->tool_options);
 
@@ -341,7 +341,7 @@ gimp_align_tool_cursor_update (GimpTool        *tool,
       tool_cursor = GIMP_TOOL_CURSOR_PATHS;
       modifier    = GIMP_CURSOR_MODIFIER_MOVE;
 
-      if (gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), gdisp,
+      if (gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), display,
                                      coords, 7, 7,
                                      NULL, NULL, NULL, NULL, NULL, NULL))
         {
@@ -353,18 +353,18 @@ gimp_align_tool_cursor_update (GimpTool        *tool,
     {
       GimpLayer *layer;
 
-      if ((layer = gimp_image_pick_correlate_layer (gdisp->image,
+      if ((layer = gimp_image_pick_correlate_layer (display->image,
                                                     coords->x, coords->y)))
 	{
 	  /*  if there is a floating selection, and this aint it...  */
-	  if (gimp_image_floating_sel (gdisp->image) &&
+	  if (gimp_image_floating_sel (display->image) &&
 	      ! gimp_layer_is_floating_sel (layer))
 	    {
               cursor      = GIMP_CURSOR_MOUSE;
               tool_cursor = GIMP_TOOL_CURSOR_MOVE;
               modifier    = GIMP_CURSOR_MODIFIER_ANCHOR;
 	    }
-	  else if (layer == gimp_image_get_active_layer (gdisp->image))
+	  else if (layer == gimp_image_get_active_layer (display->image))
 	    {
               cursor = GIMP_CURSOR_MOUSE;
 	    }
@@ -381,7 +381,7 @@ gimp_align_tool_cursor_update (GimpTool        *tool,
   gimp_tool_control_set_tool_cursor     (tool->control, tool_cursor);
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
 static void
@@ -590,8 +590,8 @@ do_horizontal_alignment (GtkWidget *widget,
                      align_tool->ref_horz_align_type,
                      align_tool->horz_offset);
 
-  if (GIMP_TOOL (align_tool)->gdisp)
-    gimp_image_flush (GIMP_TOOL (align_tool)->gdisp->image);
+  if (GIMP_TOOL (align_tool)->display)
+    gimp_image_flush (GIMP_TOOL (align_tool)->display->image);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (align_tool));
 }
@@ -612,8 +612,8 @@ do_vertical_alignment (GtkWidget *widget,
                      align_tool->ref_vert_align_type,
                      align_tool->vert_offset);
 
-  if (GIMP_TOOL (align_tool)->gdisp)
-      gimp_image_flush (GIMP_TOOL (align_tool)->gdisp->image);
+  if (GIMP_TOOL (align_tool)->display)
+      gimp_image_flush (GIMP_TOOL (align_tool)->display->image);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (align_tool));
 }

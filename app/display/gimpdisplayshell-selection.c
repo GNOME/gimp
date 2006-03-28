@@ -518,7 +518,7 @@ selection_generate_segs (Selection *select)
   /*  Ask the image for the boundary of its selected region...
    *  Then transform that information into a new buffer of GdkSegments
    */
-  gimp_channel_boundary (gimp_image_get_mask (select->shell->gdisp->image),
+  gimp_channel_boundary (gimp_image_get_mask (select->shell->display->image),
                          &segs_in, &segs_out,
                          &select->num_segs_in, &select->num_segs_out,
                          0, 0, 0, 0);
@@ -551,7 +551,7 @@ selection_generate_segs (Selection *select)
     }
 
   /*  The active layer's boundary  */
-  gimp_image_layer_boundary (select->shell->gdisp->image,
+  gimp_image_layer_boundary (select->shell->display->image,
                              &segs_layer, &select->num_segs_layer);
 
   if (select->num_segs_layer)
@@ -609,7 +609,7 @@ selection_start_marching (gpointer data)
   GimpDisplayConfig *config;
 
   canvas = GIMP_CANVAS (select->shell->canvas);
-  config = GIMP_DISPLAY_CONFIG (select->shell->gdisp->image->gimp->config);
+  config = GIMP_DISPLAY_CONFIG (select->shell->display->image->gimp->config);
 
   /*  if the RECALC bit is set, reprocess the boundaries  */
   if (select->recalc)

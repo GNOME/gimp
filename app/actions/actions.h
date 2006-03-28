@@ -65,9 +65,9 @@ GimpObject  * action_select_object    (GimpActionSelectType  select_type,
   if (! image) \
     return
 
-#define return_if_no_display(gdisp,data) \
-  gdisp = action_data_get_display (data); \
-  if (! gdisp) \
+#define return_if_no_display(display,data) \
+  display = action_data_get_display (data); \
+  if (! display) \
     return
 
 #define return_if_no_widget(widget,data) \

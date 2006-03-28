@@ -56,21 +56,21 @@ static void   gimp_blend_tool_button_press   (GimpTool        *tool,
                                               GimpCoords      *coords,
                                               guint32          time,
                                               GdkModifierType  state,
-                                              GimpDisplay     *gdisp);
+                                              GimpDisplay     *display);
 static void   gimp_blend_tool_button_release (GimpTool        *tool,
                                               GimpCoords      *coords,
                                               guint32          time,
                                               GdkModifierType  state,
-                                              GimpDisplay     *gdisp);
+                                              GimpDisplay     *display);
 static void   gimp_blend_tool_motion         (GimpTool        *tool,
                                               GimpCoords      *coords,
                                               guint32          time,
                                               GdkModifierType  state,
-                                              GimpDisplay     *gdisp);
+                                              GimpDisplay     *display);
 static void   gimp_blend_tool_cursor_update  (GimpTool        *tool,
                                               GimpCoords      *coords,
                                               GdkModifierType  state,
-                                              GimpDisplay     *gdisp);
+                                              GimpDisplay     *display);
 
 static void   gimp_blend_tool_draw           (GimpDrawTool    *draw_tool);
 
@@ -134,13 +134,13 @@ gimp_blend_tool_button_press (GimpTool        *tool,
                               GimpCoords      *coords,
                               guint32          time,
                               GdkModifierType  state,
-                              GimpDisplay     *gdisp)
+                              GimpDisplay     *display)
 {
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
   GimpDrawable  *drawable;
   gint           off_x, off_y;
 
-  drawable = gimp_image_active_drawable (gdisp->image);
+  drawable = gimp_image_active_drawable (display->image);
 
   switch (gimp_drawable_type (drawable))
     {
@@ -158,15 +158,15 @@ gimp_blend_tool_button_press (GimpTool        *tool,
   blend_tool->endx = blend_tool->startx = coords->x - off_x;
   blend_tool->endy = blend_tool->starty = coords->y - off_y;
 
-  tool->gdisp = gdisp;
+  tool->display = display;
 
   gimp_tool_control_activate (tool->control);
 
   /* initialize the statusbar display */
-  gimp_tool_push_status_coords (tool, gdisp, _("Blend: "), 0, ", ", 0);
+  gimp_tool_push_status_coords (tool, display, _("Blend: "), 0, ", ", 0);
 
   /*  Start drawing the blend tool  */
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 }
 
 static void
@@ -174,7 +174,7 @@ gimp_blend_tool_button_release (GimpTool        *tool,
                                 GimpCoords      *coords,
                                 guint32          time,
                                 GdkModifierType  state,
-                                GimpDisplay     *gdisp)
+                                GimpDisplay     *display)
 {
   GimpBlendTool    *blend_tool = GIMP_BLEND_TOOL (tool);
   GimpPaintOptions *paint_options;
@@ -186,9 +186,9 @@ gimp_blend_tool_button_release (GimpTool        *tool,
   options       = GIMP_BLEND_OPTIONS (paint_options);
   context       = GIMP_CONTEXT (options);
 
-  image = gdisp->image;
+  image = display->image;
 
-  gimp_tool_pop_status (tool, gdisp);
+  gimp_tool_pop_status (tool, display);
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
@@ -201,7 +201,7 @@ gimp_blend_tool_button_release (GimpTool        *tool,
     {
       GimpProgress *progress;
 
-      progress = gimp_progress_start (GIMP_PROGRESS (gdisp),
+      progress = gimp_progress_start (GIMP_PROGRESS (display),
                                       _("Blending"), FALSE);
 
       gimp_drawable_blend (gimp_image_active_drawable (image),
@@ -235,14 +235,14 @@ gimp_blend_tool_motion (GimpTool        *tool,
                         GimpCoords      *coords,
                         guint32          time,
                         GdkModifierType  state,
-                        GimpDisplay     *gdisp)
+                        GimpDisplay     *display)
 {
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
   gint           off_x, off_y;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (gdisp->image)),
+  gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (display->image)),
                      &off_x, &off_y);
 
   /*  Get the current coordinates  */
@@ -256,8 +256,8 @@ gimp_blend_tool_motion (GimpTool        *tool,
                                   &blend_tool->endx, &blend_tool->endy);
     }
 
-  gimp_tool_pop_status (tool, gdisp);
-  gimp_tool_push_status_coords (tool, gdisp,
+  gimp_tool_pop_status (tool, display);
+  gimp_tool_push_status_coords (tool, display,
                                 _("Blend: "),
                                 blend_tool->endx - blend_tool->startx,
                                 ", ",
@@ -270,9 +270,9 @@ static void
 gimp_blend_tool_cursor_update (GimpTool        *tool,
                                GimpCoords      *coords,
                                GdkModifierType  state,
-                               GimpDisplay     *gdisp)
+                               GimpDisplay     *display)
 {
-  switch (gimp_drawable_type (gimp_image_active_drawable (gdisp->image)))
+  switch (gimp_drawable_type (gimp_image_active_drawable (display->image)))
     {
     case GIMP_INDEXED_IMAGE:
     case GIMP_INDEXEDA_IMAGE:
@@ -283,7 +283,7 @@ gimp_blend_tool_cursor_update (GimpTool        *tool,
       break;
     }
 
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
 static void

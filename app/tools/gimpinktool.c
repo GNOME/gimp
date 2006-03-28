@@ -38,7 +38,7 @@
 static void   gimp_ink_tool_cursor_update (GimpTool        *tool,
                                            GimpCoords      *coords,
                                            GdkModifierType  state,
-                                           GimpDisplay     *gdisp);
+                                           GimpDisplay     *display);
 
 
 G_DEFINE_TYPE (GimpInkTool, gimp_ink_tool, GIMP_TYPE_PAINT_TOOL);
@@ -95,11 +95,11 @@ static void
 gimp_ink_tool_cursor_update (GimpTool         *tool,
                              GimpCoords       *coords,
                              GdkModifierType   state,
-                             GimpDisplay      *gdisp)
+                             GimpDisplay      *display)
 {
   GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
 
   paint_tool->show_cursor = TRUE;
 
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }

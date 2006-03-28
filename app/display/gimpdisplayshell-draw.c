@@ -74,8 +74,8 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
 
   gimp_display_shell_transform_xy (shell, 0, 0, &x1, &y1, FALSE);
   gimp_display_shell_transform_xy (shell,
-                                   shell->gdisp->image->width,
-                                   shell->gdisp->image->height,
+                                   shell->display->image->width,
+                                   shell->display->image->height,
                                    &x2, &y2, FALSE);
 
   gdk_drawable_get_size (shell->canvas->window, &w, &h);
@@ -118,7 +118,7 @@ gimp_display_shell_draw_guides (GimpDisplayShell *shell)
     {
       GList *list;
 
-      for (list = shell->gdisp->image->guides;
+      for (list = shell->display->image->guides;
            list;
            list = g_list_next (list))
 	{
@@ -149,7 +149,7 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
 
 #define CROSSHAIR 2
 
-      grid = GIMP_GRID (shell->gdisp->image->grid);
+      grid = GIMP_GRID (shell->display->image->grid);
       if (! grid)
         return;
 
@@ -160,8 +160,8 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
       x2 = area->x + area->width;
       y2 = area->y + area->height;
 
-      width  = shell->gdisp->image->width;
-      height = shell->gdisp->image->height;
+      width  = shell->display->image->width;
+      height = shell->display->image->height;
 
       x_offset = grid->xoffset;
       while (x_offset > 0)
@@ -407,7 +407,7 @@ gimp_display_shell_draw_sample_point (GimpDisplayShell *shell,
   gimp_canvas_draw_text (GIMP_CANVAS (shell->canvas), style,
                          x + 2, y + 2,
                          "%d",
-                         g_list_index (shell->gdisp->image->sample_points,
+                         g_list_index (shell->display->image->sample_points,
                                        sample_point) + 1);
 }
 
@@ -420,7 +420,7 @@ gimp_display_shell_draw_sample_points (GimpDisplayShell *shell)
     {
       GList *list;
 
-      for (list = shell->gdisp->image->sample_points;
+      for (list = shell->display->image->sample_points;
            list;
            list = g_list_next (list))
 	{
@@ -487,7 +487,7 @@ gimp_display_shell_draw_vectors (GimpDisplayShell *shell)
     {
       GList *list;
 
-      for (list = GIMP_LIST (shell->gdisp->image->vectors)->list;
+      for (list = GIMP_LIST (shell->display->image->vectors)->list;
            list;
            list = list->next)
 	{
@@ -524,8 +524,8 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
   /*  the image's size in display coordinates  */
   sx = shell->disp_xoffset > 0 ? shell->disp_xoffset : - shell->offset_x;
   sy = shell->disp_yoffset > 0 ? shell->disp_yoffset : - shell->offset_y;
-  sw = SCALEX (shell, shell->gdisp->image->width);
-  sh = SCALEY (shell, shell->gdisp->image->height);
+  sw = SCALEX (shell, shell->display->image->width);
+  sh = SCALEY (shell, shell->display->image->height);
 
   /*  check if the passed in area intersects with
    *  both the display and the image
@@ -572,7 +572,7 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
 
 #ifdef STRESS_TEST
               /* Invalidate the projection just after we render it! */
-              gimp_image_invalidate_without_render (shell->gdisp->image,
+              gimp_image_invalidate_without_render (shell->display->image,
                                                     j - shell->disp_xoffset,
                                                     i - shell->disp_yoffset,
                                                     dx, dy,

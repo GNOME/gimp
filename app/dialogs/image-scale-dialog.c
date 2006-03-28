@@ -91,7 +91,7 @@ image_scale_dialog_new (GimpImage                *image,
     unit = GIMP_DISPLAY_SHELL (display->shell)->unit;
 
   dialog->image   = image;
-  dialog->gdisp   = display;
+  dialog->display = display;
   dialog->context = context;
   dialog->dialog  = scale_dialog_new (GIMP_VIEWABLE (display->image),
                                       _("Scale Image"), "gimp-image-scale",

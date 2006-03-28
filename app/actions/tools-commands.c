@@ -60,7 +60,7 @@ tools_select_cmd_callback (GtkAction   *action,
   Gimp         *gimp;
   GimpToolInfo *tool_info;
   GimpContext  *context;
-  GimpDisplay  *gdisp;
+  GimpDisplay  *display;
   gboolean      rotate_layer = FALSE;
   return_if_no_gimp (gimp, data);
 
@@ -92,10 +92,10 @@ tools_select_cmd_callback (GtkAction   *action,
       gimp_context_tool_changed (context);
     }
 
-  gdisp = gimp_context_get_display (context);
+  display = gimp_context_get_display (context);
 
-  if (gdisp)
-    tool_manager_initialize_active (gimp, gdisp);
+  if (display)
+    tool_manager_initialize_active (gimp, display);
 }
 
 void

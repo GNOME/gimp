@@ -123,10 +123,10 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
   GimpDisplayConfig *display_config;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (GIMP_IS_DISPLAY (shell->gdisp));
-  g_return_if_fail (GIMP_IS_IMAGE (shell->gdisp->image));
+  g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
+  g_return_if_fail (GIMP_IS_IMAGE (shell->display->image));
 
-  image = shell->gdisp->image;
+  image = shell->display->image;
 
   display_config = GIMP_DISPLAY_CONFIG (image->gimp->config);
 
@@ -254,10 +254,10 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
   GimpDisplayConfig *display_config;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (GIMP_IS_DISPLAY (shell->gdisp));
-  g_return_if_fail (GIMP_IS_IMAGE (shell->gdisp->image));
+  g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
+  g_return_if_fail (GIMP_IS_IMAGE (shell->display->image));
 
-  image = shell->gdisp->image;
+  image = shell->display->image;
 
   display_config = GIMP_DISPLAY_CONFIG (image->gimp->config);
 
@@ -384,7 +384,7 @@ gimp_display_shell_grid_notify_handler (GimpGrid         *grid,
   gimp_display_shell_expose_full (shell);
 
   /* update item factory */
-  gimp_display_flush (shell->gdisp);
+  gimp_display_flush (shell->display);
 }
 
 static void
@@ -437,9 +437,9 @@ gimp_display_shell_quick_mask_changed_handler (GimpImage        *image,
                                    shell);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->quick_mask_button),
-                                shell->gdisp->image->quick_mask_state);
+                                shell->display->image->quick_mask_state);
 
-  if (shell->gdisp->image->quick_mask_state)
+  if (shell->display->image->quick_mask_state)
     gtk_image_set_from_stock (gtk_image, GIMP_STOCK_QUICK_MASK_ON,
                               GTK_ICON_SIZE_MENU);
   else
@@ -603,7 +603,7 @@ gimp_display_shell_padding_notify_handler (GObject          *config,
   GimpCanvasPaddingMode  padding_mode;
   GimpRGB                padding_color;
 
-  display_config = GIMP_DISPLAY_CONFIG (shell->gdisp->image->gimp->config);
+  display_config = GIMP_DISPLAY_CONFIG (shell->display->image->gimp->config);
 
   fullscreen = gimp_display_shell_get_fullscreen (shell);
 

@@ -149,13 +149,13 @@ tool_manager_select_tool (Gimp     *gimp,
 
   if (tool_manager->active_tool)
     {
-      GimpDisplay *gdisp = tool_manager->active_tool->gdisp;
+      GimpDisplay *display = tool_manager->active_tool->display;
 
-      if (! gdisp && GIMP_IS_DRAW_TOOL (tool_manager->active_tool))
-        gdisp = GIMP_DRAW_TOOL (tool_manager->active_tool)->gdisp;
+      if (! display && GIMP_IS_DRAW_TOOL (tool_manager->active_tool))
+        display = GIMP_DRAW_TOOL (tool_manager->active_tool)->display;
 
-      if (gdisp)
-        tool_manager_control_active (gimp, HALT, gdisp);
+      if (display)
+        tool_manager_control_active (gimp, HALT, display);
 
       tool_manager_focus_display_active (gimp, NULL);
 
@@ -210,13 +210,13 @@ tool_manager_pop_tool (Gimp *gimp)
 
 gboolean
 tool_manager_initialize_active (Gimp        *gimp,
-                                GimpDisplay *gdisp)
+                                GimpDisplay *display)
 {
   GimpToolManager *tool_manager;
   GimpTool        *tool;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
-  g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), FALSE);
+  g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
 
   tool_manager = tool_manager_get (gimp);
 
@@ -224,9 +224,9 @@ tool_manager_initialize_active (Gimp        *gimp,
     {
       tool = tool_manager->active_tool;
 
-      if (gimp_tool_initialize (tool, gdisp))
+      if (gimp_tool_initialize (tool, display))
         {
-          tool->drawable = gimp_image_active_drawable (gdisp->image);
+          tool->drawable = gimp_image_active_drawable (display->image);
 
           return TRUE;
         }
@@ -238,7 +238,7 @@ tool_manager_initialize_active (Gimp        *gimp,
 void
 tool_manager_control_active (Gimp           *gimp,
 			     GimpToolAction  action,
-			     GimpDisplay    *gdisp)
+			     GimpDisplay    *display)
 {
   GimpToolManager *tool_manager;
 
@@ -249,11 +249,11 @@ tool_manager_control_active (Gimp           *gimp,
   if (! tool_manager->active_tool)
     return;
 
-  if (gdisp && (tool_manager->active_tool->gdisp == gdisp ||
-                (GIMP_IS_DRAW_TOOL (tool_manager->active_tool) &&
-                 GIMP_DRAW_TOOL (tool_manager->active_tool)->gdisp == gdisp)))
+  if (display && (tool_manager->active_tool->display == display ||
+                  (GIMP_IS_DRAW_TOOL (tool_manager->active_tool) &&
+                   GIMP_DRAW_TOOL (tool_manager->active_tool)->display == display)))
     {
-      gimp_tool_control (tool_manager->active_tool, action, gdisp);
+      gimp_tool_control (tool_manager->active_tool, action, display);
     }
   else if (action == HALT)
     {
@@ -267,7 +267,7 @@ tool_manager_button_press_active (Gimp            *gimp,
                                   GimpCoords      *coords,
                                   guint32          time,
                                   GdkModifierType  state,
-                                  GimpDisplay     *gdisp)
+                                  GimpDisplay     *display)
 {
   GimpToolManager *tool_manager;
 
@@ -279,7 +279,7 @@ tool_manager_button_press_active (Gimp            *gimp,
     {
       gimp_tool_button_press (tool_manager->active_tool,
                               coords, time, state,
-                              gdisp);
+                              display);
     }
 }
 
@@ -288,7 +288,7 @@ tool_manager_button_release_active (Gimp            *gimp,
                                     GimpCoords      *coords,
                                     guint32          time,
                                     GdkModifierType  state,
-                                    GimpDisplay     *gdisp)
+                                    GimpDisplay     *display)
 {
   GimpToolManager *tool_manager;
 
@@ -300,7 +300,7 @@ tool_manager_button_release_active (Gimp            *gimp,
     {
       gimp_tool_button_release (tool_manager->active_tool,
                                 coords, time, state,
-                                gdisp);
+                                display);
     }
 }
 
@@ -309,7 +309,7 @@ tool_manager_motion_active (Gimp            *gimp,
                             GimpCoords      *coords,
                             guint32          time,
                             GdkModifierType  state,
-                            GimpDisplay     *gdisp)
+                            GimpDisplay     *display)
 {
   GimpToolManager *tool_manager;
 
@@ -321,14 +321,14 @@ tool_manager_motion_active (Gimp            *gimp,
     {
       gimp_tool_motion (tool_manager->active_tool,
                         coords, time, state,
-                        gdisp);
+                        display);
     }
 }
 
 gboolean
 tool_manager_key_press_active (Gimp        *gimp,
                                GdkEventKey *kevent,
-                               GimpDisplay *gdisp)
+                               GimpDisplay *display)
 {
   GimpToolManager *tool_manager;
 
@@ -340,7 +340,7 @@ tool_manager_key_press_active (Gimp        *gimp,
     {
       return gimp_tool_key_press (tool_manager->active_tool,
                                   kevent,
-                                  gdisp);
+                                  display);
     }
 
   return FALSE;
@@ -348,7 +348,7 @@ tool_manager_key_press_active (Gimp        *gimp,
 
 void
 tool_manager_focus_display_active (Gimp        *gimp,
-                                   GimpDisplay *gdisp)
+                                   GimpDisplay *display)
 {
   GimpToolManager *tool_manager;
 
@@ -359,14 +359,14 @@ tool_manager_focus_display_active (Gimp        *gimp,
   if (tool_manager->active_tool)
     {
       gimp_tool_set_focus_display (tool_manager->active_tool,
-                                   gdisp);
+                                   display);
     }
 }
 
 void
 tool_manager_modifier_state_active (Gimp            *gimp,
                                     GdkModifierType  state,
-                                    GimpDisplay     *gdisp)
+                                    GimpDisplay     *display)
 {
   GimpToolManager *tool_manager;
 
@@ -378,7 +378,7 @@ tool_manager_modifier_state_active (Gimp            *gimp,
     {
       gimp_tool_set_modifier_state (tool_manager->active_tool,
                                     state,
-                                    gdisp);
+                                    display);
     }
 }
 
@@ -387,7 +387,7 @@ tool_manager_oper_update_active (Gimp            *gimp,
                                  GimpCoords      *coords,
                                  GdkModifierType  state,
                                  gboolean         proximity,
-                                 GimpDisplay     *gdisp)
+                                 GimpDisplay     *display)
 {
   GimpToolManager *tool_manager;
 
@@ -399,7 +399,7 @@ tool_manager_oper_update_active (Gimp            *gimp,
     {
       gimp_tool_oper_update (tool_manager->active_tool,
                              coords, state, proximity,
-                             gdisp);
+                             display);
     }
 }
 
@@ -407,7 +407,7 @@ void
 tool_manager_cursor_update_active (Gimp            *gimp,
                                    GimpCoords      *coords,
                                    GdkModifierType  state,
-                                   GimpDisplay     *gdisp)
+                                   GimpDisplay     *display)
 {
   GimpToolManager *tool_manager;
 
@@ -419,7 +419,7 @@ tool_manager_cursor_update_active (Gimp            *gimp,
     {
       gimp_tool_cursor_update (tool_manager->active_tool,
                                coords, state,
-                               gdisp);
+                               display);
     }
 }
 
@@ -552,13 +552,13 @@ tool_manager_image_clean_dirty (GimpImage       *image,
       ! gimp_tool_control_get_preserve (active_tool->control) &&
       (gimp_tool_control_get_dirty_mask (active_tool->control) & dirty_mask))
     {
-      GimpDisplay *gdisp = active_tool->gdisp;
+      GimpDisplay *display = active_tool->display;
 
-      if (! gdisp || gdisp->image != image)
+      if (! display || display->image != image)
         if (GIMP_IS_DRAW_TOOL (active_tool))
-          gdisp = GIMP_DRAW_TOOL (active_tool)->gdisp;
+          display = GIMP_DRAW_TOOL (active_tool)->display;
 
-      if (gdisp && gdisp->image == image)
+      if (display && display->image == image)
         gimp_context_tool_changed (gimp_get_user_context (image->gimp));
     }
 }

@@ -49,16 +49,16 @@ static void          gimp_flip_tool_modifier_key  (GimpTool          *tool,
                                                    GdkModifierType    key,
                                                    gboolean           press,
                                                    GdkModifierType    state,
-                                                   GimpDisplay       *gdisp);
+                                                   GimpDisplay       *display);
 static void          gimp_flip_tool_cursor_update (GimpTool          *tool,
                                                    GimpCoords        *coords,
                                                    GdkModifierType    state,
-                                                   GimpDisplay       *gdisp);
+                                                   GimpDisplay       *display);
 
 static TileManager * gimp_flip_tool_transform     (GimpTransformTool *tool,
                                                    GimpItem          *item,
                                                    gboolean           mask_empty,
-                                                   GimpDisplay       *gdisp);
+                                                   GimpDisplay       *display);
 
 
 G_DEFINE_TYPE (GimpFlipTool, gimp_flip_tool, GIMP_TYPE_TRANSFORM_TOOL);
@@ -115,7 +115,7 @@ gimp_flip_tool_modifier_key (GimpTool        *tool,
                              GdkModifierType  key,
                              gboolean         press,
                              GdkModifierType  state,
-                             GimpDisplay     *gdisp)
+                             GimpDisplay     *display)
 {
   GimpFlipOptions *options = GIMP_FLIP_OPTIONS (tool->tool_info->tool_options);
 
@@ -145,16 +145,16 @@ static void
 gimp_flip_tool_cursor_update (GimpTool        *tool,
                               GimpCoords      *coords,
                               GdkModifierType  state,
-                              GimpDisplay     *gdisp)
+                              GimpDisplay     *display)
 {
   GimpFlipOptions *options;
   gboolean         bad_cursor = TRUE;
 
   options = GIMP_FLIP_OPTIONS (tool->tool_info->tool_options);
 
-  if (gimp_image_coords_in_active_drawable (gdisp->image, coords))
+  if (gimp_image_coords_in_active_drawable (display->image, coords))
     {
-      GimpChannel *selection = gimp_image_get_mask (gdisp->image);
+      GimpChannel *selection = gimp_image_get_mask (display->image);
 
       /*  Is there a selected region? If so, is cursor inside? */
       if (gimp_channel_is_empty (selection) ||
@@ -179,14 +179,14 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
   gimp_tool_control_set_toggled (tool->control,
                                  options->flip_type == GIMP_ORIENTATION_VERTICAL);
 
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
 static TileManager *
 gimp_flip_tool_transform (GimpTransformTool *trans_tool,
                           GimpItem          *active_item,
                           gboolean           mask_empty,
-                          GimpDisplay       *gdisp)
+                          GimpDisplay       *display)
 {
   GimpTransformOptions *tr_options;
   GimpFlipOptions      *options;

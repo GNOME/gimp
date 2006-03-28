@@ -42,11 +42,11 @@ static void   gimp_eraser_tool_modifier_key  (GimpTool        *tool,
                                               GdkModifierType  key,
                                               gboolean         press,
                                               GdkModifierType  state,
-                                              GimpDisplay     *gdisp);
+                                              GimpDisplay     *display);
 static void   gimp_eraser_tool_cursor_update (GimpTool        *tool,
                                               GimpCoords      *coords,
                                               GdkModifierType  state,
-                                              GimpDisplay     *gdisp);
+                                              GimpDisplay     *display);
 
 static GtkWidget * gimp_eraser_options_gui   (GimpToolOptions *tool_options);
 
@@ -101,7 +101,7 @@ gimp_eraser_tool_modifier_key (GimpTool        *tool,
                                GdkModifierType  key,
                                gboolean         press,
                                GdkModifierType  state,
-                               GimpDisplay     *gdisp)
+                               GimpDisplay     *display)
 {
   if (key == GDK_MOD1_MASK)
     {
@@ -114,14 +114,14 @@ gimp_eraser_tool_modifier_key (GimpTool        *tool,
                     NULL);
     }
 
-  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state, display);
 }
 
 static void
 gimp_eraser_tool_cursor_update (GimpTool        *tool,
                                 GimpCoords      *coords,
                                 GdkModifierType  state,
-                                GimpDisplay     *gdisp)
+                                GimpDisplay     *display)
 {
   GimpEraserOptions *options;
 
@@ -129,7 +129,7 @@ gimp_eraser_tool_cursor_update (GimpTool        *tool,
 
   gimp_tool_control_set_toggled (tool->control, options->anti_erase);
 
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
 

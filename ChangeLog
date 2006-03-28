@@ -1,5 +1,9 @@
 2006-03-28  Sven Neumann  <sven@gimp.org>
 
+	* app/*: did a global gdisp -> display substitution.
+
+2006-03-28  Sven Neumann  <sven@gimp.org>
+
 	* app/*
 	* plug-ins/common/psd.c
 	* plug-ins/rcm/rcm_misc.c: did a global gimage -> image substitution.

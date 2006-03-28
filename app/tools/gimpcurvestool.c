@@ -73,20 +73,20 @@
 static void     gimp_curves_tool_finalize       (GObject          *object);
 
 static gboolean gimp_curves_tool_initialize     (GimpTool         *tool,
-                                                 GimpDisplay      *gdisp);
+                                                 GimpDisplay      *display);
 static void     gimp_curves_tool_button_release (GimpTool         *tool,
                                                  GimpCoords       *coords,
                                                  guint32           time,
                                                  GdkModifierType   state,
-                                                 GimpDisplay      *gdisp);
+                                                 GimpDisplay      *display);
 static gboolean gimp_curves_tool_key_press      (GimpTool         *tool,
                                                  GdkEventKey      *kevent,
-                                                 GimpDisplay      *gdisp);
+                                                 GimpDisplay      *display);
 static void     gimp_curves_tool_oper_update    (GimpTool         *tool,
                                                  GimpCoords       *coords,
                                                  GdkModifierType   state,
                                                  gboolean          proximity,
-                                                 GimpDisplay      *gdisp);
+                                                 GimpDisplay      *display);
 
 static void     gimp_curves_tool_color_picked   (GimpColorTool    *color_tool,
                                                  GimpColorPickState pick_state,
@@ -238,12 +238,12 @@ gimp_curves_tool_finalize (GObject *object)
 
 static gboolean
 gimp_curves_tool_initialize (GimpTool    *tool,
-                             GimpDisplay *gdisp)
+                             GimpDisplay *display)
 {
   GimpCurvesTool *c_tool = GIMP_CURVES_TOOL (tool);
   GimpDrawable   *drawable;
 
-  drawable = gimp_image_active_drawable (gdisp->image);
+  drawable = gimp_image_active_drawable (display->image);
 
   if (! drawable)
     return FALSE;
@@ -267,7 +267,7 @@ gimp_curves_tool_initialize (GimpTool    *tool,
   c_tool->grabbed  = FALSE;
   c_tool->last     = 0;
 
-  GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display);
 
   /*  always pick colors  */
   gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
@@ -297,12 +297,12 @@ gimp_curves_tool_button_release (GimpTool        *tool,
                                  GimpCoords      *coords,
                                  guint32          time,
                                  GdkModifierType  state,
-                                 GimpDisplay     *gdisp)
+                                 GimpDisplay     *display)
 {
   GimpCurvesTool *c_tool = GIMP_CURVES_TOOL (tool);
   GimpDrawable   *drawable;
 
-  drawable = gimp_image_active_drawable (gdisp->image);
+  drawable = gimp_image_active_drawable (display->image);
 
   if (state & GDK_SHIFT_MASK)
     {
@@ -325,13 +325,13 @@ gimp_curves_tool_button_release (GimpTool        *tool,
 
   /*  chain up to halt the tool */
   GIMP_TOOL_CLASS (parent_class)->button_release (tool,
-                                                  coords, time, state, gdisp);
+                                                  coords, time, state, display);
 }
 
 gboolean
 gimp_curves_tool_key_press (GimpTool    *tool,
                             GdkEventKey *kevent,
-                            GimpDisplay *gdisp)
+                            GimpDisplay *display)
 {
   return curves_key_press (GIMP_CURVES_TOOL (tool), kevent);
 }
@@ -341,15 +341,15 @@ gimp_curves_tool_oper_update (GimpTool        *tool,
                               GimpCoords      *coords,
                               GdkModifierType  state,
                               gboolean         proximity,
-                              GimpDisplay     *gdisp)
+                              GimpDisplay     *display)
 {
   GimpColorPickMode  mode   = GIMP_COLOR_PICK_MODE_NONE;
   const gchar       *status = NULL;
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
-                                               gdisp);
+                                               display);
 
-  gimp_tool_pop_status (tool, gdisp);
+  gimp_tool_pop_status (tool, display);
 
   if (state & GDK_SHIFT_MASK)
     {
@@ -365,7 +365,7 @@ gimp_curves_tool_oper_update (GimpTool        *tool,
   GIMP_COLOR_TOOL (tool)->pick_mode = mode;
 
   if (status && proximity)
-    gimp_tool_push_status (tool, gdisp, status);
+    gimp_tool_push_status (tool, display, status);
 }
 
 static void

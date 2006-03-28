@@ -129,22 +129,22 @@ void
 select_feather_cmd_callback (GtkAction *action,
                              gpointer   data)
 {
-  GimpDisplay *gdisp;
+  GimpDisplay *display;
   GtkWidget   *dialog;
-  return_if_no_display (gdisp, data);
+  return_if_no_display (display, data);
 
   dialog = gimp_query_size_box (_("Feather Selection"),
-                                gdisp->shell,
+                                display->shell,
                                 gimp_standard_help_func,
                                 GIMP_HELP_SELECTION_FEATHER,
                                 _("Feather selection by"),
                                 select_feather_radius, 0, 32767, 3,
-                                GIMP_DISPLAY_SHELL (gdisp->shell)->unit,
-                                MIN (gdisp->image->xresolution,
-                                     gdisp->image->yresolution),
+                                GIMP_DISPLAY_SHELL (display->shell)->unit,
+                                MIN (display->image->xresolution,
+                                     display->image->yresolution),
                                 FALSE,
-                                G_OBJECT (gdisp->image), "disconnect",
-                                select_feather_callback, gdisp->image);
+                                G_OBJECT (display->image), "disconnect",
+                                select_feather_callback, display->image);
   gtk_widget_show (dialog);
 }
 
@@ -163,23 +163,23 @@ void
 select_shrink_cmd_callback (GtkAction *action,
                             gpointer   data)
 {
-  GimpDisplay *gdisp;
+  GimpDisplay *display;
   GtkWidget   *dialog;
   GtkWidget   *edge_lock;
-  return_if_no_display (gdisp, data);
+  return_if_no_display (display, data);
 
   dialog = gimp_query_size_box (_("Shrink Selection"),
-                                gdisp->shell,
+                                display->shell,
                                 gimp_standard_help_func,
                                 GIMP_HELP_SELECTION_SHRINK,
                                 _("Shrink selection by"),
                                 select_shrink_pixels, 1, 32767, 0,
-                                GIMP_DISPLAY_SHELL (gdisp->shell)->unit,
-                                MIN (gdisp->image->xresolution,
-                                     gdisp->image->yresolution),
+                                GIMP_DISPLAY_SHELL (display->shell)->unit,
+                                MIN (display->image->xresolution,
+                                     display->image->yresolution),
                                 FALSE,
-                                G_OBJECT (gdisp->image), "disconnect",
-                                select_shrink_callback, gdisp->image);
+                                G_OBJECT (display->image), "disconnect",
+                                select_shrink_callback, display->image);
 
   edge_lock = gtk_check_button_new_with_label (_("Shrink from image border"));
 
@@ -198,22 +198,22 @@ void
 select_grow_cmd_callback (GtkAction *action,
                           gpointer   data)
 {
-  GimpDisplay *gdisp;
+  GimpDisplay *display;
   GtkWidget   *dialog;
-  return_if_no_display (gdisp, data);
+  return_if_no_display (display, data);
 
   dialog = gimp_query_size_box (_("Grow Selection"),
-                                gdisp->shell,
+                                display->shell,
                                 gimp_standard_help_func,
                                 GIMP_HELP_SELECTION_GROW,
                                 _("Grow selection by"),
                                 select_grow_pixels, 1, 32767, 0,
-                                GIMP_DISPLAY_SHELL (gdisp->shell)->unit,
-                                MIN (gdisp->image->xresolution,
-                                     gdisp->image->yresolution),
+                                GIMP_DISPLAY_SHELL (display->shell)->unit,
+                                MIN (display->image->xresolution,
+                                     display->image->yresolution),
                                 FALSE,
-                                G_OBJECT (gdisp->image), "disconnect",
-                                select_grow_callback, gdisp->image);
+                                G_OBJECT (display->image), "disconnect",
+                                select_grow_callback, display->image);
   gtk_widget_show (dialog);
 }
 
@@ -221,22 +221,22 @@ void
 select_border_cmd_callback (GtkAction *action,
                             gpointer   data)
 {
-  GimpDisplay *gdisp;
+  GimpDisplay *display;
   GtkWidget   *dialog;
-  return_if_no_display (gdisp, data);
+  return_if_no_display (display, data);
 
   dialog = gimp_query_size_box (_("Border Selection"),
-                                gdisp->shell,
+                                display->shell,
                                 gimp_standard_help_func,
                                 GIMP_HELP_SELECTION_BORDER,
                                 _("Border selection by"),
                                 select_border_radius, 1, 32767, 0,
-                                GIMP_DISPLAY_SHELL (gdisp->shell)->unit,
-                                MIN (gdisp->image->xresolution,
-                                     gdisp->image->yresolution),
+                                GIMP_DISPLAY_SHELL (display->shell)->unit,
+                                MIN (display->image->xresolution,
+                                     display->image->yresolution),
                                 FALSE,
-                                G_OBJECT (gdisp->image), "disconnect",
-                                select_border_callback, gdisp->image);
+                                G_OBJECT (display->image), "disconnect",
+                                select_border_callback, display->image);
   gtk_widget_show (dialog);
 }
 

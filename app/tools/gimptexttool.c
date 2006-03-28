@@ -79,16 +79,16 @@ static void      gimp_text_tool_finalize       (GObject           *object);
 
 static void      gimp_text_tool_control        (GimpTool          *tool,
                                                 GimpToolAction     action,
-                                                GimpDisplay       *gdisp);
+                                                GimpDisplay       *display);
 static void      gimp_text_tool_button_press   (GimpTool          *tool,
                                                 GimpCoords        *coords,
                                                 guint32            time,
                                                 GdkModifierType    state,
-                                                GimpDisplay       *gdisp);
+                                                GimpDisplay       *display);
 static void      gimp_text_tool_cursor_update  (GimpTool          *tool,
                                                 GimpCoords        *coords,
                                                 GdkModifierType    state,
-                                                GimpDisplay       *gdisp);
+                                                GimpDisplay       *display);
 
 static void      gimp_text_tool_connect        (GimpTextTool      *text_tool,
                                                 GimpTextLayer     *layer,
@@ -235,7 +235,7 @@ gimp_text_tool_finalize (GObject *object)
 static void
 gimp_text_tool_control (GimpTool       *tool,
 			GimpToolAction  action,
-			GimpDisplay    *gdisp)
+			GimpDisplay    *display)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
 
@@ -250,7 +250,7 @@ gimp_text_tool_control (GimpTool       *tool,
       break;
     }
 
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void
@@ -258,19 +258,19 @@ gimp_text_tool_button_press (GimpTool        *tool,
 			     GimpCoords      *coords,
 			     guint32          time,
 			     GdkModifierType  state,
-			     GimpDisplay     *gdisp)
+			     GimpDisplay     *display)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
   GimpText     *text      = text_tool->text;
   GimpDrawable *drawable;
 
   gimp_tool_control_activate (tool->control);
-  tool->gdisp = gdisp;
+  tool->display = display;
 
   text_tool->x1 = coords->x;
   text_tool->y1 = coords->y;
 
-  drawable = gimp_image_active_drawable (gdisp->image);
+  drawable = gimp_image_active_drawable (display->image);
 
   gimp_text_tool_set_drawable (text_tool, drawable, FALSE);
 
@@ -305,11 +305,11 @@ static void
 gimp_text_tool_cursor_update (GimpTool        *tool,
 			      GimpCoords      *coords,
 			      GdkModifierType  state,
-			      GimpDisplay     *gdisp)
+			      GimpDisplay     *display)
 {
   /* FIXME: should do something fancy here... */
 
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
 static void
@@ -698,7 +698,7 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
       text = gimp_config_duplicate (GIMP_CONFIG (text_tool->proxy));
     }
 
-  image = tool->gdisp->image;
+  image = tool->display->image;
   layer = gimp_text_layer_new (image, text);
 
   g_object_unref (text);
@@ -868,7 +868,7 @@ gimp_text_tool_confirm_dialog (GimpTextTool *text_tool)
                                      "gimp-text-tool-confirm",
                                      GIMP_STOCK_TEXT_LAYER,
                                      _("Confirm Text Editing"),
-                                     tool->gdisp->shell,
+                                     tool->display->shell,
                                      gimp_standard_help_func,
                                      tool->tool_info->help_id,
 

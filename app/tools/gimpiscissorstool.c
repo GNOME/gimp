@@ -126,38 +126,38 @@ static void   gimp_iscissors_tool_finalize       (GObject           *object);
 
 static void   gimp_iscissors_tool_control        (GimpTool          *tool,
                                                   GimpToolAction     action,
-                                                  GimpDisplay       *gdisp);
+                                                  GimpDisplay       *display);
 static void   gimp_iscissors_tool_button_press   (GimpTool          *tool,
                                                   GimpCoords        *coords,
                                                   guint32            time,
                                                   GdkModifierType    state,
-                                                  GimpDisplay       *gdisp);
+                                                  GimpDisplay       *display);
 static void   gimp_iscissors_tool_button_release (GimpTool          *tool,
                                                   GimpCoords        *coords,
                                                   guint32            time,
                                                   GdkModifierType    state,
-                                                  GimpDisplay       *gdisp);
+                                                  GimpDisplay       *display);
 static void   gimp_iscissors_tool_motion         (GimpTool          *tool,
                                                   GimpCoords        *coords,
                                                   guint32            time,
                                                   GdkModifierType    state,
-                                                  GimpDisplay       *gdisp);
+                                                  GimpDisplay       *display);
 static void   gimp_iscissors_tool_oper_update    (GimpTool          *tool,
                                                   GimpCoords        *coords,
                                                   GdkModifierType    state,
                                                   gboolean           proximity,
-                                                  GimpDisplay       *gdisp);
+                                                  GimpDisplay       *display);
 static void   gimp_iscissors_tool_cursor_update  (GimpTool          *tool,
                                                   GimpCoords        *coords,
                                                   GdkModifierType    state,
-                                                  GimpDisplay       *gdisp);
+                                                  GimpDisplay       *display);
 
 static void   gimp_iscissors_tool_reset          (GimpIscissorsTool *iscissors);
 static void   gimp_iscissors_tool_draw           (GimpDrawTool      *draw_tool);
 
 
 static void          iscissors_convert         (GimpIscissorsTool *iscissors,
-                                                GimpDisplay       *gdisp);
+                                                GimpDisplay       *display);
 static TileManager * gradient_map_new          (GimpImage         *image);
 
 static void          find_optimal_path         (TileManager       *gradient_map,
@@ -339,7 +339,7 @@ gimp_iscissors_tool_finalize (GObject *object)
 static void
 gimp_iscissors_tool_control (GimpTool       *tool,
                              GimpToolAction  action,
-                             GimpDisplay    *gdisp)
+                             GimpDisplay    *display)
 {
   GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (tool);
   IscissorsDraw      draw;
@@ -361,7 +361,7 @@ gimp_iscissors_tool_control (GimpTool       *tool,
 
   iscissors->draw = draw;
 
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 
   switch (action)
     {
@@ -385,7 +385,7 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
                                   GimpCoords      *coords,
                                   guint32          time,
                                   GdkModifierType  state,
-                                  GimpDisplay     *gdisp)
+                                  GimpDisplay     *display)
 {
   GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (tool);
   GimpSelectionOptions *options;
@@ -399,7 +399,7 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
 
   if (gimp_tool_control_is_active (tool->control))
     {
-      if (gdisp != tool->gdisp)
+      if (display != tool->display)
         {
           gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
           gimp_iscissors_tool_reset (iscissors);
@@ -411,7 +411,7 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
       gimp_tool_control_activate (tool->control);
     }
 
-  tool->gdisp = gdisp;
+  tool->display = display;
 
   switch (iscissors->state)
     {
@@ -421,18 +421,18 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
 
       if (! (state & GDK_SHIFT_MASK))
 	find_max_gradient (iscissors,
-                           gdisp->image,
+                           display->image,
 			   &iscissors->x,
                            &iscissors->y);
 
-      iscissors->x = CLAMP (iscissors->x, 0, gdisp->image->width - 1);
-      iscissors->y = CLAMP (iscissors->y, 0, gdisp->image->height - 1);
+      iscissors->x = CLAMP (iscissors->x, 0, display->image->width - 1);
+      iscissors->y = CLAMP (iscissors->y, 0, display->image->height - 1);
 
       iscissors->ix = iscissors->x;
       iscissors->iy = iscissors->y;
 
       /*  Initialize the selection core only on starting the tool  */
-      gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
+      gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
       break;
 
     default:
@@ -458,7 +458,7 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
 	  iscissors->draw = DRAW_CURVE;
 	  gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
-          gimp_channel_select_channel (gimp_image_get_mask (gdisp->image),
+          gimp_channel_select_channel (gimp_image_get_mask (display->image),
                                        tool->tool_info->blurb,
                                        iscissors->mask,
                                        0, 0,
@@ -469,7 +469,7 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
 
 	  gimp_iscissors_tool_reset (iscissors);
 
-	  gimp_image_flush (gdisp->image);
+	  gimp_image_flush (display->image);
 	}
       else if (! iscissors->connected)
 	{
@@ -494,7 +494,7 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
 
 static void
 iscissors_convert (GimpIscissorsTool *iscissors,
-		   GimpDisplay       *gdisp)
+		   GimpDisplay       *display)
 {
   GimpSelectionOptions *options;
   GimpScanConvert      *sc;
@@ -536,9 +536,9 @@ iscissors_convert (GimpIscissorsTool *iscissors,
   if (iscissors->mask)
     g_object_unref (iscissors->mask);
 
-  iscissors->mask = gimp_channel_new_mask (gdisp->image,
-                                           gdisp->image->width,
-                                           gdisp->image->height);
+  iscissors->mask = gimp_channel_new_mask (display->image,
+                                           display->image->width,
+                                           display->image->height);
   gimp_scan_convert_render (sc, GIMP_DRAWABLE (iscissors->mask)->tiles,
                             0, 0, options->antialias);
   gimp_scan_convert_free (sc);
@@ -549,7 +549,7 @@ gimp_iscissors_tool_button_release (GimpTool        *tool,
                                     GimpCoords      *coords,
                                     guint32          time,
                                     GdkModifierType  state,
-                                    GimpDisplay     *gdisp)
+                                    GimpDisplay     *display)
 {
   GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (tool);
   GimpSelectionOptions *options;
@@ -595,7 +595,7 @@ gimp_iscissors_tool_button_release (GimpTool        *tool,
 		{
 		  curve = (ICurve *) iscissors->curves->data;
 
-		  if (gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (tool), gdisp,
+		  if (gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (tool), display,
                                                 iscissors->x, iscissors->y,
                                                 GIMP_HANDLE_CIRCLE,
                                                 curve->x1, curve->y1,
@@ -659,7 +659,7 @@ gimp_iscissors_tool_button_release (GimpTool        *tool,
 
   /*  convert the curves into a region  */
   if (iscissors->connected)
-    iscissors_convert (iscissors, gdisp);
+    iscissors_convert (iscissors, display);
 }
 
 static void
@@ -667,7 +667,7 @@ gimp_iscissors_tool_motion (GimpTool        *tool,
                             GimpCoords      *coords,
                             guint32          time,
                             GdkModifierType  state,
-                            GimpDisplay     *gdisp)
+                            GimpDisplay     *display)
 {
   GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (tool);
   GimpSelectionOptions *options;
@@ -699,11 +699,11 @@ gimp_iscissors_tool_motion (GimpTool        *tool,
     case SEED_PLACEMENT:
       /*  Hold the shift key down to disable the auto-edge snap feature  */
       if (! (state & GDK_SHIFT_MASK))
-	find_max_gradient (iscissors, gdisp->image,
+	find_max_gradient (iscissors, display->image,
 			   &iscissors->x, &iscissors->y);
 
-      iscissors->x = CLAMP (iscissors->x, 0, gdisp->image->width  - 1);
-      iscissors->y = CLAMP (iscissors->y, 0, gdisp->image->height - 1);
+      iscissors->x = CLAMP (iscissors->x, 0, display->image->width  - 1);
+      iscissors->y = CLAMP (iscissors->y, 0, display->image->height - 1);
 
       if (iscissors->first_point)
 	{
@@ -715,11 +715,11 @@ gimp_iscissors_tool_motion (GimpTool        *tool,
     case SEED_ADJUSTMENT:
       /*  Move the current seed to the location of the cursor  */
       if (! (state & GDK_SHIFT_MASK))
-	find_max_gradient (iscissors, gdisp->image,
+	find_max_gradient (iscissors, display->image,
 			   &iscissors->x, &iscissors->y);
 
-      iscissors->x = CLAMP (iscissors->x, 0, gdisp->image->width  - 1);
-      iscissors->y = CLAMP (iscissors->y, 0, gdisp->image->height - 1);
+      iscissors->x = CLAMP (iscissors->x, 0, display->image->width  - 1);
+      iscissors->y = CLAMP (iscissors->y, 0, display->image->height - 1);
 
       iscissors->nx = iscissors->x;
       iscissors->ny = iscissors->y;
@@ -737,11 +737,11 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpTool          *tool      = GIMP_TOOL (draw_tool);
   GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (draw_tool);
-  GimpDisplay       *gdisp;
+  GimpDisplay       *display;
   ICurve            *curve;
   GSList            *list;
 
-  gdisp = tool->gdisp;
+  display = tool->display;
 
   /*  Draw the crosshairs target if we're placing a seed  */
   if (iscissors->draw & DRAW_CURRENT_SEED)
@@ -933,12 +933,12 @@ gimp_iscissors_tool_oper_update (GimpTool        *tool,
                                  GimpCoords      *coords,
                                  GdkModifierType  state,
                                  gboolean         proximity,
-                                 GimpDisplay     *gdisp)
+                                 GimpDisplay     *display)
 {
   GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (tool);
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
-                                               gdisp);
+                                               display);
 
   if (mouse_over_vertex (iscissors, coords->x, coords->y))
     {
@@ -981,7 +981,7 @@ static void
 gimp_iscissors_tool_cursor_update (GimpTool        *tool,
                                    GimpCoords      *coords,
                                    GdkModifierType  state,
-                                   GimpDisplay     *gdisp)
+                                   GimpDisplay     *display)
 {
   GimpIscissorsTool  *iscissors = GIMP_ISCISSORS_TOOL (tool);
   GimpCursorType      cursor    = GIMP_CURSOR_MOUSE;
@@ -990,7 +990,7 @@ gimp_iscissors_tool_cursor_update (GimpTool        *tool,
   switch (iscissors->op)
     {
     case ISCISSORS_OP_SELECT:
-      GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
+      GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
       return;
     case ISCISSORS_OP_MOVE_POINT:
       modifier = GIMP_CURSOR_MODIFIER_MOVE;
@@ -1005,7 +1005,7 @@ gimp_iscissors_tool_cursor_update (GimpTool        *tool,
       break;
     }
 
-  gimp_tool_set_cursor (tool, gdisp,
+  gimp_tool_set_cursor (tool, display,
                         cursor, GIMP_TOOL_CURSOR_ISCISSORS, modifier);
 }
 
@@ -1115,7 +1115,7 @@ mouse_over_vertex (GimpIscissorsTool *iscissors,
       curve = (ICurve *) list->data;
 
       if (gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (iscissors),
-                                    GIMP_TOOL (iscissors)->gdisp,
+                                    GIMP_TOOL (iscissors)->display,
                                     x, y,
                                     GIMP_HANDLE_CIRCLE,
                                     curve->x1, curve->y1,
@@ -1129,7 +1129,7 @@ mouse_over_vertex (GimpIscissorsTool *iscissors,
 	    return curves_found;
 	}
       else if (gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (iscissors),
-                                         GIMP_TOOL (iscissors)->gdisp,
+                                         GIMP_TOOL (iscissors)->display,
                                          x, y,
                                          GIMP_HANDLE_CIRCLE,
                                          curve->x2, curve->y2,
@@ -1208,7 +1208,7 @@ mouse_over_curve (GimpIscissorsTool *iscissors,
 
 	  /*  Is the specified point close enough to the curve?  */
 	  if (gimp_draw_tool_in_radius (GIMP_DRAW_TOOL (iscissors),
-                                        GIMP_TOOL (iscissors)->gdisp,
+                                        GIMP_TOOL (iscissors)->display,
                                         tx, ty,
                                         x, y,
                                         POINT_HALFWIDTH))
@@ -1304,7 +1304,7 @@ calculate_curve (GimpTool *tool,
 		 ICurve   *curve)
 {
   GimpIscissorsTool *iscissors;
-  GimpDisplay       *gdisp;
+  GimpDisplay       *display;
   gint               x, y, dir;
   gint               xs, ys, xe, ye;
   gint               x1, y1, x2, y2;
@@ -1323,13 +1323,13 @@ calculate_curve (GimpTool *tool,
 
   iscissors = GIMP_ISCISSORS_TOOL (tool);
 
-  gdisp = tool->gdisp;
+  display = tool->display;
 
   /*  Get the bounding box  */
-  xs = CLAMP (curve->x1, 0, gdisp->image->width - 1);
-  ys = CLAMP (curve->y1, 0, gdisp->image->height - 1);
-  xe = CLAMP (curve->x2, 0, gdisp->image->width - 1);
-  ye = CLAMP (curve->y2, 0, gdisp->image->height - 1);
+  xs = CLAMP (curve->x1, 0, display->image->width - 1);
+  ys = CLAMP (curve->y1, 0, display->image->height - 1);
+  xe = CLAMP (curve->x2, 0, display->image->width - 1);
+  ye = CLAMP (curve->y2, 0, display->image->height - 1);
   x1 = MIN (xs, xe);
   y1 = MIN (ys, ye);
   x2 = MAX (xs, xe) + 1;  /*  +1 because if xe = 199 & xs = 0, x2 - x1, width = 200  */
@@ -1346,11 +1346,11 @@ calculate_curve (GimpTool *tool,
   eheight = (y2 - y1) * EXTEND_BY + FIXED;
 
   if (xe >= xs)
-    x2 += CLAMP (ewidth, 0, gdisp->image->width - x2);
+    x2 += CLAMP (ewidth, 0, display->image->width - x2);
   else
     x1 -= CLAMP (ewidth, 0, x1);
   if (ye >= ys)
-    y2 += CLAMP (eheight, 0, gdisp->image->height - y2);
+    y2 += CLAMP (eheight, 0, display->image->height - y2);
   else
     y1 -= CLAMP (eheight, 0, y1);
 
@@ -1370,7 +1370,7 @@ calculate_curve (GimpTool *tool,
       /* Initialise the gradient map tile manager for this image if we
        * don't already have one. */
       if (!iscissors->gradient_map)
-	  iscissors->gradient_map = gradient_map_new (gdisp->image);
+	  iscissors->gradient_map = gradient_map_new (display->image);
 
       /*  allocate the dynamic programming array  */
       iscissors->dp_buf =

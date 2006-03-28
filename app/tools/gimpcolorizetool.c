@@ -59,7 +59,7 @@
 static void     gimp_colorize_tool_finalize    (GObject          *object);
 
 static gboolean gimp_colorize_tool_initialize  (GimpTool         *tool,
-                                                GimpDisplay      *gdisp);
+                                                GimpDisplay      *display);
 
 static void     gimp_colorize_tool_map         (GimpImageMapTool *im_tool);
 static void     gimp_colorize_tool_dialog      (GimpImageMapTool *im_tool);
@@ -138,12 +138,12 @@ gimp_colorize_tool_finalize (GObject *object)
 
 static gboolean
 gimp_colorize_tool_initialize (GimpTool    *tool,
-                               GimpDisplay *gdisp)
+                               GimpDisplay *display)
 {
   GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (tool);
   GimpDrawable     *drawable;
 
-  drawable = gimp_image_active_drawable (gdisp->image);
+  drawable = gimp_image_active_drawable (display->image);
 
   if (! drawable)
     return FALSE;
@@ -156,7 +156,7 @@ gimp_colorize_tool_initialize (GimpTool    *tool,
 
   colorize_init (col_tool->colorize);
 
-  GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display);
 
   colorize_update (col_tool, ALL);
 

@@ -329,15 +329,15 @@ static void
 documents_raise_display (gpointer data,
                          gpointer user_data)
 {
-  GimpDisplay  *gdisp   = data;
+  GimpDisplay  *display = data;
   RaiseClosure *closure = user_data;
   const gchar  *uri;
 
-  uri = gimp_object_get_name (GIMP_OBJECT (gdisp->image));
+  uri = gimp_object_get_name (GIMP_OBJECT (display->image));
 
   if (uri && ! strcmp (closure->name, uri))
     {
       closure->found = TRUE;
-      gtk_window_present (GTK_WINDOW (gdisp->shell));
+      gtk_window_present (GTK_WINDOW (display->shell));
     }
 }

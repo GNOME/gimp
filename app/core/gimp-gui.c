@@ -188,14 +188,14 @@ gimp_get_program_class (Gimp *gimp)
 
 gchar *
 gimp_get_display_name (Gimp *gimp,
-                       gint  gdisp_ID,
+                       gint  display_ID,
                        gint *monitor_number)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (monitor_number != NULL, NULL);
 
   if (gimp->gui.get_display_name)
-    return gimp->gui.get_display_name (gimp, gdisp_ID, monitor_number);
+    return gimp->gui.get_display_name (gimp, display_ID, monitor_number);
 
   *monitor_number = 0;
 

@@ -491,7 +491,7 @@ gimp_statusbar_push_coords (GimpStatusbar *statusbar,
     }
   else /* show real world units */
     {
-      GimpImage *image       = shell->gdisp->image;
+      GimpImage *image       = shell->display->image;
       gdouble    unit_factor = _gimp_unit_get_factor (image->gimp,
                                                       shell->unit);
 
@@ -528,7 +528,7 @@ gimp_statusbar_push_length (GimpStatusbar       *statusbar,
     }
   else /* show real world units */
     {
-      GimpImage *image       = shell->gdisp->image;
+      GimpImage *image       = shell->display->image;
       gdouble    resolution;
       gdouble    unit_factor = _gimp_unit_get_factor (image->gimp,
                                                       shell->unit);
@@ -675,8 +675,8 @@ gimp_statusbar_set_cursor (GimpStatusbar *statusbar,
 
   if (x <  0 ||
       y <  0 ||
-      x >= statusbar->shell->gdisp->image->width ||
-      y >= statusbar->shell->gdisp->image->height)
+      x >= statusbar->shell->display->image->width ||
+      y >= statusbar->shell->display->image->height)
     {
       gtk_widget_set_sensitive (statusbar->cursor_label, FALSE);
     }
@@ -699,7 +699,7 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
 {
   static PangoLayout *layout = NULL;
 
-  GimpImage    *image = shell->gdisp->image;
+  GimpImage    *image = shell->display->image;
   GtkTreeModel *model;
   const gchar  *text;
   gint          width;

@@ -37,15 +37,15 @@ struct _GimpDisplay
 {
   GimpObject  parent_instance;
 
-  gint        ID;               /*  unique identifier for this gdisplay     */
+  gint        ID;               /*  unique identifier for this display     */
 
   GimpImage  *image;            /*  pointer to the associated image        */
-  gint        instance;         /*  the instance # of this gdisplay as      */
+  gint        instance;         /*  the instance # of this display as      */
                                 /*  taken from the image at creation       */
 
-  GtkWidget  *shell;            /*  shell widget for this gdisplay          */
+  GtkWidget  *shell;            /*  shell widget for this display          */
 
-  GSList     *update_areas;     /*  Update areas list                       */
+  GSList     *update_areas;     /*  Update areas list                      */
 };
 
 struct _GimpDisplayClass
@@ -61,24 +61,24 @@ GimpDisplay * gimp_display_new         (GimpImage       *image,
                                         gdouble          scale,
                                         GimpMenuFactory *menu_factory,
                                         GimpUIManager   *popup_manager);
-void          gimp_display_delete      (GimpDisplay     *gdisp);
+void          gimp_display_delete      (GimpDisplay     *display);
 
-gint          gimp_display_get_ID      (GimpDisplay     *gdisp);
+gint          gimp_display_get_ID      (GimpDisplay     *display);
 GimpDisplay * gimp_display_get_by_ID   (Gimp            *gimp,
                                         gint             ID);
 
-void          gimp_display_reconnect   (GimpDisplay     *gdisp,
+void          gimp_display_reconnect   (GimpDisplay     *display,
                                         GimpImage       *image);
 
-void          gimp_display_update_area (GimpDisplay     *gdisp,
+void          gimp_display_update_area (GimpDisplay     *display,
                                         gboolean         now,
                                         gint             x,
                                         gint             y,
                                         gint             w,
                                         gint             h);
 
-void          gimp_display_flush       (GimpDisplay     *gdisp);
-void          gimp_display_flush_now   (GimpDisplay     *gdisp);
+void          gimp_display_flush       (GimpDisplay     *display);
+void          gimp_display_flush_now   (GimpDisplay     *display);
 
 
 #endif /*  __GIMP_DISPLAY_H__  */

@@ -52,17 +52,17 @@ static void   gimp_rect_select_tool_button_press     (GimpTool        *tool,
                                                       GimpCoords      *coords,
                                                       guint32          time,
                                                       GdkModifierType  state,
-                                                      GimpDisplay     *gdisp);
+                                                      GimpDisplay     *display);
 static void   gimp_rect_select_tool_button_release   (GimpTool        *tool,
                                                       GimpCoords      *coords,
                                                       guint32          time,
                                                       GdkModifierType  state,
-                                                      GimpDisplay     *gdisp);
+                                                      GimpDisplay     *display);
 static void   gimp_rect_select_tool_motion           (GimpTool        *tool,
                                                       GimpCoords      *coords,
                                                       guint32          time,
                                                       GdkModifierType  state,
-                                                      GimpDisplay     *gdisp);
+                                                      GimpDisplay     *display);
 
 static void   gimp_rect_select_tool_draw             (GimpDrawTool    *draw_tool);
 
@@ -132,7 +132,7 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
                                     GimpCoords      *coords,
                                     guint32          time,
                                     GdkModifierType  state,
-                                    GimpDisplay     *gdisp)
+                                    GimpDisplay     *display)
 {
   GimpRectSelectTool   *rect_sel = GIMP_RECT_SELECT_TOOL (tool);
   GimpSelectionTool    *sel_tool = GIMP_SELECTION_TOOL (tool);
@@ -163,16 +163,16 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
       break;
     case GIMP_UNIT_PERCENT:
       rect_sel->fixed_width =
-        gdisp->image->width * rect_sel->fixed_width / 100;
+        display->image->width * rect_sel->fixed_width / 100;
       rect_sel->fixed_height =
-        gdisp->image->height * rect_sel->fixed_height / 100;
+        display->image->height * rect_sel->fixed_height / 100;
       break;
     default:
       unit_factor = _gimp_unit_get_factor (tool->tool_info->gimp, unit);
       rect_sel->fixed_width =
-        rect_sel->fixed_width * gdisp->image->xresolution / unit_factor;
+        rect_sel->fixed_width * display->image->xresolution / unit_factor;
       rect_sel->fixed_height =
-        rect_sel->fixed_height * gdisp->image->yresolution / unit_factor;
+        rect_sel->fixed_height * display->image->yresolution / unit_factor;
       break;
     }
 
@@ -180,12 +180,12 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
   rect_sel->fixed_height = MAX (1, rect_sel->fixed_height);
 
   gimp_tool_control_activate (tool->control);
-  tool->gdisp = gdisp;
+  tool->display = display;
 
   if (gimp_selection_tool_start_edit (sel_tool, coords))
     return;
 
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 }
 
 static void
@@ -193,11 +193,11 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
                                       GimpCoords      *coords,
                                       guint32          time,
                                       GdkModifierType  state,
-                                      GimpDisplay     *gdisp)
+                                      GimpDisplay     *display)
 {
   GimpRectSelectTool *rect_sel = GIMP_RECT_SELECT_TOOL (tool);
 
-  gimp_tool_pop_status (tool, gdisp);
+  gimp_tool_pop_status (tool, display);
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
@@ -209,14 +209,14 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
       if (rect_sel->w == 0 || rect_sel->h == 0)
         {
           /*  If there is a floating selection, anchor it  */
-          if (gimp_image_floating_sel (gdisp->image))
-            floating_sel_anchor (gimp_image_floating_sel (gdisp->image));
+          if (gimp_image_floating_sel (display->image))
+            floating_sel_anchor (gimp_image_floating_sel (display->image));
           /*  Otherwise, clear the selection mask  */
           else
-            gimp_channel_clear (gimp_image_get_mask (gdisp->image), NULL,
+            gimp_channel_clear (gimp_image_get_mask (display->image), NULL,
                                 TRUE);
 
-          gimp_image_flush (gdisp->image);
+          gimp_image_flush (display->image);
           return;
         }
 
@@ -225,7 +225,7 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
                                          rect_sel->w, rect_sel->h);
 
       /*  show selection on all views  */
-      gimp_image_flush (gdisp->image);
+      gimp_image_flush (display->image);
     }
 }
 
@@ -234,7 +234,7 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
                               GimpCoords      *coords,
                               guint32          time,
                               GdkModifierType  state,
-                              GimpDisplay     *gdisp)
+                              GimpDisplay     *display)
 {
   GimpRectSelectTool *rect_sel = GIMP_RECT_SELECT_TOOL (tool);
   GimpSelectionTool  *sel_tool = GIMP_SELECTION_TOOL (tool);
@@ -245,7 +245,7 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
     {
       sel_tool->op = SELECTION_REPLACE;
 
-      gimp_tool_cursor_update (tool, coords, state, gdisp);
+      gimp_tool_cursor_update (tool, coords, state, display);
     }
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
@@ -353,10 +353,10 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
   rect_sel->lx = RINT(coords->x);
   rect_sel->ly = RINT(coords->y);
 
-  gimp_rect_select_tool_update_options (rect_sel, gdisp);
+  gimp_rect_select_tool_update_options (rect_sel, display);
 
-  gimp_tool_pop_status (tool, gdisp);
-  gimp_tool_push_status_coords (tool, gdisp,
+  gimp_tool_pop_status (tool, display);
+  gimp_tool_push_status_coords (tool, display,
                                 _("Selection: "),
                                 rect_sel->w, " × ", rect_sel->h);
 
@@ -388,7 +388,7 @@ gimp_rect_select_tool_real_rect_select (GimpRectSelectTool *rect_tool,
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  gimp_channel_select_rectangle (gimp_image_get_mask (tool->gdisp->image),
+  gimp_channel_select_rectangle (gimp_image_get_mask (tool->display->image),
                                  x, y, w, h,
                                  sel_tool->op,
                                  options->feather,
@@ -419,8 +419,8 @@ gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
 
       if (! gimp_rectangle_intersect (x, y, w, h,
                                       0, 0,
-                                      tool->gdisp->image->width,
-                                      tool->gdisp->image->height,
+                                      tool->display->image->width,
+                                      tool->display->image->height,
                                       &x, &y, &w, &h))
         {
           return;
@@ -431,7 +431,7 @@ gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
           GimpItem *item;
           gint      width, height;
 
-          item = GIMP_ITEM (gimp_image_active_drawable (tool->gdisp->image));
+          item = GIMP_ITEM (gimp_image_active_drawable (tool->display->image));
 
           gimp_item_offsets (item, &off_x, &off_y);
           width  = gimp_item_width  (item);
@@ -448,7 +448,7 @@ gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
           y -= off_y;
         }
 
-      if (gimp_image_crop_auto_shrink (tool->gdisp->image,
+      if (gimp_image_crop_auto_shrink (tool->display->image,
                                        x, y,
                                        x + w, y + h,
                                        ! options->shrink_merged,
@@ -469,7 +469,7 @@ gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
 
 static void
 gimp_rect_select_tool_update_options (GimpRectSelectTool *rect_sel,
-                                      GimpDisplay        *gdisp)
+                                      GimpDisplay        *display)
 {
   GimpDisplayShell *shell;
   gdouble           width;
@@ -478,7 +478,7 @@ gimp_rect_select_tool_update_options (GimpRectSelectTool *rect_sel,
   if (rect_sel->fixed_mode != GIMP_RECT_SELECT_MODE_FREE)
     return;
 
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+  shell = GIMP_DISPLAY_SHELL (display->shell);
 
   if (shell->unit == GIMP_UNIT_PIXEL)
     {
@@ -487,7 +487,7 @@ gimp_rect_select_tool_update_options (GimpRectSelectTool *rect_sel,
     }
   else
     {
-      GimpImage *image = gdisp->image;
+      GimpImage *image = display->image;
 
       width  = (rect_sel->w *
                 _gimp_unit_get_factor (image->gimp,

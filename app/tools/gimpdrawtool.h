@@ -47,8 +47,8 @@ struct _GimpDrawTool
 {
   GimpTool      parent_instance;
 
-  GimpDisplay  *gdisp;        /*  The display we are drawing to (may be
-                               *  a different one than tool->gdisp)
+  GimpDisplay  *display;      /*  The display we are drawing to (may be
+                               *  a different one than tool->display)
                                */
 
   gint          paused_count; /*  count to keep track of multiple pauses */
@@ -70,7 +70,7 @@ struct _GimpDrawToolClass
 GType      gimp_draw_tool_get_type                 (void) G_GNUC_CONST;
 
 void       gimp_draw_tool_start                    (GimpDrawTool     *draw_tool,
-                                                    GimpDisplay      *gdisp);
+                                                    GimpDisplay      *display);
 void       gimp_draw_tool_stop                     (GimpDrawTool     *draw_tool);
 
 gboolean   gimp_draw_tool_is_active                (GimpDrawTool     *draw_tool);
@@ -84,13 +84,13 @@ void       gimp_draw_tool_set_transform            (GimpDrawTool     *draw_tool,
                                                     GimpMatrix3      *transform);
 
 gdouble    gimp_draw_tool_calc_distance            (GimpDrawTool     *draw_tool,
-                                                    GimpDisplay      *gdisp,
+                                                    GimpDisplay      *display,
                                                     gdouble           x1,
                                                     gdouble           y1,
                                                     gdouble           x2,
                                                     gdouble           y2);
 gboolean   gimp_draw_tool_in_radius                (GimpDrawTool     *draw_tool,
-                                                    GimpDisplay      *gdisp,
+                                                    GimpDisplay      *display,
                                                     gdouble           x1,
                                                     gdouble           y1,
                                                     gdouble           x2,
@@ -161,7 +161,7 @@ void       gimp_draw_tool_draw_handle              (GimpDrawTool     *draw_tool,
                                                     GtkAnchorType     anchor,
                                                     gboolean          use_offsets);
 gboolean   gimp_draw_tool_on_handle                (GimpDrawTool     *draw_tool,
-                                                    GimpDisplay      *gdisp,
+                                                    GimpDisplay      *display,
                                                     gdouble           x,
                                                     gdouble           y,
                                                     GimpHandleType    type,
@@ -172,7 +172,7 @@ gboolean   gimp_draw_tool_on_handle                (GimpDrawTool     *draw_tool,
                                                     GtkAnchorType     anchor,
                                                     gboolean          use_offsets);
 gboolean   gimp_draw_tool_on_vectors_handle        (GimpDrawTool     *draw_tool,
-                                                    GimpDisplay      *gdisp,
+                                                    GimpDisplay      *display,
                                                     GimpVectors      *vectors,
                                                     const GimpCoords *coord,
                                                     gint              width,
@@ -182,7 +182,7 @@ gboolean   gimp_draw_tool_on_vectors_handle        (GimpDrawTool     *draw_tool,
                                                     GimpAnchor      **ret_anchor,
                                                     GimpStroke      **ret_stroke);
 gboolean   gimp_draw_tool_on_vectors_curve         (GimpDrawTool     *draw_tool,
-                                                    GimpDisplay      *gdisp,
+                                                    GimpDisplay      *display,
                                                     GimpVectors      *vectors,
                                                     const GimpCoords *coord,
                                                     gint              width,
@@ -194,7 +194,7 @@ gboolean   gimp_draw_tool_on_vectors_curve         (GimpDrawTool     *draw_tool,
                                                     GimpStroke      **ret_stroke);
 
 gboolean   gimp_draw_tool_on_vectors               (GimpDrawTool     *draw_tool,
-                                                    GimpDisplay      *gdisp,
+                                                    GimpDisplay      *display,
                                                     const GimpCoords *coord,
                                                     gint              width,
                                                     gint              height,

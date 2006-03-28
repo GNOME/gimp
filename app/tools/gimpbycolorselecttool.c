@@ -46,21 +46,21 @@ static void   gimp_by_color_select_tool_button_press   (GimpTool        *tool,
                                                         GimpCoords      *coords,
                                                         guint32          time,
                                                         GdkModifierType  state,
-                                                        GimpDisplay     *gdisp);
+                                                        GimpDisplay     *display);
 static void   gimp_by_color_select_tool_button_release (GimpTool        *tool,
                                                         GimpCoords      *coords,
                                                         guint32          time,
                                                         GdkModifierType  state,
-                                                        GimpDisplay     *gdisp);
+                                                        GimpDisplay     *display);
 static void   gimp_by_color_select_tool_oper_update    (GimpTool        *tool,
                                                         GimpCoords      *coords,
                                                         GdkModifierType  state,
                                                         gboolean         proximity,
-                                                        GimpDisplay     *gdisp);
+                                                        GimpDisplay     *display);
 static void   gimp_by_color_select_tool_cursor_update  (GimpTool        *tool,
                                                         GimpCoords      *coords,
                                                         GdkModifierType  state,
-                                                        GimpDisplay     *gdisp);
+                                                        GimpDisplay     *display);
 
 
 G_DEFINE_TYPE (GimpByColorSelectTool, gimp_by_color_select_tool,
@@ -109,17 +109,17 @@ gimp_by_color_select_tool_button_press (GimpTool        *tool,
                                         GimpCoords      *coords,
                                         guint32          time,
                                         GdkModifierType  state,
-                                        GimpDisplay     *gdisp)
+                                        GimpDisplay     *display)
 {
   GimpByColorSelectTool *by_color_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
   GimpSelectionOptions  *options;
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  tool->drawable = gimp_image_active_drawable (gdisp->image);
+  tool->drawable = gimp_image_active_drawable (display->image);
 
   gimp_tool_control_activate (tool->control);
-  tool->gdisp = gdisp;
+  tool->display = display;
 
   by_color_sel->x = coords->x;
   by_color_sel->y = coords->y;
@@ -128,7 +128,7 @@ gimp_by_color_select_tool_button_press (GimpTool        *tool,
     {
       gint off_x, off_y;
 
-      gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (gdisp->image)),
+      gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (display->image)),
                          &off_x, &off_y);
 
       by_color_sel->x -= off_x;
@@ -141,7 +141,7 @@ gimp_by_color_select_tool_button_release (GimpTool        *tool,
                                           GimpCoords      *coords,
                                           guint32          time,
                                           GdkModifierType  state,
-                                          GimpDisplay     *gdisp)
+                                          GimpDisplay     *display)
 {
   GimpByColorSelectTool *by_color_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
   GimpSelectionTool     *sel_tool     = GIMP_SELECTION_TOOL (tool);
@@ -149,7 +149,7 @@ gimp_by_color_select_tool_button_release (GimpTool        *tool,
   GimpDrawable          *drawable;
 
   options  = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
-  drawable = gimp_image_active_drawable (gdisp->image);
+  drawable = gimp_image_active_drawable (display->image);
 
   gimp_tool_control_halt (tool->control);
 
@@ -166,7 +166,7 @@ gimp_by_color_select_tool_button_release (GimpTool        *tool,
       guchar       *col;
 
       if (options->sample_merged)
-        pickable = GIMP_PICKABLE (gdisp->image->projection);
+        pickable = GIMP_PICKABLE (display->image->projection);
       else
         pickable = GIMP_PICKABLE (drawable);
 
@@ -183,7 +183,7 @@ gimp_by_color_select_tool_button_release (GimpTool        *tool,
           gimp_rgba_set_uchar (&color, col[0], col[1], col[2], col[3]);
           g_free (col);
 
-          gimp_channel_select_by_color (gimp_image_get_mask (gdisp->image),
+          gimp_channel_select_by_color (gimp_image_get_mask (display->image),
                                         drawable,
                                         options->sample_merged,
                                         &color,
@@ -194,7 +194,7 @@ gimp_by_color_select_tool_button_release (GimpTool        *tool,
                                         options->feather,
                                         options->feather_radius,
                                         options->feather_radius);
-          gimp_image_flush (gdisp->image);
+          gimp_image_flush (display->image);
         }
     }
 }
@@ -204,7 +204,7 @@ gimp_by_color_select_tool_oper_update (GimpTool        *tool,
                                        GimpCoords      *coords,
                                        GdkModifierType  state,
                                        gboolean         proximity,
-                                       GimpDisplay     *gdisp)
+                                       GimpDisplay     *display)
 {
   GimpSelectionTool    *sel_tool = GIMP_SELECTION_TOOL (tool);
   GimpSelectionOptions *options;
@@ -236,17 +236,17 @@ static void
 gimp_by_color_select_tool_cursor_update (GimpTool        *tool,
                                          GimpCoords      *coords,
                                          GdkModifierType  state,
-                                         GimpDisplay     *gdisp)
+                                         GimpDisplay     *display)
 {
   GimpSelectionOptions *options;
   GimpLayer            *layer;
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  layer = gimp_image_pick_correlate_layer (gdisp->image, coords->x, coords->y);
+  layer = gimp_image_pick_correlate_layer (display->image, coords->x, coords->y);
 
   if (! options->sample_merged &&
-      layer && layer != gdisp->image->active_layer)
+      layer && layer != display->image->active_layer)
     {
       gimp_tool_control_set_cursor (tool->control, GIMP_CURSOR_BAD);
     }
@@ -255,5 +255,5 @@ gimp_by_color_select_tool_cursor_update (GimpTool        *tool,
       gimp_tool_control_set_cursor (tool->control, GIMP_CURSOR_MOUSE);
     }
 
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }

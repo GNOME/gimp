@@ -80,7 +80,7 @@
 static void     gimp_levels_tool_finalize       (GObject          *object);
 
 static gboolean gimp_levels_tool_initialize     (GimpTool         *tool,
-                                                 GimpDisplay      *gdisp);
+                                                 GimpDisplay      *display);
 
 static void     gimp_levels_tool_color_picked   (GimpColorTool    *color_tool,
                                                  GimpColorPickState pick_state,
@@ -224,12 +224,12 @@ gimp_levels_tool_finalize (GObject *object)
 
 static gboolean
 gimp_levels_tool_initialize (GimpTool    *tool,
-                             GimpDisplay *gdisp)
+                             GimpDisplay *display)
 {
   GimpLevelsTool *l_tool = GIMP_LEVELS_TOOL (tool);
   GimpDrawable   *drawable;
 
-  drawable = gimp_image_active_drawable (gdisp->image);
+  drawable = gimp_image_active_drawable (display->image);
 
   if (! drawable)
     return FALSE;
@@ -253,7 +253,7 @@ gimp_levels_tool_initialize (GimpTool    *tool,
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (l_tool->active_picker),
                                   FALSE);
 
-  GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display);
 
   gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (l_tool->channel_menu),
                                       levels_menu_sensitivity, l_tool, NULL);

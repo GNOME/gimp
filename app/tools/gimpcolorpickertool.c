@@ -59,17 +59,17 @@ static void      gimp_color_picker_tool_finalize     (GObject         *object);
 
 static void      gimp_color_picker_tool_control      (GimpTool        *tool,
                                                       GimpToolAction   action,
-                                                      GimpDisplay     *gdisp);
+                                                      GimpDisplay     *display);
 static void      gimp_color_picker_tool_modifier_key (GimpTool        *tool,
                                                       GdkModifierType  key,
                                                       gboolean         press,
                                                       GdkModifierType  state,
-                                                      GimpDisplay     *gdisp);
+                                                      GimpDisplay     *display);
 static void      gimp_color_picker_tool_oper_update  (GimpTool        *tool,
                                                       GimpCoords      *coords,
                                                       GdkModifierType  state,
                                                       gboolean         proximity,
-                                                      GimpDisplay     *gdisp);
+                                                      GimpDisplay     *display);
 
 static void      gimp_color_picker_tool_picked       (GimpColorTool   *color_tool,
                                                       GimpColorPickState  pick_state,
@@ -168,7 +168,7 @@ gimp_color_picker_tool_finalize (GObject *object)
 static void
 gimp_color_picker_tool_control (GimpTool       *tool,
                                 GimpToolAction  action,
-                                GimpDisplay    *gdisp)
+                                GimpDisplay    *display)
 {
   GimpColorPickerTool *picker_tool = GIMP_COLOR_PICKER_TOOL (tool);
 
@@ -184,7 +184,7 @@ gimp_color_picker_tool_control (GimpTool       *tool,
       break;
     }
 
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void
@@ -192,7 +192,7 @@ gimp_color_picker_tool_modifier_key (GimpTool        *tool,
                                      GdkModifierType  key,
                                      gboolean         press,
                                      GdkModifierType  state,
-                                     GimpDisplay     *gdisp)
+                                     GimpDisplay     *display)
 {
   GimpColorPickerOptions *options;
 
@@ -229,7 +229,7 @@ gimp_color_picker_tool_oper_update (GimpTool        *tool,
                                     GimpCoords      *coords,
                                     GdkModifierType  state,
                                     gboolean         proximity,
-                                    GimpDisplay     *gdisp)
+                                    GimpDisplay     *display)
 {
   GimpColorPickerOptions *options;
 
@@ -238,7 +238,7 @@ gimp_color_picker_tool_oper_update (GimpTool        *tool,
   GIMP_COLOR_TOOL (tool)->pick_mode = options->pick_mode;
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
-                                               gdisp);
+                                               display);
 }
 
 static void
@@ -262,7 +262,7 @@ gimp_color_picker_tool_picked (GimpColorTool      *color_tool,
     gimp_color_picker_tool_info_update (picker_tool, sample_type,
                                         color, color_index);
 
-  user_context = gimp_get_user_context (tool->gdisp->image->gimp);
+  user_context = gimp_get_user_context (tool->display->image->gimp);
 
   if ((options->pick_mode == GIMP_COLOR_PICK_MODE_FOREGROUND ||
        options->pick_mode == GIMP_COLOR_PICK_MODE_BACKGROUND) &&
@@ -307,7 +307,7 @@ gimp_color_picker_tool_picked (GimpColorTool      *color_tool,
         GtkWidget         *dockable;
 
         dialog_factory = gimp_dialog_factory_from_name ("dock");
-        screen = gtk_widget_get_screen (tool->gdisp->shell);
+        screen = gtk_widget_get_screen (tool->display->shell);
         dockable = gimp_dialog_factory_dialog_raise (dialog_factory, screen,
                                                      "gimp-palette-editor",
                                                      -1);
@@ -352,7 +352,7 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
   g_return_if_fail (tool->drawable != NULL);
 
   picker_tool->dialog = gimp_tool_dialog_new (tool->tool_info,
-                                              NULL /* tool->gdisp->shell */,
+                                              NULL /* tool->display->shell */,
                                               _("Color Picker Information"),
 
                                               GTK_STOCK_CLOSE,

@@ -71,7 +71,7 @@ plug_in_run (Gimp         *gimp,
 	     gint          n_args,
 	     gboolean      synchronous,
 	     gboolean      destroy_return_vals,
-	     gint          gdisp_ID)
+	     gint          display_ID)
 {
   Argument *return_vals = NULL;
   PlugIn   *plug_in;
@@ -94,7 +94,7 @@ plug_in_run (Gimp         *gimp,
   if (plug_in)
     {
       GimpDisplayConfig *display_config = GIMP_DISPLAY_CONFIG (gimp->config);
-      GimpGuiConfig     *gui_config = GIMP_GUI_CONFIG (gimp->config);
+      GimpGuiConfig     *gui_config     = GIMP_GUI_CONFIG (gimp->config);
       GPConfig           config;
       GPProcRun          proc_run;
       gint               monitor;
@@ -121,10 +121,11 @@ plug_in_run (Gimp         *gimp,
       config.install_cmap     = gimp->config->install_cmap;
       config.show_tooltips    = gui_config->show_tooltips;
       config.min_colors       = CLAMP (gimp->config->min_colors, 27, 256);
-      config.gdisp_ID         = gdisp_ID;
+      config.gdisp_ID         = display_ID;
       config.app_name         = (gchar *) g_get_application_name ();
       config.wm_class         = (gchar *) gimp_get_program_class (gimp);
-      config.display_name     = gimp_get_display_name (gimp, gdisp_ID, &monitor);
+      config.display_name     = gimp_get_display_name (gimp,
+                                                       display_ID, &monitor);
       config.monitor_number   = monitor;
 
       proc_run.name    = proc_rec->original_name;

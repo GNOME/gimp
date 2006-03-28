@@ -88,7 +88,7 @@ static void           gui_help                 (Gimp          *gimp,
                                                 const gchar   *help_id);
 static const gchar  * gui_get_program_class    (Gimp          *gimp);
 static gchar        * gui_get_display_name     (Gimp          *gimp,
-                                                gint           gdisp_ID,
+                                                gint           display_ID,
                                                 gint          *monitor_number);
 static const gchar  * gui_get_theme_dir        (Gimp          *gimp);
 static GimpObject   * gui_display_get_by_ID    (Gimp          *gimp,
@@ -279,21 +279,21 @@ gui_get_program_class (Gimp *gimp)
 
 static gchar *
 gui_get_display_name (Gimp *gimp,
-                      gint  gdisp_ID,
+                      gint  display_ID,
                       gint *monitor_number)
 {
-  GimpDisplay *gdisp = NULL;
+  GimpDisplay *display = NULL;
   GdkScreen   *screen;
   gint         monitor;
 
-  if (gdisp_ID > 0)
-    gdisp = gimp_display_get_by_ID (gimp, gdisp_ID);
+  if (display_ID > 0)
+    display = gimp_display_get_by_ID (gimp, display_ID);
 
-  if (gdisp)
+  if (display)
     {
-      screen  = gtk_widget_get_screen (gdisp->shell);
+      screen  = gtk_widget_get_screen (display->shell);
       monitor = gdk_screen_get_monitor_at_window (screen,
-                                                  gdisp->shell->window);
+                                                  display->shell->window);
     }
   else
     {
@@ -347,21 +347,21 @@ gui_display_create (GimpImage *image,
                     GimpUnit   unit,
                     gdouble    scale)
 {
-  GimpDisplay *gdisp;
+  GimpDisplay *display;
   GList       *image_managers;
 
   image_managers = gimp_ui_managers_from_name ("<Image>");
 
-  gdisp = gimp_display_new (image, unit, scale,
-                            global_menu_factory,
-                            image_managers->data);
+  display = gimp_display_new (image, unit, scale,
+                              global_menu_factory,
+                              image_managers->data);
 
-  gimp_context_set_display (gimp_get_user_context (image->gimp), gdisp);
+  gimp_context_set_display (gimp_get_user_context (image->gimp), display);
 
-  gimp_ui_manager_update (GIMP_DISPLAY_SHELL (gdisp->shell)->menubar_manager,
-                          gdisp);
+  gimp_ui_manager_update (GIMP_DISPLAY_SHELL (display->shell)->menubar_manager,
+                          display);
 
-  return GIMP_OBJECT (gdisp);
+  return GIMP_OBJECT (display);
 }
 
 static void

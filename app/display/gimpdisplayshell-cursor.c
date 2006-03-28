@@ -120,7 +120,7 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  image = shell->gdisp->image;
+  image = shell->display->image;
 
   new_cursor = (shell->draw_cursor &&
                 shell->proximity   &&
@@ -164,7 +164,7 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
 
   if (cursor_view)
     gimp_cursor_view_update_cursor (GIMP_CURSOR_VIEW (cursor_view),
-                                    shell->gdisp->image, shell->unit,
+                                    shell->display->image, shell->unit,
                                     t_x, t_y);
 }
 
@@ -202,7 +202,7 @@ gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  config = GIMP_DISPLAY_CONFIG (shell->gdisp->image->gimp->config);
+  config = GIMP_DISPLAY_CONFIG (shell->display->image->gimp->config);
 
   if (cursor_type != GIMP_CURSOR_NONE &&
       cursor_type != GIMP_CURSOR_BAD)

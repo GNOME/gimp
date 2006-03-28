@@ -43,21 +43,21 @@
 
 static void   gimp_selection_tool_control       (GimpTool        *tool,
                                                  GimpToolAction   action,
-                                                 GimpDisplay     *gdisp);
+                                                 GimpDisplay     *display);
 static void   gimp_selection_tool_modifier_key  (GimpTool        *tool,
                                                  GdkModifierType  key,
                                                  gboolean         press,
                                                  GdkModifierType  state,
-                                                 GimpDisplay     *gdisp);
+                                                 GimpDisplay     *display);
 static void   gimp_selection_tool_oper_update   (GimpTool        *tool,
                                                  GimpCoords      *coords,
                                                  GdkModifierType  state,
                                                  gboolean         proximity,
-                                                 GimpDisplay     *gdisp);
+                                                 GimpDisplay     *display);
 static void   gimp_selection_tool_cursor_update (GimpTool        *tool,
                                                  GimpCoords      *coords,
                                                  GdkModifierType  state,
-                                                 GimpDisplay     *gdisp);
+                                                 GimpDisplay     *display);
 
 
 G_DEFINE_TYPE (GimpSelectionTool, gimp_selection_tool, GIMP_TYPE_DRAW_TOOL);
@@ -87,12 +87,12 @@ gimp_selection_tool_init (GimpSelectionTool *selection_tool)
 static void
 gimp_selection_tool_control (GimpTool       *tool,
                              GimpToolAction  action,
-                             GimpDisplay    *gdisp)
+                             GimpDisplay    *display)
 {
   if (action == HALT)
-    gimp_tool_pop_status (tool, gdisp);
+    gimp_tool_pop_status (tool, display);
 
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void
@@ -100,7 +100,7 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
                                   GdkModifierType  key,
                                   gboolean         press,
                                   GdkModifierType  state,
-                                  GimpDisplay     *gdisp)
+                                  GimpDisplay     *display)
 {
   GimpSelectionTool    *selection_tool = GIMP_SELECTION_TOOL (tool);
   GimpSelectionOptions *options;
@@ -155,7 +155,7 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
                                  GimpCoords      *coords,
                                  GdkModifierType  state,
                                  gboolean         proximity,
-                                 GimpDisplay     *gdisp)
+                                 GimpDisplay     *display)
 {
   GimpSelectionTool    *selection_tool = GIMP_SELECTION_TOOL (tool);
   GimpSelectionOptions *options;
@@ -167,10 +167,10 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  selection    = gimp_image_get_mask (gdisp->image);
-  layer        = gimp_image_pick_correlate_layer (gdisp->image,
+  selection    = gimp_image_get_mask (display->image);
+  layer        = gimp_image_pick_correlate_layer (display->image,
                                                   coords->x, coords->y);
-  floating_sel = gimp_image_floating_sel (gdisp->image);
+  floating_sel = gimp_image_floating_sel (display->image);
 
   if (layer)
     {
@@ -220,7 +220,7 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
       selection_tool->op = options->operation;
     }
 
-  gimp_tool_pop_status (tool, gdisp);
+  gimp_tool_pop_status (tool, display);
 
   if (proximity)
     {
@@ -253,7 +253,7 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
         }
 
       if (status)
-        gimp_tool_push_status (tool, gdisp, status);
+        gimp_tool_push_status (tool, display, status);
     }
 }
 
@@ -261,7 +261,7 @@ static void
 gimp_selection_tool_cursor_update (GimpTool        *tool,
                                    GimpCoords      *coords,
                                    GdkModifierType  state,
-                                   GimpDisplay     *gdisp)
+                                   GimpDisplay     *display)
 {
   GimpSelectionTool  *selection_tool = GIMP_SELECTION_TOOL (tool);
   GimpToolCursorType  tool_cursor;
@@ -295,7 +295,7 @@ gimp_selection_tool_cursor_update (GimpTool        *tool,
       break;
     }
 
-  gimp_tool_set_cursor (tool, gdisp, GIMP_CURSOR_MOUSE, tool_cursor, cmodifier);
+  gimp_tool_set_cursor (tool, display, GIMP_CURSOR_MOUSE, tool_cursor, cmodifier);
 }
 
 
@@ -312,23 +312,23 @@ gimp_selection_tool_start_edit (GimpSelectionTool *sel_tool,
 
   tool = GIMP_TOOL (sel_tool);
 
-  g_return_val_if_fail (GIMP_IS_DISPLAY (tool->gdisp), FALSE);
+  g_return_val_if_fail (GIMP_IS_DISPLAY (tool->display), FALSE);
   g_return_val_if_fail (gimp_tool_control_is_active (tool->control), FALSE);
 
   switch (sel_tool->op)
     {
     case SELECTION_MOVE_MASK:
-      gimp_edit_selection_tool_start (tool, tool->gdisp, coords,
+      gimp_edit_selection_tool_start (tool, tool->display, coords,
                                       GIMP_TRANSLATE_MODE_MASK, FALSE);
       return TRUE;
 
     case SELECTION_MOVE:
-      gimp_edit_selection_tool_start (tool, tool->gdisp, coords,
+      gimp_edit_selection_tool_start (tool, tool->display, coords,
                                       GIMP_TRANSLATE_MODE_MASK_TO_LAYER, FALSE);
       return TRUE;
 
     case SELECTION_MOVE_COPY:
-      gimp_edit_selection_tool_start (tool, tool->gdisp, coords,
+      gimp_edit_selection_tool_start (tool, tool->display, coords,
                                       GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER,
                                       FALSE);
       return TRUE;

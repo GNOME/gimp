@@ -48,27 +48,27 @@ static void   gimp_free_select_tool_finalize       (GObject         *object);
 
 static void   gimp_free_select_tool_control        (GimpTool        *tool,
                                                     GimpToolAction   action,
-                                                    GimpDisplay     *gdisp);
+                                                    GimpDisplay     *display);
 static void   gimp_free_select_tool_button_press   (GimpTool        *tool,
                                                     GimpCoords      *coords,
                                                     guint32          time,
                                                     GdkModifierType  state,
-                                                    GimpDisplay     *gdisp);
+                                                    GimpDisplay     *display);
 static void   gimp_free_select_tool_button_release (GimpTool        *tool,
                                                     GimpCoords      *coords,
                                                     guint32          time,
                                                     GdkModifierType  state,
-                                                    GimpDisplay     *gdisp);
+                                                    GimpDisplay     *display);
 static void   gimp_free_select_tool_motion         (GimpTool        *tool,
                                                     GimpCoords      *coords,
                                                     guint32          time,
                                                     GdkModifierType  state,
-                                                    GimpDisplay     *gdisp);
+                                                    GimpDisplay     *display);
 
 static void   gimp_free_select_tool_draw           (GimpDrawTool    *draw_tool);
 
 static void   gimp_free_select_tool_real_select    (GimpFreeSelectTool *free_sel,
-                                                    GimpDisplay        *gdisp);
+                                                    GimpDisplay        *display);
 
 static void   gimp_free_select_tool_add_point      (GimpFreeSelectTool *free_sel,
                                                     gdouble             x,
@@ -151,7 +151,7 @@ gimp_free_select_tool_finalize (GObject *object)
 static void
 gimp_free_select_tool_control (GimpTool       *tool,
                                GimpToolAction  action,
-                               GimpDisplay    *gdisp)
+                               GimpDisplay    *display)
 {
   switch (action)
     {
@@ -163,7 +163,7 @@ gimp_free_select_tool_control (GimpTool       *tool,
       break;
     }
 
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void
@@ -171,12 +171,12 @@ gimp_free_select_tool_button_press (GimpTool        *tool,
                                     GimpCoords      *coords,
                                     guint32          time,
                                     GdkModifierType  state,
-                                    GimpDisplay     *gdisp)
+                                    GimpDisplay     *display)
 {
   GimpFreeSelectTool *free_sel = GIMP_FREE_SELECT_TOOL (tool);
 
   gimp_tool_control_activate (tool->control);
-  tool->gdisp = gdisp;
+  tool->display = display;
 
   if (gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (free_sel), coords))
     return;
@@ -186,7 +186,7 @@ gimp_free_select_tool_button_press (GimpTool        *tool,
 
   gimp_free_select_tool_add_point (free_sel, coords->x, coords->y);
 
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 }
 
 static void
@@ -194,7 +194,7 @@ gimp_free_select_tool_button_release (GimpTool        *tool,
                                       GimpCoords      *coords,
                                       guint32          time,
                                       GdkModifierType  state,
-                                      GimpDisplay     *gdisp)
+                                      GimpDisplay     *display)
 {
   GimpFreeSelectTool   *free_sel = GIMP_FREE_SELECT_TOOL (tool);
   GimpSelectionOptions *options;
@@ -212,22 +212,22 @@ gimp_free_select_tool_button_release (GimpTool        *tool,
   if (free_sel->num_points == 1)
     {
       /*  If there is a floating selection, anchor it  */
-      if (gimp_image_floating_sel (gdisp->image))
+      if (gimp_image_floating_sel (display->image))
         {
-          floating_sel_anchor (gimp_image_floating_sel (gdisp->image));
+          floating_sel_anchor (gimp_image_floating_sel (display->image));
         }
       /*  Otherwise, clear the selection mask  */
       else
         {
-          gimp_channel_clear (gimp_image_get_mask (gdisp->image), NULL, TRUE);
+          gimp_channel_clear (gimp_image_get_mask (display->image), NULL, TRUE);
         }
     }
   else
     {
-      GIMP_FREE_SELECT_TOOL_GET_CLASS (free_sel)->select (free_sel, gdisp);
+      GIMP_FREE_SELECT_TOOL_GET_CLASS (free_sel)->select (free_sel, display);
     }
 
-  gimp_image_flush (gdisp->image);
+  gimp_image_flush (display->image);
 }
 
 static void
@@ -235,7 +235,7 @@ gimp_free_select_tool_motion (GimpTool        *tool,
                               GimpCoords      *coords,
                               guint32          time,
                               GdkModifierType  state,
-                              GimpDisplay     *gdisp)
+                              GimpDisplay     *display)
 {
   GimpFreeSelectTool *free_sel = GIMP_FREE_SELECT_TOOL (tool);
   GimpSelectionTool  *sel_tool = GIMP_SELECTION_TOOL (tool);
@@ -244,7 +244,7 @@ gimp_free_select_tool_motion (GimpTool        *tool,
     {
       sel_tool->op = SELECTION_REPLACE;
 
-      gimp_tool_cursor_update (tool, coords, state, gdisp);
+      gimp_tool_cursor_update (tool, coords, state, display);
     }
 
   if (state & GDK_MOD1_MASK)
@@ -294,12 +294,12 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
 
 void
 gimp_free_select_tool_select (GimpFreeSelectTool *free_sel,
-                              GimpDisplay        *gdisp)
+                              GimpDisplay        *display)
 {
   g_return_if_fail (GIMP_IS_FREE_SELECT_TOOL (free_sel));
-  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+  g_return_if_fail (GIMP_IS_DISPLAY (display));
 
-  GIMP_FREE_SELECT_TOOL_GET_CLASS (free_sel)->select (free_sel, gdisp);
+  GIMP_FREE_SELECT_TOOL_GET_CLASS (free_sel)->select (free_sel, display);
 }
 
 
@@ -307,14 +307,14 @@ gimp_free_select_tool_select (GimpFreeSelectTool *free_sel,
 
 static void
 gimp_free_select_tool_real_select (GimpFreeSelectTool *free_sel,
-                                   GimpDisplay        *gdisp)
+                                   GimpDisplay        *display)
 {
   GimpTool             *tool = GIMP_TOOL (free_sel);
   GimpSelectionOptions *options;
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  gimp_channel_select_polygon (gimp_image_get_mask (gdisp->image),
+  gimp_channel_select_polygon (gimp_image_get_mask (display->image),
                                tool->tool_info->blurb,
                                free_sel->num_points,
                                free_sel->points,

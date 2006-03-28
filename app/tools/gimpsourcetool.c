@@ -53,22 +53,22 @@ static void   gimp_clone_tool_button_press  (GimpTool        *tool,
                                              GimpCoords      *coords,
                                              guint32          time,
                                              GdkModifierType  state,
-                                             GimpDisplay     *gdisp);
+                                             GimpDisplay     *display);
 static void   gimp_clone_tool_motion        (GimpTool        *tool,
                                              GimpCoords      *coords,
                                              guint32          time,
                                              GdkModifierType  state,
-                                             GimpDisplay     *gdisp);
+                                             GimpDisplay     *display);
 
 static void   gimp_clone_tool_cursor_update (GimpTool        *tool,
                                              GimpCoords      *coords,
                                              GdkModifierType  state,
-                                             GimpDisplay     *gdisp);
+                                             GimpDisplay     *display);
 static void   gimp_clone_tool_oper_update   (GimpTool        *tool,
                                              GimpCoords      *coords,
                                              GdkModifierType  state,
                                              gboolean         proximity,
-                                             GimpDisplay     *gdisp);
+                                             GimpDisplay     *display);
 
 static void   gimp_clone_tool_draw          (GimpDrawTool    *draw_tool);
 
@@ -128,7 +128,7 @@ gimp_clone_tool_button_press (GimpTool        *tool,
                               GimpCoords      *coords,
                               guint32          time,
                               GdkModifierType  state,
-                              GimpDisplay     *gdisp)
+                              GimpDisplay     *display)
 {
   GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (tool);
   GimpCloneTool    *clone_tool = GIMP_CLONE_TOOL (tool);
@@ -142,15 +142,15 @@ gimp_clone_tool_button_press (GimpTool        *tool,
     {
       GIMP_CLONE (paint_tool->core)->set_source = TRUE;
 
-      if (gdisp != clone_tool->src_gdisp)
+      if (display != clone_tool->src_display)
         {
-          if (clone_tool->src_gdisp)
-            g_object_remove_weak_pointer (G_OBJECT (clone_tool->src_gdisp),
-                                          (gpointer *) &clone_tool->src_gdisp);
+          if (clone_tool->src_display)
+            g_object_remove_weak_pointer (G_OBJECT (clone_tool->src_display),
+                                          (gpointer *) &clone_tool->src_display);
 
-          clone_tool->src_gdisp = gdisp;
-          g_object_add_weak_pointer (G_OBJECT (gdisp),
-                                     (gpointer *) &clone_tool->src_gdisp);
+          clone_tool->src_display = display;
+          g_object_add_weak_pointer (G_OBJECT (display),
+                                     (gpointer *) &clone_tool->src_display);
         }
     }
   else
@@ -159,14 +159,14 @@ gimp_clone_tool_button_press (GimpTool        *tool,
 
       if (options->clone_type == GIMP_IMAGE_CLONE &&
           options->sample_merged                  &&
-          gdisp == clone_tool->src_gdisp)
+          display == clone_tool->src_display)
         {
           paint_tool->core->use_saved_proj = TRUE;
         }
     }
 
   GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
-                                                gdisp);
+                                                display);
 }
 
 static void
@@ -174,7 +174,7 @@ gimp_clone_tool_motion (GimpTool        *tool,
                         GimpCoords      *coords,
                         guint32          time,
                         GdkModifierType  state,
-                        GimpDisplay     *gdisp)
+                        GimpDisplay     *display)
 {
   GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
 
@@ -183,23 +183,23 @@ gimp_clone_tool_motion (GimpTool        *tool,
   else
     GIMP_CLONE (paint_tool->core)->set_source = FALSE;
 
-  GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state, display);
 }
 
 static void
 gimp_clone_tool_cursor_update (GimpTool        *tool,
                                GimpCoords      *coords,
                                GdkModifierType  state,
-                               GimpDisplay     *gdisp)
+                               GimpDisplay     *display)
 {
   GimpCloneOptions *options;
   GimpCursorType    ctype = GIMP_CURSOR_MOUSE;
 
   options = (GimpCloneOptions *) tool->tool_info->tool_options;
 
-  if (gimp_image_coords_in_active_drawable (gdisp->image, coords))
+  if (gimp_image_coords_in_active_drawable (display->image, coords))
     {
-      GimpChannel *selection = gimp_image_get_mask (gdisp->image);
+      GimpChannel *selection = gimp_image_get_mask (display->image);
 
       /*  One more test--is there a selected region?
        *  if so, is cursor inside?
@@ -220,7 +220,7 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
 
   gimp_tool_control_set_cursor (tool->control, ctype);
 
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
 static void
@@ -228,18 +228,18 @@ gimp_clone_tool_oper_update (GimpTool        *tool,
                              GimpCoords      *coords,
                              GdkModifierType  state,
                              gboolean         proximity,
-                             GimpDisplay     *gdisp)
+                             GimpDisplay     *display)
 {
   GimpToolOptions *options = tool->tool_info->tool_options;
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
-                                               gdisp);
+                                               display);
 
   if (GIMP_CLONE_OPTIONS (options)->clone_type == GIMP_IMAGE_CLONE    &&
       GIMP_CLONE (GIMP_PAINT_TOOL (tool)->core)->src_drawable == NULL &&
       proximity)
     {
-      gimp_tool_replace_status (tool, gdisp,
+      gimp_tool_replace_status (tool, display,
                                 _("Ctrl-Click to set a clone source."));
     }
 }
@@ -260,15 +260,15 @@ gimp_clone_tool_draw (GimpDrawTool *draw_tool)
         {
           gint           off_x;
           gint           off_y;
-          GimpDisplay   *tmp_gdisp;
+          GimpDisplay   *tmp_display;
           GimpCloneTool *clone_tool = GIMP_CLONE_TOOL (draw_tool);
 
           gimp_item_offsets (GIMP_ITEM (clone->src_drawable), &off_x, &off_y);
 
-          tmp_gdisp = draw_tool->gdisp;
-          draw_tool->gdisp = clone_tool->src_gdisp;
+          tmp_display = draw_tool->display;
+          draw_tool->display = clone_tool->src_display;
 
-          if (draw_tool->gdisp)
+          if (draw_tool->display)
             gimp_draw_tool_draw_handle (draw_tool,
                                         GIMP_HANDLE_CROSS,
                                         clone->src_x + off_x,
@@ -277,7 +277,7 @@ gimp_clone_tool_draw (GimpDrawTool *draw_tool)
                                         GTK_ANCHOR_CENTER,
                                         FALSE);
 
-          draw_tool->gdisp = tmp_gdisp;
+          draw_tool->display = tmp_display;
         }
     }
 

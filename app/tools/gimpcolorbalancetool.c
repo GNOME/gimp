@@ -54,7 +54,7 @@
 static void     gimp_color_balance_tool_finalize   (GObject          *object);
 
 static gboolean gimp_color_balance_tool_initialize (GimpTool         *tool,
-                                                    GimpDisplay      *gdisp);
+                                                    GimpDisplay      *display);
 
 static void     gimp_color_balance_tool_map        (GimpImageMapTool *im_tool);
 static void     gimp_color_balance_tool_dialog     (GimpImageMapTool *im_tool);
@@ -141,12 +141,12 @@ gimp_color_balance_tool_finalize (GObject *object)
 
 static gboolean
 gimp_color_balance_tool_initialize (GimpTool    *tool,
-				    GimpDisplay *gdisp)
+				    GimpDisplay *display)
 {
   GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (tool);
   GimpDrawable         *drawable;
 
-  drawable = gimp_image_active_drawable (gdisp->image);
+  drawable = gimp_image_active_drawable (display->image);
 
   if (! drawable)
     return FALSE;
@@ -161,7 +161,7 @@ gimp_color_balance_tool_initialize (GimpTool    *tool,
 
   cb_tool->transfer_mode = GIMP_MIDTONES;
 
-  GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display);
 
   color_balance_update (cb_tool, ALL);
 

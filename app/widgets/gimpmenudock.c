@@ -579,21 +579,21 @@ gimp_menu_dock_image_changed (GimpContext *context,
     }
   else if (image != NULL && ! gimp_container_is_empty (display_container))
     {
-      GimpObject *gdisp;
-      GimpImage  *gdisp_image;
+      GimpObject *display;
+      GimpImage  *display_image;
       gboolean    find_display = TRUE;
 
-      gdisp = gimp_context_get_display (context);
+      display = gimp_context_get_display (context);
 
-      if (gdisp)
+      if (display)
         {
-          g_object_get (gdisp, "image", &gdisp_image, NULL);
+          g_object_get (display, "image", &display_image, NULL);
 
-          if (gdisp_image)
+          if (display_image)
             {
-              g_object_unref (gdisp_image);
+              g_object_unref (display_image);
 
-              if (gdisp_image == image)
+              if (display_image == image)
                 find_display = FALSE;
             }
         }
@@ -606,21 +606,21 @@ gimp_menu_dock_image_changed (GimpContext *context,
                list;
                list = g_list_next (list))
             {
-              gdisp = GIMP_OBJECT (list->data);
+              display = GIMP_OBJECT (list->data);
 
-              g_object_get (gdisp, "image", &gdisp_image, NULL);
+              g_object_get (display, "image", &display_image, NULL);
 
-              if (gdisp_image)
+              if (display_image)
                 {
-                  g_object_unref (gdisp_image);
+                  g_object_unref (display_image);
 
-                  if (gdisp_image == image)
+                  if (display_image == image)
                     {
                       /*  this invokes this function recursively but we
                        *  don't enter the if(find_display) branch the
                        *  second time
                        */
-                      gimp_context_set_display (context, gdisp);
+                      gimp_context_set_display (context, display);
 
                       /*  don't stop signal emission here because the
                        *  context's image was not changed by the

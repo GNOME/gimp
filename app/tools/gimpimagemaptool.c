@@ -57,13 +57,13 @@
 static void     gimp_image_map_tool_finalize   (GObject          *object);
 
 static gboolean gimp_image_map_tool_initialize (GimpTool         *tool,
-                                                GimpDisplay      *gdisp);
+                                                GimpDisplay      *display);
 static void     gimp_image_map_tool_control    (GimpTool         *tool,
                                                 GimpToolAction    action,
-                                                GimpDisplay      *gdisp);
+                                                GimpDisplay      *display);
 static gboolean gimp_image_map_tool_key_press  (GimpTool         *tool,
                                                 GdkEventKey      *kevent,
-                                                GimpDisplay      *gdisp);
+                                                GimpDisplay      *display);
 
 static gboolean gimp_image_map_tool_pick_color (GimpColorTool    *color_tool,
                                                 gint              x,
@@ -179,7 +179,7 @@ gimp_image_map_tool_finalize (GObject *object)
 
 static gboolean
 gimp_image_map_tool_initialize (GimpTool    *tool,
-                                GimpDisplay *gdisp)
+                                GimpDisplay *display)
 {
   GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (tool);
   GimpToolInfo     *tool_info;
@@ -187,8 +187,8 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
 
   tool_info = tool->tool_info;
 
-  /*  set gdisp so the dialog can be hidden on display destruction  */
-  tool->gdisp = gdisp;
+  /*  set display so the dialog can be hidden on display destruction  */
+  tool->display = display;
 
   if (! image_map_tool->shell)
     {
@@ -204,7 +204,7 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
 
       image_map_tool->shell = shell =
         gimp_tool_dialog_new (tool_info,
-                              gdisp->shell,
+                              display->shell,
                               klass->shell_desc,
 
                               GIMP_STOCK_RESET, RESPONSE_RESET,
@@ -304,7 +304,7 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
       gtk_widget_show (vbox);
     }
 
-  drawable = gimp_image_active_drawable (gdisp->image);
+  drawable = gimp_image_active_drawable (display->image);
 
   gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (image_map_tool->shell),
                                      GIMP_VIEWABLE (drawable));
@@ -324,7 +324,7 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
 static void
 gimp_image_map_tool_control (GimpTool       *tool,
                              GimpToolAction  action,
-                             GimpDisplay    *gdisp)
+                             GimpDisplay    *display)
 {
   GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (tool);
 
@@ -340,17 +340,17 @@ gimp_image_map_tool_control (GimpTool       *tool,
       break;
     }
 
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static gboolean
 gimp_image_map_tool_key_press (GimpTool    *tool,
                                GdkEventKey *kevent,
-                               GimpDisplay *gdisp)
+                               GimpDisplay *display)
 {
   GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (tool);
 
-  if (gdisp == tool->gdisp)
+  if (display == tool->display)
     {
       switch (kevent->keyval)
         {
@@ -448,8 +448,8 @@ gimp_image_map_tool_flush (GimpImageMap     *image_map,
 {
   GimpTool *tool = GIMP_TOOL (image_map_tool);
 
-  gimp_projection_flush_now (tool->gdisp->image->projection);
-  gimp_display_flush_now (tool->gdisp);
+  gimp_projection_flush_now (tool->display->image->projection);
+  gimp_display_flush_now (tool->display);
 }
 
 static void
@@ -485,10 +485,10 @@ gimp_image_map_tool_response (GtkWidget        *widget,
 
           gimp_tool_control_set_preserve (tool->control, FALSE);
 
-          gimp_image_flush (tool->gdisp->image);
+          gimp_image_flush (tool->display->image);
         }
 
-      tool->gdisp    = NULL;
+      tool->display    = NULL;
       tool->drawable = NULL;
       break;
 
@@ -504,10 +504,10 @@ gimp_image_map_tool_response (GtkWidget        *widget,
 
           gimp_tool_control_set_preserve (tool->control, FALSE);
 
-          gimp_image_flush (tool->gdisp->image);
+          gimp_image_flush (tool->display->image);
         }
 
-      tool->gdisp    = NULL;
+      tool->display    = NULL;
       tool->drawable = NULL;
       break;
     }
@@ -539,7 +539,7 @@ gimp_image_map_tool_notify_preview (GObject          *config,
 
           gimp_tool_control_set_preserve (tool->control, FALSE);
 
-          gimp_image_flush (tool->gdisp->image);
+          gimp_image_flush (tool->display->image);
         }
     }
 }

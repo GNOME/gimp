@@ -55,11 +55,11 @@
 static void   gimp_scale_tool_dialog         (GimpTransformTool  *tr_tool);
 static void   gimp_scale_tool_dialog_update  (GimpTransformTool  *tr_tool);
 static void   gimp_scale_tool_prepare        (GimpTransformTool  *tr_tool,
-                                              GimpDisplay        *gdisp);
+                                              GimpDisplay        *display);
 static void   gimp_scale_tool_motion         (GimpTransformTool  *tr_tool,
-                                              GimpDisplay        *gdisp);
+                                              GimpDisplay        *display);
 static void   gimp_scale_tool_recalc         (GimpTransformTool  *tr_tool,
-                                              GimpDisplay        *gdisp);
+                                              GimpDisplay        *display);
 
 static void   gimp_scale_tool_size_changed   (GtkWidget          *widget,
                                               GimpTransformTool  *tr_tool);
@@ -205,9 +205,9 @@ gimp_scale_tool_dialog_update (GimpTransformTool *tr_tool)
                   _gimp_unit_get_digits (gimp, label_unit) + 1,
                   _gimp_unit_get_symbol (gimp, label_unit));
       g_snprintf (scale->orig_width_buf, MAX_INFO_BUF, format_buf,
-                  (x2 - x1) * unit_factor / tool->gdisp->image->xresolution);
+                  (x2 - x1) * unit_factor / tool->display->image->xresolution);
       g_snprintf (scale->orig_height_buf, MAX_INFO_BUF, format_buf,
-                  (y2 - y1) * unit_factor / tool->gdisp->image->yresolution);
+                  (y2 - y1) * unit_factor / tool->display->image->yresolution);
     }
   else /* unit == GIMP_UNIT_PIXEL */
     {
@@ -258,7 +258,7 @@ gimp_scale_tool_dialog_update (GimpTransformTool *tr_tool)
 
 static void
 gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
-                         GimpDisplay       *gdisp)
+                         GimpDisplay       *display)
 {
   GimpScaleTool *scale = GIMP_SCALE_TOOL (tr_tool);
 
@@ -273,12 +273,12 @@ gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
                                    tr_tool);
 
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (scale->sizeentry),
-                            GIMP_DISPLAY_SHELL (gdisp->shell)->unit);
+                            GIMP_DISPLAY_SHELL (display->shell)->unit);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (scale->sizeentry), 0,
-                                  gdisp->image->xresolution, FALSE);
+                                  display->image->xresolution, FALSE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (scale->sizeentry), 1,
-                                  gdisp->image->yresolution, FALSE);
+                                  display->image->yresolution, FALSE);
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (scale->sizeentry), 0,
                                          GIMP_MIN_IMAGE_SIZE,
@@ -312,7 +312,7 @@ gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
 
 static void
 gimp_scale_tool_motion (GimpTransformTool *tr_tool,
-                        GimpDisplay       *gdisp)
+                        GimpDisplay       *display)
 {
   GimpTransformOptions *options;
   gdouble              *x1;
@@ -435,7 +435,7 @@ gimp_scale_tool_motion (GimpTransformTool *tr_tool,
 
 static void
 gimp_scale_tool_recalc (GimpTransformTool *tr_tool,
-                        GimpDisplay       *gdisp)
+                        GimpDisplay       *display)
 {
   gimp_matrix3_identity (&tr_tool->transform);
   gimp_transform_matrix_scale (&tr_tool->transform,
@@ -485,7 +485,7 @@ gimp_scale_tool_size_changed (GtkWidget         *widget,
       tr_tool->trans_info[X1] = tr_tool->trans_info[X0] + width;
       tr_tool->trans_info[Y1] = tr_tool->trans_info[Y0] + height;
 
-      gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
+      gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->display);
 
       gimp_transform_tool_expose_preview (tr_tool);
 
@@ -515,7 +515,7 @@ gimp_scale_tool_aspect_changed (GtkWidget         *widget,
      scale->aspect_ratio_val) +
     tr_tool->trans_info[Y0];
 
-  gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
+  gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->display);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
 }

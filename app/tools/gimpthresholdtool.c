@@ -57,7 +57,7 @@
 static void     gimp_threshold_tool_finalize        (GObject           *object);
 
 static gboolean gimp_threshold_tool_initialize      (GimpTool          *tool,
-                                                     GimpDisplay       *gdisp);
+                                                     GimpDisplay       *display);
 
 static void     gimp_threshold_tool_map             (GimpImageMapTool  *im_tool);
 static void     gimp_threshold_tool_dialog          (GimpImageMapTool  *im_tool);
@@ -142,12 +142,12 @@ gimp_threshold_tool_finalize (GObject *object)
 
 static gboolean
 gimp_threshold_tool_initialize (GimpTool    *tool,
-				GimpDisplay *gdisp)
+				GimpDisplay *display)
 {
   GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (tool);
   GimpDrawable      *drawable;
 
-  drawable = gimp_image_active_drawable (gdisp->image);
+  drawable = gimp_image_active_drawable (display->image);
 
   if (! drawable)
     return FALSE;
@@ -165,7 +165,7 @@ gimp_threshold_tool_initialize (GimpTool    *tool,
   t_tool->threshold->low_threshold  = 127;
   t_tool->threshold->high_threshold = 255;
 
-  GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display);
 
   gimp_drawable_calculate_histogram (drawable, t_tool->hist);
 

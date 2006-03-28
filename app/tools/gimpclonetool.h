@@ -37,7 +37,7 @@ typedef struct _GimpCloneToolClass GimpCloneToolClass;
 struct _GimpCloneTool
 {
   GimpPaintTool parent_instance;
-  GimpDisplay  *src_gdisp;
+  GimpDisplay  *src_display;
 };
 
 struct _GimpCloneToolClass

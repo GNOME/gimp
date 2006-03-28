@@ -459,7 +459,7 @@ void
 layers_resize_cmd_callback (GtkAction *action,
 			    gpointer   data)
 {
-  GimpDisplay *gdisp;
+  GimpDisplay *display;
   GimpImage   *image;
   GimpLayer   *layer;
   GtkWidget   *widget;
@@ -468,12 +468,12 @@ layers_resize_cmd_callback (GtkAction *action,
   return_if_no_layer (image, layer, data);
   return_if_no_widget (widget, data);
 
-  gdisp = GIMP_IS_DISPLAY (data) ? data : NULL;
+  display = GIMP_IS_DISPLAY (data) ? data : NULL;
 
   unit = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (image),
                                              "scale-dialog-unit"));
   if (! unit)
-    unit = gdisp ? GIMP_DISPLAY_SHELL (gdisp->shell)->unit : GIMP_UNIT_PIXEL;
+    unit = display ? GIMP_DISPLAY_SHELL (display->shell)->unit : GIMP_UNIT_PIXEL;
 
   dialog = resize_dialog_new (GIMP_VIEWABLE (layer),
                               _("Set Layer Boundary Size"), "gimp-layer-resize",
@@ -505,18 +505,18 @@ layers_scale_cmd_callback (GtkAction *action,
   GimpImage   *image;
   GimpLayer   *layer;
   GtkWidget   *widget;
-  GimpDisplay *gdisp;
+  GimpDisplay *display;
   GtkWidget   *dialog;
   GimpUnit     unit;
   return_if_no_layer (image, layer, data);
   return_if_no_widget (widget, data);
 
-  gdisp = action_data_get_display (data);
+  display = action_data_get_display (data);
 
   unit = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (image),
                                              "scale-dialog-unit"));
   if (! unit)
-    unit = gdisp ? GIMP_DISPLAY_SHELL (gdisp->shell)->unit : GIMP_UNIT_PIXEL;
+    unit = display ? GIMP_DISPLAY_SHELL (display->shell)->unit : GIMP_UNIT_PIXEL;
 
   dialog = scale_dialog_new (GIMP_VIEWABLE (layer),
                              _("Scale Layer"), "gimp-layer-scale",
@@ -524,7 +524,7 @@ layers_scale_cmd_callback (GtkAction *action,
                              gimp_standard_help_func, GIMP_HELP_LAYER_SCALE,
                              unit, image->gimp->config->interpolation_type,
                              layers_scale_layer_callback,
-                             gdisp);
+                             display);
 
   gtk_widget_show (dialog);
 }
@@ -958,7 +958,7 @@ layers_scale_layer_callback (GtkWidget             *dialog,
                              GimpUnit               resolution_unit,/* unused */
                              gpointer               data)
 {
-  GimpDisplay *gdisp = GIMP_DISPLAY (data);
+  GimpDisplay *display = GIMP_DISPLAY (data);
 
   if (width > 0 && height > 0)
     {
@@ -975,9 +975,9 @@ layers_scale_layer_callback (GtkWidget             *dialog,
       if (width == gimp_item_width (item) && height == gimp_item_height (item))
         return;
 
-      if (gdisp)
+      if (display)
         {
-          progress = GIMP_PROGRESS (gdisp);
+          progress = GIMP_PROGRESS (display);
         }
       else
         {

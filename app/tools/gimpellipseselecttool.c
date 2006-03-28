@@ -137,7 +137,7 @@ gimp_ellipse_select_tool_rect_select (GimpNewRectSelectTool *rect_tool,
   tool     = GIMP_TOOL (rect_tool);
   options  = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  gimp_channel_select_ellipse (gimp_image_get_mask (tool->gdisp->image),
+  gimp_channel_select_ellipse (gimp_image_get_mask (tool->display->image),
                                x, y, w, h,
                                options->operation,
                                options->antialias,

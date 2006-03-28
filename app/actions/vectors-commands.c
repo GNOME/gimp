@@ -311,7 +311,7 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
   GimpImage   *image;
   ProcRecord  *proc_rec;
   Argument    *args;
-  GimpDisplay *gdisp;
+  GimpDisplay *display;
   return_if_no_image (image, data);
 
   if (value)
@@ -327,7 +327,7 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
       return;
     }
 
-  gdisp = gimp_context_get_display (action_data_get_context (data));
+  display = gimp_context_get_display (action_data_get_context (data));
 
   /*  plug-in arguments as if called by <Image>/Filters/...  */
   args = procedural_db_arguments (proc_rec);
@@ -337,9 +337,9 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
   args[2].value.pdb_int = -1;  /*  unused  */
 
   plug_in_run (image->gimp, action_data_get_context (data),
-               GIMP_PROGRESS (gdisp),
+               GIMP_PROGRESS (display),
                proc_rec, args, 3 /* not proc_rec->num_args */,
-               FALSE, TRUE, gdisp ? gimp_display_get_ID (gdisp) : 0);
+               FALSE, TRUE, display ? gimp_display_get_ID (display) : 0);
 
   g_free (args);
 }

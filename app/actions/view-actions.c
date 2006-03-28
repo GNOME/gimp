@@ -497,14 +497,14 @@ void
 view_actions_update (GimpActionGroup *group,
                      gpointer         data)
 {
-  GimpDisplay        *gdisp      = action_data_get_display (data);
+  GimpDisplay        *display    = action_data_get_display (data);
   GimpDisplayShell   *shell      = NULL;
   GimpDisplayOptions *options    = NULL;
   gboolean            fullscreen = FALSE;
 
-  if (gdisp)
+  if (display)
     {
-      shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+      shell = GIMP_DISPLAY_SHELL (display->shell);
 
       fullscreen = gimp_display_shell_get_fullscreen (shell);
 
@@ -522,47 +522,47 @@ view_actions_update (GimpActionGroup *group,
 #define SET_COLOR(action,color) \
         gimp_action_group_set_action_color (group, action, color, FALSE)
 
-  SET_SENSITIVE ("view-new",   gdisp);
-  SET_SENSITIVE ("view-close", gdisp);
+  SET_SENSITIVE ("view-new",   display);
+  SET_SENSITIVE ("view-close", display);
 
-  SET_SENSITIVE ("view-dot-for-dot", gdisp);
-  SET_ACTIVE    ("view-dot-for-dot", gdisp && shell->dot_for_dot);
+  SET_SENSITIVE ("view-dot-for-dot", display);
+  SET_ACTIVE    ("view-dot-for-dot", display && shell->dot_for_dot);
 
-  SET_SENSITIVE ("view-zoom-out",    gdisp);
-  SET_SENSITIVE ("view-zoom-in",     gdisp);
-  SET_SENSITIVE ("view-zoom-fit-in", gdisp);
-  SET_SENSITIVE ("view-zoom-fit-to", gdisp);
+  SET_SENSITIVE ("view-zoom-out",    display);
+  SET_SENSITIVE ("view-zoom-in",     display);
+  SET_SENSITIVE ("view-zoom-fit-in", display);
+  SET_SENSITIVE ("view-zoom-fit-to", display);
 
-  SET_SENSITIVE ("view-zoom-16-1",  gdisp);
-  SET_SENSITIVE ("view-zoom-8-1",   gdisp);
-  SET_SENSITIVE ("view-zoom-4-1",   gdisp);
-  SET_SENSITIVE ("view-zoom-2-1",   gdisp);
-  SET_SENSITIVE ("view-zoom-1-1",   gdisp);
-  SET_SENSITIVE ("view-zoom-1-2",   gdisp);
-  SET_SENSITIVE ("view-zoom-1-4",   gdisp);
-  SET_SENSITIVE ("view-zoom-1-8",   gdisp);
-  SET_SENSITIVE ("view-zoom-1-16",  gdisp);
-  SET_SENSITIVE ("view-zoom-other", gdisp);
+  SET_SENSITIVE ("view-zoom-16-1",  display);
+  SET_SENSITIVE ("view-zoom-8-1",   display);
+  SET_SENSITIVE ("view-zoom-4-1",   display);
+  SET_SENSITIVE ("view-zoom-2-1",   display);
+  SET_SENSITIVE ("view-zoom-1-1",   display);
+  SET_SENSITIVE ("view-zoom-1-2",   display);
+  SET_SENSITIVE ("view-zoom-1-4",   display);
+  SET_SENSITIVE ("view-zoom-1-8",   display);
+  SET_SENSITIVE ("view-zoom-1-16",  display);
+  SET_SENSITIVE ("view-zoom-other", display);
 
-  if (gdisp)
+  if (display)
     view_actions_set_zoom (group, shell);
 
-  SET_SENSITIVE ("view-navigation-window", gdisp);
-  SET_SENSITIVE ("view-display-filters",   gdisp);
+  SET_SENSITIVE ("view-navigation-window", display);
+  SET_SENSITIVE ("view-display-filters",   display);
 
-  SET_SENSITIVE ("view-show-selection",      gdisp);
-  SET_ACTIVE    ("view-show-selection",      gdisp && options->show_selection);
-  SET_SENSITIVE ("view-show-layer-boundary", gdisp);
-  SET_ACTIVE    ("view-show-layer-boundary", gdisp && options->show_layer_boundary);
-  SET_ACTIVE    ("view-show-guides",         gdisp && options->show_guides);
-  SET_ACTIVE    ("view-show-grid",           gdisp && options->show_grid);
-  SET_ACTIVE    ("view-show-sample-points",  gdisp && options->show_sample_points);
-  SET_ACTIVE    ("view-snap-to-guides",      gdisp && shell->snap_to_guides);
-  SET_ACTIVE    ("view-snap-to-grid",        gdisp && shell->snap_to_grid);
-  SET_ACTIVE    ("view-snap-to-canvas",      gdisp && shell->snap_to_canvas);
-  SET_ACTIVE    ("view-snap-to-vectors",     gdisp && shell->snap_to_vectors);
+  SET_SENSITIVE ("view-show-selection",      display);
+  SET_ACTIVE    ("view-show-selection",      display && options->show_selection);
+  SET_SENSITIVE ("view-show-layer-boundary", display);
+  SET_ACTIVE    ("view-show-layer-boundary", display && options->show_layer_boundary);
+  SET_ACTIVE    ("view-show-guides",         display && options->show_guides);
+  SET_ACTIVE    ("view-show-grid",           display && options->show_grid);
+  SET_ACTIVE    ("view-show-sample-points",  display && options->show_sample_points);
+  SET_ACTIVE    ("view-snap-to-guides",      display && shell->snap_to_guides);
+  SET_ACTIVE    ("view-snap-to-grid",        display && shell->snap_to_grid);
+  SET_ACTIVE    ("view-snap-to-canvas",      display && shell->snap_to_canvas);
+  SET_ACTIVE    ("view-snap-to-vectors",     display && shell->snap_to_vectors);
 
-  if (gdisp)
+  if (display)
     {
       SET_COLOR ("view-padding-color-menu", &options->padding_color);
 
@@ -579,24 +579,24 @@ view_actions_update (GimpActionGroup *group,
         }
     }
 
-  SET_SENSITIVE ("view-show-menubar",    gdisp);
-  SET_ACTIVE    ("view-show-menubar",    gdisp && options->show_menubar);
-  SET_SENSITIVE ("view-show-rulers",     gdisp);
-  SET_ACTIVE    ("view-show-rulers",     gdisp && options->show_rulers);
-  SET_SENSITIVE ("view-show-scrollbars", gdisp);
-  SET_ACTIVE    ("view-show-scrollbars", gdisp && options->show_scrollbars);
-  SET_SENSITIVE ("view-show-statusbar",  gdisp);
-  SET_ACTIVE    ("view-show-statusbar",  gdisp && options->show_statusbar);
+  SET_SENSITIVE ("view-show-menubar",    display);
+  SET_ACTIVE    ("view-show-menubar",    display && options->show_menubar);
+  SET_SENSITIVE ("view-show-rulers",     display);
+  SET_ACTIVE    ("view-show-rulers",     display && options->show_rulers);
+  SET_SENSITIVE ("view-show-scrollbars", display);
+  SET_ACTIVE    ("view-show-scrollbars", display && options->show_scrollbars);
+  SET_SENSITIVE ("view-show-statusbar",  display);
+  SET_ACTIVE    ("view-show-statusbar",  display && options->show_statusbar);
 
-  SET_SENSITIVE ("view-shrink-wrap", gdisp);
-  SET_SENSITIVE ("view-fullscreen",  gdisp);
-  SET_ACTIVE    ("view-fullscreen",  gdisp && fullscreen);
+  SET_SENSITIVE ("view-shrink-wrap", display);
+  SET_SENSITIVE ("view-fullscreen",  display);
+  SET_ACTIVE    ("view-fullscreen",  display && fullscreen);
 
   if (GIMP_IS_DISPLAY (group->user_data) ||
       GIMP_IS_GIMP (group->user_data))
     {
       /*  see view_actions_setup()  */
-      window_actions_update (group, gdisp ? gdisp->shell : NULL);
+      window_actions_update (group, display ? display->shell : NULL);
     }
 
 #undef SET_ACTIVE

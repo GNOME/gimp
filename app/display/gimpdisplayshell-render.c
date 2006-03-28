@@ -205,7 +205,7 @@ static void  gimp_display_shell_render_mask      (GimpDisplayShell *shell,
 /*****************************************************************/
 /*  This function is the core of the display--it offsets and     */
 /*  scales the image according to the current parameters in the  */
-/*  gdisp object.  It handles color, grayscale, 8, 15, 16, 24,   */
+/*  display object.  It handles color, grayscale, 8, 15, 16, 24  */
 /*  & 32 bit output depths.                                      */
 /*****************************************************************/
 
@@ -223,7 +223,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
   g_return_if_fail (w > 0 && h > 0);
 
-  projection = shell->gdisp->image->projection;
+  projection = shell->display->image->projection;
 
   render_image_init_info_full (&info, shell, x, y, w, h, projection);
 
@@ -437,7 +437,7 @@ render_image_indexed (RenderInfo *info)
   gint          x, xe;
   gboolean      initial = TRUE;
 
-  cmap = gimp_image_get_colormap (info->shell->gdisp->image);
+  cmap = gimp_image_get_colormap (info->shell->display->image);
 
   y  = info->y;
   ye = info->y + info->h;
@@ -495,7 +495,7 @@ static void
 render_image_indexed_a (RenderInfo *info)
 {
   const guint  *alpha = info->alpha;
-  const guchar *cmap  = gimp_image_get_colormap (info->shell->gdisp->image);
+  const guchar *cmap  = gimp_image_get_colormap (info->shell->display->image);
   gint          y, ye;
   gint          x, xe;
   gboolean      initial = TRUE;

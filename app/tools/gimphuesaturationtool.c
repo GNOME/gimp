@@ -63,7 +63,7 @@
 static void     gimp_hue_saturation_tool_finalize   (GObject          *object);
 
 static gboolean gimp_hue_saturation_tool_initialize (GimpTool         *tool,
-                                                     GimpDisplay      *gdisp);
+                                                     GimpDisplay      *display);
 
 static void     gimp_hue_saturation_tool_map        (GimpImageMapTool *im_tool);
 static void     gimp_hue_saturation_tool_dialog     (GimpImageMapTool *im_tool);
@@ -160,12 +160,12 @@ gimp_hue_saturation_tool_finalize (GObject *object)
 
 static gboolean
 gimp_hue_saturation_tool_initialize (GimpTool    *tool,
-				     GimpDisplay *gdisp)
+				     GimpDisplay *display)
 {
   GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (tool);
   GimpDrawable          *drawable;
 
-  drawable = gimp_image_active_drawable (gdisp->image);
+  drawable = gimp_image_active_drawable (display->image);
 
   if (! drawable)
     return FALSE;
@@ -178,7 +178,7 @@ gimp_hue_saturation_tool_initialize (GimpTool    *tool,
 
   hue_saturation_init (hs_tool->hue_saturation);
 
-  GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->initialize (tool, display);
 
   hue_saturation_update (hs_tool, ALL);
 

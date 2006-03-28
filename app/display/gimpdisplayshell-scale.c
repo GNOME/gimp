@@ -81,11 +81,11 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (! shell->gdisp)
+  if (! shell->display)
     return;
 
-  image_width  = shell->gdisp->image->width;
-  image_height = shell->gdisp->image->height;
+  image_width  = shell->display->image->width;
+  image_height = shell->display->image->height;
 
   sx    = SCALEX (shell, image_width);
   sy    = SCALEY (shell, image_height);
@@ -192,7 +192,7 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
 
   if (dot_for_dot != shell->dot_for_dot)
     {
-      Gimp *gimp = shell->gdisp->image->gimp;
+      Gimp *gimp = shell->display->image->gimp;
 
       /* freeze the active tool */
       gimp_display_shell_pause (shell);
@@ -287,7 +287,7 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (! shell->gdisp)
+  if (! shell->display)
     return;
 
   current = gimp_zoom_model_get_factor (shell->zoom);
@@ -304,7 +304,7 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
   offset_x *= scale;
   offset_y *= scale;
 
-  config = GIMP_DISPLAY_CONFIG (shell->gdisp->image->gimp->config);
+  config = GIMP_DISPLAY_CONFIG (shell->display->image->gimp->config);
 
   gimp_display_shell_scale_by_values (shell, scale,
                                       offset_x - x, offset_y - y,
@@ -321,7 +321,7 @@ gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  image = shell->gdisp->image;
+  image = shell->display->image;
 
   image_width  = image->width;
   image_height = image->height;
@@ -350,7 +350,7 @@ gimp_display_shell_scale_fit_to (GimpDisplayShell *shell)
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  image = shell->gdisp->image;
+  image = shell->display->image;
 
   image_width  = image->width;
   image_height = image->height;
@@ -417,7 +417,7 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gimp = shell->gdisp->image->gimp;
+  gimp = shell->display->image->gimp;
 
   /* freeze the active tool */
   gimp_display_shell_pause (shell);
@@ -468,7 +468,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
                               NULL);
 
   shell->scale_dialog =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (shell->gdisp->image),
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (shell->display->image),
                               _("Zoom Ratio"), "display_scale",
                               GTK_STOCK_ZOOM_100,
                               _("Select Zoom Ratio"),
@@ -652,7 +652,7 @@ img2real (GimpDisplayShell *shell,
           gboolean          xdir,
           gdouble           len)
 {
-  GimpImage *image = shell->gdisp->image;
+  GimpImage *image = shell->display->image;
   gdouble    res;
 
   if (shell->unit == GIMP_UNIT_PIXEL)

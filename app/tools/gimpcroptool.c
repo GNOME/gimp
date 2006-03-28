@@ -51,22 +51,22 @@ static void     gimp_crop_tool_finalize       (GObject        *object);
 
 static void     gimp_crop_tool_control        (GimpTool       *tool,
                                                GimpToolAction  action,
-                                               GimpDisplay    *gdisp);
+                                               GimpDisplay    *display);
 
 static void     gimp_crop_tool_button_press   (GimpTool       *tool,
                                                GimpCoords     *coords,
                                                guint32         time,
                                                GdkModifierType state,
-                                               GimpDisplay    *gdisp);
+                                               GimpDisplay    *display);
 static void     gimp_crop_tool_button_release (GimpTool       *tool,
                                                GimpCoords     *coords,
                                                guint32         time,
                                                GdkModifierType state,
-                                               GimpDisplay    *gdisp);
+                                               GimpDisplay    *display);
 static void     gimp_crop_tool_cursor_update  (GimpTool       *tool,
                                                GimpCoords     *coords,
                                                GdkModifierType state,
-                                               GimpDisplay    *gdisp);
+                                               GimpDisplay    *display);
 
 static gboolean gimp_crop_tool_execute        (GimpRectangleTool *rectangle,
                                                gint            x,
@@ -165,7 +165,7 @@ gimp_crop_tool_finalize (GObject *object)
 static void
 gimp_crop_tool_control (GimpTool       *tool,
                         GimpToolAction  action,
-                        GimpDisplay    *gdisp)
+                        GimpDisplay    *display)
 {
   GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (tool);
 
@@ -187,7 +187,7 @@ gimp_crop_tool_control (GimpTool       *tool,
       break;
     }
 
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void
@@ -195,13 +195,13 @@ gimp_crop_tool_button_press (GimpTool        *tool,
                              GimpCoords      *coords,
                              guint32          time,
                              GdkModifierType  state,
-                             GimpDisplay     *gdisp)
+                             GimpDisplay     *display)
 {
-  if (tool->gdisp && gdisp != tool->gdisp)
+  if (tool->display && display != tool->display)
     gimp_rectangle_tool_response (NULL, GTK_RESPONSE_CANCEL,
                                   GIMP_RECTANGLE_TOOL (tool));
 
-  gimp_rectangle_tool_button_press (tool, coords, time, state, gdisp);
+  gimp_rectangle_tool_button_press (tool, coords, time, state, display);
 }
 
 static void
@@ -209,30 +209,30 @@ gimp_crop_tool_button_release (GimpTool        *tool,
                                GimpCoords      *coords,
                                guint32          time,
                                GdkModifierType  state,
-                               GimpDisplay     *gdisp)
+                               GimpDisplay     *display)
 {
   GimpCropOptions *options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
 
   if (options->crop_mode == GIMP_CROP_MODE_CROP)
-    gimp_tool_push_status (tool, gdisp,
+    gimp_tool_push_status (tool, display,
                            _("Click or press enter to crop."));
   else
-    gimp_tool_push_status (tool, gdisp,
+    gimp_tool_push_status (tool, display,
                            _("Click or press enter to resize."));
 
-  gimp_rectangle_tool_button_release (tool, coords, time, state, gdisp);
+  gimp_rectangle_tool_button_release (tool, coords, time, state, display);
 }
 
 static void
 gimp_crop_tool_cursor_update (GimpTool        *tool,
                               GimpCoords      *coords,
                               GdkModifierType  state,
-                              GimpDisplay     *gdisp)
+                              GimpDisplay     *display)
 {
-  gimp_rectangle_tool_cursor_update (tool, coords, state, gdisp);
+  gimp_rectangle_tool_cursor_update (tool, coords, state, display);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_CROP);
 
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
 static gboolean
@@ -250,9 +250,9 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
 
   options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
 
-  gimp_tool_pop_status (tool, tool->gdisp);
+  gimp_tool_pop_status (tool, tool->display);
 
-  image = tool->gdisp->image;
+  image = tool->display->image;
   max_x = image->width;
   max_y = image->height;
 

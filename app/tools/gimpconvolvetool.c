@@ -42,11 +42,11 @@ static void   gimp_convolve_tool_modifier_key  (GimpTool        *tool,
                                                 GdkModifierType  key,
                                                 gboolean         press,
                                                 GdkModifierType  state,
-                                                GimpDisplay     *gdisp);
+                                                GimpDisplay     *display);
 static void   gimp_convolve_tool_cursor_update (GimpTool        *tool,
                                                 GimpCoords      *coords,
                                                 GdkModifierType  state,
-                                                GimpDisplay     *gdisp);
+                                                GimpDisplay     *display);
 
 static GtkWidget * gimp_convolve_options_gui   (GimpToolOptions *options);
 
@@ -98,7 +98,7 @@ gimp_convolve_tool_modifier_key (GimpTool        *tool,
                                  GdkModifierType  key,
                                  gboolean         press,
 				 GdkModifierType  state,
-				 GimpDisplay     *gdisp)
+				 GimpDisplay     *display)
 {
   GimpConvolveOptions *options;
 
@@ -127,7 +127,7 @@ static void
 gimp_convolve_tool_cursor_update (GimpTool        *tool,
                                   GimpCoords      *coords,
 				  GdkModifierType  state,
-				  GimpDisplay     *gdisp)
+				  GimpDisplay     *display)
 {
   GimpConvolveOptions *options;
 
@@ -136,7 +136,7 @@ gimp_convolve_tool_cursor_update (GimpTool        *tool,
   gimp_tool_control_set_toggled (tool->control,
                                  (options->type == GIMP_SHARPEN_CONVOLVE));
 
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
 

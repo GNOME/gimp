@@ -63,11 +63,11 @@
 static void   gimp_rotate_tool_dialog        (GimpTransformTool   *tr_tool);
 static void   gimp_rotate_tool_dialog_update (GimpTransformTool   *tr_tool);
 static void   gimp_rotate_tool_prepare       (GimpTransformTool   *tr_tool,
-                                              GimpDisplay         *gdisp);
+                                              GimpDisplay         *display);
 static void   gimp_rotate_tool_motion        (GimpTransformTool   *tr_tool,
-                                              GimpDisplay         *gdisp);
+                                              GimpDisplay         *display);
 static void   gimp_rotate_tool_recalc        (GimpTransformTool   *tr_tool,
-                                              GimpDisplay         *gdisp);
+                                              GimpDisplay         *display);
 
 static void   rotate_angle_changed           (GtkWidget           *entry,
                                               GimpTransformTool   *tr_tool);
@@ -181,7 +181,7 @@ gimp_rotate_tool_dialog_update (GimpTransformTool *tr_tool)
 
 static void
 gimp_rotate_tool_prepare (GimpTransformTool *tr_tool,
-                          GimpDisplay       *gdisp)
+                          GimpDisplay       *display)
 {
   GimpRotateTool *rotate = GIMP_ROTATE_TOOL (tr_tool);
 
@@ -194,19 +194,19 @@ gimp_rotate_tool_prepare (GimpTransformTool *tr_tool,
                                    tr_tool);
 
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (rotate->sizeentry),
-                            GIMP_DISPLAY_SHELL (gdisp->shell)->unit);
+                            GIMP_DISPLAY_SHELL (display->shell)->unit);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (rotate->sizeentry), 0,
-                                  gdisp->image->xresolution, FALSE);
+                                  display->image->xresolution, FALSE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (rotate->sizeentry), 1,
-                                  gdisp->image->yresolution, FALSE);
+                                  display->image->yresolution, FALSE);
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (rotate->sizeentry), 0,
                                          -65536,
-                                         65536 + gdisp->image->width);
+                                         65536 + display->image->width);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (rotate->sizeentry), 1,
                                          -65536,
-                                         65536 + gdisp->image->height);
+                                         65536 + display->image->height);
 
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (rotate->sizeentry), 0,
                             tr_tool->x1, tr_tool->x2);
@@ -230,7 +230,7 @@ gimp_rotate_tool_prepare (GimpTransformTool *tr_tool,
 
 static void
 gimp_rotate_tool_motion (GimpTransformTool *tr_tool,
-                         GimpDisplay       *gdisp)
+                         GimpDisplay       *display)
 {
   GimpTransformOptions *options;
   gdouble               angle1, angle2, angle;
@@ -296,7 +296,7 @@ gimp_rotate_tool_motion (GimpTransformTool *tr_tool,
 
 static void
 gimp_rotate_tool_recalc (GimpTransformTool *tr_tool,
-                         GimpDisplay       *gdisp)
+                         GimpDisplay       *display)
 {
   tr_tool->cx = tr_tool->trans_info[CENTER_X];
   tr_tool->cy = tr_tool->trans_info[CENTER_Y];
@@ -322,7 +322,7 @@ rotate_angle_changed (GtkWidget         *widget,
 
       tr_tool->trans_info[ANGLE] = value;
 
-      gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
+      gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->display);
 
       gimp_transform_tool_expose_preview (tr_tool);
 
@@ -349,7 +349,7 @@ rotate_center_changed (GtkWidget         *widget,
       tr_tool->cx = cx;
       tr_tool->cy = cy;
 
-      gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
+      gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->display);
 
       gimp_transform_tool_expose_preview (tr_tool);
 

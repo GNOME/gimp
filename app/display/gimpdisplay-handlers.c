@@ -39,70 +39,70 @@ static void   gimp_display_update_handler (GimpProjection *projection,
                                            gint            y,
                                            gint            w,
                                            gint            h,
-                                           GimpDisplay    *gdisp);
+                                           GimpDisplay    *display);
 static void   gimp_display_flush_handler  (GimpImage      *image,
-                                           GimpDisplay    *gdisp);
+                                           GimpDisplay    *display);
 
 
 /*  public functions  */
 
 void
-gimp_display_connect (GimpDisplay *gdisp,
+gimp_display_connect (GimpDisplay *display,
                       GimpImage   *image)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+  g_return_if_fail (GIMP_IS_DISPLAY (display));
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (gdisp->image == NULL);
+  g_return_if_fail (display->image == NULL);
 
-  gdisp->image    = image;
-  gdisp->instance = image->instance_count;
+  display->image    = image;
+  display->instance = image->instance_count;
 
   image->instance_count++;   /* this is obsolete */
   image->disp_count++;
 
 #if 0
   g_print ("%s: image->ref_count before refing: %d\n",
-           G_STRFUNC, G_OBJECT (gdisp->image)->ref_count);
+           G_STRFUNC, G_OBJECT (display->image)->ref_count);
 #endif
 
   g_object_ref (image);
 
   g_signal_connect (image->projection, "update",
                     G_CALLBACK (gimp_display_update_handler),
-                    gdisp);
+                    display);
   g_signal_connect (image, "flush",
                     G_CALLBACK (gimp_display_flush_handler),
-                    gdisp);
+                    display);
 }
 
 void
-gimp_display_disconnect (GimpDisplay *gdisp)
+gimp_display_disconnect (GimpDisplay *display)
 {
   GimpImage *image;
 
-  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
-  g_return_if_fail (GIMP_IS_IMAGE (gdisp->image));
+  g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (GIMP_IS_IMAGE (display->image));
 
-  g_signal_handlers_disconnect_by_func (gdisp->image,
+  g_signal_handlers_disconnect_by_func (display->image,
                                         gimp_display_flush_handler,
-                                        gdisp);
-  g_signal_handlers_disconnect_by_func (gdisp->image->projection,
+                                        display);
+  g_signal_handlers_disconnect_by_func (display->image->projection,
                                         gimp_display_update_handler,
-                                        gdisp);
+                                        display);
 
-  gdisp->image->disp_count--;
+  display->image->disp_count--;
 
 #if 0
   g_print ("%s: image->ref_count before unrefing: %d\n",
-           G_STRFUNC, G_OBJECT (gdisp->image)->ref_count);
+           G_STRFUNC, G_OBJECT (display->image)->ref_count);
 #endif
 
-  /*  set gdisp->image to NULL before unrefing because there may be code
+  /*  set display->image to NULL before unrefing because there may be code
    *  that listens for image removals and then iterates the display list
    *  to find a valid display.
    */
-  image = gdisp->image;
-  gdisp->image = NULL;
+  image = display->image;
+  display->image = NULL;
 
   g_object_unref (image);
 }
@@ -117,14 +117,14 @@ gimp_display_update_handler (GimpProjection *projection,
                              gint            y,
                              gint            w,
                              gint            h,
-                             GimpDisplay    *gdisp)
+                             GimpDisplay    *display)
 {
-  gimp_display_update_area (gdisp, now, x, y, w, h);
+  gimp_display_update_area (display, now, x, y, w, h);
 }
 
 static void
 gimp_display_flush_handler (GimpImage   *image,
-                            GimpDisplay *gdisp)
+                            GimpDisplay *display)
 {
-  gimp_display_flush (gdisp);
+  gimp_display_flush (display);
 }

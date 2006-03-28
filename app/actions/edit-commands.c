@@ -57,7 +57,7 @@
 
 /*  local function prototypes  */
 
-static void   edit_paste                         (GimpDisplay *gdisp,
+static void   edit_paste                         (GimpDisplay *display,
                                                   gboolean     paste_into);
 static void   cut_named_buffer_callback          (GtkWidget   *widget,
                                                   const gchar *name,
@@ -198,10 +198,10 @@ void
 edit_paste_cmd_callback (GtkAction *action,
                          gpointer   data)
 {
-  GimpDisplay *gdisp = action_data_get_display (data);
+  GimpDisplay *display = action_data_get_display (data);
 
-  if (gdisp)
-    edit_paste (gdisp, FALSE);
+  if (display)
+    edit_paste (display, FALSE);
   else
     edit_paste_as_new_cmd_callback (action, data);
 }
@@ -210,10 +210,10 @@ void
 edit_paste_into_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
-  GimpDisplay *gdisp;
-  return_if_no_display (gdisp, data);
+  GimpDisplay *display;
+  return_if_no_display (display, data);
 
-  edit_paste (gdisp, TRUE);
+  edit_paste (display, TRUE);
 }
 
 void
@@ -348,20 +348,20 @@ edit_fill_cmd_callback (GtkAction *action,
 /*  private functions  */
 
 static void
-edit_paste (GimpDisplay *gdisp,
+edit_paste (GimpDisplay *display,
             gboolean     paste_into)
 {
   gchar *svg;
   gsize  svg_size;
 
-  svg = gimp_clipboard_get_svg (gdisp->image->gimp, &svg_size);
+  svg = gimp_clipboard_get_svg (display->image->gimp, &svg_size);
 
   if (svg)
     {
-      if (gimp_vectors_import_buffer (gdisp->image, svg, svg_size,
+      if (gimp_vectors_import_buffer (display->image, svg, svg_size,
                                       TRUE, TRUE, -1, NULL))
         {
-          gimp_image_flush (gdisp->image);
+          gimp_image_flush (display->image);
         }
 
       g_free (svg);
@@ -370,22 +370,22 @@ edit_paste (GimpDisplay *gdisp,
     {
       GimpBuffer *buffer;
 
-      buffer = gimp_clipboard_get_buffer (gdisp->image->gimp);
+      buffer = gimp_clipboard_get_buffer (display->image->gimp);
 
       if (buffer)
         {
-          GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+          GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
           gint              x, y;
           gint              width, height;
 
           gimp_display_shell_untransform_viewport (shell,
                                                    &x, &y, &width, &height);
 
-          if (gimp_edit_paste (gdisp->image,
-                               gimp_image_active_drawable (gdisp->image),
+          if (gimp_edit_paste (display->image,
+                               gimp_image_active_drawable (display->image),
                                buffer, paste_into, x, y, width, height))
             {
-              gimp_image_flush (gdisp->image);
+              gimp_image_flush (display->image);
             }
 
           g_object_unref (buffer);

@@ -147,13 +147,13 @@ gimp_navigation_editor_docked_iface_init (GimpDockedInterface *iface)
 
 static void
 gimp_navigation_editor_context_changed (GimpContext          *context,
-                                        GimpDisplay          *gdisp,
+                                        GimpDisplay          *display,
                                         GimpNavigationEditor *editor)
 {
   GimpDisplayShell *shell = NULL;
 
-  if (gdisp)
-    shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+  if (display)
+    shell = GIMP_DISPLAY_SHELL (display->shell);
 
   gimp_navigation_editor_set_shell (editor, shell);
 }
@@ -163,8 +163,8 @@ gimp_navigation_editor_set_context (GimpDocked  *docked,
                                     GimpContext *context)
 {
   GimpNavigationEditor *editor  = GIMP_NAVIGATION_EDITOR (docked);
-  GimpDisplay          *gdisp = NULL;
-  GimpDisplayShell     *shell = NULL;
+  GimpDisplay          *display = NULL;
+  GimpDisplayShell     *shell   = NULL;
 
   if (editor->context)
     {
@@ -181,11 +181,11 @@ gimp_navigation_editor_set_context (GimpDocked  *docked,
                         G_CALLBACK (gimp_navigation_editor_context_changed),
                         editor);
 
-      gdisp = gimp_context_get_display (context);
+      display = gimp_context_get_display (context);
     }
 
-  if (gdisp)
-    shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+  if (display)
+    shell = GIMP_DISPLAY_SHELL (display->shell);
 
   gimp_navigation_editor_set_shell (editor, shell);
 }
@@ -324,7 +324,7 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
 
       editor = g_object_new (GIMP_TYPE_NAVIGATION_EDITOR, NULL);
 
-      config = GIMP_DISPLAY_CONFIG (shell->gdisp->image->gimp->config);
+      config = GIMP_DISPLAY_CONFIG (shell->display->image->gimp->config);
       view   = GIMP_VIEW (editor->view);
 
       gimp_view_renderer_set_size (view->renderer,
@@ -444,7 +444,7 @@ gimp_navigation_editor_set_shell (GimpNavigationEditor *editor,
   if (editor->shell)
     {
       gimp_view_set_viewable (GIMP_VIEW (editor->view),
-                              GIMP_VIEWABLE (shell->gdisp->image));
+                              GIMP_VIEWABLE (shell->display->image));
 
       g_signal_connect (editor->shell, "scaled",
                         G_CALLBACK (gimp_navigation_editor_shell_scaled),
@@ -626,7 +626,7 @@ gimp_navigation_editor_shell_reconnect (GimpDisplayShell     *shell,
                                         GimpNavigationEditor *editor)
 {
   gimp_view_set_viewable (GIMP_VIEW (editor->view),
-                          GIMP_VIEWABLE (shell->gdisp->image));
+                          GIMP_VIEWABLE (shell->display->image));
 
   if (GIMP_EDITOR (editor)->ui_manager)
     gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,

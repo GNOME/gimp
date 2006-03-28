@@ -50,7 +50,7 @@
 
 
 static gboolean gimp_display_shell_update_title_idle (gpointer          data);
-static void     gimp_display_shell_format_title      (GimpDisplayShell *gdisp,
+static void     gimp_display_shell_format_title      (GimpDisplayShell *display,
                                                       gchar            *title,
                                                       gint              title_len,
                                                       const gchar      *format);
@@ -66,7 +66,7 @@ gimp_display_shell_title_init (GimpDisplayShell *shell)
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  config = GIMP_DISPLAY_CONFIG (shell->gdisp->image->gimp->config);
+  config = GIMP_DISPLAY_CONFIG (shell->display->image->gimp->config);
 
   gimp_display_shell_format_title (shell, title, sizeof (title),
                                    config->image_status_format);
@@ -97,7 +97,7 @@ gimp_display_shell_update_title_idle (gpointer data)
   gchar              title[MAX_TITLE_BUF];
 
   shell  = GIMP_DISPLAY_SHELL (data);
-  config = GIMP_DISPLAY_CONFIG (shell->gdisp->image->gimp->config);
+  config = GIMP_DISPLAY_CONFIG (shell->display->image->gimp->config);
 
   shell->title_idle_id = 0;
 
@@ -159,7 +159,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  image = shell->gdisp->image;
+  image = shell->display->image;
   gimp  = image->gimp;
 
   gimp_zoom_model_get_fraction (shell->zoom, &num, &denom);
@@ -210,7 +210,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	      break;
 
 	    case 'i': /* instance */
-	      i += print (title, title_len, i, "%d", shell->gdisp->instance);
+	      i += print (title, title_len, i, "%d", shell->display->instance);
 	      break;
 
 	    case 't': /* type */

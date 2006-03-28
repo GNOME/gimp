@@ -20,9 +20,9 @@
 #define __GIMP_DISPLAY_HANDLERS_H__
 
 
-void   gimp_display_connect    (GimpDisplay *gdisp,
+void   gimp_display_connect    (GimpDisplay *display,
                                 GimpImage   *image);
-void   gimp_display_disconnect (GimpDisplay *gdisp);
+void   gimp_display_disconnect (GimpDisplay *display);
 
 
 #endif /*  __GIMP_DISPLAY_HANDLERS_H__  */

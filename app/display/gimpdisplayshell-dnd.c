@@ -172,7 +172,7 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
                                   gpointer      data)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image = shell->gdisp->image;
+  GimpImage        *image = shell->display->image;
   GType             new_type;
   GimpItem         *new_item;
 
@@ -215,7 +215,7 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
       gimp_image_flush (image);
 
       gimp_context_set_display (gimp_get_user_context (image->gimp),
-                                shell->gdisp);
+                                shell->display);
     }
 }
 
@@ -227,7 +227,7 @@ gimp_display_shell_drop_vectors (GtkWidget    *widget,
                                  gpointer      data)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image = shell->gdisp->image;
+  GimpImage        *image = shell->display->image;
   GimpItem         *new_item;
 
   D (g_print ("drop vectors on canvas\n"));
@@ -252,7 +252,7 @@ gimp_display_shell_drop_vectors (GtkWidget    *widget,
       gimp_image_flush (image);
 
       gimp_context_set_display (gimp_get_user_context (image->gimp),
-                                shell->gdisp);
+                                shell->display);
     }
 }
 
@@ -265,7 +265,7 @@ gimp_display_shell_drop_svg (GtkWidget     *widget,
                              gpointer       data)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image = shell->gdisp->image;
+  GimpImage        *image = shell->display->image;
   GError           *error  = NULL;
 
   D (g_print ("drop SVG on canvas\n"));
@@ -285,7 +285,7 @@ gimp_display_shell_drop_svg (GtkWidget     *widget,
       gimp_image_flush (image);
 
       gimp_context_set_display (gimp_get_user_context (image->gimp),
-                                shell->gdisp);
+                                shell->display);
     }
 }
 
@@ -295,7 +295,7 @@ gimp_display_shell_bucket_fill (GimpDisplayShell   *shell,
                                 const GimpRGB      *color,
                                 GimpPattern        *pattern)
 {
-  GimpImage    *image = shell->gdisp->image;
+  GimpImage    *image = shell->display->image;
   GimpDrawable *drawable;
 
   if (image->gimp->busy)
@@ -329,7 +329,7 @@ gimp_display_shell_bucket_fill (GimpDisplayShell   *shell,
   gimp_image_flush (image);
 
   gimp_context_set_display (gimp_get_user_context (image->gimp),
-                            shell->gdisp);
+                            shell->display);
 }
 
 static void
@@ -369,7 +369,7 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
                                 gpointer      data)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image = shell->gdisp->image;
+  GimpImage        *image = shell->display->image;
   GimpBuffer       *buffer;
   gint              x, y, width, height;
 
@@ -391,7 +391,7 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
   gimp_image_flush (image);
 
   gimp_context_set_display (gimp_get_user_context (image->gimp),
-                            shell->gdisp);
+                            shell->display);
 }
 
 static void
@@ -402,7 +402,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
                                   gpointer   data)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image = shell->gdisp->image;
+  GimpImage        *image = shell->display->image;
   GimpContext      *context;
   GList            *list;
 
@@ -455,7 +455,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
 
   gimp_image_flush (image);
 
-  gimp_context_set_display (context, shell->gdisp);
+  gimp_context_set_display (context, shell->display);
 }
 
 static void
@@ -467,7 +467,7 @@ gimp_display_shell_drop_component (GtkWidget       *widget,
                                    gpointer         data)
 {
   GimpDisplayShell *shell      = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *dest_image = shell->gdisp->image;
+  GimpImage        *dest_image = shell->display->image;
   GimpChannel      *channel;
   GimpItem         *new_item;
   const gchar      *desc;
@@ -516,7 +516,7 @@ gimp_display_shell_drop_component (GtkWidget       *widget,
       gimp_image_flush (dest_image);
 
       gimp_context_set_display (gimp_get_user_context (dest_image->gimp),
-                                shell->gdisp);
+                                shell->display);
     }
 }
 
@@ -528,7 +528,7 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
                                 gpointer   data)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image = shell->gdisp->image;
+  GimpImage        *image = shell->display->image;
   GimpLayer        *new_layer;
 
   D (g_print ("drop pixbuf on canvas\n"));
@@ -569,6 +569,6 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
       gimp_image_flush (image);
 
       gimp_context_set_display (gimp_get_user_context (image->gimp),
-                                shell->gdisp);
+                                shell->display);
     }
 }
