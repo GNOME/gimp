@@ -25,6 +25,7 @@
 
 #include "pdb-types.h"
 #include "procedural_db.h"
+#include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
@@ -40,9 +41,90 @@ static ProcRecord image_convert_indexed_proc;
 void
 register_convert_procs (Gimp *gimp)
 {
+  /*
+   * image_convert_rgb
+   */
+  procedural_db_init_proc (&image_convert_rgb_proc, 1, 0);
+  procedural_db_add_argument (&image_convert_rgb_proc,
+                              GIMP_PDB_IMAGE,
+                              gimp_param_spec_image_id ("image",
+                                                        "image",
+                                                        "The image",
+                                                        gimp,
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &image_convert_rgb_proc);
+
+  /*
+   * image_convert_grayscale
+   */
+  procedural_db_init_proc (&image_convert_grayscale_proc, 1, 0);
+  procedural_db_add_argument (&image_convert_grayscale_proc,
+                              GIMP_PDB_IMAGE,
+                              gimp_param_spec_image_id ("image",
+                                                        "image",
+                                                        "The image",
+                                                        gimp,
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &image_convert_grayscale_proc);
+
+  /*
+   * image_convert_indexed
+   */
+  procedural_db_init_proc (&image_convert_indexed_proc, 7, 0);
+  procedural_db_add_argument (&image_convert_indexed_proc,
+                              GIMP_PDB_IMAGE,
+                              gimp_param_spec_image_id ("image",
+                                                        "image",
+                                                        "The image",
+                                                        gimp,
+                                                        GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&image_convert_indexed_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_enum ("dither-type",
+                                                 "dither type",
+                                                 "The dither type to use: { GIMP_NO_DITHER (0), GIMP_FS_DITHER (1), GIMP_FSLOWBLEED_DITHER (2), GIMP_FIXED_DITHER (3) }",
+                                                 GIMP_TYPE_CONVERT_DITHER_TYPE,
+                                                 GIMP_NO_DITHER,
+                                                 GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&image_convert_indexed_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_enum ("palette-type",
+                                                 "palette type",
+                                                 "The type of palette to use: { GIMP_MAKE_PALETTE (0), GIMP_REUSE_PALETTE (1), GIMP_WEB_PALETTE (2), GIMP_MONO_PALETTE (3), GIMP_CUSTOM_PALETTE (4) }",
+                                                 GIMP_TYPE_CONVERT_PALETTE_TYPE,
+                                                 GIMP_MAKE_PALETTE,
+                                                 GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&image_convert_indexed_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_int ("num-cols",
+                                                "num cols",
+                                                "The number of colors to quantize to, ignored unless (palette_type == GIMP_MAKE_PALETTE)",
+                                                G_MININT32, G_MAXINT32, 0,
+                                                GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&image_convert_indexed_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_boolean ("alpha-dither",
+                                                    "alpha dither",
+                                                    "Dither transparency to fake partial opacity",
+                                                    FALSE,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&image_convert_indexed_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_boolean ("remove-unused",
+                                                    "remove unused",
+                                                    "Remove unused or duplicate color entries from final palette, ignored if (palette_type == GIMP_MAKE_PALETTE)",
+                                                    FALSE,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&image_convert_indexed_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("palette",
+                                                      "palette",
+                                                      "The name of the custom palette to use, ignored unless (palette_type == GIMP_CUSTOM_PALETTE)",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &image_convert_indexed_proc);
+
 }
 
 static Argument *
@@ -70,15 +152,6 @@ image_convert_rgb_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg image_convert_rgb_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  }
-};
-
 static ProcRecord image_convert_rgb_proc =
 {
   "gimp-image-convert-rgb",
@@ -90,10 +163,7 @@ static ProcRecord image_convert_rgb_proc =
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
-  1,
-  image_convert_rgb_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { image_convert_rgb_invoker } }
 };
 
@@ -122,15 +192,6 @@ image_convert_grayscale_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg image_convert_grayscale_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  }
-};
-
 static ProcRecord image_convert_grayscale_proc =
 {
   "gimp-image-convert-grayscale",
@@ -142,10 +203,7 @@ static ProcRecord image_convert_grayscale_proc =
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
-  1,
-  image_convert_grayscale_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { image_convert_grayscale_invoker } }
 };
 
@@ -224,45 +282,6 @@ image_convert_indexed_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg image_convert_indexed_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  },
-  {
-    GIMP_PDB_INT32,
-    "dither-type",
-    "The dither type to use: { GIMP_NO_DITHER (0), GIMP_FS_DITHER (1), GIMP_FSLOWBLEED_DITHER (2), GIMP_FIXED_DITHER (3) }"
-  },
-  {
-    GIMP_PDB_INT32,
-    "palette-type",
-    "The type of palette to use: { GIMP_MAKE_PALETTE (0), GIMP_REUSE_PALETTE (1), GIMP_WEB_PALETTE (2), GIMP_MONO_PALETTE (3), GIMP_CUSTOM_PALETTE (4) }"
-  },
-  {
-    GIMP_PDB_INT32,
-    "num-cols",
-    "The number of colors to quantize to, ignored unless (palette_type == GIMP_MAKE_PALETTE)"
-  },
-  {
-    GIMP_PDB_INT32,
-    "alpha-dither",
-    "Dither transparency to fake partial opacity"
-  },
-  {
-    GIMP_PDB_INT32,
-    "remove-unused",
-    "Remove unused or duplicate color entries from final palette, ignored if (palette_type == GIMP_MAKE_PALETTE)"
-  },
-  {
-    GIMP_PDB_STRING,
-    "palette",
-    "The name of the custom palette to use, ignored unless (palette_type == GIMP_CUSTOM_PALETTE)"
-  }
-};
-
 static ProcRecord image_convert_indexed_proc =
 {
   "gimp-image-convert-indexed",
@@ -274,9 +293,6 @@ static ProcRecord image_convert_indexed_proc =
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
-  7,
-  image_convert_indexed_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { image_convert_indexed_invoker } }
 };

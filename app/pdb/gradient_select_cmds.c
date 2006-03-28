@@ -25,6 +25,7 @@
 
 #include "pdb-types.h"
 #include "procedural_db.h"
+#include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
 #include "core/gimpdatafactory.h"
@@ -37,9 +38,79 @@ static ProcRecord gradients_set_popup_proc;
 void
 register_gradient_select_procs (Gimp *gimp)
 {
+  /*
+   * gradients_popup
+   */
+  procedural_db_init_proc (&gradients_popup_proc, 4, 0);
+  procedural_db_add_argument (&gradients_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("gradient-callback",
+                                                      "gradient callback",
+                                                      "The callback PDB proc to call when gradient selection is made",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&gradients_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("popup-title",
+                                                      "popup title",
+                                                      "Title to give the gradient popup window",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&gradients_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("initial-gradient",
+                                                      "initial gradient",
+                                                      "The name of the pattern to set as the first selected",
+                                                      FALSE, TRUE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&gradients_popup_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_int ("sample-size",
+                                                "sample size",
+                                                "Size of the sample to return when the gradient is changed: (1 <= sample_size <= 10000)",
+                                                1, 10000, 1,
+                                                GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   procedural_db_register (gimp, &gradients_popup_proc);
+
+  /*
+   * gradients_close_popup
+   */
+  procedural_db_init_proc (&gradients_close_popup_proc, 1, 0);
+  procedural_db_add_argument (&gradients_close_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("gradient-callback",
+                                                      "gradient callback",
+                                                      "The name of the callback registered for this popup",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &gradients_close_popup_proc);
+
+  /*
+   * gradients_set_popup
+   */
+  procedural_db_init_proc (&gradients_set_popup_proc, 2, 0);
+  procedural_db_add_argument (&gradients_set_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("gradient-callback",
+                                                      "gradient callback",
+                                                      "The name of the callback registered for this popup",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&gradients_set_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("gradient-name",
+                                                      "gradient name",
+                                                      "The name of the gradient to set as selected",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &gradients_set_popup_proc);
+
 }
 
 static Argument *
@@ -86,30 +157,6 @@ gradients_popup_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg gradients_popup_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "gradient-callback",
-    "The callback PDB proc to call when gradient selection is made"
-  },
-  {
-    GIMP_PDB_STRING,
-    "popup-title",
-    "Title to give the gradient popup window"
-  },
-  {
-    GIMP_PDB_STRING,
-    "initial-gradient",
-    "The name of the pattern to set as the first selected"
-  },
-  {
-    GIMP_PDB_INT32,
-    "sample-size",
-    "Size of the sample to return when the gradient is changed: (1 <= sample_size <= 10000)"
-  }
-};
-
 static ProcRecord gradients_popup_proc =
 {
   "gimp-gradients-popup",
@@ -121,10 +168,7 @@ static ProcRecord gradients_popup_proc =
   "1998",
   NULL,
   GIMP_INTERNAL,
-  4,
-  gradients_popup_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { gradients_popup_invoker } }
 };
 
@@ -154,15 +198,6 @@ gradients_close_popup_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg gradients_close_popup_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "gradient-callback",
-    "The name of the callback registered for this popup"
-  }
-};
-
 static ProcRecord gradients_close_popup_proc =
 {
   "gimp-gradients-close-popup",
@@ -174,10 +209,7 @@ static ProcRecord gradients_close_popup_proc =
   "1998",
   NULL,
   GIMP_INTERNAL,
-  1,
-  gradients_close_popup_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { gradients_close_popup_invoker } }
 };
 
@@ -213,20 +245,6 @@ gradients_set_popup_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg gradients_set_popup_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "gradient-callback",
-    "The name of the callback registered for this popup"
-  },
-  {
-    GIMP_PDB_STRING,
-    "gradient-name",
-    "The name of the gradient to set as selected"
-  }
-};
-
 static ProcRecord gradients_set_popup_proc =
 {
   "gimp-gradients-set-popup",
@@ -238,9 +256,6 @@ static ProcRecord gradients_set_popup_proc =
   "1998",
   NULL,
   GIMP_INTERNAL,
-  2,
-  gradients_set_popup_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { gradients_set_popup_invoker } }
 };

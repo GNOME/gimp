@@ -26,6 +26,7 @@
 
 #include "pdb-types.h"
 #include "procedural_db.h"
+#include "core/gimpparamspecs.h"
 
 #include "base/temp-buf.h"
 #include "core/gimp.h"
@@ -43,10 +44,123 @@ static ProcRecord patterns_get_pattern_data_proc;
 void
 register_patterns_procs (Gimp *gimp)
 {
+  /*
+   * patterns_refresh
+   */
+  procedural_db_init_proc (&patterns_refresh_proc, 0, 0);
   procedural_db_register (gimp, &patterns_refresh_proc);
+
+  /*
+   * patterns_get_list
+   */
+  procedural_db_init_proc (&patterns_get_list_proc, 1, 2);
+  procedural_db_add_argument (&patterns_get_list_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("filter",
+                                                      "filter",
+                                                      "An optional regular expression used to filter the list",
+                                                      FALSE, TRUE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&patterns_get_list_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_int ("num-patterns",
+                                                    "num patterns",
+                                                    "The number of patterns in the pattern list",
+                                                    0, G_MAXINT32, 0,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&patterns_get_list_proc,
+                                  GIMP_PDB_STRINGARRAY,
+                                  g_param_spec_pointer ("pattern-list",
+                                                        "pattern list",
+                                                        "The list of pattern names",
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &patterns_get_list_proc);
+
+  /*
+   * patterns_get_pattern
+   */
+  procedural_db_init_proc (&patterns_get_pattern_proc, 0, 3);
+  procedural_db_add_return_value (&patterns_get_pattern_proc,
+                                  GIMP_PDB_STRING,
+                                  gimp_param_spec_string ("name",
+                                                          "name",
+                                                          "The pattern name",
+                                                          FALSE, FALSE,
+                                                          NULL,
+                                                          GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&patterns_get_pattern_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_int ("width",
+                                                    "width",
+                                                    "The pattern width",
+                                                    G_MININT32, G_MAXINT32, 0,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&patterns_get_pattern_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_int ("height",
+                                                    "height",
+                                                    "The pattern height",
+                                                    G_MININT32, G_MAXINT32, 0,
+                                                    GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &patterns_get_pattern_proc);
+
+  /*
+   * patterns_get_pattern_data
+   */
+  procedural_db_init_proc (&patterns_get_pattern_data_proc, 1, 6);
+  procedural_db_add_argument (&patterns_get_pattern_data_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("name",
+                                                      "name",
+                                                      "The pattern name (\"\" means currently active pattern)",
+                                                      FALSE, TRUE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&patterns_get_pattern_data_proc,
+                                  GIMP_PDB_STRING,
+                                  gimp_param_spec_string ("actual-name",
+                                                          "actual name",
+                                                          "The pattern name",
+                                                          FALSE, FALSE,
+                                                          NULL,
+                                                          GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&patterns_get_pattern_data_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_int ("width",
+                                                    "width",
+                                                    "The pattern width",
+                                                    G_MININT32, G_MAXINT32, 0,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&patterns_get_pattern_data_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_int ("height",
+                                                    "height",
+                                                    "The pattern height",
+                                                    G_MININT32, G_MAXINT32, 0,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&patterns_get_pattern_data_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_int ("mask-bpp",
+                                                    "mask bpp",
+                                                    "Pattern bytes per pixel",
+                                                    G_MININT32, G_MAXINT32, 0,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&patterns_get_pattern_data_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_int ("length",
+                                                    "length",
+                                                    "Length of pattern mask data",
+                                                    0, G_MAXINT32, 0,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&patterns_get_pattern_data_proc,
+                                  GIMP_PDB_INT8ARRAY,
+                                  g_param_spec_pointer ("mask-data",
+                                                        "mask data",
+                                                        "The pattern mask data",
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &patterns_get_pattern_data_proc);
+
 }
 
 static Argument *
@@ -71,10 +185,7 @@ static ProcRecord patterns_refresh_proc =
   "2002",
   NULL,
   GIMP_INTERNAL,
-  0,
-  NULL,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { patterns_refresh_invoker } }
 };
 
@@ -112,29 +223,6 @@ patterns_get_list_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg patterns_get_list_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "filter",
-    "An optional regular expression used to filter the list"
-  }
-};
-
-static ProcArg patterns_get_list_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "num-patterns",
-    "The number of patterns in the pattern list"
-  },
-  {
-    GIMP_PDB_STRINGARRAY,
-    "pattern-list",
-    "The list of pattern names"
-  }
-};
-
 static ProcRecord patterns_get_list_proc =
 {
   "gimp-patterns-get-list",
@@ -146,10 +234,7 @@ static ProcRecord patterns_get_list_proc =
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
-  1,
-  patterns_get_list_inargs,
-  2,
-  patterns_get_list_outargs,
+  0, NULL, 0, NULL,
   { { patterns_get_list_invoker } }
 };
 
@@ -189,25 +274,6 @@ patterns_get_pattern_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg patterns_get_pattern_outargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "name",
-    "The pattern name"
-  },
-  {
-    GIMP_PDB_INT32,
-    "width",
-    "The pattern width"
-  },
-  {
-    GIMP_PDB_INT32,
-    "height",
-    "The pattern height"
-  }
-};
-
 static ProcRecord patterns_get_pattern_proc =
 {
   "gimp-patterns-get-pattern",
@@ -219,10 +285,7 @@ static ProcRecord patterns_get_pattern_proc =
   "",
   "gimp-context-get-pattern",
   GIMP_INTERNAL,
-  0,
-  NULL,
-  3,
-  patterns_get_pattern_outargs,
+  0, NULL, 0, NULL,
   { { patterns_get_pattern_invoker } }
 };
 
@@ -291,49 +354,6 @@ patterns_get_pattern_data_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg patterns_get_pattern_data_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "name",
-    "The pattern name (\"\" means currently active pattern)"
-  }
-};
-
-static ProcArg patterns_get_pattern_data_outargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "actual-name",
-    "The pattern name"
-  },
-  {
-    GIMP_PDB_INT32,
-    "width",
-    "The pattern width"
-  },
-  {
-    GIMP_PDB_INT32,
-    "height",
-    "The pattern height"
-  },
-  {
-    GIMP_PDB_INT32,
-    "mask-bpp",
-    "Pattern bytes per pixel"
-  },
-  {
-    GIMP_PDB_INT32,
-    "length",
-    "Length of pattern mask data"
-  },
-  {
-    GIMP_PDB_INT8ARRAY,
-    "mask-data",
-    "The pattern mask data"
-  }
-};
-
 static ProcRecord patterns_get_pattern_data_proc =
 {
   "gimp-patterns-get-pattern-data",
@@ -345,9 +365,6 @@ static ProcRecord patterns_get_pattern_data_proc =
   "",
   "gimp-pattern-get-pixels",
   GIMP_INTERNAL,
-  1,
-  patterns_get_pattern_data_inargs,
-  6,
-  patterns_get_pattern_data_outargs,
+  0, NULL, 0, NULL,
   { { patterns_get_pattern_data_invoker } }
 };

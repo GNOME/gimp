@@ -25,6 +25,7 @@
 
 #include "pdb-types.h"
 #include "procedural_db.h"
+#include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
 #include "core/gimpdatafactory.h"
@@ -36,9 +37,72 @@ static ProcRecord palettes_set_popup_proc;
 void
 register_palette_select_procs (Gimp *gimp)
 {
+  /*
+   * palettes_popup
+   */
+  procedural_db_init_proc (&palettes_popup_proc, 3, 0);
+  procedural_db_add_argument (&palettes_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("palette-callback",
+                                                      "palette callback",
+                                                      "The callback PDB proc to call when palette selection is made",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&palettes_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("popup-title",
+                                                      "popup title",
+                                                      "Title to give the palette popup window",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&palettes_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("initial-palette",
+                                                      "initial palette",
+                                                      "The name of the palette to set as the first selected",
+                                                      FALSE, TRUE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &palettes_popup_proc);
+
+  /*
+   * palettes_close_popup
+   */
+  procedural_db_init_proc (&palettes_close_popup_proc, 1, 0);
+  procedural_db_add_argument (&palettes_close_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("palette-callback",
+                                                      "palette callback",
+                                                      "The name of the callback registered for this popup",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &palettes_close_popup_proc);
+
+  /*
+   * palettes_set_popup
+   */
+  procedural_db_init_proc (&palettes_set_popup_proc, 2, 0);
+  procedural_db_add_argument (&palettes_set_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("palette-callback",
+                                                      "palette callback",
+                                                      "The name of the callback registered for this popup",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&palettes_set_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("palette-name",
+                                                      "palette name",
+                                                      "The name of the palette to set as selected",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &palettes_set_popup_proc);
+
 }
 
 static Argument *
@@ -78,25 +142,6 @@ palettes_popup_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg palettes_popup_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "palette-callback",
-    "The callback PDB proc to call when palette selection is made"
-  },
-  {
-    GIMP_PDB_STRING,
-    "popup-title",
-    "Title to give the palette popup window"
-  },
-  {
-    GIMP_PDB_STRING,
-    "initial-palette",
-    "The name of the palette to set as the first selected"
-  }
-};
-
 static ProcRecord palettes_popup_proc =
 {
   "gimp-palettes-popup",
@@ -108,10 +153,7 @@ static ProcRecord palettes_popup_proc =
   "2002",
   NULL,
   GIMP_INTERNAL,
-  3,
-  palettes_popup_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { palettes_popup_invoker } }
 };
 
@@ -141,15 +183,6 @@ palettes_close_popup_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg palettes_close_popup_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "palette-callback",
-    "The name of the callback registered for this popup"
-  }
-};
-
 static ProcRecord palettes_close_popup_proc =
 {
   "gimp-palettes-close-popup",
@@ -161,10 +194,7 @@ static ProcRecord palettes_close_popup_proc =
   "2002",
   NULL,
   GIMP_INTERNAL,
-  1,
-  palettes_close_popup_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { palettes_close_popup_invoker } }
 };
 
@@ -200,20 +230,6 @@ palettes_set_popup_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg palettes_set_popup_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "palette-callback",
-    "The name of the callback registered for this popup"
-  },
-  {
-    GIMP_PDB_STRING,
-    "palette-name",
-    "The name of the palette to set as selected"
-  }
-};
-
 static ProcRecord palettes_set_popup_proc =
 {
   "gimp-palettes-set-popup",
@@ -225,9 +241,6 @@ static ProcRecord palettes_set_popup_proc =
   "2002",
   NULL,
   GIMP_INTERNAL,
-  2,
-  palettes_set_popup_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { palettes_set_popup_invoker } }
 };

@@ -26,6 +26,7 @@
 
 #include "pdb-types.h"
 #include "procedural_db.h"
+#include "core/gimpparamspecs.h"
 
 #include "core/gimp-edit.h"
 #include "core/gimp.h"
@@ -59,21 +60,495 @@ static ProcRecord edit_stroke_proc;
 void
 register_edit_procs (Gimp *gimp)
 {
+  /*
+   * edit_cut
+   */
+  procedural_db_init_proc (&edit_cut_proc, 1, 1);
+  procedural_db_add_argument (&edit_cut_proc,
+                              GIMP_PDB_DRAWABLE,
+                              gimp_param_spec_item_id ("drawable",
+                                                       "drawable",
+                                                       "The drawable to cut from",
+                                                       gimp,
+                                                       GIMP_TYPE_DRAWABLE,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&edit_cut_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_boolean ("non-empty",
+                                                        "non empty",
+                                                        "TRUE if the cut was successful, FALSE if the selection contained only transparent pixels",
+                                                        FALSE,
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &edit_cut_proc);
+
+  /*
+   * edit_copy
+   */
+  procedural_db_init_proc (&edit_copy_proc, 1, 1);
+  procedural_db_add_argument (&edit_copy_proc,
+                              GIMP_PDB_DRAWABLE,
+                              gimp_param_spec_item_id ("drawable",
+                                                       "drawable",
+                                                       "The drawable to copy from",
+                                                       gimp,
+                                                       GIMP_TYPE_DRAWABLE,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&edit_copy_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_boolean ("non-empty",
+                                                        "non empty",
+                                                        "TRUE if the copy was successful, FALSE if the selection contained only transparent pixels",
+                                                        FALSE,
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &edit_copy_proc);
+
+  /*
+   * edit_copy_visible
+   */
+  procedural_db_init_proc (&edit_copy_visible_proc, 1, 1);
+  procedural_db_add_argument (&edit_copy_visible_proc,
+                              GIMP_PDB_IMAGE,
+                              gimp_param_spec_image_id ("image",
+                                                        "image",
+                                                        "The image to copy from",
+                                                        gimp,
+                                                        GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&edit_copy_visible_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_boolean ("non-empty",
+                                                        "non empty",
+                                                        "TRUE if the copy was successful, FALSE if the selection contained only transparent pixels",
+                                                        FALSE,
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &edit_copy_visible_proc);
+
+  /*
+   * edit_paste
+   */
+  procedural_db_init_proc (&edit_paste_proc, 2, 1);
+  procedural_db_add_argument (&edit_paste_proc,
+                              GIMP_PDB_DRAWABLE,
+                              gimp_param_spec_item_id ("drawable",
+                                                       "drawable",
+                                                       "The drawable to paste to",
+                                                       gimp,
+                                                       GIMP_TYPE_DRAWABLE,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_paste_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_boolean ("paste-into",
+                                                    "paste into",
+                                                    "Clear selection, or paste behind it?",
+                                                    FALSE,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&edit_paste_proc,
+                                  GIMP_PDB_LAYER,
+                                  gimp_param_spec_item_id ("floating-sel",
+                                                           "floating sel",
+                                                           "The new floating selection",
+                                                           gimp,
+                                                           GIMP_TYPE_LAYER,
+                                                           GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &edit_paste_proc);
+
+  /*
+   * edit_paste_as_new
+   */
+  procedural_db_init_proc (&edit_paste_as_new_proc, 0, 1);
+  procedural_db_add_return_value (&edit_paste_as_new_proc,
+                                  GIMP_PDB_IMAGE,
+                                  gimp_param_spec_image_id ("image",
+                                                            "image",
+                                                            "The new image",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &edit_paste_as_new_proc);
+
+  /*
+   * edit_named_cut
+   */
+  procedural_db_init_proc (&edit_named_cut_proc, 2, 1);
+  procedural_db_add_argument (&edit_named_cut_proc,
+                              GIMP_PDB_DRAWABLE,
+                              gimp_param_spec_item_id ("drawable",
+                                                       "drawable",
+                                                       "The drawable to cut from",
+                                                       gimp,
+                                                       GIMP_TYPE_DRAWABLE,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_named_cut_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("buffer-name",
+                                                      "buffer name",
+                                                      "The name of the buffer to create",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&edit_named_cut_proc,
+                                  GIMP_PDB_STRING,
+                                  gimp_param_spec_string ("real-name",
+                                                          "real name",
+                                                          "The real name given to the buffer, or NULL if the selection contained only transparent pixels",
+                                                          FALSE, FALSE,
+                                                          NULL,
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &edit_named_cut_proc);
+
+  /*
+   * edit_named_copy
+   */
+  procedural_db_init_proc (&edit_named_copy_proc, 2, 1);
+  procedural_db_add_argument (&edit_named_copy_proc,
+                              GIMP_PDB_DRAWABLE,
+                              gimp_param_spec_item_id ("drawable",
+                                                       "drawable",
+                                                       "The drawable to copy from",
+                                                       gimp,
+                                                       GIMP_TYPE_DRAWABLE,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_named_copy_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("buffer-name",
+                                                      "buffer name",
+                                                      "The name of the buffer to create",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&edit_named_copy_proc,
+                                  GIMP_PDB_STRING,
+                                  gimp_param_spec_string ("real-name",
+                                                          "real name",
+                                                          "The real name given to the buffer, or NULL if the selection contained only transparent pixels",
+                                                          FALSE, FALSE,
+                                                          NULL,
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &edit_named_copy_proc);
+
+  /*
+   * edit_named_copy_visible
+   */
+  procedural_db_init_proc (&edit_named_copy_visible_proc, 2, 1);
+  procedural_db_add_argument (&edit_named_copy_visible_proc,
+                              GIMP_PDB_IMAGE,
+                              gimp_param_spec_image_id ("image",
+                                                        "image",
+                                                        "The image to copy from",
+                                                        gimp,
+                                                        GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_named_copy_visible_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("buffer-name",
+                                                      "buffer name",
+                                                      "The name of the buffer to create",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&edit_named_copy_visible_proc,
+                                  GIMP_PDB_STRING,
+                                  gimp_param_spec_string ("real-name",
+                                                          "real name",
+                                                          "The real name given to the buffer",
+                                                          FALSE, FALSE,
+                                                          NULL,
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &edit_named_copy_visible_proc);
+
+  /*
+   * edit_named_paste
+   */
+  procedural_db_init_proc (&edit_named_paste_proc, 3, 1);
+  procedural_db_add_argument (&edit_named_paste_proc,
+                              GIMP_PDB_DRAWABLE,
+                              gimp_param_spec_item_id ("drawable",
+                                                       "drawable",
+                                                       "The drawable to paste to",
+                                                       gimp,
+                                                       GIMP_TYPE_DRAWABLE,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_named_paste_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("buffer-name",
+                                                      "buffer name",
+                                                      "The name of the buffer to paste",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_named_paste_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_boolean ("paste-into",
+                                                    "paste into",
+                                                    "Clear selection, or paste behind it?",
+                                                    FALSE,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&edit_named_paste_proc,
+                                  GIMP_PDB_LAYER,
+                                  gimp_param_spec_item_id ("floating-sel",
+                                                           "floating sel",
+                                                           "The new floating selection",
+                                                           gimp,
+                                                           GIMP_TYPE_LAYER,
+                                                           GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &edit_named_paste_proc);
+
+  /*
+   * edit_named_paste_as_new
+   */
+  procedural_db_init_proc (&edit_named_paste_as_new_proc, 1, 1);
+  procedural_db_add_argument (&edit_named_paste_as_new_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("buffer-name",
+                                                      "buffer name",
+                                                      "The name of the buffer to paste",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&edit_named_paste_as_new_proc,
+                                  GIMP_PDB_IMAGE,
+                                  gimp_param_spec_image_id ("image",
+                                                            "image",
+                                                            "The new image",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &edit_named_paste_as_new_proc);
+
+  /*
+   * edit_clear
+   */
+  procedural_db_init_proc (&edit_clear_proc, 1, 0);
+  procedural_db_add_argument (&edit_clear_proc,
+                              GIMP_PDB_DRAWABLE,
+                              gimp_param_spec_item_id ("drawable",
+                                                       "drawable",
+                                                       "The drawable to clear from",
+                                                       gimp,
+                                                       GIMP_TYPE_DRAWABLE,
+                                                       GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &edit_clear_proc);
+
+  /*
+   * edit_fill
+   */
+  procedural_db_init_proc (&edit_fill_proc, 2, 0);
+  procedural_db_add_argument (&edit_fill_proc,
+                              GIMP_PDB_DRAWABLE,
+                              gimp_param_spec_item_id ("drawable",
+                                                       "drawable",
+                                                       "The drawable to fill to",
+                                                       gimp,
+                                                       GIMP_TYPE_DRAWABLE,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_fill_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_enum ("fill-type",
+                                                 "fill type",
+                                                 "The type of fill: { GIMP_FOREGROUND_FILL (0), GIMP_BACKGROUND_FILL (1), GIMP_WHITE_FILL (2), GIMP_TRANSPARENT_FILL (3), GIMP_PATTERN_FILL (4) }",
+                                                 GIMP_TYPE_FILL_TYPE,
+                                                 GIMP_FOREGROUND_FILL,
+                                                 GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &edit_fill_proc);
+
+  /*
+   * edit_bucket_fill
+   */
+  procedural_db_init_proc (&edit_bucket_fill_proc, 8, 0);
+  procedural_db_add_argument (&edit_bucket_fill_proc,
+                              GIMP_PDB_DRAWABLE,
+                              gimp_param_spec_item_id ("drawable",
+                                                       "drawable",
+                                                       "The affected drawable",
+                                                       gimp,
+                                                       GIMP_TYPE_DRAWABLE,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_bucket_fill_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_enum ("fill-mode",
+                                                 "fill mode",
+                                                 "The type of fill: { GIMP_FG_BUCKET_FILL (0), GIMP_BG_BUCKET_FILL (1), GIMP_PATTERN_BUCKET_FILL (2) }",
+                                                 GIMP_TYPE_BUCKET_FILL_MODE,
+                                                 GIMP_FG_BUCKET_FILL,
+                                                 GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_bucket_fill_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_enum ("paint-mode",
+                                                 "paint mode",
+                                                 "The paint application mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }",
+                                                 GIMP_TYPE_LAYER_MODE_EFFECTS,
+                                                 GIMP_NORMAL_MODE,
+                                                 GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_bucket_fill_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("opacity",
+                                                   "opacity",
+                                                   "The opacity of the final bucket fill (0 <= opacity <= 100)",
+                                                   0, 100, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_bucket_fill_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("threshold",
+                                                   "threshold",
+                                                   "The threshold determines how extensive the seed fill will be. It's value is specified in terms of intensity levels (0 <= threshold <= 255). This parameter is only valid when there is no selection in the specified image.",
+                                                   0, 255, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_bucket_fill_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_boolean ("sample-merged",
+                                                    "sample merged",
+                                                    "Use the composite image, not the drawable",
+                                                    FALSE,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_bucket_fill_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("x",
+                                                   "x",
+                                                   "The x coordinate of this bucket fill's application. This parameter is only valid when there is no selection in the specified image.",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_bucket_fill_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("y",
+                                                   "y",
+                                                   "The y coordinate of this bucket fill's application. This parameter is only valid when there is no selection in the specified image.",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &edit_bucket_fill_proc);
+
+  /*
+   * edit_blend
+   */
+  procedural_db_init_proc (&edit_blend_proc, 16, 0);
+  procedural_db_add_argument (&edit_blend_proc,
+                              GIMP_PDB_DRAWABLE,
+                              gimp_param_spec_item_id ("drawable",
+                                                       "drawable",
+                                                       "The affected drawable",
+                                                       gimp,
+                                                       GIMP_TYPE_DRAWABLE,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_blend_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_enum ("blend-mode",
+                                                 "blend mode",
+                                                 "The type of blend: { GIMP_FG_BG_RGB_MODE (0), GIMP_FG_BG_HSV_MODE (1), GIMP_FG_TRANSPARENT_MODE (2), GIMP_CUSTOM_MODE (3) }",
+                                                 GIMP_TYPE_BLEND_MODE,
+                                                 GIMP_FG_BG_RGB_MODE,
+                                                 GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_blend_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_enum ("paint-mode",
+                                                 "paint mode",
+                                                 "The paint application mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }",
+                                                 GIMP_TYPE_LAYER_MODE_EFFECTS,
+                                                 GIMP_NORMAL_MODE,
+                                                 GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_blend_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_enum ("gradient-type",
+                                                 "gradient type",
+                                                 "The type of gradient: { GIMP_GRADIENT_LINEAR (0), GIMP_GRADIENT_BILINEAR (1), GIMP_GRADIENT_RADIAL (2), GIMP_GRADIENT_SQUARE (3), GIMP_GRADIENT_CONICAL_SYMMETRIC (4), GIMP_GRADIENT_CONICAL_ASYMMETRIC (5), GIMP_GRADIENT_SHAPEBURST_ANGULAR (6), GIMP_GRADIENT_SHAPEBURST_SPHERICAL (7), GIMP_GRADIENT_SHAPEBURST_DIMPLED (8), GIMP_GRADIENT_SPIRAL_CLOCKWISE (9), GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE (10) }",
+                                                 GIMP_TYPE_GRADIENT_TYPE,
+                                                 GIMP_GRADIENT_LINEAR,
+                                                 GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_blend_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("opacity",
+                                                   "opacity",
+                                                   "The opacity of the final blend (0 <= opacity <= 100)",
+                                                   0, 100, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_blend_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("offset",
+                                                   "offset",
+                                                   "Offset relates to the starting and ending coordinates specified for the blend. This parameter is mode dependent (0 <= offset)",
+                                                   0, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_blend_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_enum ("repeat",
+                                                 "repeat",
+                                                 "Repeat mode: { GIMP_REPEAT_NONE (0), GIMP_REPEAT_SAWTOOTH (1), GIMP_REPEAT_TRIANGULAR (2) }",
+                                                 GIMP_TYPE_REPEAT_MODE,
+                                                 GIMP_REPEAT_NONE,
+                                                 GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_blend_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_boolean ("reverse",
+                                                    "reverse",
+                                                    "Use the reverse gradient (TRUE or FALSE)",
+                                                    FALSE,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_blend_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_boolean ("supersample",
+                                                    "supersample",
+                                                    "Do adaptive supersampling (TRUE or FALSE)",
+                                                    FALSE,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_blend_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_int ("max-depth",
+                                                "max depth",
+                                                "Maximum recursion levels for supersampling",
+                                                1, 9, 1,
+                                                GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+  procedural_db_add_argument (&edit_blend_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("threshold",
+                                                   "threshold",
+                                                   "Supersampling threshold",
+                                                   0, 4, 0,
+                                                   GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+  procedural_db_add_argument (&edit_blend_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_boolean ("dither",
+                                                    "dither",
+                                                    "Use dithering to reduce banding (TRUE or FALSE)",
+                                                    FALSE,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_blend_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("x1",
+                                                   "x1",
+                                                   "The x coordinate of this blend's starting point",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_blend_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("y1",
+                                                   "y1",
+                                                   "The y coordinate of this blend's starting point",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_blend_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("x2",
+                                                   "x2",
+                                                   "The x coordinate of this blend's ending point",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&edit_blend_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("y2",
+                                                   "y2",
+                                                   "The y coordinate of this blend's ending point",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &edit_blend_proc);
+
+  /*
+   * edit_stroke
+   */
+  procedural_db_init_proc (&edit_stroke_proc, 1, 0);
+  procedural_db_add_argument (&edit_stroke_proc,
+                              GIMP_PDB_DRAWABLE,
+                              gimp_param_spec_item_id ("drawable",
+                                                       "drawable",
+                                                       "The drawable to stroke to",
+                                                       gimp,
+                                                       GIMP_TYPE_DRAWABLE,
+                                                       GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &edit_stroke_proc);
+
 }
 
 static Argument *
@@ -112,24 +587,6 @@ edit_cut_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg edit_cut_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The drawable to cut from"
-  }
-};
-
-static ProcArg edit_cut_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "non-empty",
-    "TRUE if the cut was successful, FALSE if the selection contained only transparent pixels"
-  }
-};
-
 static ProcRecord edit_cut_proc =
 {
   "gimp-edit-cut",
@@ -141,10 +598,7 @@ static ProcRecord edit_cut_proc =
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
-  1,
-  edit_cut_inargs,
-  1,
-  edit_cut_outargs,
+  0, NULL, 0, NULL,
   { { edit_cut_invoker } }
 };
 
@@ -184,24 +638,6 @@ edit_copy_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg edit_copy_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The drawable to copy from"
-  }
-};
-
-static ProcArg edit_copy_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "non-empty",
-    "TRUE if the copy was successful, FALSE if the selection contained only transparent pixels"
-  }
-};
-
 static ProcRecord edit_copy_proc =
 {
   "gimp-edit-copy",
@@ -213,10 +649,7 @@ static ProcRecord edit_copy_proc =
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
-  1,
-  edit_copy_inargs,
-  1,
-  edit_copy_outargs,
+  0, NULL, 0, NULL,
   { { edit_copy_invoker } }
 };
 
@@ -249,24 +682,6 @@ edit_copy_visible_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg edit_copy_visible_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image to copy from"
-  }
-};
-
-static ProcArg edit_copy_visible_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "non-empty",
-    "TRUE if the copy was successful, FALSE if the selection contained only transparent pixels"
-  }
-};
-
 static ProcRecord edit_copy_visible_proc =
 {
   "gimp-edit-copy-visible",
@@ -278,10 +693,7 @@ static ProcRecord edit_copy_visible_proc =
   "2004",
   NULL,
   GIMP_INTERNAL,
-  1,
-  edit_copy_visible_inargs,
-  1,
-  edit_copy_visible_outargs,
+  0, NULL, 0, NULL,
   { { edit_copy_visible_invoker } }
 };
 
@@ -327,29 +739,6 @@ edit_paste_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg edit_paste_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The drawable to paste to"
-  },
-  {
-    GIMP_PDB_INT32,
-    "paste-into",
-    "Clear selection, or paste behind it?"
-  }
-};
-
-static ProcArg edit_paste_outargs[] =
-{
-  {
-    GIMP_PDB_LAYER,
-    "floating-sel",
-    "The new floating selection"
-  }
-};
-
 static ProcRecord edit_paste_proc =
 {
   "gimp-edit-paste",
@@ -361,10 +750,7 @@ static ProcRecord edit_paste_proc =
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
-  2,
-  edit_paste_inargs,
-  1,
-  edit_paste_outargs,
+  0, NULL, 0, NULL,
   { { edit_paste_invoker } }
 };
 
@@ -397,15 +783,6 @@ edit_paste_as_new_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg edit_paste_as_new_outargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The new image"
-  }
-};
-
 static ProcRecord edit_paste_as_new_proc =
 {
   "gimp-edit-paste-as-new",
@@ -417,10 +794,7 @@ static ProcRecord edit_paste_as_new_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  0,
-  NULL,
-  1,
-  edit_paste_as_new_outargs,
+  0, NULL, 0, NULL,
   { { edit_paste_as_new_invoker } }
 };
 
@@ -471,29 +845,6 @@ edit_named_cut_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg edit_named_cut_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The drawable to cut from"
-  },
-  {
-    GIMP_PDB_STRING,
-    "buffer-name",
-    "The name of the buffer to create"
-  }
-};
-
-static ProcArg edit_named_cut_outargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "real-name",
-    "The real name given to the buffer, or NULL if the selection contained only transparent pixels"
-  }
-};
-
 static ProcRecord edit_named_cut_proc =
 {
   "gimp-edit-named-cut",
@@ -505,10 +856,7 @@ static ProcRecord edit_named_cut_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  2,
-  edit_named_cut_inargs,
-  1,
-  edit_named_cut_outargs,
+  0, NULL, 0, NULL,
   { { edit_named_cut_invoker } }
 };
 
@@ -559,29 +907,6 @@ edit_named_copy_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg edit_named_copy_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The drawable to copy from"
-  },
-  {
-    GIMP_PDB_STRING,
-    "buffer-name",
-    "The name of the buffer to create"
-  }
-};
-
-static ProcArg edit_named_copy_outargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "real-name",
-    "The real name given to the buffer, or NULL if the selection contained only transparent pixels"
-  }
-};
-
 static ProcRecord edit_named_copy_proc =
 {
   "gimp-edit-named-copy",
@@ -593,10 +918,7 @@ static ProcRecord edit_named_copy_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  2,
-  edit_named_copy_inargs,
-  1,
-  edit_named_copy_outargs,
+  0, NULL, 0, NULL,
   { { edit_named_copy_invoker } }
 };
 
@@ -645,29 +967,6 @@ edit_named_copy_visible_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg edit_named_copy_visible_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image to copy from"
-  },
-  {
-    GIMP_PDB_STRING,
-    "buffer-name",
-    "The name of the buffer to create"
-  }
-};
-
-static ProcArg edit_named_copy_visible_outargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "real-name",
-    "The real name given to the buffer"
-  }
-};
-
 static ProcRecord edit_named_copy_visible_proc =
 {
   "gimp-edit-named-copy-visible",
@@ -679,10 +978,7 @@ static ProcRecord edit_named_copy_visible_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  2,
-  edit_named_copy_visible_inargs,
-  1,
-  edit_named_copy_visible_outargs,
+  0, NULL, 0, NULL,
   { { edit_named_copy_visible_invoker } }
 };
 
@@ -735,34 +1031,6 @@ edit_named_paste_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg edit_named_paste_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The drawable to paste to"
-  },
-  {
-    GIMP_PDB_STRING,
-    "buffer-name",
-    "The name of the buffer to paste"
-  },
-  {
-    GIMP_PDB_INT32,
-    "paste-into",
-    "Clear selection, or paste behind it?"
-  }
-};
-
-static ProcArg edit_named_paste_outargs[] =
-{
-  {
-    GIMP_PDB_LAYER,
-    "floating-sel",
-    "The new floating selection"
-  }
-};
-
 static ProcRecord edit_named_paste_proc =
 {
   "gimp-edit-named-paste",
@@ -774,10 +1042,7 @@ static ProcRecord edit_named_paste_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  3,
-  edit_named_paste_inargs,
-  1,
-  edit_named_paste_outargs,
+  0, NULL, 0, NULL,
   { { edit_named_paste_invoker } }
 };
 
@@ -821,24 +1086,6 @@ edit_named_paste_as_new_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg edit_named_paste_as_new_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "buffer-name",
-    "The name of the buffer to paste"
-  }
-};
-
-static ProcArg edit_named_paste_as_new_outargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The new image"
-  }
-};
-
 static ProcRecord edit_named_paste_as_new_proc =
 {
   "gimp-edit-named-paste-as-new",
@@ -850,10 +1097,7 @@ static ProcRecord edit_named_paste_as_new_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  1,
-  edit_named_paste_as_new_inargs,
-  1,
-  edit_named_paste_as_new_outargs,
+  0, NULL, 0, NULL,
   { { edit_named_paste_as_new_invoker } }
 };
 
@@ -886,15 +1130,6 @@ edit_clear_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg edit_clear_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The drawable to clear from"
-  }
-};
-
 static ProcRecord edit_clear_proc =
 {
   "gimp-edit-clear",
@@ -906,10 +1141,7 @@ static ProcRecord edit_clear_proc =
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
-  1,
-  edit_clear_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { edit_clear_invoker } }
 };
 
@@ -948,20 +1180,6 @@ edit_fill_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg edit_fill_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The drawable to fill to"
-  },
-  {
-    GIMP_PDB_INT32,
-    "fill-type",
-    "The type of fill: { GIMP_FOREGROUND_FILL (0), GIMP_BACKGROUND_FILL (1), GIMP_WHITE_FILL (2), GIMP_TRANSPARENT_FILL (3), GIMP_PATTERN_FILL (4) }"
-  }
-};
-
 static ProcRecord edit_fill_proc =
 {
   "gimp-edit-fill",
@@ -973,10 +1191,7 @@ static ProcRecord edit_fill_proc =
   "1995-2000",
   NULL,
   GIMP_INTERNAL,
-  2,
-  edit_fill_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { edit_fill_invoker } }
 };
 
@@ -1045,50 +1260,6 @@ edit_bucket_fill_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg edit_bucket_fill_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The affected drawable"
-  },
-  {
-    GIMP_PDB_INT32,
-    "fill-mode",
-    "The type of fill: { GIMP_FG_BUCKET_FILL (0), GIMP_BG_BUCKET_FILL (1), GIMP_PATTERN_BUCKET_FILL (2) }"
-  },
-  {
-    GIMP_PDB_INT32,
-    "paint-mode",
-    "The paint application mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "opacity",
-    "The opacity of the final bucket fill (0 <= opacity <= 100)"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "threshold",
-    "The threshold determines how extensive the seed fill will be. It's value is specified in terms of intensity levels (0 <= threshold <= 255). This parameter is only valid when there is no selection in the specified image."
-  },
-  {
-    GIMP_PDB_INT32,
-    "sample-merged",
-    "Use the composite image, not the drawable"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "x",
-    "The x coordinate of this bucket fill's application. This parameter is only valid when there is no selection in the specified image."
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "y",
-    "The y coordinate of this bucket fill's application. This parameter is only valid when there is no selection in the specified image."
-  }
-};
-
 static ProcRecord edit_bucket_fill_proc =
 {
   "gimp-edit-bucket-fill",
@@ -1100,10 +1271,7 @@ static ProcRecord edit_bucket_fill_proc =
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
-  8,
-  edit_bucket_fill_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { edit_bucket_fill_invoker } }
 };
 
@@ -1216,90 +1384,6 @@ edit_blend_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg edit_blend_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The affected drawable"
-  },
-  {
-    GIMP_PDB_INT32,
-    "blend-mode",
-    "The type of blend: { GIMP_FG_BG_RGB_MODE (0), GIMP_FG_BG_HSV_MODE (1), GIMP_FG_TRANSPARENT_MODE (2), GIMP_CUSTOM_MODE (3) }"
-  },
-  {
-    GIMP_PDB_INT32,
-    "paint-mode",
-    "The paint application mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }"
-  },
-  {
-    GIMP_PDB_INT32,
-    "gradient-type",
-    "The type of gradient: { GIMP_GRADIENT_LINEAR (0), GIMP_GRADIENT_BILINEAR (1), GIMP_GRADIENT_RADIAL (2), GIMP_GRADIENT_SQUARE (3), GIMP_GRADIENT_CONICAL_SYMMETRIC (4), GIMP_GRADIENT_CONICAL_ASYMMETRIC (5), GIMP_GRADIENT_SHAPEBURST_ANGULAR (6), GIMP_GRADIENT_SHAPEBURST_SPHERICAL (7), GIMP_GRADIENT_SHAPEBURST_DIMPLED (8), GIMP_GRADIENT_SPIRAL_CLOCKWISE (9), GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE (10) }"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "opacity",
-    "The opacity of the final blend (0 <= opacity <= 100)"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "offset",
-    "Offset relates to the starting and ending coordinates specified for the blend. This parameter is mode dependent (0 <= offset)"
-  },
-  {
-    GIMP_PDB_INT32,
-    "repeat",
-    "Repeat mode: { GIMP_REPEAT_NONE (0), GIMP_REPEAT_SAWTOOTH (1), GIMP_REPEAT_TRIANGULAR (2) }"
-  },
-  {
-    GIMP_PDB_INT32,
-    "reverse",
-    "Use the reverse gradient (TRUE or FALSE)"
-  },
-  {
-    GIMP_PDB_INT32,
-    "supersample",
-    "Do adaptive supersampling (TRUE or FALSE)"
-  },
-  {
-    GIMP_PDB_INT32,
-    "max-depth",
-    "Maximum recursion levels for supersampling"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "threshold",
-    "Supersampling threshold"
-  },
-  {
-    GIMP_PDB_INT32,
-    "dither",
-    "Use dithering to reduce banding (TRUE or FALSE)"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "x1",
-    "The x coordinate of this blend's starting point"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "y1",
-    "The y coordinate of this blend's starting point"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "x2",
-    "The x coordinate of this blend's ending point"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "y2",
-    "The y coordinate of this blend's ending point"
-  }
-};
-
 static ProcRecord edit_blend_proc =
 {
   "gimp-edit-blend",
@@ -1311,10 +1395,7 @@ static ProcRecord edit_blend_proc =
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
-  16,
-  edit_blend_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { edit_blend_invoker } }
 };
 
@@ -1353,15 +1434,6 @@ edit_stroke_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg edit_stroke_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The drawable to stroke to"
-  }
-};
-
 static ProcRecord edit_stroke_proc =
 {
   "gimp-edit-stroke",
@@ -1373,9 +1445,6 @@ static ProcRecord edit_stroke_proc =
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
-  1,
-  edit_stroke_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { edit_stroke_invoker } }
 };

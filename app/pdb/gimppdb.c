@@ -25,12 +25,18 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 
 #include "pdb-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpchannel.h"
+#include "core/gimplayer.h"
+#include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
+
+#include "vectors/gimpvectors.h"
 
 #include "plug-in/plug-in-run.h"
 
@@ -586,6 +592,233 @@ procedural_db_destroy_args (Argument *args,
   g_free (args);
 }
 
+void
+procedural_db_init_proc (ProcRecord     *procedure,
+                         gint            n_arguments,
+                         gint            n_return_values)
+{
+  g_return_if_fail (procedure != NULL);
+  g_return_if_fail (procedure->args == NULL);
+  g_return_if_fail (procedure->values == NULL);
+  g_return_if_fail (n_arguments >= 0);
+  g_return_if_fail (n_return_values >= 0);
+
+  procedure->num_args = n_arguments;
+  procedure->args     = g_new0 (ProcArg, n_arguments);
+
+  procedure->num_values = n_return_values;
+  procedure->values     = g_new0 (ProcArg, n_return_values);
+}
+
+void
+procedural_db_add_argument (ProcRecord     *procedure,
+                            GimpPDBArgType  arg_type,
+                            GParamSpec     *pspec)
+{
+  gint i;
+
+  g_return_if_fail (procedure != NULL);
+  g_return_if_fail (G_IS_PARAM_SPEC (pspec));
+
+  for (i = 0; i < procedure->num_args; i++)
+    if (procedure->args[i].pspec == NULL)
+      {
+        procedure->args[i].arg_type = arg_type;
+        procedure->args[i].pspec    = pspec;
+
+        g_param_spec_ref (pspec);
+        g_param_spec_sink (pspec);
+
+        return;
+      }
+
+  g_warning ("%s: can't register more than %d arguments for procedure %s",
+             G_STRFUNC, procedure->num_args, procedure->name);
+}
+
+void
+procedural_db_add_return_value (ProcRecord     *procedure,
+                                GimpPDBArgType  arg_type,
+                                GParamSpec     *pspec)
+{
+  gint i;
+
+  g_return_if_fail (procedure != NULL);
+  g_return_if_fail (G_IS_PARAM_SPEC (pspec));
+
+  for (i = 0; i < procedure->num_values; i++)
+    if (procedure->values[i].pspec == NULL)
+      {
+        procedure->values[i].arg_type = arg_type;
+        procedure->values[i].pspec    = pspec;
+
+        g_param_spec_ref (pspec);
+        g_param_spec_sink (pspec);
+
+        return;
+      }
+
+  g_warning ("%s: can't register more than %d return values for procedure %s",
+             G_STRFUNC, procedure->num_values, procedure->name);
+}
+
+static GParamSpec *
+procedural_db_compat_pspec (Gimp           *gimp,
+                            GimpPDBArgType  arg_type,
+                            const gchar    *name,
+                            const gchar    *desc)
+{
+  GParamSpec *pspec = NULL;
+
+  switch (arg_type)
+    {
+    case GIMP_PDB_INT32:
+      pspec = g_param_spec_int (name, name, desc,
+                                G_MININT32, G_MAXINT32, 0,
+                                G_PARAM_READWRITE);
+      break;
+
+    case GIMP_PDB_INT16:
+      pspec = g_param_spec_int (name, name, desc,
+                                G_MININT16, G_MAXINT16, 0,
+                                G_PARAM_READWRITE);
+      break;
+
+    case GIMP_PDB_INT8:
+      pspec = g_param_spec_uint (name, name, desc,
+                                 0, G_MAXUINT8, 0,
+                                 G_PARAM_READWRITE);
+      break;
+
+    case GIMP_PDB_FLOAT:
+      pspec = g_param_spec_double (name, name, desc,
+                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
+                                   G_PARAM_READWRITE);
+      break;
+
+    case GIMP_PDB_STRING:
+      pspec = g_param_spec_string (name, name, desc,
+                                   NULL,
+                                   G_PARAM_READWRITE);
+      break;
+
+    case GIMP_PDB_INT32ARRAY:
+    case GIMP_PDB_INT16ARRAY:
+    case GIMP_PDB_INT8ARRAY:
+    case GIMP_PDB_FLOATARRAY:
+    case GIMP_PDB_STRINGARRAY:
+      pspec = g_param_spec_pointer (name, name, desc,
+                                    G_PARAM_READWRITE);
+      break;
+
+    case GIMP_PDB_COLOR:
+      pspec = gimp_param_spec_rgb (name, name, desc,
+                                   NULL,
+                                   G_PARAM_READWRITE);
+      break;
+
+    case GIMP_PDB_REGION:
+      break;
+
+    case GIMP_PDB_DISPLAY:
+      pspec = gimp_param_spec_display_id (name, name, desc,
+                                          gimp,
+                                          G_PARAM_READWRITE);
+      break;
+
+    case GIMP_PDB_IMAGE:
+      pspec = gimp_param_spec_image_id (name, name, desc,
+                                        gimp,
+                                        G_PARAM_READWRITE);
+      break;
+
+    case GIMP_PDB_LAYER:
+      pspec = gimp_param_spec_item_id (name, name, desc,
+                                       gimp, GIMP_TYPE_LAYER,
+                                       G_PARAM_READWRITE);
+      break;
+
+    case GIMP_PDB_CHANNEL:
+      pspec = gimp_param_spec_item_id (name, name, desc,
+                                       gimp, GIMP_TYPE_CHANNEL,
+                                       G_PARAM_READWRITE);
+      break;
+
+    case GIMP_PDB_DRAWABLE:
+      pspec = gimp_param_spec_item_id (name, name, desc,
+                                       gimp, GIMP_TYPE_DRAWABLE,
+                                       G_PARAM_READWRITE);
+      break;
+
+    case GIMP_PDB_SELECTION:
+      pspec = gimp_param_spec_item_id (name, name, desc,
+                                       gimp, GIMP_TYPE_CHANNEL,
+                                       G_PARAM_READWRITE);
+      break;
+
+    case GIMP_PDB_BOUNDARY:
+      break;
+
+    case GIMP_PDB_VECTORS:
+      pspec = gimp_param_spec_item_id (name, name, desc,
+                                       gimp, GIMP_TYPE_VECTORS,
+                                       G_PARAM_READWRITE);
+      break;
+
+    case GIMP_PDB_PARASITE:
+      pspec = gimp_param_spec_parasite (name, name, desc,
+                                        G_PARAM_READWRITE);
+      break;
+
+    case GIMP_PDB_STATUS:
+      pspec = g_param_spec_enum (name, name, desc,
+                                 GIMP_TYPE_PDB_STATUS_TYPE,
+                                 GIMP_PDB_EXECUTION_ERROR,
+                                 G_PARAM_READWRITE);
+      break;
+
+    case GIMP_PDB_END:
+      break;
+    }
+
+  if (! pspec)
+    g_warning ("%s: returning NULL for %s (%s)",
+               G_STRFUNC, name, procedural_db_type_name (arg_type));
+
+  return pspec;
+}
+
+void
+procedural_db_add_compat_arg (ProcRecord     *procedure,
+                              Gimp           *gimp,
+                              GimpPDBArgType  arg_type,
+                              const gchar    *name,
+                              const gchar    *desc)
+{
+  g_return_if_fail (procedure != NULL);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (name != NULL);
+
+  procedural_db_add_argument (procedure, arg_type,
+                              procedural_db_compat_pspec (gimp, arg_type,
+                                                          name, desc));
+}
+
+void
+procedural_db_add_compat_value (ProcRecord     *procedure,
+                                Gimp           *gimp,
+                                GimpPDBArgType  arg_type,
+                                const gchar    *name,
+                                const gchar    *desc)
+{
+  g_return_if_fail (procedure != NULL);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (name != NULL);
+
+  procedural_db_add_return_value (procedure, arg_type,
+                                  procedural_db_compat_pspec (gimp, arg_type,
+                                                              name, desc));
+}
 
 /*  private functions  */
 

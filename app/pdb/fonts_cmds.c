@@ -25,6 +25,7 @@
 
 #include "pdb-types.h"
 #include "procedural_db.h"
+#include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontainer-filter.h"
@@ -37,8 +38,39 @@ static ProcRecord fonts_get_list_proc;
 void
 register_fonts_procs (Gimp *gimp)
 {
+  /*
+   * fonts_refresh
+   */
+  procedural_db_init_proc (&fonts_refresh_proc, 0, 0);
   procedural_db_register (gimp, &fonts_refresh_proc);
+
+  /*
+   * fonts_get_list
+   */
+  procedural_db_init_proc (&fonts_get_list_proc, 1, 2);
+  procedural_db_add_argument (&fonts_get_list_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("filter",
+                                                      "filter",
+                                                      "An optional regular expression used to filter the list",
+                                                      FALSE, TRUE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&fonts_get_list_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_int ("num-fonts",
+                                                    "num fonts",
+                                                    "The number of available fonts",
+                                                    0, G_MAXINT32, 0,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&fonts_get_list_proc,
+                                  GIMP_PDB_STRINGARRAY,
+                                  g_param_spec_pointer ("font-list",
+                                                        "font list",
+                                                        "The list of font names",
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &fonts_get_list_proc);
+
 }
 
 static Argument *
@@ -63,10 +95,7 @@ static ProcRecord fonts_refresh_proc =
   "2003",
   NULL,
   GIMP_INTERNAL,
-  0,
-  NULL,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { fonts_refresh_invoker } }
 };
 
@@ -104,29 +133,6 @@ fonts_get_list_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg fonts_get_list_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "filter",
-    "An optional regular expression used to filter the list"
-  }
-};
-
-static ProcArg fonts_get_list_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "num-fonts",
-    "The number of available fonts"
-  },
-  {
-    GIMP_PDB_STRINGARRAY,
-    "font-list",
-    "The list of font names"
-  }
-};
-
 static ProcRecord fonts_get_list_proc =
 {
   "gimp-fonts-get-list",
@@ -138,9 +144,6 @@ static ProcRecord fonts_get_list_proc =
   "2003",
   NULL,
   GIMP_INTERNAL,
-  1,
-  fonts_get_list_inargs,
-  2,
-  fonts_get_list_outargs,
+  0, NULL, 0, NULL,
   { { fonts_get_list_invoker } }
 };

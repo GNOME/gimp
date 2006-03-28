@@ -25,6 +25,7 @@
 
 #include "pdb-types.h"
 #include "procedural_db.h"
+#include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
 
@@ -35,9 +36,72 @@ static ProcRecord fonts_set_popup_proc;
 void
 register_font_select_procs (Gimp *gimp)
 {
+  /*
+   * fonts_popup
+   */
+  procedural_db_init_proc (&fonts_popup_proc, 3, 0);
+  procedural_db_add_argument (&fonts_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("font-callback",
+                                                      "font callback",
+                                                      "The callback PDB proc to call when font selection is made",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&fonts_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("popup-title",
+                                                      "popup title",
+                                                      "Title to give the font popup window",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&fonts_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("initial-font",
+                                                      "initial font",
+                                                      "The name of the font to set as the first selected",
+                                                      FALSE, TRUE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &fonts_popup_proc);
+
+  /*
+   * fonts_close_popup
+   */
+  procedural_db_init_proc (&fonts_close_popup_proc, 1, 0);
+  procedural_db_add_argument (&fonts_close_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("font-callback",
+                                                      "font callback",
+                                                      "The name of the callback registered for this popup",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &fonts_close_popup_proc);
+
+  /*
+   * fonts_set_popup
+   */
+  procedural_db_init_proc (&fonts_set_popup_proc, 2, 0);
+  procedural_db_add_argument (&fonts_set_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("font-callback",
+                                                      "font callback",
+                                                      "The name of the callback registered for this popup",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&fonts_set_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("font-name",
+                                                      "font name",
+                                                      "The name of the font to set as selected",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &fonts_set_popup_proc);
+
 }
 
 static Argument *
@@ -77,25 +141,6 @@ fonts_popup_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg fonts_popup_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "font-callback",
-    "The callback PDB proc to call when font selection is made"
-  },
-  {
-    GIMP_PDB_STRING,
-    "popup-title",
-    "Title to give the font popup window"
-  },
-  {
-    GIMP_PDB_STRING,
-    "initial-font",
-    "The name of the font to set as the first selected"
-  }
-};
-
 static ProcRecord fonts_popup_proc =
 {
   "gimp-fonts-popup",
@@ -107,10 +152,7 @@ static ProcRecord fonts_popup_proc =
   "2003",
   NULL,
   GIMP_INTERNAL,
-  3,
-  fonts_popup_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { fonts_popup_invoker } }
 };
 
@@ -139,15 +181,6 @@ fonts_close_popup_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg fonts_close_popup_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "font-callback",
-    "The name of the callback registered for this popup"
-  }
-};
-
 static ProcRecord fonts_close_popup_proc =
 {
   "gimp-fonts-close-popup",
@@ -159,10 +192,7 @@ static ProcRecord fonts_close_popup_proc =
   "2003",
   NULL,
   GIMP_INTERNAL,
-  1,
-  fonts_close_popup_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { fonts_close_popup_invoker } }
 };
 
@@ -197,20 +227,6 @@ fonts_set_popup_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg fonts_set_popup_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "font-callback",
-    "The name of the callback registered for this popup"
-  },
-  {
-    GIMP_PDB_STRING,
-    "font-name",
-    "The name of the font to set as selected"
-  }
-};
-
 static ProcRecord fonts_set_popup_proc =
 {
   "gimp-fonts-set-popup",
@@ -222,9 +238,6 @@ static ProcRecord fonts_set_popup_proc =
   "2003",
   NULL,
   GIMP_INTERNAL,
-  2,
-  fonts_set_popup_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { fonts_set_popup_invoker } }
 };

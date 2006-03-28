@@ -64,16 +64,10 @@ plug_in_proc_def_free (PlugInProcDef *proc_def)
   g_free (proc_def->db_info.date);
 
   for (i = 0; i < proc_def->db_info.num_args; i++)
-    {
-      g_free (proc_def->db_info.args[i].name);
-      g_free (proc_def->db_info.args[i].description);
-    }
+    g_param_spec_unref (proc_def->db_info.args[i].pspec);
 
   for (i = 0; i < proc_def->db_info.num_values; i++)
-    {
-      g_free (proc_def->db_info.values[i].name);
-      g_free (proc_def->db_info.values[i].description);
-    }
+    g_param_spec_unref (proc_def->db_info.values[i].pspec);
 
   g_free (proc_def->db_info.args);
   g_free (proc_def->db_info.values);

@@ -26,6 +26,7 @@
 
 #include "pdb-types.h"
 #include "procedural_db.h"
+#include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
 #include "gimp-intl.h"
@@ -39,9 +40,48 @@ static ProcRecord message_set_handler_proc;
 void
 register_message_procs (Gimp *gimp)
 {
+  /*
+   * message
+   */
+  procedural_db_init_proc (&message_proc, 1, 0);
+  procedural_db_add_argument (&message_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("message",
+                                                      "message",
+                                                      "Message to display in the dialog",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &message_proc);
+
+  /*
+   * message_get_handler
+   */
+  procedural_db_init_proc (&message_get_handler_proc, 0, 1);
+  procedural_db_add_return_value (&message_get_handler_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_enum ("handler",
+                                                     "handler",
+                                                     "The current handler type: { GIMP_MESSAGE_BOX (0), GIMP_CONSOLE (1), GIMP_ERROR_CONSOLE (2) }",
+                                                     GIMP_TYPE_MESSAGE_HANDLER_TYPE,
+                                                     GIMP_MESSAGE_BOX,
+                                                     GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &message_get_handler_proc);
+
+  /*
+   * message_set_handler
+   */
+  procedural_db_init_proc (&message_set_handler_proc, 1, 0);
+  procedural_db_add_argument (&message_set_handler_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_enum ("handler",
+                                                 "handler",
+                                                 "The new handler type: { GIMP_MESSAGE_BOX (0), GIMP_CONSOLE (1), GIMP_ERROR_CONSOLE (2) }",
+                                                 GIMP_TYPE_MESSAGE_HANDLER_TYPE,
+                                                 GIMP_MESSAGE_BOX,
+                                                 GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &message_set_handler_proc);
+
 }
 
 static Argument *
@@ -69,15 +109,6 @@ message_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg message_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "message",
-    "Message to display in the dialog"
-  }
-};
-
 static ProcRecord message_proc =
 {
   "gimp-message",
@@ -89,10 +120,7 @@ static ProcRecord message_proc =
   "1998",
   NULL,
   GIMP_INTERNAL,
-  1,
-  message_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { message_invoker } }
 };
 
@@ -114,15 +142,6 @@ message_get_handler_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg message_get_handler_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "handler",
-    "The current handler type: { GIMP_MESSAGE_BOX (0), GIMP_CONSOLE (1), GIMP_ERROR_CONSOLE (2) }"
-  }
-};
-
 static ProcRecord message_get_handler_proc =
 {
   "gimp-message-get-handler",
@@ -134,10 +153,7 @@ static ProcRecord message_get_handler_proc =
   "1998",
   NULL,
   GIMP_INTERNAL,
-  0,
-  NULL,
-  1,
-  message_get_handler_outargs,
+  0, NULL, 0, NULL,
   { { message_get_handler_invoker } }
 };
 
@@ -163,15 +179,6 @@ message_set_handler_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg message_set_handler_inargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "handler",
-    "The new handler type: { GIMP_MESSAGE_BOX (0), GIMP_CONSOLE (1), GIMP_ERROR_CONSOLE (2) }"
-  }
-};
-
 static ProcRecord message_set_handler_proc =
 {
   "gimp-message-set-handler",
@@ -183,9 +190,6 @@ static ProcRecord message_set_handler_proc =
   "1998",
   NULL,
   GIMP_INTERNAL,
-  1,
-  message_set_handler_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { message_set_handler_invoker } }
 };

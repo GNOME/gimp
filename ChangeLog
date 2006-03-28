@@ -1,3 +1,28 @@
+2006-03-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/pdb/procedural_db.[ch] (struct ProcArg): replace "name"
+	and "description" by a GParamSpec.
+
+	(procedural_db_init_proc)
+	(procedural_db_add_argument)
+	(procedural_db_add_return_value)
+	(procedural_db_add_compat_arg)
+	(procedural_db_add_compat_val): new functions which dynamically
+	allocate and register arguments and return value arrays based on
+	GParamSpecs.
+
+	* app/pdb/procedural-db-query.c
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-proc-def.c
+	* app/plug-in/plug-in-rc.c
+	* app/xcf/xcf.c
+	* tools/pdbgen/pdb/procedural_db.pdb: changed accordingly.
+
+	* tools/pdbgen/app.pl: get rid of all ProcArg arrays and generate
+	code that registers args and values with the procedures.
+
+	* app/pdb/*_cmds.c: regenerated.
+
 2006-03-28  Sven  Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdockbook.c (gimp_dockbook_drop_dockable): allow

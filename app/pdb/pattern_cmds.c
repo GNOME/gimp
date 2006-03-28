@@ -26,6 +26,7 @@
 
 #include "pdb-types.h"
 #include "procedural_db.h"
+#include "core/gimpparamspecs.h"
 
 #include "base/temp-buf.h"
 #include "core/gimp.h"
@@ -40,8 +41,89 @@ static ProcRecord pattern_get_pixels_proc;
 void
 register_pattern_procs (Gimp *gimp)
 {
+  /*
+   * pattern_get_info
+   */
+  procedural_db_init_proc (&pattern_get_info_proc, 1, 3);
+  procedural_db_add_argument (&pattern_get_info_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("name",
+                                                      "name",
+                                                      "The pattern name.",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&pattern_get_info_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_int ("width",
+                                                    "width",
+                                                    "The pattern width",
+                                                    G_MININT32, G_MAXINT32, 0,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&pattern_get_info_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_int ("height",
+                                                    "height",
+                                                    "The pattern height",
+                                                    G_MININT32, G_MAXINT32, 0,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&pattern_get_info_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_int ("bpp",
+                                                    "bpp",
+                                                    "The pattern bpp",
+                                                    G_MININT32, G_MAXINT32, 0,
+                                                    GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &pattern_get_info_proc);
+
+  /*
+   * pattern_get_pixels
+   */
+  procedural_db_init_proc (&pattern_get_pixels_proc, 1, 5);
+  procedural_db_add_argument (&pattern_get_pixels_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("name",
+                                                      "name",
+                                                      "The pattern name.",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&pattern_get_pixels_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_int ("width",
+                                                    "width",
+                                                    "The pattern width",
+                                                    G_MININT32, G_MAXINT32, 0,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&pattern_get_pixels_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_int ("height",
+                                                    "height",
+                                                    "The pattern height",
+                                                    G_MININT32, G_MAXINT32, 0,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&pattern_get_pixels_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_int ("bpp",
+                                                    "bpp",
+                                                    "The pattern bpp",
+                                                    G_MININT32, G_MAXINT32, 0,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&pattern_get_pixels_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_int ("num-color-bytes",
+                                                    "num color bytes",
+                                                    "Number of pattern bytes",
+                                                    0, G_MAXINT32, 0,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&pattern_get_pixels_proc,
+                                  GIMP_PDB_INT8ARRAY,
+                                  g_param_spec_pointer ("color-bytes",
+                                                        "color bytes",
+                                                        "The pattern data.",
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &pattern_get_pixels_proc);
+
 }
 
 static Argument *
@@ -89,34 +171,6 @@ pattern_get_info_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg pattern_get_info_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "name",
-    "The pattern name."
-  }
-};
-
-static ProcArg pattern_get_info_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "width",
-    "The pattern width"
-  },
-  {
-    GIMP_PDB_INT32,
-    "height",
-    "The pattern height"
-  },
-  {
-    GIMP_PDB_INT32,
-    "bpp",
-    "The pattern bpp"
-  }
-};
-
 static ProcRecord pattern_get_info_proc =
 {
   "gimp-pattern-get-info",
@@ -128,10 +182,7 @@ static ProcRecord pattern_get_info_proc =
   "2004",
   NULL,
   GIMP_INTERNAL,
-  1,
-  pattern_get_info_inargs,
-  3,
-  pattern_get_info_outargs,
+  0, NULL, 0, NULL,
   { { pattern_get_info_invoker } }
 };
 
@@ -188,44 +239,6 @@ pattern_get_pixels_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg pattern_get_pixels_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "name",
-    "The pattern name."
-  }
-};
-
-static ProcArg pattern_get_pixels_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "width",
-    "The pattern width"
-  },
-  {
-    GIMP_PDB_INT32,
-    "height",
-    "The pattern height"
-  },
-  {
-    GIMP_PDB_INT32,
-    "bpp",
-    "The pattern bpp"
-  },
-  {
-    GIMP_PDB_INT32,
-    "num-color-bytes",
-    "Number of pattern bytes"
-  },
-  {
-    GIMP_PDB_INT8ARRAY,
-    "color-bytes",
-    "The pattern data."
-  }
-};
-
 static ProcRecord pattern_get_pixels_proc =
 {
   "gimp-pattern-get-pixels",
@@ -237,9 +250,6 @@ static ProcRecord pattern_get_pixels_proc =
   "2004",
   NULL,
   GIMP_INTERNAL,
-  1,
-  pattern_get_pixels_inargs,
-  5,
-  pattern_get_pixels_outargs,
+  0, NULL, 0, NULL,
   { { pattern_get_pixels_invoker } }
 };

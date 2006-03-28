@@ -25,6 +25,7 @@
 
 #include "pdb-types.h"
 #include "procedural_db.h"
+#include "core/gimpparamspecs.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimplayer-floating-sel.h"
@@ -40,12 +41,112 @@ static ProcRecord floating_sel_relax_proc;
 void
 register_floating_sel_procs (Gimp *gimp)
 {
+  /*
+   * floating_sel_remove
+   */
+  procedural_db_init_proc (&floating_sel_remove_proc, 1, 0);
+  procedural_db_add_argument (&floating_sel_remove_proc,
+                              GIMP_PDB_LAYER,
+                              gimp_param_spec_item_id ("floating-sel",
+                                                       "floating sel",
+                                                       "The floating selection",
+                                                       gimp,
+                                                       GIMP_TYPE_LAYER,
+                                                       GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &floating_sel_remove_proc);
+
+  /*
+   * floating_sel_anchor
+   */
+  procedural_db_init_proc (&floating_sel_anchor_proc, 1, 0);
+  procedural_db_add_argument (&floating_sel_anchor_proc,
+                              GIMP_PDB_LAYER,
+                              gimp_param_spec_item_id ("floating-sel",
+                                                       "floating sel",
+                                                       "The floating selection",
+                                                       gimp,
+                                                       GIMP_TYPE_LAYER,
+                                                       GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &floating_sel_anchor_proc);
+
+  /*
+   * floating_sel_to_layer
+   */
+  procedural_db_init_proc (&floating_sel_to_layer_proc, 1, 0);
+  procedural_db_add_argument (&floating_sel_to_layer_proc,
+                              GIMP_PDB_LAYER,
+                              gimp_param_spec_item_id ("floating-sel",
+                                                       "floating sel",
+                                                       "The floating selection",
+                                                       gimp,
+                                                       GIMP_TYPE_LAYER,
+                                                       GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &floating_sel_to_layer_proc);
+
+  /*
+   * floating_sel_attach
+   */
+  procedural_db_init_proc (&floating_sel_attach_proc, 2, 0);
+  procedural_db_add_argument (&floating_sel_attach_proc,
+                              GIMP_PDB_LAYER,
+                              gimp_param_spec_item_id ("layer",
+                                                       "layer",
+                                                       "The layer (is attached as floating selection)",
+                                                       gimp,
+                                                       GIMP_TYPE_LAYER,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&floating_sel_attach_proc,
+                              GIMP_PDB_DRAWABLE,
+                              gimp_param_spec_item_id ("drawable",
+                                                       "drawable",
+                                                       "The drawable (where to attach the floating selection)",
+                                                       gimp,
+                                                       GIMP_TYPE_DRAWABLE,
+                                                       GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &floating_sel_attach_proc);
+
+  /*
+   * floating_sel_rigor
+   */
+  procedural_db_init_proc (&floating_sel_rigor_proc, 2, 0);
+  procedural_db_add_argument (&floating_sel_rigor_proc,
+                              GIMP_PDB_LAYER,
+                              gimp_param_spec_item_id ("floating-sel",
+                                                       "floating sel",
+                                                       "The floating selection",
+                                                       gimp,
+                                                       GIMP_TYPE_LAYER,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&floating_sel_rigor_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_boolean ("undo",
+                                                    "undo",
+                                                    "(TRUE or FALSE)",
+                                                    FALSE,
+                                                    GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &floating_sel_rigor_proc);
+
+  /*
+   * floating_sel_relax
+   */
+  procedural_db_init_proc (&floating_sel_relax_proc, 2, 0);
+  procedural_db_add_argument (&floating_sel_relax_proc,
+                              GIMP_PDB_LAYER,
+                              gimp_param_spec_item_id ("floating-sel",
+                                                       "floating sel",
+                                                       "The floating selection",
+                                                       gimp,
+                                                       GIMP_TYPE_LAYER,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&floating_sel_relax_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_boolean ("undo",
+                                                    "undo",
+                                                    "(TRUE or FALSE)",
+                                                    FALSE,
+                                                    GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &floating_sel_relax_proc);
+
 }
 
 static Argument *
@@ -73,15 +174,6 @@ floating_sel_remove_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg floating_sel_remove_inargs[] =
-{
-  {
-    GIMP_PDB_LAYER,
-    "floating-sel",
-    "The floating selection"
-  }
-};
-
 static ProcRecord floating_sel_remove_proc =
 {
   "gimp-floating-sel-remove",
@@ -93,10 +185,7 @@ static ProcRecord floating_sel_remove_proc =
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
-  1,
-  floating_sel_remove_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { floating_sel_remove_invoker } }
 };
 
@@ -125,15 +214,6 @@ floating_sel_anchor_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg floating_sel_anchor_inargs[] =
-{
-  {
-    GIMP_PDB_LAYER,
-    "floating-sel",
-    "The floating selection"
-  }
-};
-
 static ProcRecord floating_sel_anchor_proc =
 {
   "gimp-floating-sel-anchor",
@@ -145,10 +225,7 @@ static ProcRecord floating_sel_anchor_proc =
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
-  1,
-  floating_sel_anchor_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { floating_sel_anchor_invoker } }
 };
 
@@ -177,15 +254,6 @@ floating_sel_to_layer_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg floating_sel_to_layer_inargs[] =
-{
-  {
-    GIMP_PDB_LAYER,
-    "floating-sel",
-    "The floating selection"
-  }
-};
-
 static ProcRecord floating_sel_to_layer_proc =
 {
   "gimp-floating-sel-to-layer",
@@ -197,10 +265,7 @@ static ProcRecord floating_sel_to_layer_proc =
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
-  1,
-  floating_sel_to_layer_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { floating_sel_to_layer_invoker } }
 };
 
@@ -234,20 +299,6 @@ floating_sel_attach_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg floating_sel_attach_inargs[] =
-{
-  {
-    GIMP_PDB_LAYER,
-    "layer",
-    "The layer (is attached as floating selection)"
-  },
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The drawable (where to attach the floating selection)"
-  }
-};
-
 static ProcRecord floating_sel_attach_proc =
 {
   "gimp-floating-sel-attach",
@@ -259,10 +310,7 @@ static ProcRecord floating_sel_attach_proc =
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
-  2,
-  floating_sel_attach_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { floating_sel_attach_invoker } }
 };
 
@@ -294,20 +342,6 @@ floating_sel_rigor_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg floating_sel_rigor_inargs[] =
-{
-  {
-    GIMP_PDB_LAYER,
-    "floating-sel",
-    "The floating selection"
-  },
-  {
-    GIMP_PDB_INT32,
-    "undo",
-    "(TRUE or FALSE)"
-  }
-};
-
 static ProcRecord floating_sel_rigor_proc =
 {
   "gimp-floating-sel-rigor",
@@ -319,10 +353,7 @@ static ProcRecord floating_sel_rigor_proc =
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
-  2,
-  floating_sel_rigor_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { floating_sel_rigor_invoker } }
 };
 
@@ -354,20 +385,6 @@ floating_sel_relax_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg floating_sel_relax_inargs[] =
-{
-  {
-    GIMP_PDB_LAYER,
-    "floating-sel",
-    "The floating selection"
-  },
-  {
-    GIMP_PDB_INT32,
-    "undo",
-    "(TRUE or FALSE)"
-  }
-};
-
 static ProcRecord floating_sel_relax_proc =
 {
   "gimp-floating-sel-relax",
@@ -379,9 +396,6 @@ static ProcRecord floating_sel_relax_proc =
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
-  2,
-  floating_sel_relax_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { floating_sel_relax_invoker } }
 };

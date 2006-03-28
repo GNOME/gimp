@@ -27,6 +27,7 @@
 
 #include "pdb-types.h"
 #include "procedural_db.h"
+#include "core/gimpparamspecs.h"
 
 #include "config/gimpcoreconfig.h"
 #include "core/gimp-transform-utils.h"
@@ -47,12 +48,336 @@ static ProcRecord transform_2d_proc;
 void
 register_transform_tools_procs (Gimp *gimp)
 {
+  /*
+   * flip
+   */
+  procedural_db_init_proc (&flip_proc, 2, 1);
+  procedural_db_add_argument (&flip_proc,
+                              GIMP_PDB_DRAWABLE,
+                              gimp_param_spec_item_id ("drawable",
+                                                       "drawable",
+                                                       "The affected drawable",
+                                                       gimp,
+                                                       GIMP_TYPE_DRAWABLE,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&flip_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_enum ("flip-type",
+                                                 "flip type",
+                                                 "Type of flip: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }",
+                                                 GIMP_TYPE_ORIENTATION_TYPE,
+                                                 GIMP_ORIENTATION_HORIZONTAL,
+                                                 GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&flip_proc,
+                                  GIMP_PDB_DRAWABLE,
+                                  gimp_param_spec_item_id ("drawable",
+                                                           "drawable",
+                                                           "The flipped drawable",
+                                                           gimp,
+                                                           GIMP_TYPE_DRAWABLE,
+                                                           GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &flip_proc);
+
+  /*
+   * perspective
+   */
+  procedural_db_init_proc (&perspective_proc, 10, 1);
+  procedural_db_add_argument (&perspective_proc,
+                              GIMP_PDB_DRAWABLE,
+                              gimp_param_spec_item_id ("drawable",
+                                                       "drawable",
+                                                       "The affected drawable",
+                                                       gimp,
+                                                       GIMP_TYPE_DRAWABLE,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&perspective_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_boolean ("interpolation",
+                                                    "interpolation",
+                                                    "Whether to use interpolation",
+                                                    FALSE,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&perspective_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("x0",
+                                                   "x0",
+                                                   "The new x coordinate of upper-left corner of original bounding box",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&perspective_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("y0",
+                                                   "y0",
+                                                   "The new y coordinate of upper-left corner of original bounding box",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&perspective_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("x1",
+                                                   "x1",
+                                                   "The new x coordinate of upper-right corner of original bounding box",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&perspective_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("y1",
+                                                   "y1",
+                                                   "The new y coordinate of upper-right corner of original bounding box",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&perspective_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("x2",
+                                                   "x2",
+                                                   "The new x coordinate of lower-left corner of original bounding box",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&perspective_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("y2",
+                                                   "y2",
+                                                   "The new y coordinate of lower-left corner of original bounding box",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&perspective_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("x3",
+                                                   "x3",
+                                                   "The new x coordinate of lower-right corner of original bounding box",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&perspective_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("y3",
+                                                   "y3",
+                                                   "The new y coordinate of lower-right corner of original bounding box",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&perspective_proc,
+                                  GIMP_PDB_DRAWABLE,
+                                  gimp_param_spec_item_id ("drawable",
+                                                           "drawable",
+                                                           "The newly mapped drawable",
+                                                           gimp,
+                                                           GIMP_TYPE_DRAWABLE,
+                                                           GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &perspective_proc);
+
+  /*
+   * rotate
+   */
+  procedural_db_init_proc (&rotate_proc, 3, 1);
+  procedural_db_add_argument (&rotate_proc,
+                              GIMP_PDB_DRAWABLE,
+                              gimp_param_spec_item_id ("drawable",
+                                                       "drawable",
+                                                       "The affected drawable",
+                                                       gimp,
+                                                       GIMP_TYPE_DRAWABLE,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&rotate_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_boolean ("interpolation",
+                                                    "interpolation",
+                                                    "Whether to use interpolation",
+                                                    FALSE,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&rotate_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("angle",
+                                                   "angle",
+                                                   "The angle of rotation (radians)",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&rotate_proc,
+                                  GIMP_PDB_DRAWABLE,
+                                  gimp_param_spec_item_id ("drawable",
+                                                           "drawable",
+                                                           "The rotated drawable",
+                                                           gimp,
+                                                           GIMP_TYPE_DRAWABLE,
+                                                           GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &rotate_proc);
+
+  /*
+   * scale
+   */
+  procedural_db_init_proc (&scale_proc, 6, 1);
+  procedural_db_add_argument (&scale_proc,
+                              GIMP_PDB_DRAWABLE,
+                              gimp_param_spec_item_id ("drawable",
+                                                       "drawable",
+                                                       "The affected drawable",
+                                                       gimp,
+                                                       GIMP_TYPE_DRAWABLE,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&scale_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_boolean ("interpolation",
+                                                    "interpolation",
+                                                    "Whether to use interpolation",
+                                                    FALSE,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&scale_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("x0",
+                                                   "x0",
+                                                   "The new x coordinate of the upper-left corner of the scaled region",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&scale_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("y0",
+                                                   "y0",
+                                                   "The new y coordinate of the upper-left corner of the scaled region",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&scale_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("x1",
+                                                   "x1",
+                                                   "The new x coordinate of the lower-right corner of the scaled region",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&scale_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("y1",
+                                                   "y1",
+                                                   "The new y coordinate of the lower-right corner of the scaled region",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&scale_proc,
+                                  GIMP_PDB_DRAWABLE,
+                                  gimp_param_spec_item_id ("drawable",
+                                                           "drawable",
+                                                           "The scaled drawable",
+                                                           gimp,
+                                                           GIMP_TYPE_DRAWABLE,
+                                                           GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &scale_proc);
+
+  /*
+   * shear
+   */
+  procedural_db_init_proc (&shear_proc, 4, 1);
+  procedural_db_add_argument (&shear_proc,
+                              GIMP_PDB_DRAWABLE,
+                              gimp_param_spec_item_id ("drawable",
+                                                       "drawable",
+                                                       "The affected drawable",
+                                                       gimp,
+                                                       GIMP_TYPE_DRAWABLE,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&shear_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_boolean ("interpolation",
+                                                    "interpolation",
+                                                    "Whether to use interpolation",
+                                                    FALSE,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&shear_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_enum ("shear-type",
+                                                 "shear type",
+                                                 "Type of shear: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }",
+                                                 GIMP_TYPE_ORIENTATION_TYPE,
+                                                 GIMP_ORIENTATION_HORIZONTAL,
+                                                 GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&shear_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("magnitude",
+                                                   "magnitude",
+                                                   "The magnitude of the shear",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&shear_proc,
+                                  GIMP_PDB_DRAWABLE,
+                                  gimp_param_spec_item_id ("drawable",
+                                                           "drawable",
+                                                           "The sheared drawable",
+                                                           gimp,
+                                                           GIMP_TYPE_DRAWABLE,
+                                                           GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &shear_proc);
+
+  /*
+   * transform_2d
+   */
+  procedural_db_init_proc (&transform_2d_proc, 9, 1);
+  procedural_db_add_argument (&transform_2d_proc,
+                              GIMP_PDB_DRAWABLE,
+                              gimp_param_spec_item_id ("drawable",
+                                                       "drawable",
+                                                       "The affected drawable",
+                                                       gimp,
+                                                       GIMP_TYPE_DRAWABLE,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&transform_2d_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_boolean ("interpolation",
+                                                    "interpolation",
+                                                    "Whether to use interpolation",
+                                                    FALSE,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&transform_2d_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("source-x",
+                                                   "source x",
+                                                   "X coordinate of the transformation center",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&transform_2d_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("source-y",
+                                                   "source y",
+                                                   "Y coordinate of the transformation center",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&transform_2d_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("scale-x",
+                                                   "scale x",
+                                                   "Amount to scale in x direction",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&transform_2d_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("scale-y",
+                                                   "scale y",
+                                                   "Amount to scale in y direction",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&transform_2d_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("angle",
+                                                   "angle",
+                                                   "The angle of rotation (radians)",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&transform_2d_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("dest-x",
+                                                   "dest x",
+                                                   "X coordinate of where the centre goes",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&transform_2d_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("dest-y",
+                                                   "dest y",
+                                                   "Y coordinate of where the centre goes",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&transform_2d_proc,
+                                  GIMP_PDB_DRAWABLE,
+                                  gimp_param_spec_item_id ("drawable",
+                                                           "drawable",
+                                                           "The transformed drawable",
+                                                           gimp,
+                                                           GIMP_TYPE_DRAWABLE,
+                                                           GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &transform_2d_proc);
+
 }
 
 static Argument *
@@ -97,29 +422,6 @@ flip_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg flip_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The affected drawable"
-  },
-  {
-    GIMP_PDB_INT32,
-    "flip-type",
-    "Type of flip: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }"
-  }
-};
-
-static ProcArg flip_outargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The flipped drawable"
-  }
-};
-
 static ProcRecord flip_proc =
 {
   "gimp-flip",
@@ -131,10 +433,7 @@ static ProcRecord flip_proc =
   "",
   "gimp-drawable-transform-flip-simple",
   GIMP_INTERNAL,
-  2,
-  flip_inargs,
-  1,
-  flip_outargs,
+  0, NULL, 0, NULL,
   { { flip_invoker } }
 };
 
@@ -227,69 +526,6 @@ perspective_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg perspective_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The affected drawable"
-  },
-  {
-    GIMP_PDB_INT32,
-    "interpolation",
-    "Whether to use interpolation"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "x0",
-    "The new x coordinate of upper-left corner of original bounding box"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "y0",
-    "The new y coordinate of upper-left corner of original bounding box"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "x1",
-    "The new x coordinate of upper-right corner of original bounding box"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "y1",
-    "The new y coordinate of upper-right corner of original bounding box"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "x2",
-    "The new x coordinate of lower-left corner of original bounding box"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "y2",
-    "The new y coordinate of lower-left corner of original bounding box"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "x3",
-    "The new x coordinate of lower-right corner of original bounding box"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "y3",
-    "The new y coordinate of lower-right corner of original bounding box"
-  }
-};
-
-static ProcArg perspective_outargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The newly mapped drawable"
-  }
-};
-
 static ProcRecord perspective_proc =
 {
   "gimp-perspective",
@@ -301,10 +537,7 @@ static ProcRecord perspective_proc =
   "",
   "gimp-drawable-transform-perspective-default",
   GIMP_INTERNAL,
-  10,
-  perspective_inargs,
-  1,
-  perspective_outargs,
+  0, NULL, 0, NULL,
   { { perspective_invoker } }
 };
 
@@ -372,34 +605,6 @@ rotate_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg rotate_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The affected drawable"
-  },
-  {
-    GIMP_PDB_INT32,
-    "interpolation",
-    "Whether to use interpolation"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "angle",
-    "The angle of rotation (radians)"
-  }
-};
-
-static ProcArg rotate_outargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The rotated drawable"
-  }
-};
-
 static ProcRecord rotate_proc =
 {
   "gimp-rotate",
@@ -411,10 +616,7 @@ static ProcRecord rotate_proc =
   "",
   "gimp-drawable-transform-rotate-default",
   GIMP_INTERNAL,
-  3,
-  rotate_inargs,
-  1,
-  rotate_outargs,
+  0, NULL, 0, NULL,
   { { rotate_invoker } }
 };
 
@@ -495,49 +697,6 @@ scale_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg scale_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The affected drawable"
-  },
-  {
-    GIMP_PDB_INT32,
-    "interpolation",
-    "Whether to use interpolation"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "x0",
-    "The new x coordinate of the upper-left corner of the scaled region"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "y0",
-    "The new y coordinate of the upper-left corner of the scaled region"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "x1",
-    "The new x coordinate of the lower-right corner of the scaled region"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "y1",
-    "The new y coordinate of the lower-right corner of the scaled region"
-  }
-};
-
-static ProcArg scale_outargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The scaled drawable"
-  }
-};
-
 static ProcRecord scale_proc =
 {
   "gimp-scale",
@@ -549,10 +708,7 @@ static ProcRecord scale_proc =
   "",
   "gimp-drawable-transform-scale-default",
   GIMP_INTERNAL,
-  6,
-  scale_inargs,
-  1,
-  scale_outargs,
+  0, NULL, 0, NULL,
   { { scale_invoker } }
 };
 
@@ -626,39 +782,6 @@ shear_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg shear_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The affected drawable"
-  },
-  {
-    GIMP_PDB_INT32,
-    "interpolation",
-    "Whether to use interpolation"
-  },
-  {
-    GIMP_PDB_INT32,
-    "shear-type",
-    "Type of shear: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "magnitude",
-    "The magnitude of the shear"
-  }
-};
-
-static ProcArg shear_outargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The sheared drawable"
-  }
-};
-
 static ProcRecord shear_proc =
 {
   "gimp-shear",
@@ -670,10 +793,7 @@ static ProcRecord shear_proc =
   "",
   "gimp-drawable-transform-shear-default",
   GIMP_INTERNAL,
-  4,
-  shear_inargs,
-  1,
-  shear_outargs,
+  0, NULL, 0, NULL,
   { { shear_invoker } }
 };
 
@@ -760,64 +880,6 @@ transform_2d_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg transform_2d_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The affected drawable"
-  },
-  {
-    GIMP_PDB_INT32,
-    "interpolation",
-    "Whether to use interpolation"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "source-x",
-    "X coordinate of the transformation center"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "source-y",
-    "Y coordinate of the transformation center"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "scale-x",
-    "Amount to scale in x direction"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "scale-y",
-    "Amount to scale in y direction"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "angle",
-    "The angle of rotation (radians)"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "dest-x",
-    "X coordinate of where the centre goes"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "dest-y",
-    "Y coordinate of where the centre goes"
-  }
-};
-
-static ProcArg transform_2d_outargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The transformed drawable"
-  }
-};
-
 static ProcRecord transform_2d_proc =
 {
   "gimp-transform-2d",
@@ -829,9 +891,6 @@ static ProcRecord transform_2d_proc =
   "",
   "gimp-drawable-transform-2d-default",
   GIMP_INTERNAL,
-  9,
-  transform_2d_inargs,
-  1,
-  transform_2d_outargs,
+  0, NULL, 0, NULL,
   { { transform_2d_invoker } }
 };

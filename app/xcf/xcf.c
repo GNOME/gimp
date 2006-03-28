@@ -62,26 +62,6 @@ static Argument * xcf_save_invoker (ProcRecord   *procedure,
 				    Argument     *args);
 
 
-static ProcArg xcf_load_args[] =
-{
-  { GIMP_PDB_INT32,
-    "dummy-param",
-    "dummy parameter" },
-  { GIMP_PDB_STRING,
-    "filename",
-    "The name of the file to load, in the on-disk character set and encoding" },
-  { GIMP_PDB_STRING,
-    "raw-filename",
-    "The basename of the file, in UTF-8" }
-};
-
-static ProcArg xcf_load_return_vals[] =
-{
-  { GIMP_PDB_IMAGE,
-    "image",
-    "Output image" }
-};
-
 static PlugInProcDef xcf_plug_in_load_proc =
 {
   "gimp-xcf-load",
@@ -106,10 +86,7 @@ static PlugInProcDef xcf_plug_in_load_proc =
     "1995-1996",
     NULL,
     GIMP_INTERNAL,
-    3,
-    xcf_load_args,
-    1,
-    xcf_load_return_vals,
+    0, NULL, 0, NULL,
     { { xcf_load_invoker } },
   },
   TRUE,
@@ -120,25 +97,6 @@ static PlugInProcDef xcf_plug_in_load_proc =
   NULL, /* fill me in at runtime */
   NULL, /* fill me in at runtime */
   NULL  /* fill me in at runtime */
-};
-
-static ProcArg xcf_save_args[] =
-{
-  { GIMP_PDB_INT32,
-    "dummy-param",
-    "dummy parameter" },
-  { GIMP_PDB_IMAGE,
-    "image",
-    "Input image" },
-  { GIMP_PDB_DRAWABLE,
-    "drawable",
-    "Active drawable of input image" },
-  { GIMP_PDB_STRING,
-    "filename",
-    "The name of the file to save the image in, in the on-disk character set and encoding" },
-  { GIMP_PDB_STRING,
-    "raw_filename",
-    "The basename of the file, in UTF-8" }
 };
 
 static PlugInProcDef xcf_plug_in_save_proc =
@@ -165,10 +123,7 @@ static PlugInProcDef xcf_plug_in_save_proc =
     "1995-1996",
     NULL,
     GIMP_INTERNAL,
-    5,
-    xcf_save_args,
-    0,
-    NULL,
+    0, NULL, 0, NULL,
     { { xcf_save_invoker } },
   },
   TRUE,
@@ -203,11 +158,51 @@ xcf_init (Gimp *gimp)
    * though they are internal.  The only thing it requires is using a
    * PlugInProcDef struct.  -josh
    */
+  procedural_db_init_proc (&xcf_plug_in_save_proc.db_info, 5, 0);
+  procedural_db_add_compat_arg (&xcf_plug_in_save_proc.db_info, gimp,
+                                GIMP_PDB_INT32,
+                                "dummy-param",
+                                "dummy parameter");
+  procedural_db_add_compat_arg (&xcf_plug_in_save_proc.db_info, gimp,
+                                GIMP_PDB_IMAGE,
+                                "image",
+                                "Input image");
+  procedural_db_add_compat_arg (&xcf_plug_in_save_proc.db_info, gimp,
+                                GIMP_PDB_DRAWABLE,
+                                "drawable",
+                                "Active drawable of input image");
+  procedural_db_add_compat_arg (&xcf_plug_in_save_proc.db_info, gimp,
+                                GIMP_PDB_STRING,
+                                "filename",
+                                "The name of the file to save the image in, "
+                                "in the on-disk character set and encoding");
+  procedural_db_add_compat_arg (&xcf_plug_in_save_proc.db_info, gimp,
+                                GIMP_PDB_STRING,
+                                "raw_filename",
+                                "The basename of the file, in UTF-8");
   procedural_db_register (gimp, &xcf_plug_in_save_proc.db_info);
   xcf_plug_in_save_proc.image_types_val =
     plug_ins_image_types_parse (xcf_plug_in_save_proc.image_types);
   plug_ins_add_internal (gimp, &xcf_plug_in_save_proc);
 
+  procedural_db_init_proc (&xcf_plug_in_load_proc.db_info, 3, 1);
+  procedural_db_add_compat_arg (&xcf_plug_in_load_proc.db_info, gimp,
+                                GIMP_PDB_INT32,
+                                "dummy-param",
+                                "dummy parameter");
+  procedural_db_add_compat_arg (&xcf_plug_in_load_proc.db_info, gimp,
+                                GIMP_PDB_STRING,
+                                "filename",
+                                "The name of the file to load, "
+                                "in the on-disk character set and encoding");
+  procedural_db_add_compat_arg (&xcf_plug_in_load_proc.db_info, gimp,
+                                GIMP_PDB_STRING,
+                                "raw-filename",
+                                "The basename of the file, in UTF-8");
+  procedural_db_add_compat_value (&xcf_plug_in_load_proc.db_info, gimp,
+                                  GIMP_PDB_IMAGE,
+                                  "image",
+                                  "Output image");
   procedural_db_register (gimp, &xcf_plug_in_load_proc.db_info);
   xcf_plug_in_load_proc.image_types_val =
     plug_ins_image_types_parse (xcf_plug_in_load_proc.image_types);

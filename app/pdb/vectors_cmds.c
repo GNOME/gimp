@@ -26,6 +26,7 @@
 
 #include "pdb-types.h"
 #include "procedural_db.h"
+#include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
@@ -62,29 +63,749 @@ static ProcRecord vectors_bezier_stroke_new_ellipse_proc;
 void
 register_vectors_procs (Gimp *gimp)
 {
+  /*
+   * vectors_new
+   */
+  procedural_db_init_proc (&vectors_new_proc, 2, 1);
+  procedural_db_add_argument (&vectors_new_proc,
+                              GIMP_PDB_IMAGE,
+                              gimp_param_spec_image_id ("image",
+                                                        "image",
+                                                        "The image",
+                                                        gimp,
+                                                        GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_new_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("name",
+                                                      "name",
+                                                      "the name of the new vector object.",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&vectors_new_proc,
+                                  GIMP_PDB_VECTORS,
+                                  gimp_param_spec_item_id ("vectors",
+                                                           "vectors",
+                                                           "the current vector object, 0 if no vector exists in the image.",
+                                                           gimp,
+                                                           GIMP_TYPE_VECTORS,
+                                                           GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &vectors_new_proc);
+
+  /*
+   * vectors_get_image
+   */
+  procedural_db_init_proc (&vectors_get_image_proc, 1, 1);
+  procedural_db_add_argument (&vectors_get_image_proc,
+                              GIMP_PDB_VECTORS,
+                              gimp_param_spec_item_id ("vectors",
+                                                       "vectors",
+                                                       "The vectors object",
+                                                       gimp,
+                                                       GIMP_TYPE_VECTORS,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&vectors_get_image_proc,
+                                  GIMP_PDB_IMAGE,
+                                  gimp_param_spec_image_id ("image",
+                                                            "image",
+                                                            "The vectors image",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &vectors_get_image_proc);
+
+  /*
+   * vectors_get_name
+   */
+  procedural_db_init_proc (&vectors_get_name_proc, 1, 1);
+  procedural_db_add_argument (&vectors_get_name_proc,
+                              GIMP_PDB_VECTORS,
+                              gimp_param_spec_item_id ("vectors",
+                                                       "vectors",
+                                                       "The vectors object",
+                                                       gimp,
+                                                       GIMP_TYPE_VECTORS,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&vectors_get_name_proc,
+                                  GIMP_PDB_STRING,
+                                  gimp_param_spec_string ("name",
+                                                          "name",
+                                                          "The name of the vectors object",
+                                                          FALSE, FALSE,
+                                                          NULL,
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &vectors_get_name_proc);
+
+  /*
+   * vectors_set_name
+   */
+  procedural_db_init_proc (&vectors_set_name_proc, 2, 0);
+  procedural_db_add_argument (&vectors_set_name_proc,
+                              GIMP_PDB_VECTORS,
+                              gimp_param_spec_item_id ("vectors",
+                                                       "vectors",
+                                                       "The vectors object",
+                                                       gimp,
+                                                       GIMP_TYPE_VECTORS,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_set_name_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("name",
+                                                      "name",
+                                                      "the new name of the path",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &vectors_set_name_proc);
+
+  /*
+   * vectors_get_visible
+   */
+  procedural_db_init_proc (&vectors_get_visible_proc, 1, 1);
+  procedural_db_add_argument (&vectors_get_visible_proc,
+                              GIMP_PDB_VECTORS,
+                              gimp_param_spec_item_id ("vectors",
+                                                       "vectors",
+                                                       "The vectors object",
+                                                       gimp,
+                                                       GIMP_TYPE_VECTORS,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&vectors_get_visible_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_boolean ("visible",
+                                                        "visible",
+                                                        "TRUE if the path is visible, FALSE otherwise",
+                                                        FALSE,
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &vectors_get_visible_proc);
+
+  /*
+   * vectors_set_visible
+   */
+  procedural_db_init_proc (&vectors_set_visible_proc, 2, 0);
+  procedural_db_add_argument (&vectors_set_visible_proc,
+                              GIMP_PDB_VECTORS,
+                              gimp_param_spec_item_id ("vectors",
+                                                       "vectors",
+                                                       "The vectors object",
+                                                       gimp,
+                                                       GIMP_TYPE_VECTORS,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_set_visible_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_boolean ("visible",
+                                                    "visible",
+                                                    "Whether the path is visible",
+                                                    FALSE,
+                                                    GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &vectors_set_visible_proc);
+
+  /*
+   * vectors_get_linked
+   */
+  procedural_db_init_proc (&vectors_get_linked_proc, 1, 1);
+  procedural_db_add_argument (&vectors_get_linked_proc,
+                              GIMP_PDB_VECTORS,
+                              gimp_param_spec_item_id ("vectors",
+                                                       "vectors",
+                                                       "The vectors object",
+                                                       gimp,
+                                                       GIMP_TYPE_VECTORS,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&vectors_get_linked_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_boolean ("linked",
+                                                        "linked",
+                                                        "TRUE if the path is linked, FALSE otherwise",
+                                                        FALSE,
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &vectors_get_linked_proc);
+
+  /*
+   * vectors_set_linked
+   */
+  procedural_db_init_proc (&vectors_set_linked_proc, 2, 0);
+  procedural_db_add_argument (&vectors_set_linked_proc,
+                              GIMP_PDB_VECTORS,
+                              gimp_param_spec_item_id ("vectors",
+                                                       "vectors",
+                                                       "The vectors object",
+                                                       gimp,
+                                                       GIMP_TYPE_VECTORS,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_set_linked_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_boolean ("linked",
+                                                    "linked",
+                                                    "Whether the path is linked",
+                                                    FALSE,
+                                                    GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &vectors_set_linked_proc);
+
+  /*
+   * vectors_get_tattoo
+   */
+  procedural_db_init_proc (&vectors_get_tattoo_proc, 1, 1);
+  procedural_db_add_argument (&vectors_get_tattoo_proc,
+                              GIMP_PDB_VECTORS,
+                              gimp_param_spec_item_id ("vectors",
+                                                       "vectors",
+                                                       "The vectors object",
+                                                       gimp,
+                                                       GIMP_TYPE_VECTORS,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&vectors_get_tattoo_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_int ("tattoo",
+                                                    "tattoo",
+                                                    "The vectors tattoo",
+                                                    G_MININT32, G_MAXINT32, 0,
+                                                    GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &vectors_get_tattoo_proc);
+
+  /*
+   * vectors_set_tattoo
+   */
+  procedural_db_init_proc (&vectors_set_tattoo_proc, 2, 0);
+  procedural_db_add_argument (&vectors_set_tattoo_proc,
+                              GIMP_PDB_VECTORS,
+                              gimp_param_spec_item_id ("vectors",
+                                                       "vectors",
+                                                       "The vectors object",
+                                                       gimp,
+                                                       GIMP_TYPE_VECTORS,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_set_tattoo_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_int ("tattoo",
+                                                "tattoo",
+                                                "the new tattoo",
+                                                G_MININT32, G_MAXINT32, 0,
+                                                GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &vectors_set_tattoo_proc);
+
+  /*
+   * vectors_get_strokes
+   */
+  procedural_db_init_proc (&vectors_get_strokes_proc, 1, 2);
+  procedural_db_add_argument (&vectors_get_strokes_proc,
+                              GIMP_PDB_VECTORS,
+                              gimp_param_spec_item_id ("vectors",
+                                                       "vectors",
+                                                       "The vectors object",
+                                                       gimp,
+                                                       GIMP_TYPE_VECTORS,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&vectors_get_strokes_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_int ("num-strokes",
+                                                    "num strokes",
+                                                    "The number of strokes returned.",
+                                                    0, G_MAXINT32, 0,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&vectors_get_strokes_proc,
+                                  GIMP_PDB_INT32ARRAY,
+                                  g_param_spec_pointer ("stroke-ids",
+                                                        "stroke ids",
+                                                        "List of the strokes belonging to the path.",
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &vectors_get_strokes_proc);
+
+  /*
+   * vectors_stroke_get_length
+   */
+  procedural_db_init_proc (&vectors_stroke_get_length_proc, 3, 1);
+  procedural_db_add_argument (&vectors_stroke_get_length_proc,
+                              GIMP_PDB_VECTORS,
+                              gimp_param_spec_item_id ("vectors",
+                                                       "vectors",
+                                                       "The vectors object",
+                                                       gimp,
+                                                       GIMP_TYPE_VECTORS,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_stroke_get_length_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_int ("stroke-id",
+                                                "stroke id",
+                                                "The stroke ID",
+                                                G_MININT32, G_MAXINT32, 0,
+                                                GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_stroke_get_length_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("prescision",
+                                                   "prescision",
+                                                   "The prescision used for the approximation",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&vectors_stroke_get_length_proc,
+                                  GIMP_PDB_FLOAT,
+                                  g_param_spec_double ("length",
+                                                       "length",
+                                                       "The length (in pixels) of the given stroke.",
+                                                       -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                       GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &vectors_stroke_get_length_proc);
+
+  /*
+   * vectors_stroke_get_point_at_dist
+   */
+  procedural_db_init_proc (&vectors_stroke_get_point_at_dist_proc, 4, 4);
+  procedural_db_add_argument (&vectors_stroke_get_point_at_dist_proc,
+                              GIMP_PDB_VECTORS,
+                              gimp_param_spec_item_id ("vectors",
+                                                       "vectors",
+                                                       "The vectors object",
+                                                       gimp,
+                                                       GIMP_TYPE_VECTORS,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_stroke_get_point_at_dist_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_int ("stroke-id",
+                                                "stroke id",
+                                                "The stroke ID",
+                                                G_MININT32, G_MAXINT32, 0,
+                                                GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_stroke_get_point_at_dist_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("dist",
+                                                   "dist",
+                                                   "The given distance.",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_stroke_get_point_at_dist_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("prescision",
+                                                   "prescision",
+                                                   "The prescision used for the approximation",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&vectors_stroke_get_point_at_dist_proc,
+                                  GIMP_PDB_FLOAT,
+                                  g_param_spec_double ("x-point",
+                                                       "x point",
+                                                       "The x position of the point.",
+                                                       -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&vectors_stroke_get_point_at_dist_proc,
+                                  GIMP_PDB_FLOAT,
+                                  g_param_spec_double ("y-point",
+                                                       "y point",
+                                                       "The y position of the point.",
+                                                       -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&vectors_stroke_get_point_at_dist_proc,
+                                  GIMP_PDB_FLOAT,
+                                  g_param_spec_double ("slope",
+                                                       "slope",
+                                                       "The slope (dy / dx) at the specified point.",
+                                                       -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&vectors_stroke_get_point_at_dist_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_boolean ("valid",
+                                                        "valid",
+                                                        "Indicator for the validity of the returned data.",
+                                                        FALSE,
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &vectors_stroke_get_point_at_dist_proc);
+
+  /*
+   * vectors_stroke_remove
+   */
+  procedural_db_init_proc (&vectors_stroke_remove_proc, 2, 0);
+  procedural_db_add_argument (&vectors_stroke_remove_proc,
+                              GIMP_PDB_VECTORS,
+                              gimp_param_spec_item_id ("vectors",
+                                                       "vectors",
+                                                       "The vectors object",
+                                                       gimp,
+                                                       GIMP_TYPE_VECTORS,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_stroke_remove_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_int ("stroke-id",
+                                                "stroke id",
+                                                "The stroke ID",
+                                                G_MININT32, G_MAXINT32, 0,
+                                                GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &vectors_stroke_remove_proc);
+
+  /*
+   * vectors_stroke_close
+   */
+  procedural_db_init_proc (&vectors_stroke_close_proc, 2, 0);
+  procedural_db_add_argument (&vectors_stroke_close_proc,
+                              GIMP_PDB_VECTORS,
+                              gimp_param_spec_item_id ("vectors",
+                                                       "vectors",
+                                                       "The vectors object",
+                                                       gimp,
+                                                       GIMP_TYPE_VECTORS,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_stroke_close_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_int ("stroke-id",
+                                                "stroke id",
+                                                "The stroke ID",
+                                                G_MININT32, G_MAXINT32, 0,
+                                                GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &vectors_stroke_close_proc);
+
+  /*
+   * vectors_stroke_translate
+   */
+  procedural_db_init_proc (&vectors_stroke_translate_proc, 4, 0);
+  procedural_db_add_argument (&vectors_stroke_translate_proc,
+                              GIMP_PDB_VECTORS,
+                              gimp_param_spec_item_id ("vectors",
+                                                       "vectors",
+                                                       "The vectors object",
+                                                       gimp,
+                                                       GIMP_TYPE_VECTORS,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_stroke_translate_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_int ("stroke-id",
+                                                "stroke id",
+                                                "The stroke ID",
+                                                G_MININT32, G_MAXINT32, 0,
+                                                GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_stroke_translate_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_int ("off-x",
+                                                "off x",
+                                                "Offset in x direction",
+                                                G_MININT32, G_MAXINT32, 0,
+                                                GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_stroke_translate_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_int ("off-y",
+                                                "off y",
+                                                "Offset in y direction",
+                                                G_MININT32, G_MAXINT32, 0,
+                                                GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &vectors_stroke_translate_proc);
+
+  /*
+   * vectors_stroke_scale
+   */
+  procedural_db_init_proc (&vectors_stroke_scale_proc, 4, 0);
+  procedural_db_add_argument (&vectors_stroke_scale_proc,
+                              GIMP_PDB_VECTORS,
+                              gimp_param_spec_item_id ("vectors",
+                                                       "vectors",
+                                                       "The vectors object",
+                                                       gimp,
+                                                       GIMP_TYPE_VECTORS,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_stroke_scale_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_int ("stroke-id",
+                                                "stroke id",
+                                                "The stroke ID",
+                                                G_MININT32, G_MAXINT32, 0,
+                                                GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_stroke_scale_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("scale-x",
+                                                   "scale x",
+                                                   "Scale factor in x direction",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_stroke_scale_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("scale-y",
+                                                   "scale y",
+                                                   "Scale factor in y direction",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &vectors_stroke_scale_proc);
+
+  /*
+   * vectors_stroke_interpolate
+   */
+  procedural_db_init_proc (&vectors_stroke_interpolate_proc, 3, 3);
+  procedural_db_add_argument (&vectors_stroke_interpolate_proc,
+                              GIMP_PDB_VECTORS,
+                              gimp_param_spec_item_id ("vectors",
+                                                       "vectors",
+                                                       "The vectors object",
+                                                       gimp,
+                                                       GIMP_TYPE_VECTORS,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_stroke_interpolate_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_int ("stroke-id",
+                                                "stroke id",
+                                                "The stroke ID",
+                                                G_MININT32, G_MAXINT32, 0,
+                                                GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_stroke_interpolate_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("prescision",
+                                                   "prescision",
+                                                   "The prescision used for the approximation",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&vectors_stroke_interpolate_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_boolean ("closed",
+                                                        "closed",
+                                                        "List of the strokes belonging to the path.",
+                                                        FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&vectors_stroke_interpolate_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_int ("num-coords",
+                                                    "num coords",
+                                                    "The number of floats returned.",
+                                                    0, G_MAXINT32, 0,
+                                                    GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&vectors_stroke_interpolate_proc,
+                                  GIMP_PDB_FLOATARRAY,
+                                  g_param_spec_pointer ("coords",
+                                                        "coords",
+                                                        "List of the coords along the path (x0, y0, x1, y1, ...).",
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &vectors_stroke_interpolate_proc);
+
+  /*
+   * vectors_bezier_stroke_new_moveto
+   */
+  procedural_db_init_proc (&vectors_bezier_stroke_new_moveto_proc, 3, 1);
+  procedural_db_add_argument (&vectors_bezier_stroke_new_moveto_proc,
+                              GIMP_PDB_VECTORS,
+                              gimp_param_spec_item_id ("vectors",
+                                                       "vectors",
+                                                       "The vectors object",
+                                                       gimp,
+                                                       GIMP_TYPE_VECTORS,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_bezier_stroke_new_moveto_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("x0",
+                                                   "x0",
+                                                   "The x-coordinate of the moveto",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_bezier_stroke_new_moveto_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("y0",
+                                                   "y0",
+                                                   "The y-coordinate of the moveto",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&vectors_bezier_stroke_new_moveto_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_int ("stroke-id",
+                                                    "stroke id",
+                                                    "The resulting stroke",
+                                                    G_MININT32, G_MAXINT32, 0,
+                                                    GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &vectors_bezier_stroke_new_moveto_proc);
+
+  /*
+   * vectors_bezier_stroke_lineto
+   */
+  procedural_db_init_proc (&vectors_bezier_stroke_lineto_proc, 4, 0);
+  procedural_db_add_argument (&vectors_bezier_stroke_lineto_proc,
+                              GIMP_PDB_VECTORS,
+                              gimp_param_spec_item_id ("vectors",
+                                                       "vectors",
+                                                       "The vectors object",
+                                                       gimp,
+                                                       GIMP_TYPE_VECTORS,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_bezier_stroke_lineto_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_int ("stroke-id",
+                                                "stroke id",
+                                                "The stroke ID",
+                                                G_MININT32, G_MAXINT32, 0,
+                                                GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_bezier_stroke_lineto_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("x0",
+                                                   "x0",
+                                                   "The x-coordinate of the lineto",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_bezier_stroke_lineto_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("y0",
+                                                   "y0",
+                                                   "The y-coordinate of the lineto",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &vectors_bezier_stroke_lineto_proc);
+
+  /*
+   * vectors_bezier_stroke_conicto
+   */
+  procedural_db_init_proc (&vectors_bezier_stroke_conicto_proc, 6, 0);
+  procedural_db_add_argument (&vectors_bezier_stroke_conicto_proc,
+                              GIMP_PDB_VECTORS,
+                              gimp_param_spec_item_id ("vectors",
+                                                       "vectors",
+                                                       "The vectors object",
+                                                       gimp,
+                                                       GIMP_TYPE_VECTORS,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_bezier_stroke_conicto_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_int ("stroke-id",
+                                                "stroke id",
+                                                "The stroke ID",
+                                                G_MININT32, G_MAXINT32, 0,
+                                                GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_bezier_stroke_conicto_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("x0",
+                                                   "x0",
+                                                   "The x-coordinate of the control point",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_bezier_stroke_conicto_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("y0",
+                                                   "y0",
+                                                   "The y-coordinate of the control point",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_bezier_stroke_conicto_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("x1",
+                                                   "x1",
+                                                   "The x-coordinate of the end point",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_bezier_stroke_conicto_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("y1",
+                                                   "y1",
+                                                   "The y-coordinate of the end point",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &vectors_bezier_stroke_conicto_proc);
+
+  /*
+   * vectors_bezier_stroke_cubicto
+   */
+  procedural_db_init_proc (&vectors_bezier_stroke_cubicto_proc, 8, 0);
+  procedural_db_add_argument (&vectors_bezier_stroke_cubicto_proc,
+                              GIMP_PDB_VECTORS,
+                              gimp_param_spec_item_id ("vectors",
+                                                       "vectors",
+                                                       "The vectors object",
+                                                       gimp,
+                                                       GIMP_TYPE_VECTORS,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_bezier_stroke_cubicto_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_int ("stroke-id",
+                                                "stroke id",
+                                                "The stroke ID",
+                                                G_MININT32, G_MAXINT32, 0,
+                                                GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_bezier_stroke_cubicto_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("x0",
+                                                   "x0",
+                                                   "The x-coordinate of the first control point",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_bezier_stroke_cubicto_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("y0",
+                                                   "y0",
+                                                   "The y-coordinate of the first control point",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_bezier_stroke_cubicto_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("x1",
+                                                   "x1",
+                                                   "The x-coordinate of the second control point",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_bezier_stroke_cubicto_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("y1",
+                                                   "y1",
+                                                   "The y-coordinate of the second control point",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_bezier_stroke_cubicto_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("x2",
+                                                   "x2",
+                                                   "The x-coordinate of the end point",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_bezier_stroke_cubicto_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("y2",
+                                                   "y2",
+                                                   "The y-coordinate of the end point",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &vectors_bezier_stroke_cubicto_proc);
+
+  /*
+   * vectors_bezier_stroke_new_ellipse
+   */
+  procedural_db_init_proc (&vectors_bezier_stroke_new_ellipse_proc, 6, 1);
+  procedural_db_add_argument (&vectors_bezier_stroke_new_ellipse_proc,
+                              GIMP_PDB_VECTORS,
+                              gimp_param_spec_item_id ("vectors",
+                                                       "vectors",
+                                                       "The vectors object",
+                                                       gimp,
+                                                       GIMP_TYPE_VECTORS,
+                                                       GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_bezier_stroke_new_ellipse_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("x0",
+                                                   "x0",
+                                                   "The x-coordinate of the center",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_bezier_stroke_new_ellipse_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("y0",
+                                                   "y0",
+                                                   "The y-coordinate of the center",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_bezier_stroke_new_ellipse_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("radius-x",
+                                                   "radius x",
+                                                   "The radius in x direction",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_bezier_stroke_new_ellipse_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("radius-y",
+                                                   "radius y",
+                                                   "The radius in y direction",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&vectors_bezier_stroke_new_ellipse_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("angle",
+                                                   "angle",
+                                                   "The angle the x-axis of the ellipse (radians, counterclockwise)",
+                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&vectors_bezier_stroke_new_ellipse_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_int ("stroke-id",
+                                                    "stroke id",
+                                                    "The resulting stroke",
+                                                    G_MININT32, G_MAXINT32, 0,
+                                                    GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &vectors_bezier_stroke_new_ellipse_proc);
+
 }
 
 static Argument *
@@ -121,29 +842,6 @@ vectors_new_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg vectors_new_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  },
-  {
-    GIMP_PDB_STRING,
-    "name",
-    "the name of the new vector object."
-  }
-};
-
-static ProcArg vectors_new_outargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "the current vector object, 0 if no vector exists in the image."
-  }
-};
-
 static ProcRecord vectors_new_proc =
 {
   "gimp-vectors-new",
@@ -155,10 +853,7 @@ static ProcRecord vectors_new_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  2,
-  vectors_new_inargs,
-  1,
-  vectors_new_outargs,
+  0, NULL, 0, NULL,
   { { vectors_new_invoker } }
 };
 
@@ -191,24 +886,6 @@ vectors_get_image_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg vectors_get_image_inargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  }
-};
-
-static ProcArg vectors_get_image_outargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The vectors image"
-  }
-};
-
 static ProcRecord vectors_get_image_proc =
 {
   "gimp-vectors-get-image",
@@ -220,10 +897,7 @@ static ProcRecord vectors_get_image_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  1,
-  vectors_get_image_inargs,
-  1,
-  vectors_get_image_outargs,
+  0, NULL, 0, NULL,
   { { vectors_get_image_invoker } }
 };
 
@@ -256,24 +930,6 @@ vectors_get_name_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg vectors_get_name_inargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  }
-};
-
-static ProcArg vectors_get_name_outargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "name",
-    "The name of the vectors object"
-  }
-};
-
 static ProcRecord vectors_get_name_proc =
 {
   "gimp-vectors-get-name",
@@ -285,10 +941,7 @@ static ProcRecord vectors_get_name_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  1,
-  vectors_get_name_inargs,
-  1,
-  vectors_get_name_outargs,
+  0, NULL, 0, NULL,
   { { vectors_get_name_invoker } }
 };
 
@@ -319,20 +972,6 @@ vectors_set_name_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg vectors_set_name_inargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  },
-  {
-    GIMP_PDB_STRING,
-    "name",
-    "the new name of the path"
-  }
-};
-
 static ProcRecord vectors_set_name_proc =
 {
   "gimp-vectors-set-name",
@@ -344,10 +983,7 @@ static ProcRecord vectors_set_name_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  2,
-  vectors_set_name_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { vectors_set_name_invoker } }
 };
 
@@ -380,24 +1016,6 @@ vectors_get_visible_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg vectors_get_visible_inargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  }
-};
-
-static ProcArg vectors_get_visible_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "visible",
-    "TRUE if the path is visible, FALSE otherwise"
-  }
-};
-
 static ProcRecord vectors_get_visible_proc =
 {
   "gimp-vectors-get-visible",
@@ -409,10 +1027,7 @@ static ProcRecord vectors_get_visible_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  1,
-  vectors_get_visible_inargs,
-  1,
-  vectors_get_visible_outargs,
+  0, NULL, 0, NULL,
   { { vectors_get_visible_invoker } }
 };
 
@@ -441,20 +1056,6 @@ vectors_set_visible_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg vectors_set_visible_inargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  },
-  {
-    GIMP_PDB_INT32,
-    "visible",
-    "Whether the path is visible"
-  }
-};
-
 static ProcRecord vectors_set_visible_proc =
 {
   "gimp-vectors-set-visible",
@@ -466,10 +1067,7 @@ static ProcRecord vectors_set_visible_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  2,
-  vectors_set_visible_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { vectors_set_visible_invoker } }
 };
 
@@ -502,24 +1100,6 @@ vectors_get_linked_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg vectors_get_linked_inargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  }
-};
-
-static ProcArg vectors_get_linked_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "linked",
-    "TRUE if the path is linked, FALSE otherwise"
-  }
-};
-
 static ProcRecord vectors_get_linked_proc =
 {
   "gimp-vectors-get-linked",
@@ -531,10 +1111,7 @@ static ProcRecord vectors_get_linked_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  1,
-  vectors_get_linked_inargs,
-  1,
-  vectors_get_linked_outargs,
+  0, NULL, 0, NULL,
   { { vectors_get_linked_invoker } }
 };
 
@@ -563,20 +1140,6 @@ vectors_set_linked_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg vectors_set_linked_inargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  },
-  {
-    GIMP_PDB_INT32,
-    "linked",
-    "Whether the path is linked"
-  }
-};
-
 static ProcRecord vectors_set_linked_proc =
 {
   "gimp-vectors-set-linked",
@@ -588,10 +1151,7 @@ static ProcRecord vectors_set_linked_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  2,
-  vectors_set_linked_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { vectors_set_linked_invoker } }
 };
 
@@ -624,24 +1184,6 @@ vectors_get_tattoo_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg vectors_get_tattoo_inargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  }
-};
-
-static ProcArg vectors_get_tattoo_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "tattoo",
-    "The vectors tattoo"
-  }
-};
-
 static ProcRecord vectors_get_tattoo_proc =
 {
   "gimp-vectors-get-tattoo",
@@ -653,10 +1195,7 @@ static ProcRecord vectors_get_tattoo_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  1,
-  vectors_get_tattoo_inargs,
-  1,
-  vectors_get_tattoo_outargs,
+  0, NULL, 0, NULL,
   { { vectors_get_tattoo_invoker } }
 };
 
@@ -685,20 +1224,6 @@ vectors_set_tattoo_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg vectors_set_tattoo_inargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  },
-  {
-    GIMP_PDB_INT32,
-    "tattoo",
-    "the new tattoo"
-  }
-};
-
 static ProcRecord vectors_set_tattoo_proc =
 {
   "gimp-vectors-set-tattoo",
@@ -710,10 +1235,7 @@ static ProcRecord vectors_set_tattoo_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  2,
-  vectors_set_tattoo_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { vectors_set_tattoo_invoker } }
 };
 
@@ -766,29 +1288,6 @@ vectors_get_strokes_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg vectors_get_strokes_inargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  }
-};
-
-static ProcArg vectors_get_strokes_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "num-strokes",
-    "The number of strokes returned."
-  },
-  {
-    GIMP_PDB_INT32ARRAY,
-    "stroke-ids",
-    "List of the strokes belonging to the path."
-  }
-};
-
 static ProcRecord vectors_get_strokes_proc =
 {
   "gimp-vectors-get-strokes",
@@ -800,10 +1299,7 @@ static ProcRecord vectors_get_strokes_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  1,
-  vectors_get_strokes_inargs,
-  2,
-  vectors_get_strokes_outargs,
+  0, NULL, 0, NULL,
   { { vectors_get_strokes_invoker } }
 };
 
@@ -847,34 +1343,6 @@ vectors_stroke_get_length_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg vectors_stroke_get_length_inargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  },
-  {
-    GIMP_PDB_INT32,
-    "stroke-id",
-    "The stroke ID"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "prescision",
-    "The prescision used for the approximation"
-  }
-};
-
-static ProcArg vectors_stroke_get_length_outargs[] =
-{
-  {
-    GIMP_PDB_FLOAT,
-    "length",
-    "The length (in pixels) of the given stroke."
-  }
-};
-
 static ProcRecord vectors_stroke_get_length_proc =
 {
   "gimp-vectors-stroke-get-length",
@@ -886,10 +1354,7 @@ static ProcRecord vectors_stroke_get_length_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  3,
-  vectors_stroke_get_length_inargs,
-  1,
-  vectors_stroke_get_length_outargs,
+  0, NULL, 0, NULL,
   { { vectors_stroke_get_length_invoker } }
 };
 
@@ -951,54 +1416,6 @@ vectors_stroke_get_point_at_dist_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg vectors_stroke_get_point_at_dist_inargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  },
-  {
-    GIMP_PDB_INT32,
-    "stroke-id",
-    "The stroke ID"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "dist",
-    "The given distance."
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "prescision",
-    "The prescision used for the approximation"
-  }
-};
-
-static ProcArg vectors_stroke_get_point_at_dist_outargs[] =
-{
-  {
-    GIMP_PDB_FLOAT,
-    "x-point",
-    "The x position of the point."
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "y-point",
-    "The y position of the point."
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "slope",
-    "The slope (dy / dx) at the specified point."
-  },
-  {
-    GIMP_PDB_INT32,
-    "valid",
-    "Indicator for the validity of the returned data."
-  }
-};
-
 static ProcRecord vectors_stroke_get_point_at_dist_proc =
 {
   "gimp-vectors-stroke-get-point-at-dist",
@@ -1010,10 +1427,7 @@ static ProcRecord vectors_stroke_get_point_at_dist_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  4,
-  vectors_stroke_get_point_at_dist_inargs,
-  4,
-  vectors_stroke_get_point_at_dist_outargs,
+  0, NULL, 0, NULL,
   { { vectors_stroke_get_point_at_dist_invoker } }
 };
 
@@ -1047,20 +1461,6 @@ vectors_stroke_remove_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg vectors_stroke_remove_inargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  },
-  {
-    GIMP_PDB_INT32,
-    "stroke-id",
-    "The stroke ID"
-  }
-};
-
 static ProcRecord vectors_stroke_remove_proc =
 {
   "gimp-vectors-stroke-remove",
@@ -1072,10 +1472,7 @@ static ProcRecord vectors_stroke_remove_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  2,
-  vectors_stroke_remove_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { vectors_stroke_remove_invoker } }
 };
 
@@ -1109,20 +1506,6 @@ vectors_stroke_close_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg vectors_stroke_close_inargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  },
-  {
-    GIMP_PDB_INT32,
-    "stroke-id",
-    "The stroke ID"
-  }
-};
-
 static ProcRecord vectors_stroke_close_proc =
 {
   "gimp-vectors-stroke-close",
@@ -1134,10 +1517,7 @@ static ProcRecord vectors_stroke_close_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  2,
-  vectors_stroke_close_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { vectors_stroke_close_invoker } }
 };
 
@@ -1177,30 +1557,6 @@ vectors_stroke_translate_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg vectors_stroke_translate_inargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  },
-  {
-    GIMP_PDB_INT32,
-    "stroke-id",
-    "The stroke ID"
-  },
-  {
-    GIMP_PDB_INT32,
-    "off-x",
-    "Offset in x direction"
-  },
-  {
-    GIMP_PDB_INT32,
-    "off-y",
-    "Offset in y direction"
-  }
-};
-
 static ProcRecord vectors_stroke_translate_proc =
 {
   "gimp-vectors-stroke-translate",
@@ -1212,10 +1568,7 @@ static ProcRecord vectors_stroke_translate_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  4,
-  vectors_stroke_translate_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { vectors_stroke_translate_invoker } }
 };
 
@@ -1255,30 +1608,6 @@ vectors_stroke_scale_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg vectors_stroke_scale_inargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  },
-  {
-    GIMP_PDB_INT32,
-    "stroke-id",
-    "The stroke ID"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "scale-x",
-    "Scale factor in x direction"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "scale-y",
-    "Scale factor in y direction"
-  }
-};
-
 static ProcRecord vectors_stroke_scale_proc =
 {
   "gimp-vectors-stroke-scale",
@@ -1290,10 +1619,7 @@ static ProcRecord vectors_stroke_scale_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  4,
-  vectors_stroke_scale_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { vectors_stroke_scale_invoker } }
 };
 
@@ -1364,44 +1690,6 @@ vectors_stroke_interpolate_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg vectors_stroke_interpolate_inargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  },
-  {
-    GIMP_PDB_INT32,
-    "stroke-id",
-    "The stroke ID"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "prescision",
-    "The prescision used for the approximation"
-  }
-};
-
-static ProcArg vectors_stroke_interpolate_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "closed",
-    "List of the strokes belonging to the path."
-  },
-  {
-    GIMP_PDB_INT32,
-    "num-coords",
-    "The number of floats returned."
-  },
-  {
-    GIMP_PDB_FLOATARRAY,
-    "coords",
-    "List of the coords along the path (x0, y0, x1, y1, ...)."
-  }
-};
-
 static ProcRecord vectors_stroke_interpolate_proc =
 {
   "gimp-vectors-stroke-interpolate",
@@ -1413,10 +1701,7 @@ static ProcRecord vectors_stroke_interpolate_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  3,
-  vectors_stroke_interpolate_inargs,
-  3,
-  vectors_stroke_interpolate_outargs,
+  0, NULL, 0, NULL,
   { { vectors_stroke_interpolate_invoker } }
 };
 
@@ -1463,34 +1748,6 @@ vectors_bezier_stroke_new_moveto_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg vectors_bezier_stroke_new_moveto_inargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "x0",
-    "The x-coordinate of the moveto"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "y0",
-    "The y-coordinate of the moveto"
-  }
-};
-
-static ProcArg vectors_bezier_stroke_new_moveto_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "stroke-id",
-    "The resulting stroke"
-  }
-};
-
 static ProcRecord vectors_bezier_stroke_new_moveto_proc =
 {
   "gimp-vectors-bezier-stroke-new-moveto",
@@ -1502,10 +1759,7 @@ static ProcRecord vectors_bezier_stroke_new_moveto_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  3,
-  vectors_bezier_stroke_new_moveto_inargs,
-  1,
-  vectors_bezier_stroke_new_moveto_outargs,
+  0, NULL, 0, NULL,
   { { vectors_bezier_stroke_new_moveto_invoker } }
 };
 
@@ -1552,30 +1806,6 @@ vectors_bezier_stroke_lineto_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg vectors_bezier_stroke_lineto_inargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  },
-  {
-    GIMP_PDB_INT32,
-    "stroke-id",
-    "The stroke ID"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "x0",
-    "The x-coordinate of the lineto"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "y0",
-    "The y-coordinate of the lineto"
-  }
-};
-
 static ProcRecord vectors_bezier_stroke_lineto_proc =
 {
   "gimp-vectors-bezier-stroke-lineto",
@@ -1587,10 +1817,7 @@ static ProcRecord vectors_bezier_stroke_lineto_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  4,
-  vectors_bezier_stroke_lineto_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { vectors_bezier_stroke_lineto_invoker } }
 };
 
@@ -1647,40 +1874,6 @@ vectors_bezier_stroke_conicto_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg vectors_bezier_stroke_conicto_inargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  },
-  {
-    GIMP_PDB_INT32,
-    "stroke-id",
-    "The stroke ID"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "x0",
-    "The x-coordinate of the control point"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "y0",
-    "The y-coordinate of the control point"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "x1",
-    "The x-coordinate of the end point"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "y1",
-    "The y-coordinate of the end point"
-  }
-};
-
 static ProcRecord vectors_bezier_stroke_conicto_proc =
 {
   "gimp-vectors-bezier-stroke-conicto",
@@ -1692,10 +1885,7 @@ static ProcRecord vectors_bezier_stroke_conicto_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  6,
-  vectors_bezier_stroke_conicto_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { vectors_bezier_stroke_conicto_invoker } }
 };
 
@@ -1762,50 +1952,6 @@ vectors_bezier_stroke_cubicto_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg vectors_bezier_stroke_cubicto_inargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  },
-  {
-    GIMP_PDB_INT32,
-    "stroke-id",
-    "The stroke ID"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "x0",
-    "The x-coordinate of the first control point"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "y0",
-    "The y-coordinate of the first control point"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "x1",
-    "The x-coordinate of the second control point"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "y1",
-    "The y-coordinate of the second control point"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "x2",
-    "The x-coordinate of the end point"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "y2",
-    "The y-coordinate of the end point"
-  }
-};
-
 static ProcRecord vectors_bezier_stroke_cubicto_proc =
 {
   "gimp-vectors-bezier-stroke-cubicto",
@@ -1817,10 +1963,7 @@ static ProcRecord vectors_bezier_stroke_cubicto_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  8,
-  vectors_bezier_stroke_cubicto_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { vectors_bezier_stroke_cubicto_invoker } }
 };
 
@@ -1876,49 +2019,6 @@ vectors_bezier_stroke_new_ellipse_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg vectors_bezier_stroke_new_ellipse_inargs[] =
-{
-  {
-    GIMP_PDB_VECTORS,
-    "vectors",
-    "The vectors object"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "x0",
-    "The x-coordinate of the center"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "y0",
-    "The y-coordinate of the center"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "radius-x",
-    "The radius in x direction"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "radius-y",
-    "The radius in y direction"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "angle",
-    "The angle the x-axis of the ellipse (radians, counterclockwise)"
-  }
-};
-
-static ProcArg vectors_bezier_stroke_new_ellipse_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "stroke-id",
-    "The resulting stroke"
-  }
-};
-
 static ProcRecord vectors_bezier_stroke_new_ellipse_proc =
 {
   "gimp-vectors-bezier-stroke-new-ellipse",
@@ -1930,9 +2030,6 @@ static ProcRecord vectors_bezier_stroke_new_ellipse_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  6,
-  vectors_bezier_stroke_new_ellipse_inargs,
-  1,
-  vectors_bezier_stroke_new_ellipse_outargs,
+  0, NULL, 0, NULL,
   { { vectors_bezier_stroke_new_ellipse_invoker } }
 };

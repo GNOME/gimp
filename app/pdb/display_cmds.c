@@ -25,6 +25,7 @@
 
 #include "pdb-types.h"
 #include "procedural_db.h"
+#include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
@@ -39,11 +40,85 @@ static ProcRecord displays_reconnect_proc;
 void
 register_display_procs (Gimp *gimp)
 {
+  /*
+   * display_new
+   */
+  procedural_db_init_proc (&display_new_proc, 1, 1);
+  procedural_db_add_argument (&display_new_proc,
+                              GIMP_PDB_IMAGE,
+                              gimp_param_spec_image_id ("image",
+                                                        "image",
+                                                        "The image",
+                                                        gimp,
+                                                        GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&display_new_proc,
+                                  GIMP_PDB_DISPLAY,
+                                  gimp_param_spec_display_id ("display",
+                                                              "display",
+                                                              "The new display",
+                                                              gimp,
+                                                              GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &display_new_proc);
+
+  /*
+   * display_delete
+   */
+  procedural_db_init_proc (&display_delete_proc, 1, 0);
+  procedural_db_add_argument (&display_delete_proc,
+                              GIMP_PDB_DISPLAY,
+                              gimp_param_spec_display_id ("display",
+                                                          "display",
+                                                          "The display to delete",
+                                                          gimp,
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &display_delete_proc);
+
+  /*
+   * display_get_window_handle
+   */
+  procedural_db_init_proc (&display_get_window_handle_proc, 1, 1);
+  procedural_db_add_argument (&display_get_window_handle_proc,
+                              GIMP_PDB_DISPLAY,
+                              gimp_param_spec_display_id ("display",
+                                                          "display",
+                                                          "The display to get the window handle from",
+                                                          gimp,
+                                                          GIMP_PARAM_READWRITE));
+  procedural_db_add_return_value (&display_get_window_handle_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_int ("window",
+                                                    "window",
+                                                    "The native window handle or 0",
+                                                    G_MININT32, G_MAXINT32, 0,
+                                                    GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &display_get_window_handle_proc);
+
+  /*
+   * displays_flush
+   */
+  procedural_db_init_proc (&displays_flush_proc, 0, 0);
   procedural_db_register (gimp, &displays_flush_proc);
+
+  /*
+   * displays_reconnect
+   */
+  procedural_db_init_proc (&displays_reconnect_proc, 2, 0);
+  procedural_db_add_argument (&displays_reconnect_proc,
+                              GIMP_PDB_IMAGE,
+                              gimp_param_spec_image_id ("old-image",
+                                                        "old image",
+                                                        "The old image (must have at least one display)",
+                                                        gimp,
+                                                        GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&displays_reconnect_proc,
+                              GIMP_PDB_IMAGE,
+                              gimp_param_spec_image_id ("new-image",
+                                                        "new image",
+                                                        "The new image (must not have a display)",
+                                                        gimp,
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &displays_reconnect_proc);
+
 }
 
 static Argument *
@@ -84,24 +159,6 @@ display_new_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg display_new_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  }
-};
-
-static ProcArg display_new_outargs[] =
-{
-  {
-    GIMP_PDB_DISPLAY,
-    "display",
-    "The new display"
-  }
-};
-
 static ProcRecord display_new_proc =
 {
   "gimp-display-new",
@@ -113,10 +170,7 @@ static ProcRecord display_new_proc =
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
-  1,
-  display_new_inargs,
-  1,
-  display_new_outargs,
+  0, NULL, 0, NULL,
   { { display_new_invoker } }
 };
 
@@ -142,15 +196,6 @@ display_delete_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg display_delete_inargs[] =
-{
-  {
-    GIMP_PDB_DISPLAY,
-    "display",
-    "The display to delete"
-  }
-};
-
 static ProcRecord display_delete_proc =
 {
   "gimp-display-delete",
@@ -162,10 +207,7 @@ static ProcRecord display_delete_proc =
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
-  1,
-  display_delete_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { display_delete_invoker } }
 };
 
@@ -198,24 +240,6 @@ display_get_window_handle_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg display_get_window_handle_inargs[] =
-{
-  {
-    GIMP_PDB_DISPLAY,
-    "display",
-    "The display to get the window handle from"
-  }
-};
-
-static ProcArg display_get_window_handle_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "window",
-    "The native window handle or 0"
-  }
-};
-
 static ProcRecord display_get_window_handle_proc =
 {
   "gimp-display-get-window-handle",
@@ -227,10 +251,7 @@ static ProcRecord display_get_window_handle_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  1,
-  display_get_window_handle_inargs,
-  1,
-  display_get_window_handle_outargs,
+  0, NULL, 0, NULL,
   { { display_get_window_handle_invoker } }
 };
 
@@ -256,10 +277,7 @@ static ProcRecord displays_flush_proc =
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
-  0,
-  NULL,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { displays_flush_invoker } }
 };
 
@@ -301,20 +319,6 @@ displays_reconnect_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg displays_reconnect_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "old-image",
-    "The old image (must have at least one display)"
-  },
-  {
-    GIMP_PDB_IMAGE,
-    "new-image",
-    "The new image (must not have a display)"
-  }
-};
-
 static ProcRecord displays_reconnect_proc =
 {
   "gimp-displays-reconnect",
@@ -326,9 +330,6 @@ static ProcRecord displays_reconnect_proc =
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
-  2,
-  displays_reconnect_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { displays_reconnect_invoker } }
 };

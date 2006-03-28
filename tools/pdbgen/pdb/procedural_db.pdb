@@ -77,8 +77,8 @@ HELP
       ProcArg *$type = \&proc->${real_type}\[${type}_num];
 
       ${type}_type = ${type}->arg_type;
-      ${type}_name = g_strdup (${type}->name);
-      ${type}_desc = g_strdup (${type}->description);
+      ${type}_name = g_strdup (g_param_spec_get_name (${type}->pspec));
+      ${type}_desc = g_strdup (g_param_spec_get_blurb (${type}->pspec));
     }
   else
     success = FALSE;

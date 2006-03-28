@@ -740,7 +740,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 
   proc = &proc_def->db_info;
 
-  proc->name          = g_strdup (canonical);
+  proc->name          = canonical;
   proc->original_name = g_strdup (proc_install->name);
   proc->blurb         = g_strdup (proc_install->blurb);
   proc->help          = g_strdup (proc_install->help);
@@ -749,24 +749,33 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
   proc->date          = g_strdup (proc_install->date);
   proc->proc_type     = proc_install->type;
 
-  proc->num_args   = proc_install->nparams;
-  proc->num_values = proc_install->nreturn_vals;
-
-  proc->args   = g_new0 (ProcArg, proc->num_args);
-  proc->values = g_new0 (ProcArg, proc->num_values);
+  procedural_db_init_proc (proc,
+                           proc_install->nparams, proc_install->nreturn_vals);
 
   for (i = 0; i < proc->num_args; i++)
     {
-      proc->args[i].arg_type    = proc_install->params[i].type;
-      proc->args[i].name        = gimp_canonicalize_identifier (proc_install->params[i].name);
-      proc->args[i].description = g_strdup (proc_install->params[i].description);
+      canonical = gimp_canonicalize_identifier (proc_install->params[i].name);
+
+      procedural_db_add_compat_arg (proc,
+                                    plug_in->gimp,
+                                    proc_install->params[i].type,
+                                    canonical,
+                                    proc_install->params[i].description);
+
+      g_free (canonical);
     }
 
   for (i = 0; i < proc->num_values; i++)
     {
-      proc->values[i].arg_type    = proc_install->return_vals[i].type;
-      proc->values[i].name        = gimp_canonicalize_identifier (proc_install->return_vals[i].name);
-      proc->values[i].description = g_strdup (proc_install->return_vals[i].description);
+      canonical = gimp_canonicalize_identifier (proc_install->return_vals[i].name);
+
+      procedural_db_add_compat_value (proc,
+                                      plug_in->gimp,
+                                      proc_install->return_vals[i].type,
+                                      canonical,
+                                      proc_install->return_vals[i].description);
+
+      g_free (canonical);
     }
 
   switch (proc_install->type)
@@ -786,8 +795,6 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
       plug_ins_temp_proc_def_add (plug_in->gimp, proc_def);
       break;
     }
-
-  g_free (canonical);
 }
 
 static void

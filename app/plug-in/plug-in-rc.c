@@ -47,6 +47,7 @@
 static GTokenType plug_in_def_deserialize        (Gimp          *gimp,
                                                   GScanner      *scanner);
 static GTokenType plug_in_proc_def_deserialize   (GScanner      *scanner,
+                                                  Gimp          *gimp,
                                                   PlugInProcDef *proc_def);
 static GTokenType plug_in_menu_path_deserialize  (GScanner      *scanner,
                                                   PlugInProcDef *proc_def);
@@ -55,7 +56,9 @@ static GTokenType plug_in_icon_deserialize       (GScanner      *scanner,
 static GTokenType plug_in_file_proc_deserialize  (GScanner      *scanner,
                                                   PlugInProcDef *proc_def);
 static GTokenType plug_in_proc_arg_deserialize   (GScanner      *scanner,
-                                                  ProcArg       *arg);
+                                                  Gimp          *gimp,
+                                                  ProcRecord    *proc,
+                                                  gboolean       return_value);
 static GTokenType plug_in_locale_def_deserialize (GScanner      *scanner,
                                                   PlugInDef     *plug_in_def);
 static GTokenType plug_in_help_def_deserialize   (GScanner      *scanner,
@@ -253,7 +256,7 @@ plug_in_def_deserialize (Gimp     *gimp,
             {
             case PROC_DEF:
               proc_def = plug_in_proc_def_new ();
-              token = plug_in_proc_def_deserialize (scanner, proc_def);
+              token = plug_in_proc_def_deserialize (scanner, gimp, proc_def);
 
               if (token == G_TOKEN_LEFT_PAREN)
                 plug_in_def_add_proc_def (plug_in_def, proc_def);
@@ -305,9 +308,12 @@ plug_in_def_deserialize (Gimp     *gimp,
 
 static GTokenType
 plug_in_proc_def_deserialize (GScanner      *scanner,
+                              Gimp          *gimp,
                               PlugInProcDef *proc_def)
 {
   GTokenType token;
+  gint       n_args;
+  gint       n_return_vals;
   gint       n_menu_paths;
   gint       i;
 
@@ -356,29 +362,25 @@ plug_in_proc_def_deserialize (GScanner      *scanner,
   proc_def->image_types_val =
     plug_ins_image_types_parse (proc_def->image_types);
 
-  if (! gimp_scanner_parse_int (scanner, (gint *) &proc_def->db_info.num_args))
+  if (! gimp_scanner_parse_int (scanner, (gint *) &n_args))
     return G_TOKEN_INT;
-  if (! gimp_scanner_parse_int (scanner, (gint *) &proc_def->db_info.num_values))
+  if (! gimp_scanner_parse_int (scanner, (gint *) &n_return_vals))
     return G_TOKEN_INT;
 
-  if (proc_def->db_info.num_args > 0)
-    proc_def->db_info.args = g_new0 (ProcArg, proc_def->db_info.num_args);
+  procedural_db_init_proc (&proc_def->db_info, n_args, n_return_vals);
 
-  for (i = 0; i < proc_def->db_info.num_args; i++)
+  for (i = 0; i < n_args; i++)
     {
-      token = plug_in_proc_arg_deserialize (scanner,
-                                            &proc_def->db_info.args[i]);
+      token = plug_in_proc_arg_deserialize (scanner, gimp,
+                                            &proc_def->db_info, FALSE);
       if (token != G_TOKEN_LEFT_PAREN)
         return token;
     }
 
-  if (proc_def->db_info.num_values > 0)
-    proc_def->db_info.values = g_new0 (ProcArg, proc_def->db_info.num_values);
-
-  for (i = 0; i < proc_def->db_info.num_values; i++)
+  for (i = 0; i < n_return_vals; i++)
     {
-      token = plug_in_proc_arg_deserialize (scanner,
-                                            &proc_def->db_info.values[i]);
+      token = plug_in_proc_arg_deserialize (scanner, gimp,
+                                            &proc_def->db_info, TRUE);
       if (token != G_TOKEN_LEFT_PAREN)
         return token;
     }
@@ -596,27 +598,64 @@ plug_in_file_proc_deserialize (GScanner      *scanner,
 }
 
 static GTokenType
-plug_in_proc_arg_deserialize (GScanner *scanner,
-                              ProcArg  *arg)
+plug_in_proc_arg_deserialize (GScanner   *scanner,
+                              Gimp       *gimp,
+                              ProcRecord *proc,
+                              gboolean    return_value)
 {
+  GTokenType  token;
+  gint        arg_type;
+  gchar      *name = NULL;
+  gchar      *desc = NULL;
+
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_LEFT_PAREN))
-    return G_TOKEN_LEFT_PAREN;
+    {
+      token = G_TOKEN_LEFT_PAREN;
+      goto error;
+    }
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_SYMBOL) ||
       GPOINTER_TO_INT (scanner->value.v_symbol) != PROC_ARG)
-    return G_TOKEN_SYMBOL;
+    {
+      token = G_TOKEN_SYMBOL;
+      goto error;
+    }
 
-  if (! gimp_scanner_parse_int (scanner, (gint *) &arg->arg_type))
-    return G_TOKEN_INT;
-  if (! gimp_scanner_parse_string (scanner, &arg->name))
-    return G_TOKEN_STRING;
-  if (! gimp_scanner_parse_string (scanner, &arg->description))
-    return G_TOKEN_STRING;
+  if (! gimp_scanner_parse_int (scanner, (gint *) &arg_type))
+    {
+      token = G_TOKEN_INT;
+      goto error;
+    }
+  if (! gimp_scanner_parse_string (scanner, &name))
+    {
+      token = G_TOKEN_STRING;
+      goto error;
+    }
+  if (! gimp_scanner_parse_string (scanner, &desc))
+    {
+      token = G_TOKEN_STRING;
+      goto error;
+    }
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
-    return G_TOKEN_RIGHT_PAREN;
+    {
+      token = G_TOKEN_RIGHT_PAREN;
+      goto error;
+    }
 
-  return G_TOKEN_LEFT_PAREN;
+  token = G_TOKEN_LEFT_PAREN;
+
+  if (return_value)
+    procedural_db_add_compat_value (proc, gimp, arg_type, name, desc);
+  else
+    procedural_db_add_compat_arg (proc, gimp, arg_type, name, desc);
+
+ error:
+
+  g_free (name);
+  g_free (desc);
+
+  return token;
 }
 
 static GTokenType
@@ -845,9 +884,9 @@ plug_in_rc_write (GSList       *plug_in_defs,
                                              proc_def->db_info.args[i].arg_type);
 
 		  gimp_config_writer_string (writer,
-                                             proc_def->db_info.args[i].name);
+                                             g_param_spec_get_name (proc_def->db_info.args[i].pspec));
 		  gimp_config_writer_string (writer,
-                                             proc_def->db_info.args[i].description);
+                                             g_param_spec_get_blurb (proc_def->db_info.args[i].pspec));
 
                   gimp_config_writer_close (writer);
 		}
@@ -859,9 +898,9 @@ plug_in_rc_write (GSList       *plug_in_defs,
                                              proc_def->db_info.values[i].arg_type);
 
 		  gimp_config_writer_string (writer,
-                                             proc_def->db_info.values[i].name);
+                                             g_param_spec_get_name (proc_def->db_info.values[i].pspec));
 		  gimp_config_writer_string (writer,
-                                             proc_def->db_info.values[i].description);
+                                             g_param_spec_get_blurb (proc_def->db_info.values[i].pspec));
 
                   gimp_config_writer_close (writer);
 		}

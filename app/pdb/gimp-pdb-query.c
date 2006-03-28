@@ -407,9 +407,9 @@ procedural_db_print_entry (gpointer key,
           arg_value = g_enum_get_value (arg_class,
                                         procedure->args[i].arg_type);
 
-          output_string (file, procedure->args[i].name);
+          output_string (file, g_param_spec_get_name (procedure->args[i].pspec));
           output_string (file, arg_value->value_name);
-          output_string (file, procedure->args[i].description);
+          output_string (file, g_param_spec_get_blurb (procedure->args[i].pspec));
 
           fprintf (file, " ) ");
         }
@@ -423,9 +423,9 @@ procedural_db_print_entry (gpointer key,
           arg_value = g_enum_get_value (arg_class,
                                         procedure->values[i].arg_type);
 
-          output_string (file, procedure->values[i].name);
+          output_string (file, g_param_spec_get_name (procedure->values[i].pspec));
           output_string (file, arg_value->value_name);
-          output_string (file, procedure->values[i].description);
+          output_string (file, g_param_spec_get_blurb (procedure->values[i].pspec));
 
           fprintf (file, " ) ");
         }

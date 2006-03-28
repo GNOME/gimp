@@ -39,6 +39,7 @@
 
 #include "pdb-types.h"
 #include "procedural_db.h"
+#include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
 
@@ -49,9 +50,46 @@ static ProcRecord quit_proc;
 void
 register_misc_procs (Gimp *gimp)
 {
+  /*
+   * version
+   */
+  procedural_db_init_proc (&version_proc, 0, 1);
+  procedural_db_add_return_value (&version_proc,
+                                  GIMP_PDB_STRING,
+                                  gimp_param_spec_string ("version",
+                                                          "version",
+                                                          "The gimp version",
+                                                          FALSE, FALSE,
+                                                          NULL,
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &version_proc);
+
+  /*
+   * getpid
+   */
+  procedural_db_init_proc (&getpid_proc, 0, 1);
+  procedural_db_add_return_value (&getpid_proc,
+                                  GIMP_PDB_INT32,
+                                  g_param_spec_int ("pid",
+                                                    "pid",
+                                                    "The PID",
+                                                    G_MININT32, G_MAXINT32, 0,
+                                                    GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &getpid_proc);
+
+  /*
+   * quit
+   */
+  procedural_db_init_proc (&quit_proc, 1, 0);
+  procedural_db_add_argument (&quit_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_boolean ("force",
+                                                    "force",
+                                                    "Flag specifying whether to force the gimp to or exit normally",
+                                                    FALSE,
+                                                    GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &quit_proc);
+
 }
 
 static Argument *
@@ -72,15 +110,6 @@ version_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg version_outargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "version",
-    "The gimp version"
-  }
-};
-
 static ProcRecord version_proc =
 {
   "gimp-version",
@@ -92,10 +121,7 @@ static ProcRecord version_proc =
   "1999",
   NULL,
   GIMP_INTERNAL,
-  0,
-  NULL,
-  1,
-  version_outargs,
+  0, NULL, 0, NULL,
   { { version_invoker } }
 };
 
@@ -117,15 +143,6 @@ getpid_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcArg getpid_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "pid",
-    "The PID"
-  }
-};
-
 static ProcRecord getpid_proc =
 {
   "gimp-getpid",
@@ -137,10 +154,7 @@ static ProcRecord getpid_proc =
   "2005",
   NULL,
   GIMP_INTERNAL,
-  0,
-  NULL,
-  1,
-  getpid_outargs,
+  0, NULL, 0, NULL,
   { { getpid_invoker } }
 };
 
@@ -160,15 +174,6 @@ quit_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, TRUE);
 }
 
-static ProcArg quit_inargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "force",
-    "Flag specifying whether to force the gimp to or exit normally"
-  }
-};
-
 static ProcRecord quit_proc =
 {
   "gimp-quit",
@@ -180,9 +185,6 @@ static ProcRecord quit_proc =
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
-  1,
-  quit_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { quit_invoker } }
 };

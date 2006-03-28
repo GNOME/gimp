@@ -25,6 +25,7 @@
 
 #include "pdb-types.h"
 #include "procedural_db.h"
+#include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
 #include "core/gimpdatafactory.h"
@@ -36,9 +37,116 @@ static ProcRecord brushes_set_popup_proc;
 void
 register_brush_select_procs (Gimp *gimp)
 {
+  /*
+   * brushes_popup
+   */
+  procedural_db_init_proc (&brushes_popup_proc, 6, 0);
+  procedural_db_add_argument (&brushes_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("brush-callback",
+                                                      "brush callback",
+                                                      "The callback PDB proc to call when brush selection is made",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&brushes_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("popup-title",
+                                                      "popup title",
+                                                      "Title to give the brush popup window",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&brushes_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("initial-brush",
+                                                      "initial brush",
+                                                      "The name of the brush to set as the first selected",
+                                                      FALSE, TRUE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&brushes_popup_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("opacity",
+                                                   "opacity",
+                                                   "The initial opacity of the brush",
+                                                   0, 100, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&brushes_popup_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_int ("spacing",
+                                                "spacing",
+                                                "The initial spacing of the brush (if < 0 then use brush default spacing)",
+                                                G_MININT32, 1000, 0,
+                                                GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&brushes_popup_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_enum ("paint-mode",
+                                                 "paint mode",
+                                                 "The initial paint mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }",
+                                                 GIMP_TYPE_LAYER_MODE_EFFECTS,
+                                                 GIMP_NORMAL_MODE,
+                                                 GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &brushes_popup_proc);
+
+  /*
+   * brushes_close_popup
+   */
+  procedural_db_init_proc (&brushes_close_popup_proc, 1, 0);
+  procedural_db_add_argument (&brushes_close_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("brush-callback",
+                                                      "brush callback",
+                                                      "The name of the callback registered for this popup",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &brushes_close_popup_proc);
+
+  /*
+   * brushes_set_popup
+   */
+  procedural_db_init_proc (&brushes_set_popup_proc, 5, 0);
+  procedural_db_add_argument (&brushes_set_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("brush-callback",
+                                                      "brush callback",
+                                                      "The name of the callback registered for this popup",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&brushes_set_popup_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("brush-name",
+                                                      "brush name",
+                                                      "The name of the brush to set as selected",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&brushes_set_popup_proc,
+                              GIMP_PDB_FLOAT,
+                              g_param_spec_double ("opacity",
+                                                   "opacity",
+                                                   "The initial opacity of the brush",
+                                                   0, 100, 0,
+                                                   GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&brushes_set_popup_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_int ("spacing",
+                                                "spacing",
+                                                "The initial spacing of the brush (if < 0 then use brush default spacing)",
+                                                G_MININT32, 1000, 0,
+                                                GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&brushes_set_popup_proc,
+                              GIMP_PDB_INT32,
+                              g_param_spec_enum ("paint-mode",
+                                                 "paint mode",
+                                                 "The initial paint mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }",
+                                                 GIMP_TYPE_LAYER_MODE_EFFECTS,
+                                                 GIMP_NORMAL_MODE,
+                                                 GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &brushes_set_popup_proc);
+
 }
 
 static Argument *
@@ -96,40 +204,6 @@ brushes_popup_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg brushes_popup_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "brush-callback",
-    "The callback PDB proc to call when brush selection is made"
-  },
-  {
-    GIMP_PDB_STRING,
-    "popup-title",
-    "Title to give the brush popup window"
-  },
-  {
-    GIMP_PDB_STRING,
-    "initial-brush",
-    "The name of the brush to set as the first selected"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "opacity",
-    "The initial opacity of the brush"
-  },
-  {
-    GIMP_PDB_INT32,
-    "spacing",
-    "The initial spacing of the brush (if < 0 then use brush default spacing)"
-  },
-  {
-    GIMP_PDB_INT32,
-    "paint-mode",
-    "The initial paint mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }"
-  }
-};
-
 static ProcRecord brushes_popup_proc =
 {
   "gimp-brushes-popup",
@@ -141,10 +215,7 @@ static ProcRecord brushes_popup_proc =
   "1998",
   NULL,
   GIMP_INTERNAL,
-  6,
-  brushes_popup_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { brushes_popup_invoker } }
 };
 
@@ -174,15 +245,6 @@ brushes_close_popup_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg brushes_close_popup_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "brush-callback",
-    "The name of the callback registered for this popup"
-  }
-};
-
 static ProcRecord brushes_close_popup_proc =
 {
   "gimp-brushes-close-popup",
@@ -194,10 +256,7 @@ static ProcRecord brushes_close_popup_proc =
   "1998",
   NULL,
   GIMP_INTERNAL,
-  1,
-  brushes_close_popup_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { brushes_close_popup_invoker } }
 };
 
@@ -251,35 +310,6 @@ brushes_set_popup_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg brushes_set_popup_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "brush-callback",
-    "The name of the callback registered for this popup"
-  },
-  {
-    GIMP_PDB_STRING,
-    "brush-name",
-    "The name of the brush to set as selected"
-  },
-  {
-    GIMP_PDB_FLOAT,
-    "opacity",
-    "The initial opacity of the brush"
-  },
-  {
-    GIMP_PDB_INT32,
-    "spacing",
-    "The initial spacing of the brush (if < 0 then use brush default spacing)"
-  },
-  {
-    GIMP_PDB_INT32,
-    "paint-mode",
-    "The initial paint mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }"
-  }
-};
-
 static ProcRecord brushes_set_popup_proc =
 {
   "gimp-brushes-set-popup",
@@ -291,9 +321,6 @@ static ProcRecord brushes_set_popup_proc =
   "1998",
   NULL,
   GIMP_INTERNAL,
-  5,
-  brushes_set_popup_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { brushes_set_popup_invoker } }
 };

@@ -25,6 +25,7 @@
 
 #include "pdb-types.h"
 #include "procedural_db.h"
+#include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
 #include "plug-in/plug-in.h"
@@ -35,7 +36,28 @@ static ProcRecord help_proc;
 void
 register_help_procs (Gimp *gimp)
 {
+  /*
+   * help
+   */
+  procedural_db_init_proc (&help_proc, 2, 0);
+  procedural_db_add_argument (&help_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("help-domain",
+                                                      "help domain",
+                                                      "The help domain in which help_id is registered",
+                                                      FALSE, TRUE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
+  procedural_db_add_argument (&help_proc,
+                              GIMP_PDB_STRING,
+                              gimp_param_spec_string ("help-id",
+                                                      "help id",
+                                                      "The help page's ID",
+                                                      FALSE, FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, &help_proc);
+
 }
 
 static Argument *
@@ -69,20 +91,6 @@ help_invoker (ProcRecord   *proc_record,
   return procedural_db_return_values (proc_record, success);
 }
 
-static ProcArg help_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "help-domain",
-    "The help domain in which help_id is registered"
-  },
-  {
-    GIMP_PDB_STRING,
-    "help-id",
-    "The help page's ID"
-  }
-};
-
 static ProcRecord help_proc =
 {
   "gimp-help",
@@ -94,9 +102,6 @@ static ProcRecord help_proc =
   "2000",
   NULL,
   GIMP_INTERNAL,
-  2,
-  help_inargs,
-  0,
-  NULL,
+  0, NULL, 0, NULL,
   { { help_invoker } }
 };
