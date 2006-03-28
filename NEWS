@@ -13,7 +13,8 @@ Changes in GIMP 2.3.8
 - added new tile primitive Triangle to Mosaic plug-in
 - speed up Gaussian Blur plug-in
 - suppress redundant progress updates from plug-ins
-- changed some gimprc and sessionrc default values
+- changed some gimprc and sessionrc default values (window hints,
+  fullscreen mode)
 - do not focus transform tool dialogs on map
 - renamed Magnify tool to Zoom tool and added some missing tool shortcuts
 - added a submenu with recently used plug-ins to the Filters menu
@@ -22,6 +23,12 @@ Changes in GIMP 2.3.8
 - added framework for describing menu entries in the statusbar
 - added lots of helpful blurbs to procedures and core actions
 - remove color from the Watercolor selector if Shift is being pressed
+- ported PDB internals to GParamSpec
+- speedup and UI improvements for the SIOX tool
+- added parasite getters and settors for vectors
+- made PSD load and save plug-ins 64bit clean
+- some string review
+- ported ellipse select tool to the new rectangle tool
 - bug fixes and code cleanup
 
 
