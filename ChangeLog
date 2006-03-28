@@ -1,3 +1,9 @@
+2006-03-28 Vladimer Sichinava  <vlsichinava@gmail.com>
+
+        * configure.in: Added "ka" (Georgian) to ALL_LINGUAS
+
+2006-03-28  Sven  Neumann  <sven@gimp.org>
+=======
 2006-03-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/procedural_db.[ch] (struct ProcArg): replace "name"
@@ -24,6 +30,7 @@
 	* app/pdb/*_cmds.c: regenerated.
 
 2006-03-28  Sven Neumann  <sven@gimp.org>
+>>>>>>> 1.12332
 
 	* app/widgets/gimpdockbook.c (gimp_dockbook_drop_dockable): allow
 	dropping of dockables from the same dockbook to the empty space
