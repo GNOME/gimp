@@ -332,7 +332,7 @@ query (void)
   static int nreturn_vals = 0;
 
   gimp_install_procedure (IFSCOMPOSE_PROC,
-                          "Create an Iterated Function System (IFS) Fractal",
+                          N_("Create an Iterated Function System (IFS) fractal"),
                           "Interactively create an Iterated Function System "
                           "fractal. Use the window on the upper left to adjust "
                           "the component transformations of the fractal. The "

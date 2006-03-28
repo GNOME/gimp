@@ -150,7 +150,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  "Draws a maze.",
+			  N_("Draw a labyrinth"),
 			  "Generates a maze using either the depth-first "
                           "search method or Prim's algorithm.  Can make "
                           "tileable mazes too.",

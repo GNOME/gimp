@@ -125,8 +125,8 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Creates cosmic recursive fractal flames",
-                          "Creates cosmic recursive fractal flames",
+                          N_("Create cosmic recursive fractal flames"),
+                          "Create cosmic recursive fractal flames",
                           "Scott Draves",
                           "Scott Draves",
                           "1997",

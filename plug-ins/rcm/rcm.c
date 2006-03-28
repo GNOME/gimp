@@ -93,7 +93,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  "Colormap rotation as in xv",
+			  N_("Replace a range of colors with another"),
 			  "Exchanges two color ranges. "
                           "Based on code from Pavel Grinfeld (pavel@ml.com). "
                           "This version written by Sven Anders (anderss@fmi.uni-passau.de).",

@@ -160,17 +160,16 @@ query (void)
     { GIMP_PDB_INT32,	"unit",		"Unit 0=Inches 1=Metric" },
   };
 
-  static const gchar *blurb = "This plug-in prints images from The GIMP.";
   static const gchar *help  = "Prints images to PostScript, PCL, or ESC/P2 printers.";
   static const gchar *auth  = "Michael Sweet <mike@easysw.com> and Robert Krawitz <rlk@alum.mit.edu>";
   static const gchar *copy  = "Copyright 1997-2000 by Michael Sweet and Robert Krawitz";
-  static const gchar *types = "RGB*,GRAY*,INDEXED*";
 
   gimp_install_procedure (PROC_NAME,
-			  blurb, help, auth, copy,
+			  N_("Print the image using the gimp-print drivers"),
+                          help, auth, copy,
 			  PLUG_IN_VERSION,
 			  N_("_Print..."),
-			  types,
+			  "*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);

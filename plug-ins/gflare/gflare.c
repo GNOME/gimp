@@ -810,7 +810,7 @@ plugin_query (void)
     "which has been stored in gflare-path already.";
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          "Produce lense flare effect using custom gradients",
+                          N_("Produce a lense flare effect using gradients"),
                           help_string,
                           "Eiichi Takamori",
                           "Eiichi Takamori, and a lot of GIMP people",

@@ -213,7 +213,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  "Pagecurl effect",
+			  N_("Curl up one of the image corners"),
 			  "This plug-in creates a pagecurl-effect.",
 			  "Federico Mena Quintero and Simon Budig",
 			  "Federico Mena Quintero and Simon Budig",

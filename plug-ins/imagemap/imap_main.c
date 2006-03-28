@@ -116,7 +116,7 @@ static void query(void)
    static int nreturn_vals = 0;
 
    gimp_install_procedure("plug_in_imagemap",
-			  "Creates a clickable imagemap.",
+			  N_("Create a clickable imagemap"),
 			  "",
 			  "Maurits Rijk",
 			  "Maurits Rijk",

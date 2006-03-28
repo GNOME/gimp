@@ -57,7 +57,6 @@
 #define PLUG_IN_NAME        "plug_in_winsnap"
 #define HELP_ID             "plug-in-winsnap"
 #define PLUG_IN_PRINT_NAME  "WinSnap"
-#define PLUG_IN_DESCRIPTION "Capture a Win32 window or desktop image"
 #define PLUG_IN_HELP        "This plug-in will capture an image of a Win32 window or desktop"
 #define PLUG_IN_AUTHOR      "Craig Setera (setera@home.com)"
 #define PLUG_IN_COPYRIGHT   "Craig Setera"
@@ -986,7 +985,7 @@ query(void)
 
   /* the installation of the plugin */
   gimp_install_procedure (PLUG_IN_NAME,
-                          PLUG_IN_DESCRIPTION,
+                          N_("Capture a window or desktop image"),
                           PLUG_IN_HELP,
                           PLUG_IN_AUTHOR,
                           PLUG_IN_COPYRIGHT,

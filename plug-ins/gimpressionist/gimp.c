@@ -71,7 +71,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
-                          "Performs various artistic operations on an image",
+                          N_("Performs various artistic operations"),
                           "Performs various artistic operations on an image",
                           "Vidar Madsen <vidar@prosalg.no>",
                           "Vidar Madsen",

@@ -1,3 +1,19 @@
+2006-03-28  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/flame/flame.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/gimpressionist/gimp.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/maze/maze.c
+	* plug-ins/metadata/metadata.c
+	* plug-ins/pagecurl/pagecurl.c
+	* plug-ins/print/print.c
+	* plug-ins/rcm/rcm.c
+	* plug-ins/winsnap/winsnap.c: reviewed blurbs and marked them for
+	translation.
+
 2006-03-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/procedural_db.c (procedural_db_arguments): argh, get
