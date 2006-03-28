@@ -55,15 +55,40 @@ static gboolean   jpeg_query (const gchar *primary,
                               const gchar *ok_label);
 
 
+/*  Replacement for exif_data_new_from_file() to work around
+ *  filename encoding problems (see bug #335391).
+ */
+ExifData *
+jpeg_exif_data_new_from_file (const gchar  *filename,
+                              GError      **error)
+{
+  ExifData    *data;
+  GMappedFile *file;
+
+  g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  file = g_mapped_file_new (filename, FALSE, error);
+  if (! file)
+    return NULL;
+
+  data = exif_data_new_from_data ((guchar *) g_mapped_file_get_contents (file),
+                                  g_mapped_file_get_length (file));
+
+  g_mapped_file_free (file);
+
+  return data;
+}
+
 void
-jpeg_apply_exif_data_to_image (const gchar   *filename,
-                               const gint32   image_ID)
+jpeg_apply_exif_data_to_image (const gchar  *filename,
+                               const gint32  image_ID)
 {
   ExifData     *exif_data     = NULL;
   ExifEntry    *entry;
   gint          byte_order;
 
-  exif_data = exif_data_new_from_file (filename);
+  exif_data = jpeg_exif_data_new_from_file (filename, NULL);
   if (!exif_data)
     return;
 

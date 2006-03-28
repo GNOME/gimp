@@ -1,5 +1,12 @@
 2006-03-28  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/jpeg/jpeg-exif.c
+	* plug-ins/jpeg/jpeg-load.c
+	* plug-ins/jpeg/jpeg.h: added a utility function to work around
+	filename encoding problems when reading EXIF data (bug #335391).
+
+2006-03-28  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/flame/flame.c
 	* plug-ins/gfig/gfig.c
 	* plug-ins/gflare/gflare.c

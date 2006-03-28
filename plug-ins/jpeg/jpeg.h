@@ -62,11 +62,14 @@ void      my_output_message             (j_common_ptr   cinfo);
 
 #ifdef HAVE_EXIF
 
-ExifData        *exif_data;
+ExifData *exif_data;
 
 gint32    load_thumbnail_image          (const gchar   *filename,
                                          gint          *width,
                                          gint          *height);
+
+ExifData * jpeg_exif_data_new_from_file (const gchar   *filename,
+                                         GError       **error);
 
 void      jpeg_apply_exif_data_to_image (const gchar   *filename,
                                          const gint32   image_ID);

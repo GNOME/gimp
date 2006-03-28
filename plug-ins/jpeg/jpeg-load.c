@@ -590,7 +590,7 @@ load_thumbnail_image (const gchar *filename,
   FILE       *infile;
 
   image_ID = -1;
-  exif_data = exif_data_new_from_file (filename);
+  exif_data = jpeg_exif_data_new_from_file (filename, NULL);
 
   if (! ((exif_data) && (exif_data->data) && (exif_data->size > 0)))
     return -1;
