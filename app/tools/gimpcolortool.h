@@ -79,7 +79,7 @@ void       gimp_color_tool_disable            (GimpColorTool    *color_tool);
 gboolean   gimp_color_tool_is_enabled         (GimpColorTool    *color_tool);
 
 void       gimp_color_tool_start_sample_point (GimpTool         *tool,
-                                               GimpDisplay      *gdisp);
+                                               GimpDisplay      *display);
 
 
 #endif  /*  __GIMP_COLOR_TOOL_H__  */

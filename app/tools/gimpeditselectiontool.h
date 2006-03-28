@@ -21,7 +21,7 @@
 
 
 void       gimp_edit_selection_tool_start     (GimpTool          *parent_tool,
-                                               GimpDisplay       *gdisp,
+                                               GimpDisplay       *display,
                                                GimpCoords        *coords,
                                                GimpTranslateMode  edit_mode,
                                                gboolean           propagate_release);
@@ -29,7 +29,7 @@ void       gimp_edit_selection_tool_start     (GimpTool          *parent_tool,
 
 gboolean   gimp_edit_selection_tool_key_press (GimpTool          *tool,
                                                GdkEventKey       *kevent,
-                                               GimpDisplay       *gdisp);
+                                               GimpDisplay       *display);
 
 
 #endif  /*  __GIMP_EDIT_SELECTION_TOOL_H__  */

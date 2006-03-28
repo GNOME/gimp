@@ -32,7 +32,7 @@ Argument * plug_in_run    (Gimp         *gimp,
                            gint          argc,
                            gboolean      synchronous,
                            gboolean      destroy_return_vals,
-                           gint          gdisp_ID);
+                           gint          display_ID);
 
 /*  Run one of the last plug-ins from the plug-in history again with
  *  the same arguments. Extensions are exempt from this "privelege".

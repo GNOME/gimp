@@ -52,7 +52,7 @@ struct _GimpFreeSelectToolClass
   /*  virtual function  */
 
   void (* select) (GimpFreeSelectTool *free_select_tool,
-                   GimpDisplay        *gdisp);
+                   GimpDisplay        *display);
 };
 
 
@@ -62,7 +62,7 @@ void    gimp_free_select_tool_register (GimpToolRegisterCallback  callback,
 GType   gimp_free_select_tool_get_type (void) G_GNUC_CONST;
 
 void    gimp_free_select_tool_select   (GimpFreeSelectTool       *free_sel,
-                                        GimpDisplay              *gdisp);
+                                        GimpDisplay              *display);
 
 
 #endif  /*  __GIMP_FREE_SELECT_TOOL_H__  */

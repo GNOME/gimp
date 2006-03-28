@@ -107,22 +107,22 @@ struct _GimpTransformToolClass
   void          (* dialog)        (GimpTransformTool *tool);
   void          (* dialog_update) (GimpTransformTool *tool);
   void          (* prepare)       (GimpTransformTool *tool,
-                                   GimpDisplay       *gdisp);
+                                   GimpDisplay       *display);
   void          (* motion)        (GimpTransformTool *tool,
-                                   GimpDisplay       *gdisp);
+                                   GimpDisplay       *display);
   void          (* recalc)        (GimpTransformTool *tool,
-                                   GimpDisplay       *gdisp);
+                                   GimpDisplay       *display);
   TileManager * (* transform)     (GimpTransformTool *tool,
                                    GimpItem          *item,
                                    gboolean           mask_empty,
-                                   GimpDisplay       *gdisp);
+                                   GimpDisplay       *display);
 };
 
 
 GType   gimp_transform_tool_get_type       (void) G_GNUC_CONST;
 
 void    gimp_transform_tool_recalc         (GimpTransformTool *tr_tool,
-                                            GimpDisplay       *gdisp);
+                                            GimpDisplay       *display);
 void    gimp_transform_tool_expose_preview (GimpTransformTool *tr_tool);
 
 
