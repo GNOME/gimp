@@ -21,6 +21,7 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
 
@@ -127,9 +128,9 @@ GParamSpec *
 gimp_param_spec_string (const gchar *name,
                         const gchar *nick,
                         const gchar *blurb,
-                        const gchar *default_value,
                         gboolean     no_validate,
                         gboolean     null_ok,
+                        const gchar *default_value,
                         GParamFlags  flags)
 {
   GimpParamSpecString *sspec;
@@ -622,6 +623,35 @@ gimp_value_set_display (GValue     *value,
 
   value->data[0].v_int = id;
 }
+
+
+/*
+ * GIMP_TYPE_RGB
+ */
+
+void
+gimp_value_get_rgb (const GValue *value,
+                    GimpRGB      *rgb)
+{
+  g_return_if_fail (GIMP_VALUE_HOLDS_RGB (value));
+  g_return_if_fail (rgb != NULL);
+
+  if (value->data[0].v_pointer)
+    *rgb = *((GimpRGB *) value->data[0].v_pointer);
+  else
+    gimp_rgba_set (rgb, 0.0, 0.0, 0.0, 1.0);
+}
+
+void
+gimp_value_set_rgb (GValue  *value,
+                    GimpRGB *rgb)
+{
+  g_return_if_fail (GIMP_VALUE_HOLDS_RGB (value));
+  g_return_if_fail (rgb != NULL);
+
+  g_value_set_boxed (value, rgb);
+}
+
 
 /*
  * GIMP_TYPE_PARASITE

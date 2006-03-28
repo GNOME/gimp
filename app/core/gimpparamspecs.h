@@ -38,9 +38,9 @@ GType        gimp_param_string_get_type  (void) G_GNUC_CONST;
 GParamSpec * gimp_param_spec_string      (const gchar  *name,
                                           const gchar  *nick,
                                           const gchar  *blurb,
-                                          const gchar  *default_value,
                                           gboolean      no_validate,
                                           gboolean      null_ok,
+                                          const gchar  *default_value,
                                           GParamFlags   flags);
 
 
@@ -111,6 +111,16 @@ void         gimp_value_set_display          (GValue       *value,
 
 
 /*
+ * GIMP_TYPE_RGB
+ */
+
+void    gimp_value_get_rgb (const GValue *value,
+                            GimpRGB      *rgb);
+void    gimp_value_set_rgb (GValue       *value,
+                            GimpRGB      *rgb);
+
+
+/*
  * GIMP_TYPE_PARASITE
  */
 
@@ -118,6 +128,7 @@ void         gimp_value_set_display          (GValue       *value,
 #define GIMP_VALUE_HOLDS_PARASITE(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_PARASITE))
 
 GType   gimp_parasite_get_type           (void) G_GNUC_CONST;
+
 
 /*
  * GIMP_TYPE_PARAM_PARASITE

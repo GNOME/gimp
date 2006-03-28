@@ -1,3 +1,14 @@
+2006-03-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpparamspecs.[ch] (gimp_param_spec_string): reordered
+	params to be consistent with other param specs.
+
+	(gimp_value_get_rgb): utility function which reads the value
+	into a GimpRGB struct, instead of returning a pointer.
+
+	(gimp_value_set_rgb): added for symmetry. Just calls
+	g_value_set_boxed().
+
 2006-03-28  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/jpeg/jpeg-exif.c
