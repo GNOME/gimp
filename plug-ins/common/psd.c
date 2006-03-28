@@ -1890,11 +1890,11 @@ load_image (const gchar *name)
   if (psd_image.num_layers > 0) /* PS3-style */
     {
       int               lnum;
-      GimpImageBaseType gimagetype;
+      GimpImageBaseType imagetype;
 
-      gimagetype = psd_mode_to_gimp_base_type (PSDheader.mode);
+      imagetype = psd_mode_to_gimp_base_type (PSDheader.mode);
       image_ID =
-	gimp_image_new (PSDheader.columns, PSDheader.rows, gimagetype);
+	gimp_image_new (PSDheader.columns, PSDheader.rows, imagetype);
       gimp_image_set_filename (image_ID, name);
 
       if (psd_image.resolution_is_set)
@@ -1946,7 +1946,7 @@ load_image (const gchar *name)
 
 	  IFDBG printf ("Hey, it's a LAYER with %d channels!\n", numc);
 
-	  switch (gimagetype)
+	  switch (imagetype)
 	    {
 	    case GIMP_GRAY:
 	      {

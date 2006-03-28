@@ -181,7 +181,7 @@ rcm_reduce_image (GimpDrawable *drawable,
 		  gint          LongerSize,
 		  gint          Slctn)
 {
-  guint32       gimage;
+  guint32       image;
   GimpPixelRgn  srcPR, srcMask;
   ReducedImage *temp;
   guchar       *tempRGB, *src_row, *tempmask, *src_mask_row;
@@ -226,12 +226,12 @@ rcm_reduce_image (GimpDrawable *drawable,
   /* clamp to image size since this is the size of the mask */
 
   gimp_drawable_offsets (drawable->drawable_id, &offx, &offy);
-  gimage = gimp_drawable_get_image (drawable->drawable_id);
+  image = gimp_drawable_get_image (drawable->drawable_id);
 
-  x1 = CLAMP (x1, - offx, gimp_image_width (gimage) - offx);
-  x2 = CLAMP (x2, - offx, gimp_image_width (gimage) - offx);
-  y1 = CLAMP (y1, - offy, gimp_image_height (gimage) - offy);
-  y2 = CLAMP (y2, - offy, gimp_image_height (gimage) - offy);
+  x1 = CLAMP (x1, - offx, gimp_image_width (image) - offx);
+  x2 = CLAMP (x2, - offx, gimp_image_width (image) - offx);
+  y1 = CLAMP (y1, - offy, gimp_image_height (image) - offy);
+  y2 = CLAMP (y2, - offy, gimp_image_height (image) - offy);
 
   /* calculate size of preview */
 
