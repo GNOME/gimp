@@ -1,3 +1,9 @@
+2006-03-28  Sven  Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdockbook.c (gimp_dockbook_drop_dockable): allow
+	dropping of dockables from the same dockbook to the empty space
+	next to the notebook tabs. This moves the dockable to the end.
+
 2006-03-28  Sven Neumann  <sven@gimp.org>
 
 	* app/*: did a global gdisp -> display substitution.

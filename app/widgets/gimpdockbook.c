@@ -509,7 +509,12 @@ gimp_dockbook_drop_dockable (GimpDockbook *dockbook,
           g_object_set_data (G_OBJECT (dockable),
                              "gimp-dock-drag-widget", NULL);
 
-          if (dockable->dockbook != dockbook)
+          if (dockable->dockbook == dockbook)
+	    {
+	      gtk_notebook_reorder_child (GTK_NOTEBOOK (dockbook),
+                                          GTK_WIDGET (dockable), -1);
+	    }
+	  else
             {
               g_object_ref (dockable);
 
@@ -517,9 +522,9 @@ gimp_dockbook_drop_dockable (GimpDockbook *dockbook,
               gimp_dockbook_add (dockbook, dockable, -1);
 
               g_object_unref (dockable);
-
-              return TRUE;
             }
+
+	  return TRUE;
         }
     }
 
