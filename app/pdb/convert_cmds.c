@@ -41,44 +41,46 @@ static ProcRecord image_convert_indexed_proc;
 void
 register_convert_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * image_convert_rgb
    */
-  procedural_db_init_proc (&image_convert_rgb_proc, 1, 0);
-  procedural_db_add_argument (&image_convert_rgb_proc,
+  procedure = procedural_db_init_proc (&image_convert_rgb_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &image_convert_rgb_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * image_convert_grayscale
    */
-  procedural_db_init_proc (&image_convert_grayscale_proc, 1, 0);
-  procedural_db_add_argument (&image_convert_grayscale_proc,
+  procedure = procedural_db_init_proc (&image_convert_grayscale_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &image_convert_grayscale_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * image_convert_indexed
    */
-  procedural_db_init_proc (&image_convert_indexed_proc, 7, 0);
-  procedural_db_add_argument (&image_convert_indexed_proc,
+  procedure = procedural_db_init_proc (&image_convert_indexed_proc, 7, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&image_convert_indexed_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("dither-type",
                                                  "dither type",
@@ -86,7 +88,7 @@ register_convert_procs (Gimp *gimp)
                                                  GIMP_TYPE_CONVERT_DITHER_TYPE,
                                                  GIMP_NO_DITHER,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&image_convert_indexed_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("palette-type",
                                                  "palette type",
@@ -94,28 +96,28 @@ register_convert_procs (Gimp *gimp)
                                                  GIMP_TYPE_CONVERT_PALETTE_TYPE,
                                                  GIMP_MAKE_PALETTE,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&image_convert_indexed_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("num-cols",
                                                 "num cols",
                                                 "The number of colors to quantize to, ignored unless (palette_type == GIMP_MAKE_PALETTE)",
                                                 G_MININT32, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&image_convert_indexed_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("alpha-dither",
                                                     "alpha dither",
                                                     "Dither transparency to fake partial opacity",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&image_convert_indexed_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("remove-unused",
                                                     "remove unused",
                                                     "Remove unused or duplicate color entries from final palette, ignored if (palette_type == GIMP_MAKE_PALETTE)",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&image_convert_indexed_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("palette",
                                                       "palette",
@@ -123,7 +125,7 @@ register_convert_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &image_convert_indexed_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

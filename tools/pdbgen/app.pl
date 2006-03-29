@@ -649,11 +649,11 @@ sub generate {
 
 	$out->{procs} .= "static ProcRecord ${name}_proc;\n";
 
-	    $out->{register} .= <<CODE;
+	$out->{register} .= <<CODE;
   /*
    * ${name}
    */
-  procedural_db_init_proc (\&${name}_proc, @{[scalar @inargs]}, @{[scalar @outargs]});
+  procedure = procedural_db_init_proc (\&${name}_proc, @{[scalar @inargs]}, @{[scalar @outargs]});
 CODE
 
 	foreach $arg (@inargs) {
@@ -662,7 +662,7 @@ CODE
 	    $pspec =~ s/^/' ' x length("  procedural_db_add_argument (")/meg;
 
 	    $out->{register} .= <<CODE;
-  procedural_db_add_argument (\&${name}_proc,
+  procedural_db_add_argument (procedure,
 ${pspec});
 CODE
 	}
@@ -673,13 +673,13 @@ CODE
 	    $pspec =~ s/^/' ' x length("  procedural_db_add_return_value (")/meg;
 
 	    $out->{register} .= <<CODE;
-  procedural_db_add_return_value (\&${name}_proc,
+  procedural_db_add_return_value (procedure,
 ${pspec});
 CODE
 	}
 
 	$out->{register} .= <<CODE;
-  procedural_db_register (gimp, \&${name}_proc);
+  procedural_db_register (gimp, procedure);
 
 CODE
 
@@ -888,7 +888,7 @@ GPL
 	print CFILE $extra->{decls}, "\n" if exists $extra->{decls};
 	print CFILE $out->{procs};
 	print CFILE "\nvoid\nregister_${group}_procs (Gimp *gimp)\n";
-	print CFILE "{\n$out->{register}}\n";
+	print CFILE "{\n  ProcRecord *procedure;\n\n$out->{register}}\n";
 	print CFILE "\n", $extra->{code} if exists $extra->{code};
 	print CFILE $out->{code};
 	close CFILE;

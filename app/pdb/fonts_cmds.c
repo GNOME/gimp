@@ -38,17 +38,19 @@ static ProcRecord fonts_get_list_proc;
 void
 register_fonts_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * fonts_refresh
    */
-  procedural_db_init_proc (&fonts_refresh_proc, 0, 0);
-  procedural_db_register (gimp, &fonts_refresh_proc);
+  procedure = procedural_db_init_proc (&fonts_refresh_proc, 0, 0);
+  procedural_db_register (gimp, procedure);
 
   /*
    * fonts_get_list
    */
-  procedural_db_init_proc (&fonts_get_list_proc, 1, 2);
-  procedural_db_add_argument (&fonts_get_list_proc,
+  procedure = procedural_db_init_proc (&fonts_get_list_proc, 1, 2);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("filter",
                                                       "filter",
@@ -56,20 +58,20 @@ register_fonts_procs (Gimp *gimp)
                                                       FALSE, TRUE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&fonts_get_list_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("num-fonts",
                                                     "num fonts",
                                                     "The number of available fonts",
                                                     0, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&fonts_get_list_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRINGARRAY,
                                   g_param_spec_pointer ("font-list",
                                                         "font list",
                                                         "The list of font names",
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &fonts_get_list_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

@@ -43,11 +43,13 @@ static ProcRecord rect_select_proc;
 void
 register_selection_tools_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * by_color_select
    */
-  procedural_db_init_proc (&by_color_select_proc, 8, 0);
-  procedural_db_add_argument (&by_color_select_proc,
+  procedure = procedural_db_init_proc (&by_color_select_proc, 8, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -55,21 +57,21 @@ register_selection_tools_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&by_color_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_COLOR,
                               gimp_param_spec_rgb ("color",
                                                    "color",
                                                    "The color to select",
                                                    NULL,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&by_color_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("threshold",
                                                 "threshold",
                                                 "Threshold in intensity levels (0 <= threshold <= 255)",
                                                 0, 255, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&by_color_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("operation",
                                                  "operation",
@@ -77,76 +79,76 @@ register_selection_tools_procs (Gimp *gimp)
                                                  GIMP_TYPE_CHANNEL_OPS,
                                                  GIMP_CHANNEL_OP_ADD,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&by_color_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("antialias",
                                                     "antialias",
                                                     "Antialiasing (TRUE or FALSE)",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&by_color_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("feather",
                                                     "feather",
                                                     "Feather option for selections",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&by_color_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("feather-radius",
                                                    "feather radius",
                                                    "Radius for feather operation",
                                                    0, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&by_color_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("sample-merged",
                                                     "sample merged",
                                                     "Use the composite image, not the drawable",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &by_color_select_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * ellipse_select
    */
-  procedural_db_init_proc (&ellipse_select_proc, 9, 0);
-  procedural_db_add_argument (&ellipse_select_proc,
+  procedure = procedural_db_init_proc (&ellipse_select_proc, 9, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&ellipse_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("x",
                                                    "x",
                                                    "x coordinate of upper-left corner of ellipse bounding box",
                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&ellipse_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("y",
                                                    "y",
                                                    "y coordinate of upper-left corner of ellipse bounding box",
                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&ellipse_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("width",
                                                    "width",
                                                    "The width of the ellipse (0 < width)",
                                                    0, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&ellipse_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("height",
                                                    "height",
                                                    "The height of the ellipse (0 < height)",
                                                    0, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&ellipse_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("operation",
                                                  "operation",
@@ -154,54 +156,54 @@ register_selection_tools_procs (Gimp *gimp)
                                                  GIMP_TYPE_CHANNEL_OPS,
                                                  GIMP_CHANNEL_OP_ADD,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&ellipse_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("antialias",
                                                     "antialias",
                                                     "Antialiasing (TRUE or FALSE)",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&ellipse_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("feather",
                                                     "feather",
                                                     "Feather option for selections",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&ellipse_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("feather-radius",
                                                    "feather radius",
                                                    "Radius for feather operation",
                                                    0, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &ellipse_select_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * free_select
    */
-  procedural_db_init_proc (&free_select_proc, 7, 0);
-  procedural_db_add_argument (&free_select_proc,
+  procedure = procedural_db_init_proc (&free_select_proc, 7, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&free_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("num-segs",
                                                 "num segs",
                                                 "Number of points (count 1 coordinate as two points)",
                                                 2, G_MAXINT32, 2,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&free_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOATARRAY,
                               g_param_spec_pointer ("segs",
                                                     "segs",
                                                     "Array of points: { p1.x, p1.y, p2.x, p2.y, ..., pn.x, pn.y}",
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&free_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("operation",
                                                  "operation",
@@ -209,34 +211,34 @@ register_selection_tools_procs (Gimp *gimp)
                                                  GIMP_TYPE_CHANNEL_OPS,
                                                  GIMP_CHANNEL_OP_ADD,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&free_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("antialias",
                                                     "antialias",
                                                     "Antialiasing (TRUE or FALSE)",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&free_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("feather",
                                                     "feather",
                                                     "Feather option for selections",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&free_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("feather-radius",
                                                    "feather radius",
                                                    "Radius for feather operation",
                                                    0, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &free_select_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * fuzzy_select
    */
-  procedural_db_init_proc (&fuzzy_select_proc, 9, 0);
-  procedural_db_add_argument (&fuzzy_select_proc,
+  procedure = procedural_db_init_proc (&fuzzy_select_proc, 9, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -244,28 +246,28 @@ register_selection_tools_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&fuzzy_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("x",
                                                    "x",
                                                    "x coordinate of initial seed fill point: (image coordinates)",
                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&fuzzy_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("y",
                                                    "y",
                                                    "y coordinate of initial seed fill point: (image coordinates)",
                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&fuzzy_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("threshold",
                                                 "threshold",
                                                 "Threshold in intensity levels (0 <= threshold <= 255)",
                                                 0, 255, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&fuzzy_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("operation",
                                                  "operation",
@@ -273,76 +275,76 @@ register_selection_tools_procs (Gimp *gimp)
                                                  GIMP_TYPE_CHANNEL_OPS,
                                                  GIMP_CHANNEL_OP_ADD,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&fuzzy_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("antialias",
                                                     "antialias",
                                                     "Antialiasing (TRUE or FALSE)",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&fuzzy_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("feather",
                                                     "feather",
                                                     "Feather option for selections",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&fuzzy_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("feather-radius",
                                                    "feather radius",
                                                    "Radius for feather operation",
                                                    0, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&fuzzy_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("sample-merged",
                                                     "sample merged",
                                                     "Use the composite image, not the drawable",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &fuzzy_select_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * rect_select
    */
-  procedural_db_init_proc (&rect_select_proc, 8, 0);
-  procedural_db_add_argument (&rect_select_proc,
+  procedure = procedural_db_init_proc (&rect_select_proc, 8, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&rect_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("x",
                                                    "x",
                                                    "x coordinate of upper-left corner of rectangle",
                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&rect_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("y",
                                                    "y",
                                                    "y coordinate of upper-left corner of rectangle",
                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&rect_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("width",
                                                    "width",
                                                    "The width of the rectangle (0 < width)",
                                                    0, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&rect_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("height",
                                                    "height",
                                                    "The height of the rectangle (0 < height)",
                                                    0, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&rect_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("operation",
                                                  "operation",
@@ -350,21 +352,21 @@ register_selection_tools_procs (Gimp *gimp)
                                                  GIMP_TYPE_CHANNEL_OPS,
                                                  GIMP_CHANNEL_OP_ADD,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&rect_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("feather",
                                                     "feather",
                                                     "Feather option for selections",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&rect_select_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("feather-radius",
                                                    "feather radius",
                                                    "Radius for feather operation",
                                                    0, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &rect_select_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

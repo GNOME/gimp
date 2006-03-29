@@ -46,11 +46,13 @@ static ProcRecord procedural_db_set_data_proc;
 void
 register_procedural_db_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * procedural_db_temp_name
    */
-  procedural_db_init_proc (&procedural_db_temp_name_proc, 0, 1);
-  procedural_db_add_return_value (&procedural_db_temp_name_proc,
+  procedure = procedural_db_init_proc (&procedural_db_temp_name_proc, 0, 1);
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("temp-name",
                                                           "temp name",
@@ -58,13 +60,13 @@ register_procedural_db_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &procedural_db_temp_name_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * procedural_db_dump
    */
-  procedural_db_init_proc (&procedural_db_dump_proc, 1, 0);
-  procedural_db_add_argument (&procedural_db_dump_proc,
+  procedure = procedural_db_init_proc (&procedural_db_dump_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("filename",
                                                       "filename",
@@ -72,13 +74,13 @@ register_procedural_db_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &procedural_db_dump_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * procedural_db_query
    */
-  procedural_db_init_proc (&procedural_db_query_proc, 7, 2);
-  procedural_db_add_argument (&procedural_db_query_proc,
+  procedure = procedural_db_init_proc (&procedural_db_query_proc, 7, 2);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -86,7 +88,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&procedural_db_query_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("blurb",
                                                       "blurb",
@@ -94,7 +96,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&procedural_db_query_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("help",
                                                       "help",
@@ -102,7 +104,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&procedural_db_query_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("author",
                                                       "author",
@@ -110,7 +112,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&procedural_db_query_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("copyright",
                                                       "copyright",
@@ -118,7 +120,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&procedural_db_query_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("date",
                                                       "date",
@@ -126,7 +128,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&procedural_db_query_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("proc-type",
                                                       "proc type",
@@ -134,26 +136,26 @@ register_procedural_db_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&procedural_db_query_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("num-matches",
                                                     "num matches",
                                                     "The number of matching procedures",
                                                     0, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&procedural_db_query_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRINGARRAY,
                                   g_param_spec_pointer ("procedure-names",
                                                         "procedure names",
                                                         "The list of procedure names",
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &procedural_db_query_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * procedural_db_proc_info
    */
-  procedural_db_init_proc (&procedural_db_proc_info_proc, 1, 8);
-  procedural_db_add_argument (&procedural_db_proc_info_proc,
+  procedure = procedural_db_init_proc (&procedural_db_proc_info_proc, 1, 8);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("procedure",
                                                       "procedure",
@@ -161,7 +163,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&procedural_db_proc_info_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("blurb",
                                                           "blurb",
@@ -169,7 +171,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&procedural_db_proc_info_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("help",
                                                           "help",
@@ -177,7 +179,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&procedural_db_proc_info_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("author",
                                                           "author",
@@ -185,7 +187,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&procedural_db_proc_info_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("copyright",
                                                           "copyright",
@@ -193,7 +195,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&procedural_db_proc_info_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("date",
                                                           "date",
@@ -201,7 +203,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&procedural_db_proc_info_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_enum ("proc-type",
                                                      "proc type",
@@ -209,27 +211,27 @@ register_procedural_db_procs (Gimp *gimp)
                                                      GIMP_TYPE_PDB_PROC_TYPE,
                                                      GIMP_INTERNAL,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&procedural_db_proc_info_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("num-args",
                                                     "num args",
                                                     "The number of input arguments",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&procedural_db_proc_info_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("num-values",
                                                     "num values",
                                                     "The number of return values",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &procedural_db_proc_info_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * procedural_db_proc_arg
    */
-  procedural_db_init_proc (&procedural_db_proc_arg_proc, 2, 3);
-  procedural_db_add_argument (&procedural_db_proc_arg_proc,
+  procedure = procedural_db_init_proc (&procedural_db_proc_arg_proc, 2, 3);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("procedure",
                                                       "procedure",
@@ -237,14 +239,14 @@ register_procedural_db_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&procedural_db_proc_arg_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("arg-num",
                                                 "arg num",
                                                 "The argument number",
                                                 G_MININT32, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&procedural_db_proc_arg_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_enum ("arg-type",
                                                      "arg type",
@@ -252,7 +254,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                      GIMP_TYPE_PDB_ARG_TYPE,
                                                      GIMP_PDB_INT32,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&procedural_db_proc_arg_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("arg-name",
                                                           "arg name",
@@ -260,7 +262,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&procedural_db_proc_arg_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("arg-desc",
                                                           "arg desc",
@@ -268,13 +270,13 @@ register_procedural_db_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &procedural_db_proc_arg_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * procedural_db_proc_val
    */
-  procedural_db_init_proc (&procedural_db_proc_val_proc, 2, 3);
-  procedural_db_add_argument (&procedural_db_proc_val_proc,
+  procedure = procedural_db_init_proc (&procedural_db_proc_val_proc, 2, 3);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("procedure",
                                                       "procedure",
@@ -282,14 +284,14 @@ register_procedural_db_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&procedural_db_proc_val_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("val-num",
                                                 "val num",
                                                 "The return value number",
                                                 G_MININT32, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&procedural_db_proc_val_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_enum ("val-type",
                                                      "val type",
@@ -297,7 +299,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                      GIMP_TYPE_PDB_ARG_TYPE,
                                                      GIMP_PDB_INT32,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&procedural_db_proc_val_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("val-name",
                                                           "val name",
@@ -305,7 +307,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&procedural_db_proc_val_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("val-desc",
                                                           "val desc",
@@ -313,13 +315,13 @@ register_procedural_db_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &procedural_db_proc_val_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * procedural_db_get_data
    */
-  procedural_db_init_proc (&procedural_db_get_data_proc, 1, 2);
-  procedural_db_add_argument (&procedural_db_get_data_proc,
+  procedure = procedural_db_init_proc (&procedural_db_get_data_proc, 1, 2);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("identifier",
                                                       "identifier",
@@ -327,26 +329,26 @@ register_procedural_db_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&procedural_db_get_data_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("bytes",
                                                     "bytes",
                                                     "The number of bytes in the data",
                                                     1, G_MAXINT32, 1,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&procedural_db_get_data_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT8ARRAY,
                                   g_param_spec_pointer ("data",
                                                         "data",
                                                         "A byte array containing data",
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &procedural_db_get_data_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * procedural_db_get_data_size
    */
-  procedural_db_init_proc (&procedural_db_get_data_size_proc, 1, 1);
-  procedural_db_add_argument (&procedural_db_get_data_size_proc,
+  procedure = procedural_db_init_proc (&procedural_db_get_data_size_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("identifier",
                                                       "identifier",
@@ -354,20 +356,20 @@ register_procedural_db_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&procedural_db_get_data_size_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("bytes",
                                                     "bytes",
                                                     "The number of bytes in the data",
                                                     1, G_MAXINT32, 1,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &procedural_db_get_data_size_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * procedural_db_set_data
    */
-  procedural_db_init_proc (&procedural_db_set_data_proc, 3, 0);
-  procedural_db_add_argument (&procedural_db_set_data_proc,
+  procedure = procedural_db_init_proc (&procedural_db_set_data_proc, 3, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("identifier",
                                                       "identifier",
@@ -375,20 +377,20 @@ register_procedural_db_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&procedural_db_set_data_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("bytes",
                                                 "bytes",
                                                 "The number of bytes in the data",
                                                 1, G_MAXINT32, 1,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&procedural_db_set_data_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT8ARRAY,
                               g_param_spec_pointer ("data",
                                                     "data",
                                                     "A byte array containing data",
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &procedural_db_set_data_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

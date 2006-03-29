@@ -50,11 +50,13 @@ static ProcRecord plugin_icon_register_proc;
 void
 register_plug_in_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * plugins_query
    */
-  procedural_db_init_proc (&plugins_query_proc, 1, 12);
-  procedural_db_add_argument (&plugins_query_proc,
+  procedure = procedural_db_init_proc (&plugins_query_proc, 1, 12);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("search-string",
                                                       "search string",
@@ -62,91 +64,91 @@ register_plug_in_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  procedural_db_add_return_value (&plugins_query_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("num-plugins",
                                                     "num plugins",
                                                     "The number of plugins",
                                                     0, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&plugins_query_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRINGARRAY,
                                   g_param_spec_pointer ("menu-path",
                                                         "menu path",
                                                         "The menu path of the plugin",
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&plugins_query_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("num-plugins",
                                                     "num plugins",
                                                     "The number of plugins",
                                                     0, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&plugins_query_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRINGARRAY,
                                   g_param_spec_pointer ("plugin-accelerator",
                                                         "plugin accelerator",
                                                         "String representing keyboard accelerator (could be empty string)",
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&plugins_query_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("num-plugins",
                                                     "num plugins",
                                                     "The number of plugins",
                                                     0, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&plugins_query_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRINGARRAY,
                                   g_param_spec_pointer ("plugin-location",
                                                         "plugin location",
                                                         "Location of the plugin program",
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&plugins_query_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("num-plugins",
                                                     "num plugins",
                                                     "The number of plugins",
                                                     0, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&plugins_query_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRINGARRAY,
                                   g_param_spec_pointer ("plugin-image-type",
                                                         "plugin image type",
                                                         "Type of image that this plugin will work on",
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&plugins_query_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("num-plugins",
                                                     "num plugins",
                                                     "The number of plugins",
                                                     0, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&plugins_query_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32ARRAY,
                                   g_param_spec_pointer ("plugin-install-time",
                                                         "plugin install time",
                                                         "Time that the plugin was installed",
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&plugins_query_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("num-plugins",
                                                     "num plugins",
                                                     "The number of plugins",
                                                     0, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&plugins_query_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRINGARRAY,
                                   g_param_spec_pointer ("plugin-real-name",
                                                         "plugin real name",
                                                         "The internal name of the plugin",
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &plugins_query_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * plugin_domain_register
    */
-  procedural_db_init_proc (&plugin_domain_register_proc, 2, 0);
-  procedural_db_add_argument (&plugin_domain_register_proc,
+  procedure = procedural_db_init_proc (&plugin_domain_register_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("domain-name",
                                                       "domain name",
@@ -154,7 +156,7 @@ register_plug_in_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&plugin_domain_register_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("domain-path",
                                                       "domain path",
@@ -162,13 +164,13 @@ register_plug_in_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  procedural_db_register (gimp, &plugin_domain_register_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * plugin_help_register
    */
-  procedural_db_init_proc (&plugin_help_register_proc, 2, 0);
-  procedural_db_add_argument (&plugin_help_register_proc,
+  procedure = procedural_db_init_proc (&plugin_help_register_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("domain-name",
                                                       "domain name",
@@ -176,7 +178,7 @@ register_plug_in_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&plugin_help_register_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("domain-uri",
                                                       "domain uri",
@@ -184,13 +186,13 @@ register_plug_in_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &plugin_help_register_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * plugin_menu_register
    */
-  procedural_db_init_proc (&plugin_menu_register_proc, 2, 0);
-  procedural_db_add_argument (&plugin_menu_register_proc,
+  procedure = procedural_db_init_proc (&plugin_menu_register_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("procedure-name",
                                                       "procedure name",
@@ -198,7 +200,7 @@ register_plug_in_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&plugin_menu_register_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("menu-path",
                                                       "menu path",
@@ -206,13 +208,13 @@ register_plug_in_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &plugin_menu_register_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * plugin_menu_branch_register
    */
-  procedural_db_init_proc (&plugin_menu_branch_register_proc, 2, 0);
-  procedural_db_add_argument (&plugin_menu_branch_register_proc,
+  procedure = procedural_db_init_proc (&plugin_menu_branch_register_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("menu-path",
                                                       "menu path",
@@ -220,7 +222,7 @@ register_plug_in_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&plugin_menu_branch_register_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("menu-name",
                                                       "menu name",
@@ -228,13 +230,13 @@ register_plug_in_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &plugin_menu_branch_register_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * plugin_icon_register
    */
-  procedural_db_init_proc (&plugin_icon_register_proc, 4, 0);
-  procedural_db_add_argument (&plugin_icon_register_proc,
+  procedure = procedural_db_init_proc (&plugin_icon_register_proc, 4, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("procedure-name",
                                                       "procedure name",
@@ -242,7 +244,7 @@ register_plug_in_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&plugin_icon_register_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("icon-type",
                                                  "icon type",
@@ -250,20 +252,20 @@ register_plug_in_procs (Gimp *gimp)
                                                  GIMP_TYPE_ICON_TYPE,
                                                  GIMP_ICON_TYPE_STOCK_ID,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&plugin_icon_register_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("icon-data-length",
                                                 "icon data length",
                                                 "The length of 'icon-data' (1 <= icon_data_length)",
                                                 1, G_MAXINT32, 1,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&plugin_icon_register_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT8ARRAY,
                               g_param_spec_pointer ("icon-data",
                                                     "icon data",
                                                     "The procedure's icon. The format depends on the 'icon_type' parameter",
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &plugin_icon_register_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

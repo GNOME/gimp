@@ -60,44 +60,46 @@ static ProcRecord path_import_string_proc;
 void
 register_paths_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * path_list
    */
-  procedural_db_init_proc (&path_list_proc, 1, 2);
-  procedural_db_add_argument (&path_list_proc,
+  procedure = procedural_db_init_proc (&path_list_proc, 1, 2);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image to list the paths from",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&path_list_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("num-paths",
                                                     "num paths",
                                                     "The number of paths returned.",
                                                     0, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&path_list_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRINGARRAY,
                                   g_param_spec_pointer ("path-list",
                                                         "path list",
                                                         "List of the paths belonging to this image.",
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &path_list_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * path_get_current
    */
-  procedural_db_init_proc (&path_get_current_proc, 1, 1);
-  procedural_db_add_argument (&path_get_current_proc,
+  procedure = procedural_db_init_proc (&path_get_current_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image to get the current path from",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&path_get_current_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("name",
                                                           "name",
@@ -105,20 +107,20 @@ register_paths_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &path_get_current_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * path_set_current
    */
-  procedural_db_init_proc (&path_set_current_proc, 2, 0);
-  procedural_db_add_argument (&path_set_current_proc,
+  procedure = procedural_db_init_proc (&path_set_current_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image in which a path will become current",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_set_current_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -126,20 +128,20 @@ register_paths_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &path_set_current_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * path_delete
    */
-  procedural_db_init_proc (&path_delete_proc, 2, 0);
-  procedural_db_add_argument (&path_delete_proc,
+  procedure = procedural_db_init_proc (&path_delete_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image to delete the path from",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_delete_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -147,20 +149,20 @@ register_paths_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &path_delete_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * path_get_points
    */
-  procedural_db_init_proc (&path_get_points_proc, 2, 4);
-  procedural_db_add_argument (&path_get_points_proc,
+  procedure = procedural_db_init_proc (&path_get_points_proc, 2, 4);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image to list the paths from",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_get_points_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -168,47 +170,47 @@ register_paths_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&path_get_points_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("path-type",
                                                     "path type",
                                                     "The type of the path. Currently only one type (1 = Bezier) is supported",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&path_get_points_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("path-closed",
                                                     "path closed",
                                                     "Return if the path is closed. (0 = path open, 1 = path closed)",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&path_get_points_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("num-path-point-details",
                                                     "num path point details",
                                                     "The number of points returned. Each point is made up of (x, y, pnt_type) of floats.",
                                                     0, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&path_get_points_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_FLOATARRAY,
                                   g_param_spec_pointer ("points-pairs",
                                                         "points pairs",
                                                         "The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL, 3.0 = BEZIER_MOVE). Note all points are returned in pixel resolution.",
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &path_get_points_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * path_set_points
    */
-  procedural_db_init_proc (&path_set_points_proc, 5, 0);
-  procedural_db_add_argument (&path_set_points_proc,
+  procedure = procedural_db_init_proc (&path_set_points_proc, 5, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image to set the paths in",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_set_points_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -216,94 +218,94 @@ register_paths_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_set_points_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("ptype",
                                                 "ptype",
                                                 "The type of the path. Currently only one type (1 = Bezier) is supported.",
                                                 G_MININT32, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_set_points_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("num-path-points",
                                                 "num path points",
                                                 "The number of elements in the array, i.e. the number of points in the path * 3. Each point is made up of (x, y, type) of floats. Currently only the creation of bezier curves is allowed. The type parameter must be set to (1) to indicate a BEZIER type curve. Note that for BEZIER curves, points must be given in the following order: ACCACCAC... If the path is not closed the last control point is missed off. Points consist of three control points (control/anchor/control) so for a curve that is not closed there must be at least two points passed (2 x,y pairs). If (num_path_points/3) % 3 = 0 then the path is assumed to be closed and the points are ACCACCACCACC.",
                                                 0, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_set_points_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOATARRAY,
                               g_param_spec_pointer ("points-pairs",
                                                     "points pairs",
                                                     "The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL, 3.0= BEZIER_MOVE). Note all points are returned in pixel resolution.",
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &path_set_points_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * path_stroke_current
    */
-  procedural_db_init_proc (&path_stroke_current_proc, 1, 0);
-  procedural_db_add_argument (&path_stroke_current_proc,
+  procedure = procedural_db_init_proc (&path_stroke_current_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image which contains the path to stroke",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &path_stroke_current_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * path_get_point_at_dist
    */
-  procedural_db_init_proc (&path_get_point_at_dist_proc, 2, 3);
-  procedural_db_add_argument (&path_get_point_at_dist_proc,
+  procedure = procedural_db_init_proc (&path_get_point_at_dist_proc, 2, 3);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image the paths belongs to",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_get_point_at_dist_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("distance",
                                                    "distance",
                                                    "The distance along the path.",
                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&path_get_point_at_dist_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("x-point",
                                                     "x point",
                                                     "The x position of the point.",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&path_get_point_at_dist_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("y-point",
                                                     "y point",
                                                     "The y position of the point.",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&path_get_point_at_dist_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_FLOAT,
                                   g_param_spec_double ("slope",
                                                        "slope",
                                                        "The slope (dy / dx) at the specified point.",
                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &path_get_point_at_dist_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * path_get_tattoo
    */
-  procedural_db_init_proc (&path_get_tattoo_proc, 2, 1);
-  procedural_db_add_argument (&path_get_tattoo_proc,
+  procedure = procedural_db_init_proc (&path_get_tattoo_proc, 2, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_get_tattoo_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -311,27 +313,27 @@ register_paths_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&path_get_tattoo_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("tattoo",
                                                     "tattoo",
                                                     "The tattoo associated with the named path.",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &path_get_tattoo_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * path_set_tattoo
    */
-  procedural_db_init_proc (&path_set_tattoo_proc, 3, 0);
-  procedural_db_add_argument (&path_set_tattoo_proc,
+  procedure = procedural_db_init_proc (&path_set_tattoo_proc, 3, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_set_tattoo_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -339,34 +341,34 @@ register_paths_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_set_tattoo_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("tattovalue",
                                                 "tattovalue",
                                                 "The tattoo associated with the name path. Only values returned from 'path_get_tattoo' should be used here",
                                                 G_MININT32, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &path_set_tattoo_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * get_path_by_tattoo
    */
-  procedural_db_init_proc (&get_path_by_tattoo_proc, 2, 1);
-  procedural_db_add_argument (&get_path_by_tattoo_proc,
+  procedure = procedural_db_init_proc (&get_path_by_tattoo_proc, 2, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&get_path_by_tattoo_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("tattoo",
                                                 "tattoo",
                                                 "The tattoo of the required path.",
                                                 G_MININT32, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&get_path_by_tattoo_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("name",
                                                           "name",
@@ -374,20 +376,20 @@ register_paths_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &get_path_by_tattoo_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * path_get_locked
    */
-  procedural_db_init_proc (&path_get_locked_proc, 2, 1);
-  procedural_db_add_argument (&path_get_locked_proc,
+  procedure = procedural_db_init_proc (&path_get_locked_proc, 2, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_get_locked_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -395,27 +397,27 @@ register_paths_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&path_get_locked_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("locked",
                                                         "locked",
                                                         "TRUE if the path is locked, FALSE otherwise",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &path_get_locked_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * path_set_locked
    */
-  procedural_db_init_proc (&path_set_locked_proc, 3, 0);
-  procedural_db_add_argument (&path_set_locked_proc,
+  procedure = procedural_db_init_proc (&path_set_locked_proc, 3, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_set_locked_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -423,27 +425,27 @@ register_paths_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_set_locked_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("locked",
                                                     "locked",
                                                     "Whether the path is locked",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &path_set_locked_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * path_to_selection
    */
-  procedural_db_init_proc (&path_to_selection_proc, 7, 0);
-  procedural_db_add_argument (&path_to_selection_proc,
+  procedure = procedural_db_init_proc (&path_to_selection_proc, 7, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_to_selection_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -451,7 +453,7 @@ register_paths_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_to_selection_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("op",
                                                  "op",
@@ -459,48 +461,48 @@ register_paths_procs (Gimp *gimp)
                                                  GIMP_TYPE_CHANNEL_OPS,
                                                  GIMP_CHANNEL_OP_ADD,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_to_selection_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("antialias",
                                                     "antialias",
                                                     "Antialias selection.",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_to_selection_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("feather",
                                                     "feather",
                                                     "Feather selection.",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_to_selection_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("feather-radius-x",
                                                    "feather radius x",
                                                    "Feather radius x.",
                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_to_selection_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("feather-radius-y",
                                                    "feather radius y",
                                                    "Feather radius y.",
                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &path_to_selection_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * path_import
    */
-  procedural_db_init_proc (&path_import_proc, 4, 0);
-  procedural_db_add_argument (&path_import_proc,
+  procedure = procedural_db_init_proc (&path_import_proc, 4, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_import_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("filename",
                                                       "filename",
@@ -508,34 +510,34 @@ register_paths_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_import_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("merge",
                                                     "merge",
                                                     "Merge paths into a single vectors object.",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_import_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("scale",
                                                     "scale",
                                                     "Scale the SVG to image dimensions.",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &path_import_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * path_import_string
    */
-  procedural_db_init_proc (&path_import_string_proc, 5, 0);
-  procedural_db_add_argument (&path_import_string_proc,
+  procedure = procedural_db_init_proc (&path_import_string_proc, 5, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_import_string_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("string",
                                                       "string",
@@ -543,28 +545,28 @@ register_paths_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_import_string_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("length",
                                                 "length",
                                                 "Number of bytes in string or -1 if the string is NULL terminated.",
                                                 G_MININT32, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_import_string_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("merge",
                                                     "merge",
                                                     "Merge paths into a single vectors object.",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&path_import_string_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("scale",
                                                     "scale",
                                                     "Scale the SVG to image dimensions.",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &path_import_string_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

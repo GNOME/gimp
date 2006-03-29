@@ -37,11 +37,13 @@ static ProcRecord brushes_set_popup_proc;
 void
 register_brush_select_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * brushes_popup
    */
-  procedural_db_init_proc (&brushes_popup_proc, 6, 0);
-  procedural_db_add_argument (&brushes_popup_proc,
+  procedure = procedural_db_init_proc (&brushes_popup_proc, 6, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("brush-callback",
                                                       "brush callback",
@@ -49,7 +51,7 @@ register_brush_select_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&brushes_popup_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("popup-title",
                                                       "popup title",
@@ -57,7 +59,7 @@ register_brush_select_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&brushes_popup_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("initial-brush",
                                                       "initial brush",
@@ -65,21 +67,21 @@ register_brush_select_procs (Gimp *gimp)
                                                       FALSE, TRUE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&brushes_popup_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("opacity",
                                                    "opacity",
                                                    "The initial opacity of the brush",
                                                    0, 100, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&brushes_popup_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("spacing",
                                                 "spacing",
                                                 "The initial spacing of the brush (if < 0 then use brush default spacing)",
                                                 G_MININT32, 1000, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&brushes_popup_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("paint-mode",
                                                  "paint mode",
@@ -87,13 +89,13 @@ register_brush_select_procs (Gimp *gimp)
                                                  GIMP_TYPE_LAYER_MODE_EFFECTS,
                                                  GIMP_NORMAL_MODE,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brushes_popup_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * brushes_close_popup
    */
-  procedural_db_init_proc (&brushes_close_popup_proc, 1, 0);
-  procedural_db_add_argument (&brushes_close_popup_proc,
+  procedure = procedural_db_init_proc (&brushes_close_popup_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("brush-callback",
                                                       "brush callback",
@@ -101,13 +103,13 @@ register_brush_select_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brushes_close_popup_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * brushes_set_popup
    */
-  procedural_db_init_proc (&brushes_set_popup_proc, 5, 0);
-  procedural_db_add_argument (&brushes_set_popup_proc,
+  procedure = procedural_db_init_proc (&brushes_set_popup_proc, 5, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("brush-callback",
                                                       "brush callback",
@@ -115,7 +117,7 @@ register_brush_select_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&brushes_set_popup_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("brush-name",
                                                       "brush name",
@@ -123,21 +125,21 @@ register_brush_select_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&brushes_set_popup_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("opacity",
                                                    "opacity",
                                                    "The initial opacity of the brush",
                                                    0, 100, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&brushes_set_popup_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("spacing",
                                                 "spacing",
                                                 "The initial spacing of the brush (if < 0 then use brush default spacing)",
                                                 G_MININT32, 1000, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&brushes_set_popup_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("paint-mode",
                                                  "paint mode",
@@ -145,7 +147,7 @@ register_brush_select_procs (Gimp *gimp)
                                                  GIMP_TYPE_LAYER_MODE_EFFECTS,
                                                  GIMP_NORMAL_MODE,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brushes_set_popup_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

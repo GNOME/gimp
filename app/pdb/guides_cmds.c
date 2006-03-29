@@ -41,126 +41,128 @@ static ProcRecord image_get_guide_position_proc;
 void
 register_guides_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * image_add_hguide
    */
-  procedural_db_init_proc (&image_add_hguide_proc, 2, 1);
-  procedural_db_add_argument (&image_add_hguide_proc,
+  procedure = procedural_db_init_proc (&image_add_hguide_proc, 2, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&image_add_hguide_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("yposition",
                                                 "yposition",
                                                 "The guide's y-offset from top of image",
                                                 0, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&image_add_hguide_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_uint ("guide",
                                                      "guide",
                                                      "The new guide",
                                                      1, G_MAXUINT32, 1,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &image_add_hguide_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * image_add_vguide
    */
-  procedural_db_init_proc (&image_add_vguide_proc, 2, 1);
-  procedural_db_add_argument (&image_add_vguide_proc,
+  procedure = procedural_db_init_proc (&image_add_vguide_proc, 2, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&image_add_vguide_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("xposition",
                                                 "xposition",
                                                 "The guide's x-offset from left of image",
                                                 0, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&image_add_vguide_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_uint ("guide",
                                                      "guide",
                                                      "The new guide",
                                                      1, G_MAXUINT32, 1,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &image_add_vguide_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * image_delete_guide
    */
-  procedural_db_init_proc (&image_delete_guide_proc, 2, 0);
-  procedural_db_add_argument (&image_delete_guide_proc,
+  procedure = procedural_db_init_proc (&image_delete_guide_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&image_delete_guide_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_uint ("guide",
                                                  "guide",
                                                  "The ID of the guide to be removed",
                                                  1, G_MAXUINT32, 1,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &image_delete_guide_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * image_find_next_guide
    */
-  procedural_db_init_proc (&image_find_next_guide_proc, 2, 1);
-  procedural_db_add_argument (&image_find_next_guide_proc,
+  procedure = procedural_db_init_proc (&image_find_next_guide_proc, 2, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&image_find_next_guide_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_uint ("guide",
                                                  "guide",
                                                  "The ID of the current guide (0 if first invocation)",
                                                  1, G_MAXUINT32, 1,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&image_find_next_guide_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_uint ("next-guide",
                                                      "next guide",
                                                      "The next guide's ID",
                                                      1, G_MAXUINT32, 1,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &image_find_next_guide_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * image_get_guide_orientation
    */
-  procedural_db_init_proc (&image_get_guide_orientation_proc, 2, 1);
-  procedural_db_add_argument (&image_get_guide_orientation_proc,
+  procedure = procedural_db_init_proc (&image_get_guide_orientation_proc, 2, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&image_get_guide_orientation_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_uint ("guide",
                                                  "guide",
                                                  "The guide",
                                                  1, G_MAXUINT32, 1,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&image_get_guide_orientation_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_enum ("orientation",
                                                      "orientation",
@@ -168,34 +170,34 @@ register_guides_procs (Gimp *gimp)
                                                      GIMP_TYPE_ORIENTATION_TYPE,
                                                      GIMP_ORIENTATION_HORIZONTAL,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &image_get_guide_orientation_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * image_get_guide_position
    */
-  procedural_db_init_proc (&image_get_guide_position_proc, 2, 1);
-  procedural_db_add_argument (&image_get_guide_position_proc,
+  procedure = procedural_db_init_proc (&image_get_guide_position_proc, 2, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&image_get_guide_position_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_uint ("guide",
                                                  "guide",
                                                  "The guide",
                                                  1, G_MAXUINT32, 1,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&image_get_guide_position_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("position",
                                                     "position",
                                                     "The guide's position relative to top or left of image",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &image_get_guide_position_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

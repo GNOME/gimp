@@ -45,17 +45,19 @@ static ProcRecord palettes_get_palette_entry_proc;
 void
 register_palettes_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * palettes_refresh
    */
-  procedural_db_init_proc (&palettes_refresh_proc, 0, 0);
-  procedural_db_register (gimp, &palettes_refresh_proc);
+  procedure = procedural_db_init_proc (&palettes_refresh_proc, 0, 0);
+  procedural_db_register (gimp, procedure);
 
   /*
    * palettes_get_list
    */
-  procedural_db_init_proc (&palettes_get_list_proc, 1, 2);
-  procedural_db_add_argument (&palettes_get_list_proc,
+  procedure = procedural_db_init_proc (&palettes_get_list_proc, 1, 2);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("filter",
                                                       "filter",
@@ -63,26 +65,26 @@ register_palettes_procs (Gimp *gimp)
                                                       FALSE, TRUE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&palettes_get_list_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("num-palettes",
                                                     "num palettes",
                                                     "The number of palettes in the list",
                                                     0, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&palettes_get_list_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRINGARRAY,
                                   g_param_spec_pointer ("palette-list",
                                                         "palette list",
                                                         "The list of palette names",
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &palettes_get_list_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * palettes_get_palette
    */
-  procedural_db_init_proc (&palettes_get_palette_proc, 0, 2);
-  procedural_db_add_return_value (&palettes_get_palette_proc,
+  procedure = procedural_db_init_proc (&palettes_get_palette_proc, 0, 2);
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("name",
                                                           "name",
@@ -90,20 +92,20 @@ register_palettes_procs (Gimp *gimp)
                                                           FALSE, TRUE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&palettes_get_palette_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("num-colors",
                                                     "num colors",
                                                     "The palette num_colors",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &palettes_get_palette_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * palettes_get_palette_entry
    */
-  procedural_db_init_proc (&palettes_get_palette_entry_proc, 2, 3);
-  procedural_db_add_argument (&palettes_get_palette_entry_proc,
+  procedure = procedural_db_init_proc (&palettes_get_palette_entry_proc, 2, 3);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -111,14 +113,14 @@ register_palettes_procs (Gimp *gimp)
                                                       FALSE, TRUE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&palettes_get_palette_entry_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("entry-num",
                                                 "entry num",
                                                 "The entry to retrieve",
                                                 G_MININT32, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&palettes_get_palette_entry_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("actual-name",
                                                           "actual name",
@@ -126,21 +128,21 @@ register_palettes_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&palettes_get_palette_entry_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("num-colors",
                                                     "num colors",
                                                     "The palette num_colors",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&palettes_get_palette_entry_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_COLOR,
                                   gimp_param_spec_rgb ("color",
                                                        "color",
                                                        "The color requested",
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &palettes_get_palette_entry_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

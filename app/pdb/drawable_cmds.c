@@ -81,11 +81,13 @@ static ProcRecord drawable_foreground_extract_proc;
 void
 register_drawable_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * drawable_delete
    */
-  procedural_db_init_proc (&drawable_delete_proc, 1, 0);
-  procedural_db_add_argument (&drawable_delete_proc,
+  procedure = procedural_db_init_proc (&drawable_delete_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -93,13 +95,13 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_delete_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_is_layer
    */
-  procedural_db_init_proc (&drawable_is_layer_proc, 1, 1);
-  procedural_db_add_argument (&drawable_is_layer_proc,
+  procedure = procedural_db_init_proc (&drawable_is_layer_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -107,20 +109,20 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_is_layer_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("layer",
                                                         "layer",
                                                         "TRUE if the drawable is a layer",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_is_layer_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_is_layer_mask
    */
-  procedural_db_init_proc (&drawable_is_layer_mask_proc, 1, 1);
-  procedural_db_add_argument (&drawable_is_layer_mask_proc,
+  procedure = procedural_db_init_proc (&drawable_is_layer_mask_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -128,20 +130,20 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_is_layer_mask_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("layer-mask",
                                                         "layer mask",
                                                         "TRUE if the drawable is a layer mask",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_is_layer_mask_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_is_channel
    */
-  procedural_db_init_proc (&drawable_is_channel_proc, 1, 1);
-  procedural_db_add_argument (&drawable_is_channel_proc,
+  procedure = procedural_db_init_proc (&drawable_is_channel_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -149,20 +151,20 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_is_channel_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("channel",
                                                         "channel",
                                                         "TRUE if the drawable is a channel",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_is_channel_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_type
    */
-  procedural_db_init_proc (&drawable_type_proc, 1, 1);
-  procedural_db_add_argument (&drawable_type_proc,
+  procedure = procedural_db_init_proc (&drawable_type_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -170,7 +172,7 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_type_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_enum ("type",
                                                      "type",
@@ -178,13 +180,13 @@ register_drawable_procs (Gimp *gimp)
                                                      GIMP_TYPE_IMAGE_TYPE,
                                                      GIMP_RGB_IMAGE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_type_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_type_with_alpha
    */
-  procedural_db_init_proc (&drawable_type_with_alpha_proc, 1, 1);
-  procedural_db_add_argument (&drawable_type_with_alpha_proc,
+  procedure = procedural_db_init_proc (&drawable_type_with_alpha_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -192,7 +194,7 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_type_with_alpha_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_enum ("type-with-alpha",
                                                      "type with alpha",
@@ -200,13 +202,13 @@ register_drawable_procs (Gimp *gimp)
                                                      GIMP_TYPE_IMAGE_TYPE,
                                                      GIMP_RGB_IMAGE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_type_with_alpha_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_has_alpha
    */
-  procedural_db_init_proc (&drawable_has_alpha_proc, 1, 1);
-  procedural_db_add_argument (&drawable_has_alpha_proc,
+  procedure = procedural_db_init_proc (&drawable_has_alpha_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -214,20 +216,20 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_has_alpha_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("has-alpha",
                                                         "has alpha",
                                                         "Does the drawable have an alpha channel?",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_has_alpha_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_is_rgb
    */
-  procedural_db_init_proc (&drawable_is_rgb_proc, 1, 1);
-  procedural_db_add_argument (&drawable_is_rgb_proc,
+  procedure = procedural_db_init_proc (&drawable_is_rgb_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -235,20 +237,20 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_is_rgb_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("is-rgb",
                                                         "is rgb",
                                                         "TRUE if the drawable is an RGB type",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_is_rgb_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_is_gray
    */
-  procedural_db_init_proc (&drawable_is_gray_proc, 1, 1);
-  procedural_db_add_argument (&drawable_is_gray_proc,
+  procedure = procedural_db_init_proc (&drawable_is_gray_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -256,20 +258,20 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_is_gray_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("is-gray",
                                                         "is gray",
                                                         "TRUE if the drawable is a grayscale type",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_is_gray_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_is_indexed
    */
-  procedural_db_init_proc (&drawable_is_indexed_proc, 1, 1);
-  procedural_db_add_argument (&drawable_is_indexed_proc,
+  procedure = procedural_db_init_proc (&drawable_is_indexed_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -277,20 +279,20 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_is_indexed_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("is-indexed",
                                                         "is indexed",
                                                         "TRUE if the drawable is an indexed type",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_is_indexed_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_bpp
    */
-  procedural_db_init_proc (&drawable_bpp_proc, 1, 1);
-  procedural_db_add_argument (&drawable_bpp_proc,
+  procedure = procedural_db_init_proc (&drawable_bpp_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -298,20 +300,20 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_bpp_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("bpp",
                                                     "bpp",
                                                     "Bytes per pixel",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_bpp_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_width
    */
-  procedural_db_init_proc (&drawable_width_proc, 1, 1);
-  procedural_db_add_argument (&drawable_width_proc,
+  procedure = procedural_db_init_proc (&drawable_width_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -319,20 +321,20 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_width_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("width",
                                                     "width",
                                                     "Width of drawable",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_width_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_height
    */
-  procedural_db_init_proc (&drawable_height_proc, 1, 1);
-  procedural_db_add_argument (&drawable_height_proc,
+  procedure = procedural_db_init_proc (&drawable_height_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -340,20 +342,20 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_height_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("height",
                                                     "height",
                                                     "Height of drawable",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_height_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_offsets
    */
-  procedural_db_init_proc (&drawable_offsets_proc, 1, 2);
-  procedural_db_add_argument (&drawable_offsets_proc,
+  procedure = procedural_db_init_proc (&drawable_offsets_proc, 1, 2);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -361,27 +363,27 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_offsets_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("offset-x",
                                                     "offset x",
                                                     "x offset of drawable",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_offsets_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("offset-y",
                                                     "offset y",
                                                     "y offset of drawable",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_offsets_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_get_image
    */
-  procedural_db_init_proc (&drawable_get_image_proc, 1, 1);
-  procedural_db_add_argument (&drawable_get_image_proc,
+  procedure = procedural_db_init_proc (&drawable_get_image_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -389,20 +391,20 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_get_image_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_IMAGE,
                                   gimp_param_spec_image_id ("image",
                                                             "image",
                                                             "The drawable's image",
                                                             gimp,
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_get_image_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_set_image
    */
-  procedural_db_init_proc (&drawable_set_image_proc, 2, 0);
-  procedural_db_add_argument (&drawable_set_image_proc,
+  procedure = procedural_db_init_proc (&drawable_set_image_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -410,20 +412,20 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_set_image_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_set_image_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_get_name
    */
-  procedural_db_init_proc (&drawable_get_name_proc, 1, 1);
-  procedural_db_add_argument (&drawable_get_name_proc,
+  procedure = procedural_db_init_proc (&drawable_get_name_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -431,7 +433,7 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_get_name_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("name",
                                                           "name",
@@ -439,13 +441,13 @@ register_drawable_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_get_name_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_set_name
    */
-  procedural_db_init_proc (&drawable_set_name_proc, 2, 0);
-  procedural_db_add_argument (&drawable_set_name_proc,
+  procedure = procedural_db_init_proc (&drawable_set_name_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -453,7 +455,7 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_set_name_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -461,13 +463,13 @@ register_drawable_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_set_name_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_get_visible
    */
-  procedural_db_init_proc (&drawable_get_visible_proc, 1, 1);
-  procedural_db_add_argument (&drawable_get_visible_proc,
+  procedure = procedural_db_init_proc (&drawable_get_visible_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -475,20 +477,20 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_get_visible_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("visible",
                                                         "visible",
                                                         "The drawable visibility",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_get_visible_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_set_visible
    */
-  procedural_db_init_proc (&drawable_set_visible_proc, 2, 0);
-  procedural_db_add_argument (&drawable_set_visible_proc,
+  procedure = procedural_db_init_proc (&drawable_set_visible_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -496,20 +498,20 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_set_visible_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("visible",
                                                     "visible",
                                                     "The new drawable visibility",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_set_visible_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_get_linked
    */
-  procedural_db_init_proc (&drawable_get_linked_proc, 1, 1);
-  procedural_db_add_argument (&drawable_get_linked_proc,
+  procedure = procedural_db_init_proc (&drawable_get_linked_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -517,20 +519,20 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_get_linked_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("linked",
                                                         "linked",
                                                         "The drawable linked state (for moves)",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_get_linked_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_set_linked
    */
-  procedural_db_init_proc (&drawable_set_linked_proc, 2, 0);
-  procedural_db_add_argument (&drawable_set_linked_proc,
+  procedure = procedural_db_init_proc (&drawable_set_linked_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -538,20 +540,20 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_set_linked_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("linked",
                                                     "linked",
                                                     "The new drawable linked state",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_set_linked_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_get_tattoo
    */
-  procedural_db_init_proc (&drawable_get_tattoo_proc, 1, 1);
-  procedural_db_add_argument (&drawable_get_tattoo_proc,
+  procedure = procedural_db_init_proc (&drawable_get_tattoo_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -559,20 +561,20 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_get_tattoo_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_uint ("tattoo",
                                                      "tattoo",
                                                      "The drawable tattoo",
                                                      1, G_MAXUINT32, 1,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_get_tattoo_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_set_tattoo
    */
-  procedural_db_init_proc (&drawable_set_tattoo_proc, 2, 0);
-  procedural_db_add_argument (&drawable_set_tattoo_proc,
+  procedure = procedural_db_init_proc (&drawable_set_tattoo_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -580,20 +582,20 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_set_tattoo_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_uint ("tattoo",
                                                  "tattoo",
                                                  "The new drawable tattoo",
                                                  1, G_MAXUINT32, 1,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_set_tattoo_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_mask_bounds
    */
-  procedural_db_init_proc (&drawable_mask_bounds_proc, 1, 5);
-  procedural_db_add_argument (&drawable_mask_bounds_proc,
+  procedure = procedural_db_init_proc (&drawable_mask_bounds_proc, 1, 5);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -601,48 +603,48 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_mask_bounds_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("non-empty",
                                                         "non empty",
                                                         "TRUE if there is a selection",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_mask_bounds_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("x1",
                                                     "x1",
                                                     "x coordinate of the upper left corner of selection bounds",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_mask_bounds_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("y1",
                                                     "y1",
                                                     "y coordinate of the upper left corner of selection bounds",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_mask_bounds_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("x2",
                                                     "x2",
                                                     "x coordinate of the lower right corner of selection bounds",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_mask_bounds_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("y2",
                                                     "y2",
                                                     "y coordinate of the lower right corner of selection bounds",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_mask_bounds_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_mask_intersect
    */
-  procedural_db_init_proc (&drawable_mask_intersect_proc, 1, 5);
-  procedural_db_add_argument (&drawable_mask_intersect_proc,
+  procedure = procedural_db_init_proc (&drawable_mask_intersect_proc, 1, 5);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -650,48 +652,48 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_mask_intersect_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("non-empty",
                                                         "non empty",
                                                         "TRUE if the returned area is not empty",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_mask_intersect_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("x",
                                                     "x",
                                                     "x coordinate of the upper left corner of the intersection",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_mask_intersect_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("y",
                                                     "y",
                                                     "y coordinate of the upper left corner of the intersection",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_mask_intersect_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("width",
                                                     "width",
                                                     "width of the intersection",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_mask_intersect_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("height",
                                                     "height",
                                                     "height of the intersection",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_mask_intersect_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_merge_shadow
    */
-  procedural_db_init_proc (&drawable_merge_shadow_proc, 2, 0);
-  procedural_db_add_argument (&drawable_merge_shadow_proc,
+  procedure = procedural_db_init_proc (&drawable_merge_shadow_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -699,20 +701,20 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_merge_shadow_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("undo",
                                                     "undo",
                                                     "Push merge to undo stack?",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_merge_shadow_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_update
    */
-  procedural_db_init_proc (&drawable_update_proc, 5, 0);
-  procedural_db_add_argument (&drawable_update_proc,
+  procedure = procedural_db_init_proc (&drawable_update_proc, 5, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -720,41 +722,41 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_update_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("x",
                                                 "x",
                                                 "x coordinate of upper left corner of update region",
                                                 G_MININT32, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_update_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("y",
                                                 "y",
                                                 "y coordinate of upper left corner of update region",
                                                 G_MININT32, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_update_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("width",
                                                 "width",
                                                 "Width of update region",
                                                 G_MININT32, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_update_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("height",
                                                 "height",
                                                 "Height of update region",
                                                 G_MININT32, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_update_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_get_pixel
    */
-  procedural_db_init_proc (&drawable_get_pixel_proc, 3, 2);
-  procedural_db_add_argument (&drawable_get_pixel_proc,
+  procedure = procedural_db_init_proc (&drawable_get_pixel_proc, 3, 2);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -762,40 +764,40 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_get_pixel_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("x-coord",
                                                 "x coord",
                                                 "The x coordinate",
                                                 0, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_get_pixel_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("y-coord",
                                                 "y coord",
                                                 "The y coordinate",
                                                 0, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_get_pixel_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("num-channels",
                                                     "num channels",
                                                     "The number of channels for the pixel",
                                                     0, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  procedural_db_add_return_value (&drawable_get_pixel_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT8ARRAY,
                                   g_param_spec_pointer ("pixel",
                                                         "pixel",
                                                         "The pixel value",
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_get_pixel_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_set_pixel
    */
-  procedural_db_init_proc (&drawable_set_pixel_proc, 5, 0);
-  procedural_db_add_argument (&drawable_set_pixel_proc,
+  procedure = procedural_db_init_proc (&drawable_set_pixel_proc, 5, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -803,40 +805,40 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_set_pixel_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("x-coord",
                                                 "x coord",
                                                 "The x coordinate",
                                                 0, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_set_pixel_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("y-coord",
                                                 "y coord",
                                                 "The y coordinate",
                                                 0, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_set_pixel_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("num-channels",
                                                 "num channels",
                                                 "The number of channels for the pixel",
                                                 0, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  procedural_db_add_argument (&drawable_set_pixel_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT8ARRAY,
                               g_param_spec_pointer ("pixel",
                                                     "pixel",
                                                     "The pixel value",
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_set_pixel_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_fill
    */
-  procedural_db_init_proc (&drawable_fill_proc, 2, 0);
-  procedural_db_add_argument (&drawable_fill_proc,
+  procedure = procedural_db_init_proc (&drawable_fill_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -844,7 +846,7 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_fill_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("fill-type",
                                                  "fill type",
@@ -852,13 +854,13 @@ register_drawable_procs (Gimp *gimp)
                                                  GIMP_TYPE_FILL_TYPE,
                                                  GIMP_FOREGROUND_FILL,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_fill_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_offset
    */
-  procedural_db_init_proc (&drawable_offset_proc, 5, 0);
-  procedural_db_add_argument (&drawable_offset_proc,
+  procedure = procedural_db_init_proc (&drawable_offset_proc, 5, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -866,14 +868,14 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_offset_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("wrap-around",
                                                     "wrap around",
                                                     "wrap image around or fill vacated regions",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_offset_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("fill-type",
                                                  "fill type",
@@ -881,27 +883,27 @@ register_drawable_procs (Gimp *gimp)
                                                  GIMP_TYPE_OFFSET_TYPE,
                                                  GIMP_OFFSET_BACKGROUND,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_offset_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("offset-x",
                                                 "offset x",
                                                 "offset by this amount in X direction",
                                                 G_MININT32, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_offset_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("offset-y",
                                                 "offset y",
                                                 "offset by this amount in Y direction",
                                                 G_MININT32, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_offset_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_thumbnail
    */
-  procedural_db_init_proc (&drawable_thumbnail_proc, 3, 5);
-  procedural_db_add_argument (&drawable_thumbnail_proc,
+  procedure = procedural_db_init_proc (&drawable_thumbnail_proc, 3, 5);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -909,61 +911,61 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_thumbnail_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("width",
                                                 "width",
                                                 "The requested thumbnail width",
                                                 1, 512, 1,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_thumbnail_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("height",
                                                 "height",
                                                 "The requested thumbnail height",
                                                 1, 512, 1,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_thumbnail_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("actual-width",
                                                     "actual width",
                                                     "The previews width",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_thumbnail_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("actual-height",
                                                     "actual height",
                                                     "The previews height",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_thumbnail_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("bpp",
                                                     "bpp",
                                                     "The previews bpp",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_thumbnail_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("thumbnail-data-count",
                                                     "thumbnail data count",
                                                     "The number of bytes in thumbnail data",
                                                     0, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_thumbnail_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT8ARRAY,
                                   g_param_spec_pointer ("thumbnail-data",
                                                         "thumbnail data",
                                                         "The thumbnail data",
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_thumbnail_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_sub_thumbnail
    */
-  procedural_db_init_proc (&drawable_sub_thumbnail_proc, 7, 5);
-  procedural_db_add_argument (&drawable_sub_thumbnail_proc,
+  procedure = procedural_db_init_proc (&drawable_sub_thumbnail_proc, 7, 5);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -971,89 +973,89 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_sub_thumbnail_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("src-x",
                                                 "src x",
                                                 "The x coordinate of the area",
                                                 0, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_sub_thumbnail_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("src-y",
                                                 "src y",
                                                 "The y coordinate of the area",
                                                 0, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_sub_thumbnail_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("src-width",
                                                 "src width",
                                                 "The width of the area",
                                                 1, G_MAXINT32, 1,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_sub_thumbnail_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("src-height",
                                                 "src height",
                                                 "The height of the area",
                                                 1, G_MAXINT32, 1,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_sub_thumbnail_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("dest-width",
                                                 "dest width",
                                                 "The thumbnail width",
                                                 1, 512, 1,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_sub_thumbnail_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("dest-height",
                                                 "dest height",
                                                 "The thumbnail height",
                                                 1, 512, 1,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_sub_thumbnail_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("width",
                                                     "width",
                                                     "The previews width",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_sub_thumbnail_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("height",
                                                     "height",
                                                     "The previews height",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_sub_thumbnail_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("bpp",
                                                     "bpp",
                                                     "The previews bpp",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_sub_thumbnail_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("thumbnail-data-count",
                                                     "thumbnail data count",
                                                     "The number of bytes in thumbnail data",
                                                     0, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&drawable_sub_thumbnail_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT8ARRAY,
                                   g_param_spec_pointer ("thumbnail-data",
                                                         "thumbnail data",
                                                         "The thumbnail data",
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_sub_thumbnail_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * drawable_foreground_extract
    */
-  procedural_db_init_proc (&drawable_foreground_extract_proc, 3, 0);
-  procedural_db_add_argument (&drawable_foreground_extract_proc,
+  procedure = procedural_db_init_proc (&drawable_foreground_extract_proc, 3, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -1061,7 +1063,7 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_foreground_extract_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("mode",
                                                  "mode",
@@ -1069,7 +1071,7 @@ register_drawable_procs (Gimp *gimp)
                                                  GIMP_TYPE_FOREGROUND_EXTRACT_MODE,
                                                  GIMP_FOREGROUND_EXTRACT_SIOX,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&drawable_foreground_extract_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("mask",
                                                        "mask",
@@ -1077,7 +1079,7 @@ register_drawable_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &drawable_foreground_extract_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

@@ -55,11 +55,13 @@ static ProcRecord smudge_default_proc;
 void
 register_paint_tools_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * airbrush
    */
-  procedural_db_init_proc (&airbrush_proc, 4, 0);
-  procedural_db_add_argument (&airbrush_proc,
+  procedure = procedural_db_init_proc (&airbrush_proc, 4, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -67,33 +69,33 @@ register_paint_tools_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&airbrush_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("pressure",
                                                    "pressure",
                                                    "The pressure of the airbrush strokes (0 <= pressure <= 100)",
                                                    0, 100, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&airbrush_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("num-strokes",
                                                 "num strokes",
                                                 "Number of stroke control points (count each coordinate as 2 points)",
                                                 2, G_MAXINT32, 2,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&airbrush_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOATARRAY,
                               g_param_spec_pointer ("strokes",
                                                     "strokes",
                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &airbrush_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * airbrush_default
    */
-  procedural_db_init_proc (&airbrush_default_proc, 3, 0);
-  procedural_db_add_argument (&airbrush_default_proc,
+  procedure = procedural_db_init_proc (&airbrush_default_proc, 3, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -101,26 +103,26 @@ register_paint_tools_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&airbrush_default_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("num-strokes",
                                                 "num strokes",
                                                 "Number of stroke control points (count each coordinate as 2 points)",
                                                 2, G_MAXINT32, 2,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&airbrush_default_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOATARRAY,
                               g_param_spec_pointer ("strokes",
                                                     "strokes",
                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &airbrush_default_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * clone
    */
-  procedural_db_init_proc (&clone_proc, 7, 0);
-  procedural_db_add_argument (&clone_proc,
+  procedure = procedural_db_init_proc (&clone_proc, 7, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -128,7 +130,7 @@ register_paint_tools_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&clone_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("src-drawable",
                                                        "src drawable",
@@ -136,7 +138,7 @@ register_paint_tools_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&clone_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("clone-type",
                                                  "clone type",
@@ -144,40 +146,40 @@ register_paint_tools_procs (Gimp *gimp)
                                                  GIMP_TYPE_CLONE_TYPE,
                                                  GIMP_IMAGE_CLONE,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&clone_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("src-x",
                                                    "src x",
                                                    "The x coordinate in the source image",
                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&clone_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("src-y",
                                                    "src y",
                                                    "The y coordinate in the source image",
                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&clone_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("num-strokes",
                                                 "num strokes",
                                                 "Number of stroke control points (count each coordinate as 2 points)",
                                                 2, G_MAXINT32, 2,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&clone_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOATARRAY,
                               g_param_spec_pointer ("strokes",
                                                     "strokes",
                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &clone_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * clone_default
    */
-  procedural_db_init_proc (&clone_default_proc, 3, 0);
-  procedural_db_add_argument (&clone_default_proc,
+  procedure = procedural_db_init_proc (&clone_default_proc, 3, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -185,26 +187,26 @@ register_paint_tools_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&clone_default_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("num-strokes",
                                                 "num strokes",
                                                 "Number of stroke control points (count each coordinate as 2 points)",
                                                 2, G_MAXINT32, 2,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&clone_default_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOATARRAY,
                               g_param_spec_pointer ("strokes",
                                                     "strokes",
                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &clone_default_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * convolve
    */
-  procedural_db_init_proc (&convolve_proc, 5, 0);
-  procedural_db_add_argument (&convolve_proc,
+  procedure = procedural_db_init_proc (&convolve_proc, 5, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -212,14 +214,14 @@ register_paint_tools_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&convolve_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("pressure",
                                                    "pressure",
                                                    "The pressure (0 <= pressure <= 100)",
                                                    0, 100, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&convolve_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("convolve-type",
                                                  "convolve type",
@@ -227,26 +229,26 @@ register_paint_tools_procs (Gimp *gimp)
                                                  GIMP_TYPE_CONVOLVE_TYPE,
                                                  GIMP_BLUR_CONVOLVE,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&convolve_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("num-strokes",
                                                 "num strokes",
                                                 "Number of stroke control points (count each coordinate as 2 points)",
                                                 2, G_MAXINT32, 2,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&convolve_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOATARRAY,
                               g_param_spec_pointer ("strokes",
                                                     "strokes",
                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &convolve_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * convolve_default
    */
-  procedural_db_init_proc (&convolve_default_proc, 3, 0);
-  procedural_db_add_argument (&convolve_default_proc,
+  procedure = procedural_db_init_proc (&convolve_default_proc, 3, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -254,26 +256,26 @@ register_paint_tools_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&convolve_default_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("num-strokes",
                                                 "num strokes",
                                                 "Number of stroke control points (count each coordinate as 2 points)",
                                                 2, G_MAXINT32, 2,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&convolve_default_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOATARRAY,
                               g_param_spec_pointer ("strokes",
                                                     "strokes",
                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &convolve_default_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * dodgeburn
    */
-  procedural_db_init_proc (&dodgeburn_proc, 6, 0);
-  procedural_db_add_argument (&dodgeburn_proc,
+  procedure = procedural_db_init_proc (&dodgeburn_proc, 6, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -281,14 +283,14 @@ register_paint_tools_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&dodgeburn_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("exposure",
                                                    "exposure",
                                                    "The exposure of the strokes (0 <= exposure <= 100)",
                                                    0, 100, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&dodgeburn_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("dodgeburn-type",
                                                  "dodgeburn type",
@@ -296,7 +298,7 @@ register_paint_tools_procs (Gimp *gimp)
                                                  GIMP_TYPE_DODGE_BURN_TYPE,
                                                  GIMP_DODGE,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&dodgeburn_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("dodgeburn-mode",
                                                  "dodgeburn mode",
@@ -304,26 +306,26 @@ register_paint_tools_procs (Gimp *gimp)
                                                  GIMP_TYPE_TRANSFER_MODE,
                                                  GIMP_SHADOWS,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&dodgeburn_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("num-strokes",
                                                 "num strokes",
                                                 "Number of stroke control points (count each coordinate as 2 points)",
                                                 2, G_MAXINT32, 2,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&dodgeburn_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOATARRAY,
                               g_param_spec_pointer ("strokes",
                                                     "strokes",
                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &dodgeburn_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * dodgeburn_default
    */
-  procedural_db_init_proc (&dodgeburn_default_proc, 3, 0);
-  procedural_db_add_argument (&dodgeburn_default_proc,
+  procedure = procedural_db_init_proc (&dodgeburn_default_proc, 3, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -331,26 +333,26 @@ register_paint_tools_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&dodgeburn_default_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("num-strokes",
                                                 "num strokes",
                                                 "Number of stroke control points (count each coordinate as 2 points)",
                                                 2, G_MAXINT32, 2,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&dodgeburn_default_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOATARRAY,
                               g_param_spec_pointer ("strokes",
                                                     "strokes",
                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &dodgeburn_default_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * eraser
    */
-  procedural_db_init_proc (&eraser_proc, 5, 0);
-  procedural_db_add_argument (&eraser_proc,
+  procedure = procedural_db_init_proc (&eraser_proc, 5, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -358,20 +360,20 @@ register_paint_tools_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&eraser_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("num-strokes",
                                                 "num strokes",
                                                 "Number of stroke control points (count each coordinate as 2 points)",
                                                 2, G_MAXINT32, 2,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&eraser_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOATARRAY,
                               g_param_spec_pointer ("strokes",
                                                     "strokes",
                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&eraser_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("hardness",
                                                  "hardness",
@@ -379,7 +381,7 @@ register_paint_tools_procs (Gimp *gimp)
                                                  GIMP_TYPE_BRUSH_APPLICATION_MODE,
                                                  GIMP_BRUSH_HARD,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&eraser_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("method",
                                                  "method",
@@ -387,13 +389,13 @@ register_paint_tools_procs (Gimp *gimp)
                                                  GIMP_TYPE_PAINT_APPLICATION_MODE,
                                                  GIMP_PAINT_CONSTANT,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &eraser_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * eraser_default
    */
-  procedural_db_init_proc (&eraser_default_proc, 3, 0);
-  procedural_db_add_argument (&eraser_default_proc,
+  procedure = procedural_db_init_proc (&eraser_default_proc, 3, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -401,26 +403,26 @@ register_paint_tools_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&eraser_default_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("num-strokes",
                                                 "num strokes",
                                                 "Number of stroke control points (count each coordinate as 2 points)",
                                                 2, G_MAXINT32, 2,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&eraser_default_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOATARRAY,
                               g_param_spec_pointer ("strokes",
                                                     "strokes",
                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &eraser_default_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * paintbrush
    */
-  procedural_db_init_proc (&paintbrush_proc, 6, 0);
-  procedural_db_add_argument (&paintbrush_proc,
+  procedure = procedural_db_init_proc (&paintbrush_proc, 6, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -428,27 +430,27 @@ register_paint_tools_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&paintbrush_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("fade-out",
                                                    "fade out",
                                                    "Fade out parameter (0 <= fade_out)",
                                                    0, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&paintbrush_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("num-strokes",
                                                 "num strokes",
                                                 "Number of stroke control points (count each coordinate as 2 points)",
                                                 2, G_MAXINT32, 2,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&paintbrush_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOATARRAY,
                               g_param_spec_pointer ("strokes",
                                                     "strokes",
                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&paintbrush_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("method",
                                                  "method",
@@ -456,20 +458,20 @@ register_paint_tools_procs (Gimp *gimp)
                                                  GIMP_TYPE_PAINT_APPLICATION_MODE,
                                                  GIMP_PAINT_CONSTANT,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&paintbrush_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("gradient-length",
                                                    "gradient length",
                                                    "Length of gradient to draw (0 <= gradient_length)",
                                                    0, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &paintbrush_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * paintbrush_default
    */
-  procedural_db_init_proc (&paintbrush_default_proc, 3, 0);
-  procedural_db_add_argument (&paintbrush_default_proc,
+  procedure = procedural_db_init_proc (&paintbrush_default_proc, 3, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -477,26 +479,26 @@ register_paint_tools_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&paintbrush_default_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("num-strokes",
                                                 "num strokes",
                                                 "Number of stroke control points (count each coordinate as 2 points)",
                                                 2, G_MAXINT32, 2,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&paintbrush_default_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOATARRAY,
                               g_param_spec_pointer ("strokes",
                                                     "strokes",
                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &paintbrush_default_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * pencil
    */
-  procedural_db_init_proc (&pencil_proc, 3, 0);
-  procedural_db_add_argument (&pencil_proc,
+  procedure = procedural_db_init_proc (&pencil_proc, 3, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -504,26 +506,26 @@ register_paint_tools_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&pencil_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("num-strokes",
                                                 "num strokes",
                                                 "Number of stroke control points (count each coordinate as 2 points)",
                                                 2, G_MAXINT32, 2,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&pencil_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOATARRAY,
                               g_param_spec_pointer ("strokes",
                                                     "strokes",
                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &pencil_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * smudge
    */
-  procedural_db_init_proc (&smudge_proc, 4, 0);
-  procedural_db_add_argument (&smudge_proc,
+  procedure = procedural_db_init_proc (&smudge_proc, 4, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -531,33 +533,33 @@ register_paint_tools_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&smudge_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("pressure",
                                                    "pressure",
                                                    "The pressure of the smudge strokes (0 <= pressure <= 100)",
                                                    0, 100, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&smudge_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("num-strokes",
                                                 "num strokes",
                                                 "Number of stroke control points (count each coordinate as 2 points)",
                                                 2, G_MAXINT32, 2,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&smudge_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOATARRAY,
                               g_param_spec_pointer ("strokes",
                                                     "strokes",
                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &smudge_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * smudge_default
    */
-  procedural_db_init_proc (&smudge_default_proc, 3, 0);
-  procedural_db_add_argument (&smudge_default_proc,
+  procedure = procedural_db_init_proc (&smudge_default_proc, 3, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -565,20 +567,20 @@ register_paint_tools_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&smudge_default_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("num-strokes",
                                                 "num strokes",
                                                 "Number of stroke control points (count each coordinate as 2 points)",
                                                 2, G_MAXINT32, 2,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&smudge_default_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOATARRAY,
                               g_param_spec_pointer ("strokes",
                                                     "strokes",
                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &smudge_default_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

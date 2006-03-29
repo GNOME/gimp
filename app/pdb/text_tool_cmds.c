@@ -42,18 +42,20 @@ static ProcRecord text_get_extents_proc;
 void
 register_text_tool_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * text_fontname
    */
-  procedural_db_init_proc (&text_fontname_proc, 10, 1);
-  procedural_db_add_argument (&text_fontname_proc,
+  procedure = procedural_db_init_proc (&text_fontname_proc, 10, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_fontname_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -61,21 +63,21 @@ register_text_tool_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  procedural_db_add_argument (&text_fontname_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("x",
                                                    "x",
                                                    "The x coordinate for the left of the text bounding box",
                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_fontname_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("y",
                                                    "y",
                                                    "The y coordinate for the top of the text bounding box",
                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_fontname_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("text",
                                                       "text",
@@ -83,28 +85,28 @@ register_text_tool_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_fontname_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("border",
                                                 "border",
                                                 "The size of the border (-1 <= border)",
                                                 -1, G_MAXINT32, -1,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_fontname_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("antialias",
                                                     "antialias",
                                                     "Antialiasing (TRUE or FALSE)",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_fontname_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("size",
                                                    "size",
                                                    "The size of text in either pixels or points",
                                                    0, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_fontname_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("size-type",
                                                  "size type",
@@ -112,7 +114,7 @@ register_text_tool_procs (Gimp *gimp)
                                                  GIMP_TYPE_SIZE_TYPE,
                                                  GIMP_PIXELS,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_fontname_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("fontname",
                                                       "fontname",
@@ -120,7 +122,7 @@ register_text_tool_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&text_fontname_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_LAYER,
                                   gimp_param_spec_item_id ("text-layer",
                                                            "text layer",
@@ -128,13 +130,13 @@ register_text_tool_procs (Gimp *gimp)
                                                            gimp,
                                                            GIMP_TYPE_LAYER,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &text_fontname_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * text_get_extents_fontname
    */
-  procedural_db_init_proc (&text_get_extents_fontname_proc, 4, 4);
-  procedural_db_add_argument (&text_get_extents_fontname_proc,
+  procedure = procedural_db_init_proc (&text_get_extents_fontname_proc, 4, 4);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("text",
                                                       "text",
@@ -142,14 +144,14 @@ register_text_tool_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_get_extents_fontname_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("size",
                                                    "size",
                                                    "The size of text in either pixels or points",
                                                    0, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_get_extents_fontname_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("size-type",
                                                  "size type",
@@ -157,7 +159,7 @@ register_text_tool_procs (Gimp *gimp)
                                                  GIMP_TYPE_SIZE_TYPE,
                                                  GIMP_PIXELS,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_get_extents_fontname_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("fontname",
                                                       "fontname",
@@ -165,48 +167,48 @@ register_text_tool_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&text_get_extents_fontname_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("width",
                                                     "width",
                                                     "The width of the specified font",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&text_get_extents_fontname_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("height",
                                                     "height",
                                                     "The height of the specified font",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&text_get_extents_fontname_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("ascent",
                                                     "ascent",
                                                     "The ascent of the specified font",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&text_get_extents_fontname_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("descent",
                                                     "descent",
                                                     "The descent of the specified font",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &text_get_extents_fontname_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * text
    */
-  procedural_db_init_proc (&text_proc, 17, 1);
-  procedural_db_add_argument (&text_proc,
+  procedure = procedural_db_init_proc (&text_proc, 17, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -214,21 +216,21 @@ register_text_tool_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  procedural_db_add_argument (&text_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("x",
                                                    "x",
                                                    "The x coordinate for the left of the text bounding box",
                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("y",
                                                    "y",
                                                    "The y coordinate for the top of the text bounding box",
                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("text",
                                                       "text",
@@ -236,28 +238,28 @@ register_text_tool_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("border",
                                                 "border",
                                                 "The size of the border (-1 <= border)",
                                                 -1, G_MAXINT32, -1,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("antialias",
                                                     "antialias",
                                                     "Antialiasing (TRUE or FALSE)",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("size",
                                                    "size",
                                                    "The size of text in either pixels or points",
                                                    0, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("size-type",
                                                  "size type",
@@ -265,7 +267,7 @@ register_text_tool_procs (Gimp *gimp)
                                                  GIMP_TYPE_SIZE_TYPE,
                                                  GIMP_PIXELS,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("foundry",
                                                       "foundry",
@@ -273,7 +275,7 @@ register_text_tool_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("family",
                                                       "family",
@@ -281,7 +283,7 @@ register_text_tool_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("weight",
                                                       "weight",
@@ -289,7 +291,7 @@ register_text_tool_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("slant",
                                                       "slant",
@@ -297,7 +299,7 @@ register_text_tool_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("set-width",
                                                       "set width",
@@ -305,7 +307,7 @@ register_text_tool_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("spacing",
                                                       "spacing",
@@ -313,7 +315,7 @@ register_text_tool_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("registry",
                                                       "registry",
@@ -321,7 +323,7 @@ register_text_tool_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("encoding",
                                                       "encoding",
@@ -329,7 +331,7 @@ register_text_tool_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&text_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_LAYER,
                                   gimp_param_spec_item_id ("text-layer",
                                                            "text layer",
@@ -337,13 +339,13 @@ register_text_tool_procs (Gimp *gimp)
                                                            gimp,
                                                            GIMP_TYPE_LAYER,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &text_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * text_get_extents
    */
-  procedural_db_init_proc (&text_get_extents_proc, 11, 4);
-  procedural_db_add_argument (&text_get_extents_proc,
+  procedure = procedural_db_init_proc (&text_get_extents_proc, 11, 4);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("text",
                                                       "text",
@@ -351,14 +353,14 @@ register_text_tool_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_get_extents_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("size",
                                                    "size",
                                                    "The size of text in either pixels or points",
                                                    0, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_get_extents_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("size-type",
                                                  "size type",
@@ -366,7 +368,7 @@ register_text_tool_procs (Gimp *gimp)
                                                  GIMP_TYPE_SIZE_TYPE,
                                                  GIMP_PIXELS,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_get_extents_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("foundry",
                                                       "foundry",
@@ -374,7 +376,7 @@ register_text_tool_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_get_extents_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("family",
                                                       "family",
@@ -382,7 +384,7 @@ register_text_tool_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_get_extents_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("weight",
                                                       "weight",
@@ -390,7 +392,7 @@ register_text_tool_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_get_extents_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("slant",
                                                       "slant",
@@ -398,7 +400,7 @@ register_text_tool_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_get_extents_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("set-width",
                                                       "set width",
@@ -406,7 +408,7 @@ register_text_tool_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_get_extents_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("spacing",
                                                       "spacing",
@@ -414,7 +416,7 @@ register_text_tool_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_get_extents_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("registry",
                                                       "registry",
@@ -422,7 +424,7 @@ register_text_tool_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&text_get_extents_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("encoding",
                                                       "encoding",
@@ -430,35 +432,35 @@ register_text_tool_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&text_get_extents_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("width",
                                                     "width",
                                                     "The width of the specified font",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&text_get_extents_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("height",
                                                     "height",
                                                     "The height of the specified font",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&text_get_extents_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("ascent",
                                                     "ascent",
                                                     "The ascent of the specified font",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&text_get_extents_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("descent",
                                                     "descent",
                                                     "The descent of the specified font",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &text_get_extents_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

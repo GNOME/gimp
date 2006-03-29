@@ -43,11 +43,13 @@ static ProcRecord progress_cancel_proc;
 void
 register_progress_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * progress_init
    */
-  procedural_db_init_proc (&progress_init_proc, 2, 0);
-  procedural_db_add_argument (&progress_init_proc,
+  procedure = procedural_db_init_proc (&progress_init_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("message",
                                                       "message",
@@ -55,39 +57,39 @@ register_progress_procs (Gimp *gimp)
                                                       FALSE, TRUE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&progress_init_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DISPLAY,
                               gimp_param_spec_display_id ("gdisplay",
                                                           "gdisplay",
                                                           "GimpDisplay to update progressbar in, or -1 for a seperate window",
                                                           gimp,
                                                           GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  procedural_db_register (gimp, &progress_init_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * progress_update
    */
-  procedural_db_init_proc (&progress_update_proc, 1, 0);
-  procedural_db_add_argument (&progress_update_proc,
+  procedure = procedural_db_init_proc (&progress_update_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("percentage",
                                                    "percentage",
                                                    "Percentage of progress completed which must be between 0.0 and 1.0",
                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &progress_update_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * progress_pulse
    */
-  procedural_db_init_proc (&progress_pulse_proc, 0, 0);
-  procedural_db_register (gimp, &progress_pulse_proc);
+  procedure = procedural_db_init_proc (&progress_pulse_proc, 0, 0);
+  procedural_db_register (gimp, procedure);
 
   /*
    * progress_set_text
    */
-  procedural_db_init_proc (&progress_set_text_proc, 1, 0);
-  procedural_db_add_argument (&progress_set_text_proc,
+  procedure = procedural_db_init_proc (&progress_set_text_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("message",
                                                       "message",
@@ -95,26 +97,26 @@ register_progress_procs (Gimp *gimp)
                                                       FALSE, TRUE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &progress_set_text_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * progress_get_window_handle
    */
-  procedural_db_init_proc (&progress_get_window_handle_proc, 0, 1);
-  procedural_db_add_return_value (&progress_get_window_handle_proc,
+  procedure = procedural_db_init_proc (&progress_get_window_handle_proc, 0, 1);
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("window",
                                                     "window",
                                                     "The progress bar's toplevel window",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &progress_get_window_handle_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * progress_install
    */
-  procedural_db_init_proc (&progress_install_proc, 1, 0);
-  procedural_db_add_argument (&progress_install_proc,
+  procedure = procedural_db_init_proc (&progress_install_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("progress-callback",
                                                       "progress callback",
@@ -122,13 +124,13 @@ register_progress_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &progress_install_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * progress_uninstall
    */
-  procedural_db_init_proc (&progress_uninstall_proc, 1, 0);
-  procedural_db_add_argument (&progress_uninstall_proc,
+  procedure = procedural_db_init_proc (&progress_uninstall_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("progress-callback",
                                                       "progress callback",
@@ -136,13 +138,13 @@ register_progress_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &progress_uninstall_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * progress_cancel
    */
-  procedural_db_init_proc (&progress_cancel_proc, 1, 0);
-  procedural_db_add_argument (&progress_cancel_proc,
+  procedure = procedural_db_init_proc (&progress_cancel_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("progress-callback",
                                                       "progress callback",
@@ -150,7 +152,7 @@ register_progress_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &progress_cancel_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

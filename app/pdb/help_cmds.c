@@ -36,11 +36,13 @@ static ProcRecord help_proc;
 void
 register_help_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * help
    */
-  procedural_db_init_proc (&help_proc, 2, 0);
-  procedural_db_add_argument (&help_proc,
+  procedure = procedural_db_init_proc (&help_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("help-domain",
                                                       "help domain",
@@ -48,7 +50,7 @@ register_help_procs (Gimp *gimp)
                                                       FALSE, TRUE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&help_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("help-id",
                                                       "help id",
@@ -56,7 +58,7 @@ register_help_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &help_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

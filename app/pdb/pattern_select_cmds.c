@@ -37,11 +37,13 @@ static ProcRecord patterns_set_popup_proc;
 void
 register_pattern_select_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * patterns_popup
    */
-  procedural_db_init_proc (&patterns_popup_proc, 3, 0);
-  procedural_db_add_argument (&patterns_popup_proc,
+  procedure = procedural_db_init_proc (&patterns_popup_proc, 3, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("pattern-callback",
                                                       "pattern callback",
@@ -49,7 +51,7 @@ register_pattern_select_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&patterns_popup_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("popup-title",
                                                       "popup title",
@@ -57,7 +59,7 @@ register_pattern_select_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&patterns_popup_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("initial-pattern",
                                                       "initial pattern",
@@ -65,13 +67,13 @@ register_pattern_select_procs (Gimp *gimp)
                                                       FALSE, TRUE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &patterns_popup_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * patterns_close_popup
    */
-  procedural_db_init_proc (&patterns_close_popup_proc, 1, 0);
-  procedural_db_add_argument (&patterns_close_popup_proc,
+  procedure = procedural_db_init_proc (&patterns_close_popup_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("pattern-callback",
                                                       "pattern callback",
@@ -79,13 +81,13 @@ register_pattern_select_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &patterns_close_popup_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * patterns_set_popup
    */
-  procedural_db_init_proc (&patterns_set_popup_proc, 2, 0);
-  procedural_db_add_argument (&patterns_set_popup_proc,
+  procedure = procedural_db_init_proc (&patterns_set_popup_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("pattern-callback",
                                                       "pattern callback",
@@ -93,7 +95,7 @@ register_pattern_select_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&patterns_set_popup_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("pattern-name",
                                                       "pattern name",
@@ -101,7 +103,7 @@ register_pattern_select_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &patterns_set_popup_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

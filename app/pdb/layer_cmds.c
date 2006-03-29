@@ -68,32 +68,34 @@ static ProcRecord layer_set_mode_proc;
 void
 register_layer_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * layer_new
    */
-  procedural_db_init_proc (&layer_new_proc, 7, 1);
-  procedural_db_add_argument (&layer_new_proc,
+  procedure = procedural_db_init_proc (&layer_new_proc, 7, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image to which to add the layer",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_new_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("width",
                                                 "width",
                                                 "The layer width (1 <= width)",
                                                 1, G_MAXINT32, 1,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_new_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("height",
                                                 "height",
                                                 "The layer height (1 <= height)",
                                                 1, G_MAXINT32, 1,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_new_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("type",
                                                  "type",
@@ -101,7 +103,7 @@ register_layer_procs (Gimp *gimp)
                                                  GIMP_TYPE_IMAGE_TYPE,
                                                  GIMP_RGB_IMAGE,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_new_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -109,14 +111,14 @@ register_layer_procs (Gimp *gimp)
                                                       FALSE, TRUE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_new_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("opacity",
                                                    "opacity",
                                                    "The layer opacity (0 <= opacity <= 100)",
                                                    0, 100, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_new_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("mode",
                                                  "mode",
@@ -124,7 +126,7 @@ register_layer_procs (Gimp *gimp)
                                                  GIMP_TYPE_LAYER_MODE_EFFECTS,
                                                  GIMP_NORMAL_MODE,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&layer_new_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_LAYER,
                                   gimp_param_spec_item_id ("layer",
                                                            "layer",
@@ -132,13 +134,13 @@ register_layer_procs (Gimp *gimp)
                                                            gimp,
                                                            GIMP_TYPE_LAYER,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_new_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_new_from_drawable
    */
-  procedural_db_init_proc (&layer_new_from_drawable_proc, 2, 1);
-  procedural_db_add_argument (&layer_new_from_drawable_proc,
+  procedure = procedural_db_init_proc (&layer_new_from_drawable_proc, 2, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -146,14 +148,14 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_new_from_drawable_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("dest-image",
                                                         "dest image",
                                                         "The destination image to which to add the layer",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&layer_new_from_drawable_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_LAYER,
                                   gimp_param_spec_item_id ("layer-copy",
                                                            "layer copy",
@@ -161,13 +163,13 @@ register_layer_procs (Gimp *gimp)
                                                            gimp,
                                                            GIMP_TYPE_LAYER,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_new_from_drawable_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_copy
    */
-  procedural_db_init_proc (&layer_copy_proc, 2, 1);
-  procedural_db_add_argument (&layer_copy_proc,
+  procedure = procedural_db_init_proc (&layer_copy_proc, 2, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -175,14 +177,14 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_copy_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("add-alpha",
                                                     "add alpha",
                                                     "Add an alpha channel to the copied layer",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&layer_copy_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_LAYER,
                                   gimp_param_spec_item_id ("layer-copy",
                                                            "layer copy",
@@ -190,13 +192,13 @@ register_layer_procs (Gimp *gimp)
                                                            gimp,
                                                            GIMP_TYPE_LAYER,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_copy_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_add_alpha
    */
-  procedural_db_init_proc (&layer_add_alpha_proc, 1, 0);
-  procedural_db_add_argument (&layer_add_alpha_proc,
+  procedure = procedural_db_init_proc (&layer_add_alpha_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -204,13 +206,13 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_add_alpha_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_scale
    */
-  procedural_db_init_proc (&layer_scale_proc, 4, 0);
-  procedural_db_add_argument (&layer_scale_proc,
+  procedure = procedural_db_init_proc (&layer_scale_proc, 4, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -218,34 +220,34 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_scale_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("new-width",
                                                 "new width",
                                                 "New layer width (1 <= new_width)",
                                                 1, G_MAXINT32, 1,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_scale_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("new-height",
                                                 "new height",
                                                 "New layer height (1 <= new_height)",
                                                 1, G_MAXINT32, 1,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_scale_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("local-origin",
                                                     "local origin",
                                                     "Use a local origin (as opposed to the image origin)",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_scale_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_resize
    */
-  procedural_db_init_proc (&layer_resize_proc, 5, 0);
-  procedural_db_add_argument (&layer_resize_proc,
+  procedure = procedural_db_init_proc (&layer_resize_proc, 5, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -253,41 +255,41 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_resize_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("new-width",
                                                 "new width",
                                                 "New layer width (1 <= new_width)",
                                                 1, G_MAXINT32, 1,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_resize_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("new-height",
                                                 "new height",
                                                 "New layer height (1 <= new_height)",
                                                 1, G_MAXINT32, 1,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_resize_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("offx",
                                                 "offx",
                                                 "x offset between upper left corner of old and new layers: (old - new)",
                                                 G_MININT32, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_resize_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("offy",
                                                 "offy",
                                                 "y offset between upper left corner of old and new layers: (old - new)",
                                                 G_MININT32, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_resize_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_resize_to_image_size
    */
-  procedural_db_init_proc (&layer_resize_to_image_size_proc, 1, 0);
-  procedural_db_add_argument (&layer_resize_to_image_size_proc,
+  procedure = procedural_db_init_proc (&layer_resize_to_image_size_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -295,13 +297,13 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_resize_to_image_size_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_translate
    */
-  procedural_db_init_proc (&layer_translate_proc, 3, 0);
-  procedural_db_add_argument (&layer_translate_proc,
+  procedure = procedural_db_init_proc (&layer_translate_proc, 3, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -309,27 +311,27 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_translate_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("offx",
                                                 "offx",
                                                 "Offset in x direction",
                                                 G_MININT32, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_translate_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("offy",
                                                 "offy",
                                                 "Offset in y direction",
                                                 G_MININT32, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_translate_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_set_offsets
    */
-  procedural_db_init_proc (&layer_set_offsets_proc, 3, 0);
-  procedural_db_add_argument (&layer_set_offsets_proc,
+  procedure = procedural_db_init_proc (&layer_set_offsets_proc, 3, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -337,27 +339,27 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_set_offsets_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("offx",
                                                 "offx",
                                                 "Offset in x direction",
                                                 G_MININT32, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_set_offsets_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("offy",
                                                 "offy",
                                                 "Offset in y direction",
                                                 G_MININT32, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_set_offsets_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_create_mask
    */
-  procedural_db_init_proc (&layer_create_mask_proc, 2, 1);
-  procedural_db_add_argument (&layer_create_mask_proc,
+  procedure = procedural_db_init_proc (&layer_create_mask_proc, 2, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -365,7 +367,7 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_create_mask_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("mask-type",
                                                  "mask type",
@@ -373,7 +375,7 @@ register_layer_procs (Gimp *gimp)
                                                  GIMP_TYPE_ADD_MASK_TYPE,
                                                  GIMP_ADD_WHITE_MASK,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&layer_create_mask_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_CHANNEL,
                                   gimp_param_spec_item_id ("mask",
                                                            "mask",
@@ -381,13 +383,13 @@ register_layer_procs (Gimp *gimp)
                                                            gimp,
                                                            GIMP_TYPE_LAYER_MASK,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_create_mask_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_get_mask
    */
-  procedural_db_init_proc (&layer_get_mask_proc, 1, 1);
-  procedural_db_add_argument (&layer_get_mask_proc,
+  procedure = procedural_db_init_proc (&layer_get_mask_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -395,7 +397,7 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&layer_get_mask_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_CHANNEL,
                                   gimp_param_spec_item_id ("mask",
                                                            "mask",
@@ -403,13 +405,13 @@ register_layer_procs (Gimp *gimp)
                                                            gimp,
                                                            GIMP_TYPE_LAYER_MASK,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_get_mask_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_from_mask
    */
-  procedural_db_init_proc (&layer_from_mask_proc, 1, 1);
-  procedural_db_add_argument (&layer_from_mask_proc,
+  procedure = procedural_db_init_proc (&layer_from_mask_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_CHANNEL,
                               gimp_param_spec_item_id ("mask",
                                                        "mask",
@@ -417,7 +419,7 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER_MASK,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&layer_from_mask_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_LAYER,
                                   gimp_param_spec_item_id ("layer",
                                                            "layer",
@@ -425,13 +427,13 @@ register_layer_procs (Gimp *gimp)
                                                            gimp,
                                                            GIMP_TYPE_LAYER,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_from_mask_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_add_mask
    */
-  procedural_db_init_proc (&layer_add_mask_proc, 2, 0);
-  procedural_db_add_argument (&layer_add_mask_proc,
+  procedure = procedural_db_init_proc (&layer_add_mask_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -439,7 +441,7 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_add_mask_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_CHANNEL,
                               gimp_param_spec_item_id ("mask",
                                                        "mask",
@@ -447,13 +449,13 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER_MASK,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_add_mask_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_remove_mask
    */
-  procedural_db_init_proc (&layer_remove_mask_proc, 2, 0);
-  procedural_db_add_argument (&layer_remove_mask_proc,
+  procedure = procedural_db_init_proc (&layer_remove_mask_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -461,7 +463,7 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_remove_mask_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("mode",
                                                  "mode",
@@ -469,13 +471,13 @@ register_layer_procs (Gimp *gimp)
                                                  GIMP_TYPE_MASK_APPLY_MODE,
                                                  GIMP_MASK_APPLY,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_remove_mask_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_is_floating_sel
    */
-  procedural_db_init_proc (&layer_is_floating_sel_proc, 1, 1);
-  procedural_db_add_argument (&layer_is_floating_sel_proc,
+  procedure = procedural_db_init_proc (&layer_is_floating_sel_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -483,20 +485,20 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&layer_is_floating_sel_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("is-floating-sel",
                                                         "is floating sel",
                                                         "TRUE if the layer is a floating selection",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_is_floating_sel_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_get_lock_alpha
    */
-  procedural_db_init_proc (&layer_get_lock_alpha_proc, 1, 1);
-  procedural_db_add_argument (&layer_get_lock_alpha_proc,
+  procedure = procedural_db_init_proc (&layer_get_lock_alpha_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -504,20 +506,20 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&layer_get_lock_alpha_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("lock-alpha",
                                                         "lock alpha",
                                                         "The layer's lock alpha channel setting",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_get_lock_alpha_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_set_lock_alpha
    */
-  procedural_db_init_proc (&layer_set_lock_alpha_proc, 2, 0);
-  procedural_db_add_argument (&layer_set_lock_alpha_proc,
+  procedure = procedural_db_init_proc (&layer_set_lock_alpha_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -525,20 +527,20 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_set_lock_alpha_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("lock-alpha",
                                                     "lock alpha",
                                                     "The new layer's lock alpha channel setting",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_set_lock_alpha_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_get_apply_mask
    */
-  procedural_db_init_proc (&layer_get_apply_mask_proc, 1, 1);
-  procedural_db_add_argument (&layer_get_apply_mask_proc,
+  procedure = procedural_db_init_proc (&layer_get_apply_mask_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -546,20 +548,20 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&layer_get_apply_mask_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("apply-mask",
                                                         "apply mask",
                                                         "The layer's apply mask setting",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_get_apply_mask_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_set_apply_mask
    */
-  procedural_db_init_proc (&layer_set_apply_mask_proc, 2, 0);
-  procedural_db_add_argument (&layer_set_apply_mask_proc,
+  procedure = procedural_db_init_proc (&layer_set_apply_mask_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -567,20 +569,20 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_set_apply_mask_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("apply-mask",
                                                     "apply mask",
                                                     "The new layer's apply mask setting",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_set_apply_mask_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_get_show_mask
    */
-  procedural_db_init_proc (&layer_get_show_mask_proc, 1, 1);
-  procedural_db_add_argument (&layer_get_show_mask_proc,
+  procedure = procedural_db_init_proc (&layer_get_show_mask_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -588,20 +590,20 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&layer_get_show_mask_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("show-mask",
                                                         "show mask",
                                                         "The layer's show mask setting",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_get_show_mask_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_set_show_mask
    */
-  procedural_db_init_proc (&layer_set_show_mask_proc, 2, 0);
-  procedural_db_add_argument (&layer_set_show_mask_proc,
+  procedure = procedural_db_init_proc (&layer_set_show_mask_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -609,20 +611,20 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_set_show_mask_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("show-mask",
                                                     "show mask",
                                                     "The new layer's show mask setting",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_set_show_mask_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_get_edit_mask
    */
-  procedural_db_init_proc (&layer_get_edit_mask_proc, 1, 1);
-  procedural_db_add_argument (&layer_get_edit_mask_proc,
+  procedure = procedural_db_init_proc (&layer_get_edit_mask_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -630,20 +632,20 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&layer_get_edit_mask_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("edit-mask",
                                                         "edit mask",
                                                         "The layer's edit mask setting",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_get_edit_mask_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_set_edit_mask
    */
-  procedural_db_init_proc (&layer_set_edit_mask_proc, 2, 0);
-  procedural_db_add_argument (&layer_set_edit_mask_proc,
+  procedure = procedural_db_init_proc (&layer_set_edit_mask_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -651,20 +653,20 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_set_edit_mask_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("edit-mask",
                                                     "edit mask",
                                                     "The new layer's edit mask setting",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_set_edit_mask_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_get_opacity
    */
-  procedural_db_init_proc (&layer_get_opacity_proc, 1, 1);
-  procedural_db_add_argument (&layer_get_opacity_proc,
+  procedure = procedural_db_init_proc (&layer_get_opacity_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -672,20 +674,20 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&layer_get_opacity_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_FLOAT,
                                   g_param_spec_double ("opacity",
                                                        "opacity",
                                                        "The layer opacity",
                                                        0, 100, 0,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_get_opacity_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_set_opacity
    */
-  procedural_db_init_proc (&layer_set_opacity_proc, 2, 0);
-  procedural_db_add_argument (&layer_set_opacity_proc,
+  procedure = procedural_db_init_proc (&layer_set_opacity_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -693,20 +695,20 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_set_opacity_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("opacity",
                                                    "opacity",
                                                    "The new layer opacity (0 <= opacity <= 100)",
                                                    0, 100, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_set_opacity_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_get_mode
    */
-  procedural_db_init_proc (&layer_get_mode_proc, 1, 1);
-  procedural_db_add_argument (&layer_get_mode_proc,
+  procedure = procedural_db_init_proc (&layer_get_mode_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -714,7 +716,7 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&layer_get_mode_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_enum ("mode",
                                                      "mode",
@@ -722,13 +724,13 @@ register_layer_procs (Gimp *gimp)
                                                      GIMP_TYPE_LAYER_MODE_EFFECTS,
                                                      GIMP_NORMAL_MODE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_get_mode_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * layer_set_mode
    */
-  procedural_db_init_proc (&layer_set_mode_proc, 2, 0);
-  procedural_db_add_argument (&layer_set_mode_proc,
+  procedure = procedural_db_init_proc (&layer_set_mode_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -736,7 +738,7 @@ register_layer_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&layer_set_mode_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("mode",
                                                  "mode",
@@ -744,7 +746,7 @@ register_layer_procs (Gimp *gimp)
                                                  GIMP_TYPE_LAYER_MODE_EFFECTS,
                                                  GIMP_NORMAL_MODE,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &layer_set_mode_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

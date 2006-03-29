@@ -41,11 +41,13 @@ static ProcRecord floating_sel_relax_proc;
 void
 register_floating_sel_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * floating_sel_remove
    */
-  procedural_db_init_proc (&floating_sel_remove_proc, 1, 0);
-  procedural_db_add_argument (&floating_sel_remove_proc,
+  procedure = procedural_db_init_proc (&floating_sel_remove_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("floating-sel",
                                                        "floating sel",
@@ -53,13 +55,13 @@ register_floating_sel_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &floating_sel_remove_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * floating_sel_anchor
    */
-  procedural_db_init_proc (&floating_sel_anchor_proc, 1, 0);
-  procedural_db_add_argument (&floating_sel_anchor_proc,
+  procedure = procedural_db_init_proc (&floating_sel_anchor_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("floating-sel",
                                                        "floating sel",
@@ -67,13 +69,13 @@ register_floating_sel_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &floating_sel_anchor_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * floating_sel_to_layer
    */
-  procedural_db_init_proc (&floating_sel_to_layer_proc, 1, 0);
-  procedural_db_add_argument (&floating_sel_to_layer_proc,
+  procedure = procedural_db_init_proc (&floating_sel_to_layer_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("floating-sel",
                                                        "floating sel",
@@ -81,13 +83,13 @@ register_floating_sel_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &floating_sel_to_layer_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * floating_sel_attach
    */
-  procedural_db_init_proc (&floating_sel_attach_proc, 2, 0);
-  procedural_db_add_argument (&floating_sel_attach_proc,
+  procedure = procedural_db_init_proc (&floating_sel_attach_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("layer",
                                                        "layer",
@@ -95,7 +97,7 @@ register_floating_sel_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&floating_sel_attach_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -103,13 +105,13 @@ register_floating_sel_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &floating_sel_attach_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * floating_sel_rigor
    */
-  procedural_db_init_proc (&floating_sel_rigor_proc, 2, 0);
-  procedural_db_add_argument (&floating_sel_rigor_proc,
+  procedure = procedural_db_init_proc (&floating_sel_rigor_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("floating-sel",
                                                        "floating sel",
@@ -117,20 +119,20 @@ register_floating_sel_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&floating_sel_rigor_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("undo",
                                                     "undo",
                                                     "(TRUE or FALSE)",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &floating_sel_rigor_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * floating_sel_relax
    */
-  procedural_db_init_proc (&floating_sel_relax_proc, 2, 0);
-  procedural_db_add_argument (&floating_sel_relax_proc,
+  procedure = procedural_db_init_proc (&floating_sel_relax_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_LAYER,
                               gimp_param_spec_item_id ("floating-sel",
                                                        "floating sel",
@@ -138,14 +140,14 @@ register_floating_sel_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_LAYER,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&floating_sel_relax_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("undo",
                                                     "undo",
                                                     "(TRUE or FALSE)",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &floating_sel_relax_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

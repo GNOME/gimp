@@ -46,11 +46,13 @@ static ProcRecord get_module_load_inhibit_proc;
 void
 register_gimprc_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * gimprc_query
    */
-  procedural_db_init_proc (&gimprc_query_proc, 1, 1);
-  procedural_db_add_argument (&gimprc_query_proc,
+  procedure = procedural_db_init_proc (&gimprc_query_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("token",
                                                       "token",
@@ -58,7 +60,7 @@ register_gimprc_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&gimprc_query_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("value",
                                                           "value",
@@ -66,13 +68,13 @@ register_gimprc_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &gimprc_query_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * gimprc_set
    */
-  procedural_db_init_proc (&gimprc_set_proc, 2, 0);
-  procedural_db_add_argument (&gimprc_set_proc,
+  procedure = procedural_db_init_proc (&gimprc_set_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("token",
                                                       "token",
@@ -80,7 +82,7 @@ register_gimprc_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&gimprc_set_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("value",
                                                       "value",
@@ -88,13 +90,13 @@ register_gimprc_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &gimprc_set_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * get_default_comment
    */
-  procedural_db_init_proc (&get_default_comment_proc, 0, 1);
-  procedural_db_add_return_value (&get_default_comment_proc,
+  procedure = procedural_db_init_proc (&get_default_comment_proc, 0, 1);
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("comment",
                                                           "comment",
@@ -102,33 +104,33 @@ register_gimprc_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &get_default_comment_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * get_monitor_resolution
    */
-  procedural_db_init_proc (&get_monitor_resolution_proc, 0, 2);
-  procedural_db_add_return_value (&get_monitor_resolution_proc,
+  procedure = procedural_db_init_proc (&get_monitor_resolution_proc, 0, 2);
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_FLOAT,
                                   g_param_spec_double ("xres",
                                                        "xres",
                                                        "X resolution",
                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&get_monitor_resolution_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_FLOAT,
                                   g_param_spec_double ("yres",
                                                        "yres",
                                                        "Y resolution",
                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &get_monitor_resolution_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * get_theme_dir
    */
-  procedural_db_init_proc (&get_theme_dir_proc, 0, 1);
-  procedural_db_add_return_value (&get_theme_dir_proc,
+  procedure = procedural_db_init_proc (&get_theme_dir_proc, 0, 1);
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("theme-dir",
                                                           "theme dir",
@@ -136,13 +138,13 @@ register_gimprc_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &get_theme_dir_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * get_color_configuration
    */
-  procedural_db_init_proc (&get_color_configuration_proc, 0, 1);
-  procedural_db_add_return_value (&get_color_configuration_proc,
+  procedure = procedural_db_init_proc (&get_color_configuration_proc, 0, 1);
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("config",
                                                           "config",
@@ -150,13 +152,13 @@ register_gimprc_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &get_color_configuration_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * get_module_load_inhibit
    */
-  procedural_db_init_proc (&get_module_load_inhibit_proc, 0, 1);
-  procedural_db_add_return_value (&get_module_load_inhibit_proc,
+  procedure = procedural_db_init_proc (&get_module_load_inhibit_proc, 0, 1);
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("load-inhibit",
                                                           "load inhibit",
@@ -164,7 +166,7 @@ register_gimprc_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &get_module_load_inhibit_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

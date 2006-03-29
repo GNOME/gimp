@@ -40,84 +40,86 @@ static ProcRecord displays_reconnect_proc;
 void
 register_display_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * display_new
    */
-  procedural_db_init_proc (&display_new_proc, 1, 1);
-  procedural_db_add_argument (&display_new_proc,
+  procedure = procedural_db_init_proc (&display_new_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&display_new_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_DISPLAY,
                                   gimp_param_spec_display_id ("display",
                                                               "display",
                                                               "The new display",
                                                               gimp,
                                                               GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &display_new_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * display_delete
    */
-  procedural_db_init_proc (&display_delete_proc, 1, 0);
-  procedural_db_add_argument (&display_delete_proc,
+  procedure = procedural_db_init_proc (&display_delete_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DISPLAY,
                               gimp_param_spec_display_id ("display",
                                                           "display",
                                                           "The display to delete",
                                                           gimp,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &display_delete_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * display_get_window_handle
    */
-  procedural_db_init_proc (&display_get_window_handle_proc, 1, 1);
-  procedural_db_add_argument (&display_get_window_handle_proc,
+  procedure = procedural_db_init_proc (&display_get_window_handle_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DISPLAY,
                               gimp_param_spec_display_id ("display",
                                                           "display",
                                                           "The display to get the window handle from",
                                                           gimp,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&display_get_window_handle_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("window",
                                                     "window",
                                                     "The native window handle or 0",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &display_get_window_handle_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * displays_flush
    */
-  procedural_db_init_proc (&displays_flush_proc, 0, 0);
-  procedural_db_register (gimp, &displays_flush_proc);
+  procedure = procedural_db_init_proc (&displays_flush_proc, 0, 0);
+  procedural_db_register (gimp, procedure);
 
   /*
    * displays_reconnect
    */
-  procedural_db_init_proc (&displays_reconnect_proc, 2, 0);
-  procedural_db_add_argument (&displays_reconnect_proc,
+  procedure = procedural_db_init_proc (&displays_reconnect_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("old-image",
                                                         "old image",
                                                         "The old image (must have at least one display)",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&displays_reconnect_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("new-image",
                                                         "new image",
                                                         "The new image (must not have a display)",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &displays_reconnect_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

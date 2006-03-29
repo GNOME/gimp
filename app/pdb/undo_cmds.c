@@ -43,131 +43,133 @@ static ProcRecord image_undo_thaw_proc;
 void
 register_undo_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * image_undo_group_start
    */
-  procedural_db_init_proc (&image_undo_group_start_proc, 1, 0);
-  procedural_db_add_argument (&image_undo_group_start_proc,
+  procedure = procedural_db_init_proc (&image_undo_group_start_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The ID of the image in which to open an undo group",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &image_undo_group_start_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * image_undo_group_end
    */
-  procedural_db_init_proc (&image_undo_group_end_proc, 1, 0);
-  procedural_db_add_argument (&image_undo_group_end_proc,
+  procedure = procedural_db_init_proc (&image_undo_group_end_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The ID of the image in which to close an undo group",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &image_undo_group_end_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * image_undo_is_enabled
    */
-  procedural_db_init_proc (&image_undo_is_enabled_proc, 1, 1);
-  procedural_db_add_argument (&image_undo_is_enabled_proc,
+  procedure = procedural_db_init_proc (&image_undo_is_enabled_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&image_undo_is_enabled_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("enabled",
                                                         "enabled",
                                                         "TRUE if undo is enabled for this image",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &image_undo_is_enabled_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * image_undo_disable
    */
-  procedural_db_init_proc (&image_undo_disable_proc, 1, 1);
-  procedural_db_add_argument (&image_undo_disable_proc,
+  procedure = procedural_db_init_proc (&image_undo_disable_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&image_undo_disable_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("disabled",
                                                         "disabled",
                                                         "TRUE if the image undo has been disabled",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &image_undo_disable_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * image_undo_enable
    */
-  procedural_db_init_proc (&image_undo_enable_proc, 1, 1);
-  procedural_db_add_argument (&image_undo_enable_proc,
+  procedure = procedural_db_init_proc (&image_undo_enable_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&image_undo_enable_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("enabled",
                                                         "enabled",
                                                         "TRUE if the image undo has been enabled",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &image_undo_enable_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * image_undo_freeze
    */
-  procedural_db_init_proc (&image_undo_freeze_proc, 1, 1);
-  procedural_db_add_argument (&image_undo_freeze_proc,
+  procedure = procedural_db_init_proc (&image_undo_freeze_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&image_undo_freeze_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("frozen",
                                                         "frozen",
                                                         "TRUE if the image undo has been frozen",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &image_undo_freeze_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * image_undo_thaw
    */
-  procedural_db_init_proc (&image_undo_thaw_proc, 1, 1);
-  procedural_db_add_argument (&image_undo_thaw_proc,
+  procedure = procedural_db_init_proc (&image_undo_thaw_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&image_undo_thaw_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("thawed",
                                                         "thawed",
                                                         "TRUE if the image undo has been thawed",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &image_undo_thaw_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

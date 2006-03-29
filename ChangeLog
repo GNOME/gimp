@@ -1,5 +1,15 @@
 2006-03-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/procedural_db.[ch] (procedural_db_init_proc): return the
+	procedure.
+
+	* tools/pdbgen/app.pl: use a local ProcRecord* variable so the
+	generated code becomes more readable.
+
+	* app/pdb/*_cmds.c: regenerated.
+
+2006-03-29  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimp.c (gimp_run_procedure2): add newline to g_printerr().
 
 2006-03-29  Sven Neumann  <sven@gimp.org>

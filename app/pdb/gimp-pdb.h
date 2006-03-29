@@ -148,7 +148,7 @@ Argument     * procedural_db_return_values    (ProcRecord   *procedure,
 void           procedural_db_destroy_args     (Argument     *args,
                                                gint          nargs);
 
-void           procedural_db_init_proc        (ProcRecord     *procedure,
+ProcRecord   * procedural_db_init_proc        (ProcRecord     *procedure,
                                                gint            n_arguments,
                                                gint            n_return_values);
 

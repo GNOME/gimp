@@ -62,11 +62,13 @@ static ProcRecord brush_set_angle_proc;
 void
 register_brush_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * brush_new
    */
-  procedural_db_init_proc (&brush_new_proc, 1, 1);
-  procedural_db_add_argument (&brush_new_proc,
+  procedure = procedural_db_init_proc (&brush_new_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -74,7 +76,7 @@ register_brush_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_new_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("actual-name",
                                                           "actual name",
@@ -82,13 +84,13 @@ register_brush_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brush_new_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * brush_duplicate
    */
-  procedural_db_init_proc (&brush_duplicate_proc, 1, 1);
-  procedural_db_add_argument (&brush_duplicate_proc,
+  procedure = procedural_db_init_proc (&brush_duplicate_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -96,7 +98,7 @@ register_brush_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_duplicate_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("copy-name",
                                                           "copy name",
@@ -104,13 +106,13 @@ register_brush_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brush_duplicate_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * brush_is_generated
    */
-  procedural_db_init_proc (&brush_is_generated_proc, 1, 1);
-  procedural_db_add_argument (&brush_is_generated_proc,
+  procedure = procedural_db_init_proc (&brush_is_generated_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -118,20 +120,20 @@ register_brush_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_is_generated_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("generated",
                                                         "generated",
                                                         "TRUE if the brush is generated",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brush_is_generated_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * brush_rename
    */
-  procedural_db_init_proc (&brush_rename_proc, 2, 1);
-  procedural_db_add_argument (&brush_rename_proc,
+  procedure = procedural_db_init_proc (&brush_rename_proc, 2, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -139,7 +141,7 @@ register_brush_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&brush_rename_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("new-name",
                                                       "new name",
@@ -147,7 +149,7 @@ register_brush_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_rename_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("actual-name",
                                                           "actual name",
@@ -155,13 +157,13 @@ register_brush_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brush_rename_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * brush_delete
    */
-  procedural_db_init_proc (&brush_delete_proc, 1, 0);
-  procedural_db_add_argument (&brush_delete_proc,
+  procedure = procedural_db_init_proc (&brush_delete_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -169,13 +171,13 @@ register_brush_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brush_delete_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * brush_is_editable
    */
-  procedural_db_init_proc (&brush_is_editable_proc, 1, 1);
-  procedural_db_add_argument (&brush_is_editable_proc,
+  procedure = procedural_db_init_proc (&brush_is_editable_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -183,20 +185,20 @@ register_brush_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_is_editable_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_boolean ("editable",
                                                         "editable",
                                                         "TRUE if the brush can be edited",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brush_is_editable_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * brush_get_info
    */
-  procedural_db_init_proc (&brush_get_info_proc, 1, 4);
-  procedural_db_add_argument (&brush_get_info_proc,
+  procedure = procedural_db_init_proc (&brush_get_info_proc, 1, 4);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -204,41 +206,41 @@ register_brush_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_get_info_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("width",
                                                     "width",
                                                     "The brush width",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_get_info_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("height",
                                                     "height",
                                                     "The brush height",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_get_info_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("mask-bpp",
                                                     "mask bpp",
                                                     "The brush mask bpp",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_get_info_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("color-bpp",
                                                     "color bpp",
                                                     "The brush color bpp",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brush_get_info_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * brush_get_pixels
    */
-  procedural_db_init_proc (&brush_get_pixels_proc, 1, 8);
-  procedural_db_add_argument (&brush_get_pixels_proc,
+  procedure = procedural_db_init_proc (&brush_get_pixels_proc, 1, 8);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -246,67 +248,67 @@ register_brush_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_get_pixels_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("width",
                                                     "width",
                                                     "The brush width",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_get_pixels_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("height",
                                                     "height",
                                                     "The brush height",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_get_pixels_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("mask-bpp",
                                                     "mask bpp",
                                                     "The brush mask bpp",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_get_pixels_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("num-mask-bytes",
                                                     "num mask bytes",
                                                     "Length of brush mask data",
                                                     0, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_get_pixels_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT8ARRAY,
                                   g_param_spec_pointer ("mask-bytes",
                                                         "mask bytes",
                                                         "The brush mask data",
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_get_pixels_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("color-bpp",
                                                     "color bpp",
                                                     "The brush color bpp",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_get_pixels_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("num-color-bytes",
                                                     "num color bytes",
                                                     "Length of brush color data",
                                                     0, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_get_pixels_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT8ARRAY,
                                   g_param_spec_pointer ("color-bytes",
                                                         "color bytes",
                                                         "The brush color data",
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brush_get_pixels_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * brush_get_spacing
    */
-  procedural_db_init_proc (&brush_get_spacing_proc, 1, 1);
-  procedural_db_add_argument (&brush_get_spacing_proc,
+  procedure = procedural_db_init_proc (&brush_get_spacing_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -314,20 +316,20 @@ register_brush_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_get_spacing_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("spacing",
                                                     "spacing",
                                                     "The brush spacing (0 <= spacing <= 1000)",
                                                     0, 1000, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brush_get_spacing_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * brush_set_spacing
    */
-  procedural_db_init_proc (&brush_set_spacing_proc, 2, 0);
-  procedural_db_add_argument (&brush_set_spacing_proc,
+  procedure = procedural_db_init_proc (&brush_set_spacing_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -335,20 +337,20 @@ register_brush_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&brush_set_spacing_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("spacing",
                                                 "spacing",
                                                 "The brush spacing (0 <= spacing <= 1000)",
                                                 0, 1000, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brush_set_spacing_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * brush_get_shape
    */
-  procedural_db_init_proc (&brush_get_shape_proc, 1, 1);
-  procedural_db_add_argument (&brush_get_shape_proc,
+  procedure = procedural_db_init_proc (&brush_get_shape_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -356,7 +358,7 @@ register_brush_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_get_shape_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_enum ("shape",
                                                      "shape",
@@ -364,13 +366,13 @@ register_brush_procs (Gimp *gimp)
                                                      GIMP_TYPE_BRUSH_GENERATED_SHAPE,
                                                      GIMP_BRUSH_GENERATED_CIRCLE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brush_get_shape_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * brush_get_radius
    */
-  procedural_db_init_proc (&brush_get_radius_proc, 1, 1);
-  procedural_db_add_argument (&brush_get_radius_proc,
+  procedure = procedural_db_init_proc (&brush_get_radius_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -378,20 +380,20 @@ register_brush_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_get_radius_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_FLOAT,
                                   g_param_spec_double ("radius",
                                                        "radius",
                                                        "The radius of the brush in pixels",
                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brush_get_radius_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * brush_get_spikes
    */
-  procedural_db_init_proc (&brush_get_spikes_proc, 1, 1);
-  procedural_db_add_argument (&brush_get_spikes_proc,
+  procedure = procedural_db_init_proc (&brush_get_spikes_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -399,20 +401,20 @@ register_brush_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_get_spikes_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("spikes",
                                                     "spikes",
                                                     "The number of spikes on the brush.",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brush_get_spikes_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * brush_get_hardness
    */
-  procedural_db_init_proc (&brush_get_hardness_proc, 1, 1);
-  procedural_db_add_argument (&brush_get_hardness_proc,
+  procedure = procedural_db_init_proc (&brush_get_hardness_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -420,20 +422,20 @@ register_brush_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_get_hardness_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_FLOAT,
                                   g_param_spec_double ("hardness",
                                                        "hardness",
                                                        "The hardness of the brush.",
                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brush_get_hardness_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * brush_get_aspect_ratio
    */
-  procedural_db_init_proc (&brush_get_aspect_ratio_proc, 1, 1);
-  procedural_db_add_argument (&brush_get_aspect_ratio_proc,
+  procedure = procedural_db_init_proc (&brush_get_aspect_ratio_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -441,20 +443,20 @@ register_brush_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_get_aspect_ratio_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_FLOAT,
                                   g_param_spec_double ("aspect-ratio",
                                                        "aspect ratio",
                                                        "The aspect ratio of the brush.",
                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brush_get_aspect_ratio_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * brush_get_angle
    */
-  procedural_db_init_proc (&brush_get_angle_proc, 1, 1);
-  procedural_db_add_argument (&brush_get_angle_proc,
+  procedure = procedural_db_init_proc (&brush_get_angle_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -462,20 +464,20 @@ register_brush_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_get_angle_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_FLOAT,
                                   g_param_spec_double ("angle",
                                                        "angle",
                                                        "The rotation angle of the brush.",
                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brush_get_angle_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * brush_set_shape
    */
-  procedural_db_init_proc (&brush_set_shape_proc, 2, 1);
-  procedural_db_add_argument (&brush_set_shape_proc,
+  procedure = procedural_db_init_proc (&brush_set_shape_proc, 2, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -483,7 +485,7 @@ register_brush_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&brush_set_shape_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("shape-in",
                                                  "shape in",
@@ -491,7 +493,7 @@ register_brush_procs (Gimp *gimp)
                                                  GIMP_TYPE_BRUSH_GENERATED_SHAPE,
                                                  GIMP_BRUSH_GENERATED_CIRCLE,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_set_shape_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_enum ("shape-out",
                                                      "shape out",
@@ -499,13 +501,13 @@ register_brush_procs (Gimp *gimp)
                                                      GIMP_TYPE_BRUSH_GENERATED_SHAPE,
                                                      GIMP_BRUSH_GENERATED_CIRCLE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brush_set_shape_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * brush_set_radius
    */
-  procedural_db_init_proc (&brush_set_radius_proc, 2, 1);
-  procedural_db_add_argument (&brush_set_radius_proc,
+  procedure = procedural_db_init_proc (&brush_set_radius_proc, 2, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -513,27 +515,27 @@ register_brush_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&brush_set_radius_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("radius-in",
                                                    "radius in",
                                                    "The desired brush radius",
                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_set_radius_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_FLOAT,
                                   g_param_spec_double ("radius-out",
                                                        "radius out",
                                                        "The brush radius actually assigned",
                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brush_set_radius_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * brush_set_spikes
    */
-  procedural_db_init_proc (&brush_set_spikes_proc, 2, 1);
-  procedural_db_add_argument (&brush_set_spikes_proc,
+  procedure = procedural_db_init_proc (&brush_set_spikes_proc, 2, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -541,27 +543,27 @@ register_brush_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&brush_set_spikes_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("spikes-in",
                                                 "spikes in",
                                                 "The desired number of spikes",
                                                 G_MININT32, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_set_spikes_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("spikes-out",
                                                     "spikes out",
                                                     "The number of spikes actually assigned",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brush_set_spikes_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * brush_set_hardness
    */
-  procedural_db_init_proc (&brush_set_hardness_proc, 2, 1);
-  procedural_db_add_argument (&brush_set_hardness_proc,
+  procedure = procedural_db_init_proc (&brush_set_hardness_proc, 2, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -569,27 +571,27 @@ register_brush_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&brush_set_hardness_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("hardness-in",
                                                    "hardness in",
                                                    "The desired brush hardness",
                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_set_hardness_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_FLOAT,
                                   g_param_spec_double ("hardness-out",
                                                        "hardness out",
                                                        "The brush hardness actually assigned",
                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brush_set_hardness_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * brush_set_aspect_ratio
    */
-  procedural_db_init_proc (&brush_set_aspect_ratio_proc, 2, 1);
-  procedural_db_add_argument (&brush_set_aspect_ratio_proc,
+  procedure = procedural_db_init_proc (&brush_set_aspect_ratio_proc, 2, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -597,27 +599,27 @@ register_brush_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&brush_set_aspect_ratio_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("aspect-ratio-in",
                                                    "aspect ratio in",
                                                    "The desired brush aspect ratio",
                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_set_aspect_ratio_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_FLOAT,
                                   g_param_spec_double ("aspect-ratio-out",
                                                        "aspect ratio out",
                                                        "The brush aspect ratio actually assigned",
                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brush_set_aspect_ratio_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * brush_set_angle
    */
-  procedural_db_init_proc (&brush_set_angle_proc, 2, 1);
-  procedural_db_add_argument (&brush_set_angle_proc,
+  procedure = procedural_db_init_proc (&brush_set_angle_proc, 2, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("name",
                                                       "name",
@@ -625,21 +627,21 @@ register_brush_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&brush_set_angle_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("angle-in",
                                                    "angle in",
                                                    "The desired brush rotation angle",
                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&brush_set_angle_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_FLOAT,
                                   g_param_spec_double ("angle-out",
                                                        "angle out",
                                                        "The brush rotation angle actually assigned",
                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brush_set_angle_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

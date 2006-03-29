@@ -37,11 +37,13 @@ static ProcRecord palettes_set_popup_proc;
 void
 register_palette_select_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * palettes_popup
    */
-  procedural_db_init_proc (&palettes_popup_proc, 3, 0);
-  procedural_db_add_argument (&palettes_popup_proc,
+  procedure = procedural_db_init_proc (&palettes_popup_proc, 3, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("palette-callback",
                                                       "palette callback",
@@ -49,7 +51,7 @@ register_palette_select_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&palettes_popup_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("popup-title",
                                                       "popup title",
@@ -57,7 +59,7 @@ register_palette_select_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&palettes_popup_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("initial-palette",
                                                       "initial palette",
@@ -65,13 +67,13 @@ register_palette_select_procs (Gimp *gimp)
                                                       FALSE, TRUE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &palettes_popup_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * palettes_close_popup
    */
-  procedural_db_init_proc (&palettes_close_popup_proc, 1, 0);
-  procedural_db_add_argument (&palettes_close_popup_proc,
+  procedure = procedural_db_init_proc (&palettes_close_popup_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("palette-callback",
                                                       "palette callback",
@@ -79,13 +81,13 @@ register_palette_select_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &palettes_close_popup_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * palettes_set_popup
    */
-  procedural_db_init_proc (&palettes_set_popup_proc, 2, 0);
-  procedural_db_add_argument (&palettes_set_popup_proc,
+  procedure = procedural_db_init_proc (&palettes_set_popup_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("palette-callback",
                                                       "palette callback",
@@ -93,7 +95,7 @@ register_palette_select_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&palettes_set_popup_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("palette-name",
                                                       "palette name",
@@ -101,7 +103,7 @@ register_palette_select_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &palettes_set_popup_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

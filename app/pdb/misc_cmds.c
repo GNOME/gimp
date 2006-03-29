@@ -50,11 +50,13 @@ static ProcRecord quit_proc;
 void
 register_misc_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * version
    */
-  procedural_db_init_proc (&version_proc, 0, 1);
-  procedural_db_add_return_value (&version_proc,
+  procedure = procedural_db_init_proc (&version_proc, 0, 1);
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("version",
                                                           "version",
@@ -62,33 +64,33 @@ register_misc_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &version_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * getpid
    */
-  procedural_db_init_proc (&getpid_proc, 0, 1);
-  procedural_db_add_return_value (&getpid_proc,
+  procedure = procedural_db_init_proc (&getpid_proc, 0, 1);
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("pid",
                                                     "pid",
                                                     "The PID",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &getpid_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * quit
    */
-  procedural_db_init_proc (&quit_proc, 1, 0);
-  procedural_db_add_argument (&quit_proc,
+  procedure = procedural_db_init_proc (&quit_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("force",
                                                     "force",
                                                     "Flag specifying whether to force the gimp to or exit normally",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &quit_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

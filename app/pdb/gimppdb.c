@@ -592,7 +592,7 @@ procedural_db_destroy_args (Argument *args,
   g_free (args);
 }
 
-void
+ProcRecord *
 procedural_db_init_proc (ProcRecord     *procedure,
                          gint            n_arguments,
                          gint            n_return_values)
@@ -608,6 +608,8 @@ procedural_db_init_proc (ProcRecord     *procedure,
 
   procedure->num_values = n_return_values;
   procedure->values     = g_new0 (ProcArg, n_return_values);
+
+  return procedure;
 }
 
 void

@@ -68,11 +68,13 @@ static ProcRecord threshold_proc;
 void
 register_color_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * brightness_contrast
    */
-  procedural_db_init_proc (&brightness_contrast_proc, 3, 0);
-  procedural_db_add_argument (&brightness_contrast_proc,
+  procedure = procedural_db_init_proc (&brightness_contrast_proc, 3, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -80,27 +82,27 @@ register_color_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&brightness_contrast_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("brightness",
                                                 "brightness",
                                                 "Brightness adjustment (-127 <= brightness <= 127)",
                                                 -127, 127, -127,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&brightness_contrast_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("contrast",
                                                 "contrast",
                                                 "Contrast adjustment (-127 <= contrast <= 127)",
                                                 -127, 127, -127,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &brightness_contrast_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * levels
    */
-  procedural_db_init_proc (&levels_proc, 7, 0);
-  procedural_db_add_argument (&levels_proc,
+  procedure = procedural_db_init_proc (&levels_proc, 7, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -108,7 +110,7 @@ register_color_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&levels_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("channel",
                                                  "channel",
@@ -116,48 +118,48 @@ register_color_procs (Gimp *gimp)
                                                  GIMP_TYPE_HISTOGRAM_CHANNEL,
                                                  GIMP_HISTOGRAM_VALUE,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&levels_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("low-input",
                                                 "low input",
                                                 "Intensity of lowest input (0 <= low_input <= 255)",
                                                 0, 255, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&levels_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("high-input",
                                                 "high input",
                                                 "Intensity of highest input (0 <= high_input <= 255)",
                                                 0, 255, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&levels_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("gamma",
                                                    "gamma",
                                                    "Gamma correction factor (0.1 <= gamma <= 10)",
                                                    0.1, 10, 0.1,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&levels_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("low-output",
                                                 "low output",
                                                 "Intensity of lowest output (0 <= low_output <= 255)",
                                                 0, 255, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&levels_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("high-output",
                                                 "high output",
                                                 "Intensity of highest output (0 <= high_output <= 255)",
                                                 0, 255, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &levels_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * levels_auto
    */
-  procedural_db_init_proc (&levels_auto_proc, 1, 0);
-  procedural_db_add_argument (&levels_auto_proc,
+  procedure = procedural_db_init_proc (&levels_auto_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -165,13 +167,13 @@ register_color_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &levels_auto_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * levels_stretch
    */
-  procedural_db_init_proc (&levels_stretch_proc, 1, 0);
-  procedural_db_add_argument (&levels_stretch_proc,
+  procedure = procedural_db_init_proc (&levels_stretch_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -179,13 +181,13 @@ register_color_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &levels_stretch_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * posterize
    */
-  procedural_db_init_proc (&posterize_proc, 2, 0);
-  procedural_db_add_argument (&posterize_proc,
+  procedure = procedural_db_init_proc (&posterize_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -193,20 +195,20 @@ register_color_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&posterize_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("levels",
                                                 "levels",
                                                 "Levels of posterization (2 <= levels <= 255)",
                                                 2, 255, 2,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &posterize_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * desaturate
    */
-  procedural_db_init_proc (&desaturate_proc, 1, 0);
-  procedural_db_add_argument (&desaturate_proc,
+  procedure = procedural_db_init_proc (&desaturate_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -214,13 +216,13 @@ register_color_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &desaturate_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * desaturate_full
    */
-  procedural_db_init_proc (&desaturate_full_proc, 2, 0);
-  procedural_db_add_argument (&desaturate_full_proc,
+  procedure = procedural_db_init_proc (&desaturate_full_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -228,7 +230,7 @@ register_color_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&desaturate_full_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("desaturate-mode",
                                                  "desaturate mode",
@@ -236,13 +238,13 @@ register_color_procs (Gimp *gimp)
                                                  GIMP_TYPE_DESATURATE_MODE,
                                                  GIMP_DESATURATE_LIGHTNESS,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &desaturate_full_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * equalize
    */
-  procedural_db_init_proc (&equalize_proc, 2, 0);
-  procedural_db_add_argument (&equalize_proc,
+  procedure = procedural_db_init_proc (&equalize_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -250,20 +252,20 @@ register_color_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&equalize_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("mask-only",
                                                     "mask only",
                                                     "Equalization option",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &equalize_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * invert
    */
-  procedural_db_init_proc (&invert_proc, 1, 0);
-  procedural_db_add_argument (&invert_proc,
+  procedure = procedural_db_init_proc (&invert_proc, 1, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -271,13 +273,13 @@ register_color_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &invert_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * curves_spline
    */
-  procedural_db_init_proc (&curves_spline_proc, 4, 0);
-  procedural_db_add_argument (&curves_spline_proc,
+  procedure = procedural_db_init_proc (&curves_spline_proc, 4, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -285,7 +287,7 @@ register_color_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&curves_spline_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("channel",
                                                  "channel",
@@ -293,26 +295,26 @@ register_color_procs (Gimp *gimp)
                                                  GIMP_TYPE_HISTOGRAM_CHANNEL,
                                                  GIMP_HISTOGRAM_VALUE,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&curves_spline_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("num-points",
                                                 "num points",
                                                 "The number of values in the control point array (4 <= num_points <= 34)",
                                                 4, 34, 4,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&curves_spline_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT8ARRAY,
                               g_param_spec_pointer ("control-pts",
                                                     "control pts",
                                                     "The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }",
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &curves_spline_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * curves_explicit
    */
-  procedural_db_init_proc (&curves_explicit_proc, 4, 0);
-  procedural_db_add_argument (&curves_explicit_proc,
+  procedure = procedural_db_init_proc (&curves_explicit_proc, 4, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -320,7 +322,7 @@ register_color_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&curves_explicit_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("channel",
                                                  "channel",
@@ -328,26 +330,26 @@ register_color_procs (Gimp *gimp)
                                                  GIMP_TYPE_HISTOGRAM_CHANNEL,
                                                  GIMP_HISTOGRAM_VALUE,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&curves_explicit_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("num-bytes",
                                                 "num bytes",
                                                 "The number of bytes in the new curve (always 256)",
                                                 0, G_MAXINT32, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&curves_explicit_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT8ARRAY,
                               g_param_spec_pointer ("curve",
                                                     "curve",
                                                     "The explicit curve",
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &curves_explicit_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * color_balance
    */
-  procedural_db_init_proc (&color_balance_proc, 6, 0);
-  procedural_db_add_argument (&color_balance_proc,
+  procedure = procedural_db_init_proc (&color_balance_proc, 6, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -355,7 +357,7 @@ register_color_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&color_balance_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("transfer-mode",
                                                  "transfer mode",
@@ -363,41 +365,41 @@ register_color_procs (Gimp *gimp)
                                                  GIMP_TYPE_TRANSFER_MODE,
                                                  GIMP_SHADOWS,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&color_balance_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_boolean ("preserve-lum",
                                                     "preserve lum",
                                                     "Preserve luminosity values at each pixel",
                                                     FALSE,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&color_balance_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("cyan-red",
                                                    "cyan red",
                                                    "Cyan-Red color balance (-100 <= cyan_red <= 100)",
                                                    -100, 100, -100,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&color_balance_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("magenta-green",
                                                    "magenta green",
                                                    "Magenta-Green color balance (-100 <= magenta_green <= 100)",
                                                    -100, 100, -100,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&color_balance_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("yellow-blue",
                                                    "yellow blue",
                                                    "Yellow-Blue color balance (-100 <= yellow_blue <= 100)",
                                                    -100, 100, -100,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &color_balance_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * colorize
    */
-  procedural_db_init_proc (&colorize_proc, 4, 0);
-  procedural_db_add_argument (&colorize_proc,
+  procedure = procedural_db_init_proc (&colorize_proc, 4, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -405,34 +407,34 @@ register_color_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&colorize_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("hue",
                                                    "hue",
                                                    "Hue in degrees (0 <= hue <= 360)",
                                                    0, 360, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&colorize_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("saturation",
                                                    "saturation",
                                                    "Saturation in percent (0 <= saturation <= 100)",
                                                    0, 100, 0,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&colorize_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("lightness",
                                                    "lightness",
                                                    "Lightness in percent (-100 <= lightness <= 100)",
                                                    -100, 100, -100,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &colorize_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * histogram
    */
-  procedural_db_init_proc (&histogram_proc, 4, 6);
-  procedural_db_add_argument (&histogram_proc,
+  procedure = procedural_db_init_proc (&histogram_proc, 4, 6);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -440,7 +442,7 @@ register_color_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&histogram_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("channel",
                                                  "channel",
@@ -448,69 +450,69 @@ register_color_procs (Gimp *gimp)
                                                  GIMP_TYPE_HISTOGRAM_CHANNEL,
                                                  GIMP_HISTOGRAM_VALUE,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&histogram_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("start-range",
                                                 "start range",
                                                 "Start of the intensity measurement range",
                                                 0, 256, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&histogram_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("end-range",
                                                 "end range",
                                                 "End of the intensity measurement range",
                                                 0, 256, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&histogram_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_FLOAT,
                                   g_param_spec_double ("mean",
                                                        "mean",
                                                        "Mean intensity value",
                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&histogram_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_FLOAT,
                                   g_param_spec_double ("std-dev",
                                                        "std dev",
                                                        "Standard deviation of intensity values",
                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&histogram_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_FLOAT,
                                   g_param_spec_double ("median",
                                                        "median",
                                                        "Median intensity value",
                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&histogram_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_FLOAT,
                                   g_param_spec_double ("pixels",
                                                        "pixels",
                                                        "Alpha-weighted pixel count for entire image",
                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&histogram_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_FLOAT,
                                   g_param_spec_double ("count",
                                                        "count",
                                                        "Alpha-weighted pixel count for range",
                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&histogram_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_FLOAT,
                                   g_param_spec_double ("percentile",
                                                        "percentile",
                                                        "Percentile that range falls under",
                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &histogram_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * hue_saturation
    */
-  procedural_db_init_proc (&hue_saturation_proc, 5, 0);
-  procedural_db_add_argument (&hue_saturation_proc,
+  procedure = procedural_db_init_proc (&hue_saturation_proc, 5, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -518,7 +520,7 @@ register_color_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&hue_saturation_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("hue-range",
                                                  "hue range",
@@ -526,34 +528,34 @@ register_color_procs (Gimp *gimp)
                                                  GIMP_TYPE_HUE_RANGE,
                                                  GIMP_ALL_HUES,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&hue_saturation_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("hue-offset",
                                                    "hue offset",
                                                    "Hue offset in degrees (-180 <= hue_offset <= 180)",
                                                    -180, 180, -180,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&hue_saturation_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("lightness",
                                                    "lightness",
                                                    "Lightness modification (-100 <= lightness <= 100)",
                                                    -100, 100, -100,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&hue_saturation_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("saturation",
                                                    "saturation",
                                                    "Saturation modification (-100 <= saturation <= 100)",
                                                    -100, 100, -100,
                                                    GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &hue_saturation_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * threshold
    */
-  procedural_db_init_proc (&threshold_proc, 3, 0);
-  procedural_db_add_argument (&threshold_proc,
+  procedure = procedural_db_init_proc (&threshold_proc, 3, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -561,21 +563,21 @@ register_color_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&threshold_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("low-threshold",
                                                 "low threshold",
                                                 "The low threshold value (0 <= low_threshold <= 255)",
                                                 0, 255, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&threshold_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_int ("high-threshold",
                                                 "high threshold",
                                                 "The high threshold value (0 <= high_threshold <= 255)",
                                                 0, 255, 0,
                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &threshold_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 

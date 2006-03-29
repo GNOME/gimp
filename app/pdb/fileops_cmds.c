@@ -72,11 +72,13 @@ static ProcRecord register_thumbnail_loader_proc;
 void
 register_fileops_procs (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   /*
    * file_load
    */
-  procedural_db_init_proc (&file_load_proc, 3, 1);
-  procedural_db_add_argument (&file_load_proc,
+  procedure = procedural_db_init_proc (&file_load_proc, 3, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("run-mode",
                                                  "run mode",
@@ -84,7 +86,7 @@ register_fileops_procs (Gimp *gimp)
                                                  GIMP_TYPE_RUN_MODE,
                                                  GIMP_RUN_INTERACTIVE,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&file_load_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("filename",
                                                       "filename",
@@ -92,7 +94,7 @@ register_fileops_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&file_load_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("raw-filename",
                                                       "raw filename",
@@ -100,20 +102,20 @@ register_fileops_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&file_load_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_IMAGE,
                                   gimp_param_spec_image_id ("image",
                                                             "image",
                                                             "The output image",
                                                             gimp,
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &file_load_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * file_load_layer
    */
-  procedural_db_init_proc (&file_load_layer_proc, 3, 1);
-  procedural_db_add_argument (&file_load_layer_proc,
+  procedure = procedural_db_init_proc (&file_load_layer_proc, 3, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("run-mode",
                                                  "run mode",
@@ -121,14 +123,14 @@ register_fileops_procs (Gimp *gimp)
                                                  GIMP_TYPE_RUN_MODE,
                                                  GIMP_RUN_INTERACTIVE,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&file_load_layer_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "Destination image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&file_load_layer_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("filename",
                                                       "filename",
@@ -136,7 +138,7 @@ register_fileops_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&file_load_layer_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_LAYER,
                                   gimp_param_spec_item_id ("layer",
                                                            "layer",
@@ -144,13 +146,13 @@ register_fileops_procs (Gimp *gimp)
                                                            gimp,
                                                            GIMP_TYPE_LAYER,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &file_load_layer_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * file_load_thumbnail
    */
-  procedural_db_init_proc (&file_load_thumbnail_proc, 1, 4);
-  procedural_db_add_argument (&file_load_thumbnail_proc,
+  procedure = procedural_db_init_proc (&file_load_thumbnail_proc, 1, 4);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("filename",
                                                       "filename",
@@ -158,40 +160,40 @@ register_fileops_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&file_load_thumbnail_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("width",
                                                     "width",
                                                     "The width of the thumbnail",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&file_load_thumbnail_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("height",
                                                     "height",
                                                     "The height of the thumbnail",
                                                     G_MININT32, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&file_load_thumbnail_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
                                   g_param_spec_int ("thumb-data-count",
                                                     "thumb data count",
                                                     "The number of bytes in thumbnail data",
                                                     0, G_MAXINT32, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&file_load_thumbnail_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT8ARRAY,
                                   g_param_spec_pointer ("thumb-data",
                                                         "thumb data",
                                                         "The thumbnail data",
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &file_load_thumbnail_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * file_save
    */
-  procedural_db_init_proc (&file_save_proc, 5, 0);
-  procedural_db_add_argument (&file_save_proc,
+  procedure = procedural_db_init_proc (&file_save_proc, 5, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
                               g_param_spec_enum ("run-mode",
                                                  "run mode",
@@ -199,14 +201,14 @@ register_fileops_procs (Gimp *gimp)
                                                  GIMP_TYPE_RUN_MODE,
                                                  GIMP_RUN_INTERACTIVE,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&file_save_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "Input image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&file_save_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_DRAWABLE,
                               gimp_param_spec_item_id ("drawable",
                                                        "drawable",
@@ -214,7 +216,7 @@ register_fileops_procs (Gimp *gimp)
                                                        gimp,
                                                        GIMP_TYPE_DRAWABLE,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&file_save_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("filename",
                                                       "filename",
@@ -222,7 +224,7 @@ register_fileops_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&file_save_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("raw-filename",
                                                       "raw filename",
@@ -230,20 +232,20 @@ register_fileops_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &file_save_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * file_save_thumbnail
    */
-  procedural_db_init_proc (&file_save_thumbnail_proc, 2, 0);
-  procedural_db_add_argument (&file_save_thumbnail_proc,
+  procedure = procedural_db_init_proc (&file_save_thumbnail_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
                                                         "image",
                                                         "The image",
                                                         gimp,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&file_save_thumbnail_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("filename",
                                                       "filename",
@@ -251,13 +253,13 @@ register_fileops_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &file_save_thumbnail_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * temp_name
    */
-  procedural_db_init_proc (&temp_name_proc, 1, 1);
-  procedural_db_add_argument (&temp_name_proc,
+  procedure = procedural_db_init_proc (&temp_name_proc, 1, 1);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("extension",
                                                       "extension",
@@ -265,7 +267,7 @@ register_fileops_procs (Gimp *gimp)
                                                       TRUE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (&temp_name_proc,
+  procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("name",
                                                           "name",
@@ -273,13 +275,13 @@ register_fileops_procs (Gimp *gimp)
                                                           FALSE, FALSE,
                                                           NULL,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &temp_name_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * register_magic_load_handler
    */
-  procedural_db_init_proc (&register_magic_load_handler_proc, 4, 0);
-  procedural_db_add_argument (&register_magic_load_handler_proc,
+  procedure = procedural_db_init_proc (&register_magic_load_handler_proc, 4, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("procedure-name",
                                                       "procedure name",
@@ -287,7 +289,7 @@ register_fileops_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&register_magic_load_handler_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("extensions",
                                                       "extensions",
@@ -295,7 +297,7 @@ register_fileops_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  procedural_db_add_argument (&register_magic_load_handler_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("prefixes",
                                                       "prefixes",
@@ -303,7 +305,7 @@ register_fileops_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  procedural_db_add_argument (&register_magic_load_handler_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("magics",
                                                       "magics",
@@ -311,13 +313,13 @@ register_fileops_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  procedural_db_register (gimp, &register_magic_load_handler_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * register_load_handler
    */
-  procedural_db_init_proc (&register_load_handler_proc, 3, 0);
-  procedural_db_add_argument (&register_load_handler_proc,
+  procedure = procedural_db_init_proc (&register_load_handler_proc, 3, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("procedure-name",
                                                       "procedure name",
@@ -325,7 +327,7 @@ register_fileops_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&register_load_handler_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("extensions",
                                                       "extensions",
@@ -333,7 +335,7 @@ register_fileops_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  procedural_db_add_argument (&register_load_handler_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("prefixes",
                                                       "prefixes",
@@ -341,13 +343,13 @@ register_fileops_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  procedural_db_register (gimp, &register_load_handler_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * register_save_handler
    */
-  procedural_db_init_proc (&register_save_handler_proc, 3, 0);
-  procedural_db_add_argument (&register_save_handler_proc,
+  procedure = procedural_db_init_proc (&register_save_handler_proc, 3, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("procedure-name",
                                                       "procedure name",
@@ -355,7 +357,7 @@ register_fileops_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&register_save_handler_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("extensions",
                                                       "extensions",
@@ -363,7 +365,7 @@ register_fileops_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  procedural_db_add_argument (&register_save_handler_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("prefixes",
                                                       "prefixes",
@@ -371,13 +373,13 @@ register_fileops_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  procedural_db_register (gimp, &register_save_handler_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * register_file_handler_mime
    */
-  procedural_db_init_proc (&register_file_handler_mime_proc, 2, 0);
-  procedural_db_add_argument (&register_file_handler_mime_proc,
+  procedure = procedural_db_init_proc (&register_file_handler_mime_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("procedure-name",
                                                       "procedure name",
@@ -385,7 +387,7 @@ register_fileops_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&register_file_handler_mime_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("mime-type",
                                                       "mime type",
@@ -393,13 +395,13 @@ register_fileops_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &register_file_handler_mime_proc);
+  procedural_db_register (gimp, procedure);
 
   /*
    * register_thumbnail_loader
    */
-  procedural_db_init_proc (&register_thumbnail_loader_proc, 2, 0);
-  procedural_db_add_argument (&register_thumbnail_loader_proc,
+  procedure = procedural_db_init_proc (&register_thumbnail_loader_proc, 2, 0);
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("load-proc",
                                                       "load proc",
@@ -407,7 +409,7 @@ register_fileops_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (&register_thumbnail_loader_proc,
+  procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("thumb-proc",
                                                       "thumb proc",
@@ -415,7 +417,7 @@ register_fileops_procs (Gimp *gimp)
                                                       FALSE, FALSE,
                                                       NULL,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, &register_thumbnail_loader_proc);
+  procedural_db_register (gimp, procedure);
 
 }
 
