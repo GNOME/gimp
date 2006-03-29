@@ -31,7 +31,18 @@
  */
 
 #define GIMP_TYPE_PARAM_STRING           (gimp_param_string_get_type ())
+#define GIMP_PARAM_SPEC_STRING(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_STRING, GimpParamSpecString))
 #define GIMP_IS_PARAM_SPEC_STRING(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_STRING))
+
+typedef struct _GimpParamSpecString GimpParamSpecString;
+
+struct _GimpParamSpecString
+{
+  GParamSpecString parent_instance;
+
+  guint            no_validate : 1;
+  guint            null_ok     : 1;
+};
 
 GType        gimp_param_string_get_type  (void) G_GNUC_CONST;
 
@@ -45,11 +56,52 @@ GParamSpec * gimp_param_spec_string      (const gchar  *name,
 
 
 /*
+ * GIMP_TYPE_PARAM_ENUM
+ */
+
+#define GIMP_TYPE_PARAM_ENUM           (gimp_param_enum_get_type ())
+#define GIMP_PARAM_SPEC_ENUM(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_ENUM, GimpParamSpecEnum))
+
+#define GIMP_IS_PARAM_SPEC_ENUM(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_ENUM))
+
+typedef struct _GimpParamSpecEnum GimpParamSpecEnum;
+
+struct _GimpParamSpecEnum
+{
+  GParamSpecEnum  parent_instance;
+
+  GSList         *excluded_values;
+};
+
+GType        gimp_param_enum_get_type     (void) G_GNUC_CONST;
+
+GParamSpec * gimp_param_spec_enum         (const gchar       *name,
+                                           const gchar       *nick,
+                                           const gchar       *blurb,
+                                           GType              enum_type,
+                                           gint               default_value,
+                                           GParamFlags        flags);
+
+void   gimp_param_spec_enum_exclude_value (GimpParamSpecEnum *espec,
+                                           gint               value);
+
+
+/*
  * GIMP_TYPE_PARAM_IMAGE_ID
  */
 
 #define GIMP_TYPE_PARAM_IMAGE_ID           (gimp_param_image_id_get_type ())
+#define GIMP_PARAM_SPEC_IMAGE_ID(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_IMAGE_ID, GimpParamSpecImageID))
 #define GIMP_IS_PARAM_SPEC_IMAGE_ID(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_IMAGE_ID))
+
+typedef struct _GimpParamSpecImageID GimpParamSpecImageID;
+
+struct _GimpParamSpecImageID
+{
+  GParamSpecInt  parent_instance;
+
+  Gimp          *gimp;
+};
 
 GType        gimp_param_image_id_get_type  (void) G_GNUC_CONST;
 
@@ -71,7 +123,18 @@ void         gimp_value_set_image          (GValue       *value,
  */
 
 #define GIMP_TYPE_PARAM_ITEM_ID           (gimp_param_item_id_get_type ())
+#define GIMP_PARAM_SPEC_ITEM_ID(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_ITEM_ID, GimpParamSpecItemID))
 #define GIMP_IS_PARAM_SPEC_ITEM_ID(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_ITEM_ID))
+
+typedef struct _GimpParamSpecItemID GimpParamSpecItemID;
+
+struct _GimpParamSpecItemID
+{
+  GParamSpecInt  parent_instance;
+
+  Gimp          *gimp;
+  GType          item_type;
+};
 
 GType        gimp_param_item_id_get_type  (void) G_GNUC_CONST;
 
@@ -94,7 +157,17 @@ void         gimp_value_set_item          (GValue       *value,
  */
 
 #define GIMP_TYPE_PARAM_DISPLAY_ID           (gimp_param_display_id_get_type ())
+#define GIMP_PARAM_SPEC_DISPLAY_ID(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_DISPLAY_ID, GimpParamSpecDisplayID))
 #define GIMP_IS_PARAM_SPEC_DISPLAY_ID(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_DISPLAY_ID))
+
+typedef struct _GimpParamSpecDisplayID GimpParamSpecDisplayID;
+
+struct _GimpParamSpecDisplayID
+{
+  GParamSpecInt  parent_instance;
+
+  Gimp          *gimp;
+};
 
 GType        gimp_param_display_id_get_type  (void) G_GNUC_CONST;
 
@@ -135,7 +208,15 @@ GType   gimp_parasite_get_type           (void) G_GNUC_CONST;
  */
 
 #define GIMP_TYPE_PARAM_PARASITE           (gimp_param_parasite_get_type ())
+#define GIMP_PARAM_SPEC_PARASITE(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_PARASITE, GimpParamSpecParasite))
 #define GIMP_IS_PARAM_SPEC_PARASITE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_PARASITE))
+
+typedef struct _GimpParamSpecParasite GimpParamSpecParasite;
+
+struct _GimpParamSpecParasite
+{
+  GParamSpecBoxed parent_instance;
+};
 
 GType        gimp_param_parasite_get_type  (void) G_GNUC_CONST;
 

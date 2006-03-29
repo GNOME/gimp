@@ -1,5 +1,12 @@
 2006-03-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpparamspecs.[ch]: added GimpParamSpecEnum, which is
+	a GParamSpecEnum plus the possibility to exclude values.
+	Fixed lots of validation functions.
+	Made all structs and macros public.
+
+2006-03-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/pdb/procedural_db.c (procedural_db_init_proc): switch to
 	g_return_val_if_fail() because it got a return value.
 

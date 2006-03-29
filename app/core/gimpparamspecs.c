@@ -35,22 +35,10 @@
  * GIMP_TYPE_PARAM_STRING
  */
 
-#define GIMP_PARAM_SPEC_STRING(pspec) (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_STRING, GimpParamSpecString))
-
 static void       gimp_param_string_class_init  (GParamSpecClass *class);
 static void       gimp_param_string_init        (GParamSpec      *pspec);
 static gboolean   gimp_param_string_validate    (GParamSpec      *pspec,
                                                  GValue          *value);
-
-typedef struct _GimpParamSpecString GimpParamSpecString;
-
-struct _GimpParamSpecString
-{
-  GParamSpecString parent_instance;
-
-  guint            no_validate : 1;
-  guint            null_ok     : 1;
-};
 
 GType
 gimp_param_string_get_type (void)
@@ -152,10 +140,139 @@ gimp_param_spec_string (const gchar *name,
 
 
 /*
- * GIMP_TYPE_PARAM_IMAGE_ID
+ * GIMP_TYPE_PARAM_ENUM
  */
 
-#define GIMP_PARAM_SPEC_IMAGE_ID(pspec) (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_IMAGE_ID, GimpParamSpecImageID))
+static void       gimp_param_enum_class_init  (GParamSpecClass *class);
+static void       gimp_param_enum_init        (GParamSpec      *pspec);
+static void       gimp_param_enum_finalize    (GParamSpec      *pspec);
+static gboolean   gimp_param_enum_validate    (GParamSpec      *pspec,
+                                               GValue          *value);
+
+GType
+gimp_param_enum_get_type (void)
+{
+  static GType type = 0;
+
+  if (! type)
+    {
+      static const GTypeInfo type_info =
+      {
+        sizeof (GParamSpecClass),
+        NULL, NULL,
+        (GClassInitFunc) gimp_param_enum_class_init,
+        NULL, NULL,
+        sizeof (GimpParamSpecEnum),
+        0,
+        (GInstanceInitFunc) gimp_param_enum_init
+      };
+
+      type = g_type_register_static (G_TYPE_PARAM_ENUM,
+                                     "GimpParamEnum",
+                                     &type_info, 0);
+    }
+
+  return type;
+}
+
+static void
+gimp_param_enum_class_init (GParamSpecClass *class)
+{
+  class->value_type     = G_TYPE_ENUM;
+  class->finalize       = gimp_param_enum_finalize;
+  class->value_validate = gimp_param_enum_validate;
+}
+
+static void
+gimp_param_enum_init (GParamSpec *pspec)
+{
+  GimpParamSpecEnum *espec = GIMP_PARAM_SPEC_ENUM (pspec);
+
+  espec->excluded_values = NULL;
+}
+
+static void
+gimp_param_enum_finalize (GParamSpec *pspec)
+{
+  GimpParamSpecEnum *espec = GIMP_PARAM_SPEC_ENUM (pspec);
+  GParamSpecClass   *parent_class;
+
+  parent_class = g_type_class_peek (g_type_parent (GIMP_TYPE_PARAM_ENUM));
+
+  g_slist_free (espec->excluded_values);
+
+  parent_class->finalize (pspec);
+}
+
+static gboolean
+gimp_param_enum_validate (GParamSpec *pspec,
+                          GValue     *value)
+{
+  GimpParamSpecEnum *espec  = GIMP_PARAM_SPEC_ENUM (pspec);
+  GParamSpecClass   *parent_class;
+  GSList            *list;
+
+  parent_class = g_type_class_peek (g_type_parent (GIMP_TYPE_PARAM_ENUM));
+
+  if (parent_class->value_validate (pspec, value))
+    return TRUE;
+
+  for (list = espec->excluded_values; list; list = g_slist_next (list))
+    {
+      if (GPOINTER_TO_INT (list->data) == value->data[0].v_long)
+        {
+          value->data[0].v_long = G_PARAM_SPEC_ENUM (pspec)->default_value;
+          return TRUE;
+        }
+    }
+
+  return FALSE;
+}
+
+GParamSpec *
+gimp_param_spec_enum (const gchar *name,
+                      const gchar *nick,
+                      const gchar *blurb,
+                      GType        enum_type,
+                      gint         default_value,
+                      GParamFlags  flags)
+{
+  GimpParamSpecEnum *espec;
+  GEnumClass        *enum_class;
+
+  g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), NULL);
+
+  enum_class = g_type_class_ref (enum_type);
+
+  g_return_val_if_fail (g_enum_get_value (enum_class, default_value) != NULL,
+                        NULL);
+
+  espec = g_param_spec_internal (GIMP_TYPE_PARAM_ENUM,
+                                 name, nick, blurb, flags);
+
+  G_PARAM_SPEC_ENUM (espec)->enum_class    = enum_class;
+  G_PARAM_SPEC_ENUM (espec)->default_value = default_value;
+  G_PARAM_SPEC (espec)->value_type         = enum_type;
+
+  return G_PARAM_SPEC (espec);
+}
+
+void
+gimp_param_spec_enum_exclude_value (GimpParamSpecEnum *espec,
+                                    gint               value)
+{
+  g_return_if_fail (GIMP_IS_PARAM_SPEC_ENUM (espec));
+  g_return_if_fail (g_enum_get_value (G_PARAM_SPEC_ENUM (espec)->enum_class,
+                                      value) != NULL);
+
+  espec->excluded_values = g_slist_prepend (espec->excluded_values,
+                                            GINT_TO_POINTER (value));
+}
+
+
+/*
+ * GIMP_TYPE_PARAM_IMAGE_ID
+ */
 
 static void       gimp_param_image_id_class_init  (GParamSpecClass *class);
 static void       gimp_param_image_id_init        (GParamSpec      *pspec);
@@ -166,15 +283,6 @@ static gboolean   gimp_param_image_id_validate    (GParamSpec      *pspec,
 static gint       gimp_param_image_id_values_cmp  (GParamSpec      *pspec,
                                                    const GValue    *value1,
                                                    const GValue    *value2);
-
-typedef struct _GimpParamSpecImageID GimpParamSpecImageID;
-
-struct _GimpParamSpecImageID
-{
-  GParamSpecInt  parent_instance;
-
-  Gimp          *gimp;
-};
 
 GType
 gimp_param_image_id_get_type (void)
@@ -237,7 +345,13 @@ gimp_param_image_id_validate (GParamSpec *pspec,
   image_id = value->data[0].v_int;
   image    = gimp_image_get_by_ID (ispec->gimp, image_id);
 
-  return GIMP_IS_IMAGE (image);
+  if (! GIMP_IS_IMAGE (image))
+    {
+      value->data[0].v_int = -1;
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 static gint
@@ -306,8 +420,6 @@ gimp_value_set_image (GValue    *value,
  * GIMP_TYPE_PARAM_ITEM_ID
  */
 
-#define GIMP_PARAM_SPEC_ITEM_ID(pspec) (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_ITEM_ID, GimpParamSpecItemID))
-
 static void       gimp_param_item_id_class_init  (GParamSpecClass *class);
 static void       gimp_param_item_id_init        (GParamSpec      *pspec);
 static void       gimp_param_item_id_set_default (GParamSpec      *pspec,
@@ -317,16 +429,6 @@ static gboolean   gimp_param_item_id_validate    (GParamSpec      *pspec,
 static gint       gimp_param_item_id_values_cmp  (GParamSpec      *pspec,
                                                    const GValue    *value1,
                                                    const GValue    *value2);
-
-typedef struct _GimpParamSpecItemID GimpParamSpecItemID;
-
-struct _GimpParamSpecItemID
-{
-  GParamSpecInt  parent_instance;
-
-  Gimp          *gimp;
-  GType          item_type;
-};
 
 GType
 gimp_param_item_id_get_type (void)
@@ -390,7 +492,18 @@ gimp_param_item_id_validate (GParamSpec *pspec,
   item_id = value->data[0].v_int;
   item    = gimp_item_get_by_ID (ispec->gimp, item_id);
 
-  return g_type_is_a (G_TYPE_FROM_INSTANCE (item), ispec->item_type);
+  if (! item || ! g_type_is_a (G_TYPE_FROM_INSTANCE (item), ispec->item_type))
+    {
+      value->data[0].v_int = -1;
+      return TRUE;
+    }
+  else if (gimp_item_is_removed (item))
+    {
+      value->data[0].v_int = -1;
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 static gint
@@ -473,8 +586,6 @@ gimp_value_set_item (GValue   *value,
  * GIMP_TYPE_PARAM_DISPLAY_ID
  */
 
-#define GIMP_PARAM_SPEC_DISPLAY_ID(pspec) (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_DISPLAY_ID, GimpParamSpecDisplayID))
-
 static void       gimp_param_display_id_class_init  (GParamSpecClass *class);
 static void       gimp_param_display_id_init        (GParamSpec      *pspec);
 static void       gimp_param_display_id_set_default (GParamSpec      *pspec,
@@ -484,15 +595,6 @@ static gboolean   gimp_param_display_id_validate    (GParamSpec      *pspec,
 static gint       gimp_param_display_id_values_cmp  (GParamSpec      *pspec,
                                                      const GValue    *value1,
                                                      const GValue    *value2);
-
-typedef struct _GimpParamSpecDisplayID GimpParamSpecDisplayID;
-
-struct _GimpParamSpecDisplayID
-{
-  GParamSpecInt  parent_instance;
-
-  Gimp          *gimp;
-};
 
 GType
 gimp_param_display_id_get_type (void)
@@ -555,7 +657,13 @@ gimp_param_display_id_validate (GParamSpec *pspec,
   display_id = value->data[0].v_int;
   display    = gimp_get_display_by_ID (ispec->gimp, display_id);
 
-  return GIMP_IS_OBJECT (display);
+  if (! GIMP_IS_OBJECT (display))
+    {
+      value->data[0].v_int = -1;
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 static gint
@@ -675,8 +783,6 @@ gimp_parasite_get_type (void)
  * GIMP_TYPE_PARAM_PARASITE
  */
 
-#define GIMP_PARAM_SPEC_PARASITE(pspec) (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_PARASITE, GimpParamSpecParasite))
-
 static void       gimp_param_parasite_class_init  (GParamSpecClass *class);
 static void       gimp_param_parasite_init        (GParamSpec      *pspec);
 static void       gimp_param_parasite_set_default (GParamSpec      *pspec,
@@ -686,13 +792,6 @@ static gboolean   gimp_param_parasite_validate    (GParamSpec      *pspec,
 static gint       gimp_param_parasite_values_cmp  (GParamSpec      *pspec,
                                                    const GValue    *value1,
                                                    const GValue    *value2);
-
-typedef struct _GimpParamSpecParasite GimpParamSpecParasite;
-
-struct _GimpParamSpecParasite
-{
-  GParamSpecBoxed parent_instance;
-};
 
 GType
 gimp_param_parasite_get_type (void)
@@ -748,15 +847,20 @@ gimp_param_parasite_validate (GParamSpec *pspec,
 
   parasite = value->data[0].v_pointer;
 
-  if (parasite)
+  if (! parasite)
     {
-      return (parasite->name != NULL                     &&
-              g_utf8_validate (parasite->name, -1, NULL) &&
-              ((parasite->size == 0 && parasite->data == NULL) ||
-               (parasite->size >  0 && parasite->data != NULL)));
+      return TRUE;
+    }
+  else if (parasite->name == NULL                          ||
+           ! g_utf8_validate (parasite->name, -1, NULL)    ||
+           (parasite->size == 0 && parasite->data != NULL) ||
+           (parasite->size >  0 && parasite->data == NULL))
+    {
+      g_value_set_boxed (value, NULL);
+      return TRUE;
     }
 
-  return FALSE;
+  return TRUE;
 }
 
 static gint
