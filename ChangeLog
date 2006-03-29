@@ -1,5 +1,10 @@
 2006-03-29  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/Makefile.am: added an explicit dependency to
+	force creation of gimp-wilber-pixbufs.h.
+
+2006-03-29  Sven Neumann  <sven@gimp.org>
+
 	* desktop/Makefile.am
 	* desktop/gimp.png: removed.
 

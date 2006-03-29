@@ -253,11 +253,14 @@ EXTRA_DIST = \
 	$(WILBER_IMAGES)
 
 
+gimpwidgets-private.c: gimp-wilber-pixbufs.h
+
+
 #
 # rules to generate built sources
 #
 # setup autogeneration dependancies
-gen_sources = xgen-wec xgen-wmh xgen-wmc
+gen_sources = xgen-wec xgen-wmh xgen-wmc gimp-wilber-pixbufs.h
 CLEANFILES = $(gen_sources)
 
 $(srcdir)/gimpwidgetsenums.c: $(srcdir)/gimpwidgetsenums.h $(GIMP_MKENUMS)
