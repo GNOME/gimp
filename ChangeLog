@@ -1,3 +1,8 @@
+2006-03-29  Sven Neumann  <sven@gimp.org>
+
+	* desktop/gimp.desktop.in.in: dropped the extension from the icon
+	name (bug #336498).
+
 2006-03-29  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/drawable.pdb (drawable_type_with_alpha): fixed
