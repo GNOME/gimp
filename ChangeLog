@@ -1,5 +1,10 @@
 2006-03-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/procedural_db.c (procedural_db_init_proc): switch to
+	g_return_val_if_fail() because it got a return value.
+
+2006-03-29  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/fileops.pdb (file_save): pass the filename, not
 	a GimpImage to file_utils_filename_to_uri(). Fixes bug #336527.
 

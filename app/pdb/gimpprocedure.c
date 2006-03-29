@@ -597,11 +597,11 @@ procedural_db_init_proc (ProcRecord     *procedure,
                          gint            n_arguments,
                          gint            n_return_values)
 {
-  g_return_if_fail (procedure != NULL);
-  g_return_if_fail (procedure->args == NULL);
-  g_return_if_fail (procedure->values == NULL);
-  g_return_if_fail (n_arguments >= 0);
-  g_return_if_fail (n_return_values >= 0);
+  g_return_val_if_fail (procedure != NULL, procedure);
+  g_return_val_if_fail (procedure->args == NULL, procedure);
+  g_return_val_if_fail (procedure->values == NULL, procedure);
+  g_return_val_if_fail (n_arguments >= 0, procedure);
+  g_return_val_if_fail (n_return_values >= 0, procedure);
 
   procedure->num_args = n_arguments;
   procedure->args     = g_new0 (ProcArg, n_arguments);
