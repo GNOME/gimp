@@ -321,8 +321,9 @@ HELP
 
     @outargs = (
 	{ name => 'type_with_alpha', type => 'enum GimpImageType
-					      (no RGB_GIMAGE, GRAY_GIMAGE,
-					      INDEXED_GIMAGE)',
+					      (no GIMP_RGB_IMAGE,
+					       GIMP_GRAY_IMAGE,
+					       GIMP_INDEXED_IMAGE)',
 	  desc => "The drawable's type with alpha: %%desc%%" }
     );
 

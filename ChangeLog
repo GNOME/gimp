@@ -1,5 +1,12 @@
 2006-03-29  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/drawable.pdb (drawable_type_with_alpha): fixed
+	forgotten antique enum values (RGBA_GIMAGE -> GIMP_RGB_IMAGE etc.)
+
+	* app/pdb/drawable_cmds.c: regenerated.
+
+2006-03-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/pdb/procedural_db.[ch] (procedural_db_init_proc): return the
 	procedure.
 

@@ -198,7 +198,7 @@ register_drawable_procs (Gimp *gimp)
                                   GIMP_PDB_INT32,
                                   g_param_spec_enum ("type-with-alpha",
                                                      "type with alpha",
-                                                     "The drawable's type with alpha: { GIMP_RGB_IMAGE (0), GIMP_RGBA_IMAGE (1), GIMP_GRAY_IMAGE (2), GIMP_GRAYA_IMAGE (3), GIMP_INDEXED_IMAGE (4), GIMP_INDEXEDA_IMAGE (5) }",
+                                                     "The drawable's type with alpha: { GIMP_RGBA_IMAGE (1), GIMP_GRAYA_IMAGE (3), GIMP_INDEXEDA_IMAGE (5) }",
                                                      GIMP_TYPE_IMAGE_TYPE,
                                                      GIMP_RGB_IMAGE,
                                                      GIMP_PARAM_READWRITE));
