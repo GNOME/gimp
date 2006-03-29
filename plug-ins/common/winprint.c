@@ -216,18 +216,20 @@ query (void)
   };
 
   gimp_install_procedure (PRINT_PROC,
-			  N_("Print image to any recognized printer"),
+			  N_("Print the image"),
+			  "Prints images to any printer recognized by Windows.",
 			  "Tor Lillqvist <tml@iki.fi>",
 			  "Copyright 1999 Tor Lillqvist",
 			  "$Id$",
-			  N_("_Print"),
+			  N_("_Print..."),
 			  "RGB*,GRAY*,INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (print_args), 0,
 			  print_args, NULL);
 
   gimp_install_procedure (PAGE_SETUP_PROC,
-			  N_("Set up  page layout for printing"),
+			  N_("Set up page layout for printing"),
+			  "Sets up the page parameters for printing to a Windows printer.",
 			  "Tor Lillqvist <tml@iki.fi>",
 			  "Copyright 1999 Tor Lillqvist",
 			  "$Id$",
