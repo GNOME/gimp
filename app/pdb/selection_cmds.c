@@ -445,9 +445,7 @@ selection_bounds_invoker (ProcRecord   *proc_record,
   gint32 x2 = 0;
   gint32 y2 = 0;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -459,11 +457,11 @@ selection_bounds_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = non_empty;
-      return_vals[2].value.pdb_int = x1;
-      return_vals[3].value.pdb_int = y1;
-      return_vals[4].value.pdb_int = x2;
-      return_vals[5].value.pdb_int = y2;
+      g_value_set_boolean (&return_vals[1].value, non_empty);
+      g_value_set_int (&return_vals[2].value, x1);
+      g_value_set_int (&return_vals[3].value, y1);
+      g_value_set_int (&return_vals[4].value, x2);
+      g_value_set_int (&return_vals[5].value, y2);
     }
 
   return return_vals;
@@ -498,13 +496,9 @@ selection_value_invoker (ProcRecord   *proc_record,
   gint32 y;
   gint32 value = 0;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  x = args[1].value.pdb_int;
-
-  y = args[2].value.pdb_int;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  x = g_value_get_int (&args[1].value);
+  y = g_value_get_int (&args[2].value);
 
   if (success)
     {
@@ -514,7 +508,7 @@ selection_value_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = value;
+    g_value_set_int (&return_vals[1].value, value);
 
   return return_vals;
 }
@@ -546,9 +540,7 @@ selection_is_empty_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gboolean is_empty = FALSE;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -558,7 +550,7 @@ selection_is_empty_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = is_empty;
+    g_value_set_boolean (&return_vals[1].value, is_empty);
 
   return return_vals;
 }
@@ -590,13 +582,9 @@ selection_translate_invoker (ProcRecord   *proc_record,
   gint32 offx;
   gint32 offy;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  offx = args[1].value.pdb_int;
-
-  offy = args[2].value.pdb_int;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  offx = g_value_get_int (&args[1].value);
+  offy = g_value_get_int (&args[2].value);
 
   if (success)
     {
@@ -636,13 +624,9 @@ selection_float_invoker (ProcRecord   *proc_record,
   gint32 offy;
   GimpLayer *layer = NULL;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  offx = args[1].value.pdb_int;
-
-  offy = args[2].value.pdb_int;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  offx = g_value_get_int (&args[1].value);
+  offy = g_value_get_int (&args[2].value);
 
   if (success)
     {
@@ -662,7 +646,7 @@ selection_float_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = layer ? gimp_item_get_ID (GIMP_ITEM (layer)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (layer));
 
   return return_vals;
 }
@@ -692,9 +676,7 @@ selection_invert_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -729,9 +711,7 @@ selection_sharpen_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -766,9 +746,7 @@ selection_all_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -803,9 +781,7 @@ selection_none_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -841,13 +817,8 @@ selection_feather_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gdouble radius;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  radius = args[1].value.pdb_float;
-  if (radius < 0.0)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  radius = g_value_get_double (&args[1].value);
 
   if (success)
     {
@@ -884,13 +855,8 @@ selection_border_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gint32 radius;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  radius = args[1].value.pdb_int;
-  if (radius < 0)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  radius = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -927,13 +893,8 @@ selection_grow_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gint32 steps;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  steps = args[1].value.pdb_int;
-  if (steps < 0)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  steps = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -970,13 +931,8 @@ selection_shrink_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gint32 steps;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  steps = args[1].value.pdb_int;
-  if (steps < 0)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  steps = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -1012,9 +968,7 @@ selection_layer_alpha_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpLayer *layer;
 
-  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
-    success = FALSE;
+  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
 
   if (success)
     {
@@ -1053,9 +1007,7 @@ selection_load_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpChannel *channel;
 
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
-    success = FALSE;
+  channel = (GimpChannel *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_CHANNEL);
 
   if (success)
     {
@@ -1103,9 +1055,7 @@ selection_save_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpChannel *channel = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -1118,7 +1068,7 @@ selection_save_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = channel ? gimp_item_get_ID (GIMP_ITEM (channel)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (channel));
 
   return return_vals;
 }
@@ -1149,13 +1099,8 @@ selection_combine_invoker (ProcRecord   *proc_record,
   GimpChannel *channel;
   gint32 operation;
 
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
-    success = FALSE;
-
-  operation = args[1].value.pdb_int;
-  if (operation < GIMP_CHANNEL_OP_ADD || operation > GIMP_CHANNEL_OP_INTERSECT)
-    success = FALSE;
+  channel = (GimpChannel *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_CHANNEL);
+  operation = g_value_get_enum (&args[1].value);
 
   if (success)
     {

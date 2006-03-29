@@ -593,17 +593,9 @@ brightness_contrast_invoker (ProcRecord   *proc_record,
   gint32 brightness;
   gint32 contrast;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  brightness = args[1].value.pdb_int;
-  if (brightness < -127 || brightness > 127)
-    success = FALSE;
-
-  contrast = args[2].value.pdb_int;
-  if (contrast < -127 || contrast > 127)
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  brightness = g_value_get_int (&args[1].value);
+  contrast = g_value_get_int (&args[2].value);
 
   if (success)
     {
@@ -676,33 +668,13 @@ levels_invoker (ProcRecord   *proc_record,
   gint32 low_output;
   gint32 high_output;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  channel = args[1].value.pdb_int;
-  if (channel < GIMP_HISTOGRAM_VALUE || channel > GIMP_HISTOGRAM_ALPHA)
-    success = FALSE;
-
-  low_input = args[2].value.pdb_int;
-  if (low_input < 0 || low_input > 255)
-    success = FALSE;
-
-  high_input = args[3].value.pdb_int;
-  if (high_input < 0 || high_input > 255)
-    success = FALSE;
-
-  gamma = args[4].value.pdb_float;
-  if (gamma < 0.1 || gamma > 10.0)
-    success = FALSE;
-
-  low_output = args[5].value.pdb_int;
-  if (low_output < 0 || low_output > 255)
-    success = FALSE;
-
-  high_output = args[6].value.pdb_int;
-  if (high_output < 0 || high_output > 255)
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  channel = g_value_get_enum (&args[1].value);
+  low_input = g_value_get_int (&args[2].value);
+  high_input = g_value_get_int (&args[3].value);
+  gamma = g_value_get_double (&args[4].value);
+  low_output = g_value_get_int (&args[5].value);
+  high_output = g_value_get_int (&args[6].value);
 
   if (success)
     {
@@ -750,9 +722,7 @@ levels_auto_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -792,9 +762,7 @@ levels_stretch_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -835,13 +803,8 @@ posterize_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gint32 levels;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  levels = args[1].value.pdb_int;
-  if (levels < 2 || levels > 255)
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  levels = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -906,9 +869,7 @@ desaturate_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -949,13 +910,8 @@ desaturate_full_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gint32 desaturate_mode;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  desaturate_mode = args[1].value.pdb_int;
-  if (desaturate_mode < GIMP_DESATURATE_LIGHTNESS || desaturate_mode > GIMP_DESATURATE_AVERAGE)
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  desaturate_mode = g_value_get_enum (&args[1].value);
 
   if (success)
     {
@@ -996,11 +952,8 @@ equalize_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gboolean mask_only;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  mask_only = args[1].value.pdb_int ? TRUE : FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  mask_only = g_value_get_boolean (&args[1].value);
 
   if (success)
     {
@@ -1040,9 +993,7 @@ invert_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -1085,19 +1036,10 @@ curves_spline_invoker (ProcRecord   *proc_record,
   gint32 num_points;
   guint8 *control_pts;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  channel = args[1].value.pdb_int;
-  if (channel < GIMP_HISTOGRAM_VALUE || channel > GIMP_HISTOGRAM_ALPHA)
-    success = FALSE;
-
-  num_points = args[2].value.pdb_int;
-  if (num_points < 4 || num_points > 34)
-    success = FALSE;
-
-  control_pts = (guint8 *) args[3].value.pdb_pointer;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  channel = g_value_get_enum (&args[1].value);
+  num_points = g_value_get_int (&args[2].value);
+  control_pts = g_value_get_pointer (&args[3].value);
 
   if (success)
     {
@@ -1195,19 +1137,10 @@ curves_explicit_invoker (ProcRecord   *proc_record,
   gint32 num_bytes;
   guint8 *curve;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  channel = args[1].value.pdb_int;
-  if (channel < GIMP_HISTOGRAM_VALUE || channel > GIMP_HISTOGRAM_ALPHA)
-    success = FALSE;
-
-  num_bytes = args[2].value.pdb_int;
-  if (num_bytes <= 0)
-    success = FALSE;
-
-  curve = (guint8 *) args[3].value.pdb_pointer;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  channel = g_value_get_enum (&args[1].value);
+  num_bytes = g_value_get_int (&args[2].value);
+  curve = g_value_get_pointer (&args[3].value);
 
   if (success)
     {
@@ -1298,27 +1231,12 @@ color_balance_invoker (ProcRecord   *proc_record,
   gdouble magenta_green;
   gdouble yellow_blue;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  transfer_mode = args[1].value.pdb_int;
-  if (transfer_mode < GIMP_SHADOWS || transfer_mode > GIMP_HIGHLIGHTS)
-    success = FALSE;
-
-  preserve_lum = args[2].value.pdb_int ? TRUE : FALSE;
-
-  cyan_red = args[3].value.pdb_float;
-  if (cyan_red < -100.0 || cyan_red > 100.0)
-    success = FALSE;
-
-  magenta_green = args[4].value.pdb_float;
-  if (magenta_green < -100.0 || magenta_green > 100.0)
-    success = FALSE;
-
-  yellow_blue = args[5].value.pdb_float;
-  if (yellow_blue < -100.0 || yellow_blue > 100.0)
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  transfer_mode = g_value_get_enum (&args[1].value);
+  preserve_lum = g_value_get_boolean (&args[2].value);
+  cyan_red = g_value_get_double (&args[3].value);
+  magenta_green = g_value_get_double (&args[4].value);
+  yellow_blue = g_value_get_double (&args[5].value);
 
   if (success)
     {
@@ -1391,21 +1309,10 @@ colorize_invoker (ProcRecord   *proc_record,
   gdouble saturation;
   gdouble lightness;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  hue = args[1].value.pdb_float;
-  if (hue < 0.0 || hue > 360.0)
-    success = FALSE;
-
-  saturation = args[2].value.pdb_float;
-  if (saturation < 0.0 || saturation > 100.0)
-    success = FALSE;
-
-  lightness = args[3].value.pdb_float;
-  if (lightness < -100.0 || lightness > 100.0)
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  hue = g_value_get_double (&args[1].value);
+  saturation = g_value_get_double (&args[2].value);
+  lightness = g_value_get_double (&args[3].value);
 
   if (success)
     {
@@ -1483,21 +1390,10 @@ histogram_invoker (ProcRecord   *proc_record,
   gdouble count = 0.0;
   gdouble percentile = 0.0;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  channel = args[1].value.pdb_int;
-  if (channel < GIMP_HISTOGRAM_VALUE || channel > GIMP_HISTOGRAM_ALPHA)
-    success = FALSE;
-
-  start_range = args[2].value.pdb_int;
-  if (start_range < 0 || start_range >= 256)
-    success = FALSE;
-
-  end_range = args[3].value.pdb_int;
-  if (end_range < 0 || end_range >= 256)
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  channel = g_value_get_enum (&args[1].value);
+  start_range = g_value_get_int (&args[2].value);
+  end_range = g_value_get_int (&args[3].value);
 
   if (success)
     {
@@ -1534,12 +1430,12 @@ histogram_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_float = mean;
-      return_vals[2].value.pdb_float = std_dev;
-      return_vals[3].value.pdb_float = median;
-      return_vals[4].value.pdb_float = pixels;
-      return_vals[5].value.pdb_float = count;
-      return_vals[6].value.pdb_float = percentile;
+      g_value_set_double (&return_vals[1].value, mean);
+      g_value_set_double (&return_vals[2].value, std_dev);
+      g_value_set_double (&return_vals[3].value, median);
+      g_value_set_double (&return_vals[4].value, pixels);
+      g_value_set_double (&return_vals[5].value, count);
+      g_value_set_double (&return_vals[6].value, percentile);
     }
 
   return return_vals;
@@ -1574,25 +1470,11 @@ hue_saturation_invoker (ProcRecord   *proc_record,
   gdouble lightness;
   gdouble saturation;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  hue_range = args[1].value.pdb_int;
-  if (hue_range < GIMP_ALL_HUES || hue_range > GIMP_MAGENTA_HUES)
-    success = FALSE;
-
-  hue_offset = args[2].value.pdb_float;
-  if (hue_offset < -180.0 || hue_offset > 180.0)
-    success = FALSE;
-
-  lightness = args[3].value.pdb_float;
-  if (lightness < -100.0 || lightness > 100.0)
-    success = FALSE;
-
-  saturation = args[4].value.pdb_float;
-  if (saturation < -100.0 || saturation > 100.0)
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  hue_range = g_value_get_enum (&args[1].value);
+  hue_offset = g_value_get_double (&args[2].value);
+  lightness = g_value_get_double (&args[3].value);
+  saturation = g_value_get_double (&args[4].value);
 
   if (success)
     {
@@ -1663,17 +1545,9 @@ threshold_invoker (ProcRecord   *proc_record,
   gint32 low_threshold;
   gint32 high_threshold;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  low_threshold = args[1].value.pdb_int;
-  if (low_threshold < 0 || low_threshold > 255)
-    success = FALSE;
-
-  high_threshold = args[2].value.pdb_int;
-  if (high_threshold < 0 || high_threshold > 255)
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  low_threshold = g_value_get_int (&args[1].value);
+  high_threshold = g_value_get_int (&args[2].value);
 
   if (success)
     {

@@ -64,12 +64,14 @@ register_transform_tools_procs (Gimp *gimp)
                                                        GIMP_PARAM_READWRITE));
   procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
-                              g_param_spec_enum ("flip-type",
-                                                 "flip type",
-                                                 "Type of flip: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }",
-                                                 GIMP_TYPE_ORIENTATION_TYPE,
-                                                 GIMP_ORIENTATION_HORIZONTAL,
-                                                 GIMP_PARAM_READWRITE));
+                              gimp_param_spec_enum ("flip-type",
+                                                    "flip type",
+                                                    "Type of flip: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }",
+                                                    GIMP_TYPE_ORIENTATION_TYPE,
+                                                    GIMP_ORIENTATION_HORIZONTAL,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[1].pspec),
+                                      GIMP_ORIENTATION_UNKNOWN);
   procedural_db_add_return_value (procedure,
                                   GIMP_PDB_DRAWABLE,
                                   gimp_param_spec_item_id ("drawable",
@@ -279,12 +281,14 @@ register_transform_tools_procs (Gimp *gimp)
                                                     GIMP_PARAM_READWRITE));
   procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
-                              g_param_spec_enum ("shear-type",
-                                                 "shear type",
-                                                 "Type of shear: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }",
-                                                 GIMP_TYPE_ORIENTATION_TYPE,
-                                                 GIMP_ORIENTATION_HORIZONTAL,
-                                                 GIMP_PARAM_READWRITE));
+                              gimp_param_spec_enum ("shear-type",
+                                                    "shear type",
+                                                    "Type of shear: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }",
+                                                    GIMP_TYPE_ORIENTATION_TYPE,
+                                                    GIMP_ORIENTATION_HORIZONTAL,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[2].pspec),
+                                      GIMP_ORIENTATION_UNKNOWN);
   procedural_db_add_argument (procedure,
                               GIMP_PDB_FLOAT,
                               g_param_spec_double ("magnitude",
@@ -394,13 +398,8 @@ flip_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gint32 flip_type;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  flip_type = args[1].value.pdb_int;
-  if (flip_type < GIMP_ORIENTATION_HORIZONTAL || flip_type > GIMP_ORIENTATION_VERTICAL)
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  flip_type = g_value_get_enum (&args[1].value);
 
   if (success)
     {
@@ -419,7 +418,7 @@ flip_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
 
   return return_vals;
 }
@@ -459,27 +458,16 @@ perspective_invoker (ProcRecord   *proc_record,
   gdouble x3;
   gdouble y3;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  interpolation = args[1].value.pdb_int ? TRUE : FALSE;
-
-  x0 = args[2].value.pdb_float;
-
-  y0 = args[3].value.pdb_float;
-
-  x1 = args[4].value.pdb_float;
-
-  y1 = args[5].value.pdb_float;
-
-  x2 = args[6].value.pdb_float;
-
-  y2 = args[7].value.pdb_float;
-
-  x3 = args[8].value.pdb_float;
-
-  y3 = args[9].value.pdb_float;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  interpolation = g_value_get_boolean (&args[1].value);
+  x0 = g_value_get_double (&args[2].value);
+  y0 = g_value_get_double (&args[3].value);
+  x1 = g_value_get_double (&args[4].value);
+  y1 = g_value_get_double (&args[5].value);
+  x2 = g_value_get_double (&args[6].value);
+  y2 = g_value_get_double (&args[7].value);
+  x3 = g_value_get_double (&args[8].value);
+  y3 = g_value_get_double (&args[9].value);
 
   if (success)
     {
@@ -523,7 +511,7 @@ perspective_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
 
   return return_vals;
 }
@@ -556,13 +544,9 @@ rotate_invoker (ProcRecord   *proc_record,
   gboolean interpolation;
   gdouble angle;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  interpolation = args[1].value.pdb_int ? TRUE : FALSE;
-
-  angle = args[2].value.pdb_float;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  interpolation = g_value_get_boolean (&args[1].value);
+  angle = g_value_get_double (&args[2].value);
 
   if (success)
     {
@@ -602,7 +586,7 @@ rotate_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
 
   return return_vals;
 }
@@ -638,19 +622,12 @@ scale_invoker (ProcRecord   *proc_record,
   gdouble x1;
   gdouble y1;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  interpolation = args[1].value.pdb_int ? TRUE : FALSE;
-
-  x0 = args[2].value.pdb_float;
-
-  y0 = args[3].value.pdb_float;
-
-  x1 = args[4].value.pdb_float;
-
-  y1 = args[5].value.pdb_float;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  interpolation = g_value_get_boolean (&args[1].value);
+  x0 = g_value_get_double (&args[2].value);
+  y0 = g_value_get_double (&args[3].value);
+  x1 = g_value_get_double (&args[4].value);
+  y1 = g_value_get_double (&args[5].value);
 
   if (success)
     {
@@ -694,7 +671,7 @@ scale_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
 
   return return_vals;
 }
@@ -728,17 +705,10 @@ shear_invoker (ProcRecord   *proc_record,
   gint32 shear_type;
   gdouble magnitude;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  interpolation = args[1].value.pdb_int ? TRUE : FALSE;
-
-  shear_type = args[2].value.pdb_int;
-  if (shear_type < GIMP_ORIENTATION_HORIZONTAL || shear_type > GIMP_ORIENTATION_VERTICAL)
-    success = FALSE;
-
-  magnitude = args[3].value.pdb_float;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  interpolation = g_value_get_boolean (&args[1].value);
+  shear_type = g_value_get_enum (&args[2].value);
+  magnitude = g_value_get_double (&args[3].value);
 
   if (success)
     {
@@ -779,7 +749,7 @@ shear_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
 
   return return_vals;
 }
@@ -818,25 +788,15 @@ transform_2d_invoker (ProcRecord   *proc_record,
   gdouble dest_x;
   gdouble dest_y;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  interpolation = args[1].value.pdb_int ? TRUE : FALSE;
-
-  source_x = args[2].value.pdb_float;
-
-  source_y = args[3].value.pdb_float;
-
-  scale_x = args[4].value.pdb_float;
-
-  scale_y = args[5].value.pdb_float;
-
-  angle = args[6].value.pdb_float;
-
-  dest_x = args[7].value.pdb_float;
-
-  dest_y = args[8].value.pdb_float;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  interpolation = g_value_get_boolean (&args[1].value);
+  source_x = g_value_get_double (&args[2].value);
+  source_y = g_value_get_double (&args[3].value);
+  scale_x = g_value_get_double (&args[4].value);
+  scale_y = g_value_get_double (&args[5].value);
+  angle = g_value_get_double (&args[6].value);
+  dest_x = g_value_get_double (&args[7].value);
+  dest_y = g_value_get_double (&args[8].value);
 
   if (success)
     {
@@ -877,7 +837,7 @@ transform_2d_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
 
   return return_vals;
 }

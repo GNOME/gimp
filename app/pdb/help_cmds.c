@@ -73,13 +73,8 @@ help_invoker (ProcRecord   *proc_record,
   gchar *help_domain;
   gchar *help_id;
 
-  help_domain = (gchar *) args[0].value.pdb_pointer;
-  if (help_domain && !g_utf8_validate (help_domain, -1, NULL))
-    success = FALSE;
-
-  help_id = (gchar *) args[1].value.pdb_pointer;
-  if (help_id == NULL || !g_utf8_validate (help_id, -1, NULL))
-    success = FALSE;
+  help_domain = (gchar *) g_value_get_string (&args[0].value);
+  help_id = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {

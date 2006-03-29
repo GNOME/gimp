@@ -307,11 +307,10 @@ plug_in_progress_cancel_callback (GimpProgress *progress,
 
   if (proc_frame->main_loop)
     {
-      proc_frame->return_vals   = g_new (Argument, 1);
+      proc_frame->return_vals   = procedural_db_return_values (NULL, FALSE);
       proc_frame->n_return_vals = 1;
 
-      proc_frame->return_vals->arg_type      = GIMP_PDB_STATUS;
-      proc_frame->return_vals->value.pdb_int = GIMP_PDB_CANCEL;
+      g_value_set_enum (&proc_frame->return_vals->value, GIMP_PDB_CANCEL);
     }
 
   for (list = plug_in->temp_proc_frames; list; list = g_list_next (list))
@@ -320,11 +319,10 @@ plug_in_progress_cancel_callback (GimpProgress *progress,
 
       if (proc_frame->main_loop)
         {
-          proc_frame->return_vals   = g_new (Argument, 1);
+          proc_frame->return_vals   = procedural_db_return_values (NULL, FALSE);
           proc_frame->n_return_vals = 1;
 
-          proc_frame->return_vals->arg_type      = GIMP_PDB_STATUS;
-          proc_frame->return_vals->value.pdb_int = GIMP_PDB_CANCEL;
+          g_value_set_enum (&proc_frame->return_vals->value, GIMP_PDB_CANCEL);
         }
     }
 

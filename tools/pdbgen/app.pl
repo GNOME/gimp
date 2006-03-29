@@ -21,8 +21,6 @@ $destdir = "$main::destdir/app/pdb";
 
 *arg_types = \%Gimp::CodeGen::pdb::arg_types;
 *arg_parse = \&Gimp::CodeGen::pdb::arg_parse;
-*arg_ptype = \&Gimp::CodeGen::pdb::arg_ptype;
-*arg_vname = \&Gimp::CodeGen::pdb::arg_vname;
 
 *enums = \%Gimp::CodeGen::enums::enums;
 
@@ -61,33 +59,6 @@ sub format_code_frag {
     $code;
 }
 
-sub arg_value {
-    my ($arg, $argc) = @_;
-    my $cast = "";
-
-    my $type = &arg_ptype($arg);
-
-    if ($type eq 'pointer' || $arg->{type} =~ /int(16|8)$/) {
-	$cast = "($arg->{type}) ";
-    }
-
-    return "${cast}args[$argc].value.pdb_$type";
-}
-
-sub make_arg_test {
-    my ($arg, $reverse, $test) = @_;
-    my $result = "";
-
-    if (!exists $arg->{no_success}) {
-	$result .= ' ' x 2 . "if ($test)\n";
-	$result .= ' ' x 4 . "success = FALSE;\n";
-
-	$success = 1;
-    }
-
-    $result;
-}
-
 sub declare_args {
     my $proc = shift;
     my $out = shift;
@@ -107,7 +78,7 @@ sub declare_args {
 	    }
 
 	    unless (exists $_->{no_declare}) {
-		$result .= ' ' x 2 . $arg->{type} . &arg_vname($_);
+		$result .= ' ' x 2 . $arg->{type} . $_->{name};
 		if ($init) {
 		    $result .= " = $arg->{init_value}";
 		}
@@ -161,168 +132,20 @@ sub marshal_inargs {
     foreach (@inargs) {
 	my($pdbtype, @typeinfo) = &arg_parse($_->{type});
 	my $arg = $arg_types{$pdbtype};
-	my $var = &arg_vname($_);
-	my $value = &arg_value($arg, $argc++);
-	
-	if (exists $arg->{id_func}) {
-	    my $id_func = $arg->{id_func};
+	my $var = $_->{name};
+	my $value;
 
-	    $result .= "  $var = $id_func (gimp, $value);\n";
+	$value = "&args[$argc].value";
+	$result .= eval qq/"  $arg->{get_value_func};\n"/;
 
-	    if (exists $arg->{check_func}) {
-		my $check_func = eval qq/"$arg->{check_func}"/;
+	$argc++;
 
-		$result .= &make_arg_test($_, sub { ${$_[0]} =~ s/==/!=/ },
-		                          "! $check_func");
-	    } else {
-		$result .= &make_arg_test($_, sub { ${$_[0]} =~ s/==/!=/ },
-				          "$var == NULL");
-	    }
+	if (!exists $_->{no_success}) {
+	    $success = 1;
 	}
-	else {
-	    $result .= ' ' x 2 . "$var = $value";
-	    $result .= ' ? TRUE : FALSE' if $pdbtype eq 'boolean';
-	    $result .= ";\n";
-
-	    if ($pdbtype eq 'string' || $pdbtype eq 'parasite') {
-		my ($reverse, $test, $utf8, $utf8testvar);
-
-		$test = "$var == NULL";
-                $utf8 = 1;
-
-		if ($pdbtype eq 'parasite') {
-		    $test .= " || $var->name == NULL";
-		    $utf8testvar = "$var->name";
-		}
-		else {
-		    $utf8 = !exists $_->{no_validate};
-		    $utf8testvar = "$var";
-		}
-
-		if (exists $_->{null_ok}) {
-		    $reverse = sub { ${$_[0]} =~ s/!//; };
-		    $test = "$var && !g_utf8_validate ($var, -1, NULL)";
-		}
-		elsif ($utf8) {
-		    $reverse = sub { ${$_[0]} =~ s/!//;
-				     ${$_[0]} =~ s/||/&&/g;
-				     ${$_[0]} =~ s/==/!=/g };
-                    $test .= " || !g_utf8_validate ($utf8testvar, -1, NULL)";
-		}
-		else {
-		    $reverse = sub { ${$_[0]} =~ s/||/&&/g;
-				     ${$_[0]} =~ s/==/!=/g };
-		}
-
-		$result .= &make_arg_test($_, $reverse, $test);
-	    }
-	    elsif ($pdbtype eq 'tattoo') {
-		$result .= &make_arg_test($_, sub { ${$_[0]} =~ s/==/!=/ },
-					  "$var == 0");
-	    }
-	    elsif ($pdbtype eq 'unit') {
-		$typeinfo[0] = 'GIMP_UNIT_PIXEL' unless defined $typeinfo[0];
-		$result .= &make_arg_test($_, sub { ${$_[0]} = "!(${$_[0]})" },
-					  "$var < $typeinfo[0] || $var >= " .
-					  '_gimp_unit_get_number_of_units (gimp)');
-	    }
-	    elsif ($pdbtype eq 'enum' && !$enums{$typeinfo[0]}->{contig}) {
-		if (!exists $_->{no_success}) {
-		    my %vals; my $symbols = $enums{pop @typeinfo}->{symbols};
-		    @vals{@$symbols}++; delete @vals{@typeinfo};
-
-		    my $okvals = ""; my $failvals = "";
-
-		    my $once = 0;
-		    foreach (@$symbols) {
-			if (exists $vals{$_}) {
-			    $okvals .= ' ' x 4 if $once++;
-			    $okvals .= "case $_:\n";
-			}
-		    }
-
-		    $failvals .= "default:\n";
-		    if (!exists $_->{no_success}) {
-			$success = 1;
-			$failvals .= ' ' x 6 . "success = FALSE;\n"
-		    }
-
-		    $result .= <<CODE;
-  switch ($var)
-    {
-    $okvals
-      break;
-
-    $failvals
-      break;
-    }
-CODE
-		}
-	    }
-	    elsif (defined $typeinfo[0] || defined $typeinfo[2]) {
-		my $code = ""; my $tests = 0; my $extra = "";
-
-		if ($pdbtype eq 'enum') {
-		    my $symbols = $enums{shift @typeinfo}->{symbols};
-
-		    my ($start, $end) = (0, $#$symbols);
-
-		    my $syms = "@$symbols "; my $test = $syms;
-		    foreach (@typeinfo) { $test =~ s/$_ // }
-
-		    if ($syms =~ /$test/g) {
-			if (pos $syms  == length $syms) {
-			    $start = @typeinfo;
-			}
-			else {
-			    $end -= @typeinfo;
-			}
-		    }
-		    else {
-			foreach (@typeinfo) {
-			    $extra .= " || $var == $_";
-			}
-		    }
-
-		    $typeinfo[0] = $symbols->[$start];
-		    if ($start != $end) {
-			$typeinfo[1] = '<';
-			$typeinfo[2] = $symbols->[$end];
-			$typeinfo[3] = '>';
-		    }
-		    else {
-			$typeinfo[1] = '!=';
-			undef @typeinf[2..3];
-		    }
-		}
-		elsif ($pdbtype eq 'float') {
-		    foreach (@typeinfo[0, 2]) {
-			$_ .= '.0' if defined $_ && !/\./
-		    }
-		}
-
-		if (defined $typeinfo[0]) {
-		    $code .= "$var $typeinfo[1] $typeinfo[0]";
-		    $code .= '.0' if $pdbtype eq 'float' && $typeinfo[0] !~ /\./;
-		    $tests++;
-		}
-
-		if (defined $typeinfo[2]) {
-		    $code .= ' || ' if $tests;
-		    $code .= "$var $typeinfo[3] $typeinfo[2]";
-		}
-
-		$code .= $extra;
-
-		$result .= &make_arg_test($_, sub { ${$_[0]} = "!(${$_[0]})" },
-					  $code);
-	    }
-	}
-
-	$result .= "\n";
     }
 
-    $result = "\n" . $result if $result;
+    $result = "\n" . $result . "\n" if $result;
     $result;
 }
 
@@ -342,16 +165,14 @@ CODE
 	foreach (@{$proc->{outargs}}) {
 	    my ($pdbtype) = &arg_parse($_->{type});
 	    my $arg = $arg_types{$pdbtype};
-	    my $type = &arg_ptype($arg);
-	    my $var = &arg_vname($_);
+	    my $var = $_->{name};
+	    my $value;
 
-	    $argc++; $outargs .= ' ' x 2;
+	    $argc++;
 
-            if (exists $arg->{id_ret_func}) {
-		$var = eval qq/"$arg->{id_ret_func}"/;
-	    }
+	    $value = "&return_vals[$argc].value";
 
-	    $outargs .= "return_vals[$argc].value.pdb_$type = $var;\n";
+	    $outargs .= eval qq/"  $arg->{set_value_func};\n"/;
 	}
 
 	$outargs =~ s/^/' ' x 2/meg if $success;
@@ -374,9 +195,7 @@ CODE
 
 sub generate_pspec {
     my $arg = shift;
-
-    my($pdbtype, @typeinfo) = &arg_parse($arg->{type});
-
+    my ($pdbtype, @typeinfo) = &arg_parse($arg->{type});
     my $name = $arg->{canonical_name};
     my $nick = $arg->{canonical_name};
     my $blurb = &make_desc($arg);
@@ -385,6 +204,7 @@ sub generate_pspec {
     my $default;
     my $flags = 'GIMP_PARAM_READWRITE';
     my $pspec = "";
+    my $postproc = "";
 
     $nick =~ s/-/ /g;
 
@@ -566,7 +386,16 @@ CODE
 	$enum_type =~ tr/[a-z]/[A-Z]/;
 	$enum_type =~ s/^GIMP/GIMP_TYPE/;
 	$default = exists $arg->{default} ? $arg->{default} : $enums{$typeinfo[0]}->{symbols}[0];
-	$pspec = <<CODE;
+
+	my ($foo, $bar, @remove) = &arg_parse($arg->{type});
+
+	foreach (@remove) {
+	    $postproc .= 'gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM ($pspec),';
+	    $postproc .= "\n                                    $_);\n";
+	}
+
+	if ($postproc eq '') {
+	    $pspec = <<CODE;
 g_param_spec_enum ("$name",
                    "$nick",
                    "$blurb",
@@ -574,6 +403,17 @@ g_param_spec_enum ("$name",
                    $default,
                    $flags)
 CODE
+	}
+	else {
+	    $pspec = <<CODE;
+gimp_param_spec_enum ("$name",
+                      "$nick",
+                      "$blurb",
+                      $enum_type,
+                      $default,
+                      $flags)
+CODE
+        }
     }
     elsif ($pdbtype eq 'unit') {
 	$typeinfo[0] = 'GIMP_UNIT_PIXEL' unless defined $typeinfo[0];
@@ -628,13 +468,14 @@ CODE
     $pspec = "GIMP_PDB_$arg_types{$pdbtype}->{name},\n" . $pspec;
     $pspec =~ s/\s$//;
 
-    $pspec;
+    return ($pspec, $postproc);
 }
 
 sub generate {
     my @procs = @{(shift)};
     my %out;
     my $total = 0.0;
+    my $argc;
 
     foreach $name (@procs) {
 	my $proc = $main::pdb{$name};
@@ -656,8 +497,10 @@ sub generate {
   procedure = procedural_db_init_proc (\&${name}_proc, @{[scalar @inargs]}, @{[scalar @outargs]});
 CODE
 
-	foreach $arg (@inargs) {
-	    my $pspec  = &generate_pspec($arg);
+        $argc = 0;
+
+        foreach $arg (@inargs) {
+	    my ($pspec, $postproc) = &generate_pspec($arg);
 
 	    $pspec =~ s/^/' ' x length("  procedural_db_add_argument (")/meg;
 
@@ -665,10 +508,21 @@ CODE
   procedural_db_add_argument (procedure,
 ${pspec});
 CODE
+
+            if (! ($postproc eq '')) {
+		$pspec = "procedure->args[$argc].pspec";
+		$postproc =~ s/^/'  '/meg;
+		$out->{register} .= eval qq/"$postproc"/;
+	    }
+
+	    $argc++;
 	}
 
+	$argc = 0;
+
 	foreach $arg (@outargs) {
-	    my $pspec = &generate_pspec($arg);
+	    my ($pspec, $postproc) = &generate_pspec($arg);
+	    my $argc = 0;
 
 	    $pspec =~ s/^/' ' x length("  procedural_db_add_return_value (")/meg;
 
@@ -676,6 +530,14 @@ CODE
   procedural_db_add_return_value (procedure,
 ${pspec});
 CODE
+
+            if (! ($postproc eq '')) {
+		$pspec = "procedure->values[$argc].pspec";
+		$postproc =~ s/^/'  '/meg;
+		$out->{register} .= eval qq/"$postproc"/;
+	    }
+
+	    $argc++;
 	}
 
 	$out->{register} .= <<CODE;

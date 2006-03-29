@@ -196,12 +196,18 @@ register_drawable_procs (Gimp *gimp)
                                                        GIMP_PARAM_READWRITE));
   procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
-                                  g_param_spec_enum ("type-with-alpha",
-                                                     "type with alpha",
-                                                     "The drawable's type with alpha: { GIMP_RGBA_IMAGE (1), GIMP_GRAYA_IMAGE (3), GIMP_INDEXEDA_IMAGE (5) }",
-                                                     GIMP_TYPE_IMAGE_TYPE,
-                                                     GIMP_RGB_IMAGE,
-                                                     GIMP_PARAM_READWRITE));
+                                  gimp_param_spec_enum ("type-with-alpha",
+                                                        "type with alpha",
+                                                        "The drawable's type with alpha: { GIMP_RGBA_IMAGE (1), GIMP_GRAYA_IMAGE (3), GIMP_INDEXEDA_IMAGE (5) }",
+                                                        GIMP_TYPE_IMAGE_TYPE,
+                                                        GIMP_RGB_IMAGE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->values[0].pspec),
+                                      GIMP_RGB_IMAGE);
+  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->values[0].pspec),
+                                      GIMP_GRAY_IMAGE);
+  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->values[0].pspec),
+                                      GIMP_INDEXED_IMAGE);
   procedural_db_register (gimp, procedure);
 
   /*
@@ -1093,9 +1099,7 @@ drawable_delete_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -1135,9 +1139,7 @@ drawable_is_layer_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gboolean layer = FALSE;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -1147,7 +1149,7 @@ drawable_is_layer_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = layer;
+    g_value_set_boolean (&return_vals[1].value, layer);
 
   return return_vals;
 }
@@ -1179,9 +1181,7 @@ drawable_is_layer_mask_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gboolean layer_mask = FALSE;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -1191,7 +1191,7 @@ drawable_is_layer_mask_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = layer_mask;
+    g_value_set_boolean (&return_vals[1].value, layer_mask);
 
   return return_vals;
 }
@@ -1223,9 +1223,7 @@ drawable_is_channel_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gboolean channel = FALSE;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -1235,7 +1233,7 @@ drawable_is_channel_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = channel;
+    g_value_set_boolean (&return_vals[1].value, channel);
 
   return return_vals;
 }
@@ -1267,9 +1265,7 @@ drawable_type_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gint32 type = 0;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -1279,7 +1275,7 @@ drawable_type_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = type;
+    g_value_set_enum (&return_vals[1].value, type);
 
   return return_vals;
 }
@@ -1311,9 +1307,7 @@ drawable_type_with_alpha_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gint32 type_with_alpha = 0;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -1323,7 +1317,7 @@ drawable_type_with_alpha_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = type_with_alpha;
+    g_value_set_enum (&return_vals[1].value, type_with_alpha);
 
   return return_vals;
 }
@@ -1355,9 +1349,7 @@ drawable_has_alpha_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gboolean has_alpha = FALSE;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -1367,7 +1359,7 @@ drawable_has_alpha_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = has_alpha;
+    g_value_set_boolean (&return_vals[1].value, has_alpha);
 
   return return_vals;
 }
@@ -1399,9 +1391,7 @@ drawable_is_rgb_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gboolean is_rgb = FALSE;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -1411,7 +1401,7 @@ drawable_is_rgb_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = is_rgb;
+    g_value_set_boolean (&return_vals[1].value, is_rgb);
 
   return return_vals;
 }
@@ -1443,9 +1433,7 @@ drawable_is_gray_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gboolean is_gray = FALSE;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -1455,7 +1443,7 @@ drawable_is_gray_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = is_gray;
+    g_value_set_boolean (&return_vals[1].value, is_gray);
 
   return return_vals;
 }
@@ -1487,9 +1475,7 @@ drawable_is_indexed_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gboolean is_indexed = FALSE;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -1499,7 +1485,7 @@ drawable_is_indexed_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = is_indexed;
+    g_value_set_boolean (&return_vals[1].value, is_indexed);
 
   return return_vals;
 }
@@ -1531,9 +1517,7 @@ drawable_bpp_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gint32 bpp = 0;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -1543,7 +1527,7 @@ drawable_bpp_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = bpp;
+    g_value_set_int (&return_vals[1].value, bpp);
 
   return return_vals;
 }
@@ -1575,9 +1559,7 @@ drawable_width_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gint32 width = 0;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -1587,7 +1569,7 @@ drawable_width_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = width;
+    g_value_set_int (&return_vals[1].value, width);
 
   return return_vals;
 }
@@ -1619,9 +1601,7 @@ drawable_height_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gint32 height = 0;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -1631,7 +1611,7 @@ drawable_height_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = height;
+    g_value_set_int (&return_vals[1].value, height);
 
   return return_vals;
 }
@@ -1664,9 +1644,7 @@ drawable_offsets_invoker (ProcRecord   *proc_record,
   gint32 offset_x = 0;
   gint32 offset_y = 0;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -1677,8 +1655,8 @@ drawable_offsets_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = offset_x;
-      return_vals[2].value.pdb_int = offset_y;
+      g_value_set_int (&return_vals[1].value, offset_x);
+      g_value_set_int (&return_vals[2].value, offset_y);
     }
 
   return return_vals;
@@ -1711,9 +1689,7 @@ drawable_get_image_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   GimpImage *image = NULL;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -1723,7 +1699,7 @@ drawable_get_image_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = image ? gimp_image_get_ID (image) : -1;
+    gimp_value_set_image (&return_vals[1].value, image);
 
   return return_vals;
 }
@@ -1754,13 +1730,8 @@ drawable_set_image_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   GimpImage *image;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  image = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  image = gimp_value_get_image (&args[1].value, gimp);
 
   if (success)
     {
@@ -1798,9 +1769,7 @@ drawable_get_name_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gchar *name = NULL;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -1810,7 +1779,7 @@ drawable_get_name_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = name;
+    g_value_take_string (&return_vals[1].value, name);
 
   return return_vals;
 }
@@ -1841,13 +1810,8 @@ drawable_set_name_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gchar *name;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  name = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -1884,9 +1848,7 @@ drawable_get_visible_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gboolean visible = FALSE;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -1896,7 +1858,7 @@ drawable_get_visible_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = visible;
+    g_value_set_boolean (&return_vals[1].value, visible);
 
   return return_vals;
 }
@@ -1927,11 +1889,8 @@ drawable_set_visible_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gboolean visible;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  visible = args[1].value.pdb_int ? TRUE : FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  visible = g_value_get_boolean (&args[1].value);
 
   if (success)
     {
@@ -1968,9 +1927,7 @@ drawable_get_linked_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gboolean linked = FALSE;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -1980,7 +1937,7 @@ drawable_get_linked_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = linked;
+    g_value_set_boolean (&return_vals[1].value, linked);
 
   return return_vals;
 }
@@ -2011,11 +1968,8 @@ drawable_set_linked_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gboolean linked;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  linked = args[1].value.pdb_int ? TRUE : FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  linked = g_value_get_boolean (&args[1].value);
 
   if (success)
     {
@@ -2052,9 +2006,7 @@ drawable_get_tattoo_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gint32 tattoo = 0;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -2064,7 +2016,7 @@ drawable_get_tattoo_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = tattoo;
+    g_value_set_uint (&return_vals[1].value, tattoo);
 
   return return_vals;
 }
@@ -2095,13 +2047,8 @@ drawable_set_tattoo_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gint32 tattoo;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  tattoo = args[1].value.pdb_int;
-  if (tattoo == 0)
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  tattoo = g_value_get_uint (&args[1].value);
 
   if (success)
     {
@@ -2142,9 +2089,7 @@ drawable_mask_bounds_invoker (ProcRecord   *proc_record,
   gint32 x2 = 0;
   gint32 y2 = 0;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -2155,11 +2100,11 @@ drawable_mask_bounds_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = non_empty;
-      return_vals[2].value.pdb_int = x1;
-      return_vals[3].value.pdb_int = y1;
-      return_vals[4].value.pdb_int = x2;
-      return_vals[5].value.pdb_int = y2;
+      g_value_set_boolean (&return_vals[1].value, non_empty);
+      g_value_set_int (&return_vals[2].value, x1);
+      g_value_set_int (&return_vals[3].value, y1);
+      g_value_set_int (&return_vals[4].value, x2);
+      g_value_set_int (&return_vals[5].value, y2);
     }
 
   return return_vals;
@@ -2196,9 +2141,7 @@ drawable_mask_intersect_invoker (ProcRecord   *proc_record,
   gint32 width = 0;
   gint32 height = 0;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -2209,11 +2152,11 @@ drawable_mask_intersect_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = non_empty;
-      return_vals[2].value.pdb_int = x;
-      return_vals[3].value.pdb_int = y;
-      return_vals[4].value.pdb_int = width;
-      return_vals[5].value.pdb_int = height;
+      g_value_set_boolean (&return_vals[1].value, non_empty);
+      g_value_set_int (&return_vals[2].value, x);
+      g_value_set_int (&return_vals[3].value, y);
+      g_value_set_int (&return_vals[4].value, width);
+      g_value_set_int (&return_vals[5].value, height);
     }
 
   return return_vals;
@@ -2245,11 +2188,8 @@ drawable_merge_shadow_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gboolean undo;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  undo = args[1].value.pdb_int ? TRUE : FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  undo = g_value_get_boolean (&args[1].value);
 
   if (success)
     {
@@ -2303,17 +2243,11 @@ drawable_update_invoker (ProcRecord   *proc_record,
   gint32 width;
   gint32 height;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  x = args[1].value.pdb_int;
-
-  y = args[2].value.pdb_int;
-
-  width = args[3].value.pdb_int;
-
-  height = args[4].value.pdb_int;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  x = g_value_get_int (&args[1].value);
+  y = g_value_get_int (&args[2].value);
+  width = g_value_get_int (&args[3].value);
+  height = g_value_get_int (&args[4].value);
 
   if (success)
     {
@@ -2353,17 +2287,9 @@ drawable_get_pixel_invoker (ProcRecord   *proc_record,
   gint32 num_channels = 0;
   guint8 *pixel = NULL;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  x_coord = args[1].value.pdb_int;
-  if (x_coord < 0)
-    success = FALSE;
-
-  y_coord = args[2].value.pdb_int;
-  if (y_coord < 0)
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  x_coord = g_value_get_int (&args[1].value);
+  y_coord = g_value_get_int (&args[2].value);
 
   if (success)
     {
@@ -2398,8 +2324,8 @@ drawable_get_pixel_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = num_channels;
-      return_vals[2].value.pdb_pointer = pixel;
+      g_value_set_int (&return_vals[1].value, num_channels);
+      g_value_set_pointer (&return_vals[2].value, pixel);
     }
 
   return return_vals;
@@ -2434,21 +2360,11 @@ drawable_set_pixel_invoker (ProcRecord   *proc_record,
   gint32 num_channels;
   guint8 *pixel;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  x_coord = args[1].value.pdb_int;
-  if (x_coord < 0)
-    success = FALSE;
-
-  y_coord = args[2].value.pdb_int;
-  if (y_coord < 0)
-    success = FALSE;
-
-  num_channels = args[3].value.pdb_int;
-
-  pixel = (guint8 *) args[4].value.pdb_pointer;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  x_coord = g_value_get_int (&args[1].value);
+  y_coord = g_value_get_int (&args[2].value);
+  num_channels = g_value_get_int (&args[3].value);
+  pixel = g_value_get_pointer (&args[4].value);
 
   if (success)
     {
@@ -2506,13 +2422,8 @@ drawable_fill_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gint32 fill_type;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  fill_type = args[1].value.pdb_int;
-  if (fill_type < GIMP_FOREGROUND_FILL || fill_type > GIMP_PATTERN_FILL)
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  fill_type = g_value_get_enum (&args[1].value);
 
   if (success)
     {
@@ -2551,19 +2462,11 @@ drawable_offset_invoker (ProcRecord   *proc_record,
   gint32 offset_x;
   gint32 offset_y;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  wrap_around = args[1].value.pdb_int ? TRUE : FALSE;
-
-  fill_type = args[2].value.pdb_int;
-  if (fill_type < GIMP_OFFSET_BACKGROUND || fill_type > GIMP_OFFSET_TRANSPARENT)
-    success = FALSE;
-
-  offset_x = args[3].value.pdb_int;
-
-  offset_y = args[4].value.pdb_int;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  wrap_around = g_value_get_boolean (&args[1].value);
+  fill_type = g_value_get_enum (&args[2].value);
+  offset_x = g_value_get_int (&args[3].value);
+  offset_y = g_value_get_int (&args[4].value);
 
   if (success)
     {
@@ -2610,17 +2513,9 @@ drawable_thumbnail_invoker (ProcRecord   *proc_record,
   gint32 thumbnail_data_count = 0;
   guint8 *thumbnail_data = NULL;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  width = args[1].value.pdb_int;
-  if (width < 1 || width > 512)
-    success = FALSE;
-
-  height = args[2].value.pdb_int;
-  if (height < 1 || height > 512)
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  width = g_value_get_int (&args[1].value);
+  height = g_value_get_int (&args[2].value);
 
   if (success)
     {
@@ -2665,11 +2560,11 @@ drawable_thumbnail_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = actual_width;
-      return_vals[2].value.pdb_int = actual_height;
-      return_vals[3].value.pdb_int = bpp;
-      return_vals[4].value.pdb_int = thumbnail_data_count;
-      return_vals[5].value.pdb_pointer = thumbnail_data;
+      g_value_set_int (&return_vals[1].value, actual_width);
+      g_value_set_int (&return_vals[2].value, actual_height);
+      g_value_set_int (&return_vals[3].value, bpp);
+      g_value_set_int (&return_vals[4].value, thumbnail_data_count);
+      g_value_set_pointer (&return_vals[5].value, thumbnail_data);
     }
 
   return return_vals;
@@ -2712,33 +2607,13 @@ drawable_sub_thumbnail_invoker (ProcRecord   *proc_record,
   gint32 thumbnail_data_count = 0;
   guint8 *thumbnail_data = NULL;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  src_x = args[1].value.pdb_int;
-  if (src_x < 0)
-    success = FALSE;
-
-  src_y = args[2].value.pdb_int;
-  if (src_y < 0)
-    success = FALSE;
-
-  src_width = args[3].value.pdb_int;
-  if (src_width < 1)
-    success = FALSE;
-
-  src_height = args[4].value.pdb_int;
-  if (src_height < 1)
-    success = FALSE;
-
-  dest_width = args[5].value.pdb_int;
-  if (dest_width < 1 || dest_width > 512)
-    success = FALSE;
-
-  dest_height = args[6].value.pdb_int;
-  if (dest_height < 1 || dest_height > 512)
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  src_x = g_value_get_int (&args[1].value);
+  src_y = g_value_get_int (&args[2].value);
+  src_width = g_value_get_int (&args[3].value);
+  src_height = g_value_get_int (&args[4].value);
+  dest_width = g_value_get_int (&args[5].value);
+  dest_height = g_value_get_int (&args[6].value);
 
   if (success)
     {
@@ -2781,11 +2656,11 @@ drawable_sub_thumbnail_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = width;
-      return_vals[2].value.pdb_int = height;
-      return_vals[3].value.pdb_int = bpp;
-      return_vals[4].value.pdb_int = thumbnail_data_count;
-      return_vals[5].value.pdb_pointer = thumbnail_data;
+      g_value_set_int (&return_vals[1].value, width);
+      g_value_set_int (&return_vals[2].value, height);
+      g_value_set_int (&return_vals[3].value, bpp);
+      g_value_set_int (&return_vals[4].value, thumbnail_data_count);
+      g_value_set_pointer (&return_vals[5].value, thumbnail_data);
     }
 
   return return_vals;
@@ -2818,17 +2693,9 @@ drawable_foreground_extract_invoker (ProcRecord   *proc_record,
   gint32 mode;
   GimpDrawable *mask;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  mode = args[1].value.pdb_int;
-  if (mode != GIMP_FOREGROUND_EXTRACT_SIOX)
-    success = FALSE;
-
-  mask = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[2].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (mask) && ! gimp_item_is_removed (GIMP_ITEM (mask))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  mode = g_value_get_enum (&args[1].value);
+  mask = (GimpDrawable *) gimp_value_get_item (&args[2].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {

@@ -161,9 +161,7 @@ floating_sel_remove_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpLayer *floating_sel;
 
-  floating_sel = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_LAYER (floating_sel) && ! gimp_item_is_removed (GIMP_ITEM (floating_sel))))
-    success = FALSE;
+  floating_sel = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
 
   if (success)
     {
@@ -201,9 +199,7 @@ floating_sel_anchor_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpLayer *floating_sel;
 
-  floating_sel = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_LAYER (floating_sel) && ! gimp_item_is_removed (GIMP_ITEM (floating_sel))))
-    success = FALSE;
+  floating_sel = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
 
   if (success)
     {
@@ -241,9 +237,7 @@ floating_sel_to_layer_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpLayer *floating_sel;
 
-  floating_sel = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_LAYER (floating_sel) && ! gimp_item_is_removed (GIMP_ITEM (floating_sel))))
-    success = FALSE;
+  floating_sel = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
 
   if (success)
     {
@@ -282,13 +276,8 @@ floating_sel_attach_invoker (ProcRecord   *proc_record,
   GimpLayer *layer;
   GimpDrawable *drawable;
 
-  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
-    success = FALSE;
-
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -327,11 +316,8 @@ floating_sel_rigor_invoker (ProcRecord   *proc_record,
   GimpLayer *floating_sel;
   gboolean undo;
 
-  floating_sel = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_LAYER (floating_sel) && ! gimp_item_is_removed (GIMP_ITEM (floating_sel))))
-    success = FALSE;
-
-  undo = args[1].value.pdb_int ? TRUE : FALSE;
+  floating_sel = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  undo = g_value_get_boolean (&args[1].value);
 
   if (success)
     {
@@ -370,11 +356,8 @@ floating_sel_relax_invoker (ProcRecord   *proc_record,
   GimpLayer *floating_sel;
   gboolean undo;
 
-  floating_sel = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_LAYER (floating_sel) && ! gimp_item_is_removed (GIMP_ITEM (floating_sel))))
-    success = FALSE;
-
-  undo = args[1].value.pdb_int ? TRUE : FALSE;
+  floating_sel = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  undo = g_value_get_boolean (&args[1].value);
 
   if (success)
     {

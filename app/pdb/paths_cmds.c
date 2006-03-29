@@ -583,9 +583,7 @@ path_list_invoker (ProcRecord   *proc_record,
   gint32 num_paths = 0;
   gchar **path_list = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -596,8 +594,8 @@ path_list_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = num_paths;
-      return_vals[2].value.pdb_pointer = path_list;
+      g_value_set_int (&return_vals[1].value, num_paths);
+      g_value_set_pointer (&return_vals[2].value, path_list);
     }
 
   return return_vals;
@@ -630,9 +628,7 @@ path_get_current_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gchar *name = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -647,7 +643,7 @@ path_get_current_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = name;
+    g_value_take_string (&return_vals[1].value, name);
 
   return return_vals;
 }
@@ -678,13 +674,8 @@ path_set_current_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gchar *name;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  name = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -725,13 +716,8 @@ path_delete_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gchar *name;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  name = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -777,13 +763,8 @@ path_get_points_invoker (ProcRecord   *proc_record,
   gint32 num_path_point_details = 0;
   gdouble *points_pairs = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  name = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -830,10 +811,10 @@ path_get_points_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = path_type;
-      return_vals[2].value.pdb_int = path_closed;
-      return_vals[3].value.pdb_int = num_path_point_details;
-      return_vals[4].value.pdb_pointer = points_pairs;
+      g_value_set_int (&return_vals[1].value, path_type);
+      g_value_set_int (&return_vals[2].value, path_closed);
+      g_value_set_int (&return_vals[3].value, num_path_point_details);
+      g_value_set_pointer (&return_vals[4].value, points_pairs);
     }
 
   return return_vals;
@@ -868,21 +849,11 @@ path_set_points_invoker (ProcRecord   *proc_record,
   gint32 num_path_points;
   gdouble *points_pairs;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  ptype = args[2].value.pdb_int;
-
-  num_path_points = args[3].value.pdb_int;
-  if (num_path_points <= 0)
-    success = FALSE;
-
-  points_pairs = (gdouble *) args[4].value.pdb_pointer;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  name = (gchar *) g_value_get_string (&args[1].value);
+  ptype = g_value_get_int (&args[2].value);
+  num_path_points = g_value_get_int (&args[3].value);
+  points_pairs = g_value_get_pointer (&args[4].value);
 
   if (success)
     {
@@ -954,9 +925,7 @@ path_stroke_current_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -1011,11 +980,8 @@ path_get_point_at_dist_invoker (ProcRecord   *proc_record,
   gint32 y_point = 0;
   gdouble slope = 0.0;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  distance = args[1].value.pdb_float;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  distance = g_value_get_double (&args[1].value);
 
   if (success)
     {
@@ -1074,9 +1040,9 @@ path_get_point_at_dist_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = x_point;
-      return_vals[2].value.pdb_int = y_point;
-      return_vals[3].value.pdb_float = slope;
+      g_value_set_int (&return_vals[1].value, x_point);
+      g_value_set_int (&return_vals[2].value, y_point);
+      g_value_set_double (&return_vals[3].value, slope);
     }
 
   return return_vals;
@@ -1110,13 +1076,8 @@ path_get_tattoo_invoker (ProcRecord   *proc_record,
   gchar *name;
   gint32 tattoo = 0;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  name = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -1131,7 +1092,7 @@ path_get_tattoo_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = tattoo;
+    g_value_set_int (&return_vals[1].value, tattoo);
 
   return return_vals;
 }
@@ -1163,15 +1124,9 @@ path_set_tattoo_invoker (ProcRecord   *proc_record,
   gchar *name;
   gint32 tattovalue;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  tattovalue = args[2].value.pdb_int;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  name = (gchar *) g_value_get_string (&args[1].value);
+  tattovalue = g_value_get_int (&args[2].value);
 
   if (success)
     {
@@ -1214,11 +1169,8 @@ get_path_by_tattoo_invoker (ProcRecord   *proc_record,
   gint32 tattoo;
   gchar *name = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  tattoo = args[1].value.pdb_int;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  tattoo = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -1233,7 +1185,7 @@ get_path_by_tattoo_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = name;
+    g_value_take_string (&return_vals[1].value, name);
 
   return return_vals;
 }
@@ -1266,13 +1218,8 @@ path_get_locked_invoker (ProcRecord   *proc_record,
   gchar *name;
   gboolean locked = FALSE;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  name = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -1287,7 +1234,7 @@ path_get_locked_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = locked;
+    g_value_set_boolean (&return_vals[1].value, locked);
 
   return return_vals;
 }
@@ -1319,15 +1266,9 @@ path_set_locked_invoker (ProcRecord   *proc_record,
   gchar *name;
   gboolean locked;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  locked = args[2].value.pdb_int ? TRUE : FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  name = (gchar *) g_value_get_string (&args[1].value);
+  locked = g_value_get_boolean (&args[2].value);
 
   if (success)
     {
@@ -1373,25 +1314,13 @@ path_to_selection_invoker (ProcRecord   *proc_record,
   gdouble feather_radius_x;
   gdouble feather_radius_y;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  op = args[2].value.pdb_int;
-  if (op < GIMP_CHANNEL_OP_ADD || op > GIMP_CHANNEL_OP_INTERSECT)
-    success = FALSE;
-
-  antialias = args[3].value.pdb_int ? TRUE : FALSE;
-
-  feather = args[4].value.pdb_int ? TRUE : FALSE;
-
-  feather_radius_x = args[5].value.pdb_float;
-
-  feather_radius_y = args[6].value.pdb_float;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  name = (gchar *) g_value_get_string (&args[1].value);
+  op = g_value_get_enum (&args[2].value);
+  antialias = g_value_get_boolean (&args[3].value);
+  feather = g_value_get_boolean (&args[4].value);
+  feather_radius_x = g_value_get_double (&args[5].value);
+  feather_radius_y = g_value_get_double (&args[6].value);
 
   if (success)
     {
@@ -1441,17 +1370,10 @@ path_import_invoker (ProcRecord   *proc_record,
   gboolean merge;
   gboolean scale;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  filename = (gchar *) args[1].value.pdb_pointer;
-  if (filename == NULL)
-    success = FALSE;
-
-  merge = args[2].value.pdb_int ? TRUE : FALSE;
-
-  scale = args[3].value.pdb_int ? TRUE : FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  filename = (gchar *) g_value_get_string (&args[1].value);
+  merge = g_value_get_boolean (&args[2].value);
+  scale = g_value_get_boolean (&args[3].value);
 
   if (success)
     {
@@ -1490,19 +1412,11 @@ path_import_string_invoker (ProcRecord   *proc_record,
   gboolean merge;
   gboolean scale;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  string = (gchar *) args[1].value.pdb_pointer;
-  if (string == NULL)
-    success = FALSE;
-
-  length = args[2].value.pdb_int;
-
-  merge = args[3].value.pdb_int ? TRUE : FALSE;
-
-  scale = args[4].value.pdb_int ? TRUE : FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  string = (gchar *) g_value_get_string (&args[1].value);
+  length = g_value_get_int (&args[2].value);
+  merge = g_value_get_boolean (&args[3].value);
+  scale = g_value_get_boolean (&args[4].value);
 
   if (success)
     {

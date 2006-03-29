@@ -107,7 +107,7 @@ version_invoker (ProcRecord   *proc_record,
   version = g_strdup (GIMP_VERSION);
 
   return_vals = procedural_db_return_values (proc_record, TRUE);
-  return_vals[1].value.pdb_pointer = version;
+  g_value_take_string (&return_vals[1].value, version);
 
   return return_vals;
 }
@@ -140,7 +140,7 @@ getpid_invoker (ProcRecord   *proc_record,
   pid = getpid ();
 
   return_vals = procedural_db_return_values (proc_record, TRUE);
-  return_vals[1].value.pdb_int = pid;
+  g_value_set_int (&return_vals[1].value, pid);
 
   return return_vals;
 }
@@ -167,13 +167,17 @@ quit_invoker (ProcRecord   *proc_record,
               GimpProgress *progress,
               Argument     *args)
 {
+  gboolean success = TRUE;
   gboolean force;
 
-  force = args[0].value.pdb_int ? TRUE : FALSE;
+  force = g_value_get_boolean (&args[0].value);
 
-  gimp_exit (gimp, force);
+  if (success)
+    {
+      gimp_exit (gimp, force);
+    }
 
-  return procedural_db_return_values (proc_record, TRUE);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcRecord quit_proc =

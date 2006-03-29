@@ -644,19 +644,10 @@ airbrush_invoker (ProcRecord   *proc_record,
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  pressure = args[1].value.pdb_float;
-  if (pressure < 0.0 || pressure > 100.0)
-    success = FALSE;
-
-  num_strokes = args[2].value.pdb_int;
-  if (num_strokes < 2)
-    success = FALSE;
-
-  strokes = (gdouble *) args[3].value.pdb_pointer;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  pressure = g_value_get_double (&args[1].value);
+  num_strokes = g_value_get_int (&args[2].value);
+  strokes = g_value_get_pointer (&args[3].value);
 
   if (success)
     {
@@ -708,15 +699,9 @@ airbrush_default_invoker (ProcRecord   *proc_record,
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  num_strokes = args[1].value.pdb_int;
-  if (num_strokes < 2)
-    success = FALSE;
-
-  strokes = (gdouble *) args[2].value.pdb_pointer;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  num_strokes = g_value_get_int (&args[1].value);
+  strokes = g_value_get_pointer (&args[2].value);
 
   if (success)
     {
@@ -768,27 +753,13 @@ clone_invoker (ProcRecord   *proc_record,
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  src_drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (src_drawable) && ! gimp_item_is_removed (GIMP_ITEM (src_drawable))))
-    success = FALSE;
-
-  clone_type = args[2].value.pdb_int;
-  if (clone_type < GIMP_IMAGE_CLONE || clone_type > GIMP_PATTERN_CLONE)
-    success = FALSE;
-
-  src_x = args[3].value.pdb_float;
-
-  src_y = args[4].value.pdb_float;
-
-  num_strokes = args[5].value.pdb_int;
-  if (num_strokes < 2)
-    success = FALSE;
-
-  strokes = (gdouble *) args[6].value.pdb_pointer;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  src_drawable = (GimpDrawable *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_DRAWABLE);
+  clone_type = g_value_get_enum (&args[2].value);
+  src_x = g_value_get_double (&args[3].value);
+  src_y = g_value_get_double (&args[4].value);
+  num_strokes = g_value_get_int (&args[5].value);
+  strokes = g_value_get_pointer (&args[6].value);
 
   if (success)
     {
@@ -851,15 +822,9 @@ clone_default_invoker (ProcRecord   *proc_record,
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  num_strokes = args[1].value.pdb_int;
-  if (num_strokes < 2)
-    success = FALSE;
-
-  strokes = (gdouble *) args[2].value.pdb_pointer;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  num_strokes = g_value_get_int (&args[1].value);
+  strokes = g_value_get_pointer (&args[2].value);
 
   if (success)
     {
@@ -909,23 +874,11 @@ convolve_invoker (ProcRecord   *proc_record,
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  pressure = args[1].value.pdb_float;
-  if (pressure < 0.0 || pressure > 100.0)
-    success = FALSE;
-
-  convolve_type = args[2].value.pdb_int;
-  if (convolve_type < GIMP_BLUR_CONVOLVE || convolve_type > GIMP_SHARPEN_CONVOLVE)
-    success = FALSE;
-
-  num_strokes = args[3].value.pdb_int;
-  if (num_strokes < 2)
-    success = FALSE;
-
-  strokes = (gdouble *) args[4].value.pdb_pointer;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  pressure = g_value_get_double (&args[1].value);
+  convolve_type = g_value_get_enum (&args[2].value);
+  num_strokes = g_value_get_int (&args[3].value);
+  strokes = g_value_get_pointer (&args[4].value);
 
   if (success)
     {
@@ -978,15 +931,9 @@ convolve_default_invoker (ProcRecord   *proc_record,
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  num_strokes = args[1].value.pdb_int;
-  if (num_strokes < 2)
-    success = FALSE;
-
-  strokes = (gdouble *) args[2].value.pdb_pointer;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  num_strokes = g_value_get_int (&args[1].value);
+  strokes = g_value_get_pointer (&args[2].value);
 
   if (success)
     {
@@ -1037,27 +984,12 @@ dodgeburn_invoker (ProcRecord   *proc_record,
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  exposure = args[1].value.pdb_float;
-  if (exposure < 0.0 || exposure > 100.0)
-    success = FALSE;
-
-  dodgeburn_type = args[2].value.pdb_int;
-  if (dodgeburn_type < GIMP_DODGE || dodgeburn_type > GIMP_BURN)
-    success = FALSE;
-
-  dodgeburn_mode = args[3].value.pdb_int;
-  if (dodgeburn_mode < GIMP_SHADOWS || dodgeburn_mode > GIMP_HIGHLIGHTS)
-    success = FALSE;
-
-  num_strokes = args[4].value.pdb_int;
-  if (num_strokes < 2)
-    success = FALSE;
-
-  strokes = (gdouble *) args[5].value.pdb_pointer;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  exposure = g_value_get_double (&args[1].value);
+  dodgeburn_type = g_value_get_enum (&args[2].value);
+  dodgeburn_mode = g_value_get_enum (&args[3].value);
+  num_strokes = g_value_get_int (&args[4].value);
+  strokes = g_value_get_pointer (&args[5].value);
 
   if (success)
     {
@@ -1111,15 +1043,9 @@ dodgeburn_default_invoker (ProcRecord   *proc_record,
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  num_strokes = args[1].value.pdb_int;
-  if (num_strokes < 2)
-    success = FALSE;
-
-  strokes = (gdouble *) args[2].value.pdb_pointer;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  num_strokes = g_value_get_int (&args[1].value);
+  strokes = g_value_get_pointer (&args[2].value);
 
   if (success)
     {
@@ -1169,23 +1095,11 @@ eraser_invoker (ProcRecord   *proc_record,
   gint32 hardness;
   gint32 method;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  num_strokes = args[1].value.pdb_int;
-  if (num_strokes < 2)
-    success = FALSE;
-
-  strokes = (gdouble *) args[2].value.pdb_pointer;
-
-  hardness = args[3].value.pdb_int;
-  if (hardness < GIMP_BRUSH_HARD || hardness > GIMP_BRUSH_SOFT)
-    success = FALSE;
-
-  method = args[4].value.pdb_int;
-  if (method < GIMP_PAINT_CONSTANT || method > GIMP_PAINT_INCREMENTAL)
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  num_strokes = g_value_get_int (&args[1].value);
+  strokes = g_value_get_pointer (&args[2].value);
+  hardness = g_value_get_enum (&args[3].value);
+  method = g_value_get_enum (&args[4].value);
 
   if (success)
     {
@@ -1238,15 +1152,9 @@ eraser_default_invoker (ProcRecord   *proc_record,
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  num_strokes = args[1].value.pdb_int;
-  if (num_strokes < 2)
-    success = FALSE;
-
-  strokes = (gdouble *) args[2].value.pdb_pointer;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  num_strokes = g_value_get_int (&args[1].value);
+  strokes = g_value_get_pointer (&args[2].value);
 
   if (success)
     {
@@ -1297,27 +1205,12 @@ paintbrush_invoker (ProcRecord   *proc_record,
   gint32 method;
   gdouble gradient_length;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  fade_out = args[1].value.pdb_float;
-  if (fade_out < 0.0)
-    success = FALSE;
-
-  num_strokes = args[2].value.pdb_int;
-  if (num_strokes < 2)
-    success = FALSE;
-
-  strokes = (gdouble *) args[3].value.pdb_pointer;
-
-  method = args[4].value.pdb_int;
-  if (method < GIMP_PAINT_CONSTANT || method > GIMP_PAINT_INCREMENTAL)
-    success = FALSE;
-
-  gradient_length = args[5].value.pdb_float;
-  if (gradient_length < 0.0)
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  fade_out = g_value_get_double (&args[1].value);
+  num_strokes = g_value_get_int (&args[2].value);
+  strokes = g_value_get_pointer (&args[3].value);
+  method = g_value_get_enum (&args[4].value);
+  gradient_length = g_value_get_double (&args[5].value);
 
   if (success)
     {
@@ -1373,15 +1266,9 @@ paintbrush_default_invoker (ProcRecord   *proc_record,
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  num_strokes = args[1].value.pdb_int;
-  if (num_strokes < 2)
-    success = FALSE;
-
-  strokes = (gdouble *) args[2].value.pdb_pointer;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  num_strokes = g_value_get_int (&args[1].value);
+  strokes = g_value_get_pointer (&args[2].value);
 
   if (success)
     {
@@ -1429,15 +1316,9 @@ pencil_invoker (ProcRecord   *proc_record,
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  num_strokes = args[1].value.pdb_int;
-  if (num_strokes < 2)
-    success = FALSE;
-
-  strokes = (gdouble *) args[2].value.pdb_pointer;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  num_strokes = g_value_get_int (&args[1].value);
+  strokes = g_value_get_pointer (&args[2].value);
 
   if (success)
     {
@@ -1486,19 +1367,10 @@ smudge_invoker (ProcRecord   *proc_record,
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  pressure = args[1].value.pdb_float;
-  if (pressure < 0.0 || pressure > 100.0)
-    success = FALSE;
-
-  num_strokes = args[2].value.pdb_int;
-  if (num_strokes < 2)
-    success = FALSE;
-
-  strokes = (gdouble *) args[3].value.pdb_pointer;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  pressure = g_value_get_double (&args[1].value);
+  num_strokes = g_value_get_int (&args[2].value);
+  strokes = g_value_get_pointer (&args[3].value);
 
   if (success)
     {
@@ -1550,15 +1422,9 @@ smudge_default_invoker (ProcRecord   *proc_record,
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  num_strokes = args[1].value.pdb_int;
-  if (num_strokes < 2)
-    success = FALSE;
-
-  strokes = (gdouble *) args[2].value.pdb_pointer;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  num_strokes = g_value_get_int (&args[1].value);
+  strokes = g_value_get_pointer (&args[2].value);
 
   if (success)
     {

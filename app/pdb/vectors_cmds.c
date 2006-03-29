@@ -823,13 +823,8 @@ vectors_new_invoker (ProcRecord   *proc_record,
   gchar *name;
   GimpVectors *vectors = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  name = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -839,7 +834,7 @@ vectors_new_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = vectors ? gimp_item_get_ID (GIMP_ITEM (vectors)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (vectors));
 
   return return_vals;
 }
@@ -871,9 +866,7 @@ vectors_get_image_invoker (ProcRecord   *proc_record,
   GimpVectors *vectors;
   GimpImage *image = NULL;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
 
   if (success)
     {
@@ -883,7 +876,7 @@ vectors_get_image_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = image ? gimp_image_get_ID (image) : -1;
+    gimp_value_set_image (&return_vals[1].value, image);
 
   return return_vals;
 }
@@ -915,9 +908,7 @@ vectors_get_name_invoker (ProcRecord   *proc_record,
   GimpVectors *vectors;
   gchar *name = NULL;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
 
   if (success)
     {
@@ -927,7 +918,7 @@ vectors_get_name_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = name;
+    g_value_take_string (&return_vals[1].value, name);
 
   return return_vals;
 }
@@ -958,13 +949,8 @@ vectors_set_name_invoker (ProcRecord   *proc_record,
   GimpVectors *vectors;
   gchar *name;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
-
-  name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
+  name = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -1001,9 +987,7 @@ vectors_get_visible_invoker (ProcRecord   *proc_record,
   GimpVectors *vectors;
   gboolean visible = FALSE;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
 
   if (success)
     {
@@ -1013,7 +997,7 @@ vectors_get_visible_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = visible;
+    g_value_set_boolean (&return_vals[1].value, visible);
 
   return return_vals;
 }
@@ -1044,11 +1028,8 @@ vectors_set_visible_invoker (ProcRecord   *proc_record,
   GimpVectors *vectors;
   gboolean visible;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
-
-  visible = args[1].value.pdb_int ? TRUE : FALSE;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
+  visible = g_value_get_boolean (&args[1].value);
 
   if (success)
     {
@@ -1085,9 +1066,7 @@ vectors_get_linked_invoker (ProcRecord   *proc_record,
   GimpVectors *vectors;
   gboolean linked = FALSE;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
 
   if (success)
     {
@@ -1097,7 +1076,7 @@ vectors_get_linked_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = linked;
+    g_value_set_boolean (&return_vals[1].value, linked);
 
   return return_vals;
 }
@@ -1128,11 +1107,8 @@ vectors_set_linked_invoker (ProcRecord   *proc_record,
   GimpVectors *vectors;
   gboolean linked;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
-
-  linked = args[1].value.pdb_int ? TRUE : FALSE;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
+  linked = g_value_get_boolean (&args[1].value);
 
   if (success)
     {
@@ -1169,9 +1145,7 @@ vectors_get_tattoo_invoker (ProcRecord   *proc_record,
   GimpVectors *vectors;
   gint32 tattoo = 0;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
 
   if (success)
     {
@@ -1181,7 +1155,7 @@ vectors_get_tattoo_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = tattoo;
+    g_value_set_int (&return_vals[1].value, tattoo);
 
   return return_vals;
 }
@@ -1212,11 +1186,8 @@ vectors_set_tattoo_invoker (ProcRecord   *proc_record,
   GimpVectors *vectors;
   gint32 tattoo;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
-
-  tattoo = args[1].value.pdb_int;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
+  tattoo = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -1254,9 +1225,7 @@ vectors_get_strokes_invoker (ProcRecord   *proc_record,
   gint32 num_strokes = 0;
   gint32 *stroke_ids = NULL;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
 
   if (success)
     {
@@ -1283,8 +1252,8 @@ vectors_get_strokes_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = num_strokes;
-      return_vals[2].value.pdb_pointer = stroke_ids;
+      g_value_set_int (&return_vals[1].value, num_strokes);
+      g_value_set_pointer (&return_vals[2].value, stroke_ids);
     }
 
   return return_vals;
@@ -1319,13 +1288,9 @@ vectors_stroke_get_length_invoker (ProcRecord   *proc_record,
   gdouble prescision;
   gdouble length = 0.0;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
-
-  stroke_id = args[1].value.pdb_int;
-
-  prescision = args[2].value.pdb_float;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
+  stroke_id = g_value_get_int (&args[1].value);
+  prescision = g_value_get_double (&args[2].value);
 
   if (success)
     {
@@ -1340,7 +1305,7 @@ vectors_stroke_get_length_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_float = length;
+    g_value_set_double (&return_vals[1].value, length);
 
   return return_vals;
 }
@@ -1378,15 +1343,10 @@ vectors_stroke_get_point_at_dist_invoker (ProcRecord   *proc_record,
   gdouble slope = 0.0;
   gboolean valid = FALSE;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
-
-  stroke_id = args[1].value.pdb_int;
-
-  dist = args[2].value.pdb_float;
-
-  prescision = args[3].value.pdb_float;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
+  stroke_id = g_value_get_int (&args[1].value);
+  dist = g_value_get_double (&args[2].value);
+  prescision = g_value_get_double (&args[3].value);
 
   if (success)
     {
@@ -1409,10 +1369,10 @@ vectors_stroke_get_point_at_dist_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_float = x_point;
-      return_vals[2].value.pdb_float = y_point;
-      return_vals[3].value.pdb_float = slope;
-      return_vals[4].value.pdb_int = valid;
+      g_value_set_double (&return_vals[1].value, x_point);
+      g_value_set_double (&return_vals[2].value, y_point);
+      g_value_set_double (&return_vals[3].value, slope);
+      g_value_set_boolean (&return_vals[4].value, valid);
     }
 
   return return_vals;
@@ -1444,11 +1404,8 @@ vectors_stroke_remove_invoker (ProcRecord   *proc_record,
   GimpVectors *vectors;
   gint32 stroke_id;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
-
-  stroke_id = args[1].value.pdb_int;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
+  stroke_id = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -1489,11 +1446,8 @@ vectors_stroke_close_invoker (ProcRecord   *proc_record,
   GimpVectors *vectors;
   gint32 stroke_id;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
-
-  stroke_id = args[1].value.pdb_int;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
+  stroke_id = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -1536,15 +1490,10 @@ vectors_stroke_translate_invoker (ProcRecord   *proc_record,
   gint32 off_x;
   gint32 off_y;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
-
-  stroke_id = args[1].value.pdb_int;
-
-  off_x = args[2].value.pdb_int;
-
-  off_y = args[3].value.pdb_int;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
+  stroke_id = g_value_get_int (&args[1].value);
+  off_x = g_value_get_int (&args[2].value);
+  off_y = g_value_get_int (&args[3].value);
 
   if (success)
     {
@@ -1587,15 +1536,10 @@ vectors_stroke_scale_invoker (ProcRecord   *proc_record,
   gdouble scale_x;
   gdouble scale_y;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
-
-  stroke_id = args[1].value.pdb_int;
-
-  scale_x = args[2].value.pdb_float;
-
-  scale_y = args[3].value.pdb_float;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
+  stroke_id = g_value_get_int (&args[1].value);
+  scale_x = g_value_get_double (&args[2].value);
+  scale_y = g_value_get_double (&args[3].value);
 
   if (success)
     {
@@ -1641,13 +1585,9 @@ vectors_stroke_interpolate_invoker (ProcRecord   *proc_record,
   gint32 num_coords = 0;
   gdouble *coords = NULL;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
-
-  stroke_id = args[1].value.pdb_int;
-
-  prescision = args[2].value.pdb_float;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
+  stroke_id = g_value_get_int (&args[1].value);
+  prescision = g_value_get_double (&args[2].value);
 
   if (success)
     {
@@ -1684,9 +1624,9 @@ vectors_stroke_interpolate_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = closed;
-      return_vals[2].value.pdb_int = num_coords;
-      return_vals[3].value.pdb_pointer = coords;
+      g_value_set_boolean (&return_vals[1].value, closed);
+      g_value_set_int (&return_vals[2].value, num_coords);
+      g_value_set_pointer (&return_vals[3].value, coords);
     }
 
   return return_vals;
@@ -1721,13 +1661,9 @@ vectors_bezier_stroke_new_moveto_invoker (ProcRecord   *proc_record,
   gdouble y0;
   gint32 stroke_id = 0;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
-
-  x0 = args[1].value.pdb_float;
-
-  y0 = args[2].value.pdb_float;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
+  x0 = g_value_get_double (&args[1].value);
+  y0 = g_value_get_double (&args[2].value);
 
   if (success)
     {
@@ -1745,7 +1681,7 @@ vectors_bezier_stroke_new_moveto_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = stroke_id;
+    g_value_set_int (&return_vals[1].value, stroke_id);
 
   return return_vals;
 }
@@ -1778,15 +1714,10 @@ vectors_bezier_stroke_lineto_invoker (ProcRecord   *proc_record,
   gdouble x0;
   gdouble y0;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
-
-  stroke_id = args[1].value.pdb_int;
-
-  x0 = args[2].value.pdb_float;
-
-  y0 = args[3].value.pdb_float;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
+  stroke_id = g_value_get_int (&args[1].value);
+  x0 = g_value_get_double (&args[2].value);
+  y0 = g_value_get_double (&args[3].value);
 
   if (success)
     {
@@ -1838,19 +1769,12 @@ vectors_bezier_stroke_conicto_invoker (ProcRecord   *proc_record,
   gdouble x1;
   gdouble y1;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
-
-  stroke_id = args[1].value.pdb_int;
-
-  x0 = args[2].value.pdb_float;
-
-  y0 = args[3].value.pdb_float;
-
-  x1 = args[4].value.pdb_float;
-
-  y1 = args[5].value.pdb_float;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
+  stroke_id = g_value_get_int (&args[1].value);
+  x0 = g_value_get_double (&args[2].value);
+  y0 = g_value_get_double (&args[3].value);
+  x1 = g_value_get_double (&args[4].value);
+  y1 = g_value_get_double (&args[5].value);
 
   if (success)
     {
@@ -1908,23 +1832,14 @@ vectors_bezier_stroke_cubicto_invoker (ProcRecord   *proc_record,
   gdouble x2;
   gdouble y2;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
-
-  stroke_id = args[1].value.pdb_int;
-
-  x0 = args[2].value.pdb_float;
-
-  y0 = args[3].value.pdb_float;
-
-  x1 = args[4].value.pdb_float;
-
-  y1 = args[5].value.pdb_float;
-
-  x2 = args[6].value.pdb_float;
-
-  y2 = args[7].value.pdb_float;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
+  stroke_id = g_value_get_int (&args[1].value);
+  x0 = g_value_get_double (&args[2].value);
+  y0 = g_value_get_double (&args[3].value);
+  x1 = g_value_get_double (&args[4].value);
+  y1 = g_value_get_double (&args[5].value);
+  x2 = g_value_get_double (&args[6].value);
+  y2 = g_value_get_double (&args[7].value);
 
   if (success)
     {
@@ -1986,19 +1901,12 @@ vectors_bezier_stroke_new_ellipse_invoker (ProcRecord   *proc_record,
   gdouble angle;
   gint32 stroke_id = 0;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
-
-  x0 = args[1].value.pdb_float;
-
-  y0 = args[2].value.pdb_float;
-
-  radius_x = args[3].value.pdb_float;
-
-  radius_y = args[4].value.pdb_float;
-
-  angle = args[5].value.pdb_float;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
+  x0 = g_value_get_double (&args[1].value);
+  y0 = g_value_get_double (&args[2].value);
+  radius_x = g_value_get_double (&args[3].value);
+  radius_y = g_value_get_double (&args[4].value);
+  angle = g_value_get_double (&args[5].value);
 
   if (success)
     {
@@ -2016,7 +1924,7 @@ vectors_bezier_stroke_new_ellipse_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = stroke_id;
+    g_value_set_int (&return_vals[1].value, stroke_id);
 
   return return_vals;
 }

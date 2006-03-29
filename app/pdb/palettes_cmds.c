@@ -185,9 +185,7 @@ palettes_get_list_invoker (ProcRecord   *proc_record,
   gint32 num_palettes = 0;
   gchar **palette_list = NULL;
 
-  filter = (gchar *) args[0].value.pdb_pointer;
-  if (filter && !g_utf8_validate (filter, -1, NULL))
-    success = FALSE;
+  filter = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -199,8 +197,8 @@ palettes_get_list_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = num_palettes;
-      return_vals[2].value.pdb_pointer = palette_list;
+      g_value_set_int (&return_vals[1].value, num_palettes);
+      g_value_set_pointer (&return_vals[2].value, palette_list);
     }
 
   return return_vals;
@@ -247,8 +245,8 @@ palettes_get_palette_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_pointer = name;
-      return_vals[2].value.pdb_int = num_colors;
+      g_value_take_string (&return_vals[1].value, name);
+      g_value_set_int (&return_vals[2].value, num_colors);
     }
 
   return return_vals;
@@ -284,11 +282,8 @@ palettes_get_palette_entry_invoker (ProcRecord   *proc_record,
   gint32 num_colors = 0;
   GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name && !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  entry_num = args[1].value.pdb_int;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  entry_num = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -326,9 +321,9 @@ palettes_get_palette_entry_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_pointer = actual_name;
-      return_vals[2].value.pdb_int = num_colors;
-      return_vals[3].value.pdb_color = color;
+      g_value_take_string (&return_vals[1].value, actual_name);
+      g_value_set_int (&return_vals[2].value, num_colors);
+      gimp_value_set_rgb (&return_vals[3].value, &color);
     }
 
   return return_vals;

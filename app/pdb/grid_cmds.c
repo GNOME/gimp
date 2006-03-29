@@ -295,9 +295,7 @@ image_grid_get_spacing_invoker (ProcRecord   *proc_record,
   gdouble xspacing = 0.0;
   gdouble yspacing = 0.0;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -316,8 +314,8 @@ image_grid_get_spacing_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_float = xspacing;
-      return_vals[2].value.pdb_float = yspacing;
+      g_value_set_double (&return_vals[1].value, xspacing);
+      g_value_set_double (&return_vals[2].value, yspacing);
     }
 
   return return_vals;
@@ -350,13 +348,9 @@ image_grid_set_spacing_invoker (ProcRecord   *proc_record,
   gdouble xspacing;
   gdouble yspacing;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  xspacing = args[1].value.pdb_float;
-
-  yspacing = args[2].value.pdb_float;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  xspacing = g_value_get_double (&args[1].value);
+  yspacing = g_value_get_double (&args[2].value);
 
   if (success)
     {
@@ -402,9 +396,7 @@ image_grid_get_offset_invoker (ProcRecord   *proc_record,
   gdouble xoffset = 0.0;
   gdouble yoffset = 0.0;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -423,8 +415,8 @@ image_grid_get_offset_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_float = xoffset;
-      return_vals[2].value.pdb_float = yoffset;
+      g_value_set_double (&return_vals[1].value, xoffset);
+      g_value_set_double (&return_vals[2].value, yoffset);
     }
 
   return return_vals;
@@ -457,13 +449,9 @@ image_grid_set_offset_invoker (ProcRecord   *proc_record,
   gdouble xoffset;
   gdouble yoffset;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  xoffset = args[1].value.pdb_float;
-
-  yoffset = args[2].value.pdb_float;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  xoffset = g_value_get_double (&args[1].value);
+  yoffset = g_value_get_double (&args[2].value);
 
   if (success)
     {
@@ -508,9 +496,7 @@ image_grid_get_foreground_color_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpRGB fgcolor = { 0.0, 0.0, 0.0, 1.0 };
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -525,7 +511,7 @@ image_grid_get_foreground_color_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_color = fgcolor;
+    gimp_value_set_rgb (&return_vals[1].value, &fgcolor);
 
   return return_vals;
 }
@@ -556,11 +542,8 @@ image_grid_set_foreground_color_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpRGB fgcolor;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  fgcolor = args[1].value.pdb_color;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  gimp_value_get_rgb (&args[1].value, &fgcolor);
 
   if (success)
     {
@@ -602,9 +585,7 @@ image_grid_get_background_color_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpRGB bgcolor = { 0.0, 0.0, 0.0, 1.0 };
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -619,7 +600,7 @@ image_grid_get_background_color_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_color = bgcolor;
+    gimp_value_set_rgb (&return_vals[1].value, &bgcolor);
 
   return return_vals;
 }
@@ -650,11 +631,8 @@ image_grid_set_background_color_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpRGB bgcolor;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  bgcolor = args[1].value.pdb_color;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  gimp_value_get_rgb (&args[1].value, &bgcolor);
 
   if (success)
     {
@@ -696,9 +674,7 @@ image_grid_get_style_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gint32 style = 0;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -713,7 +689,7 @@ image_grid_get_style_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = style;
+    g_value_set_enum (&return_vals[1].value, style);
 
   return return_vals;
 }
@@ -744,13 +720,8 @@ image_grid_set_style_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gint32 style;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  style = args[1].value.pdb_int;
-  if (style < GIMP_GRID_DOTS || style > GIMP_GRID_SOLID)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  style = g_value_get_enum (&args[1].value);
 
   if (success)
     {

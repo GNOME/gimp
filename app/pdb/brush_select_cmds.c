@@ -166,29 +166,12 @@ brushes_popup_invoker (ProcRecord   *proc_record,
   gint32 spacing;
   gint32 paint_mode;
 
-  brush_callback = (gchar *) args[0].value.pdb_pointer;
-  if (brush_callback == NULL || !g_utf8_validate (brush_callback, -1, NULL))
-    success = FALSE;
-
-  popup_title = (gchar *) args[1].value.pdb_pointer;
-  if (popup_title == NULL || !g_utf8_validate (popup_title, -1, NULL))
-    success = FALSE;
-
-  initial_brush = (gchar *) args[2].value.pdb_pointer;
-  if (initial_brush && !g_utf8_validate (initial_brush, -1, NULL))
-    success = FALSE;
-
-  opacity = args[3].value.pdb_float;
-  if (opacity < 0.0 || opacity > 100.0)
-    success = FALSE;
-
-  spacing = args[4].value.pdb_int;
-  if (spacing > 1000)
-    success = FALSE;
-
-  paint_mode = args[5].value.pdb_int;
-  if (paint_mode < GIMP_NORMAL_MODE || paint_mode > GIMP_COLOR_ERASE_MODE)
-    success = FALSE;
+  brush_callback = (gchar *) g_value_get_string (&args[0].value);
+  popup_title = (gchar *) g_value_get_string (&args[1].value);
+  initial_brush = (gchar *) g_value_get_string (&args[2].value);
+  opacity = g_value_get_double (&args[3].value);
+  spacing = g_value_get_int (&args[4].value);
+  paint_mode = g_value_get_enum (&args[5].value);
 
   if (success)
     {
@@ -231,9 +214,7 @@ brushes_close_popup_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gchar *brush_callback;
 
-  brush_callback = (gchar *) args[0].value.pdb_pointer;
-  if (brush_callback == NULL || !g_utf8_validate (brush_callback, -1, NULL))
-    success = FALSE;
+  brush_callback = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -276,25 +257,11 @@ brushes_set_popup_invoker (ProcRecord   *proc_record,
   gint32 spacing;
   gint32 paint_mode;
 
-  brush_callback = (gchar *) args[0].value.pdb_pointer;
-  if (brush_callback == NULL || !g_utf8_validate (brush_callback, -1, NULL))
-    success = FALSE;
-
-  brush_name = (gchar *) args[1].value.pdb_pointer;
-  if (brush_name == NULL || !g_utf8_validate (brush_name, -1, NULL))
-    success = FALSE;
-
-  opacity = args[2].value.pdb_float;
-  if (opacity < 0.0 || opacity > 100.0)
-    success = FALSE;
-
-  spacing = args[3].value.pdb_int;
-  if (spacing > 1000)
-    success = FALSE;
-
-  paint_mode = args[4].value.pdb_int;
-  if (paint_mode < GIMP_NORMAL_MODE || paint_mode > GIMP_COLOR_ERASE_MODE)
-    success = FALSE;
+  brush_callback = (gchar *) g_value_get_string (&args[0].value);
+  brush_name = (gchar *) g_value_get_string (&args[1].value);
+  opacity = g_value_get_double (&args[2].value);
+  spacing = g_value_get_int (&args[3].value);
+  paint_mode = g_value_get_enum (&args[4].value);
 
   if (success)
     {

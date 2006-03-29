@@ -59,7 +59,7 @@ sub generate {
 	my ($type, $name) = &arg_parse($arg->{type});
 	my $argtype = $arg_types{$type};
 	
-	if (exists $argtype->{id_func} || $arg->{type} =~ /guide/) {
+	if (exists $argtype->{id}) {
 	    return 'gint32 ';
 	}
 
@@ -131,7 +131,7 @@ sub generate {
 	    my ($type) = &arg_parse($_->{type});
 	    my $desc = &desc_clean($_->{desc});
 	    my $arg = $arg_types{$type};
-	    my $id = exists $arg->{id_func} || $_->{type} =~ /guide/;
+	    my $id = exists $arg->{id};
 
 	    $wrapped = "_" if exists $_->{wrap};
 	    $attribute = " G_GNUC_INTERNAL" if exists $_->{wrap};
@@ -184,7 +184,7 @@ sub generate {
 	    foreach (@outargs) {
 		my ($type) = &arg_parse($_->{type});
 		my $arg = $arg_types{$type};
-		my $id = $arg->{id_ret_func} || $_->{type} =~ /guide/;
+		my $id = $arg->{id};
 		my $var;
 
 		$return_marshal = "" unless $once++;
@@ -277,7 +277,7 @@ CODE
 		my ($type) = &arg_parse($_->{type});
                 my $desc = &desc_clean($_->{desc});
 		my $arg = $arg_types{$type};
-		my $id = $arg->{id_ret_func} || $_->{type} =~ /guide/;
+		my $id = $arg->{id};
 		my $var;
 	    
 		my $ch = ""; my $cf = "";

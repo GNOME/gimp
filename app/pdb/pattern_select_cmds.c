@@ -119,17 +119,9 @@ patterns_popup_invoker (ProcRecord   *proc_record,
   gchar *popup_title;
   gchar *initial_pattern;
 
-  pattern_callback = (gchar *) args[0].value.pdb_pointer;
-  if (pattern_callback == NULL || !g_utf8_validate (pattern_callback, -1, NULL))
-    success = FALSE;
-
-  popup_title = (gchar *) args[1].value.pdb_pointer;
-  if (popup_title == NULL || !g_utf8_validate (popup_title, -1, NULL))
-    success = FALSE;
-
-  initial_pattern = (gchar *) args[2].value.pdb_pointer;
-  if (initial_pattern && !g_utf8_validate (initial_pattern, -1, NULL))
-    success = FALSE;
+  pattern_callback = (gchar *) g_value_get_string (&args[0].value);
+  popup_title = (gchar *) g_value_get_string (&args[1].value);
+  initial_pattern = (gchar *) g_value_get_string (&args[2].value);
 
   if (success)
     {
@@ -169,9 +161,7 @@ patterns_close_popup_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gchar *pattern_callback;
 
-  pattern_callback = (gchar *) args[0].value.pdb_pointer;
-  if (pattern_callback == NULL || !g_utf8_validate (pattern_callback, -1, NULL))
-    success = FALSE;
+  pattern_callback = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -211,13 +201,8 @@ patterns_set_popup_invoker (ProcRecord   *proc_record,
   gchar *pattern_callback;
   gchar *pattern_name;
 
-  pattern_callback = (gchar *) args[0].value.pdb_pointer;
-  if (pattern_callback == NULL || !g_utf8_validate (pattern_callback, -1, NULL))
-    success = FALSE;
-
-  pattern_name = (gchar *) args[1].value.pdb_pointer;
-  if (pattern_name == NULL || !g_utf8_validate (pattern_name, -1, NULL))
-    success = FALSE;
+  pattern_callback = (gchar *) g_value_get_string (&args[0].value);
+  pattern_name = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {

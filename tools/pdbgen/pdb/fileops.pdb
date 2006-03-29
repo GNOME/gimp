@@ -56,10 +56,12 @@ HELP
   PlugInProcDef    *file_proc;
   const ProcRecord *proc;
   gchar            *uri;
+  gint              n_return_vals;
   gint              i;
 
   uri = file_utils_filename_to_uri (gimp->load_procs,
-                                    args[1].value.pdb_pointer, NULL);
+                                    g_value_get_string (&args[1].value),
+                                    NULL);
 
   if (! uri)
     return procedural_db_return_values (proc_record, FALSE);
@@ -73,19 +75,21 @@ HELP
 
   proc = plug_in_proc_def_get_proc (file_proc);
 
-  new_args = g_new0 (Argument, proc->num_args);
-  memcpy (new_args, args, sizeof (Argument) * 3);
+  new_args = procedural_db_arguments (proc);
+
+  for (i = 0; i < 3; i++)
+    g_value_transform (&args[i].value, &new_args[i].value);
 
   for (i = 3; i < proc->num_args; i++)
-    {
-      new_args[i].arg_type = proc->args[i].arg_type;
-      if (proc->args[i].arg_type == GIMP_PDB_STRING)
-        new_args[i].value.pdb_pointer = g_strdup ("");
-    }
+    if (proc->args[i].arg_type == GIMP_PDB_STRING)
+      g_value_set_string (&new_args[i].value, "");
 
   return_vals = procedural_db_execute (gimp, context, progress,
-                                       proc->name, new_args);
-  g_free (new_args);
+                                       proc->name,
+                                       new_args, proc->num_args,
+                                       &n_return_vals);
+
+  procedural_db_destroy_args (new_args, proc->num_args, FALSE);
 
   return return_vals;
 }
@@ -181,10 +185,12 @@ HELP
   PlugInProcDef    *file_proc;
   const ProcRecord *proc;
   gchar            *uri;
+  gint              n_return_vals;
   gint              i;
 
   uri = file_utils_filename_to_uri (gimp->load_procs,
-                                    args[3].value.pdb_pointer, NULL);
+                                    g_value_get_string (&args[3].value),
+                                    NULL);
 
   if (! uri)
     return procedural_db_return_values (proc_record, FALSE);
@@ -198,19 +204,21 @@ HELP
 
   proc = plug_in_proc_def_get_proc (file_proc);
 
-  new_args = g_new0 (Argument, proc->num_args);
-  memcpy (new_args, args, sizeof (Argument) * 5);
+  new_args = procedural_db_arguments (proc);
+
+  for (i = 0; i < 5; i++)
+    g_value_transform (&args[i].value, &new_args[i].value);
 
   for (i = 5; i < proc->num_args; i++)
-    {
-      new_args[i].arg_type = proc->args[i].arg_type;
-      if (proc->args[i].arg_type == GIMP_PDB_STRING)
-        new_args[i].value.pdb_pointer = g_strdup ("");
-    }
+    if (proc->args[i].arg_type == GIMP_PDB_STRING)
+      g_value_set_string (&new_args[i].value, "");
 
   return_vals = procedural_db_execute (gimp, context, progress,
-                                       proc->name, new_args);
-  g_free (new_args);
+                                       proc->name,
+                                       new_args, proc->num_args,
+                                       &n_return_vals);
+
+  procedural_db_destroy_args (new_args, proc->num_args, FALSE);
 
   return return_vals;
 }

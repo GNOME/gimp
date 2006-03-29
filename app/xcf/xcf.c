@@ -31,6 +31,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
+#include "core/gimpparamspecs.h"
 
 #include "pdb/procedural_db.h"
 
@@ -231,7 +232,7 @@ xcf_load_invoker (ProcRecord   *procedure,
 
   gimp_set_busy (gimp);
 
-  filename = args[1].value.pdb_pointer;
+  filename = g_value_get_string (&args[1].value);
 
   info.fp = g_fopen (filename, "rb");
 
@@ -296,7 +297,7 @@ xcf_load_invoker (ProcRecord   *procedure,
   return_vals = procedural_db_return_values (procedure, success);
 
   if (success)
-    return_vals[1].value.pdb_int = gimp_image_get_ID (image);
+    gimp_value_set_image (&return_vals[1].value, image);
 
   gimp_unset_busy (gimp);
 
@@ -318,8 +319,8 @@ xcf_save_invoker (ProcRecord   *procedure,
 
   gimp_set_busy (gimp);
 
-  image   = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
-  filename = args[3].value.pdb_pointer;
+  image    = gimp_value_get_image (&args[1].value, gimp);
+  filename = g_value_get_string (&args[3].value);
 
   info.fp = g_fopen (filename, "wb");
 

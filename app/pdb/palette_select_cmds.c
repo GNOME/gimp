@@ -119,17 +119,9 @@ palettes_popup_invoker (ProcRecord   *proc_record,
   gchar *popup_title;
   gchar *initial_palette;
 
-  palette_callback = (gchar *) args[0].value.pdb_pointer;
-  if (palette_callback == NULL || !g_utf8_validate (palette_callback, -1, NULL))
-    success = FALSE;
-
-  popup_title = (gchar *) args[1].value.pdb_pointer;
-  if (popup_title == NULL || !g_utf8_validate (popup_title, -1, NULL))
-    success = FALSE;
-
-  initial_palette = (gchar *) args[2].value.pdb_pointer;
-  if (initial_palette && !g_utf8_validate (initial_palette, -1, NULL))
-    success = FALSE;
+  palette_callback = (gchar *) g_value_get_string (&args[0].value);
+  popup_title = (gchar *) g_value_get_string (&args[1].value);
+  initial_palette = (gchar *) g_value_get_string (&args[2].value);
 
   if (success)
     {
@@ -169,9 +161,7 @@ palettes_close_popup_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gchar *palette_callback;
 
-  palette_callback = (gchar *) args[0].value.pdb_pointer;
-  if (palette_callback == NULL || !g_utf8_validate (palette_callback, -1, NULL))
-    success = FALSE;
+  palette_callback = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -211,13 +201,8 @@ palettes_set_popup_invoker (ProcRecord   *proc_record,
   gchar *palette_callback;
   gchar *palette_name;
 
-  palette_callback = (gchar *) args[0].value.pdb_pointer;
-  if (palette_callback == NULL || !g_utf8_validate (palette_callback, -1, NULL))
-    success = FALSE;
-
-  palette_name = (gchar *) args[1].value.pdb_pointer;
-  if (palette_name == NULL || !g_utf8_validate (palette_name, -1, NULL))
-    success = FALSE;
+  palette_callback = (gchar *) g_value_get_string (&args[0].value);
+  palette_name = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {

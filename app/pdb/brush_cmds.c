@@ -657,9 +657,7 @@ brush_new_invoker (ProcRecord   *proc_record,
   gchar *name;
   gchar *actual_name = NULL;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -679,7 +677,7 @@ brush_new_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = actual_name;
+    g_value_take_string (&return_vals[1].value, actual_name);
 
   return return_vals;
 }
@@ -711,9 +709,7 @@ brush_duplicate_invoker (ProcRecord   *proc_record,
   gchar *name;
   gchar *copy_name = NULL;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -738,7 +734,7 @@ brush_duplicate_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = copy_name;
+    g_value_take_string (&return_vals[1].value, copy_name);
 
   return return_vals;
 }
@@ -770,9 +766,7 @@ brush_is_generated_invoker (ProcRecord   *proc_record,
   gchar *name;
   gboolean generated = FALSE;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -788,7 +782,7 @@ brush_is_generated_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = generated;
+    g_value_set_boolean (&return_vals[1].value, generated);
 
   return return_vals;
 }
@@ -821,13 +815,8 @@ brush_rename_invoker (ProcRecord   *proc_record,
   gchar *new_name;
   gchar *actual_name = NULL;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  new_name = (gchar *) args[1].value.pdb_pointer;
-  if (new_name == NULL || !g_utf8_validate (new_name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  new_name = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -846,7 +835,7 @@ brush_rename_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = actual_name;
+    g_value_take_string (&return_vals[1].value, actual_name);
 
   return return_vals;
 }
@@ -876,9 +865,7 @@ brush_delete_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gchar *name;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -933,9 +920,7 @@ brush_is_editable_invoker (ProcRecord   *proc_record,
   gchar *name;
   gboolean editable = FALSE;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -951,7 +936,7 @@ brush_is_editable_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = editable;
+    g_value_set_boolean (&return_vals[1].value, editable);
 
   return return_vals;
 }
@@ -986,9 +971,7 @@ brush_get_info_invoker (ProcRecord   *proc_record,
   gint32 mask_bpp = 0;
   gint32 color_bpp = 0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -1010,10 +993,10 @@ brush_get_info_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = width;
-      return_vals[2].value.pdb_int = height;
-      return_vals[3].value.pdb_int = mask_bpp;
-      return_vals[4].value.pdb_int = color_bpp;
+      g_value_set_int (&return_vals[1].value, width);
+      g_value_set_int (&return_vals[2].value, height);
+      g_value_set_int (&return_vals[3].value, mask_bpp);
+      g_value_set_int (&return_vals[4].value, color_bpp);
     }
 
   return return_vals;
@@ -1053,9 +1036,7 @@ brush_get_pixels_invoker (ProcRecord   *proc_record,
   gint32 num_color_bytes = 0;
   guint8 *color_bytes = NULL;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -1086,14 +1067,14 @@ brush_get_pixels_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = width;
-      return_vals[2].value.pdb_int = height;
-      return_vals[3].value.pdb_int = mask_bpp;
-      return_vals[4].value.pdb_int = num_mask_bytes;
-      return_vals[5].value.pdb_pointer = mask_bytes;
-      return_vals[6].value.pdb_int = color_bpp;
-      return_vals[7].value.pdb_int = num_color_bytes;
-      return_vals[8].value.pdb_pointer = color_bytes;
+      g_value_set_int (&return_vals[1].value, width);
+      g_value_set_int (&return_vals[2].value, height);
+      g_value_set_int (&return_vals[3].value, mask_bpp);
+      g_value_set_int (&return_vals[4].value, num_mask_bytes);
+      g_value_set_pointer (&return_vals[5].value, mask_bytes);
+      g_value_set_int (&return_vals[6].value, color_bpp);
+      g_value_set_int (&return_vals[7].value, num_color_bytes);
+      g_value_set_pointer (&return_vals[8].value, color_bytes);
     }
 
   return return_vals;
@@ -1126,9 +1107,7 @@ brush_get_spacing_invoker (ProcRecord   *proc_record,
   gchar *name;
   gint32 spacing = 0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -1144,7 +1123,7 @@ brush_get_spacing_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = spacing;
+    g_value_set_int (&return_vals[1].value, spacing);
 
   return return_vals;
 }
@@ -1175,13 +1154,8 @@ brush_set_spacing_invoker (ProcRecord   *proc_record,
   gchar *name;
   gint32 spacing;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  spacing = args[1].value.pdb_int;
-  if (spacing < 0 || spacing > 1000)
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  spacing = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -1224,9 +1198,7 @@ brush_get_shape_invoker (ProcRecord   *proc_record,
   gchar *name;
   gint32 shape = 0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -1242,7 +1214,7 @@ brush_get_shape_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = shape;
+    g_value_set_enum (&return_vals[1].value, shape);
 
   return return_vals;
 }
@@ -1274,9 +1246,7 @@ brush_get_radius_invoker (ProcRecord   *proc_record,
   gchar *name;
   gdouble radius = 0.0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -1292,7 +1262,7 @@ brush_get_radius_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_float = radius;
+    g_value_set_double (&return_vals[1].value, radius);
 
   return return_vals;
 }
@@ -1324,9 +1294,7 @@ brush_get_spikes_invoker (ProcRecord   *proc_record,
   gchar *name;
   gint32 spikes = 0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -1342,7 +1310,7 @@ brush_get_spikes_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = spikes;
+    g_value_set_int (&return_vals[1].value, spikes);
 
   return return_vals;
 }
@@ -1374,9 +1342,7 @@ brush_get_hardness_invoker (ProcRecord   *proc_record,
   gchar *name;
   gdouble hardness = 0.0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -1392,7 +1358,7 @@ brush_get_hardness_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_float = hardness;
+    g_value_set_double (&return_vals[1].value, hardness);
 
   return return_vals;
 }
@@ -1424,9 +1390,7 @@ brush_get_aspect_ratio_invoker (ProcRecord   *proc_record,
   gchar *name;
   gdouble aspect_ratio = 0.0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -1442,7 +1406,7 @@ brush_get_aspect_ratio_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_float = aspect_ratio;
+    g_value_set_double (&return_vals[1].value, aspect_ratio);
 
   return return_vals;
 }
@@ -1474,9 +1438,7 @@ brush_get_angle_invoker (ProcRecord   *proc_record,
   gchar *name;
   gdouble angle = 0.0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -1492,7 +1454,7 @@ brush_get_angle_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_float = angle;
+    g_value_set_double (&return_vals[1].value, angle);
 
   return return_vals;
 }
@@ -1525,13 +1487,8 @@ brush_set_shape_invoker (ProcRecord   *proc_record,
   gint32 shape_in;
   gint32 shape_out = 0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  shape_in = args[1].value.pdb_int;
-  if (shape_in < GIMP_BRUSH_GENERATED_CIRCLE || shape_in > GIMP_BRUSH_GENERATED_DIAMOND)
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  shape_in = g_value_get_enum (&args[1].value);
 
   if (success)
     {
@@ -1551,7 +1508,7 @@ brush_set_shape_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = shape_out;
+    g_value_set_enum (&return_vals[1].value, shape_out);
 
   return return_vals;
 }
@@ -1584,11 +1541,8 @@ brush_set_radius_invoker (ProcRecord   *proc_record,
   gdouble radius_in;
   gdouble radius_out = 0.0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  radius_in = args[1].value.pdb_float;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  radius_in = g_value_get_double (&args[1].value);
 
   if (success)
     {
@@ -1608,7 +1562,7 @@ brush_set_radius_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_float = radius_out;
+    g_value_set_double (&return_vals[1].value, radius_out);
 
   return return_vals;
 }
@@ -1641,11 +1595,8 @@ brush_set_spikes_invoker (ProcRecord   *proc_record,
   gint32 spikes_in;
   gint32 spikes_out = 0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  spikes_in = args[1].value.pdb_int;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  spikes_in = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -1665,7 +1616,7 @@ brush_set_spikes_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = spikes_out;
+    g_value_set_int (&return_vals[1].value, spikes_out);
 
   return return_vals;
 }
@@ -1698,11 +1649,8 @@ brush_set_hardness_invoker (ProcRecord   *proc_record,
   gdouble hardness_in;
   gdouble hardness_out = 0.0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  hardness_in = args[1].value.pdb_float;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  hardness_in = g_value_get_double (&args[1].value);
 
   if (success)
     {
@@ -1722,7 +1670,7 @@ brush_set_hardness_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_float = hardness_out;
+    g_value_set_double (&return_vals[1].value, hardness_out);
 
   return return_vals;
 }
@@ -1755,11 +1703,8 @@ brush_set_aspect_ratio_invoker (ProcRecord   *proc_record,
   gdouble aspect_ratio_in;
   gdouble aspect_ratio_out = 0.0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  aspect_ratio_in = args[1].value.pdb_float;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  aspect_ratio_in = g_value_get_double (&args[1].value);
 
   if (success)
     {
@@ -1779,7 +1724,7 @@ brush_set_aspect_ratio_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_float = aspect_ratio_out;
+    g_value_set_double (&return_vals[1].value, aspect_ratio_out);
 
   return return_vals;
 }
@@ -1812,11 +1757,8 @@ brush_set_angle_invoker (ProcRecord   *proc_record,
   gdouble angle_in;
   gdouble angle_out = 0.0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  angle_in = args[1].value.pdb_float;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  angle_in = g_value_get_double (&args[1].value);
 
   if (success)
     {
@@ -1836,7 +1778,7 @@ brush_set_angle_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_float = angle_out;
+    g_value_set_double (&return_vals[1].value, angle_out);
 
   return return_vals;
 }

@@ -422,9 +422,7 @@ parasite_find_invoker (ProcRecord   *proc_record,
   gchar *name;
   GimpParasite *parasite = NULL;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -437,7 +435,7 @@ parasite_find_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = parasite;
+    g_value_take_boxed (&return_vals[1].value, parasite);
 
   return return_vals;
 }
@@ -467,9 +465,7 @@ parasite_attach_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpParasite *parasite;
 
-  parasite = (GimpParasite *) args[0].value.pdb_pointer;
-  if (parasite == NULL || parasite->name == NULL || !g_utf8_validate (parasite->name, -1, NULL))
-    success = FALSE;
+  parasite = g_value_get_boxed (&args[0].value);
 
   if (success)
     {
@@ -504,9 +500,7 @@ parasite_detach_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gchar *name;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -546,8 +540,8 @@ parasite_list_invoker (ProcRecord   *proc_record,
 
   return_vals = procedural_db_return_values (proc_record, TRUE);
 
-  return_vals[1].value.pdb_int = num_parasites;
-  return_vals[2].value.pdb_pointer = parasites;
+  g_value_set_int (&return_vals[1].value, num_parasites);
+  g_value_set_pointer (&return_vals[2].value, parasites);
 
   return return_vals;
 }
@@ -580,13 +574,8 @@ image_parasite_find_invoker (ProcRecord   *proc_record,
   gchar *name;
   GimpParasite *parasite = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  name = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -599,7 +588,7 @@ image_parasite_find_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = parasite;
+    g_value_take_boxed (&return_vals[1].value, parasite);
 
   return return_vals;
 }
@@ -630,13 +619,8 @@ image_parasite_attach_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpParasite *parasite;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  parasite = (GimpParasite *) args[1].value.pdb_pointer;
-  if (parasite == NULL || parasite->name == NULL || !g_utf8_validate (parasite->name, -1, NULL))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  parasite = g_value_get_boxed (&args[1].value);
 
   if (success)
     {
@@ -672,13 +656,8 @@ image_parasite_detach_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gchar *name;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  name = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -716,9 +695,7 @@ image_parasite_list_invoker (ProcRecord   *proc_record,
   gint32 num_parasites = 0;
   gchar **parasites = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -729,8 +706,8 @@ image_parasite_list_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = num_parasites;
-      return_vals[2].value.pdb_pointer = parasites;
+      g_value_set_int (&return_vals[1].value, num_parasites);
+      g_value_set_pointer (&return_vals[2].value, parasites);
     }
 
   return return_vals;
@@ -764,13 +741,8 @@ drawable_parasite_find_invoker (ProcRecord   *proc_record,
   gchar *name;
   GimpParasite *parasite = NULL;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  name = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -784,7 +756,7 @@ drawable_parasite_find_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = parasite;
+    g_value_take_boxed (&return_vals[1].value, parasite);
 
   return return_vals;
 }
@@ -815,13 +787,8 @@ drawable_parasite_attach_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   GimpParasite *parasite;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  parasite = (GimpParasite *) args[1].value.pdb_pointer;
-  if (parasite == NULL || parasite->name == NULL || !g_utf8_validate (parasite->name, -1, NULL))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  parasite = g_value_get_boxed (&args[1].value);
 
   if (success)
     {
@@ -857,13 +824,8 @@ drawable_parasite_detach_invoker (ProcRecord   *proc_record,
   GimpDrawable *drawable;
   gchar *name;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  name = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -901,9 +863,7 @@ drawable_parasite_list_invoker (ProcRecord   *proc_record,
   gint32 num_parasites = 0;
   gchar **parasites = NULL;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
 
   if (success)
     {
@@ -914,8 +874,8 @@ drawable_parasite_list_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = num_parasites;
-      return_vals[2].value.pdb_pointer = parasites;
+      g_value_set_int (&return_vals[1].value, num_parasites);
+      g_value_set_pointer (&return_vals[2].value, parasites);
     }
 
   return return_vals;
@@ -949,13 +909,8 @@ vectors_parasite_find_invoker (ProcRecord   *proc_record,
   gchar *name;
   GimpParasite *parasite = NULL;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
-
-  name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
+  name = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -969,7 +924,7 @@ vectors_parasite_find_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = parasite;
+    g_value_take_boxed (&return_vals[1].value, parasite);
 
   return return_vals;
 }
@@ -1000,13 +955,8 @@ vectors_parasite_attach_invoker (ProcRecord   *proc_record,
   GimpVectors *vectors;
   GimpParasite *parasite;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
-
-  parasite = (GimpParasite *) args[1].value.pdb_pointer;
-  if (parasite == NULL || parasite->name == NULL || !g_utf8_validate (parasite->name, -1, NULL))
-    success = FALSE;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
+  parasite = g_value_get_boxed (&args[1].value);
 
   if (success)
     {
@@ -1042,13 +992,8 @@ vectors_parasite_detach_invoker (ProcRecord   *proc_record,
   GimpVectors *vectors;
   gchar *name;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
-
-  name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
+  name = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -1086,9 +1031,7 @@ vectors_parasite_list_invoker (ProcRecord   *proc_record,
   gint32 num_parasites = 0;
   gchar **parasites = NULL;
 
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
+  vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
 
   if (success)
     {
@@ -1099,8 +1042,8 @@ vectors_parasite_list_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = num_parasites;
-      return_vals[2].value.pdb_pointer = parasites;
+      g_value_set_int (&return_vals[1].value, num_parasites);
+      g_value_set_pointer (&return_vals[2].value, parasites);
     }
 
   return return_vals;

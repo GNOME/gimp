@@ -286,7 +286,7 @@ plugins_query_invoker (ProcRecord   *proc_record,
   gint32 *plugin_install_time = NULL;
   gchar **plugin_real_name = NULL;
 
-  search_string = (gchar *) args[0].value.pdb_pointer;
+  search_string = (gchar *) g_value_get_string (&args[0].value);
 
   num_plugins = plug_ins_query (gimp, search_string,
                                 &menu_path,
@@ -298,18 +298,18 @@ plugins_query_invoker (ProcRecord   *proc_record,
 
   return_vals = procedural_db_return_values (proc_record, TRUE);
 
-  return_vals[1].value.pdb_int = num_plugins;
-  return_vals[2].value.pdb_pointer = menu_path;
-  return_vals[3].value.pdb_int = num_plugins;
-  return_vals[4].value.pdb_pointer = plugin_accelerator;
-  return_vals[5].value.pdb_int = num_plugins;
-  return_vals[6].value.pdb_pointer = plugin_location;
-  return_vals[7].value.pdb_int = num_plugins;
-  return_vals[8].value.pdb_pointer = plugin_image_type;
-  return_vals[9].value.pdb_int = num_plugins;
-  return_vals[10].value.pdb_pointer = plugin_install_time;
-  return_vals[11].value.pdb_int = num_plugins;
-  return_vals[12].value.pdb_pointer = plugin_real_name;
+  g_value_set_int (&return_vals[1].value, num_plugins);
+  g_value_set_pointer (&return_vals[2].value, menu_path);
+  g_value_set_int (&return_vals[3].value, num_plugins);
+  g_value_set_pointer (&return_vals[4].value, plugin_accelerator);
+  g_value_set_int (&return_vals[5].value, num_plugins);
+  g_value_set_pointer (&return_vals[6].value, plugin_location);
+  g_value_set_int (&return_vals[7].value, num_plugins);
+  g_value_set_pointer (&return_vals[8].value, plugin_image_type);
+  g_value_set_int (&return_vals[9].value, num_plugins);
+  g_value_set_pointer (&return_vals[10].value, plugin_install_time);
+  g_value_set_int (&return_vals[11].value, num_plugins);
+  g_value_set_pointer (&return_vals[12].value, plugin_real_name);
 
   return return_vals;
 }
@@ -340,11 +340,8 @@ plugin_domain_register_invoker (ProcRecord   *proc_record,
   gchar *domain_name;
   gchar *domain_path;
 
-  domain_name = (gchar *) args[0].value.pdb_pointer;
-  if (domain_name == NULL || !g_utf8_validate (domain_name, -1, NULL))
-    success = FALSE;
-
-  domain_path = (gchar *) args[1].value.pdb_pointer;
+  domain_name = (gchar *) g_value_get_string (&args[0].value);
+  domain_path = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -388,13 +385,8 @@ plugin_help_register_invoker (ProcRecord   *proc_record,
   gchar *domain_name;
   gchar *domain_uri;
 
-  domain_name = (gchar *) args[0].value.pdb_pointer;
-  if (domain_name == NULL || !g_utf8_validate (domain_name, -1, NULL))
-    success = FALSE;
-
-  domain_uri = (gchar *) args[1].value.pdb_pointer;
-  if (domain_uri == NULL || !g_utf8_validate (domain_uri, -1, NULL))
-    success = FALSE;
+  domain_name = (gchar *) g_value_get_string (&args[0].value);
+  domain_uri = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -438,13 +430,8 @@ plugin_menu_register_invoker (ProcRecord   *proc_record,
   gchar *procedure_name;
   gchar *menu_path;
 
-  procedure_name = (gchar *) args[0].value.pdb_pointer;
-  if (procedure_name == NULL || !g_utf8_validate (procedure_name, -1, NULL))
-    success = FALSE;
-
-  menu_path = (gchar *) args[1].value.pdb_pointer;
-  if (menu_path == NULL || !g_utf8_validate (menu_path, -1, NULL))
-    success = FALSE;
+  procedure_name = (gchar *) g_value_get_string (&args[0].value);
+  menu_path = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -491,13 +478,8 @@ plugin_menu_branch_register_invoker (ProcRecord   *proc_record,
   gchar *menu_path;
   gchar *menu_name;
 
-  menu_path = (gchar *) args[0].value.pdb_pointer;
-  if (menu_path == NULL || !g_utf8_validate (menu_path, -1, NULL))
-    success = FALSE;
-
-  menu_name = (gchar *) args[1].value.pdb_pointer;
-  if (menu_name == NULL || !g_utf8_validate (menu_name, -1, NULL))
-    success = FALSE;
+  menu_path = (gchar *) g_value_get_string (&args[0].value);
+  menu_name = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -549,19 +531,10 @@ plugin_icon_register_invoker (ProcRecord   *proc_record,
   gint32 icon_data_length;
   guint8 *icon_data;
 
-  procedure_name = (gchar *) args[0].value.pdb_pointer;
-  if (procedure_name == NULL || !g_utf8_validate (procedure_name, -1, NULL))
-    success = FALSE;
-
-  icon_type = args[1].value.pdb_int;
-  if (icon_type < GIMP_ICON_TYPE_STOCK_ID || icon_type > GIMP_ICON_TYPE_IMAGE_FILE)
-    success = FALSE;
-
-  icon_data_length = args[2].value.pdb_int;
-  if (icon_data_length < 1)
-    success = FALSE;
-
-  icon_data = (guint8 *) args[3].value.pdb_pointer;
+  procedure_name = (gchar *) g_value_get_string (&args[0].value);
+  icon_type = g_value_get_enum (&args[1].value);
+  icon_data_length = g_value_get_int (&args[2].value);
+  icon_data = g_value_get_pointer (&args[3].value);
 
   if (success)
     {

@@ -1,5 +1,81 @@
 2006-03-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/procedural_db.[ch] (struct Argument): replace the value
+	union by a GValue.
+
+	(procedural_db_argument_init)
+	(procedural_db_compat_arg_init): new functions to initialize
+	an Argument. They call g_value_init() on the Argument's value.
+
+	(procedural_db_arguments)
+	(procedural_db_return_values): initialize the returned Argument
+	arrays so their GValues are ready to use. Allow to get the
+	(unsuccessful) return values of a NULL ProcRecord.
+
+	(procedural_db_destroy_args): g_value_unset() the values. Added a
+	"gboolean full_destroy" parameter. Its only effect is to destroy
+	PDB arrays, everything else is nicely memory managed by GValue.
+
+	(procedural_db_execute)
+	(procedural_db_run_proc): do GValue stuff. Added n_args and
+	n_return_vals parameters to execute().
+
+	(procedural_db_execute_proc): private function to execute a
+	procedure. Validates the passed in arguments using the registered
+	GParamSpecs before passing them to the resp. exec method.
+
+	* app/plug-in/plug-in-params.[ch] (plug_in_params_to_args): needs
+	an array of ProcArgs now in order to initialize the Arguments'
+	GValues correctly. Passing NULL ProcArgs uses
+	procedural_db_compat_arg_init(), so procedures (plug-ins)
+	returning more values than expected work.
+
+	(plug_in_args_to_params): do GValue stuff here too.
+
+	(plug_in_args_destroy): removed this function,
+	procedural_db_destroy_args() does the same now.
+
+	* app/plug-in/plug-in-message.c (plug_in_handle_proc_run):
+	simplified quite a bit because everything returns n_return_values
+	now. Call plug_in_params_to_args() only of the procedure was found.
+
+	(plug_in_handle_proc_return_priv): pass ProcRecs to
+	plug_in_params_to_args().
+
+	* app/batch.c
+	* app/actions/plug-in-commands.c
+	* app/actions/vectors-commands.c
+	* app/core/gimppdbprogress.c
+	* app/dialogs/about-dialog.c
+	* app/file/file-open.c
+	* app/file/file-save.c
+	* app/plug-in/plug-ins.c
+	* app/plug-in/plug-in-progress.c
+	* app/plug-in/plug-in-run.[ch]
+	* app/widgets/gimphelp.c
+	* app/widgets/gimppdbdialog.c
+	* app/xcf/xcf.c
+	* tools/pdbgen/pdb/fileops.pdb: changed accordingly: don't
+	g_new/g_free Argument arrays, always use procedural_db_foo()
+	functions. Use GValue functions to get/set Arguments.
+
+	* tools/pdbgen/pdb.pl: added get_value_func and set_value_func to
+	all PDB types. Removed id_func, id_ret_func and check_func. Added
+	flags which indicated that a type is an ID. Removed unused utility
+	functions.
+
+	* tools/pdbgen/lib.pl: use the flag instead of looking at
+	functions and value types.
+
+	* tools/pdbgen/app.pl: use the get_value_func and set_value_func
+	to marshal inargs and outargs. Removed all checks performed on
+	inargs because that's done by GParamSpec validation now. Added the
+	missing bits to register excluded values with GimpParamSpecEnum.
+
+	* app/pdb/*_cmds.c: regenerated.
+
+2006-03-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/plug-in-params.c (plug_in_param_defs_check): can't
 	just cast the GPParamDefs to ProcArgs any more, their struct
 	layouts are different now. Convert them into temporary ProcArgs

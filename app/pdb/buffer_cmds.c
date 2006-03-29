@@ -218,9 +218,7 @@ buffers_get_list_invoker (ProcRecord   *proc_record,
   gint32 num_buffers = 0;
   gchar **buffer_list = NULL;
 
-  filter = (gchar *) args[0].value.pdb_pointer;
-  if (filter && !g_utf8_validate (filter, -1, NULL))
-    success = FALSE;
+  filter = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -232,8 +230,8 @@ buffers_get_list_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = num_buffers;
-      return_vals[2].value.pdb_pointer = buffer_list;
+      g_value_set_int (&return_vals[1].value, num_buffers);
+      g_value_set_pointer (&return_vals[2].value, buffer_list);
     }
 
   return return_vals;
@@ -267,13 +265,8 @@ buffer_rename_invoker (ProcRecord   *proc_record,
   gchar *new_name;
   gchar *real_name = NULL;
 
-  buffer_name = (gchar *) args[0].value.pdb_pointer;
-  if (buffer_name == NULL || !g_utf8_validate (buffer_name, -1, NULL))
-    success = FALSE;
-
-  new_name = (gchar *) args[1].value.pdb_pointer;
-  if (new_name == NULL || !g_utf8_validate (new_name, -1, NULL))
-    success = FALSE;
+  buffer_name = (gchar *) g_value_get_string (&args[0].value);
+  new_name = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -292,7 +285,7 @@ buffer_rename_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = real_name;
+    g_value_take_string (&return_vals[1].value, real_name);
 
   return return_vals;
 }
@@ -322,9 +315,7 @@ buffer_delete_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gchar *buffer_name;
 
-  buffer_name = (gchar *) args[0].value.pdb_pointer;
-  if (buffer_name == NULL || !g_utf8_validate (buffer_name, -1, NULL))
-    success = FALSE;
+  buffer_name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -367,9 +358,7 @@ buffer_get_width_invoker (ProcRecord   *proc_record,
   gchar *buffer_name;
   gint32 width = 0;
 
-  buffer_name = (gchar *) args[0].value.pdb_pointer;
-  if (buffer_name == NULL || !g_utf8_validate (buffer_name, -1, NULL))
-    success = FALSE;
+  buffer_name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -385,7 +374,7 @@ buffer_get_width_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = width;
+    g_value_set_int (&return_vals[1].value, width);
 
   return return_vals;
 }
@@ -417,9 +406,7 @@ buffer_get_height_invoker (ProcRecord   *proc_record,
   gchar *buffer_name;
   gint32 height = 0;
 
-  buffer_name = (gchar *) args[0].value.pdb_pointer;
-  if (buffer_name == NULL || !g_utf8_validate (buffer_name, -1, NULL))
-    success = FALSE;
+  buffer_name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -435,7 +422,7 @@ buffer_get_height_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = height;
+    g_value_set_int (&return_vals[1].value, height);
 
   return return_vals;
 }
@@ -467,9 +454,7 @@ buffer_get_bytes_invoker (ProcRecord   *proc_record,
   gchar *buffer_name;
   gint32 bytes = 0;
 
-  buffer_name = (gchar *) args[0].value.pdb_pointer;
-  if (buffer_name == NULL || !g_utf8_validate (buffer_name, -1, NULL))
-    success = FALSE;
+  buffer_name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -485,7 +470,7 @@ buffer_get_bytes_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = bytes;
+    g_value_set_int (&return_vals[1].value, bytes);
 
   return return_vals;
 }
@@ -517,9 +502,7 @@ buffer_get_image_type_invoker (ProcRecord   *proc_record,
   gchar *buffer_name;
   gint32 image_type = 0;
 
-  buffer_name = (gchar *) args[0].value.pdb_pointer;
-  if (buffer_name == NULL || !g_utf8_validate (buffer_name, -1, NULL))
-    success = FALSE;
+  buffer_name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -535,7 +518,7 @@ buffer_get_image_type_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = image_type;
+    g_value_set_enum (&return_vals[1].value, image_type);
 
   return return_vals;
 }

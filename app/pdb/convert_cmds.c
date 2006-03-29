@@ -139,9 +139,7 @@ image_convert_rgb_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -179,9 +177,7 @@ image_convert_grayscale_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -225,27 +221,13 @@ image_convert_indexed_invoker (ProcRecord   *proc_record,
   gboolean remove_unused;
   gchar *palette;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  dither_type = args[1].value.pdb_int;
-  if (dither_type < GIMP_NO_DITHER || dither_type > GIMP_FIXED_DITHER)
-    success = FALSE;
-
-  palette_type = args[2].value.pdb_int;
-  if (palette_type < GIMP_MAKE_PALETTE || palette_type > GIMP_CUSTOM_PALETTE)
-    success = FALSE;
-
-  num_cols = args[3].value.pdb_int;
-
-  alpha_dither = args[4].value.pdb_int ? TRUE : FALSE;
-
-  remove_unused = args[5].value.pdb_int ? TRUE : FALSE;
-
-  palette = (gchar *) args[6].value.pdb_pointer;
-  if (palette == NULL || !g_utf8_validate (palette, -1, NULL))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  dither_type = g_value_get_enum (&args[1].value);
+  palette_type = g_value_get_enum (&args[2].value);
+  num_cols = g_value_get_int (&args[3].value);
+  alpha_dither = g_value_get_boolean (&args[4].value);
+  remove_unused = g_value_get_boolean (&args[5].value);
+  palette = (gchar *) g_value_get_string (&args[6].value);
 
   if (success)
     {

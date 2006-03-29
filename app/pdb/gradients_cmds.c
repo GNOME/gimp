@@ -241,9 +241,7 @@ gradients_get_list_invoker (ProcRecord   *proc_record,
   gint32 num_gradients = 0;
   gchar **gradient_list = NULL;
 
-  filter = (gchar *) args[0].value.pdb_pointer;
-  if (filter && !g_utf8_validate (filter, -1, NULL))
-    success = FALSE;
+  filter = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -255,8 +253,8 @@ gradients_get_list_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = num_gradients;
-      return_vals[2].value.pdb_pointer = gradient_list;
+      g_value_set_int (&return_vals[1].value, num_gradients);
+      g_value_set_pointer (&return_vals[2].value, gradient_list);
     }
 
   return return_vals;
@@ -291,11 +289,8 @@ gradients_sample_uniform_invoker (ProcRecord   *proc_record,
   gint32 array_length = 0;
   gdouble *color_samples = NULL;
 
-  num_samples = args[0].value.pdb_int;
-  if (num_samples < 2)
-    success = FALSE;
-
-  reverse = args[1].value.pdb_int ? TRUE : FALSE;
+  num_samples = g_value_get_int (&args[0].value);
+  reverse = g_value_get_boolean (&args[1].value);
 
   if (success)
     {
@@ -331,8 +326,8 @@ gradients_sample_uniform_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = array_length;
-      return_vals[2].value.pdb_pointer = color_samples;
+      g_value_set_int (&return_vals[1].value, array_length);
+      g_value_set_pointer (&return_vals[2].value, color_samples);
     }
 
   return return_vals;
@@ -368,13 +363,9 @@ gradients_sample_custom_invoker (ProcRecord   *proc_record,
   gint32 array_length = 0;
   gdouble *color_samples = NULL;
 
-  num_samples = args[0].value.pdb_int;
-  if (num_samples <= 0)
-    success = FALSE;
-
-  positions = (gdouble *) args[1].value.pdb_pointer;
-
-  reverse = args[2].value.pdb_int ? TRUE : FALSE;
+  num_samples = g_value_get_int (&args[0].value);
+  positions = g_value_get_pointer (&args[1].value);
+  reverse = g_value_get_boolean (&args[2].value);
 
   if (success)
     {
@@ -407,8 +398,8 @@ gradients_sample_custom_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = array_length;
-      return_vals[2].value.pdb_pointer = color_samples;
+      g_value_set_int (&return_vals[1].value, array_length);
+      g_value_set_pointer (&return_vals[2].value, color_samples);
     }
 
   return return_vals;
@@ -445,13 +436,9 @@ gradients_get_gradient_data_invoker (ProcRecord   *proc_record,
   gint32 width = 0;
   gdouble *grad_data = NULL;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name && !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  sample_size = args[1].value.pdb_int;
-
-  reverse = args[2].value.pdb_int ? TRUE : FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  sample_size = g_value_get_int (&args[1].value);
+  reverse = g_value_get_boolean (&args[2].value);
 
   if (success)
     {
@@ -507,9 +494,9 @@ gradients_get_gradient_data_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_pointer = actual_name;
-      return_vals[2].value.pdb_int = width;
-      return_vals[3].value.pdb_pointer = grad_data;
+      g_value_take_string (&return_vals[1].value, actual_name);
+      g_value_set_int (&return_vals[2].value, width);
+      g_value_set_pointer (&return_vals[3].value, grad_data);
     }
 
   return return_vals;

@@ -447,7 +447,7 @@ context_get_paint_method_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = name;
+    g_value_take_string (&return_vals[1].value, name);
 
   return return_vals;
 }
@@ -477,9 +477,7 @@ context_set_paint_method_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gchar *name;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -523,7 +521,7 @@ context_get_foreground_invoker (ProcRecord   *proc_record,
   gimp_context_get_foreground (context, &foreground);
 
   return_vals = procedural_db_return_values (proc_record, TRUE);
-  return_vals[1].value.pdb_color = foreground;
+  gimp_value_set_rgb (&return_vals[1].value, &foreground);
 
   return return_vals;
 }
@@ -550,14 +548,18 @@ context_set_foreground_invoker (ProcRecord   *proc_record,
                                 GimpProgress *progress,
                                 Argument     *args)
 {
+  gboolean success = TRUE;
   GimpRGB foreground;
 
-  foreground = args[0].value.pdb_color;
+  gimp_value_get_rgb (&args[0].value, &foreground);
 
-  gimp_rgb_set_alpha (&foreground, 1.0);
-  gimp_context_set_foreground (context, &foreground);
+  if (success)
+    {
+      gimp_rgb_set_alpha (&foreground, 1.0);
+      gimp_context_set_foreground (context, &foreground);
+    }
 
-  return procedural_db_return_values (proc_record, TRUE);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcRecord context_set_foreground_proc =
@@ -588,7 +590,7 @@ context_get_background_invoker (ProcRecord   *proc_record,
   gimp_context_get_background (context, &background);
 
   return_vals = procedural_db_return_values (proc_record, TRUE);
-  return_vals[1].value.pdb_color = background;
+  gimp_value_set_rgb (&return_vals[1].value, &background);
 
   return return_vals;
 }
@@ -615,14 +617,18 @@ context_set_background_invoker (ProcRecord   *proc_record,
                                 GimpProgress *progress,
                                 Argument     *args)
 {
+  gboolean success = TRUE;
   GimpRGB background;
 
-  background = args[0].value.pdb_color;
+  gimp_value_get_rgb (&args[0].value, &background);
 
-  gimp_rgb_set_alpha (&background, 1.0);
-  gimp_context_set_background (context, &background);
+  if (success)
+    {
+      gimp_rgb_set_alpha (&background, 1.0);
+      gimp_context_set_background (context, &background);
+    }
 
-  return procedural_db_return_values (proc_record, TRUE);
+  return procedural_db_return_values (proc_record, success);
 }
 
 static ProcRecord context_set_background_proc =
@@ -705,7 +711,7 @@ context_get_opacity_invoker (ProcRecord   *proc_record,
   opacity = gimp_context_get_opacity (context) * 100.0;
 
   return_vals = procedural_db_return_values (proc_record, TRUE);
-  return_vals[1].value.pdb_float = opacity;
+  g_value_set_double (&return_vals[1].value, opacity);
 
   return return_vals;
 }
@@ -735,9 +741,7 @@ context_set_opacity_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gdouble opacity;
 
-  opacity = args[0].value.pdb_float;
-  if (opacity < 0.0 || opacity > 100.0)
-    success = FALSE;
+  opacity = g_value_get_double (&args[0].value);
 
   if (success)
     {
@@ -775,7 +779,7 @@ context_get_paint_mode_invoker (ProcRecord   *proc_record,
   paint_mode = gimp_context_get_paint_mode (context);
 
   return_vals = procedural_db_return_values (proc_record, TRUE);
-  return_vals[1].value.pdb_int = paint_mode;
+  g_value_set_enum (&return_vals[1].value, paint_mode);
 
   return return_vals;
 }
@@ -805,9 +809,7 @@ context_set_paint_mode_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gint32 paint_mode;
 
-  paint_mode = args[0].value.pdb_int;
-  if (paint_mode < GIMP_NORMAL_MODE || paint_mode > GIMP_COLOR_ERASE_MODE)
-    success = FALSE;
+  paint_mode = g_value_get_enum (&args[0].value);
 
   if (success)
     {
@@ -853,7 +855,7 @@ context_get_brush_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = name;
+    g_value_take_string (&return_vals[1].value, name);
 
   return return_vals;
 }
@@ -883,9 +885,7 @@ context_set_brush_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gchar *name;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -937,7 +937,7 @@ context_get_pattern_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = name;
+    g_value_take_string (&return_vals[1].value, name);
 
   return return_vals;
 }
@@ -967,9 +967,7 @@ context_set_pattern_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gchar *name;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -1021,7 +1019,7 @@ context_get_gradient_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = name;
+    g_value_take_string (&return_vals[1].value, name);
 
   return return_vals;
 }
@@ -1051,9 +1049,7 @@ context_set_gradient_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gchar *name;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -1105,7 +1101,7 @@ context_get_palette_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = name;
+    g_value_take_string (&return_vals[1].value, name);
 
   return return_vals;
 }
@@ -1135,9 +1131,7 @@ context_set_palette_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gchar *name;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -1189,7 +1183,7 @@ context_get_font_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = name;
+    g_value_take_string (&return_vals[1].value, name);
 
   return return_vals;
 }
@@ -1219,9 +1213,7 @@ context_set_font_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gchar *name;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {

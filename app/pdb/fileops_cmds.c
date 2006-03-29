@@ -80,12 +80,14 @@ register_fileops_procs (Gimp *gimp)
   procedure = procedural_db_init_proc (&file_load_proc, 3, 1);
   procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
-                              g_param_spec_enum ("run-mode",
-                                                 "run mode",
-                                                 "The run mode: { GIMP_RUN_INTERACTIVE (0), GIMP_RUN_NONINTERACTIVE (1) }",
-                                                 GIMP_TYPE_RUN_MODE,
-                                                 GIMP_RUN_INTERACTIVE,
-                                                 GIMP_PARAM_READWRITE));
+                              gimp_param_spec_enum ("run-mode",
+                                                    "run mode",
+                                                    "The run mode: { GIMP_RUN_INTERACTIVE (0), GIMP_RUN_NONINTERACTIVE (1) }",
+                                                    GIMP_TYPE_RUN_MODE,
+                                                    GIMP_RUN_INTERACTIVE,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[0].pspec),
+                                      GIMP_RUN_WITH_LAST_VALS);
   procedural_db_add_argument (procedure,
                               GIMP_PDB_STRING,
                               gimp_param_spec_string ("filename",
@@ -117,12 +119,14 @@ register_fileops_procs (Gimp *gimp)
   procedure = procedural_db_init_proc (&file_load_layer_proc, 3, 1);
   procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
-                              g_param_spec_enum ("run-mode",
-                                                 "run mode",
-                                                 "The run mode: { GIMP_RUN_INTERACTIVE (0), GIMP_RUN_NONINTERACTIVE (1) }",
-                                                 GIMP_TYPE_RUN_MODE,
-                                                 GIMP_RUN_INTERACTIVE,
-                                                 GIMP_PARAM_READWRITE));
+                              gimp_param_spec_enum ("run-mode",
+                                                    "run mode",
+                                                    "The run mode: { GIMP_RUN_INTERACTIVE (0), GIMP_RUN_NONINTERACTIVE (1) }",
+                                                    GIMP_TYPE_RUN_MODE,
+                                                    GIMP_RUN_INTERACTIVE,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[0].pspec),
+                                      GIMP_RUN_WITH_LAST_VALS);
   procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
@@ -195,12 +199,14 @@ register_fileops_procs (Gimp *gimp)
   procedure = procedural_db_init_proc (&file_save_proc, 5, 0);
   procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
-                              g_param_spec_enum ("run-mode",
-                                                 "run mode",
-                                                 "The run mode: { GIMP_RUN_INTERACTIVE (0), GIMP_RUN_NONINTERACTIVE (1) }",
-                                                 GIMP_TYPE_RUN_MODE,
-                                                 GIMP_RUN_INTERACTIVE,
-                                                 GIMP_PARAM_READWRITE));
+                              gimp_param_spec_enum ("run-mode",
+                                                    "run mode",
+                                                    "The run mode: { GIMP_RUN_INTERACTIVE (0), GIMP_RUN_NONINTERACTIVE (1) }",
+                                                    GIMP_TYPE_RUN_MODE,
+                                                    GIMP_RUN_INTERACTIVE,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[0].pspec),
+                                      GIMP_RUN_WITH_LAST_VALS);
   procedural_db_add_argument (procedure,
                               GIMP_PDB_IMAGE,
                               gimp_param_spec_image_id ("image",
@@ -482,10 +488,12 @@ file_load_invoker (ProcRecord   *proc_record,
   PlugInProcDef    *file_proc;
   const ProcRecord *proc;
   gchar            *uri;
+  gint              n_return_vals;
   gint              i;
 
   uri = file_utils_filename_to_uri (gimp->load_procs,
-                                    args[1].value.pdb_pointer, NULL);
+                                    g_value_get_string (&args[1].value),
+                                    NULL);
 
   if (! uri)
     return procedural_db_return_values (proc_record, FALSE);
@@ -499,19 +507,21 @@ file_load_invoker (ProcRecord   *proc_record,
 
   proc = plug_in_proc_def_get_proc (file_proc);
 
-  new_args = g_new0 (Argument, proc->num_args);
-  memcpy (new_args, args, sizeof (Argument) * 3);
+  new_args = procedural_db_arguments (proc);
+
+  for (i = 0; i < 3; i++)
+    g_value_transform (&args[i].value, &new_args[i].value);
 
   for (i = 3; i < proc->num_args; i++)
-    {
-      new_args[i].arg_type = proc->args[i].arg_type;
-      if (proc->args[i].arg_type == GIMP_PDB_STRING)
-        new_args[i].value.pdb_pointer = g_strdup ("");
-    }
+    if (proc->args[i].arg_type == GIMP_PDB_STRING)
+      g_value_set_string (&new_args[i].value, "");
 
   return_vals = procedural_db_execute (gimp, context, progress,
-                                       proc->name, new_args);
-  g_free (new_args);
+                                       proc->name,
+                                       new_args, proc->num_args,
+                                       &n_return_vals);
+
+  procedural_db_destroy_args (new_args, proc->num_args, FALSE);
 
   return return_vals;
 }
@@ -545,17 +555,9 @@ file_load_layer_invoker (ProcRecord   *proc_record,
   gchar *filename;
   GimpLayer *layer = NULL;
 
-  run_mode = args[0].value.pdb_int;
-  if (run_mode < GIMP_RUN_INTERACTIVE || run_mode > GIMP_RUN_NONINTERACTIVE)
-    success = FALSE;
-
-  image = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  filename = (gchar *) args[2].value.pdb_pointer;
-  if (filename == NULL)
-    success = FALSE;
+  run_mode = g_value_get_enum (&args[0].value);
+  image = gimp_value_get_image (&args[1].value, gimp);
+  filename = (gchar *) g_value_get_string (&args[2].value);
 
   if (success)
     {
@@ -579,7 +581,7 @@ file_load_layer_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = layer ? gimp_item_get_ID (GIMP_ITEM (layer)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (layer));
 
   return return_vals;
 }
@@ -614,9 +616,7 @@ file_load_thumbnail_invoker (ProcRecord   *proc_record,
   gint32 thumb_data_count = 0;
   guint8 *thumb_data = NULL;
 
-  filename = (gchar *) args[0].value.pdb_pointer;
-  if (filename == NULL)
-    success = FALSE;
+  filename = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -672,10 +672,10 @@ file_load_thumbnail_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = width;
-      return_vals[2].value.pdb_int = height;
-      return_vals[3].value.pdb_int = thumb_data_count;
-      return_vals[4].value.pdb_pointer = thumb_data;
+      g_value_set_int (&return_vals[1].value, width);
+      g_value_set_int (&return_vals[2].value, height);
+      g_value_set_int (&return_vals[3].value, thumb_data_count);
+      g_value_set_pointer (&return_vals[4].value, thumb_data);
     }
 
   return return_vals;
@@ -708,10 +708,12 @@ file_save_invoker (ProcRecord   *proc_record,
   PlugInProcDef    *file_proc;
   const ProcRecord *proc;
   gchar            *uri;
+  gint              n_return_vals;
   gint              i;
 
   uri = file_utils_filename_to_uri (gimp->load_procs,
-                                    args[3].value.pdb_pointer, NULL);
+                                    g_value_get_string (&args[3].value),
+                                    NULL);
 
   if (! uri)
     return procedural_db_return_values (proc_record, FALSE);
@@ -725,19 +727,21 @@ file_save_invoker (ProcRecord   *proc_record,
 
   proc = plug_in_proc_def_get_proc (file_proc);
 
-  new_args = g_new0 (Argument, proc->num_args);
-  memcpy (new_args, args, sizeof (Argument) * 5);
+  new_args = procedural_db_arguments (proc);
+
+  for (i = 0; i < 5; i++)
+    g_value_transform (&args[i].value, &new_args[i].value);
 
   for (i = 5; i < proc->num_args; i++)
-    {
-      new_args[i].arg_type = proc->args[i].arg_type;
-      if (proc->args[i].arg_type == GIMP_PDB_STRING)
-        new_args[i].value.pdb_pointer = g_strdup ("");
-    }
+    if (proc->args[i].arg_type == GIMP_PDB_STRING)
+      g_value_set_string (&new_args[i].value, "");
 
   return_vals = procedural_db_execute (gimp, context, progress,
-                                       proc->name, new_args);
-  g_free (new_args);
+                                       proc->name,
+                                       new_args, proc->num_args,
+                                       &n_return_vals);
+
+  procedural_db_destroy_args (new_args, proc->num_args, FALSE);
 
   return return_vals;
 }
@@ -768,13 +772,8 @@ file_save_thumbnail_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gchar *filename;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  filename = (gchar *) args[1].value.pdb_pointer;
-  if (filename == NULL)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  filename = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -836,9 +835,7 @@ temp_name_invoker (ProcRecord   *proc_record,
   gchar *extension;
   gchar *name = NULL;
 
-  extension = (gchar *) args[0].value.pdb_pointer;
-  if (extension == NULL)
-    success = FALSE;
+  extension = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -865,7 +862,7 @@ temp_name_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = name;
+    g_value_take_string (&return_vals[1].value, name);
 
   return return_vals;
 }
@@ -898,15 +895,10 @@ register_magic_load_handler_invoker (ProcRecord   *proc_record,
   gchar *prefixes;
   gchar *magics;
 
-  procedure_name = (gchar *) args[0].value.pdb_pointer;
-  if (procedure_name == NULL || !g_utf8_validate (procedure_name, -1, NULL))
-    success = FALSE;
-
-  extensions = (gchar *) args[1].value.pdb_pointer;
-
-  prefixes = (gchar *) args[2].value.pdb_pointer;
-
-  magics = (gchar *) args[3].value.pdb_pointer;
+  procedure_name = (gchar *) g_value_get_string (&args[0].value);
+  extensions = (gchar *) g_value_get_string (&args[1].value);
+  prefixes = (gchar *) g_value_get_string (&args[2].value);
+  magics = (gchar *) g_value_get_string (&args[3].value);
 
   if (success)
     {
@@ -945,13 +937,9 @@ register_load_handler_invoker (ProcRecord   *proc_record,
   gchar *extensions;
   gchar *prefixes;
 
-  procedure_name = (gchar *) args[0].value.pdb_pointer;
-  if (procedure_name == NULL || !g_utf8_validate (procedure_name, -1, NULL))
-    success = FALSE;
-
-  extensions = (gchar *) args[1].value.pdb_pointer;
-
-  prefixes = (gchar *) args[2].value.pdb_pointer;
+  procedure_name = (gchar *) g_value_get_string (&args[0].value);
+  extensions = (gchar *) g_value_get_string (&args[1].value);
+  prefixes = (gchar *) g_value_get_string (&args[2].value);
 
   if (success)
     {
@@ -990,13 +978,9 @@ register_save_handler_invoker (ProcRecord   *proc_record,
   gchar *extensions;
   gchar *prefixes;
 
-  procedure_name = (gchar *) args[0].value.pdb_pointer;
-  if (procedure_name == NULL || !g_utf8_validate (procedure_name, -1, NULL))
-    success = FALSE;
-
-  extensions = (gchar *) args[1].value.pdb_pointer;
-
-  prefixes = (gchar *) args[2].value.pdb_pointer;
+  procedure_name = (gchar *) g_value_get_string (&args[0].value);
+  extensions = (gchar *) g_value_get_string (&args[1].value);
+  prefixes = (gchar *) g_value_get_string (&args[2].value);
 
   if (success)
     {
@@ -1070,13 +1054,8 @@ register_file_handler_mime_invoker (ProcRecord   *proc_record,
   gchar *procedure_name;
   gchar *mime_type;
 
-  procedure_name = (gchar *) args[0].value.pdb_pointer;
-  if (procedure_name == NULL || !g_utf8_validate (procedure_name, -1, NULL))
-    success = FALSE;
-
-  mime_type = (gchar *) args[1].value.pdb_pointer;
-  if (mime_type == NULL || !g_utf8_validate (mime_type, -1, NULL))
-    success = FALSE;
+  procedure_name = (gchar *) g_value_get_string (&args[0].value);
+  mime_type = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -1119,13 +1098,8 @@ register_thumbnail_loader_invoker (ProcRecord   *proc_record,
   gchar *load_proc;
   gchar *thumb_proc;
 
-  load_proc = (gchar *) args[0].value.pdb_pointer;
-  if (load_proc == NULL || !g_utf8_validate (load_proc, -1, NULL))
-    success = FALSE;
-
-  thumb_proc = (gchar *) args[1].value.pdb_pointer;
-  if (thumb_proc == NULL || !g_utf8_validate (thumb_proc, -1, NULL))
-    success = FALSE;
+  load_proc = (gchar *) g_value_get_string (&args[0].value);
+  thumb_proc = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {

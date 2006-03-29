@@ -387,29 +387,14 @@ by_color_select_invoker (ProcRecord   *proc_record,
   gdouble feather_radius;
   gboolean sample_merged;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  color = args[1].value.pdb_color;
-
-  threshold = args[2].value.pdb_int;
-  if (threshold < 0 || threshold > 255)
-    success = FALSE;
-
-  operation = args[3].value.pdb_int;
-  if (operation < GIMP_CHANNEL_OP_ADD || operation > GIMP_CHANNEL_OP_INTERSECT)
-    success = FALSE;
-
-  antialias = args[4].value.pdb_int ? TRUE : FALSE;
-
-  feather = args[5].value.pdb_int ? TRUE : FALSE;
-
-  feather_radius = args[6].value.pdb_float;
-  if (feather_radius < 0.0)
-    success = FALSE;
-
-  sample_merged = args[7].value.pdb_int ? TRUE : FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  gimp_value_get_rgb (&args[1].value, &color);
+  threshold = g_value_get_int (&args[2].value);
+  operation = g_value_get_enum (&args[3].value);
+  antialias = g_value_get_boolean (&args[4].value);
+  feather = g_value_get_boolean (&args[5].value);
+  feather_radius = g_value_get_double (&args[6].value);
+  sample_merged = g_value_get_boolean (&args[7].value);
 
   if (success)
     {
@@ -463,33 +448,15 @@ ellipse_select_invoker (ProcRecord   *proc_record,
   gboolean feather;
   gdouble feather_radius;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  x = args[1].value.pdb_float;
-
-  y = args[2].value.pdb_float;
-
-  width = args[3].value.pdb_float;
-  if (width <= 0.0)
-    success = FALSE;
-
-  height = args[4].value.pdb_float;
-  if (height <= 0.0)
-    success = FALSE;
-
-  operation = args[5].value.pdb_int;
-  if (operation < GIMP_CHANNEL_OP_ADD || operation > GIMP_CHANNEL_OP_INTERSECT)
-    success = FALSE;
-
-  antialias = args[6].value.pdb_int ? TRUE : FALSE;
-
-  feather = args[7].value.pdb_int ? TRUE : FALSE;
-
-  feather_radius = args[8].value.pdb_float;
-  if (feather_radius < 0.0)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  x = g_value_get_double (&args[1].value);
+  y = g_value_get_double (&args[2].value);
+  width = g_value_get_double (&args[3].value);
+  height = g_value_get_double (&args[4].value);
+  operation = g_value_get_enum (&args[5].value);
+  antialias = g_value_get_boolean (&args[6].value);
+  feather = g_value_get_boolean (&args[7].value);
+  feather_radius = g_value_get_double (&args[8].value);
 
   if (success)
     {
@@ -537,27 +504,13 @@ free_select_invoker (ProcRecord   *proc_record,
   gboolean feather;
   gdouble feather_radius;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  num_segs = args[1].value.pdb_int;
-  if (num_segs < 2)
-    success = FALSE;
-
-  segs = (gdouble *) args[2].value.pdb_pointer;
-
-  operation = args[3].value.pdb_int;
-  if (operation < GIMP_CHANNEL_OP_ADD || operation > GIMP_CHANNEL_OP_INTERSECT)
-    success = FALSE;
-
-  antialias = args[4].value.pdb_int ? TRUE : FALSE;
-
-  feather = args[5].value.pdb_int ? TRUE : FALSE;
-
-  feather_radius = args[6].value.pdb_float;
-  if (feather_radius < 0.0)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  num_segs = g_value_get_int (&args[1].value);
+  segs = g_value_get_pointer (&args[2].value);
+  operation = g_value_get_enum (&args[3].value);
+  antialias = g_value_get_boolean (&args[4].value);
+  feather = g_value_get_boolean (&args[5].value);
+  feather_radius = g_value_get_double (&args[6].value);
 
   if (success)
     {
@@ -608,31 +561,15 @@ fuzzy_select_invoker (ProcRecord   *proc_record,
   gdouble feather_radius;
   gboolean sample_merged;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
-    success = FALSE;
-
-  x = args[1].value.pdb_float;
-
-  y = args[2].value.pdb_float;
-
-  threshold = args[3].value.pdb_int;
-  if (threshold < 0 || threshold > 255)
-    success = FALSE;
-
-  operation = args[4].value.pdb_int;
-  if (operation < GIMP_CHANNEL_OP_ADD || operation > GIMP_CHANNEL_OP_INTERSECT)
-    success = FALSE;
-
-  antialias = args[5].value.pdb_int ? TRUE : FALSE;
-
-  feather = args[6].value.pdb_int ? TRUE : FALSE;
-
-  feather_radius = args[7].value.pdb_float;
-  if (feather_radius < 0.0)
-    success = FALSE;
-
-  sample_merged = args[8].value.pdb_int ? TRUE : FALSE;
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  x = g_value_get_double (&args[1].value);
+  y = g_value_get_double (&args[2].value);
+  threshold = g_value_get_int (&args[3].value);
+  operation = g_value_get_enum (&args[4].value);
+  antialias = g_value_get_boolean (&args[5].value);
+  feather = g_value_get_boolean (&args[6].value);
+  feather_radius = g_value_get_double (&args[7].value);
+  sample_merged = g_value_get_boolean (&args[8].value);
 
   if (success)
     {
@@ -687,31 +624,14 @@ rect_select_invoker (ProcRecord   *proc_record,
   gboolean feather;
   gdouble feather_radius;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  x = args[1].value.pdb_float;
-
-  y = args[2].value.pdb_float;
-
-  width = args[3].value.pdb_float;
-  if (width <= 0.0)
-    success = FALSE;
-
-  height = args[4].value.pdb_float;
-  if (height <= 0.0)
-    success = FALSE;
-
-  operation = args[5].value.pdb_int;
-  if (operation < GIMP_CHANNEL_OP_ADD || operation > GIMP_CHANNEL_OP_INTERSECT)
-    success = FALSE;
-
-  feather = args[6].value.pdb_int ? TRUE : FALSE;
-
-  feather_radius = args[7].value.pdb_float;
-  if (feather_radius < 0.0)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  x = g_value_get_double (&args[1].value);
+  y = g_value_get_double (&args[2].value);
+  width = g_value_get_double (&args[3].value);
+  height = g_value_get_double (&args[4].value);
+  operation = g_value_get_enum (&args[5].value);
+  feather = g_value_get_boolean (&args[6].value);
+  feather_radius = g_value_get_double (&args[7].value);
 
   if (success)
     {

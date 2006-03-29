@@ -223,7 +223,7 @@ about_dialog_load_url (GtkAboutDialog *dialog,
                                         &nreturn_vals,
                                         GIMP_PDB_STRING, url,
                                         GIMP_PDB_END);
-  procedural_db_destroy_args (return_vals, nreturn_vals);
+  procedural_db_destroy_args (return_vals, nreturn_vals, TRUE);
 }
 
 

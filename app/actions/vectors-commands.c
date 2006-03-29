@@ -35,6 +35,7 @@
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpitemundo.h"
+#include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
 #include "core/gimpstrokedesc.h"
 #include "core/gimptoolinfo.h"
@@ -332,16 +333,16 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
   /*  plug-in arguments as if called by <Image>/Filters/...  */
   args = procedural_db_arguments (proc_rec);
 
-  args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
-  args[1].value.pdb_int = (gint32) gimp_image_get_ID (image);
-  args[2].value.pdb_int = -1;  /*  unused  */
+  g_value_set_enum     (&args[0].value, GIMP_RUN_INTERACTIVE);
+  gimp_value_set_image (&args[1].value, image);
+  gimp_value_set_item  (&args[2].value, NULL /* unused */);
 
   plug_in_run (image->gimp, action_data_get_context (data),
                GIMP_PROGRESS (display),
                proc_rec, args, 3 /* not proc_rec->num_args */,
                FALSE, TRUE, display ? gimp_display_get_ID (display) : 0);
 
-  g_free (args);
+  procedural_db_destroy_args (args, proc_rec->num_args, TRUE);
 }
 
 void

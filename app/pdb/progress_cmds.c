@@ -167,11 +167,8 @@ progress_init_invoker (ProcRecord   *proc_record,
   gchar *message;
   GimpObject *gdisplay;
 
-  message = (gchar *) args[0].value.pdb_pointer;
-  if (message && !g_utf8_validate (message, -1, NULL))
-    success = FALSE;
-
-  gdisplay = gimp_get_display_by_ID (gimp, args[1].value.pdb_int);
+  message = (gchar *) g_value_get_string (&args[0].value);
+  gdisplay = gimp_value_get_display (&args[1].value, gimp);
 
   if (success)
     {
@@ -212,15 +209,18 @@ progress_update_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gdouble percentage;
 
-  percentage = args[0].value.pdb_float;
+  percentage = g_value_get_double (&args[0].value);
 
-  if (gimp->current_plug_in && gimp->current_plug_in->open)
+  if (success)
     {
-      if (! gimp->no_interface)
-        plug_in_progress_set_value (gimp->current_plug_in, percentage);
+      if (gimp->current_plug_in && gimp->current_plug_in->open)
+        {
+          if (! gimp->no_interface)
+            plug_in_progress_set_value (gimp->current_plug_in, percentage);
+        }
+      else
+        success = FALSE;
     }
-  else
-    success = FALSE;
 
   return procedural_db_return_values (proc_record, success);
 }
@@ -283,9 +283,7 @@ progress_set_text_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gchar *message;
 
-  message = (gchar *) args[0].value.pdb_pointer;
-  if (message && !g_utf8_validate (message, -1, NULL))
-    success = FALSE;
+  message = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -338,7 +336,7 @@ progress_get_window_handle_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = window;
+    g_value_set_int (&return_vals[1].value, window);
 
   return return_vals;
 }
@@ -368,9 +366,7 @@ progress_install_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gchar *progress_callback;
 
-  progress_callback = (gchar *) args[0].value.pdb_pointer;
-  if (progress_callback == NULL || !g_utf8_validate (progress_callback, -1, NULL))
-    success = FALSE;
+  progress_callback = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -409,9 +405,7 @@ progress_uninstall_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gchar *progress_callback;
 
-  progress_callback = (gchar *) args[0].value.pdb_pointer;
-  if (progress_callback == NULL || !g_utf8_validate (progress_callback, -1, NULL))
-    success = FALSE;
+  progress_callback = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -450,9 +444,7 @@ progress_cancel_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gchar *progress_callback;
 
-  progress_callback = (gchar *) args[0].value.pdb_pointer;
-  if (progress_callback == NULL || !g_utf8_validate (progress_callback, -1, NULL))
-    success = FALSE;
+  progress_callback = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {

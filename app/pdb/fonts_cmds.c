@@ -114,9 +114,7 @@ fonts_get_list_invoker (ProcRecord   *proc_record,
   gint32 num_fonts = 0;
   gchar **font_list = NULL;
 
-  filter = (gchar *) args[0].value.pdb_pointer;
-  if (filter && !g_utf8_validate (filter, -1, NULL))
-    success = FALSE;
+  filter = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -128,8 +126,8 @@ fonts_get_list_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = num_fonts;
-      return_vals[2].value.pdb_pointer = font_list;
+      g_value_set_int (&return_vals[1].value, num_fonts);
+      g_value_set_pointer (&return_vals[2].value, font_list);
     }
 
   return return_vals;

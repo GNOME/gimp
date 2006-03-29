@@ -142,9 +142,7 @@ pattern_get_info_invoker (ProcRecord   *proc_record,
   gint32 height = 0;
   gint32 bpp = 0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -165,9 +163,9 @@ pattern_get_info_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = width;
-      return_vals[2].value.pdb_int = height;
-      return_vals[3].value.pdb_int = bpp;
+      g_value_set_int (&return_vals[1].value, width);
+      g_value_set_int (&return_vals[2].value, height);
+      g_value_set_int (&return_vals[3].value, bpp);
     }
 
   return return_vals;
@@ -204,9 +202,7 @@ pattern_get_pixels_invoker (ProcRecord   *proc_record,
   gint32 num_color_bytes = 0;
   guint8 *color_bytes = NULL;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -231,11 +227,11 @@ pattern_get_pixels_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = width;
-      return_vals[2].value.pdb_int = height;
-      return_vals[3].value.pdb_int = bpp;
-      return_vals[4].value.pdb_int = num_color_bytes;
-      return_vals[5].value.pdb_pointer = color_bytes;
+      g_value_set_int (&return_vals[1].value, width);
+      g_value_set_int (&return_vals[2].value, height);
+      g_value_set_int (&return_vals[3].value, bpp);
+      g_value_set_int (&return_vals[4].value, num_color_bytes);
+      g_value_set_pointer (&return_vals[5].value, color_bytes);
     }
 
   return return_vals;

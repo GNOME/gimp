@@ -259,7 +259,8 @@ gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
                                             GIMP_PDB_FLOAT,  value,
                                             GIMP_PDB_END);
 
-      if (! return_vals || return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
+      if (! return_vals ||
+          g_value_get_enum (&return_vals[0].value) != GIMP_PDB_SUCCESS)
         {
           g_message (_("Unable to run %s callback. "
                        "The corresponding plug-in may have crashed."),
@@ -267,11 +268,11 @@ gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
         }
       else if (n_return_vals >= 2 && return_vals[1].arg_type == GIMP_PDB_FLOAT)
         {
-          retval = return_vals[1].value.pdb_float;
+          retval = g_value_get_double (&return_vals[1].value);
         }
 
       if (return_vals)
-        procedural_db_destroy_args (return_vals, n_return_vals);
+        procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
 
       progress->callback_busy = FALSE;
     }

@@ -164,12 +164,14 @@ register_guides_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
-                                  g_param_spec_enum ("orientation",
-                                                     "orientation",
-                                                     "The guide's orientation: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }",
-                                                     GIMP_TYPE_ORIENTATION_TYPE,
-                                                     GIMP_ORIENTATION_HORIZONTAL,
-                                                     GIMP_PARAM_READWRITE));
+                                  gimp_param_spec_enum ("orientation",
+                                                        "orientation",
+                                                        "The guide's orientation: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }",
+                                                        GIMP_TYPE_ORIENTATION_TYPE,
+                                                        GIMP_ORIENTATION_HORIZONTAL,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->values[0].pspec),
+                                      GIMP_ORIENTATION_UNKNOWN);
   procedural_db_register (gimp, procedure);
 
   /*
@@ -214,13 +216,8 @@ image_add_hguide_invoker (ProcRecord   *proc_record,
   gint32 yposition;
   gint32 guide = 0;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  yposition = args[1].value.pdb_int;
-  if (yposition < 0)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  yposition = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -238,7 +235,7 @@ image_add_hguide_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = guide;
+    g_value_set_uint (&return_vals[1].value, guide);
 
   return return_vals;
 }
@@ -271,13 +268,8 @@ image_add_vguide_invoker (ProcRecord   *proc_record,
   gint32 xposition;
   gint32 guide = 0;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  xposition = args[1].value.pdb_int;
-  if (xposition < 0)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  xposition = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -295,7 +287,7 @@ image_add_vguide_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = guide;
+    g_value_set_uint (&return_vals[1].value, guide);
 
   return return_vals;
 }
@@ -326,11 +318,8 @@ image_delete_guide_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gint32 guide;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  guide = args[1].value.pdb_int;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  guide = g_value_get_uint (&args[1].value);
 
   if (success)
     {
@@ -373,11 +362,8 @@ image_find_next_guide_invoker (ProcRecord   *proc_record,
   gint32 guide;
   gint32 next_guide = 0;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  guide = args[1].value.pdb_int;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  guide = g_value_get_uint (&args[1].value);
 
   if (success)
     {
@@ -390,7 +376,7 @@ image_find_next_guide_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = next_guide;
+    g_value_set_uint (&return_vals[1].value, next_guide);
 
   return return_vals;
 }
@@ -423,11 +409,8 @@ image_get_guide_orientation_invoker (ProcRecord   *proc_record,
   gint32 guide;
   gint32 orientation = 0;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  guide = args[1].value.pdb_int;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  guide = g_value_get_uint (&args[1].value);
 
   if (success)
     {
@@ -442,7 +425,7 @@ image_get_guide_orientation_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = orientation;
+    g_value_set_enum (&return_vals[1].value, orientation);
 
   return return_vals;
 }
@@ -475,11 +458,8 @@ image_get_guide_position_invoker (ProcRecord   *proc_record,
   gint32 guide;
   gint32 position = 0;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  guide = args[1].value.pdb_int;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  guide = g_value_get_uint (&args[1].value);
 
   if (success)
     {
@@ -494,7 +474,7 @@ image_get_guide_position_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = position;
+    g_value_set_int (&return_vals[1].value, position);
 
   return return_vals;
 }

@@ -53,6 +53,7 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimpimagefile.h"
 #include "core/gimplayer.h"
+#include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
 
 #include "pdb/procedural_db.h"
@@ -88,7 +89,7 @@ file_open_image (Gimp               *gimp,
   Argument         *return_vals;
   gint              n_return_vals;
   gchar            *filename;
-  gint              image_id;
+  GimpImage        *image;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -149,17 +150,15 @@ file_open_image (Gimp               *gimp,
 
   g_free (filename);
 
-  *status  = return_vals[0].value.pdb_int;
-  image_id = return_vals[1].value.pdb_int;
+  *status = g_value_get_enum (&return_vals[0].value);
+  image   = gimp_value_get_image (&return_vals[1].value, gimp);
 
-  procedural_db_destroy_args (return_vals, n_return_vals);
+  procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
 
   if (*status == GIMP_PDB_SUCCESS)
     {
-      if (image_id != -1)
+      if (image)
         {
-          GimpImage *image = gimp_image_get_by_ID (gimp, image_id);
-
           file_open_sanitize_image (image);
 
           if (mime_type)
@@ -221,7 +220,7 @@ file_open_thumbnail (Gimp          *gimp,
       Argument          *return_vals;
       gint               n_return_vals;
       gchar             *filename;
-      gint               image_id;
+      GimpImage         *image;
 
       filename = file_utils_filename_from_uri (uri);
 
@@ -237,21 +236,19 @@ file_open_thumbnail (Gimp          *gimp,
 
       g_free (filename);
 
-      status   = return_vals[0].value.pdb_int;
-      image_id = return_vals[1].value.pdb_int;
+      status = g_value_get_enum (&return_vals[0].value);
+      image  = gimp_value_get_image (&return_vals[1].value, gimp);
 
       if (proc->num_values >= 3)
         {
-          *image_width  = MAX (0, return_vals[2].value.pdb_int);
-          *image_height = MAX (0, return_vals[3].value.pdb_int);
+          *image_width  = MAX (0, g_value_get_int (&return_vals[2].value));
+          *image_height = MAX (0, g_value_get_int (&return_vals[3].value));
         }
 
-      procedural_db_destroy_args (return_vals, n_return_vals);
+      procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
 
-      if (status == GIMP_PDB_SUCCESS && image_id != -1)
+      if (status == GIMP_PDB_SUCCESS && image != NULL)
         {
-          GimpImage *image = gimp_image_get_by_ID (gimp, image_id);
-
           file_open_sanitize_image (image);
 
           *mime_type = file_proc->mime_type;

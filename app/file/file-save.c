@@ -140,9 +140,9 @@ file_save (GimpImage      *image,
                             GIMP_PDB_STRING,   uri,
                             GIMP_PDB_END);
 
-  status = return_vals[0].value.pdb_int;
+  status = g_value_get_enum (&return_vals[0].value);
 
-  procedural_db_destroy_args (return_vals, n_return_vals);
+  procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
 
   if (status == GIMP_PDB_SUCCESS)
     {

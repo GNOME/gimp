@@ -182,9 +182,7 @@ gimprc_query_invoker (ProcRecord   *proc_record,
   gchar *token;
   gchar *value = NULL;
 
-  token = (gchar *) args[0].value.pdb_pointer;
-  if (token == NULL || !g_utf8_validate (token, -1, NULL))
-    success = FALSE;
+  token = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -203,7 +201,7 @@ gimprc_query_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = value;
+    g_value_take_string (&return_vals[1].value, value);
 
   return return_vals;
 }
@@ -234,13 +232,8 @@ gimprc_set_invoker (ProcRecord   *proc_record,
   gchar *token;
   gchar *value;
 
-  token = (gchar *) args[0].value.pdb_pointer;
-  if (token == NULL || !g_utf8_validate (token, -1, NULL))
-    success = FALSE;
-
-  value = (gchar *) args[1].value.pdb_pointer;
-  if (value == NULL || !g_utf8_validate (value, -1, NULL))
-    success = FALSE;
+  token = (gchar *) g_value_get_string (&args[0].value);
+  value = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -284,7 +277,7 @@ get_default_comment_invoker (ProcRecord   *proc_record,
   comment = g_strdup (gimp->config->default_image->comment);
 
   return_vals = procedural_db_return_values (proc_record, TRUE);
-  return_vals[1].value.pdb_pointer = comment;
+  g_value_take_string (&return_vals[1].value, comment);
 
   return return_vals;
 }
@@ -320,8 +313,8 @@ get_monitor_resolution_invoker (ProcRecord   *proc_record,
 
   return_vals = procedural_db_return_values (proc_record, TRUE);
 
-  return_vals[1].value.pdb_float = xres;
-  return_vals[2].value.pdb_float = yres;
+  g_value_set_double (&return_vals[1].value, xres);
+  g_value_set_double (&return_vals[2].value, yres);
 
   return return_vals;
 }
@@ -354,7 +347,7 @@ get_theme_dir_invoker (ProcRecord   *proc_record,
   theme_dir = g_strdup (gimp_get_theme_dir (gimp));
 
   return_vals = procedural_db_return_values (proc_record, TRUE);
-  return_vals[1].value.pdb_pointer = theme_dir;
+  g_value_take_string (&return_vals[1].value, theme_dir);
 
   return return_vals;
 }
@@ -387,7 +380,7 @@ get_color_configuration_invoker (ProcRecord   *proc_record,
   config = gimp_config_serialize_to_string (GIMP_CONFIG (gimp->config->color_management), NULL);
 
   return_vals = procedural_db_return_values (proc_record, TRUE);
-  return_vals[1].value.pdb_pointer = config;
+  g_value_take_string (&return_vals[1].value, config);
 
   return return_vals;
 }
@@ -420,7 +413,7 @@ get_module_load_inhibit_invoker (ProcRecord   *proc_record,
   load_inhibit = g_strdup (gimp_module_db_get_load_inhibit (gimp->module_db));
 
   return_vals = procedural_db_return_values (proc_record, TRUE);
-  return_vals[1].value.pdb_pointer = load_inhibit;
+  g_value_take_string (&return_vals[1].value, load_inhibit);
 
   return return_vals;
 }

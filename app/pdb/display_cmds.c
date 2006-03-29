@@ -135,9 +135,7 @@ display_new_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpObject *display = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -156,7 +154,7 @@ display_new_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = display ? gimp_get_display_ID (gimp, display) : -1;
+    gimp_value_set_display (&return_vals[1].value, display);
 
   return return_vals;
 }
@@ -186,9 +184,7 @@ display_delete_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpObject *display;
 
-  display = gimp_get_display_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_OBJECT (display))
-    success = FALSE;
+  display = gimp_value_get_display (&args[0].value, gimp);
 
   if (success)
     {
@@ -225,9 +221,7 @@ display_get_window_handle_invoker (ProcRecord   *proc_record,
   GimpObject *display;
   gint32 window = 0;
 
-  display = gimp_get_display_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_OBJECT (display))
-    success = FALSE;
+  display = gimp_value_get_display (&args[0].value, gimp);
 
   if (success)
     {
@@ -237,7 +231,7 @@ display_get_window_handle_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = window;
+    g_value_set_int (&return_vals[1].value, window);
 
   return return_vals;
 }
@@ -294,13 +288,8 @@ displays_reconnect_invoker (ProcRecord   *proc_record,
   GimpImage *old_image;
   GimpImage *new_image;
 
-  old_image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (old_image))
-    success = FALSE;
-
-  new_image = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_IMAGE (new_image))
-    success = FALSE;
+  old_image = gimp_value_get_image (&args[0].value, gimp);
+  new_image = gimp_value_get_image (&args[1].value, gimp);
 
   if (success)
     {

@@ -354,27 +354,12 @@ channel_new_invoker (ProcRecord   *proc_record,
   GimpRGB color;
   GimpChannel *channel = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  width = args[1].value.pdb_int;
-  if (width < 1)
-    success = FALSE;
-
-  height = args[2].value.pdb_int;
-  if (height < 1)
-    success = FALSE;
-
-  name = (gchar *) args[3].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  opacity = args[4].value.pdb_float;
-  if (opacity < 0.0 || opacity > 100.0)
-    success = FALSE;
-
-  color = args[5].value.pdb_color;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  width = g_value_get_int (&args[1].value);
+  height = g_value_get_int (&args[2].value);
+  name = (gchar *) g_value_get_string (&args[3].value);
+  opacity = g_value_get_double (&args[4].value);
+  gimp_value_get_rgb (&args[5].value, &color);
 
   if (success)
     {
@@ -390,7 +375,7 @@ channel_new_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = channel ? gimp_item_get_ID (GIMP_ITEM (channel)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (channel));
 
   return return_vals;
 }
@@ -424,17 +409,9 @@ channel_new_from_component_invoker (ProcRecord   *proc_record,
   gchar *name;
   GimpChannel *channel = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  component = args[1].value.pdb_int;
-  if (component < GIMP_RED_CHANNEL || component > GIMP_ALPHA_CHANNEL)
-    success = FALSE;
-
-  name = (gchar *) args[2].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  component = g_value_get_enum (&args[1].value);
+  name = (gchar *) g_value_get_string (&args[2].value);
 
   if (success)
     {
@@ -451,7 +428,7 @@ channel_new_from_component_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = channel ? gimp_item_get_ID (GIMP_ITEM (channel)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (channel));
 
   return return_vals;
 }
@@ -483,9 +460,7 @@ channel_copy_invoker (ProcRecord   *proc_record,
   GimpChannel *channel;
   GimpChannel *channel_copy = NULL;
 
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
-    success = FALSE;
+  channel = (GimpChannel *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_CHANNEL);
 
   if (success)
     {
@@ -499,7 +474,7 @@ channel_copy_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = channel_copy ? gimp_item_get_ID (GIMP_ITEM (channel_copy)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (channel_copy));
 
   return return_vals;
 }
@@ -533,21 +508,11 @@ channel_combine_masks_invoker (ProcRecord   *proc_record,
   gint32 offx;
   gint32 offy;
 
-  channel1 = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_CHANNEL (channel1) && ! gimp_item_is_removed (GIMP_ITEM (channel1))))
-    success = FALSE;
-
-  channel2 = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_CHANNEL (channel2) && ! gimp_item_is_removed (GIMP_ITEM (channel2))))
-    success = FALSE;
-
-  operation = args[2].value.pdb_int;
-  if (operation < GIMP_CHANNEL_OP_ADD || operation > GIMP_CHANNEL_OP_INTERSECT)
-    success = FALSE;
-
-  offx = args[3].value.pdb_int;
-
-  offy = args[4].value.pdb_int;
+  channel1 = (GimpChannel *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_CHANNEL);
+  channel2 = (GimpChannel *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_CHANNEL);
+  operation = g_value_get_enum (&args[2].value);
+  offx = g_value_get_int (&args[3].value);
+  offy = g_value_get_int (&args[4].value);
 
   if (success)
     {
@@ -584,9 +549,7 @@ channel_get_show_masked_invoker (ProcRecord   *proc_record,
   GimpChannel *channel;
   gboolean show_masked = FALSE;
 
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
-    success = FALSE;
+  channel = (GimpChannel *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_CHANNEL);
 
   if (success)
     {
@@ -596,7 +559,7 @@ channel_get_show_masked_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = show_masked;
+    g_value_set_boolean (&return_vals[1].value, show_masked);
 
   return return_vals;
 }
@@ -627,11 +590,8 @@ channel_set_show_masked_invoker (ProcRecord   *proc_record,
   GimpChannel *channel;
   gboolean show_masked;
 
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
-    success = FALSE;
-
-  show_masked = args[1].value.pdb_int ? TRUE : FALSE;
+  channel = (GimpChannel *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_CHANNEL);
+  show_masked = g_value_get_boolean (&args[1].value);
 
   if (success)
     {
@@ -668,9 +628,7 @@ channel_get_opacity_invoker (ProcRecord   *proc_record,
   GimpChannel *channel;
   gdouble opacity = 0.0;
 
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
-    success = FALSE;
+  channel = (GimpChannel *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_CHANNEL);
 
   if (success)
     {
@@ -680,7 +638,7 @@ channel_get_opacity_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_float = opacity;
+    g_value_set_double (&return_vals[1].value, opacity);
 
   return return_vals;
 }
@@ -711,13 +669,8 @@ channel_set_opacity_invoker (ProcRecord   *proc_record,
   GimpChannel *channel;
   gdouble opacity;
 
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
-    success = FALSE;
-
-  opacity = args[1].value.pdb_float;
-  if (opacity < 0.0 || opacity > 100.0)
-    success = FALSE;
+  channel = (GimpChannel *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_CHANNEL);
+  opacity = g_value_get_double (&args[1].value);
 
   if (success)
     {
@@ -754,9 +707,7 @@ channel_get_color_invoker (ProcRecord   *proc_record,
   GimpChannel *channel;
   GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
 
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
-    success = FALSE;
+  channel = (GimpChannel *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_CHANNEL);
 
   if (success)
     {
@@ -766,7 +717,7 @@ channel_get_color_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_color = color;
+    gimp_value_set_rgb (&return_vals[1].value, &color);
 
   return return_vals;
 }
@@ -797,11 +748,8 @@ channel_set_color_invoker (ProcRecord   *proc_record,
   GimpChannel *channel;
   GimpRGB color;
 
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
-    success = FALSE;
-
-  color = args[1].value.pdb_color;
+  channel = (GimpChannel *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_CHANNEL);
+  gimp_value_get_rgb (&args[1].value, &color);
 
   if (success)
     {

@@ -195,12 +195,12 @@ gimp_help_browser (Gimp *gimp)
 
       args = procedural_db_arguments (proc_rec);
 
-      args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
+      g_value_set_enum (&args[0].value, GIMP_RUN_INTERACTIVE);
 
       plug_in_run (gimp, gimp_get_user_context (gimp), NULL,
                    proc_rec, args, 1, FALSE, TRUE, -1);
 
-      procedural_db_destroy_args (args, 1);
+      procedural_db_destroy_args (args, 1, TRUE);
     }
 
   /*  Check if the help browser started properly  */
@@ -280,15 +280,15 @@ gimp_help_call (Gimp        *gimp,
 
       args = procedural_db_arguments (proc_rec);
 
-      args[0].value.pdb_int     = n_domains;
-      args[1].value.pdb_pointer = help_domains;
-      args[2].value.pdb_int     = n_domains;
-      args[3].value.pdb_pointer = help_uris;
+      g_value_set_int     (&args[0].value, n_domains);
+      g_value_set_pointer (&args[1].value, help_domains);
+      g_value_set_int     (&args[2].value, n_domains);
+      g_value_set_pointer (&args[3].value, help_uris);
 
       plug_in_run (gimp, gimp_get_user_context (gimp), NULL,
                    proc_rec, args, 4, FALSE, TRUE, -1);
 
-      procedural_db_destroy_args (args, 4);
+      procedural_db_destroy_args (args, 4, TRUE);
     }
 
   /*  Check if the help parser started properly  */
@@ -319,7 +319,7 @@ gimp_help_call (Gimp        *gimp,
                                 GIMP_PDB_STRING, help_id,
                                 GIMP_PDB_END);
 
-      procedural_db_destroy_args (return_vals, n_return_vals);
+      procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
     }
 }
 

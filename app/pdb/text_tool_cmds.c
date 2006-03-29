@@ -485,37 +485,16 @@ text_fontname_invoker (ProcRecord   *proc_record,
   gchar *fontname;
   GimpLayer *text_layer = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-
-  x = args[2].value.pdb_float;
-
-  y = args[3].value.pdb_float;
-
-  text = (gchar *) args[4].value.pdb_pointer;
-  if (text == NULL || !g_utf8_validate (text, -1, NULL))
-    success = FALSE;
-
-  border = args[5].value.pdb_int;
-  if (border < -1)
-    success = FALSE;
-
-  antialias = args[6].value.pdb_int ? TRUE : FALSE;
-
-  size = args[7].value.pdb_float;
-  if (size <= 0.0)
-    success = FALSE;
-
-  size_type = args[8].value.pdb_int;
-  if (size_type < GIMP_PIXELS || size_type > GIMP_POINTS)
-    success = FALSE;
-
-  fontname = (gchar *) args[9].value.pdb_pointer;
-  if (fontname == NULL || !g_utf8_validate (fontname, -1, NULL))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_DRAWABLE);
+  x = g_value_get_double (&args[2].value);
+  y = g_value_get_double (&args[3].value);
+  text = (gchar *) g_value_get_string (&args[4].value);
+  border = g_value_get_int (&args[5].value);
+  antialias = g_value_get_boolean (&args[6].value);
+  size = g_value_get_double (&args[7].value);
+  size_type = g_value_get_enum (&args[8].value);
+  fontname = (gchar *) g_value_get_string (&args[9].value);
 
   if (success)
     {
@@ -537,7 +516,7 @@ text_fontname_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = text_layer ? gimp_item_get_ID (GIMP_ITEM (text_layer)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (text_layer));
 
   return return_vals;
 }
@@ -575,21 +554,10 @@ text_get_extents_fontname_invoker (ProcRecord   *proc_record,
   gint32 ascent = 0;
   gint32 descent = 0;
 
-  text = (gchar *) args[0].value.pdb_pointer;
-  if (text == NULL || !g_utf8_validate (text, -1, NULL))
-    success = FALSE;
-
-  size = args[1].value.pdb_float;
-  if (size <= 0.0)
-    success = FALSE;
-
-  size_type = args[2].value.pdb_int;
-  if (size_type < GIMP_PIXELS || size_type > GIMP_POINTS)
-    success = FALSE;
-
-  fontname = (gchar *) args[3].value.pdb_pointer;
-  if (fontname == NULL || !g_utf8_validate (fontname, -1, NULL))
-    success = FALSE;
+  text = (gchar *) g_value_get_string (&args[0].value);
+  size = g_value_get_double (&args[1].value);
+  size_type = g_value_get_enum (&args[2].value);
+  fontname = (gchar *) g_value_get_string (&args[3].value);
 
   if (success)
     {
@@ -606,10 +574,10 @@ text_get_extents_fontname_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = width;
-      return_vals[2].value.pdb_int = height;
-      return_vals[3].value.pdb_int = ascent;
-      return_vals[4].value.pdb_int = descent;
+      g_value_set_int (&return_vals[1].value, width);
+      g_value_set_int (&return_vals[2].value, height);
+      g_value_set_int (&return_vals[3].value, ascent);
+      g_value_set_int (&return_vals[4].value, descent);
     }
 
   return return_vals;
@@ -658,65 +626,23 @@ text_invoker (ProcRecord   *proc_record,
   gchar *encoding;
   GimpLayer *text_layer = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-
-  x = args[2].value.pdb_float;
-
-  y = args[3].value.pdb_float;
-
-  text = (gchar *) args[4].value.pdb_pointer;
-  if (text == NULL || !g_utf8_validate (text, -1, NULL))
-    success = FALSE;
-
-  border = args[5].value.pdb_int;
-  if (border < -1)
-    success = FALSE;
-
-  antialias = args[6].value.pdb_int ? TRUE : FALSE;
-
-  size = args[7].value.pdb_float;
-  if (size <= 0.0)
-    success = FALSE;
-
-  size_type = args[8].value.pdb_int;
-  if (size_type < GIMP_PIXELS || size_type > GIMP_POINTS)
-    success = FALSE;
-
-  foundry = (gchar *) args[9].value.pdb_pointer;
-  if (foundry == NULL)
-    success = FALSE;
-
-  family = (gchar *) args[10].value.pdb_pointer;
-  if (family == NULL)
-    success = FALSE;
-
-  weight = (gchar *) args[11].value.pdb_pointer;
-  if (weight == NULL)
-    success = FALSE;
-
-  slant = (gchar *) args[12].value.pdb_pointer;
-  if (slant == NULL)
-    success = FALSE;
-
-  set_width = (gchar *) args[13].value.pdb_pointer;
-  if (set_width == NULL)
-    success = FALSE;
-
-  spacing = (gchar *) args[14].value.pdb_pointer;
-  if (spacing == NULL)
-    success = FALSE;
-
-  registry = (gchar *) args[15].value.pdb_pointer;
-  if (registry == NULL)
-    success = FALSE;
-
-  encoding = (gchar *) args[16].value.pdb_pointer;
-  if (encoding == NULL)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_DRAWABLE);
+  x = g_value_get_double (&args[2].value);
+  y = g_value_get_double (&args[3].value);
+  text = (gchar *) g_value_get_string (&args[4].value);
+  border = g_value_get_int (&args[5].value);
+  antialias = g_value_get_boolean (&args[6].value);
+  size = g_value_get_double (&args[7].value);
+  size_type = g_value_get_enum (&args[8].value);
+  foundry = (gchar *) g_value_get_string (&args[9].value);
+  family = (gchar *) g_value_get_string (&args[10].value);
+  weight = (gchar *) g_value_get_string (&args[11].value);
+  slant = (gchar *) g_value_get_string (&args[12].value);
+  set_width = (gchar *) g_value_get_string (&args[13].value);
+  spacing = (gchar *) g_value_get_string (&args[14].value);
+  registry = (gchar *) g_value_get_string (&args[15].value);
+  encoding = (gchar *) g_value_get_string (&args[16].value);
 
   if (success)
     {
@@ -738,7 +664,7 @@ text_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = text_layer ? gimp_item_get_ID (GIMP_ITEM (text_layer)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (text_layer));
 
   return return_vals;
 }
@@ -783,49 +709,17 @@ text_get_extents_invoker (ProcRecord   *proc_record,
   gint32 ascent = 0;
   gint32 descent = 0;
 
-  text = (gchar *) args[0].value.pdb_pointer;
-  if (text == NULL || !g_utf8_validate (text, -1, NULL))
-    success = FALSE;
-
-  size = args[1].value.pdb_float;
-  if (size <= 0.0)
-    success = FALSE;
-
-  size_type = args[2].value.pdb_int;
-  if (size_type < GIMP_PIXELS || size_type > GIMP_POINTS)
-    success = FALSE;
-
-  foundry = (gchar *) args[3].value.pdb_pointer;
-  if (foundry == NULL)
-    success = FALSE;
-
-  family = (gchar *) args[4].value.pdb_pointer;
-  if (family == NULL)
-    success = FALSE;
-
-  weight = (gchar *) args[5].value.pdb_pointer;
-  if (weight == NULL)
-    success = FALSE;
-
-  slant = (gchar *) args[6].value.pdb_pointer;
-  if (slant == NULL)
-    success = FALSE;
-
-  set_width = (gchar *) args[7].value.pdb_pointer;
-  if (set_width == NULL)
-    success = FALSE;
-
-  spacing = (gchar *) args[8].value.pdb_pointer;
-  if (spacing == NULL)
-    success = FALSE;
-
-  registry = (gchar *) args[9].value.pdb_pointer;
-  if (registry == NULL)
-    success = FALSE;
-
-  encoding = (gchar *) args[10].value.pdb_pointer;
-  if (encoding == NULL)
-    success = FALSE;
+  text = (gchar *) g_value_get_string (&args[0].value);
+  size = g_value_get_double (&args[1].value);
+  size_type = g_value_get_enum (&args[2].value);
+  foundry = (gchar *) g_value_get_string (&args[3].value);
+  family = (gchar *) g_value_get_string (&args[4].value);
+  weight = (gchar *) g_value_get_string (&args[5].value);
+  slant = (gchar *) g_value_get_string (&args[6].value);
+  set_width = (gchar *) g_value_get_string (&args[7].value);
+  spacing = (gchar *) g_value_get_string (&args[8].value);
+  registry = (gchar *) g_value_get_string (&args[9].value);
+  encoding = (gchar *) g_value_get_string (&args[10].value);
 
   if (success)
     {
@@ -842,10 +736,10 @@ text_get_extents_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = width;
-      return_vals[2].value.pdb_int = height;
-      return_vals[3].value.pdb_int = ascent;
-      return_vals[4].value.pdb_int = descent;
+      g_value_set_int (&return_vals[1].value, width);
+      g_value_set_int (&return_vals[2].value, height);
+      g_value_set_int (&return_vals[3].value, ascent);
+      g_value_set_int (&return_vals[4].value, descent);
     }
 
   return return_vals;

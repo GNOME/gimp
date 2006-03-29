@@ -1082,7 +1082,7 @@ plug_ins_add_to_db (Gimp        *gimp,
                                         GIMP_PDB_END);
             }
 
-          procedural_db_destroy_args (return_vals, n_return_vals);
+          procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
 	}
     }
 }

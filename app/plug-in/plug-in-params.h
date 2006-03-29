@@ -20,7 +20,9 @@
 #define __PLUG_IN_PARAMS_H__
 
 
-Argument * plug_in_params_to_args   (GPParam     *params,
+Argument * plug_in_params_to_args   (ProcArg     *proc_args,
+                                     gint         n_proc_args,
+                                     GPParam     *params,
                                      gint         n_params,
                                      gboolean     full_copy);
 GPParam  * plug_in_args_to_params   (Argument    *args,
@@ -29,9 +31,6 @@ GPParam  * plug_in_args_to_params   (Argument    *args,
 
 void       plug_in_params_destroy   (GPParam     *params,
                                      gint         n_params,
-                                     gboolean     full_destroy);
-void       plug_in_args_destroy     (Argument    *args,
-                                     gint         n_args,
                                      gboolean     full_destroy);
 
 gboolean   plug_in_param_defs_check (const gchar *plug_in_name,

@@ -248,12 +248,14 @@ register_procedural_db_procs (Gimp *gimp)
                                                 GIMP_PARAM_READWRITE));
   procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
-                                  g_param_spec_enum ("arg-type",
-                                                     "arg type",
-                                                     "The type of argument: { GIMP_PDB_INT32 (0), GIMP_PDB_INT16 (1), GIMP_PDB_INT8 (2), GIMP_PDB_FLOAT (3), GIMP_PDB_STRING (4), GIMP_PDB_INT32ARRAY (5), GIMP_PDB_INT16ARRAY (6), GIMP_PDB_INT8ARRAY (7), GIMP_PDB_FLOATARRAY (8), GIMP_PDB_STRINGARRAY (9), GIMP_PDB_COLOR (10), GIMP_PDB_REGION (11), GIMP_PDB_DISPLAY (12), GIMP_PDB_IMAGE (13), GIMP_PDB_LAYER (14), GIMP_PDB_CHANNEL (15), GIMP_PDB_DRAWABLE (16), GIMP_PDB_SELECTION (17), GIMP_PDB_BOUNDARY (18), GIMP_PDB_VECTORS (19), GIMP_PDB_PARASITE (20), GIMP_PDB_STATUS (21), GIMP_PDB_PATH (GIMP_PDB_VECTORS) }",
-                                                     GIMP_TYPE_PDB_ARG_TYPE,
-                                                     GIMP_PDB_INT32,
-                                                     GIMP_PARAM_READWRITE));
+                                  gimp_param_spec_enum ("arg-type",
+                                                        "arg type",
+                                                        "The type of argument: { GIMP_PDB_INT32 (0), GIMP_PDB_INT16 (1), GIMP_PDB_INT8 (2), GIMP_PDB_FLOAT (3), GIMP_PDB_STRING (4), GIMP_PDB_INT32ARRAY (5), GIMP_PDB_INT16ARRAY (6), GIMP_PDB_INT8ARRAY (7), GIMP_PDB_FLOATARRAY (8), GIMP_PDB_STRINGARRAY (9), GIMP_PDB_COLOR (10), GIMP_PDB_REGION (11), GIMP_PDB_DISPLAY (12), GIMP_PDB_IMAGE (13), GIMP_PDB_LAYER (14), GIMP_PDB_CHANNEL (15), GIMP_PDB_DRAWABLE (16), GIMP_PDB_SELECTION (17), GIMP_PDB_BOUNDARY (18), GIMP_PDB_VECTORS (19), GIMP_PDB_PARASITE (20), GIMP_PDB_STATUS (21), GIMP_PDB_PATH (GIMP_PDB_VECTORS) }",
+                                                        GIMP_TYPE_PDB_ARG_TYPE,
+                                                        GIMP_PDB_INT32,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->values[0].pspec),
+                                      GIMP_PDB_END);
   procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("arg-name",
@@ -293,12 +295,14 @@ register_procedural_db_procs (Gimp *gimp)
                                                 GIMP_PARAM_READWRITE));
   procedural_db_add_return_value (procedure,
                                   GIMP_PDB_INT32,
-                                  g_param_spec_enum ("val-type",
-                                                     "val type",
-                                                     "The type of return value: { GIMP_PDB_INT32 (0), GIMP_PDB_INT16 (1), GIMP_PDB_INT8 (2), GIMP_PDB_FLOAT (3), GIMP_PDB_STRING (4), GIMP_PDB_INT32ARRAY (5), GIMP_PDB_INT16ARRAY (6), GIMP_PDB_INT8ARRAY (7), GIMP_PDB_FLOATARRAY (8), GIMP_PDB_STRINGARRAY (9), GIMP_PDB_COLOR (10), GIMP_PDB_REGION (11), GIMP_PDB_DISPLAY (12), GIMP_PDB_IMAGE (13), GIMP_PDB_LAYER (14), GIMP_PDB_CHANNEL (15), GIMP_PDB_DRAWABLE (16), GIMP_PDB_SELECTION (17), GIMP_PDB_BOUNDARY (18), GIMP_PDB_VECTORS (19), GIMP_PDB_PARASITE (20), GIMP_PDB_STATUS (21), GIMP_PDB_PATH (GIMP_PDB_VECTORS) }",
-                                                     GIMP_TYPE_PDB_ARG_TYPE,
-                                                     GIMP_PDB_INT32,
-                                                     GIMP_PARAM_READWRITE));
+                                  gimp_param_spec_enum ("val-type",
+                                                        "val type",
+                                                        "The type of return value: { GIMP_PDB_INT32 (0), GIMP_PDB_INT16 (1), GIMP_PDB_INT8 (2), GIMP_PDB_FLOAT (3), GIMP_PDB_STRING (4), GIMP_PDB_INT32ARRAY (5), GIMP_PDB_INT16ARRAY (6), GIMP_PDB_INT8ARRAY (7), GIMP_PDB_FLOATARRAY (8), GIMP_PDB_STRINGARRAY (9), GIMP_PDB_COLOR (10), GIMP_PDB_REGION (11), GIMP_PDB_DISPLAY (12), GIMP_PDB_IMAGE (13), GIMP_PDB_LAYER (14), GIMP_PDB_CHANNEL (15), GIMP_PDB_DRAWABLE (16), GIMP_PDB_SELECTION (17), GIMP_PDB_BOUNDARY (18), GIMP_PDB_VECTORS (19), GIMP_PDB_PARASITE (20), GIMP_PDB_STATUS (21), GIMP_PDB_PATH (GIMP_PDB_VECTORS) }",
+                                                        GIMP_TYPE_PDB_ARG_TYPE,
+                                                        GIMP_PDB_INT32,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->values[0].pspec),
+                                      GIMP_PDB_END);
   procedural_db_add_return_value (procedure,
                                   GIMP_PDB_STRING,
                                   gimp_param_spec_string ("val-name",
@@ -409,7 +413,7 @@ procedural_db_temp_name_invoker (ProcRecord   *proc_record,
   temp_name = g_strdup_printf ("temp-procedure-number-%d", proc_number++);
 
   return_vals = procedural_db_return_values (proc_record, TRUE);
-  return_vals[1].value.pdb_pointer = temp_name;
+  g_value_take_string (&return_vals[1].value, temp_name);
 
   return return_vals;
 }
@@ -439,9 +443,7 @@ procedural_db_dump_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gchar *filename;
 
-  filename = (gchar *) args[0].value.pdb_pointer;
-  if (filename == NULL)
-    success = FALSE;
+  filename = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -485,33 +487,13 @@ procedural_db_query_invoker (ProcRecord   *proc_record,
   gint32 num_matches = 0;
   gchar **procedure_names = NULL;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL)
-    success = FALSE;
-
-  blurb = (gchar *) args[1].value.pdb_pointer;
-  if (blurb == NULL)
-    success = FALSE;
-
-  help = (gchar *) args[2].value.pdb_pointer;
-  if (help == NULL)
-    success = FALSE;
-
-  author = (gchar *) args[3].value.pdb_pointer;
-  if (author == NULL)
-    success = FALSE;
-
-  copyright = (gchar *) args[4].value.pdb_pointer;
-  if (copyright == NULL)
-    success = FALSE;
-
-  date = (gchar *) args[5].value.pdb_pointer;
-  if (date == NULL)
-    success = FALSE;
-
-  proc_type = (gchar *) args[6].value.pdb_pointer;
-  if (proc_type == NULL)
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  blurb = (gchar *) g_value_get_string (&args[1].value);
+  help = (gchar *) g_value_get_string (&args[2].value);
+  author = (gchar *) g_value_get_string (&args[3].value);
+  copyright = (gchar *) g_value_get_string (&args[4].value);
+  date = (gchar *) g_value_get_string (&args[5].value);
+  proc_type = (gchar *) g_value_get_string (&args[6].value);
 
   if (success)
     {
@@ -525,8 +507,8 @@ procedural_db_query_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = num_matches;
-      return_vals[2].value.pdb_pointer = procedure_names;
+      g_value_set_int (&return_vals[1].value, num_matches);
+      g_value_set_pointer (&return_vals[2].value, procedure_names);
     }
 
   return return_vals;
@@ -566,9 +548,7 @@ procedural_db_proc_info_invoker (ProcRecord   *proc_record,
   gint32 num_args = 0;
   gint32 num_values = 0;
 
-  procedure = (gchar *) args[0].value.pdb_pointer;
-  if (procedure == NULL || !g_utf8_validate (procedure, -1, NULL))
-    success = FALSE;
+  procedure = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -590,14 +570,14 @@ procedural_db_proc_info_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_pointer = blurb;
-      return_vals[2].value.pdb_pointer = help;
-      return_vals[3].value.pdb_pointer = author;
-      return_vals[4].value.pdb_pointer = copyright;
-      return_vals[5].value.pdb_pointer = date;
-      return_vals[6].value.pdb_int = proc_type;
-      return_vals[7].value.pdb_int = num_args;
-      return_vals[8].value.pdb_int = num_values;
+      g_value_take_string (&return_vals[1].value, blurb);
+      g_value_take_string (&return_vals[2].value, help);
+      g_value_take_string (&return_vals[3].value, author);
+      g_value_take_string (&return_vals[4].value, copyright);
+      g_value_take_string (&return_vals[5].value, date);
+      g_value_set_enum (&return_vals[6].value, proc_type);
+      g_value_set_int (&return_vals[7].value, num_args);
+      g_value_set_int (&return_vals[8].value, num_values);
     }
 
   return return_vals;
@@ -633,11 +613,8 @@ procedural_db_proc_arg_invoker (ProcRecord   *proc_record,
   gchar *arg_name = NULL;
   gchar *arg_desc = NULL;
 
-  procedure = (gchar *) args[0].value.pdb_pointer;
-  if (procedure == NULL || !g_utf8_validate (procedure, -1, NULL))
-    success = FALSE;
-
-  arg_num = args[1].value.pdb_int;
+  procedure = (gchar *) g_value_get_string (&args[0].value);
+  arg_num = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -676,9 +653,9 @@ procedural_db_proc_arg_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = arg_type;
-      return_vals[2].value.pdb_pointer = arg_name;
-      return_vals[3].value.pdb_pointer = arg_desc;
+      g_value_set_enum (&return_vals[1].value, arg_type);
+      g_value_take_string (&return_vals[2].value, arg_name);
+      g_value_take_string (&return_vals[3].value, arg_desc);
     }
 
   return return_vals;
@@ -714,11 +691,8 @@ procedural_db_proc_val_invoker (ProcRecord   *proc_record,
   gchar *val_name = NULL;
   gchar *val_desc = NULL;
 
-  procedure = (gchar *) args[0].value.pdb_pointer;
-  if (procedure == NULL || !g_utf8_validate (procedure, -1, NULL))
-    success = FALSE;
-
-  val_num = args[1].value.pdb_int;
+  procedure = (gchar *) g_value_get_string (&args[0].value);
+  val_num = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -757,9 +731,9 @@ procedural_db_proc_val_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = val_type;
-      return_vals[2].value.pdb_pointer = val_name;
-      return_vals[3].value.pdb_pointer = val_desc;
+      g_value_set_enum (&return_vals[1].value, val_type);
+      g_value_take_string (&return_vals[2].value, val_name);
+      g_value_take_string (&return_vals[3].value, val_desc);
     }
 
   return return_vals;
@@ -793,9 +767,7 @@ procedural_db_get_data_invoker (ProcRecord   *proc_record,
   gint32 bytes = 0;
   guint8 *data = NULL;
 
-  identifier = (gchar *) args[0].value.pdb_pointer;
-  if (identifier == NULL || !g_utf8_validate (identifier, -1, NULL))
-    success = FALSE;
+  identifier = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -818,8 +790,8 @@ procedural_db_get_data_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = bytes;
-      return_vals[2].value.pdb_pointer = data;
+      g_value_set_int (&return_vals[1].value, bytes);
+      g_value_set_pointer (&return_vals[2].value, data);
     }
 
   return return_vals;
@@ -852,9 +824,7 @@ procedural_db_get_data_size_invoker (ProcRecord   *proc_record,
   gchar *identifier;
   gint32 bytes = 0;
 
-  identifier = (gchar *) args[0].value.pdb_pointer;
-  if (identifier == NULL || !g_utf8_validate (identifier, -1, NULL))
-    success = FALSE;
+  identifier = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -875,7 +845,7 @@ procedural_db_get_data_size_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = bytes;
+    g_value_set_int (&return_vals[1].value, bytes);
 
   return return_vals;
 }
@@ -907,15 +877,9 @@ procedural_db_set_data_invoker (ProcRecord   *proc_record,
   gint32 bytes;
   guint8 *data;
 
-  identifier = (gchar *) args[0].value.pdb_pointer;
-  if (identifier == NULL || !g_utf8_validate (identifier, -1, NULL))
-    success = FALSE;
-
-  bytes = args[1].value.pdb_int;
-  if (bytes < 1)
-    success = FALSE;
-
-  data = (guint8 *) args[2].value.pdb_pointer;
+  identifier = (gchar *) g_value_get_string (&args[0].value);
+  bytes = g_value_get_int (&args[1].value);
+  data = g_value_get_pointer (&args[2].value);
 
   if (success)
     {

@@ -129,23 +129,23 @@ batch_run_cmd (Gimp        *gimp,
 	       const gchar *cmd)
 {
   Argument *args;
-  Argument *vals;
-  gint      i;
+  Argument *return_vals;
+  gint      n_return_vals;
 
-  args = g_new0 (Argument, proc->num_args);
-  for (i = 0; i < proc->num_args; i++)
-    args[i].arg_type = proc->args[i].arg_type;
+  args = procedural_db_arguments (proc);
 
-  args[0].value.pdb_int = run_mode;
+  g_value_set_int (&args[0].value, run_mode);
 
   if (proc->num_args > 1)
-    args[1].value.pdb_pointer = (gpointer) cmd;
+    g_value_set_static_string (&args[1].value, cmd);
 
-  vals = procedural_db_execute (gimp,
-                                gimp_get_user_context (gimp), NULL,
-                                proc_name, args);
+  return_vals = procedural_db_execute (gimp,
+                                       gimp_get_user_context (gimp), NULL,
+                                       proc_name,
+                                       args, proc->num_args,
+                                       &n_return_vals);
 
-  switch (vals[0].value.pdb_int)
+  switch (g_value_get_enum (&return_vals[0].value))
     {
     case GIMP_PDB_EXECUTION_ERROR:
       g_printerr ("batch command: experienced an execution error.\n");
@@ -160,8 +160,8 @@ batch_run_cmd (Gimp        *gimp,
       break;
     }
 
-  procedural_db_destroy_args (vals, proc->num_values);
-  g_free (args);
+  procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
+  procedural_db_destroy_args (args, proc->num_args, TRUE);
 
   return;
 }

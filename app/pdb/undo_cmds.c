@@ -183,9 +183,7 @@ image_undo_group_start_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -228,9 +226,7 @@ image_undo_group_end_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -267,9 +263,7 @@ image_undo_is_enabled_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gboolean enabled = FALSE;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -279,7 +273,7 @@ image_undo_is_enabled_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = enabled;
+    g_value_set_boolean (&return_vals[1].value, enabled);
 
   return return_vals;
 }
@@ -311,9 +305,7 @@ image_undo_disable_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gboolean disabled = FALSE;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -323,7 +315,7 @@ image_undo_disable_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = disabled;
+    g_value_set_boolean (&return_vals[1].value, disabled);
 
   return return_vals;
 }
@@ -355,9 +347,7 @@ image_undo_enable_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gboolean enabled = FALSE;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -367,7 +357,7 @@ image_undo_enable_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = enabled;
+    g_value_set_boolean (&return_vals[1].value, enabled);
 
   return return_vals;
 }
@@ -399,9 +389,7 @@ image_undo_freeze_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gboolean frozen = FALSE;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -411,7 +399,7 @@ image_undo_freeze_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = frozen;
+    g_value_set_boolean (&return_vals[1].value, frozen);
 
   return return_vals;
 }
@@ -443,9 +431,7 @@ image_undo_thaw_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gboolean thawed = FALSE;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -455,7 +441,7 @@ image_undo_thaw_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = thawed;
+    g_value_set_boolean (&return_vals[1].value, thawed);
 
   return return_vals;
 }

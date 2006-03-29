@@ -1078,9 +1078,7 @@ gradient_new_invoker (ProcRecord   *proc_record,
   gchar *name;
   gchar *actual_name = NULL;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -1100,7 +1098,7 @@ gradient_new_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = actual_name;
+    g_value_take_string (&return_vals[1].value, actual_name);
 
   return return_vals;
 }
@@ -1132,9 +1130,7 @@ gradient_duplicate_invoker (ProcRecord   *proc_record,
   gchar *name;
   gchar *copy_name = NULL;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -1159,7 +1155,7 @@ gradient_duplicate_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = copy_name;
+    g_value_take_string (&return_vals[1].value, copy_name);
 
   return return_vals;
 }
@@ -1191,9 +1187,7 @@ gradient_is_editable_invoker (ProcRecord   *proc_record,
   gchar *name;
   gboolean editable = FALSE;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -1209,7 +1203,7 @@ gradient_is_editable_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = editable;
+    g_value_set_boolean (&return_vals[1].value, editable);
 
   return return_vals;
 }
@@ -1242,13 +1236,8 @@ gradient_rename_invoker (ProcRecord   *proc_record,
   gchar *new_name;
   gchar *actual_name = NULL;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  new_name = (gchar *) args[1].value.pdb_pointer;
-  if (new_name == NULL || !g_utf8_validate (new_name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  new_name = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -1267,7 +1256,7 @@ gradient_rename_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = actual_name;
+    g_value_take_string (&return_vals[1].value, actual_name);
 
   return return_vals;
 }
@@ -1297,9 +1286,7 @@ gradient_delete_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gchar *name;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -1357,15 +1344,9 @@ gradient_get_uniform_samples_invoker (ProcRecord   *proc_record,
   gint32 num_color_samples = 0;
   gdouble *color_samples = NULL;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  num_samples = args[1].value.pdb_int;
-  if (num_samples < 2)
-    success = FALSE;
-
-  reverse = args[2].value.pdb_int ? TRUE : FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  num_samples = g_value_get_int (&args[1].value);
+  reverse = g_value_get_boolean (&args[2].value);
 
   if (success)
     {
@@ -1405,8 +1386,8 @@ gradient_get_uniform_samples_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = num_color_samples;
-      return_vals[2].value.pdb_pointer = color_samples;
+      g_value_set_int (&return_vals[1].value, num_color_samples);
+      g_value_set_pointer (&return_vals[2].value, color_samples);
     }
 
   return return_vals;
@@ -1443,17 +1424,10 @@ gradient_get_custom_samples_invoker (ProcRecord   *proc_record,
   gint32 num_color_samples = 0;
   gdouble *color_samples = NULL;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  num_samples = args[1].value.pdb_int;
-  if (num_samples < 1)
-    success = FALSE;
-
-  positions = (gdouble *) args[2].value.pdb_pointer;
-
-  reverse = args[3].value.pdb_int ? TRUE : FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  num_samples = g_value_get_int (&args[1].value);
+  positions = g_value_get_pointer (&args[2].value);
+  reverse = g_value_get_boolean (&args[3].value);
 
   if (success)
     {
@@ -1492,8 +1466,8 @@ gradient_get_custom_samples_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = num_color_samples;
-      return_vals[2].value.pdb_pointer = color_samples;
+      g_value_set_int (&return_vals[1].value, num_color_samples);
+      g_value_set_pointer (&return_vals[2].value, color_samples);
     }
 
   return return_vals;
@@ -1528,13 +1502,8 @@ gradient_segment_get_left_color_invoker (ProcRecord   *proc_record,
   GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
   gdouble opacity = 0.0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  segment = args[1].value.pdb_int;
-  if (segment < 0)
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  segment = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -1556,8 +1525,8 @@ gradient_segment_get_left_color_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_color = color;
-      return_vals[2].value.pdb_float = opacity;
+      gimp_value_set_rgb (&return_vals[1].value, &color);
+      g_value_set_double (&return_vals[2].value, opacity);
     }
 
   return return_vals;
@@ -1591,19 +1560,10 @@ gradient_segment_set_left_color_invoker (ProcRecord   *proc_record,
   GimpRGB color;
   gdouble opacity;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  segment = args[1].value.pdb_int;
-  if (segment < 0)
-    success = FALSE;
-
-  color = args[2].value.pdb_color;
-
-  opacity = args[3].value.pdb_float;
-  if (opacity < 0.0 || opacity > 100.0)
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  segment = g_value_get_int (&args[1].value);
+  gimp_value_get_rgb (&args[2].value, &color);
+  opacity = g_value_get_double (&args[3].value);
 
   if (success)
     {
@@ -1653,13 +1613,8 @@ gradient_segment_get_right_color_invoker (ProcRecord   *proc_record,
   GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
   gdouble opacity = 0.0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  segment = args[1].value.pdb_int;
-  if (segment < 0)
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  segment = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -1681,8 +1636,8 @@ gradient_segment_get_right_color_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_color = color;
-      return_vals[2].value.pdb_float = opacity;
+      gimp_value_set_rgb (&return_vals[1].value, &color);
+      g_value_set_double (&return_vals[2].value, opacity);
     }
 
   return return_vals;
@@ -1716,19 +1671,10 @@ gradient_segment_set_right_color_invoker (ProcRecord   *proc_record,
   GimpRGB color;
   gdouble opacity;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  segment = args[1].value.pdb_int;
-  if (segment < 0)
-    success = FALSE;
-
-  color = args[2].value.pdb_color;
-
-  opacity = args[3].value.pdb_float;
-  if (opacity < 0.0 || opacity > 100.0)
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  segment = g_value_get_int (&args[1].value);
+  gimp_value_get_rgb (&args[2].value, &color);
+  opacity = g_value_get_double (&args[3].value);
 
   if (success)
     {
@@ -1777,13 +1723,8 @@ gradient_segment_get_left_pos_invoker (ProcRecord   *proc_record,
   gint32 segment;
   gdouble pos = 0.0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  segment = args[1].value.pdb_int;
-  if (segment < 0)
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  segment = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -1803,7 +1744,7 @@ gradient_segment_get_left_pos_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_float = pos;
+    g_value_set_double (&return_vals[1].value, pos);
 
   return return_vals;
 }
@@ -1837,17 +1778,9 @@ gradient_segment_set_left_pos_invoker (ProcRecord   *proc_record,
   gdouble pos;
   gdouble final_pos = 0.0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  segment = args[1].value.pdb_int;
-  if (segment < 0)
-    success = FALSE;
-
-  pos = args[2].value.pdb_float;
-  if (pos < 0.0 || pos > 1.0)
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  segment = g_value_get_int (&args[1].value);
+  pos = g_value_get_double (&args[2].value);
 
   if (success)
     {
@@ -1867,7 +1800,7 @@ gradient_segment_set_left_pos_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_float = final_pos;
+    g_value_set_double (&return_vals[1].value, final_pos);
 
   return return_vals;
 }
@@ -1900,13 +1833,8 @@ gradient_segment_get_middle_pos_invoker (ProcRecord   *proc_record,
   gint32 segment;
   gdouble pos = 0.0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  segment = args[1].value.pdb_int;
-  if (segment < 0)
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  segment = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -1926,7 +1854,7 @@ gradient_segment_get_middle_pos_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_float = pos;
+    g_value_set_double (&return_vals[1].value, pos);
 
   return return_vals;
 }
@@ -1960,17 +1888,9 @@ gradient_segment_set_middle_pos_invoker (ProcRecord   *proc_record,
   gdouble pos;
   gdouble final_pos = 0.0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  segment = args[1].value.pdb_int;
-  if (segment < 0)
-    success = FALSE;
-
-  pos = args[2].value.pdb_float;
-  if (pos < 0.0 || pos > 1.0)
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  segment = g_value_get_int (&args[1].value);
+  pos = g_value_get_double (&args[2].value);
 
   if (success)
     {
@@ -1991,7 +1911,7 @@ gradient_segment_set_middle_pos_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_float = final_pos;
+    g_value_set_double (&return_vals[1].value, final_pos);
 
   return return_vals;
 }
@@ -2024,13 +1944,8 @@ gradient_segment_get_right_pos_invoker (ProcRecord   *proc_record,
   gint32 segment;
   gdouble pos = 0.0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  segment = args[1].value.pdb_int;
-  if (segment < 0)
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  segment = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -2050,7 +1965,7 @@ gradient_segment_get_right_pos_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_float = pos;
+    g_value_set_double (&return_vals[1].value, pos);
 
   return return_vals;
 }
@@ -2084,17 +1999,9 @@ gradient_segment_set_right_pos_invoker (ProcRecord   *proc_record,
   gdouble pos;
   gdouble final_pos = 0.0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  segment = args[1].value.pdb_int;
-  if (segment < 0)
-    success = FALSE;
-
-  pos = args[2].value.pdb_float;
-  if (pos < 0.0 || pos > 1.0)
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  segment = g_value_get_int (&args[1].value);
+  pos = g_value_get_double (&args[2].value);
 
   if (success)
     {
@@ -2115,7 +2022,7 @@ gradient_segment_set_right_pos_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_float = final_pos;
+    g_value_set_double (&return_vals[1].value, final_pos);
 
   return return_vals;
 }
@@ -2148,13 +2055,8 @@ gradient_segment_get_blending_function_invoker (ProcRecord   *proc_record,
   gint32 segment;
   gint32 blend_func = 0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  segment = args[1].value.pdb_int;
-  if (segment < 0)
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  segment = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -2174,7 +2076,7 @@ gradient_segment_get_blending_function_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = blend_func;
+    g_value_set_enum (&return_vals[1].value, blend_func);
 
   return return_vals;
 }
@@ -2207,13 +2109,8 @@ gradient_segment_get_coloring_type_invoker (ProcRecord   *proc_record,
   gint32 segment;
   gint32 coloring_type = 0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  segment = args[1].value.pdb_int;
-  if (segment < 0)
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  segment = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -2233,7 +2130,7 @@ gradient_segment_get_coloring_type_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = coloring_type;
+    g_value_set_enum (&return_vals[1].value, coloring_type);
 
   return return_vals;
 }
@@ -2266,19 +2163,10 @@ gradient_segment_range_set_blending_function_invoker (ProcRecord   *proc_record,
   gint32 end_segment;
   gint32 blending_function;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  start_segment = args[1].value.pdb_int;
-  if (start_segment < 0)
-    success = FALSE;
-
-  end_segment = args[2].value.pdb_int;
-
-  blending_function = args[3].value.pdb_int;
-  if (blending_function < GIMP_GRADIENT_SEGMENT_LINEAR || blending_function > GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING)
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  start_segment = g_value_get_int (&args[1].value);
+  end_segment = g_value_get_int (&args[2].value);
+  blending_function = g_value_get_enum (&args[3].value);
 
   if (success)
     {
@@ -2330,19 +2218,10 @@ gradient_segment_range_set_coloring_type_invoker (ProcRecord   *proc_record,
   gint32 end_segment;
   gint32 coloring_type;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  start_segment = args[1].value.pdb_int;
-  if (start_segment < 0)
-    success = FALSE;
-
-  end_segment = args[2].value.pdb_int;
-
-  coloring_type = args[3].value.pdb_int;
-  if (coloring_type < GIMP_GRADIENT_SEGMENT_RGB || coloring_type > GIMP_GRADIENT_SEGMENT_HSV_CW)
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  start_segment = g_value_get_int (&args[1].value);
+  end_segment = g_value_get_int (&args[2].value);
+  coloring_type = g_value_get_enum (&args[3].value);
 
   if (success)
     {
@@ -2393,15 +2272,9 @@ gradient_segment_range_flip_invoker (ProcRecord   *proc_record,
   gint32 start_segment;
   gint32 end_segment;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  start_segment = args[1].value.pdb_int;
-  if (start_segment < 0)
-    success = FALSE;
-
-  end_segment = args[2].value.pdb_int;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  start_segment = g_value_get_int (&args[1].value);
+  end_segment = g_value_get_int (&args[2].value);
 
   if (success)
     {
@@ -2453,19 +2326,10 @@ gradient_segment_range_replicate_invoker (ProcRecord   *proc_record,
   gint32 end_segment;
   gint32 replicate_times;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  start_segment = args[1].value.pdb_int;
-  if (start_segment < 0)
-    success = FALSE;
-
-  end_segment = args[2].value.pdb_int;
-
-  replicate_times = args[3].value.pdb_int;
-  if (replicate_times < 2 || replicate_times > 20)
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  start_segment = g_value_get_int (&args[1].value);
+  end_segment = g_value_get_int (&args[2].value);
+  replicate_times = g_value_get_int (&args[3].value);
 
   if (success)
     {
@@ -2517,15 +2381,9 @@ gradient_segment_range_split_midpoint_invoker (ProcRecord   *proc_record,
   gint32 start_segment;
   gint32 end_segment;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  start_segment = args[1].value.pdb_int;
-  if (start_segment < 0)
-    success = FALSE;
-
-  end_segment = args[2].value.pdb_int;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  start_segment = g_value_get_int (&args[1].value);
+  end_segment = g_value_get_int (&args[2].value);
 
   if (success)
     {
@@ -2577,19 +2435,10 @@ gradient_segment_range_split_uniform_invoker (ProcRecord   *proc_record,
   gint32 end_segment;
   gint32 split_parts;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  start_segment = args[1].value.pdb_int;
-  if (start_segment < 0)
-    success = FALSE;
-
-  end_segment = args[2].value.pdb_int;
-
-  split_parts = args[3].value.pdb_int;
-  if (split_parts < 2 || split_parts > 20)
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  start_segment = g_value_get_int (&args[1].value);
+  end_segment = g_value_get_int (&args[2].value);
+  split_parts = g_value_get_int (&args[3].value);
 
   if (success)
     {
@@ -2641,15 +2490,9 @@ gradient_segment_range_delete_invoker (ProcRecord   *proc_record,
   gint32 start_segment;
   gint32 end_segment;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  start_segment = args[1].value.pdb_int;
-  if (start_segment < 0)
-    success = FALSE;
-
-  end_segment = args[2].value.pdb_int;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  start_segment = g_value_get_int (&args[1].value);
+  end_segment = g_value_get_int (&args[2].value);
 
   if (success)
     {
@@ -2700,15 +2543,9 @@ gradient_segment_range_redistribute_handles_invoker (ProcRecord   *proc_record,
   gint32 start_segment;
   gint32 end_segment;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  start_segment = args[1].value.pdb_int;
-  if (start_segment < 0)
-    success = FALSE;
-
-  end_segment = args[2].value.pdb_int;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  start_segment = g_value_get_int (&args[1].value);
+  end_segment = g_value_get_int (&args[2].value);
 
   if (success)
     {
@@ -2758,15 +2595,9 @@ gradient_segment_range_blend_colors_invoker (ProcRecord   *proc_record,
   gint32 start_segment;
   gint32 end_segment;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  start_segment = args[1].value.pdb_int;
-  if (start_segment < 0)
-    success = FALSE;
-
-  end_segment = args[2].value.pdb_int;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  start_segment = g_value_get_int (&args[1].value);
+  end_segment = g_value_get_int (&args[2].value);
 
   if (success)
     {
@@ -2819,15 +2650,9 @@ gradient_segment_range_blend_opacity_invoker (ProcRecord   *proc_record,
   gint32 start_segment;
   gint32 end_segment;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  start_segment = args[1].value.pdb_int;
-  if (start_segment < 0)
-    success = FALSE;
-
-  end_segment = args[2].value.pdb_int;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  start_segment = g_value_get_int (&args[1].value);
+  end_segment = g_value_get_int (&args[2].value);
 
   if (success)
     {
@@ -2884,21 +2709,11 @@ gradient_segment_range_move_invoker (ProcRecord   *proc_record,
   gboolean control_compress;
   gdouble final_delta = 0.0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  start_segment = args[1].value.pdb_int;
-  if (start_segment < 0)
-    success = FALSE;
-
-  end_segment = args[2].value.pdb_int;
-
-  delta = args[3].value.pdb_float;
-  if (delta < -1.0 || delta > 1.0)
-    success = FALSE;
-
-  control_compress = args[4].value.pdb_int ? TRUE : FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  start_segment = g_value_get_int (&args[1].value);
+  end_segment = g_value_get_int (&args[2].value);
+  delta = g_value_get_double (&args[3].value);
+  control_compress = g_value_get_boolean (&args[4].value);
 
   if (success)
     {
@@ -2923,7 +2738,7 @@ gradient_segment_range_move_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_float = final_delta;
+    g_value_set_double (&return_vals[1].value, final_delta);
 
   return return_vals;
 }

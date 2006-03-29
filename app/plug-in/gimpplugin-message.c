@@ -348,10 +348,12 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
 {
   PlugInProcFrame *proc_frame;
   gchar           *canonical;
-  const gchar     *proc_name = NULL;
+  const gchar     *proc_name     = NULL;
   ProcRecord      *proc_rec;
-  Argument        *args;
-  Argument        *return_vals;
+  Argument        *args          = NULL;
+  gint             n_args        = 0;
+  Argument        *return_vals   = NULL;
+  gint             n_return_vals = 0;
 
   canonical = gimp_canonicalize_identifier (proc_run->name);
 
@@ -410,7 +412,13 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
   if (! proc_name)
     proc_name = canonical;
 
-  args = plug_in_params_to_args (proc_run->params, proc_run->nparams, FALSE);
+  if (proc_rec)
+    {
+      n_args = proc_run->nparams;
+      args   = plug_in_params_to_args (proc_rec->args, proc_rec->num_args,
+                                       proc_run->params, n_args,
+                                       FALSE);
+    }
 
   plug_in_push (plug_in->gimp, plug_in);
 
@@ -422,7 +430,9 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
                                        proc_frame->context_stack->data :
                                        proc_frame->main_context,
                                        proc_frame->progress,
-                                       proc_name, args);
+                                       proc_name,
+                                       args, n_args,
+                                       &n_return_vals);
 
   plug_in_pop (plug_in->gimp);
 
@@ -436,20 +446,10 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
        *  since proc_name may have been remapped by gimp->procedural_compat_ht
        *  and canonical may be different too.
        */
-      proc_return.name = proc_run->name;
-
-      if (proc_rec)
-	{
-	  proc_return.nparams = proc_rec->num_values + 1;
-	  proc_return.params  = plug_in_args_to_params (return_vals,
-                                                        proc_return.nparams,
-                                                        FALSE);
-	}
-      else
-	{
-	  proc_return.nparams = 1;
-	  proc_return.params  = plug_in_args_to_params (return_vals, 1, FALSE);
-	}
+      proc_return.name    = proc_run->name;
+      proc_return.nparams = n_return_vals;
+      proc_return.params  = plug_in_args_to_params (return_vals, n_return_vals,
+                                                    FALSE);
 
       if (! gp_proc_return_write (plug_in->my_write, &proc_return, plug_in))
 	{
@@ -458,13 +458,8 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
 	  return;
 	}
 
-      plug_in_args_destroy (args, proc_run->nparams, FALSE);
-
-      if (proc_rec)
-        plug_in_args_destroy (return_vals, proc_rec->num_values + 1, TRUE);
-      else
-        plug_in_args_destroy (return_vals, 1, TRUE);
-
+      procedural_db_destroy_args (args, n_args, FALSE);
+      procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
       plug_in_params_destroy (proc_return.params, proc_return.nparams, FALSE);
     }
   else
@@ -499,7 +494,9 @@ plug_in_handle_proc_return_priv (PlugIn       *plug_in,
 
   if (proc_frame->main_loop)
     {
-      proc_frame->return_vals = plug_in_params_to_args (proc_return->params,
+      proc_frame->return_vals = plug_in_params_to_args (proc_frame->proc_rec->values,
+                                                        proc_frame->proc_rec->num_values,
+                                                        proc_return->params,
                                                         proc_return->nparams,
                                                         TRUE);
       proc_frame->n_return_vals = proc_return->nparams;

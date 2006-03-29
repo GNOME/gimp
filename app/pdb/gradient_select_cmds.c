@@ -128,19 +128,10 @@ gradients_popup_invoker (ProcRecord   *proc_record,
   gchar *initial_gradient;
   gint32 sample_size;
 
-  gradient_callback = (gchar *) args[0].value.pdb_pointer;
-  if (gradient_callback == NULL || !g_utf8_validate (gradient_callback, -1, NULL))
-    success = FALSE;
-
-  popup_title = (gchar *) args[1].value.pdb_pointer;
-  if (popup_title == NULL || !g_utf8_validate (popup_title, -1, NULL))
-    success = FALSE;
-
-  initial_gradient = (gchar *) args[2].value.pdb_pointer;
-  if (initial_gradient && !g_utf8_validate (initial_gradient, -1, NULL))
-    success = FALSE;
-
-  sample_size = args[3].value.pdb_int;
+  gradient_callback = (gchar *) g_value_get_string (&args[0].value);
+  popup_title = (gchar *) g_value_get_string (&args[1].value);
+  initial_gradient = (gchar *) g_value_get_string (&args[2].value);
+  sample_size = g_value_get_int (&args[3].value);
 
   if (success)
     {
@@ -184,9 +175,7 @@ gradients_close_popup_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gchar *gradient_callback;
 
-  gradient_callback = (gchar *) args[0].value.pdb_pointer;
-  if (gradient_callback == NULL || !g_utf8_validate (gradient_callback, -1, NULL))
-    success = FALSE;
+  gradient_callback = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -226,13 +215,8 @@ gradients_set_popup_invoker (ProcRecord   *proc_record,
   gchar *gradient_callback;
   gchar *gradient_name;
 
-  gradient_callback = (gchar *) args[0].value.pdb_pointer;
-  if (gradient_callback == NULL || !g_utf8_validate (gradient_callback, -1, NULL))
-    success = FALSE;
-
-  gradient_name = (gchar *) args[1].value.pdb_pointer;
-  if (gradient_name == NULL || !g_utf8_validate (gradient_name, -1, NULL))
-    success = FALSE;
+  gradient_callback = (gchar *) g_value_get_string (&args[0].value);
+  gradient_name = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {

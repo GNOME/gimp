@@ -428,12 +428,14 @@ register_image_procs (Gimp *gimp)
                                                         GIMP_PARAM_READWRITE));
   procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
-                              g_param_spec_enum ("flip-type",
-                                                 "flip type",
-                                                 "Type of flip: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }",
-                                                 GIMP_TYPE_ORIENTATION_TYPE,
-                                                 GIMP_ORIENTATION_HORIZONTAL,
-                                                 GIMP_PARAM_READWRITE));
+                              gimp_param_spec_enum ("flip-type",
+                                                    "flip type",
+                                                    "Type of flip: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }",
+                                                    GIMP_TYPE_ORIENTATION_TYPE,
+                                                    GIMP_ORIENTATION_HORIZONTAL,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[1].pspec),
+                                      GIMP_ORIENTATION_UNKNOWN);
   procedural_db_register (gimp, procedure);
 
   /*
@@ -1100,12 +1102,14 @@ register_image_procs (Gimp *gimp)
                                                         GIMP_PARAM_READWRITE));
   procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
-                              g_param_spec_enum ("merge-type",
-                                                 "merge type",
-                                                 "The type of merge: { GIMP_EXPAND_AS_NECESSARY (0), GIMP_CLIP_TO_IMAGE (1), GIMP_CLIP_TO_BOTTOM_LAYER (2) }",
-                                                 GIMP_TYPE_MERGE_TYPE,
-                                                 GIMP_EXPAND_AS_NECESSARY,
-                                                 GIMP_PARAM_READWRITE));
+                              gimp_param_spec_enum ("merge-type",
+                                                    "merge type",
+                                                    "The type of merge: { GIMP_EXPAND_AS_NECESSARY (0), GIMP_CLIP_TO_IMAGE (1), GIMP_CLIP_TO_BOTTOM_LAYER (2) }",
+                                                    GIMP_TYPE_MERGE_TYPE,
+                                                    GIMP_EXPAND_AS_NECESSARY,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[1].pspec),
+                                      GIMP_FLATTEN_IMAGE);
   procedural_db_add_return_value (procedure,
                                   GIMP_PDB_LAYER,
                                   gimp_param_spec_item_id ("layer",
@@ -1137,12 +1141,14 @@ register_image_procs (Gimp *gimp)
                                                        GIMP_PARAM_READWRITE));
   procedural_db_add_argument (procedure,
                               GIMP_PDB_INT32,
-                              g_param_spec_enum ("merge-type",
-                                                 "merge type",
-                                                 "The type of merge: { GIMP_EXPAND_AS_NECESSARY (0), GIMP_CLIP_TO_IMAGE (1), GIMP_CLIP_TO_BOTTOM_LAYER (2) }",
-                                                 GIMP_TYPE_MERGE_TYPE,
-                                                 GIMP_EXPAND_AS_NECESSARY,
-                                                 GIMP_PARAM_READWRITE));
+                              gimp_param_spec_enum ("merge-type",
+                                                    "merge type",
+                                                    "The type of merge: { GIMP_EXPAND_AS_NECESSARY (0), GIMP_CLIP_TO_IMAGE (1), GIMP_CLIP_TO_BOTTOM_LAYER (2) }",
+                                                    GIMP_TYPE_MERGE_TYPE,
+                                                    GIMP_EXPAND_AS_NECESSARY,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[2].pspec),
+                                      GIMP_FLATTEN_IMAGE);
   procedural_db_add_return_value (procedure,
                                   GIMP_PDB_LAYER,
                                   gimp_param_spec_item_id ("layer",
@@ -1940,8 +1946,8 @@ image_list_invoker (ProcRecord   *proc_record,
 
   return_vals = procedural_db_return_values (proc_record, TRUE);
 
-  return_vals[1].value.pdb_int = num_images;
-  return_vals[2].value.pdb_pointer = image_ids;
+  g_value_set_int (&return_vals[1].value, num_images);
+  g_value_set_pointer (&return_vals[2].value, image_ids);
 
   return return_vals;
 }
@@ -1975,17 +1981,9 @@ image_new_invoker (ProcRecord   *proc_record,
   gint32 type;
   GimpImage *image = NULL;
 
-  width = args[0].value.pdb_int;
-  if (width < 1)
-    success = FALSE;
-
-  height = args[1].value.pdb_int;
-  if (height < 1)
-    success = FALSE;
-
-  type = args[2].value.pdb_int;
-  if (type < GIMP_RGB || type > GIMP_INDEXED)
-    success = FALSE;
+  width = g_value_get_int (&args[0].value);
+  height = g_value_get_int (&args[1].value);
+  type = g_value_get_enum (&args[2].value);
 
   if (success)
     {
@@ -1998,7 +1996,7 @@ image_new_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = image ? gimp_image_get_ID (image) : -1;
+    gimp_value_set_image (&return_vals[1].value, image);
 
   return return_vals;
 }
@@ -2030,9 +2028,7 @@ image_duplicate_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpImage *new_image = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -2045,7 +2041,7 @@ image_duplicate_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = new_image ? gimp_image_get_ID (new_image) : -1;
+    gimp_value_set_image (&return_vals[1].value, new_image);
 
   return return_vals;
 }
@@ -2075,9 +2071,7 @@ image_delete_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -2117,9 +2111,7 @@ image_base_type_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gint32 base_type = 0;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -2129,7 +2121,7 @@ image_base_type_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = base_type;
+    g_value_set_enum (&return_vals[1].value, base_type);
 
   return return_vals;
 }
@@ -2161,9 +2153,7 @@ image_width_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gint32 width = 0;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -2173,7 +2163,7 @@ image_width_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = width;
+    g_value_set_int (&return_vals[1].value, width);
 
   return return_vals;
 }
@@ -2205,9 +2195,7 @@ image_height_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gint32 height = 0;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -2217,7 +2205,7 @@ image_height_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = height;
+    g_value_set_int (&return_vals[1].value, height);
 
   return return_vals;
 }
@@ -2247,9 +2235,7 @@ image_free_shadow_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -2288,21 +2274,11 @@ image_resize_invoker (ProcRecord   *proc_record,
   gint32 offx;
   gint32 offy;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  new_width = args[1].value.pdb_int;
-  if (new_width < 1)
-    success = FALSE;
-
-  new_height = args[2].value.pdb_int;
-  if (new_height < 1)
-    success = FALSE;
-
-  offx = args[3].value.pdb_int;
-
-  offy = args[4].value.pdb_int;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  new_width = g_value_get_int (&args[1].value);
+  new_height = g_value_get_int (&args[2].value);
+  offx = g_value_get_int (&args[3].value);
+  offy = g_value_get_int (&args[4].value);
 
   if (success)
     {
@@ -2338,9 +2314,7 @@ image_resize_to_layers_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -2377,17 +2351,9 @@ image_scale_invoker (ProcRecord   *proc_record,
   gint32 new_width;
   gint32 new_height;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  new_width = args[1].value.pdb_int;
-  if (new_width < 1)
-    success = FALSE;
-
-  new_height = args[2].value.pdb_int;
-  if (new_height < 1)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  new_width = g_value_get_int (&args[1].value);
+  new_height = g_value_get_int (&args[2].value);
 
   if (success)
     {
@@ -2428,25 +2394,11 @@ image_crop_invoker (ProcRecord   *proc_record,
   gint32 offx;
   gint32 offy;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  new_width = args[1].value.pdb_int;
-  if (new_width < 1)
-    success = FALSE;
-
-  new_height = args[2].value.pdb_int;
-  if (new_height < 1)
-    success = FALSE;
-
-  offx = args[3].value.pdb_int;
-  if (offx < 0)
-    success = FALSE;
-
-  offy = args[4].value.pdb_int;
-  if (offy < 0)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  new_width = g_value_get_int (&args[1].value);
+  new_height = g_value_get_int (&args[2].value);
+  offx = g_value_get_int (&args[3].value);
+  offy = g_value_get_int (&args[4].value);
 
   if (success)
     {
@@ -2490,13 +2442,8 @@ image_flip_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gint32 flip_type;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  flip_type = args[1].value.pdb_int;
-  if (flip_type < GIMP_ORIENTATION_HORIZONTAL || flip_type > GIMP_ORIENTATION_VERTICAL)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  flip_type = g_value_get_enum (&args[1].value);
 
   if (success)
     {
@@ -2532,13 +2479,8 @@ image_rotate_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gint32 rotate_type;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  rotate_type = args[1].value.pdb_int;
-  if (rotate_type < GIMP_ROTATE_90 || rotate_type > GIMP_ROTATE_270)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  rotate_type = g_value_get_enum (&args[1].value);
 
   if (success)
     {
@@ -2576,9 +2518,7 @@ image_get_layers_invoker (ProcRecord   *proc_record,
   gint32 num_layers = 0;
   gint32 *layer_ids = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -2601,8 +2541,8 @@ image_get_layers_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = num_layers;
-      return_vals[2].value.pdb_pointer = layer_ids;
+      g_value_set_int (&return_vals[1].value, num_layers);
+      g_value_set_pointer (&return_vals[2].value, layer_ids);
     }
 
   return return_vals;
@@ -2636,9 +2576,7 @@ image_get_channels_invoker (ProcRecord   *proc_record,
   gint32 num_channels = 0;
   gint32 *channel_ids = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -2661,8 +2599,8 @@ image_get_channels_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = num_channels;
-      return_vals[2].value.pdb_pointer = channel_ids;
+      g_value_set_int (&return_vals[1].value, num_channels);
+      g_value_set_pointer (&return_vals[2].value, channel_ids);
     }
 
   return return_vals;
@@ -2696,9 +2634,7 @@ image_get_vectors_invoker (ProcRecord   *proc_record,
   gint32 num_vectors = 0;
   gint32 *vector_ids = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -2721,8 +2657,8 @@ image_get_vectors_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = num_vectors;
-      return_vals[2].value.pdb_pointer = vector_ids;
+      g_value_set_int (&return_vals[1].value, num_vectors);
+      g_value_set_pointer (&return_vals[2].value, vector_ids);
     }
 
   return return_vals;
@@ -2755,9 +2691,7 @@ image_get_active_drawable_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpDrawable *drawable = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -2767,7 +2701,7 @@ image_get_active_drawable_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
 
   return return_vals;
 }
@@ -2797,9 +2731,7 @@ image_unset_active_channel_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -2836,9 +2768,7 @@ image_get_floating_sel_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpLayer *floating_sel = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -2848,7 +2778,7 @@ image_get_floating_sel_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = floating_sel ? gimp_item_get_ID (GIMP_ITEM (floating_sel)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (floating_sel));
 
   return return_vals;
 }
@@ -2880,9 +2810,7 @@ image_floating_sel_attached_to_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpDrawable *drawable = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -2897,7 +2825,7 @@ image_floating_sel_attached_to_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
 
   return return_vals;
 }
@@ -2935,21 +2863,13 @@ image_pick_color_invoker (ProcRecord   *proc_record,
   gdouble average_radius;
   GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-
-  x = args[2].value.pdb_float;
-
-  y = args[3].value.pdb_float;
-
-  sample_merged = args[4].value.pdb_int ? TRUE : FALSE;
-
-  sample_average = args[5].value.pdb_int ? TRUE : FALSE;
-
-  average_radius = args[6].value.pdb_float;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  drawable = (GimpDrawable *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_DRAWABLE);
+  x = g_value_get_double (&args[2].value);
+  y = g_value_get_double (&args[3].value);
+  sample_merged = g_value_get_boolean (&args[4].value);
+  sample_average = g_value_get_boolean (&args[5].value);
+  average_radius = g_value_get_double (&args[6].value);
 
   if (success)
     {
@@ -2985,7 +2905,7 @@ image_pick_color_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_color = color;
+    gimp_value_set_rgb (&return_vals[1].value, &color);
 
   return return_vals;
 }
@@ -3019,13 +2939,9 @@ image_pick_correlate_layer_invoker (ProcRecord   *proc_record,
   gint32 y;
   GimpLayer *layer = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  x = args[1].value.pdb_int;
-
-  y = args[2].value.pdb_int;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  x = g_value_get_int (&args[1].value);
+  y = g_value_get_int (&args[2].value);
 
   if (success)
     {
@@ -3035,7 +2951,7 @@ image_pick_correlate_layer_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = layer ? gimp_item_get_ID (GIMP_ITEM (layer)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (layer));
 
   return return_vals;
 }
@@ -3067,15 +2983,9 @@ image_add_layer_invoker (ProcRecord   *proc_record,
   GimpLayer *layer;
   gint32 position;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
-    success = FALSE;
-
-  position = args[2].value.pdb_int;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  layer = (GimpLayer *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_LAYER);
+  position = g_value_get_int (&args[2].value);
 
   if (success)
     {
@@ -3120,13 +3030,8 @@ image_remove_layer_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpLayer *layer;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  layer = (GimpLayer *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_LAYER);
 
   if (success)
     {
@@ -3162,13 +3067,8 @@ image_raise_layer_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpLayer *layer;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  layer = (GimpLayer *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_LAYER);
 
   if (success)
     {
@@ -3204,13 +3104,8 @@ image_lower_layer_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpLayer *layer;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  layer = (GimpLayer *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_LAYER);
 
   if (success)
     {
@@ -3246,13 +3141,8 @@ image_raise_layer_to_top_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpLayer *layer;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  layer = (GimpLayer *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_LAYER);
 
   if (success)
     {
@@ -3288,13 +3178,8 @@ image_lower_layer_to_bottom_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpLayer *layer;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  layer = (GimpLayer *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_LAYER);
 
   if (success)
     {
@@ -3331,15 +3216,9 @@ image_add_channel_invoker (ProcRecord   *proc_record,
   GimpChannel *channel;
   gint32 position;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
-    success = FALSE;
-
-  position = args[2].value.pdb_int;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  channel = (GimpChannel *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_CHANNEL);
+  position = g_value_get_int (&args[2].value);
 
   if (success)
     {
@@ -3378,13 +3257,8 @@ image_remove_channel_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpChannel *channel;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  channel = (GimpChannel *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_CHANNEL);
 
   if (success)
     {
@@ -3420,13 +3294,8 @@ image_raise_channel_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpChannel *channel;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  channel = (GimpChannel *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_CHANNEL);
 
   if (success)
     {
@@ -3462,13 +3331,8 @@ image_lower_channel_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpChannel *channel;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  channel = (GimpChannel *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_CHANNEL);
 
   if (success)
     {
@@ -3505,15 +3369,9 @@ image_add_vectors_invoker (ProcRecord   *proc_record,
   GimpVectors *vectors;
   gint32 position;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
-
-  position = args[2].value.pdb_int;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  vectors = (GimpVectors *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_VECTORS);
+  position = g_value_get_int (&args[2].value);
 
   if (success)
     {
@@ -3552,13 +3410,8 @@ image_remove_vectors_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpVectors *vectors;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  vectors = (GimpVectors *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_VECTORS);
 
   if (success)
     {
@@ -3594,13 +3447,8 @@ image_raise_vectors_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpVectors *vectors;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  vectors = (GimpVectors *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_VECTORS);
 
   if (success)
     {
@@ -3636,13 +3484,8 @@ image_lower_vectors_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpVectors *vectors;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  vectors = (GimpVectors *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_VECTORS);
 
   if (success)
     {
@@ -3678,13 +3521,8 @@ image_raise_vectors_to_top_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpVectors *vectors;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  vectors = (GimpVectors *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_VECTORS);
 
   if (success)
     {
@@ -3720,13 +3558,8 @@ image_lower_vectors_to_bottom_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpVectors *vectors;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  vectors = (GimpVectors *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_VECTORS);
 
   if (success)
     {
@@ -3763,9 +3596,7 @@ image_flatten_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpLayer *layer = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -3778,7 +3609,7 @@ image_flatten_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = layer ? gimp_item_get_ID (GIMP_ITEM (layer)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (layer));
 
   return return_vals;
 }
@@ -3811,13 +3642,8 @@ image_merge_visible_layers_invoker (ProcRecord   *proc_record,
   gint32 merge_type;
   GimpLayer *layer = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  merge_type = args[1].value.pdb_int;
-  if (merge_type < GIMP_EXPAND_AS_NECESSARY || merge_type > GIMP_CLIP_TO_BOTTOM_LAYER)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  merge_type = g_value_get_enum (&args[1].value);
 
   if (success)
     {
@@ -3830,7 +3656,7 @@ image_merge_visible_layers_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = layer ? gimp_item_get_ID (GIMP_ITEM (layer)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (layer));
 
   return return_vals;
 }
@@ -3864,17 +3690,9 @@ image_merge_down_invoker (ProcRecord   *proc_record,
   gint32 merge_type;
   GimpLayer *layer = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  merge_layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_LAYER (merge_layer) && ! gimp_item_is_removed (GIMP_ITEM (merge_layer))))
-    success = FALSE;
-
-  merge_type = args[2].value.pdb_int;
-  if (merge_type < GIMP_EXPAND_AS_NECESSARY || merge_type > GIMP_CLIP_TO_BOTTOM_LAYER)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  merge_layer = (GimpLayer *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_LAYER);
+  merge_type = g_value_get_enum (&args[2].value);
 
   if (success)
     {
@@ -3887,7 +3705,7 @@ image_merge_down_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = layer ? gimp_item_get_ID (GIMP_ITEM (layer)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (layer));
 
   return return_vals;
 }
@@ -3919,17 +3737,9 @@ image_add_layer_mask_invoker (ProcRecord   *proc_record,
   GimpLayer *layer;
   GimpLayerMask *mask;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
-    success = FALSE;
-
-  mask = (GimpLayerMask *) gimp_item_get_by_ID (gimp, args[2].value.pdb_int);
-  if (! (GIMP_IS_LAYER_MASK (mask) && ! gimp_item_is_removed (GIMP_ITEM (mask))))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  layer = (GimpLayer *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_LAYER);
+  mask = (GimpLayerMask *) gimp_value_get_item (&args[2].value, gimp, GIMP_TYPE_LAYER_MASK);
 
   if (success)
     {
@@ -3967,17 +3777,9 @@ image_remove_layer_mask_invoker (ProcRecord   *proc_record,
   GimpLayer *layer;
   gint32 mode;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
-    success = FALSE;
-
-  mode = args[2].value.pdb_int;
-  if (mode < GIMP_MASK_APPLY || mode > GIMP_MASK_DISCARD)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  layer = (GimpLayer *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_LAYER);
+  mode = g_value_get_enum (&args[2].value);
 
   if (success)
     {
@@ -4015,9 +3817,7 @@ image_get_colormap_invoker (ProcRecord   *proc_record,
   gint32 num_bytes = 0;
   guint8 *colormap = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -4029,8 +3829,8 @@ image_get_colormap_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = num_bytes;
-      return_vals[2].value.pdb_pointer = colormap;
+      g_value_set_int (&return_vals[1].value, num_bytes);
+      g_value_set_pointer (&return_vals[2].value, colormap);
     }
 
   return return_vals;
@@ -4063,15 +3863,9 @@ image_set_colormap_invoker (ProcRecord   *proc_record,
   gint32 num_bytes;
   guint8 *colormap;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  num_bytes = args[1].value.pdb_int;
-  if (num_bytes < 0 || num_bytes > 768)
-    success = FALSE;
-
-  colormap = (guint8 *) args[2].value.pdb_pointer;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  num_bytes = g_value_get_int (&args[1].value);
+  colormap = g_value_get_pointer (&args[2].value);
 
   if (success)
     {
@@ -4106,9 +3900,7 @@ image_clean_all_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -4145,9 +3937,7 @@ image_is_dirty_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gboolean dirty = FALSE;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -4157,7 +3947,7 @@ image_is_dirty_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = dirty;
+    g_value_set_boolean (&return_vals[1].value, dirty);
 
   return return_vals;
 }
@@ -4195,17 +3985,9 @@ image_thumbnail_invoker (ProcRecord   *proc_record,
   gint32 thumbnail_data_count = 0;
   guint8 *thumbnail_data = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  width = args[1].value.pdb_int;
-  if (width < 1 || width > 1024)
-    success = FALSE;
-
-  height = args[2].value.pdb_int;
-  if (height < 1 || height > 1024)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  width = g_value_get_int (&args[1].value);
+  height = g_value_get_int (&args[2].value);
 
   if (success)
     {
@@ -4251,11 +4033,11 @@ image_thumbnail_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_int = actual_width;
-      return_vals[2].value.pdb_int = actual_height;
-      return_vals[3].value.pdb_int = bpp;
-      return_vals[4].value.pdb_int = thumbnail_data_count;
-      return_vals[5].value.pdb_pointer = thumbnail_data;
+      g_value_set_int (&return_vals[1].value, actual_width);
+      g_value_set_int (&return_vals[2].value, actual_height);
+      g_value_set_int (&return_vals[3].value, bpp);
+      g_value_set_int (&return_vals[4].value, thumbnail_data_count);
+      g_value_set_pointer (&return_vals[5].value, thumbnail_data);
     }
 
   return return_vals;
@@ -4288,9 +4070,7 @@ image_get_active_layer_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpLayer *active_layer = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -4300,7 +4080,7 @@ image_get_active_layer_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = active_layer ? gimp_item_get_ID (GIMP_ITEM (active_layer)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (active_layer));
 
   return return_vals;
 }
@@ -4331,13 +4111,8 @@ image_set_active_layer_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpLayer *active_layer;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  active_layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_LAYER (active_layer) && ! gimp_item_is_removed (GIMP_ITEM (active_layer))))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  active_layer = (GimpLayer *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_LAYER);
 
   if (success)
     {
@@ -4375,9 +4150,7 @@ image_get_active_channel_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpChannel *active_channel = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -4387,7 +4160,7 @@ image_get_active_channel_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = active_channel ? gimp_item_get_ID (GIMP_ITEM (active_channel)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (active_channel));
 
   return return_vals;
 }
@@ -4418,13 +4191,8 @@ image_set_active_channel_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpChannel *active_channel;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  active_channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_CHANNEL (active_channel) && ! gimp_item_is_removed (GIMP_ITEM (active_channel))))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  active_channel = (GimpChannel *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_CHANNEL);
 
   if (success)
     {
@@ -4462,9 +4230,7 @@ image_get_active_vectors_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpVectors *active_vectors = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -4474,7 +4240,7 @@ image_get_active_vectors_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = active_vectors ? gimp_item_get_ID (GIMP_ITEM (active_vectors)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (active_vectors));
 
   return return_vals;
 }
@@ -4505,13 +4271,8 @@ image_set_active_vectors_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpVectors *active_vectors;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  active_vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! (GIMP_IS_VECTORS (active_vectors) && ! gimp_item_is_removed (GIMP_ITEM (active_vectors))))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  active_vectors = (GimpVectors *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_VECTORS);
 
   if (success)
     {
@@ -4549,9 +4310,7 @@ image_get_selection_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpChannel *selection = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -4564,7 +4323,7 @@ image_get_selection_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = selection ? gimp_item_get_ID (GIMP_ITEM (selection)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (selection));
 
   return return_vals;
 }
@@ -4597,13 +4356,8 @@ image_get_component_active_invoker (ProcRecord   *proc_record,
   gint32 component;
   gboolean active = FALSE;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  component = args[1].value.pdb_int;
-  if (component < GIMP_RED_CHANNEL || component > GIMP_ALPHA_CHANNEL)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  component = g_value_get_enum (&args[1].value);
 
   if (success)
     {
@@ -4621,7 +4375,7 @@ image_get_component_active_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = active;
+    g_value_set_boolean (&return_vals[1].value, active);
 
   return return_vals;
 }
@@ -4653,15 +4407,9 @@ image_set_component_active_invoker (ProcRecord   *proc_record,
   gint32 component;
   gboolean active;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  component = args[1].value.pdb_int;
-  if (component < GIMP_RED_CHANNEL || component > GIMP_ALPHA_CHANNEL)
-    success = FALSE;
-
-  active = args[2].value.pdb_int ? TRUE : FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  component = g_value_get_enum (&args[1].value);
+  active = g_value_get_boolean (&args[2].value);
 
   if (success)
     {
@@ -4707,13 +4455,8 @@ image_get_component_visible_invoker (ProcRecord   *proc_record,
   gint32 component;
   gboolean visible = FALSE;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  component = args[1].value.pdb_int;
-  if (component < GIMP_RED_CHANNEL || component > GIMP_ALPHA_CHANNEL)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  component = g_value_get_enum (&args[1].value);
 
   if (success)
     {
@@ -4731,7 +4474,7 @@ image_get_component_visible_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = visible;
+    g_value_set_boolean (&return_vals[1].value, visible);
 
   return return_vals;
 }
@@ -4763,15 +4506,9 @@ image_set_component_visible_invoker (ProcRecord   *proc_record,
   gint32 component;
   gboolean visible;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  component = args[1].value.pdb_int;
-  if (component < GIMP_RED_CHANNEL || component > GIMP_ALPHA_CHANNEL)
-    success = FALSE;
-
-  visible = args[2].value.pdb_int ? TRUE : FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  component = g_value_get_enum (&args[1].value);
+  visible = g_value_get_boolean (&args[2].value);
 
   if (success)
     {
@@ -4816,9 +4553,7 @@ image_get_filename_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gchar *filename = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -4828,7 +4563,7 @@ image_get_filename_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = filename;
+    g_value_take_string (&return_vals[1].value, filename);
 
   return return_vals;
 }
@@ -4859,13 +4594,8 @@ image_set_filename_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gchar *filename;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  filename = (gchar *) args[1].value.pdb_pointer;
-  if (filename == NULL)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  filename = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -4920,9 +4650,7 @@ image_get_name_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gchar *name = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -4937,7 +4665,7 @@ image_get_name_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = name;
+    g_value_take_string (&return_vals[1].value, name);
 
   return return_vals;
 }
@@ -4970,9 +4698,7 @@ image_get_resolution_invoker (ProcRecord   *proc_record,
   gdouble xresolution = 0.0;
   gdouble yresolution = 0.0;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -4983,8 +4709,8 @@ image_get_resolution_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      return_vals[1].value.pdb_float = xresolution;
-      return_vals[2].value.pdb_float = yresolution;
+      g_value_set_double (&return_vals[1].value, xresolution);
+      g_value_set_double (&return_vals[2].value, yresolution);
     }
 
   return return_vals;
@@ -5017,13 +4743,9 @@ image_set_resolution_invoker (ProcRecord   *proc_record,
   gdouble xresolution;
   gdouble yresolution;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  xresolution = args[1].value.pdb_float;
-
-  yresolution = args[2].value.pdb_float;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  xresolution = g_value_get_double (&args[1].value);
+  yresolution = g_value_get_double (&args[2].value);
 
   if (success)
     {
@@ -5072,9 +4794,7 @@ image_get_unit_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpUnit unit = 0;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -5084,7 +4804,7 @@ image_get_unit_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = unit;
+    g_value_set_int (&return_vals[1].value, unit);
 
   return return_vals;
 }
@@ -5115,13 +4835,8 @@ image_set_unit_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   GimpUnit unit;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  unit = args[1].value.pdb_int;
-  if (unit < GIMP_UNIT_INCH || unit >= _gimp_unit_get_number_of_units (gimp))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  unit = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -5158,9 +4873,7 @@ image_get_tattoo_state_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gint32 tattoo_state = 0;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
 
   if (success)
     {
@@ -5170,7 +4883,7 @@ image_get_tattoo_state_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = tattoo_state;
+    g_value_set_uint (&return_vals[1].value, tattoo_state);
 
   return return_vals;
 }
@@ -5201,13 +4914,8 @@ image_set_tattoo_state_invoker (ProcRecord   *proc_record,
   GimpImage *image;
   gint32 tattoo_state;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  tattoo_state = args[1].value.pdb_int;
-  if (tattoo_state == 0)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  tattoo_state = g_value_get_uint (&args[1].value);
 
   if (success)
     {
@@ -5245,13 +4953,8 @@ image_get_layer_by_tattoo_invoker (ProcRecord   *proc_record,
   gint32 tattoo;
   GimpLayer *layer = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  tattoo = args[1].value.pdb_int;
-  if (tattoo == 0)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  tattoo = g_value_get_uint (&args[1].value);
 
   if (success)
     {
@@ -5261,7 +4964,7 @@ image_get_layer_by_tattoo_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = layer ? gimp_item_get_ID (GIMP_ITEM (layer)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (layer));
 
   return return_vals;
 }
@@ -5294,13 +4997,8 @@ image_get_channel_by_tattoo_invoker (ProcRecord   *proc_record,
   gint32 tattoo;
   GimpChannel *channel = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  tattoo = args[1].value.pdb_int;
-  if (tattoo == 0)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  tattoo = g_value_get_uint (&args[1].value);
 
   if (success)
     {
@@ -5310,7 +5008,7 @@ image_get_channel_by_tattoo_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = channel ? gimp_item_get_ID (GIMP_ITEM (channel)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (channel));
 
   return return_vals;
 }
@@ -5343,13 +5041,8 @@ image_get_vectors_by_tattoo_invoker (ProcRecord   *proc_record,
   gint32 tattoo;
   GimpVectors *vectors = NULL;
 
-  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (image))
-    success = FALSE;
-
-  tattoo = args[1].value.pdb_int;
-  if (tattoo == 0)
-    success = FALSE;
+  image = gimp_value_get_image (&args[0].value, gimp);
+  tattoo = g_value_get_uint (&args[1].value);
 
   if (success)
     {
@@ -5359,7 +5052,7 @@ image_get_vectors_by_tattoo_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = vectors ? gimp_item_get_ID (GIMP_ITEM (vectors)) : -1;
+    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (vectors));
 
   return return_vals;
 }

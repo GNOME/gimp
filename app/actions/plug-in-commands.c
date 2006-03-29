@@ -30,6 +30,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
+#include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
 
 #include "plug-in/plug-in-data.h"
@@ -77,7 +78,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
   args = procedural_db_arguments (proc_rec);
 
   /* initialize the first argument  */
-  args[n_args].value.pdb_int = GIMP_RUN_INTERACTIVE;
+  g_value_set_int (&args[n_args].value, GIMP_RUN_INTERACTIVE);
   n_args++;
 
   switch (proc_rec->proc_type)
@@ -94,7 +95,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
 
           if (display)
             {
-              args[n_args].value.pdb_int = gimp_image_get_ID (display->image);
+              gimp_value_set_image (&args[n_args].value, display->image);
               n_args++;
 
               if (proc_rec->num_args > n_args &&
@@ -106,15 +107,14 @@ plug_in_run_cmd_callback (GtkAction     *action,
 
                   if (drawable)
                     {
-                      args[n_args].value.pdb_int =
-                        gimp_item_get_ID (GIMP_ITEM (drawable));
+                      gimp_value_set_item (&args[n_args].value,
+                                           GIMP_ITEM (drawable));
                       n_args++;
                     }
                   else
                     {
                       g_warning ("Uh-oh, no active drawable for the plug-in!");
-                      g_free (args);
-                      return;
+                      goto error;
                     }
                 }
             }
@@ -123,8 +123,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
 
     default:
       g_error ("Unknown procedure type.");
-      g_free (args);
-      return;
+      goto error;
     }
 
   /* run the plug-in procedure */
@@ -142,7 +141,8 @@ plug_in_run_cmd_callback (GtkAction     *action,
       gimp_set_last_plug_in (gimp, proc_def);
     }
 
-  g_free (args);
+ error:
+  procedural_db_destroy_args (args, proc_rec->num_args, TRUE);
 }
 
 void

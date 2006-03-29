@@ -96,9 +96,7 @@ message_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gchar *message;
 
-  message = (gchar *) args[0].value.pdb_pointer;
-  if (message == NULL || !g_utf8_validate (message, -1, NULL))
-    success = FALSE;
+  message = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -139,7 +137,7 @@ message_get_handler_invoker (ProcRecord   *proc_record,
   handler = gimp->message_handler;
 
   return_vals = procedural_db_return_values (proc_record, TRUE);
-  return_vals[1].value.pdb_int = handler;
+  g_value_set_enum (&return_vals[1].value, handler);
 
   return return_vals;
 }
@@ -169,9 +167,7 @@ message_set_handler_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gint32 handler;
 
-  handler = args[0].value.pdb_int;
-  if (handler < GIMP_MESSAGE_BOX || handler > GIMP_ERROR_CONSOLE)
-    success = FALSE;
+  handler = g_value_get_enum (&args[0].value);
 
   if (success)
     {

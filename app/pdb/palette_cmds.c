@@ -413,9 +413,7 @@ palette_new_invoker (ProcRecord   *proc_record,
   gchar *name;
   gchar *actual_name = NULL;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -435,7 +433,7 @@ palette_new_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = actual_name;
+    g_value_take_string (&return_vals[1].value, actual_name);
 
   return return_vals;
 }
@@ -467,9 +465,7 @@ palette_duplicate_invoker (ProcRecord   *proc_record,
   gchar *name;
   gchar *copy_name = NULL;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -494,7 +490,7 @@ palette_duplicate_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = copy_name;
+    g_value_take_string (&return_vals[1].value, copy_name);
 
   return return_vals;
 }
@@ -527,13 +523,8 @@ palette_rename_invoker (ProcRecord   *proc_record,
   gchar *new_name;
   gchar *actual_name = NULL;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  new_name = (gchar *) args[1].value.pdb_pointer;
-  if (new_name == NULL || !g_utf8_validate (new_name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  new_name = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -552,7 +543,7 @@ palette_rename_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = actual_name;
+    g_value_take_string (&return_vals[1].value, actual_name);
 
   return return_vals;
 }
@@ -582,9 +573,7 @@ palette_delete_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gchar *name;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -639,9 +628,7 @@ palette_is_editable_invoker (ProcRecord   *proc_record,
   gchar *name;
   gboolean editable = FALSE;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -657,7 +644,7 @@ palette_is_editable_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = editable;
+    g_value_set_boolean (&return_vals[1].value, editable);
 
   return return_vals;
 }
@@ -689,9 +676,7 @@ palette_get_info_invoker (ProcRecord   *proc_record,
   gchar *name;
   gint32 num_colors = 0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -707,7 +692,7 @@ palette_get_info_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = num_colors;
+    g_value_set_int (&return_vals[1].value, num_colors);
 
   return return_vals;
 }
@@ -739,9 +724,7 @@ palette_get_columns_invoker (ProcRecord   *proc_record,
   gchar *name;
   gint32 num_columns = 0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -757,7 +740,7 @@ palette_get_columns_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = num_columns;
+    g_value_set_int (&return_vals[1].value, num_columns);
 
   return return_vals;
 }
@@ -788,13 +771,8 @@ palette_set_columns_invoker (ProcRecord   *proc_record,
   gchar *name;
   gint32 columns;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  columns = args[1].value.pdb_int;
-  if (columns < 0 || columns > 64)
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  columns = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -839,15 +817,9 @@ palette_add_entry_invoker (ProcRecord   *proc_record,
   GimpRGB color;
   gint32 entry_num = 0;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  entry_name = (gchar *) args[1].value.pdb_pointer;
-  if (entry_name && !g_utf8_validate (entry_name, -1, NULL))
-    success = FALSE;
-
-  color = args[2].value.pdb_color;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  entry_name = (gchar *) g_value_get_string (&args[1].value);
+  gimp_value_get_rgb (&args[2].value, &color);
 
   if (success)
     {
@@ -868,7 +840,7 @@ palette_add_entry_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_int = entry_num;
+    g_value_set_int (&return_vals[1].value, entry_num);
 
   return return_vals;
 }
@@ -899,11 +871,8 @@ palette_delete_entry_invoker (ProcRecord   *proc_record,
   gchar *name;
   gint32 entry_num;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  entry_num = args[1].value.pdb_int;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  entry_num = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -956,11 +925,8 @@ palette_entry_get_color_invoker (ProcRecord   *proc_record,
   gint32 entry_num;
   GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  entry_num = args[1].value.pdb_int;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  entry_num = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -985,7 +951,7 @@ palette_entry_get_color_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_color = color;
+    gimp_value_set_rgb (&return_vals[1].value, &color);
 
   return return_vals;
 }
@@ -1017,13 +983,9 @@ palette_entry_set_color_invoker (ProcRecord   *proc_record,
   gint32 entry_num;
   GimpRGB color;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  entry_num = args[1].value.pdb_int;
-
-  color = args[2].value.pdb_color;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  entry_num = g_value_get_int (&args[1].value);
+  gimp_value_get_rgb (&args[2].value, &color);
 
   if (success)
     {
@@ -1078,11 +1040,8 @@ palette_entry_get_name_invoker (ProcRecord   *proc_record,
   gint32 entry_num;
   gchar *entry_name = NULL;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  entry_num = args[1].value.pdb_int;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  entry_num = g_value_get_int (&args[1].value);
 
   if (success)
     {
@@ -1107,7 +1066,7 @@ palette_entry_get_name_invoker (ProcRecord   *proc_record,
   return_vals = procedural_db_return_values (proc_record, success);
 
   if (success)
-    return_vals[1].value.pdb_pointer = entry_name;
+    g_value_take_string (&return_vals[1].value, entry_name);
 
   return return_vals;
 }
@@ -1139,15 +1098,9 @@ palette_entry_set_name_invoker (ProcRecord   *proc_record,
   gint32 entry_num;
   gchar *entry_name;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  entry_num = args[1].value.pdb_int;
-
-  entry_name = (gchar *) args[2].value.pdb_pointer;
-  if (entry_name && !g_utf8_validate (entry_name, -1, NULL))
-    success = FALSE;
+  name = (gchar *) g_value_get_string (&args[0].value);
+  entry_num = g_value_get_int (&args[1].value);
+  entry_name = (gchar *) g_value_get_string (&args[2].value);
 
   if (success)
     {

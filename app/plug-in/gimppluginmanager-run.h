@@ -29,7 +29,7 @@ Argument * plug_in_run    (Gimp         *gimp,
                            GimpProgress *progress,
                            ProcRecord   *proc_rec,
                            Argument     *args,
-                           gint          argc,
+                           gint          n_args,
                            gboolean      synchronous,
                            gboolean      destroy_return_vals,
                            gint          display_ID);

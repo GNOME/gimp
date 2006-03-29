@@ -118,17 +118,9 @@ fonts_popup_invoker (ProcRecord   *proc_record,
   gchar *popup_title;
   gchar *initial_font;
 
-  font_callback = (gchar *) args[0].value.pdb_pointer;
-  if (font_callback == NULL || !g_utf8_validate (font_callback, -1, NULL))
-    success = FALSE;
-
-  popup_title = (gchar *) args[1].value.pdb_pointer;
-  if (popup_title == NULL || !g_utf8_validate (popup_title, -1, NULL))
-    success = FALSE;
-
-  initial_font = (gchar *) args[2].value.pdb_pointer;
-  if (initial_font && !g_utf8_validate (initial_font, -1, NULL))
-    success = FALSE;
+  font_callback = (gchar *) g_value_get_string (&args[0].value);
+  popup_title = (gchar *) g_value_get_string (&args[1].value);
+  initial_font = (gchar *) g_value_get_string (&args[2].value);
 
   if (success)
     {
@@ -168,9 +160,7 @@ fonts_close_popup_invoker (ProcRecord   *proc_record,
   gboolean success = TRUE;
   gchar *font_callback;
 
-  font_callback = (gchar *) args[0].value.pdb_pointer;
-  if (font_callback == NULL || !g_utf8_validate (font_callback, -1, NULL))
-    success = FALSE;
+  font_callback = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -209,13 +199,8 @@ fonts_set_popup_invoker (ProcRecord   *proc_record,
   gchar *font_callback;
   gchar *font_name;
 
-  font_callback = (gchar *) args[0].value.pdb_pointer;
-  if (font_callback == NULL || !g_utf8_validate (font_callback, -1, NULL))
-    success = FALSE;
-
-  font_name = (gchar *) args[1].value.pdb_pointer;
-  if (font_name == NULL || !g_utf8_validate (font_name, -1, NULL))
-    success = FALSE;
+  font_callback = (gchar *) g_value_get_string (&args[0].value);
+  font_name = (gchar *) g_value_get_string (&args[1].value);
 
   if (success)
     {
