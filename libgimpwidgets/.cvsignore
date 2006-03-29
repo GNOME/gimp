@@ -8,4 +8,5 @@ _libs
 *.la
 gimpwidgetsmarshal.h
 gimpwidgetsmarshal.c
+gimp-wilber-pixbufs.h
 test-preview-area

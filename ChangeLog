@@ -1,5 +1,32 @@
 2006-03-29  Sven Neumann  <sven@gimp.org>
 
+	* desktop/Makefile.am
+	* desktop/gimp.png: removed.
+
+	* desktop/16x16/gimp.png
+	* desktop/22x22/gimp.png
+	* desktop/24x24/gimp.png
+	* desktop/32x32/gimp.png
+	* desktop/48x48/gimp.png
+	* desktop/64x64/gimp.png
+	* desktop/scalable/gimp.svg: new application icons in different
+	sizes, contributed by Jakub Steiner.
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-wilber-32.png
+	* themes/Default/images/stock-wilber-48.png: removed.
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/wilber-16.png
+	* libgimpwidgets/wilber-32.png
+	* libgimpwidgets/wilber-48.png
+	* libgimpwidgets/wilber-64.png: new window icons, identical to the
+	new application icons.
+
+	* libgimpwidgets/gimpwidgets-private.c: use the new window icons.
+
+2006-03-29  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/plug-in-message.c
 	* app/plug-in/plug-in-params.c
 	* app/plug-in/plug-in.c: string review.

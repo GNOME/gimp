@@ -14,22 +14,7 @@ CORE_VARIABLES = \
 	stock_question_64 $(srcdir)/stock-question-64.png
 
 
-## Wilber icons for the window managaer, compiled in
-
-WILBER_IMAGES = \
-	stock-wilber-16.png	\
-	stock-wilber-32.png	\
-	stock-wilber-48.png	\
-	stock-wilber-64.png
-
-WILBER_VARIABLES = \
-	stock_wilber_16  $(srcdir)/stock-wilber-16.png	\
-	stock_wilber_32  $(srcdir)/stock-wilber-32.png	\
-	stock_wilber_48  $(srcdir)/stock-wilber-48.png	\
-	stock_wilber_64  $(srcdir)/stock-wilber-64.png
-
-
-## Below are compiled in stock icons 
+## Compiled in stock icons 
 
 STOCK_MENU_IMAGES = \
 	stock-cap-butt-16.png				\
