@@ -484,8 +484,8 @@ file_load_invoker (ProcRecord   *proc_record,
   gchar            *uri;
   gint              i;
 
-  uri = file_utils_filename_to_uri (gimp->load_procs, args[1].value.pdb_pointer,
-                                    NULL);
+  uri = file_utils_filename_to_uri (gimp->load_procs,
+                                    args[1].value.pdb_pointer, NULL);
 
   if (! uri)
     return procedural_db_return_values (proc_record, FALSE);
@@ -559,7 +559,8 @@ file_load_layer_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      gchar *uri = file_utils_filename_to_uri (gimp->load_procs, filename, NULL);
+      gchar *uri = file_utils_filename_to_uri (gimp->load_procs,
+                                               filename, NULL);
 
       if (uri)
         {
@@ -709,8 +710,8 @@ file_save_invoker (ProcRecord   *proc_record,
   gchar            *uri;
   gint              i;
 
-  uri = file_utils_filename_to_uri (gimp->load_procs, args[1].value.pdb_pointer,
-                                    NULL);
+  uri = file_utils_filename_to_uri (gimp->load_procs,
+                                    args[3].value.pdb_pointer, NULL);
 
   if (! uri)
     return procedural_db_return_values (proc_record, FALSE);

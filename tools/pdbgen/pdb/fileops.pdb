@@ -58,8 +58,8 @@ HELP
   gchar            *uri;
   gint              i;
 
-  uri = file_utils_filename_to_uri (gimp->load_procs, args[1].value.pdb_pointer,
-                                    NULL);
+  uri = file_utils_filename_to_uri (gimp->load_procs,
+                                    args[1].value.pdb_pointer, NULL);
 
   if (! uri)
     return procedural_db_return_values (proc_record, FALSE);
@@ -122,7 +122,8 @@ HELP
         headers => [ qw("file/file-open.h") ],
 	code    => <<'CODE'
 {
-  gchar *uri = file_utils_filename_to_uri (gimp->load_procs, filename, NULL);
+  gchar *uri = file_utils_filename_to_uri (gimp->load_procs,
+                                           filename, NULL);
 
   if (uri)
     {
@@ -182,8 +183,8 @@ HELP
   gchar            *uri;
   gint              i;
 
-  uri = file_utils_filename_to_uri (gimp->load_procs, args[1].value.pdb_pointer,
-                                    NULL);
+  uri = file_utils_filename_to_uri (gimp->load_procs,
+                                    args[3].value.pdb_pointer, NULL);
 
   if (! uri)
     return procedural_db_return_values (proc_record, FALSE);
