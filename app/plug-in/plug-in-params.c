@@ -143,7 +143,7 @@ plug_in_params_to_args (GPParam  *params,
 	  args[i].value.pdb_color = params[i].data.d_color;
 	  break;
 	case GIMP_PDB_REGION:
-	  g_message ("the \"region\" arg type is not currently supported");
+	  g_message ("the \"region\" argument type is not supported");
 	  break;
 	case GIMP_PDB_DISPLAY:
 	  args[i].value.pdb_int = params[i].data.d_display;
@@ -295,7 +295,7 @@ plug_in_args_to_params (Argument *args,
 	  params[i].data.d_color = args[i].value.pdb_color;
 	  break;
 	case GIMP_PDB_REGION:
-	  g_message ("the \"region\" arg type is not currently supported");
+	  g_message ("the \"region\" argument type is not supported");
 	  break;
 	case GIMP_PDB_DISPLAY:
 	  params[i].data.d_display = args[i].value.pdb_int;
@@ -409,7 +409,7 @@ plug_in_params_destroy (GPParam  *params,
             case GIMP_PDB_COLOR:
               break;
             case GIMP_PDB_REGION:
-              g_message ("the \"region\" arg type is not currently supported");
+              g_message ("the \"region\" argument type is not supported");
               break;
             case GIMP_PDB_DISPLAY:
             case GIMP_PDB_IMAGE:
@@ -511,7 +511,7 @@ plug_in_proc_args_check (const gchar *plug_in_name,
                        "Plug-In \"%s\"\n(%s)\n\n"
                        "attempted to install %s procedure \"%s\" "
                        "which does not take the standard %s Plug-In "
-                       "args.\n"
+                       "arguments.\n"
                        "(INT32)",
                        gimp_filename_to_utf8 (plug_in_name),
                        gimp_filename_to_utf8 (plug_in_prog),
@@ -530,7 +530,7 @@ plug_in_proc_args_check (const gchar *plug_in_name,
                        "Plug-In \"%s\"\n(%s)\n\n"
                        "attempted to install <Load> procedure \"%s\" "
                        "which does not take the standard <Load> Plug-In "
-                       "args.\n"
+                       "arguments.\n"
                        "(INT32, STRING, STRING)",
                        gimp_filename_to_utf8 (plug_in_name),
                        gimp_filename_to_utf8 (plug_in_prog),
@@ -551,7 +551,7 @@ plug_in_proc_args_check (const gchar *plug_in_name,
                        "Plug-In \"%s\"\n(%s)\n\n"
                        "attempted to install <Save> procedure \"%s\" "
                        "which does not take the standard <Save> Plug-In "
-                       "args.\n"
+                       "arguments.\n"
                        "(INT32, IMAGE, DRAWABLE, STRING, STRING)",
                        gimp_filename_to_utf8 (plug_in_name),
                        gimp_filename_to_utf8 (plug_in_prog),
@@ -573,7 +573,7 @@ plug_in_proc_args_check (const gchar *plug_in_name,
                        "Plug-In \"%s\"\n(%s)\n\n"
                        "attempted to install %s procedure \"%s\" "
                        "which does not take the standard %s Plug-In "
-                       "args.\n"
+                       "arguments.\n"
                        "(INT32)",
                        gimp_filename_to_utf8 (plug_in_name),
                        gimp_filename_to_utf8 (plug_in_prog),

@@ -363,7 +363,7 @@ plug_in_open (PlugIn *plug_in)
    */
   if ((pipe (my_read) == -1) || (pipe (my_write) == -1))
     {
-      g_message ("Unable to run Plug-In \"%s\"\n(%s)\n\npipe() failed: %s",
+      g_message ("Unable to run plug-in \"%s\"\n(%s)\n\npipe() failed: %s",
                  gimp_filename_to_utf8 (plug_in->name),
 		 gimp_filename_to_utf8 (plug_in->prog),
                  g_strerror (errno));
@@ -473,7 +473,7 @@ plug_in_open (PlugIn *plug_in)
                        &plug_in->pid,
                        &error))
     {
-      g_message ("Unable to run Plug-In \"%s\"\n(%s)\n\n%s",
+      g_message ("Unable to run plug-in \"%s\"\n(%s)\n\n%s",
                  gimp_filename_to_utf8 (plug_in->name),
 		 gimp_filename_to_utf8 (plug_in->prog),
                  error->message);
@@ -750,8 +750,8 @@ plug_in_recv_message (GIOChannel   *channel,
     }
 
   if (! got_message)
-    g_message (_("Plug-In crashed: \"%s\"\n(%s)\n\n"
-		 "The dying Plug-In may have messed up GIMP's internal state. "
+    g_message (_("Plug-in crashed: \"%s\"\n(%s)\n\n"
+		 "The dying plug-in may have messed up GIMP's internal state. "
 		 "You may want to save your images and restart GIMP "
 		 "to be on the safe side."),
 	       gimp_filename_to_utf8 (plug_in->name),

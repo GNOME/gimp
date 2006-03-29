@@ -94,7 +94,7 @@ plug_in_handle_message (PlugIn          *plug_in,
 
     case GP_CONFIG:
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
-		 "sent a CONFIG message (should not happen)",
+		 "sent a CONFIG message.  This should not happen.",
                  gimp_filename_to_utf8 (plug_in->name),
 		 gimp_filename_to_utf8 (plug_in->prog));
       plug_in_close (plug_in, TRUE);
@@ -106,7 +106,7 @@ plug_in_handle_message (PlugIn          *plug_in,
 
     case GP_TILE_ACK:
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
-		 "sent a TILE_ACK message (should not happen)",
+		 "sent a TILE_ACK message.  This should not happen.",
                  gimp_filename_to_utf8 (plug_in->name),
 		 gimp_filename_to_utf8 (plug_in->prog));
       plug_in_close (plug_in, TRUE);
@@ -114,7 +114,7 @@ plug_in_handle_message (PlugIn          *plug_in,
 
     case GP_TILE_DATA:
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
-		 "sent a TILE_DATA message (should not happen)",
+		 "sent a TILE_DATA message.  This should not happen.",
                  gimp_filename_to_utf8 (plug_in->name),
 		 gimp_filename_to_utf8 (plug_in->prog));
       plug_in_close (plug_in, TRUE);
@@ -130,7 +130,7 @@ plug_in_handle_message (PlugIn          *plug_in,
 
     case GP_TEMP_PROC_RUN:
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
-		 "sent a TEMP_PROC_RUN message (should not happen)",
+		 "sent a TEMP_PROC_RUN message.  This should not happen.",
                  gimp_filename_to_utf8 (plug_in->name),
 		 gimp_filename_to_utf8 (plug_in->prog));
       plug_in_close (plug_in, TRUE);
@@ -562,7 +562,7 @@ plug_in_handle_temp_proc_return (PlugIn       *plug_in,
     {
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
 		 "sent a TEMP_PROC_RETURN message while not running "
-                 "a temp proc (should not happen)",
+                 "a temporary procedure.  This should not happen.",
                  gimp_filename_to_utf8 (plug_in->name),
 		 gimp_filename_to_utf8 (plug_in->prog));
       plug_in_close (plug_in, TRUE);
@@ -829,7 +829,7 @@ plug_in_handle_extension_ack (PlugIn *plug_in)
     {
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
 		 "sent an EXTENSION_ACK message while not being started "
-                 "as extension (should not happen)",
+                 "as an extension.  This should not happen.",
                  gimp_filename_to_utf8 (plug_in->name),
 		 gimp_filename_to_utf8 (plug_in->prog));
       plug_in_close (plug_in, TRUE);
@@ -846,8 +846,8 @@ plug_in_handle_has_init (PlugIn *plug_in)
   else
     {
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
-		 "sent an HAS_INIT message while not in query() "
-                 "(should not happen)",
+		 "sent an HAS_INIT message while not in query().  "
+                 "This should not happen.",
                  gimp_filename_to_utf8 (plug_in->name),
 		 gimp_filename_to_utf8 (plug_in->prog));
       plug_in_close (plug_in, TRUE);
