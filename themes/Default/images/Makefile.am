@@ -326,8 +326,7 @@ EXTRA_DIST = \
 
 noinst_DATA = \
 	gimp-core-pixbufs.h	\
-	gimp-stock-pixbufs.h	\
-	gimp-wilber-pixbufs.h
+	gimp-stock-pixbufs.h
 
 CLEANFILES = $(noinst_DATA) stock-icons.list
 
@@ -345,6 +344,3 @@ $(srcdir)/gimp-core-pixbufs.h: $(CORE_IMAGES) Makefile.am
 
 $(srcdir)/gimp-stock-pixbufs.h: stock-icons.list
 	$(GDK_PIXBUF_CSOURCE) --raw --build-list `cat stock-icons.list` > $(@F)
-
-$(srcdir)/gimp-wilber-pixbufs.h: $(WILBER_IMAGES) Makefile.am
-	$(GDK_PIXBUF_CSOURCE) --raw --build-list $(WILBER_VARIABLES) > $(@F)
