@@ -462,15 +462,33 @@ plug_in_param_defs_check (const gchar *plug_in_name,
                           guint32      n_return_vals,
                           GError     **error)
 {
-  return plug_in_proc_args_check (plug_in_name,
-                                  plug_in_prog,
-                                  procedure_name,
-                                  menu_path,
-                                  (ProcArg *) params,
-                                  n_args,
-                                  (ProcArg *) return_vals,
-                                  n_return_vals,
-                                  error);
+  ProcArg  *args;
+  ProcArg  *return_args;
+  gboolean  success;
+  gint      i;
+
+  args = g_new0 (ProcArg, n_args);
+  for (i = 0; i < n_args; i++)
+    args[i].arg_type = params[i].type;
+
+  return_args = g_new0 (ProcArg, n_return_vals);
+  for (i = 0; i < n_return_vals; i++)
+    return_args[i].arg_type = return_vals[i].type;
+
+  success = plug_in_proc_args_check (plug_in_name,
+                                     plug_in_prog,
+                                     procedure_name,
+                                     menu_path,
+                                     args,
+                                     n_args,
+                                     return_args,
+                                     n_return_vals,
+                                     error);
+
+  g_free (args);
+  g_free (return_args);
+
+  return success;
 }
 
 gboolean

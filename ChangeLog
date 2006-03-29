@@ -1,3 +1,10 @@
+2006-03-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in-params.c (plug_in_param_defs_check): can't
+	just cast the GPParamDefs to ProcArgs any more, their struct
+	layouts are different now. Convert them into temporary ProcArgs
+	before calling plug_in_proc_args_check()
+
 2006-03-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpparamspecs.[ch]: added GimpParamSpecEnum, which is
