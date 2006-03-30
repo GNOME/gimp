@@ -32,6 +32,8 @@
 #include <unistd.h>
 #endif
 
+#include <glib.h>
+
 #ifdef G_OS_WIN32
 #include <process.h>
 #endif
@@ -356,8 +358,7 @@ gimp_get_temp_filename (Gimp        *gimp,
   if (id == 0)
     pid = getpid ();
 
-  basename = g_strdup_printf ("gimp-temp-%d%d.%s",
-                              pid, id++, extension);
+  basename = g_strdup_printf ("gimp-temp-%d%d.%s", pid, id++, extension);
 
   path = gimp_config_path_expand (GIMP_BASE_CONFIG (gimp->config)->temp_path,
                                   TRUE, NULL);
