@@ -941,7 +941,9 @@ siox_foreground_extract (SioxState          *state,
         {
           gint i = 0;
 
-          for (pixels = 0, n = 0; pr != NULL; pr = pixel_regions_process (pr))
+          for (pixels = 0, n = 0;
+               pr != NULL;
+               pr = pixel_regions_process (pr), n++)
             {
               const guchar *src = srcPR.data;
               const guchar *map = mapPR.data;
@@ -976,7 +978,9 @@ siox_foreground_extract (SioxState          *state,
         {
           gint i = 0;
 
-          for (pixels = 0, n = 0; pr != NULL; pr = pixel_regions_process (pr))
+          for (pixels = 0, n = 0;
+               pr != NULL;
+               pr = pixel_regions_process (pr), n++)
             {
               const guchar *src = srcPR.data;
               const guchar *map = mapPR.data;
@@ -1012,7 +1016,9 @@ siox_foreground_extract (SioxState          *state,
           gint i = 0;
           gint j = 0;
 
-          for (pixels = 0, n = 0; pr != NULL; pr = pixel_regions_process (pr))
+          for (pixels = 0, n = 0;
+               pr != NULL;
+               pr = pixel_regions_process (pr), n++)
             {
               const guchar *src = srcPR.data;
               const guchar *map = mapPR.data;

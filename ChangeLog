@@ -1,3 +1,8 @@
+2006-03-30  Sven Neumann  <sven@gimp.org>
+
+	* app/base/siox.c (siox_foreground_extract): actually increment
+	the tile counter used to limit the number of progress updates.
+
 2006-03-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/procedural_db.c (procedural_db_free_entry): also
