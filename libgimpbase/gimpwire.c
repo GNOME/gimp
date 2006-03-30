@@ -124,9 +124,9 @@ gimp_wire_read (GIOChannel *channel,
                                                 &bytes,
                                                 &error);
             }
-          while (status == G_IO_STATUS_AGAIN);
+          while (G_UNLIKELY (status == G_IO_STATUS_AGAIN));
 
-          if (status != G_IO_STATUS_NORMAL)
+          if (G_UNLIKELY (status != G_IO_STATUS_NORMAL))
             {
               if (error)
                 {
@@ -144,7 +144,7 @@ gimp_wire_read (GIOChannel *channel,
               return FALSE;
             }
 
-          if (bytes == 0)
+          if (G_UNLIKELY (bytes == 0))
             {
               g_warning ("%s: wire_read(): unexpected EOF", g_get_prgname ());
               wire_error_val = TRUE;
@@ -192,9 +192,9 @@ gimp_wire_write (GIOChannel   *channel,
                                                  &bytes,
                                                  &error);
             }
-          while (status == G_IO_STATUS_AGAIN);
+          while (G_UNLIKELY (status == G_IO_STATUS_AGAIN));
 
-          if (status != G_IO_STATUS_NORMAL)
+          if (G_UNLIKELY (status != G_IO_STATUS_NORMAL))
             {
               if (error)
                 {
@@ -256,7 +256,7 @@ gimp_wire_read_msg (GIOChannel      *channel,
     return FALSE;
 
   handler = g_hash_table_lookup (wire_ht, &msg->type);
-  if (!handler)
+  if (! handler)
     g_error ("could not find handler for message: %d", msg->type);
 
   (* handler->read_func) (channel, msg, user_data);
@@ -275,7 +275,7 @@ gimp_wire_write_msg (GIOChannel      *channel,
     return !wire_error_val;
 
   handler = g_hash_table_lookup (wire_ht, &msg->type);
-  if (!handler)
+  if (! handler)
     g_error ("could not find handler for message: %d", msg->type);
 
   if (! _gimp_wire_write_int32 (channel, &msg->type, 1, user_data))
@@ -368,7 +368,6 @@ _gimp_wire_read_double (GIOChannel *channel,
   gint     i;
 #if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
   gint     j;
-  guint8   swap;
 #endif
 
   g_return_val_if_fail (count >= 0, FALSE);
@@ -383,8 +382,10 @@ _gimp_wire_read_double (GIOChannel *channel,
 #if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
       for (j = 0; j < 4; j++)
         {
-          swap = tmp[j];
-          tmp[j] = tmp[7 - j];
+          guint8 swap;
+
+          swap       = tmp[j];
+          tmp[j]     = tmp[7 - j];
           tmp[7 - j] = swap;
         }
 #endif
@@ -514,7 +515,6 @@ _gimp_wire_write_double (GIOChannel    *channel,
   gint     i;
 #if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
   gint     j;
-  guint8   swap;
 #endif
 
   g_return_val_if_fail (count >= 0, FALSE);
@@ -528,8 +528,10 @@ _gimp_wire_write_double (GIOChannel    *channel,
 #if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
       for (j = 0; j < 4; j++)
         {
-          swap = tmp[j];
-          tmp[j] = tmp[7 - j];
+          guint8 swap;
+
+          swap       = tmp[j];
+          tmp[j]     = tmp[7 - j];
           tmp[7 - j] = swap;
         }
 #endif

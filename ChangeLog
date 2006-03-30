@@ -1,5 +1,10 @@
 2006-03-30  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimpwire.c (gimp_wire_read, gimp_wire_write):
+	sprinkled a few G_UNLIKELY() macros to help the compiler.
+
+2006-03-30  Sven Neumann  <sven@gimp.org>
+
 	* app/pdb/procedural_db.c (procedural_db_free_entry): actually
 	free the memory allocated for the procedure entry.
 
