@@ -68,7 +68,19 @@ procedural_db_free_entry (gpointer key,
                           gpointer user_data)
 {
   if (value)
-    g_list_free (value);
+    {
+      GList *list;
+
+      for (list = value; list; list = g_list_next (list))
+        {
+          ProcRecord *procedure = list->data;
+
+          g_free (procedure->args);
+          g_free (procedure->values);
+        }
+
+      g_list_free (value);
+    }
 }
 
 void
@@ -669,9 +681,9 @@ procedural_db_destroy_args (Argument *args,
 }
 
 ProcRecord *
-procedural_db_init_proc (ProcRecord     *procedure,
-                         gint            n_arguments,
-                         gint            n_return_values)
+procedural_db_init_proc (ProcRecord *procedure,
+                         gint        n_arguments,
+                         gint        n_return_values)
 {
   g_return_val_if_fail (procedure != NULL, procedure);
   g_return_val_if_fail (procedure->args == NULL, procedure);
