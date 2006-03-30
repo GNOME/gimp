@@ -17,78 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub arg_info_proc {
-    my ($type, $long_type, $real_type) = @_;
-
-    $blurb = <<BLURB;
-Queries the procedural database for information on the specified procedure's
-$long_type.
-BLURB
-
-    $help = <<HELP;
-This procedure returns information on the specified procedure's $long_type. The
-$long_type type, name, and a description are retrieved.
-HELP
-
-    &std_pdb_misc;
-    $date = '1997';
-
-    @inargs = (
-	{ name  => 'procedure', type  => 'string',
-	  desc  => 'The procedure name' },
-	{ name => "${type}_num", type => 'int32',
-	  desc => "The $long_type number" }
-    );
-
-    @outargs = (
-	{ name => "${type}_type",
-	  type => 'enum GimpPDBArgType (no GIMP_PDB_END)',
-	  desc => "The type of $long_type: %%desc%%", void_ret => 1 },
-	{ name => "${type}_name", type => 'string',
-	  desc => "The name of the $long_type" },
-	{ name => "${type}_desc", type => 'string',
-	  desc => "A description of the $long_type" }
-    );
-
-   %invoke = (
-	code => <<CODE
-{
-  ProcRecord *proc;
-  gchar      *canonical;
-
-  canonical = gimp_canonicalize_identifier (procedure);
-
-  proc = procedural_db_lookup (gimp, canonical);
-
-  if (! proc)
-    {
-      const gchar *compat_name;
-
-      compat_name = g_hash_table_lookup (gimp->procedural_compat_ht, canonical);
-
-      if (compat_name)
-        proc = procedural_db_lookup (gimp, compat_name);
-    }
-
-  g_free (canonical);
-
-  if (proc && (${type}_num >= 0 && ${type}_num < proc->num_$real_type))
-    {
-      ProcArg *$type = \&proc->${real_type}\[${type}_num];
-
-      ${type}_type = ${type}->type;
-      ${type}_name = g_strdup (g_param_spec_get_name (${type}->pspec));
-      ${type}_desc = g_strdup (g_param_spec_get_blurb (${type}->pspec));
-    }
-  else
-    success = FALSE;
-}
-CODE
-   );
-}
-
-# The defs
-
 sub procedural_db_temp_name {
     $blurb = 'Generates a unique temporary PDB name.';
 
@@ -265,11 +193,137 @@ CODE
 }
 
 sub procedural_db_proc_arg {
-    &arg_info_proc('arg', 'argument', 'args');
+    $blurb = <<BLURB;
+Queries the procedural database for information on the specified procedure's
+argument.
+BLURB
+
+    $help = <<HELP;
+This procedure returns information on the specified procedure's argument. The
+argument type, name, and a description are retrieved.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+
+    @inargs = (
+	{ name => 'procedure', type  => 'string',
+	  desc => 'The procedure name' },
+	{ name => 'arg_num', type => 'int32',
+	  desc => 'The argument number' }
+    );
+
+    @outargs = (
+	{ name => 'arg_type', type => 'enum GimpPDBArgType (no GIMP_PDB_END)',
+	  desc => "The type of argument: %%desc%%", void_ret => 1 },
+	{ name => 'arg_name', type => 'string',
+	  desc => 'The name of the argument' },
+	{ name => 'arg_desc', type => 'string',
+	  desc => 'A description of the argument' }
+    );
+
+   %invoke = (
+	code => <<CODE
+{
+  ProcRecord *proc;
+  gchar      *canonical;
+
+  canonical = gimp_canonicalize_identifier (procedure);
+
+  proc = procedural_db_lookup (gimp, canonical);
+
+  if (! proc)
+    {
+      const gchar *compat_name;
+
+      compat_name = g_hash_table_lookup (gimp->procedural_compat_ht, canonical);
+
+      if (compat_name)
+        proc = procedural_db_lookup (gimp, compat_name);
+    }
+
+  g_free (canonical);
+
+  if (proc && (arg_num >= 0 && arg_num < proc->num_args))
+    {
+      ProcArg *arg = &proc->args[arg_num];
+
+      arg_type = arg->type;
+      arg_name = g_strdup (g_param_spec_get_name (arg->pspec));
+      arg_desc = g_strdup (g_param_spec_get_blurb (arg->pspec));
+    }
+  else
+    success = FALSE;
+}
+CODE
+   );
 }
 
 sub procedural_db_proc_val {
-    &arg_info_proc('val', 'return value', 'values');
+    $blurb = <<BLURB;
+Queries the procedural database for information on the specified procedure's
+return value.
+BLURB
+
+    $help = <<HELP;
+This procedure returns information on the specified procedure's return value.
+The return value type, name, and a description are retrieved.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+
+    @inargs = (
+	{ name => 'procedure', type  => 'string',
+	  desc => 'The procedure name' },
+	{ name => 'val_num', type => 'int32',
+	  desc => 'The return value number' }
+    );
+
+    @outargs = (
+	{ name => 'val_type', type => 'enum GimpPDBArgType (no GIMP_PDB_END)',
+	  desc => "The type of return value: %%desc%%", void_ret => 1 },
+	{ name => 'val_name', type => 'string',
+	  desc => 'The name of the return value' },
+	{ name => 'val_desc', type => 'string',
+	  desc => 'A description of the return value' }
+    );
+
+   %invoke = (
+	code => <<CODE
+{
+  ProcRecord *proc;
+  gchar      *canonical;
+
+  canonical = gimp_canonicalize_identifier (procedure);
+
+  proc = procedural_db_lookup (gimp, canonical);
+
+  if (! proc)
+    {
+      const gchar *compat_name;
+
+      compat_name = g_hash_table_lookup (gimp->procedural_compat_ht, canonical);
+
+      if (compat_name)
+        proc = procedural_db_lookup (gimp, compat_name);
+    }
+
+  g_free (canonical);
+
+  if (proc && (val_num >= 0 && val_num < proc->num_values))
+    {
+      ProcArg *val = &proc->values[val_num];
+
+      val_type = val->type;
+      val_name = g_strdup (g_param_spec_get_name (val->pspec));
+      val_desc = g_strdup (g_param_spec_get_blurb (val->pspec));
+    }
+  else
+    success = FALSE;
+}
+CODE
+   );
 }
 
 sub procedural_db_get_data {
