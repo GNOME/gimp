@@ -314,16 +314,14 @@ gimp_pdb_dialog_run_callback (GimpPdbDialog *dialog,
           return_vals = klass->run_callback (dialog, object, closing,
                                              &n_return_vals);
 
-          if (! return_vals ||
-              g_value_get_enum (&return_vals[0].value) != GIMP_PDB_SUCCESS)
+          if (g_value_get_enum (&return_vals[0].value) != GIMP_PDB_SUCCESS)
             {
               g_message (_("Unable to run %s callback. "
                            "The corresponding plug-in may have crashed."),
                          g_type_name (G_TYPE_FROM_INSTANCE (dialog)));
             }
 
-          if (return_vals)
-            procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
+          procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
         }
 
       dialog->callback_busy = FALSE;

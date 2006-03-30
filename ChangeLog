@@ -1,5 +1,20 @@
 2006-03-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/procedural_db.c (procedural_db_execute_proc): don't
+	memset(0) the array of return values if the procedure didn't
+	succeed. GValues don't like to be treated like that and I don't
+	understand what the memsetting is good for. It just looks like a
+	very bad hack.
+
+	* app/file/file-open.c: additionally, don't access return_vals[>0]
+	unless the procedure returned successfully.
+
+	* app/core/gimppdbprogress.c
+	* app/widgets/gimppdbdialog.c: procedural_db_run_proc() always
+	returns non-NULL, no need to check for it.
+
+2006-03-30  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/procedural_db.pdb: got rid of one more (the
 	last?) perl utility function.
 

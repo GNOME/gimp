@@ -342,13 +342,6 @@ procedural_db_execute_proc (Gimp         *gimp,
       return return_vals;
     }
 
-  if (g_value_get_enum (&return_vals[0].value) != GIMP_PDB_SUCCESS      &&
-      g_value_get_enum (&return_vals[0].value) != GIMP_PDB_PASS_THROUGH &&
-      procedure->num_values > 0)
-    {
-      memset (&return_vals[1], 0, sizeof (Argument) * procedure->num_values);
-    }
-
   return return_vals;
 }
 

@@ -89,7 +89,7 @@ file_open_image (Gimp               *gimp,
   Argument         *return_vals;
   gint              n_return_vals;
   gchar            *filename;
-  GimpImage        *image;
+  GimpImage        *image = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -151,20 +151,17 @@ file_open_image (Gimp               *gimp,
   g_free (filename);
 
   *status = g_value_get_enum (&return_vals[0].value);
-  image   = gimp_value_get_image (&return_vals[1].value, gimp);
-
-  procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
 
   if (*status == GIMP_PDB_SUCCESS)
     {
+      image = gimp_value_get_image (&return_vals[1].value, gimp);
+
       if (image)
         {
           file_open_sanitize_image (image);
 
           if (mime_type)
             *mime_type = file_proc->mime_type;
-
-          return image;
         }
       else
         {
@@ -180,7 +177,9 @@ file_open_image (Gimp               *gimp,
                    _("Plug-In could not open image"));
     }
 
-  return NULL;
+  procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
+
+  return image;
 }
 
 /*  Attempts to load a thumbnail by using a registered thumbnail loader.  */
@@ -220,7 +219,7 @@ file_open_thumbnail (Gimp          *gimp,
       Argument          *return_vals;
       gint               n_return_vals;
       gchar             *filename;
-      GimpImage         *image;
+      GimpImage         *image = NULL;
 
       filename = file_utils_filename_from_uri (uri);
 
@@ -237,27 +236,31 @@ file_open_thumbnail (Gimp          *gimp,
       g_free (filename);
 
       status = g_value_get_enum (&return_vals[0].value);
-      image  = gimp_value_get_image (&return_vals[1].value, gimp);
 
-      if (proc->num_values >= 3)
+      if (status == GIMP_PDB_SUCCESS)
         {
-          *image_width  = MAX (0, g_value_get_int (&return_vals[2].value));
-          *image_height = MAX (0, g_value_get_int (&return_vals[3].value));
+          image = gimp_value_get_image (&return_vals[1].value, gimp);
+
+          if (n_return_vals >= 3)
+            {
+              *image_width  = MAX (0, g_value_get_int (&return_vals[2].value));
+              *image_height = MAX (0, g_value_get_int (&return_vals[3].value));
+            }
+
+          if (image)
+            {
+              file_open_sanitize_image (image);
+
+              *mime_type = file_proc->mime_type;
+
+              g_printerr ("opened thumbnail at %d x %d\n",
+                          image->width, image->height);
+            }
         }
 
       procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
 
-      if (status == GIMP_PDB_SUCCESS && image != NULL)
-        {
-          file_open_sanitize_image (image);
-
-          *mime_type = file_proc->mime_type;
-
-          g_printerr ("opened thumbnail at %d x %d\n",
-                      image->width, image->height);
-
-          return image;
-        }
+      return image;
     }
 
   return NULL;
@@ -294,13 +297,13 @@ file_open_with_proc_and_display (Gimp               *gimp,
   g_return_val_if_fail (status != NULL, NULL);
 
   image = file_open_image (gimp, context, progress,
-                            uri,
-                            entered_filename,
-                            file_proc,
-                            GIMP_RUN_INTERACTIVE,
-                            status,
-                            &mime_type,
-                            error);
+                           uri,
+                           entered_filename,
+                           file_proc,
+                           GIMP_RUN_INTERACTIVE,
+                           status,
+                           &mime_type,
+                           error);
 
   if (image)
     {

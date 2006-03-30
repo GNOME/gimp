@@ -259,8 +259,7 @@ gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
                                             GIMP_PDB_FLOAT,  value,
                                             GIMP_PDB_END);
 
-      if (! return_vals ||
-          g_value_get_enum (&return_vals[0].value) != GIMP_PDB_SUCCESS)
+      if (g_value_get_enum (&return_vals[0].value) != GIMP_PDB_SUCCESS)
         {
           g_message (_("Unable to run %s callback. "
                        "The corresponding plug-in may have crashed."),
