@@ -1,3 +1,8 @@
+2006-03-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/pdb/procedural_db.c (procedural_db_free_entry): also
+	unref the ProcRecord's GParamSpecs.
+
 2006-03-30  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpparamspecs.c (gimp_param_parasite_validate): return
