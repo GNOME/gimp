@@ -81,7 +81,7 @@ HELP
     g_value_transform (&args[i].value, &new_args[i].value);
 
   for (i = 3; i < proc->num_args; i++)
-    if (proc->args[i].arg_type == GIMP_PDB_STRING)
+    if (proc->args[i].type == GIMP_PDB_STRING)
       g_value_set_string (&new_args[i].value, "");
 
   return_vals = procedural_db_execute (gimp, context, progress,
@@ -210,7 +210,7 @@ HELP
     g_value_transform (&args[i].value, &new_args[i].value);
 
   for (i = 5; i < proc->num_args; i++)
-    if (proc->args[i].arg_type == GIMP_PDB_STRING)
+    if (proc->args[i].type == GIMP_PDB_STRING)
       g_value_set_string (&new_args[i].value, "");
 
   return_vals = procedural_db_execute (gimp, context, progress,
@@ -514,12 +514,12 @@ HELP
 
   proc = procedural_db_lookup (gimp, canonical);
 
-  if (proc && ((proc->num_args < 5) ||
-	       (proc->args[0].arg_type != GIMP_PDB_INT32) ||
-	       (proc->args[1].arg_type != GIMP_PDB_IMAGE) ||
-	       (proc->args[2].arg_type != GIMP_PDB_DRAWABLE) ||
-	       (proc->args[3].arg_type != GIMP_PDB_STRING) ||
-	       (proc->args[4].arg_type != GIMP_PDB_STRING)))
+  if (proc && ((proc->num_args < 5)                      ||
+	       (proc->args[0].type != GIMP_PDB_INT32)    ||
+	       (proc->args[1].type != GIMP_PDB_IMAGE)    ||
+	       (proc->args[2].type != GIMP_PDB_DRAWABLE) ||
+	       (proc->args[3].type != GIMP_PDB_STRING)   ||
+	       (proc->args[4].type != GIMP_PDB_STRING)))
     {
       g_message ("save handler \"%s\" does not take the standard save handler args",
 		 canonical);
@@ -636,12 +636,12 @@ fileops_register_magic_load_handler (Gimp        *gimp,
 
   proc = procedural_db_lookup (gimp, canonical);
 
-  if (proc && ((proc->num_args < 3) ||
-	       (proc->num_values < 1) ||
-	       (proc->args[0].arg_type != GIMP_PDB_INT32) ||
-	       (proc->args[1].arg_type != GIMP_PDB_STRING) ||
-	       (proc->args[2].arg_type != GIMP_PDB_STRING) ||
-	       (proc->values[0].arg_type != GIMP_PDB_IMAGE)))
+  if (proc && ((proc->num_args < 3)                    ||
+	       (proc->num_values < 1)                  ||
+	       (proc->args[0].type != GIMP_PDB_INT32)  ||
+	       (proc->args[1].type != GIMP_PDB_STRING) ||
+	       (proc->args[2].type != GIMP_PDB_STRING) ||
+	       (proc->values[0].type != GIMP_PDB_IMAGE)))
     {
       g_message ("load handler \"%s\" does not take the standard load handler args",
 		 canonical);

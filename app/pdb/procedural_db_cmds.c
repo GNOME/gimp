@@ -641,7 +641,7 @@ procedural_db_proc_arg_invoker (ProcRecord   *proc_record,
         {
           ProcArg *arg = &proc->args[arg_num];
 
-          arg_type = arg->arg_type;
+          arg_type = arg->type;
           arg_name = g_strdup (g_param_spec_get_name (arg->pspec));
           arg_desc = g_strdup (g_param_spec_get_blurb (arg->pspec));
         }
@@ -719,7 +719,7 @@ procedural_db_proc_val_invoker (ProcRecord   *proc_record,
         {
           ProcArg *val = &proc->values[val_num];
 
-          val_type = val->arg_type;
+          val_type = val->type;
           val_name = g_strdup (g_param_spec_get_name (val->pspec));
           val_desc = g_strdup (g_param_spec_get_blurb (val->pspec));
         }

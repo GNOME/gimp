@@ -266,7 +266,7 @@ gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
                        "The corresponding plug-in may have crashed."),
                      g_type_name (G_TYPE_FROM_INSTANCE (progress)));
         }
-      else if (n_return_vals >= 2 && return_vals[1].arg_type == GIMP_PDB_FLOAT)
+      else if (n_return_vals >= 2 && return_vals[1].type == GIMP_PDB_FLOAT)
         {
           retval = g_value_get_double (&return_vals[1].value);
         }

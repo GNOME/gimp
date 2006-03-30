@@ -61,7 +61,7 @@ plug_in_params_to_args (ProcArg  *proc_args,
     {
       GValue *value = &args[i].value;
 
-      if (i < n_proc_args && proc_args[i].arg_type == params[i].type)
+      if (i < n_proc_args && proc_args[i].type == params[i].type)
         {
           procedural_db_argument_init (&args[i], &proc_args[i]);
         }
@@ -70,7 +70,7 @@ plug_in_params_to_args (ProcArg  *proc_args,
           procedural_db_compat_arg_init (&args[i], params[i].type);
         }
 
-      switch (args[i].arg_type)
+      switch (args[i].type)
 	{
 	case GIMP_PDB_INT32:
           if (G_VALUE_HOLDS_INT (value))
@@ -258,9 +258,9 @@ plug_in_args_to_params (Argument *args,
     {
       GValue *value = &args[i].value;
 
-      params[i].type = args[i].arg_type;
+      params[i].type = args[i].type;
 
-      switch (args[i].arg_type)
+      switch (args[i].type)
 	{
 	case GIMP_PDB_INT32:
           if (G_VALUE_HOLDS_INT (value))
@@ -552,11 +552,11 @@ plug_in_param_defs_check (const gchar *plug_in_name,
 
   args = g_new0 (ProcArg, n_args);
   for (i = 0; i < n_args; i++)
-    args[i].arg_type = params[i].type;
+    args[i].type = params[i].type;
 
   return_args = g_new0 (ProcArg, n_return_vals);
   for (i = 0; i < n_return_vals; i++)
-    return_args[i].arg_type = return_vals[i].type;
+    return_args[i].type = return_vals[i].type;
 
   success = plug_in_proc_args_check (plug_in_name,
                                      plug_in_prog,
@@ -606,7 +606,7 @@ plug_in_proc_args_check (const gchar *plug_in_name,
       strcmp (prefix, "<Image>")   == 0)
     {
       if ((n_args < 1) ||
-          (args[0].arg_type != GIMP_PDB_INT32))
+          (args[0].type != GIMP_PDB_INT32))
         {
           g_set_error (error, 0, 0,
                        "Plug-In \"%s\"\n(%s)\n\n"
@@ -622,10 +622,10 @@ plug_in_proc_args_check (const gchar *plug_in_name,
     }
   else if (strcmp (prefix, "<Load>") == 0)
     {
-      if ((n_args < 3) ||
-          (args[0].arg_type != GIMP_PDB_INT32) ||
-          (args[1].arg_type != GIMP_PDB_STRING) ||
-          (args[2].arg_type != GIMP_PDB_STRING))
+      if ((n_args < 3)                      ||
+          (args[0].type != GIMP_PDB_INT32)  ||
+          (args[1].type != GIMP_PDB_STRING) ||
+          (args[2].type != GIMP_PDB_STRING))
         {
           g_set_error (error, 0, 0,
                        "Plug-In \"%s\"\n(%s)\n\n"
@@ -641,12 +641,12 @@ plug_in_proc_args_check (const gchar *plug_in_name,
     }
   else if (strcmp (prefix, "<Save>") == 0)
     {
-      if ((n_args < 5) ||
-          (args[0].arg_type != GIMP_PDB_INT32)    ||
-          (args[1].arg_type != GIMP_PDB_IMAGE)    ||
-          (args[2].arg_type != GIMP_PDB_DRAWABLE) ||
-          (args[3].arg_type != GIMP_PDB_STRING)   ||
-          (args[4].arg_type != GIMP_PDB_STRING))
+      if ((n_args < 5)                        ||
+          (args[0].type != GIMP_PDB_INT32)    ||
+          (args[1].type != GIMP_PDB_IMAGE)    ||
+          (args[2].type != GIMP_PDB_DRAWABLE) ||
+          (args[3].type != GIMP_PDB_STRING)   ||
+          (args[4].type != GIMP_PDB_STRING))
         {
           g_set_error (error, 0, 0,
                        "Plug-In \"%s\"\n(%s)\n\n"
@@ -668,7 +668,7 @@ plug_in_proc_args_check (const gchar *plug_in_name,
            strcmp (prefix, "<Buffers>")   == 0)
     {
       if ((n_args < 1) ||
-          (args[0].arg_type != GIMP_PDB_INT32))
+          (args[0].type != GIMP_PDB_INT32))
         {
           g_set_error (error, 0, 0,
                        "Plug-In \"%s\"\n(%s)\n\n"

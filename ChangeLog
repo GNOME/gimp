@@ -1,3 +1,21 @@
+2006-03-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/pdb/procedural_db.h (structs Argument and ProcArg): renamed
+	member "arg_type" to "type".
+
+	* app/pdb/procedural_db.c
+	* app/pdb/procedural-db-query.c
+	* app/actions/plug-in-commands.c
+	* app/core/gimppdbprogress.c
+	* app/plug-in/plug-in-params.c
+	* app/plug-in/plug-in-progress.c
+	* app/plug-in/plug-in-rc.c
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/procedural_db.pdb: changed accordingly.
+
+	* app/pdb/fileops_cmds.c
+	* app/pdb/procedural_db_cmds.c: regenerated.
+
 2006-03-30  Sven Neumann  <sven@gimp.org>
 
 	* app/base/siox.c (siox_foreground_extract): actually increment

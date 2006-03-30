@@ -203,12 +203,12 @@ plug_in_progress_install (PlugIn      *plug_in,
 
   proc_rec = procedural_db_lookup (plug_in->gimp, progress_callback);
 
-  if (! proc_rec                                    ||
-      proc_rec->num_args != 3                       ||
-      proc_rec->args[0].arg_type != GIMP_PDB_INT32  ||
-      proc_rec->args[1].arg_type != GIMP_PDB_STRING ||
-      proc_rec->args[2].arg_type != GIMP_PDB_FLOAT  ||
-      proc_rec->proc_type        != GIMP_TEMPORARY  ||
+  if (! proc_rec                                ||
+      proc_rec->num_args != 3                   ||
+      proc_rec->args[0].type != GIMP_PDB_INT32  ||
+      proc_rec->args[1].type != GIMP_PDB_STRING ||
+      proc_rec->args[2].type != GIMP_PDB_FLOAT  ||
+      proc_rec->proc_type    != GIMP_TEMPORARY  ||
       proc_rec->exec_method.temporary.plug_in != plug_in)
     {
       return FALSE;

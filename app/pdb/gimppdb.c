@@ -270,13 +270,10 @@ procedural_db_execute_proc (Gimp         *gimp,
 
   for (i = 0; i < MIN (n_args, procedure->num_args); i++)
     {
-      if (args[i].arg_type != procedure->args[i].arg_type)
+      if (args[i].type != procedure->args[i].type)
         {
-          gchar *type_name;
-          gchar *got;
-
-          type_name = procedural_db_type_name (procedure->args[i].arg_type);
-          got       = procedural_db_type_name (args[i].arg_type);
+          gchar *type_name = procedural_db_type_name (procedure->args[i].type);
+          gchar *got       = procedural_db_type_name (args[i].type);
 
           g_message (_("PDB calling error for procedure '%s':\n"
                        "Argument '%s' (#%d, type %s) type mismatch "
@@ -297,9 +294,7 @@ procedural_db_execute_proc (Gimp         *gimp,
                g_param_value_validate (procedure->args[i].pspec,
                                        &args[i].value))
         {
-          gchar *type_name;
-
-          type_name = procedural_db_type_name (procedure->args[i].arg_type);
+          gchar *type_name = procedural_db_type_name (procedure->args[i].type);
 
           g_message (_("PDB calling error for procedure '%s':\n"
                        "Argument '%s' (#%d, type %s) out of bounds."),
@@ -469,9 +464,9 @@ procedural_db_run_proc (Gimp         *gimp,
       if (arg_type == GIMP_PDB_END)
         break;
 
-      if (arg_type != params[i].arg_type)
+      if (arg_type != params[i].type)
         {
-          gchar *expected = procedural_db_type_name (proc->args[i].arg_type);
+          gchar *expected = procedural_db_type_name (proc->args[i].type);
           gchar *got      = procedural_db_type_name (arg_type);
 
           procedural_db_destroy_args (params, proc->num_args, FALSE);
@@ -631,7 +626,7 @@ procedural_db_destroy_args (Argument *args,
 
   for (i = n_args - 1; i >= 0; i--)
     {
-      switch (args[i].arg_type)
+      switch (args[i].type)
         {
         case GIMP_PDB_INT32:
         case GIMP_PDB_INT16:
@@ -720,8 +715,8 @@ procedural_db_add_argument (ProcRecord     *procedure,
   for (i = 0; i < procedure->num_args; i++)
     if (procedure->args[i].pspec == NULL)
       {
-        procedure->args[i].arg_type = arg_type;
-        procedure->args[i].pspec    = pspec;
+        procedure->args[i].type  = arg_type;
+        procedure->args[i].pspec = pspec;
 
         g_param_spec_ref (pspec);
         g_param_spec_sink (pspec);
@@ -746,8 +741,8 @@ procedural_db_add_return_value (ProcRecord     *procedure,
   for (i = 0; i < procedure->num_values; i++)
     if (procedure->values[i].pspec == NULL)
       {
-        procedure->values[i].arg_type = arg_type;
-        procedure->values[i].pspec    = pspec;
+        procedure->values[i].type  = arg_type;
+        procedure->values[i].pspec = pspec;
 
         g_param_spec_ref (pspec);
         g_param_spec_sink (pspec);
@@ -766,7 +761,7 @@ procedural_db_argument_init (Argument *arg,
   g_return_if_fail (arg != NULL);
   g_return_if_fail (proc_arg != NULL);
 
-  arg->arg_type = proc_arg->arg_type;
+  arg->type = proc_arg->type;
   g_value_init (&arg->value, proc_arg->pspec->value_type);
 }
 
@@ -934,7 +929,7 @@ procedural_db_compat_arg_init (Argument       *arg,
 {
   g_return_if_fail (arg != NULL);
 
-  arg->arg_type = arg_type;
+  arg->type = arg_type;
 
   switch (arg_type)
     {

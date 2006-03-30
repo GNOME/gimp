@@ -881,7 +881,7 @@ plug_in_rc_write (GSList       *plug_in_defs,
 		{
                   gimp_config_writer_open (writer, "proc-arg");
                   gimp_config_writer_printf (writer, "%d",
-                                             proc_def->db_info.args[i].arg_type);
+                                             proc_def->db_info.args[i].type);
 
 		  gimp_config_writer_string (writer,
                                              g_param_spec_get_name (proc_def->db_info.args[i].pspec));
@@ -895,7 +895,7 @@ plug_in_rc_write (GSList       *plug_in_defs,
 		{
 		  gimp_config_writer_open (writer, "proc-arg");
                   gimp_config_writer_printf (writer, "%d",
-                                             proc_def->db_info.values[i].arg_type);
+                                             proc_def->db_info.values[i].type);
 
 		  gimp_config_writer_string (writer,
                                              g_param_spec_get_name (proc_def->db_info.values[i].pspec));

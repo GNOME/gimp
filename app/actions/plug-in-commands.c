@@ -89,7 +89,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
     case GIMP_PLUGIN:
     case GIMP_TEMPORARY:
       if (proc_rec->num_args > n_args &&
-          proc_rec->args[n_args].arg_type == GIMP_PDB_IMAGE)
+          proc_rec->args[n_args].type == GIMP_PDB_IMAGE)
         {
           display = action_data_get_display (data);
 
@@ -99,7 +99,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
               n_args++;
 
               if (proc_rec->num_args > n_args &&
-                  proc_rec->args[n_args].arg_type == GIMP_PDB_DRAWABLE)
+                  proc_rec->args[n_args].type == GIMP_PDB_DRAWABLE)
                 {
                   GimpDrawable *drawable;
 
@@ -133,10 +133,10 @@ plug_in_run_cmd_callback (GtkAction     *action,
                display ? gimp_display_get_ID (display) : -1);
 
   /* remember only "standard" plug-ins */
-  if (proc_rec->proc_type == GIMP_PLUGIN           &&
-      proc_rec->num_args >= 3                      &&
-      proc_rec->args[1].arg_type == GIMP_PDB_IMAGE &&
-      proc_rec->args[2].arg_type == GIMP_PDB_DRAWABLE)
+  if (proc_rec->proc_type == GIMP_PLUGIN       &&
+      proc_rec->num_args >= 3                  &&
+      proc_rec->args[1].type == GIMP_PDB_IMAGE &&
+      proc_rec->args[2].type == GIMP_PDB_DRAWABLE)
     {
       gimp_set_last_plug_in (gimp, proc_def);
     }

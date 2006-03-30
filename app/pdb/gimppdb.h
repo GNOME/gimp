@@ -22,7 +22,7 @@
 
 struct _Argument
 {
-  GimpPDBArgType arg_type;
+  GimpPDBArgType type;
   GValue         value;
 };
 
@@ -67,7 +67,7 @@ struct _TempExec
 
 struct _ProcArg
 {
-  GimpPDBArgType  arg_type;    /*  Argument type (int, char, char *, etc)  */
+  GimpPDBArgType  type;    /*  Argument type (int, char, char *, etc)  */
   GParamSpec     *pspec;
 };
 
