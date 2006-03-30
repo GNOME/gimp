@@ -60,5 +60,8 @@ GParameter  * gimp_parameters_append_valist (GType         object_type,
 void          gimp_parameters_free          (GParameter   *params,
                                              gint          n_params);
 
+gchar       * gimp_get_temp_filename        (Gimp         *gimp,
+                                             const gchar  *extension);
+
 
 #endif /* __APP_GIMP_UTILS_H__ */

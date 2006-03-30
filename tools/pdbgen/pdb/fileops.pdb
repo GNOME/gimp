@@ -386,28 +386,9 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw(<process.h> "config/gimpbaseconfig.h") ],
+	headers => [ qw("core/gimp-utils.h") ],
 	code => <<'CODE'
-{
-  static gint  id = 0;
-  static gint  pid;
-  gchar       *filename;
-  gchar       *path;
-
-  if (id == 0)
-    pid = getpid ();
-
-  filename = g_strdup_printf ("gimp_temp_%d%d.%s",
-			      pid, id++, extension);
-
-  path = gimp_config_path_expand (GIMP_BASE_CONFIG (gimp->config)->temp_path,
-                                  TRUE, NULL);
-
-  name = g_build_filename (path, filename, NULL);
-
-  g_free (path);
-  g_free (filename);
-}
+  name = gimp_get_temp_filename (gimp, extension);
 CODE
     );
 }
@@ -671,7 +652,7 @@ done:
 CODE
 
 
-@headers = qw(<sys/types.h> <unistd.h> <gdk-pixbuf/gdk-pixbuf.h>
+@headers = qw(<gdk-pixbuf/gdk-pixbuf.h>
               "libgimpbase/gimpbase.h" "libgimpconfig/gimpconfig.h"
               "libgimpthumb/gimpthumb.h"
               "core/gimp.h" "core/gimpimagefile.h"

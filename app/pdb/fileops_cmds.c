@@ -21,20 +21,7 @@
 #include "config.h"
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
-
-#include <glib.h>
-
-#ifdef G_OS_WIN32
-#include <process.h>
-#endif
-
 #include <string.h>
-#include <sys/types.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 
 #include <glib-object.h>
 
@@ -46,7 +33,7 @@
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
-#include "config/gimpbaseconfig.h"
+#include "core/gimp-utils.h"
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagefile.h"
@@ -838,26 +825,7 @@ temp_name_invoker (ProcRecord   *proc_record,
   extension = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
-    {
-      static gint  id = 0;
-      static gint  pid;
-      gchar       *filename;
-      gchar       *path;
-
-      if (id == 0)
-        pid = getpid ();
-
-      filename = g_strdup_printf ("gimp_temp_%d%d.%s",
-                                  pid, id++, extension);
-
-      path = gimp_config_path_expand (GIMP_BASE_CONFIG (gimp->config)->temp_path,
-                                      TRUE, NULL);
-
-      name = g_build_filename (path, filename, NULL);
-
-      g_free (path);
-      g_free (filename);
-    }
+      name = gimp_get_temp_filename (gimp, extension);
 
   return_vals = procedural_db_return_values (proc_record, success);
 

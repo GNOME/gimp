@@ -1,3 +1,12 @@
+2006-03-30  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimp-utils.[ch]: added gimp_get_temp_filename().
+
+	* tools/pdbgen/pdb/fileops.pdb (temp_name): removed the
+	implementation here and call gimp_get_temp_filename() instead.
+
+	* app/pdb/fileops_cmds.c: regenerated.
+
 2006-03-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/procedural_db.h (structs Argument and ProcArg): renamed
