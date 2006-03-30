@@ -338,12 +338,11 @@ static gboolean
 gimp_param_image_id_validate (GParamSpec *pspec,
                               GValue     *value)
 {
-  GimpParamSpecImageID *ispec = GIMP_PARAM_SPEC_IMAGE_ID (pspec);
-  gint                  image_id;
+  GimpParamSpecImageID *ispec    = GIMP_PARAM_SPEC_IMAGE_ID (pspec);
+  gint                  image_id = value->data[0].v_int;
   GimpImage            *image;
 
-  image_id = value->data[0].v_int;
-  image    = gimp_image_get_by_ID (ispec->gimp, image_id);
+  image = gimp_image_get_by_ID (ispec->gimp, image_id);
 
   if (! GIMP_IS_IMAGE (image))
     {
@@ -359,11 +358,8 @@ gimp_param_image_id_values_cmp (GParamSpec   *pspec,
                                 const GValue *value1,
                                 const GValue *value2)
 {
-  gint image_id1;
-  gint image_id2;
-
-  image_id1 = value1->data[0].v_int;
-  image_id2 = value2->data[0].v_int;
+  gint image_id1 = value1->data[0].v_int;
+  gint image_id2 = value2->data[0].v_int;
 
   /*  try to return at least *something*, it's useless anyway...  */
 
@@ -485,12 +481,11 @@ static gboolean
 gimp_param_item_id_validate (GParamSpec *pspec,
                               GValue     *value)
 {
-  GimpParamSpecItemID *ispec = GIMP_PARAM_SPEC_ITEM_ID (pspec);
-  gint                 item_id;
+  GimpParamSpecItemID *ispec   = GIMP_PARAM_SPEC_ITEM_ID (pspec);
+  gint                 item_id = value->data[0].v_int;
   GimpItem            *item;
 
-  item_id = value->data[0].v_int;
-  item    = gimp_item_get_by_ID (ispec->gimp, item_id);
+  item = gimp_item_get_by_ID (ispec->gimp, item_id);
 
   if (! item || ! g_type_is_a (G_TYPE_FROM_INSTANCE (item), ispec->item_type))
     {
@@ -511,11 +506,8 @@ gimp_param_item_id_values_cmp (GParamSpec   *pspec,
                                const GValue *value1,
                                const GValue *value2)
 {
-  gint item_id1;
-  gint item_id2;
-
-  item_id1 = value1->data[0].v_int;
-  item_id2 = value2->data[0].v_int;
+  gint item_id1 = value1->data[0].v_int;
+  gint item_id2 = value2->data[0].v_int;
 
   /*  try to return at least *something*, it's useless anyway...  */
 
@@ -650,12 +642,11 @@ static gboolean
 gimp_param_display_id_validate (GParamSpec *pspec,
                                 GValue     *value)
 {
-  GimpParamSpecDisplayID *ispec = GIMP_PARAM_SPEC_DISPLAY_ID (pspec);
-  gint                    display_id;
+  GimpParamSpecDisplayID *ispec      = GIMP_PARAM_SPEC_DISPLAY_ID (pspec);
+  gint                    display_id = value->data[0].v_int;
   GimpObject             *display;
 
-  display_id = value->data[0].v_int;
-  display    = gimp_get_display_by_ID (ispec->gimp, display_id);
+  display = gimp_get_display_by_ID (ispec->gimp, display_id);
 
   if (! GIMP_IS_OBJECT (display))
     {
@@ -671,11 +662,8 @@ gimp_param_display_id_values_cmp (GParamSpec   *pspec,
                                   const GValue *value1,
                                   const GValue *value2)
 {
-  gint display_id1;
-  gint display_id2;
-
-  display_id1 = value1->data[0].v_int;
-  display_id2 = value2->data[0].v_int;
+  gint display_id1 = value1->data[0].v_int;
+  gint display_id2 = value2->data[0].v_int;
 
   /*  try to return at least *something*, it's useless anyway...  */
 
@@ -843,9 +831,7 @@ static gboolean
 gimp_param_parasite_validate (GParamSpec *pspec,
                               GValue     *value)
 {
-  GimpParasite *parasite;
-
-  parasite = value->data[0].v_pointer;
+  GimpParasite *parasite = value->data[0].v_pointer;
 
   if (! parasite)
     {
@@ -860,7 +846,7 @@ gimp_param_parasite_validate (GParamSpec *pspec,
       return TRUE;
     }
 
-  return TRUE;
+  return FALSE;
 }
 
 static gint
@@ -868,11 +854,8 @@ gimp_param_parasite_values_cmp (GParamSpec   *pspec,
                                 const GValue *value1,
                                 const GValue *value2)
 {
-  GimpParasite *parasite1;
-  GimpParasite *parasite2;
-
-  parasite1 = value1->data[0].v_pointer;
-  parasite2 = value2->data[0].v_pointer;
+  GimpParasite *parasite1 = value1->data[0].v_pointer;
+  GimpParasite *parasite2 = value2->data[0].v_pointer;
 
   /*  try to return at least *something*, it's useless anyway...  */
 

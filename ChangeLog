@@ -1,5 +1,10 @@
 2006-03-30  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpparamspecs.c (gimp_param_parasite_validate): return
+	FALSE in case of a valid parasite.
+
+2006-03-30  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimpwire.c (gimp_wire_read, gimp_wire_write):
 	sprinkled a few G_UNLIKELY() macros to help the compiler.
 
