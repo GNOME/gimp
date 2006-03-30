@@ -23,6 +23,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "paint-types.h"
 
 #include "base/pixel-region.h"
@@ -42,6 +44,24 @@
 
 #include "gimp-intl.h"
 
+
+enum
+{
+  PROP_0,
+  PROP_SRC_DRAWABLE,
+  PROP_SRC_X,
+  PROP_SRC_Y
+};
+
+
+static void   gimp_clone_set_property     (GObject          *object,
+                                           guint             property_id,
+                                           const GValue     *value,
+                                           GParamSpec       *pspec);
+static void   gimp_clone_get_property     (GObject          *object,
+                                           guint             property_id,
+                                           GValue           *value,
+                                           GParamSpec       *pspec);
 
 static void   gimp_clone_paint            (GimpPaintCore    *paint_core,
                                            GimpDrawable     *drawable,
@@ -92,12 +112,34 @@ gimp_clone_register (Gimp                      *gimp,
 static void
 gimp_clone_class_init (GimpCloneClass *klass)
 {
+  GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
   GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
   GimpBrushCoreClass *brush_core_class = GIMP_BRUSH_CORE_CLASS (klass);
+
+  object_class->set_property               = gimp_clone_set_property;
+  object_class->get_property               = gimp_clone_get_property;
 
   paint_core_class->paint                  = gimp_clone_paint;
 
   brush_core_class->handles_changing_brush = TRUE;
+
+  g_object_class_install_property (object_class, PROP_SRC_DRAWABLE,
+                                   g_param_spec_object ("src-drawable",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_DRAWABLE,
+                                                        GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_SRC_X,
+                                   g_param_spec_double ("src-x", NULL, NULL,
+                                                        0, GIMP_MAX_IMAGE_SIZE,
+                                                        0.0,
+                                                        GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_SRC_Y,
+                                   g_param_spec_double ("src-y", NULL, NULL,
+                                                        0, GIMP_MAX_IMAGE_SIZE,
+                                                        0.0,
+                                                        GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -109,12 +151,62 @@ gimp_clone_init (GimpClone *clone)
   clone->src_x        = 0.0;
   clone->src_y        = 0.0;
 
-  clone->orig_src_x   = 0;
-  clone->orig_src_y   = 0;
+  clone->orig_src_x   = 0.0;
+  clone->orig_src_y   = 0.0;
 
-  clone->offset_x     = 0;
-  clone->offset_y     = 0;
+  clone->offset_x     = 0.0;
+  clone->offset_y     = 0.0;
   clone->first_stroke = TRUE;
+}
+
+static void
+gimp_clone_set_property (GObject      *object,
+                         guint         property_id,
+                         const GValue *value,
+                         GParamSpec   *pspec)
+{
+  GimpClone *clone = GIMP_CLONE (object);
+
+  switch (property_id)
+    {
+    case PROP_SRC_DRAWABLE:
+      gimp_clone_set_src_drawable (clone, g_value_get_object (value));
+      break;
+    case PROP_SRC_X:
+      clone->src_x = g_value_get_double (value);
+      break;
+    case PROP_SRC_Y:
+      clone->src_y = g_value_get_double (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_clone_get_property (GObject    *object,
+                         guint       property_id,
+                         GValue     *value,
+                         GParamSpec *pspec)
+{
+  GimpClone *clone = GIMP_CLONE (object);
+
+  switch (property_id)
+    {
+    case PROP_SRC_DRAWABLE:
+      g_value_set_object (value, clone->src_drawable);
+      break;
+    case PROP_SRC_X:
+      g_value_set_int (value, clone->src_x);
+      break;
+    case PROP_SRC_Y:
+      g_value_set_int (value, clone->src_y);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -209,6 +301,9 @@ gimp_clone_paint (GimpPaintCore    *paint_core,
     default:
       break;
     }
+
+  g_object_notify (G_OBJECT (clone), "src-x");
+  g_object_notify (G_OBJECT (clone), "src-y");
 }
 
 static void
@@ -507,4 +602,6 @@ gimp_clone_set_src_drawable (GimpClone    *clone,
     g_signal_connect (clone->src_drawable, "removed",
                       G_CALLBACK (gimp_clone_src_drawable_removed),
                       clone);
+
+  g_object_notify (G_OBJECT (clone), "src-drawable");
 }

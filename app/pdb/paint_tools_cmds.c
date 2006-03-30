@@ -34,6 +34,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimppaintinfo.h"
 #include "paint/gimppaintcore-stroke.h"
+#include "paint/gimppaintcore.h"
 #include "paint/gimppaintoptions.h"
 
 static ProcRecord airbrush_proc;
@@ -592,12 +593,15 @@ paint_tools_stroke (Gimp             *gimp,
                     GimpPaintOptions *options,
                     GimpDrawable     *drawable,
                     gint              n_strokes,
-                    gdouble          *strokes)
+                    gdouble          *strokes,
+                    const gchar      *first_property_name,
+                    ...)
 {
   GimpPaintCore *core;
   GimpCoords    *coords;
   gboolean       retval;
   gint           i;
+  va_list        args;
 
   n_strokes /= 2;  /* #doubles -> #points */
 
@@ -609,7 +613,10 @@ paint_tools_stroke (Gimp             *gimp,
                                   FALSE);
   gimp_context_set_parent (GIMP_CONTEXT (options), context);
 
-  core = g_object_new (options->paint_info->paint_type, NULL);
+  va_start (args, first_property_name);
+  core = GIMP_PAINT_CORE (g_object_new_valist (options->paint_info->paint_type,
+                                               first_property_name, args));
+  va_end (args);
 
   coords = g_new (GimpCoords, n_strokes);
 
@@ -665,7 +672,7 @@ airbrush_invoker (ProcRecord   *proc_record,
                         NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes);
+                                        num_strokes, strokes, NULL);
         }
     }
 
@@ -715,7 +722,7 @@ airbrush_default_invoker (ProcRecord   *proc_record,
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes);
+                                        num_strokes, strokes, NULL);
         }
     }
 
@@ -776,19 +783,12 @@ clone_invoker (ProcRecord   *proc_record,
                         "clone-type", clone_type,
                         NULL);
 
-    #ifdef __GNUC__
-    #warning FIXME: re-enable clone src_drawable
-    #endif
-    #if 0
-      FIXME
-
-          core->src_drawable = src_drawable;
-          core->src_x        = srx_x;
-          core->src_y        = src_y;
-    #endif
-
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes);
+                                        num_strokes, strokes,
+                                        "src-drawable", src_drawable,
+                                        "src-x",        src_x,
+                                        "src-y",        src_y,
+                                        NULL);
         }
     }
 
@@ -838,7 +838,7 @@ clone_default_invoker (ProcRecord   *proc_record,
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes);
+                                        num_strokes, strokes, NULL);
         }
     }
 
@@ -897,7 +897,7 @@ convolve_invoker (ProcRecord   *proc_record,
                         NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes);
+                                        num_strokes, strokes, NULL);
         }
     }
 
@@ -947,7 +947,7 @@ convolve_default_invoker (ProcRecord   *proc_record,
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes);
+                                        num_strokes, strokes, NULL);
         }
     }
 
@@ -1009,7 +1009,7 @@ dodgeburn_invoker (ProcRecord   *proc_record,
                         NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes);
+                                        num_strokes, strokes, NULL);
         }
     }
 
@@ -1059,7 +1059,7 @@ dodgeburn_default_invoker (ProcRecord   *proc_record,
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes);
+                                        num_strokes, strokes, NULL);
         }
     }
 
@@ -1118,7 +1118,7 @@ eraser_invoker (ProcRecord   *proc_record,
                         NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes);
+                                        num_strokes, strokes, NULL);
         }
     }
 
@@ -1168,7 +1168,7 @@ eraser_default_invoker (ProcRecord   *proc_record,
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes);
+                                        num_strokes, strokes, NULL);
         }
     }
 
@@ -1232,7 +1232,7 @@ paintbrush_invoker (ProcRecord   *proc_record,
                         NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes);
+                                        num_strokes, strokes, NULL);
         }
     }
 
@@ -1282,7 +1282,7 @@ paintbrush_default_invoker (ProcRecord   *proc_record,
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes);
+                                        num_strokes, strokes, NULL);
         }
     }
 
@@ -1332,7 +1332,7 @@ pencil_invoker (ProcRecord   *proc_record,
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes);
+                                        num_strokes, strokes, NULL);
         }
     }
 
@@ -1388,7 +1388,7 @@ smudge_invoker (ProcRecord   *proc_record,
                         NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes);
+                                        num_strokes, strokes, NULL);
         }
     }
 
@@ -1438,7 +1438,7 @@ smudge_default_invoker (ProcRecord   *proc_record,
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
-                                        num_strokes, strokes);
+                                        num_strokes, strokes, NULL);
         }
     }
 

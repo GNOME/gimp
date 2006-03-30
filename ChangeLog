@@ -1,3 +1,13 @@
+2006-03-30  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimpclone.[ch]: use doubles for src coordinates. Added
+	properties for "src-drawable", "src-x" and "src-y".
+
+	* tools/pdbgen/pdb/paint_tools.pdb: resurrected cloning from
+	drawables over the PDB. This used to be broken for quite a while.
+
+	* app/pdb/paint_tools_cmds.c: regenerated.
+
 2006-03-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/procedural_db.c (procedural_db_execute_proc): don't

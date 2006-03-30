@@ -67,7 +67,7 @@ HELP
                     NULL);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes);
+                                    num_strokes, strokes, NULL);
     }
 }
 CODE
@@ -81,8 +81,8 @@ time-dependent.
 BLURB
 
     $help = <<'HELP';
-This tool simulates the use of an airbrush. It is similar to gimp_airbrush 
-except that the pressure is derived from the airbrush tools options box. 
+This tool simulates the use of an airbrush. It is similar to gimp_airbrush
+except that the pressure is derived from the airbrush tools options box.
 It the option has not been set the default for the option will be used.
 HELP
 
@@ -107,7 +107,7 @@ HELP
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes);
+                                    num_strokes, strokes, NULL);
     }
 }
 CODE
@@ -121,8 +121,8 @@ Clone from the source to the dest drawable using the current brush
 BLURB
 
     $help = <<'HELP';
-This tool clones (copies) from the source drawable starting at the specified 
-source coordinates to the dest drawable. If the "clone_type" argument is set 
+This tool clones (copies) from the source drawable starting at the specified
+source coordinates to the dest drawable. If the "clone_type" argument is set
 to PATTERN-CLONE, then the current pattern is used as the source and the
 "src_drawable" argument is ignored. Pattern cloning assumes a tileable
 pattern and mods the sum of the src coordinates and subsequent stroke offsets
@@ -165,19 +165,12 @@ HELP
                     "clone-type", clone_type,
                     NULL);
 
-#ifdef __GNUC__
-#warning FIXME: re-enable clone src_drawable
-#endif
-#if 0
-  FIXME
-
-      core->src_drawable = src_drawable;
-      core->src_x        = srx_x;
-      core->src_y        = src_y;
-#endif
-
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes);
+                                    num_strokes, strokes,
+                                    "src-drawable", src_drawable,
+                                    "src-x",        src_x,
+                                    "src-y",        src_y,
+                                    NULL);
     }
 }
 CODE
@@ -190,9 +183,9 @@ Clone from the source to the dest drawable using the current brush
 BLURB
 
     $help = <<'HELP';
-This tool clones (copies) from the source drawable starting at the specified 
+This tool clones (copies) from the source drawable starting at the specified
 source coordinates to the dest drawable. This function performs exactly
-the same as the gimp_clone function except that the tools arguments are 
+the same as the gimp_clone function except that the tools arguments are
 obtained from the clones option dialog. It this dialog has not been activated
 then the dialogs default values will be used.
 HELP
@@ -218,7 +211,7 @@ HELP
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes);
+                                    num_strokes, strokes, NULL);
     }
 }
 CODE
@@ -232,8 +225,8 @@ sub convolve_default {
     $help = <<'HELP';
 This tool convolves the specified drawable with either a sharpening or blurring
 kernel. This function performs exactly the same as the gimp_convolve
-function except that the tools arguments are obtained from the convolve 
-option dialog. It this dialog has not been activated then the dialogs 
+function except that the tools arguments are obtained from the convolve
+option dialog. It this dialog has not been activated then the dialogs
 default values will be used.
 HELP
 
@@ -258,7 +251,7 @@ HELP
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes);
+                                    num_strokes, strokes, NULL);
     }
 }
 CODE
@@ -305,7 +298,7 @@ HELP
                     NULL);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes);
+                                    num_strokes, strokes, NULL);
     }
 }
 CODE
@@ -317,7 +310,7 @@ sub eraser_default {
 
     $help = <<'HELP';
 This tool erases using the current brush mask. This function performs exactly
-the same as the gimp_eraser function except that the tools arguments are 
+the same as the gimp_eraser function except that the tools arguments are
 obtained from the eraser option dialog. It this dialog has not been activated
 then the dialogs default values will be used.
 HELP
@@ -343,7 +336,7 @@ HELP
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes);
+                                    num_strokes, strokes, NULL);
     }
 }
 CODE
@@ -391,7 +384,7 @@ HELP
                     NULL);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes);
+                                    num_strokes, strokes, NULL);
     }
 }
 CODE
@@ -440,7 +433,7 @@ HELP
                     NULL);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes);
+                                    num_strokes, strokes, NULL);
     }
 }
 CODE
@@ -499,7 +492,7 @@ HELP
                     NULL);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes);
+                                    num_strokes, strokes, NULL);
     }
 }
 CODE
@@ -517,12 +510,12 @@ BLURB
 This tool is similar to the standard paintbrush. It draws linearly interpolated lines
 through the specified stroke coordinates. It operates on the specified drawable
 in the foreground color with the active brush. The "fade_out" parameter is
-measured in pixels and allows the brush stroke to linearly fall 
-off (value obtained from the option dialog). The pressure is set 
+measured in pixels and allows the brush stroke to linearly fall
+off (value obtained from the option dialog). The pressure is set
 to the maximum at the beginning of the stroke. As the distance
 of the stroke nears the fade_out value, the pressure will approach zero. The
-gradient_length (value obtained from the option dialog) is the 
-distance to spread the gradient over. It is measured in pixels. If 
+gradient_length (value obtained from the option dialog) is the
+distance to spread the gradient over. It is measured in pixels. If
 the gradient_length is 0, no gradient is used.
 HELP
 
@@ -547,7 +540,7 @@ HELP
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes);
+                                    num_strokes, strokes, NULL);
     }
 }
 CODE
@@ -586,7 +579,7 @@ HELP
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes);
+                                    num_strokes, strokes, NULL);
     }
 }
 CODE
@@ -597,7 +590,7 @@ sub smudge {
     $blurb  = 'Smudge image with varying pressure.';
 
     $help = <<'HELP';
-This tool simulates a smudge using the current brush. High pressure results 
+This tool simulates a smudge using the current brush. High pressure results
 in a greater smudge of paint while low pressure results in a lesser smudge.
 HELP
 
@@ -628,7 +621,7 @@ HELP
                     NULL);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes);
+                                    num_strokes, strokes, NULL);
     }
 }
 CODE
@@ -641,7 +634,7 @@ Smudge image with varying pressure.
 BLURB
 
     $help = <<'HELP';
-This tool simulates a smudge using the current brush. It behaves exactly 
+This tool simulates a smudge using the current brush. It behaves exactly
 the same as gimp_smudge except that the pressure value is taken from the
 smudge tool options or the options default if the tools option dialog has
 not been activated.
@@ -668,7 +661,7 @@ HELP
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes);
+                                    num_strokes, strokes, NULL);
     }
 }
 CODE
@@ -717,7 +710,7 @@ HELP
                     NULL);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes);
+                                    num_strokes, strokes, NULL);
     }
 }
 CODE
@@ -728,7 +721,7 @@ sub dodgeburn_default {
     $blurb  = <<'BLURB';
 Dodgeburn image with varying exposure. This is the same as the gimp_dodgeburn
 function except that the exposure, type and mode are taken from the tools
-option dialog. If the dialog has not been activated then the defaults 
+option dialog. If the dialog has not been activated then the defaults
 as used by the dialog will be used.
 BLURB
 
@@ -757,7 +750,7 @@ HELP
       GimpPaintOptions *options = gimp_paint_options_new (info);
 
       success = paint_tools_stroke (gimp, context, options, drawable,
-                                    num_strokes, strokes);
+                                    num_strokes, strokes, NULL);
     }
 }
 CODE
@@ -791,12 +784,15 @@ paint_tools_stroke (Gimp             *gimp,
                     GimpPaintOptions *options,
                     GimpDrawable     *drawable,
                     gint              n_strokes,
-                    gdouble          *strokes)
+                    gdouble          *strokes,
+                    const gchar      *first_property_name,
+                    ...)
 {
   GimpPaintCore *core;
   GimpCoords    *coords;
   gboolean       retval;
   gint           i;
+  va_list        args;
 
   n_strokes /= 2;  /* #doubles -> #points */
 
@@ -808,7 +804,10 @@ paint_tools_stroke (Gimp             *gimp,
                                   FALSE);
   gimp_context_set_parent (GIMP_CONTEXT (options), context);
 
-  core = g_object_new (options->paint_info->paint_type, NULL);
+  va_start (args, first_property_name);
+  core = GIMP_PAINT_CORE (g_object_new_valist (options->paint_info->paint_type,
+                                               first_property_name, args));
+  va_end (args);
 
   coords = g_new (GimpCoords, n_strokes);
 
@@ -833,7 +832,8 @@ CODE
 
 
 @headers = qw("libgimpmath/gimpmath.h"
-              "paint/gimppaintcore-stroke.h" "paint/gimppaintoptions.h"
+              "paint/gimppaintcore.h" "paint/gimppaintcore-stroke.h"
+              "paint/gimppaintoptions.h"
               "core/gimp.h" "core/gimpcontainer.h" "core/gimppaintinfo.h");
 
 @procs = qw(airbrush airbrush_default
