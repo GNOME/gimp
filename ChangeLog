@@ -1,3 +1,8 @@
+2006-03-31  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/psd_save.c: applied a patch from Guillermo
+	S. Romero that adds basic support for saving layer masks.
+
 2006-03-30  Sven Neumann  <sven@gimp.org>
 
 	* app/paint/gimpclone.[ch]: use doubles for src coordinates. Added
