@@ -138,7 +138,7 @@ plug_in_run (Gimp         *gimp,
           ! gp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
           ! gimp_wire_flush (plug_in->my_write, plug_in))
         {
-          return_vals = procedural_db_return_values (proc_rec, FALSE);
+          return_vals = gimp_procedure_get_return_values (proc_rec, FALSE);
 
           g_free (config.display_name);
 
@@ -221,7 +221,7 @@ plug_in_repeat (Gimp         *gimp,
   if (proc_def)
     {
       /* construct the procedures arguments */
-      args = procedural_db_arguments (&proc_def->db_info);
+      args = gimp_procedure_get_arguments (&proc_def->db_info);
 
       g_value_set_int (&args[0].value,
                        with_interface ?
@@ -269,7 +269,7 @@ plug_in_temp_run (ProcRecord   *proc_rec,
       if (! gp_temp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
 	  ! gimp_wire_flush (plug_in->my_write, plug_in))
 	{
-	  return_vals = procedural_db_return_values (proc_rec, FALSE);
+	  return_vals = gimp_procedure_get_return_values (proc_rec, FALSE);
 
           plug_in_proc_frame_pop (plug_in);
 
@@ -320,7 +320,8 @@ plug_in_get_return_vals (PlugIn          *plug_in,
   else if (proc_frame->return_vals)
     {
       /* Allocate new return values of the correct size. */
-      return_vals = procedural_db_return_values (proc_frame->proc_rec, FALSE);
+      return_vals = gimp_procedure_get_return_values (proc_frame->proc_rec,
+                                                      FALSE);
 
       /* Copy all of the arguments we can. */
       memcpy (return_vals, proc_frame->return_vals,
@@ -336,7 +337,8 @@ plug_in_get_return_vals (PlugIn          *plug_in,
   else
     {
       /* Just return a dummy set of values. */
-      return_vals = procedural_db_return_values (proc_frame->proc_rec, FALSE);
+      return_vals = gimp_procedure_get_return_values (proc_frame->proc_rec,
+                                                      FALSE);
     }
 
   /* We have consumed any saved values, so clear them. */

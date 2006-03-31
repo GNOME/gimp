@@ -25,6 +25,7 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
@@ -46,84 +47,84 @@ register_pattern_procs (Gimp *gimp)
   /*
    * pattern_get_info
    */
-  procedure = procedural_db_init_proc (&pattern_get_info_proc, 1, 3);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("name",
-                                                      "name",
-                                                      "The pattern name.",
-                                                      FALSE, FALSE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("width",
-                                                    "width",
-                                                    "The pattern width",
-                                                    G_MININT32, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("height",
-                                                    "height",
-                                                    "The pattern height",
-                                                    G_MININT32, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("bpp",
-                                                    "bpp",
-                                                    "The pattern bpp",
-                                                    G_MININT32, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&pattern_get_info_proc, 1, 3);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The pattern name.",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("width",
+                                                     "width",
+                                                     "The pattern width",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("height",
+                                                     "height",
+                                                     "The pattern height",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("bpp",
+                                                     "bpp",
+                                                     "The pattern bpp",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * pattern_get_pixels
    */
-  procedure = procedural_db_init_proc (&pattern_get_pixels_proc, 1, 5);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("name",
-                                                      "name",
-                                                      "The pattern name.",
-                                                      FALSE, FALSE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("width",
-                                                    "width",
-                                                    "The pattern width",
-                                                    G_MININT32, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("height",
-                                                    "height",
-                                                    "The pattern height",
-                                                    G_MININT32, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("bpp",
-                                                    "bpp",
-                                                    "The pattern bpp",
-                                                    G_MININT32, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("num-color-bytes",
-                                                    "num color bytes",
-                                                    "Number of pattern bytes",
-                                                    0, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT8ARRAY,
-                                  g_param_spec_pointer ("color-bytes",
-                                                        "color bytes",
-                                                        "The pattern data.",
-                                                        GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&pattern_get_pixels_proc, 1, 5);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The pattern name.",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("width",
+                                                     "width",
+                                                     "The pattern width",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("height",
+                                                     "height",
+                                                     "The pattern height",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("bpp",
+                                                     "bpp",
+                                                     "The pattern bpp",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("num-color-bytes",
+                                                     "num color bytes",
+                                                     "Number of pattern bytes",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT8ARRAY,
+                                   g_param_spec_pointer ("color-bytes",
+                                                         "color bytes",
+                                                         "The pattern data.",
+                                                         GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
 }
@@ -159,7 +160,7 @@ pattern_get_info_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     {
@@ -223,7 +224,7 @@ pattern_get_pixels_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     {

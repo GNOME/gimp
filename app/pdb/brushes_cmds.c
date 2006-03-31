@@ -25,6 +25,7 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
@@ -51,166 +52,166 @@ register_brushes_procs (Gimp *gimp)
   /*
    * brushes_refresh
    */
-  procedure = procedural_db_init_proc (&brushes_refresh_proc, 0, 0);
+  procedure = gimp_procedure_init (&brushes_refresh_proc, 0, 0);
   procedural_db_register (gimp, procedure);
 
   /*
    * brushes_get_list
    */
-  procedure = procedural_db_init_proc (&brushes_get_list_proc, 1, 2);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("filter",
-                                                      "filter",
-                                                      "An optional regular expression used to filter the list",
-                                                      FALSE, TRUE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("num-brushes",
-                                                    "num brushes",
-                                                    "The number of brushes in the brush list",
-                                                    0, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_STRINGARRAY,
-                                  g_param_spec_pointer ("brush-list",
-                                                        "brush list",
-                                                        "The list of brush names",
-                                                        GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&brushes_get_list_proc, 1, 2);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("filter",
+                                                       "filter",
+                                                       "An optional regular expression used to filter the list",
+                                                       FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("num-brushes",
+                                                     "num brushes",
+                                                     "The number of brushes in the brush list",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_STRINGARRAY,
+                                   g_param_spec_pointer ("brush-list",
+                                                         "brush list",
+                                                         "The list of brush names",
+                                                         GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * brushes_get_brush
    */
-  procedure = procedural_db_init_proc (&brushes_get_brush_proc, 0, 4);
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_STRING,
-                                  gimp_param_spec_string ("name",
-                                                          "name",
-                                                          "The brush name",
-                                                          FALSE, FALSE,
-                                                          NULL,
-                                                          GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("width",
-                                                    "width",
-                                                    "The brush width",
-                                                    G_MININT32, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("height",
-                                                    "height",
-                                                    "The brush height",
-                                                    G_MININT32, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("spacing",
-                                                    "spacing",
-                                                    "The brush spacing (0 <= spacing <= 1000)",
-                                                    0, 1000, 0,
-                                                    GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&brushes_get_brush_proc, 0, 4);
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_STRING,
+                                   gimp_param_spec_string ("name",
+                                                           "name",
+                                                           "The brush name",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("width",
+                                                     "width",
+                                                     "The brush width",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("height",
+                                                     "height",
+                                                     "The brush height",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("spacing",
+                                                     "spacing",
+                                                     "The brush spacing (0 <= spacing <= 1000)",
+                                                     0, 1000, 0,
+                                                     GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * brushes_get_spacing
    */
-  procedure = procedural_db_init_proc (&brushes_get_spacing_proc, 0, 1);
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("spacing",
-                                                    "spacing",
-                                                    "The brush spacing (0 <= spacing <= 1000)",
-                                                    0, 1000, 0,
-                                                    GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&brushes_get_spacing_proc, 0, 1);
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("spacing",
+                                                     "spacing",
+                                                     "The brush spacing (0 <= spacing <= 1000)",
+                                                     0, 1000, 0,
+                                                     GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * brushes_set_spacing
    */
-  procedure = procedural_db_init_proc (&brushes_set_spacing_proc, 1, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_int ("spacing",
-                                                "spacing",
-                                                "The brush spacing (0 <= spacing <= 1000)",
-                                                0, 1000, 0,
-                                                GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&brushes_set_spacing_proc, 1, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_int ("spacing",
+                                                 "spacing",
+                                                 "The brush spacing (0 <= spacing <= 1000)",
+                                                 0, 1000, 0,
+                                                 GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * brushes_get_brush_data
    */
-  procedure = procedural_db_init_proc (&brushes_get_brush_data_proc, 1, 8);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("name",
-                                                      "name",
-                                                      "The brush name (\"\" means current active brush)",
-                                                      FALSE, TRUE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_STRING,
-                                  gimp_param_spec_string ("actual-name",
-                                                          "actual name",
-                                                          "The brush name",
-                                                          FALSE, FALSE,
-                                                          NULL,
-                                                          GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_FLOAT,
-                                  g_param_spec_double ("opacity",
-                                                       "opacity",
-                                                       "The brush opacity (0 <= opacity <= 100)",
-                                                       0, 100, 0,
+  procedure = gimp_procedure_init (&brushes_get_brush_data_proc, 1, 8);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name (\"\" means current active brush)",
+                                                       FALSE, TRUE,
+                                                       NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("spacing",
-                                                    "spacing",
-                                                    "The brush spacing (0 <= spacing <= 1000)",
-                                                    0, 1000, 0,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_enum ("paint-mode",
-                                                     "paint mode",
-                                                     "The paint mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }",
-                                                     GIMP_TYPE_LAYER_MODE_EFFECTS,
-                                                     GIMP_NORMAL_MODE,
-                                                     GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("width",
-                                                    "width",
-                                                    "The brush width",
-                                                    G_MININT32, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("height",
-                                                    "height",
-                                                    "The brush height",
-                                                    G_MININT32, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("length",
-                                                    "length",
-                                                    "Length of brush mask data",
-                                                    0, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT8ARRAY,
-                                  g_param_spec_pointer ("mask-data",
-                                                        "mask data",
-                                                        "The brush mask data",
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_STRING,
+                                   gimp_param_spec_string ("actual-name",
+                                                           "actual name",
+                                                           "The brush name",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_FLOAT,
+                                   g_param_spec_double ("opacity",
+                                                        "opacity",
+                                                        "The brush opacity (0 <= opacity <= 100)",
+                                                        0, 100, 0,
                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("spacing",
+                                                     "spacing",
+                                                     "The brush spacing (0 <= spacing <= 1000)",
+                                                     0, 1000, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_enum ("paint-mode",
+                                                      "paint mode",
+                                                      "The paint mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }",
+                                                      GIMP_TYPE_LAYER_MODE_EFFECTS,
+                                                      GIMP_NORMAL_MODE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("width",
+                                                     "width",
+                                                     "The brush width",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("height",
+                                                     "height",
+                                                     "The brush height",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("length",
+                                                     "length",
+                                                     "Length of brush mask data",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT8ARRAY,
+                                   g_param_spec_pointer ("mask-data",
+                                                         "mask data",
+                                                         "The brush mask data",
+                                                         GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
 }
@@ -223,7 +224,7 @@ brushes_refresh_invoker (ProcRecord   *proc_record,
                          Argument     *args)
 {
   gimp_data_factory_data_refresh (gimp->brush_factory);
-  return procedural_db_return_values (proc_record, TRUE);
+  return gimp_procedure_get_return_values (proc_record, TRUE);
 }
 
 static ProcRecord brushes_refresh_proc =
@@ -262,7 +263,7 @@ brushes_get_list_invoker (ProcRecord   *proc_record,
                                                            filter, &num_brushes);
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     {
@@ -314,7 +315,7 @@ brushes_get_brush_invoker (ProcRecord   *proc_record,
   else
     success = FALSE;
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     {
@@ -360,7 +361,7 @@ brushes_get_spacing_invoker (ProcRecord   *proc_record,
   else
     success = FALSE;
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_set_int (&return_vals[1].value, spacing);
@@ -400,7 +401,7 @@ brushes_set_spacing_invoker (ProcRecord   *proc_record,
       gimp_brush_set_spacing (gimp_context_get_brush (context), spacing);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord brushes_set_spacing_proc =
@@ -468,7 +469,7 @@ brushes_get_brush_data_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     {

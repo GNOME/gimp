@@ -31,6 +31,8 @@
 
 #include "core/gimp.h"
 
+#include "pdb/procedural_db.h"
+
 #include "plug-ins.h"
 #include "plug-in-def.h"
 #include "plug-in-proc-def.h"
@@ -367,7 +369,7 @@ plug_in_proc_def_deserialize (GScanner      *scanner,
   if (! gimp_scanner_parse_int (scanner, (gint *) &n_return_vals))
     return G_TOKEN_INT;
 
-  procedural_db_init_proc (&proc_def->db_info, n_args, n_return_vals);
+  gimp_procedure_init (&proc_def->db_info, n_args, n_return_vals);
 
   for (i = 0; i < n_args; i++)
     {
@@ -646,9 +648,9 @@ plug_in_proc_arg_deserialize (GScanner   *scanner,
   token = G_TOKEN_LEFT_PAREN;
 
   if (return_value)
-    procedural_db_add_compat_value (proc, gimp, arg_type, name, desc);
+    gimp_procedure_add_compat_value (proc, gimp, arg_type, name, desc);
   else
-    procedural_db_add_compat_arg (proc, gimp, arg_type, name, desc);
+    gimp_procedure_add_compat_arg (proc, gimp, arg_type, name, desc);
 
  error:
 

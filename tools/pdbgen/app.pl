@@ -153,7 +153,7 @@ sub marshal_outargs {
     my $proc = shift;
 
     my $result = <<CODE;
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 CODE
 
     my $argc = 0;
@@ -494,7 +494,7 @@ sub generate {
   /*
    * ${name}
    */
-  procedure = procedural_db_init_proc (\&${name}_proc, @{[scalar @inargs]}, @{[scalar @outargs]});
+  procedure = gimp_procedure_init (\&${name}_proc, @{[scalar @inargs]}, @{[scalar @outargs]});
 CODE
 
         $argc = 0;
@@ -502,10 +502,10 @@ CODE
         foreach $arg (@inargs) {
 	    my ($pspec, $postproc) = &generate_pspec($arg);
 
-	    $pspec =~ s/^/' ' x length("  procedural_db_add_argument (")/meg;
+	    $pspec =~ s/^/' ' x length("  gimp_procedure_add_argument (")/meg;
 
 	    $out->{register} .= <<CODE;
-  procedural_db_add_argument (procedure,
+  gimp_procedure_add_argument (procedure,
 ${pspec});
 CODE
 
@@ -524,10 +524,10 @@ CODE
 	    my ($pspec, $postproc) = &generate_pspec($arg);
 	    my $argc = 0;
 
-	    $pspec =~ s/^/' ' x length("  procedural_db_add_return_value (")/meg;
+	    $pspec =~ s/^/' ' x length("  gimp_procedure_add_return_value (")/meg;
 
 	    $out->{register} .= <<CODE;
-  procedural_db_add_return_value (procedure,
+  gimp_procedure_add_return_value (procedure,
 ${pspec});
 CODE
 
@@ -700,6 +700,8 @@ GPL
 		    $base = 1;
 
 		    $headers .= '#include "pdb-types.h"';
+		    $headers .= "\n";
+		    $headers .= '#include "gimpprocedure.h"';
 		    $headers .= "\n";
 		    $headers .= '#include "procedural_db.h"';
 		    $headers .= "\n";

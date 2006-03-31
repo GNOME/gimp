@@ -29,6 +29,7 @@
 
 #include "core/gimpcontext.h"
 
+#include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
 #include "gimppdbprogress.h"
@@ -270,8 +271,7 @@ gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
           retval = g_value_get_double (&return_vals[1].value);
         }
 
-      if (return_vals)
-        procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
+      procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
 
       progress->callback_busy = FALSE;
     }

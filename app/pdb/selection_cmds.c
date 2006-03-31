@@ -24,6 +24,7 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
@@ -62,369 +63,369 @@ register_selection_procs (Gimp *gimp)
   /*
    * selection_bounds
    */
-  procedure = procedural_db_init_proc (&selection_bounds_proc, 1, 5);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image",
-                                                        gimp,
-                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_boolean ("non-empty",
-                                                        "non empty",
-                                                        "TRUE if there is a selection",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("x1",
-                                                    "x1",
-                                                    "x coordinate of upper left corner of selection bounds",
-                                                    G_MININT32, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("y1",
-                                                    "y1",
-                                                    "y coordinate of upper left corner of selection bounds",
-                                                    G_MININT32, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("x2",
-                                                    "x2",
-                                                    "x coordinate of lower right corner of selection bounds",
-                                                    G_MININT32, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("y2",
-                                                    "y2",
-                                                    "y coordinate of lower right corner of selection bounds",
-                                                    G_MININT32, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&selection_bounds_proc, 1, 5);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_boolean ("non-empty",
+                                                         "non empty",
+                                                         "TRUE if there is a selection",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("x1",
+                                                     "x1",
+                                                     "x coordinate of upper left corner of selection bounds",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("y1",
+                                                     "y1",
+                                                     "y coordinate of upper left corner of selection bounds",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("x2",
+                                                     "x2",
+                                                     "x coordinate of lower right corner of selection bounds",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("y2",
+                                                     "y2",
+                                                     "y coordinate of lower right corner of selection bounds",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * selection_value
    */
-  procedure = procedural_db_init_proc (&selection_value_proc, 3, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image",
-                                                        gimp,
-                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_int ("x",
-                                                "x",
-                                                "x coordinate of value",
-                                                G_MININT32, G_MAXINT32, 0,
-                                                GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_int ("y",
-                                                "y",
-                                                "y coordinate of value",
-                                                G_MININT32, G_MAXINT32, 0,
-                                                GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("value",
-                                                    "value",
-                                                    "Value of the selection (0 <= value <= 255)",
-                                                    0, 255, 0,
-                                                    GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&selection_value_proc, 3, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_int ("x",
+                                                 "x",
+                                                 "x coordinate of value",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_int ("y",
+                                                 "y",
+                                                 "y coordinate of value",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("value",
+                                                     "value",
+                                                     "Value of the selection (0 <= value <= 255)",
+                                                     0, 255, 0,
+                                                     GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * selection_is_empty
    */
-  procedure = procedural_db_init_proc (&selection_is_empty_proc, 1, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image",
-                                                        gimp,
-                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_boolean ("is-empty",
-                                                        "is empty",
-                                                        "Is the selection empty?",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&selection_is_empty_proc, 1, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_boolean ("is-empty",
+                                                         "is empty",
+                                                         "Is the selection empty?",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * selection_translate
    */
-  procedure = procedural_db_init_proc (&selection_translate_proc, 3, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image",
-                                                        gimp,
-                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_int ("offx",
-                                                "offx",
-                                                "x offset for translation",
-                                                G_MININT32, G_MAXINT32, 0,
-                                                GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_int ("offy",
-                                                "offy",
-                                                "y offset for translation",
-                                                G_MININT32, G_MAXINT32, 0,
-                                                GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&selection_translate_proc, 3, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_int ("offx",
+                                                 "offx",
+                                                 "x offset for translation",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_int ("offy",
+                                                 "offy",
+                                                 "y offset for translation",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * selection_float
    */
-  procedure = procedural_db_init_proc (&selection_float_proc, 3, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_DRAWABLE,
-                              gimp_param_spec_item_id ("drawable",
-                                                       "drawable",
-                                                       "The drawable from which to float selection",
-                                                       gimp,
-                                                       GIMP_TYPE_DRAWABLE,
-                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_int ("offx",
-                                                "offx",
-                                                "x offset for translation",
-                                                G_MININT32, G_MAXINT32, 0,
-                                                GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_int ("offy",
-                                                "offy",
-                                                "y offset for translation",
-                                                G_MININT32, G_MAXINT32, 0,
-                                                GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_LAYER,
-                                  gimp_param_spec_item_id ("layer",
-                                                           "layer",
-                                                           "The floated layer",
-                                                           gimp,
-                                                           GIMP_TYPE_LAYER,
-                                                           GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&selection_float_proc, 3, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_DRAWABLE,
+                               gimp_param_spec_item_id ("drawable",
+                                                        "drawable",
+                                                        "The drawable from which to float selection",
+                                                        gimp,
+                                                        GIMP_TYPE_DRAWABLE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_int ("offx",
+                                                 "offx",
+                                                 "x offset for translation",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_int ("offy",
+                                                 "offy",
+                                                 "y offset for translation",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_LAYER,
+                                   gimp_param_spec_item_id ("layer",
+                                                            "layer",
+                                                            "The floated layer",
+                                                            gimp,
+                                                            GIMP_TYPE_LAYER,
+                                                            GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * selection_invert
    */
-  procedure = procedural_db_init_proc (&selection_invert_proc, 1, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image",
-                                                        gimp,
-                                                        GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&selection_invert_proc, 1, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * selection_sharpen
    */
-  procedure = procedural_db_init_proc (&selection_sharpen_proc, 1, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image",
-                                                        gimp,
-                                                        GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&selection_sharpen_proc, 1, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * selection_all
    */
-  procedure = procedural_db_init_proc (&selection_all_proc, 1, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image",
-                                                        gimp,
-                                                        GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&selection_all_proc, 1, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * selection_none
    */
-  procedure = procedural_db_init_proc (&selection_none_proc, 1, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image",
-                                                        gimp,
-                                                        GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&selection_none_proc, 1, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * selection_feather
    */
-  procedure = procedural_db_init_proc (&selection_feather_proc, 2, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image",
-                                                        gimp,
-                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_FLOAT,
-                              g_param_spec_double ("radius",
-                                                   "radius",
-                                                   "Radius of feather (in pixels)",
-                                                   0, G_MAXDOUBLE, 0,
-                                                   GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&selection_feather_proc, 2, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_FLOAT,
+                               g_param_spec_double ("radius",
+                                                    "radius",
+                                                    "Radius of feather (in pixels)",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * selection_border
    */
-  procedure = procedural_db_init_proc (&selection_border_proc, 2, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image",
-                                                        gimp,
-                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_int ("radius",
-                                                "radius",
-                                                "Radius of border (in pixels)",
-                                                0, G_MAXINT32, 0,
-                                                GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&selection_border_proc, 2, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_int ("radius",
+                                                 "radius",
+                                                 "Radius of border (in pixels)",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * selection_grow
    */
-  procedure = procedural_db_init_proc (&selection_grow_proc, 2, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image",
-                                                        gimp,
-                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_int ("steps",
-                                                "steps",
-                                                "Steps of grow (in pixels)",
-                                                0, G_MAXINT32, 0,
-                                                GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&selection_grow_proc, 2, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_int ("steps",
+                                                 "steps",
+                                                 "Steps of grow (in pixels)",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * selection_shrink
    */
-  procedure = procedural_db_init_proc (&selection_shrink_proc, 2, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image",
-                                                        gimp,
-                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_int ("steps",
-                                                "steps",
-                                                "Steps of shrink (in pixels)",
-                                                0, G_MAXINT32, 0,
-                                                GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&selection_shrink_proc, 2, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_int ("steps",
+                                                 "steps",
+                                                 "Steps of shrink (in pixels)",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * selection_layer_alpha
    */
-  procedure = procedural_db_init_proc (&selection_layer_alpha_proc, 1, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_LAYER,
-                              gimp_param_spec_item_id ("layer",
-                                                       "layer",
-                                                       "Layer with alpha",
-                                                       gimp,
-                                                       GIMP_TYPE_LAYER,
-                                                       GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&selection_layer_alpha_proc, 1, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_LAYER,
+                               gimp_param_spec_item_id ("layer",
+                                                        "layer",
+                                                        "Layer with alpha",
+                                                        gimp,
+                                                        GIMP_TYPE_LAYER,
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * selection_load
    */
-  procedure = procedural_db_init_proc (&selection_load_proc, 1, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_CHANNEL,
-                              gimp_param_spec_item_id ("channel",
-                                                       "channel",
-                                                       "The channel",
-                                                       gimp,
-                                                       GIMP_TYPE_CHANNEL,
-                                                       GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&selection_load_proc, 1, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_CHANNEL,
+                               gimp_param_spec_item_id ("channel",
+                                                        "channel",
+                                                        "The channel",
+                                                        gimp,
+                                                        GIMP_TYPE_CHANNEL,
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * selection_save
    */
-  procedure = procedural_db_init_proc (&selection_save_proc, 1, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image",
-                                                        gimp,
-                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_CHANNEL,
-                                  gimp_param_spec_item_id ("channel",
-                                                           "channel",
-                                                           "The new channel",
-                                                           gimp,
-                                                           GIMP_TYPE_CHANNEL,
-                                                           GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&selection_save_proc, 1, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_CHANNEL,
+                                   gimp_param_spec_item_id ("channel",
+                                                            "channel",
+                                                            "The new channel",
+                                                            gimp,
+                                                            GIMP_TYPE_CHANNEL,
+                                                            GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * selection_combine
    */
-  procedure = procedural_db_init_proc (&selection_combine_proc, 2, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_CHANNEL,
-                              gimp_param_spec_item_id ("channel",
-                                                       "channel",
-                                                       "The channel",
-                                                       gimp,
-                                                       GIMP_TYPE_CHANNEL,
-                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_enum ("operation",
-                                                 "operation",
-                                                 "The selection operation: { GIMP_CHANNEL_OP_ADD (0), GIMP_CHANNEL_OP_SUBTRACT (1), GIMP_CHANNEL_OP_REPLACE (2), GIMP_CHANNEL_OP_INTERSECT (3) }",
-                                                 GIMP_TYPE_CHANNEL_OPS,
-                                                 GIMP_CHANNEL_OP_ADD,
-                                                 GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&selection_combine_proc, 2, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_CHANNEL,
+                               gimp_param_spec_item_id ("channel",
+                                                        "channel",
+                                                        "The channel",
+                                                        gimp,
+                                                        GIMP_TYPE_CHANNEL,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_enum ("operation",
+                                                  "operation",
+                                                  "The selection operation: { GIMP_CHANNEL_OP_ADD (0), GIMP_CHANNEL_OP_SUBTRACT (1), GIMP_CHANNEL_OP_REPLACE (2), GIMP_CHANNEL_OP_INTERSECT (3) }",
+                                                  GIMP_TYPE_CHANNEL_OPS,
+                                                  GIMP_CHANNEL_OP_ADD,
+                                                  GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
 }
@@ -453,7 +454,7 @@ selection_bounds_invoker (ProcRecord   *proc_record,
                                        &x1, &y1, &x2, &y2);
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     {
@@ -505,7 +506,7 @@ selection_value_invoker (ProcRecord   *proc_record,
       value = gimp_pickable_get_opacity_at (GIMP_PICKABLE (gimp_image_get_mask (image)), x, y);
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_set_int (&return_vals[1].value, value);
@@ -547,7 +548,7 @@ selection_is_empty_invoker (ProcRecord   *proc_record,
       is_empty = gimp_channel_is_empty (gimp_image_get_mask (image));
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_set_boolean (&return_vals[1].value, is_empty);
@@ -592,7 +593,7 @@ selection_translate_invoker (ProcRecord   *proc_record,
                            offx, offy, TRUE);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord selection_translate_proc =
@@ -643,7 +644,7 @@ selection_float_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (layer));
@@ -683,7 +684,7 @@ selection_invert_invoker (ProcRecord   *proc_record,
       gimp_channel_invert (gimp_image_get_mask (image), TRUE);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord selection_invert_proc =
@@ -718,7 +719,7 @@ selection_sharpen_invoker (ProcRecord   *proc_record,
       gimp_channel_sharpen (gimp_image_get_mask (image), TRUE);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord selection_sharpen_proc =
@@ -753,7 +754,7 @@ selection_all_invoker (ProcRecord   *proc_record,
       gimp_channel_all (gimp_image_get_mask (image), TRUE);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord selection_all_proc =
@@ -788,7 +789,7 @@ selection_none_invoker (ProcRecord   *proc_record,
       gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord selection_none_proc =
@@ -826,7 +827,7 @@ selection_feather_invoker (ProcRecord   *proc_record,
                             radius, radius, TRUE);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord selection_feather_proc =
@@ -864,7 +865,7 @@ selection_border_invoker (ProcRecord   *proc_record,
                            radius, radius, TRUE);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord selection_border_proc =
@@ -902,7 +903,7 @@ selection_grow_invoker (ProcRecord   *proc_record,
                          steps, steps, TRUE);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord selection_grow_proc =
@@ -940,7 +941,7 @@ selection_shrink_invoker (ProcRecord   *proc_record,
                            steps, steps, FALSE, TRUE);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord selection_shrink_proc =
@@ -979,7 +980,7 @@ selection_layer_alpha_invoker (ProcRecord   *proc_record,
                                  GIMP_CHANNEL_OP_REPLACE, FALSE, 0.0, 0.0);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord selection_layer_alpha_proc =
@@ -1025,7 +1026,7 @@ selection_load_invoker (ProcRecord   *proc_record,
                                    FALSE, 0.0, 0.0);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord selection_load_proc =
@@ -1065,7 +1066,7 @@ selection_save_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (channel));
@@ -1118,7 +1119,7 @@ selection_combine_invoker (ProcRecord   *proc_record,
                                    FALSE, 0.0, 0.0);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord selection_combine_proc =

@@ -40,6 +40,8 @@
 #include "plug-in/plug-in-proc-def.h"
 #include "plug-in/plug-ins.h"
 
+#include "pdb/procedural_db.h"
+
 #include "gimpfiledialog.h"
 #include "gimpfileprocview.h"
 #include "gimphelp-ids.h"

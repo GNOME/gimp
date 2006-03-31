@@ -36,6 +36,7 @@
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
 
+#include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
 #include "plug-in/plug-ins.h"
@@ -193,7 +194,7 @@ gimp_help_browser (Gimp *gimp)
 	  return FALSE;
 	}
 
-      args = procedural_db_arguments (proc_rec);
+      args = gimp_procedure_get_arguments (proc_rec);
 
       g_value_set_enum (&args[0].value, GIMP_RUN_INTERACTIVE);
 
@@ -278,7 +279,7 @@ gimp_help_call (Gimp        *gimp,
 
       n_domains = plug_ins_help_domains (gimp, &help_domains, &help_uris);
 
-      args = procedural_db_arguments (proc_rec);
+      args = gimp_procedure_get_arguments (proc_rec);
 
       g_value_set_int     (&args[0].value, n_domains);
       g_value_set_pointer (&args[1].value, help_domains);

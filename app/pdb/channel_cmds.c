@@ -26,6 +26,7 @@
 #include "libgimpcolor/gimpcolor.h"
 
 #include "pdb-types.h"
+#include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
@@ -52,287 +53,287 @@ register_channel_procs (Gimp *gimp)
   /*
    * channel_new
    */
-  procedure = procedural_db_init_proc (&channel_new_proc, 6, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image to which to add the channel",
-                                                        gimp,
-                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_int ("width",
-                                                "width",
-                                                "The channel width (1 <= width)",
-                                                1, G_MAXINT32, 1,
-                                                GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_int ("height",
-                                                "height",
-                                                "The channel height (1 <= height)",
-                                                1, G_MAXINT32, 1,
-                                                GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("name",
-                                                      "name",
-                                                      "The channel name",
-                                                      FALSE, FALSE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_FLOAT,
-                              g_param_spec_double ("opacity",
-                                                   "opacity",
-                                                   "The channel opacity (0 <= opacity <= 100)",
-                                                   0, 100, 0,
-                                                   GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_COLOR,
-                              gimp_param_spec_rgb ("color",
-                                                   "color",
-                                                   "The channel compositing color",
-                                                   NULL,
-                                                   GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_CHANNEL,
-                                  gimp_param_spec_item_id ("channel",
-                                                           "channel",
-                                                           "The newly created channel",
-                                                           gimp,
-                                                           GIMP_TYPE_CHANNEL,
-                                                           GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&channel_new_proc, 6, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image to which to add the channel",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_int ("width",
+                                                 "width",
+                                                 "The channel width (1 <= width)",
+                                                 1, G_MAXINT32, 1,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_int ("height",
+                                                 "height",
+                                                 "The channel height (1 <= height)",
+                                                 1, G_MAXINT32, 1,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The channel name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_FLOAT,
+                               g_param_spec_double ("opacity",
+                                                    "opacity",
+                                                    "The channel opacity (0 <= opacity <= 100)",
+                                                    0, 100, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_COLOR,
+                               gimp_param_spec_rgb ("color",
+                                                    "color",
+                                                    "The channel compositing color",
+                                                    NULL,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_CHANNEL,
+                                   gimp_param_spec_item_id ("channel",
+                                                            "channel",
+                                                            "The newly created channel",
+                                                            gimp,
+                                                            GIMP_TYPE_CHANNEL,
+                                                            GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * channel_new_from_component
    */
-  procedure = procedural_db_init_proc (&channel_new_from_component_proc, 3, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image to which to add the channel",
-                                                        gimp,
-                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_enum ("component",
-                                                 "component",
-                                                 "The image component: { GIMP_RED_CHANNEL (0), GIMP_GREEN_CHANNEL (1), GIMP_BLUE_CHANNEL (2), GIMP_GRAY_CHANNEL (3), GIMP_INDEXED_CHANNEL (4), GIMP_ALPHA_CHANNEL (5) }",
-                                                 GIMP_TYPE_CHANNEL_TYPE,
-                                                 GIMP_RED_CHANNEL,
-                                                 GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("name",
-                                                      "name",
-                                                      "The channel name",
-                                                      FALSE, FALSE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_CHANNEL,
-                                  gimp_param_spec_item_id ("channel",
-                                                           "channel",
-                                                           "The newly created channel",
-                                                           gimp,
-                                                           GIMP_TYPE_CHANNEL,
-                                                           GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&channel_new_from_component_proc, 3, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image to which to add the channel",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_enum ("component",
+                                                  "component",
+                                                  "The image component: { GIMP_RED_CHANNEL (0), GIMP_GREEN_CHANNEL (1), GIMP_BLUE_CHANNEL (2), GIMP_GRAY_CHANNEL (3), GIMP_INDEXED_CHANNEL (4), GIMP_ALPHA_CHANNEL (5) }",
+                                                  GIMP_TYPE_CHANNEL_TYPE,
+                                                  GIMP_RED_CHANNEL,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The channel name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_CHANNEL,
+                                   gimp_param_spec_item_id ("channel",
+                                                            "channel",
+                                                            "The newly created channel",
+                                                            gimp,
+                                                            GIMP_TYPE_CHANNEL,
+                                                            GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * channel_copy
    */
-  procedure = procedural_db_init_proc (&channel_copy_proc, 1, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_CHANNEL,
-                              gimp_param_spec_item_id ("channel",
-                                                       "channel",
-                                                       "The channel to copy",
-                                                       gimp,
-                                                       GIMP_TYPE_CHANNEL,
-                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_CHANNEL,
-                                  gimp_param_spec_item_id ("channel-copy",
-                                                           "channel copy",
-                                                           "The newly copied channel",
-                                                           gimp,
-                                                           GIMP_TYPE_CHANNEL,
-                                                           GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&channel_copy_proc, 1, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_CHANNEL,
+                               gimp_param_spec_item_id ("channel",
+                                                        "channel",
+                                                        "The channel to copy",
+                                                        gimp,
+                                                        GIMP_TYPE_CHANNEL,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_CHANNEL,
+                                   gimp_param_spec_item_id ("channel-copy",
+                                                            "channel copy",
+                                                            "The newly copied channel",
+                                                            gimp,
+                                                            GIMP_TYPE_CHANNEL,
+                                                            GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * channel_combine_masks
    */
-  procedure = procedural_db_init_proc (&channel_combine_masks_proc, 5, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_CHANNEL,
-                              gimp_param_spec_item_id ("channel1",
-                                                       "channel1",
-                                                       "The channel1",
-                                                       gimp,
-                                                       GIMP_TYPE_CHANNEL,
-                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_CHANNEL,
-                              gimp_param_spec_item_id ("channel2",
-                                                       "channel2",
-                                                       "The channel2",
-                                                       gimp,
-                                                       GIMP_TYPE_CHANNEL,
-                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_enum ("operation",
-                                                 "operation",
-                                                 "The selection operation: { GIMP_CHANNEL_OP_ADD (0), GIMP_CHANNEL_OP_SUBTRACT (1), GIMP_CHANNEL_OP_REPLACE (2), GIMP_CHANNEL_OP_INTERSECT (3) }",
-                                                 GIMP_TYPE_CHANNEL_OPS,
-                                                 GIMP_CHANNEL_OP_ADD,
+  procedure = gimp_procedure_init (&channel_combine_masks_proc, 5, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_CHANNEL,
+                               gimp_param_spec_item_id ("channel1",
+                                                        "channel1",
+                                                        "The channel1",
+                                                        gimp,
+                                                        GIMP_TYPE_CHANNEL,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_CHANNEL,
+                               gimp_param_spec_item_id ("channel2",
+                                                        "channel2",
+                                                        "The channel2",
+                                                        gimp,
+                                                        GIMP_TYPE_CHANNEL,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_enum ("operation",
+                                                  "operation",
+                                                  "The selection operation: { GIMP_CHANNEL_OP_ADD (0), GIMP_CHANNEL_OP_SUBTRACT (1), GIMP_CHANNEL_OP_REPLACE (2), GIMP_CHANNEL_OP_INTERSECT (3) }",
+                                                  GIMP_TYPE_CHANNEL_OPS,
+                                                  GIMP_CHANNEL_OP_ADD,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_int ("offx",
+                                                 "offx",
+                                                 "x offset between upper left corner of channels: (second - first)",
+                                                 G_MININT32, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_int ("offx",
-                                                "offx",
-                                                "x offset between upper left corner of channels: (second - first)",
-                                                G_MININT32, G_MAXINT32, 0,
-                                                GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_int ("offy",
-                                                "offy",
-                                                "y offset between upper left corner of channels: (second - first)",
-                                                G_MININT32, G_MAXINT32, 0,
-                                                GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_int ("offy",
+                                                 "offy",
+                                                 "y offset between upper left corner of channels: (second - first)",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * channel_get_show_masked
    */
-  procedure = procedural_db_init_proc (&channel_get_show_masked_proc, 1, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_CHANNEL,
-                              gimp_param_spec_item_id ("channel",
-                                                       "channel",
-                                                       "The channel",
-                                                       gimp,
-                                                       GIMP_TYPE_CHANNEL,
-                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_boolean ("show-masked",
-                                                        "show masked",
-                                                        "The channel composite method",
-                                                        FALSE,
+  procedure = gimp_procedure_init (&channel_get_show_masked_proc, 1, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_CHANNEL,
+                               gimp_param_spec_item_id ("channel",
+                                                        "channel",
+                                                        "The channel",
+                                                        gimp,
+                                                        GIMP_TYPE_CHANNEL,
                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_boolean ("show-masked",
+                                                         "show masked",
+                                                         "The channel composite method",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * channel_set_show_masked
    */
-  procedure = procedural_db_init_proc (&channel_set_show_masked_proc, 2, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_CHANNEL,
-                              gimp_param_spec_item_id ("channel",
-                                                       "channel",
-                                                       "The channel",
-                                                       gimp,
-                                                       GIMP_TYPE_CHANNEL,
-                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_boolean ("show-masked",
-                                                    "show masked",
-                                                    "The new channel composite method",
-                                                    FALSE,
-                                                    GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&channel_set_show_masked_proc, 2, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_CHANNEL,
+                               gimp_param_spec_item_id ("channel",
+                                                        "channel",
+                                                        "The channel",
+                                                        gimp,
+                                                        GIMP_TYPE_CHANNEL,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_boolean ("show-masked",
+                                                     "show masked",
+                                                     "The new channel composite method",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * channel_get_opacity
    */
-  procedure = procedural_db_init_proc (&channel_get_opacity_proc, 1, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_CHANNEL,
-                              gimp_param_spec_item_id ("channel",
-                                                       "channel",
-                                                       "The channel",
-                                                       gimp,
-                                                       GIMP_TYPE_CHANNEL,
-                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_FLOAT,
-                                  g_param_spec_double ("opacity",
-                                                       "opacity",
-                                                       "The channel opacity",
-                                                       0, 100, 0,
-                                                       GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&channel_get_opacity_proc, 1, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_CHANNEL,
+                               gimp_param_spec_item_id ("channel",
+                                                        "channel",
+                                                        "The channel",
+                                                        gimp,
+                                                        GIMP_TYPE_CHANNEL,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_FLOAT,
+                                   g_param_spec_double ("opacity",
+                                                        "opacity",
+                                                        "The channel opacity",
+                                                        0, 100, 0,
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * channel_set_opacity
    */
-  procedure = procedural_db_init_proc (&channel_set_opacity_proc, 2, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_CHANNEL,
-                              gimp_param_spec_item_id ("channel",
-                                                       "channel",
-                                                       "The channel",
-                                                       gimp,
-                                                       GIMP_TYPE_CHANNEL,
-                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_FLOAT,
-                              g_param_spec_double ("opacity",
-                                                   "opacity",
-                                                   "The new channel opacity (0 <= opacity <= 100)",
-                                                   0, 100, 0,
-                                                   GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&channel_set_opacity_proc, 2, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_CHANNEL,
+                               gimp_param_spec_item_id ("channel",
+                                                        "channel",
+                                                        "The channel",
+                                                        gimp,
+                                                        GIMP_TYPE_CHANNEL,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_FLOAT,
+                               g_param_spec_double ("opacity",
+                                                    "opacity",
+                                                    "The new channel opacity (0 <= opacity <= 100)",
+                                                    0, 100, 0,
+                                                    GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * channel_get_color
    */
-  procedure = procedural_db_init_proc (&channel_get_color_proc, 1, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_CHANNEL,
-                              gimp_param_spec_item_id ("channel",
-                                                       "channel",
-                                                       "The channel",
-                                                       gimp,
-                                                       GIMP_TYPE_CHANNEL,
-                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_COLOR,
-                                  gimp_param_spec_rgb ("color",
-                                                       "color",
-                                                       "The channel compositing color",
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&channel_get_color_proc, 1, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_CHANNEL,
+                               gimp_param_spec_item_id ("channel",
+                                                        "channel",
+                                                        "The channel",
+                                                        gimp,
+                                                        GIMP_TYPE_CHANNEL,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_COLOR,
+                                   gimp_param_spec_rgb ("color",
+                                                        "color",
+                                                        "The channel compositing color",
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * channel_set_color
    */
-  procedure = procedural_db_init_proc (&channel_set_color_proc, 2, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_CHANNEL,
-                              gimp_param_spec_item_id ("channel",
-                                                       "channel",
-                                                       "The channel",
-                                                       gimp,
-                                                       GIMP_TYPE_CHANNEL,
-                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_COLOR,
-                              gimp_param_spec_rgb ("color",
-                                                   "color",
-                                                   "The new channel compositing color",
-                                                   NULL,
-                                                   GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&channel_set_color_proc, 2, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_CHANNEL,
+                               gimp_param_spec_item_id ("channel",
+                                                        "channel",
+                                                        "The channel",
+                                                        gimp,
+                                                        GIMP_TYPE_CHANNEL,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_COLOR,
+                               gimp_param_spec_rgb ("color",
+                                                    "color",
+                                                    "The new channel compositing color",
+                                                    NULL,
+                                                    GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
 }
@@ -372,7 +373,7 @@ channel_new_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (channel));
@@ -425,7 +426,7 @@ channel_new_from_component_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (channel));
@@ -471,7 +472,7 @@ channel_copy_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (channel_copy));
@@ -519,7 +520,7 @@ channel_combine_masks_invoker (ProcRecord   *proc_record,
       gimp_channel_combine_mask (channel1, channel2, operation, offx, offy);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord channel_combine_masks_proc =
@@ -556,7 +557,7 @@ channel_get_show_masked_invoker (ProcRecord   *proc_record,
       show_masked = gimp_channel_get_show_masked (channel);
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_set_boolean (&return_vals[1].value, show_masked);
@@ -598,7 +599,7 @@ channel_set_show_masked_invoker (ProcRecord   *proc_record,
       gimp_channel_set_show_masked (channel, show_masked);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord channel_set_show_masked_proc =
@@ -635,7 +636,7 @@ channel_get_opacity_invoker (ProcRecord   *proc_record,
       opacity = gimp_channel_get_opacity (channel) * 100;
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_set_double (&return_vals[1].value, opacity);
@@ -677,7 +678,7 @@ channel_set_opacity_invoker (ProcRecord   *proc_record,
       gimp_channel_set_opacity (channel, opacity / 100.0, TRUE);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord channel_set_opacity_proc =
@@ -714,7 +715,7 @@ channel_get_color_invoker (ProcRecord   *proc_record,
       gimp_channel_get_color (channel, &color);
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     gimp_value_set_rgb (&return_vals[1].value, &color);
@@ -759,7 +760,7 @@ channel_set_color_invoker (ProcRecord   *proc_record,
       gimp_channel_set_color (channel, &rgb_color, TRUE);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord channel_set_color_proc =

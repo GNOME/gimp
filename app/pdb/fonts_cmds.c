@@ -24,6 +24,7 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
@@ -43,34 +44,34 @@ register_fonts_procs (Gimp *gimp)
   /*
    * fonts_refresh
    */
-  procedure = procedural_db_init_proc (&fonts_refresh_proc, 0, 0);
+  procedure = gimp_procedure_init (&fonts_refresh_proc, 0, 0);
   procedural_db_register (gimp, procedure);
 
   /*
    * fonts_get_list
    */
-  procedure = procedural_db_init_proc (&fonts_get_list_proc, 1, 2);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("filter",
-                                                      "filter",
-                                                      "An optional regular expression used to filter the list",
-                                                      FALSE, TRUE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("num-fonts",
-                                                    "num fonts",
-                                                    "The number of available fonts",
-                                                    0, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_STRINGARRAY,
-                                  g_param_spec_pointer ("font-list",
-                                                        "font list",
-                                                        "The list of font names",
-                                                        GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&fonts_get_list_proc, 1, 2);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("filter",
+                                                       "filter",
+                                                       "An optional regular expression used to filter the list",
+                                                       FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("num-fonts",
+                                                     "num fonts",
+                                                     "The number of available fonts",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_STRINGARRAY,
+                                   g_param_spec_pointer ("font-list",
+                                                         "font list",
+                                                         "The list of font names",
+                                                         GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
 }
@@ -83,7 +84,7 @@ fonts_refresh_invoker (ProcRecord   *proc_record,
                        Argument     *args)
 {
   gimp_fonts_load (gimp);
-  return procedural_db_return_values (proc_record, TRUE);
+  return gimp_procedure_get_return_values (proc_record, TRUE);
 }
 
 static ProcRecord fonts_refresh_proc =
@@ -122,7 +123,7 @@ fonts_get_list_invoker (ProcRecord   *proc_record,
                                                           filter, &num_fonts);
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     {

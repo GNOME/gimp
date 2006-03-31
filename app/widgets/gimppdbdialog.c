@@ -31,6 +31,7 @@
 
 #include "core/gimpcontext.h"
 
+#include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
 #include "gimpmenufactory.h"

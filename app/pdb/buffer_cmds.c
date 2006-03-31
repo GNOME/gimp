@@ -25,6 +25,7 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
@@ -50,157 +51,157 @@ register_buffer_procs (Gimp *gimp)
   /*
    * buffers_get_list
    */
-  procedure = procedural_db_init_proc (&buffers_get_list_proc, 1, 2);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("filter",
-                                                      "filter",
-                                                      "An optional regular expression used to filter the list",
-                                                      FALSE, TRUE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("num-buffers",
-                                                    "num buffers",
-                                                    "The number of buffers",
-                                                    0, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_STRINGARRAY,
-                                  g_param_spec_pointer ("buffer-list",
-                                                        "buffer list",
-                                                        "The list of buffer names",
-                                                        GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&buffers_get_list_proc, 1, 2);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("filter",
+                                                       "filter",
+                                                       "An optional regular expression used to filter the list",
+                                                       FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("num-buffers",
+                                                     "num buffers",
+                                                     "The number of buffers",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_STRINGARRAY,
+                                   g_param_spec_pointer ("buffer-list",
+                                                         "buffer list",
+                                                         "The list of buffer names",
+                                                         GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * buffer_rename
    */
-  procedure = procedural_db_init_proc (&buffer_rename_proc, 2, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("buffer-name",
-                                                      "buffer name",
-                                                      "The buffer name",
-                                                      FALSE, FALSE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("new-name",
-                                                      "new name",
-                                                      "The buffer's new name",
-                                                      FALSE, FALSE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_STRING,
-                                  gimp_param_spec_string ("real-name",
-                                                          "real name",
-                                                          "The real name given to the buffer",
-                                                          FALSE, FALSE,
-                                                          NULL,
-                                                          GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&buffer_rename_proc, 2, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("buffer-name",
+                                                       "buffer name",
+                                                       "The buffer name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("new-name",
+                                                       "new name",
+                                                       "The buffer's new name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_STRING,
+                                   gimp_param_spec_string ("real-name",
+                                                           "real name",
+                                                           "The real name given to the buffer",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * buffer_delete
    */
-  procedure = procedural_db_init_proc (&buffer_delete_proc, 1, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("buffer-name",
-                                                      "buffer name",
-                                                      "The buffer name",
-                                                      FALSE, FALSE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&buffer_delete_proc, 1, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("buffer-name",
+                                                       "buffer name",
+                                                       "The buffer name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * buffer_get_width
    */
-  procedure = procedural_db_init_proc (&buffer_get_width_proc, 1, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("buffer-name",
-                                                      "buffer name",
-                                                      "The buffer name",
-                                                      FALSE, FALSE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("width",
-                                                    "width",
-                                                    "The buffer width",
-                                                    G_MININT32, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&buffer_get_width_proc, 1, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("buffer-name",
+                                                       "buffer name",
+                                                       "The buffer name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("width",
+                                                     "width",
+                                                     "The buffer width",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * buffer_get_height
    */
-  procedure = procedural_db_init_proc (&buffer_get_height_proc, 1, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("buffer-name",
-                                                      "buffer name",
-                                                      "The buffer name",
-                                                      FALSE, FALSE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("height",
-                                                    "height",
-                                                    "The buffer height",
-                                                    G_MININT32, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&buffer_get_height_proc, 1, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("buffer-name",
+                                                       "buffer name",
+                                                       "The buffer name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("height",
+                                                     "height",
+                                                     "The buffer height",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * buffer_get_bytes
    */
-  procedure = procedural_db_init_proc (&buffer_get_bytes_proc, 1, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("buffer-name",
-                                                      "buffer name",
-                                                      "The buffer name",
-                                                      FALSE, FALSE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("bytes",
-                                                    "bytes",
-                                                    "The buffer bpp",
-                                                    G_MININT32, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&buffer_get_bytes_proc, 1, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("buffer-name",
+                                                       "buffer name",
+                                                       "The buffer name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("bytes",
+                                                     "bytes",
+                                                     "The buffer bpp",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * buffer_get_image_type
    */
-  procedure = procedural_db_init_proc (&buffer_get_image_type_proc, 1, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("buffer-name",
-                                                      "buffer name",
-                                                      "The buffer name",
-                                                      FALSE, FALSE,
-                                                      NULL,
+  procedure = gimp_procedure_init (&buffer_get_image_type_proc, 1, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("buffer-name",
+                                                       "buffer name",
+                                                       "The buffer name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_enum ("image-type",
+                                                      "image type",
+                                                      "The buffer image type: { GIMP_RGB (0), GIMP_GRAY (1), GIMP_INDEXED (2) }",
+                                                      GIMP_TYPE_IMAGE_BASE_TYPE,
+                                                      GIMP_RGB,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_enum ("image-type",
-                                                     "image type",
-                                                     "The buffer image type: { GIMP_RGB (0), GIMP_GRAY (1), GIMP_INDEXED (2) }",
-                                                     GIMP_TYPE_IMAGE_BASE_TYPE,
-                                                     GIMP_RGB,
-                                                     GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
 }
@@ -226,7 +227,7 @@ buffers_get_list_invoker (ProcRecord   *proc_record,
                                                             filter, &num_buffers);
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     {
@@ -282,7 +283,7 @@ buffer_rename_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, real_name);
@@ -328,7 +329,7 @@ buffer_delete_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord buffer_delete_proc =
@@ -371,7 +372,7 @@ buffer_get_width_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_set_int (&return_vals[1].value, width);
@@ -419,7 +420,7 @@ buffer_get_height_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_set_int (&return_vals[1].value, height);
@@ -467,7 +468,7 @@ buffer_get_bytes_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_set_int (&return_vals[1].value, bytes);
@@ -515,7 +516,7 @@ buffer_get_image_type_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_set_enum (&return_vals[1].value, image_type);

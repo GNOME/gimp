@@ -38,6 +38,8 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
+#include "pdb/procedural_db.h"
+
 #include "plug-in.h"
 #include "plug-ins.h"
 #include "plug-in-data.h"

@@ -16,15 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PROCEDURAL_DB_H__
-#define __PROCEDURAL_DB_H__
-
-
-struct _Argument
-{
-  GimpPDBArgType type;
-  GValue         value;
-};
+#ifndef __GIMP_PROCEDURE_H__
+#define __GIMP_PROCEDURE_H__
 
 
 /*  Argument marshalling procedures  */
@@ -60,15 +53,6 @@ struct _ExtExec
 struct _TempExec
 {
   void       *plug_in;        /*  Plug-in that registered this temp proc  */
-};
-
-
-/*  Structure for a procedure argument  */
-
-struct _ProcArg
-{
-  GimpPDBArgType  type;    /*  Argument type (int, char, char *, etc)  */
-  GParamSpec     *pspec;
 };
 
 
@@ -111,64 +95,39 @@ struct _ProcRecord
 
 /*  Functions  */
 
-void           procedural_db_init             (Gimp             *gimp);
-void           procedural_db_free             (Gimp             *gimp);
+ProcRecord   * gimp_procedure_init              (ProcRecord       *procedure,
+                                                 gint              n_arguments,
+                                                 gint              n_return_vals);
 
-void           procedural_db_init_procs       (Gimp             *gimp);
+void           gimp_procedure_add_argument      (ProcRecord       *procedure,
+                                                 GimpPDBArgType    arg_type,
+                                                 GParamSpec       *pspec);
+void           gimp_procedure_add_return_value  (ProcRecord       *procedure,
+                                                 GimpPDBArgType    arg_type,
+                                                 GParamSpec       *pspec);
 
-void           procedural_db_register         (Gimp             *gimp,
-                                               ProcRecord       *procedure);
-void           procedural_db_unregister       (Gimp             *gimp,
-                                               const gchar      *name);
-ProcRecord   * procedural_db_lookup           (Gimp             *gimp,
-                                               const gchar      *name);
+void           gimp_procedure_add_compat_arg    (ProcRecord       *procedure,
+                                                 Gimp             *gimp,
+                                                 GimpPDBArgType    arg_type,
+                                                 const gchar      *name,
+                                                 const gchar      *desc);
+void           gimp_procedure_add_compat_value  (ProcRecord       *procedure,
+                                                 Gimp             *gimp,
+                                                 GimpPDBArgType    arg_type,
+                                                 const gchar      *name,
+                                                 const gchar      *desc);
 
-Argument     * procedural_db_execute          (Gimp             *gimp,
-                                               GimpContext      *context,
-                                               GimpProgress     *progress,
-                                               const gchar      *name,
-                                               Argument         *args,
-                                               gint              n_args,
-                                               gint             *n_return_vals);
-Argument     * procedural_db_run_proc         (Gimp             *gimp,
-                                               GimpContext      *context,
-                                               GimpProgress     *progress,
-                                               const gchar      *name,
-                                               gint             *n_return_vals,
-                                               ...);
+Argument     * gimp_procedure_get_arguments     (const ProcRecord *procedure);
+Argument     * gimp_procedure_get_return_values (const ProcRecord *procedure,
+                                                 gboolean          success);
 
-Argument     * procedural_db_arguments        (const ProcRecord *procedure);
-Argument     * procedural_db_return_values    (const ProcRecord *procedure,
-                                               gboolean          success);
-void           procedural_db_destroy_args     (Argument         *args,
-                                               gint              n_args,
-                                               gboolean          full_destroy);
-
-ProcRecord   * procedural_db_init_proc        (ProcRecord       *procedure,
-                                               gint              n_arguments,
-                                               gint              n_return_vals);
-
-void           procedural_db_add_argument     (ProcRecord       *procedure,
-                                               GimpPDBArgType    arg_type,
-                                               GParamSpec       *pspec);
-void           procedural_db_add_return_value (ProcRecord       *procedure,
-                                               GimpPDBArgType    arg_type,
-                                               GParamSpec       *pspec);
-void           procedural_db_argument_init    (Argument         *arg,
-                                               ProcArg          *proc_arg);
-
-void           procedural_db_add_compat_arg   (ProcRecord       *procedure,
-                                               Gimp             *gimp,
-                                               GimpPDBArgType    arg_type,
-                                               const gchar      *name,
-                                               const gchar      *desc);
-void           procedural_db_add_compat_value (ProcRecord       *procedure,
-                                               Gimp             *gimp,
-                                               GimpPDBArgType    arg_type,
-                                               const gchar      *name,
-                                               const gchar      *desc);
-void           procedural_db_compat_arg_init  (Argument         *arg,
-                                               GimpPDBArgType    arg_type);
+Argument     * gimp_procedure_execute           (ProcRecord       *procedure,
+                                                 Gimp             *gimp,
+                                                 GimpContext      *context,
+                                                 GimpProgress     *progress,
+                                                 Argument         *args,
+                                                 gint              n_args,
+                                                 gint             *n_return_vals);
 
 
-#endif  /*  __PROCEDURAL_DB_H__  */
+#endif  /*  __GIMP_PROCEDURE_H__  */

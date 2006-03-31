@@ -25,6 +25,7 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
@@ -45,43 +46,43 @@ register_message_procs (Gimp *gimp)
   /*
    * message
    */
-  procedure = procedural_db_init_proc (&message_proc, 1, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("message",
-                                                      "message",
-                                                      "Message to display in the dialog",
-                                                      FALSE, FALSE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&message_proc, 1, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("message",
+                                                       "message",
+                                                       "Message to display in the dialog",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * message_get_handler
    */
-  procedure = procedural_db_init_proc (&message_get_handler_proc, 0, 1);
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_enum ("handler",
-                                                     "handler",
-                                                     "The current handler type: { GIMP_MESSAGE_BOX (0), GIMP_CONSOLE (1), GIMP_ERROR_CONSOLE (2) }",
-                                                     GIMP_TYPE_MESSAGE_HANDLER_TYPE,
-                                                     GIMP_MESSAGE_BOX,
-                                                     GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&message_get_handler_proc, 0, 1);
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_enum ("handler",
+                                                      "handler",
+                                                      "The current handler type: { GIMP_MESSAGE_BOX (0), GIMP_CONSOLE (1), GIMP_ERROR_CONSOLE (2) }",
+                                                      GIMP_TYPE_MESSAGE_HANDLER_TYPE,
+                                                      GIMP_MESSAGE_BOX,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * message_set_handler
    */
-  procedure = procedural_db_init_proc (&message_set_handler_proc, 1, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_enum ("handler",
-                                                 "handler",
-                                                 "The new handler type: { GIMP_MESSAGE_BOX (0), GIMP_CONSOLE (1), GIMP_ERROR_CONSOLE (2) }",
-                                                 GIMP_TYPE_MESSAGE_HANDLER_TYPE,
-                                                 GIMP_MESSAGE_BOX,
-                                                 GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&message_set_handler_proc, 1, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_enum ("handler",
+                                                  "handler",
+                                                  "The new handler type: { GIMP_MESSAGE_BOX (0), GIMP_CONSOLE (1), GIMP_ERROR_CONSOLE (2) }",
+                                                  GIMP_TYPE_MESSAGE_HANDLER_TYPE,
+                                                  GIMP_MESSAGE_BOX,
+                                                  GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
 }
@@ -106,7 +107,7 @@ message_invoker (ProcRecord   *proc_record,
         gimp_message (gimp, NULL, message);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord message_proc =
@@ -136,7 +137,7 @@ message_get_handler_invoker (ProcRecord   *proc_record,
 
   handler = gimp->message_handler;
 
-  return_vals = procedural_db_return_values (proc_record, TRUE);
+  return_vals = gimp_procedure_get_return_values (proc_record, TRUE);
   g_value_set_enum (&return_vals[1].value, handler);
 
   return return_vals;
@@ -174,7 +175,7 @@ message_set_handler_invoker (ProcRecord   *proc_record,
       gimp->message_handler = handler;
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord message_set_handler_proc =

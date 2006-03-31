@@ -27,6 +27,7 @@
 #include "libgimpcolor/gimpcolor.h"
 
 #include "pdb-types.h"
+#include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
@@ -53,231 +54,231 @@ register_grid_procs (Gimp *gimp)
   /*
    * image_grid_get_spacing
    */
-  procedure = procedural_db_init_proc (&image_grid_get_spacing_proc, 1, 2);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image",
-                                                        gimp,
+  procedure = gimp_procedure_init (&image_grid_get_spacing_proc, 1, 2);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_FLOAT,
+                                   g_param_spec_double ("xspacing",
+                                                        "xspacing",
+                                                        "The image's grid horizontal spacing",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_FLOAT,
-                                  g_param_spec_double ("xspacing",
-                                                       "xspacing",
-                                                       "The image's grid horizontal spacing",
-                                                       -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_FLOAT,
-                                  g_param_spec_double ("yspacing",
-                                                       "yspacing",
-                                                       "The image's grid vertical spacing",
-                                                       -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_FLOAT,
+                                   g_param_spec_double ("yspacing",
+                                                        "yspacing",
+                                                        "The image's grid vertical spacing",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * image_grid_set_spacing
    */
-  procedure = procedural_db_init_proc (&image_grid_set_spacing_proc, 3, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image",
-                                                        gimp,
-                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_FLOAT,
-                              g_param_spec_double ("xspacing",
-                                                   "xspacing",
-                                                   "The image's grid horizontal spacing",
-                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                   GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_FLOAT,
-                              g_param_spec_double ("yspacing",
-                                                   "yspacing",
-                                                   "The image's grid vertical spacing",
-                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                   GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&image_grid_set_spacing_proc, 3, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_FLOAT,
+                               g_param_spec_double ("xspacing",
+                                                    "xspacing",
+                                                    "The image's grid horizontal spacing",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_FLOAT,
+                               g_param_spec_double ("yspacing",
+                                                    "yspacing",
+                                                    "The image's grid vertical spacing",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * image_grid_get_offset
    */
-  procedure = procedural_db_init_proc (&image_grid_get_offset_proc, 1, 2);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image",
-                                                        gimp,
+  procedure = gimp_procedure_init (&image_grid_get_offset_proc, 1, 2);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_FLOAT,
+                                   g_param_spec_double ("xoffset",
+                                                        "xoffset",
+                                                        "The image's grid horizontal offset",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_FLOAT,
-                                  g_param_spec_double ("xoffset",
-                                                       "xoffset",
-                                                       "The image's grid horizontal offset",
-                                                       -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                       GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_FLOAT,
-                                  g_param_spec_double ("yoffset",
-                                                       "yoffset",
-                                                       "The image's grid vertical offset",
-                                                       -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_FLOAT,
+                                   g_param_spec_double ("yoffset",
+                                                        "yoffset",
+                                                        "The image's grid vertical offset",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * image_grid_set_offset
    */
-  procedure = procedural_db_init_proc (&image_grid_set_offset_proc, 3, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image",
-                                                        gimp,
-                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_FLOAT,
-                              g_param_spec_double ("xoffset",
-                                                   "xoffset",
-                                                   "The image's grid horizontal offset",
-                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                   GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_FLOAT,
-                              g_param_spec_double ("yoffset",
-                                                   "yoffset",
-                                                   "The image's grid vertical offset",
-                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                   GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&image_grid_set_offset_proc, 3, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_FLOAT,
+                               g_param_spec_double ("xoffset",
+                                                    "xoffset",
+                                                    "The image's grid horizontal offset",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_FLOAT,
+                               g_param_spec_double ("yoffset",
+                                                    "yoffset",
+                                                    "The image's grid vertical offset",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * image_grid_get_foreground_color
    */
-  procedure = procedural_db_init_proc (&image_grid_get_foreground_color_proc, 1, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image",
-                                                        gimp,
+  procedure = gimp_procedure_init (&image_grid_get_foreground_color_proc, 1, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_COLOR,
+                                   gimp_param_spec_rgb ("fgcolor",
+                                                        "fgcolor",
+                                                        "The image's grid foreground color",
+                                                        NULL,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_COLOR,
-                                  gimp_param_spec_rgb ("fgcolor",
-                                                       "fgcolor",
-                                                       "The image's grid foreground color",
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * image_grid_set_foreground_color
    */
-  procedure = procedural_db_init_proc (&image_grid_set_foreground_color_proc, 2, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image",
-                                                        gimp,
-                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_COLOR,
-                              gimp_param_spec_rgb ("fgcolor",
-                                                   "fgcolor",
-                                                   "The new foreground color",
-                                                   NULL,
-                                                   GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&image_grid_set_foreground_color_proc, 2, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_COLOR,
+                               gimp_param_spec_rgb ("fgcolor",
+                                                    "fgcolor",
+                                                    "The new foreground color",
+                                                    NULL,
+                                                    GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * image_grid_get_background_color
    */
-  procedure = procedural_db_init_proc (&image_grid_get_background_color_proc, 1, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image",
-                                                        gimp,
+  procedure = gimp_procedure_init (&image_grid_get_background_color_proc, 1, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_COLOR,
+                                   gimp_param_spec_rgb ("bgcolor",
+                                                        "bgcolor",
+                                                        "The image's grid background color",
+                                                        NULL,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_COLOR,
-                                  gimp_param_spec_rgb ("bgcolor",
-                                                       "bgcolor",
-                                                       "The image's grid background color",
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * image_grid_set_background_color
    */
-  procedure = procedural_db_init_proc (&image_grid_set_background_color_proc, 2, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image",
-                                                        gimp,
-                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_COLOR,
-                              gimp_param_spec_rgb ("bgcolor",
-                                                   "bgcolor",
-                                                   "The new background color",
-                                                   NULL,
-                                                   GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&image_grid_set_background_color_proc, 2, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_COLOR,
+                               gimp_param_spec_rgb ("bgcolor",
+                                                    "bgcolor",
+                                                    "The new background color",
+                                                    NULL,
+                                                    GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * image_grid_get_style
    */
-  procedure = procedural_db_init_proc (&image_grid_get_style_proc, 1, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image",
-                                                        gimp,
-                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_enum ("style",
-                                                     "style",
-                                                     "The image's grid style: { GIMP_GRID_DOTS (0), GIMP_GRID_INTERSECTIONS (1), GIMP_GRID_ON_OFF_DASH (2), GIMP_GRID_DOUBLE_DASH (3), GIMP_GRID_SOLID (4) }",
-                                                     GIMP_TYPE_GRID_STYLE,
-                                                     GIMP_GRID_DOTS,
-                                                     GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&image_grid_get_style_proc, 1, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_enum ("style",
+                                                      "style",
+                                                      "The image's grid style: { GIMP_GRID_DOTS (0), GIMP_GRID_INTERSECTIONS (1), GIMP_GRID_ON_OFF_DASH (2), GIMP_GRID_DOUBLE_DASH (3), GIMP_GRID_SOLID (4) }",
+                                                      GIMP_TYPE_GRID_STYLE,
+                                                      GIMP_GRID_DOTS,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * image_grid_set_style
    */
-  procedure = procedural_db_init_proc (&image_grid_set_style_proc, 2, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_IMAGE,
-                              gimp_param_spec_image_id ("image",
-                                                        "image",
-                                                        "The image",
-                                                        gimp,
-                                                        GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_enum ("style",
-                                                 "style",
-                                                 "The image's grid style: { GIMP_GRID_DOTS (0), GIMP_GRID_INTERSECTIONS (1), GIMP_GRID_ON_OFF_DASH (2), GIMP_GRID_DOUBLE_DASH (3), GIMP_GRID_SOLID (4) }",
-                                                 GIMP_TYPE_GRID_STYLE,
-                                                 GIMP_GRID_DOTS,
-                                                 GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&image_grid_set_style_proc, 2, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_IMAGE,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_enum ("style",
+                                                  "style",
+                                                  "The image's grid style: { GIMP_GRID_DOTS (0), GIMP_GRID_INTERSECTIONS (1), GIMP_GRID_ON_OFF_DASH (2), GIMP_GRID_DOUBLE_DASH (3), GIMP_GRID_SOLID (4) }",
+                                                  GIMP_TYPE_GRID_STYLE,
+                                                  GIMP_GRID_DOTS,
+                                                  GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
 }
@@ -310,7 +311,7 @@ image_grid_get_spacing_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     {
@@ -365,7 +366,7 @@ image_grid_set_spacing_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord image_grid_set_spacing_proc =
@@ -411,7 +412,7 @@ image_grid_get_offset_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     {
@@ -466,7 +467,7 @@ image_grid_set_offset_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord image_grid_set_offset_proc =
@@ -508,7 +509,7 @@ image_grid_get_foreground_color_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     gimp_value_set_rgb (&return_vals[1].value, &fgcolor);
@@ -555,7 +556,7 @@ image_grid_set_foreground_color_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord image_grid_set_foreground_color_proc =
@@ -597,7 +598,7 @@ image_grid_get_background_color_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     gimp_value_set_rgb (&return_vals[1].value, &bgcolor);
@@ -644,7 +645,7 @@ image_grid_set_background_color_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord image_grid_set_background_color_proc =
@@ -686,7 +687,7 @@ image_grid_get_style_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_set_enum (&return_vals[1].value, style);
@@ -733,7 +734,7 @@ image_grid_set_style_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord image_grid_set_style_proc =

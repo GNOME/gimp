@@ -26,6 +26,7 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "pdb-types.h"
+#include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
@@ -52,299 +53,299 @@ register_unit_procs (Gimp *gimp)
   /*
    * unit_get_number_of_units
    */
-  procedure = procedural_db_init_proc (&unit_get_number_of_units_proc, 0, 1);
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("num-units",
-                                                    "num units",
-                                                    "The number of units",
-                                                    G_MININT32, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&unit_get_number_of_units_proc, 0, 1);
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("num-units",
+                                                     "num units",
+                                                     "The number of units",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * unit_get_number_of_built_in_units
    */
-  procedure = procedural_db_init_proc (&unit_get_number_of_built_in_units_proc, 0, 1);
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("num-units",
-                                                    "num units",
-                                                    "The number of built-in units",
-                                                    G_MININT32, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&unit_get_number_of_built_in_units_proc, 0, 1);
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("num-units",
+                                                     "num units",
+                                                     "The number of built-in units",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * unit_new
    */
-  procedure = procedural_db_init_proc (&unit_new_proc, 7, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("identifier",
-                                                      "identifier",
-                                                      "The new unit's identifier",
-                                                      FALSE, FALSE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_FLOAT,
-                              g_param_spec_double ("factor",
-                                                   "factor",
-                                                   "The new unit's factor",
-                                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                   GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_int ("digits",
-                                                "digits",
-                                                "The new unit's digits",
-                                                G_MININT32, G_MAXINT32, 0,
-                                                GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("symbol",
-                                                      "symbol",
-                                                      "The new unit's symbol",
-                                                      FALSE, FALSE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("abbreviation",
-                                                      "abbreviation",
-                                                      "The new unit's abbreviation",
-                                                      FALSE, FALSE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("singular",
-                                                      "singular",
-                                                      "The new unit's singular form",
-                                                      FALSE, FALSE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("plural",
-                                                      "plural",
-                                                      "The new unit's plural form",
-                                                      FALSE, FALSE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  gimp_param_spec_unit ("unit-id",
-                                                        "unit id",
-                                                        "The new unit's ID",
-                                                        TRUE,
-                                                        FALSE,
-                                                        GIMP_UNIT_PIXEL,
-                                                        GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&unit_new_proc, 7, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("identifier",
+                                                       "identifier",
+                                                       "The new unit's identifier",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_FLOAT,
+                               g_param_spec_double ("factor",
+                                                    "factor",
+                                                    "The new unit's factor",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_int ("digits",
+                                                 "digits",
+                                                 "The new unit's digits",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("symbol",
+                                                       "symbol",
+                                                       "The new unit's symbol",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("abbreviation",
+                                                       "abbreviation",
+                                                       "The new unit's abbreviation",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("singular",
+                                                       "singular",
+                                                       "The new unit's singular form",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("plural",
+                                                       "plural",
+                                                       "The new unit's plural form",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   gimp_param_spec_unit ("unit-id",
+                                                         "unit id",
+                                                         "The new unit's ID",
+                                                         TRUE,
+                                                         FALSE,
+                                                         GIMP_UNIT_PIXEL,
+                                                         GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * unit_get_deletion_flag
    */
-  procedure = procedural_db_init_proc (&unit_get_deletion_flag_proc, 1, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              gimp_param_spec_unit ("unit-id",
-                                                    "unit id",
-                                                    "The unit's integer ID",
-                                                    TRUE,
-                                                    FALSE,
-                                                    GIMP_UNIT_PIXEL,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_boolean ("deletion-flag",
-                                                        "deletion flag",
-                                                        "The unit's deletion flag",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&unit_get_deletion_flag_proc, 1, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               gimp_param_spec_unit ("unit-id",
+                                                     "unit id",
+                                                     "The unit's integer ID",
+                                                     TRUE,
+                                                     FALSE,
+                                                     GIMP_UNIT_PIXEL,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_boolean ("deletion-flag",
+                                                         "deletion flag",
+                                                         "The unit's deletion flag",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * unit_set_deletion_flag
    */
-  procedure = procedural_db_init_proc (&unit_set_deletion_flag_proc, 2, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              gimp_param_spec_unit ("unit-id",
-                                                    "unit id",
-                                                    "The unit's integer ID",
-                                                    TRUE,
-                                                    FALSE,
-                                                    GIMP_UNIT_PIXEL,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_boolean ("deletion-flag",
-                                                    "deletion flag",
-                                                    "The new deletion flag of the unit",
-                                                    FALSE,
-                                                    GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&unit_set_deletion_flag_proc, 2, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               gimp_param_spec_unit ("unit-id",
+                                                     "unit id",
+                                                     "The unit's integer ID",
+                                                     TRUE,
+                                                     FALSE,
+                                                     GIMP_UNIT_PIXEL,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_boolean ("deletion-flag",
+                                                     "deletion flag",
+                                                     "The new deletion flag of the unit",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * unit_get_identifier
    */
-  procedure = procedural_db_init_proc (&unit_get_identifier_proc, 1, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              gimp_param_spec_unit ("unit-id",
-                                                    "unit id",
-                                                    "The unit's integer ID",
-                                                    TRUE,
-                                                    FALSE,
-                                                    GIMP_UNIT_PIXEL,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_STRING,
-                                  gimp_param_spec_string ("identifier",
-                                                          "identifier",
-                                                          "The unit's textual identifier",
-                                                          FALSE, FALSE,
-                                                          NULL,
-                                                          GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&unit_get_identifier_proc, 1, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               gimp_param_spec_unit ("unit-id",
+                                                     "unit id",
+                                                     "The unit's integer ID",
+                                                     TRUE,
+                                                     FALSE,
+                                                     GIMP_UNIT_PIXEL,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_STRING,
+                                   gimp_param_spec_string ("identifier",
+                                                           "identifier",
+                                                           "The unit's textual identifier",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * unit_get_factor
    */
-  procedure = procedural_db_init_proc (&unit_get_factor_proc, 1, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              gimp_param_spec_unit ("unit-id",
-                                                    "unit id",
-                                                    "The unit's integer ID",
-                                                    TRUE,
-                                                    FALSE,
-                                                    GIMP_UNIT_PIXEL,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_FLOAT,
-                                  g_param_spec_double ("factor",
-                                                       "factor",
-                                                       "The unit's factor",
-                                                       -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                       GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&unit_get_factor_proc, 1, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               gimp_param_spec_unit ("unit-id",
+                                                     "unit id",
+                                                     "The unit's integer ID",
+                                                     TRUE,
+                                                     FALSE,
+                                                     GIMP_UNIT_PIXEL,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_FLOAT,
+                                   g_param_spec_double ("factor",
+                                                        "factor",
+                                                        "The unit's factor",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * unit_get_digits
    */
-  procedure = procedural_db_init_proc (&unit_get_digits_proc, 1, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              gimp_param_spec_unit ("unit-id",
-                                                    "unit id",
-                                                    "The unit's integer ID",
-                                                    TRUE,
-                                                    FALSE,
-                                                    GIMP_UNIT_PIXEL,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("digits",
-                                                    "digits",
-                                                    "The unit's number of digits",
-                                                    G_MININT32, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&unit_get_digits_proc, 1, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               gimp_param_spec_unit ("unit-id",
+                                                     "unit id",
+                                                     "The unit's integer ID",
+                                                     TRUE,
+                                                     FALSE,
+                                                     GIMP_UNIT_PIXEL,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("digits",
+                                                     "digits",
+                                                     "The unit's number of digits",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * unit_get_symbol
    */
-  procedure = procedural_db_init_proc (&unit_get_symbol_proc, 1, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              gimp_param_spec_unit ("unit-id",
-                                                    "unit id",
-                                                    "The unit's integer ID",
-                                                    TRUE,
-                                                    FALSE,
-                                                    GIMP_UNIT_PIXEL,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_STRING,
-                                  gimp_param_spec_string ("symbol",
-                                                          "symbol",
-                                                          "The unit's symbol",
-                                                          FALSE, FALSE,
-                                                          NULL,
-                                                          GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&unit_get_symbol_proc, 1, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               gimp_param_spec_unit ("unit-id",
+                                                     "unit id",
+                                                     "The unit's integer ID",
+                                                     TRUE,
+                                                     FALSE,
+                                                     GIMP_UNIT_PIXEL,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_STRING,
+                                   gimp_param_spec_string ("symbol",
+                                                           "symbol",
+                                                           "The unit's symbol",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * unit_get_abbreviation
    */
-  procedure = procedural_db_init_proc (&unit_get_abbreviation_proc, 1, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              gimp_param_spec_unit ("unit-id",
-                                                    "unit id",
-                                                    "The unit's integer ID",
-                                                    TRUE,
-                                                    FALSE,
-                                                    GIMP_UNIT_PIXEL,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_STRING,
-                                  gimp_param_spec_string ("abbreviation",
-                                                          "abbreviation",
-                                                          "The unit's abbreviation",
-                                                          FALSE, FALSE,
-                                                          NULL,
-                                                          GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&unit_get_abbreviation_proc, 1, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               gimp_param_spec_unit ("unit-id",
+                                                     "unit id",
+                                                     "The unit's integer ID",
+                                                     TRUE,
+                                                     FALSE,
+                                                     GIMP_UNIT_PIXEL,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_STRING,
+                                   gimp_param_spec_string ("abbreviation",
+                                                           "abbreviation",
+                                                           "The unit's abbreviation",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * unit_get_singular
    */
-  procedure = procedural_db_init_proc (&unit_get_singular_proc, 1, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              gimp_param_spec_unit ("unit-id",
-                                                    "unit id",
-                                                    "The unit's integer ID",
-                                                    TRUE,
-                                                    FALSE,
-                                                    GIMP_UNIT_PIXEL,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_STRING,
-                                  gimp_param_spec_string ("singular",
-                                                          "singular",
-                                                          "The unit's singular form",
-                                                          FALSE, FALSE,
-                                                          NULL,
-                                                          GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&unit_get_singular_proc, 1, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               gimp_param_spec_unit ("unit-id",
+                                                     "unit id",
+                                                     "The unit's integer ID",
+                                                     TRUE,
+                                                     FALSE,
+                                                     GIMP_UNIT_PIXEL,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_STRING,
+                                   gimp_param_spec_string ("singular",
+                                                           "singular",
+                                                           "The unit's singular form",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * unit_get_plural
    */
-  procedure = procedural_db_init_proc (&unit_get_plural_proc, 1, 1);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              gimp_param_spec_unit ("unit-id",
-                                                    "unit id",
-                                                    "The unit's integer ID",
-                                                    TRUE,
-                                                    FALSE,
-                                                    GIMP_UNIT_PIXEL,
-                                                    GIMP_PARAM_READWRITE));
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_STRING,
-                                  gimp_param_spec_string ("plural",
-                                                          "plural",
-                                                          "The unit's plural form",
-                                                          FALSE, FALSE,
-                                                          NULL,
-                                                          GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&unit_get_plural_proc, 1, 1);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               gimp_param_spec_unit ("unit-id",
+                                                     "unit id",
+                                                     "The unit's integer ID",
+                                                     TRUE,
+                                                     FALSE,
+                                                     GIMP_UNIT_PIXEL,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_STRING,
+                                   gimp_param_spec_string ("plural",
+                                                           "plural",
+                                                           "The unit's plural form",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
 }
@@ -361,7 +362,7 @@ unit_get_number_of_units_invoker (ProcRecord   *proc_record,
 
   num_units = _gimp_unit_get_number_of_units (gimp);
 
-  return_vals = procedural_db_return_values (proc_record, TRUE);
+  return_vals = gimp_procedure_get_return_values (proc_record, TRUE);
   g_value_set_int (&return_vals[1].value, num_units);
 
   return return_vals;
@@ -394,7 +395,7 @@ unit_get_number_of_built_in_units_invoker (ProcRecord   *proc_record,
 
   num_units = _gimp_unit_get_number_of_built_in_units (gimp);
 
-  return_vals = procedural_db_return_values (proc_record, TRUE);
+  return_vals = gimp_procedure_get_return_values (proc_record, TRUE);
   g_value_set_int (&return_vals[1].value, num_units);
 
   return return_vals;
@@ -447,7 +448,7 @@ unit_new_invoker (ProcRecord   *proc_record,
                                 symbol, abbreviation, singular, plural);
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_set_int (&return_vals[1].value, unit_id);
@@ -489,7 +490,7 @@ unit_get_deletion_flag_invoker (ProcRecord   *proc_record,
       deletion_flag = _gimp_unit_get_deletion_flag (gimp, unit_id);
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_set_boolean (&return_vals[1].value, deletion_flag);
@@ -531,7 +532,7 @@ unit_set_deletion_flag_invoker (ProcRecord   *proc_record,
       _gimp_unit_set_deletion_flag (gimp, unit_id, deletion_flag);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord unit_set_deletion_flag_proc =
@@ -568,7 +569,7 @@ unit_get_identifier_invoker (ProcRecord   *proc_record,
       identifier = g_strdup (_gimp_unit_get_identifier (gimp, unit_id));
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, identifier);
@@ -610,7 +611,7 @@ unit_get_factor_invoker (ProcRecord   *proc_record,
       factor = _gimp_unit_get_factor (gimp, unit_id);
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_set_double (&return_vals[1].value, factor);
@@ -652,7 +653,7 @@ unit_get_digits_invoker (ProcRecord   *proc_record,
       digits = _gimp_unit_get_digits (gimp, unit_id);
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_set_int (&return_vals[1].value, digits);
@@ -694,7 +695,7 @@ unit_get_symbol_invoker (ProcRecord   *proc_record,
       symbol = g_strdup (_gimp_unit_get_symbol (gimp, unit_id));
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, symbol);
@@ -736,7 +737,7 @@ unit_get_abbreviation_invoker (ProcRecord   *proc_record,
       abbreviation = g_strdup (_gimp_unit_get_abbreviation (gimp, unit_id));
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, abbreviation);
@@ -778,7 +779,7 @@ unit_get_singular_invoker (ProcRecord   *proc_record,
       singular = g_strdup (_gimp_unit_get_singular (gimp, unit_id));
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, singular);
@@ -820,7 +821,7 @@ unit_get_plural_invoker (ProcRecord   *proc_record,
       plural = g_strdup (_gimp_unit_get_plural (gimp, unit_id));
     }
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, plural);

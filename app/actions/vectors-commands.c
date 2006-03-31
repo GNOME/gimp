@@ -40,6 +40,7 @@
 #include "core/gimpstrokedesc.h"
 #include "core/gimptoolinfo.h"
 
+#include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
 #include "plug-in/plug-in-run.h"
@@ -310,19 +311,19 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
                                            gpointer   data)
 {
   GimpImage   *image;
-  ProcRecord  *proc_rec;
+  ProcRecord  *procedure;
   Argument    *args;
   GimpDisplay *display;
   return_if_no_image (image, data);
 
   if (value)
-    proc_rec = procedural_db_lookup (image->gimp,
-                                     "plug-in-sel2path-advanced");
+    procedure = procedural_db_lookup (image->gimp,
+                                      "plug-in-sel2path-advanced");
   else
-    proc_rec = procedural_db_lookup (image->gimp,
-                                     "plug-in-sel2path");
+    procedure = procedural_db_lookup (image->gimp,
+                                      "plug-in-sel2path");
 
-  if (! proc_rec)
+  if (! procedure)
     {
       g_message ("Selection to path procedure lookup failed.");
       return;
@@ -331,7 +332,7 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
   display = gimp_context_get_display (action_data_get_context (data));
 
   /*  plug-in arguments as if called by <Image>/Filters/...  */
-  args = procedural_db_arguments (proc_rec);
+  args = gimp_procedure_get_arguments (procedure);
 
   g_value_set_enum     (&args[0].value, GIMP_RUN_INTERACTIVE);
   gimp_value_set_image (&args[1].value, image);
@@ -339,10 +340,10 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
 
   plug_in_run (image->gimp, action_data_get_context (data),
                GIMP_PROGRESS (display),
-               proc_rec, args, 3 /* not proc_rec->num_args */,
+               procedure, args, 3 /* not procedure->num_args */,
                FALSE, TRUE, display ? gimp_display_get_ID (display) : 0);
 
-  procedural_db_destroy_args (args, proc_rec->num_args, TRUE);
+  procedural_db_destroy_args (args, procedure->num_args, TRUE);
 }
 
 void

@@ -33,6 +33,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpparamspecs.h"
 
+#include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
 #include "plug-in/plug-ins.h"
@@ -149,6 +150,8 @@ static GimpXcfLoaderFunc *xcf_loaders[] =
 void
 xcf_init (Gimp *gimp)
 {
+  ProcRecord *procedure;
+
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   /* So this is sort of a hack, but its better than it was before.  To
@@ -159,52 +162,52 @@ xcf_init (Gimp *gimp)
    * though they are internal.  The only thing it requires is using a
    * PlugInProcDef struct.  -josh
    */
-  procedural_db_init_proc (&xcf_plug_in_save_proc.db_info, 5, 0);
-  procedural_db_add_compat_arg (&xcf_plug_in_save_proc.db_info, gimp,
-                                GIMP_PDB_INT32,
-                                "dummy-param",
-                                "dummy parameter");
-  procedural_db_add_compat_arg (&xcf_plug_in_save_proc.db_info, gimp,
-                                GIMP_PDB_IMAGE,
-                                "image",
-                                "Input image");
-  procedural_db_add_compat_arg (&xcf_plug_in_save_proc.db_info, gimp,
-                                GIMP_PDB_DRAWABLE,
-                                "drawable",
-                                "Active drawable of input image");
-  procedural_db_add_compat_arg (&xcf_plug_in_save_proc.db_info, gimp,
-                                GIMP_PDB_STRING,
-                                "filename",
-                                "The name of the file to save the image in, "
-                                "in the on-disk character set and encoding");
-  procedural_db_add_compat_arg (&xcf_plug_in_save_proc.db_info, gimp,
-                                GIMP_PDB_STRING,
-                                "raw_filename",
-                                "The basename of the file, in UTF-8");
-  procedural_db_register (gimp, &xcf_plug_in_save_proc.db_info);
+  procedure = gimp_procedure_init (&xcf_plug_in_save_proc.db_info, 5, 0);
+  gimp_procedure_add_compat_arg (procedure, gimp,
+                                 GIMP_PDB_INT32,
+                                 "dummy-param",
+                                 "dummy parameter");
+  gimp_procedure_add_compat_arg (procedure, gimp,
+                                 GIMP_PDB_IMAGE,
+                                 "image",
+                                 "Input image");
+  gimp_procedure_add_compat_arg (procedure, gimp,
+                                 GIMP_PDB_DRAWABLE,
+                                 "drawable",
+                                 "Active drawable of input image");
+  gimp_procedure_add_compat_arg (procedure, gimp,
+                                 GIMP_PDB_STRING,
+                                 "filename",
+                                 "The name of the file to save the image in, "
+                                 "in the on-disk character set and encoding");
+  gimp_procedure_add_compat_arg (procedure, gimp,
+                                 GIMP_PDB_STRING,
+                                 "raw_filename",
+                                 "The basename of the file, in UTF-8");
+  procedural_db_register (gimp, procedure);
   xcf_plug_in_save_proc.image_types_val =
     plug_ins_image_types_parse (xcf_plug_in_save_proc.image_types);
   plug_ins_add_internal (gimp, &xcf_plug_in_save_proc);
 
-  procedural_db_init_proc (&xcf_plug_in_load_proc.db_info, 3, 1);
-  procedural_db_add_compat_arg (&xcf_plug_in_load_proc.db_info, gimp,
-                                GIMP_PDB_INT32,
-                                "dummy-param",
-                                "dummy parameter");
-  procedural_db_add_compat_arg (&xcf_plug_in_load_proc.db_info, gimp,
-                                GIMP_PDB_STRING,
-                                "filename",
-                                "The name of the file to load, "
-                                "in the on-disk character set and encoding");
-  procedural_db_add_compat_arg (&xcf_plug_in_load_proc.db_info, gimp,
-                                GIMP_PDB_STRING,
-                                "raw-filename",
-                                "The basename of the file, in UTF-8");
-  procedural_db_add_compat_value (&xcf_plug_in_load_proc.db_info, gimp,
+  procedure = gimp_procedure_init (&xcf_plug_in_load_proc.db_info, 3, 1);
+  gimp_procedure_add_compat_arg (procedure, gimp,
+                                 GIMP_PDB_INT32,
+                                 "dummy-param",
+                                 "dummy parameter");
+  gimp_procedure_add_compat_arg (procedure, gimp,
+                                 GIMP_PDB_STRING,
+                                 "filename",
+                                 "The name of the file to load, "
+                                 "in the on-disk character set and encoding");
+  gimp_procedure_add_compat_arg (procedure, gimp,
+                                 GIMP_PDB_STRING,
+                                 "raw-filename",
+                                 "The basename of the file, in UTF-8");
+  gimp_procedure_add_compat_value (procedure, gimp,
                                   GIMP_PDB_IMAGE,
                                   "image",
                                   "Output image");
-  procedural_db_register (gimp, &xcf_plug_in_load_proc.db_info);
+  procedural_db_register (gimp, procedure);
   xcf_plug_in_load_proc.image_types_val =
     plug_ins_image_types_parse (xcf_plug_in_load_proc.image_types);
   plug_ins_add_internal (gimp, &xcf_plug_in_load_proc);
@@ -294,7 +297,7 @@ xcf_load_invoker (ProcRecord   *procedure,
     g_message (_("Could not open '%s' for reading: %s"),
 	       gimp_filename_to_utf8 (filename), g_strerror (errno));
 
-  return_vals = procedural_db_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_image (&return_vals[1].value, image);
@@ -351,7 +354,7 @@ xcf_save_invoker (ProcRecord   *procedure,
     g_message (_("Could not open '%s' for writing: %s"),
 	       gimp_filename_to_utf8 (filename), g_strerror (errno));
 
-  return_vals = procedural_db_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   gimp_unset_busy (gimp);
 

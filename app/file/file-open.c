@@ -56,6 +56,7 @@
 #include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
 
+#include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
 #include "plug-in/plug-in.h"

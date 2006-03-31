@@ -36,6 +36,8 @@
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 
+#include "pdb/procedural_db.h"
+
 #include "plug-in.h"
 #include "plug-ins.h"
 #include "plug-in-def.h"
@@ -746,18 +748,18 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
   proc->date          = g_strdup (proc_install->date);
   proc->proc_type     = proc_install->type;
 
-  procedural_db_init_proc (proc,
-                           proc_install->nparams, proc_install->nreturn_vals);
+  gimp_procedure_init (proc,
+                       proc_install->nparams, proc_install->nreturn_vals);
 
   for (i = 0; i < proc->num_args; i++)
     {
       canonical = gimp_canonicalize_identifier (proc_install->params[i].name);
 
-      procedural_db_add_compat_arg (proc,
-                                    plug_in->gimp,
-                                    proc_install->params[i].type,
-                                    canonical,
-                                    proc_install->params[i].description);
+      gimp_procedure_add_compat_arg (proc,
+                                     plug_in->gimp,
+                                     proc_install->params[i].type,
+                                     canonical,
+                                     proc_install->params[i].description);
 
       g_free (canonical);
     }
@@ -766,11 +768,11 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
     {
       canonical = gimp_canonicalize_identifier (proc_install->return_vals[i].name);
 
-      procedural_db_add_compat_value (proc,
-                                      plug_in->gimp,
-                                      proc_install->return_vals[i].type,
-                                      canonical,
-                                      proc_install->return_vals[i].description);
+      gimp_procedure_add_compat_value (proc,
+                                       plug_in->gimp,
+                                       proc_install->return_vals[i].type,
+                                       canonical,
+                                       proc_install->return_vals[i].description);
 
       g_free (canonical);
     }

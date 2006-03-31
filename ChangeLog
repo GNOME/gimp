@@ -1,3 +1,35 @@
+2006-03-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/pdb/Makefile.am
+	* app/pdb/gimpprocedure.[ch]: new files containing the functions
+	operating on *one* procedure. Factored out of procedural_db.[ch]
+	and renamed to gimp_procedure_foo().
+
+	* app/pdb/procedural_db.[ch]: removed them here.
+
+	* app/pdb/procedural-db-query.c
+	* app/batch.c
+	* app/actions/plug-in-commands.c
+	* app/actions/vectors-commands.c
+	* app/core/gimppdbprogress.c
+	* app/file/file-open.c
+	* app/file/file-save.c
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-proc-def.[ch]
+	* app/plug-in/plug-in-progress.c
+	* app/plug-in/plug-in-rc.c
+	* app/plug-in/plug-in-run.c
+	* app/plug-in/plug-ins.c
+	* app/widgets/gimpfiledialog.c
+	* app/widgets/gimphelp.c
+	* app/widgets/gimppdbdialog.c
+	* app/xcf/xcf.c
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/app.pl: changed #includes and function calls
+	accordingly. No logic changed.
+
+	* app/pdb/*_cmds.c: regenerated.
+
 2006-03-31  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/psd_save.c: applied a patch from Guillermo

@@ -37,6 +37,8 @@
 #include "plug-in/plug-in-run.h"
 #include "plug-in/plug-in-proc-def.h"
 
+#include "pdb/procedural_db.h"
+
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
@@ -64,7 +66,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
                           gpointer       data)
 {
   Gimp          *gimp;
-  ProcRecord    *proc_rec;
+  ProcRecord    *procedure;
   Argument      *args;
   gint           n_args  = 0;
   GimpDisplay   *display = NULL;
@@ -73,23 +75,23 @@ plug_in_run_cmd_callback (GtkAction     *action,
   if (! gimp)
     return;
 
-  proc_rec = &proc_def->db_info;
+  procedure = &proc_def->db_info;
 
-  args = procedural_db_arguments (proc_rec);
+  args = gimp_procedure_get_arguments (procedure);
 
   /* initialize the first argument  */
   g_value_set_int (&args[n_args].value, GIMP_RUN_INTERACTIVE);
   n_args++;
 
-  switch (proc_rec->proc_type)
+  switch (procedure->proc_type)
     {
     case GIMP_EXTENSION:
       break;
 
     case GIMP_PLUGIN:
     case GIMP_TEMPORARY:
-      if (proc_rec->num_args > n_args &&
-          proc_rec->args[n_args].type == GIMP_PDB_IMAGE)
+      if (procedure->num_args > n_args &&
+          procedure->args[n_args].type == GIMP_PDB_IMAGE)
         {
           display = action_data_get_display (data);
 
@@ -98,8 +100,8 @@ plug_in_run_cmd_callback (GtkAction     *action,
               gimp_value_set_image (&args[n_args].value, display->image);
               n_args++;
 
-              if (proc_rec->num_args > n_args &&
-                  proc_rec->args[n_args].type == GIMP_PDB_DRAWABLE)
+              if (procedure->num_args > n_args &&
+                  procedure->args[n_args].type == GIMP_PDB_DRAWABLE)
                 {
                   GimpDrawable *drawable;
 
@@ -129,20 +131,20 @@ plug_in_run_cmd_callback (GtkAction     *action,
   /* run the plug-in procedure */
   plug_in_run (gimp, gimp_get_user_context (gimp),
                GIMP_PROGRESS (display),
-               proc_rec, args, n_args, FALSE, TRUE,
+               procedure, args, n_args, FALSE, TRUE,
                display ? gimp_display_get_ID (display) : -1);
 
   /* remember only "standard" plug-ins */
-  if (proc_rec->proc_type == GIMP_PLUGIN       &&
-      proc_rec->num_args >= 3                  &&
-      proc_rec->args[1].type == GIMP_PDB_IMAGE &&
-      proc_rec->args[2].type == GIMP_PDB_DRAWABLE)
+  if (procedure->proc_type == GIMP_PLUGIN       &&
+      procedure->num_args >= 3                  &&
+      procedure->args[1].type == GIMP_PDB_IMAGE &&
+      procedure->args[2].type == GIMP_PDB_DRAWABLE)
     {
       gimp_set_last_plug_in (gimp, proc_def);
     }
 
  error:
-  procedural_db_destroy_args (args, proc_rec->num_args, TRUE);
+  procedural_db_destroy_args (args, procedure->num_args, TRUE);
 }
 
 void

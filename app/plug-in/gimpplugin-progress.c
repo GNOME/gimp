@@ -28,6 +28,7 @@
 #include "core/gimppdbprogress.h"
 #include "core/gimpprogress.h"
 
+#include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
 #include "plug-in.h"
@@ -307,7 +308,8 @@ plug_in_progress_cancel_callback (GimpProgress *progress,
 
   if (proc_frame->main_loop)
     {
-      proc_frame->return_vals   = procedural_db_return_values (NULL, FALSE);
+      proc_frame->return_vals   = gimp_procedure_get_return_values (NULL,
+                                                                    FALSE);
       proc_frame->n_return_vals = 1;
 
       g_value_set_enum (&proc_frame->return_vals->value, GIMP_PDB_CANCEL);
@@ -319,7 +321,8 @@ plug_in_progress_cancel_callback (GimpProgress *progress,
 
       if (proc_frame->main_loop)
         {
-          proc_frame->return_vals   = procedural_db_return_values (NULL, FALSE);
+          proc_frame->return_vals   = gimp_procedure_get_return_values (NULL,
+                                                                        FALSE);
           proc_frame->n_return_vals = 1;
 
           g_value_set_enum (&proc_frame->return_vals->value, GIMP_PDB_CANCEL);

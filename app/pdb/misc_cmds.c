@@ -38,6 +38,7 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "pdb-types.h"
+#include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
@@ -55,41 +56,41 @@ register_misc_procs (Gimp *gimp)
   /*
    * version
    */
-  procedure = procedural_db_init_proc (&version_proc, 0, 1);
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_STRING,
-                                  gimp_param_spec_string ("version",
-                                                          "version",
-                                                          "The gimp version",
-                                                          FALSE, FALSE,
-                                                          NULL,
-                                                          GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&version_proc, 0, 1);
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_STRING,
+                                   gimp_param_spec_string ("version",
+                                                           "version",
+                                                           "The gimp version",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * getpid
    */
-  procedure = procedural_db_init_proc (&getpid_proc, 0, 1);
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_int ("pid",
-                                                    "pid",
-                                                    "The PID",
-                                                    G_MININT32, G_MAXINT32, 0,
-                                                    GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&getpid_proc, 0, 1);
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_int ("pid",
+                                                     "pid",
+                                                     "The PID",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * quit
    */
-  procedure = procedural_db_init_proc (&quit_proc, 1, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_boolean ("force",
-                                                    "force",
-                                                    "Flag specifying whether to force the gimp to or exit normally",
-                                                    FALSE,
-                                                    GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&quit_proc, 1, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_boolean ("force",
+                                                     "force",
+                                                     "Flag specifying whether to force the gimp to or exit normally",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
 }
@@ -106,7 +107,7 @@ version_invoker (ProcRecord   *proc_record,
 
   version = g_strdup (GIMP_VERSION);
 
-  return_vals = procedural_db_return_values (proc_record, TRUE);
+  return_vals = gimp_procedure_get_return_values (proc_record, TRUE);
   g_value_take_string (&return_vals[1].value, version);
 
   return return_vals;
@@ -139,7 +140,7 @@ getpid_invoker (ProcRecord   *proc_record,
 
   pid = getpid ();
 
-  return_vals = procedural_db_return_values (proc_record, TRUE);
+  return_vals = gimp_procedure_get_return_values (proc_record, TRUE);
   g_value_set_int (&return_vals[1].value, pid);
 
   return return_vals;
@@ -177,7 +178,7 @@ quit_invoker (ProcRecord   *proc_record,
       gimp_exit (gimp, force);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord quit_proc =

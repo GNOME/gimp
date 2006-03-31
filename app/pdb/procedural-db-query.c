@@ -36,6 +36,7 @@
 
 #include "core/gimp.h"
 
+#include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "procedural-db-query.h"
 

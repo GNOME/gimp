@@ -31,6 +31,7 @@
 
 #include "batch.h"
 
+#include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
 #include "gimp-intl.h"
@@ -132,7 +133,7 @@ batch_run_cmd (Gimp        *gimp,
   Argument *return_vals;
   gint      n_return_vals;
 
-  args = procedural_db_arguments (proc);
+  args = gimp_procedure_get_arguments (proc);
 
   g_value_set_int (&args[0].value, run_mode);
 

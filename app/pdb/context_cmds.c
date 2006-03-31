@@ -26,6 +26,7 @@
 #include "libgimpcolor/gimpcolor.h"
 
 #include "pdb-types.h"
+#include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
@@ -69,299 +70,299 @@ register_context_procs (Gimp *gimp)
   /*
    * context_push
    */
-  procedure = procedural_db_init_proc (&context_push_proc, 0, 0);
+  procedure = gimp_procedure_init (&context_push_proc, 0, 0);
   procedural_db_register (gimp, procedure);
 
   /*
    * context_pop
    */
-  procedure = procedural_db_init_proc (&context_pop_proc, 0, 0);
+  procedure = gimp_procedure_init (&context_pop_proc, 0, 0);
   procedural_db_register (gimp, procedure);
 
   /*
    * context_get_paint_method
    */
-  procedure = procedural_db_init_proc (&context_get_paint_method_proc, 0, 1);
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_STRING,
-                                  gimp_param_spec_string ("name",
-                                                          "name",
-                                                          "The name of the active paint method",
-                                                          FALSE, FALSE,
-                                                          NULL,
-                                                          GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&context_get_paint_method_proc, 0, 1);
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_STRING,
+                                   gimp_param_spec_string ("name",
+                                                           "name",
+                                                           "The name of the active paint method",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * context_set_paint_method
    */
-  procedure = procedural_db_init_proc (&context_set_paint_method_proc, 1, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("name",
-                                                      "name",
-                                                      "The name of the paint method",
-                                                      FALSE, FALSE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&context_set_paint_method_proc, 1, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The name of the paint method",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * context_get_foreground
    */
-  procedure = procedural_db_init_proc (&context_get_foreground_proc, 0, 1);
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_COLOR,
-                                  gimp_param_spec_rgb ("foreground",
-                                                       "foreground",
-                                                       "The foreground color",
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&context_get_foreground_proc, 0, 1);
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_COLOR,
+                                   gimp_param_spec_rgb ("foreground",
+                                                        "foreground",
+                                                        "The foreground color",
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * context_set_foreground
    */
-  procedure = procedural_db_init_proc (&context_set_foreground_proc, 1, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_COLOR,
-                              gimp_param_spec_rgb ("foreground",
-                                                   "foreground",
-                                                   "The foreground color",
-                                                   NULL,
-                                                   GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&context_set_foreground_proc, 1, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_COLOR,
+                               gimp_param_spec_rgb ("foreground",
+                                                    "foreground",
+                                                    "The foreground color",
+                                                    NULL,
+                                                    GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * context_get_background
    */
-  procedure = procedural_db_init_proc (&context_get_background_proc, 0, 1);
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_COLOR,
-                                  gimp_param_spec_rgb ("background",
-                                                       "background",
-                                                       "The background color",
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&context_get_background_proc, 0, 1);
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_COLOR,
+                                   gimp_param_spec_rgb ("background",
+                                                        "background",
+                                                        "The background color",
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * context_set_background
    */
-  procedure = procedural_db_init_proc (&context_set_background_proc, 1, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_COLOR,
-                              gimp_param_spec_rgb ("background",
-                                                   "background",
-                                                   "The background color",
-                                                   NULL,
-                                                   GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&context_set_background_proc, 1, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_COLOR,
+                               gimp_param_spec_rgb ("background",
+                                                    "background",
+                                                    "The background color",
+                                                    NULL,
+                                                    GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * context_set_default_colors
    */
-  procedure = procedural_db_init_proc (&context_set_default_colors_proc, 0, 0);
+  procedure = gimp_procedure_init (&context_set_default_colors_proc, 0, 0);
   procedural_db_register (gimp, procedure);
 
   /*
    * context_swap_colors
    */
-  procedure = procedural_db_init_proc (&context_swap_colors_proc, 0, 0);
+  procedure = gimp_procedure_init (&context_swap_colors_proc, 0, 0);
   procedural_db_register (gimp, procedure);
 
   /*
    * context_get_opacity
    */
-  procedure = procedural_db_init_proc (&context_get_opacity_proc, 0, 1);
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_FLOAT,
-                                  g_param_spec_double ("opacity",
-                                                       "opacity",
-                                                       "The opacity (0 <= opacity <= 100)",
-                                                       0, 100, 0,
-                                                       GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&context_get_opacity_proc, 0, 1);
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_FLOAT,
+                                   g_param_spec_double ("opacity",
+                                                        "opacity",
+                                                        "The opacity (0 <= opacity <= 100)",
+                                                        0, 100, 0,
+                                                        GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * context_set_opacity
    */
-  procedure = procedural_db_init_proc (&context_set_opacity_proc, 1, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_FLOAT,
-                              g_param_spec_double ("opacity",
-                                                   "opacity",
-                                                   "The opacity (0 <= opacity <= 100)",
-                                                   0, 100, 0,
-                                                   GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&context_set_opacity_proc, 1, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_FLOAT,
+                               g_param_spec_double ("opacity",
+                                                    "opacity",
+                                                    "The opacity (0 <= opacity <= 100)",
+                                                    0, 100, 0,
+                                                    GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * context_get_paint_mode
    */
-  procedure = procedural_db_init_proc (&context_get_paint_mode_proc, 0, 1);
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_INT32,
-                                  g_param_spec_enum ("paint-mode",
-                                                     "paint mode",
-                                                     "The paint mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }",
-                                                     GIMP_TYPE_LAYER_MODE_EFFECTS,
-                                                     GIMP_NORMAL_MODE,
-                                                     GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&context_get_paint_mode_proc, 0, 1);
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_INT32,
+                                   g_param_spec_enum ("paint-mode",
+                                                      "paint mode",
+                                                      "The paint mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }",
+                                                      GIMP_TYPE_LAYER_MODE_EFFECTS,
+                                                      GIMP_NORMAL_MODE,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * context_set_paint_mode
    */
-  procedure = procedural_db_init_proc (&context_set_paint_mode_proc, 1, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_INT32,
-                              g_param_spec_enum ("paint-mode",
-                                                 "paint mode",
-                                                 "The paint mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }",
-                                                 GIMP_TYPE_LAYER_MODE_EFFECTS,
-                                                 GIMP_NORMAL_MODE,
-                                                 GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&context_set_paint_mode_proc, 1, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_INT32,
+                               g_param_spec_enum ("paint-mode",
+                                                  "paint mode",
+                                                  "The paint mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }",
+                                                  GIMP_TYPE_LAYER_MODE_EFFECTS,
+                                                  GIMP_NORMAL_MODE,
+                                                  GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * context_get_brush
    */
-  procedure = procedural_db_init_proc (&context_get_brush_proc, 0, 1);
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_STRING,
-                                  gimp_param_spec_string ("name",
-                                                          "name",
-                                                          "The name of the active brush",
-                                                          FALSE, FALSE,
-                                                          NULL,
-                                                          GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&context_get_brush_proc, 0, 1);
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_STRING,
+                                   gimp_param_spec_string ("name",
+                                                           "name",
+                                                           "The name of the active brush",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * context_set_brush
    */
-  procedure = procedural_db_init_proc (&context_set_brush_proc, 1, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("name",
-                                                      "name",
-                                                      "The name of the brush",
-                                                      FALSE, FALSE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&context_set_brush_proc, 1, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The name of the brush",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * context_get_pattern
    */
-  procedure = procedural_db_init_proc (&context_get_pattern_proc, 0, 1);
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_STRING,
-                                  gimp_param_spec_string ("name",
-                                                          "name",
-                                                          "The name of the active pattern",
-                                                          FALSE, FALSE,
-                                                          NULL,
-                                                          GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&context_get_pattern_proc, 0, 1);
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_STRING,
+                                   gimp_param_spec_string ("name",
+                                                           "name",
+                                                           "The name of the active pattern",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * context_set_pattern
    */
-  procedure = procedural_db_init_proc (&context_set_pattern_proc, 1, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("name",
-                                                      "name",
-                                                      "The name of the pattern",
-                                                      FALSE, FALSE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&context_set_pattern_proc, 1, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The name of the pattern",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * context_get_gradient
    */
-  procedure = procedural_db_init_proc (&context_get_gradient_proc, 0, 1);
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_STRING,
-                                  gimp_param_spec_string ("name",
-                                                          "name",
-                                                          "The name of the active gradient",
-                                                          FALSE, FALSE,
-                                                          NULL,
-                                                          GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&context_get_gradient_proc, 0, 1);
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_STRING,
+                                   gimp_param_spec_string ("name",
+                                                           "name",
+                                                           "The name of the active gradient",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * context_set_gradient
    */
-  procedure = procedural_db_init_proc (&context_set_gradient_proc, 1, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("name",
-                                                      "name",
-                                                      "The name of the gradient",
-                                                      FALSE, FALSE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&context_set_gradient_proc, 1, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The name of the gradient",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * context_get_palette
    */
-  procedure = procedural_db_init_proc (&context_get_palette_proc, 0, 1);
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_STRING,
-                                  gimp_param_spec_string ("name",
-                                                          "name",
-                                                          "The name of the active palette",
-                                                          FALSE, FALSE,
-                                                          NULL,
-                                                          GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&context_get_palette_proc, 0, 1);
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_STRING,
+                                   gimp_param_spec_string ("name",
+                                                           "name",
+                                                           "The name of the active palette",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * context_set_palette
    */
-  procedure = procedural_db_init_proc (&context_set_palette_proc, 1, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("name",
-                                                      "name",
-                                                      "The name of the palette",
-                                                      FALSE, FALSE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&context_set_palette_proc, 1, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The name of the palette",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * context_get_font
    */
-  procedure = procedural_db_init_proc (&context_get_font_proc, 0, 1);
-  procedural_db_add_return_value (procedure,
-                                  GIMP_PDB_STRING,
-                                  gimp_param_spec_string ("name",
-                                                          "name",
-                                                          "The name of the active font",
-                                                          FALSE, FALSE,
-                                                          NULL,
-                                                          GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&context_get_font_proc, 0, 1);
+  gimp_procedure_add_return_value (procedure,
+                                   GIMP_PDB_STRING,
+                                   gimp_param_spec_string ("name",
+                                                           "name",
+                                                           "The name of the active font",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
    * context_set_font
    */
-  procedure = procedural_db_init_proc (&context_set_font_proc, 1, 0);
-  procedural_db_add_argument (procedure,
-                              GIMP_PDB_STRING,
-                              gimp_param_spec_string ("name",
-                                                      "name",
-                                                      "The name of the font",
-                                                      FALSE, FALSE,
-                                                      NULL,
-                                                      GIMP_PARAM_READWRITE));
+  procedure = gimp_procedure_init (&context_set_font_proc, 1, 0);
+  gimp_procedure_add_argument (procedure,
+                               GIMP_PDB_STRING,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The name of the font",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
 }
@@ -378,7 +379,7 @@ context_push_invoker (ProcRecord   *proc_record,
     success = plug_in_context_push (gimp->current_plug_in);
   else
     success = FALSE;
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord context_push_proc =
@@ -408,7 +409,7 @@ context_pop_invoker (ProcRecord   *proc_record,
     success = plug_in_context_pop (gimp->current_plug_in);
   else
     success = FALSE;
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord context_pop_proc =
@@ -444,7 +445,7 @@ context_get_paint_method_invoker (ProcRecord   *proc_record,
   else
     success = FALSE;
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, name);
@@ -490,7 +491,7 @@ context_set_paint_method_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord context_set_paint_method_proc =
@@ -520,7 +521,7 @@ context_get_foreground_invoker (ProcRecord   *proc_record,
 
   gimp_context_get_foreground (context, &foreground);
 
-  return_vals = procedural_db_return_values (proc_record, TRUE);
+  return_vals = gimp_procedure_get_return_values (proc_record, TRUE);
   gimp_value_set_rgb (&return_vals[1].value, &foreground);
 
   return return_vals;
@@ -559,7 +560,7 @@ context_set_foreground_invoker (ProcRecord   *proc_record,
       gimp_context_set_foreground (context, &foreground);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord context_set_foreground_proc =
@@ -589,7 +590,7 @@ context_get_background_invoker (ProcRecord   *proc_record,
 
   gimp_context_get_background (context, &background);
 
-  return_vals = procedural_db_return_values (proc_record, TRUE);
+  return_vals = gimp_procedure_get_return_values (proc_record, TRUE);
   gimp_value_set_rgb (&return_vals[1].value, &background);
 
   return return_vals;
@@ -628,7 +629,7 @@ context_set_background_invoker (ProcRecord   *proc_record,
       gimp_context_set_background (context, &background);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord context_set_background_proc =
@@ -654,7 +655,7 @@ context_set_default_colors_invoker (ProcRecord   *proc_record,
                                     Argument     *args)
 {
   gimp_context_set_default_colors (context);
-  return procedural_db_return_values (proc_record, TRUE);
+  return gimp_procedure_get_return_values (proc_record, TRUE);
 }
 
 static ProcRecord context_set_default_colors_proc =
@@ -680,7 +681,7 @@ context_swap_colors_invoker (ProcRecord   *proc_record,
                              Argument     *args)
 {
   gimp_context_swap_colors (context);
-  return procedural_db_return_values (proc_record, TRUE);
+  return gimp_procedure_get_return_values (proc_record, TRUE);
 }
 
 static ProcRecord context_swap_colors_proc =
@@ -710,7 +711,7 @@ context_get_opacity_invoker (ProcRecord   *proc_record,
 
   opacity = gimp_context_get_opacity (context) * 100.0;
 
-  return_vals = procedural_db_return_values (proc_record, TRUE);
+  return_vals = gimp_procedure_get_return_values (proc_record, TRUE);
   g_value_set_double (&return_vals[1].value, opacity);
 
   return return_vals;
@@ -748,7 +749,7 @@ context_set_opacity_invoker (ProcRecord   *proc_record,
       gimp_context_set_opacity (context, opacity / 100.0);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord context_set_opacity_proc =
@@ -778,7 +779,7 @@ context_get_paint_mode_invoker (ProcRecord   *proc_record,
 
   paint_mode = gimp_context_get_paint_mode (context);
 
-  return_vals = procedural_db_return_values (proc_record, TRUE);
+  return_vals = gimp_procedure_get_return_values (proc_record, TRUE);
   g_value_set_enum (&return_vals[1].value, paint_mode);
 
   return return_vals;
@@ -816,7 +817,7 @@ context_set_paint_mode_invoker (ProcRecord   *proc_record,
       gimp_context_set_paint_mode (context, paint_mode);
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord context_set_paint_mode_proc =
@@ -852,7 +853,7 @@ context_get_brush_invoker (ProcRecord   *proc_record,
   else
     success = FALSE;
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, name);
@@ -898,7 +899,7 @@ context_set_brush_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord context_set_brush_proc =
@@ -934,7 +935,7 @@ context_get_pattern_invoker (ProcRecord   *proc_record,
   else
     success = FALSE;
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, name);
@@ -980,7 +981,7 @@ context_set_pattern_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord context_set_pattern_proc =
@@ -1016,7 +1017,7 @@ context_get_gradient_invoker (ProcRecord   *proc_record,
   else
     success = FALSE;
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, name);
@@ -1062,7 +1063,7 @@ context_set_gradient_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord context_set_gradient_proc =
@@ -1098,7 +1099,7 @@ context_get_palette_invoker (ProcRecord   *proc_record,
   else
     success = FALSE;
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, name);
@@ -1144,7 +1145,7 @@ context_set_palette_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord context_set_palette_proc =
@@ -1180,7 +1181,7 @@ context_get_font_invoker (ProcRecord   *proc_record,
   else
     success = FALSE;
 
-  return_vals = procedural_db_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (proc_record, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, name);
@@ -1226,7 +1227,7 @@ context_set_font_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return procedural_db_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (proc_record, success);
 }
 
 static ProcRecord context_set_font_proc =

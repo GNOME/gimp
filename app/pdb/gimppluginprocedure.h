@@ -25,7 +25,7 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "pdb/procedural_db.h"  /* ProcRecord */
+#include "pdb/gimpprocedure.h"  /* ProcRecord */
 
 
 struct _PlugInProcDef
