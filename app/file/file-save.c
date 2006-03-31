@@ -53,6 +53,7 @@
 #include "core/gimpimagefile.h"
 #include "core/gimpprogress.h"
 
+#include "pdb/gimpargument.h"
 #include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
@@ -140,7 +141,7 @@ file_save (GimpImage      *image,
 
   status = g_value_get_enum (&return_vals[0].value);
 
-  procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
+  gimp_arguments_destroy (return_vals, n_return_vals, TRUE);
 
   if (status == GIMP_PDB_SUCCESS)
     {

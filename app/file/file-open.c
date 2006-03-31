@@ -56,6 +56,7 @@
 #include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
 
+#include "pdb/gimpargument.h"
 #include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
@@ -175,7 +176,7 @@ file_open_image (Gimp               *gimp,
                    _("Plug-In could not open image"));
     }
 
-  procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
+  gimp_arguments_destroy (return_vals, n_return_vals, TRUE);
 
   return image;
 }
@@ -256,7 +257,7 @@ file_open_thumbnail (Gimp          *gimp,
             }
         }
 
-      procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
+      gimp_arguments_destroy (return_vals, n_return_vals, TRUE);
 
       return image;
     }

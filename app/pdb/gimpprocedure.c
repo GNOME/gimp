@@ -40,6 +40,7 @@
 
 #include "plug-in/plug-in-run.h"
 
+#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 
@@ -338,7 +339,7 @@ gimp_procedure_get_arguments (GimpProcedure *procedure)
   args = g_new0 (Argument, procedure->num_args);
 
   for (i = 0; i < procedure->num_args; i++)
-    procedural_db_argument_init (&args[i], &procedure->args[i]);
+    gimp_argument_init (&args[i], &procedure->args[i]);
 
   return args;
 }
@@ -361,7 +362,7 @@ gimp_procedure_get_return_values (GimpProcedure *procedure,
 
   args = g_new0 (Argument, n_args);
 
-  procedural_db_compat_arg_init (&args[0], GIMP_PDB_STATUS);
+  gimp_argument_init_compat (&args[0], GIMP_PDB_STATUS);
 
   if (success)
     g_value_set_enum (&args[0].value, GIMP_PDB_SUCCESS);
@@ -370,7 +371,7 @@ gimp_procedure_get_return_values (GimpProcedure *procedure,
 
   if (procedure)
     for (i = 0; i < procedure->num_values; i++)
-      procedural_db_argument_init (&args[i + 1], &procedure->values[i]);
+      gimp_argument_init (&args[i + 1], &procedure->values[i]);
 
   return args;
 }

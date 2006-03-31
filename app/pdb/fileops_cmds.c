@@ -30,6 +30,7 @@
 #include "libgimpthumb/gimpthumb.h"
 
 #include "pdb-types.h"
+#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
@@ -507,7 +508,7 @@ file_load_invoker (GimpProcedure *procedure,
                                        new_args, proc->num_args,
                                        &n_return_vals);
 
-  procedural_db_destroy_args (new_args, proc->num_args, TRUE);
+  gimp_arguments_destroy (new_args, proc->num_args, TRUE);
 
   return return_vals;
 }
@@ -730,7 +731,7 @@ file_save_invoker (GimpProcedure *procedure,
                                        new_args, proc->num_args,
                                        &n_return_vals);
 
-  procedural_db_destroy_args (new_args, proc->num_args, TRUE);
+  gimp_arguments_destroy (new_args, proc->num_args, TRUE);
 
   return return_vals;
 }

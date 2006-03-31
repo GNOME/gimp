@@ -26,6 +26,7 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "pdb-types.h"
+#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"

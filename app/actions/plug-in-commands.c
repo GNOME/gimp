@@ -37,8 +37,8 @@
 #include "plug-in/plug-in-run.h"
 #include "plug-in/plug-in-proc-def.h"
 
+#include "pdb/gimpargument.h"
 #include "pdb/gimpprocedure.h"
-#include "pdb/procedural_db.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
@@ -145,7 +145,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
     }
 
  error:
-  procedural_db_destroy_args (args, procedure->num_args, TRUE);
+  gimp_arguments_destroy (args, procedure->num_args, TRUE);
 }
 
 void

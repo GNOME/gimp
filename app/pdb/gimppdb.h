@@ -20,19 +20,6 @@
 #define __PROCEDURAL_DB_H__
 
 
-struct _Argument
-{
-  GimpPDBArgType type;
-  GValue         value;
-};
-
-struct _ProcArg
-{
-  GimpPDBArgType  type;    /*  Argument type (int, char, char *, etc)  */
-  GParamSpec     *pspec;
-};
-
-
 void            procedural_db_init             (Gimp             *gimp);
 void            procedural_db_free             (Gimp             *gimp);
 
@@ -58,15 +45,6 @@ Argument      * procedural_db_run_proc         (Gimp             *gimp,
                                                 const gchar      *name,
                                                 gint             *n_return_vals,
                                                 ...);
-
-void            procedural_db_argument_init    (Argument         *arg,
-                                                ProcArg          *proc_arg);
-void            procedural_db_compat_arg_init  (Argument         *arg,
-                                                GimpPDBArgType    arg_type);
-
-void            procedural_db_destroy_args     (Argument         *args,
-                                                gint              n_args,
-                                                gboolean          full_destroy);
 
 gchar         * procedural_db_type_name        (GimpPDBArgType    type);
 

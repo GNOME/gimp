@@ -702,6 +702,8 @@ GPL
 
 		    $headers .= '#include "pdb-types.h"';
 		    $headers .= "\n";
+		    $headers .= '#include "gimpargument.h"';
+		    $headers .= "\n";
 		    $headers .= '#include "gimpprocedure.h"';
 		    $headers .= "\n";
 		    $headers .= '#include "procedural_db.h"';

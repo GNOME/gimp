@@ -1,5 +1,38 @@
 2006-03-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/Makefile.am
+	* app/pdb/gimpargument.[ch]: moved Argument and ProcArg structs
+	and functions to these new files. Renamed functions to
+	gimp_argument_foo().
+
+	* app/pdb/procedural_db.[ch]: removed them here.
+
+	* app/batch.c
+	* app/actions/plug-in-commands.c
+	* app/actions/vectors-commands.c
+	* app/core/gimppdbprogress.c
+	* app/dialogs/about-dialog.c
+	* app/file/file-open.c
+	* app/file/file-save.c
+	* app/pdb/gimpprocedure.c
+	* app/pdb/procedural_db_cmds.c
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-params.c
+	* app/plug-in/plug-in-progress.c
+	* app/plug-in/plug-in-rc.c
+	* app/plug-in/plug-in-run.c
+	* app/plug-in/plug-ins.c
+	* app/widgets/gimphelp.c
+	* app/widgets/gimppdbdialog.c
+	* app/xcf/xcf.c
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/pdb/fileops.pdb: changed #includes and function
+	calls accordingly.
+
+	* app/pdb/*_cmds.c: regenerated.
+
+2006-03-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/pdb/pdb-types.h
 	* app/pdb/gimpprocedure.h: renamed struct ProcRecord to
 	GimpProcedure. Added GIMP_IS_PROCEDURE() which checks for != NULL.

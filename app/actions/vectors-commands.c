@@ -40,6 +40,7 @@
 #include "core/gimpstrokedesc.h"
 #include "core/gimptoolinfo.h"
 
+#include "pdb/gimpargument.h"
 #include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
@@ -343,7 +344,7 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
                procedure, args, 3 /* not procedure->num_args */,
                FALSE, TRUE, display ? gimp_display_get_ID (display) : 0);
 
-  procedural_db_destroy_args (args, procedure->num_args, TRUE);
+  gimp_arguments_destroy (args, procedure->num_args, TRUE);
 }
 
 void

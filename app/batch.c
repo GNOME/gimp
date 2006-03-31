@@ -31,6 +31,7 @@
 
 #include "batch.h"
 
+#include "pdb/gimpargument.h"
 #include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
@@ -162,8 +163,8 @@ batch_run_cmd (Gimp          *gimp,
       break;
     }
 
-  procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
-  procedural_db_destroy_args (args, procedure->num_args, TRUE);
+  gimp_arguments_destroy (return_vals, n_return_vals, TRUE);
+  gimp_arguments_destroy (args, procedure->num_args, TRUE);
 
   return;
 }

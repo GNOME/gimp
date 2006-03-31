@@ -29,6 +29,7 @@
 
 #include "core/gimpcontext.h"
 
+#include "pdb/gimpargument.h"
 #include "pdb/procedural_db.h"
 
 #include "about.h"
@@ -223,7 +224,7 @@ about_dialog_load_url (GtkAboutDialog *dialog,
                                         &nreturn_vals,
                                         GIMP_PDB_STRING, url,
                                         GIMP_PDB_END);
-  procedural_db_destroy_args (return_vals, nreturn_vals, TRUE);
+  gimp_arguments_destroy (return_vals, nreturn_vals, TRUE);
 }
 
 
