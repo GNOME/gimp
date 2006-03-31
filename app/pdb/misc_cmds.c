@@ -96,14 +96,14 @@ register_misc_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 version_invoker (GimpProcedure *procedure,
                  Gimp          *gimp,
                  GimpContext   *context,
                  GimpProgress  *progress,
-                 Argument      *args)
+                 GimpArgument  *args)
 {
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *version = NULL;
 
   version = g_strdup (GIMP_VERSION);
@@ -130,14 +130,14 @@ static GimpProcedure version_proc =
   { { version_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 getpid_invoker (GimpProcedure *procedure,
                 Gimp          *gimp,
                 GimpContext   *context,
                 GimpProgress  *progress,
-                Argument      *args)
+                GimpArgument  *args)
 {
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gint32 pid = 0;
 
   pid = getpid ();
@@ -164,12 +164,12 @@ static GimpProcedure getpid_proc =
   { { getpid_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 quit_invoker (GimpProcedure *procedure,
               Gimp          *gimp,
               GimpContext   *context,
               GimpProgress  *progress,
-              Argument      *args)
+              GimpArgument  *args)
 {
   gboolean success = TRUE;
   gboolean force;

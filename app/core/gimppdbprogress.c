@@ -245,8 +245,8 @@ gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
 
   if (progress->callback_name && ! progress->callback_busy)
     {
-      Argument *return_vals;
-      gint      n_return_vals;
+      GimpArgument *return_vals;
+      gint          n_return_vals;
 
       progress->callback_busy = TRUE;
 

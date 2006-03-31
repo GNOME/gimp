@@ -388,15 +388,15 @@ register_transform_tools_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 flip_invoker (GimpProcedure *procedure,
               Gimp          *gimp,
               GimpContext   *context,
               GimpProgress  *progress,
-              Argument      *args)
+              GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gint32 flip_type;
 
@@ -441,15 +441,15 @@ static GimpProcedure flip_proc =
   { { flip_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 perspective_invoker (GimpProcedure *procedure,
                      Gimp          *gimp,
                      GimpContext   *context,
                      GimpProgress  *progress,
-                     Argument      *args)
+                     GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gboolean interpolation;
   gdouble x0;
@@ -535,15 +535,15 @@ static GimpProcedure perspective_proc =
   { { perspective_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 rotate_invoker (GimpProcedure *procedure,
                 Gimp          *gimp,
                 GimpContext   *context,
                 GimpProgress  *progress,
-                Argument      *args)
+                GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gboolean interpolation;
   gdouble angle;
@@ -611,15 +611,15 @@ static GimpProcedure rotate_proc =
   { { rotate_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 scale_invoker (GimpProcedure *procedure,
                Gimp          *gimp,
                GimpContext   *context,
                GimpProgress  *progress,
-               Argument      *args)
+               GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gboolean interpolation;
   gdouble x0;
@@ -697,15 +697,15 @@ static GimpProcedure scale_proc =
   { { scale_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 shear_invoker (GimpProcedure *procedure,
                Gimp          *gimp,
                GimpContext   *context,
                GimpProgress  *progress,
-               Argument      *args)
+               GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gboolean interpolation;
   gint32 shear_type;
@@ -776,15 +776,15 @@ static GimpProcedure shear_proc =
   { { shear_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 transform_2d_invoker (GimpProcedure *procedure,
                       Gimp          *gimp,
                       GimpContext   *context,
                       GimpProgress  *progress,
-                      Argument      *args)
+                      GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gboolean interpolation;
   gdouble source_x;

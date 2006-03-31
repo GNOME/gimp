@@ -38,6 +38,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
+#include "pdb/gimpargument.h"
 #include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
@@ -1059,8 +1060,8 @@ plug_ins_add_to_db (Gimp        *gimp,
 
       if (proc_def->file_proc)
         {
-          Argument *return_vals;
-          gint      n_return_vals;
+          GimpArgument *return_vals;
+          gint          n_return_vals;
 
           if (proc_def->image_types)
             {
@@ -1086,7 +1087,7 @@ plug_ins_add_to_db (Gimp        *gimp,
                                         GIMP_PDB_END);
             }
 
-          procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
+          gimp_arguments_destroy (return_vals, n_return_vals, TRUE);
 	}
     }
 }

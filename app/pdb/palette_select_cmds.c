@@ -109,12 +109,12 @@ register_palette_select_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 palettes_popup_invoker (GimpProcedure *procedure,
                         Gimp          *gimp,
                         GimpContext   *context,
                         GimpProgress  *progress,
-                        Argument      *args)
+                        GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *palette_callback;
@@ -154,12 +154,12 @@ static GimpProcedure palettes_popup_proc =
   { { palettes_popup_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 palettes_close_popup_invoker (GimpProcedure *procedure,
                               Gimp          *gimp,
                               GimpContext   *context,
                               GimpProgress  *progress,
-                              Argument      *args)
+                              GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *palette_callback;
@@ -194,12 +194,12 @@ static GimpProcedure palettes_close_popup_proc =
   { { palettes_close_popup_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 palettes_set_popup_invoker (GimpProcedure *procedure,
                             Gimp          *gimp,
                             GimpContext   *context,
                             GimpProgress  *progress,
-                            Argument      *args)
+                            GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *palette_callback;

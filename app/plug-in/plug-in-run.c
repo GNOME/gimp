@@ -38,8 +38,8 @@
 #include "core/gimpcontext.h"
 #include "core/gimpprogress.h"
 
+#include "pdb/gimpargument.h"
 #include "pdb/gimpprocedure.h"
-#include "pdb/procedural_db.h"
 
 #include "plug-in.h"
 #include "plug-in-params.h"
@@ -52,32 +52,32 @@
 
 /*  local function prototypes  */
 
-static Argument * plug_in_temp_run        (GimpProcedure   *procedure,
-                                           GimpContext     *context,
-                                           GimpProgress    *progress,
-                                           Argument        *args,
-                                           gint             n_args);
-static Argument * plug_in_get_return_vals (PlugIn          *plug_in,
-                                           PlugInProcFrame *proc_frame,
-                                           gint            *n_return_vals);
+static GimpArgument * plug_in_temp_run        (GimpProcedure   *procedure,
+                                               GimpContext     *context,
+                                               GimpProgress    *progress,
+                                               GimpArgument    *args,
+                                               gint             n_args);
+static GimpArgument * plug_in_get_return_vals (PlugIn          *plug_in,
+                                               PlugInProcFrame *proc_frame,
+                                               gint            *n_return_vals);
 
 
 /*  public functions  */
 
-Argument *
+GimpArgument *
 plug_in_run (Gimp          *gimp,
              GimpContext   *context,
              GimpProgress  *progress,
              GimpProcedure *procedure,
-	     Argument      *args,
+	     GimpArgument  *args,
 	     gint           n_args,
 	     gboolean       synchronous,
 	     gboolean       destroy_return_vals,
 	     gint           display_ID)
 {
-  Argument *return_vals   = NULL;
-  gint      n_return_vals = 0;
-  PlugIn   *plug_in;
+  GimpArgument *return_vals   = NULL;
+  gint          n_return_vals = 0;
+  PlugIn       *plug_in;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -193,7 +193,7 @@ plug_in_run (Gimp          *gimp,
  done:
   if (return_vals && destroy_return_vals)
     {
-      procedural_db_destroy_args (return_vals, procedure->num_values, TRUE);
+      gimp_arguments_destroy (return_vals, procedure->num_values, TRUE);
       return_vals = NULL;
     }
 
@@ -211,7 +211,7 @@ plug_in_repeat (Gimp         *gimp,
                 gboolean      with_interface)
 {
   PlugInProcDef *proc_def;
-  Argument      *args;
+  GimpArgument  *args;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (index >= 0);
@@ -235,23 +235,23 @@ plug_in_repeat (Gimp         *gimp,
                    args, 3 /* not proc_def->procedure->num_args */,
                    FALSE, TRUE, display_ID);
 
-      procedural_db_destroy_args (args, proc_def->procedure->num_args, TRUE);
+      gimp_arguments_destroy (args, proc_def->procedure->num_args, TRUE);
     }
 }
 
 
 /*  private functions  */
 
-static Argument *
+static GimpArgument *
 plug_in_temp_run (GimpProcedure *procedure,
                   GimpContext   *context,
                   GimpProgress  *progress,
-		  Argument      *args,
+		  GimpArgument  *args,
 		  gint           n_args)
 {
-  Argument *return_vals   = NULL;
-  gint      n_return_vals = 0;
-  PlugIn   *plug_in;
+  GimpArgument *return_vals   = NULL;
+  gint          n_return_vals = 0;
+  PlugIn       *plug_in;
 
   plug_in = (PlugIn *) procedure->exec_method.temporary.plug_in;
 
@@ -299,12 +299,12 @@ plug_in_temp_run (GimpProcedure *procedure,
   return return_vals;
 }
 
-static Argument *
+static GimpArgument *
 plug_in_get_return_vals (PlugIn          *plug_in,
                          PlugInProcFrame *proc_frame,
                          gint            *n_return_vals)
 {
-  Argument *return_vals;
+  GimpArgument *return_vals;
 
   g_return_val_if_fail (plug_in != NULL, NULL);
   g_return_val_if_fail (proc_frame != NULL, NULL);
@@ -326,8 +326,8 @@ plug_in_get_return_vals (PlugIn          *plug_in,
 
       /* Copy all of the arguments we can. */
       memcpy (return_vals, proc_frame->return_vals,
-	      sizeof (Argument) * MIN (proc_frame->n_return_vals,
-                                       *n_return_vals));
+	      sizeof (GimpArgument) * MIN (proc_frame->n_return_vals,
+                                           *n_return_vals));
 
       /* Free the old argument pointer.  This will cause a memory leak
        * only if there were more values returned than we need (which

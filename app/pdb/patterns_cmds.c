@@ -167,12 +167,12 @@ register_patterns_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 patterns_refresh_invoker (GimpProcedure *procedure,
                           Gimp          *gimp,
                           GimpContext   *context,
                           GimpProgress  *progress,
-                          Argument      *args)
+                          GimpArgument  *args)
 {
   gimp_data_factory_data_refresh (gimp->pattern_factory);
   return gimp_procedure_get_return_values (procedure, TRUE);
@@ -194,15 +194,15 @@ static GimpProcedure patterns_refresh_proc =
   { { patterns_refresh_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 patterns_get_list_invoker (GimpProcedure *procedure,
                            Gimp          *gimp,
                            GimpContext   *context,
                            GimpProgress  *progress,
-                           Argument      *args)
+                           GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *filter;
   gint32 num_patterns = 0;
   gchar **pattern_list = NULL;
@@ -242,15 +242,15 @@ static GimpProcedure patterns_get_list_proc =
   { { patterns_get_list_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 patterns_get_pattern_invoker (GimpProcedure *procedure,
                               Gimp          *gimp,
                               GimpContext   *context,
                               GimpProgress  *progress,
-                              Argument      *args)
+                              GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name = NULL;
   gint32 width = 0;
   gint32 height = 0;
@@ -294,15 +294,15 @@ static GimpProcedure patterns_get_pattern_proc =
   { { patterns_get_pattern_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 patterns_get_pattern_data_invoker (GimpProcedure *procedure,
                                    Gimp          *gimp,
                                    GimpContext   *context,
                                    GimpProgress  *progress,
-                                   Argument      *args)
+                                   GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gchar *actual_name = NULL;
   gint32 width = 0;

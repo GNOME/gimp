@@ -583,12 +583,12 @@ register_color_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 brightness_contrast_invoker (GimpProcedure *procedure,
                              Gimp          *gimp,
                              GimpContext   *context,
                              GimpProgress  *progress,
-                             Argument      *args)
+                             GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -655,12 +655,12 @@ static GimpProcedure brightness_contrast_proc =
   { { brightness_contrast_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 levels_invoker (GimpProcedure *procedure,
                 Gimp          *gimp,
                 GimpContext   *context,
                 GimpProgress  *progress,
-                Argument      *args)
+                GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -716,12 +716,12 @@ static GimpProcedure levels_proc =
   { { levels_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 levels_auto_invoker (GimpProcedure *procedure,
                      Gimp          *gimp,
                      GimpContext   *context,
                      GimpProgress  *progress,
-                     Argument      *args)
+                     GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -757,12 +757,12 @@ static GimpProcedure levels_auto_proc =
   { { levels_auto_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 levels_stretch_invoker (GimpProcedure *procedure,
                         Gimp          *gimp,
                         GimpContext   *context,
                         GimpProgress  *progress,
-                        Argument      *args)
+                        GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -798,12 +798,12 @@ static GimpProcedure levels_stretch_proc =
   { { levels_stretch_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 posterize_invoker (GimpProcedure *procedure,
                    Gimp          *gimp,
                    GimpContext   *context,
                    GimpProgress  *progress,
-                   Argument      *args)
+                   GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -866,12 +866,12 @@ static GimpProcedure posterize_proc =
   { { posterize_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 desaturate_invoker (GimpProcedure *procedure,
                     Gimp          *gimp,
                     GimpContext   *context,
                     GimpProgress  *progress,
-                    Argument      *args)
+                    GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -907,12 +907,12 @@ static GimpProcedure desaturate_proc =
   { { desaturate_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 desaturate_full_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -950,12 +950,12 @@ static GimpProcedure desaturate_full_proc =
   { { desaturate_full_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 equalize_invoker (GimpProcedure *procedure,
                   Gimp          *gimp,
                   GimpContext   *context,
                   GimpProgress  *progress,
-                  Argument      *args)
+                  GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -993,12 +993,12 @@ static GimpProcedure equalize_proc =
   { { equalize_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 invert_invoker (GimpProcedure *procedure,
                 Gimp          *gimp,
                 GimpContext   *context,
                 GimpProgress  *progress,
-                Argument      *args)
+                GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1034,12 +1034,12 @@ static GimpProcedure invert_proc =
   { { invert_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 curves_spline_invoker (GimpProcedure *procedure,
                        Gimp          *gimp,
                        GimpContext   *context,
                        GimpProgress  *progress,
-                       Argument      *args)
+                       GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1136,12 +1136,12 @@ static GimpProcedure curves_spline_proc =
   { { curves_spline_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 curves_explicit_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1229,12 +1229,12 @@ static GimpProcedure curves_explicit_proc =
   { { curves_explicit_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 color_balance_invoker (GimpProcedure *procedure,
                        Gimp          *gimp,
                        GimpContext   *context,
                        GimpProgress  *progress,
-                       Argument      *args)
+                       GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1310,12 +1310,12 @@ static GimpProcedure color_balance_proc =
   { { color_balance_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 colorize_invoker (GimpProcedure *procedure,
                   Gimp          *gimp,
                   GimpContext   *context,
                   GimpProgress  *progress,
-                  Argument      *args)
+                  GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1385,15 +1385,15 @@ static GimpProcedure colorize_proc =
   { { colorize_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 histogram_invoker (GimpProcedure *procedure,
                    Gimp          *gimp,
                    GimpContext   *context,
                    GimpProgress  *progress,
-                   Argument      *args)
+                   GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gint32 channel;
   gint32 start_range;
@@ -1472,12 +1472,12 @@ static GimpProcedure histogram_proc =
   { { histogram_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 hue_saturation_invoker (GimpProcedure *procedure,
                         Gimp          *gimp,
                         GimpContext   *context,
                         GimpProgress  *progress,
-                        Argument      *args)
+                        GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1550,12 +1550,12 @@ static GimpProcedure hue_saturation_proc =
   { { hue_saturation_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 threshold_invoker (GimpProcedure *procedure,
                    Gimp          *gimp,
                    GimpContext   *context,
                    GimpProgress  *progress,
-                   Argument      *args)
+                   GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;

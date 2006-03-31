@@ -79,7 +79,7 @@ file_save (GimpImage      *image,
            gboolean        save_a_copy,
            GError        **error)
 {
-  Argument          *return_vals;
+  GimpArgument      *return_vals;
   gint               n_return_vals;
   GimpPDBStatusType  status;
   gchar             *filename;

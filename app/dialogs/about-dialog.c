@@ -215,16 +215,16 @@ about_dialog_load_url (GtkAboutDialog *dialog,
                        const gchar    *url,
                        gpointer        data)
 {
-  GimpContext *context = GIMP_CONTEXT (data);
-  Argument    *return_vals;
-  gint         nreturn_vals;
+  GimpContext  *context = GIMP_CONTEXT (data);
+  GimpArgument *return_vals;
+  gint          n_return_vals;
 
   return_vals = procedural_db_run_proc (context->gimp, context, NULL,
                                         PDB_URL_LOAD,
-                                        &nreturn_vals,
+                                        &n_return_vals,
                                         GIMP_PDB_STRING, url,
                                         GIMP_PDB_END);
-  gimp_arguments_destroy (return_vals, nreturn_vals, TRUE);
+  gimp_arguments_destroy (return_vals, n_return_vals, TRUE);
 }
 
 

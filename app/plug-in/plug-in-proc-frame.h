@@ -32,7 +32,7 @@ struct _PlugInProcFrame
   GimpProcedure *procedure;
   GMainLoop     *main_loop;
 
-  Argument      *return_vals;
+  GimpArgument  *return_vals;
   gint           n_return_vals;
 
   GimpProgress  *progress;

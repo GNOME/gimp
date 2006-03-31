@@ -60,7 +60,8 @@ static void       gimp_brush_select_set_property (GObject         *object,
                                                   const GValue    *value,
                                                   GParamSpec      *pspec);
 
-static Argument * gimp_brush_select_run_callback (GimpPdbDialog   *dialog,
+static GimpArgument *
+                  gimp_brush_select_run_callback (GimpPdbDialog   *dialog,
                                                   GimpObject      *object,
                                                   gboolean         closing,
                                                   gint            *n_return_vals);
@@ -250,7 +251,7 @@ gimp_brush_select_set_property (GObject      *object,
     }
 }
 
-static Argument *
+static GimpArgument *
 gimp_brush_select_run_callback (GimpPdbDialog *dialog,
                                 GimpObject    *object,
                                 gboolean       closing,

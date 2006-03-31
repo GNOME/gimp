@@ -36,6 +36,7 @@
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
 
+#include "pdb/gimpargument.h"
 #include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
@@ -178,7 +179,7 @@ gimp_help_browser (Gimp *gimp)
 
   if (! procedure)
     {
-      Argument *args = NULL;
+      GimpArgument *args = NULL;
 
       procedure = procedural_db_lookup (gimp, "extension-gimp-help-browser");
 
@@ -201,7 +202,7 @@ gimp_help_browser (Gimp *gimp)
       plug_in_run (gimp, gimp_get_user_context (gimp), NULL,
                    procedure, args, 1, FALSE, TRUE, -1);
 
-      procedural_db_destroy_args (args, 1, TRUE);
+      gimp_arguments_destroy (args, procedure->num_args, TRUE);
     }
 
   /*  Check if the help browser started properly  */
@@ -266,10 +267,10 @@ gimp_help_call (Gimp        *gimp,
 
   if (! procedure)
     {
-      Argument  *args         = NULL;
-      gint       n_domains    = 0;
-      gchar    **help_domains = NULL;
-      gchar    **help_uris    = NULL;
+      GimpArgument  *args         = NULL;
+      gint           n_domains    = 0;
+      gchar        **help_domains = NULL;
+      gchar        **help_uris    = NULL;
 
       procedure = procedural_db_lookup (gimp, "extension-gimp-help");
 
@@ -289,7 +290,7 @@ gimp_help_call (Gimp        *gimp,
       plug_in_run (gimp, gimp_get_user_context (gimp), NULL,
                    procedure, args, 4, FALSE, TRUE, -1);
 
-      procedural_db_destroy_args (args, 4, TRUE);
+      gimp_arguments_destroy (args, procedure->num_args, TRUE);
     }
 
   /*  Check if the help parser started properly  */
@@ -297,8 +298,8 @@ gimp_help_call (Gimp        *gimp,
 
   if (procedure)
     {
-      Argument *return_vals;
-      gint      n_return_vals;
+      GimpArgument *return_vals;
+      gint          n_return_vals;
 
 #ifdef GIMP_HELP_DEBUG
       g_printerr ("Calling help via %s: %s %s %s\n",
@@ -320,7 +321,7 @@ gimp_help_call (Gimp        *gimp,
                                 GIMP_PDB_STRING, help_id,
                                 GIMP_PDB_END);
 
-      procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
+      gimp_arguments_destroy (return_vals, n_return_vals, TRUE);
     }
 }
 

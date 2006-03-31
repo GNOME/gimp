@@ -40,14 +40,14 @@
 #include "gimppatternselect.h"
 
 
-static GObject  * gimp_pattern_select_constructor  (GType          type,
-                                                    guint          n_params,
-                                                    GObjectConstructParam *params);
+static GObject      * gimp_pattern_select_constructor  (GType          type,
+                                                        guint          n_params,
+                                                        GObjectConstructParam *params);
 
-static Argument * gimp_pattern_select_run_callback (GimpPdbDialog *dialog,
-                                                    GimpObject    *object,
-                                                    gboolean       closing,
-                                                    gint          *n_return_vals);
+static GimpArgument * gimp_pattern_select_run_callback (GimpPdbDialog *dialog,
+                                                        GimpObject    *object,
+                                                        gboolean       closing,
+                                                        gint          *n_return_vals);
 
 
 G_DEFINE_TYPE (GimpPatternSelect, gimp_pattern_select, GIMP_TYPE_PDB_DIALOG);
@@ -101,7 +101,7 @@ gimp_pattern_select_constructor (GType                  type,
   return object;
 }
 
-static Argument *
+static GimpArgument *
 gimp_pattern_select_run_callback (GimpPdbDialog *dialog,
                                   GimpObject    *object,
                                   gboolean       closing,

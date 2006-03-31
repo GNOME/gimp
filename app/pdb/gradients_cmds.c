@@ -204,12 +204,12 @@ register_gradients_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 gradients_refresh_invoker (GimpProcedure *procedure,
                            Gimp          *gimp,
                            GimpContext   *context,
                            GimpProgress  *progress,
-                           Argument      *args)
+                           GimpArgument  *args)
 {
   gimp_data_factory_data_refresh (gimp->gradient_factory);
   return gimp_procedure_get_return_values (procedure, TRUE);
@@ -231,15 +231,15 @@ static GimpProcedure gradients_refresh_proc =
   { { gradients_refresh_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradients_get_list_invoker (GimpProcedure *procedure,
                             Gimp          *gimp,
                             GimpContext   *context,
                             GimpProgress  *progress,
-                            Argument      *args)
+                            GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *filter;
   gint32 num_gradients = 0;
   gchar **gradient_list = NULL;
@@ -279,15 +279,15 @@ static GimpProcedure gradients_get_list_proc =
   { { gradients_get_list_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradients_sample_uniform_invoker (GimpProcedure *procedure,
                                   Gimp          *gimp,
                                   GimpContext   *context,
                                   GimpProgress  *progress,
-                                  Argument      *args)
+                                  GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gint32 num_samples;
   gboolean reverse;
   gint32 array_length = 0;
@@ -353,15 +353,15 @@ static GimpProcedure gradients_sample_uniform_proc =
   { { gradients_sample_uniform_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradients_sample_custom_invoker (GimpProcedure *procedure,
                                  Gimp          *gimp,
                                  GimpContext   *context,
                                  GimpProgress  *progress,
-                                 Argument      *args)
+                                 GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gint32 num_samples;
   gdouble *positions;
   gboolean reverse;
@@ -426,15 +426,15 @@ static GimpProcedure gradients_sample_custom_proc =
   { { gradients_sample_custom_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradients_get_gradient_data_invoker (GimpProcedure *procedure,
                                      Gimp          *gimp,
                                      GimpContext   *context,
                                      GimpProgress  *progress,
-                                     Argument      *args)
+                                     GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gint32 sample_size;
   gboolean reverse;

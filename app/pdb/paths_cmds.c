@@ -572,15 +572,15 @@ register_paths_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 path_list_invoker (GimpProcedure *procedure,
                    Gimp          *gimp,
                    GimpContext   *context,
                    GimpProgress  *progress,
-                   Argument      *args)
+                   GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gint32 num_paths = 0;
   gchar **path_list = NULL;
@@ -619,15 +619,15 @@ static GimpProcedure path_list_proc =
   { { path_list_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 path_get_current_invoker (GimpProcedure *procedure,
                           Gimp          *gimp,
                           GimpContext   *context,
                           GimpProgress  *progress,
-                          Argument      *args)
+                          GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gchar *name = NULL;
 
@@ -667,12 +667,12 @@ static GimpProcedure path_get_current_proc =
   { { path_get_current_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 path_set_current_invoker (GimpProcedure *procedure,
                           Gimp          *gimp,
                           GimpContext   *context,
                           GimpProgress  *progress,
-                          Argument      *args)
+                          GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -710,12 +710,12 @@ static GimpProcedure path_set_current_proc =
   { { path_set_current_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 path_delete_invoker (GimpProcedure *procedure,
                      Gimp          *gimp,
                      GimpContext   *context,
                      GimpProgress  *progress,
-                     Argument      *args)
+                     GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -753,15 +753,15 @@ static GimpProcedure path_delete_proc =
   { { path_delete_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 path_get_points_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gchar *name;
   gint32 path_type = 0;
@@ -842,12 +842,12 @@ static GimpProcedure path_get_points_proc =
   { { path_get_points_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 path_set_points_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -923,12 +923,12 @@ static GimpProcedure path_set_points_proc =
   { { path_set_points_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 path_stroke_current_invoker (GimpProcedure *procedure,
                              Gimp          *gimp,
                              GimpContext   *context,
                              GimpProgress  *progress,
-                             Argument      *args)
+                             GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -974,15 +974,15 @@ static GimpProcedure path_stroke_current_proc =
   { { path_stroke_current_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 path_get_point_at_dist_invoker (GimpProcedure *procedure,
                                 Gimp          *gimp,
                                 GimpContext   *context,
                                 GimpProgress  *progress,
-                                Argument      *args)
+                                GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gdouble distance;
   gint32 x_point = 0;
@@ -1073,15 +1073,15 @@ static GimpProcedure path_get_point_at_dist_proc =
   { { path_get_point_at_dist_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 path_get_tattoo_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gchar *name;
   gint32 tattoo = 0;
@@ -1123,12 +1123,12 @@ static GimpProcedure path_get_tattoo_proc =
   { { path_get_tattoo_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 path_set_tattoo_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -1168,15 +1168,15 @@ static GimpProcedure path_set_tattoo_proc =
   { { path_set_tattoo_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 get_path_by_tattoo_invoker (GimpProcedure *procedure,
                             Gimp          *gimp,
                             GimpContext   *context,
                             GimpProgress  *progress,
-                            Argument      *args)
+                            GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gint32 tattoo;
   gchar *name = NULL;
@@ -1218,15 +1218,15 @@ static GimpProcedure get_path_by_tattoo_proc =
   { { get_path_by_tattoo_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 path_get_locked_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gchar *name;
   gboolean locked = FALSE;
@@ -1268,12 +1268,12 @@ static GimpProcedure path_get_locked_proc =
   { { path_get_locked_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 path_set_locked_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -1313,12 +1313,12 @@ static GimpProcedure path_set_locked_proc =
   { { path_set_locked_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 path_to_selection_invoker (GimpProcedure *procedure,
                            Gimp          *gimp,
                            GimpContext   *context,
                            GimpProgress  *progress,
-                           Argument      *args)
+                           GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -1373,12 +1373,12 @@ static GimpProcedure path_to_selection_proc =
   { { path_to_selection_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 path_import_invoker (GimpProcedure *procedure,
                      Gimp          *gimp,
                      GimpContext   *context,
                      GimpProgress  *progress,
-                     Argument      *args)
+                     GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -1415,12 +1415,12 @@ static GimpProcedure path_import_proc =
   { { path_import_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 path_import_string_invoker (GimpProcedure *procedure,
                             Gimp          *gimp,
                             GimpContext   *context,
                             GimpProgress  *progress,
-                            Argument      *args)
+                            GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpImage *image;

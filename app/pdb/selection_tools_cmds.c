@@ -372,12 +372,12 @@ register_selection_tools_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 by_color_select_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -433,12 +433,12 @@ static GimpProcedure by_color_select_proc =
   { { by_color_select_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 ellipse_select_invoker (GimpProcedure *procedure,
                         Gimp          *gimp,
                         GimpContext   *context,
                         GimpProgress  *progress,
-                        Argument      *args)
+                        GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -492,12 +492,12 @@ static GimpProcedure ellipse_select_proc =
   { { ellipse_select_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 free_select_invoker (GimpProcedure *procedure,
                      Gimp          *gimp,
                      GimpContext   *context,
                      GimpProgress  *progress,
-                     Argument      *args)
+                     GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -548,12 +548,12 @@ static GimpProcedure free_select_proc =
   { { free_select_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 fuzzy_select_invoker (GimpProcedure *procedure,
                       Gimp          *gimp,
                       GimpContext   *context,
                       GimpProgress  *progress,
-                      Argument      *args)
+                      GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -613,12 +613,12 @@ static GimpProcedure fuzzy_select_proc =
   { { fuzzy_select_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 rect_select_invoker (GimpProcedure *procedure,
                      Gimp          *gimp,
                      GimpContext   *context,
                      GimpProgress  *progress,
-                     Argument      *args)
+                     GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpImage *image;

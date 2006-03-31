@@ -105,10 +105,10 @@ gimp_procedure_init (GimpProcedure *procedure,
   g_return_val_if_fail (n_return_values >= 0, procedure);
 
   procedure->num_args = n_arguments;
-  procedure->args     = g_new0 (ProcArg, n_arguments);
+  procedure->args     = g_new0 (GimpArgumentSpec, n_arguments);
 
   procedure->num_values = n_return_values;
-  procedure->values     = g_new0 (ProcArg, n_return_values);
+  procedure->values     = g_new0 (GimpArgumentSpec, n_return_values);
 
   return procedure;
 }
@@ -194,17 +194,17 @@ gimp_procedure_take_strings (GimpProcedure *procedure,
   procedure->static_strings = FALSE;
 }
 
-Argument *
+GimpArgument *
 gimp_procedure_execute (GimpProcedure *procedure,
                         Gimp          *gimp,
                         GimpContext   *context,
                         GimpProgress  *progress,
-                        Argument      *args,
+                        GimpArgument  *args,
                         gint           n_args,
                         gint          *n_return_vals)
 {
-  Argument *return_vals = NULL;
-  gint      i;
+  GimpArgument *return_vals = NULL;
+  gint          i;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -328,15 +328,15 @@ gimp_procedure_execute (GimpProcedure *procedure,
   return return_vals;
 }
 
-Argument *
+GimpArgument *
 gimp_procedure_get_arguments (GimpProcedure *procedure)
 {
-  Argument *args;
-  gint      i;
+  GimpArgument *args;
+  gint          i;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
-  args = g_new0 (Argument, procedure->num_args);
+  args = g_new0 (GimpArgument, procedure->num_args);
 
   for (i = 0; i < procedure->num_args; i++)
     gimp_argument_init (&args[i], &procedure->args[i]);
@@ -344,13 +344,13 @@ gimp_procedure_get_arguments (GimpProcedure *procedure)
   return args;
 }
 
-Argument *
+GimpArgument *
 gimp_procedure_get_return_values (GimpProcedure *procedure,
                                   gboolean       success)
 {
-  Argument *args;
-  gint      n_args;
-  gint      i;
+  GimpArgument *args;
+  gint          n_args;
+  gint          i;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure) ||
                         success == FALSE, NULL);
@@ -360,7 +360,7 @@ gimp_procedure_get_return_values (GimpProcedure *procedure,
   else
     n_args = 1;
 
-  args = g_new0 (Argument, n_args);
+  args = g_new0 (GimpArgument, n_args);
 
   gimp_argument_init_compat (&args[0], GIMP_PDB_STATUS);
 

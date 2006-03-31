@@ -555,15 +555,15 @@ register_edit_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 edit_cut_invoker (GimpProcedure *procedure,
                   Gimp          *gimp,
                   GimpContext   *context,
                   GimpProgress  *progress,
-                  Argument      *args)
+                  GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gboolean non_empty = FALSE;
 
@@ -605,15 +605,15 @@ static GimpProcedure edit_cut_proc =
   { { edit_cut_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 edit_copy_invoker (GimpProcedure *procedure,
                    Gimp          *gimp,
                    GimpContext   *context,
                    GimpProgress  *progress,
-                   Argument      *args)
+                   GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gboolean non_empty = FALSE;
 
@@ -655,15 +655,15 @@ static GimpProcedure edit_copy_proc =
   { { edit_copy_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 edit_copy_visible_invoker (GimpProcedure *procedure,
                            Gimp          *gimp,
                            GimpContext   *context,
                            GimpProgress  *progress,
-                           Argument      *args)
+                           GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gboolean non_empty = FALSE;
 
@@ -698,15 +698,15 @@ static GimpProcedure edit_copy_visible_proc =
   { { edit_copy_visible_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 edit_paste_invoker (GimpProcedure *procedure,
                     Gimp          *gimp,
                     GimpContext   *context,
                     GimpProgress  *progress,
-                    Argument      *args)
+                    GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gboolean paste_into;
   GimpLayer *floating_sel = NULL;
@@ -753,15 +753,15 @@ static GimpProcedure edit_paste_proc =
   { { edit_paste_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 edit_paste_as_new_invoker (GimpProcedure *procedure,
                            Gimp          *gimp,
                            GimpContext   *context,
                            GimpProgress  *progress,
-                           Argument      *args)
+                           GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image = NULL;
 
   if (gimp->global_buffer)
@@ -798,15 +798,15 @@ static GimpProcedure edit_paste_as_new_proc =
   { { edit_paste_as_new_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 edit_named_cut_invoker (GimpProcedure *procedure,
                         Gimp          *gimp,
                         GimpContext   *context,
                         GimpProgress  *progress,
-                        Argument      *args)
+                        GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gchar *buffer_name;
   gchar *real_name = NULL;
@@ -856,15 +856,15 @@ static GimpProcedure edit_named_cut_proc =
   { { edit_named_cut_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 edit_named_copy_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gchar *buffer_name;
   gchar *real_name = NULL;
@@ -914,15 +914,15 @@ static GimpProcedure edit_named_copy_proc =
   { { edit_named_copy_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 edit_named_copy_visible_invoker (GimpProcedure *procedure,
                                  Gimp          *gimp,
                                  GimpContext   *context,
                                  GimpProgress  *progress,
-                                 Argument      *args)
+                                 GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gchar *buffer_name;
   gchar *real_name = NULL;
@@ -970,15 +970,15 @@ static GimpProcedure edit_named_copy_visible_proc =
   { { edit_named_copy_visible_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 edit_named_paste_invoker (GimpProcedure *procedure,
                           Gimp          *gimp,
                           GimpContext   *context,
                           GimpProgress  *progress,
-                          Argument      *args)
+                          GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gchar *buffer_name;
   gboolean paste_into;
@@ -1029,15 +1029,15 @@ static GimpProcedure edit_named_paste_proc =
   { { edit_named_paste_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 edit_named_paste_as_new_invoker (GimpProcedure *procedure,
                                  Gimp          *gimp,
                                  GimpContext   *context,
                                  GimpProgress  *progress,
-                                 Argument      *args)
+                                 GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *buffer_name;
   GimpImage *image = NULL;
 
@@ -1083,12 +1083,12 @@ static GimpProcedure edit_named_paste_as_new_proc =
   { { edit_named_paste_as_new_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 edit_clear_invoker (GimpProcedure *procedure,
                     Gimp          *gimp,
                     GimpContext   *context,
                     GimpProgress  *progress,
-                    Argument      *args)
+                    GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1126,12 +1126,12 @@ static GimpProcedure edit_clear_proc =
   { { edit_clear_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 edit_fill_invoker (GimpProcedure *procedure,
                    Gimp          *gimp,
                    GimpContext   *context,
                    GimpProgress  *progress,
-                   Argument      *args)
+                   GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1172,12 +1172,12 @@ static GimpProcedure edit_fill_proc =
   { { edit_fill_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 edit_bucket_fill_invoker (GimpProcedure *procedure,
                           Gimp          *gimp,
                           GimpContext   *context,
                           GimpProgress  *progress,
-                          Argument      *args)
+                          GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1236,12 +1236,12 @@ static GimpProcedure edit_bucket_fill_proc =
   { { edit_bucket_fill_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 edit_blend_invoker (GimpProcedure *procedure,
                     Gimp          *gimp,
                     GimpContext   *context,
                     GimpProgress  *progress,
-                    Argument      *args)
+                    GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1332,12 +1332,12 @@ static GimpProcedure edit_blend_proc =
   { { edit_blend_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 edit_stroke_invoker (GimpProcedure *procedure,
                      Gimp          *gimp,
                      GimpContext   *context,
                      GimpProgress  *progress,
-                     Argument      *args)
+                     GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;

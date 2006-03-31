@@ -175,12 +175,12 @@ register_undo_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 image_undo_group_start_invoker (GimpProcedure *procedure,
                                 Gimp          *gimp,
                                 GimpContext   *context,
                                 GimpProgress  *progress,
-                                Argument      *args)
+                                GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -219,12 +219,12 @@ static GimpProcedure image_undo_group_start_proc =
   { { image_undo_group_start_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 image_undo_group_end_invoker (GimpProcedure *procedure,
                               Gimp          *gimp,
                               GimpContext   *context,
                               GimpProgress  *progress,
-                              Argument      *args)
+                              GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -255,15 +255,15 @@ static GimpProcedure image_undo_group_end_proc =
   { { image_undo_group_end_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 image_undo_is_enabled_invoker (GimpProcedure *procedure,
                                Gimp          *gimp,
                                GimpContext   *context,
                                GimpProgress  *progress,
-                               Argument      *args)
+                               GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gboolean enabled = FALSE;
 
@@ -298,15 +298,15 @@ static GimpProcedure image_undo_is_enabled_proc =
   { { image_undo_is_enabled_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 image_undo_disable_invoker (GimpProcedure *procedure,
                             Gimp          *gimp,
                             GimpContext   *context,
                             GimpProgress  *progress,
-                            Argument      *args)
+                            GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gboolean disabled = FALSE;
 
@@ -341,15 +341,15 @@ static GimpProcedure image_undo_disable_proc =
   { { image_undo_disable_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 image_undo_enable_invoker (GimpProcedure *procedure,
                            Gimp          *gimp,
                            GimpContext   *context,
                            GimpProgress  *progress,
-                           Argument      *args)
+                           GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gboolean enabled = FALSE;
 
@@ -384,15 +384,15 @@ static GimpProcedure image_undo_enable_proc =
   { { image_undo_enable_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 image_undo_freeze_invoker (GimpProcedure *procedure,
                            Gimp          *gimp,
                            GimpContext   *context,
                            GimpProgress  *progress,
-                           Argument      *args)
+                           GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gboolean frozen = FALSE;
 
@@ -427,15 +427,15 @@ static GimpProcedure image_undo_freeze_proc =
   { { image_undo_freeze_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 image_undo_thaw_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gboolean thawed = FALSE;
 

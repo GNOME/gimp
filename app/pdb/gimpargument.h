@@ -20,27 +20,27 @@
 #define __GIMP_ARGUMENT_H__
 
 
-struct _Argument
+struct _GimpArgument
 {
   GimpPDBArgType type;
   GValue         value;
 };
 
-struct _ProcArg
+struct _GimpArgumentSpec
 {
   GimpPDBArgType  type;
   GParamSpec     *pspec;
 };
 
 
-void   gimp_argument_init        (Argument       *arg,
-                                  ProcArg        *proc_arg);
-void   gimp_argument_init_compat (Argument       *arg,
-                                  GimpPDBArgType  arg_type);
+void   gimp_argument_init        (GimpArgument     *arg,
+                                  GimpArgumentSpec *spec);
+void   gimp_argument_init_compat (GimpArgument     *arg,
+                                  GimpPDBArgType    arg_type);
 
-void   gimp_arguments_destroy    (Argument       *args,
-                                  gint            n_args,
-                                  gboolean        full_destroy);
+void   gimp_arguments_destroy    (GimpArgument     *args,
+                                  gint              n_args,
+                                  gboolean          full_destroy);
 
 
 #endif  /*  __GIMP_ARGUMENT_H__  */

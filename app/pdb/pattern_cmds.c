@@ -130,15 +130,15 @@ register_pattern_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 pattern_get_info_invoker (GimpProcedure *procedure,
                           Gimp          *gimp,
                           GimpContext   *context,
                           GimpProgress  *progress,
-                          Argument      *args)
+                          GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gint32 width = 0;
   gint32 height = 0;
@@ -189,15 +189,15 @@ static GimpProcedure pattern_get_info_proc =
   { { pattern_get_info_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 pattern_get_pixels_invoker (GimpProcedure *procedure,
                             Gimp          *gimp,
                             GimpContext   *context,
                             GimpProgress  *progress,
-                            Argument      *args)
+                            GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gint32 width = 0;
   gint32 height = 0;

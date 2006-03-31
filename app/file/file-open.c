@@ -87,10 +87,10 @@ file_open_image (Gimp               *gimp,
                  const gchar       **mime_type,
                  GError            **error)
 {
-  Argument  *return_vals;
-  gint       n_return_vals;
-  gchar     *filename;
-  GimpImage *image = NULL;
+  GimpArgument *return_vals;
+  gint          n_return_vals;
+  gchar        *filename;
+  GimpImage    *image = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -215,7 +215,7 @@ file_open_thumbnail (Gimp          *gimp,
   if (procedure && procedure->num_args >= 2 && procedure->num_values >= 1)
     {
       GimpPDBStatusType  status;
-      Argument          *return_vals;
+      GimpArgument      *return_vals;
       gint               n_return_vals;
       gchar             *filename;
       GimpImage         *image = NULL;

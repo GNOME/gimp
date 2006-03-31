@@ -205,15 +205,15 @@ register_guides_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 image_add_hguide_invoker (GimpProcedure *procedure,
                           Gimp          *gimp,
                           GimpContext   *context,
                           GimpProgress  *progress,
-                          Argument      *args)
+                          GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gint32 yposition;
   gint32 guide = 0;
@@ -258,15 +258,15 @@ static GimpProcedure image_add_hguide_proc =
   { { image_add_hguide_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 image_add_vguide_invoker (GimpProcedure *procedure,
                           Gimp          *gimp,
                           GimpContext   *context,
                           GimpProgress  *progress,
-                          Argument      *args)
+                          GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gint32 xposition;
   gint32 guide = 0;
@@ -311,12 +311,12 @@ static GimpProcedure image_add_vguide_proc =
   { { image_add_vguide_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 image_delete_guide_invoker (GimpProcedure *procedure,
                             Gimp          *gimp,
                             GimpContext   *context,
                             GimpProgress  *progress,
-                            Argument      *args)
+                            GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -354,15 +354,15 @@ static GimpProcedure image_delete_guide_proc =
   { { image_delete_guide_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 image_find_next_guide_invoker (GimpProcedure *procedure,
                                Gimp          *gimp,
                                GimpContext   *context,
                                GimpProgress  *progress,
-                               Argument      *args)
+                               GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gint32 guide;
   gint32 next_guide = 0;
@@ -402,15 +402,15 @@ static GimpProcedure image_find_next_guide_proc =
   { { image_find_next_guide_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 image_get_guide_orientation_invoker (GimpProcedure *procedure,
                                      Gimp          *gimp,
                                      GimpContext   *context,
                                      GimpProgress  *progress,
-                                     Argument      *args)
+                                     GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gint32 guide;
   gint32 orientation = 0;
@@ -452,15 +452,15 @@ static GimpProcedure image_get_guide_orientation_proc =
   { { image_get_guide_orientation_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 image_get_guide_position_invoker (GimpProcedure *procedure,
                                   Gimp          *gimp,
                                   GimpContext   *context,
                                   GimpProgress  *progress,
-                                  Argument      *args)
+                                  GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gint32 guide;
   gint32 position = 0;

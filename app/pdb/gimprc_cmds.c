@@ -172,15 +172,15 @@ register_gimprc_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 gimprc_query_invoker (GimpProcedure *procedure,
                       Gimp          *gimp,
                       GimpContext   *context,
                       GimpProgress  *progress,
-                      Argument      *args)
+                      GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *token;
   gchar *value = NULL;
 
@@ -224,12 +224,12 @@ static GimpProcedure gimprc_query_proc =
   { { gimprc_query_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gimprc_set_invoker (GimpProcedure *procedure,
                     Gimp          *gimp,
                     GimpContext   *context,
                     GimpProgress  *progress,
-                    Argument      *args)
+                    GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *token;
@@ -268,14 +268,14 @@ static GimpProcedure gimprc_set_proc =
   { { gimprc_set_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 get_default_comment_invoker (GimpProcedure *procedure,
                              Gimp          *gimp,
                              GimpContext   *context,
                              GimpProgress  *progress,
-                             Argument      *args)
+                             GimpArgument  *args)
 {
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *comment = NULL;
 
   comment = g_strdup (gimp->config->default_image->comment);
@@ -302,14 +302,14 @@ static GimpProcedure get_default_comment_proc =
   { { get_default_comment_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 get_monitor_resolution_invoker (GimpProcedure *procedure,
                                 Gimp          *gimp,
                                 GimpContext   *context,
                                 GimpProgress  *progress,
-                                Argument      *args)
+                                GimpArgument  *args)
 {
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gdouble xres = 0.0;
   gdouble yres = 0.0;
 
@@ -340,14 +340,14 @@ static GimpProcedure get_monitor_resolution_proc =
   { { get_monitor_resolution_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 get_theme_dir_invoker (GimpProcedure *procedure,
                        Gimp          *gimp,
                        GimpContext   *context,
                        GimpProgress  *progress,
-                       Argument      *args)
+                       GimpArgument  *args)
 {
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *theme_dir = NULL;
 
   theme_dir = g_strdup (gimp_get_theme_dir (gimp));
@@ -374,14 +374,14 @@ static GimpProcedure get_theme_dir_proc =
   { { get_theme_dir_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 get_color_configuration_invoker (GimpProcedure *procedure,
                                  Gimp          *gimp,
                                  GimpContext   *context,
                                  GimpProgress  *progress,
-                                 Argument      *args)
+                                 GimpArgument  *args)
 {
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *config = NULL;
 
   config = gimp_config_serialize_to_string (GIMP_CONFIG (gimp->config->color_management), NULL);
@@ -408,14 +408,14 @@ static GimpProcedure get_color_configuration_proc =
   { { get_color_configuration_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 get_module_load_inhibit_invoker (GimpProcedure *procedure,
                                  Gimp          *gimp,
                                  GimpContext   *context,
                                  GimpProgress  *progress,
-                                 Argument      *args)
+                                 GimpArgument  *args)
 {
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *load_inhibit = NULL;
 
   load_inhibit = g_strdup (gimp_module_db_get_load_inhibit (gimp->module_db));

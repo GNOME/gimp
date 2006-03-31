@@ -313,7 +313,7 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
 {
   GimpImage     *image;
   GimpProcedure *procedure;
-  Argument      *args;
+  GimpArgument  *args;
   GimpDisplay   *display;
   return_if_no_image (image, data);
 

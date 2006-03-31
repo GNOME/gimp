@@ -551,12 +551,12 @@ CODE
 	    }
 	}
 
-	$out->{code} .= "\nstatic Argument *\n";
+	$out->{code} .= "\nstatic GimpArgument *\n";
 	$out->{code} .= "${name}_invoker (GimpProcedure *procedure,\n";
 	$out->{code} .=  ' ' x length($name) . "          Gimp          *gimp,\n";
 	$out->{code} .=  ' ' x length($name) . "          GimpContext   *context,\n";
 	$out->{code} .=  ' ' x length($name) . "          GimpProgress  *progress,\n";
-	$out->{code} .=  ' ' x length($name) . "          Argument      *args)\n{\n";
+	$out->{code} .=  ' ' x length($name) . "          GimpArgument  *args)\n{\n";
 
 	my $code = "";
 
@@ -566,7 +566,7 @@ CODE
 	else {
 	    my $invoker = "";
 	
-	    $invoker .= ' ' x 2 . "Argument *return_vals;\n" if scalar @outargs;
+	    $invoker .= ' ' x 2 . "GimpArgument *return_vals;\n" if scalar @outargs;
 	    $invoker .= &declare_args($proc, $out, 0, qw(inargs));
 	    $invoker .= &declare_args($proc, $out, 1, qw(outargs));
 

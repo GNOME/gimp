@@ -153,12 +153,12 @@ register_brush_select_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 brushes_popup_invoker (GimpProcedure *procedure,
                        Gimp          *gimp,
                        GimpContext   *context,
                        GimpProgress  *progress,
-                       Argument      *args)
+                       GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *brush_callback;
@@ -207,12 +207,12 @@ static GimpProcedure brushes_popup_proc =
   { { brushes_popup_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 brushes_close_popup_invoker (GimpProcedure *procedure,
                              Gimp          *gimp,
                              GimpContext   *context,
                              GimpProgress  *progress,
-                             Argument      *args)
+                             GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *brush_callback;
@@ -247,12 +247,12 @@ static GimpProcedure brushes_close_popup_proc =
   { { brushes_close_popup_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 brushes_set_popup_invoker (GimpProcedure *procedure,
                            Gimp          *gimp,
                            GimpContext   *context,
                            GimpProgress  *progress,
-                           Argument      *args)
+                           GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *brush_callback;

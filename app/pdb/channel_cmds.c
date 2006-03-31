@@ -339,15 +339,15 @@ register_channel_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 channel_new_invoker (GimpProcedure *procedure,
                      Gimp          *gimp,
                      GimpContext   *context,
                      GimpProgress  *progress,
-                     Argument      *args)
+                     GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gint32 width;
   gint32 height;
@@ -398,15 +398,15 @@ static GimpProcedure channel_new_proc =
   { { channel_new_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 channel_new_from_component_invoker (GimpProcedure *procedure,
                                     Gimp          *gimp,
                                     GimpContext   *context,
                                     GimpProgress  *progress,
-                                    Argument      *args)
+                                    GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gint32 component;
   gchar *name;
@@ -452,15 +452,15 @@ static GimpProcedure channel_new_from_component_proc =
   { { channel_new_from_component_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 channel_copy_invoker (GimpProcedure *procedure,
                       Gimp          *gimp,
                       GimpContext   *context,
                       GimpProgress  *progress,
-                      Argument      *args)
+                      GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpChannel *channel;
   GimpChannel *channel_copy = NULL;
 
@@ -499,12 +499,12 @@ static GimpProcedure channel_copy_proc =
   { { channel_copy_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 channel_combine_masks_invoker (GimpProcedure *procedure,
                                Gimp          *gimp,
                                GimpContext   *context,
                                GimpProgress  *progress,
-                               Argument      *args)
+                               GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel1;
@@ -543,15 +543,15 @@ static GimpProcedure channel_combine_masks_proc =
   { { channel_combine_masks_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 channel_get_show_masked_invoker (GimpProcedure *procedure,
                                  Gimp          *gimp,
                                  GimpContext   *context,
                                  GimpProgress  *progress,
-                                 Argument      *args)
+                                 GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpChannel *channel;
   gboolean show_masked = FALSE;
 
@@ -586,12 +586,12 @@ static GimpProcedure channel_get_show_masked_proc =
   { { channel_get_show_masked_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 channel_set_show_masked_invoker (GimpProcedure *procedure,
                                  Gimp          *gimp,
                                  GimpContext   *context,
                                  GimpProgress  *progress,
-                                 Argument      *args)
+                                 GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel;
@@ -624,15 +624,15 @@ static GimpProcedure channel_set_show_masked_proc =
   { { channel_set_show_masked_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 channel_get_opacity_invoker (GimpProcedure *procedure,
                              Gimp          *gimp,
                              GimpContext   *context,
                              GimpProgress  *progress,
-                             Argument      *args)
+                             GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpChannel *channel;
   gdouble opacity = 0.0;
 
@@ -667,12 +667,12 @@ static GimpProcedure channel_get_opacity_proc =
   { { channel_get_opacity_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 channel_set_opacity_invoker (GimpProcedure *procedure,
                              Gimp          *gimp,
                              GimpContext   *context,
                              GimpProgress  *progress,
-                             Argument      *args)
+                             GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel;
@@ -705,15 +705,15 @@ static GimpProcedure channel_set_opacity_proc =
   { { channel_set_opacity_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 channel_get_color_invoker (GimpProcedure *procedure,
                            Gimp          *gimp,
                            GimpContext   *context,
                            GimpProgress  *progress,
-                           Argument      *args)
+                           GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpChannel *channel;
   GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
 
@@ -748,12 +748,12 @@ static GimpProcedure channel_get_color_proc =
   { { channel_get_color_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 channel_set_color_invoker (GimpProcedure *procedure,
                            Gimp          *gimp,
                            GimpContext   *context,
                            GimpProgress  *progress,
-                           Argument      *args)
+                           GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel;

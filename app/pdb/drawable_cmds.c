@@ -1091,12 +1091,12 @@ register_drawable_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 drawable_delete_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1130,15 +1130,15 @@ static GimpProcedure drawable_delete_proc =
   { { drawable_delete_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_is_layer_invoker (GimpProcedure *procedure,
                            Gimp          *gimp,
                            GimpContext   *context,
                            GimpProgress  *progress,
-                           Argument      *args)
+                           GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gboolean layer = FALSE;
 
@@ -1173,15 +1173,15 @@ static GimpProcedure drawable_is_layer_proc =
   { { drawable_is_layer_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_is_layer_mask_invoker (GimpProcedure *procedure,
                                 Gimp          *gimp,
                                 GimpContext   *context,
                                 GimpProgress  *progress,
-                                Argument      *args)
+                                GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gboolean layer_mask = FALSE;
 
@@ -1216,15 +1216,15 @@ static GimpProcedure drawable_is_layer_mask_proc =
   { { drawable_is_layer_mask_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_is_channel_invoker (GimpProcedure *procedure,
                              Gimp          *gimp,
                              GimpContext   *context,
                              GimpProgress  *progress,
-                             Argument      *args)
+                             GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gboolean channel = FALSE;
 
@@ -1259,15 +1259,15 @@ static GimpProcedure drawable_is_channel_proc =
   { { drawable_is_channel_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_type_invoker (GimpProcedure *procedure,
                        Gimp          *gimp,
                        GimpContext   *context,
                        GimpProgress  *progress,
-                       Argument      *args)
+                       GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gint32 type = 0;
 
@@ -1302,15 +1302,15 @@ static GimpProcedure drawable_type_proc =
   { { drawable_type_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_type_with_alpha_invoker (GimpProcedure *procedure,
                                   Gimp          *gimp,
                                   GimpContext   *context,
                                   GimpProgress  *progress,
-                                  Argument      *args)
+                                  GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gint32 type_with_alpha = 0;
 
@@ -1345,15 +1345,15 @@ static GimpProcedure drawable_type_with_alpha_proc =
   { { drawable_type_with_alpha_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_has_alpha_invoker (GimpProcedure *procedure,
                             Gimp          *gimp,
                             GimpContext   *context,
                             GimpProgress  *progress,
-                            Argument      *args)
+                            GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gboolean has_alpha = FALSE;
 
@@ -1388,15 +1388,15 @@ static GimpProcedure drawable_has_alpha_proc =
   { { drawable_has_alpha_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_is_rgb_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gboolean is_rgb = FALSE;
 
@@ -1431,15 +1431,15 @@ static GimpProcedure drawable_is_rgb_proc =
   { { drawable_is_rgb_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_is_gray_invoker (GimpProcedure *procedure,
                           Gimp          *gimp,
                           GimpContext   *context,
                           GimpProgress  *progress,
-                          Argument      *args)
+                          GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gboolean is_gray = FALSE;
 
@@ -1474,15 +1474,15 @@ static GimpProcedure drawable_is_gray_proc =
   { { drawable_is_gray_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_is_indexed_invoker (GimpProcedure *procedure,
                              Gimp          *gimp,
                              GimpContext   *context,
                              GimpProgress  *progress,
-                             Argument      *args)
+                             GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gboolean is_indexed = FALSE;
 
@@ -1517,15 +1517,15 @@ static GimpProcedure drawable_is_indexed_proc =
   { { drawable_is_indexed_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_bpp_invoker (GimpProcedure *procedure,
                       Gimp          *gimp,
                       GimpContext   *context,
                       GimpProgress  *progress,
-                      Argument      *args)
+                      GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gint32 bpp = 0;
 
@@ -1560,15 +1560,15 @@ static GimpProcedure drawable_bpp_proc =
   { { drawable_bpp_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_width_invoker (GimpProcedure *procedure,
                         Gimp          *gimp,
                         GimpContext   *context,
                         GimpProgress  *progress,
-                        Argument      *args)
+                        GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gint32 width = 0;
 
@@ -1603,15 +1603,15 @@ static GimpProcedure drawable_width_proc =
   { { drawable_width_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_height_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gint32 height = 0;
 
@@ -1646,15 +1646,15 @@ static GimpProcedure drawable_height_proc =
   { { drawable_height_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_offsets_invoker (GimpProcedure *procedure,
                           Gimp          *gimp,
                           GimpContext   *context,
                           GimpProgress  *progress,
-                          Argument      *args)
+                          GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gint32 offset_x = 0;
   gint32 offset_y = 0;
@@ -1693,15 +1693,15 @@ static GimpProcedure drawable_offsets_proc =
   { { drawable_offsets_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_get_image_invoker (GimpProcedure *procedure,
                             Gimp          *gimp,
                             GimpContext   *context,
                             GimpProgress  *progress,
-                            Argument      *args)
+                            GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   GimpImage *image = NULL;
 
@@ -1736,12 +1736,12 @@ static GimpProcedure drawable_get_image_proc =
   { { drawable_get_image_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_set_image_invoker (GimpProcedure *procedure,
                             Gimp          *gimp,
                             GimpContext   *context,
                             GimpProgress  *progress,
-                            Argument      *args)
+                            GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1775,15 +1775,15 @@ static GimpProcedure drawable_set_image_proc =
   { { drawable_set_image_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_get_name_invoker (GimpProcedure *procedure,
                            Gimp          *gimp,
                            GimpContext   *context,
                            GimpProgress  *progress,
-                           Argument      *args)
+                           GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gchar *name = NULL;
 
@@ -1818,12 +1818,12 @@ static GimpProcedure drawable_get_name_proc =
   { { drawable_get_name_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_set_name_invoker (GimpProcedure *procedure,
                            Gimp          *gimp,
                            GimpContext   *context,
                            GimpProgress  *progress,
-                           Argument      *args)
+                           GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1856,15 +1856,15 @@ static GimpProcedure drawable_set_name_proc =
   { { drawable_set_name_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_get_visible_invoker (GimpProcedure *procedure,
                               Gimp          *gimp,
                               GimpContext   *context,
                               GimpProgress  *progress,
-                              Argument      *args)
+                              GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gboolean visible = FALSE;
 
@@ -1899,12 +1899,12 @@ static GimpProcedure drawable_get_visible_proc =
   { { drawable_get_visible_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_set_visible_invoker (GimpProcedure *procedure,
                               Gimp          *gimp,
                               GimpContext   *context,
                               GimpProgress  *progress,
-                              Argument      *args)
+                              GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1937,15 +1937,15 @@ static GimpProcedure drawable_set_visible_proc =
   { { drawable_set_visible_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_get_linked_invoker (GimpProcedure *procedure,
                              Gimp          *gimp,
                              GimpContext   *context,
                              GimpProgress  *progress,
-                             Argument      *args)
+                             GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gboolean linked = FALSE;
 
@@ -1980,12 +1980,12 @@ static GimpProcedure drawable_get_linked_proc =
   { { drawable_get_linked_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_set_linked_invoker (GimpProcedure *procedure,
                              Gimp          *gimp,
                              GimpContext   *context,
                              GimpProgress  *progress,
-                             Argument      *args)
+                             GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -2018,15 +2018,15 @@ static GimpProcedure drawable_set_linked_proc =
   { { drawable_set_linked_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_get_tattoo_invoker (GimpProcedure *procedure,
                              Gimp          *gimp,
                              GimpContext   *context,
                              GimpProgress  *progress,
-                             Argument      *args)
+                             GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gint32 tattoo = 0;
 
@@ -2061,12 +2061,12 @@ static GimpProcedure drawable_get_tattoo_proc =
   { { drawable_get_tattoo_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_set_tattoo_invoker (GimpProcedure *procedure,
                              Gimp          *gimp,
                              GimpContext   *context,
                              GimpProgress  *progress,
-                             Argument      *args)
+                             GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -2099,15 +2099,15 @@ static GimpProcedure drawable_set_tattoo_proc =
   { { drawable_set_tattoo_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_mask_bounds_invoker (GimpProcedure *procedure,
                               Gimp          *gimp,
                               GimpContext   *context,
                               GimpProgress  *progress,
-                              Argument      *args)
+                              GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gboolean non_empty = FALSE;
   gint32 x1 = 0;
@@ -2152,15 +2152,15 @@ static GimpProcedure drawable_mask_bounds_proc =
   { { drawable_mask_bounds_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_mask_intersect_invoker (GimpProcedure *procedure,
                                  Gimp          *gimp,
                                  GimpContext   *context,
                                  GimpProgress  *progress,
-                                 Argument      *args)
+                                 GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gboolean non_empty = FALSE;
   gint32 x = 0;
@@ -2205,12 +2205,12 @@ static GimpProcedure drawable_mask_intersect_proc =
   { { drawable_mask_intersect_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_merge_shadow_invoker (GimpProcedure *procedure,
                                Gimp          *gimp,
                                GimpContext   *context,
                                GimpProgress  *progress,
-                               Argument      *args)
+                               GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -2258,12 +2258,12 @@ static GimpProcedure drawable_merge_shadow_proc =
   { { drawable_merge_shadow_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_update_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -2302,15 +2302,15 @@ static GimpProcedure drawable_update_proc =
   { { drawable_update_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_get_pixel_invoker (GimpProcedure *procedure,
                             Gimp          *gimp,
                             GimpContext   *context,
                             GimpProgress  *progress,
-                            Argument      *args)
+                            GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gint32 x_coord;
   gint32 y_coord;
@@ -2377,12 +2377,12 @@ static GimpProcedure drawable_get_pixel_proc =
   { { drawable_get_pixel_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_set_pixel_invoker (GimpProcedure *procedure,
                             Gimp          *gimp,
                             GimpContext   *context,
                             GimpProgress  *progress,
-                            Argument      *args)
+                            GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -2443,12 +2443,12 @@ static GimpProcedure drawable_set_pixel_proc =
   { { drawable_set_pixel_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_fill_invoker (GimpProcedure *procedure,
                        Gimp          *gimp,
                        GimpContext   *context,
                        GimpProgress  *progress,
-                       Argument      *args)
+                       GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -2481,12 +2481,12 @@ static GimpProcedure drawable_fill_proc =
   { { drawable_fill_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_offset_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -2529,15 +2529,15 @@ static GimpProcedure drawable_offset_proc =
   { { drawable_offset_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_thumbnail_invoker (GimpProcedure *procedure,
                             Gimp          *gimp,
                             GimpContext   *context,
                             GimpProgress  *progress,
-                            Argument      *args)
+                            GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gint32 width;
   gint32 height;
@@ -2620,15 +2620,15 @@ static GimpProcedure drawable_thumbnail_proc =
   { { drawable_thumbnail_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_sub_thumbnail_invoker (GimpProcedure *procedure,
                                 Gimp          *gimp,
                                 GimpContext   *context,
                                 GimpProgress  *progress,
-                                Argument      *args)
+                                GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpDrawable *drawable;
   gint32 src_x;
   gint32 src_y;
@@ -2717,12 +2717,12 @@ static GimpProcedure drawable_sub_thumbnail_proc =
   { { drawable_sub_thumbnail_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 drawable_foreground_extract_invoker (GimpProcedure *procedure,
                                      Gimp          *gimp,
                                      GimpContext   *context,
                                      GimpProgress  *progress,
-                                     Argument      *args)
+                                     GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;

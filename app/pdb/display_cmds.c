@@ -125,15 +125,15 @@ register_display_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 display_new_invoker (GimpProcedure *procedure,
                      Gimp          *gimp,
                      GimpContext   *context,
                      GimpProgress  *progress,
-                     Argument      *args)
+                     GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   GimpObject *display = NULL;
 
@@ -177,12 +177,12 @@ static GimpProcedure display_new_proc =
   { { display_new_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 display_delete_invoker (GimpProcedure *procedure,
                         Gimp          *gimp,
                         GimpContext   *context,
                         GimpProgress  *progress,
-                        Argument      *args)
+                        GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpObject *display;
@@ -213,15 +213,15 @@ static GimpProcedure display_delete_proc =
   { { display_delete_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 display_get_window_handle_invoker (GimpProcedure *procedure,
                                    Gimp          *gimp,
                                    GimpContext   *context,
                                    GimpProgress  *progress,
-                                   Argument      *args)
+                                   GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpObject *display;
   gint32 window = 0;
 
@@ -256,12 +256,12 @@ static GimpProcedure display_get_window_handle_proc =
   { { display_get_window_handle_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 displays_flush_invoker (GimpProcedure *procedure,
                         Gimp          *gimp,
                         GimpContext   *context,
                         GimpProgress  *progress,
-                        Argument      *args)
+                        GimpArgument  *args)
 {
   gimp_container_foreach (gimp->images, (GFunc) gimp_image_flush, NULL);
   return gimp_procedure_get_return_values (procedure, TRUE);
@@ -283,12 +283,12 @@ static GimpProcedure displays_flush_proc =
   { { displays_flush_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 displays_reconnect_invoker (GimpProcedure *procedure,
                             Gimp          *gimp,
                             GimpContext   *context,
                             GimpProgress  *progress,
-                            Argument      *args)
+                            GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpImage *old_image;

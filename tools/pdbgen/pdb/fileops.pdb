@@ -51,8 +51,8 @@ HELP
 	no_marshalling => 1,
 	code => <<'CODE'
 {
-  Argument      *new_args;
-  Argument      *return_vals;
+  GimpArgument  *new_args;
+  GimpArgument  *return_vals;
   PlugInProcDef *file_proc;
   GimpProcedure *proc;
   gchar         *uri;
@@ -178,8 +178,8 @@ HELP
 	no_marshalling => 1,
 	code => <<'CODE'
 {
-  Argument      *new_args;
-  Argument      *return_vals;
+  GimpArgument  *new_args;
+  GimpArgument  *return_vals;
   PlugInProcDef *file_proc;
   GimpProcedure *proc;
   gchar         *uri;

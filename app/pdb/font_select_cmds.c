@@ -108,12 +108,12 @@ register_font_select_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 fonts_popup_invoker (GimpProcedure *procedure,
                      Gimp          *gimp,
                      GimpContext   *context,
                      GimpProgress  *progress,
-                     Argument      *args)
+                     GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *font_callback;
@@ -153,12 +153,12 @@ static GimpProcedure fonts_popup_proc =
   { { fonts_popup_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 fonts_close_popup_invoker (GimpProcedure *procedure,
                            Gimp          *gimp,
                            GimpContext   *context,
                            GimpProgress  *progress,
-                           Argument      *args)
+                           GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *font_callback;
@@ -192,12 +192,12 @@ static GimpProcedure fonts_close_popup_proc =
   { { fonts_close_popup_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 fonts_set_popup_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *font_callback;

@@ -271,14 +271,14 @@ register_plug_in_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 plugins_query_invoker (GimpProcedure *procedure,
                        Gimp          *gimp,
                        GimpContext   *context,
                        GimpProgress  *progress,
-                       Argument      *args)
+                       GimpArgument  *args)
 {
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *search_string;
   gint32 num_plugins = 0;
   gchar **menu_path = NULL;
@@ -332,12 +332,12 @@ static GimpProcedure plugins_query_proc =
   { { plugins_query_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 plugin_domain_register_invoker (GimpProcedure *procedure,
                                 Gimp          *gimp,
                                 GimpContext   *context,
                                 GimpProgress  *progress,
-                                Argument      *args)
+                                GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *domain_name;
@@ -378,12 +378,12 @@ static GimpProcedure plugin_domain_register_proc =
   { { plugin_domain_register_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 plugin_help_register_invoker (GimpProcedure *procedure,
                               Gimp          *gimp,
                               GimpContext   *context,
                               GimpProgress  *progress,
-                              Argument      *args)
+                              GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *domain_name;
@@ -424,12 +424,12 @@ static GimpProcedure plugin_help_register_proc =
   { { plugin_help_register_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 plugin_menu_register_invoker (GimpProcedure *procedure,
                               Gimp          *gimp,
                               GimpContext   *context,
                               GimpProgress  *progress,
-                              Argument      *args)
+                              GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *procedure_name;
@@ -473,12 +473,12 @@ static GimpProcedure plugin_menu_register_proc =
   { { plugin_menu_register_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 plugin_menu_branch_register_invoker (GimpProcedure *procedure,
                                      Gimp          *gimp,
                                      GimpContext   *context,
                                      GimpProgress  *progress,
-                                     Argument      *args)
+                                     GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *menu_path;
@@ -525,12 +525,12 @@ static GimpProcedure plugin_menu_branch_register_proc =
   { { plugin_menu_branch_register_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 plugin_icon_register_invoker (GimpProcedure *procedure,
                               Gimp          *gimp,
                               GimpContext   *context,
                               GimpProgress  *progress,
-                              Argument      *args)
+                              GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *procedure_name;

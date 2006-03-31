@@ -1068,15 +1068,15 @@ gradient_get_range (Gimp                 *gimp,
   return gradient;
 }
 
-static Argument *
+static GimpArgument *
 gradient_new_invoker (GimpProcedure *procedure,
                       Gimp          *gimp,
                       GimpContext   *context,
                       GimpProgress  *progress,
-                      Argument      *args)
+                      GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gchar *actual_name = NULL;
 
@@ -1121,15 +1121,15 @@ static GimpProcedure gradient_new_proc =
   { { gradient_new_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_duplicate_invoker (GimpProcedure *procedure,
                             Gimp          *gimp,
                             GimpContext   *context,
                             GimpProgress  *progress,
-                            Argument      *args)
+                            GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gchar *copy_name = NULL;
 
@@ -1179,15 +1179,15 @@ static GimpProcedure gradient_duplicate_proc =
   { { gradient_duplicate_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_is_editable_invoker (GimpProcedure *procedure,
                               Gimp          *gimp,
                               GimpContext   *context,
                               GimpProgress  *progress,
-                              Argument      *args)
+                              GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gboolean editable = FALSE;
 
@@ -1228,15 +1228,15 @@ static GimpProcedure gradient_is_editable_proc =
   { { gradient_is_editable_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_rename_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gchar *new_name;
   gchar *actual_name = NULL;
@@ -1282,12 +1282,12 @@ static GimpProcedure gradient_rename_proc =
   { { gradient_rename_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_delete_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -1336,15 +1336,15 @@ static GimpProcedure gradient_delete_proc =
   { { gradient_delete_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_get_uniform_samples_invoker (GimpProcedure *procedure,
                                       Gimp          *gimp,
                                       GimpContext   *context,
                                       GimpProgress  *progress,
-                                      Argument      *args)
+                                      GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gint32 num_samples;
   gboolean reverse;
@@ -1416,15 +1416,15 @@ static GimpProcedure gradient_get_uniform_samples_proc =
   { { gradient_get_uniform_samples_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_get_custom_samples_invoker (GimpProcedure *procedure,
                                      Gimp          *gimp,
                                      GimpContext   *context,
                                      GimpProgress  *progress,
-                                     Argument      *args)
+                                     GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gint32 num_samples;
   gdouble *positions;
@@ -1497,15 +1497,15 @@ static GimpProcedure gradient_get_custom_samples_proc =
   { { gradient_get_custom_samples_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_segment_get_left_color_invoker (GimpProcedure *procedure,
                                          Gimp          *gimp,
                                          GimpContext   *context,
                                          GimpProgress  *progress,
-                                         Argument      *args)
+                                         GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gint32 segment;
   GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
@@ -1557,12 +1557,12 @@ static GimpProcedure gradient_segment_get_left_color_proc =
   { { gradient_segment_get_left_color_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_segment_set_left_color_invoker (GimpProcedure *procedure,
                                          Gimp          *gimp,
                                          GimpContext   *context,
                                          GimpProgress  *progress,
-                                         Argument      *args)
+                                         GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -1610,15 +1610,15 @@ static GimpProcedure gradient_segment_set_left_color_proc =
   { { gradient_segment_set_left_color_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_segment_get_right_color_invoker (GimpProcedure *procedure,
                                           Gimp          *gimp,
                                           GimpContext   *context,
                                           GimpProgress  *progress,
-                                          Argument      *args)
+                                          GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gint32 segment;
   GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
@@ -1670,12 +1670,12 @@ static GimpProcedure gradient_segment_get_right_color_proc =
   { { gradient_segment_get_right_color_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_segment_set_right_color_invoker (GimpProcedure *procedure,
                                           Gimp          *gimp,
                                           GimpContext   *context,
                                           GimpProgress  *progress,
-                                          Argument      *args)
+                                          GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -1723,15 +1723,15 @@ static GimpProcedure gradient_segment_set_right_color_proc =
   { { gradient_segment_set_right_color_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_segment_get_left_pos_invoker (GimpProcedure *procedure,
                                        Gimp          *gimp,
                                        GimpContext   *context,
                                        GimpProgress  *progress,
-                                       Argument      *args)
+                                       GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gint32 segment;
   gdouble pos = 0.0;
@@ -1778,15 +1778,15 @@ static GimpProcedure gradient_segment_get_left_pos_proc =
   { { gradient_segment_get_left_pos_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_segment_set_left_pos_invoker (GimpProcedure *procedure,
                                        Gimp          *gimp,
                                        GimpContext   *context,
                                        GimpProgress  *progress,
-                                       Argument      *args)
+                                       GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gint32 segment;
   gdouble pos;
@@ -1835,15 +1835,15 @@ static GimpProcedure gradient_segment_set_left_pos_proc =
   { { gradient_segment_set_left_pos_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_segment_get_middle_pos_invoker (GimpProcedure *procedure,
                                          Gimp          *gimp,
                                          GimpContext   *context,
                                          GimpProgress  *progress,
-                                         Argument      *args)
+                                         GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gint32 segment;
   gdouble pos = 0.0;
@@ -1890,15 +1890,15 @@ static GimpProcedure gradient_segment_get_middle_pos_proc =
   { { gradient_segment_get_middle_pos_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_segment_set_middle_pos_invoker (GimpProcedure *procedure,
                                          Gimp          *gimp,
                                          GimpContext   *context,
                                          GimpProgress  *progress,
-                                         Argument      *args)
+                                         GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gint32 segment;
   gdouble pos;
@@ -1948,15 +1948,15 @@ static GimpProcedure gradient_segment_set_middle_pos_proc =
   { { gradient_segment_set_middle_pos_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_segment_get_right_pos_invoker (GimpProcedure *procedure,
                                         Gimp          *gimp,
                                         GimpContext   *context,
                                         GimpProgress  *progress,
-                                        Argument      *args)
+                                        GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gint32 segment;
   gdouble pos = 0.0;
@@ -2003,15 +2003,15 @@ static GimpProcedure gradient_segment_get_right_pos_proc =
   { { gradient_segment_get_right_pos_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_segment_set_right_pos_invoker (GimpProcedure *procedure,
                                         Gimp          *gimp,
                                         GimpContext   *context,
                                         GimpProgress  *progress,
-                                        Argument      *args)
+                                        GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gint32 segment;
   gdouble pos;
@@ -2061,15 +2061,15 @@ static GimpProcedure gradient_segment_set_right_pos_proc =
   { { gradient_segment_set_right_pos_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_segment_get_blending_function_invoker (GimpProcedure *procedure,
                                                 Gimp          *gimp,
                                                 GimpContext   *context,
                                                 GimpProgress  *progress,
-                                                Argument      *args)
+                                                GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gint32 segment;
   gint32 blend_func = 0;
@@ -2116,15 +2116,15 @@ static GimpProcedure gradient_segment_get_blending_function_proc =
   { { gradient_segment_get_blending_function_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_segment_get_coloring_type_invoker (GimpProcedure *procedure,
                                             Gimp          *gimp,
                                             GimpContext   *context,
                                             GimpProgress  *progress,
-                                            Argument      *args)
+                                            GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gint32 segment;
   gint32 coloring_type = 0;
@@ -2171,12 +2171,12 @@ static GimpProcedure gradient_segment_get_coloring_type_proc =
   { { gradient_segment_get_coloring_type_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_segment_range_set_blending_function_invoker (GimpProcedure *procedure,
                                                       Gimp          *gimp,
                                                       GimpContext   *context,
                                                       GimpProgress  *progress,
-                                                      Argument      *args)
+                                                      GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -2227,12 +2227,12 @@ static GimpProcedure gradient_segment_range_set_blending_function_proc =
   { { gradient_segment_range_set_blending_function_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_segment_range_set_coloring_type_invoker (GimpProcedure *procedure,
                                                   Gimp          *gimp,
                                                   GimpContext   *context,
                                                   GimpProgress  *progress,
-                                                  Argument      *args)
+                                                  GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -2283,12 +2283,12 @@ static GimpProcedure gradient_segment_range_set_coloring_type_proc =
   { { gradient_segment_range_set_coloring_type_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_segment_range_flip_invoker (GimpProcedure *procedure,
                                      Gimp          *gimp,
                                      GimpContext   *context,
                                      GimpProgress  *progress,
-                                     Argument      *args)
+                                     GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -2337,12 +2337,12 @@ static GimpProcedure gradient_segment_range_flip_proc =
   { { gradient_segment_range_flip_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_segment_range_replicate_invoker (GimpProcedure *procedure,
                                           Gimp          *gimp,
                                           GimpContext   *context,
                                           GimpProgress  *progress,
-                                          Argument      *args)
+                                          GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -2394,12 +2394,12 @@ static GimpProcedure gradient_segment_range_replicate_proc =
   { { gradient_segment_range_replicate_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_segment_range_split_midpoint_invoker (GimpProcedure *procedure,
                                                Gimp          *gimp,
                                                GimpContext   *context,
                                                GimpProgress  *progress,
-                                               Argument      *args)
+                                               GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -2448,12 +2448,12 @@ static GimpProcedure gradient_segment_range_split_midpoint_proc =
   { { gradient_segment_range_split_midpoint_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_segment_range_split_uniform_invoker (GimpProcedure *procedure,
                                               Gimp          *gimp,
                                               GimpContext   *context,
                                               GimpProgress  *progress,
-                                              Argument      *args)
+                                              GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -2505,12 +2505,12 @@ static GimpProcedure gradient_segment_range_split_uniform_proc =
   { { gradient_segment_range_split_uniform_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_segment_range_delete_invoker (GimpProcedure *procedure,
                                        Gimp          *gimp,
                                        GimpContext   *context,
                                        GimpProgress  *progress,
-                                       Argument      *args)
+                                       GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -2559,12 +2559,12 @@ static GimpProcedure gradient_segment_range_delete_proc =
   { { gradient_segment_range_delete_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_segment_range_redistribute_handles_invoker (GimpProcedure *procedure,
                                                      Gimp          *gimp,
                                                      GimpContext   *context,
                                                      GimpProgress  *progress,
-                                                     Argument      *args)
+                                                     GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -2612,12 +2612,12 @@ static GimpProcedure gradient_segment_range_redistribute_handles_proc =
   { { gradient_segment_range_redistribute_handles_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_segment_range_blend_colors_invoker (GimpProcedure *procedure,
                                              Gimp          *gimp,
                                              GimpContext   *context,
                                              GimpProgress  *progress,
-                                             Argument      *args)
+                                             GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -2668,12 +2668,12 @@ static GimpProcedure gradient_segment_range_blend_colors_proc =
   { { gradient_segment_range_blend_colors_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_segment_range_blend_opacity_invoker (GimpProcedure *procedure,
                                               Gimp          *gimp,
                                               GimpContext   *context,
                                               GimpProgress  *progress,
-                                              Argument      *args)
+                                              GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -2724,15 +2724,15 @@ static GimpProcedure gradient_segment_range_blend_opacity_proc =
   { { gradient_segment_range_blend_opacity_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 gradient_segment_range_move_invoker (GimpProcedure *procedure,
                                      Gimp          *gimp,
                                      GimpContext   *context,
                                      GimpProgress  *progress,
-                                     Argument      *args)
+                                     GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gint32 start_segment;
   gint32 end_segment;

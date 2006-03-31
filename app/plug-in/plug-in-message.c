@@ -36,6 +36,7 @@
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 
+#include "pdb/gimpargument.h"
 #include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
@@ -353,9 +354,9 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
   gchar           *canonical;
   const gchar     *proc_name     = NULL;
   GimpProcedure   *procedure;
-  Argument        *args          = NULL;
+  GimpArgument    *args          = NULL;
   gint             n_args        = 0;
-  Argument        *return_vals   = NULL;
+  GimpArgument    *return_vals   = NULL;
   gint             n_return_vals = 0;
 
   canonical = gimp_canonicalize_identifier (proc_run->name);
@@ -461,8 +462,8 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
 	  return;
 	}
 
-      procedural_db_destroy_args (args, n_args, FALSE);
-      procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
+      gimp_arguments_destroy (args, n_args, FALSE);
+      gimp_arguments_destroy (return_vals, n_return_vals, TRUE);
       plug_in_params_destroy (proc_return.params, proc_return.nparams, FALSE);
     }
   else

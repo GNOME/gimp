@@ -647,15 +647,15 @@ register_brush_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 brush_new_invoker (GimpProcedure *procedure,
                    Gimp          *gimp,
                    GimpContext   *context,
                    GimpProgress  *progress,
-                   Argument      *args)
+                   GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gchar *actual_name = NULL;
 
@@ -700,15 +700,15 @@ static GimpProcedure brush_new_proc =
   { { brush_new_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 brush_duplicate_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gchar *copy_name = NULL;
 
@@ -758,15 +758,15 @@ static GimpProcedure brush_duplicate_proc =
   { { brush_duplicate_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 brush_is_generated_invoker (GimpProcedure *procedure,
                             Gimp          *gimp,
                             GimpContext   *context,
                             GimpProgress  *progress,
-                            Argument      *args)
+                            GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gboolean generated = FALSE;
 
@@ -807,15 +807,15 @@ static GimpProcedure brush_is_generated_proc =
   { { brush_is_generated_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 brush_rename_invoker (GimpProcedure *procedure,
                       Gimp          *gimp,
                       GimpContext   *context,
                       GimpProgress  *progress,
-                      Argument      *args)
+                      GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gchar *new_name;
   gchar *actual_name = NULL;
@@ -861,12 +861,12 @@ static GimpProcedure brush_rename_proc =
   { { brush_rename_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 brush_delete_invoker (GimpProcedure *procedure,
                       Gimp          *gimp,
                       GimpContext   *context,
                       GimpProgress  *progress,
-                      Argument      *args)
+                      GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -915,15 +915,15 @@ static GimpProcedure brush_delete_proc =
   { { brush_delete_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 brush_is_editable_invoker (GimpProcedure *procedure,
                            Gimp          *gimp,
                            GimpContext   *context,
                            GimpProgress  *progress,
-                           Argument      *args)
+                           GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gboolean editable = FALSE;
 
@@ -964,15 +964,15 @@ static GimpProcedure brush_is_editable_proc =
   { { brush_is_editable_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 brush_get_info_invoker (GimpProcedure *procedure,
                         Gimp          *gimp,
                         GimpContext   *context,
                         GimpProgress  *progress,
-                        Argument      *args)
+                        GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gint32 width = 0;
   gint32 height = 0;
@@ -1026,15 +1026,15 @@ static GimpProcedure brush_get_info_proc =
   { { brush_get_info_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 brush_get_pixels_invoker (GimpProcedure *procedure,
                           Gimp          *gimp,
                           GimpContext   *context,
                           GimpProgress  *progress,
-                          Argument      *args)
+                          GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gint32 width = 0;
   gint32 height = 0;
@@ -1105,15 +1105,15 @@ static GimpProcedure brush_get_pixels_proc =
   { { brush_get_pixels_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 brush_get_spacing_invoker (GimpProcedure *procedure,
                            Gimp          *gimp,
                            GimpContext   *context,
                            GimpProgress  *progress,
-                           Argument      *args)
+                           GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gint32 spacing = 0;
 
@@ -1154,12 +1154,12 @@ static GimpProcedure brush_get_spacing_proc =
   { { brush_get_spacing_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 brush_set_spacing_invoker (GimpProcedure *procedure,
                            Gimp          *gimp,
                            GimpContext   *context,
                            GimpProgress  *progress,
-                           Argument      *args)
+                           GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -1198,15 +1198,15 @@ static GimpProcedure brush_set_spacing_proc =
   { { brush_set_spacing_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 brush_get_shape_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gint32 shape = 0;
 
@@ -1247,15 +1247,15 @@ static GimpProcedure brush_get_shape_proc =
   { { brush_get_shape_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 brush_get_radius_invoker (GimpProcedure *procedure,
                           Gimp          *gimp,
                           GimpContext   *context,
                           GimpProgress  *progress,
-                          Argument      *args)
+                          GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gdouble radius = 0.0;
 
@@ -1296,15 +1296,15 @@ static GimpProcedure brush_get_radius_proc =
   { { brush_get_radius_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 brush_get_spikes_invoker (GimpProcedure *procedure,
                           Gimp          *gimp,
                           GimpContext   *context,
                           GimpProgress  *progress,
-                          Argument      *args)
+                          GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gint32 spikes = 0;
 
@@ -1345,15 +1345,15 @@ static GimpProcedure brush_get_spikes_proc =
   { { brush_get_spikes_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 brush_get_hardness_invoker (GimpProcedure *procedure,
                             Gimp          *gimp,
                             GimpContext   *context,
                             GimpProgress  *progress,
-                            Argument      *args)
+                            GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gdouble hardness = 0.0;
 
@@ -1394,15 +1394,15 @@ static GimpProcedure brush_get_hardness_proc =
   { { brush_get_hardness_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 brush_get_aspect_ratio_invoker (GimpProcedure *procedure,
                                 Gimp          *gimp,
                                 GimpContext   *context,
                                 GimpProgress  *progress,
-                                Argument      *args)
+                                GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gdouble aspect_ratio = 0.0;
 
@@ -1443,15 +1443,15 @@ static GimpProcedure brush_get_aspect_ratio_proc =
   { { brush_get_aspect_ratio_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 brush_get_angle_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gdouble angle = 0.0;
 
@@ -1492,15 +1492,15 @@ static GimpProcedure brush_get_angle_proc =
   { { brush_get_angle_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 brush_set_shape_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gint32 shape_in;
   gint32 shape_out = 0;
@@ -1547,15 +1547,15 @@ static GimpProcedure brush_set_shape_proc =
   { { brush_set_shape_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 brush_set_radius_invoker (GimpProcedure *procedure,
                           Gimp          *gimp,
                           GimpContext   *context,
                           GimpProgress  *progress,
-                          Argument      *args)
+                          GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gdouble radius_in;
   gdouble radius_out = 0.0;
@@ -1602,15 +1602,15 @@ static GimpProcedure brush_set_radius_proc =
   { { brush_set_radius_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 brush_set_spikes_invoker (GimpProcedure *procedure,
                           Gimp          *gimp,
                           GimpContext   *context,
                           GimpProgress  *progress,
-                          Argument      *args)
+                          GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gint32 spikes_in;
   gint32 spikes_out = 0;
@@ -1657,15 +1657,15 @@ static GimpProcedure brush_set_spikes_proc =
   { { brush_set_spikes_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 brush_set_hardness_invoker (GimpProcedure *procedure,
                             Gimp          *gimp,
                             GimpContext   *context,
                             GimpProgress  *progress,
-                            Argument      *args)
+                            GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gdouble hardness_in;
   gdouble hardness_out = 0.0;
@@ -1712,15 +1712,15 @@ static GimpProcedure brush_set_hardness_proc =
   { { brush_set_hardness_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 brush_set_aspect_ratio_invoker (GimpProcedure *procedure,
                                 Gimp          *gimp,
                                 GimpContext   *context,
                                 GimpProgress  *progress,
-                                Argument      *args)
+                                GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gdouble aspect_ratio_in;
   gdouble aspect_ratio_out = 0.0;
@@ -1767,15 +1767,15 @@ static GimpProcedure brush_set_aspect_ratio_proc =
   { { brush_set_aspect_ratio_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 brush_set_angle_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *name;
   gdouble angle_in;
   gdouble angle_out = 0.0;

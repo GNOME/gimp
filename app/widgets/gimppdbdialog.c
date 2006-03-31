@@ -31,7 +31,7 @@
 
 #include "core/gimpcontext.h"
 
-#include "pdb/gimpprocedure.h"
+#include "pdb/gimpargument.h"
 #include "pdb/procedural_db.h"
 
 #include "gimpmenufactory.h"
@@ -309,8 +309,8 @@ gimp_pdb_dialog_run_callback (GimpPdbDialog *dialog,
       if (procedural_db_lookup (dialog->caller_context->gimp,
                                 dialog->callback_name))
         {
-          Argument *return_vals;
-          gint      n_return_vals;
+          GimpArgument *return_vals;
+          gint          n_return_vals;
 
           return_vals = klass->run_callback (dialog, object, closing,
                                              &n_return_vals);
@@ -322,7 +322,7 @@ gimp_pdb_dialog_run_callback (GimpPdbDialog *dialog,
                          g_type_name (G_TYPE_FROM_INSTANCE (dialog)));
             }
 
-          procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
+          gimp_arguments_destroy (return_vals, n_return_vals, TRUE);
         }
 
       dialog->callback_busy = FALSE;

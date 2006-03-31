@@ -404,7 +404,7 @@ procedural_db_print_entry (gpointer key,
       fprintf (file, "( ");
       for (i = 0; i < procedure->num_args; i++)
         {
-          ProcArg *arg = &procedure->args[i];
+          GimpArgumentSpec *arg = &procedure->args[i];
 
           fprintf (file, "( ");
 
@@ -421,7 +421,7 @@ procedural_db_print_entry (gpointer key,
       fprintf (file, "( ");
       for (i = 0; i < procedure->num_values; i++)
         {
-          ProcArg *arg = &procedure->values[i];
+          GimpArgumentSpec *arg = &procedure->values[i];
 
           fprintf (file, "( ");
 

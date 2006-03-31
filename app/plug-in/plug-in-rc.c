@@ -31,8 +31,8 @@
 
 #include "core/gimp.h"
 
+#include "pdb/gimpargument.h"
 #include "pdb/gimpprocedure.h"
-#include "pdb/procedural_db.h"
 
 #include "plug-ins.h"
 #include "plug-in-def.h"

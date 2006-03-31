@@ -24,27 +24,27 @@
 
 /*  Run a plug-in as if it were a procedure database procedure
  */
-Argument * plug_in_run    (Gimp          *gimp,
-                           GimpContext   *context,
-                           GimpProgress  *progress,
-                           GimpProcedure *procedure,
-                           Argument      *args,
-                           gint           n_args,
-                           gboolean       synchronous,
-                           gboolean       destroy_return_vals,
-                           gint           display_ID);
+GimpArgument * plug_in_run    (Gimp          *gimp,
+                               GimpContext   *context,
+                               GimpProgress  *progress,
+                               GimpProcedure *procedure,
+                               GimpArgument  *args,
+                               gint           n_args,
+                               gboolean       synchronous,
+                               gboolean       destroy_return_vals,
+                               gint           display_ID);
 
 /*  Run one of the last plug-ins from the plug-in history again with
  *  the same arguments. Extensions are exempt from this "privelege".
  */
-void       plug_in_repeat (Gimp         *gimp,
-                           gint          index,
-                           GimpContext  *context,
-                           GimpProgress *progress,
-                           gint          display_ID,
-                           gint          image_ID,
-                           gint          drawable_ID,
-                           gboolean      with_interface);
+void           plug_in_repeat (Gimp         *gimp,
+                               gint          index,
+                               GimpContext  *context,
+                               GimpProgress *progress,
+                               gint          display_ID,
+                               gint          image_ID,
+                               gint          drawable_ID,
+                               gboolean      with_interface);
 
 
 #endif /* __PLUG_IN_RUN_H__ */

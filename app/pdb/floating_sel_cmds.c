@@ -153,12 +153,12 @@ register_floating_sel_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 floating_sel_remove_invoker (GimpProcedure *procedure,
                              Gimp          *gimp,
                              GimpContext   *context,
                              GimpProgress  *progress,
-                             Argument      *args)
+                             GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
@@ -192,12 +192,12 @@ static GimpProcedure floating_sel_remove_proc =
   { { floating_sel_remove_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 floating_sel_anchor_invoker (GimpProcedure *procedure,
                              Gimp          *gimp,
                              GimpContext   *context,
                              GimpProgress  *progress,
-                             Argument      *args)
+                             GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
@@ -231,12 +231,12 @@ static GimpProcedure floating_sel_anchor_proc =
   { { floating_sel_anchor_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 floating_sel_to_layer_invoker (GimpProcedure *procedure,
                                Gimp          *gimp,
                                GimpContext   *context,
                                GimpProgress  *progress,
-                               Argument      *args)
+                               GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
@@ -270,12 +270,12 @@ static GimpProcedure floating_sel_to_layer_proc =
   { { floating_sel_to_layer_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 floating_sel_attach_invoker (GimpProcedure *procedure,
                              Gimp          *gimp,
                              GimpContext   *context,
                              GimpProgress  *progress,
-                             Argument      *args)
+                             GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -311,12 +311,12 @@ static GimpProcedure floating_sel_attach_proc =
   { { floating_sel_attach_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 floating_sel_rigor_invoker (GimpProcedure *procedure,
                             Gimp          *gimp,
                             GimpContext   *context,
                             GimpProgress  *progress,
-                            Argument      *args)
+                            GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
@@ -352,12 +352,12 @@ static GimpProcedure floating_sel_rigor_proc =
   { { floating_sel_rigor_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 floating_sel_relax_invoker (GimpProcedure *procedure,
                             Gimp          *gimp,
                             GimpContext   *context,
                             GimpProgress  *progress,
-                            Argument      *args)
+                            GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;

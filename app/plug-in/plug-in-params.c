@@ -30,22 +30,23 @@
 
 #include "core/gimpparamspecs.h"
 
+#include "pdb/gimpargument.h"
 #include "pdb/procedural_db.h"
 
 #include "plug-in.h"
 #include "plug-in-params.h"
 
 
-Argument *
-plug_in_params_to_args (ProcArg  *proc_args,
-                        gint      n_proc_args,
-                        GPParam  *params,
-			gint      n_params,
-			gboolean  full_copy)
+GimpArgument *
+plug_in_params_to_args (GimpArgumentSpec *proc_args,
+                        gint              n_proc_args,
+                        GPParam          *params,
+			gint              n_params,
+			gboolean          full_copy)
 {
-  Argument *args;
-  gint      count;
-  gint      i;
+  GimpArgument *args;
+  gint          count;
+  gint          i;
 
   g_return_val_if_fail ((proc_args != NULL && n_proc_args  > 0) ||
                         (proc_args == NULL && n_proc_args == 0), NULL);
@@ -55,7 +56,7 @@ plug_in_params_to_args (ProcArg  *proc_args,
   if (! params)
     return NULL;
 
-  args = g_new0 (Argument, n_params);
+  args = g_new0 (GimpArgument, n_params);
 
   for (i = 0; i < n_params; i++)
     {
@@ -63,11 +64,11 @@ plug_in_params_to_args (ProcArg  *proc_args,
 
       if (i < n_proc_args && proc_args[i].type == params[i].type)
         {
-          procedural_db_argument_init (&args[i], &proc_args[i]);
+          gimp_argument_init (&args[i], &proc_args[i]);
         }
       else
         {
-          procedural_db_compat_arg_init (&args[i], params[i].type);
+          gimp_argument_init_compat (&args[i], params[i].type);
         }
 
       switch (args[i].type)
@@ -238,13 +239,13 @@ plug_in_params_to_args (ProcArg  *proc_args,
 }
 
 GPParam *
-plug_in_args_to_params (Argument *args,
-			gint      n_args,
-			gboolean  full_copy)
+plug_in_args_to_params (GimpArgument *args,
+			gint          n_args,
+			gboolean      full_copy)
 {
-  GPParam  *params;
-  gint      count;
-  gint      i;
+  GPParam *params;
+  gint     count;
+  gint     i;
 
   g_return_val_if_fail ((args != NULL && n_args  > 0) ||
                         (args == NULL && n_args == 0), NULL);
@@ -545,16 +546,16 @@ plug_in_param_defs_check (const gchar *plug_in_name,
                           guint32      n_return_vals,
                           GError     **error)
 {
-  ProcArg  *args;
-  ProcArg  *return_args;
-  gboolean  success;
-  gint      i;
+  GimpArgumentSpec *args;
+  GimpArgumentSpec *return_args;
+  gboolean          success;
+  gint              i;
 
-  args = g_new0 (ProcArg, n_args);
+  args = g_new0 (GimpArgumentSpec, n_args);
   for (i = 0; i < n_args; i++)
     args[i].type = params[i].type;
 
-  return_args = g_new0 (ProcArg, n_return_vals);
+  return_args = g_new0 (GimpArgumentSpec, n_return_vals);
   for (i = 0; i < n_return_vals; i++)
     return_args[i].type = return_vals[i].type;
 
@@ -575,15 +576,15 @@ plug_in_param_defs_check (const gchar *plug_in_name,
 }
 
 gboolean
-plug_in_proc_args_check (const gchar *plug_in_name,
-                         const gchar *plug_in_prog,
-                         const gchar *procedure_name,
-                         const gchar *menu_path,
-                         ProcArg     *args,
-                         guint32      n_args,
-                         ProcArg     *return_vals,
-                         guint32      n_return_vals,
-                         GError     **error)
+plug_in_proc_args_check (const gchar       *plug_in_name,
+                         const gchar       *plug_in_prog,
+                         const gchar       *procedure_name,
+                         const gchar       *menu_path,
+                         GimpArgumentSpec  *args,
+                         guint32            n_args,
+                         GimpArgumentSpec  *return_vals,
+                         guint32            n_return_vals,
+                         GError           **error)
 {
   gchar *prefix;
   gchar *p;

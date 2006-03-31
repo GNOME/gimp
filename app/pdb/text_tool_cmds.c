@@ -466,15 +466,15 @@ register_text_tool_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 text_fontname_invoker (GimpProcedure *procedure,
                        Gimp          *gimp,
                        GimpContext   *context,
                        GimpProgress  *progress,
-                       Argument      *args)
+                       GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   GimpDrawable *drawable;
   gdouble x;
@@ -539,15 +539,15 @@ static GimpProcedure text_fontname_proc =
   { { text_fontname_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 text_get_extents_fontname_invoker (GimpProcedure *procedure,
                                    Gimp          *gimp,
                                    GimpContext   *context,
                                    GimpProgress  *progress,
-                                   Argument      *args)
+                                   GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *text;
   gdouble size;
   gint32 size_type;
@@ -602,15 +602,15 @@ static GimpProcedure text_get_extents_fontname_proc =
   { { text_get_extents_fontname_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 text_invoker (GimpProcedure *procedure,
               Gimp          *gimp,
               GimpContext   *context,
               GimpProgress  *progress,
-              Argument      *args)
+              GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   GimpDrawable *drawable;
   gdouble x;
@@ -689,15 +689,15 @@ static GimpProcedure text_proc =
   { { text_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 text_get_extents_invoker (GimpProcedure *procedure,
                           Gimp          *gimp,
                           GimpContext   *context,
                           GimpProgress  *progress,
-                          Argument      *args)
+                          GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *text;
   gdouble size;
   gint32 size_type;

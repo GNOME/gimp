@@ -1,5 +1,43 @@
 2006-03-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/pdb-types.h
+	* app/pdb/gimpargument.h: renamed struct Argument to GimpArgument
+	and struct ProcArg to GimpArgumentSpec.
+
+	* app/batch.c
+	* app/actions/plug-in-commands.c
+	* app/actions/vectors-commands.c
+	* app/core/gimppdbprogress.c
+	* app/dialogs/about-dialog.c
+	* app/file/file-open.c
+	* app/file/file-save.c
+	* app/pdb/gimpargument.c
+	* app/pdb/gimpprocedure.[ch]
+	* app/pdb/procedural-db-query.c
+	* app/pdb/procedural_db.[ch]
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-params.[ch]
+	* app/plug-in/plug-in-proc-frame.h
+	* app/plug-in/plug-in-progress.c
+	* app/plug-in/plug-in-rc.c
+	* app/plug-in/plug-in-run.[ch]
+	* app/plug-in/plug-ins.c
+	* app/widgets/gimpbrushselect.c
+	* app/widgets/gimpfontselect.c
+	* app/widgets/gimpgradientselect.c
+	* app/widgets/gimphelp.c
+	* app/widgets/gimppaletteselect.c
+	* app/widgets/gimppatternselect.c
+	* app/widgets/gimppdbdialog.[ch]
+	* app/xcf/xcf.c
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/procedural_db.pdb: changed accordingly.
+
+	* app/pdb/*_cmds.c: regenerated.
+
+2006-03-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/pdb/Makefile.am
 	* app/pdb/gimpargument.[ch]: moved Argument and ProcArg structs
 	and functions to these new files. Renamed functions to

@@ -284,15 +284,15 @@ register_grid_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 image_grid_get_spacing_invoker (GimpProcedure *procedure,
                                 Gimp          *gimp,
                                 GimpContext   *context,
                                 GimpProgress  *progress,
-                                Argument      *args)
+                                GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gdouble xspacing = 0.0;
   gdouble yspacing = 0.0;
@@ -339,12 +339,12 @@ static GimpProcedure image_grid_get_spacing_proc =
   { { image_grid_get_spacing_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 image_grid_set_spacing_invoker (GimpProcedure *procedure,
                                 Gimp          *gimp,
                                 GimpContext   *context,
                                 GimpProgress  *progress,
-                                Argument      *args)
+                                GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -387,15 +387,15 @@ static GimpProcedure image_grid_set_spacing_proc =
   { { image_grid_set_spacing_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 image_grid_get_offset_invoker (GimpProcedure *procedure,
                                Gimp          *gimp,
                                GimpContext   *context,
                                GimpProgress  *progress,
-                               Argument      *args)
+                               GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gdouble xoffset = 0.0;
   gdouble yoffset = 0.0;
@@ -442,12 +442,12 @@ static GimpProcedure image_grid_get_offset_proc =
   { { image_grid_get_offset_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 image_grid_set_offset_invoker (GimpProcedure *procedure,
                                Gimp          *gimp,
                                GimpContext   *context,
                                GimpProgress  *progress,
-                               Argument      *args)
+                               GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -490,15 +490,15 @@ static GimpProcedure image_grid_set_offset_proc =
   { { image_grid_set_offset_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 image_grid_get_foreground_color_invoker (GimpProcedure *procedure,
                                          Gimp          *gimp,
                                          GimpContext   *context,
                                          GimpProgress  *progress,
-                                         Argument      *args)
+                                         GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   GimpRGB fgcolor = { 0.0, 0.0, 0.0, 1.0 };
 
@@ -538,12 +538,12 @@ static GimpProcedure image_grid_get_foreground_color_proc =
   { { image_grid_get_foreground_color_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 image_grid_set_foreground_color_invoker (GimpProcedure *procedure,
                                          Gimp          *gimp,
                                          GimpContext   *context,
                                          GimpProgress  *progress,
-                                         Argument      *args)
+                                         GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -581,15 +581,15 @@ static GimpProcedure image_grid_set_foreground_color_proc =
   { { image_grid_set_foreground_color_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 image_grid_get_background_color_invoker (GimpProcedure *procedure,
                                          Gimp          *gimp,
                                          GimpContext   *context,
                                          GimpProgress  *progress,
-                                         Argument      *args)
+                                         GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   GimpRGB bgcolor = { 0.0, 0.0, 0.0, 1.0 };
 
@@ -629,12 +629,12 @@ static GimpProcedure image_grid_get_background_color_proc =
   { { image_grid_get_background_color_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 image_grid_set_background_color_invoker (GimpProcedure *procedure,
                                          Gimp          *gimp,
                                          GimpContext   *context,
                                          GimpProgress  *progress,
-                                         Argument      *args)
+                                         GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -672,15 +672,15 @@ static GimpProcedure image_grid_set_background_color_proc =
   { { image_grid_set_background_color_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 image_grid_get_style_invoker (GimpProcedure *procedure,
                               Gimp          *gimp,
                               GimpContext   *context,
                               GimpProgress  *progress,
-                              Argument      *args)
+                              GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   GimpImage *image;
   gint32 style = 0;
 
@@ -720,12 +720,12 @@ static GimpProcedure image_grid_get_style_proc =
   { { image_grid_get_style_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 image_grid_set_style_invoker (GimpProcedure *procedure,
                               Gimp          *gimp,
                               GimpContext   *context,
                               GimpProgress  *progress,
-                              Argument      *args)
+                              GimpArgument  *args)
 {
   gboolean success = TRUE;
   GimpImage *image;

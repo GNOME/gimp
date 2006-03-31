@@ -131,9 +131,9 @@ batch_run_cmd (Gimp          *gimp,
                GimpRunMode    run_mode,
 	       const gchar   *cmd)
 {
-  Argument *args;
-  Argument *return_vals;
-  gint      n_return_vals;
+  GimpArgument *args;
+  GimpArgument *return_vals;
+  gint          n_return_vals;
 
   args = gimp_procedure_get_arguments (procedure);
 

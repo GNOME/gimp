@@ -53,16 +53,16 @@ typedef GimpImage * GimpXcfLoaderFunc (Gimp    *gimp,
                                        XcfInfo *info);
 
 
-static Argument * xcf_load_invoker (GimpProcedure *procedure,
-                                    Gimp          *gimp,
-                                    GimpContext   *context,
-                                    GimpProgress  *progress,
-                                    Argument      *args);
-static Argument * xcf_save_invoker (GimpProcedure *procedure,
-                                    Gimp          *gimp,
-                                    GimpContext   *context,
-                                    GimpProgress  *progress,
-                                    Argument      *args);
+static GimpArgument * xcf_load_invoker (GimpProcedure *procedure,
+                                        Gimp          *gimp,
+                                        GimpContext   *context,
+                                        GimpProgress  *progress,
+                                        GimpArgument  *args);
+static GimpArgument * xcf_save_invoker (GimpProcedure *procedure,
+                                        Gimp          *gimp,
+                                        GimpContext   *context,
+                                        GimpProgress  *progress,
+                                        GimpArgument  *args);
 
 
 static PlugInProcDef xcf_plug_in_load_proc =
@@ -230,19 +230,19 @@ xcf_exit (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 }
 
-static Argument *
+static GimpArgument *
 xcf_load_invoker (GimpProcedure *procedure,
                   Gimp          *gimp,
                   GimpContext   *context,
                   GimpProgress  *progress,
-                  Argument      *args)
+                  GimpArgument  *args)
 {
-  XcfInfo      info;
-  Argument    *return_vals;
-  GimpImage   *image   = NULL;
-  const gchar *filename;
-  gboolean     success = FALSE;
-  gchar        id[14];
+  XcfInfo       info;
+  GimpArgument *return_vals;
+  GimpImage    *image   = NULL;
+  const gchar  *filename;
+  gboolean      success = FALSE;
+  gchar         id[14];
 
   gimp_set_busy (gimp);
 
@@ -318,18 +318,18 @@ xcf_load_invoker (GimpProcedure *procedure,
   return return_vals;
 }
 
-static Argument *
+static GimpArgument *
 xcf_save_invoker (GimpProcedure *procedure,
                   Gimp          *gimp,
                   GimpContext   *context,
                   GimpProgress  *progress,
-                  Argument      *args)
+                  GimpArgument  *args)
 {
-  XcfInfo      info;
-  Argument    *return_vals;
-  GimpImage   *image;
-  const gchar *filename;
-  gboolean     success = FALSE;
+  XcfInfo       info;
+  GimpArgument *return_vals;
+  GimpImage    *image;
+  const gchar  *filename;
+  gboolean      success = FALSE;
 
   gimp_set_busy (gimp);
 

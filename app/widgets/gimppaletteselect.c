@@ -38,14 +38,14 @@
 #include "gimppaletteselect.h"
 
 
-static GObject  * gimp_palette_select_constructor  (GType          type,
-                                                    guint          n_params,
-                                                    GObjectConstructParam *params);
+static GObject      * gimp_palette_select_constructor  (GType          type,
+                                                        guint          n_params,
+                                                        GObjectConstructParam *params);
 
-static Argument * gimp_palette_select_run_callback (GimpPdbDialog *dialog,
-                                                    GimpObject    *object,
-                                                    gboolean       closing,
-                                                    gint          *n_return_vals);
+static GimpArgument * gimp_palette_select_run_callback (GimpPdbDialog *dialog,
+                                                        GimpObject    *object,
+                                                        gboolean       closing,
+                                                        gint          *n_return_vals);
 
 
 G_DEFINE_TYPE (GimpPaletteSelect, gimp_palette_select, GIMP_TYPE_PDB_DIALOG);
@@ -101,7 +101,7 @@ gimp_palette_select_constructor (GType                  type,
   return object;
 }
 
-static Argument *
+static GimpArgument *
 gimp_palette_select_run_callback (GimpPdbDialog *dialog,
                                   GimpObject    *object,
                                   gboolean       closing,

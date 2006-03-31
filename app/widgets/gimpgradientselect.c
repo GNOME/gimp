@@ -45,18 +45,18 @@ enum
 };
 
 
-static GObject  * gimp_gradient_select_constructor  (GType          type,
-                                                     guint          n_params,
-                                                     GObjectConstructParam *params);
-static void       gimp_gradient_select_set_property (GObject       *object,
-                                                     guint          property_id,
-                                                     const GValue  *value,
-                                                     GParamSpec    *pspec);
+static GObject      * gimp_gradient_select_constructor  (GType          type,
+                                                         guint          n_params,
+                                                         GObjectConstructParam *params);
+static void           gimp_gradient_select_set_property (GObject       *object,
+                                                         guint          property_id,
+                                                         const GValue  *value,
+                                                         GParamSpec    *pspec);
 
-static Argument * gimp_gradient_select_run_callback (GimpPdbDialog *dialog,
-                                                     GimpObject    *object,
-                                                     gboolean       closing,
-                                                     gint          *n_return_vals);
+static GimpArgument * gimp_gradient_select_run_callback (GimpPdbDialog *dialog,
+                                                         GimpObject    *object,
+                                                         gboolean       closing,
+                                                         gint          *n_return_vals);
 
 
 G_DEFINE_TYPE (GimpGradientSelect, gimp_gradient_select,
@@ -120,7 +120,7 @@ gimp_gradient_select_constructor (GType                  type,
   return object;
 }
 
-static Argument *
+static GimpArgument *
 gimp_gradient_select_run_callback (GimpPdbDialog *dialog,
                                    GimpObject    *object,
                                    gboolean       closing,

@@ -28,6 +28,7 @@
 #include "core/gimppdbprogress.h"
 #include "core/gimpprogress.h"
 
+#include "pdb/gimpargument.h"
 #include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 

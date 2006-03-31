@@ -158,12 +158,12 @@ register_progress_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 progress_init_invoker (GimpProcedure *procedure,
                        Gimp          *gimp,
                        GimpContext   *context,
                        GimpProgress  *progress,
-                       Argument      *args)
+                       GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *message;
@@ -202,12 +202,12 @@ static GimpProcedure progress_init_proc =
   { { progress_init_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 progress_update_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
   gdouble percentage;
@@ -244,12 +244,12 @@ static GimpProcedure progress_update_proc =
   { { progress_update_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 progress_pulse_invoker (GimpProcedure *procedure,
                         Gimp          *gimp,
                         GimpContext   *context,
                         GimpProgress  *progress,
-                        Argument      *args)
+                        GimpArgument  *args)
 {
   gboolean success = TRUE;
   if (gimp->current_plug_in && gimp->current_plug_in->open)
@@ -278,12 +278,12 @@ static GimpProcedure progress_pulse_proc =
   { { progress_pulse_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 progress_set_text_invoker (GimpProcedure *procedure,
                            Gimp          *gimp,
                            GimpContext   *context,
                            GimpProgress  *progress,
-                           Argument      *args)
+                           GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *message;
@@ -320,15 +320,15 @@ static GimpProcedure progress_set_text_proc =
   { { progress_set_text_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 progress_get_window_handle_invoker (GimpProcedure *procedure,
                                     Gimp          *gimp,
                                     GimpContext   *context,
                                     GimpProgress  *progress,
-                                    Argument      *args)
+                                    GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gint32 window = 0;
 
   if (gimp->current_plug_in && gimp->current_plug_in->open)
@@ -363,12 +363,12 @@ static GimpProcedure progress_get_window_handle_proc =
   { { progress_get_window_handle_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 progress_install_invoker (GimpProcedure *procedure,
                           Gimp          *gimp,
                           GimpContext   *context,
                           GimpProgress  *progress,
-                          Argument      *args)
+                          GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *progress_callback;
@@ -403,12 +403,12 @@ static GimpProcedure progress_install_proc =
   { { progress_install_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 progress_uninstall_invoker (GimpProcedure *procedure,
                             Gimp          *gimp,
                             GimpContext   *context,
                             GimpProgress  *progress,
-                            Argument      *args)
+                            GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *progress_callback;
@@ -443,12 +443,12 @@ static GimpProcedure progress_uninstall_proc =
   { { progress_uninstall_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 progress_cancel_invoker (GimpProcedure *procedure,
                          Gimp          *gimp,
                          GimpContext   *context,
                          GimpProgress  *progress,
-                         Argument      *args)
+                         GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *progress_callback;

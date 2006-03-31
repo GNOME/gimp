@@ -109,12 +109,12 @@ register_pattern_select_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 patterns_popup_invoker (GimpProcedure *procedure,
                         Gimp          *gimp,
                         GimpContext   *context,
                         GimpProgress  *progress,
-                        Argument      *args)
+                        GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *pattern_callback;
@@ -154,12 +154,12 @@ static GimpProcedure patterns_popup_proc =
   { { patterns_popup_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 patterns_close_popup_invoker (GimpProcedure *procedure,
                               Gimp          *gimp,
                               GimpContext   *context,
                               GimpProgress  *progress,
-                              Argument      *args)
+                              GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *pattern_callback;
@@ -194,12 +194,12 @@ static GimpProcedure patterns_close_popup_proc =
   { { patterns_close_popup_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 patterns_set_popup_invoker (GimpProcedure *procedure,
                             Gimp          *gimp,
                             GimpContext   *context,
                             GimpProgress  *progress,
-                            Argument      *args)
+                            GimpArgument  *args)
 {
   gboolean success = TRUE;
   gchar *pattern_callback;

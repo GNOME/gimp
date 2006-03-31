@@ -77,12 +77,12 @@ register_fonts_procs (Gimp *gimp)
 
 }
 
-static Argument *
+static GimpArgument *
 fonts_refresh_invoker (GimpProcedure *procedure,
                        Gimp          *gimp,
                        GimpContext   *context,
                        GimpProgress  *progress,
-                       Argument      *args)
+                       GimpArgument  *args)
 {
   gimp_fonts_load (gimp);
   return gimp_procedure_get_return_values (procedure, TRUE);
@@ -104,15 +104,15 @@ static GimpProcedure fonts_refresh_proc =
   { { fonts_refresh_invoker } }
 };
 
-static Argument *
+static GimpArgument *
 fonts_get_list_invoker (GimpProcedure *procedure,
                         Gimp          *gimp,
                         GimpContext   *context,
                         GimpProgress  *progress,
-                        Argument      *args)
+                        GimpArgument  *args)
 {
   gboolean success = TRUE;
-  Argument *return_vals;
+  GimpArgument *return_vals;
   gchar *filter;
   gint32 num_fonts = 0;
   gchar **font_list = NULL;

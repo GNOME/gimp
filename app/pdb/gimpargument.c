@@ -32,8 +32,8 @@
 /*  public functions  */
 
 void
-gimp_argument_init (Argument *arg,
-                    ProcArg  *proc_arg)
+gimp_argument_init (GimpArgument     *arg,
+                    GimpArgumentSpec *proc_arg)
 {
   g_return_if_fail (arg != NULL);
   g_return_if_fail (proc_arg != NULL);
@@ -43,7 +43,7 @@ gimp_argument_init (Argument *arg,
 }
 
 void
-gimp_argument_init_compat (Argument       *arg,
+gimp_argument_init_compat (GimpArgument   *arg,
                            GimpPDBArgType  arg_type)
 {
   g_return_if_fail (arg != NULL);
@@ -109,9 +109,9 @@ gimp_argument_init_compat (Argument       *arg,
 }
 
 void
-gimp_arguments_destroy (Argument *args,
-                        gint      n_args,
-                        gboolean  full_destroy)
+gimp_arguments_destroy (GimpArgument *args,
+                        gint          n_args,
+                        gboolean      full_destroy)
 {
   gint i;
 
