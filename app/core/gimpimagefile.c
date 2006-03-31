@@ -465,7 +465,7 @@ gimp_imagefile_get_new_pixbuf (GimpViewable *viewable,
       break;
 
     case GIMP_THUMB_STATE_NOT_FOUND:
-      stock_id = "gimp-wilber-eek";
+      stock_id = "gtk-dialog-question";
       break;
 
     default:
