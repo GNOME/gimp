@@ -108,6 +108,7 @@ scale_region_no_resample (PixelRegion *srcPR,
   /*  do the scaling  */
   row_bytes = width * bytes;
   last_src_y = -1;
+
   for (y = 0; y < height; y++)
     {
       /* if the source of this line was the same as the source
@@ -116,10 +117,10 @@ scale_region_no_resample (PixelRegion *srcPR,
       if (y_src_offsets[y] != last_src_y)
         {
           pixel_region_get_row (srcPR, 0, y_src_offsets[y], orig_width, src, 1);
+
           for (x = 0; x < row_bytes ; x++)
-            {
-              dest[x] = src[x_src_offsets[x]];
-            }
+            dest[x] = src[x_src_offsets[x]];
+
           last_src_y = y_src_offsets[y];
         }
 
@@ -157,8 +158,10 @@ get_premultiplied_double_row (PixelRegion *srcPR,
       for (x = 0; x < w; x++)
         {
           mod_alpha = tmp_src[alpha] / 255.0;
+
           for (b = 0; b < alpha; b++)
             irow[b] = mod_alpha * tmp_src[b];
+
           irow[b] = tmp_src[alpha];
           irow += bytes;
           tmp_src += bytes;
@@ -173,6 +176,7 @@ get_premultiplied_double_row (PixelRegion *srcPR,
   /* set the off edge pixels to their nearest neighbor */
   for (b = 0; b < 2 * bytes; b++)
     row[b - 2 * bytes] = row[b % bytes];
+
   for (b = 0; b < bytes * 2; b++)
     row[b + w * bytes] = row[(w - 1) * bytes + b % bytes];
 }
@@ -209,9 +213,11 @@ expand_line (gdouble               *dest,
              to round down */
           frac = (x * ratio - 0.5) - src_col;
           s = &src[src_col * bytes];
+
           for (b = 0; b < bytes; b++)
             dest[b] = cubic (frac, s[b - bytes], s[b], s[b + bytes],
                              s[b + bytes * 2]);
+
           dest += bytes;
         }
 
@@ -225,8 +231,10 @@ expand_line (gdouble               *dest,
              to round down */
           frac = (x * ratio - 0.5) - src_col;
           s = &src[src_col * bytes];
+
           for (b = 0; b < bytes; b++)
             dest[b] = ((s[b + bytes] - s[b]) * frac + s[b]);
+
           dest += bytes;
         }
       break;
@@ -468,8 +476,10 @@ scale_region (PixelRegion           *srcPR,
             get_scaled_row (&src[0], 0, width, srcPR, row,
                             src_tmp,
                             interpolation);
+
           new_y = (int) (y * y_rat);
           frac = 1.0 - (y * y_rat - new_y);
+
           for (x = 0; x < width * bytes; x++)
             accum[x] = src[3][x] * frac;
 
@@ -483,12 +493,15 @@ scale_region (PixelRegion           *srcPR,
             {
               for (x = 0; x < width * bytes; x++)
                 accum[x] += src[3][x];
+
               get_scaled_row (&src[0], ++new_y, width, srcPR, row,
                               src_tmp,
                               interpolation);
               max--;
             }
+
           frac = (y + 1) * y_rat - ((int) ((y + 1) * y_rat));
+
           for (x = 0; x < width * bytes; x++)
             {
               accum[x] += frac * src[3][x];
@@ -520,6 +533,7 @@ scale_region (PixelRegion           *srcPR,
                 p1 = cubic (dy, 0, 1, 0, 0);
                 p2 = cubic (dy, 0, 0, 1, 0);
                 p3 = cubic (dy, 0, 0, 0, 1);
+
                 for (x = 0; x < width * bytes; x++)
                   accum[x] = (p0 * src[0][x] + p1 * src[1][x] +
                               p2 * src[2][x] + p3 * src[3][x]);
@@ -569,9 +583,11 @@ scale_region (PixelRegion           *srcPR,
               if (p[alpha] > 0.001)
                 {
                   inv_alpha = 255.0 / p[alpha];
+
                   for (b = 0; b < alpha; b++)
                     {
                       result = RINT (inv_alpha * p[b]);
+
                       if (result < 0)
                         d[b] = 0;
                       else if (result > 255)
@@ -579,15 +595,19 @@ scale_region (PixelRegion           *srcPR,
                       else
                         d[b] = result;
                     }
+
                   result = RINT (p[alpha]);
+
                   if (result > 255)
                     d[alpha] = 255;
                   else
                     d[alpha] = result;
                 }
               else /* alpha <= 0 */
-                for (b = 0; b <= alpha; b++)
-                  d[b] = 0;
+                {
+                  for (b = 0; b <= alpha; b++)
+                    d[b] = 0;
+                }
 
               d += bytes;
               p += bytes;
@@ -607,13 +627,16 @@ scale_region (PixelRegion           *srcPR,
                 dest[x] = RINT (accum[x]);
             }
         }
+
       pixel_region_set_row (destPR, 0, y, width, dest);
     }
 
   /*  free up temporary arrays  */
   g_free (accum);
+
   for (i = 0; i < 4; i++)
     g_free (src[i]);
+
   g_free (src_tmp);
   g_free (dest);
 
@@ -764,6 +787,7 @@ subsample_region (PixelRegion *srcPR,
           while (j--)
             {
               b = bytes;
+
               while (b--)
                 *d++ = (guchar) (*r++ * tot_frac + 0.5);
             }
@@ -950,7 +974,7 @@ scale_region_lanczos (PixelRegion *srcPR,
   gint	       i, j, byte;              /* loop vars to fill source window   */
 
   gdouble      sx,  sy;                 /* Scalefactor                       */
-  gdouble      trans[6],itrans[6];      /* Scale transformations             */
+  gdouble      trans[6], itrans[6];     /* Scale transformations             */
   gdouble      aval, arecip;            /* Handle alpha values               */
   gdouble      newval;                  /* New interpolated RGB value        */
 
@@ -966,12 +990,17 @@ scale_region_lanczos (PixelRegion *srcPR,
   sx = (gdouble) dst_width / (gdouble) src_width;
   sy = (gdouble) dst_height / (gdouble) src_height;
 
-  for ( i = 0 ; i < 6 ; i++ )
+  for (i = 0; i < 6; i++)
     trans[i] = 0.0;
 
   trans[0] = sx;
   trans[4] = sy;
-  inv_lin_trans (trans, itrans);
+
+  if (! inv_lin_trans (trans, itrans))
+    {
+      g_warning ("transformation matrix is not invertible");
+      return;
+    }
 
   /* Calculate kernel */
   kernel = kernel_lanczos ();
@@ -980,7 +1009,7 @@ scale_region_lanczos (PixelRegion *srcPR,
      allocate buffer for width + 2 * LANCZOS_WIDTH
      We need 2* LANCZOS_WIDTH lines for sliding window
      buffer with edge mirror
-  */
+   */
   src_rowstride = (src_width + LANCZOS_WIDTH2) * bytes;
   src_buf = g_new0 (guchar, LANCZOS_WIDTH2 * src_rowstride);
 
@@ -1007,6 +1036,7 @@ scale_region_lanczos (PixelRegion *srcPR,
   for (srcrow = 0, y = 0; y < dst_height; y++)
     {
       pixel_region_get_row (dstPR, 0, y, dst_width, dst_buf, 1);
+
       for (x = 0; x < dst_width; x++)
         {
           du = itrans[0] * (gdouble) x + itrans[1] * (gdouble) y + itrans[2];
