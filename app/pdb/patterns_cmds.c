@@ -179,7 +179,7 @@ patterns_refresh_invoker (ProcRecord   *proc_record,
 
 static ProcRecord patterns_refresh_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-patterns-refresh",
   "gimp-patterns-refresh",
   "Refresh current patterns. This function always succeeds.",
@@ -227,7 +227,7 @@ patterns_get_list_invoker (ProcRecord   *proc_record,
 
 static ProcRecord patterns_get_list_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-patterns-get-list",
   "gimp-patterns-get-list",
   "Retrieve a complete listing of the available patterns.",
@@ -279,7 +279,7 @@ patterns_get_pattern_invoker (ProcRecord   *proc_record,
 
 static ProcRecord patterns_get_pattern_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-patterns-get-pattern",
   "gimp-patterns-get-pattern",
   "This procedure is deprecated! Use 'gimp-context-get-pattern' instead.",
@@ -358,7 +358,7 @@ patterns_get_pattern_data_invoker (ProcRecord   *proc_record,
 
 static ProcRecord patterns_get_pattern_data_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-patterns-get-pattern-data",
   "gimp-patterns-get-pattern-data",
   "This procedure is deprecated! Use 'gimp-pattern-get-pixels' instead.",

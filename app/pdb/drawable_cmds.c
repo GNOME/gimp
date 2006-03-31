@@ -1115,7 +1115,7 @@ drawable_delete_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_delete_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-delete",
   "gimp-drawable-delete",
   "Delete a drawable.",
@@ -1158,7 +1158,7 @@ drawable_is_layer_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_is_layer_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-is-layer",
   "gimp-drawable-is-layer",
   "Returns whether the drawable is a layer.",
@@ -1201,7 +1201,7 @@ drawable_is_layer_mask_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_is_layer_mask_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-is-layer-mask",
   "gimp-drawable-is-layer-mask",
   "Returns whether the drawable is a layer mask.",
@@ -1244,7 +1244,7 @@ drawable_is_channel_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_is_channel_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-is-channel",
   "gimp-drawable-is-channel",
   "Returns whether the drawable is a channel.",
@@ -1287,7 +1287,7 @@ drawable_type_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_type_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-type",
   "gimp-drawable-type",
   "Returns the drawable's type.",
@@ -1330,7 +1330,7 @@ drawable_type_with_alpha_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_type_with_alpha_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-type-with-alpha",
   "gimp-drawable-type-with-alpha",
   "Returns the drawable's type with alpha.",
@@ -1373,7 +1373,7 @@ drawable_has_alpha_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_has_alpha_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-has-alpha",
   "gimp-drawable-has-alpha",
   "Returns TRUE if the drawable has an alpha channel.",
@@ -1416,7 +1416,7 @@ drawable_is_rgb_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_is_rgb_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-is-rgb",
   "gimp-drawable-is-rgb",
   "Returns whether the drawable is an RGB type.",
@@ -1459,7 +1459,7 @@ drawable_is_gray_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_is_gray_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-is-gray",
   "gimp-drawable-is-gray",
   "Returns whether the drawable is a grayscale type.",
@@ -1502,7 +1502,7 @@ drawable_is_indexed_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_is_indexed_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-is-indexed",
   "gimp-drawable-is-indexed",
   "Returns whether the drawable is an indexed type.",
@@ -1545,7 +1545,7 @@ drawable_bpp_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_bpp_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-bpp",
   "gimp-drawable-bpp",
   "Returns the bytes per pixel.",
@@ -1588,7 +1588,7 @@ drawable_width_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_width_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-width",
   "gimp-drawable-width",
   "Returns the width of the drawable.",
@@ -1631,7 +1631,7 @@ drawable_height_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_height_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-height",
   "gimp-drawable-height",
   "Returns the height of the drawable.",
@@ -1678,7 +1678,7 @@ drawable_offsets_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_offsets_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-offsets",
   "gimp-drawable-offsets",
   "Returns the offsets for the drawable.",
@@ -1721,7 +1721,7 @@ drawable_get_image_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_get_image_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-get-image",
   "gimp-drawable-get-image",
   "Returns the drawable's image.",
@@ -1760,7 +1760,7 @@ drawable_set_image_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_set_image_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-set-image",
   "gimp-drawable-set-image",
   "This procedure is deprecated!",
@@ -1803,7 +1803,7 @@ drawable_get_name_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_get_name_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-get-name",
   "gimp-drawable-get-name",
   "Get the name of the specified drawable.",
@@ -1841,7 +1841,7 @@ drawable_set_name_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_set_name_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-set-name",
   "gimp-drawable-set-name",
   "Set the name of the specified drawable.",
@@ -1884,7 +1884,7 @@ drawable_get_visible_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_get_visible_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-get-visible",
   "gimp-drawable-get-visible",
   "Get the visibility of the specified drawable.",
@@ -1922,7 +1922,7 @@ drawable_set_visible_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_set_visible_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-set-visible",
   "gimp-drawable-set-visible",
   "Set the visibility of the specified drawable.",
@@ -1965,7 +1965,7 @@ drawable_get_linked_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_get_linked_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-get-linked",
   "gimp-drawable-get-linked",
   "Get the linked state of the specified drawable.",
@@ -2003,7 +2003,7 @@ drawable_set_linked_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_set_linked_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-set-linked",
   "gimp-drawable-set-linked",
   "Set the linked state of the specified drawable.",
@@ -2046,7 +2046,7 @@ drawable_get_tattoo_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_get_tattoo_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-get-tattoo",
   "gimp-drawable-get-tattoo",
   "Get the tattoo of the specified drawable.",
@@ -2084,7 +2084,7 @@ drawable_set_tattoo_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_set_tattoo_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-set-tattoo",
   "gimp-drawable-set-tattoo",
   "Set the tattoo of the specified drawable.",
@@ -2137,7 +2137,7 @@ drawable_mask_bounds_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_mask_bounds_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-mask-bounds",
   "gimp-drawable-mask-bounds",
   "Find the bounding box of the current selection in relation to the specified drawable.",
@@ -2190,7 +2190,7 @@ drawable_mask_intersect_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_mask_intersect_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-mask-intersect",
   "gimp-drawable-mask-intersect",
   "Find the bounding box of the current selection in relation to the specified drawable.",
@@ -2243,7 +2243,7 @@ drawable_merge_shadow_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_merge_shadow_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-merge-shadow",
   "gimp-drawable-merge-shadow",
   "Merge the shadow buffer with the specified drawable.",
@@ -2287,7 +2287,7 @@ drawable_update_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_update_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-update",
   "gimp-drawable-update",
   "Update the specified region of the drawable.",
@@ -2362,7 +2362,7 @@ drawable_get_pixel_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_get_pixel_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-get-pixel",
   "gimp-drawable-get-pixel",
   "Gets the value of the pixel at the specified coordinates.",
@@ -2428,7 +2428,7 @@ drawable_set_pixel_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_set_pixel_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-set-pixel",
   "gimp-drawable-set-pixel",
   "Sets the value of the pixel at the specified coordinates.",
@@ -2466,7 +2466,7 @@ drawable_fill_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_fill_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-fill",
   "gimp-drawable-fill",
   "Fill the drawable with the specified fill mode.",
@@ -2514,7 +2514,7 @@ drawable_offset_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_offset_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-offset",
   "gimp-drawable-offset",
   "Offset the drawable by the specified amounts in the X and Y directions",
@@ -2605,7 +2605,7 @@ drawable_thumbnail_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_thumbnail_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-thumbnail",
   "gimp-drawable-thumbnail",
   "Get a thumbnail of a drawable.",
@@ -2702,7 +2702,7 @@ drawable_sub_thumbnail_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_sub_thumbnail_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-sub-thumbnail",
   "gimp-drawable-sub-thumbnail",
   "Get a thumbnail of a sub-area of a drawable drawable.",
@@ -2745,7 +2745,7 @@ drawable_foreground_extract_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_foreground_extract_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-drawable-foreground-extract",
   "gimp-drawable-foreground-extract",
   "Extract the foreground of a drawable using a given trimap.",

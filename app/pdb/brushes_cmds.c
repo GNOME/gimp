@@ -229,7 +229,7 @@ brushes_refresh_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brushes_refresh_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-brushes-refresh",
   "gimp-brushes-refresh",
   "Refresh current brushes. This function always succeeds.",
@@ -277,7 +277,7 @@ brushes_get_list_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brushes_get_list_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-brushes-get-list",
   "gimp-brushes-get-list",
   "Retrieve a complete listing of the available brushes.",
@@ -332,7 +332,7 @@ brushes_get_brush_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brushes_get_brush_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-brushes-get-brush",
   "gimp-brushes-get-brush",
   "This procedure is deprecated! Use 'gimp-context-get-brush' instead.",
@@ -374,7 +374,7 @@ brushes_get_spacing_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brushes_get_spacing_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-brushes-get-spacing",
   "gimp-brushes-get-spacing",
   "This procedure is deprecated! Use 'gimp-brush-get-spacing' instead.",
@@ -410,7 +410,7 @@ brushes_set_spacing_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brushes_set_spacing_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-brushes-set-spacing",
   "gimp-brushes-set-spacing",
   "This procedure is deprecated! Use 'gimp-brush-set-spacing' instead.",
@@ -493,7 +493,7 @@ brushes_get_brush_data_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brushes_get_brush_data_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-brushes-get-brush-data",
   "gimp-brushes-get-brush-data",
   "This procedure is deprecated! Use 'gimp-brush-get-pixels' instead.",

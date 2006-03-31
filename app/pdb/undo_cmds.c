@@ -204,7 +204,7 @@ image_undo_group_start_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_undo_group_start_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-undo-group-start",
   "gimp-image-undo-group-start",
   "Starts a group undo.",
@@ -240,7 +240,7 @@ image_undo_group_end_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_undo_group_end_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-undo-group-end",
   "gimp-image-undo-group-end",
   "Finish a group undo.",
@@ -283,7 +283,7 @@ image_undo_is_enabled_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_undo_is_enabled_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-undo-is-enabled",
   "gimp-image-undo-is-enabled",
   "Check if the image's undo stack is enabled.",
@@ -326,7 +326,7 @@ image_undo_disable_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_undo_disable_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-undo-disable",
   "gimp-image-undo-disable",
   "Disable the image's undo stack.",
@@ -369,7 +369,7 @@ image_undo_enable_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_undo_enable_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-undo-enable",
   "gimp-image-undo-enable",
   "Enable the image's undo stack.",
@@ -412,7 +412,7 @@ image_undo_freeze_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_undo_freeze_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-undo-freeze",
   "gimp-image-undo-freeze",
   "Freeze the image's undo stack.",
@@ -455,7 +455,7 @@ image_undo_thaw_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_undo_thaw_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-undo-thaw",
   "gimp-image-undo-thaw",
   "Thaw the image's undo stack.",

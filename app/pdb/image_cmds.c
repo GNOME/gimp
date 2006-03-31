@@ -1955,7 +1955,7 @@ image_list_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_list_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-list",
   "gimp-image-list",
   "Returns the list of images currently open.",
@@ -2005,7 +2005,7 @@ image_new_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_new_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-new",
   "gimp-image-new",
   "Creates a new image with the specified width, height, and type.",
@@ -2051,7 +2051,7 @@ image_duplicate_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_duplicate_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-duplicate",
   "gimp-image-duplicate",
   "Duplicate the specified image",
@@ -2090,7 +2090,7 @@ image_delete_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_delete_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-delete",
   "gimp-image-delete",
   "Delete the specified image.",
@@ -2133,7 +2133,7 @@ image_base_type_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_base_type_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-base-type",
   "gimp-image-base-type",
   "Get the base type of the image.",
@@ -2176,7 +2176,7 @@ image_width_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_width_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-width",
   "gimp-image-width",
   "Return the width of the image",
@@ -2219,7 +2219,7 @@ image_height_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_height_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-height",
   "gimp-image-height",
   "Return the height of the image",
@@ -2255,7 +2255,7 @@ image_free_shadow_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_free_shadow_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-free-shadow",
   "gimp-image-free-shadow",
   "Free the specified image's shadow data (if it exists).",
@@ -2300,7 +2300,7 @@ image_resize_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_resize_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-resize",
   "gimp-image-resize",
   "Resize the image to the specified extents.",
@@ -2336,7 +2336,7 @@ image_resize_to_layers_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_resize_to_layers_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-resize-to-layers",
   "gimp-image-resize-to-layers",
   "Resize the image to fit all layers.",
@@ -2378,7 +2378,7 @@ image_scale_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_scale_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-scale",
   "gimp-image-scale",
   "Scale the image to the specified extents.",
@@ -2430,7 +2430,7 @@ image_crop_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_crop_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-crop",
   "gimp-image-crop",
   "Crop the image to the specified extents.",
@@ -2468,7 +2468,7 @@ image_flip_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_flip_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-flip",
   "gimp-image-flip",
   "Flips the image horizontally or vertically.",
@@ -2506,7 +2506,7 @@ image_rotate_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_rotate_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-rotate",
   "gimp-image-rotate",
   "Rotates the image by the specified degrees.",
@@ -2565,7 +2565,7 @@ image_get_layers_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_get_layers_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-get-layers",
   "gimp-image-get-layers",
   "Returns the list of layers contained in the specified image.",
@@ -2624,7 +2624,7 @@ image_get_channels_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_get_channels_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-get-channels",
   "gimp-image-get-channels",
   "Returns the list of channels contained in the specified image.",
@@ -2683,7 +2683,7 @@ image_get_vectors_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_get_vectors_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-get-vectors",
   "gimp-image-get-vectors",
   "Returns the list of vectors contained in the specified image.",
@@ -2726,7 +2726,7 @@ image_get_active_drawable_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_get_active_drawable_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-get-active-drawable",
   "gimp-image-get-active-drawable",
   "Get the image's active drawable",
@@ -2762,7 +2762,7 @@ image_unset_active_channel_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_unset_active_channel_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-unset-active-channel",
   "gimp-image-unset-active-channel",
   "Unsets the active channel in the specified image.",
@@ -2805,7 +2805,7 @@ image_get_floating_sel_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_get_floating_sel_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-get-floating-sel",
   "gimp-image-get-floating-sel",
   "Return the floating selection of the image.",
@@ -2853,7 +2853,7 @@ image_floating_sel_attached_to_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_floating_sel_attached_to_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-floating-sel-attached-to",
   "gimp-image-floating-sel-attached-to",
   "Return the drawable the floating selection is attached to.",
@@ -2934,7 +2934,7 @@ image_pick_color_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_pick_color_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-pick-color",
   "gimp-image-pick-color",
   "Determine the color at the given drawable coordinates",
@@ -2981,7 +2981,7 @@ image_pick_correlate_layer_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_pick_correlate_layer_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-pick-correlate-layer",
   "gimp-image-pick-correlate-layer",
   "Find the layer visible at the specified coordinates.",
@@ -3030,7 +3030,7 @@ image_add_layer_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_add_layer_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-add-layer",
   "gimp-image-add-layer",
   "Add the specified layer to the image.",
@@ -3068,7 +3068,7 @@ image_remove_layer_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_remove_layer_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-remove-layer",
   "gimp-image-remove-layer",
   "Remove the specified layer from the image.",
@@ -3106,7 +3106,7 @@ image_raise_layer_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_raise_layer_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-raise-layer",
   "gimp-image-raise-layer",
   "Raise the specified layer in the image's layer stack",
@@ -3144,7 +3144,7 @@ image_lower_layer_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_lower_layer_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-lower-layer",
   "gimp-image-lower-layer",
   "Lower the specified layer in the image's layer stack",
@@ -3182,7 +3182,7 @@ image_raise_layer_to_top_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_raise_layer_to_top_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-raise-layer-to-top",
   "gimp-image-raise-layer-to-top",
   "Raise the specified layer in the image's layer stack to top of stack",
@@ -3220,7 +3220,7 @@ image_lower_layer_to_bottom_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_lower_layer_to_bottom_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-lower-layer-to-bottom",
   "gimp-image-lower-layer-to-bottom",
   "Lower the specified layer in the image's layer stack to bottom of stack",
@@ -3263,7 +3263,7 @@ image_add_channel_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_add_channel_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-add-channel",
   "gimp-image-add-channel",
   "Add the specified channel to the image.",
@@ -3301,7 +3301,7 @@ image_remove_channel_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_remove_channel_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-remove-channel",
   "gimp-image-remove-channel",
   "Remove the specified channel from the image.",
@@ -3339,7 +3339,7 @@ image_raise_channel_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_raise_channel_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-raise-channel",
   "gimp-image-raise-channel",
   "Raise the specified channel in the image's channel stack",
@@ -3377,7 +3377,7 @@ image_lower_channel_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_lower_channel_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-lower-channel",
   "gimp-image-lower-channel",
   "Lower the specified channel in the image's channel stack",
@@ -3420,7 +3420,7 @@ image_add_vectors_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_add_vectors_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-add-vectors",
   "gimp-image-add-vectors",
   "Add the specified vectors object to the image.",
@@ -3458,7 +3458,7 @@ image_remove_vectors_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_remove_vectors_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-remove-vectors",
   "gimp-image-remove-vectors",
   "Remove the specified path from the image.",
@@ -3496,7 +3496,7 @@ image_raise_vectors_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_raise_vectors_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-raise-vectors",
   "gimp-image-raise-vectors",
   "Raise the specified vectors in the image's vectors stack",
@@ -3534,7 +3534,7 @@ image_lower_vectors_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_lower_vectors_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-lower-vectors",
   "gimp-image-lower-vectors",
   "Lower the specified vectors in the image's vectors stack",
@@ -3572,7 +3572,7 @@ image_raise_vectors_to_top_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_raise_vectors_to_top_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-raise-vectors-to-top",
   "gimp-image-raise-vectors-to-top",
   "Raise the specified vectors in the image's vectors stack to top of stack",
@@ -3610,7 +3610,7 @@ image_lower_vectors_to_bottom_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_lower_vectors_to_bottom_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-lower-vectors-to-bottom",
   "gimp-image-lower-vectors-to-bottom",
   "Lower the specified vectors in the image's vectors stack to bottom of stack",
@@ -3656,7 +3656,7 @@ image_flatten_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_flatten_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-flatten",
   "gimp-image-flatten",
   "Flatten all visible layers into a single layer. Discard all invisible layers.",
@@ -3704,7 +3704,7 @@ image_merge_visible_layers_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_merge_visible_layers_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-merge-visible-layers",
   "gimp-image-merge-visible-layers",
   "Merge the visible image layers into one.",
@@ -3754,7 +3754,7 @@ image_merge_down_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_merge_down_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-merge-down",
   "gimp-image-merge-down",
   "Merge the layer passed and the first visible layer below.",
@@ -3795,7 +3795,7 @@ image_add_layer_mask_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_add_layer_mask_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-add-layer-mask",
   "gimp-image-add-layer-mask",
   "This procedure is deprecated! Use 'gimp-layer-add-mask' instead.",
@@ -3835,7 +3835,7 @@ image_remove_layer_mask_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_remove_layer_mask_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-remove-layer-mask",
   "gimp-image-remove-layer-mask",
   "This procedure is deprecated! Use 'gimp-layer-remove-mask' instead.",
@@ -3883,7 +3883,7 @@ image_get_colormap_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_get_colormap_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-get-colormap",
   "gimp-image-get-colormap",
   "Returns the image's colormap",
@@ -3923,7 +3923,7 @@ image_set_colormap_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_set_colormap_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-set-colormap",
   "gimp-image-set-colormap",
   "Sets the entries in the image's colormap.",
@@ -3959,7 +3959,7 @@ image_clean_all_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_clean_all_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-clean-all",
   "gimp-image-clean-all",
   "Set the image dirty count to 0.",
@@ -4002,7 +4002,7 @@ image_is_dirty_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_is_dirty_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-is-dirty",
   "gimp-image-is-dirty",
   "Checks if the image has unsaved changes.",
@@ -4094,7 +4094,7 @@ image_thumbnail_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_thumbnail_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-thumbnail",
   "gimp-image-thumbnail",
   "Get a thumbnail of an image.",
@@ -4137,7 +4137,7 @@ image_get_active_layer_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_get_active_layer_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-get-active-layer",
   "gimp-image-get-active-layer",
   "Returns the specified image's active layer.",
@@ -4176,7 +4176,7 @@ image_set_active_layer_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_set_active_layer_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-set-active-layer",
   "gimp-image-set-active-layer",
   "Sets the specified image's active layer.",
@@ -4219,7 +4219,7 @@ image_get_active_channel_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_get_active_channel_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-get-active-channel",
   "gimp-image-get-active-channel",
   "Returns the specified image's active channel.",
@@ -4258,7 +4258,7 @@ image_set_active_channel_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_set_active_channel_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-set-active-channel",
   "gimp-image-set-active-channel",
   "Sets the specified image's active channel.",
@@ -4301,7 +4301,7 @@ image_get_active_vectors_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_get_active_vectors_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-get-active-vectors",
   "gimp-image-get-active-vectors",
   "Returns the specified image's active vectors.",
@@ -4340,7 +4340,7 @@ image_set_active_vectors_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_set_active_vectors_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-set-active-vectors",
   "gimp-image-set-active-vectors",
   "Sets the specified image's active vectors.",
@@ -4386,7 +4386,7 @@ image_get_selection_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_get_selection_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-get-selection",
   "gimp-image-get-selection",
   "Returns the specified image's selection.",
@@ -4439,7 +4439,7 @@ image_get_component_active_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_get_component_active_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-get-component-active",
   "gimp-image-get-component-active",
   "Returns if the specified image's image component is active.",
@@ -4487,7 +4487,7 @@ image_set_component_active_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_set_component_active_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-set-component-active",
   "gimp-image-set-component-active",
   "Sets if the specified image's image component is active.",
@@ -4540,7 +4540,7 @@ image_get_component_visible_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_get_component_visible_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-get-component-visible",
   "gimp-image-get-component-visible",
   "Returns if the specified image's image component is visible.",
@@ -4588,7 +4588,7 @@ image_set_component_visible_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_set_component_visible_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-set-component-visible",
   "gimp-image-set-component-visible",
   "Sets if the specified image's image component is visible.",
@@ -4631,7 +4631,7 @@ image_get_filename_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_get_filename_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-get-filename",
   "gimp-image-get-filename",
   "Returns the specified image's filename.",
@@ -4687,7 +4687,7 @@ image_set_filename_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_set_filename_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-set-filename",
   "gimp-image-set-filename",
   "Sets the specified image's filename.",
@@ -4735,7 +4735,7 @@ image_get_name_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_get_name_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-get-name",
   "gimp-image-get-name",
   "Returns the specified image's name.",
@@ -4782,7 +4782,7 @@ image_get_resolution_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_get_resolution_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-get-resolution",
   "gimp-image-get-resolution",
   "Returns the specified image's resolution.",
@@ -4834,7 +4834,7 @@ image_set_resolution_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_set_resolution_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-set-resolution",
   "gimp-image-set-resolution",
   "Sets the specified image's resolution.",
@@ -4877,7 +4877,7 @@ image_get_unit_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_get_unit_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-get-unit",
   "gimp-image-get-unit",
   "Returns the specified image's unit.",
@@ -4915,7 +4915,7 @@ image_set_unit_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_set_unit_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-set-unit",
   "gimp-image-set-unit",
   "Sets the specified image's unit.",
@@ -4958,7 +4958,7 @@ image_get_tattoo_state_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_get_tattoo_state_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-get-tattoo-state",
   "gimp-image-get-tattoo-state",
   "Returns the tattoo state associated with the image.",
@@ -4996,7 +4996,7 @@ image_set_tattoo_state_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_set_tattoo_state_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-set-tattoo-state",
   "gimp-image-set-tattoo-state",
   "Set the tattoo state associated with the image.",
@@ -5041,7 +5041,7 @@ image_get_layer_by_tattoo_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_get_layer_by_tattoo_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-get-layer-by-tattoo",
   "gimp-image-get-layer-by-tattoo",
   "Find a layer with a given tattoo in an image.",
@@ -5086,7 +5086,7 @@ image_get_channel_by_tattoo_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_get_channel_by_tattoo_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-get-channel-by-tattoo",
   "gimp-image-get-channel-by-tattoo",
   "Find a channel with a given tattoo in an image.",
@@ -5131,7 +5131,7 @@ image_get_vectors_by_tattoo_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_get_vectors_by_tattoo_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-get-vectors-by-tattoo",
   "gimp-image-get-vectors-by-tattoo",
   "Find a vectors with a given tattoo in an image.",

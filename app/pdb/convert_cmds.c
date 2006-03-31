@@ -155,7 +155,7 @@ image_convert_rgb_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_convert_rgb_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-convert-rgb",
   "gimp-image-convert-rgb",
   "Convert specified image to RGB color",
@@ -194,7 +194,7 @@ image_convert_grayscale_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_convert_grayscale_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-convert-grayscale",
   "gimp-image-convert-grayscale",
   "Convert specified image to grayscale (256 intensity levels)",
@@ -271,7 +271,7 @@ image_convert_indexed_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_convert_indexed_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-convert-indexed",
   "gimp-image-convert-indexed",
   "Convert specified image to and Indexed image",

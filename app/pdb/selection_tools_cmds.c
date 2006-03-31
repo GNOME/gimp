@@ -418,7 +418,7 @@ by_color_select_invoker (ProcRecord   *proc_record,
 
 static ProcRecord by_color_select_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-by-color-select",
   "gimp-by-color-select",
   "Create a selection by selecting all pixels (in the specified drawable) with the same (or similar) color to that specified.",
@@ -477,7 +477,7 @@ ellipse_select_invoker (ProcRecord   *proc_record,
 
 static ProcRecord ellipse_select_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-ellipse-select",
   "gimp-ellipse-select",
   "Create an elliptical selection over the specified image.",
@@ -533,7 +533,7 @@ free_select_invoker (ProcRecord   *proc_record,
 
 static ProcRecord free_select_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-free-select",
   "gimp-free-select",
   "Create a polygonal selection over the specified image.",
@@ -597,7 +597,7 @@ fuzzy_select_invoker (ProcRecord   *proc_record,
 
 static ProcRecord fuzzy_select_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-fuzzy-select",
   "gimp-fuzzy-select",
   "Create a fuzzy selection starting at the specified coordinates on the specified drawable.",
@@ -654,7 +654,7 @@ rect_select_invoker (ProcRecord   *proc_record,
 
 static ProcRecord rect_select_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-rect-select",
   "gimp-rect-select",
   "Create a rectangular selection over the specified image;",

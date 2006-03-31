@@ -115,7 +115,7 @@ version_invoker (ProcRecord   *proc_record,
 
 static ProcRecord version_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-version",
   "gimp-version",
   "Returns the host gimp version.",
@@ -149,7 +149,7 @@ getpid_invoker (ProcRecord   *proc_record,
 
 static ProcRecord getpid_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-getpid",
   "gimp-getpid",
   "Returns the PID of the host gimp process.",
@@ -185,7 +185,7 @@ quit_invoker (ProcRecord   *proc_record,
 
 static ProcRecord quit_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-quit",
   "gimp-quit",
   "Causes the gimp to exit gracefully.",

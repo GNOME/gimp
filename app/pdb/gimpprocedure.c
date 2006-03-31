@@ -46,6 +46,11 @@
 #include "gimp-intl.h"
 
 
+/*  local function prototypes  */
+
+static void   gimp_procedure_free_strings (ProcRecord *procedure);
+
+
 /*  public functions  */
 
 ProcRecord  *
@@ -59,11 +64,32 @@ gimp_procedure_new (void)
 void
 gimp_procedure_free (ProcRecord *procedure)
 {
+  gint i;
+
   g_return_if_fail (procedure != NULL);
 
-  gimp_procedure_dispose (procedure);
+  gimp_procedure_free_strings (procedure);
 
-  g_free (procedure);
+  if (procedure->args)
+    {
+      for (i = 0; i < procedure->num_args; i++)
+        g_param_spec_unref (procedure->args[i].pspec);
+
+      g_free (procedure->args);
+      procedure->args = NULL;
+    }
+
+  if (procedure->values)
+    {
+      for (i = 0; i < procedure->num_values; i++)
+        g_param_spec_unref (procedure->values[i].pspec);
+
+      g_free (procedure->values);
+      procedure->values = NULL;
+    }
+
+  if (! procedure->static_proc)
+    g_free (procedure);
 }
 
 ProcRecord *
@@ -87,56 +113,84 @@ gimp_procedure_init (ProcRecord *procedure,
 }
 
 void
-gimp_procedure_dispose (ProcRecord *procedure)
+gimp_procedure_set_strings (ProcRecord       *procedure,
+                            gchar            *name,
+                            gchar            *original_name,
+                            gchar            *blurb,
+                            gchar            *help,
+                            gchar            *author,
+                            gchar            *copyright,
+                            gchar            *date,
+                            gchar            *deprecated)
 {
-  gint i;
-
   g_return_if_fail (procedure != NULL);
 
-  if (! procedure->static_proc)
-    {
-      g_free (procedure->name);
-      procedure->name = NULL;
+  gimp_procedure_free_strings (procedure);
 
-      g_free (procedure->original_name);
-      procedure->original_name = NULL;
+  procedure->name          = g_strdup (name);
+  procedure->original_name = g_strdup (original_name);
+  procedure->blurb         = g_strdup (blurb);
+  procedure->help          = g_strdup (help);
+  procedure->author        = g_strdup (author);
+  procedure->copyright     = g_strdup (copyright);
+  procedure->date          = g_strdup (date);
+  procedure->deprecated    = g_strdup (deprecated);
 
-      g_free (procedure->blurb);
-      procedure->blurb = NULL;
+  procedure->static_strings = FALSE;
+}
 
-      g_free (procedure->help);
-      procedure->help = NULL;
+void
+gimp_procedure_set_static_strings (ProcRecord       *procedure,
+                                   gchar            *name,
+                                   gchar            *original_name,
+                                   gchar            *blurb,
+                                   gchar            *help,
+                                   gchar            *author,
+                                   gchar            *copyright,
+                                   gchar            *date,
+                                   gchar            *deprecated)
+{
+  g_return_if_fail (procedure != NULL);
 
-      g_free (procedure->author);
-      procedure->author = NULL;
+  gimp_procedure_free_strings (procedure);
 
-      g_free (procedure->copyright);
-      procedure->copyright = NULL;
+  procedure->name          = name;
+  procedure->original_name = original_name;
+  procedure->blurb         = blurb;
+  procedure->help          = help;
+  procedure->author        = author;
+  procedure->copyright     = copyright;
+  procedure->date          = date;
+  procedure->deprecated    = deprecated;
 
-      g_free (procedure->date);
-      procedure->date = NULL;
+  procedure->static_strings = TRUE;
+}
 
-      g_free (procedure->deprecated);
-      procedure->deprecated = NULL;
-    }
+void
+gimp_procedure_take_strings (ProcRecord       *procedure,
+                             gchar            *name,
+                             gchar            *original_name,
+                             gchar            *blurb,
+                             gchar            *help,
+                             gchar            *author,
+                             gchar            *copyright,
+                             gchar            *date,
+                             gchar            *deprecated)
+{
+  g_return_if_fail (procedure != NULL);
 
-  if (procedure->args)
-    {
-      for (i = 0; i < procedure->num_args; i++)
-        g_param_spec_unref (procedure->args[i].pspec);
+  gimp_procedure_free_strings (procedure);
 
-      g_free (procedure->args);
-      procedure->args = NULL;
-    }
+  procedure->name          = name;
+  procedure->original_name = original_name;
+  procedure->blurb         = blurb;
+  procedure->help          = help;
+  procedure->author        = author;
+  procedure->copyright     = copyright;
+  procedure->date          = date;
+  procedure->deprecated    = deprecated;
 
-  if (procedure->values)
-    {
-      for (i = 0; i < procedure->num_values; i++)
-        g_param_spec_unref (procedure->values[i].pspec);
-
-      g_free (procedure->values);
-      procedure->values = NULL;
-    }
+  procedure->static_strings = FALSE;
 }
 
 Argument *
@@ -152,6 +206,10 @@ gimp_procedure_execute (ProcRecord   *procedure,
   gint      i;
 
   g_return_val_if_fail (procedure != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (n_return_vals != NULL, NULL);
 
   *n_return_vals = procedure->num_values + 1;
 
@@ -213,7 +271,7 @@ gimp_procedure_execute (ProcRecord   *procedure,
 
               g_message (_("PDB calling error for procedure '%s':\n"
                            "Argument '%s' (#%d, type %s) out of bounds "
-                           "(value '%s' was changed to '%s')"),
+                           "(validation changed '%s' to '%s')"),
                          procedure->name,
                          g_param_spec_get_name (procedure->args[i].pspec),
                          i + 1, type_name,
@@ -237,6 +295,8 @@ gimp_procedure_execute (ProcRecord   *procedure,
   switch (procedure->proc_type)
     {
     case GIMP_INTERNAL:
+      g_return_val_if_fail (n_args >= procedure->num_args, NULL);
+
       return_vals = procedure->exec_method.internal.marshal_func (procedure,
                                                                   gimp, context,
                                                                   progress,
@@ -522,4 +582,34 @@ gimp_procedure_add_compat_value (ProcRecord     *procedure,
   gimp_procedure_add_return_value (procedure, arg_type,
                                    gimp_procedure_compat_pspec (gimp, arg_type,
                                                                 name, desc));
+}
+
+
+/*  private functions  */
+
+static void
+gimp_procedure_free_strings (ProcRecord *procedure)
+{
+  if (! procedure->static_strings)
+    {
+      g_free (procedure->name);
+      g_free (procedure->original_name);
+      g_free (procedure->blurb);
+      g_free (procedure->help);
+      g_free (procedure->author);
+      g_free (procedure->copyright);
+      g_free (procedure->date);
+      g_free (procedure->deprecated);
+    }
+
+  procedure->name          = NULL;
+  procedure->original_name = NULL;
+  procedure->blurb         = NULL;
+  procedure->help          = NULL;
+  procedure->author        = NULL;
+  procedure->copyright     = NULL;
+  procedure->date          = NULL;
+  procedure->deprecated    = NULL;
+
+  procedure->static_strings = FALSE;
 }

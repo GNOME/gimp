@@ -138,7 +138,7 @@ fonts_popup_invoker (ProcRecord   *proc_record,
 
 static ProcRecord fonts_popup_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-fonts-popup",
   "gimp-fonts-popup",
   "Invokes the Gimp font selection.",
@@ -177,7 +177,7 @@ fonts_close_popup_invoker (ProcRecord   *proc_record,
 
 static ProcRecord fonts_close_popup_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-fonts-close-popup",
   "gimp-fonts-close-popup",
   "Popdown the Gimp font selection.",
@@ -219,7 +219,7 @@ fonts_set_popup_invoker (ProcRecord   *proc_record,
 
 static ProcRecord fonts_set_popup_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-fonts-set-popup",
   "gimp-fonts-set-popup",
   "Sets the current font selection in a popup.",

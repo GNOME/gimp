@@ -112,7 +112,7 @@ message_invoker (ProcRecord   *proc_record,
 
 static ProcRecord message_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-message",
   "gimp-message",
   "Displays a dialog box with a message.",
@@ -146,7 +146,7 @@ message_get_handler_invoker (ProcRecord   *proc_record,
 
 static ProcRecord message_get_handler_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-message-get-handler",
   "gimp-message-get-handler",
   "Returns the current state of where warning messages are displayed.",
@@ -182,7 +182,7 @@ message_set_handler_invoker (ProcRecord   *proc_record,
 
 static ProcRecord message_set_handler_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-message-set-handler",
   "gimp-message-set-handler",
   "Controls where warning messages are displayed.",

@@ -514,7 +514,7 @@ file_load_invoker (ProcRecord   *proc_record,
 
 static ProcRecord file_load_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-file-load",
   "gimp-file-load",
   "Loads an image file by invoking the right load handler.",
@@ -575,7 +575,7 @@ file_load_layer_invoker (ProcRecord   *proc_record,
 
 static ProcRecord file_load_layer_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-file-load-layer",
   "gimp-file-load-layer",
   "Loads an image file as a layer into an already opened image.",
@@ -671,7 +671,7 @@ file_load_thumbnail_invoker (ProcRecord   *proc_record,
 
 static ProcRecord file_load_thumbnail_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-file-load-thumbnail",
   "gimp-file-load-thumbnail",
   "Loads the thumbnail for a file.",
@@ -737,7 +737,7 @@ file_save_invoker (ProcRecord   *proc_record,
 
 static ProcRecord file_save_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-file-save",
   "gimp-file-save",
   "Saves a file by extension.",
@@ -800,7 +800,7 @@ file_save_thumbnail_invoker (ProcRecord   *proc_record,
 
 static ProcRecord file_save_thumbnail_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-file-save-thumbnail",
   "gimp-file-save-thumbnail",
   "Saves a thumbnail for the given image",
@@ -843,7 +843,7 @@ temp_name_invoker (ProcRecord   *proc_record,
 
 static ProcRecord temp_name_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-temp-name",
   "gimp-temp-name",
   "Generates a unique filename.",
@@ -887,7 +887,7 @@ register_magic_load_handler_invoker (ProcRecord   *proc_record,
 
 static ProcRecord register_magic_load_handler_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-register-magic-load-handler",
   "gimp-register-magic-load-handler",
   "Registers a file load handler procedure.",
@@ -929,7 +929,7 @@ register_load_handler_invoker (ProcRecord   *proc_record,
 
 static ProcRecord register_load_handler_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-register-load-handler",
   "gimp-register-load-handler",
   "Registers a file load handler procedure.",
@@ -1007,7 +1007,7 @@ register_save_handler_invoker (ProcRecord   *proc_record,
 
 static ProcRecord register_save_handler_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-register-save-handler",
   "gimp-register-save-handler",
   "Registers a file save handler procedure.",
@@ -1052,7 +1052,7 @@ register_file_handler_mime_invoker (ProcRecord   *proc_record,
 
 static ProcRecord register_file_handler_mime_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-register-file-handler-mime",
   "gimp-register-file-handler-mime",
   "Associates a MIME type with a file handler procedure.",
@@ -1097,7 +1097,7 @@ register_thumbnail_loader_invoker (ProcRecord   *proc_record,
 
 static ProcRecord register_thumbnail_loader_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-register-thumbnail-loader",
   "gimp-register-thumbnail-loader",
   "Associates a thumbnail loader with a file load procedure.",

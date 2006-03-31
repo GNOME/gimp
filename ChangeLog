@@ -1,5 +1,35 @@
 2006-03-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/gimpprocedure.h (struct ProcRecord): added new member
+	"gboolean static_strings", so the ProcRecord struct and its
+	strings can be marked as static separately.
+
+	* app/pdb/gimpprocedure.[ch] (gimp_procedure_dispose): removed.
+
+	(gimp_procedure_free): don't free the struct if it's static.
+
+	(gimp_procedure_set_strings)
+	(gimp_procedure_set_static_strings)
+	(gimp_procedure_take_strings): new functions to set a procedure's
+	strings.
+
+	* app/pdb/procedural_db.c (procedural_db_free_entry): simply call
+	gimp_procedure_free() on all procedures, the memory-manage
+	themselves now.
+
+	* app/plug-in/plug-in-message.c (plug_in_handle_proc_install): use
+	gimp_procedure_set_strings() instead of setting them manually.
+
+	* app/xcf/xcf.c: register gimp-xcf-load and gimp-xcf-save
+	dynamically so further ProcRecord struct changes don't affect this
+	file.
+
+	* tools/pdbgen/app.pl: set "static_proc" to TRUE for static procs.
+
+	* app/pdb/*_cmds.c: regenerated.
+
+2006-03-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/plug-in-proc-def.h (struct PlugInProcDef)
 	(plug_in_proc_def_set_icon): changed "icon_data" from gchar* to
 	guint8*.

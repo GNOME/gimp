@@ -575,7 +575,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 {
   PlugInDef     *plug_in_def = NULL;
   PlugInProcDef *proc_def    = NULL;
-  ProcRecord    *proc        = NULL;
+  ProcRecord    *procedure   = NULL;
   gchar         *canonical;
   gchar         *prog        = NULL;
   gboolean       valid_utf8  = FALSE;
@@ -738,25 +738,30 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 
   /*  The procedural database procedure  */
 
-  proc = proc_def->procedure;
+  procedure = proc_def->procedure;
 
-  proc->name          = canonical;
-  proc->original_name = g_strdup (proc_install->name);
-  proc->blurb         = g_strdup (proc_install->blurb);
-  proc->help          = g_strdup (proc_install->help);
-  proc->author        = g_strdup (proc_install->author);
-  proc->copyright     = g_strdup (proc_install->copyright);
-  proc->date          = g_strdup (proc_install->date);
-  proc->proc_type     = proc_install->type;
+  gimp_procedure_set_strings (procedure,
+                              canonical,
+                              proc_install->name,
+                              proc_install->blurb,
+                              proc_install->help,
+                              proc_install->author,
+                              proc_install->copyright,
+                              proc_install->date,
+                              NULL);
 
-  gimp_procedure_init (proc,
+  g_free (canonical);
+
+  procedure->proc_type = proc_install->type;
+
+  gimp_procedure_init (procedure,
                        proc_install->nparams, proc_install->nreturn_vals);
 
-  for (i = 0; i < proc->num_args; i++)
+  for (i = 0; i < proc_install->nparams; i++)
     {
       canonical = gimp_canonicalize_identifier (proc_install->params[i].name);
 
-      gimp_procedure_add_compat_arg (proc,
+      gimp_procedure_add_compat_arg (procedure,
                                      plug_in->gimp,
                                      proc_install->params[i].type,
                                      canonical,
@@ -765,11 +770,11 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
       g_free (canonical);
     }
 
-  for (i = 0; i < proc->num_values; i++)
+  for (i = 0; i < proc_install->nreturn_vals; i++)
     {
       canonical = gimp_canonicalize_identifier (proc_install->return_vals[i].name);
 
-      gimp_procedure_add_compat_value (proc,
+      gimp_procedure_add_compat_value (procedure,
                                        plug_in->gimp,
                                        proc_install->return_vals[i].type,
                                        canonical,
@@ -790,7 +795,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
       plug_in->temp_proc_defs = g_slist_prepend (plug_in->temp_proc_defs,
                                                  proc_def);
 
-      proc->exec_method.temporary.plug_in = plug_in;
+      procedure->exec_method.temporary.plug_in = plug_in;
 
       plug_ins_temp_proc_def_add (plug_in->gimp, proc_def);
       break;

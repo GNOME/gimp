@@ -370,7 +370,7 @@ unit_get_number_of_units_invoker (ProcRecord   *proc_record,
 
 static ProcRecord unit_get_number_of_units_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-unit-get-number-of-units",
   "gimp-unit-get-number-of-units",
   "Returns the number of units.",
@@ -404,7 +404,7 @@ unit_get_number_of_built_in_units_invoker (ProcRecord   *proc_record,
 
 static ProcRecord unit_get_number_of_built_in_units_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-unit-get-number-of-built-in-units",
   "gimp-unit-get-number-of-built-in-units",
   "Returns the number of built-in units.",
@@ -460,7 +460,7 @@ unit_new_invoker (ProcRecord   *proc_record,
 
 static ProcRecord unit_new_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-unit-new",
   "gimp-unit-new",
   "Creates a new unit and returns it's integer ID.",
@@ -503,7 +503,7 @@ unit_get_deletion_flag_invoker (ProcRecord   *proc_record,
 
 static ProcRecord unit_get_deletion_flag_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-unit-get-deletion-flag",
   "gimp-unit-get-deletion-flag",
   "Returns the deletion flag of the unit.",
@@ -541,7 +541,7 @@ unit_set_deletion_flag_invoker (ProcRecord   *proc_record,
 
 static ProcRecord unit_set_deletion_flag_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-unit-set-deletion-flag",
   "gimp-unit-set-deletion-flag",
   "Sets the deletion flag of a unit.",
@@ -584,7 +584,7 @@ unit_get_identifier_invoker (ProcRecord   *proc_record,
 
 static ProcRecord unit_get_identifier_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-unit-get-identifier",
   "gimp-unit-get-identifier",
   "Returns the textual identifier of the unit.",
@@ -627,7 +627,7 @@ unit_get_factor_invoker (ProcRecord   *proc_record,
 
 static ProcRecord unit_get_factor_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-unit-get-factor",
   "gimp-unit-get-factor",
   "Returns the factor of the unit.",
@@ -670,7 +670,7 @@ unit_get_digits_invoker (ProcRecord   *proc_record,
 
 static ProcRecord unit_get_digits_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-unit-get-digits",
   "gimp-unit-get-digits",
   "Returns the number of digits of the unit.",
@@ -713,7 +713,7 @@ unit_get_symbol_invoker (ProcRecord   *proc_record,
 
 static ProcRecord unit_get_symbol_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-unit-get-symbol",
   "gimp-unit-get-symbol",
   "Returns the symbol of the unit.",
@@ -756,7 +756,7 @@ unit_get_abbreviation_invoker (ProcRecord   *proc_record,
 
 static ProcRecord unit_get_abbreviation_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-unit-get-abbreviation",
   "gimp-unit-get-abbreviation",
   "Returns the abbreviation of the unit.",
@@ -799,7 +799,7 @@ unit_get_singular_invoker (ProcRecord   *proc_record,
 
 static ProcRecord unit_get_singular_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-unit-get-singular",
   "gimp-unit-get-singular",
   "Returns the singular form of the unit.",
@@ -842,7 +842,7 @@ unit_get_plural_invoker (ProcRecord   *proc_record,
 
 static ProcRecord unit_get_plural_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-unit-get-plural",
   "gimp-unit-get-plural",
   "Returns the plural form of the unit.",

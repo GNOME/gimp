@@ -139,7 +139,7 @@ patterns_popup_invoker (ProcRecord   *proc_record,
 
 static ProcRecord patterns_popup_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-patterns-popup",
   "gimp-patterns-popup",
   "Invokes the Gimp pattern selection.",
@@ -179,7 +179,7 @@ patterns_close_popup_invoker (ProcRecord   *proc_record,
 
 static ProcRecord patterns_close_popup_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-patterns-close-popup",
   "gimp-patterns-close-popup",
   "Popdown the Gimp pattern selection.",
@@ -222,7 +222,7 @@ patterns_set_popup_invoker (ProcRecord   *proc_record,
 
 static ProcRecord patterns_set_popup_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-patterns-set-popup",
   "gimp-patterns-set-popup",
   "Sets the current pattern selection in a popup.",

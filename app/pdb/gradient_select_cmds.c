@@ -153,7 +153,7 @@ gradients_popup_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradients_popup_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-gradients-popup",
   "gimp-gradients-popup",
   "Invokes the Gimp gradients selection.",
@@ -193,7 +193,7 @@ gradients_close_popup_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradients_close_popup_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-gradients-close-popup",
   "gimp-gradients-close-popup",
   "Popdown the Gimp gradient selection.",
@@ -236,7 +236,7 @@ gradients_set_popup_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradients_set_popup_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-gradients-set-popup",
   "gimp-gradients-set-popup",
   "Sets the current gradient selection in a popup.",

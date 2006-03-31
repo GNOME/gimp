@@ -187,7 +187,7 @@ progress_init_invoker (ProcRecord   *proc_record,
 
 static ProcRecord progress_init_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-progress-init",
   "gimp-progress-init",
   "Initializes the progress bar for the current plug-in.",
@@ -229,7 +229,7 @@ progress_update_invoker (ProcRecord   *proc_record,
 
 static ProcRecord progress_update_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-progress-update",
   "gimp-progress-update",
   "Updates the progress bar for the current plug-in.",
@@ -263,7 +263,7 @@ progress_pulse_invoker (ProcRecord   *proc_record,
 
 static ProcRecord progress_pulse_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-progress-pulse",
   "gimp-progress-pulse",
   "Pulses the progress bar for the current plug-in.",
@@ -305,7 +305,7 @@ progress_set_text_invoker (ProcRecord   *proc_record,
 
 static ProcRecord progress_set_text_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-progress-set-text",
   "gimp-progress-set-text",
   "Changes the text in the progress bar for the current plug-in.",
@@ -348,7 +348,7 @@ progress_get_window_handle_invoker (ProcRecord   *proc_record,
 
 static ProcRecord progress_get_window_handle_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-progress-get-window-handle",
   "gimp-progress-get-window-handle",
   "Returns the native window ID of the toplevel window this plug-in's progress is displayed in.",
@@ -388,7 +388,7 @@ progress_install_invoker (ProcRecord   *proc_record,
 
 static ProcRecord progress_install_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-progress-install",
   "gimp-progress-install",
   "Installs a progress callback for the current plug-in.",
@@ -428,7 +428,7 @@ progress_uninstall_invoker (ProcRecord   *proc_record,
 
 static ProcRecord progress_uninstall_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-progress-uninstall",
   "gimp-progress-uninstall",
   "Uninstalls the progress callback for the current plug-in.",
@@ -468,7 +468,7 @@ progress_cancel_invoker (ProcRecord   *proc_record,
 
 static ProcRecord progress_cancel_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-progress-cancel",
   "gimp-progress-cancel",
   "Cancels a running progress.",

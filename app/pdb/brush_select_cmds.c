@@ -192,7 +192,7 @@ brushes_popup_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brushes_popup_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-brushes-popup",
   "gimp-brushes-popup",
   "Invokes the Gimp brush selection.",
@@ -232,7 +232,7 @@ brushes_close_popup_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brushes_close_popup_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-brushes-close-popup",
   "gimp-brushes-close-popup",
   "Popdown the Gimp brush selection.",
@@ -284,7 +284,7 @@ brushes_set_popup_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brushes_set_popup_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-brushes-set-popup",
   "gimp-brushes-set-popup",
   "Sets the current brush selection in a popup.",

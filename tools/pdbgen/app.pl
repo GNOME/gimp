@@ -601,7 +601,7 @@ CODE
 
 static ProcRecord ${name}_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-$proc->{canonical_name}",
   "gimp-$proc->{canonical_name}",
   @{[ &quotewrap($proc->{blurb}, 2) ]},

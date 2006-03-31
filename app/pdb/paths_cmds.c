@@ -604,7 +604,7 @@ path_list_invoker (ProcRecord   *proc_record,
 
 static ProcRecord path_list_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-path-list",
   "gimp-path-list",
   "This procedure is deprecated! Use 'gimp-image-get-vectors' instead.",
@@ -652,7 +652,7 @@ path_get_current_invoker (ProcRecord   *proc_record,
 
 static ProcRecord path_get_current_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-path-get-current",
   "gimp-path-get-current",
   "This procedure is deprecated! Use 'gimp-image-get-active-vectors' instead.",
@@ -695,7 +695,7 @@ path_set_current_invoker (ProcRecord   *proc_record,
 
 static ProcRecord path_set_current_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-path-set-current",
   "gimp-path-set-current",
   "This procedure is deprecated! Use 'gimp-image-set-active-vectors' instead.",
@@ -738,7 +738,7 @@ path_delete_invoker (ProcRecord   *proc_record,
 
 static ProcRecord path_delete_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-path-delete",
   "gimp-path-delete",
   "This procedure is deprecated! Use 'gimp-image-remove-vectors' instead.",
@@ -827,7 +827,7 @@ path_get_points_invoker (ProcRecord   *proc_record,
 
 static ProcRecord path_get_points_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-path-get-points",
   "gimp-path-get-points",
   "List the points associated with the named path.",
@@ -908,7 +908,7 @@ path_set_points_invoker (ProcRecord   *proc_record,
 
 static ProcRecord path_set_points_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-path-set-points",
   "gimp-path-set-points",
   "Set the points associated with the named path.",
@@ -959,7 +959,7 @@ path_stroke_current_invoker (ProcRecord   *proc_record,
 
 static ProcRecord path_stroke_current_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-path-stroke-current",
   "gimp-path-stroke-current",
   "Stroke the current path in the passed image.",
@@ -1058,7 +1058,7 @@ path_get_point_at_dist_invoker (ProcRecord   *proc_record,
 
 static ProcRecord path_get_point_at_dist_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-path-get-point-at-dist",
   "gimp-path-get-point-at-dist",
   "This procedure is deprecated! Use 'gimp-vectors-stroke-get-point-at-dist' instead.",
@@ -1108,7 +1108,7 @@ path_get_tattoo_invoker (ProcRecord   *proc_record,
 
 static ProcRecord path_get_tattoo_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-path-get-tattoo",
   "gimp-path-get-tattoo",
   "This procedure is deprecated! Use 'gimp-vectors-get-tattoo' instead.",
@@ -1153,7 +1153,7 @@ path_set_tattoo_invoker (ProcRecord   *proc_record,
 
 static ProcRecord path_set_tattoo_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-path-set-tattoo",
   "gimp-path-set-tattoo",
   "This procedure is deprecated! Use 'gimp-vectors-set-tattoo' instead.",
@@ -1203,7 +1203,7 @@ get_path_by_tattoo_invoker (ProcRecord   *proc_record,
 
 static ProcRecord get_path_by_tattoo_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-get-path-by-tattoo",
   "gimp-get-path-by-tattoo",
   "This procedure is deprecated! Use 'gimp-image-get-vectors-by-tattoo' instead.",
@@ -1253,7 +1253,7 @@ path_get_locked_invoker (ProcRecord   *proc_record,
 
 static ProcRecord path_get_locked_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-path-get-locked",
   "gimp-path-get-locked",
   "This procedure is deprecated! Use 'gimp-vectors-get-linked' instead.",
@@ -1298,7 +1298,7 @@ path_set_locked_invoker (ProcRecord   *proc_record,
 
 static ProcRecord path_set_locked_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-path-set-locked",
   "gimp-path-set-locked",
   "This procedure is deprecated! Use 'gimp-vectors-set-linked' instead.",
@@ -1358,7 +1358,7 @@ path_to_selection_invoker (ProcRecord   *proc_record,
 
 static ProcRecord path_to_selection_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-path-to-selection",
   "gimp-path-to-selection",
   "Transforms the active path into a selection",
@@ -1400,7 +1400,7 @@ path_import_invoker (ProcRecord   *proc_record,
 
 static ProcRecord path_import_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-path-import",
   "gimp-path-import",
   "Import paths from an SVG file.",
@@ -1445,7 +1445,7 @@ path_import_string_invoker (ProcRecord   *proc_record,
 
 static ProcRecord path_import_string_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-path-import-string",
   "gimp-path-import-string",
   "Import paths from an SVG string.",

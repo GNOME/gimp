@@ -682,7 +682,7 @@ airbrush_invoker (ProcRecord   *proc_record,
 
 static ProcRecord airbrush_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-airbrush",
   "gimp-airbrush",
   "Paint in the current brush with varying pressure. Paint application is time-dependent.",
@@ -733,7 +733,7 @@ airbrush_default_invoker (ProcRecord   *proc_record,
 
 static ProcRecord airbrush_default_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-airbrush-default",
   "gimp-airbrush-default",
   "Paint in the current brush with varying pressure. Paint application is time-dependent.",
@@ -800,7 +800,7 @@ clone_invoker (ProcRecord   *proc_record,
 
 static ProcRecord clone_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-clone",
   "gimp-clone",
   "Clone from the source to the dest drawable using the current brush",
@@ -851,7 +851,7 @@ clone_default_invoker (ProcRecord   *proc_record,
 
 static ProcRecord clone_default_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-clone-default",
   "gimp-clone-default",
   "Clone from the source to the dest drawable using the current brush",
@@ -911,7 +911,7 @@ convolve_invoker (ProcRecord   *proc_record,
 
 static ProcRecord convolve_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-convolve",
   "gimp-convolve",
   "Convolve (Blur, Sharpen) using the current brush.",
@@ -962,7 +962,7 @@ convolve_default_invoker (ProcRecord   *proc_record,
 
 static ProcRecord convolve_default_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-convolve-default",
   "gimp-convolve-default",
   "Convolve (Blur, Sharpen) using the current brush.",
@@ -1025,7 +1025,7 @@ dodgeburn_invoker (ProcRecord   *proc_record,
 
 static ProcRecord dodgeburn_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-dodgeburn",
   "gimp-dodgeburn",
   "Dodgeburn image with varying exposure.",
@@ -1076,7 +1076,7 @@ dodgeburn_default_invoker (ProcRecord   *proc_record,
 
 static ProcRecord dodgeburn_default_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-dodgeburn-default",
   "gimp-dodgeburn-default",
   "Dodgeburn image with varying exposure. This is the same as the gimp_dodgeburn function except that the exposure, type and mode are taken from the tools option dialog. If the dialog has not been activated then the defaults as used by the dialog will be used.",
@@ -1136,7 +1136,7 @@ eraser_invoker (ProcRecord   *proc_record,
 
 static ProcRecord eraser_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-eraser",
   "gimp-eraser",
   "Erase using the current brush.",
@@ -1187,7 +1187,7 @@ eraser_default_invoker (ProcRecord   *proc_record,
 
 static ProcRecord eraser_default_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-eraser-default",
   "gimp-eraser-default",
   "Erase using the current brush.",
@@ -1252,7 +1252,7 @@ paintbrush_invoker (ProcRecord   *proc_record,
 
 static ProcRecord paintbrush_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-paintbrush",
   "gimp-paintbrush",
   "Paint in the current brush with optional fade out parameter and pull colors from a gradient.",
@@ -1303,7 +1303,7 @@ paintbrush_default_invoker (ProcRecord   *proc_record,
 
 static ProcRecord paintbrush_default_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-paintbrush-default",
   "gimp-paintbrush-default",
   "Paint in the current brush. The fade out parameter and pull colors from a gradient parameter are set from the paintbrush options dialog. If this dialog has not been activated then the dialog defaults will be used.",
@@ -1354,7 +1354,7 @@ pencil_invoker (ProcRecord   *proc_record,
 
 static ProcRecord pencil_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-pencil",
   "gimp-pencil",
   "Paint in the current brush without sub-pixel sampling.",
@@ -1411,7 +1411,7 @@ smudge_invoker (ProcRecord   *proc_record,
 
 static ProcRecord smudge_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-smudge",
   "gimp-smudge",
   "Smudge image with varying pressure.",
@@ -1462,7 +1462,7 @@ smudge_default_invoker (ProcRecord   *proc_record,
 
 static ProcRecord smudge_default_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-smudge-default",
   "gimp-smudge-default",
   "Smudge image with varying pressure.",

@@ -65,18 +65,7 @@ procedural_db_free_entry (gpointer key,
 {
   if (value)
     {
-      GList *list;
-
-      for (list = value; list; list = g_list_next (list))
-        {
-          ProcRecord *procedure = list->data;
-
-          if (procedure->static_proc)
-            gimp_procedure_dispose (procedure);
-          else
-            gimp_procedure_free (procedure);
-        }
-
+      g_list_foreach (value, (GFunc) gimp_procedure_free, NULL);
       g_list_free (value);
     }
 }

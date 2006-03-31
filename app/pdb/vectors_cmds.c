@@ -842,7 +842,7 @@ vectors_new_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_new_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-vectors-new",
   "gimp-vectors-new",
   "Creates a new empty vectors object.",
@@ -885,7 +885,7 @@ vectors_get_image_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_get_image_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-vectors-get-image",
   "gimp-vectors-get-image",
   "Returns the vectors objects image.",
@@ -928,7 +928,7 @@ vectors_get_name_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_get_name_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-vectors-get-name",
   "gimp-vectors-get-name",
   "Gets the name of the vectors object.",
@@ -966,7 +966,7 @@ vectors_set_name_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_set_name_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-vectors-set-name",
   "gimp-vectors-set-name",
   "Sets the name of the vectors object.",
@@ -1009,7 +1009,7 @@ vectors_get_visible_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_get_visible_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-vectors-get-visible",
   "gimp-vectors-get-visible",
   "Gets the visibility of the vectors object.",
@@ -1047,7 +1047,7 @@ vectors_set_visible_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_set_visible_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-vectors-set-visible",
   "gimp-vectors-set-visible",
   "Sets the visibility of the vectors object.",
@@ -1090,7 +1090,7 @@ vectors_get_linked_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_get_linked_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-vectors-get-linked",
   "gimp-vectors-get-linked",
   "Gets the linked state of the vectors object.",
@@ -1128,7 +1128,7 @@ vectors_set_linked_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_set_linked_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-vectors-set-linked",
   "gimp-vectors-set-linked",
   "Sets the linked state of the vectors object.",
@@ -1171,7 +1171,7 @@ vectors_get_tattoo_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_get_tattoo_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-vectors-get-tattoo",
   "gimp-vectors-get-tattoo",
   "Get the tattoo of the vectors object.",
@@ -1209,7 +1209,7 @@ vectors_set_tattoo_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_set_tattoo_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-vectors-set-tattoo",
   "gimp-vectors-set-tattoo",
   "Set the tattoo of the vectors object.",
@@ -1272,7 +1272,7 @@ vectors_get_strokes_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_get_strokes_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-vectors-get-strokes",
   "gimp-vectors-get-strokes",
   "List the strokes associated with the passed path.",
@@ -1324,7 +1324,7 @@ vectors_stroke_get_length_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_stroke_get_length_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-vectors-stroke-get-length",
   "gimp-vectors-stroke-get-length",
   "Measure the length of the given stroke.",
@@ -1393,7 +1393,7 @@ vectors_stroke_get_point_at_dist_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_stroke_get_point_at_dist_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-vectors-stroke-get-point-at-dist",
   "gimp-vectors-stroke-get-point-at-dist",
   "Get point at a specified distance along the stroke.",
@@ -1436,7 +1436,7 @@ vectors_stroke_remove_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_stroke_remove_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-vectors-stroke-remove",
   "gimp-vectors-stroke-remove",
   "remove the stroke from a vectors object.",
@@ -1479,7 +1479,7 @@ vectors_stroke_close_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_stroke_close_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-vectors-stroke-close",
   "gimp-vectors-stroke-close",
   "closes the specified stroke.",
@@ -1526,7 +1526,7 @@ vectors_stroke_translate_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_stroke_translate_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-vectors-stroke-translate",
   "gimp-vectors-stroke-translate",
   "translate the given stroke.",
@@ -1573,7 +1573,7 @@ vectors_stroke_scale_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_stroke_scale_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-vectors-stroke-scale",
   "gimp-vectors-stroke-scale",
   "scales the given stroke.",
@@ -1652,7 +1652,7 @@ vectors_stroke_interpolate_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_stroke_interpolate_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-vectors-stroke-interpolate",
   "gimp-vectors-stroke-interpolate",
   "returns polygonal approximation of the stroke.",
@@ -1707,7 +1707,7 @@ vectors_bezier_stroke_new_moveto_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_bezier_stroke_new_moveto_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-vectors-bezier-stroke-new-moveto",
   "gimp-vectors-bezier-stroke-new-moveto",
   "Adds a bezier stroke with a single moveto to the vectors object.",
@@ -1761,7 +1761,7 @@ vectors_bezier_stroke_lineto_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_bezier_stroke_lineto_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-vectors-bezier-stroke-lineto",
   "gimp-vectors-bezier-stroke-lineto",
   "Extends a bezier stroke with a lineto.",
@@ -1823,7 +1823,7 @@ vectors_bezier_stroke_conicto_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_bezier_stroke_conicto_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-vectors-bezier-stroke-conicto",
   "gimp-vectors-bezier-stroke-conicto",
   "Extends a bezier stroke with a conic bezier spline.",
@@ -1893,7 +1893,7 @@ vectors_bezier_stroke_cubicto_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_bezier_stroke_cubicto_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-vectors-bezier-stroke-cubicto",
   "gimp-vectors-bezier-stroke-cubicto",
   "Extends a bezier stroke with a cubic bezier spline.",
@@ -1954,7 +1954,7 @@ vectors_bezier_stroke_new_ellipse_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_bezier_stroke_new_ellipse_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-vectors-bezier-stroke-new-ellipse",
   "gimp-vectors-bezier-stroke-new-ellipse",
   "Adds a bezier stroke describing an ellipse the vectors object.",

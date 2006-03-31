@@ -426,7 +426,7 @@ flip_invoker (ProcRecord   *proc_record,
 
 static ProcRecord flip_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-flip",
   "gimp-flip",
   "This procedure is deprecated! Use 'gimp-drawable-transform-flip-simple' instead.",
@@ -520,7 +520,7 @@ perspective_invoker (ProcRecord   *proc_record,
 
 static ProcRecord perspective_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-perspective",
   "gimp-perspective",
   "This procedure is deprecated! Use 'gimp-drawable-transform-perspective-default' instead.",
@@ -596,7 +596,7 @@ rotate_invoker (ProcRecord   *proc_record,
 
 static ProcRecord rotate_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-rotate",
   "gimp-rotate",
   "This procedure is deprecated! Use 'gimp-drawable-transform-rotate-default' instead.",
@@ -682,7 +682,7 @@ scale_invoker (ProcRecord   *proc_record,
 
 static ProcRecord scale_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-scale",
   "gimp-scale",
   "This procedure is deprecated! Use 'gimp-drawable-transform-scale-default' instead.",
@@ -761,7 +761,7 @@ shear_invoker (ProcRecord   *proc_record,
 
 static ProcRecord shear_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-shear",
   "gimp-shear",
   "This procedure is deprecated! Use 'gimp-drawable-transform-shear-default' instead.",
@@ -850,7 +850,7 @@ transform_2d_invoker (ProcRecord   *proc_record,
 
 static ProcRecord transform_2d_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-transform-2d",
   "gimp-transform-2d",
   "This procedure is deprecated! Use 'gimp-drawable-transform-2d-default' instead.",

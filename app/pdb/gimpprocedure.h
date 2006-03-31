@@ -60,76 +60,106 @@ struct _TempExec
 
 struct _ProcRecord
 {
+  /*  Flags  */
+  gboolean     static_proc;    /* Is the procedure allocated?                */
+  gboolean     static_strings; /* Are the procedure's strings allocated?     */
+
   /*  Procedure information  */
-  gboolean     static_proc;   /*  Are the procedure's strings allocated      */
-  gchar       *name;          /*  Procedure name                             */
-  gchar       *original_name; /*  Procedure name before canonicalization     */
-  gchar       *blurb;         /*  Short procedure description                */
-  gchar       *help;          /*  Detailed help instructions                 */
-  gchar       *author;        /*  Author field                               */
-  gchar       *copyright;     /*  Copyright field                            */
-  gchar       *date;          /*  Date field                                 */
-  gchar       *deprecated;    /*  Replacement if the procedure is deprecated */
+  gchar       *name;           /* Procedure name                             */
+  gchar       *original_name;  /* Procedure name before canonicalization     */
+  gchar       *blurb;          /* Short procedure description                */
+  gchar       *help;           /* Detailed help instructions                 */
+  gchar       *author;         /* Author field                               */
+  gchar       *copyright;      /* Copyright field                            */
+  gchar       *date;           /* Date field                                 */
+  gchar       *deprecated;     /* Replacement if the procedure is deprecated */
 
   /*  Procedure type  */
-  GimpPDBProcType  proc_type; /*  Type of procedure                          */
+  GimpPDBProcType  proc_type;  /* Type of procedure                          */
 
   /*  Input arguments  */
-  gint32       num_args;      /*  Number of procedure arguments              */
-  ProcArg     *args;          /*  Array of procedure arguments               */
+  gint32       num_args;       /* Number of procedure arguments              */
+  ProcArg     *args;           /* Array of procedure arguments               */
 
   /*  Output values  */
-  gint32       num_values;    /*  Number of return values                    */
-  ProcArg     *values;        /*  Array of return values                     */
+  gint32       num_values;     /* Number of return values                    */
+  ProcArg     *values;         /* Array of return values                     */
 
   /*  Method of procedure execution  */
   union _ExecMethod
   {
-    IntExec     internal;     /*  Execution information for internal procs   */
-    PlugInExec  plug_in;      /*  ..................... for plug-ins         */
-    ExtExec     extension;    /*  ..................... for extensions       */
-    TempExec    temporary;    /*  ..................... for temp procs       */
+    IntExec     internal;      /* Execution information for internal procs   */
+    PlugInExec  plug_in;       /* ..................... for plug-ins         */
+    ExtExec     extension;     /* ..................... for extensions       */
+    TempExec    temporary;     /* ..................... for temp procs       */
   } exec_method;
 };
 
 
-ProcRecord   * gimp_procedure_new               (void);
-void           gimp_procedure_free              (ProcRecord       *procedure);
+ProcRecord    * gimp_procedure_new                (void);
+void            gimp_procedure_free               (ProcRecord       *procedure);
 
-ProcRecord   * gimp_procedure_init              (ProcRecord       *procedure,
-                                                 gint              n_arguments,
-                                                 gint              n_return_vals);
-void           gimp_procedure_dispose           (ProcRecord       *procedure);
+ProcRecord    * gimp_procedure_init               (ProcRecord       *procedure,
+                                                   gint              n_arguments,
+                                                   gint              n_return_vals);
 
-void           gimp_procedure_add_argument      (ProcRecord       *procedure,
-                                                 GimpPDBArgType    arg_type,
-                                                 GParamSpec       *pspec);
-void           gimp_procedure_add_return_value  (ProcRecord       *procedure,
-                                                 GimpPDBArgType    arg_type,
-                                                 GParamSpec       *pspec);
+void            gimp_procedure_set_strings        (ProcRecord       *procedure,
+                                                   gchar            *name,
+                                                   gchar            *original_name,
+                                                   gchar            *blurb,
+                                                   gchar            *help,
+                                                   gchar            *author,
+                                                   gchar            *copyright,
+                                                   gchar            *date,
+                                                   gchar            *deprecated);
+void           gimp_procedure_set_static_strings  (ProcRecord       *procedure,
+                                                   gchar            *name,
+                                                   gchar            *original_name,
+                                                   gchar            *blurb,
+                                                   gchar            *help,
+                                                   gchar            *author,
+                                                   gchar            *copyright,
+                                                   gchar            *date,
+                                                   gchar            *deprecated);
+void           gimp_procedure_take_strings        (ProcRecord       *procedure,
+                                                   gchar            *name,
+                                                   gchar            *original_name,
+                                                   gchar            *blurb,
+                                                   gchar            *help,
+                                                   gchar            *author,
+                                                   gchar            *copyright,
+                                                   gchar            *date,
+                                                   gchar            *deprecated);
 
-void           gimp_procedure_add_compat_arg    (ProcRecord       *procedure,
-                                                 Gimp             *gimp,
-                                                 GimpPDBArgType    arg_type,
-                                                 const gchar      *name,
-                                                 const gchar      *desc);
-void           gimp_procedure_add_compat_value  (ProcRecord       *procedure,
-                                                 Gimp             *gimp,
-                                                 GimpPDBArgType    arg_type,
-                                                 const gchar      *name,
-                                                 const gchar      *desc);
+void            gimp_procedure_add_argument       (ProcRecord       *procedure,
+                                                   GimpPDBArgType    arg_type,
+                                                   GParamSpec       *pspec);
+void            gimp_procedure_add_return_value   (ProcRecord       *procedure,
+                                                   GimpPDBArgType    arg_type,
+                                                   GParamSpec       *pspec);
 
-Argument     * gimp_procedure_get_arguments     (const ProcRecord *procedure);
-Argument     * gimp_procedure_get_return_values (const ProcRecord *procedure,
-                                                 gboolean          success);
+void            gimp_procedure_add_compat_arg     (ProcRecord       *procedure,
+                                                   Gimp             *gimp,
+                                                   GimpPDBArgType    arg_type,
+                                                   const gchar      *name,
+                                                   const gchar      *desc);
+void            gimp_procedure_add_compat_value   (ProcRecord       *procedure,
+                                                   Gimp             *gimp,
+                                                   GimpPDBArgType    arg_type,
+                                                   const gchar      *name,
+                                                   const gchar      *desc);
 
-Argument     * gimp_procedure_execute           (ProcRecord       *procedure,
-                                                 Gimp             *gimp,
-                                                 GimpContext      *context,
-                                                 GimpProgress     *progress,
-                                                 Argument         *args,
-                                                 gint              n_args,
-                                                 gint             *n_return_vals);
+Argument      * gimp_procedure_get_arguments      (const ProcRecord *procedure);
+Argument      * gimp_procedure_get_return_values  (const ProcRecord *procedure,
+                                                   gboolean          success);
+
+Argument      * gimp_procedure_execute            (ProcRecord       *procedure,
+                                                   Gimp             *gimp,
+                                                   GimpContext      *context,
+                                                   GimpProgress     *progress,
+                                                   Argument         *args,
+                                                   gint              n_args,
+                                                   gint             *n_return_vals);
 
 
 #endif  /*  __GIMP_PROCEDURE_H__  */

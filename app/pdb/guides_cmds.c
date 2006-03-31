@@ -243,7 +243,7 @@ image_add_hguide_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_add_hguide_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-add-hguide",
   "gimp-image-add-hguide",
   "Add a horizontal guide to an image.",
@@ -296,7 +296,7 @@ image_add_vguide_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_add_vguide_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-add-vguide",
   "gimp-image-add-vguide",
   "Add a vertical guide to an image.",
@@ -339,7 +339,7 @@ image_delete_guide_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_delete_guide_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-delete-guide",
   "gimp-image-delete-guide",
   "Deletes a guide from an image.",
@@ -387,7 +387,7 @@ image_find_next_guide_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_find_next_guide_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-find-next-guide",
   "gimp-image-find-next-guide",
   "Find next guide on an image.",
@@ -437,7 +437,7 @@ image_get_guide_orientation_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_get_guide_orientation_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-get-guide-orientation",
   "gimp-image-get-guide-orientation",
   "Get orientation of a guide on an image.",
@@ -487,7 +487,7 @@ image_get_guide_position_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_get_guide_position_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-image-get-guide-position",
   "gimp-image-get-guide-position",
   "Get position of a guide on an image.",

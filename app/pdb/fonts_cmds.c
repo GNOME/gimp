@@ -89,7 +89,7 @@ fonts_refresh_invoker (ProcRecord   *proc_record,
 
 static ProcRecord fonts_refresh_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-fonts-refresh",
   "gimp-fonts-refresh",
   "Refresh current fonts. This function always succeeds.",
@@ -137,7 +137,7 @@ fonts_get_list_invoker (ProcRecord   *proc_record,
 
 static ProcRecord fonts_get_list_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-fonts-get-list",
   "gimp-fonts-get-list",
   "Retrieve the list of loaded fonts.",

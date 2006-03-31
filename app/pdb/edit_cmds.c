@@ -590,7 +590,7 @@ edit_cut_invoker (ProcRecord   *proc_record,
 
 static ProcRecord edit_cut_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-edit-cut",
   "gimp-edit-cut",
   "Cut from the specified drawable.",
@@ -640,7 +640,7 @@ edit_copy_invoker (ProcRecord   *proc_record,
 
 static ProcRecord edit_copy_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-edit-copy",
   "gimp-edit-copy",
   "Copy from the specified drawable.",
@@ -683,7 +683,7 @@ edit_copy_visible_invoker (ProcRecord   *proc_record,
 
 static ProcRecord edit_copy_visible_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-edit-copy-visible",
   "gimp-edit-copy-visible",
   "Copy from the projection.",
@@ -738,7 +738,7 @@ edit_paste_invoker (ProcRecord   *proc_record,
 
 static ProcRecord edit_paste_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-edit-paste",
   "gimp-edit-paste",
   "Paste buffer to the specified drawable.",
@@ -783,7 +783,7 @@ edit_paste_as_new_invoker (ProcRecord   *proc_record,
 
 static ProcRecord edit_paste_as_new_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-edit-paste-as-new",
   "gimp-edit-paste-as-new",
   "Paste buffer to a new image.",
@@ -841,7 +841,7 @@ edit_named_cut_invoker (ProcRecord   *proc_record,
 
 static ProcRecord edit_named_cut_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-edit-named-cut",
   "gimp-edit-named-cut",
   "Cut into a named buffer.",
@@ -899,7 +899,7 @@ edit_named_copy_invoker (ProcRecord   *proc_record,
 
 static ProcRecord edit_named_copy_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-edit-named-copy",
   "gimp-edit-named-copy",
   "Copy into a named buffer.",
@@ -955,7 +955,7 @@ edit_named_copy_visible_invoker (ProcRecord   *proc_record,
 
 static ProcRecord edit_named_copy_visible_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-edit-named-copy-visible",
   "gimp-edit-named-copy-visible",
   "Copy from the projection into a named buffer.",
@@ -1014,7 +1014,7 @@ edit_named_paste_invoker (ProcRecord   *proc_record,
 
 static ProcRecord edit_named_paste_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-edit-named-paste",
   "gimp-edit-named-paste",
   "Paste named buffer to the specified drawable.",
@@ -1068,7 +1068,7 @@ edit_named_paste_as_new_invoker (ProcRecord   *proc_record,
 
 static ProcRecord edit_named_paste_as_new_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-edit-named-paste-as-new",
   "gimp-edit-named-paste-as-new",
   "Paste named buffer to a new image.",
@@ -1111,7 +1111,7 @@ edit_clear_invoker (ProcRecord   *proc_record,
 
 static ProcRecord edit_clear_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-edit-clear",
   "gimp-edit-clear",
   "Clear selected area of drawable.",
@@ -1157,7 +1157,7 @@ edit_fill_invoker (ProcRecord   *proc_record,
 
 static ProcRecord edit_fill_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-edit-fill",
   "gimp-edit-fill",
   "Fill selected area of drawable.",
@@ -1221,7 +1221,7 @@ edit_bucket_fill_invoker (ProcRecord   *proc_record,
 
 static ProcRecord edit_bucket_fill_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-edit-bucket-fill",
   "gimp-edit-bucket-fill",
   "Fill the area specified either by the current selection if there is one, or by a seed fill starting at the specified coordinates.",
@@ -1317,7 +1317,7 @@ edit_blend_invoker (ProcRecord   *proc_record,
 
 static ProcRecord edit_blend_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-edit-blend",
   "gimp-edit-blend",
   "Blend between the starting and ending coordinates with the specified blend mode and gradient type.",
@@ -1366,7 +1366,7 @@ edit_stroke_invoker (ProcRecord   *proc_record,
 
 static ProcRecord edit_stroke_proc =
 {
-  TRUE,
+  TRUE, TRUE,
   "gimp-edit-stroke",
   "gimp-edit-stroke",
   "Stroke the current selection",
