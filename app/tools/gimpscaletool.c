@@ -37,12 +37,6 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "dialogs/dialogs-types.h"
-#endif
-#include "dialogs/dialogs-types.h"
-#include "dialogs/info-dialog.h"
-
 #include "gimpscaletool.h"
 #include "gimptoolcontrol.h"
 #include "gimptransformoptions.h"
@@ -119,6 +113,18 @@ static void
 gimp_scale_tool_dialog (GimpTransformTool *tr_tool)
 {
   GimpScaleTool *scale = GIMP_SCALE_TOOL (tr_tool);
+  GtkWidget     *table;
+
+  table = gtk_table_new (5, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (tr_tool->dialog)->vbox), table,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+#if 0
+
   GtkWidget     *spinbutton;
 
   info_dialog_add_label (tr_tool->info_dialog,
@@ -165,11 +171,14 @@ gimp_scale_tool_dialog (GimpTransformTool *tr_tool)
                              1, 4);
   gtk_table_set_row_spacing (GTK_TABLE (tr_tool->info_dialog->info_table),
                              2, 0);
+
+#endif
 }
 
 static void
 gimp_scale_tool_dialog_update (GimpTransformTool *tr_tool)
 {
+#if 0
   GimpTool             *tool  = GIMP_TOOL (tr_tool);
   GimpScaleTool        *scale = GIMP_SCALE_TOOL (tr_tool);
   GimpTransformOptions *options;
@@ -253,7 +262,10 @@ gimp_scale_tool_dialog_update (GimpTransformTool *tr_tool)
               "%0.2f", ratio_y);
 
   info_dialog_update (tr_tool->info_dialog);
-  info_dialog_show (tr_tool->info_dialog);
+
+#endif
+
+  gtk_widget_show (tr_tool->dialog);
 }
 
 static void
@@ -265,6 +277,7 @@ gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
   scale->size_vals[0] = tr_tool->x2 - tr_tool->x1;
   scale->size_vals[1] = tr_tool->y2 - tr_tool->y1;
 
+#if 0
   g_signal_handlers_block_by_func (scale->sizeentry,
                                    gimp_scale_tool_size_changed,
                                    tr_tool);
@@ -303,6 +316,8 @@ gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
   g_signal_handlers_unblock_by_func (scale->sizeentry,
                                      gimp_scale_tool_unit_changed,
                                      tr_tool);
+
+#endif
 
   tr_tool->trans_info[X0] = (gdouble) tr_tool->x1;
   tr_tool->trans_info[Y0] = (gdouble) tr_tool->y1;

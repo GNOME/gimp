@@ -46,8 +46,6 @@ libappdialogs_a_sources = \
 	image-properties-dialog.h	\
 	image-scale-dialog.c		\
 	image-scale-dialog.h		\
-	info-dialog.c			\
-	info-dialog.h			\
 	keyboard-shortcuts-dialog.c	\
 	keyboard-shortcuts-dialog.h	\
 	layer-add-mask-dialog.c		\

@@ -22,8 +22,6 @@
 
 #include "gimpdrawtool.h"
 
-#include "dialogs/dialogs-types.h" /* FIXME */
-
 
 /* buffer sizes for scaling information strings (for the info dialog) */
 #define MAX_INFO_BUF   40
@@ -92,11 +90,10 @@ struct _GimpTransformTool
   GimpTransformType       type;
   GimpTransformDirection  direction;
 
-  /*  transform info dialog  */
   const gchar    *shell_desc;
   const gchar    *progress_text;
 
-  InfoDialog     *info_dialog;
+  GtkWidget      *dialog;
 };
 
 struct _GimpTransformToolClass

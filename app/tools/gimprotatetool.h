@@ -38,10 +38,7 @@ struct _GimpRotateTool
 {
   GimpTransformTool  parent_instance;
 
-  /*  rotate dialog  */
-  gdouble            angle_val;
-  gdouble            center_vals[2];
-
+  GtkObject         *angle_adj;
   GtkWidget         *sizeentry;
 };
 

@@ -1,3 +1,7 @@
+2006-03-31  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed app/dialogs/info-dialog.c
+
 2006-03-29  Vladimer Sichinava  <vlsichinava@gmail.com>
 
         * ka.po: Added Georgian translation by

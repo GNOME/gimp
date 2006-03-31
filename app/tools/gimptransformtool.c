@@ -49,18 +49,13 @@
 #include "vectors/gimpstroke.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimptooldialog.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-transform.h"
-
-#ifdef __GNUC__
-#warning FIXME #include "dialogs/dialogs-types.h"
-#endif
-#include "dialogs/dialogs-types.h"
-#include "dialogs/info-dialog.h"
 
 #include "gimptoolcontrol.h"
 #include "gimptransformoptions.h"
@@ -224,7 +219,7 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
 
   tr_tool->shell_desc       = NULL;
   tr_tool->progress_text    = _("Transforming");
-  tr_tool->info_dialog      = NULL;
+  tr_tool->dialog           = NULL;
 }
 
 static GObject *
@@ -294,10 +289,10 @@ gimp_transform_tool_finalize (GObject *object)
       tr_tool->original = NULL;
     }
 
-  if (tr_tool->info_dialog)
+  if (tr_tool->dialog)
     {
-      info_dialog_free (tr_tool->info_dialog);
-      tr_tool->info_dialog = NULL;
+      gtk_widget_destroy (tr_tool->dialog);
+      tr_tool->dialog = NULL;
     }
 
   if (tr_tool->grid_coords)
@@ -330,7 +325,7 @@ gimp_transform_tool_initialize (GimpTool    *tool,
       tool->drawable = gimp_image_active_drawable (display->image);
 
       /*  Initialize the transform tool dialog */
-      if (! tr_tool->info_dialog)
+      if (! tr_tool->dialog)
         gimp_transform_tool_dialog (tr_tool);
 
       /*  Find the transform bounds for some tools (like scale,
@@ -834,8 +829,8 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
   options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
   context = GIMP_CONTEXT (options);
 
-  if (tr_tool->info_dialog)
-    gtk_widget_set_sensitive (GTK_WIDGET (tr_tool->info_dialog->shell), FALSE);
+  if (tr_tool->dialog)
+    gtk_widget_set_sensitive (tr_tool->dialog, FALSE);
 
   progress = gimp_progress_start (GIMP_PROGRESS (display),
                                   tr_tool->progress_text, FALSE);
@@ -1229,10 +1224,10 @@ gimp_transform_tool_halt (GimpTransformTool *tr_tool)
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tr_tool)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (tr_tool));
 
-  if (tr_tool->info_dialog)
-    info_dialog_hide (tr_tool->info_dialog);
+  if (tr_tool->dialog)
+    gtk_widget_hide (tr_tool->dialog);
 
-  tool->display    = NULL;
+  tool->display  = NULL;
   tool->drawable = NULL;
 }
 
@@ -1391,53 +1386,35 @@ gimp_transform_tool_grid_recalc (GimpTransformTool *tr_tool)
 static void
 gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
 {
-  GimpTool     *tool = GIMP_TOOL (tr_tool);
-  GimpToolInfo *tool_info;
+  GimpTool     *tool      = GIMP_TOOL (tr_tool);
+  GimpToolInfo *tool_info = tool->tool_info;
   const gchar  *stock_id;
-  gchar        *identifier;
 
   if (! GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog)
     return;
 
-  tool_info = tool->tool_info;
-
   stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
 
-  tr_tool->info_dialog = info_dialog_new (NULL,
-                                          tool_info->blurb,
-                                          GIMP_OBJECT (tool_info)->name,
-                                          stock_id,
-                                          tr_tool->shell_desc,
+  tr_tool->dialog = gimp_tool_dialog_new (tool_info,
                                           NULL /* tool->display->shell */,
-                                          gimp_standard_help_func,
-                                          tool_info->help_id);
-
-  gtk_dialog_add_buttons (GTK_DIALOG (tr_tool->info_dialog->shell),
-                          GIMP_STOCK_RESET, RESPONSE_RESET,
-                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                          stock_id,         GTK_RESPONSE_OK,
-                          NULL);
-  gtk_dialog_set_default_response (GTK_DIALOG (tr_tool->info_dialog->shell),
+                                          tr_tool->shell_desc,
+                                          GIMP_STOCK_RESET, RESPONSE_RESET,
+                                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                          stock_id,         GTK_RESPONSE_OK,
+                                          NULL);
+  gtk_dialog_set_default_response (GTK_DIALOG (tr_tool->dialog),
                                    GTK_RESPONSE_OK);
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (tr_tool->info_dialog->shell),
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (tr_tool->dialog),
                                            RESPONSE_RESET,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  g_signal_connect (tr_tool->info_dialog->shell, "response",
+  g_signal_connect (tr_tool->dialog, "response",
                     G_CALLBACK (gimp_transform_tool_response),
                     tr_tool);
 
   GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog (tr_tool);
-
-  identifier = g_strconcat (GIMP_OBJECT (tool_info)->name, "-dialog", NULL);
-
-  gimp_dialog_factory_add_foreign (gimp_dialog_factory_from_name ("toplevel"),
-                                   identifier,
-                                   tr_tool->info_dialog->shell);
-
-  g_free (identifier);
 }
 
 static void
@@ -1459,12 +1436,12 @@ gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
     gimp_display_shell_set_show_transform (GIMP_DISPLAY_SHELL (display->shell),
                                            FALSE);
 
-  if (tr_tool->info_dialog)
+  if (tr_tool->dialog)
     {
-      gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (tr_tool->info_dialog->shell),
+      gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (tr_tool->dialog),
                                          GIMP_VIEWABLE (gimp_image_active_drawable (display->image)));
 
-      gtk_widget_set_sensitive (GTK_WIDGET (tr_tool->info_dialog->shell), TRUE);
+      gtk_widget_set_sensitive (tr_tool->dialog, TRUE);
     }
 
   if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->prepare)

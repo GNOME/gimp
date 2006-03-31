@@ -38,8 +38,7 @@ struct _GimpPerspectiveTool
 {
   GimpTransformTool  parent_instance;
 
-  /*  perspective dialog  */
-  gchar              matrix_row_buf [3][MAX_INFO_BUF];
+  GtkWidget         *label[3][3];
 };
 
 struct _GimpPerspectiveToolClass

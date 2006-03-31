@@ -34,12 +34,6 @@
 
 #include "display/gimpdisplay.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "dialogs/dialogs-types.h"
-#endif
-#include "dialogs/dialogs-types.h"
-#include "dialogs/info-dialog.h"
-
 #include "gimpperspectivetool.h"
 #include "gimptoolcontrol.h"
 #include "gimptransformoptions.h"
@@ -109,36 +103,55 @@ static void
 gimp_perspective_tool_dialog (GimpTransformTool *tr_tool)
 {
   GimpPerspectiveTool *perspective = GIMP_PERSPECTIVE_TOOL (tr_tool);
+  GtkWidget           *frame;
+  GtkWidget           *table;
+  gint                 x, y;
 
-  info_dialog_add_label (tr_tool->info_dialog, _("Matrix:"),
-                         perspective->matrix_row_buf[0]);
-  info_dialog_add_label (tr_tool->info_dialog, "",
-                         perspective->matrix_row_buf[1]);
-  info_dialog_add_label (tr_tool->info_dialog, "",
-                         perspective->matrix_row_buf[2]);
+  frame = gimp_frame_new (_("Transformation Matrix"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (tr_tool->dialog)->vbox), frame,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  table = gtk_table_new (3, 3, FALSE);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
+
+  for (y = 0; y < 3; y++)
+    for (x = 0; x < 3; x++)
+      {
+        GtkWidget *label = gtk_label_new (" ");
+
+        gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_RIGHT);
+        gtk_label_set_width_chars (GTK_LABEL (label), 12);
+        gtk_table_attach (GTK_TABLE (table), label,
+                          x, x + 1, y, y + 1, GTK_EXPAND, GTK_FILL, 0, 0);
+        gtk_widget_show (label);
+
+        perspective->label[y][x] = label;
+      }
 }
 
 static void
 gimp_perspective_tool_dialog_update (GimpTransformTool *tr_tool)
 {
   GimpPerspectiveTool *perspective = GIMP_PERSPECTIVE_TOOL (tr_tool);
-  gint                 i;
+  gint                 x, y;
 
-  for (i = 0; i < 3; i++)
-    {
-      gchar *p = perspective->matrix_row_buf[i];
-      gint   j;
+  for (y = 0; y < 3; y++)
+    for (x = 0; x < 3; x++)
+      {
+        gchar buf[32];
 
-      for (j = 0; j < 3; j++)
-	{
-	  p += g_snprintf (p,
-                           MAX_INFO_BUF - (p - perspective->matrix_row_buf[i]),
-			   "%10.3g", tr_tool->transform.coeff[i][j]);
-	}
-    }
+        g_snprintf (buf, sizeof (buf),
+                    "%10.5f", tr_tool->transform.coeff[y][x]);
 
-  info_dialog_update (tr_tool->info_dialog);
-  info_dialog_show (tr_tool->info_dialog);
+        gtk_label_set_text (GTK_LABEL (perspective->label[y][x]), buf);
+      }
+
+  gtk_widget_show (tr_tool->dialog);
 }
 
 static void

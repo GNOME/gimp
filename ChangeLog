@@ -1,3 +1,19 @@
+2006-03-31  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/Makefile.am
+	* app/dialogs/dialogs-types.h
+	* app/dialogs/dialogs.c
+	* app/dialogs/info-dialog.[ch]: good bye InfoDialog.
+
+	* app/tools/gimpperspectivetool.[ch]
+	* app/tools/gimprotatetool.[ch]
+	* app/tools/gimpsheartool.[ch]
+	* app/tools/gimptransformtool.[ch]: use GimpToolDialog instead of
+	InfoDialog and add the widgets manually.
+
+	* app/tools/gimpscaletool.c: commented out use of InfoDialog. This
+	tools still needs to be ported to GimpToolDialog.
+
 2006-03-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/gimpprocedure.[ch]: added gimp_procedure_new() and

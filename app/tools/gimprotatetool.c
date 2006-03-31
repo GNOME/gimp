@@ -35,12 +35,6 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "dialogs/dialogs-types.h"
-#endif
-#include "dialogs/dialogs-types.h"
-#include "dialogs/info-dialog.h"
-
 #include "gimprotatetool.h"
 #include "gimptoolcontrol.h"
 #include "gimptransformoptions.h"
@@ -54,8 +48,9 @@
 #define CENTER_X     2
 #define CENTER_Y     3
 
-#define EPSILON      0.018  /*  ~ 1 degree  */
 #define FIFTEEN_DEG  (G_PI / 12.0)
+
+#define SB_WIDTH     10
 
 
 /*  local function prototypes  */
@@ -69,7 +64,7 @@ static void   gimp_rotate_tool_motion        (GimpTransformTool   *tr_tool,
 static void   gimp_rotate_tool_recalc        (GimpTransformTool   *tr_tool,
                                               GimpDisplay         *display);
 
-static void   rotate_angle_changed           (GtkWidget           *entry,
+static void   rotate_angle_changed           (GtkAdjustment       *adj,
                                               GimpTransformTool   *tr_tool);
 static void   rotate_center_changed          (GtkWidget           *entry,
                                               GimpTransformTool   *tr_tool);
@@ -125,45 +120,53 @@ static void
 gimp_rotate_tool_dialog (GimpTransformTool *tr_tool)
 {
   GimpRotateTool *rotate = GIMP_ROTATE_TOOL (tr_tool);
-  GtkWidget      *widget;
-  GtkWidget      *spinbutton2;
+  GtkWidget      *table;
+  GtkWidget      *button;
+  GtkWidget      *scale;
+  GtkObject      *adj;
 
-  widget = info_dialog_add_spinbutton (tr_tool->info_dialog, _("Angle:"),
-                                       &rotate->angle_val,
-                                       -180, 180, 1, 15, 1, 1, 2,
-                                       G_CALLBACK (rotate_angle_changed),
-                                       tr_tool);
-  gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (widget), TRUE);
+  table = gtk_table_new (4, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 1, 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (tr_tool->dialog)->vbox), table,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
-  /*  this looks strange (-180, 181), but it works  */
-  widget = info_dialog_add_scale (tr_tool->info_dialog, "",
-                                  &rotate->angle_val,
-                                  -180, 181, 0.01, 0.1, 1, -1,
-                                  G_CALLBACK (rotate_angle_changed),
-                                  tr_tool);
-  gtk_widget_set_size_request (widget, 180, -1);
+  button = gimp_spin_button_new (&rotate->angle_adj,
+                                 0, -180, 180, 0.1, 15, 0, 2, 2);
+  gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (button), TRUE);
+  gtk_entry_set_width_chars (GTK_ENTRY (button), SB_WIDTH);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0, _("Angle:"),
+                             0.0, 0.5, button, 1, TRUE);
 
-  spinbutton2 = info_dialog_add_spinbutton (tr_tool->info_dialog,
-                                            _("Center X:"),
-                                            NULL,
-                                            -1, 1, 1, 10, 1, 1, 2,
-                                            NULL, NULL);
-  rotate->sizeentry = info_dialog_add_sizeentry (tr_tool->info_dialog,
-                                                 _("Center Y:"),
-                                                 rotate->center_vals, 1,
-                                                 GIMP_UNIT_PIXEL, "%a",
-                                                 TRUE, TRUE, FALSE,
-                                                 GIMP_SIZE_ENTRY_UPDATE_SIZE,
-                                                 G_CALLBACK (rotate_center_changed),
-                                                 tr_tool);
+  g_signal_connect (rotate->angle_adj, "value-changed",
+		    G_CALLBACK (rotate_angle_changed),
+                    tr_tool);
 
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (rotate->angle_adj));
+  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
+  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 1, 2,
+                    GTK_EXPAND | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_widget_show (scale);
+
+  button = gimp_spin_button_new (&adj, 0, -1, 1, 1, 10, 1, 1, 2);
+  gtk_entry_set_width_chars (GTK_ENTRY (button), SB_WIDTH);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2, _("Center X:"),
+                             0.0, 0.5, button, 1, TRUE);
+
+  rotate->sizeentry = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
+                                           TRUE, TRUE, FALSE, SB_WIDTH,
+                                           GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (rotate->sizeentry),
-                             GTK_SPIN_BUTTON (spinbutton2), NULL);
+                             GTK_SPIN_BUTTON (button), NULL);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3, _("Center Y:"),
+                             0.0, 0.5, rotate->sizeentry, 1, TRUE);
 
-  gtk_table_set_row_spacing (GTK_TABLE (tr_tool->info_dialog->info_table),
-                             1, 6);
-  gtk_table_set_row_spacing (GTK_TABLE (tr_tool->info_dialog->info_table),
-                             2, 0);
+  g_signal_connect (rotate->sizeentry, "value-changed",
+                    G_CALLBACK (rotate_center_changed),
+                    tr_tool);
 }
 
 static void
@@ -171,12 +174,23 @@ gimp_rotate_tool_dialog_update (GimpTransformTool *tr_tool)
 {
   GimpRotateTool *rotate = GIMP_ROTATE_TOOL (tr_tool);
 
-  rotate->angle_val      = gimp_rad_to_deg (tr_tool->trans_info[ANGLE]);
-  rotate->center_vals[0] = tr_tool->trans_info[CENTER_X];
-  rotate->center_vals[1] = tr_tool->trans_info[CENTER_Y];
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (rotate->angle_adj),
+                            gimp_rad_to_deg (tr_tool->trans_info[ANGLE]));
 
-  info_dialog_update (tr_tool->info_dialog);
-  info_dialog_show (tr_tool->info_dialog);
+  g_signal_handlers_block_by_func (rotate->sizeentry,
+                                   rotate_center_changed,
+                                   tr_tool);
+
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (rotate->sizeentry), 0,
+                              tr_tool->trans_info[CENTER_X]);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (rotate->sizeentry), 1,
+                              tr_tool->trans_info[CENTER_Y]);
+
+  g_signal_handlers_unblock_by_func (rotate->sizeentry,
+                                     rotate_center_changed,
+                                     tr_tool);
+
+  gtk_widget_show (tr_tool->dialog);
 }
 
 static void
@@ -185,9 +199,10 @@ gimp_rotate_tool_prepare (GimpTransformTool *tr_tool,
 {
   GimpRotateTool *rotate = GIMP_ROTATE_TOOL (tr_tool);
 
-  rotate->angle_val      = 0.0;
-  rotate->center_vals[0] = tr_tool->cx;
-  rotate->center_vals[1] = tr_tool->cy;
+  tr_tool->trans_info[ANGLE]      = 0.0;
+  tr_tool->trans_info[REAL_ANGLE] = 0.0;
+  tr_tool->trans_info[CENTER_X]   = tr_tool->cx;
+  tr_tool->trans_info[CENTER_Y]   = tr_tool->cy;
 
   g_signal_handlers_block_by_func (rotate->sizeentry,
                                    rotate_center_changed,
@@ -213,19 +228,9 @@ gimp_rotate_tool_prepare (GimpTransformTool *tr_tool,
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (rotate->sizeentry), 1,
                             tr_tool->y1, tr_tool->y2);
 
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (rotate->sizeentry), 0,
-                              rotate->center_vals[0]);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (rotate->sizeentry), 1,
-                              rotate->center_vals[1]);
-
   g_signal_handlers_unblock_by_func (rotate->sizeentry,
                                      rotate_center_changed,
                                      tr_tool);
-
-  tr_tool->trans_info[ANGLE]      = rotate->angle_val;
-  tr_tool->trans_info[REAL_ANGLE] = rotate->angle_val;
-  tr_tool->trans_info[CENTER_X]   = rotate->center_vals[0];
-  tr_tool->trans_info[CENTER_Y]   = rotate->center_vals[1];
 }
 
 static void
@@ -309,10 +314,10 @@ gimp_rotate_tool_recalc (GimpTransformTool *tr_tool,
 }
 
 static void
-rotate_angle_changed (GtkWidget         *widget,
+rotate_angle_changed (GtkAdjustment     *adj,
                       GimpTransformTool *tr_tool)
 {
-  gdouble value = gimp_deg_to_rad (GTK_ADJUSTMENT (widget)->value);
+  gdouble value = gimp_deg_to_rad (gtk_adjustment_get_value (adj));
 
 #define ANGLE_EPSILON 0.0001
 

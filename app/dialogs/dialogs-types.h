@@ -23,7 +23,4 @@
 #include "display/display-types.h"
 
 
-typedef struct _InfoDialog InfoDialog;
-
-
 #endif /* __DIALOGS_TYPES_H__ */
