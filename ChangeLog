@@ -1,3 +1,9 @@
+2006-03-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdockable.c (gimp_dockable_destroy): always set
+	dockable->blurb to NULL, also if its memory is shared with
+	dockable->name.
+
 2006-03-31  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimagefile.c (gimp_imagefile_get_new_pixbuf): use
