@@ -59,26 +59,9 @@ gimp_procedure_new (void)
 void
 gimp_procedure_free (ProcRecord *procedure)
 {
-  gint i;
-
   g_return_if_fail (procedure != NULL);
 
-  g_free (procedure->name);
-  g_free (procedure->original_name);
-  g_free (procedure->blurb);
-  g_free (procedure->help);
-  g_free (procedure->author);
-  g_free (procedure->copyright);
-  g_free (procedure->date);
-
-  for (i = 0; i < procedure->num_args; i++)
-    g_param_spec_unref (procedure->args[i].pspec);
-
-  for (i = 0; i < procedure->num_values; i++)
-    g_param_spec_unref (procedure->values[i].pspec);
-
-  g_free (procedure->args);
-  g_free (procedure->values);
+  gimp_procedure_dispose (procedure);
 
   g_free (procedure);
 }
@@ -101,6 +84,59 @@ gimp_procedure_init (ProcRecord *procedure,
   procedure->values     = g_new0 (ProcArg, n_return_values);
 
   return procedure;
+}
+
+void
+gimp_procedure_dispose (ProcRecord *procedure)
+{
+  gint i;
+
+  g_return_if_fail (procedure != NULL);
+
+  if (! procedure->static_proc)
+    {
+      g_free (procedure->name);
+      procedure->name = NULL;
+
+      g_free (procedure->original_name);
+      procedure->original_name = NULL;
+
+      g_free (procedure->blurb);
+      procedure->blurb = NULL;
+
+      g_free (procedure->help);
+      procedure->help = NULL;
+
+      g_free (procedure->author);
+      procedure->author = NULL;
+
+      g_free (procedure->copyright);
+      procedure->copyright = NULL;
+
+      g_free (procedure->date);
+      procedure->date = NULL;
+
+      g_free (procedure->deprecated);
+      procedure->deprecated = NULL;
+    }
+
+  if (procedure->args)
+    {
+      for (i = 0; i < procedure->num_args; i++)
+        g_param_spec_unref (procedure->args[i].pspec);
+
+      g_free (procedure->args);
+      procedure->args = NULL;
+    }
+
+  if (procedure->values)
+    {
+      for (i = 0; i < procedure->num_values; i++)
+        g_param_spec_unref (procedure->values[i].pspec);
+
+      g_free (procedure->values);
+      procedure->values = NULL;
+    }
 }
 
 Argument *

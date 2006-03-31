@@ -384,6 +384,7 @@ context_push_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_push_proc =
 {
+  TRUE,
   "gimp-context-push",
   "gimp-context-push",
   "Pushes a context to the top of the plug-in's context stack.",
@@ -414,6 +415,7 @@ context_pop_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_pop_proc =
 {
+  TRUE,
   "gimp-context-pop",
   "gimp-context-pop",
   "Pops the topmost context from the plug-in's context stack.",
@@ -455,6 +457,7 @@ context_get_paint_method_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_get_paint_method_proc =
 {
+  TRUE,
   "gimp-context-get-paint-method",
   "gimp-context-get-paint-method",
   "Retrieve the currently active paint method.",
@@ -496,6 +499,7 @@ context_set_paint_method_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_set_paint_method_proc =
 {
+  TRUE,
   "gimp-context-set-paint-method",
   "gimp-context-set-paint-method",
   "Set the specified paint method as the active paint method.",
@@ -529,6 +533,7 @@ context_get_foreground_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_get_foreground_proc =
 {
+  TRUE,
   "gimp-context-get-foreground",
   "gimp-context-get-foreground",
   "Get the current GIMP foreground color.",
@@ -565,6 +570,7 @@ context_set_foreground_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_set_foreground_proc =
 {
+  TRUE,
   "gimp-context-set-foreground",
   "gimp-context-set-foreground",
   "Set the current GIMP foreground color.",
@@ -598,6 +604,7 @@ context_get_background_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_get_background_proc =
 {
+  TRUE,
   "gimp-context-get-background",
   "gimp-context-get-background",
   "Get the current GIMP background color.",
@@ -634,6 +641,7 @@ context_set_background_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_set_background_proc =
 {
+  TRUE,
   "gimp-context-set-background",
   "gimp-context-set-background",
   "Set the current GIMP background color.",
@@ -660,6 +668,7 @@ context_set_default_colors_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_set_default_colors_proc =
 {
+  TRUE,
   "gimp-context-set-default-colors",
   "gimp-context-set-default-colors",
   "Set the current GIMP foreground and background colors to black and white.",
@@ -686,6 +695,7 @@ context_swap_colors_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_swap_colors_proc =
 {
+  TRUE,
   "gimp-context-swap-colors",
   "gimp-context-swap-colors",
   "Swap the current GIMP foreground and background colors.",
@@ -719,6 +729,7 @@ context_get_opacity_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_get_opacity_proc =
 {
+  TRUE,
   "gimp-context-get-opacity",
   "gimp-context-get-opacity",
   "Get the opacity.",
@@ -754,6 +765,7 @@ context_set_opacity_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_set_opacity_proc =
 {
+  TRUE,
   "gimp-context-set-opacity",
   "gimp-context-set-opacity",
   "Set the opacity.",
@@ -787,6 +799,7 @@ context_get_paint_mode_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_get_paint_mode_proc =
 {
+  TRUE,
   "gimp-context-get-paint-mode",
   "gimp-context-get-paint-mode",
   "Get the paint mode.",
@@ -822,6 +835,7 @@ context_set_paint_mode_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_set_paint_mode_proc =
 {
+  TRUE,
   "gimp-context-set-paint-mode",
   "gimp-context-set-paint-mode",
   "Set the paint mode.",
@@ -863,6 +877,7 @@ context_get_brush_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_get_brush_proc =
 {
+  TRUE,
   "gimp-context-get-brush",
   "gimp-context-get-brush",
   "Retrieve the currently active brush.",
@@ -904,6 +919,7 @@ context_set_brush_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_set_brush_proc =
 {
+  TRUE,
   "gimp-context-set-brush",
   "gimp-context-set-brush",
   "Set the specified brush as the active brush.",
@@ -945,6 +961,7 @@ context_get_pattern_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_get_pattern_proc =
 {
+  TRUE,
   "gimp-context-get-pattern",
   "gimp-context-get-pattern",
   "Retrieve the currently active pattern.",
@@ -986,6 +1003,7 @@ context_set_pattern_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_set_pattern_proc =
 {
+  TRUE,
   "gimp-context-set-pattern",
   "gimp-context-set-pattern",
   "Set the specified pattern as the active pattern.",
@@ -1027,6 +1045,7 @@ context_get_gradient_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_get_gradient_proc =
 {
+  TRUE,
   "gimp-context-get-gradient",
   "gimp-context-get-gradient",
   "Retrieve the currently active gradient.",
@@ -1068,6 +1087,7 @@ context_set_gradient_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_set_gradient_proc =
 {
+  TRUE,
   "gimp-context-set-gradient",
   "gimp-context-set-gradient",
   "Sets the specified gradient as the active gradient.",
@@ -1109,6 +1129,7 @@ context_get_palette_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_get_palette_proc =
 {
+  TRUE,
   "gimp-context-get-palette",
   "gimp-context-get-palette",
   "Retrieve the currently active palette.",
@@ -1150,6 +1171,7 @@ context_set_palette_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_set_palette_proc =
 {
+  TRUE,
   "gimp-context-set-palette",
   "gimp-context-set-palette",
   "Set the specified palette as the active palette.",
@@ -1191,6 +1213,7 @@ context_get_font_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_get_font_proc =
 {
+  TRUE,
   "gimp-context-get-font",
   "gimp-context-get-font",
   "Retrieve the currently active font.",
@@ -1232,6 +1255,7 @@ context_set_font_invoker (ProcRecord   *proc_record,
 
 static ProcRecord context_set_font_proc =
 {
+  TRUE,
   "gimp-context-set-font",
   "gimp-context-set-font",
   "Set the specified font as the active font.",

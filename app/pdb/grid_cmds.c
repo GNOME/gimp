@@ -324,6 +324,7 @@ image_grid_get_spacing_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_grid_get_spacing_proc =
 {
+  TRUE,
   "gimp-image-grid-get-spacing",
   "gimp-image-grid-get-spacing",
   "Gets the spacing of an image's grid.",
@@ -371,6 +372,7 @@ image_grid_set_spacing_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_grid_set_spacing_proc =
 {
+  TRUE,
   "gimp-image-grid-set-spacing",
   "gimp-image-grid-set-spacing",
   "Sets the spacing of an image's grid.",
@@ -425,6 +427,7 @@ image_grid_get_offset_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_grid_get_offset_proc =
 {
+  TRUE,
   "gimp-image-grid-get-offset",
   "gimp-image-grid-get-offset",
   "Gets the offset of an image's grid.",
@@ -472,6 +475,7 @@ image_grid_set_offset_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_grid_set_offset_proc =
 {
+  TRUE,
   "gimp-image-grid-set-offset",
   "gimp-image-grid-set-offset",
   "Sets the offset of an image's grid.",
@@ -519,6 +523,7 @@ image_grid_get_foreground_color_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_grid_get_foreground_color_proc =
 {
+  TRUE,
   "gimp-image-grid-get-foreground-color",
   "gimp-image-grid-get-foreground-color",
   "Sets the foreground color of an image's grid.",
@@ -561,6 +566,7 @@ image_grid_set_foreground_color_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_grid_set_foreground_color_proc =
 {
+  TRUE,
   "gimp-image-grid-set-foreground-color",
   "gimp-image-grid-set-foreground-color",
   "Gets the foreground color of an image's grid.",
@@ -608,6 +614,7 @@ image_grid_get_background_color_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_grid_get_background_color_proc =
 {
+  TRUE,
   "gimp-image-grid-get-background-color",
   "gimp-image-grid-get-background-color",
   "Sets the background color of an image's grid.",
@@ -650,6 +657,7 @@ image_grid_set_background_color_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_grid_set_background_color_proc =
 {
+  TRUE,
   "gimp-image-grid-set-background-color",
   "gimp-image-grid-set-background-color",
   "Gets the background color of an image's grid.",
@@ -697,6 +705,7 @@ image_grid_get_style_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_grid_get_style_proc =
 {
+  TRUE,
   "gimp-image-grid-get-style",
   "gimp-image-grid-get-style",
   "Gets the style of an image's grid.",
@@ -739,6 +748,7 @@ image_grid_set_style_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_grid_set_style_proc =
 {
+  TRUE,
   "gimp-image-grid-set-style",
   "gimp-image-grid-set-style",
   "Sets the style unit of an image's grid.",

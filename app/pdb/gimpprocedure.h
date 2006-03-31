@@ -61,39 +61,37 @@ struct _TempExec
 struct _ProcRecord
 {
   /*  Procedure information  */
-  gchar       *name;          /*  Procedure name  */
-  gchar       *original_name; /*  Procedure name before canonicalization  */
-  gchar       *blurb;         /*  Short procedure description  */
-  gchar       *help;          /*  Detailed help instructions  */
-  gchar       *author;        /*  Author field  */
-  gchar       *copyright;     /*  Copyright field  */
-  gchar       *date;          /*  Date field  */
-
-  gchar       *deprecated;    /*  Replacement if the procedure is deprecated  */
+  gboolean     static_proc;   /*  Are the procedure's strings allocated      */
+  gchar       *name;          /*  Procedure name                             */
+  gchar       *original_name; /*  Procedure name before canonicalization     */
+  gchar       *blurb;         /*  Short procedure description                */
+  gchar       *help;          /*  Detailed help instructions                 */
+  gchar       *author;        /*  Author field                               */
+  gchar       *copyright;     /*  Copyright field                            */
+  gchar       *date;          /*  Date field                                 */
+  gchar       *deprecated;    /*  Replacement if the procedure is deprecated */
 
   /*  Procedure type  */
-  GimpPDBProcType  proc_type; /*  Type of procedure--Internal, Plug-In, Extension  */
+  GimpPDBProcType  proc_type; /*  Type of procedure                          */
 
   /*  Input arguments  */
-  gint32       num_args;      /*  Number of procedure arguments  */
-  ProcArg     *args;          /*  Array of procedure arguments   */
+  gint32       num_args;      /*  Number of procedure arguments              */
+  ProcArg     *args;          /*  Array of procedure arguments               */
 
   /*  Output values  */
-  gint32       num_values;    /*  Number of return values        */
-  ProcArg     *values;        /*  Array of return values         */
+  gint32       num_values;    /*  Number of return values                    */
+  ProcArg     *values;        /*  Array of return values                     */
 
   /*  Method of procedure execution  */
   union _ExecMethod
   {
-    IntExec     internal;     /*  Execution information for internal procs  */
-    PlugInExec  plug_in;      /*  ..................... for plug-ins  */
-    ExtExec     extension;    /*  ..................... for extensions  */
-    TempExec    temporary;    /*  ..................... for temp procs  */
+    IntExec     internal;     /*  Execution information for internal procs   */
+    PlugInExec  plug_in;      /*  ..................... for plug-ins         */
+    ExtExec     extension;    /*  ..................... for extensions       */
+    TempExec    temporary;    /*  ..................... for temp procs       */
   } exec_method;
 };
 
-
-/*  Functions  */
 
 ProcRecord   * gimp_procedure_new               (void);
 void           gimp_procedure_free              (ProcRecord       *procedure);
@@ -101,6 +99,7 @@ void           gimp_procedure_free              (ProcRecord       *procedure);
 ProcRecord   * gimp_procedure_init              (ProcRecord       *procedure,
                                                  gint              n_arguments,
                                                  gint              n_return_vals);
+void           gimp_procedure_dispose           (ProcRecord       *procedure);
 
 void           gimp_procedure_add_argument      (ProcRecord       *procedure,
                                                  GimpPDBArgType    arg_type,

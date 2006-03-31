@@ -107,14 +107,6 @@ plug_in_proc_def_find (GSList      *list,
   return NULL;
 }
 
-const ProcRecord *
-plug_in_proc_def_get_proc (const PlugInProcDef *proc_def)
-{
-  g_return_val_if_fail (proc_def != NULL, NULL);
-
-  return proc_def->procedure;
-}
-
 const gchar *
 plug_in_proc_def_get_progname (const PlugInProcDef *proc_def)
 {

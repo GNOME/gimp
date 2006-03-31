@@ -685,6 +685,7 @@ brush_new_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brush_new_proc =
 {
+  TRUE,
   "gimp-brush-new",
   "gimp-brush-new",
   "Creates a new brush",
@@ -742,6 +743,7 @@ brush_duplicate_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brush_duplicate_proc =
 {
+  TRUE,
   "gimp-brush-duplicate",
   "gimp-brush-duplicate",
   "Duplicates a brush",
@@ -790,6 +792,7 @@ brush_is_generated_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brush_is_generated_proc =
 {
+  TRUE,
   "gimp-brush-is-generated",
   "gimp-brush-is-generated",
   "Tests if brush is generated",
@@ -843,6 +846,7 @@ brush_rename_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brush_rename_proc =
 {
+  TRUE,
   "gimp-brush-rename",
   "gimp-brush-rename",
   "Rename a brush",
@@ -896,6 +900,7 @@ brush_delete_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brush_delete_proc =
 {
+  TRUE,
   "gimp-brush-delete",
   "gimp-brush-delete",
   "Deletes a brush",
@@ -944,6 +949,7 @@ brush_is_editable_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brush_is_editable_proc =
 {
+  TRUE,
   "gimp-brush-is-editable",
   "gimp-brush-is-editable",
   "Tests if brush can be edited",
@@ -1005,6 +1011,7 @@ brush_get_info_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brush_get_info_proc =
 {
+  TRUE,
   "gimp-brush-get-info",
   "gimp-brush-get-info",
   "Retrieve information about the specified brush.",
@@ -1083,6 +1090,7 @@ brush_get_pixels_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brush_get_pixels_proc =
 {
+  TRUE,
   "gimp-brush-get-pixels",
   "gimp-brush-get-pixels",
   "Retrieve information about the specified brush.",
@@ -1131,6 +1139,7 @@ brush_get_spacing_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brush_get_spacing_proc =
 {
+  TRUE,
   "gimp-brush-get-spacing",
   "gimp-brush-get-spacing",
   "Get the brush spacing.",
@@ -1174,6 +1183,7 @@ brush_set_spacing_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brush_set_spacing_proc =
 {
+  TRUE,
   "gimp-brush-set-spacing",
   "gimp-brush-set-spacing",
   "Set the brush spacing.",
@@ -1222,6 +1232,7 @@ brush_get_shape_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brush_get_shape_proc =
 {
+  TRUE,
   "gimp-brush-get-shape",
   "gimp-brush-get-shape",
   "Get the shape of a generated brush.",
@@ -1270,6 +1281,7 @@ brush_get_radius_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brush_get_radius_proc =
 {
+  TRUE,
   "gimp-brush-get-radius",
   "gimp-brush-get-radius",
   "Get the radius of a generated brush.",
@@ -1318,6 +1330,7 @@ brush_get_spikes_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brush_get_spikes_proc =
 {
+  TRUE,
   "gimp-brush-get-spikes",
   "gimp-brush-get-spikes",
   "Get the number of spikes for a generated brush.",
@@ -1366,6 +1379,7 @@ brush_get_hardness_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brush_get_hardness_proc =
 {
+  TRUE,
   "gimp-brush-get-hardness",
   "gimp-brush-get-hardness",
   "Get the hardness of a generated brush.",
@@ -1414,6 +1428,7 @@ brush_get_aspect_ratio_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brush_get_aspect_ratio_proc =
 {
+  TRUE,
   "gimp-brush-get-aspect-ratio",
   "gimp-brush-get-aspect-ratio",
   "Get the aspect ratio of a generated brush.",
@@ -1462,6 +1477,7 @@ brush_get_angle_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brush_get_angle_proc =
 {
+  TRUE,
   "gimp-brush-get-angle",
   "gimp-brush-get-angle",
   "Get the rotation angle of a generated brush.",
@@ -1516,6 +1532,7 @@ brush_set_shape_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brush_set_shape_proc =
 {
+  TRUE,
   "gimp-brush-set-shape",
   "gimp-brush-set-shape",
   "Set the shape of a generated brush.",
@@ -1570,6 +1587,7 @@ brush_set_radius_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brush_set_radius_proc =
 {
+  TRUE,
   "gimp-brush-set-radius",
   "gimp-brush-set-radius",
   "Set the radius of a generated brush.",
@@ -1624,6 +1642,7 @@ brush_set_spikes_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brush_set_spikes_proc =
 {
+  TRUE,
   "gimp-brush-set-spikes",
   "gimp-brush-set-spikes",
   "Set the number of spikes for a generated brush.",
@@ -1678,6 +1697,7 @@ brush_set_hardness_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brush_set_hardness_proc =
 {
+  TRUE,
   "gimp-brush-set-hardness",
   "gimp-brush-set-hardness",
   "Set the hardness of a generated brush.",
@@ -1732,6 +1752,7 @@ brush_set_aspect_ratio_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brush_set_aspect_ratio_proc =
 {
+  TRUE,
   "gimp-brush-set-aspect-ratio",
   "gimp-brush-set-aspect-ratio",
   "Set the aspect ratio of a generated brush.",
@@ -1786,6 +1807,7 @@ brush_set_angle_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brush_set_angle_proc =
 {
+  TRUE,
   "gimp-brush-set-angle",
   "gimp-brush-set-angle",
   "Set the rotation angle of a generated brush.",

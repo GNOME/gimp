@@ -51,13 +51,13 @@ HELP
 	no_marshalling => 1,
 	code => <<'CODE'
 {
-  Argument         *new_args;
-  Argument         *return_vals;
-  PlugInProcDef    *file_proc;
-  const ProcRecord *proc;
-  gchar            *uri;
-  gint              n_return_vals;
-  gint              i;
+  Argument      *new_args;
+  Argument      *return_vals;
+  PlugInProcDef *file_proc;
+  ProcRecord    *proc;
+  gchar         *uri;
+  gint           n_return_vals;
+  gint           i;
 
   uri = file_utils_filename_to_uri (gimp->load_procs,
                                     g_value_get_string (&args[1].value),
@@ -73,7 +73,7 @@ HELP
   if (! file_proc)
     return gimp_procedure_get_return_values (proc_record, FALSE);
 
-  proc = plug_in_proc_def_get_proc (file_proc);
+  proc = file_proc->procedure;
 
   new_args = gimp_procedure_get_arguments (proc);
 
@@ -178,13 +178,13 @@ HELP
 	no_marshalling => 1,
 	code => <<'CODE'
 {
-  Argument         *new_args;
-  Argument         *return_vals;
-  PlugInProcDef    *file_proc;
-  const ProcRecord *proc;
-  gchar            *uri;
-  gint              n_return_vals;
-  gint              i;
+  Argument      *new_args;
+  Argument      *return_vals;
+  PlugInProcDef *file_proc;
+  ProcRecord    *proc;
+  gchar         *uri;
+  gint           n_return_vals;
+  gint           i;
 
   uri = file_utils_filename_to_uri (gimp->load_procs,
                                     g_value_get_string (&args[3].value),
@@ -200,7 +200,7 @@ HELP
   if (! file_proc)
     return gimp_procedure_get_return_values (proc_record, FALSE);
 
-  proc = plug_in_proc_def_get_proc (file_proc);
+  proc = file_proc->procedure;
 
   new_args = gimp_procedure_get_arguments (proc);
 

@@ -421,6 +421,7 @@ procedural_db_temp_name_invoker (ProcRecord   *proc_record,
 
 static ProcRecord procedural_db_temp_name_proc =
 {
+  TRUE,
   "gimp-procedural-db-temp-name",
   "gimp-procedural-db-temp-name",
   "Generates a unique temporary PDB name.",
@@ -456,6 +457,7 @@ procedural_db_dump_invoker (ProcRecord   *proc_record,
 
 static ProcRecord procedural_db_dump_proc =
 {
+  TRUE,
   "gimp-procedural-db-dump",
   "gimp-procedural-db-dump",
   "Dumps the current contents of the procedural database",
@@ -517,6 +519,7 @@ procedural_db_query_invoker (ProcRecord   *proc_record,
 
 static ProcRecord procedural_db_query_proc =
 {
+  TRUE,
   "gimp-procedural-db-query",
   "gimp-procedural-db-query",
   "Queries the procedural database for its contents using regular expression matching.",
@@ -586,6 +589,7 @@ procedural_db_proc_info_invoker (ProcRecord   *proc_record,
 
 static ProcRecord procedural_db_proc_info_proc =
 {
+  TRUE,
   "gimp-procedural-db-proc-info",
   "gimp-procedural-db-proc-info",
   "Queries the procedural database for information on the specified procedure.",
@@ -664,6 +668,7 @@ procedural_db_proc_arg_invoker (ProcRecord   *proc_record,
 
 static ProcRecord procedural_db_proc_arg_proc =
 {
+  TRUE,
   "gimp-procedural-db-proc-arg",
   "gimp-procedural-db-proc-arg",
   "Queries the procedural database for information on the specified procedure's argument.",
@@ -742,6 +747,7 @@ procedural_db_proc_val_invoker (ProcRecord   *proc_record,
 
 static ProcRecord procedural_db_proc_val_proc =
 {
+  TRUE,
   "gimp-procedural-db-proc-val",
   "gimp-procedural-db-proc-val",
   "Queries the procedural database for information on the specified procedure's return value.",
@@ -800,6 +806,7 @@ procedural_db_get_data_invoker (ProcRecord   *proc_record,
 
 static ProcRecord procedural_db_get_data_proc =
 {
+  TRUE,
   "gimp-procedural-db-get-data",
   "gimp-procedural-db-get-data",
   "Returns data associated with the specified identifier.",
@@ -853,6 +860,7 @@ procedural_db_get_data_size_invoker (ProcRecord   *proc_record,
 
 static ProcRecord procedural_db_get_data_size_proc =
 {
+  TRUE,
   "gimp-procedural-db-get-data-size",
   "gimp-procedural-db-get-data-size",
   "Returns size of data associated with the specified identifier.",
@@ -898,6 +906,7 @@ procedural_db_set_data_invoker (ProcRecord   *proc_record,
 
 static ProcRecord procedural_db_set_data_proc =
 {
+  TRUE,
   "gimp-procedural-db-set-data",
   "gimp-procedural-db-set-data",
   "Associates the specified identifier with the supplied data.",

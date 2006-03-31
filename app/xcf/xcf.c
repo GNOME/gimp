@@ -66,6 +66,7 @@ static Argument * xcf_save_invoker (ProcRecord   *procedure,
 
 static ProcRecord xcf_load_procedure =
 {
+  TRUE,
   "gimp-xcf-load",
   "gimp-xcf-load",
   "loads file saved in the .xcf file format",
@@ -106,6 +107,7 @@ static PlugInProcDef xcf_plug_in_load_proc =
 
 static ProcRecord xcf_save_procedure =
 {
+  TRUE,
   "gimp-xcf-save",
   "gimp-xcf-save",
   "saves file in the .xcf file format",

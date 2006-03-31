@@ -139,6 +139,7 @@ palettes_popup_invoker (ProcRecord   *proc_record,
 
 static ProcRecord palettes_popup_proc =
 {
+  TRUE,
   "gimp-palettes-popup",
   "gimp-palettes-popup",
   "Invokes the Gimp palette selection.",
@@ -178,6 +179,7 @@ palettes_close_popup_invoker (ProcRecord   *proc_record,
 
 static ProcRecord palettes_close_popup_proc =
 {
+  TRUE,
   "gimp-palettes-close-popup",
   "gimp-palettes-close-popup",
   "Popdown the Gimp palette selection.",
@@ -220,6 +222,7 @@ palettes_set_popup_invoker (ProcRecord   *proc_record,
 
 static ProcRecord palettes_set_popup_proc =
 {
+  TRUE,
   "gimp-palettes-set-popup",
   "gimp-palettes-set-popup",
   "Sets the current palette selection in a popup.",

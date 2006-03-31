@@ -177,6 +177,7 @@ floating_sel_remove_invoker (ProcRecord   *proc_record,
 
 static ProcRecord floating_sel_remove_proc =
 {
+  TRUE,
   "gimp-floating-sel-remove",
   "gimp-floating-sel-remove",
   "Remove the specified floating selection from its associated drawable.",
@@ -215,6 +216,7 @@ floating_sel_anchor_invoker (ProcRecord   *proc_record,
 
 static ProcRecord floating_sel_anchor_proc =
 {
+  TRUE,
   "gimp-floating-sel-anchor",
   "gimp-floating-sel-anchor",
   "Anchor the specified floating selection to its associated drawable.",
@@ -253,6 +255,7 @@ floating_sel_to_layer_invoker (ProcRecord   *proc_record,
 
 static ProcRecord floating_sel_to_layer_proc =
 {
+  TRUE,
   "gimp-floating-sel-to-layer",
   "gimp-floating-sel-to-layer",
   "Transforms the specified floating selection into a layer.",
@@ -293,6 +296,7 @@ floating_sel_attach_invoker (ProcRecord   *proc_record,
 
 static ProcRecord floating_sel_attach_proc =
 {
+  TRUE,
   "gimp-floating-sel-attach",
   "gimp-floating-sel-attach",
   "Attach the specified layer as floating to the specified drawable.",
@@ -333,6 +337,7 @@ floating_sel_rigor_invoker (ProcRecord   *proc_record,
 
 static ProcRecord floating_sel_rigor_proc =
 {
+  TRUE,
   "gimp-floating-sel-rigor",
   "gimp-floating-sel-rigor",
   "Rigor the floating selection.",
@@ -373,6 +378,7 @@ floating_sel_relax_invoker (ProcRecord   *proc_record,
 
 static ProcRecord floating_sel_relax_proc =
 {
+  TRUE,
   "gimp-floating-sel-relax",
   "gimp-floating-sel-relax",
   "Relax the floating selection.",

@@ -70,16 +70,11 @@ procedural_db_free_entry (gpointer key,
       for (list = value; list; list = g_list_next (list))
         {
           ProcRecord *procedure = list->data;
-          gint        i;
 
-          for (i = 0; i < procedure->num_args; i++)
-            g_param_spec_unref (procedure->args[i].pspec);
-
-          for (i = 0; i < procedure->num_values; i++)
-            g_param_spec_unref (procedure->values[i].pspec);
-
-          g_free (procedure->args);
-          g_free (procedure->values);
+          if (procedure->static_proc)
+            gimp_procedure_dispose (procedure);
+          else
+            gimp_procedure_free (procedure);
         }
 
       g_list_free (value);

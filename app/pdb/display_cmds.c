@@ -162,6 +162,7 @@ display_new_invoker (ProcRecord   *proc_record,
 
 static ProcRecord display_new_proc =
 {
+  TRUE,
   "gimp-display-new",
   "gimp-display-new",
   "Create a new display for the specified image.",
@@ -197,6 +198,7 @@ display_delete_invoker (ProcRecord   *proc_record,
 
 static ProcRecord display_delete_proc =
 {
+  TRUE,
   "gimp-display-delete",
   "gimp-display-delete",
   "Delete the specified display.",
@@ -239,6 +241,7 @@ display_get_window_handle_invoker (ProcRecord   *proc_record,
 
 static ProcRecord display_get_window_handle_proc =
 {
+  TRUE,
   "gimp-display-get-window-handle",
   "gimp-display-get-window-handle",
   "Get a handle to the native window for an image display.",
@@ -265,6 +268,7 @@ displays_flush_invoker (ProcRecord   *proc_record,
 
 static ProcRecord displays_flush_proc =
 {
+  TRUE,
   "gimp-displays-flush",
   "gimp-displays-flush",
   "Flush all internal changes to the user interface",
@@ -313,6 +317,7 @@ displays_reconnect_invoker (ProcRecord   *proc_record,
 
 static ProcRecord displays_reconnect_proc =
 {
+  TRUE,
   "gimp-displays-reconnect",
   "gimp-displays-reconnect",
   "Reconnect displays from one image to another image.",

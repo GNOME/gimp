@@ -524,6 +524,7 @@ text_fontname_invoker (ProcRecord   *proc_record,
 
 static ProcRecord text_fontname_proc =
 {
+  TRUE,
   "gimp-text-fontname",
   "gimp-text-fontname",
   "Add text at the specified location as a floating selection or a new layer.",
@@ -586,6 +587,7 @@ text_get_extents_fontname_invoker (ProcRecord   *proc_record,
 
 static ProcRecord text_get_extents_fontname_proc =
 {
+  TRUE,
   "gimp-text-get-extents-fontname",
   "gimp-text-get-extents-fontname",
   "Get extents of the bounding box for the specified text.",
@@ -672,6 +674,7 @@ text_invoker (ProcRecord   *proc_record,
 
 static ProcRecord text_proc =
 {
+  TRUE,
   "gimp-text",
   "gimp-text",
   "This procedure is deprecated! Use 'gimp-text-fontname' instead.",
@@ -748,6 +751,7 @@ text_get_extents_invoker (ProcRecord   *proc_record,
 
 static ProcRecord text_get_extents_proc =
 {
+  TRUE,
   "gimp-text-get-extents",
   "gimp-text-get-extents",
   "This procedure is deprecated! Use 'gimp-text-get-extents-fontname' instead.",

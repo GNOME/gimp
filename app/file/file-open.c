@@ -86,11 +86,10 @@ file_open_image (Gimp               *gimp,
                  const gchar       **mime_type,
                  GError            **error)
 {
-  const ProcRecord *proc;
-  Argument         *return_vals;
-  gint              n_return_vals;
-  gchar            *filename;
-  GimpImage        *image = NULL;
+  Argument  *return_vals;
+  gint       n_return_vals;
+  gchar     *filename;
+  GimpImage *image = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -139,10 +138,8 @@ file_open_image (Gimp               *gimp,
       filename = g_strdup (uri);
     }
 
-  proc = plug_in_proc_def_get_proc (file_proc);
-
   return_vals = procedural_db_run_proc (gimp, context, progress,
-                                        proc->name,
+                                        file_proc->procedure->name,
                                         &n_return_vals,
                                         GIMP_PDB_INT32,  run_mode,
                                         GIMP_PDB_STRING, filename,

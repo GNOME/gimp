@@ -240,6 +240,7 @@ buffers_get_list_invoker (ProcRecord   *proc_record,
 
 static ProcRecord buffers_get_list_proc =
 {
+  TRUE,
   "gimp-buffers-get-list",
   "gimp-buffers-get-list",
   "Retrieve a complete listing of the available buffers.",
@@ -293,6 +294,7 @@ buffer_rename_invoker (ProcRecord   *proc_record,
 
 static ProcRecord buffer_rename_proc =
 {
+  TRUE,
   "gimp-buffer-rename",
   "gimp-buffer-rename",
   "Renames a named buffer.",
@@ -334,6 +336,7 @@ buffer_delete_invoker (ProcRecord   *proc_record,
 
 static ProcRecord buffer_delete_proc =
 {
+  TRUE,
   "gimp-buffer-delete",
   "gimp-buffer-delete",
   "Deletes a named buffer.",
@@ -382,6 +385,7 @@ buffer_get_width_invoker (ProcRecord   *proc_record,
 
 static ProcRecord buffer_get_width_proc =
 {
+  TRUE,
   "gimp-buffer-get-width",
   "gimp-buffer-get-width",
   "Retrieves the specified buffer's width.",
@@ -430,6 +434,7 @@ buffer_get_height_invoker (ProcRecord   *proc_record,
 
 static ProcRecord buffer_get_height_proc =
 {
+  TRUE,
   "gimp-buffer-get-height",
   "gimp-buffer-get-height",
   "Retrieves the specified buffer's height.",
@@ -478,6 +483,7 @@ buffer_get_bytes_invoker (ProcRecord   *proc_record,
 
 static ProcRecord buffer_get_bytes_proc =
 {
+  TRUE,
   "gimp-buffer-get-bytes",
   "gimp-buffer-get-bytes",
   "Retrieves the specified buffer's bytes.",
@@ -526,6 +532,7 @@ buffer_get_image_type_invoker (ProcRecord   *proc_record,
 
 static ProcRecord buffer_get_image_type_proc =
 {
+  TRUE,
   "gimp-buffer-get-image-type",
   "gimp-buffer-get-image-type",
   "Retrieves the specified buffer's image type.",

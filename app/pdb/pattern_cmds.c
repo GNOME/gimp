@@ -174,6 +174,7 @@ pattern_get_info_invoker (ProcRecord   *proc_record,
 
 static ProcRecord pattern_get_info_proc =
 {
+  TRUE,
   "gimp-pattern-get-info",
   "gimp-pattern-get-info",
   "Retrieve information about the specified pattern.",
@@ -240,6 +241,7 @@ pattern_get_pixels_invoker (ProcRecord   *proc_record,
 
 static ProcRecord pattern_get_pixels_proc =
 {
+  TRUE,
   "gimp-pattern-get-pixels",
   "gimp-pattern-get-pixels",
   "Retrieve information about the specified pattern (including pixels).",

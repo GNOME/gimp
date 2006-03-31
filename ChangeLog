@@ -1,3 +1,30 @@
+2006-03-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/pdb/gimpprocedure.[ch] (struct ProcRecord): added new member
+	"gboolean static_proc" which indicates whether a ProcRecord struct
+	and its strings are static.
+
+	(gimp_procedure_dispose): new function which frees the procedure's
+	args and values, and its strings if it is not static.
+
+	* app/xcf/xcf.c
+	* tools/pdbgen/app.pl: set "static_proc" to TRUE for static procs.
+
+	* app/pdb/procedural_db.c (procedural_db_free): call
+	gimp_procedure_free() or gimp_procedure_dispose(), depending on
+	procedure->static_proc.
+
+	* app/pdb/procedural_db.h: removed #if 0'ed cruft.
+
+	* app/plug-in/plug-in-proc-def.[ch]: removed
+	plug_in_proc_def_get_proc().
+
+	* app/file/file-open.c
+	* app/file/file-save.c
+	* tools/pdbgen/pdb/fileops.pdb: access proc_def->procedure directly.
+
+	* app/pdb/*_cmds.c: regenerated.
+
 2006-03-31  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/Makefile.am

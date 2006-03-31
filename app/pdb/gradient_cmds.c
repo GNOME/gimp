@@ -1106,6 +1106,7 @@ gradient_new_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_new_proc =
 {
+  TRUE,
   "gimp-gradient-new",
   "gimp-gradient-new",
   "Creates a new gradient",
@@ -1163,6 +1164,7 @@ gradient_duplicate_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_duplicate_proc =
 {
+  TRUE,
   "gimp-gradient-duplicate",
   "gimp-gradient-duplicate",
   "Duplicates a gradient",
@@ -1211,6 +1213,7 @@ gradient_is_editable_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_is_editable_proc =
 {
+  TRUE,
   "gimp-gradient-is-editable",
   "gimp-gradient-is-editable",
   "Tests if gradient can be edited",
@@ -1264,6 +1267,7 @@ gradient_rename_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_rename_proc =
 {
+  TRUE,
   "gimp-gradient-rename",
   "gimp-gradient-rename",
   "Rename a gradient",
@@ -1317,6 +1321,7 @@ gradient_delete_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_delete_proc =
 {
+  TRUE,
   "gimp-gradient-delete",
   "gimp-gradient-delete",
   "Deletes a gradient",
@@ -1396,6 +1401,7 @@ gradient_get_uniform_samples_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_get_uniform_samples_proc =
 {
+  TRUE,
   "gimp-gradient-get-uniform-samples",
   "gimp-gradient-get-uniform-samples",
   "Sample the specified in uniform parts.",
@@ -1476,6 +1482,7 @@ gradient_get_custom_samples_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_get_custom_samples_proc =
 {
+  TRUE,
   "gimp-gradient-get-custom-samples",
   "gimp-gradient-get-custom-samples",
   "Sample the spacified gradient in custom positions.",
@@ -1535,6 +1542,7 @@ gradient_segment_get_left_color_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_segment_get_left_color_proc =
 {
+  TRUE,
   "gimp-gradient-segment-get-left-color",
   "gimp-gradient-segment-get-left-color",
   "Retrieves the left endpoint color of the specified segment",
@@ -1587,6 +1595,7 @@ gradient_segment_set_left_color_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_segment_set_left_color_proc =
 {
+  TRUE,
   "gimp-gradient-segment-set-left-color",
   "gimp-gradient-segment-set-left-color",
   "Retrieves the left endpoint color of the specified segment",
@@ -1646,6 +1655,7 @@ gradient_segment_get_right_color_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_segment_get_right_color_proc =
 {
+  TRUE,
   "gimp-gradient-segment-get-right-color",
   "gimp-gradient-segment-get-right-color",
   "Retrieves the right endpoint color of the specified segment",
@@ -1698,6 +1708,7 @@ gradient_segment_set_right_color_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_segment_set_right_color_proc =
 {
+  TRUE,
   "gimp-gradient-segment-set-right-color",
   "gimp-gradient-segment-set-right-color",
   "Retrieves the right endpoint color of the specified segment",
@@ -1752,6 +1763,7 @@ gradient_segment_get_left_pos_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_segment_get_left_pos_proc =
 {
+  TRUE,
   "gimp-gradient-segment-get-left-pos",
   "gimp-gradient-segment-get-left-pos",
   "Retrieves the left endpoint position of the specified segment",
@@ -1808,6 +1820,7 @@ gradient_segment_set_left_pos_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_segment_set_left_pos_proc =
 {
+  TRUE,
   "gimp-gradient-segment-set-left-pos",
   "gimp-gradient-segment-set-left-pos",
   "Sets the left endpoint position of the specified segment",
@@ -1862,6 +1875,7 @@ gradient_segment_get_middle_pos_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_segment_get_middle_pos_proc =
 {
+  TRUE,
   "gimp-gradient-segment-get-middle-pos",
   "gimp-gradient-segment-get-middle-pos",
   "Retrieves the middle point position of the specified segment",
@@ -1919,6 +1933,7 @@ gradient_segment_set_middle_pos_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_segment_set_middle_pos_proc =
 {
+  TRUE,
   "gimp-gradient-segment-set-middle-pos",
   "gimp-gradient-segment-set-middle-pos",
   "Sets the middle point position of the specified segment",
@@ -1973,6 +1988,7 @@ gradient_segment_get_right_pos_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_segment_get_right_pos_proc =
 {
+  TRUE,
   "gimp-gradient-segment-get-right-pos",
   "gimp-gradient-segment-get-right-pos",
   "Retrieves the right endpoint position of the specified segment",
@@ -2030,6 +2046,7 @@ gradient_segment_set_right_pos_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_segment_set_right_pos_proc =
 {
+  TRUE,
   "gimp-gradient-segment-set-right-pos",
   "gimp-gradient-segment-set-right-pos",
   "Sets the right endpoint position of the specified segment",
@@ -2084,6 +2101,7 @@ gradient_segment_get_blending_function_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_segment_get_blending_function_proc =
 {
+  TRUE,
   "gimp-gradient-segment-get-blending-function",
   "gimp-gradient-segment-get-blending-function",
   "Retrieves the gradient segment's blending function",
@@ -2138,6 +2156,7 @@ gradient_segment_get_coloring_type_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_segment_get_coloring_type_proc =
 {
+  TRUE,
   "gimp-gradient-segment-get-coloring-type",
   "gimp-gradient-segment-get-coloring-type",
   "Retrieves the gradient segment's coloring type",
@@ -2193,6 +2212,7 @@ gradient_segment_range_set_blending_function_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_segment_range_set_blending_function_proc =
 {
+  TRUE,
   "gimp-gradient-segment-range-set-blending-function",
   "gimp-gradient-segment-range-set-blending-function",
   "Change the blending function of a segments range",
@@ -2248,6 +2268,7 @@ gradient_segment_range_set_coloring_type_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_segment_range_set_coloring_type_proc =
 {
+  TRUE,
   "gimp-gradient-segment-range-set-coloring-type",
   "gimp-gradient-segment-range-set-coloring-type",
   "Change the coloring type of a segments range",
@@ -2301,6 +2322,7 @@ gradient_segment_range_flip_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_segment_range_flip_proc =
 {
+  TRUE,
   "gimp-gradient-segment-range-flip",
   "gimp-gradient-segment-range-flip",
   "Flip the segment range",
@@ -2357,6 +2379,7 @@ gradient_segment_range_replicate_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_segment_range_replicate_proc =
 {
+  TRUE,
   "gimp-gradient-segment-range-replicate",
   "gimp-gradient-segment-range-replicate",
   "Replicate the segment range",
@@ -2410,6 +2433,7 @@ gradient_segment_range_split_midpoint_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_segment_range_split_midpoint_proc =
 {
+  TRUE,
   "gimp-gradient-segment-range-split-midpoint",
   "gimp-gradient-segment-range-split-midpoint",
   "Splits each segment in the segment range at midpoint",
@@ -2466,6 +2490,7 @@ gradient_segment_range_split_uniform_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_segment_range_split_uniform_proc =
 {
+  TRUE,
   "gimp-gradient-segment-range-split-uniform",
   "gimp-gradient-segment-range-split-uniform",
   "Splits each segment in the segment range uniformly",
@@ -2519,6 +2544,7 @@ gradient_segment_range_delete_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_segment_range_delete_proc =
 {
+  TRUE,
   "gimp-gradient-segment-range-delete",
   "gimp-gradient-segment-range-delete",
   "Delete the segment range",
@@ -2571,6 +2597,7 @@ gradient_segment_range_redistribute_handles_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_segment_range_redistribute_handles_proc =
 {
+  TRUE,
   "gimp-gradient-segment-range-redistribute-handles",
   "gimp-gradient-segment-range-redistribute-handles",
   "Uniformly redistribute the segment range's handles",
@@ -2626,6 +2653,7 @@ gradient_segment_range_blend_colors_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_segment_range_blend_colors_proc =
 {
+  TRUE,
   "gimp-gradient-segment-range-blend-colors",
   "gimp-gradient-segment-range-blend-colors",
   "Blend the colors of the segment range.",
@@ -2681,6 +2709,7 @@ gradient_segment_range_blend_opacity_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_segment_range_blend_opacity_proc =
 {
+  TRUE,
   "gimp-gradient-segment-range-blend-opacity",
   "gimp-gradient-segment-range-blend-opacity",
   "Blend the opacity of the segment range.",
@@ -2746,6 +2775,7 @@ gradient_segment_range_move_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradient_segment_range_move_proc =
 {
+  TRUE,
   "gimp-gradient-segment-range-move",
   "gimp-gradient-segment-range-move",
   "Move the position of an entire segment range by a delta.",

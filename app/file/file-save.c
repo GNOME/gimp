@@ -78,7 +78,6 @@ file_save (GimpImage      *image,
            gboolean        save_a_copy,
            GError        **error)
 {
-  const ProcRecord  *proc;
   Argument          *return_vals;
   gint               n_return_vals;
   GimpPDBStatusType  status;
@@ -128,11 +127,9 @@ file_save (GimpImage      *image,
   /* ref the image, so it can't get deleted during save */
   g_object_ref (image);
 
-  proc = plug_in_proc_def_get_proc (file_proc);
-
   return_vals =
     procedural_db_run_proc (image->gimp, context, progress,
-                            proc->name,
+                            file_proc->procedure->name,
                             &n_return_vals,
                             GIMP_PDB_INT32,    run_mode,
                             GIMP_PDB_IMAGE,    gimp_image_get_ID (image),

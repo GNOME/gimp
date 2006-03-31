@@ -443,6 +443,7 @@ parasite_find_invoker (ProcRecord   *proc_record,
 
 static ProcRecord parasite_find_proc =
 {
+  TRUE,
   "gimp-parasite-find",
   "gimp-parasite-find",
   "Finds the named parasite.",
@@ -478,6 +479,7 @@ parasite_attach_invoker (ProcRecord   *proc_record,
 
 static ProcRecord parasite_attach_proc =
 {
+  TRUE,
   "gimp-parasite-attach",
   "gimp-parasite-attach",
   "Add a parasite to the gimp.",
@@ -513,6 +515,7 @@ parasite_detach_invoker (ProcRecord   *proc_record,
 
 static ProcRecord parasite_detach_proc =
 {
+  TRUE,
   "gimp-parasite-detach",
   "gimp-parasite-detach",
   "Removes a parasite from the gimp.",
@@ -549,6 +552,7 @@ parasite_list_invoker (ProcRecord   *proc_record,
 
 static ProcRecord parasite_list_proc =
 {
+  TRUE,
   "gimp-parasite-list",
   "gimp-parasite-list",
   "List all parasites.",
@@ -596,6 +600,7 @@ image_parasite_find_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_parasite_find_proc =
 {
+  TRUE,
   "gimp-image-parasite-find",
   "gimp-image-parasite-find",
   "Finds the named parasite in an image",
@@ -633,6 +638,7 @@ image_parasite_attach_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_parasite_attach_proc =
 {
+  TRUE,
   "gimp-image-parasite-attach",
   "gimp-image-parasite-attach",
   "Add a parasite to an image.",
@@ -670,6 +676,7 @@ image_parasite_detach_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_parasite_detach_proc =
 {
+  TRUE,
   "gimp-image-parasite-detach",
   "gimp-image-parasite-detach",
   "Removes a parasite from an image.",
@@ -716,6 +723,7 @@ image_parasite_list_invoker (ProcRecord   *proc_record,
 
 static ProcRecord image_parasite_list_proc =
 {
+  TRUE,
   "gimp-image-parasite-list",
   "gimp-image-parasite-list",
   "List all parasites.",
@@ -764,6 +772,7 @@ drawable_parasite_find_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_parasite_find_proc =
 {
+  TRUE,
   "gimp-drawable-parasite-find",
   "gimp-drawable-parasite-find",
   "Finds the named parasite in a drawable",
@@ -801,6 +810,7 @@ drawable_parasite_attach_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_parasite_attach_proc =
 {
+  TRUE,
   "gimp-drawable-parasite-attach",
   "gimp-drawable-parasite-attach",
   "Add a parasite to a drawable.",
@@ -838,6 +848,7 @@ drawable_parasite_detach_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_parasite_detach_proc =
 {
+  TRUE,
   "gimp-drawable-parasite-detach",
   "gimp-drawable-parasite-detach",
   "Removes a parasite from a drawable.",
@@ -884,6 +895,7 @@ drawable_parasite_list_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_parasite_list_proc =
 {
+  TRUE,
   "gimp-drawable-parasite-list",
   "gimp-drawable-parasite-list",
   "List all parasites.",
@@ -932,6 +944,7 @@ vectors_parasite_find_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_parasite_find_proc =
 {
+  TRUE,
   "gimp-vectors-parasite-find",
   "gimp-vectors-parasite-find",
   "Finds the named parasite in a vectors object",
@@ -969,6 +982,7 @@ vectors_parasite_attach_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_parasite_attach_proc =
 {
+  TRUE,
   "gimp-vectors-parasite-attach",
   "gimp-vectors-parasite-attach",
   "Add a parasite to a vectors object",
@@ -1006,6 +1020,7 @@ vectors_parasite_detach_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_parasite_detach_proc =
 {
+  TRUE,
   "gimp-vectors-parasite-detach",
   "gimp-vectors-parasite-detach",
   "Removes a parasite from a vectors object",
@@ -1052,6 +1067,7 @@ vectors_parasite_list_invoker (ProcRecord   *proc_record,
 
 static ProcRecord vectors_parasite_list_proc =
 {
+  TRUE,
   "gimp-vectors-parasite-list",
   "gimp-vectors-parasite-list",
   "List all parasites.",

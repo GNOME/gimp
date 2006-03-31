@@ -160,6 +160,7 @@ palettes_refresh_invoker (ProcRecord   *proc_record,
 
 static ProcRecord palettes_refresh_proc =
 {
+  TRUE,
   "gimp-palettes-refresh",
   "gimp-palettes-refresh",
   "Refreshes current palettes. This function always succeeds.",
@@ -207,6 +208,7 @@ palettes_get_list_invoker (ProcRecord   *proc_record,
 
 static ProcRecord palettes_get_list_proc =
 {
+  TRUE,
   "gimp-palettes-get-list",
   "gimp-palettes-get-list",
   "Retrieves a list of all of the available palettes",
@@ -255,6 +257,7 @@ palettes_get_palette_invoker (ProcRecord   *proc_record,
 
 static ProcRecord palettes_get_palette_proc =
 {
+  TRUE,
   "gimp-palettes-get-palette",
   "gimp-palettes-get-palette",
   "This procedure is deprecated! Use 'gimp-context-get-palette' instead.",
@@ -332,6 +335,7 @@ palettes_get_palette_entry_invoker (ProcRecord   *proc_record,
 
 static ProcRecord palettes_get_palette_entry_proc =
 {
+  TRUE,
   "gimp-palettes-get-palette-entry",
   "gimp-palettes-get-palette-entry",
   "This procedure is deprecated! Use 'gimp-palette-entry-get-color' instead.",

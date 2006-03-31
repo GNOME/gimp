@@ -1424,6 +1424,7 @@ drawable_transform_flip_simple_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_transform_flip_simple_proc =
 {
+  TRUE,
   "gimp-drawable-transform-flip-simple",
   "gimp-drawable-transform-flip-simple",
   "Flip the specified drawable either vertically or horizontally.",
@@ -1509,6 +1510,7 @@ drawable_transform_flip_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_transform_flip_proc =
 {
+  TRUE,
   "gimp-drawable-transform-flip",
   "gimp-drawable-transform-flip",
   "Flip the specified drawable around a given line.",
@@ -1592,6 +1594,7 @@ drawable_transform_flip_default_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_transform_flip_default_proc =
 {
+  TRUE,
   "gimp-drawable-transform-flip-default",
   "gimp-drawable-transform-flip-default",
   "Flip the specified drawable around a given line.",
@@ -1689,6 +1692,7 @@ drawable_transform_perspective_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_transform_perspective_proc =
 {
+  TRUE,
   "gimp-drawable-transform-perspective",
   "gimp-drawable-transform-perspective",
   "Perform a possibly non-affine transformation on the specified drawable, with extra parameters.",
@@ -1784,6 +1788,7 @@ drawable_transform_perspective_default_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_transform_perspective_default_proc =
 {
+  TRUE,
   "gimp-drawable-transform-perspective-default",
   "gimp-drawable-transform-perspective-default",
   "Perform a possibly non-affine transformation on the specified drawable, with extra parameters.",
@@ -1846,6 +1851,7 @@ drawable_transform_rotate_simple_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_transform_rotate_simple_proc =
 {
+  TRUE,
   "gimp-drawable-transform-rotate-simple",
   "gimp-drawable-transform-rotate-simple",
   "Rotate the specified drawable about given coordinates through the specified angle.",
@@ -1934,6 +1940,7 @@ drawable_transform_rotate_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_transform_rotate_proc =
 {
+  TRUE,
   "gimp-drawable-transform-rotate",
   "gimp-drawable-transform-rotate",
   "Rotate the specified drawable about given coordinates through the specified angle.",
@@ -2020,6 +2027,7 @@ drawable_transform_rotate_default_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_transform_rotate_default_proc =
 {
+  TRUE,
   "gimp-drawable-transform-rotate-default",
   "gimp-drawable-transform-rotate-default",
   "Rotate the specified drawable about given coordinates through the specified angle.",
@@ -2108,6 +2116,7 @@ drawable_transform_scale_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_transform_scale_proc =
 {
+  TRUE,
   "gimp-drawable-transform-scale",
   "gimp-drawable-transform-scale",
   "Scale the specified drawable with extra parameters",
@@ -2194,6 +2203,7 @@ drawable_transform_scale_default_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_transform_scale_default_proc =
 {
+  TRUE,
   "gimp-drawable-transform-scale-default",
   "gimp-drawable-transform-scale-default",
   "Scale the specified drawable with extra parameters",
@@ -2276,6 +2286,7 @@ drawable_transform_shear_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_transform_shear_proc =
 {
+  TRUE,
   "gimp-drawable-transform-shear",
   "gimp-drawable-transform-shear",
   "Shear the specified drawable about its center by the specified magnitude, with extra parameters.",
@@ -2356,6 +2367,7 @@ drawable_transform_shear_default_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_transform_shear_default_proc =
 {
+  TRUE,
   "gimp-drawable-transform-shear-default",
   "gimp-drawable-transform-shear-default",
   "Shear the specified drawable about its center by the specified magnitude, with extra parameters.",
@@ -2449,6 +2461,7 @@ drawable_transform_2d_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_transform_2d_proc =
 {
+  TRUE,
   "gimp-drawable-transform-2d",
   "gimp-drawable-transform-2d",
   "Transform the specified drawable in 2d, with extra parameters.",
@@ -2540,6 +2553,7 @@ drawable_transform_2d_default_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_transform_2d_default_proc =
 {
+  TRUE,
   "gimp-drawable-transform-2d-default",
   "gimp-drawable-transform-2d-default",
   "Transform the specified drawable in 2d, with extra parameters.",
@@ -2641,6 +2655,7 @@ drawable_transform_matrix_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_transform_matrix_proc =
 {
+  TRUE,
   "gimp-drawable-transform-matrix",
   "gimp-drawable-transform-matrix",
   "Transform the specified drawable in 2d, with extra parameters.",
@@ -2740,6 +2755,7 @@ drawable_transform_matrix_default_invoker (ProcRecord   *proc_record,
 
 static ProcRecord drawable_transform_matrix_default_proc =
 {
+  TRUE,
   "gimp-drawable-transform-matrix-default",
   "gimp-drawable-transform-matrix-default",
   "Transform the specified drawable in 2d, with extra parameters.",

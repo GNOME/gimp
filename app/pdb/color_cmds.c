@@ -640,6 +640,7 @@ brightness_contrast_invoker (ProcRecord   *proc_record,
 
 static ProcRecord brightness_contrast_proc =
 {
+  TRUE,
   "gimp-brightness-contrast",
   "gimp-brightness-contrast",
   "Modify brightness/contrast in the specified drawable.",
@@ -700,6 +701,7 @@ levels_invoker (ProcRecord   *proc_record,
 
 static ProcRecord levels_proc =
 {
+  TRUE,
   "gimp-levels",
   "gimp-levels",
   "Modifies intensity levels in the specified drawable.",
@@ -740,6 +742,7 @@ levels_auto_invoker (ProcRecord   *proc_record,
 
 static ProcRecord levels_auto_proc =
 {
+  TRUE,
   "gimp-levels-auto",
   "gimp-levels-auto",
   "This procedure is deprecated! Use 'gimp_levels_stretch' instead.",
@@ -780,6 +783,7 @@ levels_stretch_invoker (ProcRecord   *proc_record,
 
 static ProcRecord levels_stretch_proc =
 {
+  TRUE,
   "gimp-levels-stretch",
   "gimp-levels-stretch",
   "Automatically modifies intensity levels in the specified drawable.",
@@ -847,6 +851,7 @@ posterize_invoker (ProcRecord   *proc_record,
 
 static ProcRecord posterize_proc =
 {
+  TRUE,
   "gimp-posterize",
   "gimp-posterize",
   "Posterize the specified drawable.",
@@ -887,6 +892,7 @@ desaturate_invoker (ProcRecord   *proc_record,
 
 static ProcRecord desaturate_proc =
 {
+  TRUE,
   "gimp-desaturate",
   "gimp-desaturate",
   "Desaturate the contents of the specified drawable.",
@@ -929,6 +935,7 @@ desaturate_full_invoker (ProcRecord   *proc_record,
 
 static ProcRecord desaturate_full_proc =
 {
+  TRUE,
   "gimp-desaturate-full",
   "gimp-desaturate-full",
   "Desaturate the contents of the specified drawable, with the specified formula.",
@@ -971,6 +978,7 @@ equalize_invoker (ProcRecord   *proc_record,
 
 static ProcRecord equalize_proc =
 {
+  TRUE,
   "gimp-equalize",
   "gimp-equalize",
   "Equalize the contents of the specified drawable.",
@@ -1011,6 +1019,7 @@ invert_invoker (ProcRecord   *proc_record,
 
 static ProcRecord invert_proc =
 {
+  TRUE,
   "gimp-invert",
   "gimp-invert",
   "Invert the contents of the specified drawable.",
@@ -1112,6 +1121,7 @@ curves_spline_invoker (ProcRecord   *proc_record,
 
 static ProcRecord curves_spline_proc =
 {
+  TRUE,
   "gimp-curves-spline",
   "gimp-curves-spline",
   "Modifies the intensity curve(s) for specified drawable.",
@@ -1204,6 +1214,7 @@ curves_explicit_invoker (ProcRecord   *proc_record,
 
 static ProcRecord curves_explicit_proc =
 {
+  TRUE,
   "gimp-curves-explicit",
   "gimp-curves-explicit",
   "Modifies the intensity curve(s) for specified drawable.",
@@ -1284,6 +1295,7 @@ color_balance_invoker (ProcRecord   *proc_record,
 
 static ProcRecord color_balance_proc =
 {
+  TRUE,
   "gimp-color-balance",
   "gimp-color-balance",
   "Modify the color balance of the specified drawable.",
@@ -1358,6 +1370,7 @@ colorize_invoker (ProcRecord   *proc_record,
 
 static ProcRecord colorize_proc =
 {
+  TRUE,
   "gimp-colorize",
   "gimp-colorize",
   "Render the drawable as a grayscale image seen through a colored glass.",
@@ -1444,6 +1457,7 @@ histogram_invoker (ProcRecord   *proc_record,
 
 static ProcRecord histogram_proc =
 {
+  TRUE,
   "gimp-histogram",
   "gimp-histogram",
   "Returns information on the intensity histogram for the specified drawable.",
@@ -1521,6 +1535,7 @@ hue_saturation_invoker (ProcRecord   *proc_record,
 
 static ProcRecord hue_saturation_proc =
 {
+  TRUE,
   "gimp-hue-saturation",
   "gimp-hue-saturation",
   "Modify hue, lightness, and saturation in the specified drawable.",
@@ -1590,6 +1605,7 @@ threshold_invoker (ProcRecord   *proc_record,
 
 static ProcRecord threshold_proc =
 {
+  TRUE,
   "gimp-threshold",
   "gimp-threshold",
   "Threshold the specified drawable.",

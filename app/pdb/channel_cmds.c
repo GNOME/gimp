@@ -383,6 +383,7 @@ channel_new_invoker (ProcRecord   *proc_record,
 
 static ProcRecord channel_new_proc =
 {
+  TRUE,
   "gimp-channel-new",
   "gimp-channel-new",
   "Create a new channel.",
@@ -436,6 +437,7 @@ channel_new_from_component_invoker (ProcRecord   *proc_record,
 
 static ProcRecord channel_new_from_component_proc =
 {
+  TRUE,
   "gimp-channel-new-from-component",
   "gimp-channel-new-from-component",
   "Create a new channel from a color component",
@@ -482,6 +484,7 @@ channel_copy_invoker (ProcRecord   *proc_record,
 
 static ProcRecord channel_copy_proc =
 {
+  TRUE,
   "gimp-channel-copy",
   "gimp-channel-copy",
   "Copy a channel.",
@@ -525,6 +528,7 @@ channel_combine_masks_invoker (ProcRecord   *proc_record,
 
 static ProcRecord channel_combine_masks_proc =
 {
+  TRUE,
   "gimp-channel-combine-masks",
   "gimp-channel-combine-masks",
   "Combine two channel masks.",
@@ -567,6 +571,7 @@ channel_get_show_masked_invoker (ProcRecord   *proc_record,
 
 static ProcRecord channel_get_show_masked_proc =
 {
+  TRUE,
   "gimp-channel-get-show-masked",
   "gimp-channel-get-show-masked",
   "Get the composite method of the specified channel.",
@@ -604,6 +609,7 @@ channel_set_show_masked_invoker (ProcRecord   *proc_record,
 
 static ProcRecord channel_set_show_masked_proc =
 {
+  TRUE,
   "gimp-channel-set-show-masked",
   "gimp-channel-set-show-masked",
   "Set the composite method of the specified channel.",
@@ -646,6 +652,7 @@ channel_get_opacity_invoker (ProcRecord   *proc_record,
 
 static ProcRecord channel_get_opacity_proc =
 {
+  TRUE,
   "gimp-channel-get-opacity",
   "gimp-channel-get-opacity",
   "Get the opacity of the specified channel.",
@@ -683,6 +690,7 @@ channel_set_opacity_invoker (ProcRecord   *proc_record,
 
 static ProcRecord channel_set_opacity_proc =
 {
+  TRUE,
   "gimp-channel-set-opacity",
   "gimp-channel-set-opacity",
   "Set the opacity of the specified channel.",
@@ -725,6 +733,7 @@ channel_get_color_invoker (ProcRecord   *proc_record,
 
 static ProcRecord channel_get_color_proc =
 {
+  TRUE,
   "gimp-channel-get-color",
   "gimp-channel-get-color",
   "Get the compositing color of the specified channel.",
@@ -765,6 +774,7 @@ channel_set_color_invoker (ProcRecord   *proc_record,
 
 static ProcRecord channel_set_color_proc =
 {
+  TRUE,
   "gimp-channel-set-color",
   "gimp-channel-set-color",
   "Set the compositing color of the specified channel.",

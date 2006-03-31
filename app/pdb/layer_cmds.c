@@ -796,6 +796,7 @@ layer_new_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_new_proc =
 {
+  TRUE,
   "gimp-layer-new",
   "gimp-layer-new",
   "Create a new layer.",
@@ -856,6 +857,7 @@ layer_new_from_drawable_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_new_from_drawable_proc =
 {
+  TRUE,
   "gimp-layer-new-from-drawable",
   "gimp-layer-new-from-drawable",
   "Create a new layer by copying an existing drawable.",
@@ -904,6 +906,7 @@ layer_copy_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_copy_proc =
 {
+  TRUE,
   "gimp-layer-copy",
   "gimp-layer-copy",
   "Copy a layer.",
@@ -939,6 +942,7 @@ layer_add_alpha_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_add_alpha_proc =
 {
+  TRUE,
   "gimp-layer-add-alpha",
   "gimp-layer-add-alpha",
   "Add an alpha channel to the layer if it doesn't already have one.",
@@ -985,6 +989,7 @@ layer_scale_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_scale_proc =
 {
+  TRUE,
   "gimp-layer-scale",
   "gimp-layer-scale",
   "Scale the layer to the specified extents.",
@@ -1032,6 +1037,7 @@ layer_resize_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_resize_proc =
 {
+  TRUE,
   "gimp-layer-resize",
   "gimp-layer-resize",
   "Resize the layer to the specified extents.",
@@ -1070,6 +1076,7 @@ layer_resize_to_image_size_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_resize_to_image_size_proc =
 {
+  TRUE,
   "gimp-layer-resize-to-image-size",
   "gimp-layer-resize-to-image-size",
   "Resize a layer to the image size.",
@@ -1119,6 +1126,7 @@ layer_translate_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_translate_proc =
 {
+  TRUE,
   "gimp-layer-translate",
   "gimp-layer-translate",
   "Translate the layer by the specified offsets.",
@@ -1171,6 +1179,7 @@ layer_set_offsets_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_set_offsets_proc =
 {
+  TRUE,
   "gimp-layer-set-offsets",
   "gimp-layer-set-offsets",
   "Set the layer offsets.",
@@ -1218,6 +1227,7 @@ layer_create_mask_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_create_mask_proc =
 {
+  TRUE,
   "gimp-layer-create-mask",
   "gimp-layer-create-mask",
   "Create a layer mask for the specified specified layer.",
@@ -1260,6 +1270,7 @@ layer_get_mask_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_get_mask_proc =
 {
+  TRUE,
   "gimp-layer-get-mask",
   "gimp-layer-get-mask",
   "Get the specified layer's mask if it exists.",
@@ -1302,6 +1313,7 @@ layer_from_mask_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_from_mask_proc =
 {
+  TRUE,
   "gimp-layer-from-mask",
   "gimp-layer-from-mask",
   "Get the specified mask's layer.",
@@ -1342,6 +1354,7 @@ layer_add_mask_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_add_mask_proc =
 {
+  TRUE,
   "gimp-layer-add-mask",
   "gimp-layer-add-mask",
   "Add a layer mask to the specified layer.",
@@ -1382,6 +1395,7 @@ layer_remove_mask_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_remove_mask_proc =
 {
+  TRUE,
   "gimp-layer-remove-mask",
   "gimp-layer-remove-mask",
   "Remove the specified layer mask from the layer.",
@@ -1424,6 +1438,7 @@ layer_is_floating_sel_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_is_floating_sel_proc =
 {
+  TRUE,
   "gimp-layer-is-floating-sel",
   "gimp-layer-is-floating-sel",
   "Is the specified layer a floating selection?",
@@ -1466,6 +1481,7 @@ layer_get_lock_alpha_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_get_lock_alpha_proc =
 {
+  TRUE,
   "gimp-layer-get-lock-alpha",
   "gimp-layer-get-lock-alpha",
   "Get the lock alpha channel setting of the specified layer.",
@@ -1503,6 +1519,7 @@ layer_set_lock_alpha_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_set_lock_alpha_proc =
 {
+  TRUE,
   "gimp-layer-set-lock-alpha",
   "gimp-layer-set-lock-alpha",
   "Set the lock alpha channel setting of the specified layer.",
@@ -1548,6 +1565,7 @@ layer_get_apply_mask_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_get_apply_mask_proc =
 {
+  TRUE,
   "gimp-layer-get-apply-mask",
   "gimp-layer-get-apply-mask",
   "Get the apply mask setting of the specified layer.",
@@ -1588,6 +1606,7 @@ layer_set_apply_mask_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_set_apply_mask_proc =
 {
+  TRUE,
   "gimp-layer-set-apply-mask",
   "gimp-layer-set-apply-mask",
   "Set the apply mask setting of the specified layer.",
@@ -1633,6 +1652,7 @@ layer_get_show_mask_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_get_show_mask_proc =
 {
+  TRUE,
   "gimp-layer-get-show-mask",
   "gimp-layer-get-show-mask",
   "Get the show mask setting of the specified layer.",
@@ -1673,6 +1693,7 @@ layer_set_show_mask_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_set_show_mask_proc =
 {
+  TRUE,
   "gimp-layer-set-show-mask",
   "gimp-layer-set-show-mask",
   "Set the show mask setting of the specified layer.",
@@ -1718,6 +1739,7 @@ layer_get_edit_mask_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_get_edit_mask_proc =
 {
+  TRUE,
   "gimp-layer-get-edit-mask",
   "gimp-layer-get-edit-mask",
   "Get the edit mask setting of the specified layer.",
@@ -1758,6 +1780,7 @@ layer_set_edit_mask_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_set_edit_mask_proc =
 {
+  TRUE,
   "gimp-layer-set-edit-mask",
   "gimp-layer-set-edit-mask",
   "Set the edit mask setting of the specified layer.",
@@ -1800,6 +1823,7 @@ layer_get_opacity_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_get_opacity_proc =
 {
+  TRUE,
   "gimp-layer-get-opacity",
   "gimp-layer-get-opacity",
   "Get the opacity of the specified layer.",
@@ -1837,6 +1861,7 @@ layer_set_opacity_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_set_opacity_proc =
 {
+  TRUE,
   "gimp-layer-set-opacity",
   "gimp-layer-set-opacity",
   "Set the opacity of the specified layer.",
@@ -1879,6 +1904,7 @@ layer_get_mode_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_get_mode_proc =
 {
+  TRUE,
   "gimp-layer-get-mode",
   "gimp-layer-get-mode",
   "Get the combination mode of the specified layer.",
@@ -1916,6 +1942,7 @@ layer_set_mode_invoker (ProcRecord   *proc_record,
 
 static ProcRecord layer_set_mode_proc =
 {
+  TRUE,
   "gimp-layer-set-mode",
   "gimp-layer-set-mode",
   "Set the combination mode of the specified layer.",

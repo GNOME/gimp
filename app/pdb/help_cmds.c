@@ -91,6 +91,7 @@ help_invoker (ProcRecord   *proc_record,
 
 static ProcRecord help_proc =
 {
+  TRUE,
   "gimp-help",
   "gimp-help",
   "Load a help page.",

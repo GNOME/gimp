@@ -216,6 +216,7 @@ gradients_refresh_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradients_refresh_proc =
 {
+  TRUE,
   "gimp-gradients-refresh",
   "gimp-gradients-refresh",
   "Refresh current gradients. This function always succeeds.",
@@ -263,6 +264,7 @@ gradients_get_list_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradients_get_list_proc =
 {
+  TRUE,
   "gimp-gradients-get-list",
   "gimp-gradients-get-list",
   "Retrieve the list of loaded gradients.",
@@ -336,6 +338,7 @@ gradients_sample_uniform_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradients_sample_uniform_proc =
 {
+  TRUE,
   "gimp-gradients-sample-uniform",
   "gimp-gradients-sample-uniform",
   "This procedure is deprecated! Use 'gimp-gradient-get-uniform-samples' instead.",
@@ -408,6 +411,7 @@ gradients_sample_custom_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradients_sample_custom_proc =
 {
+  TRUE,
   "gimp-gradients-sample-custom",
   "gimp-gradients-sample-custom",
   "This procedure is deprecated! Use 'gimp-gradient-get-custom-samples' instead.",
@@ -505,6 +509,7 @@ gradients_get_gradient_data_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gradients_get_gradient_data_proc =
 {
+  TRUE,
   "gimp-gradients-get-gradient-data",
   "gimp-gradients-get-gradient-data",
   "This procedure is deprecated! Use 'gimp-gradient-get-uniform-samples' instead.",

@@ -317,6 +317,7 @@ plugins_query_invoker (ProcRecord   *proc_record,
 
 static ProcRecord plugins_query_proc =
 {
+  TRUE,
   "gimp-plugins-query",
   "gimp-plugins-query",
   "Queries the plugin database for its contents.",
@@ -362,6 +363,7 @@ plugin_domain_register_invoker (ProcRecord   *proc_record,
 
 static ProcRecord plugin_domain_register_proc =
 {
+  TRUE,
   "gimp-plugin-domain-register",
   "gimp-plugin-domain-register",
   "Registers a textdomain for localisation.",
@@ -407,6 +409,7 @@ plugin_help_register_invoker (ProcRecord   *proc_record,
 
 static ProcRecord plugin_help_register_proc =
 {
+  TRUE,
   "gimp-plugin-help-register",
   "gimp-plugin-help-register",
   "Register a help path for a plug-in.",
@@ -455,6 +458,7 @@ plugin_menu_register_invoker (ProcRecord   *proc_record,
 
 static ProcRecord plugin_menu_register_proc =
 {
+  TRUE,
   "gimp-plugin-menu-register",
   "gimp-plugin-menu-register",
   "Register an additional menu path for a plug-in procedure.",
@@ -506,6 +510,7 @@ plugin_menu_branch_register_invoker (ProcRecord   *proc_record,
 
 static ProcRecord plugin_menu_branch_register_proc =
 {
+  TRUE,
   "gimp-plugin-menu-branch-register",
   "gimp-plugin-menu-branch-register",
   "Register a sub-menu.",
@@ -566,6 +571,7 @@ plugin_icon_register_invoker (ProcRecord   *proc_record,
 
 static ProcRecord plugin_icon_register_proc =
 {
+  TRUE,
   "gimp-plugin-icon-register",
   "gimp-plugin-icon-register",
   "Register an icon for a plug-in procedure.",

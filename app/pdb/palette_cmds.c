@@ -441,6 +441,7 @@ palette_new_invoker (ProcRecord   *proc_record,
 
 static ProcRecord palette_new_proc =
 {
+  TRUE,
   "gimp-palette-new",
   "gimp-palette-new",
   "Creates a new palette",
@@ -498,6 +499,7 @@ palette_duplicate_invoker (ProcRecord   *proc_record,
 
 static ProcRecord palette_duplicate_proc =
 {
+  TRUE,
   "gimp-palette-duplicate",
   "gimp-palette-duplicate",
   "Duplicates a palette",
@@ -551,6 +553,7 @@ palette_rename_invoker (ProcRecord   *proc_record,
 
 static ProcRecord palette_rename_proc =
 {
+  TRUE,
   "gimp-palette-rename",
   "gimp-palette-rename",
   "Rename a palette",
@@ -604,6 +607,7 @@ palette_delete_invoker (ProcRecord   *proc_record,
 
 static ProcRecord palette_delete_proc =
 {
+  TRUE,
   "gimp-palette-delete",
   "gimp-palette-delete",
   "Deletes a palette",
@@ -652,6 +656,7 @@ palette_is_editable_invoker (ProcRecord   *proc_record,
 
 static ProcRecord palette_is_editable_proc =
 {
+  TRUE,
   "gimp-palette-is-editable",
   "gimp-palette-is-editable",
   "Tests if palette can be edited",
@@ -700,6 +705,7 @@ palette_get_info_invoker (ProcRecord   *proc_record,
 
 static ProcRecord palette_get_info_proc =
 {
+  TRUE,
   "gimp-palette-get-info",
   "gimp-palette-get-info",
   "Retrieve information about the specified palette.",
@@ -748,6 +754,7 @@ palette_get_columns_invoker (ProcRecord   *proc_record,
 
 static ProcRecord palette_get_columns_proc =
 {
+  TRUE,
   "gimp-palette-get-columns",
   "gimp-palette-get-columns",
   "Retrieves the number of columns to use to display this palette",
@@ -791,6 +798,7 @@ palette_set_columns_invoker (ProcRecord   *proc_record,
 
 static ProcRecord palette_set_columns_proc =
 {
+  TRUE,
   "gimp-palette-set-columns",
   "gimp-palette-set-columns",
   "Sets the number of columns to use when displaying the palette",
@@ -848,6 +856,7 @@ palette_add_entry_invoker (ProcRecord   *proc_record,
 
 static ProcRecord palette_add_entry_proc =
 {
+  TRUE,
   "gimp-palette-add-entry",
   "gimp-palette-add-entry",
   "Adds a palette entry to the specified palette.",
@@ -900,6 +909,7 @@ palette_delete_entry_invoker (ProcRecord   *proc_record,
 
 static ProcRecord palette_delete_entry_proc =
 {
+  TRUE,
   "gimp-palette-delete-entry",
   "gimp-palette-delete-entry",
   "Deletes a palette entry from the specified palette.",
@@ -959,6 +969,7 @@ palette_entry_get_color_invoker (ProcRecord   *proc_record,
 
 static ProcRecord palette_entry_get_color_proc =
 {
+  TRUE,
   "gimp-palette-entry-get-color",
   "gimp-palette-entry-get-color",
   "Gets the specified palette entry from the specified palette.",
@@ -1015,6 +1026,7 @@ palette_entry_set_color_invoker (ProcRecord   *proc_record,
 
 static ProcRecord palette_entry_set_color_proc =
 {
+  TRUE,
   "gimp-palette-entry-set-color",
   "gimp-palette-entry-set-color",
   "Sets the specified palette entry in the specified palette.",
@@ -1074,6 +1086,7 @@ palette_entry_get_name_invoker (ProcRecord   *proc_record,
 
 static ProcRecord palette_entry_get_name_proc =
 {
+  TRUE,
   "gimp-palette-entry-get-name",
   "gimp-palette-entry-get-name",
   "Gets the specified palette entry from the specified palette.",
@@ -1131,6 +1144,7 @@ palette_entry_set_name_invoker (ProcRecord   *proc_record,
 
 static ProcRecord palette_entry_set_name_proc =
 {
+  TRUE,
   "gimp-palette-entry-set-name",
   "gimp-palette-entry-set-name",
   "Sets the specified palette entry in the specified palette.",

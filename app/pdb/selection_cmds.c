@@ -470,6 +470,7 @@ selection_bounds_invoker (ProcRecord   *proc_record,
 
 static ProcRecord selection_bounds_proc =
 {
+  TRUE,
   "gimp-selection-bounds",
   "gimp-selection-bounds",
   "Find the bounding box of the current selection.",
@@ -516,6 +517,7 @@ selection_value_invoker (ProcRecord   *proc_record,
 
 static ProcRecord selection_value_proc =
 {
+  TRUE,
   "gimp-selection-value",
   "gimp-selection-value",
   "Find the value of the selection at the specified coordinates.",
@@ -558,6 +560,7 @@ selection_is_empty_invoker (ProcRecord   *proc_record,
 
 static ProcRecord selection_is_empty_proc =
 {
+  TRUE,
   "gimp-selection-is-empty",
   "gimp-selection-is-empty",
   "Determine whether the selection is empty.",
@@ -598,6 +601,7 @@ selection_translate_invoker (ProcRecord   *proc_record,
 
 static ProcRecord selection_translate_proc =
 {
+  TRUE,
   "gimp-selection-translate",
   "gimp-selection-translate",
   "Translate the selection by the specified offsets.",
@@ -654,6 +658,7 @@ selection_float_invoker (ProcRecord   *proc_record,
 
 static ProcRecord selection_float_proc =
 {
+  TRUE,
   "gimp-selection-float",
   "gimp-selection-float",
   "Float the selection from the specified drawable with initial offsets as specified.",
@@ -689,6 +694,7 @@ selection_invert_invoker (ProcRecord   *proc_record,
 
 static ProcRecord selection_invert_proc =
 {
+  TRUE,
   "gimp-selection-invert",
   "gimp-selection-invert",
   "Invert the selection mask.",
@@ -724,6 +730,7 @@ selection_sharpen_invoker (ProcRecord   *proc_record,
 
 static ProcRecord selection_sharpen_proc =
 {
+  TRUE,
   "gimp-selection-sharpen",
   "gimp-selection-sharpen",
   "Sharpen the selection mask.",
@@ -759,6 +766,7 @@ selection_all_invoker (ProcRecord   *proc_record,
 
 static ProcRecord selection_all_proc =
 {
+  TRUE,
   "gimp-selection-all",
   "gimp-selection-all",
   "Select all of the image.",
@@ -794,6 +802,7 @@ selection_none_invoker (ProcRecord   *proc_record,
 
 static ProcRecord selection_none_proc =
 {
+  TRUE,
   "gimp-selection-none",
   "gimp-selection-none",
   "Deselect the entire image.",
@@ -832,6 +841,7 @@ selection_feather_invoker (ProcRecord   *proc_record,
 
 static ProcRecord selection_feather_proc =
 {
+  TRUE,
   "gimp-selection-feather",
   "gimp-selection-feather",
   "Feather the image's selection",
@@ -870,6 +880,7 @@ selection_border_invoker (ProcRecord   *proc_record,
 
 static ProcRecord selection_border_proc =
 {
+  TRUE,
   "gimp-selection-border",
   "gimp-selection-border",
   "Border the image's selection",
@@ -908,6 +919,7 @@ selection_grow_invoker (ProcRecord   *proc_record,
 
 static ProcRecord selection_grow_proc =
 {
+  TRUE,
   "gimp-selection-grow",
   "gimp-selection-grow",
   "Grow the image's selection",
@@ -946,6 +958,7 @@ selection_shrink_invoker (ProcRecord   *proc_record,
 
 static ProcRecord selection_shrink_proc =
 {
+  TRUE,
   "gimp-selection-shrink",
   "gimp-selection-shrink",
   "Shrink the image's selection",
@@ -985,6 +998,7 @@ selection_layer_alpha_invoker (ProcRecord   *proc_record,
 
 static ProcRecord selection_layer_alpha_proc =
 {
+  TRUE,
   "gimp-selection-layer-alpha",
   "gimp-selection-layer-alpha",
   "Transfer the specified layer's alpha channel to the selection mask.",
@@ -1031,6 +1045,7 @@ selection_load_invoker (ProcRecord   *proc_record,
 
 static ProcRecord selection_load_proc =
 {
+  TRUE,
   "gimp-selection-load",
   "gimp-selection-load",
   "Transfer the specified channel to the selection mask.",
@@ -1076,6 +1091,7 @@ selection_save_invoker (ProcRecord   *proc_record,
 
 static ProcRecord selection_save_proc =
 {
+  TRUE,
   "gimp-selection-save",
   "gimp-selection-save",
   "Copy the selection mask to a new channel.",
@@ -1124,6 +1140,7 @@ selection_combine_invoker (ProcRecord   *proc_record,
 
 static ProcRecord selection_combine_proc =
 {
+  TRUE,
   "gimp-selection-combine",
   "gimp-selection-combine",
   "Combines the specified channel with the selection mask.",

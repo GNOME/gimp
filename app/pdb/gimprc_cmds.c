@@ -209,6 +209,7 @@ gimprc_query_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gimprc_query_proc =
 {
+  TRUE,
   "gimp-gimprc-query",
   "gimp-gimprc-query",
   "Queries the gimprc file parser for information on a specified token.",
@@ -252,6 +253,7 @@ gimprc_set_invoker (ProcRecord   *proc_record,
 
 static ProcRecord gimprc_set_proc =
 {
+  TRUE,
   "gimp-gimprc-set",
   "gimp-gimprc-set",
   "Sets a gimprc token to a value and saves it in the gimprc.",
@@ -285,6 +287,7 @@ get_default_comment_invoker (ProcRecord   *proc_record,
 
 static ProcRecord get_default_comment_proc =
 {
+  TRUE,
   "gimp-get-default-comment",
   "gimp-get-default-comment",
   "Get the default image comment as specified in the Preferences.",
@@ -322,6 +325,7 @@ get_monitor_resolution_invoker (ProcRecord   *proc_record,
 
 static ProcRecord get_monitor_resolution_proc =
 {
+  TRUE,
   "gimp-get-monitor-resolution",
   "gimp-get-monitor-resolution",
   "Get the monitor resolution as specified in the Preferences.",
@@ -355,6 +359,7 @@ get_theme_dir_invoker (ProcRecord   *proc_record,
 
 static ProcRecord get_theme_dir_proc =
 {
+  TRUE,
   "gimp-get-theme-dir",
   "gimp-get-theme-dir",
   "Get the directory of the current GUI theme.",
@@ -388,6 +393,7 @@ get_color_configuration_invoker (ProcRecord   *proc_record,
 
 static ProcRecord get_color_configuration_proc =
 {
+  TRUE,
   "gimp-get-color-configuration",
   "gimp-get-color-configuration",
   "Get a serialized version of the color management configuration.",
@@ -421,6 +427,7 @@ get_module_load_inhibit_invoker (ProcRecord   *proc_record,
 
 static ProcRecord get_module_load_inhibit_proc =
 {
+  TRUE,
   "gimp-get-module-load-inhibit",
   "gimp-get-module-load-inhibit",
   "Get the list of modules which should not be loaded.",
