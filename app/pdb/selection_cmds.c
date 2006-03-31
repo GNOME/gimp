@@ -37,28 +37,28 @@
 #include "core/gimpselection.h"
 #include "gimp-intl.h"
 
-static ProcRecord selection_bounds_proc;
-static ProcRecord selection_value_proc;
-static ProcRecord selection_is_empty_proc;
-static ProcRecord selection_translate_proc;
-static ProcRecord selection_float_proc;
-static ProcRecord selection_invert_proc;
-static ProcRecord selection_sharpen_proc;
-static ProcRecord selection_all_proc;
-static ProcRecord selection_none_proc;
-static ProcRecord selection_feather_proc;
-static ProcRecord selection_border_proc;
-static ProcRecord selection_grow_proc;
-static ProcRecord selection_shrink_proc;
-static ProcRecord selection_layer_alpha_proc;
-static ProcRecord selection_load_proc;
-static ProcRecord selection_save_proc;
-static ProcRecord selection_combine_proc;
+static GimpProcedure selection_bounds_proc;
+static GimpProcedure selection_value_proc;
+static GimpProcedure selection_is_empty_proc;
+static GimpProcedure selection_translate_proc;
+static GimpProcedure selection_float_proc;
+static GimpProcedure selection_invert_proc;
+static GimpProcedure selection_sharpen_proc;
+static GimpProcedure selection_all_proc;
+static GimpProcedure selection_none_proc;
+static GimpProcedure selection_feather_proc;
+static GimpProcedure selection_border_proc;
+static GimpProcedure selection_grow_proc;
+static GimpProcedure selection_shrink_proc;
+static GimpProcedure selection_layer_alpha_proc;
+static GimpProcedure selection_load_proc;
+static GimpProcedure selection_save_proc;
+static GimpProcedure selection_combine_proc;
 
 void
 register_selection_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * selection_bounds
@@ -431,11 +431,11 @@ register_selection_procs (Gimp *gimp)
 }
 
 static Argument *
-selection_bounds_invoker (ProcRecord   *proc_record,
-                          Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+selection_bounds_invoker (GimpProcedure *procedure,
+                          Gimp          *gimp,
+                          GimpContext   *context,
+                          GimpProgress  *progress,
+                          Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -454,7 +454,7 @@ selection_bounds_invoker (ProcRecord   *proc_record,
                                        &x1, &y1, &x2, &y2);
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -468,7 +468,7 @@ selection_bounds_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord selection_bounds_proc =
+static GimpProcedure selection_bounds_proc =
 {
   TRUE, TRUE,
   "gimp-selection-bounds",
@@ -485,11 +485,11 @@ static ProcRecord selection_bounds_proc =
 };
 
 static Argument *
-selection_value_invoker (ProcRecord   *proc_record,
-                         Gimp         *gimp,
-                         GimpContext  *context,
-                         GimpProgress *progress,
-                         Argument     *args)
+selection_value_invoker (GimpProcedure *procedure,
+                         Gimp          *gimp,
+                         GimpContext   *context,
+                         GimpProgress  *progress,
+                         Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -507,7 +507,7 @@ selection_value_invoker (ProcRecord   *proc_record,
       value = gimp_pickable_get_opacity_at (GIMP_PICKABLE (gimp_image_get_mask (image)), x, y);
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_int (&return_vals[1].value, value);
@@ -515,7 +515,7 @@ selection_value_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord selection_value_proc =
+static GimpProcedure selection_value_proc =
 {
   TRUE, TRUE,
   "gimp-selection-value",
@@ -532,11 +532,11 @@ static ProcRecord selection_value_proc =
 };
 
 static Argument *
-selection_is_empty_invoker (ProcRecord   *proc_record,
-                            Gimp         *gimp,
-                            GimpContext  *context,
-                            GimpProgress *progress,
-                            Argument     *args)
+selection_is_empty_invoker (GimpProcedure *procedure,
+                            Gimp          *gimp,
+                            GimpContext   *context,
+                            GimpProgress  *progress,
+                            Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -550,7 +550,7 @@ selection_is_empty_invoker (ProcRecord   *proc_record,
       is_empty = gimp_channel_is_empty (gimp_image_get_mask (image));
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals[1].value, is_empty);
@@ -558,7 +558,7 @@ selection_is_empty_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord selection_is_empty_proc =
+static GimpProcedure selection_is_empty_proc =
 {
   TRUE, TRUE,
   "gimp-selection-is-empty",
@@ -575,11 +575,11 @@ static ProcRecord selection_is_empty_proc =
 };
 
 static Argument *
-selection_translate_invoker (ProcRecord   *proc_record,
-                             Gimp         *gimp,
-                             GimpContext  *context,
-                             GimpProgress *progress,
-                             Argument     *args)
+selection_translate_invoker (GimpProcedure *procedure,
+                             Gimp          *gimp,
+                             GimpContext   *context,
+                             GimpProgress  *progress,
+                             Argument      *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -596,10 +596,10 @@ selection_translate_invoker (ProcRecord   *proc_record,
                            offx, offy, TRUE);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord selection_translate_proc =
+static GimpProcedure selection_translate_proc =
 {
   TRUE, TRUE,
   "gimp-selection-translate",
@@ -616,11 +616,11 @@ static ProcRecord selection_translate_proc =
 };
 
 static Argument *
-selection_float_invoker (ProcRecord   *proc_record,
-                         Gimp         *gimp,
-                         GimpContext  *context,
-                         GimpProgress *progress,
-                         Argument     *args)
+selection_float_invoker (GimpProcedure *procedure,
+                         Gimp          *gimp,
+                         GimpContext   *context,
+                         GimpProgress  *progress,
+                         Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -648,7 +648,7 @@ selection_float_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (layer));
@@ -656,7 +656,7 @@ selection_float_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord selection_float_proc =
+static GimpProcedure selection_float_proc =
 {
   TRUE, TRUE,
   "gimp-selection-float",
@@ -673,11 +673,11 @@ static ProcRecord selection_float_proc =
 };
 
 static Argument *
-selection_invert_invoker (ProcRecord   *proc_record,
-                          Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+selection_invert_invoker (GimpProcedure *procedure,
+                          Gimp          *gimp,
+                          GimpContext   *context,
+                          GimpProgress  *progress,
+                          Argument      *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -689,10 +689,10 @@ selection_invert_invoker (ProcRecord   *proc_record,
       gimp_channel_invert (gimp_image_get_mask (image), TRUE);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord selection_invert_proc =
+static GimpProcedure selection_invert_proc =
 {
   TRUE, TRUE,
   "gimp-selection-invert",
@@ -709,11 +709,11 @@ static ProcRecord selection_invert_proc =
 };
 
 static Argument *
-selection_sharpen_invoker (ProcRecord   *proc_record,
-                           Gimp         *gimp,
-                           GimpContext  *context,
-                           GimpProgress *progress,
-                           Argument     *args)
+selection_sharpen_invoker (GimpProcedure *procedure,
+                           Gimp          *gimp,
+                           GimpContext   *context,
+                           GimpProgress  *progress,
+                           Argument      *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -725,10 +725,10 @@ selection_sharpen_invoker (ProcRecord   *proc_record,
       gimp_channel_sharpen (gimp_image_get_mask (image), TRUE);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord selection_sharpen_proc =
+static GimpProcedure selection_sharpen_proc =
 {
   TRUE, TRUE,
   "gimp-selection-sharpen",
@@ -745,11 +745,11 @@ static ProcRecord selection_sharpen_proc =
 };
 
 static Argument *
-selection_all_invoker (ProcRecord   *proc_record,
-                       Gimp         *gimp,
-                       GimpContext  *context,
-                       GimpProgress *progress,
-                       Argument     *args)
+selection_all_invoker (GimpProcedure *procedure,
+                       Gimp          *gimp,
+                       GimpContext   *context,
+                       GimpProgress  *progress,
+                       Argument      *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -761,10 +761,10 @@ selection_all_invoker (ProcRecord   *proc_record,
       gimp_channel_all (gimp_image_get_mask (image), TRUE);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord selection_all_proc =
+static GimpProcedure selection_all_proc =
 {
   TRUE, TRUE,
   "gimp-selection-all",
@@ -781,11 +781,11 @@ static ProcRecord selection_all_proc =
 };
 
 static Argument *
-selection_none_invoker (ProcRecord   *proc_record,
-                        Gimp         *gimp,
-                        GimpContext  *context,
-                        GimpProgress *progress,
-                        Argument     *args)
+selection_none_invoker (GimpProcedure *procedure,
+                        Gimp          *gimp,
+                        GimpContext   *context,
+                        GimpProgress  *progress,
+                        Argument      *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -797,10 +797,10 @@ selection_none_invoker (ProcRecord   *proc_record,
       gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord selection_none_proc =
+static GimpProcedure selection_none_proc =
 {
   TRUE, TRUE,
   "gimp-selection-none",
@@ -817,11 +817,11 @@ static ProcRecord selection_none_proc =
 };
 
 static Argument *
-selection_feather_invoker (ProcRecord   *proc_record,
-                           Gimp         *gimp,
-                           GimpContext  *context,
-                           GimpProgress *progress,
-                           Argument     *args)
+selection_feather_invoker (GimpProcedure *procedure,
+                           Gimp          *gimp,
+                           GimpContext   *context,
+                           GimpProgress  *progress,
+                           Argument      *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -836,10 +836,10 @@ selection_feather_invoker (ProcRecord   *proc_record,
                             radius, radius, TRUE);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord selection_feather_proc =
+static GimpProcedure selection_feather_proc =
 {
   TRUE, TRUE,
   "gimp-selection-feather",
@@ -856,11 +856,11 @@ static ProcRecord selection_feather_proc =
 };
 
 static Argument *
-selection_border_invoker (ProcRecord   *proc_record,
-                          Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+selection_border_invoker (GimpProcedure *procedure,
+                          Gimp          *gimp,
+                          GimpContext   *context,
+                          GimpProgress  *progress,
+                          Argument      *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -875,10 +875,10 @@ selection_border_invoker (ProcRecord   *proc_record,
                            radius, radius, TRUE);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord selection_border_proc =
+static GimpProcedure selection_border_proc =
 {
   TRUE, TRUE,
   "gimp-selection-border",
@@ -895,11 +895,11 @@ static ProcRecord selection_border_proc =
 };
 
 static Argument *
-selection_grow_invoker (ProcRecord   *proc_record,
-                        Gimp         *gimp,
-                        GimpContext  *context,
-                        GimpProgress *progress,
-                        Argument     *args)
+selection_grow_invoker (GimpProcedure *procedure,
+                        Gimp          *gimp,
+                        GimpContext   *context,
+                        GimpProgress  *progress,
+                        Argument      *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -914,10 +914,10 @@ selection_grow_invoker (ProcRecord   *proc_record,
                          steps, steps, TRUE);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord selection_grow_proc =
+static GimpProcedure selection_grow_proc =
 {
   TRUE, TRUE,
   "gimp-selection-grow",
@@ -934,11 +934,11 @@ static ProcRecord selection_grow_proc =
 };
 
 static Argument *
-selection_shrink_invoker (ProcRecord   *proc_record,
-                          Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+selection_shrink_invoker (GimpProcedure *procedure,
+                          Gimp          *gimp,
+                          GimpContext   *context,
+                          GimpProgress  *progress,
+                          Argument      *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -953,10 +953,10 @@ selection_shrink_invoker (ProcRecord   *proc_record,
                            steps, steps, FALSE, TRUE);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord selection_shrink_proc =
+static GimpProcedure selection_shrink_proc =
 {
   TRUE, TRUE,
   "gimp-selection-shrink",
@@ -973,11 +973,11 @@ static ProcRecord selection_shrink_proc =
 };
 
 static Argument *
-selection_layer_alpha_invoker (ProcRecord   *proc_record,
-                               Gimp         *gimp,
-                               GimpContext  *context,
-                               GimpProgress *progress,
-                               Argument     *args)
+selection_layer_alpha_invoker (GimpProcedure *procedure,
+                               Gimp          *gimp,
+                               GimpContext   *context,
+                               GimpProgress  *progress,
+                               Argument      *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -993,10 +993,10 @@ selection_layer_alpha_invoker (ProcRecord   *proc_record,
                                  GIMP_CHANNEL_OP_REPLACE, FALSE, 0.0, 0.0);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord selection_layer_alpha_proc =
+static GimpProcedure selection_layer_alpha_proc =
 {
   TRUE, TRUE,
   "gimp-selection-layer-alpha",
@@ -1013,11 +1013,11 @@ static ProcRecord selection_layer_alpha_proc =
 };
 
 static Argument *
-selection_load_invoker (ProcRecord   *proc_record,
-                        Gimp         *gimp,
-                        GimpContext  *context,
-                        GimpProgress *progress,
-                        Argument     *args)
+selection_load_invoker (GimpProcedure *procedure,
+                        Gimp          *gimp,
+                        GimpContext   *context,
+                        GimpProgress  *progress,
+                        Argument      *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel;
@@ -1040,10 +1040,10 @@ selection_load_invoker (ProcRecord   *proc_record,
                                    FALSE, 0.0, 0.0);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord selection_load_proc =
+static GimpProcedure selection_load_proc =
 {
   TRUE, TRUE,
   "gimp-selection-load",
@@ -1060,11 +1060,11 @@ static ProcRecord selection_load_proc =
 };
 
 static Argument *
-selection_save_invoker (ProcRecord   *proc_record,
-                        Gimp         *gimp,
-                        GimpContext  *context,
-                        GimpProgress *progress,
-                        Argument     *args)
+selection_save_invoker (GimpProcedure *procedure,
+                        Gimp          *gimp,
+                        GimpContext   *context,
+                        GimpProgress  *progress,
+                        Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1081,7 +1081,7 @@ selection_save_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (channel));
@@ -1089,7 +1089,7 @@ selection_save_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord selection_save_proc =
+static GimpProcedure selection_save_proc =
 {
   TRUE, TRUE,
   "gimp-selection-save",
@@ -1106,11 +1106,11 @@ static ProcRecord selection_save_proc =
 };
 
 static Argument *
-selection_combine_invoker (ProcRecord   *proc_record,
-                           Gimp         *gimp,
-                           GimpContext  *context,
-                           GimpProgress *progress,
-                           Argument     *args)
+selection_combine_invoker (GimpProcedure *procedure,
+                           Gimp          *gimp,
+                           GimpContext   *context,
+                           GimpProgress  *progress,
+                           Argument      *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel;
@@ -1135,10 +1135,10 @@ selection_combine_invoker (ProcRecord   *proc_record,
                                    FALSE, 0.0, 0.0);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord selection_combine_proc =
+static GimpProcedure selection_combine_proc =
 {
   TRUE, TRUE,
   "gimp-selection-combine",

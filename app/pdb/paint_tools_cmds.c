@@ -38,26 +38,26 @@
 #include "paint/gimppaintcore.h"
 #include "paint/gimppaintoptions.h"
 
-static ProcRecord airbrush_proc;
-static ProcRecord airbrush_default_proc;
-static ProcRecord clone_proc;
-static ProcRecord clone_default_proc;
-static ProcRecord convolve_proc;
-static ProcRecord convolve_default_proc;
-static ProcRecord dodgeburn_proc;
-static ProcRecord dodgeburn_default_proc;
-static ProcRecord eraser_proc;
-static ProcRecord eraser_default_proc;
-static ProcRecord paintbrush_proc;
-static ProcRecord paintbrush_default_proc;
-static ProcRecord pencil_proc;
-static ProcRecord smudge_proc;
-static ProcRecord smudge_default_proc;
+static GimpProcedure airbrush_proc;
+static GimpProcedure airbrush_default_proc;
+static GimpProcedure clone_proc;
+static GimpProcedure clone_default_proc;
+static GimpProcedure convolve_proc;
+static GimpProcedure convolve_default_proc;
+static GimpProcedure dodgeburn_proc;
+static GimpProcedure dodgeburn_default_proc;
+static GimpProcedure eraser_proc;
+static GimpProcedure eraser_default_proc;
+static GimpProcedure paintbrush_proc;
+static GimpProcedure paintbrush_default_proc;
+static GimpProcedure pencil_proc;
+static GimpProcedure smudge_proc;
+static GimpProcedure smudge_default_proc;
 
 void
 register_paint_tools_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * airbrush
@@ -640,11 +640,11 @@ paint_tools_stroke (Gimp             *gimp,
 }
 
 static Argument *
-airbrush_invoker (ProcRecord   *proc_record,
-                  Gimp         *gimp,
-                  GimpContext  *context,
-                  GimpProgress *progress,
-                  Argument     *args)
+airbrush_invoker (GimpProcedure *procedure,
+                  Gimp          *gimp,
+                  GimpContext   *context,
+                  GimpProgress  *progress,
+                  Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -677,10 +677,10 @@ airbrush_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord airbrush_proc =
+static GimpProcedure airbrush_proc =
 {
   TRUE, TRUE,
   "gimp-airbrush",
@@ -697,11 +697,11 @@ static ProcRecord airbrush_proc =
 };
 
 static Argument *
-airbrush_default_invoker (ProcRecord   *proc_record,
-                          Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+airbrush_default_invoker (GimpProcedure *procedure,
+                          Gimp          *gimp,
+                          GimpContext   *context,
+                          GimpProgress  *progress,
+                          Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -728,10 +728,10 @@ airbrush_default_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord airbrush_default_proc =
+static GimpProcedure airbrush_default_proc =
 {
   TRUE, TRUE,
   "gimp-airbrush-default",
@@ -748,11 +748,11 @@ static ProcRecord airbrush_default_proc =
 };
 
 static Argument *
-clone_invoker (ProcRecord   *proc_record,
-               Gimp         *gimp,
-               GimpContext  *context,
-               GimpProgress *progress,
-               Argument     *args)
+clone_invoker (GimpProcedure *procedure,
+               Gimp          *gimp,
+               GimpContext   *context,
+               GimpProgress  *progress,
+               Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -795,10 +795,10 @@ clone_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord clone_proc =
+static GimpProcedure clone_proc =
 {
   TRUE, TRUE,
   "gimp-clone",
@@ -815,11 +815,11 @@ static ProcRecord clone_proc =
 };
 
 static Argument *
-clone_default_invoker (ProcRecord   *proc_record,
-                       Gimp         *gimp,
-                       GimpContext  *context,
-                       GimpProgress *progress,
-                       Argument     *args)
+clone_default_invoker (GimpProcedure *procedure,
+                       Gimp          *gimp,
+                       GimpContext   *context,
+                       GimpProgress  *progress,
+                       Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -846,10 +846,10 @@ clone_default_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord clone_default_proc =
+static GimpProcedure clone_default_proc =
 {
   TRUE, TRUE,
   "gimp-clone-default",
@@ -866,11 +866,11 @@ static ProcRecord clone_default_proc =
 };
 
 static Argument *
-convolve_invoker (ProcRecord   *proc_record,
-                  Gimp         *gimp,
-                  GimpContext  *context,
-                  GimpProgress *progress,
-                  Argument     *args)
+convolve_invoker (GimpProcedure *procedure,
+                  Gimp          *gimp,
+                  GimpContext   *context,
+                  GimpProgress  *progress,
+                  Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -906,10 +906,10 @@ convolve_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord convolve_proc =
+static GimpProcedure convolve_proc =
 {
   TRUE, TRUE,
   "gimp-convolve",
@@ -926,11 +926,11 @@ static ProcRecord convolve_proc =
 };
 
 static Argument *
-convolve_default_invoker (ProcRecord   *proc_record,
-                          Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+convolve_default_invoker (GimpProcedure *procedure,
+                          Gimp          *gimp,
+                          GimpContext   *context,
+                          GimpProgress  *progress,
+                          Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -957,10 +957,10 @@ convolve_default_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord convolve_default_proc =
+static GimpProcedure convolve_default_proc =
 {
   TRUE, TRUE,
   "gimp-convolve-default",
@@ -977,11 +977,11 @@ static ProcRecord convolve_default_proc =
 };
 
 static Argument *
-dodgeburn_invoker (ProcRecord   *proc_record,
-                   Gimp         *gimp,
-                   GimpContext  *context,
-                   GimpProgress *progress,
-                   Argument     *args)
+dodgeburn_invoker (GimpProcedure *procedure,
+                   Gimp          *gimp,
+                   GimpContext   *context,
+                   GimpProgress  *progress,
+                   Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1020,10 +1020,10 @@ dodgeburn_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord dodgeburn_proc =
+static GimpProcedure dodgeburn_proc =
 {
   TRUE, TRUE,
   "gimp-dodgeburn",
@@ -1040,11 +1040,11 @@ static ProcRecord dodgeburn_proc =
 };
 
 static Argument *
-dodgeburn_default_invoker (ProcRecord   *proc_record,
-                           Gimp         *gimp,
-                           GimpContext  *context,
-                           GimpProgress *progress,
-                           Argument     *args)
+dodgeburn_default_invoker (GimpProcedure *procedure,
+                           Gimp          *gimp,
+                           GimpContext   *context,
+                           GimpProgress  *progress,
+                           Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1071,10 +1071,10 @@ dodgeburn_default_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord dodgeburn_default_proc =
+static GimpProcedure dodgeburn_default_proc =
 {
   TRUE, TRUE,
   "gimp-dodgeburn-default",
@@ -1091,11 +1091,11 @@ static ProcRecord dodgeburn_default_proc =
 };
 
 static Argument *
-eraser_invoker (ProcRecord   *proc_record,
-                Gimp         *gimp,
-                GimpContext  *context,
-                GimpProgress *progress,
-                Argument     *args)
+eraser_invoker (GimpProcedure *procedure,
+                Gimp          *gimp,
+                GimpContext   *context,
+                GimpProgress  *progress,
+                Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1131,10 +1131,10 @@ eraser_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord eraser_proc =
+static GimpProcedure eraser_proc =
 {
   TRUE, TRUE,
   "gimp-eraser",
@@ -1151,11 +1151,11 @@ static ProcRecord eraser_proc =
 };
 
 static Argument *
-eraser_default_invoker (ProcRecord   *proc_record,
-                        Gimp         *gimp,
-                        GimpContext  *context,
-                        GimpProgress *progress,
-                        Argument     *args)
+eraser_default_invoker (GimpProcedure *procedure,
+                        Gimp          *gimp,
+                        GimpContext   *context,
+                        GimpProgress  *progress,
+                        Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1182,10 +1182,10 @@ eraser_default_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord eraser_default_proc =
+static GimpProcedure eraser_default_proc =
 {
   TRUE, TRUE,
   "gimp-eraser-default",
@@ -1202,11 +1202,11 @@ static ProcRecord eraser_default_proc =
 };
 
 static Argument *
-paintbrush_invoker (ProcRecord   *proc_record,
-                    Gimp         *gimp,
-                    GimpContext  *context,
-                    GimpProgress *progress,
-                    Argument     *args)
+paintbrush_invoker (GimpProcedure *procedure,
+                    Gimp          *gimp,
+                    GimpContext   *context,
+                    GimpProgress  *progress,
+                    Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1247,10 +1247,10 @@ paintbrush_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord paintbrush_proc =
+static GimpProcedure paintbrush_proc =
 {
   TRUE, TRUE,
   "gimp-paintbrush",
@@ -1267,11 +1267,11 @@ static ProcRecord paintbrush_proc =
 };
 
 static Argument *
-paintbrush_default_invoker (ProcRecord   *proc_record,
-                            Gimp         *gimp,
-                            GimpContext  *context,
-                            GimpProgress *progress,
-                            Argument     *args)
+paintbrush_default_invoker (GimpProcedure *procedure,
+                            Gimp          *gimp,
+                            GimpContext   *context,
+                            GimpProgress  *progress,
+                            Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1298,10 +1298,10 @@ paintbrush_default_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord paintbrush_default_proc =
+static GimpProcedure paintbrush_default_proc =
 {
   TRUE, TRUE,
   "gimp-paintbrush-default",
@@ -1318,11 +1318,11 @@ static ProcRecord paintbrush_default_proc =
 };
 
 static Argument *
-pencil_invoker (ProcRecord   *proc_record,
-                Gimp         *gimp,
-                GimpContext  *context,
-                GimpProgress *progress,
-                Argument     *args)
+pencil_invoker (GimpProcedure *procedure,
+                Gimp          *gimp,
+                GimpContext   *context,
+                GimpProgress  *progress,
+                Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1349,10 +1349,10 @@ pencil_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord pencil_proc =
+static GimpProcedure pencil_proc =
 {
   TRUE, TRUE,
   "gimp-pencil",
@@ -1369,11 +1369,11 @@ static ProcRecord pencil_proc =
 };
 
 static Argument *
-smudge_invoker (ProcRecord   *proc_record,
-                Gimp         *gimp,
-                GimpContext  *context,
-                GimpProgress *progress,
-                Argument     *args)
+smudge_invoker (GimpProcedure *procedure,
+                Gimp          *gimp,
+                GimpContext   *context,
+                GimpProgress  *progress,
+                Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1406,10 +1406,10 @@ smudge_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord smudge_proc =
+static GimpProcedure smudge_proc =
 {
   TRUE, TRUE,
   "gimp-smudge",
@@ -1426,11 +1426,11 @@ static ProcRecord smudge_proc =
 };
 
 static Argument *
-smudge_default_invoker (ProcRecord   *proc_record,
-                        Gimp         *gimp,
-                        GimpContext  *context,
-                        GimpProgress *progress,
-                        Argument     *args)
+smudge_default_invoker (GimpProcedure *procedure,
+                        Gimp          *gimp,
+                        GimpContext   *context,
+                        GimpProgress  *progress,
+                        Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1457,10 +1457,10 @@ smudge_default_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord smudge_default_proc =
+static GimpProcedure smudge_default_proc =
 {
   TRUE, TRUE,
   "gimp-smudge-default",

@@ -33,13 +33,13 @@
 #include "core/gimpcontainer.h"
 #include "text/gimp-fonts.h"
 
-static ProcRecord fonts_refresh_proc;
-static ProcRecord fonts_get_list_proc;
+static GimpProcedure fonts_refresh_proc;
+static GimpProcedure fonts_get_list_proc;
 
 void
 register_fonts_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * fonts_refresh
@@ -77,17 +77,17 @@ register_fonts_procs (Gimp *gimp)
 }
 
 static Argument *
-fonts_refresh_invoker (ProcRecord   *proc_record,
-                       Gimp         *gimp,
-                       GimpContext  *context,
-                       GimpProgress *progress,
-                       Argument     *args)
+fonts_refresh_invoker (GimpProcedure *procedure,
+                       Gimp          *gimp,
+                       GimpContext   *context,
+                       GimpProgress  *progress,
+                       Argument      *args)
 {
   gimp_fonts_load (gimp);
-  return gimp_procedure_get_return_values (proc_record, TRUE);
+  return gimp_procedure_get_return_values (procedure, TRUE);
 }
 
-static ProcRecord fonts_refresh_proc =
+static GimpProcedure fonts_refresh_proc =
 {
   TRUE, TRUE,
   "gimp-fonts-refresh",
@@ -104,11 +104,11 @@ static ProcRecord fonts_refresh_proc =
 };
 
 static Argument *
-fonts_get_list_invoker (ProcRecord   *proc_record,
-                        Gimp         *gimp,
-                        GimpContext  *context,
-                        GimpProgress *progress,
-                        Argument     *args)
+fonts_get_list_invoker (GimpProcedure *procedure,
+                        Gimp          *gimp,
+                        GimpContext   *context,
+                        GimpProgress  *progress,
+                        Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -124,7 +124,7 @@ fonts_get_list_invoker (ProcRecord   *proc_record,
                                                           filter, &num_fonts);
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -135,7 +135,7 @@ fonts_get_list_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord fonts_get_list_proc =
+static GimpProcedure fonts_get_list_proc =
 {
   TRUE, TRUE,
   "gimp-fonts-get-list",

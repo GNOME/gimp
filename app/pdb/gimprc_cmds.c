@@ -36,18 +36,18 @@
 #include "core/gimp.h"
 #include "core/gimptemplate.h"
 
-static ProcRecord gimprc_query_proc;
-static ProcRecord gimprc_set_proc;
-static ProcRecord get_default_comment_proc;
-static ProcRecord get_monitor_resolution_proc;
-static ProcRecord get_theme_dir_proc;
-static ProcRecord get_color_configuration_proc;
-static ProcRecord get_module_load_inhibit_proc;
+static GimpProcedure gimprc_query_proc;
+static GimpProcedure gimprc_set_proc;
+static GimpProcedure get_default_comment_proc;
+static GimpProcedure get_monitor_resolution_proc;
+static GimpProcedure get_theme_dir_proc;
+static GimpProcedure get_color_configuration_proc;
+static GimpProcedure get_module_load_inhibit_proc;
 
 void
 register_gimprc_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * gimprc_query
@@ -172,11 +172,11 @@ register_gimprc_procs (Gimp *gimp)
 }
 
 static Argument *
-gimprc_query_invoker (ProcRecord   *proc_record,
-                      Gimp         *gimp,
-                      GimpContext  *context,
-                      GimpProgress *progress,
-                      Argument     *args)
+gimprc_query_invoker (GimpProcedure *procedure,
+                      Gimp          *gimp,
+                      GimpContext   *context,
+                      GimpProgress  *progress,
+                      Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -199,7 +199,7 @@ gimprc_query_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, value);
@@ -207,7 +207,7 @@ gimprc_query_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord gimprc_query_proc =
+static GimpProcedure gimprc_query_proc =
 {
   TRUE, TRUE,
   "gimp-gimprc-query",
@@ -224,11 +224,11 @@ static ProcRecord gimprc_query_proc =
 };
 
 static Argument *
-gimprc_set_invoker (ProcRecord   *proc_record,
-                    Gimp         *gimp,
-                    GimpContext  *context,
-                    GimpProgress *progress,
-                    Argument     *args)
+gimprc_set_invoker (GimpProcedure *procedure,
+                    Gimp          *gimp,
+                    GimpContext   *context,
+                    GimpProgress  *progress,
+                    Argument      *args)
 {
   gboolean success = TRUE;
   gchar *token;
@@ -248,10 +248,10 @@ gimprc_set_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord gimprc_set_proc =
+static GimpProcedure gimprc_set_proc =
 {
   TRUE, TRUE,
   "gimp-gimprc-set",
@@ -268,24 +268,24 @@ static ProcRecord gimprc_set_proc =
 };
 
 static Argument *
-get_default_comment_invoker (ProcRecord   *proc_record,
-                             Gimp         *gimp,
-                             GimpContext  *context,
-                             GimpProgress *progress,
-                             Argument     *args)
+get_default_comment_invoker (GimpProcedure *procedure,
+                             Gimp          *gimp,
+                             GimpContext   *context,
+                             GimpProgress  *progress,
+                             Argument      *args)
 {
   Argument *return_vals;
   gchar *comment = NULL;
 
   comment = g_strdup (gimp->config->default_image->comment);
 
-  return_vals = gimp_procedure_get_return_values (proc_record, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
   g_value_take_string (&return_vals[1].value, comment);
 
   return return_vals;
 }
 
-static ProcRecord get_default_comment_proc =
+static GimpProcedure get_default_comment_proc =
 {
   TRUE, TRUE,
   "gimp-get-default-comment",
@@ -302,11 +302,11 @@ static ProcRecord get_default_comment_proc =
 };
 
 static Argument *
-get_monitor_resolution_invoker (ProcRecord   *proc_record,
-                                Gimp         *gimp,
-                                GimpContext  *context,
-                                GimpProgress *progress,
-                                Argument     *args)
+get_monitor_resolution_invoker (GimpProcedure *procedure,
+                                Gimp          *gimp,
+                                GimpContext   *context,
+                                GimpProgress  *progress,
+                                Argument      *args)
 {
   Argument *return_vals;
   gdouble xres = 0.0;
@@ -315,7 +315,7 @@ get_monitor_resolution_invoker (ProcRecord   *proc_record,
   xres = GIMP_DISPLAY_CONFIG (gimp->config)->monitor_xres;
   yres = GIMP_DISPLAY_CONFIG (gimp->config)->monitor_yres;
 
-  return_vals = gimp_procedure_get_return_values (proc_record, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
 
   g_value_set_double (&return_vals[1].value, xres);
   g_value_set_double (&return_vals[2].value, yres);
@@ -323,7 +323,7 @@ get_monitor_resolution_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord get_monitor_resolution_proc =
+static GimpProcedure get_monitor_resolution_proc =
 {
   TRUE, TRUE,
   "gimp-get-monitor-resolution",
@@ -340,24 +340,24 @@ static ProcRecord get_monitor_resolution_proc =
 };
 
 static Argument *
-get_theme_dir_invoker (ProcRecord   *proc_record,
-                       Gimp         *gimp,
-                       GimpContext  *context,
-                       GimpProgress *progress,
-                       Argument     *args)
+get_theme_dir_invoker (GimpProcedure *procedure,
+                       Gimp          *gimp,
+                       GimpContext   *context,
+                       GimpProgress  *progress,
+                       Argument      *args)
 {
   Argument *return_vals;
   gchar *theme_dir = NULL;
 
   theme_dir = g_strdup (gimp_get_theme_dir (gimp));
 
-  return_vals = gimp_procedure_get_return_values (proc_record, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
   g_value_take_string (&return_vals[1].value, theme_dir);
 
   return return_vals;
 }
 
-static ProcRecord get_theme_dir_proc =
+static GimpProcedure get_theme_dir_proc =
 {
   TRUE, TRUE,
   "gimp-get-theme-dir",
@@ -374,24 +374,24 @@ static ProcRecord get_theme_dir_proc =
 };
 
 static Argument *
-get_color_configuration_invoker (ProcRecord   *proc_record,
-                                 Gimp         *gimp,
-                                 GimpContext  *context,
-                                 GimpProgress *progress,
-                                 Argument     *args)
+get_color_configuration_invoker (GimpProcedure *procedure,
+                                 Gimp          *gimp,
+                                 GimpContext   *context,
+                                 GimpProgress  *progress,
+                                 Argument      *args)
 {
   Argument *return_vals;
   gchar *config = NULL;
 
   config = gimp_config_serialize_to_string (GIMP_CONFIG (gimp->config->color_management), NULL);
 
-  return_vals = gimp_procedure_get_return_values (proc_record, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
   g_value_take_string (&return_vals[1].value, config);
 
   return return_vals;
 }
 
-static ProcRecord get_color_configuration_proc =
+static GimpProcedure get_color_configuration_proc =
 {
   TRUE, TRUE,
   "gimp-get-color-configuration",
@@ -408,24 +408,24 @@ static ProcRecord get_color_configuration_proc =
 };
 
 static Argument *
-get_module_load_inhibit_invoker (ProcRecord   *proc_record,
-                                 Gimp         *gimp,
-                                 GimpContext  *context,
-                                 GimpProgress *progress,
-                                 Argument     *args)
+get_module_load_inhibit_invoker (GimpProcedure *procedure,
+                                 Gimp          *gimp,
+                                 GimpContext   *context,
+                                 GimpProgress  *progress,
+                                 Argument      *args)
 {
   Argument *return_vals;
   gchar *load_inhibit = NULL;
 
   load_inhibit = g_strdup (gimp_module_db_get_load_inhibit (gimp->module_db));
 
-  return_vals = gimp_procedure_get_return_values (proc_record, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
   g_value_take_string (&return_vals[1].value, load_inhibit);
 
   return return_vals;
 }
 
-static ProcRecord get_module_load_inhibit_proc =
+static GimpProcedure get_module_load_inhibit_proc =
 {
   TRUE, TRUE,
   "gimp-get-module-load-inhibit",

@@ -102,9 +102,9 @@ gint              plug_ins_help_domains         (Gimp          *gimp,
                                                  gchar       ***help_domains,
                                                  gchar       ***help_uris);
 
-/* Retreive a plug-ins proc_def from its ProcRecord */
+/* Retreive a plug-ins proc_def from its GimpProcedure */
 PlugInProcDef   * plug_ins_proc_def_find        (Gimp          *gimp,
-                                                 ProcRecord    *proc_rec);
+                                                 GimpProcedure *procedure);
 
 
 GSList          * plug_ins_extensions_parse     (gchar         *extensions);

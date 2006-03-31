@@ -24,30 +24,30 @@
 
 struct _PlugInProcFrame
 {
-  gint          ref_count;
+  gint           ref_count;
 
-  GimpContext  *main_context;
-  GList        *context_stack;
+  GimpContext   *main_context;
+  GList         *context_stack;
 
-  ProcRecord   *proc_rec;
-  GMainLoop    *main_loop;
+  GimpProcedure *procedure;
+  GMainLoop     *main_loop;
 
-  Argument     *return_vals;
-  gint          n_return_vals;
+  Argument      *return_vals;
+  gint           n_return_vals;
 
-  GimpProgress *progress;
-  gboolean      progress_created;
-  gulong        progress_cancel_id;
+  GimpProgress  *progress;
+  gboolean       progress_created;
+  gulong         progress_cancel_id;
 };
 
 
 PlugInProcFrame * plug_in_proc_frame_new     (GimpContext     *context,
                                               GimpProgress    *progress,
-                                              ProcRecord      *proc_rec);
+                                              GimpProcedure   *procedure);
 void              plug_in_proc_frame_init    (PlugInProcFrame *proc_frame,
                                               GimpContext     *context,
                                               GimpProgress    *progress,
-                                              ProcRecord      *proc_rec);
+                                              GimpProcedure   *procedure);
 
 void              plug_in_proc_frame_dispose (PlugInProcFrame *proc_frame,
                                               PlugIn          *plug_in);

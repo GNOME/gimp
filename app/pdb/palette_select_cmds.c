@@ -31,14 +31,14 @@
 #include "core/gimp.h"
 #include "core/gimpdatafactory.h"
 
-static ProcRecord palettes_popup_proc;
-static ProcRecord palettes_close_popup_proc;
-static ProcRecord palettes_set_popup_proc;
+static GimpProcedure palettes_popup_proc;
+static GimpProcedure palettes_close_popup_proc;
+static GimpProcedure palettes_set_popup_proc;
 
 void
 register_palette_select_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * palettes_popup
@@ -109,11 +109,11 @@ register_palette_select_procs (Gimp *gimp)
 }
 
 static Argument *
-palettes_popup_invoker (ProcRecord   *proc_record,
-                        Gimp         *gimp,
-                        GimpContext  *context,
-                        GimpProgress *progress,
-                        Argument     *args)
+palettes_popup_invoker (GimpProcedure *procedure,
+                        Gimp          *gimp,
+                        GimpContext   *context,
+                        GimpProgress  *progress,
+                        Argument      *args)
 {
   gboolean success = TRUE;
   gchar *palette_callback;
@@ -134,10 +134,10 @@ palettes_popup_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord palettes_popup_proc =
+static GimpProcedure palettes_popup_proc =
 {
   TRUE, TRUE,
   "gimp-palettes-popup",
@@ -154,11 +154,11 @@ static ProcRecord palettes_popup_proc =
 };
 
 static Argument *
-palettes_close_popup_invoker (ProcRecord   *proc_record,
-                              Gimp         *gimp,
-                              GimpContext  *context,
-                              GimpProgress *progress,
-                              Argument     *args)
+palettes_close_popup_invoker (GimpProcedure *procedure,
+                              Gimp          *gimp,
+                              GimpContext   *context,
+                              GimpProgress  *progress,
+                              Argument      *args)
 {
   gboolean success = TRUE;
   gchar *palette_callback;
@@ -174,10 +174,10 @@ palettes_close_popup_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord palettes_close_popup_proc =
+static GimpProcedure palettes_close_popup_proc =
 {
   TRUE, TRUE,
   "gimp-palettes-close-popup",
@@ -194,11 +194,11 @@ static ProcRecord palettes_close_popup_proc =
 };
 
 static Argument *
-palettes_set_popup_invoker (ProcRecord   *proc_record,
-                            Gimp         *gimp,
-                            GimpContext  *context,
-                            GimpProgress *progress,
-                            Argument     *args)
+palettes_set_popup_invoker (GimpProcedure *procedure,
+                            Gimp          *gimp,
+                            GimpContext   *context,
+                            GimpProgress  *progress,
+                            Argument      *args)
 {
   gboolean success = TRUE;
   gchar *palette_callback;
@@ -217,10 +217,10 @@ palettes_set_popup_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord palettes_set_popup_proc =
+static GimpProcedure palettes_set_popup_proc =
 {
   TRUE, TRUE,
   "gimp-palettes-set-popup",

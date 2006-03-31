@@ -35,16 +35,16 @@
 #include "core/gimpimage.h"
 #include "gimp-intl.h"
 
-static ProcRecord by_color_select_proc;
-static ProcRecord ellipse_select_proc;
-static ProcRecord free_select_proc;
-static ProcRecord fuzzy_select_proc;
-static ProcRecord rect_select_proc;
+static GimpProcedure by_color_select_proc;
+static GimpProcedure ellipse_select_proc;
+static GimpProcedure free_select_proc;
+static GimpProcedure fuzzy_select_proc;
+static GimpProcedure rect_select_proc;
 
 void
 register_selection_tools_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * by_color_select
@@ -372,11 +372,11 @@ register_selection_tools_procs (Gimp *gimp)
 }
 
 static Argument *
-by_color_select_invoker (ProcRecord   *proc_record,
-                         Gimp         *gimp,
-                         GimpContext  *context,
-                         GimpProgress *progress,
-                         Argument     *args)
+by_color_select_invoker (GimpProcedure *procedure,
+                         Gimp          *gimp,
+                         GimpContext   *context,
+                         GimpProgress  *progress,
+                         Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -413,10 +413,10 @@ by_color_select_invoker (ProcRecord   *proc_record,
                                     feather_radius);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord by_color_select_proc =
+static GimpProcedure by_color_select_proc =
 {
   TRUE, TRUE,
   "gimp-by-color-select",
@@ -433,11 +433,11 @@ static ProcRecord by_color_select_proc =
 };
 
 static Argument *
-ellipse_select_invoker (ProcRecord   *proc_record,
-                        Gimp         *gimp,
-                        GimpContext  *context,
-                        GimpProgress *progress,
-                        Argument     *args)
+ellipse_select_invoker (GimpProcedure *procedure,
+                        Gimp          *gimp,
+                        GimpContext   *context,
+                        GimpProgress  *progress,
+                        Argument      *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -472,10 +472,10 @@ ellipse_select_invoker (ProcRecord   *proc_record,
                                    feather_radius);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord ellipse_select_proc =
+static GimpProcedure ellipse_select_proc =
 {
   TRUE, TRUE,
   "gimp-ellipse-select",
@@ -492,11 +492,11 @@ static ProcRecord ellipse_select_proc =
 };
 
 static Argument *
-free_select_invoker (ProcRecord   *proc_record,
-                     Gimp         *gimp,
-                     GimpContext  *context,
-                     GimpProgress *progress,
-                     Argument     *args)
+free_select_invoker (GimpProcedure *procedure,
+                     Gimp          *gimp,
+                     GimpContext   *context,
+                     GimpProgress  *progress,
+                     Argument      *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -528,10 +528,10 @@ free_select_invoker (ProcRecord   *proc_record,
                                    feather_radius);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord free_select_proc =
+static GimpProcedure free_select_proc =
 {
   TRUE, TRUE,
   "gimp-free-select",
@@ -548,11 +548,11 @@ static ProcRecord free_select_proc =
 };
 
 static Argument *
-fuzzy_select_invoker (ProcRecord   *proc_record,
-                      Gimp         *gimp,
-                      GimpContext  *context,
-                      GimpProgress *progress,
-                      Argument     *args)
+fuzzy_select_invoker (GimpProcedure *procedure,
+                      Gimp          *gimp,
+                      GimpContext   *context,
+                      GimpProgress  *progress,
+                      Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -592,10 +592,10 @@ fuzzy_select_invoker (ProcRecord   *proc_record,
                                  feather_radius);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord fuzzy_select_proc =
+static GimpProcedure fuzzy_select_proc =
 {
   TRUE, TRUE,
   "gimp-fuzzy-select",
@@ -613,11 +613,11 @@ static ProcRecord fuzzy_select_proc =
 };
 
 static Argument *
-rect_select_invoker (ProcRecord   *proc_record,
-                     Gimp         *gimp,
-                     GimpContext  *context,
-                     GimpProgress *progress,
-                     Argument     *args)
+rect_select_invoker (GimpProcedure *procedure,
+                     Gimp          *gimp,
+                     GimpContext   *context,
+                     GimpProgress  *progress,
+                     Argument      *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -649,10 +649,10 @@ rect_select_invoker (ProcRecord   *proc_record,
                                      feather_radius);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord rect_select_proc =
+static GimpProcedure rect_select_proc =
 {
   TRUE, TRUE,
   "gimp-rect-select",

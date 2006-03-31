@@ -240,11 +240,11 @@ plug_in_call_init (Gimp        *gimp,
 }
 
 PlugIn *
-plug_in_new (Gimp         *gimp,
-             GimpContext  *context,
-             GimpProgress *progress,
-             ProcRecord   *proc_rec,
-             const gchar  *prog)
+plug_in_new (Gimp          *gimp,
+             GimpContext   *context,
+             GimpProgress  *progress,
+             GimpProcedure *procedure,
+             const gchar   *prog)
 {
   PlugIn *plug_in;
 
@@ -282,7 +282,7 @@ plug_in_new (Gimp         *gimp,
   plug_in->ext_main_loop      = NULL;
 
   plug_in_proc_frame_init (&plug_in->main_proc_frame,
-                           context, progress, proc_rec);
+                           context, progress, procedure);
 
   plug_in->temp_proc_frames   = NULL;
 
@@ -900,19 +900,19 @@ plug_in_get_proc_frame (PlugIn *plug_in)
 }
 
 PlugInProcFrame *
-plug_in_proc_frame_push (PlugIn       *plug_in,
-                         GimpContext  *context,
-                         GimpProgress *progress,
-                         ProcRecord   *proc_rec)
+plug_in_proc_frame_push (PlugIn        *plug_in,
+                         GimpContext   *context,
+                         GimpProgress  *progress,
+                         GimpProcedure *procedure)
 {
   PlugInProcFrame *proc_frame;
 
   g_return_val_if_fail (plug_in != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
-  g_return_val_if_fail (proc_rec != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
-  proc_frame = plug_in_proc_frame_new (context, progress, proc_rec);
+  proc_frame = plug_in_proc_frame_new (context, progress, procedure);
 
   plug_in->temp_proc_frames = g_list_prepend (plug_in->temp_proc_frames,
                                               proc_frame);
@@ -985,7 +985,7 @@ plug_in_get_undo_desc (PlugIn *plug_in)
   proc_frame = plug_in_get_proc_frame (plug_in);
 
   if (proc_frame)
-    proc_def = plug_ins_proc_def_find (plug_in->gimp, proc_frame->proc_rec);
+    proc_def = plug_ins_proc_def_find (plug_in->gimp, proc_frame->procedure);
 
   if (proc_def)
     {

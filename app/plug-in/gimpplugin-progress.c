@@ -197,20 +197,20 @@ plug_in_progress_install (PlugIn      *plug_in,
                           const gchar *progress_callback)
 {
   PlugInProcFrame *proc_frame;
-  ProcRecord      *proc_rec;
+  GimpProcedure   *procedure;
 
   g_return_val_if_fail (plug_in != NULL, FALSE);
   g_return_val_if_fail (progress_callback != NULL, FALSE);
 
-  proc_rec = procedural_db_lookup (plug_in->gimp, progress_callback);
+  procedure = procedural_db_lookup (plug_in->gimp, progress_callback);
 
-  if (! proc_rec                                ||
-      proc_rec->num_args != 3                   ||
-      proc_rec->args[0].type != GIMP_PDB_INT32  ||
-      proc_rec->args[1].type != GIMP_PDB_STRING ||
-      proc_rec->args[2].type != GIMP_PDB_FLOAT  ||
-      proc_rec->proc_type    != GIMP_TEMPORARY  ||
-      proc_rec->exec_method.temporary.plug_in != plug_in)
+  if (! procedure                                ||
+      procedure->num_args != 3                   ||
+      procedure->args[0].type != GIMP_PDB_INT32  ||
+      procedure->args[1].type != GIMP_PDB_STRING ||
+      procedure->args[2].type != GIMP_PDB_FLOAT  ||
+      procedure->proc_type    != GIMP_TEMPORARY  ||
+      procedure->exec_method.temporary.plug_in != plug_in)
     {
       return FALSE;
     }

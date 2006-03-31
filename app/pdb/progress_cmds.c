@@ -32,19 +32,19 @@
 #include "plug-in/plug-in-progress.h"
 #include "plug-in/plug-in.h"
 
-static ProcRecord progress_init_proc;
-static ProcRecord progress_update_proc;
-static ProcRecord progress_pulse_proc;
-static ProcRecord progress_set_text_proc;
-static ProcRecord progress_get_window_handle_proc;
-static ProcRecord progress_install_proc;
-static ProcRecord progress_uninstall_proc;
-static ProcRecord progress_cancel_proc;
+static GimpProcedure progress_init_proc;
+static GimpProcedure progress_update_proc;
+static GimpProcedure progress_pulse_proc;
+static GimpProcedure progress_set_text_proc;
+static GimpProcedure progress_get_window_handle_proc;
+static GimpProcedure progress_install_proc;
+static GimpProcedure progress_uninstall_proc;
+static GimpProcedure progress_cancel_proc;
 
 void
 register_progress_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * progress_init
@@ -158,11 +158,11 @@ register_progress_procs (Gimp *gimp)
 }
 
 static Argument *
-progress_init_invoker (ProcRecord   *proc_record,
-                       Gimp         *gimp,
-                       GimpContext  *context,
-                       GimpProgress *progress,
-                       Argument     *args)
+progress_init_invoker (GimpProcedure *procedure,
+                       Gimp          *gimp,
+                       GimpContext   *context,
+                       GimpProgress  *progress,
+                       Argument      *args)
 {
   gboolean success = TRUE;
   gchar *message;
@@ -182,10 +182,10 @@ progress_init_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord progress_init_proc =
+static GimpProcedure progress_init_proc =
 {
   TRUE, TRUE,
   "gimp-progress-init",
@@ -202,11 +202,11 @@ static ProcRecord progress_init_proc =
 };
 
 static Argument *
-progress_update_invoker (ProcRecord   *proc_record,
-                         Gimp         *gimp,
-                         GimpContext  *context,
-                         GimpProgress *progress,
-                         Argument     *args)
+progress_update_invoker (GimpProcedure *procedure,
+                         Gimp          *gimp,
+                         GimpContext   *context,
+                         GimpProgress  *progress,
+                         Argument      *args)
 {
   gboolean success = TRUE;
   gdouble percentage;
@@ -224,10 +224,10 @@ progress_update_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord progress_update_proc =
+static GimpProcedure progress_update_proc =
 {
   TRUE, TRUE,
   "gimp-progress-update",
@@ -244,11 +244,11 @@ static ProcRecord progress_update_proc =
 };
 
 static Argument *
-progress_pulse_invoker (ProcRecord   *proc_record,
-                        Gimp         *gimp,
-                        GimpContext  *context,
-                        GimpProgress *progress,
-                        Argument     *args)
+progress_pulse_invoker (GimpProcedure *procedure,
+                        Gimp          *gimp,
+                        GimpContext   *context,
+                        GimpProgress  *progress,
+                        Argument      *args)
 {
   gboolean success = TRUE;
   if (gimp->current_plug_in && gimp->current_plug_in->open)
@@ -258,10 +258,10 @@ progress_pulse_invoker (ProcRecord   *proc_record,
     }
   else
     success = FALSE;
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord progress_pulse_proc =
+static GimpProcedure progress_pulse_proc =
 {
   TRUE, TRUE,
   "gimp-progress-pulse",
@@ -278,11 +278,11 @@ static ProcRecord progress_pulse_proc =
 };
 
 static Argument *
-progress_set_text_invoker (ProcRecord   *proc_record,
-                           Gimp         *gimp,
-                           GimpContext  *context,
-                           GimpProgress *progress,
-                           Argument     *args)
+progress_set_text_invoker (GimpProcedure *procedure,
+                           Gimp          *gimp,
+                           GimpContext   *context,
+                           GimpProgress  *progress,
+                           Argument      *args)
 {
   gboolean success = TRUE;
   gchar *message;
@@ -300,10 +300,10 @@ progress_set_text_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord progress_set_text_proc =
+static GimpProcedure progress_set_text_proc =
 {
   TRUE, TRUE,
   "gimp-progress-set-text",
@@ -320,11 +320,11 @@ static ProcRecord progress_set_text_proc =
 };
 
 static Argument *
-progress_get_window_handle_invoker (ProcRecord   *proc_record,
-                                    Gimp         *gimp,
-                                    GimpContext  *context,
-                                    GimpProgress *progress,
-                                    Argument     *args)
+progress_get_window_handle_invoker (GimpProcedure *procedure,
+                                    Gimp          *gimp,
+                                    GimpContext   *context,
+                                    GimpProgress  *progress,
+                                    Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -338,7 +338,7 @@ progress_get_window_handle_invoker (ProcRecord   *proc_record,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_int (&return_vals[1].value, window);
@@ -346,7 +346,7 @@ progress_get_window_handle_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord progress_get_window_handle_proc =
+static GimpProcedure progress_get_window_handle_proc =
 {
   TRUE, TRUE,
   "gimp-progress-get-window-handle",
@@ -363,11 +363,11 @@ static ProcRecord progress_get_window_handle_proc =
 };
 
 static Argument *
-progress_install_invoker (ProcRecord   *proc_record,
-                          Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+progress_install_invoker (GimpProcedure *procedure,
+                          Gimp          *gimp,
+                          GimpContext   *context,
+                          GimpProgress  *progress,
+                          Argument      *args)
 {
   gboolean success = TRUE;
   gchar *progress_callback;
@@ -383,10 +383,10 @@ progress_install_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord progress_install_proc =
+static GimpProcedure progress_install_proc =
 {
   TRUE, TRUE,
   "gimp-progress-install",
@@ -403,11 +403,11 @@ static ProcRecord progress_install_proc =
 };
 
 static Argument *
-progress_uninstall_invoker (ProcRecord   *proc_record,
-                            Gimp         *gimp,
-                            GimpContext  *context,
-                            GimpProgress *progress,
-                            Argument     *args)
+progress_uninstall_invoker (GimpProcedure *procedure,
+                            Gimp          *gimp,
+                            GimpContext   *context,
+                            GimpProgress  *progress,
+                            Argument      *args)
 {
   gboolean success = TRUE;
   gchar *progress_callback;
@@ -423,10 +423,10 @@ progress_uninstall_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord progress_uninstall_proc =
+static GimpProcedure progress_uninstall_proc =
 {
   TRUE, TRUE,
   "gimp-progress-uninstall",
@@ -443,11 +443,11 @@ static ProcRecord progress_uninstall_proc =
 };
 
 static Argument *
-progress_cancel_invoker (ProcRecord   *proc_record,
-                         Gimp         *gimp,
-                         GimpContext  *context,
-                         GimpProgress *progress,
-                         Argument     *args)
+progress_cancel_invoker (GimpProcedure *procedure,
+                         Gimp          *gimp,
+                         GimpContext   *context,
+                         GimpProgress  *progress,
+                         Argument      *args)
 {
   gboolean success = TRUE;
   gchar *progress_callback;
@@ -463,10 +463,10 @@ progress_cancel_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord progress_cancel_proc =
+static GimpProcedure progress_cancel_proc =
 {
   TRUE, TRUE,
   "gimp-progress-cancel",

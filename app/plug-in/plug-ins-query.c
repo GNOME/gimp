@@ -135,8 +135,7 @@ plug_ins_query (Gimp          *gimp,
 
   for (list = matched; list; list = g_slist_next (list))
     {
-      PlugInProcDef *proc_def = list->data;
-      ProcRecord    *proc_rec = proc_def->procedure;
+      PlugInProcDef *proc_def  = list->data;
       gchar         *name;
 
       if (proc_def->menu_label)
@@ -150,7 +149,7 @@ plug_ins_query (Gimp          *gimp,
       (*accel_strs)[i]    = NULL;
       (*prog_strs)[i]     = g_strdup (proc_def->prog);
       (*types_strs)[i]    = g_strdup (proc_def->image_types);
-      (*realname_strs)[i] = g_strdup (proc_rec->name);
+      (*realname_strs)[i] = g_strdup (proc_def->procedure->name);
       (*time_ints)[i]     = proc_def->mtime;
 
       g_free (name);

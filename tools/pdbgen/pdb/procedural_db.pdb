@@ -149,7 +149,7 @@ HELP
     $date = '1997';
 
     @inargs = (
-	{ name  => 'procedure', type  => 'string',
+	{ name  => 'procedure_name', type  => 'string',
 	  desc  => 'The procedure name' }
     );
 
@@ -178,7 +178,7 @@ HELP
   GimpPDBProcType  ptype;
   gchar           *canonical;
 
-  canonical = gimp_canonicalize_identifier (procedure);
+  canonical = gimp_canonicalize_identifier (procedure_name);
 
   success = procedural_db_proc_info (gimp, canonical,
                                      &blurb, &help, &author,
@@ -207,7 +207,7 @@ HELP
     $date = '1997';
 
     @inargs = (
-	{ name => 'procedure', type  => 'string',
+	{ name => 'procedure_name', type  => 'string',
 	  desc => 'The procedure name' },
 	{ name => 'arg_num', type => 'int32',
 	  desc => 'The argument number' }
@@ -225,10 +225,10 @@ HELP
    %invoke = (
 	code => <<CODE
 {
-  ProcRecord *proc;
-  gchar      *canonical;
+  GimpProcedure *proc;
+  gchar         *canonical;
 
-  canonical = gimp_canonicalize_identifier (procedure);
+  canonical = gimp_canonicalize_identifier (procedure_name);
 
   proc = procedural_db_lookup (gimp, canonical);
 
@@ -274,7 +274,7 @@ HELP
     $date = '1997';
 
     @inargs = (
-	{ name => 'procedure', type  => 'string',
+	{ name => 'procedure_name', type  => 'string',
 	  desc => 'The procedure name' },
 	{ name => 'val_num', type => 'int32',
 	  desc => 'The return value number' }
@@ -292,10 +292,10 @@ HELP
    %invoke = (
 	code => <<CODE
 {
-  ProcRecord *proc;
-  gchar      *canonical;
+  GimpProcedure *proc;
+  gchar         *canonical;
 
-  canonical = gimp_canonicalize_identifier (procedure);
+  canonical = gimp_canonicalize_identifier (procedure_name);
 
   proc = procedural_db_lookup (gimp, canonical);
 

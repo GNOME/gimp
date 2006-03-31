@@ -39,17 +39,17 @@
 #include "core/gimpprogress.h"
 #include "gimp-intl.h"
 
-static ProcRecord flip_proc;
-static ProcRecord perspective_proc;
-static ProcRecord rotate_proc;
-static ProcRecord scale_proc;
-static ProcRecord shear_proc;
-static ProcRecord transform_2d_proc;
+static GimpProcedure flip_proc;
+static GimpProcedure perspective_proc;
+static GimpProcedure rotate_proc;
+static GimpProcedure scale_proc;
+static GimpProcedure shear_proc;
+static GimpProcedure transform_2d_proc;
 
 void
 register_transform_tools_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * flip
@@ -388,11 +388,11 @@ register_transform_tools_procs (Gimp *gimp)
 }
 
 static Argument *
-flip_invoker (ProcRecord   *proc_record,
-              Gimp         *gimp,
-              GimpContext  *context,
-              GimpProgress *progress,
-              Argument     *args)
+flip_invoker (GimpProcedure *procedure,
+              Gimp          *gimp,
+              GimpContext   *context,
+              GimpProgress  *progress,
+              Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -416,7 +416,7 @@ flip_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
@@ -424,7 +424,7 @@ flip_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord flip_proc =
+static GimpProcedure flip_proc =
 {
   TRUE, TRUE,
   "gimp-flip",
@@ -441,11 +441,11 @@ static ProcRecord flip_proc =
 };
 
 static Argument *
-perspective_invoker (ProcRecord   *proc_record,
-                     Gimp         *gimp,
-                     GimpContext  *context,
-                     GimpProgress *progress,
-                     Argument     *args)
+perspective_invoker (GimpProcedure *procedure,
+                     Gimp          *gimp,
+                     GimpContext   *context,
+                     GimpProgress  *progress,
+                     Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -510,7 +510,7 @@ perspective_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
@@ -518,7 +518,7 @@ perspective_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord perspective_proc =
+static GimpProcedure perspective_proc =
 {
   TRUE, TRUE,
   "gimp-perspective",
@@ -535,11 +535,11 @@ static ProcRecord perspective_proc =
 };
 
 static Argument *
-rotate_invoker (ProcRecord   *proc_record,
-                Gimp         *gimp,
-                GimpContext  *context,
-                GimpProgress *progress,
-                Argument     *args)
+rotate_invoker (GimpProcedure *procedure,
+                Gimp          *gimp,
+                GimpContext   *context,
+                GimpProgress  *progress,
+                Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -586,7 +586,7 @@ rotate_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
@@ -594,7 +594,7 @@ rotate_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord rotate_proc =
+static GimpProcedure rotate_proc =
 {
   TRUE, TRUE,
   "gimp-rotate",
@@ -611,11 +611,11 @@ static ProcRecord rotate_proc =
 };
 
 static Argument *
-scale_invoker (ProcRecord   *proc_record,
-               Gimp         *gimp,
-               GimpContext  *context,
-               GimpProgress *progress,
-               Argument     *args)
+scale_invoker (GimpProcedure *procedure,
+               Gimp          *gimp,
+               GimpContext   *context,
+               GimpProgress  *progress,
+               Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -672,7 +672,7 @@ scale_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
@@ -680,7 +680,7 @@ scale_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord scale_proc =
+static GimpProcedure scale_proc =
 {
   TRUE, TRUE,
   "gimp-scale",
@@ -697,11 +697,11 @@ static ProcRecord scale_proc =
 };
 
 static Argument *
-shear_invoker (ProcRecord   *proc_record,
-               Gimp         *gimp,
-               GimpContext  *context,
-               GimpProgress *progress,
-               Argument     *args)
+shear_invoker (GimpProcedure *procedure,
+               Gimp          *gimp,
+               GimpContext   *context,
+               GimpProgress  *progress,
+               Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -751,7 +751,7 @@ shear_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
@@ -759,7 +759,7 @@ shear_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord shear_proc =
+static GimpProcedure shear_proc =
 {
   TRUE, TRUE,
   "gimp-shear",
@@ -776,11 +776,11 @@ static ProcRecord shear_proc =
 };
 
 static Argument *
-transform_2d_invoker (ProcRecord   *proc_record,
-                      Gimp         *gimp,
-                      GimpContext  *context,
-                      GimpProgress *progress,
-                      Argument     *args)
+transform_2d_invoker (GimpProcedure *procedure,
+                      Gimp          *gimp,
+                      GimpContext   *context,
+                      GimpProgress  *progress,
+                      Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -840,7 +840,7 @@ transform_2d_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
@@ -848,7 +848,7 @@ transform_2d_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord transform_2d_proc =
+static GimpProcedure transform_2d_proc =
 {
   TRUE, TRUE,
   "gimp-transform-2d",

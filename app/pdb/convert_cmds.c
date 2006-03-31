@@ -35,14 +35,14 @@
 #include "core/gimpimage.h"
 #include "core/gimppalette.h"
 
-static ProcRecord image_convert_rgb_proc;
-static ProcRecord image_convert_grayscale_proc;
-static ProcRecord image_convert_indexed_proc;
+static GimpProcedure image_convert_rgb_proc;
+static GimpProcedure image_convert_grayscale_proc;
+static GimpProcedure image_convert_indexed_proc;
 
 void
 register_convert_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * image_convert_rgb
@@ -131,11 +131,11 @@ register_convert_procs (Gimp *gimp)
 }
 
 static Argument *
-image_convert_rgb_invoker (ProcRecord   *proc_record,
-                           Gimp         *gimp,
-                           GimpContext  *context,
-                           GimpProgress *progress,
-                           Argument     *args)
+image_convert_rgb_invoker (GimpProcedure *procedure,
+                           Gimp          *gimp,
+                           GimpContext   *context,
+                           GimpProgress  *progress,
+                           Argument      *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -150,10 +150,10 @@ image_convert_rgb_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord image_convert_rgb_proc =
+static GimpProcedure image_convert_rgb_proc =
 {
   TRUE, TRUE,
   "gimp-image-convert-rgb",
@@ -170,11 +170,11 @@ static ProcRecord image_convert_rgb_proc =
 };
 
 static Argument *
-image_convert_grayscale_invoker (ProcRecord   *proc_record,
-                                 Gimp         *gimp,
-                                 GimpContext  *context,
-                                 GimpProgress *progress,
-                                 Argument     *args)
+image_convert_grayscale_invoker (GimpProcedure *procedure,
+                                 Gimp          *gimp,
+                                 GimpContext   *context,
+                                 GimpProgress  *progress,
+                                 Argument      *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -189,10 +189,10 @@ image_convert_grayscale_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord image_convert_grayscale_proc =
+static GimpProcedure image_convert_grayscale_proc =
 {
   TRUE, TRUE,
   "gimp-image-convert-grayscale",
@@ -209,11 +209,11 @@ static ProcRecord image_convert_grayscale_proc =
 };
 
 static Argument *
-image_convert_indexed_invoker (ProcRecord   *proc_record,
-                               Gimp         *gimp,
-                               GimpContext  *context,
-                               GimpProgress *progress,
-                               Argument     *args)
+image_convert_indexed_invoker (GimpProcedure *procedure,
+                               Gimp          *gimp,
+                               GimpContext   *context,
+                               GimpProgress  *progress,
+                               Argument      *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -266,10 +266,10 @@ image_convert_indexed_invoker (ProcRecord   *proc_record,
                             NULL);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord image_convert_indexed_proc =
+static GimpProcedure image_convert_indexed_proc =
 {
   TRUE, TRUE,
   "gimp-image-convert-indexed",

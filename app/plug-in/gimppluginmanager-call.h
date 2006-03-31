@@ -24,15 +24,15 @@
 
 /*  Run a plug-in as if it were a procedure database procedure
  */
-Argument * plug_in_run    (Gimp         *gimp,
-                           GimpContext  *context,
-                           GimpProgress *progress,
-                           ProcRecord   *proc_rec,
-                           Argument     *args,
-                           gint          n_args,
-                           gboolean      synchronous,
-                           gboolean      destroy_return_vals,
-                           gint          display_ID);
+Argument * plug_in_run    (Gimp          *gimp,
+                           GimpContext   *context,
+                           GimpProgress  *progress,
+                           GimpProcedure *procedure,
+                           Argument      *args,
+                           gint           n_args,
+                           gboolean       synchronous,
+                           gboolean       destroy_return_vals,
+                           gint           display_ID);
 
 /*  Run one of the last plug-ins from the plug-in history again with
  *  the same arguments. Extensions are exempt from this "privelege".

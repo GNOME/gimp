@@ -37,15 +37,15 @@
 #include "core/gimplist.h"
 #include "core/gimppattern.h"
 
-static ProcRecord patterns_refresh_proc;
-static ProcRecord patterns_get_list_proc;
-static ProcRecord patterns_get_pattern_proc;
-static ProcRecord patterns_get_pattern_data_proc;
+static GimpProcedure patterns_refresh_proc;
+static GimpProcedure patterns_get_list_proc;
+static GimpProcedure patterns_get_pattern_proc;
+static GimpProcedure patterns_get_pattern_data_proc;
 
 void
 register_patterns_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * patterns_refresh
@@ -167,17 +167,17 @@ register_patterns_procs (Gimp *gimp)
 }
 
 static Argument *
-patterns_refresh_invoker (ProcRecord   *proc_record,
-                          Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+patterns_refresh_invoker (GimpProcedure *procedure,
+                          Gimp          *gimp,
+                          GimpContext   *context,
+                          GimpProgress  *progress,
+                          Argument      *args)
 {
   gimp_data_factory_data_refresh (gimp->pattern_factory);
-  return gimp_procedure_get_return_values (proc_record, TRUE);
+  return gimp_procedure_get_return_values (procedure, TRUE);
 }
 
-static ProcRecord patterns_refresh_proc =
+static GimpProcedure patterns_refresh_proc =
 {
   TRUE, TRUE,
   "gimp-patterns-refresh",
@@ -194,11 +194,11 @@ static ProcRecord patterns_refresh_proc =
 };
 
 static Argument *
-patterns_get_list_invoker (ProcRecord   *proc_record,
-                           Gimp         *gimp,
-                           GimpContext  *context,
-                           GimpProgress *progress,
-                           Argument     *args)
+patterns_get_list_invoker (GimpProcedure *procedure,
+                           Gimp          *gimp,
+                           GimpContext   *context,
+                           GimpProgress  *progress,
+                           Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -214,7 +214,7 @@ patterns_get_list_invoker (ProcRecord   *proc_record,
                                                              filter, &num_patterns);
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -225,7 +225,7 @@ patterns_get_list_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord patterns_get_list_proc =
+static GimpProcedure patterns_get_list_proc =
 {
   TRUE, TRUE,
   "gimp-patterns-get-list",
@@ -242,11 +242,11 @@ static ProcRecord patterns_get_list_proc =
 };
 
 static Argument *
-patterns_get_pattern_invoker (ProcRecord   *proc_record,
-                              Gimp         *gimp,
-                              GimpContext  *context,
-                              GimpProgress *progress,
-                              Argument     *args)
+patterns_get_pattern_invoker (GimpProcedure *procedure,
+                              Gimp          *gimp,
+                              GimpContext   *context,
+                              GimpProgress  *progress,
+                              Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -265,7 +265,7 @@ patterns_get_pattern_invoker (ProcRecord   *proc_record,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -277,7 +277,7 @@ patterns_get_pattern_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord patterns_get_pattern_proc =
+static GimpProcedure patterns_get_pattern_proc =
 {
   TRUE, TRUE,
   "gimp-patterns-get-pattern",
@@ -294,11 +294,11 @@ static ProcRecord patterns_get_pattern_proc =
 };
 
 static Argument *
-patterns_get_pattern_data_invoker (ProcRecord   *proc_record,
-                                   Gimp         *gimp,
-                                   GimpContext  *context,
-                                   GimpProgress *progress,
-                                   Argument     *args)
+patterns_get_pattern_data_invoker (GimpProcedure *procedure,
+                                   Gimp          *gimp,
+                                   GimpContext   *context,
+                                   GimpProgress  *progress,
+                                   Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -341,7 +341,7 @@ patterns_get_pattern_data_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -356,7 +356,7 @@ patterns_get_pattern_data_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord patterns_get_pattern_data_proc =
+static GimpProcedure patterns_get_pattern_data_proc =
 {
   TRUE, TRUE,
   "gimp-patterns-get-pattern-data",

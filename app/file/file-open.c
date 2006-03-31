@@ -191,8 +191,8 @@ file_open_thumbnail (Gimp          *gimp,
                      gint          *image_width,
                      gint          *image_height)
 {
-  PlugInProcDef     *file_proc;
-  const ProcRecord  *proc;
+  PlugInProcDef *file_proc;
+  GimpProcedure *procedure;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -209,9 +209,9 @@ file_open_thumbnail (Gimp          *gimp,
   if (! file_proc || ! file_proc->thumb_loader)
     return NULL;
 
-  proc = procedural_db_lookup (gimp, file_proc->thumb_loader);
+  procedure = procedural_db_lookup (gimp, file_proc->thumb_loader);
 
-  if (proc && proc->num_args >= 2 && proc->num_values >= 1)
+  if (procedure && procedure->num_args >= 2 && procedure->num_values >= 1)
     {
       GimpPDBStatusType  status;
       Argument          *return_vals;
@@ -225,7 +225,7 @@ file_open_thumbnail (Gimp          *gimp,
         filename = g_strdup (uri);
 
       return_vals = procedural_db_run_proc (gimp, context, progress,
-                                            proc->name,
+                                            procedure->name,
                                             &n_return_vals,
                                             GIMP_PDB_STRING, filename,
                                             GIMP_PDB_INT32,  size,

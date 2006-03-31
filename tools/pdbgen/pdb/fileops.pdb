@@ -54,7 +54,7 @@ HELP
   Argument      *new_args;
   Argument      *return_vals;
   PlugInProcDef *file_proc;
-  ProcRecord    *proc;
+  GimpProcedure *proc;
   gchar         *uri;
   gint           n_return_vals;
   gint           i;
@@ -64,14 +64,14 @@ HELP
                                     NULL);
 
   if (! uri)
-    return gimp_procedure_get_return_values (proc_record, FALSE);
+    return gimp_procedure_get_return_values (procedure, FALSE);
 
   file_proc = file_utils_find_proc (gimp->load_procs, uri);
 
   g_free (uri);
 
   if (! file_proc)
-    return gimp_procedure_get_return_values (proc_record, FALSE);
+    return gimp_procedure_get_return_values (procedure, FALSE);
 
   proc = file_proc->procedure;
 
@@ -181,7 +181,7 @@ HELP
   Argument      *new_args;
   Argument      *return_vals;
   PlugInProcDef *file_proc;
-  ProcRecord    *proc;
+  GimpProcedure *proc;
   gchar         *uri;
   gint           n_return_vals;
   gint           i;
@@ -191,14 +191,14 @@ HELP
                                     NULL);
 
   if (! uri)
-    return gimp_procedure_get_return_values (proc_record, FALSE);
+    return gimp_procedure_get_return_values (procedure, FALSE);
 
   file_proc = file_utils_find_proc (gimp->save_procs, uri);
 
   g_free (uri);
 
   if (! file_proc)
-    return gimp_procedure_get_return_values (proc_record, FALSE);
+    return gimp_procedure_get_return_values (procedure, FALSE);
 
   proc = file_proc->procedure;
 
@@ -485,7 +485,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  ProcRecord    *proc;
+  GimpProcedure *proc;
   PlugInProcDef *file_proc;
   gchar         *canonical;
 
@@ -608,21 +608,21 @@ fileops_register_magic_load_handler (Gimp        *gimp,
                                      const gchar *prefixes,
                                      const gchar *magics)
 {
-  ProcRecord    *proc;
+  GimpProcedure *procedure;
   PlugInProcDef *file_proc;
   gchar         *canonical;
   gboolean       success = FALSE;
 
   canonical = gimp_canonicalize_identifier (procedure_name);
 
-  proc = procedural_db_lookup (gimp, canonical);
+  procedure = procedural_db_lookup (gimp, canonical);
 
-  if (proc && ((proc->num_args < 3)                    ||
-	       (proc->num_values < 1)                  ||
-	       (proc->args[0].type != GIMP_PDB_INT32)  ||
-	       (proc->args[1].type != GIMP_PDB_STRING) ||
-	       (proc->args[2].type != GIMP_PDB_STRING) ||
-	       (proc->values[0].type != GIMP_PDB_IMAGE)))
+  if (procedure && ((procedure->num_args < 3)                    ||
+	            (procedure->num_values < 1)                  ||
+	            (procedure->args[0].type != GIMP_PDB_INT32)  ||
+	            (procedure->args[1].type != GIMP_PDB_STRING) ||
+	            (procedure->args[2].type != GIMP_PDB_STRING) ||
+	            (procedure->values[0].type != GIMP_PDB_IMAGE)))
     {
       g_message ("load handler \"%s\" does not take the standard load handler args",
 		 canonical);

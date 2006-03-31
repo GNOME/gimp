@@ -36,16 +36,16 @@
 #include "core/gimpgradient.h"
 #include "core/gimplist.h"
 
-static ProcRecord gradients_refresh_proc;
-static ProcRecord gradients_get_list_proc;
-static ProcRecord gradients_sample_uniform_proc;
-static ProcRecord gradients_sample_custom_proc;
-static ProcRecord gradients_get_gradient_data_proc;
+static GimpProcedure gradients_refresh_proc;
+static GimpProcedure gradients_get_list_proc;
+static GimpProcedure gradients_sample_uniform_proc;
+static GimpProcedure gradients_sample_custom_proc;
+static GimpProcedure gradients_get_gradient_data_proc;
 
 void
 register_gradients_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * gradients_refresh
@@ -204,17 +204,17 @@ register_gradients_procs (Gimp *gimp)
 }
 
 static Argument *
-gradients_refresh_invoker (ProcRecord   *proc_record,
-                           Gimp         *gimp,
-                           GimpContext  *context,
-                           GimpProgress *progress,
-                           Argument     *args)
+gradients_refresh_invoker (GimpProcedure *procedure,
+                           Gimp          *gimp,
+                           GimpContext   *context,
+                           GimpProgress  *progress,
+                           Argument      *args)
 {
   gimp_data_factory_data_refresh (gimp->gradient_factory);
-  return gimp_procedure_get_return_values (proc_record, TRUE);
+  return gimp_procedure_get_return_values (procedure, TRUE);
 }
 
-static ProcRecord gradients_refresh_proc =
+static GimpProcedure gradients_refresh_proc =
 {
   TRUE, TRUE,
   "gimp-gradients-refresh",
@@ -231,11 +231,11 @@ static ProcRecord gradients_refresh_proc =
 };
 
 static Argument *
-gradients_get_list_invoker (ProcRecord   *proc_record,
-                            Gimp         *gimp,
-                            GimpContext  *context,
-                            GimpProgress *progress,
-                            Argument     *args)
+gradients_get_list_invoker (GimpProcedure *procedure,
+                            Gimp          *gimp,
+                            GimpContext   *context,
+                            GimpProgress  *progress,
+                            Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -251,7 +251,7 @@ gradients_get_list_invoker (ProcRecord   *proc_record,
                                                               filter, &num_gradients);
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -262,7 +262,7 @@ gradients_get_list_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord gradients_get_list_proc =
+static GimpProcedure gradients_get_list_proc =
 {
   TRUE, TRUE,
   "gimp-gradients-get-list",
@@ -279,11 +279,11 @@ static ProcRecord gradients_get_list_proc =
 };
 
 static Argument *
-gradients_sample_uniform_invoker (ProcRecord   *proc_record,
-                                  Gimp         *gimp,
-                                  GimpContext  *context,
-                                  GimpProgress *progress,
-                                  Argument     *args)
+gradients_sample_uniform_invoker (GimpProcedure *procedure,
+                                  Gimp          *gimp,
+                                  GimpContext   *context,
+                                  GimpProgress  *progress,
+                                  Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -325,7 +325,7 @@ gradients_sample_uniform_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -336,7 +336,7 @@ gradients_sample_uniform_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord gradients_sample_uniform_proc =
+static GimpProcedure gradients_sample_uniform_proc =
 {
   TRUE, TRUE,
   "gimp-gradients-sample-uniform",
@@ -353,11 +353,11 @@ static ProcRecord gradients_sample_uniform_proc =
 };
 
 static Argument *
-gradients_sample_custom_invoker (ProcRecord   *proc_record,
-                                 Gimp         *gimp,
-                                 GimpContext  *context,
-                                 GimpProgress *progress,
-                                 Argument     *args)
+gradients_sample_custom_invoker (GimpProcedure *procedure,
+                                 Gimp          *gimp,
+                                 GimpContext   *context,
+                                 GimpProgress  *progress,
+                                 Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -398,7 +398,7 @@ gradients_sample_custom_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -409,7 +409,7 @@ gradients_sample_custom_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord gradients_sample_custom_proc =
+static GimpProcedure gradients_sample_custom_proc =
 {
   TRUE, TRUE,
   "gimp-gradients-sample-custom",
@@ -426,11 +426,11 @@ static ProcRecord gradients_sample_custom_proc =
 };
 
 static Argument *
-gradients_get_gradient_data_invoker (ProcRecord   *proc_record,
-                                     Gimp         *gimp,
-                                     GimpContext  *context,
-                                     GimpProgress *progress,
-                                     Argument     *args)
+gradients_get_gradient_data_invoker (GimpProcedure *procedure,
+                                     Gimp          *gimp,
+                                     GimpContext   *context,
+                                     GimpProgress  *progress,
+                                     Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -495,7 +495,7 @@ gradients_get_gradient_data_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -507,7 +507,7 @@ gradients_get_gradient_data_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord gradients_get_gradient_data_proc =
+static GimpProcedure gradients_get_gradient_data_proc =
 {
   TRUE, TRUE,
   "gimp-gradients-get-gradient-data",

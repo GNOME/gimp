@@ -35,18 +35,18 @@
 #include "core/gimpcontainer.h"
 #include "gimp-intl.h"
 
-static ProcRecord buffers_get_list_proc;
-static ProcRecord buffer_rename_proc;
-static ProcRecord buffer_delete_proc;
-static ProcRecord buffer_get_width_proc;
-static ProcRecord buffer_get_height_proc;
-static ProcRecord buffer_get_bytes_proc;
-static ProcRecord buffer_get_image_type_proc;
+static GimpProcedure buffers_get_list_proc;
+static GimpProcedure buffer_rename_proc;
+static GimpProcedure buffer_delete_proc;
+static GimpProcedure buffer_get_width_proc;
+static GimpProcedure buffer_get_height_proc;
+static GimpProcedure buffer_get_bytes_proc;
+static GimpProcedure buffer_get_image_type_proc;
 
 void
 register_buffer_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * buffers_get_list
@@ -207,11 +207,11 @@ register_buffer_procs (Gimp *gimp)
 }
 
 static Argument *
-buffers_get_list_invoker (ProcRecord   *proc_record,
-                          Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+buffers_get_list_invoker (GimpProcedure *procedure,
+                          Gimp          *gimp,
+                          GimpContext   *context,
+                          GimpProgress  *progress,
+                          Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -227,7 +227,7 @@ buffers_get_list_invoker (ProcRecord   *proc_record,
                                                             filter, &num_buffers);
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -238,7 +238,7 @@ buffers_get_list_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord buffers_get_list_proc =
+static GimpProcedure buffers_get_list_proc =
 {
   TRUE, TRUE,
   "gimp-buffers-get-list",
@@ -255,11 +255,11 @@ static ProcRecord buffers_get_list_proc =
 };
 
 static Argument *
-buffer_rename_invoker (ProcRecord   *proc_record,
-                       Gimp         *gimp,
-                       GimpContext  *context,
-                       GimpProgress *progress,
-                       Argument     *args)
+buffer_rename_invoker (GimpProcedure *procedure,
+                       Gimp          *gimp,
+                       GimpContext   *context,
+                       GimpProgress  *progress,
+                       Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -284,7 +284,7 @@ buffer_rename_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, real_name);
@@ -292,7 +292,7 @@ buffer_rename_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord buffer_rename_proc =
+static GimpProcedure buffer_rename_proc =
 {
   TRUE, TRUE,
   "gimp-buffer-rename",
@@ -309,11 +309,11 @@ static ProcRecord buffer_rename_proc =
 };
 
 static Argument *
-buffer_delete_invoker (ProcRecord   *proc_record,
-                       Gimp         *gimp,
-                       GimpContext  *context,
-                       GimpProgress *progress,
-                       Argument     *args)
+buffer_delete_invoker (GimpProcedure *procedure,
+                       Gimp          *gimp,
+                       GimpContext   *context,
+                       GimpProgress  *progress,
+                       Argument      *args)
 {
   gboolean success = TRUE;
   gchar *buffer_name;
@@ -331,10 +331,10 @@ buffer_delete_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord buffer_delete_proc =
+static GimpProcedure buffer_delete_proc =
 {
   TRUE, TRUE,
   "gimp-buffer-delete",
@@ -351,11 +351,11 @@ static ProcRecord buffer_delete_proc =
 };
 
 static Argument *
-buffer_get_width_invoker (ProcRecord   *proc_record,
-                          Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+buffer_get_width_invoker (GimpProcedure *procedure,
+                          Gimp          *gimp,
+                          GimpContext   *context,
+                          GimpProgress  *progress,
+                          Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -375,7 +375,7 @@ buffer_get_width_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_int (&return_vals[1].value, width);
@@ -383,7 +383,7 @@ buffer_get_width_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord buffer_get_width_proc =
+static GimpProcedure buffer_get_width_proc =
 {
   TRUE, TRUE,
   "gimp-buffer-get-width",
@@ -400,11 +400,11 @@ static ProcRecord buffer_get_width_proc =
 };
 
 static Argument *
-buffer_get_height_invoker (ProcRecord   *proc_record,
-                           Gimp         *gimp,
-                           GimpContext  *context,
-                           GimpProgress *progress,
-                           Argument     *args)
+buffer_get_height_invoker (GimpProcedure *procedure,
+                           Gimp          *gimp,
+                           GimpContext   *context,
+                           GimpProgress  *progress,
+                           Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -424,7 +424,7 @@ buffer_get_height_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_int (&return_vals[1].value, height);
@@ -432,7 +432,7 @@ buffer_get_height_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord buffer_get_height_proc =
+static GimpProcedure buffer_get_height_proc =
 {
   TRUE, TRUE,
   "gimp-buffer-get-height",
@@ -449,11 +449,11 @@ static ProcRecord buffer_get_height_proc =
 };
 
 static Argument *
-buffer_get_bytes_invoker (ProcRecord   *proc_record,
-                          Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+buffer_get_bytes_invoker (GimpProcedure *procedure,
+                          Gimp          *gimp,
+                          GimpContext   *context,
+                          GimpProgress  *progress,
+                          Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -473,7 +473,7 @@ buffer_get_bytes_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_int (&return_vals[1].value, bytes);
@@ -481,7 +481,7 @@ buffer_get_bytes_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord buffer_get_bytes_proc =
+static GimpProcedure buffer_get_bytes_proc =
 {
   TRUE, TRUE,
   "gimp-buffer-get-bytes",
@@ -498,11 +498,11 @@ static ProcRecord buffer_get_bytes_proc =
 };
 
 static Argument *
-buffer_get_image_type_invoker (ProcRecord   *proc_record,
-                               Gimp         *gimp,
-                               GimpContext  *context,
-                               GimpProgress *progress,
-                               Argument     *args)
+buffer_get_image_type_invoker (GimpProcedure *procedure,
+                               Gimp          *gimp,
+                               GimpContext   *context,
+                               GimpProgress  *progress,
+                               Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -522,7 +522,7 @@ buffer_get_image_type_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_enum (&return_vals[1].value, image_type);
@@ -530,7 +530,7 @@ buffer_get_image_type_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord buffer_get_image_type_proc =
+static GimpProcedure buffer_get_image_type_proc =
 {
   TRUE, TRUE,
   "gimp-buffer-get-image-type",

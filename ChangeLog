@@ -1,5 +1,39 @@
 2006-03-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/pdb-types.h
+	* app/pdb/gimpprocedure.h: renamed struct ProcRecord to
+	GimpProcedure. Added GIMP_IS_PROCEDURE() which checks for != NULL.
+
+	* app/pdb/gimpprocedure.c
+	* app/pdb/procedural-db-query.c
+	* app/pdb/procedural_db.[ch]
+	* app/batch.c
+	* app/actions/plug-in-commands.c
+	* app/actions/vectors-commands.c
+	* app/file/file-open.c
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-proc-def.h
+	* app/plug-in/plug-in-proc-frame.[ch]
+	* app/plug-in/plug-in-progress.c
+	* app/plug-in/plug-in-rc.c
+	* app/plug-in/plug-in-run.[ch]
+	* app/plug-in/plug-in.[ch]
+	* app/plug-in/plug-ins-query.c
+	* app/plug-in/plug-ins.[ch]
+	* app/widgets/gimphelp.c
+	* app/xcf/xcf.c
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/app.pl: changed accordingly. Renamed 'proc_rec' and
+	similarily named variables and parameters to 'procedure'.
+
+	* tools/pdbgen/pdb/procedural_db.pdb: changed 'procedure'
+	parameters to 'procedure_name'.
+
+	* app/pdb/*_cmds.c
+	* libgimp/gimpproceduraldb_pdb.[ch]: regenerated.
+
+2006-03-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/pdb/gimpprocedure.h (struct ProcRecord): added new member
 	"gboolean static_strings", so the ProcRecord struct and its
 	strings can be marked as static separately.

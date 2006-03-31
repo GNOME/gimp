@@ -49,27 +49,27 @@
 #include "core/gimpimage.h"
 #include "gimp-intl.h"
 
-static ProcRecord brightness_contrast_proc;
-static ProcRecord levels_proc;
-static ProcRecord levels_auto_proc;
-static ProcRecord levels_stretch_proc;
-static ProcRecord posterize_proc;
-static ProcRecord desaturate_proc;
-static ProcRecord desaturate_full_proc;
-static ProcRecord equalize_proc;
-static ProcRecord invert_proc;
-static ProcRecord curves_spline_proc;
-static ProcRecord curves_explicit_proc;
-static ProcRecord color_balance_proc;
-static ProcRecord colorize_proc;
-static ProcRecord histogram_proc;
-static ProcRecord hue_saturation_proc;
-static ProcRecord threshold_proc;
+static GimpProcedure brightness_contrast_proc;
+static GimpProcedure levels_proc;
+static GimpProcedure levels_auto_proc;
+static GimpProcedure levels_stretch_proc;
+static GimpProcedure posterize_proc;
+static GimpProcedure desaturate_proc;
+static GimpProcedure desaturate_full_proc;
+static GimpProcedure equalize_proc;
+static GimpProcedure invert_proc;
+static GimpProcedure curves_spline_proc;
+static GimpProcedure curves_explicit_proc;
+static GimpProcedure color_balance_proc;
+static GimpProcedure colorize_proc;
+static GimpProcedure histogram_proc;
+static GimpProcedure hue_saturation_proc;
+static GimpProcedure threshold_proc;
 
 void
 register_color_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * brightness_contrast
@@ -583,11 +583,11 @@ register_color_procs (Gimp *gimp)
 }
 
 static Argument *
-brightness_contrast_invoker (ProcRecord   *proc_record,
-                             Gimp         *gimp,
-                             GimpContext  *context,
-                             GimpProgress *progress,
-                             Argument     *args)
+brightness_contrast_invoker (GimpProcedure *procedure,
+                             Gimp          *gimp,
+                             GimpContext   *context,
+                             GimpProgress  *progress,
+                             Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -635,10 +635,10 @@ brightness_contrast_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord brightness_contrast_proc =
+static GimpProcedure brightness_contrast_proc =
 {
   TRUE, TRUE,
   "gimp-brightness-contrast",
@@ -655,11 +655,11 @@ static ProcRecord brightness_contrast_proc =
 };
 
 static Argument *
-levels_invoker (ProcRecord   *proc_record,
-                Gimp         *gimp,
-                GimpContext  *context,
-                GimpProgress *progress,
-                Argument     *args)
+levels_invoker (GimpProcedure *procedure,
+                Gimp          *gimp,
+                GimpContext   *context,
+                GimpProgress  *progress,
+                Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -696,10 +696,10 @@ levels_invoker (ProcRecord   *proc_record,
                               low_output, high_output);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord levels_proc =
+static GimpProcedure levels_proc =
 {
   TRUE, TRUE,
   "gimp-levels",
@@ -716,11 +716,11 @@ static ProcRecord levels_proc =
 };
 
 static Argument *
-levels_auto_invoker (ProcRecord   *proc_record,
-                     Gimp         *gimp,
-                     GimpContext  *context,
-                     GimpProgress *progress,
-                     Argument     *args)
+levels_auto_invoker (GimpProcedure *procedure,
+                     Gimp          *gimp,
+                     GimpContext   *context,
+                     GimpProgress  *progress,
+                     Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -737,10 +737,10 @@ levels_auto_invoker (ProcRecord   *proc_record,
         gimp_drawable_levels_stretch (drawable, context);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord levels_auto_proc =
+static GimpProcedure levels_auto_proc =
 {
   TRUE, TRUE,
   "gimp-levels-auto",
@@ -757,11 +757,11 @@ static ProcRecord levels_auto_proc =
 };
 
 static Argument *
-levels_stretch_invoker (ProcRecord   *proc_record,
-                        Gimp         *gimp,
-                        GimpContext  *context,
-                        GimpProgress *progress,
-                        Argument     *args)
+levels_stretch_invoker (GimpProcedure *procedure,
+                        Gimp          *gimp,
+                        GimpContext   *context,
+                        GimpProgress  *progress,
+                        Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -778,10 +778,10 @@ levels_stretch_invoker (ProcRecord   *proc_record,
         gimp_drawable_levels_stretch (drawable, context);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord levels_stretch_proc =
+static GimpProcedure levels_stretch_proc =
 {
   TRUE, TRUE,
   "gimp-levels-stretch",
@@ -798,11 +798,11 @@ static ProcRecord levels_stretch_proc =
 };
 
 static Argument *
-posterize_invoker (ProcRecord   *proc_record,
-                   Gimp         *gimp,
-                   GimpContext  *context,
-                   GimpProgress *progress,
-                   Argument     *args)
+posterize_invoker (GimpProcedure *procedure,
+                   Gimp          *gimp,
+                   GimpContext   *context,
+                   GimpProgress  *progress,
+                   Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -846,10 +846,10 @@ posterize_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord posterize_proc =
+static GimpProcedure posterize_proc =
 {
   TRUE, TRUE,
   "gimp-posterize",
@@ -866,11 +866,11 @@ static ProcRecord posterize_proc =
 };
 
 static Argument *
-desaturate_invoker (ProcRecord   *proc_record,
-                    Gimp         *gimp,
-                    GimpContext  *context,
-                    GimpProgress *progress,
-                    Argument     *args)
+desaturate_invoker (GimpProcedure *procedure,
+                    Gimp          *gimp,
+                    GimpContext   *context,
+                    GimpProgress  *progress,
+                    Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -887,10 +887,10 @@ desaturate_invoker (ProcRecord   *proc_record,
         gimp_drawable_desaturate (drawable, GIMP_DESATURATE_LIGHTNESS);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord desaturate_proc =
+static GimpProcedure desaturate_proc =
 {
   TRUE, TRUE,
   "gimp-desaturate",
@@ -907,11 +907,11 @@ static ProcRecord desaturate_proc =
 };
 
 static Argument *
-desaturate_full_invoker (ProcRecord   *proc_record,
-                         Gimp         *gimp,
-                         GimpContext  *context,
-                         GimpProgress *progress,
-                         Argument     *args)
+desaturate_full_invoker (GimpProcedure *procedure,
+                         Gimp          *gimp,
+                         GimpContext   *context,
+                         GimpProgress  *progress,
+                         Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -930,10 +930,10 @@ desaturate_full_invoker (ProcRecord   *proc_record,
         gimp_drawable_desaturate (drawable, desaturate_mode);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord desaturate_full_proc =
+static GimpProcedure desaturate_full_proc =
 {
   TRUE, TRUE,
   "gimp-desaturate-full",
@@ -950,11 +950,11 @@ static ProcRecord desaturate_full_proc =
 };
 
 static Argument *
-equalize_invoker (ProcRecord   *proc_record,
-                  Gimp         *gimp,
-                  GimpContext  *context,
-                  GimpProgress *progress,
-                  Argument     *args)
+equalize_invoker (GimpProcedure *procedure,
+                  Gimp          *gimp,
+                  GimpContext   *context,
+                  GimpProgress  *progress,
+                  Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -973,10 +973,10 @@ equalize_invoker (ProcRecord   *proc_record,
         gimp_drawable_equalize (drawable, mask_only);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord equalize_proc =
+static GimpProcedure equalize_proc =
 {
   TRUE, TRUE,
   "gimp-equalize",
@@ -993,11 +993,11 @@ static ProcRecord equalize_proc =
 };
 
 static Argument *
-invert_invoker (ProcRecord   *proc_record,
-                Gimp         *gimp,
-                GimpContext  *context,
-                GimpProgress *progress,
-                Argument     *args)
+invert_invoker (GimpProcedure *procedure,
+                Gimp          *gimp,
+                GimpContext   *context,
+                GimpProgress  *progress,
+                Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1014,10 +1014,10 @@ invert_invoker (ProcRecord   *proc_record,
         gimp_drawable_invert (drawable);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord invert_proc =
+static GimpProcedure invert_proc =
 {
   TRUE, TRUE,
   "gimp-invert",
@@ -1034,11 +1034,11 @@ static ProcRecord invert_proc =
 };
 
 static Argument *
-curves_spline_invoker (ProcRecord   *proc_record,
-                       Gimp         *gimp,
-                       GimpContext  *context,
-                       GimpProgress *progress,
-                       Argument     *args)
+curves_spline_invoker (GimpProcedure *procedure,
+                       Gimp          *gimp,
+                       GimpContext   *context,
+                       GimpProgress  *progress,
+                       Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1116,10 +1116,10 @@ curves_spline_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord curves_spline_proc =
+static GimpProcedure curves_spline_proc =
 {
   TRUE, TRUE,
   "gimp-curves-spline",
@@ -1136,11 +1136,11 @@ static ProcRecord curves_spline_proc =
 };
 
 static Argument *
-curves_explicit_invoker (ProcRecord   *proc_record,
-                         Gimp         *gimp,
-                         GimpContext  *context,
-                         GimpProgress *progress,
-                         Argument     *args)
+curves_explicit_invoker (GimpProcedure *procedure,
+                         Gimp          *gimp,
+                         GimpContext   *context,
+                         GimpProgress  *progress,
+                         Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1209,10 +1209,10 @@ curves_explicit_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord curves_explicit_proc =
+static GimpProcedure curves_explicit_proc =
 {
   TRUE, TRUE,
   "gimp-curves-explicit",
@@ -1229,11 +1229,11 @@ static ProcRecord curves_explicit_proc =
 };
 
 static Argument *
-color_balance_invoker (ProcRecord   *proc_record,
-                       Gimp         *gimp,
-                       GimpContext  *context,
-                       GimpProgress *progress,
-                       Argument     *args)
+color_balance_invoker (GimpProcedure *procedure,
+                       Gimp          *gimp,
+                       GimpContext   *context,
+                       GimpProgress  *progress,
+                       Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1290,10 +1290,10 @@ color_balance_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord color_balance_proc =
+static GimpProcedure color_balance_proc =
 {
   TRUE, TRUE,
   "gimp-color-balance",
@@ -1310,11 +1310,11 @@ static ProcRecord color_balance_proc =
 };
 
 static Argument *
-colorize_invoker (ProcRecord   *proc_record,
-                  Gimp         *gimp,
-                  GimpContext  *context,
-                  GimpProgress *progress,
-                  Argument     *args)
+colorize_invoker (GimpProcedure *procedure,
+                  Gimp          *gimp,
+                  GimpContext   *context,
+                  GimpProgress  *progress,
+                  Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1365,10 +1365,10 @@ colorize_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord colorize_proc =
+static GimpProcedure colorize_proc =
 {
   TRUE, TRUE,
   "gimp-colorize",
@@ -1385,11 +1385,11 @@ static ProcRecord colorize_proc =
 };
 
 static Argument *
-histogram_invoker (ProcRecord   *proc_record,
-                   Gimp         *gimp,
-                   GimpContext  *context,
-                   GimpProgress *progress,
-                   Argument     *args)
+histogram_invoker (GimpProcedure *procedure,
+                   Gimp          *gimp,
+                   GimpContext   *context,
+                   GimpProgress  *progress,
+                   Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1440,7 +1440,7 @@ histogram_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -1455,7 +1455,7 @@ histogram_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord histogram_proc =
+static GimpProcedure histogram_proc =
 {
   TRUE, TRUE,
   "gimp-histogram",
@@ -1472,11 +1472,11 @@ static ProcRecord histogram_proc =
 };
 
 static Argument *
-hue_saturation_invoker (ProcRecord   *proc_record,
-                        Gimp         *gimp,
-                        GimpContext  *context,
-                        GimpProgress *progress,
-                        Argument     *args)
+hue_saturation_invoker (GimpProcedure *procedure,
+                        Gimp          *gimp,
+                        GimpContext   *context,
+                        GimpProgress  *progress,
+                        Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1530,10 +1530,10 @@ hue_saturation_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord hue_saturation_proc =
+static GimpProcedure hue_saturation_proc =
 {
   TRUE, TRUE,
   "gimp-hue-saturation",
@@ -1550,11 +1550,11 @@ static ProcRecord hue_saturation_proc =
 };
 
 static Argument *
-threshold_invoker (ProcRecord   *proc_record,
-                   Gimp         *gimp,
-                   GimpContext  *context,
-                   GimpProgress *progress,
-                   Argument     *args)
+threshold_invoker (GimpProcedure *procedure,
+                   Gimp          *gimp,
+                   GimpContext   *context,
+                   GimpProgress  *progress,
+                   Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1600,10 +1600,10 @@ threshold_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord threshold_proc =
+static GimpProcedure threshold_proc =
 {
   TRUE, TRUE,
   "gimp-threshold",

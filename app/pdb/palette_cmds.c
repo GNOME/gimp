@@ -37,25 +37,25 @@
 #include "core/gimplist.h"
 #include "core/gimppalette.h"
 
-static ProcRecord palette_new_proc;
-static ProcRecord palette_duplicate_proc;
-static ProcRecord palette_rename_proc;
-static ProcRecord palette_delete_proc;
-static ProcRecord palette_is_editable_proc;
-static ProcRecord palette_get_info_proc;
-static ProcRecord palette_get_columns_proc;
-static ProcRecord palette_set_columns_proc;
-static ProcRecord palette_add_entry_proc;
-static ProcRecord palette_delete_entry_proc;
-static ProcRecord palette_entry_get_color_proc;
-static ProcRecord palette_entry_set_color_proc;
-static ProcRecord palette_entry_get_name_proc;
-static ProcRecord palette_entry_set_name_proc;
+static GimpProcedure palette_new_proc;
+static GimpProcedure palette_duplicate_proc;
+static GimpProcedure palette_rename_proc;
+static GimpProcedure palette_delete_proc;
+static GimpProcedure palette_is_editable_proc;
+static GimpProcedure palette_get_info_proc;
+static GimpProcedure palette_get_columns_proc;
+static GimpProcedure palette_set_columns_proc;
+static GimpProcedure palette_add_entry_proc;
+static GimpProcedure palette_delete_entry_proc;
+static GimpProcedure palette_entry_get_color_proc;
+static GimpProcedure palette_entry_set_color_proc;
+static GimpProcedure palette_entry_get_name_proc;
+static GimpProcedure palette_entry_set_name_proc;
 
 void
 register_palette_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * palette_new
@@ -403,11 +403,11 @@ register_palette_procs (Gimp *gimp)
 }
 
 static Argument *
-palette_new_invoker (ProcRecord   *proc_record,
-                     Gimp         *gimp,
-                     GimpContext  *context,
-                     GimpProgress *progress,
-                     Argument     *args)
+palette_new_invoker (GimpProcedure *procedure,
+                     Gimp          *gimp,
+                     GimpContext   *context,
+                     GimpProgress  *progress,
+                     Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -431,7 +431,7 @@ palette_new_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, actual_name);
@@ -439,7 +439,7 @@ palette_new_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord palette_new_proc =
+static GimpProcedure palette_new_proc =
 {
   TRUE, TRUE,
   "gimp-palette-new",
@@ -456,11 +456,11 @@ static ProcRecord palette_new_proc =
 };
 
 static Argument *
-palette_duplicate_invoker (ProcRecord   *proc_record,
-                           Gimp         *gimp,
-                           GimpContext  *context,
-                           GimpProgress *progress,
-                           Argument     *args)
+palette_duplicate_invoker (GimpProcedure *procedure,
+                           Gimp          *gimp,
+                           GimpContext   *context,
+                           GimpProgress  *progress,
+                           Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -489,7 +489,7 @@ palette_duplicate_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, copy_name);
@@ -497,7 +497,7 @@ palette_duplicate_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord palette_duplicate_proc =
+static GimpProcedure palette_duplicate_proc =
 {
   TRUE, TRUE,
   "gimp-palette-duplicate",
@@ -514,11 +514,11 @@ static ProcRecord palette_duplicate_proc =
 };
 
 static Argument *
-palette_rename_invoker (ProcRecord   *proc_record,
-                        Gimp         *gimp,
-                        GimpContext  *context,
-                        GimpProgress *progress,
-                        Argument     *args)
+palette_rename_invoker (GimpProcedure *procedure,
+                        Gimp          *gimp,
+                        GimpContext   *context,
+                        GimpProgress  *progress,
+                        Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -543,7 +543,7 @@ palette_rename_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, actual_name);
@@ -551,7 +551,7 @@ palette_rename_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord palette_rename_proc =
+static GimpProcedure palette_rename_proc =
 {
   TRUE, TRUE,
   "gimp-palette-rename",
@@ -568,11 +568,11 @@ static ProcRecord palette_rename_proc =
 };
 
 static Argument *
-palette_delete_invoker (ProcRecord   *proc_record,
-                        Gimp         *gimp,
-                        GimpContext  *context,
-                        GimpProgress *progress,
-                        Argument     *args)
+palette_delete_invoker (GimpProcedure *procedure,
+                        Gimp          *gimp,
+                        GimpContext   *context,
+                        GimpProgress  *progress,
+                        Argument      *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -602,10 +602,10 @@ palette_delete_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord palette_delete_proc =
+static GimpProcedure palette_delete_proc =
 {
   TRUE, TRUE,
   "gimp-palette-delete",
@@ -622,11 +622,11 @@ static ProcRecord palette_delete_proc =
 };
 
 static Argument *
-palette_is_editable_invoker (ProcRecord   *proc_record,
-                             Gimp         *gimp,
-                             GimpContext  *context,
-                             GimpProgress *progress,
-                             Argument     *args)
+palette_is_editable_invoker (GimpProcedure *procedure,
+                             Gimp          *gimp,
+                             GimpContext   *context,
+                             GimpProgress  *progress,
+                             Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -646,7 +646,7 @@ palette_is_editable_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals[1].value, editable);
@@ -654,7 +654,7 @@ palette_is_editable_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord palette_is_editable_proc =
+static GimpProcedure palette_is_editable_proc =
 {
   TRUE, TRUE,
   "gimp-palette-is-editable",
@@ -671,11 +671,11 @@ static ProcRecord palette_is_editable_proc =
 };
 
 static Argument *
-palette_get_info_invoker (ProcRecord   *proc_record,
-                          Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+palette_get_info_invoker (GimpProcedure *procedure,
+                          Gimp          *gimp,
+                          GimpContext   *context,
+                          GimpProgress  *progress,
+                          Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -695,7 +695,7 @@ palette_get_info_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_int (&return_vals[1].value, num_colors);
@@ -703,7 +703,7 @@ palette_get_info_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord palette_get_info_proc =
+static GimpProcedure palette_get_info_proc =
 {
   TRUE, TRUE,
   "gimp-palette-get-info",
@@ -720,11 +720,11 @@ static ProcRecord palette_get_info_proc =
 };
 
 static Argument *
-palette_get_columns_invoker (ProcRecord   *proc_record,
-                             Gimp         *gimp,
-                             GimpContext  *context,
-                             GimpProgress *progress,
-                             Argument     *args)
+palette_get_columns_invoker (GimpProcedure *procedure,
+                             Gimp          *gimp,
+                             GimpContext   *context,
+                             GimpProgress  *progress,
+                             Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -744,7 +744,7 @@ palette_get_columns_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_int (&return_vals[1].value, num_columns);
@@ -752,7 +752,7 @@ palette_get_columns_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord palette_get_columns_proc =
+static GimpProcedure palette_get_columns_proc =
 {
   TRUE, TRUE,
   "gimp-palette-get-columns",
@@ -769,11 +769,11 @@ static ProcRecord palette_get_columns_proc =
 };
 
 static Argument *
-palette_set_columns_invoker (ProcRecord   *proc_record,
-                             Gimp         *gimp,
-                             GimpContext  *context,
-                             GimpProgress *progress,
-                             Argument     *args)
+palette_set_columns_invoker (GimpProcedure *procedure,
+                             Gimp          *gimp,
+                             GimpContext   *context,
+                             GimpProgress  *progress,
+                             Argument      *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -793,10 +793,10 @@ palette_set_columns_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord palette_set_columns_proc =
+static GimpProcedure palette_set_columns_proc =
 {
   TRUE, TRUE,
   "gimp-palette-set-columns",
@@ -813,11 +813,11 @@ static ProcRecord palette_set_columns_proc =
 };
 
 static Argument *
-palette_add_entry_invoker (ProcRecord   *proc_record,
-                           Gimp         *gimp,
-                           GimpContext  *context,
-                           GimpProgress *progress,
-                           Argument     *args)
+palette_add_entry_invoker (GimpProcedure *procedure,
+                           Gimp          *gimp,
+                           GimpContext   *context,
+                           GimpProgress  *progress,
+                           Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -846,7 +846,7 @@ palette_add_entry_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_int (&return_vals[1].value, entry_num);
@@ -854,7 +854,7 @@ palette_add_entry_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord palette_add_entry_proc =
+static GimpProcedure palette_add_entry_proc =
 {
   TRUE, TRUE,
   "gimp-palette-add-entry",
@@ -871,11 +871,11 @@ static ProcRecord palette_add_entry_proc =
 };
 
 static Argument *
-palette_delete_entry_invoker (ProcRecord   *proc_record,
-                              Gimp         *gimp,
-                              GimpContext  *context,
-                              GimpProgress *progress,
-                              Argument     *args)
+palette_delete_entry_invoker (GimpProcedure *procedure,
+                              Gimp          *gimp,
+                              GimpContext   *context,
+                              GimpProgress  *progress,
+                              Argument      *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -904,10 +904,10 @@ palette_delete_entry_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord palette_delete_entry_proc =
+static GimpProcedure palette_delete_entry_proc =
 {
   TRUE, TRUE,
   "gimp-palette-delete-entry",
@@ -924,11 +924,11 @@ static ProcRecord palette_delete_entry_proc =
 };
 
 static Argument *
-palette_entry_get_color_invoker (ProcRecord   *proc_record,
-                                 Gimp         *gimp,
-                                 GimpContext  *context,
-                                 GimpProgress *progress,
-                                 Argument     *args)
+palette_entry_get_color_invoker (GimpProcedure *procedure,
+                                 Gimp          *gimp,
+                                 GimpContext   *context,
+                                 GimpProgress  *progress,
+                                 Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -959,7 +959,7 @@ palette_entry_get_color_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_rgb (&return_vals[1].value, &color);
@@ -967,7 +967,7 @@ palette_entry_get_color_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord palette_entry_get_color_proc =
+static GimpProcedure palette_entry_get_color_proc =
 {
   TRUE, TRUE,
   "gimp-palette-entry-get-color",
@@ -984,11 +984,11 @@ static ProcRecord palette_entry_get_color_proc =
 };
 
 static Argument *
-palette_entry_set_color_invoker (ProcRecord   *proc_record,
-                                 Gimp         *gimp,
-                                 GimpContext  *context,
-                                 GimpProgress *progress,
-                                 Argument     *args)
+palette_entry_set_color_invoker (GimpProcedure *procedure,
+                                 Gimp          *gimp,
+                                 GimpContext   *context,
+                                 GimpProgress  *progress,
+                                 Argument      *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -1021,10 +1021,10 @@ palette_entry_set_color_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord palette_entry_set_color_proc =
+static GimpProcedure palette_entry_set_color_proc =
 {
   TRUE, TRUE,
   "gimp-palette-entry-set-color",
@@ -1041,11 +1041,11 @@ static ProcRecord palette_entry_set_color_proc =
 };
 
 static Argument *
-palette_entry_get_name_invoker (ProcRecord   *proc_record,
-                                Gimp         *gimp,
-                                GimpContext  *context,
-                                GimpProgress *progress,
-                                Argument     *args)
+palette_entry_get_name_invoker (GimpProcedure *procedure,
+                                Gimp          *gimp,
+                                GimpContext   *context,
+                                GimpProgress  *progress,
+                                Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1076,7 +1076,7 @@ palette_entry_get_name_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, entry_name);
@@ -1084,7 +1084,7 @@ palette_entry_get_name_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord palette_entry_get_name_proc =
+static GimpProcedure palette_entry_get_name_proc =
 {
   TRUE, TRUE,
   "gimp-palette-entry-get-name",
@@ -1101,11 +1101,11 @@ static ProcRecord palette_entry_get_name_proc =
 };
 
 static Argument *
-palette_entry_set_name_invoker (ProcRecord   *proc_record,
-                                Gimp         *gimp,
-                                GimpContext  *context,
-                                GimpProgress *progress,
-                                Argument     *args)
+palette_entry_set_name_invoker (GimpProcedure *procedure,
+                                Gimp          *gimp,
+                                GimpContext   *context,
+                                GimpProgress  *progress,
+                                Argument      *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -1139,10 +1139,10 @@ palette_entry_set_name_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord palette_entry_set_name_proc =
+static GimpProcedure palette_entry_set_name_proc =
 {
   TRUE, TRUE,
   "gimp-palette-entry-set-name",

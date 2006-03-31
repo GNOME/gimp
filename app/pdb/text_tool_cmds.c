@@ -35,15 +35,15 @@
 #include "core/gimplayer.h"
 #include "text/gimptext-compat.h"
 
-static ProcRecord text_fontname_proc;
-static ProcRecord text_get_extents_fontname_proc;
-static ProcRecord text_proc;
-static ProcRecord text_get_extents_proc;
+static GimpProcedure text_fontname_proc;
+static GimpProcedure text_get_extents_fontname_proc;
+static GimpProcedure text_proc;
+static GimpProcedure text_get_extents_proc;
 
 void
 register_text_tool_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * text_fontname
@@ -466,11 +466,11 @@ register_text_tool_procs (Gimp *gimp)
 }
 
 static Argument *
-text_fontname_invoker (ProcRecord   *proc_record,
-                       Gimp         *gimp,
-                       GimpContext  *context,
-                       GimpProgress *progress,
-                       Argument     *args)
+text_fontname_invoker (GimpProcedure *procedure,
+                       Gimp          *gimp,
+                       GimpContext   *context,
+                       GimpProgress  *progress,
+                       Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -514,7 +514,7 @@ text_fontname_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (text_layer));
@@ -522,7 +522,7 @@ text_fontname_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord text_fontname_proc =
+static GimpProcedure text_fontname_proc =
 {
   TRUE, TRUE,
   "gimp-text-fontname",
@@ -539,11 +539,11 @@ static ProcRecord text_fontname_proc =
 };
 
 static Argument *
-text_get_extents_fontname_invoker (ProcRecord   *proc_record,
-                                   Gimp         *gimp,
-                                   GimpContext  *context,
-                                   GimpProgress *progress,
-                                   Argument     *args)
+text_get_extents_fontname_invoker (GimpProcedure *procedure,
+                                   Gimp          *gimp,
+                                   GimpContext   *context,
+                                   GimpProgress  *progress,
+                                   Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -572,7 +572,7 @@ text_get_extents_fontname_invoker (ProcRecord   *proc_record,
       g_free (real_fontname);
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -585,7 +585,7 @@ text_get_extents_fontname_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord text_get_extents_fontname_proc =
+static GimpProcedure text_get_extents_fontname_proc =
 {
   TRUE, TRUE,
   "gimp-text-get-extents-fontname",
@@ -602,11 +602,11 @@ static ProcRecord text_get_extents_fontname_proc =
 };
 
 static Argument *
-text_invoker (ProcRecord   *proc_record,
-              Gimp         *gimp,
-              GimpContext  *context,
-              GimpProgress *progress,
-              Argument     *args)
+text_invoker (GimpProcedure *procedure,
+              Gimp          *gimp,
+              GimpContext   *context,
+              GimpProgress  *progress,
+              Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -664,7 +664,7 @@ text_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (text_layer));
@@ -672,7 +672,7 @@ text_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord text_proc =
+static GimpProcedure text_proc =
 {
   TRUE, TRUE,
   "gimp-text",
@@ -689,11 +689,11 @@ static ProcRecord text_proc =
 };
 
 static Argument *
-text_get_extents_invoker (ProcRecord   *proc_record,
-                          Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+text_get_extents_invoker (GimpProcedure *procedure,
+                          Gimp          *gimp,
+                          GimpContext   *context,
+                          GimpProgress  *progress,
+                          Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -736,7 +736,7 @@ text_get_extents_invoker (ProcRecord   *proc_record,
       g_free (real_fontname);
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -749,7 +749,7 @@ text_get_extents_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord text_get_extents_proc =
+static GimpProcedure text_get_extents_proc =
 {
   TRUE, TRUE,
   "gimp-text-get-extents",

@@ -32,12 +32,12 @@
 #include "plug-in/plug-in.h"
 #include "plug-in/plug-ins.h"
 
-static ProcRecord help_proc;
+static GimpProcedure help_proc;
 
 void
 register_help_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * help
@@ -64,11 +64,11 @@ register_help_procs (Gimp *gimp)
 }
 
 static Argument *
-help_invoker (ProcRecord   *proc_record,
-              Gimp         *gimp,
-              GimpContext  *context,
-              GimpProgress *progress,
-              Argument     *args)
+help_invoker (GimpProcedure *procedure,
+              Gimp          *gimp,
+              GimpContext   *context,
+              GimpProgress  *progress,
+              Argument      *args)
 {
   gboolean success = TRUE;
   gchar *help_domain;
@@ -86,10 +86,10 @@ help_invoker (ProcRecord   *proc_record,
       gimp_help (gimp, help_domain, help_id);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord help_proc =
+static GimpProcedure help_proc =
 {
   TRUE, TRUE,
   "gimp-help",

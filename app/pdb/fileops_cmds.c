@@ -45,22 +45,22 @@
 #include "plug-in/plug-in.h"
 #include "plug-in/plug-ins.h"
 
-static ProcRecord file_load_proc;
-static ProcRecord file_load_layer_proc;
-static ProcRecord file_load_thumbnail_proc;
-static ProcRecord file_save_proc;
-static ProcRecord file_save_thumbnail_proc;
-static ProcRecord temp_name_proc;
-static ProcRecord register_magic_load_handler_proc;
-static ProcRecord register_load_handler_proc;
-static ProcRecord register_save_handler_proc;
-static ProcRecord register_file_handler_mime_proc;
-static ProcRecord register_thumbnail_loader_proc;
+static GimpProcedure file_load_proc;
+static GimpProcedure file_load_layer_proc;
+static GimpProcedure file_load_thumbnail_proc;
+static GimpProcedure file_save_proc;
+static GimpProcedure file_save_thumbnail_proc;
+static GimpProcedure temp_name_proc;
+static GimpProcedure register_magic_load_handler_proc;
+static GimpProcedure register_load_handler_proc;
+static GimpProcedure register_save_handler_proc;
+static GimpProcedure register_file_handler_mime_proc;
+static GimpProcedure register_thumbnail_loader_proc;
 
 void
 register_fileops_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * file_load
@@ -420,21 +420,21 @@ fileops_register_magic_load_handler (Gimp        *gimp,
                                      const gchar *prefixes,
                                      const gchar *magics)
 {
-  ProcRecord    *proc;
+  GimpProcedure *procedure;
   PlugInProcDef *file_proc;
   gchar         *canonical;
   gboolean       success = FALSE;
 
   canonical = gimp_canonicalize_identifier (procedure_name);
 
-  proc = procedural_db_lookup (gimp, canonical);
+  procedure = procedural_db_lookup (gimp, canonical);
 
-  if (proc && ((proc->num_args < 3)                    ||
-	       (proc->num_values < 1)                  ||
-	       (proc->args[0].type != GIMP_PDB_INT32)  ||
-	       (proc->args[1].type != GIMP_PDB_STRING) ||
-	       (proc->args[2].type != GIMP_PDB_STRING) ||
-	       (proc->values[0].type != GIMP_PDB_IMAGE)))
+  if (procedure && ((procedure->num_args < 3)                    ||
+	            (procedure->num_values < 1)                  ||
+	            (procedure->args[0].type != GIMP_PDB_INT32)  ||
+	            (procedure->args[1].type != GIMP_PDB_STRING) ||
+	            (procedure->args[2].type != GIMP_PDB_STRING) ||
+	            (procedure->values[0].type != GIMP_PDB_IMAGE)))
     {
       g_message ("load handler \"%s\" does not take the standard load handler args",
 		 canonical);
@@ -463,16 +463,16 @@ done:
 }
 
 static Argument *
-file_load_invoker (ProcRecord   *proc_record,
-                   Gimp         *gimp,
-                   GimpContext  *context,
-                   GimpProgress *progress,
-                   Argument     *args)
+file_load_invoker (GimpProcedure *procedure,
+                   Gimp          *gimp,
+                   GimpContext   *context,
+                   GimpProgress  *progress,
+                   Argument      *args)
 {
   Argument      *new_args;
   Argument      *return_vals;
   PlugInProcDef *file_proc;
-  ProcRecord    *proc;
+  GimpProcedure *proc;
   gchar         *uri;
   gint           n_return_vals;
   gint           i;
@@ -482,14 +482,14 @@ file_load_invoker (ProcRecord   *proc_record,
                                     NULL);
 
   if (! uri)
-    return gimp_procedure_get_return_values (proc_record, FALSE);
+    return gimp_procedure_get_return_values (procedure, FALSE);
 
   file_proc = file_utils_find_proc (gimp->load_procs, uri);
 
   g_free (uri);
 
   if (! file_proc)
-    return gimp_procedure_get_return_values (proc_record, FALSE);
+    return gimp_procedure_get_return_values (procedure, FALSE);
 
   proc = file_proc->procedure;
 
@@ -512,7 +512,7 @@ file_load_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord file_load_proc =
+static GimpProcedure file_load_proc =
 {
   TRUE, TRUE,
   "gimp-file-load",
@@ -529,11 +529,11 @@ static ProcRecord file_load_proc =
 };
 
 static Argument *
-file_load_layer_invoker (ProcRecord   *proc_record,
-                         Gimp         *gimp,
-                         GimpContext  *context,
-                         GimpProgress *progress,
-                         Argument     *args)
+file_load_layer_invoker (GimpProcedure *procedure,
+                         Gimp          *gimp,
+                         GimpContext   *context,
+                         GimpProgress  *progress,
+                         Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -565,7 +565,7 @@ file_load_layer_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (layer));
@@ -573,7 +573,7 @@ file_load_layer_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord file_load_layer_proc =
+static GimpProcedure file_load_layer_proc =
 {
   TRUE, TRUE,
   "gimp-file-load-layer",
@@ -590,11 +590,11 @@ static ProcRecord file_load_layer_proc =
 };
 
 static Argument *
-file_load_thumbnail_invoker (ProcRecord   *proc_record,
-                             Gimp         *gimp,
-                             GimpContext  *context,
-                             GimpProgress *progress,
-                             Argument     *args)
+file_load_thumbnail_invoker (GimpProcedure *procedure,
+                             Gimp          *gimp,
+                             GimpContext   *context,
+                             GimpProgress  *progress,
+                             Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -656,7 +656,7 @@ file_load_thumbnail_invoker (ProcRecord   *proc_record,
       g_free (uri);
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -669,7 +669,7 @@ file_load_thumbnail_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord file_load_thumbnail_proc =
+static GimpProcedure file_load_thumbnail_proc =
 {
   TRUE, TRUE,
   "gimp-file-load-thumbnail",
@@ -686,16 +686,16 @@ static ProcRecord file_load_thumbnail_proc =
 };
 
 static Argument *
-file_save_invoker (ProcRecord   *proc_record,
-                   Gimp         *gimp,
-                   GimpContext  *context,
-                   GimpProgress *progress,
-                   Argument     *args)
+file_save_invoker (GimpProcedure *procedure,
+                   Gimp          *gimp,
+                   GimpContext   *context,
+                   GimpProgress  *progress,
+                   Argument      *args)
 {
   Argument      *new_args;
   Argument      *return_vals;
   PlugInProcDef *file_proc;
-  ProcRecord    *proc;
+  GimpProcedure *proc;
   gchar         *uri;
   gint           n_return_vals;
   gint           i;
@@ -705,14 +705,14 @@ file_save_invoker (ProcRecord   *proc_record,
                                     NULL);
 
   if (! uri)
-    return gimp_procedure_get_return_values (proc_record, FALSE);
+    return gimp_procedure_get_return_values (procedure, FALSE);
 
   file_proc = file_utils_find_proc (gimp->save_procs, uri);
 
   g_free (uri);
 
   if (! file_proc)
-    return gimp_procedure_get_return_values (proc_record, FALSE);
+    return gimp_procedure_get_return_values (procedure, FALSE);
 
   proc = file_proc->procedure;
 
@@ -735,7 +735,7 @@ file_save_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord file_save_proc =
+static GimpProcedure file_save_proc =
 {
   TRUE, TRUE,
   "gimp-file-save",
@@ -752,11 +752,11 @@ static ProcRecord file_save_proc =
 };
 
 static Argument *
-file_save_thumbnail_invoker (ProcRecord   *proc_record,
-                             Gimp         *gimp,
-                             GimpContext  *context,
-                             GimpProgress *progress,
-                             Argument     *args)
+file_save_thumbnail_invoker (GimpProcedure *procedure,
+                             Gimp          *gimp,
+                             GimpContext   *context,
+                             GimpProgress  *progress,
+                             Argument      *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -795,10 +795,10 @@ file_save_thumbnail_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord file_save_thumbnail_proc =
+static GimpProcedure file_save_thumbnail_proc =
 {
   TRUE, TRUE,
   "gimp-file-save-thumbnail",
@@ -815,11 +815,11 @@ static ProcRecord file_save_thumbnail_proc =
 };
 
 static Argument *
-temp_name_invoker (ProcRecord   *proc_record,
-                   Gimp         *gimp,
-                   GimpContext  *context,
-                   GimpProgress *progress,
-                   Argument     *args)
+temp_name_invoker (GimpProcedure *procedure,
+                   Gimp          *gimp,
+                   GimpContext   *context,
+                   GimpProgress  *progress,
+                   Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -833,7 +833,7 @@ temp_name_invoker (ProcRecord   *proc_record,
       name = gimp_get_temp_filename (gimp, extension);
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, name);
@@ -841,7 +841,7 @@ temp_name_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord temp_name_proc =
+static GimpProcedure temp_name_proc =
 {
   TRUE, TRUE,
   "gimp-temp-name",
@@ -858,11 +858,11 @@ static ProcRecord temp_name_proc =
 };
 
 static Argument *
-register_magic_load_handler_invoker (ProcRecord   *proc_record,
-                                     Gimp         *gimp,
-                                     GimpContext  *context,
-                                     GimpProgress *progress,
-                                     Argument     *args)
+register_magic_load_handler_invoker (GimpProcedure *procedure,
+                                     Gimp          *gimp,
+                                     GimpContext   *context,
+                                     GimpProgress  *progress,
+                                     Argument      *args)
 {
   gboolean success = TRUE;
   gchar *procedure_name;
@@ -882,10 +882,10 @@ register_magic_load_handler_invoker (ProcRecord   *proc_record,
                                                      extensions, prefixes, magics);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord register_magic_load_handler_proc =
+static GimpProcedure register_magic_load_handler_proc =
 {
   TRUE, TRUE,
   "gimp-register-magic-load-handler",
@@ -902,11 +902,11 @@ static ProcRecord register_magic_load_handler_proc =
 };
 
 static Argument *
-register_load_handler_invoker (ProcRecord   *proc_record,
-                               Gimp         *gimp,
-                               GimpContext  *context,
-                               GimpProgress *progress,
-                               Argument     *args)
+register_load_handler_invoker (GimpProcedure *procedure,
+                               Gimp          *gimp,
+                               GimpContext   *context,
+                               GimpProgress  *progress,
+                               Argument      *args)
 {
   gboolean success = TRUE;
   gchar *procedure_name;
@@ -924,10 +924,10 @@ register_load_handler_invoker (ProcRecord   *proc_record,
                                                      extensions, prefixes, NULL);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord register_load_handler_proc =
+static GimpProcedure register_load_handler_proc =
 {
   TRUE, TRUE,
   "gimp-register-load-handler",
@@ -944,11 +944,11 @@ static ProcRecord register_load_handler_proc =
 };
 
 static Argument *
-register_save_handler_invoker (ProcRecord   *proc_record,
-                               Gimp         *gimp,
-                               GimpContext  *context,
-                               GimpProgress *progress,
-                               Argument     *args)
+register_save_handler_invoker (GimpProcedure *procedure,
+                               Gimp          *gimp,
+                               GimpContext   *context,
+                               GimpProgress  *progress,
+                               Argument      *args)
 {
   gboolean success = TRUE;
   gchar *procedure_name;
@@ -961,7 +961,7 @@ register_save_handler_invoker (ProcRecord   *proc_record,
 
   if (success)
     {
-      ProcRecord    *proc;
+      GimpProcedure *proc;
       PlugInProcDef *file_proc;
       gchar         *canonical;
 
@@ -1002,10 +1002,10 @@ register_save_handler_invoker (ProcRecord   *proc_record,
       g_free (canonical);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord register_save_handler_proc =
+static GimpProcedure register_save_handler_proc =
 {
   TRUE, TRUE,
   "gimp-register-save-handler",
@@ -1022,11 +1022,11 @@ static ProcRecord register_save_handler_proc =
 };
 
 static Argument *
-register_file_handler_mime_invoker (ProcRecord   *proc_record,
-                                    Gimp         *gimp,
-                                    GimpContext  *context,
-                                    GimpProgress *progress,
-                                    Argument     *args)
+register_file_handler_mime_invoker (GimpProcedure *procedure,
+                                    Gimp          *gimp,
+                                    GimpContext   *context,
+                                    GimpProgress  *progress,
+                                    Argument      *args)
 {
   gboolean success = TRUE;
   gchar *procedure_name;
@@ -1047,10 +1047,10 @@ register_file_handler_mime_invoker (ProcRecord   *proc_record,
       g_free (canonical);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord register_file_handler_mime_proc =
+static GimpProcedure register_file_handler_mime_proc =
 {
   TRUE, TRUE,
   "gimp-register-file-handler-mime",
@@ -1067,11 +1067,11 @@ static ProcRecord register_file_handler_mime_proc =
 };
 
 static Argument *
-register_thumbnail_loader_invoker (ProcRecord   *proc_record,
-                                   Gimp         *gimp,
-                                   GimpContext  *context,
-                                   GimpProgress *progress,
-                                   Argument     *args)
+register_thumbnail_loader_invoker (GimpProcedure *procedure,
+                                   Gimp          *gimp,
+                                   GimpContext   *context,
+                                   GimpProgress  *progress,
+                                   Argument      *args)
 {
   gboolean success = TRUE;
   gchar *load_proc;
@@ -1092,10 +1092,10 @@ register_thumbnail_loader_invoker (ProcRecord   *proc_record,
       g_free (canonical);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord register_thumbnail_loader_proc =
+static GimpProcedure register_thumbnail_loader_proc =
 {
   TRUE, TRUE,
   "gimp-register-thumbnail-loader",

@@ -31,14 +31,14 @@
 #include "core/gimp.h"
 #include "core/gimpdatafactory.h"
 
-static ProcRecord brushes_popup_proc;
-static ProcRecord brushes_close_popup_proc;
-static ProcRecord brushes_set_popup_proc;
+static GimpProcedure brushes_popup_proc;
+static GimpProcedure brushes_close_popup_proc;
+static GimpProcedure brushes_set_popup_proc;
 
 void
 register_brush_select_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * brushes_popup
@@ -153,11 +153,11 @@ register_brush_select_procs (Gimp *gimp)
 }
 
 static Argument *
-brushes_popup_invoker (ProcRecord   *proc_record,
-                       Gimp         *gimp,
-                       GimpContext  *context,
-                       GimpProgress *progress,
-                       Argument     *args)
+brushes_popup_invoker (GimpProcedure *procedure,
+                       Gimp          *gimp,
+                       GimpContext   *context,
+                       GimpProgress  *progress,
+                       Argument      *args)
 {
   gboolean success = TRUE;
   gchar *brush_callback;
@@ -187,10 +187,10 @@ brushes_popup_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord brushes_popup_proc =
+static GimpProcedure brushes_popup_proc =
 {
   TRUE, TRUE,
   "gimp-brushes-popup",
@@ -207,11 +207,11 @@ static ProcRecord brushes_popup_proc =
 };
 
 static Argument *
-brushes_close_popup_invoker (ProcRecord   *proc_record,
-                             Gimp         *gimp,
-                             GimpContext  *context,
-                             GimpProgress *progress,
-                             Argument     *args)
+brushes_close_popup_invoker (GimpProcedure *procedure,
+                             Gimp          *gimp,
+                             GimpContext   *context,
+                             GimpProgress  *progress,
+                             Argument      *args)
 {
   gboolean success = TRUE;
   gchar *brush_callback;
@@ -227,10 +227,10 @@ brushes_close_popup_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord brushes_close_popup_proc =
+static GimpProcedure brushes_close_popup_proc =
 {
   TRUE, TRUE,
   "gimp-brushes-close-popup",
@@ -247,11 +247,11 @@ static ProcRecord brushes_close_popup_proc =
 };
 
 static Argument *
-brushes_set_popup_invoker (ProcRecord   *proc_record,
-                           Gimp         *gimp,
-                           GimpContext  *context,
-                           GimpProgress *progress,
-                           Argument     *args)
+brushes_set_popup_invoker (GimpProcedure *procedure,
+                           Gimp          *gimp,
+                           GimpContext   *context,
+                           GimpProgress  *progress,
+                           Argument      *args)
 {
   gboolean success = TRUE;
   gchar *brush_callback;
@@ -279,10 +279,10 @@ brushes_set_popup_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord brushes_set_popup_proc =
+static GimpProcedure brushes_set_popup_proc =
 {
   TRUE, TRUE,
   "gimp-brushes-set-popup",

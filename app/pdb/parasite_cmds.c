@@ -35,27 +35,27 @@
 #include "core/gimpimage.h"
 #include "vectors/gimpvectors.h"
 
-static ProcRecord parasite_find_proc;
-static ProcRecord parasite_attach_proc;
-static ProcRecord parasite_detach_proc;
-static ProcRecord parasite_list_proc;
-static ProcRecord image_parasite_find_proc;
-static ProcRecord image_parasite_attach_proc;
-static ProcRecord image_parasite_detach_proc;
-static ProcRecord image_parasite_list_proc;
-static ProcRecord drawable_parasite_find_proc;
-static ProcRecord drawable_parasite_attach_proc;
-static ProcRecord drawable_parasite_detach_proc;
-static ProcRecord drawable_parasite_list_proc;
-static ProcRecord vectors_parasite_find_proc;
-static ProcRecord vectors_parasite_attach_proc;
-static ProcRecord vectors_parasite_detach_proc;
-static ProcRecord vectors_parasite_list_proc;
+static GimpProcedure parasite_find_proc;
+static GimpProcedure parasite_attach_proc;
+static GimpProcedure parasite_detach_proc;
+static GimpProcedure parasite_list_proc;
+static GimpProcedure image_parasite_find_proc;
+static GimpProcedure image_parasite_attach_proc;
+static GimpProcedure image_parasite_detach_proc;
+static GimpProcedure image_parasite_list_proc;
+static GimpProcedure drawable_parasite_find_proc;
+static GimpProcedure drawable_parasite_attach_proc;
+static GimpProcedure drawable_parasite_detach_proc;
+static GimpProcedure drawable_parasite_list_proc;
+static GimpProcedure vectors_parasite_find_proc;
+static GimpProcedure vectors_parasite_attach_proc;
+static GimpProcedure vectors_parasite_detach_proc;
+static GimpProcedure vectors_parasite_list_proc;
 
 void
 register_parasite_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * parasite_find
@@ -412,11 +412,11 @@ register_parasite_procs (Gimp *gimp)
 }
 
 static Argument *
-parasite_find_invoker (ProcRecord   *proc_record,
-                       Gimp         *gimp,
-                       GimpContext  *context,
-                       GimpProgress *progress,
-                       Argument     *args)
+parasite_find_invoker (GimpProcedure *procedure,
+                       Gimp          *gimp,
+                       GimpContext   *context,
+                       GimpProgress  *progress,
+                       Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -433,7 +433,7 @@ parasite_find_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_boxed (&return_vals[1].value, parasite);
@@ -441,7 +441,7 @@ parasite_find_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord parasite_find_proc =
+static GimpProcedure parasite_find_proc =
 {
   TRUE, TRUE,
   "gimp-parasite-find",
@@ -458,11 +458,11 @@ static ProcRecord parasite_find_proc =
 };
 
 static Argument *
-parasite_attach_invoker (ProcRecord   *proc_record,
-                         Gimp         *gimp,
-                         GimpContext  *context,
-                         GimpProgress *progress,
-                         Argument     *args)
+parasite_attach_invoker (GimpProcedure *procedure,
+                         Gimp          *gimp,
+                         GimpContext   *context,
+                         GimpProgress  *progress,
+                         Argument      *args)
 {
   gboolean success = TRUE;
   GimpParasite *parasite;
@@ -474,10 +474,10 @@ parasite_attach_invoker (ProcRecord   *proc_record,
       gimp_parasite_attach (gimp, parasite);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord parasite_attach_proc =
+static GimpProcedure parasite_attach_proc =
 {
   TRUE, TRUE,
   "gimp-parasite-attach",
@@ -494,11 +494,11 @@ static ProcRecord parasite_attach_proc =
 };
 
 static Argument *
-parasite_detach_invoker (ProcRecord   *proc_record,
-                         Gimp         *gimp,
-                         GimpContext  *context,
-                         GimpProgress *progress,
-                         Argument     *args)
+parasite_detach_invoker (GimpProcedure *procedure,
+                         Gimp          *gimp,
+                         GimpContext   *context,
+                         GimpProgress  *progress,
+                         Argument      *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -510,10 +510,10 @@ parasite_detach_invoker (ProcRecord   *proc_record,
       gimp_parasite_detach (gimp, name);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord parasite_detach_proc =
+static GimpProcedure parasite_detach_proc =
 {
   TRUE, TRUE,
   "gimp-parasite-detach",
@@ -530,11 +530,11 @@ static ProcRecord parasite_detach_proc =
 };
 
 static Argument *
-parasite_list_invoker (ProcRecord   *proc_record,
-                       Gimp         *gimp,
-                       GimpContext  *context,
-                       GimpProgress *progress,
-                       Argument     *args)
+parasite_list_invoker (GimpProcedure *procedure,
+                       Gimp          *gimp,
+                       GimpContext   *context,
+                       GimpProgress  *progress,
+                       Argument      *args)
 {
   Argument *return_vals;
   gint32 num_parasites = 0;
@@ -542,7 +542,7 @@ parasite_list_invoker (ProcRecord   *proc_record,
 
   parasites = gimp_parasite_list (gimp, &num_parasites);
 
-  return_vals = gimp_procedure_get_return_values (proc_record, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
 
   g_value_set_int (&return_vals[1].value, num_parasites);
   g_value_set_pointer (&return_vals[2].value, parasites);
@@ -550,7 +550,7 @@ parasite_list_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord parasite_list_proc =
+static GimpProcedure parasite_list_proc =
 {
   TRUE, TRUE,
   "gimp-parasite-list",
@@ -567,11 +567,11 @@ static ProcRecord parasite_list_proc =
 };
 
 static Argument *
-image_parasite_find_invoker (ProcRecord   *proc_record,
-                             Gimp         *gimp,
-                             GimpContext  *context,
-                             GimpProgress *progress,
-                             Argument     *args)
+image_parasite_find_invoker (GimpProcedure *procedure,
+                             Gimp          *gimp,
+                             GimpContext   *context,
+                             GimpProgress  *progress,
+                             Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -590,7 +590,7 @@ image_parasite_find_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_boxed (&return_vals[1].value, parasite);
@@ -598,7 +598,7 @@ image_parasite_find_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord image_parasite_find_proc =
+static GimpProcedure image_parasite_find_proc =
 {
   TRUE, TRUE,
   "gimp-image-parasite-find",
@@ -615,11 +615,11 @@ static ProcRecord image_parasite_find_proc =
 };
 
 static Argument *
-image_parasite_attach_invoker (ProcRecord   *proc_record,
-                               Gimp         *gimp,
-                               GimpContext  *context,
-                               GimpProgress *progress,
-                               Argument     *args)
+image_parasite_attach_invoker (GimpProcedure *procedure,
+                               Gimp          *gimp,
+                               GimpContext   *context,
+                               GimpProgress  *progress,
+                               Argument      *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -633,10 +633,10 @@ image_parasite_attach_invoker (ProcRecord   *proc_record,
       gimp_image_parasite_attach (image, parasite);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord image_parasite_attach_proc =
+static GimpProcedure image_parasite_attach_proc =
 {
   TRUE, TRUE,
   "gimp-image-parasite-attach",
@@ -653,11 +653,11 @@ static ProcRecord image_parasite_attach_proc =
 };
 
 static Argument *
-image_parasite_detach_invoker (ProcRecord   *proc_record,
-                               Gimp         *gimp,
-                               GimpContext  *context,
-                               GimpProgress *progress,
-                               Argument     *args)
+image_parasite_detach_invoker (GimpProcedure *procedure,
+                               Gimp          *gimp,
+                               GimpContext   *context,
+                               GimpProgress  *progress,
+                               Argument      *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -671,10 +671,10 @@ image_parasite_detach_invoker (ProcRecord   *proc_record,
       gimp_image_parasite_detach (image, name);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord image_parasite_detach_proc =
+static GimpProcedure image_parasite_detach_proc =
 {
   TRUE, TRUE,
   "gimp-image-parasite-detach",
@@ -691,11 +691,11 @@ static ProcRecord image_parasite_detach_proc =
 };
 
 static Argument *
-image_parasite_list_invoker (ProcRecord   *proc_record,
-                             Gimp         *gimp,
-                             GimpContext  *context,
-                             GimpProgress *progress,
-                             Argument     *args)
+image_parasite_list_invoker (GimpProcedure *procedure,
+                             Gimp          *gimp,
+                             GimpContext   *context,
+                             GimpProgress  *progress,
+                             Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -710,7 +710,7 @@ image_parasite_list_invoker (ProcRecord   *proc_record,
       parasites = gimp_image_parasite_list (image, &num_parasites);
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -721,7 +721,7 @@ image_parasite_list_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord image_parasite_list_proc =
+static GimpProcedure image_parasite_list_proc =
 {
   TRUE, TRUE,
   "gimp-image-parasite-list",
@@ -738,11 +738,11 @@ static ProcRecord image_parasite_list_proc =
 };
 
 static Argument *
-drawable_parasite_find_invoker (ProcRecord   *proc_record,
-                                Gimp         *gimp,
-                                GimpContext  *context,
-                                GimpProgress *progress,
-                                Argument     *args)
+drawable_parasite_find_invoker (GimpProcedure *procedure,
+                                Gimp          *gimp,
+                                GimpContext   *context,
+                                GimpProgress  *progress,
+                                Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -762,7 +762,7 @@ drawable_parasite_find_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_boxed (&return_vals[1].value, parasite);
@@ -770,7 +770,7 @@ drawable_parasite_find_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord drawable_parasite_find_proc =
+static GimpProcedure drawable_parasite_find_proc =
 {
   TRUE, TRUE,
   "gimp-drawable-parasite-find",
@@ -787,11 +787,11 @@ static ProcRecord drawable_parasite_find_proc =
 };
 
 static Argument *
-drawable_parasite_attach_invoker (ProcRecord   *proc_record,
-                                  Gimp         *gimp,
-                                  GimpContext  *context,
-                                  GimpProgress *progress,
-                                  Argument     *args)
+drawable_parasite_attach_invoker (GimpProcedure *procedure,
+                                  Gimp          *gimp,
+                                  GimpContext   *context,
+                                  GimpProgress  *progress,
+                                  Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -805,10 +805,10 @@ drawable_parasite_attach_invoker (ProcRecord   *proc_record,
       gimp_item_parasite_attach (GIMP_ITEM (drawable), parasite);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord drawable_parasite_attach_proc =
+static GimpProcedure drawable_parasite_attach_proc =
 {
   TRUE, TRUE,
   "gimp-drawable-parasite-attach",
@@ -825,11 +825,11 @@ static ProcRecord drawable_parasite_attach_proc =
 };
 
 static Argument *
-drawable_parasite_detach_invoker (ProcRecord   *proc_record,
-                                  Gimp         *gimp,
-                                  GimpContext  *context,
-                                  GimpProgress *progress,
-                                  Argument     *args)
+drawable_parasite_detach_invoker (GimpProcedure *procedure,
+                                  Gimp          *gimp,
+                                  GimpContext   *context,
+                                  GimpProgress  *progress,
+                                  Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -843,10 +843,10 @@ drawable_parasite_detach_invoker (ProcRecord   *proc_record,
       gimp_item_parasite_detach (GIMP_ITEM (drawable), name);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord drawable_parasite_detach_proc =
+static GimpProcedure drawable_parasite_detach_proc =
 {
   TRUE, TRUE,
   "gimp-drawable-parasite-detach",
@@ -863,11 +863,11 @@ static ProcRecord drawable_parasite_detach_proc =
 };
 
 static Argument *
-drawable_parasite_list_invoker (ProcRecord   *proc_record,
-                                Gimp         *gimp,
-                                GimpContext  *context,
-                                GimpProgress *progress,
-                                Argument     *args)
+drawable_parasite_list_invoker (GimpProcedure *procedure,
+                                Gimp          *gimp,
+                                GimpContext   *context,
+                                GimpProgress  *progress,
+                                Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -882,7 +882,7 @@ drawable_parasite_list_invoker (ProcRecord   *proc_record,
       parasites = gimp_item_parasite_list (GIMP_ITEM (drawable), &num_parasites);
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -893,7 +893,7 @@ drawable_parasite_list_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord drawable_parasite_list_proc =
+static GimpProcedure drawable_parasite_list_proc =
 {
   TRUE, TRUE,
   "gimp-drawable-parasite-list",
@@ -910,11 +910,11 @@ static ProcRecord drawable_parasite_list_proc =
 };
 
 static Argument *
-vectors_parasite_find_invoker (ProcRecord   *proc_record,
-                               Gimp         *gimp,
-                               GimpContext  *context,
-                               GimpProgress *progress,
-                               Argument     *args)
+vectors_parasite_find_invoker (GimpProcedure *procedure,
+                               Gimp          *gimp,
+                               GimpContext   *context,
+                               GimpProgress  *progress,
+                               Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -934,7 +934,7 @@ vectors_parasite_find_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_boxed (&return_vals[1].value, parasite);
@@ -942,7 +942,7 @@ vectors_parasite_find_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord vectors_parasite_find_proc =
+static GimpProcedure vectors_parasite_find_proc =
 {
   TRUE, TRUE,
   "gimp-vectors-parasite-find",
@@ -959,11 +959,11 @@ static ProcRecord vectors_parasite_find_proc =
 };
 
 static Argument *
-vectors_parasite_attach_invoker (ProcRecord   *proc_record,
-                                 Gimp         *gimp,
-                                 GimpContext  *context,
-                                 GimpProgress *progress,
-                                 Argument     *args)
+vectors_parasite_attach_invoker (GimpProcedure *procedure,
+                                 Gimp          *gimp,
+                                 GimpContext   *context,
+                                 GimpProgress  *progress,
+                                 Argument      *args)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
@@ -977,10 +977,10 @@ vectors_parasite_attach_invoker (ProcRecord   *proc_record,
       gimp_item_parasite_attach (GIMP_ITEM (vectors), parasite);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord vectors_parasite_attach_proc =
+static GimpProcedure vectors_parasite_attach_proc =
 {
   TRUE, TRUE,
   "gimp-vectors-parasite-attach",
@@ -997,11 +997,11 @@ static ProcRecord vectors_parasite_attach_proc =
 };
 
 static Argument *
-vectors_parasite_detach_invoker (ProcRecord   *proc_record,
-                                 Gimp         *gimp,
-                                 GimpContext  *context,
-                                 GimpProgress *progress,
-                                 Argument     *args)
+vectors_parasite_detach_invoker (GimpProcedure *procedure,
+                                 Gimp          *gimp,
+                                 GimpContext   *context,
+                                 GimpProgress  *progress,
+                                 Argument      *args)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
@@ -1015,10 +1015,10 @@ vectors_parasite_detach_invoker (ProcRecord   *proc_record,
       gimp_item_parasite_detach (GIMP_ITEM (vectors), name);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord vectors_parasite_detach_proc =
+static GimpProcedure vectors_parasite_detach_proc =
 {
   TRUE, TRUE,
   "gimp-vectors-parasite-detach",
@@ -1035,11 +1035,11 @@ static ProcRecord vectors_parasite_detach_proc =
 };
 
 static Argument *
-vectors_parasite_list_invoker (ProcRecord   *proc_record,
-                               Gimp         *gimp,
-                               GimpContext  *context,
-                               GimpProgress *progress,
-                               Argument     *args)
+vectors_parasite_list_invoker (GimpProcedure *procedure,
+                               Gimp          *gimp,
+                               GimpContext   *context,
+                               GimpProgress  *progress,
+                               Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1054,7 +1054,7 @@ vectors_parasite_list_invoker (ProcRecord   *proc_record,
       parasites = gimp_item_parasite_list (GIMP_ITEM (vectors), &num_parasites);
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -1065,7 +1065,7 @@ vectors_parasite_list_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord vectors_parasite_list_proc =
+static GimpProcedure vectors_parasite_list_proc =
 {
   TRUE, TRUE,
   "gimp-vectors-parasite-list",

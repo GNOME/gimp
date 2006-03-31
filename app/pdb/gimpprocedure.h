@@ -20,14 +20,6 @@
 #define __GIMP_PROCEDURE_H__
 
 
-/*  Argument marshalling procedures  */
-typedef Argument * (* ArgMarshal) (ProcRecord   *procedure,
-                                   Gimp         *gimp,
-                                   GimpContext  *context,
-                                   GimpProgress *progress,
-                                   Argument     *args);
-
-
 /*  Execution types  */
 typedef struct _IntExec    IntExec;
 typedef struct _PlugInExec PlugInExec;
@@ -37,28 +29,37 @@ typedef struct _TempExec   TempExec;
 
 struct _IntExec
 {
-  ArgMarshal  marshal_func;   /*  Function called to marshal arguments  */
+  /*  Function called to marshal arguments  */
+  Argument * (* marshal_func) (GimpProcedure *procedure,
+                               Gimp          *gimp,
+                               GimpContext   *context,
+                               GimpProgress  *progress,
+                               Argument      *args);
 };
 
 struct _PlugInExec
 {
-  gchar      *filename;       /*  Where is the executable on disk?  */
+  /*  Where is the executable on disk?  */
+  gchar *filename;
 };
 
 struct _ExtExec
 {
-  gchar      *filename;       /*  Where is the executable on disk?  */
+  /*  Where is the executable on disk?  */
+  gchar *filename;
 };
 
 struct _TempExec
 {
-  void       *plug_in;        /*  Plug-in that registered this temp proc  */
+  /*  Plug-in that registered this temp proc  */
+  void *plug_in;
 };
 
 
-/*  Structure for a procedure  */
+#define GIMP_IS_PROCEDURE(obj) ((obj) != NULL)
 
-struct _ProcRecord
+
+struct _GimpProcedure
 {
   /*  Flags  */
   gboolean     static_proc;    /* Is the procedure allocated?                */
@@ -96,14 +97,14 @@ struct _ProcRecord
 };
 
 
-ProcRecord    * gimp_procedure_new                (void);
-void            gimp_procedure_free               (ProcRecord       *procedure);
+GimpProcedure * gimp_procedure_new                (void);
+void            gimp_procedure_free               (GimpProcedure    *procedure);
 
-ProcRecord    * gimp_procedure_init               (ProcRecord       *procedure,
+GimpProcedure * gimp_procedure_init               (GimpProcedure    *procedure,
                                                    gint              n_arguments,
                                                    gint              n_return_vals);
 
-void            gimp_procedure_set_strings        (ProcRecord       *procedure,
+void            gimp_procedure_set_strings        (GimpProcedure    *procedure,
                                                    gchar            *name,
                                                    gchar            *original_name,
                                                    gchar            *blurb,
@@ -112,7 +113,7 @@ void            gimp_procedure_set_strings        (ProcRecord       *procedure,
                                                    gchar            *copyright,
                                                    gchar            *date,
                                                    gchar            *deprecated);
-void           gimp_procedure_set_static_strings  (ProcRecord       *procedure,
+void           gimp_procedure_set_static_strings  (GimpProcedure    *procedure,
                                                    gchar            *name,
                                                    gchar            *original_name,
                                                    gchar            *blurb,
@@ -121,7 +122,7 @@ void           gimp_procedure_set_static_strings  (ProcRecord       *procedure,
                                                    gchar            *copyright,
                                                    gchar            *date,
                                                    gchar            *deprecated);
-void           gimp_procedure_take_strings        (ProcRecord       *procedure,
+void           gimp_procedure_take_strings        (GimpProcedure    *procedure,
                                                    gchar            *name,
                                                    gchar            *original_name,
                                                    gchar            *blurb,
@@ -131,29 +132,29 @@ void           gimp_procedure_take_strings        (ProcRecord       *procedure,
                                                    gchar            *date,
                                                    gchar            *deprecated);
 
-void            gimp_procedure_add_argument       (ProcRecord       *procedure,
+void            gimp_procedure_add_argument       (GimpProcedure    *procedure,
                                                    GimpPDBArgType    arg_type,
                                                    GParamSpec       *pspec);
-void            gimp_procedure_add_return_value   (ProcRecord       *procedure,
+void            gimp_procedure_add_return_value   (GimpProcedure    *procedure,
                                                    GimpPDBArgType    arg_type,
                                                    GParamSpec       *pspec);
 
-void            gimp_procedure_add_compat_arg     (ProcRecord       *procedure,
+void            gimp_procedure_add_compat_arg     (GimpProcedure    *procedure,
                                                    Gimp             *gimp,
                                                    GimpPDBArgType    arg_type,
                                                    const gchar      *name,
                                                    const gchar      *desc);
-void            gimp_procedure_add_compat_value   (ProcRecord       *procedure,
+void            gimp_procedure_add_compat_value   (GimpProcedure    *procedure,
                                                    Gimp             *gimp,
                                                    GimpPDBArgType    arg_type,
                                                    const gchar      *name,
                                                    const gchar      *desc);
 
-Argument      * gimp_procedure_get_arguments      (const ProcRecord *procedure);
-Argument      * gimp_procedure_get_return_values  (const ProcRecord *procedure,
+Argument      * gimp_procedure_get_arguments      (GimpProcedure    *procedure);
+Argument      * gimp_procedure_get_return_values  (GimpProcedure    *procedure,
                                                    gboolean          success);
 
-Argument      * gimp_procedure_execute            (ProcRecord       *procedure,
+Argument      * gimp_procedure_execute            (GimpProcedure    *procedure,
                                                    Gimp             *gimp,
                                                    GimpContext      *context,
                                                    GimpProgress     *progress,

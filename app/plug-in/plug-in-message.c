@@ -352,7 +352,7 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
   PlugInProcFrame *proc_frame;
   gchar           *canonical;
   const gchar     *proc_name     = NULL;
-  ProcRecord      *proc_rec;
+  GimpProcedure   *procedure;
   Argument        *args          = NULL;
   gint             n_args        = 0;
   Argument        *return_vals   = NULL;
@@ -362,16 +362,16 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
 
   proc_frame = plug_in_get_proc_frame (plug_in);
 
-  proc_rec = procedural_db_lookup (plug_in->gimp, canonical);
+  procedure = procedural_db_lookup (plug_in->gimp, canonical);
 
-  if (! proc_rec)
+  if (! procedure)
     {
       proc_name = g_hash_table_lookup (plug_in->gimp->procedural_compat_ht,
                                        canonical);
 
       if (proc_name)
         {
-          proc_rec = procedural_db_lookup (plug_in->gimp, proc_name);
+          procedure = procedural_db_lookup (plug_in->gimp, proc_name);
 
           if (plug_in->gimp->pdb_compat_mode == GIMP_PDB_COMPAT_WARN)
             {
@@ -384,11 +384,11 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
             }
         }
     }
-  else if (proc_rec->deprecated)
+  else if (procedure->deprecated)
     {
       if (plug_in->gimp->pdb_compat_mode == GIMP_PDB_COMPAT_WARN)
         {
-          if (! strcmp (proc_rec->deprecated, "NONE"))
+          if (! strcmp (procedure->deprecated, "NONE"))
             {
               g_message ("WARNING: Plug-In \"%s\"\n(%s)\n"
                          "called deprecated procedure '%s'.",
@@ -403,22 +403,22 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
                          "It should call '%s' instead!",
                          gimp_filename_to_utf8 (plug_in->name),
                          gimp_filename_to_utf8 (plug_in->prog),
-                         canonical, proc_rec->deprecated);
+                         canonical, procedure->deprecated);
             }
         }
       else if (plug_in->gimp->pdb_compat_mode == GIMP_PDB_COMPAT_OFF)
         {
-          proc_rec = NULL;
+          procedure = NULL;
         }
     }
 
   if (! proc_name)
     proc_name = canonical;
 
-  if (proc_rec)
+  if (procedure)
     {
       n_args = proc_run->nparams;
-      args   = plug_in_params_to_args (proc_rec->args, proc_rec->num_args,
+      args   = plug_in_params_to_args (procedure->args, procedure->num_args,
                                        proc_run->params, n_args,
                                        FALSE);
     }
@@ -497,8 +497,8 @@ plug_in_handle_proc_return_priv (PlugIn       *plug_in,
 
   if (proc_frame->main_loop)
     {
-      proc_frame->return_vals = plug_in_params_to_args (proc_frame->proc_rec->values,
-                                                        proc_frame->proc_rec->num_values,
+      proc_frame->return_vals = plug_in_params_to_args (proc_frame->procedure->values,
+                                                        proc_frame->procedure->num_values,
                                                         proc_return->params,
                                                         proc_return->nparams,
                                                         TRUE);
@@ -575,7 +575,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 {
   PlugInDef     *plug_in_def = NULL;
   PlugInProcDef *proc_def    = NULL;
-  ProcRecord    *procedure   = NULL;
+  GimpProcedure *procedure   = NULL;
   gchar         *canonical;
   gchar         *prog        = NULL;
   gboolean       valid_utf8  = FALSE;

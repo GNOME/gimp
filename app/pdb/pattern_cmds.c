@@ -36,13 +36,13 @@
 #include "core/gimplist.h"
 #include "core/gimppattern.h"
 
-static ProcRecord pattern_get_info_proc;
-static ProcRecord pattern_get_pixels_proc;
+static GimpProcedure pattern_get_info_proc;
+static GimpProcedure pattern_get_pixels_proc;
 
 void
 register_pattern_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * pattern_get_info
@@ -130,11 +130,11 @@ register_pattern_procs (Gimp *gimp)
 }
 
 static Argument *
-pattern_get_info_invoker (ProcRecord   *proc_record,
-                          Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+pattern_get_info_invoker (GimpProcedure *procedure,
+                          Gimp          *gimp,
+                          GimpContext   *context,
+                          GimpProgress  *progress,
+                          Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -160,7 +160,7 @@ pattern_get_info_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -172,7 +172,7 @@ pattern_get_info_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord pattern_get_info_proc =
+static GimpProcedure pattern_get_info_proc =
 {
   TRUE, TRUE,
   "gimp-pattern-get-info",
@@ -189,11 +189,11 @@ static ProcRecord pattern_get_info_proc =
 };
 
 static Argument *
-pattern_get_pixels_invoker (ProcRecord   *proc_record,
-                            Gimp         *gimp,
-                            GimpContext  *context,
-                            GimpProgress *progress,
-                            Argument     *args)
+pattern_get_pixels_invoker (GimpProcedure *procedure,
+                            Gimp          *gimp,
+                            GimpContext   *context,
+                            GimpProgress  *progress,
+                            Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -225,7 +225,7 @@ pattern_get_pixels_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -239,7 +239,7 @@ pattern_get_pixels_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord pattern_get_pixels_proc =
+static GimpProcedure pattern_get_pixels_proc =
 {
   TRUE, TRUE,
   "gimp-pattern-get-pixels",

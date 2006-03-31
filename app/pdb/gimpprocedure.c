@@ -48,25 +48,25 @@
 
 /*  local function prototypes  */
 
-static void   gimp_procedure_free_strings (ProcRecord *procedure);
+static void   gimp_procedure_free_strings (GimpProcedure *procedure);
 
 
 /*  public functions  */
 
-ProcRecord  *
+GimpProcedure  *
 gimp_procedure_new (void)
 {
-  ProcRecord *procedure = g_new0 (ProcRecord, 1);
+  GimpProcedure *procedure = g_new0 (GimpProcedure, 1);
 
   return procedure;
 }
 
 void
-gimp_procedure_free (ProcRecord *procedure)
+gimp_procedure_free (GimpProcedure *procedure)
 {
   gint i;
 
-  g_return_if_fail (procedure != NULL);
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
   gimp_procedure_free_strings (procedure);
 
@@ -92,12 +92,12 @@ gimp_procedure_free (ProcRecord *procedure)
     g_free (procedure);
 }
 
-ProcRecord *
-gimp_procedure_init (ProcRecord *procedure,
-                     gint        n_arguments,
-                     gint        n_return_values)
+GimpProcedure *
+gimp_procedure_init (GimpProcedure *procedure,
+                     gint           n_arguments,
+                     gint           n_return_values)
 {
-  g_return_val_if_fail (procedure != NULL, procedure);
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), procedure);
   g_return_val_if_fail (procedure->args == NULL, procedure);
   g_return_val_if_fail (procedure->values == NULL, procedure);
   g_return_val_if_fail (n_arguments >= 0, procedure);
@@ -113,17 +113,17 @@ gimp_procedure_init (ProcRecord *procedure,
 }
 
 void
-gimp_procedure_set_strings (ProcRecord       *procedure,
-                            gchar            *name,
-                            gchar            *original_name,
-                            gchar            *blurb,
-                            gchar            *help,
-                            gchar            *author,
-                            gchar            *copyright,
-                            gchar            *date,
-                            gchar            *deprecated)
+gimp_procedure_set_strings (GimpProcedure *procedure,
+                            gchar         *name,
+                            gchar         *original_name,
+                            gchar         *blurb,
+                            gchar         *help,
+                            gchar         *author,
+                            gchar         *copyright,
+                            gchar         *date,
+                            gchar         *deprecated)
 {
-  g_return_if_fail (procedure != NULL);
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
   gimp_procedure_free_strings (procedure);
 
@@ -140,17 +140,17 @@ gimp_procedure_set_strings (ProcRecord       *procedure,
 }
 
 void
-gimp_procedure_set_static_strings (ProcRecord       *procedure,
-                                   gchar            *name,
-                                   gchar            *original_name,
-                                   gchar            *blurb,
-                                   gchar            *help,
-                                   gchar            *author,
-                                   gchar            *copyright,
-                                   gchar            *date,
-                                   gchar            *deprecated)
+gimp_procedure_set_static_strings (GimpProcedure *procedure,
+                                   gchar         *name,
+                                   gchar         *original_name,
+                                   gchar         *blurb,
+                                   gchar         *help,
+                                   gchar         *author,
+                                   gchar         *copyright,
+                                   gchar         *date,
+                                   gchar         *deprecated)
 {
-  g_return_if_fail (procedure != NULL);
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
   gimp_procedure_free_strings (procedure);
 
@@ -167,17 +167,17 @@ gimp_procedure_set_static_strings (ProcRecord       *procedure,
 }
 
 void
-gimp_procedure_take_strings (ProcRecord       *procedure,
-                             gchar            *name,
-                             gchar            *original_name,
-                             gchar            *blurb,
-                             gchar            *help,
-                             gchar            *author,
-                             gchar            *copyright,
-                             gchar            *date,
-                             gchar            *deprecated)
+gimp_procedure_take_strings (GimpProcedure *procedure,
+                             gchar         *name,
+                             gchar         *original_name,
+                             gchar         *blurb,
+                             gchar         *help,
+                             gchar         *author,
+                             gchar         *copyright,
+                             gchar         *date,
+                             gchar         *deprecated)
 {
-  g_return_if_fail (procedure != NULL);
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
   gimp_procedure_free_strings (procedure);
 
@@ -194,18 +194,18 @@ gimp_procedure_take_strings (ProcRecord       *procedure,
 }
 
 Argument *
-gimp_procedure_execute (ProcRecord   *procedure,
-                        Gimp         *gimp,
-                        GimpContext  *context,
-                        GimpProgress *progress,
-                        Argument     *args,
-                        gint          n_args,
-                        gint         *n_return_vals)
+gimp_procedure_execute (GimpProcedure *procedure,
+                        Gimp          *gimp,
+                        GimpContext   *context,
+                        GimpProgress  *progress,
+                        Argument      *args,
+                        gint           n_args,
+                        gint          *n_return_vals)
 {
   Argument *return_vals = NULL;
   gint      i;
 
-  g_return_val_if_fail (procedure != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
@@ -328,12 +328,12 @@ gimp_procedure_execute (ProcRecord   *procedure,
 }
 
 Argument *
-gimp_procedure_get_arguments (const ProcRecord *procedure)
+gimp_procedure_get_arguments (GimpProcedure *procedure)
 {
   Argument *args;
   gint      i;
 
-  g_return_val_if_fail (procedure != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
   args = g_new0 (Argument, procedure->num_args);
 
@@ -344,14 +344,15 @@ gimp_procedure_get_arguments (const ProcRecord *procedure)
 }
 
 Argument *
-gimp_procedure_get_return_values (const ProcRecord *procedure,
-                                  gboolean          success)
+gimp_procedure_get_return_values (GimpProcedure *procedure,
+                                  gboolean       success)
 {
   Argument *args;
   gint      n_args;
   gint      i;
 
-  g_return_val_if_fail (procedure != NULL || success == FALSE, NULL);
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure) ||
+                        success == FALSE, NULL);
 
   if (procedure)
     n_args = procedure->num_values + 1;
@@ -375,13 +376,13 @@ gimp_procedure_get_return_values (const ProcRecord *procedure,
 }
 
 void
-gimp_procedure_add_argument (ProcRecord     *procedure,
+gimp_procedure_add_argument (GimpProcedure  *procedure,
                              GimpPDBArgType  arg_type,
                              GParamSpec     *pspec)
 {
   gint i;
 
-  g_return_if_fail (procedure != NULL);
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
   g_return_if_fail (G_IS_PARAM_SPEC (pspec));
 
   for (i = 0; i < procedure->num_args; i++)
@@ -401,13 +402,13 @@ gimp_procedure_add_argument (ProcRecord     *procedure,
 }
 
 void
-gimp_procedure_add_return_value (ProcRecord     *procedure,
+gimp_procedure_add_return_value (GimpProcedure  *procedure,
                                  GimpPDBArgType  arg_type,
                                  GParamSpec     *pspec)
 {
   gint i;
 
-  g_return_if_fail (procedure != NULL);
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
   g_return_if_fail (G_IS_PARAM_SPEC (pspec));
 
   for (i = 0; i < procedure->num_values; i++)
@@ -553,13 +554,13 @@ gimp_procedure_compat_pspec (Gimp           *gimp,
 }
 
 void
-gimp_procedure_add_compat_arg (ProcRecord     *procedure,
+gimp_procedure_add_compat_arg (GimpProcedure  *procedure,
                                Gimp           *gimp,
                                GimpPDBArgType  arg_type,
                                const gchar    *name,
                                const gchar    *desc)
 {
-  g_return_if_fail (procedure != NULL);
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (name != NULL);
 
@@ -569,13 +570,13 @@ gimp_procedure_add_compat_arg (ProcRecord     *procedure,
 }
 
 void
-gimp_procedure_add_compat_value (ProcRecord     *procedure,
+gimp_procedure_add_compat_value (GimpProcedure  *procedure,
                                  Gimp           *gimp,
                                  GimpPDBArgType  arg_type,
                                  const gchar    *name,
                                  const gchar    *desc)
 {
-  g_return_if_fail (procedure != NULL);
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (name != NULL);
 
@@ -588,7 +589,7 @@ gimp_procedure_add_compat_value (ProcRecord     *procedure,
 /*  private functions  */
 
 static void
-gimp_procedure_free_strings (ProcRecord *procedure)
+gimp_procedure_free_strings (GimpProcedure *procedure)
 {
   if (! procedure->static_strings)
     {

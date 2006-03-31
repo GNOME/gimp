@@ -40,13 +40,13 @@
 #define BATCH_DEFAULT_EVAL_PROC   "plug-in-script-fu-eval"
 
 
-static gboolean  batch_exit_after_callback (Gimp        *gimp,
-                                            gboolean     kill_it);
-static void      batch_run_cmd             (Gimp        *gimp,
-                                            const gchar *proc_name,
-                                            ProcRecord  *proc,
-                                            GimpRunMode  run_mode,
-                                            const gchar *cmd);
+static gboolean  batch_exit_after_callback (Gimp          *gimp,
+                                            gboolean       kill_it);
+static void      batch_run_cmd             (Gimp          *gimp,
+                                            const gchar   *proc_name,
+                                            GimpProcedure *procedure,
+                                            GimpRunMode    run_mode,
+                                            const gchar   *cmd);
 
 
 void
@@ -76,18 +76,19 @@ batch_run (Gimp         *gimp,
   if (strcmp (batch_interpreter, "plug-in-script-fu-eval") == 0 &&
       strcmp (batch_commands[0], "-") == 0)
     {
-      const gchar *proc_name = "plug-in-script-fu-text-console";
-      ProcRecord  *proc      = procedural_db_lookup (gimp, proc_name);
+      const gchar   *proc_name = "plug-in-script-fu-text-console";
+      GimpProcedure *procedure = procedural_db_lookup (gimp, proc_name);
 
-      if (proc)
-        batch_run_cmd (gimp, proc_name, proc, GIMP_RUN_NONINTERACTIVE, NULL);
+      if (procedure)
+        batch_run_cmd (gimp, proc_name, procedure,
+                       GIMP_RUN_NONINTERACTIVE, NULL);
       else
         g_message (_("The batch interpreter '%s' is not available. "
                      "Batch mode disabled."), proc_name);
     }
   else
     {
-      ProcRecord *eval_proc = procedural_db_lookup (gimp, batch_interpreter);
+      GimpProcedure *eval_proc = procedural_db_lookup (gimp, batch_interpreter);
 
       if (eval_proc)
         {
@@ -123,27 +124,27 @@ batch_exit_after_callback (Gimp     *gimp,
 }
 
 static void
-batch_run_cmd (Gimp        *gimp,
-               const gchar *proc_name,
-               ProcRecord  *proc,
-               GimpRunMode  run_mode,
-	       const gchar *cmd)
+batch_run_cmd (Gimp          *gimp,
+               const gchar   *proc_name,
+               GimpProcedure *procedure,
+               GimpRunMode    run_mode,
+	       const gchar   *cmd)
 {
   Argument *args;
   Argument *return_vals;
   gint      n_return_vals;
 
-  args = gimp_procedure_get_arguments (proc);
+  args = gimp_procedure_get_arguments (procedure);
 
   g_value_set_int (&args[0].value, run_mode);
 
-  if (proc->num_args > 1)
+  if (procedure->num_args > 1)
     g_value_set_static_string (&args[1].value, cmd);
 
   return_vals = procedural_db_execute (gimp,
                                        gimp_get_user_context (gimp), NULL,
                                        proc_name,
-                                       args, proc->num_args,
+                                       args, procedure->num_args,
                                        &n_return_vals);
 
   switch (g_value_get_enum (&return_vals[0].value))
@@ -162,7 +163,7 @@ batch_run_cmd (Gimp        *gimp,
     }
 
   procedural_db_destroy_args (return_vals, n_return_vals, TRUE);
-  procedural_db_destroy_args (args, proc->num_args, TRUE);
+  procedural_db_destroy_args (args, procedure->num_args, TRUE);
 
   return;
 }

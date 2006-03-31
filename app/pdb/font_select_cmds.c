@@ -30,14 +30,14 @@
 
 #include "core/gimp.h"
 
-static ProcRecord fonts_popup_proc;
-static ProcRecord fonts_close_popup_proc;
-static ProcRecord fonts_set_popup_proc;
+static GimpProcedure fonts_popup_proc;
+static GimpProcedure fonts_close_popup_proc;
+static GimpProcedure fonts_set_popup_proc;
 
 void
 register_font_select_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * fonts_popup
@@ -108,11 +108,11 @@ register_font_select_procs (Gimp *gimp)
 }
 
 static Argument *
-fonts_popup_invoker (ProcRecord   *proc_record,
-                     Gimp         *gimp,
-                     GimpContext  *context,
-                     GimpProgress *progress,
-                     Argument     *args)
+fonts_popup_invoker (GimpProcedure *procedure,
+                     Gimp          *gimp,
+                     GimpContext   *context,
+                     GimpProgress  *progress,
+                     Argument      *args)
 {
   gboolean success = TRUE;
   gchar *font_callback;
@@ -133,10 +133,10 @@ fonts_popup_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord fonts_popup_proc =
+static GimpProcedure fonts_popup_proc =
 {
   TRUE, TRUE,
   "gimp-fonts-popup",
@@ -153,11 +153,11 @@ static ProcRecord fonts_popup_proc =
 };
 
 static Argument *
-fonts_close_popup_invoker (ProcRecord   *proc_record,
-                           Gimp         *gimp,
-                           GimpContext  *context,
-                           GimpProgress *progress,
-                           Argument     *args)
+fonts_close_popup_invoker (GimpProcedure *procedure,
+                           Gimp          *gimp,
+                           GimpContext   *context,
+                           GimpProgress  *progress,
+                           Argument      *args)
 {
   gboolean success = TRUE;
   gchar *font_callback;
@@ -172,10 +172,10 @@ fonts_close_popup_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord fonts_close_popup_proc =
+static GimpProcedure fonts_close_popup_proc =
 {
   TRUE, TRUE,
   "gimp-fonts-close-popup",
@@ -192,11 +192,11 @@ static ProcRecord fonts_close_popup_proc =
 };
 
 static Argument *
-fonts_set_popup_invoker (ProcRecord   *proc_record,
-                         Gimp         *gimp,
-                         GimpContext  *context,
-                         GimpProgress *progress,
-                         Argument     *args)
+fonts_set_popup_invoker (GimpProcedure *procedure,
+                         Gimp          *gimp,
+                         GimpContext   *context,
+                         GimpProgress  *progress,
+                         Argument      *args)
 {
   gboolean success = TRUE;
   gchar *font_callback;
@@ -214,10 +214,10 @@ fonts_set_popup_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord fonts_set_popup_proc =
+static GimpProcedure fonts_set_popup_proc =
 {
   TRUE, TRUE,
   "gimp-fonts-set-popup",

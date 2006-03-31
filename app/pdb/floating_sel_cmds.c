@@ -32,17 +32,17 @@
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayer.h"
 
-static ProcRecord floating_sel_remove_proc;
-static ProcRecord floating_sel_anchor_proc;
-static ProcRecord floating_sel_to_layer_proc;
-static ProcRecord floating_sel_attach_proc;
-static ProcRecord floating_sel_rigor_proc;
-static ProcRecord floating_sel_relax_proc;
+static GimpProcedure floating_sel_remove_proc;
+static GimpProcedure floating_sel_anchor_proc;
+static GimpProcedure floating_sel_to_layer_proc;
+static GimpProcedure floating_sel_attach_proc;
+static GimpProcedure floating_sel_rigor_proc;
+static GimpProcedure floating_sel_relax_proc;
 
 void
 register_floating_sel_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * floating_sel_remove
@@ -153,11 +153,11 @@ register_floating_sel_procs (Gimp *gimp)
 }
 
 static Argument *
-floating_sel_remove_invoker (ProcRecord   *proc_record,
-                             Gimp         *gimp,
-                             GimpContext  *context,
-                             GimpProgress *progress,
-                             Argument     *args)
+floating_sel_remove_invoker (GimpProcedure *procedure,
+                             Gimp          *gimp,
+                             GimpContext   *context,
+                             GimpProgress  *progress,
+                             Argument      *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
@@ -172,10 +172,10 @@ floating_sel_remove_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord floating_sel_remove_proc =
+static GimpProcedure floating_sel_remove_proc =
 {
   TRUE, TRUE,
   "gimp-floating-sel-remove",
@@ -192,11 +192,11 @@ static ProcRecord floating_sel_remove_proc =
 };
 
 static Argument *
-floating_sel_anchor_invoker (ProcRecord   *proc_record,
-                             Gimp         *gimp,
-                             GimpContext  *context,
-                             GimpProgress *progress,
-                             Argument     *args)
+floating_sel_anchor_invoker (GimpProcedure *procedure,
+                             Gimp          *gimp,
+                             GimpContext   *context,
+                             GimpProgress  *progress,
+                             Argument      *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
@@ -211,10 +211,10 @@ floating_sel_anchor_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord floating_sel_anchor_proc =
+static GimpProcedure floating_sel_anchor_proc =
 {
   TRUE, TRUE,
   "gimp-floating-sel-anchor",
@@ -231,11 +231,11 @@ static ProcRecord floating_sel_anchor_proc =
 };
 
 static Argument *
-floating_sel_to_layer_invoker (ProcRecord   *proc_record,
-                               Gimp         *gimp,
-                               GimpContext  *context,
-                               GimpProgress *progress,
-                               Argument     *args)
+floating_sel_to_layer_invoker (GimpProcedure *procedure,
+                               Gimp          *gimp,
+                               GimpContext   *context,
+                               GimpProgress  *progress,
+                               Argument      *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
@@ -250,10 +250,10 @@ floating_sel_to_layer_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord floating_sel_to_layer_proc =
+static GimpProcedure floating_sel_to_layer_proc =
 {
   TRUE, TRUE,
   "gimp-floating-sel-to-layer",
@@ -270,11 +270,11 @@ static ProcRecord floating_sel_to_layer_proc =
 };
 
 static Argument *
-floating_sel_attach_invoker (ProcRecord   *proc_record,
-                             Gimp         *gimp,
-                             GimpContext  *context,
-                             GimpProgress *progress,
-                             Argument     *args)
+floating_sel_attach_invoker (GimpProcedure *procedure,
+                             Gimp          *gimp,
+                             GimpContext   *context,
+                             GimpProgress  *progress,
+                             Argument      *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -291,10 +291,10 @@ floating_sel_attach_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord floating_sel_attach_proc =
+static GimpProcedure floating_sel_attach_proc =
 {
   TRUE, TRUE,
   "gimp-floating-sel-attach",
@@ -311,11 +311,11 @@ static ProcRecord floating_sel_attach_proc =
 };
 
 static Argument *
-floating_sel_rigor_invoker (ProcRecord   *proc_record,
-                            Gimp         *gimp,
-                            GimpContext  *context,
-                            GimpProgress *progress,
-                            Argument     *args)
+floating_sel_rigor_invoker (GimpProcedure *procedure,
+                            Gimp          *gimp,
+                            GimpContext   *context,
+                            GimpProgress  *progress,
+                            Argument      *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
@@ -332,10 +332,10 @@ floating_sel_rigor_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord floating_sel_rigor_proc =
+static GimpProcedure floating_sel_rigor_proc =
 {
   TRUE, TRUE,
   "gimp-floating-sel-rigor",
@@ -352,11 +352,11 @@ static ProcRecord floating_sel_rigor_proc =
 };
 
 static Argument *
-floating_sel_relax_invoker (ProcRecord   *proc_record,
-                            Gimp         *gimp,
-                            GimpContext  *context,
-                            GimpProgress *progress,
-                            Argument     *args)
+floating_sel_relax_invoker (GimpProcedure *procedure,
+                            Gimp          *gimp,
+                            GimpContext   *context,
+                            GimpProgress  *progress,
+                            Argument      *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
@@ -373,10 +373,10 @@ floating_sel_relax_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord floating_sel_relax_proc =
+static GimpProcedure floating_sel_relax_proc =
 {
   TRUE, TRUE,
   "gimp-floating-sel-relax",

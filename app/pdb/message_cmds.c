@@ -34,14 +34,14 @@
 #include "plug-in/plug-in-progress.h"
 #include "plug-in/plug-in.h"
 
-static ProcRecord message_proc;
-static ProcRecord message_get_handler_proc;
-static ProcRecord message_set_handler_proc;
+static GimpProcedure message_proc;
+static GimpProcedure message_get_handler_proc;
+static GimpProcedure message_set_handler_proc;
 
 void
 register_message_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * message
@@ -88,11 +88,11 @@ register_message_procs (Gimp *gimp)
 }
 
 static Argument *
-message_invoker (ProcRecord   *proc_record,
-                 Gimp         *gimp,
-                 GimpContext  *context,
-                 GimpProgress *progress,
-                 Argument     *args)
+message_invoker (GimpProcedure *procedure,
+                 Gimp          *gimp,
+                 GimpContext   *context,
+                 GimpProgress  *progress,
+                 Argument      *args)
 {
   gboolean success = TRUE;
   gchar *message;
@@ -107,10 +107,10 @@ message_invoker (ProcRecord   *proc_record,
         gimp_message (gimp, NULL, message);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord message_proc =
+static GimpProcedure message_proc =
 {
   TRUE, TRUE,
   "gimp-message",
@@ -127,24 +127,24 @@ static ProcRecord message_proc =
 };
 
 static Argument *
-message_get_handler_invoker (ProcRecord   *proc_record,
-                             Gimp         *gimp,
-                             GimpContext  *context,
-                             GimpProgress *progress,
-                             Argument     *args)
+message_get_handler_invoker (GimpProcedure *procedure,
+                             Gimp          *gimp,
+                             GimpContext   *context,
+                             GimpProgress  *progress,
+                             Argument      *args)
 {
   Argument *return_vals;
   gint32 handler = 0;
 
   handler = gimp->message_handler;
 
-  return_vals = gimp_procedure_get_return_values (proc_record, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
   g_value_set_enum (&return_vals[1].value, handler);
 
   return return_vals;
 }
 
-static ProcRecord message_get_handler_proc =
+static GimpProcedure message_get_handler_proc =
 {
   TRUE, TRUE,
   "gimp-message-get-handler",
@@ -161,11 +161,11 @@ static ProcRecord message_get_handler_proc =
 };
 
 static Argument *
-message_set_handler_invoker (ProcRecord   *proc_record,
-                             Gimp         *gimp,
-                             GimpContext  *context,
-                             GimpProgress *progress,
-                             Argument     *args)
+message_set_handler_invoker (GimpProcedure *procedure,
+                             Gimp          *gimp,
+                             GimpContext   *context,
+                             GimpProgress  *progress,
+                             Argument      *args)
 {
   gboolean success = TRUE;
   gint32 handler;
@@ -177,10 +177,10 @@ message_set_handler_invoker (ProcRecord   *proc_record,
       gimp->message_handler = handler;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord message_set_handler_proc =
+static GimpProcedure message_set_handler_proc =
 {
   TRUE, TRUE,
   "gimp-message-set-handler",

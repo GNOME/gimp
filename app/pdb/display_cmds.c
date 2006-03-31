@@ -32,16 +32,16 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 
-static ProcRecord display_new_proc;
-static ProcRecord display_delete_proc;
-static ProcRecord display_get_window_handle_proc;
-static ProcRecord displays_flush_proc;
-static ProcRecord displays_reconnect_proc;
+static GimpProcedure display_new_proc;
+static GimpProcedure display_delete_proc;
+static GimpProcedure display_get_window_handle_proc;
+static GimpProcedure displays_flush_proc;
+static GimpProcedure displays_reconnect_proc;
 
 void
 register_display_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * display_new
@@ -125,11 +125,11 @@ register_display_procs (Gimp *gimp)
 }
 
 static Argument *
-display_new_invoker (ProcRecord   *proc_record,
-                     Gimp         *gimp,
-                     GimpContext  *context,
-                     GimpProgress *progress,
-                     Argument     *args)
+display_new_invoker (GimpProcedure *procedure,
+                     Gimp          *gimp,
+                     GimpContext   *context,
+                     GimpProgress  *progress,
+                     Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -152,7 +152,7 @@ display_new_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_display (&return_vals[1].value, display);
@@ -160,7 +160,7 @@ display_new_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord display_new_proc =
+static GimpProcedure display_new_proc =
 {
   TRUE, TRUE,
   "gimp-display-new",
@@ -177,11 +177,11 @@ static ProcRecord display_new_proc =
 };
 
 static Argument *
-display_delete_invoker (ProcRecord   *proc_record,
-                        Gimp         *gimp,
-                        GimpContext  *context,
-                        GimpProgress *progress,
-                        Argument     *args)
+display_delete_invoker (GimpProcedure *procedure,
+                        Gimp          *gimp,
+                        GimpContext   *context,
+                        GimpProgress  *progress,
+                        Argument      *args)
 {
   gboolean success = TRUE;
   GimpObject *display;
@@ -193,10 +193,10 @@ display_delete_invoker (ProcRecord   *proc_record,
       gimp_delete_display (gimp, display);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord display_delete_proc =
+static GimpProcedure display_delete_proc =
 {
   TRUE, TRUE,
   "gimp-display-delete",
@@ -213,11 +213,11 @@ static ProcRecord display_delete_proc =
 };
 
 static Argument *
-display_get_window_handle_invoker (ProcRecord   *proc_record,
-                                   Gimp         *gimp,
-                                   GimpContext  *context,
-                                   GimpProgress *progress,
-                                   Argument     *args)
+display_get_window_handle_invoker (GimpProcedure *procedure,
+                                   Gimp          *gimp,
+                                   GimpContext   *context,
+                                   GimpProgress  *progress,
+                                   Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -231,7 +231,7 @@ display_get_window_handle_invoker (ProcRecord   *proc_record,
       window = (gint32) gimp_get_display_window (gimp, display);
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_int (&return_vals[1].value, window);
@@ -239,7 +239,7 @@ display_get_window_handle_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord display_get_window_handle_proc =
+static GimpProcedure display_get_window_handle_proc =
 {
   TRUE, TRUE,
   "gimp-display-get-window-handle",
@@ -256,17 +256,17 @@ static ProcRecord display_get_window_handle_proc =
 };
 
 static Argument *
-displays_flush_invoker (ProcRecord   *proc_record,
-                        Gimp         *gimp,
-                        GimpContext  *context,
-                        GimpProgress *progress,
-                        Argument     *args)
+displays_flush_invoker (GimpProcedure *procedure,
+                        Gimp          *gimp,
+                        GimpContext   *context,
+                        GimpProgress  *progress,
+                        Argument      *args)
 {
   gimp_container_foreach (gimp->images, (GFunc) gimp_image_flush, NULL);
-  return gimp_procedure_get_return_values (proc_record, TRUE);
+  return gimp_procedure_get_return_values (procedure, TRUE);
 }
 
-static ProcRecord displays_flush_proc =
+static GimpProcedure displays_flush_proc =
 {
   TRUE, TRUE,
   "gimp-displays-flush",
@@ -283,11 +283,11 @@ static ProcRecord displays_flush_proc =
 };
 
 static Argument *
-displays_reconnect_invoker (ProcRecord   *proc_record,
-                            Gimp         *gimp,
-                            GimpContext  *context,
-                            GimpProgress *progress,
-                            Argument     *args)
+displays_reconnect_invoker (GimpProcedure *procedure,
+                            Gimp          *gimp,
+                            GimpContext   *context,
+                            GimpProgress  *progress,
+                            Argument      *args)
 {
   gboolean success = TRUE;
   GimpImage *old_image;
@@ -312,10 +312,10 @@ displays_reconnect_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord displays_reconnect_proc =
+static GimpProcedure displays_reconnect_proc =
 {
   TRUE, TRUE,
   "gimp-displays-reconnect",

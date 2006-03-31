@@ -44,14 +44,14 @@
 
 #include "core/gimp.h"
 
-static ProcRecord version_proc;
-static ProcRecord getpid_proc;
-static ProcRecord quit_proc;
+static GimpProcedure version_proc;
+static GimpProcedure getpid_proc;
+static GimpProcedure quit_proc;
 
 void
 register_misc_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * version
@@ -96,24 +96,24 @@ register_misc_procs (Gimp *gimp)
 }
 
 static Argument *
-version_invoker (ProcRecord   *proc_record,
-                 Gimp         *gimp,
-                 GimpContext  *context,
-                 GimpProgress *progress,
-                 Argument     *args)
+version_invoker (GimpProcedure *procedure,
+                 Gimp          *gimp,
+                 GimpContext   *context,
+                 GimpProgress  *progress,
+                 Argument      *args)
 {
   Argument *return_vals;
   gchar *version = NULL;
 
   version = g_strdup (GIMP_VERSION);
 
-  return_vals = gimp_procedure_get_return_values (proc_record, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
   g_value_take_string (&return_vals[1].value, version);
 
   return return_vals;
 }
 
-static ProcRecord version_proc =
+static GimpProcedure version_proc =
 {
   TRUE, TRUE,
   "gimp-version",
@@ -130,24 +130,24 @@ static ProcRecord version_proc =
 };
 
 static Argument *
-getpid_invoker (ProcRecord   *proc_record,
-                Gimp         *gimp,
-                GimpContext  *context,
-                GimpProgress *progress,
-                Argument     *args)
+getpid_invoker (GimpProcedure *procedure,
+                Gimp          *gimp,
+                GimpContext   *context,
+                GimpProgress  *progress,
+                Argument      *args)
 {
   Argument *return_vals;
   gint32 pid = 0;
 
   pid = getpid ();
 
-  return_vals = gimp_procedure_get_return_values (proc_record, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
   g_value_set_int (&return_vals[1].value, pid);
 
   return return_vals;
 }
 
-static ProcRecord getpid_proc =
+static GimpProcedure getpid_proc =
 {
   TRUE, TRUE,
   "gimp-getpid",
@@ -164,11 +164,11 @@ static ProcRecord getpid_proc =
 };
 
 static Argument *
-quit_invoker (ProcRecord   *proc_record,
-              Gimp         *gimp,
-              GimpContext  *context,
-              GimpProgress *progress,
-              Argument     *args)
+quit_invoker (GimpProcedure *procedure,
+              Gimp          *gimp,
+              GimpContext   *context,
+              GimpProgress  *progress,
+              Argument      *args)
 {
   gboolean success = TRUE;
   gboolean force;
@@ -180,10 +180,10 @@ quit_invoker (ProcRecord   *proc_record,
       gimp_exit (gimp, force);
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord quit_proc =
+static GimpProcedure quit_proc =
 {
   TRUE, TRUE,
   "gimp-quit",

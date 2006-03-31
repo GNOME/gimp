@@ -40,7 +40,7 @@ struct _PlugInProcDef
   time_t           mtime;
   gboolean	   installed_during_init;
 
-  ProcRecord      *procedure;
+  GimpProcedure   *procedure;
 
   /*  file proc specific members  */
   gboolean         file_proc;

@@ -32,17 +32,17 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpimage.h"
 
-static ProcRecord image_add_hguide_proc;
-static ProcRecord image_add_vguide_proc;
-static ProcRecord image_delete_guide_proc;
-static ProcRecord image_find_next_guide_proc;
-static ProcRecord image_get_guide_orientation_proc;
-static ProcRecord image_get_guide_position_proc;
+static GimpProcedure image_add_hguide_proc;
+static GimpProcedure image_add_vguide_proc;
+static GimpProcedure image_delete_guide_proc;
+static GimpProcedure image_find_next_guide_proc;
+static GimpProcedure image_get_guide_orientation_proc;
+static GimpProcedure image_get_guide_position_proc;
 
 void
 register_guides_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * image_add_hguide
@@ -205,11 +205,11 @@ register_guides_procs (Gimp *gimp)
 }
 
 static Argument *
-image_add_hguide_invoker (ProcRecord   *proc_record,
-                          Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+image_add_hguide_invoker (GimpProcedure *procedure,
+                          Gimp          *gimp,
+                          GimpContext   *context,
+                          GimpProgress  *progress,
+                          Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -233,7 +233,7 @@ image_add_hguide_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_uint (&return_vals[1].value, guide);
@@ -241,7 +241,7 @@ image_add_hguide_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord image_add_hguide_proc =
+static GimpProcedure image_add_hguide_proc =
 {
   TRUE, TRUE,
   "gimp-image-add-hguide",
@@ -258,11 +258,11 @@ static ProcRecord image_add_hguide_proc =
 };
 
 static Argument *
-image_add_vguide_invoker (ProcRecord   *proc_record,
-                          Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+image_add_vguide_invoker (GimpProcedure *procedure,
+                          Gimp          *gimp,
+                          GimpContext   *context,
+                          GimpProgress  *progress,
+                          Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -286,7 +286,7 @@ image_add_vguide_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_uint (&return_vals[1].value, guide);
@@ -294,7 +294,7 @@ image_add_vguide_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord image_add_vguide_proc =
+static GimpProcedure image_add_vguide_proc =
 {
   TRUE, TRUE,
   "gimp-image-add-vguide",
@@ -311,11 +311,11 @@ static ProcRecord image_add_vguide_proc =
 };
 
 static Argument *
-image_delete_guide_invoker (ProcRecord   *proc_record,
-                            Gimp         *gimp,
-                            GimpContext  *context,
-                            GimpProgress *progress,
-                            Argument     *args)
+image_delete_guide_invoker (GimpProcedure *procedure,
+                            Gimp          *gimp,
+                            GimpContext   *context,
+                            GimpProgress  *progress,
+                            Argument      *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -334,10 +334,10 @@ image_delete_guide_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord image_delete_guide_proc =
+static GimpProcedure image_delete_guide_proc =
 {
   TRUE, TRUE,
   "gimp-image-delete-guide",
@@ -354,11 +354,11 @@ static ProcRecord image_delete_guide_proc =
 };
 
 static Argument *
-image_find_next_guide_invoker (ProcRecord   *proc_record,
-                               Gimp         *gimp,
-                               GimpContext  *context,
-                               GimpProgress *progress,
-                               Argument     *args)
+image_find_next_guide_invoker (GimpProcedure *procedure,
+                               Gimp          *gimp,
+                               GimpContext   *context,
+                               GimpProgress  *progress,
+                               Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -377,7 +377,7 @@ image_find_next_guide_invoker (ProcRecord   *proc_record,
         next_guide = g->guide_ID;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_uint (&return_vals[1].value, next_guide);
@@ -385,7 +385,7 @@ image_find_next_guide_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord image_find_next_guide_proc =
+static GimpProcedure image_find_next_guide_proc =
 {
   TRUE, TRUE,
   "gimp-image-find-next-guide",
@@ -402,11 +402,11 @@ static ProcRecord image_find_next_guide_proc =
 };
 
 static Argument *
-image_get_guide_orientation_invoker (ProcRecord   *proc_record,
-                                     Gimp         *gimp,
-                                     GimpContext  *context,
-                                     GimpProgress *progress,
-                                     Argument     *args)
+image_get_guide_orientation_invoker (GimpProcedure *procedure,
+                                     Gimp          *gimp,
+                                     GimpContext   *context,
+                                     GimpProgress  *progress,
+                                     Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -427,7 +427,7 @@ image_get_guide_orientation_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_enum (&return_vals[1].value, orientation);
@@ -435,7 +435,7 @@ image_get_guide_orientation_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord image_get_guide_orientation_proc =
+static GimpProcedure image_get_guide_orientation_proc =
 {
   TRUE, TRUE,
   "gimp-image-get-guide-orientation",
@@ -452,11 +452,11 @@ static ProcRecord image_get_guide_orientation_proc =
 };
 
 static Argument *
-image_get_guide_position_invoker (ProcRecord   *proc_record,
-                                  Gimp         *gimp,
-                                  GimpContext  *context,
-                                  GimpProgress *progress,
-                                  Argument     *args)
+image_get_guide_position_invoker (GimpProcedure *procedure,
+                                  Gimp          *gimp,
+                                  GimpContext   *context,
+                                  GimpProgress  *progress,
+                                  Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -477,7 +477,7 @@ image_get_guide_position_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_int (&return_vals[1].value, position);
@@ -485,7 +485,7 @@ image_get_guide_position_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord image_get_guide_position_proc =
+static GimpProcedure image_get_guide_position_proc =
 {
   TRUE, TRUE,
   "gimp-image-get-guide-position",

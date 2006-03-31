@@ -32,14 +32,14 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimpgradient.h"
 
-static ProcRecord gradients_popup_proc;
-static ProcRecord gradients_close_popup_proc;
-static ProcRecord gradients_set_popup_proc;
+static GimpProcedure gradients_popup_proc;
+static GimpProcedure gradients_close_popup_proc;
+static GimpProcedure gradients_set_popup_proc;
 
 void
 register_gradient_select_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * gradients_popup
@@ -117,11 +117,11 @@ register_gradient_select_procs (Gimp *gimp)
 }
 
 static Argument *
-gradients_popup_invoker (ProcRecord   *proc_record,
-                         Gimp         *gimp,
-                         GimpContext  *context,
-                         GimpProgress *progress,
-                         Argument     *args)
+gradients_popup_invoker (GimpProcedure *procedure,
+                         Gimp          *gimp,
+                         GimpContext   *context,
+                         GimpProgress  *progress,
+                         Argument      *args)
 {
   gboolean success = TRUE;
   gchar *gradient_callback;
@@ -148,10 +148,10 @@ gradients_popup_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord gradients_popup_proc =
+static GimpProcedure gradients_popup_proc =
 {
   TRUE, TRUE,
   "gimp-gradients-popup",
@@ -168,11 +168,11 @@ static ProcRecord gradients_popup_proc =
 };
 
 static Argument *
-gradients_close_popup_invoker (ProcRecord   *proc_record,
-                               Gimp         *gimp,
-                               GimpContext  *context,
-                               GimpProgress *progress,
-                               Argument     *args)
+gradients_close_popup_invoker (GimpProcedure *procedure,
+                               Gimp          *gimp,
+                               GimpContext   *context,
+                               GimpProgress  *progress,
+                               Argument      *args)
 {
   gboolean success = TRUE;
   gchar *gradient_callback;
@@ -188,10 +188,10 @@ gradients_close_popup_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord gradients_close_popup_proc =
+static GimpProcedure gradients_close_popup_proc =
 {
   TRUE, TRUE,
   "gimp-gradients-close-popup",
@@ -208,11 +208,11 @@ static ProcRecord gradients_close_popup_proc =
 };
 
 static Argument *
-gradients_set_popup_invoker (ProcRecord   *proc_record,
-                             Gimp         *gimp,
-                             GimpContext  *context,
-                             GimpProgress *progress,
-                             Argument     *args)
+gradients_set_popup_invoker (GimpProcedure *procedure,
+                             Gimp          *gimp,
+                             GimpContext   *context,
+                             GimpProgress  *progress,
+                             Argument      *args)
 {
   gboolean success = TRUE;
   gchar *gradient_callback;
@@ -231,10 +231,10 @@ gradients_set_popup_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord gradients_set_popup_proc =
+static GimpProcedure gradients_set_popup_proc =
 {
   TRUE, TRUE,
   "gimp-gradients-set-popup",

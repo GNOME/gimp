@@ -42,26 +42,26 @@
 #include "core/gimpstrokedesc.h"
 #include "gimp-intl.h"
 
-static ProcRecord edit_cut_proc;
-static ProcRecord edit_copy_proc;
-static ProcRecord edit_copy_visible_proc;
-static ProcRecord edit_paste_proc;
-static ProcRecord edit_paste_as_new_proc;
-static ProcRecord edit_named_cut_proc;
-static ProcRecord edit_named_copy_proc;
-static ProcRecord edit_named_copy_visible_proc;
-static ProcRecord edit_named_paste_proc;
-static ProcRecord edit_named_paste_as_new_proc;
-static ProcRecord edit_clear_proc;
-static ProcRecord edit_fill_proc;
-static ProcRecord edit_bucket_fill_proc;
-static ProcRecord edit_blend_proc;
-static ProcRecord edit_stroke_proc;
+static GimpProcedure edit_cut_proc;
+static GimpProcedure edit_copy_proc;
+static GimpProcedure edit_copy_visible_proc;
+static GimpProcedure edit_paste_proc;
+static GimpProcedure edit_paste_as_new_proc;
+static GimpProcedure edit_named_cut_proc;
+static GimpProcedure edit_named_copy_proc;
+static GimpProcedure edit_named_copy_visible_proc;
+static GimpProcedure edit_named_paste_proc;
+static GimpProcedure edit_named_paste_as_new_proc;
+static GimpProcedure edit_clear_proc;
+static GimpProcedure edit_fill_proc;
+static GimpProcedure edit_bucket_fill_proc;
+static GimpProcedure edit_blend_proc;
+static GimpProcedure edit_stroke_proc;
 
 void
 register_edit_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * edit_cut
@@ -555,11 +555,11 @@ register_edit_procs (Gimp *gimp)
 }
 
 static Argument *
-edit_cut_invoker (ProcRecord   *proc_record,
-                  Gimp         *gimp,
-                  GimpContext  *context,
-                  GimpProgress *progress,
-                  Argument     *args)
+edit_cut_invoker (GimpProcedure *procedure,
+                  Gimp          *gimp,
+                  GimpContext   *context,
+                  GimpProgress  *progress,
+                  Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -580,7 +580,7 @@ edit_cut_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals[1].value, non_empty);
@@ -588,7 +588,7 @@ edit_cut_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord edit_cut_proc =
+static GimpProcedure edit_cut_proc =
 {
   TRUE, TRUE,
   "gimp-edit-cut",
@@ -605,11 +605,11 @@ static ProcRecord edit_cut_proc =
 };
 
 static Argument *
-edit_copy_invoker (ProcRecord   *proc_record,
-                   Gimp         *gimp,
-                   GimpContext  *context,
-                   GimpProgress *progress,
-                   Argument     *args)
+edit_copy_invoker (GimpProcedure *procedure,
+                   Gimp          *gimp,
+                   GimpContext   *context,
+                   GimpProgress  *progress,
+                   Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -630,7 +630,7 @@ edit_copy_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals[1].value, non_empty);
@@ -638,7 +638,7 @@ edit_copy_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord edit_copy_proc =
+static GimpProcedure edit_copy_proc =
 {
   TRUE, TRUE,
   "gimp-edit-copy",
@@ -655,11 +655,11 @@ static ProcRecord edit_copy_proc =
 };
 
 static Argument *
-edit_copy_visible_invoker (ProcRecord   *proc_record,
-                           Gimp         *gimp,
-                           GimpContext  *context,
-                           GimpProgress *progress,
-                           Argument     *args)
+edit_copy_visible_invoker (GimpProcedure *procedure,
+                           Gimp          *gimp,
+                           GimpContext   *context,
+                           GimpProgress  *progress,
+                           Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -673,7 +673,7 @@ edit_copy_visible_invoker (ProcRecord   *proc_record,
       non_empty = gimp_edit_copy_visible (image, context) != NULL;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals[1].value, non_empty);
@@ -681,7 +681,7 @@ edit_copy_visible_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord edit_copy_visible_proc =
+static GimpProcedure edit_copy_visible_proc =
 {
   TRUE, TRUE,
   "gimp-edit-copy-visible",
@@ -698,11 +698,11 @@ static ProcRecord edit_copy_visible_proc =
 };
 
 static Argument *
-edit_paste_invoker (ProcRecord   *proc_record,
-                    Gimp         *gimp,
-                    GimpContext  *context,
-                    GimpProgress *progress,
-                    Argument     *args)
+edit_paste_invoker (GimpProcedure *procedure,
+                    Gimp          *gimp,
+                    GimpContext   *context,
+                    GimpProgress  *progress,
+                    Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -728,7 +728,7 @@ edit_paste_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (floating_sel));
@@ -736,7 +736,7 @@ edit_paste_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord edit_paste_proc =
+static GimpProcedure edit_paste_proc =
 {
   TRUE, TRUE,
   "gimp-edit-paste",
@@ -753,11 +753,11 @@ static ProcRecord edit_paste_proc =
 };
 
 static Argument *
-edit_paste_as_new_invoker (ProcRecord   *proc_record,
-                           Gimp         *gimp,
-                           GimpContext  *context,
-                           GimpProgress *progress,
-                           Argument     *args)
+edit_paste_as_new_invoker (GimpProcedure *procedure,
+                           Gimp          *gimp,
+                           GimpContext   *context,
+                           GimpProgress  *progress,
+                           Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -773,7 +773,7 @@ edit_paste_as_new_invoker (ProcRecord   *proc_record,
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_image (&return_vals[1].value, image);
@@ -781,7 +781,7 @@ edit_paste_as_new_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord edit_paste_as_new_proc =
+static GimpProcedure edit_paste_as_new_proc =
 {
   TRUE, TRUE,
   "gimp-edit-paste-as-new",
@@ -798,11 +798,11 @@ static ProcRecord edit_paste_as_new_proc =
 };
 
 static Argument *
-edit_named_cut_invoker (ProcRecord   *proc_record,
-                        Gimp         *gimp,
-                        GimpContext  *context,
-                        GimpProgress *progress,
-                        Argument     *args)
+edit_named_cut_invoker (GimpProcedure *procedure,
+                        Gimp          *gimp,
+                        GimpContext   *context,
+                        GimpProgress  *progress,
+                        Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -831,7 +831,7 @@ edit_named_cut_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, real_name);
@@ -839,7 +839,7 @@ edit_named_cut_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord edit_named_cut_proc =
+static GimpProcedure edit_named_cut_proc =
 {
   TRUE, TRUE,
   "gimp-edit-named-cut",
@@ -856,11 +856,11 @@ static ProcRecord edit_named_cut_proc =
 };
 
 static Argument *
-edit_named_copy_invoker (ProcRecord   *proc_record,
-                         Gimp         *gimp,
-                         GimpContext  *context,
-                         GimpProgress *progress,
-                         Argument     *args)
+edit_named_copy_invoker (GimpProcedure *procedure,
+                         Gimp          *gimp,
+                         GimpContext   *context,
+                         GimpProgress  *progress,
+                         Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -889,7 +889,7 @@ edit_named_copy_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, real_name);
@@ -897,7 +897,7 @@ edit_named_copy_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord edit_named_copy_proc =
+static GimpProcedure edit_named_copy_proc =
 {
   TRUE, TRUE,
   "gimp-edit-named-copy",
@@ -914,11 +914,11 @@ static ProcRecord edit_named_copy_proc =
 };
 
 static Argument *
-edit_named_copy_visible_invoker (ProcRecord   *proc_record,
-                                 Gimp         *gimp,
-                                 GimpContext  *context,
-                                 GimpProgress *progress,
-                                 Argument     *args)
+edit_named_copy_visible_invoker (GimpProcedure *procedure,
+                                 Gimp          *gimp,
+                                 GimpContext   *context,
+                                 GimpProgress  *progress,
+                                 Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -945,7 +945,7 @@ edit_named_copy_visible_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, real_name);
@@ -953,7 +953,7 @@ edit_named_copy_visible_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord edit_named_copy_visible_proc =
+static GimpProcedure edit_named_copy_visible_proc =
 {
   TRUE, TRUE,
   "gimp-edit-named-copy-visible",
@@ -970,11 +970,11 @@ static ProcRecord edit_named_copy_visible_proc =
 };
 
 static Argument *
-edit_named_paste_invoker (ProcRecord   *proc_record,
-                          Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+edit_named_paste_invoker (GimpProcedure *procedure,
+                          Gimp          *gimp,
+                          GimpContext   *context,
+                          GimpProgress  *progress,
+                          Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1004,7 +1004,7 @@ edit_named_paste_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (floating_sel));
@@ -1012,7 +1012,7 @@ edit_named_paste_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord edit_named_paste_proc =
+static GimpProcedure edit_named_paste_proc =
 {
   TRUE, TRUE,
   "gimp-edit-named-paste",
@@ -1029,11 +1029,11 @@ static ProcRecord edit_named_paste_proc =
 };
 
 static Argument *
-edit_named_paste_as_new_invoker (ProcRecord   *proc_record,
-                                 Gimp         *gimp,
-                                 GimpContext  *context,
-                                 GimpProgress *progress,
-                                 Argument     *args)
+edit_named_paste_as_new_invoker (GimpProcedure *procedure,
+                                 Gimp          *gimp,
+                                 GimpContext   *context,
+                                 GimpProgress  *progress,
+                                 Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1058,7 +1058,7 @@ edit_named_paste_as_new_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_image (&return_vals[1].value, image);
@@ -1066,7 +1066,7 @@ edit_named_paste_as_new_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord edit_named_paste_as_new_proc =
+static GimpProcedure edit_named_paste_as_new_proc =
 {
   TRUE, TRUE,
   "gimp-edit-named-paste-as-new",
@@ -1083,11 +1083,11 @@ static ProcRecord edit_named_paste_as_new_proc =
 };
 
 static Argument *
-edit_clear_invoker (ProcRecord   *proc_record,
-                    Gimp         *gimp,
-                    GimpContext  *context,
-                    GimpProgress *progress,
-                    Argument     *args)
+edit_clear_invoker (GimpProcedure *procedure,
+                    Gimp          *gimp,
+                    GimpContext   *context,
+                    GimpProgress  *progress,
+                    Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1106,10 +1106,10 @@ edit_clear_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord edit_clear_proc =
+static GimpProcedure edit_clear_proc =
 {
   TRUE, TRUE,
   "gimp-edit-clear",
@@ -1126,11 +1126,11 @@ static ProcRecord edit_clear_proc =
 };
 
 static Argument *
-edit_fill_invoker (ProcRecord   *proc_record,
-                   Gimp         *gimp,
-                   GimpContext  *context,
-                   GimpProgress *progress,
-                   Argument     *args)
+edit_fill_invoker (GimpProcedure *procedure,
+                   Gimp          *gimp,
+                   GimpContext   *context,
+                   GimpProgress  *progress,
+                   Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1152,10 +1152,10 @@ edit_fill_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord edit_fill_proc =
+static GimpProcedure edit_fill_proc =
 {
   TRUE, TRUE,
   "gimp-edit-fill",
@@ -1172,11 +1172,11 @@ static ProcRecord edit_fill_proc =
 };
 
 static Argument *
-edit_bucket_fill_invoker (ProcRecord   *proc_record,
-                          Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+edit_bucket_fill_invoker (GimpProcedure *procedure,
+                          Gimp          *gimp,
+                          GimpContext   *context,
+                          GimpProgress  *progress,
+                          Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1216,10 +1216,10 @@ edit_bucket_fill_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord edit_bucket_fill_proc =
+static GimpProcedure edit_bucket_fill_proc =
 {
   TRUE, TRUE,
   "gimp-edit-bucket-fill",
@@ -1236,11 +1236,11 @@ static ProcRecord edit_bucket_fill_proc =
 };
 
 static Argument *
-edit_blend_invoker (ProcRecord   *proc_record,
-                    Gimp         *gimp,
-                    GimpContext  *context,
-                    GimpProgress *progress,
-                    Argument     *args)
+edit_blend_invoker (GimpProcedure *procedure,
+                    Gimp          *gimp,
+                    GimpContext   *context,
+                    GimpProgress  *progress,
+                    Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1312,10 +1312,10 @@ edit_blend_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord edit_blend_proc =
+static GimpProcedure edit_blend_proc =
 {
   TRUE, TRUE,
   "gimp-edit-blend",
@@ -1332,11 +1332,11 @@ static ProcRecord edit_blend_proc =
 };
 
 static Argument *
-edit_stroke_invoker (ProcRecord   *proc_record,
-                     Gimp         *gimp,
-                     GimpContext  *context,
-                     GimpProgress *progress,
-                     Argument     *args)
+edit_stroke_invoker (GimpProcedure *procedure,
+                     Gimp          *gimp,
+                     GimpContext   *context,
+                     GimpProgress  *progress,
+                     Argument      *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1361,10 +1361,10 @@ edit_stroke_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord edit_stroke_proc =
+static GimpProcedure edit_stroke_proc =
 {
   TRUE, TRUE,
   "gimp-edit-stroke",

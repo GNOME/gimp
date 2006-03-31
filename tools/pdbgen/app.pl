@@ -153,7 +153,7 @@ sub marshal_outargs {
     my $proc = shift;
 
     my $result = <<CODE;
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 CODE
 
     my $argc = 0;
@@ -488,7 +488,7 @@ sub generate {
 
 	$out->{pcount}++; $total++;
 
-	$out->{procs} .= "static ProcRecord ${name}_proc;\n";
+	$out->{procs} .= "static GimpProcedure ${name}_proc;\n";
 
 	$out->{register} .= <<CODE;
   /*
@@ -552,11 +552,11 @@ CODE
 	}
 
 	$out->{code} .= "\nstatic Argument *\n";
-	$out->{code} .= "${name}_invoker (ProcRecord   *proc_record,\n";
-	$out->{code} .=  ' ' x length($name) . "          Gimp         *gimp,\n";
-	$out->{code} .=  ' ' x length($name) . "          GimpContext  *context,\n";
-	$out->{code} .=  ' ' x length($name) . "          GimpProgress *progress,\n";
-	$out->{code} .=  ' ' x length($name) . "          Argument     *args)\n{\n";
+	$out->{code} .= "${name}_invoker (GimpProcedure *procedure,\n";
+	$out->{code} .=  ' ' x length($name) . "          Gimp          *gimp,\n";
+	$out->{code} .=  ' ' x length($name) . "          GimpContext   *context,\n";
+	$out->{code} .=  ' ' x length($name) . "          GimpProgress  *progress,\n";
+	$out->{code} .=  ' ' x length($name) . "          Argument      *args)\n{\n";
 
 	my $code = "";
 
@@ -599,7 +599,7 @@ CODE
 
 	$out->{code} .= <<CODE;
 
-static ProcRecord ${name}_proc =
+static GimpProcedure ${name}_proc =
 {
   TRUE, TRUE,
   "gimp-$proc->{canonical_name}",
@@ -753,7 +753,7 @@ GPL
 	print CFILE $extra->{decls}, "\n" if exists $extra->{decls};
 	print CFILE $out->{procs};
 	print CFILE "\nvoid\nregister_${group}_procs (Gimp *gimp)\n";
-	print CFILE "{\n  ProcRecord *procedure;\n\n$out->{register}}\n";
+	print CFILE "{\n  GimpProcedure *procedure;\n\n$out->{register}}\n";
 	print CFILE "\n", $extra->{code} if exists $extra->{code};
 	print CFILE $out->{code};
 	close CFILE;

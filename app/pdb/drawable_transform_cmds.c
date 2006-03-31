@@ -39,27 +39,27 @@
 #include "core/gimpprogress.h"
 #include "gimp-intl.h"
 
-static ProcRecord drawable_transform_flip_simple_proc;
-static ProcRecord drawable_transform_flip_proc;
-static ProcRecord drawable_transform_flip_default_proc;
-static ProcRecord drawable_transform_perspective_proc;
-static ProcRecord drawable_transform_perspective_default_proc;
-static ProcRecord drawable_transform_rotate_simple_proc;
-static ProcRecord drawable_transform_rotate_proc;
-static ProcRecord drawable_transform_rotate_default_proc;
-static ProcRecord drawable_transform_scale_proc;
-static ProcRecord drawable_transform_scale_default_proc;
-static ProcRecord drawable_transform_shear_proc;
-static ProcRecord drawable_transform_shear_default_proc;
-static ProcRecord drawable_transform_2d_proc;
-static ProcRecord drawable_transform_2d_default_proc;
-static ProcRecord drawable_transform_matrix_proc;
-static ProcRecord drawable_transform_matrix_default_proc;
+static GimpProcedure drawable_transform_flip_simple_proc;
+static GimpProcedure drawable_transform_flip_proc;
+static GimpProcedure drawable_transform_flip_default_proc;
+static GimpProcedure drawable_transform_perspective_proc;
+static GimpProcedure drawable_transform_perspective_default_proc;
+static GimpProcedure drawable_transform_rotate_simple_proc;
+static GimpProcedure drawable_transform_rotate_proc;
+static GimpProcedure drawable_transform_rotate_default_proc;
+static GimpProcedure drawable_transform_scale_proc;
+static GimpProcedure drawable_transform_scale_default_proc;
+static GimpProcedure drawable_transform_shear_proc;
+static GimpProcedure drawable_transform_shear_default_proc;
+static GimpProcedure drawable_transform_2d_proc;
+static GimpProcedure drawable_transform_2d_default_proc;
+static GimpProcedure drawable_transform_matrix_proc;
+static GimpProcedure drawable_transform_matrix_default_proc;
 
 void
 register_drawable_transform_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * drawable_transform_flip_simple
@@ -1378,11 +1378,11 @@ register_drawable_transform_procs (Gimp *gimp)
 }
 
 static Argument *
-drawable_transform_flip_simple_invoker (ProcRecord   *proc_record,
-                                        Gimp         *gimp,
-                                        GimpContext  *context,
-                                        GimpProgress *progress,
-                                        Argument     *args)
+drawable_transform_flip_simple_invoker (GimpProcedure *procedure,
+                                        Gimp          *gimp,
+                                        GimpContext   *context,
+                                        GimpProgress  *progress,
+                                        Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1414,7 +1414,7 @@ drawable_transform_flip_simple_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
@@ -1422,7 +1422,7 @@ drawable_transform_flip_simple_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord drawable_transform_flip_simple_proc =
+static GimpProcedure drawable_transform_flip_simple_proc =
 {
   TRUE, TRUE,
   "gimp-drawable-transform-flip-simple",
@@ -1439,11 +1439,11 @@ static ProcRecord drawable_transform_flip_simple_proc =
 };
 
 static Argument *
-drawable_transform_flip_invoker (ProcRecord   *proc_record,
-                                 Gimp         *gimp,
-                                 GimpContext  *context,
-                                 GimpProgress *progress,
-                                 Argument     *args)
+drawable_transform_flip_invoker (GimpProcedure *procedure,
+                                 Gimp          *gimp,
+                                 GimpContext   *context,
+                                 GimpProgress  *progress,
+                                 Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1500,7 +1500,7 @@ drawable_transform_flip_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
@@ -1508,7 +1508,7 @@ drawable_transform_flip_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord drawable_transform_flip_proc =
+static GimpProcedure drawable_transform_flip_proc =
 {
   TRUE, TRUE,
   "gimp-drawable-transform-flip",
@@ -1525,11 +1525,11 @@ static ProcRecord drawable_transform_flip_proc =
 };
 
 static Argument *
-drawable_transform_flip_default_invoker (ProcRecord   *proc_record,
-                                         Gimp         *gimp,
-                                         GimpContext  *context,
-                                         GimpProgress *progress,
-                                         Argument     *args)
+drawable_transform_flip_default_invoker (GimpProcedure *procedure,
+                                         Gimp          *gimp,
+                                         GimpContext   *context,
+                                         GimpProgress  *progress,
+                                         Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1584,7 +1584,7 @@ drawable_transform_flip_default_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
@@ -1592,7 +1592,7 @@ drawable_transform_flip_default_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord drawable_transform_flip_default_proc =
+static GimpProcedure drawable_transform_flip_default_proc =
 {
   TRUE, TRUE,
   "gimp-drawable-transform-flip-default",
@@ -1609,11 +1609,11 @@ static ProcRecord drawable_transform_flip_default_proc =
 };
 
 static Argument *
-drawable_transform_perspective_invoker (ProcRecord   *proc_record,
-                                        Gimp         *gimp,
-                                        GimpContext  *context,
-                                        GimpProgress *progress,
-                                        Argument     *args)
+drawable_transform_perspective_invoker (GimpProcedure *procedure,
+                                        Gimp          *gimp,
+                                        GimpContext   *context,
+                                        GimpProgress  *progress,
+                                        Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1682,7 +1682,7 @@ drawable_transform_perspective_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
@@ -1690,7 +1690,7 @@ drawable_transform_perspective_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord drawable_transform_perspective_proc =
+static GimpProcedure drawable_transform_perspective_proc =
 {
   TRUE, TRUE,
   "gimp-drawable-transform-perspective",
@@ -1707,11 +1707,11 @@ static ProcRecord drawable_transform_perspective_proc =
 };
 
 static Argument *
-drawable_transform_perspective_default_invoker (ProcRecord   *proc_record,
-                                                Gimp         *gimp,
-                                                GimpContext  *context,
-                                                GimpProgress *progress,
-                                                Argument     *args)
+drawable_transform_perspective_default_invoker (GimpProcedure *procedure,
+                                                Gimp          *gimp,
+                                                GimpContext   *context,
+                                                GimpProgress  *progress,
+                                                Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1778,7 +1778,7 @@ drawable_transform_perspective_default_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
@@ -1786,7 +1786,7 @@ drawable_transform_perspective_default_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord drawable_transform_perspective_default_proc =
+static GimpProcedure drawable_transform_perspective_default_proc =
 {
   TRUE, TRUE,
   "gimp-drawable-transform-perspective-default",
@@ -1803,11 +1803,11 @@ static ProcRecord drawable_transform_perspective_default_proc =
 };
 
 static Argument *
-drawable_transform_rotate_simple_invoker (ProcRecord   *proc_record,
-                                          Gimp         *gimp,
-                                          GimpContext  *context,
-                                          GimpProgress *progress,
-                                          Argument     *args)
+drawable_transform_rotate_simple_invoker (GimpProcedure *procedure,
+                                          Gimp          *gimp,
+                                          GimpContext   *context,
+                                          GimpProgress  *progress,
+                                          Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1841,7 +1841,7 @@ drawable_transform_rotate_simple_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
@@ -1849,7 +1849,7 @@ drawable_transform_rotate_simple_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord drawable_transform_rotate_simple_proc =
+static GimpProcedure drawable_transform_rotate_simple_proc =
 {
   TRUE, TRUE,
   "gimp-drawable-transform-rotate-simple",
@@ -1866,11 +1866,11 @@ static ProcRecord drawable_transform_rotate_simple_proc =
 };
 
 static Argument *
-drawable_transform_rotate_invoker (ProcRecord   *proc_record,
-                                   Gimp         *gimp,
-                                   GimpContext  *context,
-                                   GimpProgress *progress,
-                                   Argument     *args)
+drawable_transform_rotate_invoker (GimpProcedure *procedure,
+                                   Gimp          *gimp,
+                                   GimpContext   *context,
+                                   GimpProgress  *progress,
+                                   Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1930,7 +1930,7 @@ drawable_transform_rotate_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
@@ -1938,7 +1938,7 @@ drawable_transform_rotate_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord drawable_transform_rotate_proc =
+static GimpProcedure drawable_transform_rotate_proc =
 {
   TRUE, TRUE,
   "gimp-drawable-transform-rotate",
@@ -1955,11 +1955,11 @@ static ProcRecord drawable_transform_rotate_proc =
 };
 
 static Argument *
-drawable_transform_rotate_default_invoker (ProcRecord   *proc_record,
-                                           Gimp         *gimp,
-                                           GimpContext  *context,
-                                           GimpProgress *progress,
-                                           Argument     *args)
+drawable_transform_rotate_default_invoker (GimpProcedure *procedure,
+                                           Gimp          *gimp,
+                                           GimpContext   *context,
+                                           GimpProgress  *progress,
+                                           Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -2017,7 +2017,7 @@ drawable_transform_rotate_default_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
@@ -2025,7 +2025,7 @@ drawable_transform_rotate_default_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord drawable_transform_rotate_default_proc =
+static GimpProcedure drawable_transform_rotate_default_proc =
 {
   TRUE, TRUE,
   "gimp-drawable-transform-rotate-default",
@@ -2042,11 +2042,11 @@ static ProcRecord drawable_transform_rotate_default_proc =
 };
 
 static Argument *
-drawable_transform_scale_invoker (ProcRecord   *proc_record,
-                                  Gimp         *gimp,
-                                  GimpContext  *context,
-                                  GimpProgress *progress,
-                                  Argument     *args)
+drawable_transform_scale_invoker (GimpProcedure *procedure,
+                                  Gimp          *gimp,
+                                  GimpContext   *context,
+                                  GimpProgress  *progress,
+                                  Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -2106,7 +2106,7 @@ drawable_transform_scale_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
@@ -2114,7 +2114,7 @@ drawable_transform_scale_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord drawable_transform_scale_proc =
+static GimpProcedure drawable_transform_scale_proc =
 {
   TRUE, TRUE,
   "gimp-drawable-transform-scale",
@@ -2131,11 +2131,11 @@ static ProcRecord drawable_transform_scale_proc =
 };
 
 static Argument *
-drawable_transform_scale_default_invoker (ProcRecord   *proc_record,
-                                          Gimp         *gimp,
-                                          GimpContext  *context,
-                                          GimpProgress *progress,
-                                          Argument     *args)
+drawable_transform_scale_default_invoker (GimpProcedure *procedure,
+                                          Gimp          *gimp,
+                                          GimpContext   *context,
+                                          GimpProgress  *progress,
+                                          Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -2193,7 +2193,7 @@ drawable_transform_scale_default_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
@@ -2201,7 +2201,7 @@ drawable_transform_scale_default_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord drawable_transform_scale_default_proc =
+static GimpProcedure drawable_transform_scale_default_proc =
 {
   TRUE, TRUE,
   "gimp-drawable-transform-scale-default",
@@ -2218,11 +2218,11 @@ static ProcRecord drawable_transform_scale_default_proc =
 };
 
 static Argument *
-drawable_transform_shear_invoker (ProcRecord   *proc_record,
-                                  Gimp         *gimp,
-                                  GimpContext  *context,
-                                  GimpProgress *progress,
-                                  Argument     *args)
+drawable_transform_shear_invoker (GimpProcedure *procedure,
+                                  Gimp          *gimp,
+                                  GimpContext   *context,
+                                  GimpProgress  *progress,
+                                  Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -2276,7 +2276,7 @@ drawable_transform_shear_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
@@ -2284,7 +2284,7 @@ drawable_transform_shear_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord drawable_transform_shear_proc =
+static GimpProcedure drawable_transform_shear_proc =
 {
   TRUE, TRUE,
   "gimp-drawable-transform-shear",
@@ -2301,11 +2301,11 @@ static ProcRecord drawable_transform_shear_proc =
 };
 
 static Argument *
-drawable_transform_shear_default_invoker (ProcRecord   *proc_record,
-                                          Gimp         *gimp,
-                                          GimpContext  *context,
-                                          GimpProgress *progress,
-                                          Argument     *args)
+drawable_transform_shear_default_invoker (GimpProcedure *procedure,
+                                          Gimp          *gimp,
+                                          GimpContext   *context,
+                                          GimpProgress  *progress,
+                                          Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -2357,7 +2357,7 @@ drawable_transform_shear_default_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
@@ -2365,7 +2365,7 @@ drawable_transform_shear_default_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord drawable_transform_shear_default_proc =
+static GimpProcedure drawable_transform_shear_default_proc =
 {
   TRUE, TRUE,
   "gimp-drawable-transform-shear-default",
@@ -2382,11 +2382,11 @@ static ProcRecord drawable_transform_shear_default_proc =
 };
 
 static Argument *
-drawable_transform_2d_invoker (ProcRecord   *proc_record,
-                               Gimp         *gimp,
-                               GimpContext  *context,
-                               GimpProgress *progress,
-                               Argument     *args)
+drawable_transform_2d_invoker (GimpProcedure *procedure,
+                               Gimp          *gimp,
+                               GimpContext   *context,
+                               GimpProgress  *progress,
+                               Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -2451,7 +2451,7 @@ drawable_transform_2d_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
@@ -2459,7 +2459,7 @@ drawable_transform_2d_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord drawable_transform_2d_proc =
+static GimpProcedure drawable_transform_2d_proc =
 {
   TRUE, TRUE,
   "gimp-drawable-transform-2d",
@@ -2476,11 +2476,11 @@ static ProcRecord drawable_transform_2d_proc =
 };
 
 static Argument *
-drawable_transform_2d_default_invoker (ProcRecord   *proc_record,
-                                       Gimp         *gimp,
-                                       GimpContext  *context,
-                                       GimpProgress *progress,
-                                       Argument     *args)
+drawable_transform_2d_default_invoker (GimpProcedure *procedure,
+                                       Gimp          *gimp,
+                                       GimpContext   *context,
+                                       GimpProgress  *progress,
+                                       Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -2543,7 +2543,7 @@ drawable_transform_2d_default_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
@@ -2551,7 +2551,7 @@ drawable_transform_2d_default_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord drawable_transform_2d_default_proc =
+static GimpProcedure drawable_transform_2d_default_proc =
 {
   TRUE, TRUE,
   "gimp-drawable-transform-2d-default",
@@ -2568,11 +2568,11 @@ static ProcRecord drawable_transform_2d_default_proc =
 };
 
 static Argument *
-drawable_transform_matrix_invoker (ProcRecord   *proc_record,
-                                   Gimp         *gimp,
-                                   GimpContext  *context,
-                                   GimpProgress *progress,
-                                   Argument     *args)
+drawable_transform_matrix_invoker (GimpProcedure *procedure,
+                                   Gimp          *gimp,
+                                   GimpContext   *context,
+                                   GimpProgress  *progress,
+                                   Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -2645,7 +2645,7 @@ drawable_transform_matrix_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
@@ -2653,7 +2653,7 @@ drawable_transform_matrix_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord drawable_transform_matrix_proc =
+static GimpProcedure drawable_transform_matrix_proc =
 {
   TRUE, TRUE,
   "gimp-drawable-transform-matrix",
@@ -2670,11 +2670,11 @@ static ProcRecord drawable_transform_matrix_proc =
 };
 
 static Argument *
-drawable_transform_matrix_default_invoker (ProcRecord   *proc_record,
-                                           Gimp         *gimp,
-                                           GimpContext  *context,
-                                           GimpProgress *progress,
-                                           Argument     *args)
+drawable_transform_matrix_default_invoker (GimpProcedure *procedure,
+                                           Gimp          *gimp,
+                                           GimpContext   *context,
+                                           GimpProgress  *progress,
+                                           Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -2745,7 +2745,7 @@ drawable_transform_matrix_default_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (drawable));
@@ -2753,7 +2753,7 @@ drawable_transform_matrix_default_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord drawable_transform_matrix_default_proc =
+static GimpProcedure drawable_transform_matrix_default_proc =
 {
   TRUE, TRUE,
   "gimp-drawable-transform-matrix-default",

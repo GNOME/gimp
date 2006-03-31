@@ -31,14 +31,14 @@
 #include "core/gimp.h"
 #include "core/gimpdatafactory.h"
 
-static ProcRecord patterns_popup_proc;
-static ProcRecord patterns_close_popup_proc;
-static ProcRecord patterns_set_popup_proc;
+static GimpProcedure patterns_popup_proc;
+static GimpProcedure patterns_close_popup_proc;
+static GimpProcedure patterns_set_popup_proc;
 
 void
 register_pattern_select_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * patterns_popup
@@ -109,11 +109,11 @@ register_pattern_select_procs (Gimp *gimp)
 }
 
 static Argument *
-patterns_popup_invoker (ProcRecord   *proc_record,
-                        Gimp         *gimp,
-                        GimpContext  *context,
-                        GimpProgress *progress,
-                        Argument     *args)
+patterns_popup_invoker (GimpProcedure *procedure,
+                        Gimp          *gimp,
+                        GimpContext   *context,
+                        GimpProgress  *progress,
+                        Argument      *args)
 {
   gboolean success = TRUE;
   gchar *pattern_callback;
@@ -134,10 +134,10 @@ patterns_popup_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord patterns_popup_proc =
+static GimpProcedure patterns_popup_proc =
 {
   TRUE, TRUE,
   "gimp-patterns-popup",
@@ -154,11 +154,11 @@ static ProcRecord patterns_popup_proc =
 };
 
 static Argument *
-patterns_close_popup_invoker (ProcRecord   *proc_record,
-                              Gimp         *gimp,
-                              GimpContext  *context,
-                              GimpProgress *progress,
-                              Argument     *args)
+patterns_close_popup_invoker (GimpProcedure *procedure,
+                              Gimp          *gimp,
+                              GimpContext   *context,
+                              GimpProgress  *progress,
+                              Argument      *args)
 {
   gboolean success = TRUE;
   gchar *pattern_callback;
@@ -174,10 +174,10 @@ patterns_close_popup_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord patterns_close_popup_proc =
+static GimpProcedure patterns_close_popup_proc =
 {
   TRUE, TRUE,
   "gimp-patterns-close-popup",
@@ -194,11 +194,11 @@ static ProcRecord patterns_close_popup_proc =
 };
 
 static Argument *
-patterns_set_popup_invoker (ProcRecord   *proc_record,
-                            Gimp         *gimp,
-                            GimpContext  *context,
-                            GimpProgress *progress,
-                            Argument     *args)
+patterns_set_popup_invoker (GimpProcedure *procedure,
+                            Gimp          *gimp,
+                            GimpContext   *context,
+                            GimpProgress  *progress,
+                            Argument      *args)
 {
   gboolean success = TRUE;
   gchar *pattern_callback;
@@ -217,10 +217,10 @@ patterns_set_popup_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord patterns_set_popup_proc =
+static GimpProcedure patterns_set_popup_proc =
 {
   TRUE, TRUE,
   "gimp-patterns-set-popup",

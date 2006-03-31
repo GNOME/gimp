@@ -67,7 +67,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
                           gpointer       data)
 {
   Gimp          *gimp;
-  ProcRecord    *procedure;
+  GimpProcedure *procedure;
   Argument      *args;
   gint           n_args  = 0;
   GimpDisplay   *display = NULL;

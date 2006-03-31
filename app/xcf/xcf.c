@@ -49,19 +49,19 @@
 
 
 typedef GimpImage * GimpXcfLoaderFunc (Gimp    *gimp,
-				       XcfInfo *info);
+                                       XcfInfo *info);
 
 
-static Argument * xcf_load_invoker (ProcRecord   *procedure,
-                                    Gimp         *gimp,
-                                    GimpContext  *context,
-                                    GimpProgress *progress,
-				    Argument     *args);
-static Argument * xcf_save_invoker (ProcRecord   *procedure,
-                                    Gimp         *gimp,
-                                    GimpContext  *context,
-                                    GimpProgress *progress,
-				    Argument     *args);
+static Argument * xcf_load_invoker (GimpProcedure *procedure,
+                                    Gimp          *gimp,
+                                    GimpContext   *context,
+                                    GimpProgress  *progress,
+                                    Argument      *args);
+static Argument * xcf_save_invoker (GimpProcedure *procedure,
+                                    Gimp          *gimp,
+                                    GimpContext   *context,
+                                    GimpProgress  *progress,
+                                    Argument      *args);
 
 
 static PlugInProcDef xcf_plug_in_load_proc =
@@ -122,7 +122,7 @@ static GimpXcfLoaderFunc *xcf_loaders[] =
 void
 xcf_init (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -230,11 +230,11 @@ xcf_exit (Gimp *gimp)
 }
 
 static Argument *
-xcf_load_invoker (ProcRecord   *procedure,
-                  Gimp         *gimp,
-                  GimpContext  *context,
-                  GimpProgress *progress,
-		  Argument     *args)
+xcf_load_invoker (GimpProcedure *procedure,
+                  Gimp          *gimp,
+                  GimpContext   *context,
+                  GimpProgress  *progress,
+                  Argument      *args)
 {
   XcfInfo      info;
   Argument    *return_vals;
@@ -318,11 +318,11 @@ xcf_load_invoker (ProcRecord   *procedure,
 }
 
 static Argument *
-xcf_save_invoker (ProcRecord   *procedure,
-                  Gimp         *gimp,
-                  GimpContext  *context,
-                  GimpProgress *progress,
-		  Argument     *args)
+xcf_save_invoker (GimpProcedure *procedure,
+                  Gimp          *gimp,
+                  GimpContext   *context,
+                  GimpProgress  *progress,
+                  Argument      *args)
 {
   XcfInfo      info;
   Argument    *return_vals;

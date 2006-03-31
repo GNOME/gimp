@@ -37,33 +37,33 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimplist.h"
 
-static ProcRecord brush_new_proc;
-static ProcRecord brush_duplicate_proc;
-static ProcRecord brush_is_generated_proc;
-static ProcRecord brush_rename_proc;
-static ProcRecord brush_delete_proc;
-static ProcRecord brush_is_editable_proc;
-static ProcRecord brush_get_info_proc;
-static ProcRecord brush_get_pixels_proc;
-static ProcRecord brush_get_spacing_proc;
-static ProcRecord brush_set_spacing_proc;
-static ProcRecord brush_get_shape_proc;
-static ProcRecord brush_get_radius_proc;
-static ProcRecord brush_get_spikes_proc;
-static ProcRecord brush_get_hardness_proc;
-static ProcRecord brush_get_aspect_ratio_proc;
-static ProcRecord brush_get_angle_proc;
-static ProcRecord brush_set_shape_proc;
-static ProcRecord brush_set_radius_proc;
-static ProcRecord brush_set_spikes_proc;
-static ProcRecord brush_set_hardness_proc;
-static ProcRecord brush_set_aspect_ratio_proc;
-static ProcRecord brush_set_angle_proc;
+static GimpProcedure brush_new_proc;
+static GimpProcedure brush_duplicate_proc;
+static GimpProcedure brush_is_generated_proc;
+static GimpProcedure brush_rename_proc;
+static GimpProcedure brush_delete_proc;
+static GimpProcedure brush_is_editable_proc;
+static GimpProcedure brush_get_info_proc;
+static GimpProcedure brush_get_pixels_proc;
+static GimpProcedure brush_get_spacing_proc;
+static GimpProcedure brush_set_spacing_proc;
+static GimpProcedure brush_get_shape_proc;
+static GimpProcedure brush_get_radius_proc;
+static GimpProcedure brush_get_spikes_proc;
+static GimpProcedure brush_get_hardness_proc;
+static GimpProcedure brush_get_aspect_ratio_proc;
+static GimpProcedure brush_get_angle_proc;
+static GimpProcedure brush_set_shape_proc;
+static GimpProcedure brush_set_radius_proc;
+static GimpProcedure brush_set_spikes_proc;
+static GimpProcedure brush_set_hardness_proc;
+static GimpProcedure brush_set_aspect_ratio_proc;
+static GimpProcedure brush_set_angle_proc;
 
 void
 register_brush_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * brush_new
@@ -647,11 +647,11 @@ register_brush_procs (Gimp *gimp)
 }
 
 static Argument *
-brush_new_invoker (ProcRecord   *proc_record,
-                   Gimp         *gimp,
-                   GimpContext  *context,
-                   GimpProgress *progress,
-                   Argument     *args)
+brush_new_invoker (GimpProcedure *procedure,
+                   Gimp          *gimp,
+                   GimpContext   *context,
+                   GimpProgress  *progress,
+                   Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -675,7 +675,7 @@ brush_new_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, actual_name);
@@ -683,7 +683,7 @@ brush_new_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord brush_new_proc =
+static GimpProcedure brush_new_proc =
 {
   TRUE, TRUE,
   "gimp-brush-new",
@@ -700,11 +700,11 @@ static ProcRecord brush_new_proc =
 };
 
 static Argument *
-brush_duplicate_invoker (ProcRecord   *proc_record,
-                         Gimp         *gimp,
-                         GimpContext  *context,
-                         GimpProgress *progress,
-                         Argument     *args)
+brush_duplicate_invoker (GimpProcedure *procedure,
+                         Gimp          *gimp,
+                         GimpContext   *context,
+                         GimpProgress  *progress,
+                         Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -733,7 +733,7 @@ brush_duplicate_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, copy_name);
@@ -741,7 +741,7 @@ brush_duplicate_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord brush_duplicate_proc =
+static GimpProcedure brush_duplicate_proc =
 {
   TRUE, TRUE,
   "gimp-brush-duplicate",
@@ -758,11 +758,11 @@ static ProcRecord brush_duplicate_proc =
 };
 
 static Argument *
-brush_is_generated_invoker (ProcRecord   *proc_record,
-                            Gimp         *gimp,
-                            GimpContext  *context,
-                            GimpProgress *progress,
-                            Argument     *args)
+brush_is_generated_invoker (GimpProcedure *procedure,
+                            Gimp          *gimp,
+                            GimpContext   *context,
+                            GimpProgress  *progress,
+                            Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -782,7 +782,7 @@ brush_is_generated_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals[1].value, generated);
@@ -790,7 +790,7 @@ brush_is_generated_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord brush_is_generated_proc =
+static GimpProcedure brush_is_generated_proc =
 {
   TRUE, TRUE,
   "gimp-brush-is-generated",
@@ -807,11 +807,11 @@ static ProcRecord brush_is_generated_proc =
 };
 
 static Argument *
-brush_rename_invoker (ProcRecord   *proc_record,
-                      Gimp         *gimp,
-                      GimpContext  *context,
-                      GimpProgress *progress,
-                      Argument     *args)
+brush_rename_invoker (GimpProcedure *procedure,
+                      Gimp          *gimp,
+                      GimpContext   *context,
+                      GimpProgress  *progress,
+                      Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -836,7 +836,7 @@ brush_rename_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_take_string (&return_vals[1].value, actual_name);
@@ -844,7 +844,7 @@ brush_rename_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord brush_rename_proc =
+static GimpProcedure brush_rename_proc =
 {
   TRUE, TRUE,
   "gimp-brush-rename",
@@ -861,11 +861,11 @@ static ProcRecord brush_rename_proc =
 };
 
 static Argument *
-brush_delete_invoker (ProcRecord   *proc_record,
-                      Gimp         *gimp,
-                      GimpContext  *context,
-                      GimpProgress *progress,
-                      Argument     *args)
+brush_delete_invoker (GimpProcedure *procedure,
+                      Gimp          *gimp,
+                      GimpContext   *context,
+                      GimpProgress  *progress,
+                      Argument      *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -895,10 +895,10 @@ brush_delete_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord brush_delete_proc =
+static GimpProcedure brush_delete_proc =
 {
   TRUE, TRUE,
   "gimp-brush-delete",
@@ -915,11 +915,11 @@ static ProcRecord brush_delete_proc =
 };
 
 static Argument *
-brush_is_editable_invoker (ProcRecord   *proc_record,
-                           Gimp         *gimp,
-                           GimpContext  *context,
-                           GimpProgress *progress,
-                           Argument     *args)
+brush_is_editable_invoker (GimpProcedure *procedure,
+                           Gimp          *gimp,
+                           GimpContext   *context,
+                           GimpProgress  *progress,
+                           Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -939,7 +939,7 @@ brush_is_editable_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_boolean (&return_vals[1].value, editable);
@@ -947,7 +947,7 @@ brush_is_editable_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord brush_is_editable_proc =
+static GimpProcedure brush_is_editable_proc =
 {
   TRUE, TRUE,
   "gimp-brush-is-editable",
@@ -964,11 +964,11 @@ static ProcRecord brush_is_editable_proc =
 };
 
 static Argument *
-brush_get_info_invoker (ProcRecord   *proc_record,
-                        Gimp         *gimp,
-                        GimpContext  *context,
-                        GimpProgress *progress,
-                        Argument     *args)
+brush_get_info_invoker (GimpProcedure *procedure,
+                        Gimp          *gimp,
+                        GimpContext   *context,
+                        GimpProgress  *progress,
+                        Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -996,7 +996,7 @@ brush_get_info_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -1009,7 +1009,7 @@ brush_get_info_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord brush_get_info_proc =
+static GimpProcedure brush_get_info_proc =
 {
   TRUE, TRUE,
   "gimp-brush-get-info",
@@ -1026,11 +1026,11 @@ static ProcRecord brush_get_info_proc =
 };
 
 static Argument *
-brush_get_pixels_invoker (ProcRecord   *proc_record,
-                          Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+brush_get_pixels_invoker (GimpProcedure *procedure,
+                          Gimp          *gimp,
+                          GimpContext   *context,
+                          GimpProgress  *progress,
+                          Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1071,7 +1071,7 @@ brush_get_pixels_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     {
@@ -1088,7 +1088,7 @@ brush_get_pixels_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord brush_get_pixels_proc =
+static GimpProcedure brush_get_pixels_proc =
 {
   TRUE, TRUE,
   "gimp-brush-get-pixels",
@@ -1105,11 +1105,11 @@ static ProcRecord brush_get_pixels_proc =
 };
 
 static Argument *
-brush_get_spacing_invoker (ProcRecord   *proc_record,
-                           Gimp         *gimp,
-                           GimpContext  *context,
-                           GimpProgress *progress,
-                           Argument     *args)
+brush_get_spacing_invoker (GimpProcedure *procedure,
+                           Gimp          *gimp,
+                           GimpContext   *context,
+                           GimpProgress  *progress,
+                           Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1129,7 +1129,7 @@ brush_get_spacing_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_int (&return_vals[1].value, spacing);
@@ -1137,7 +1137,7 @@ brush_get_spacing_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord brush_get_spacing_proc =
+static GimpProcedure brush_get_spacing_proc =
 {
   TRUE, TRUE,
   "gimp-brush-get-spacing",
@@ -1154,11 +1154,11 @@ static ProcRecord brush_get_spacing_proc =
 };
 
 static Argument *
-brush_set_spacing_invoker (ProcRecord   *proc_record,
-                           Gimp         *gimp,
-                           GimpContext  *context,
-                           GimpProgress *progress,
-                           Argument     *args)
+brush_set_spacing_invoker (GimpProcedure *procedure,
+                           Gimp          *gimp,
+                           GimpContext   *context,
+                           GimpProgress  *progress,
+                           Argument      *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -1178,10 +1178,10 @@ brush_set_spacing_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord brush_set_spacing_proc =
+static GimpProcedure brush_set_spacing_proc =
 {
   TRUE, TRUE,
   "gimp-brush-set-spacing",
@@ -1198,11 +1198,11 @@ static ProcRecord brush_set_spacing_proc =
 };
 
 static Argument *
-brush_get_shape_invoker (ProcRecord   *proc_record,
-                         Gimp         *gimp,
-                         GimpContext  *context,
-                         GimpProgress *progress,
-                         Argument     *args)
+brush_get_shape_invoker (GimpProcedure *procedure,
+                         Gimp          *gimp,
+                         GimpContext   *context,
+                         GimpProgress  *progress,
+                         Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1222,7 +1222,7 @@ brush_get_shape_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_enum (&return_vals[1].value, shape);
@@ -1230,7 +1230,7 @@ brush_get_shape_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord brush_get_shape_proc =
+static GimpProcedure brush_get_shape_proc =
 {
   TRUE, TRUE,
   "gimp-brush-get-shape",
@@ -1247,11 +1247,11 @@ static ProcRecord brush_get_shape_proc =
 };
 
 static Argument *
-brush_get_radius_invoker (ProcRecord   *proc_record,
-                          Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+brush_get_radius_invoker (GimpProcedure *procedure,
+                          Gimp          *gimp,
+                          GimpContext   *context,
+                          GimpProgress  *progress,
+                          Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1271,7 +1271,7 @@ brush_get_radius_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_double (&return_vals[1].value, radius);
@@ -1279,7 +1279,7 @@ brush_get_radius_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord brush_get_radius_proc =
+static GimpProcedure brush_get_radius_proc =
 {
   TRUE, TRUE,
   "gimp-brush-get-radius",
@@ -1296,11 +1296,11 @@ static ProcRecord brush_get_radius_proc =
 };
 
 static Argument *
-brush_get_spikes_invoker (ProcRecord   *proc_record,
-                          Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+brush_get_spikes_invoker (GimpProcedure *procedure,
+                          Gimp          *gimp,
+                          GimpContext   *context,
+                          GimpProgress  *progress,
+                          Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1320,7 +1320,7 @@ brush_get_spikes_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_int (&return_vals[1].value, spikes);
@@ -1328,7 +1328,7 @@ brush_get_spikes_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord brush_get_spikes_proc =
+static GimpProcedure brush_get_spikes_proc =
 {
   TRUE, TRUE,
   "gimp-brush-get-spikes",
@@ -1345,11 +1345,11 @@ static ProcRecord brush_get_spikes_proc =
 };
 
 static Argument *
-brush_get_hardness_invoker (ProcRecord   *proc_record,
-                            Gimp         *gimp,
-                            GimpContext  *context,
-                            GimpProgress *progress,
-                            Argument     *args)
+brush_get_hardness_invoker (GimpProcedure *procedure,
+                            Gimp          *gimp,
+                            GimpContext   *context,
+                            GimpProgress  *progress,
+                            Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1369,7 +1369,7 @@ brush_get_hardness_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_double (&return_vals[1].value, hardness);
@@ -1377,7 +1377,7 @@ brush_get_hardness_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord brush_get_hardness_proc =
+static GimpProcedure brush_get_hardness_proc =
 {
   TRUE, TRUE,
   "gimp-brush-get-hardness",
@@ -1394,11 +1394,11 @@ static ProcRecord brush_get_hardness_proc =
 };
 
 static Argument *
-brush_get_aspect_ratio_invoker (ProcRecord   *proc_record,
-                                Gimp         *gimp,
-                                GimpContext  *context,
-                                GimpProgress *progress,
-                                Argument     *args)
+brush_get_aspect_ratio_invoker (GimpProcedure *procedure,
+                                Gimp          *gimp,
+                                GimpContext   *context,
+                                GimpProgress  *progress,
+                                Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1418,7 +1418,7 @@ brush_get_aspect_ratio_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_double (&return_vals[1].value, aspect_ratio);
@@ -1426,7 +1426,7 @@ brush_get_aspect_ratio_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord brush_get_aspect_ratio_proc =
+static GimpProcedure brush_get_aspect_ratio_proc =
 {
   TRUE, TRUE,
   "gimp-brush-get-aspect-ratio",
@@ -1443,11 +1443,11 @@ static ProcRecord brush_get_aspect_ratio_proc =
 };
 
 static Argument *
-brush_get_angle_invoker (ProcRecord   *proc_record,
-                         Gimp         *gimp,
-                         GimpContext  *context,
-                         GimpProgress *progress,
-                         Argument     *args)
+brush_get_angle_invoker (GimpProcedure *procedure,
+                         Gimp          *gimp,
+                         GimpContext   *context,
+                         GimpProgress  *progress,
+                         Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1467,7 +1467,7 @@ brush_get_angle_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_double (&return_vals[1].value, angle);
@@ -1475,7 +1475,7 @@ brush_get_angle_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord brush_get_angle_proc =
+static GimpProcedure brush_get_angle_proc =
 {
   TRUE, TRUE,
   "gimp-brush-get-angle",
@@ -1492,11 +1492,11 @@ static ProcRecord brush_get_angle_proc =
 };
 
 static Argument *
-brush_set_shape_invoker (ProcRecord   *proc_record,
-                         Gimp         *gimp,
-                         GimpContext  *context,
-                         GimpProgress *progress,
-                         Argument     *args)
+brush_set_shape_invoker (GimpProcedure *procedure,
+                         Gimp          *gimp,
+                         GimpContext   *context,
+                         GimpProgress  *progress,
+                         Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1522,7 +1522,7 @@ brush_set_shape_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_enum (&return_vals[1].value, shape_out);
@@ -1530,7 +1530,7 @@ brush_set_shape_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord brush_set_shape_proc =
+static GimpProcedure brush_set_shape_proc =
 {
   TRUE, TRUE,
   "gimp-brush-set-shape",
@@ -1547,11 +1547,11 @@ static ProcRecord brush_set_shape_proc =
 };
 
 static Argument *
-brush_set_radius_invoker (ProcRecord   *proc_record,
-                          Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+brush_set_radius_invoker (GimpProcedure *procedure,
+                          Gimp          *gimp,
+                          GimpContext   *context,
+                          GimpProgress  *progress,
+                          Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1577,7 +1577,7 @@ brush_set_radius_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_double (&return_vals[1].value, radius_out);
@@ -1585,7 +1585,7 @@ brush_set_radius_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord brush_set_radius_proc =
+static GimpProcedure brush_set_radius_proc =
 {
   TRUE, TRUE,
   "gimp-brush-set-radius",
@@ -1602,11 +1602,11 @@ static ProcRecord brush_set_radius_proc =
 };
 
 static Argument *
-brush_set_spikes_invoker (ProcRecord   *proc_record,
-                          Gimp         *gimp,
-                          GimpContext  *context,
-                          GimpProgress *progress,
-                          Argument     *args)
+brush_set_spikes_invoker (GimpProcedure *procedure,
+                          Gimp          *gimp,
+                          GimpContext   *context,
+                          GimpProgress  *progress,
+                          Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1632,7 +1632,7 @@ brush_set_spikes_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_int (&return_vals[1].value, spikes_out);
@@ -1640,7 +1640,7 @@ brush_set_spikes_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord brush_set_spikes_proc =
+static GimpProcedure brush_set_spikes_proc =
 {
   TRUE, TRUE,
   "gimp-brush-set-spikes",
@@ -1657,11 +1657,11 @@ static ProcRecord brush_set_spikes_proc =
 };
 
 static Argument *
-brush_set_hardness_invoker (ProcRecord   *proc_record,
-                            Gimp         *gimp,
-                            GimpContext  *context,
-                            GimpProgress *progress,
-                            Argument     *args)
+brush_set_hardness_invoker (GimpProcedure *procedure,
+                            Gimp          *gimp,
+                            GimpContext   *context,
+                            GimpProgress  *progress,
+                            Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1687,7 +1687,7 @@ brush_set_hardness_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_double (&return_vals[1].value, hardness_out);
@@ -1695,7 +1695,7 @@ brush_set_hardness_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord brush_set_hardness_proc =
+static GimpProcedure brush_set_hardness_proc =
 {
   TRUE, TRUE,
   "gimp-brush-set-hardness",
@@ -1712,11 +1712,11 @@ static ProcRecord brush_set_hardness_proc =
 };
 
 static Argument *
-brush_set_aspect_ratio_invoker (ProcRecord   *proc_record,
-                                Gimp         *gimp,
-                                GimpContext  *context,
-                                GimpProgress *progress,
-                                Argument     *args)
+brush_set_aspect_ratio_invoker (GimpProcedure *procedure,
+                                Gimp          *gimp,
+                                GimpContext   *context,
+                                GimpProgress  *progress,
+                                Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1742,7 +1742,7 @@ brush_set_aspect_ratio_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_double (&return_vals[1].value, aspect_ratio_out);
@@ -1750,7 +1750,7 @@ brush_set_aspect_ratio_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord brush_set_aspect_ratio_proc =
+static GimpProcedure brush_set_aspect_ratio_proc =
 {
   TRUE, TRUE,
   "gimp-brush-set-aspect-ratio",
@@ -1767,11 +1767,11 @@ static ProcRecord brush_set_aspect_ratio_proc =
 };
 
 static Argument *
-brush_set_angle_invoker (ProcRecord   *proc_record,
-                         Gimp         *gimp,
-                         GimpContext  *context,
-                         GimpProgress *progress,
-                         Argument     *args)
+brush_set_angle_invoker (GimpProcedure *procedure,
+                         Gimp          *gimp,
+                         GimpContext   *context,
+                         GimpProgress  *progress,
+                         Argument      *args)
 {
   gboolean success = TRUE;
   Argument *return_vals;
@@ -1797,7 +1797,7 @@ brush_set_angle_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (proc_record, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
     g_value_set_double (&return_vals[1].value, angle_out);
@@ -1805,7 +1805,7 @@ brush_set_angle_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord brush_set_angle_proc =
+static GimpProcedure brush_set_angle_proc =
 {
   TRUE, TRUE,
   "gimp-brush-set-angle",

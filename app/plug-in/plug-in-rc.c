@@ -60,7 +60,7 @@ static GTokenType plug_in_file_proc_deserialize  (GScanner      *scanner,
                                                   PlugInProcDef *proc_def);
 static GTokenType plug_in_proc_arg_deserialize   (GScanner      *scanner,
                                                   Gimp          *gimp,
-                                                  ProcRecord    *proc,
+                                                  GimpProcedure *procedure,
                                                   gboolean       return_value);
 static GTokenType plug_in_locale_def_deserialize (GScanner      *scanner,
                                                   PlugInDef     *plug_in_def);
@@ -314,12 +314,12 @@ plug_in_proc_def_deserialize (GScanner      *scanner,
                               Gimp          *gimp,
                               PlugInProcDef *proc_def)
 {
-  ProcRecord *procedure;
-  GTokenType  token;
-  gint        n_args;
-  gint        n_return_vals;
-  gint        n_menu_paths;
-  gint        i;
+  GimpProcedure *procedure;
+  GTokenType     token;
+  gint           n_args;
+  gint           n_return_vals;
+  gint           n_menu_paths;
+  gint           i;
 
   procedure = proc_def->procedure;
 
@@ -601,10 +601,10 @@ plug_in_file_proc_deserialize (GScanner      *scanner,
 }
 
 static GTokenType
-plug_in_proc_arg_deserialize (GScanner   *scanner,
-                              Gimp       *gimp,
-                              ProcRecord *proc,
-                              gboolean    return_value)
+plug_in_proc_arg_deserialize (GScanner      *scanner,
+                              Gimp          *gimp,
+                              GimpProcedure *procedure,
+                              gboolean       return_value)
 {
   GTokenType  token;
   gint        arg_type;
@@ -649,9 +649,9 @@ plug_in_proc_arg_deserialize (GScanner   *scanner,
   token = G_TOKEN_LEFT_PAREN;
 
   if (return_value)
-    gimp_procedure_add_compat_value (proc, gimp, arg_type, name, desc);
+    gimp_procedure_add_compat_value (procedure, gimp, arg_type, name, desc);
   else
-    gimp_procedure_add_compat_arg (proc, gimp, arg_type, name, desc);
+    gimp_procedure_add_compat_arg (procedure, gimp, arg_type, name, desc);
 
  error:
 
@@ -765,7 +765,7 @@ plug_in_rc_write (GSList       *plug_in_defs,
 	  for (list2 = plug_in_def->proc_defs; list2; list2 = list2->next)
 	    {
               PlugInProcDef *proc_def  = list2->data;
-              ProcRecord    *procedure = proc_def->procedure;
+              GimpProcedure    *procedure = proc_def->procedure;
               GEnumValue    *enum_value;
               GList         *list3;
               gint           i;

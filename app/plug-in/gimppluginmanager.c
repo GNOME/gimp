@@ -858,19 +858,19 @@ plug_ins_help_domains (Gimp    *gimp,
 }
 
 PlugInProcDef *
-plug_ins_proc_def_find (Gimp       *gimp,
-                        ProcRecord *proc_rec)
+plug_ins_proc_def_find (Gimp          *gimp,
+                        GimpProcedure *procedure)
 {
   GSList *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (proc_rec != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
   for (list = gimp->plug_in_proc_defs; list; list = list->next)
     {
       PlugInProcDef *proc_def = list->data;
 
-      if (proc_rec == proc_def->procedure)
+      if (procedure == proc_def->procedure)
         return proc_def;
     }
 

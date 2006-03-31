@@ -23,9 +23,9 @@
 #include "core/core-types.h"
 
 
-typedef struct _Argument   Argument;
-typedef struct _ProcArg    ProcArg;
-typedef struct _ProcRecord ProcRecord;
+typedef struct _Argument      Argument;
+typedef struct _ProcArg       ProcArg;
+typedef struct _GimpProcedure GimpProcedure;
 
 
 typedef enum

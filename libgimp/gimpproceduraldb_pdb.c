@@ -167,7 +167,7 @@ gimp_procedural_db_query (const gchar   *name,
 
 /**
  * _gimp_procedural_db_proc_info:
- * @procedure: The procedure name.
+ * @procedure_name: The procedure name.
  * @blurb: A short blurb.
  * @help: Detailed procedure help.
  * @author: Author(s) of the procedure.
@@ -190,7 +190,7 @@ gimp_procedural_db_query (const gchar   *name,
  * Returns: TRUE on success.
  */
 gboolean
-_gimp_procedural_db_proc_info (const gchar      *procedure,
+_gimp_procedural_db_proc_info (const gchar      *procedure_name,
 			       gchar           **blurb,
 			       gchar           **help,
 			       gchar           **author,
@@ -206,7 +206,7 @@ _gimp_procedural_db_proc_info (const gchar      *procedure,
 
   return_vals = gimp_run_procedure ("gimp-procedural-db-proc-info",
 				    &nreturn_vals,
-				    GIMP_PDB_STRING, procedure,
+				    GIMP_PDB_STRING, procedure_name,
 				    GIMP_PDB_END);
 
   *blurb = NULL;
@@ -239,7 +239,7 @@ _gimp_procedural_db_proc_info (const gchar      *procedure,
 
 /**
  * gimp_procedural_db_proc_arg:
- * @procedure: The procedure name.
+ * @procedure_name: The procedure name.
  * @arg_num: The argument number.
  * @arg_type: The type of argument.
  * @arg_name: The name of the argument.
@@ -254,7 +254,7 @@ _gimp_procedural_db_proc_info (const gchar      *procedure,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_procedural_db_proc_arg (const gchar     *procedure,
+gimp_procedural_db_proc_arg (const gchar     *procedure_name,
 			     gint             arg_num,
 			     GimpPDBArgType  *arg_type,
 			     gchar          **arg_name,
@@ -266,7 +266,7 @@ gimp_procedural_db_proc_arg (const gchar     *procedure,
 
   return_vals = gimp_run_procedure ("gimp-procedural-db-proc-arg",
 				    &nreturn_vals,
-				    GIMP_PDB_STRING, procedure,
+				    GIMP_PDB_STRING, procedure_name,
 				    GIMP_PDB_INT32, arg_num,
 				    GIMP_PDB_END);
 
@@ -290,7 +290,7 @@ gimp_procedural_db_proc_arg (const gchar     *procedure,
 
 /**
  * gimp_procedural_db_proc_val:
- * @procedure: The procedure name.
+ * @procedure_name: The procedure name.
  * @val_num: The return value number.
  * @val_type: The type of return value.
  * @val_name: The name of the return value.
@@ -306,7 +306,7 @@ gimp_procedural_db_proc_arg (const gchar     *procedure,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_procedural_db_proc_val (const gchar     *procedure,
+gimp_procedural_db_proc_val (const gchar     *procedure_name,
 			     gint             val_num,
 			     GimpPDBArgType  *val_type,
 			     gchar          **val_name,
@@ -318,7 +318,7 @@ gimp_procedural_db_proc_val (const gchar     *procedure,
 
   return_vals = gimp_run_procedure ("gimp-procedural-db-proc-val",
 				    &nreturn_vals,
-				    GIMP_PDB_STRING, procedure,
+				    GIMP_PDB_STRING, procedure_name,
 				    GIMP_PDB_INT32, val_num,
 				    GIMP_PDB_END);
 

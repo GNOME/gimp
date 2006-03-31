@@ -41,17 +41,17 @@
 #include "plug-in/plug-ins-query.h"
 #include "plug-in/plug-ins.h"
 
-static ProcRecord plugins_query_proc;
-static ProcRecord plugin_domain_register_proc;
-static ProcRecord plugin_help_register_proc;
-static ProcRecord plugin_menu_register_proc;
-static ProcRecord plugin_menu_branch_register_proc;
-static ProcRecord plugin_icon_register_proc;
+static GimpProcedure plugins_query_proc;
+static GimpProcedure plugin_domain_register_proc;
+static GimpProcedure plugin_help_register_proc;
+static GimpProcedure plugin_menu_register_proc;
+static GimpProcedure plugin_menu_branch_register_proc;
+static GimpProcedure plugin_icon_register_proc;
 
 void
 register_plug_in_procs (Gimp *gimp)
 {
-  ProcRecord *procedure;
+  GimpProcedure *procedure;
 
   /*
    * plugins_query
@@ -271,11 +271,11 @@ register_plug_in_procs (Gimp *gimp)
 }
 
 static Argument *
-plugins_query_invoker (ProcRecord   *proc_record,
-                       Gimp         *gimp,
-                       GimpContext  *context,
-                       GimpProgress *progress,
-                       Argument     *args)
+plugins_query_invoker (GimpProcedure *procedure,
+                       Gimp          *gimp,
+                       GimpContext   *context,
+                       GimpProgress  *progress,
+                       Argument      *args)
 {
   Argument *return_vals;
   gchar *search_string;
@@ -297,7 +297,7 @@ plugins_query_invoker (ProcRecord   *proc_record,
                                 &plugin_real_name,
                                 &plugin_install_time);
 
-  return_vals = gimp_procedure_get_return_values (proc_record, TRUE);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
 
   g_value_set_int (&return_vals[1].value, num_plugins);
   g_value_set_pointer (&return_vals[2].value, menu_path);
@@ -315,7 +315,7 @@ plugins_query_invoker (ProcRecord   *proc_record,
   return return_vals;
 }
 
-static ProcRecord plugins_query_proc =
+static GimpProcedure plugins_query_proc =
 {
   TRUE, TRUE,
   "gimp-plugins-query",
@@ -332,11 +332,11 @@ static ProcRecord plugins_query_proc =
 };
 
 static Argument *
-plugin_domain_register_invoker (ProcRecord   *proc_record,
-                                Gimp         *gimp,
-                                GimpContext  *context,
-                                GimpProgress *progress,
-                                Argument     *args)
+plugin_domain_register_invoker (GimpProcedure *procedure,
+                                Gimp          *gimp,
+                                GimpContext   *context,
+                                GimpProgress  *progress,
+                                Argument      *args)
 {
   gboolean success = TRUE;
   gchar *domain_name;
@@ -358,10 +358,10 @@ plugin_domain_register_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord plugin_domain_register_proc =
+static GimpProcedure plugin_domain_register_proc =
 {
   TRUE, TRUE,
   "gimp-plugin-domain-register",
@@ -378,11 +378,11 @@ static ProcRecord plugin_domain_register_proc =
 };
 
 static Argument *
-plugin_help_register_invoker (ProcRecord   *proc_record,
-                              Gimp         *gimp,
-                              GimpContext  *context,
-                              GimpProgress *progress,
-                              Argument     *args)
+plugin_help_register_invoker (GimpProcedure *procedure,
+                              Gimp          *gimp,
+                              GimpContext   *context,
+                              GimpProgress  *progress,
+                              Argument      *args)
 {
   gboolean success = TRUE;
   gchar *domain_name;
@@ -404,10 +404,10 @@ plugin_help_register_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord plugin_help_register_proc =
+static GimpProcedure plugin_help_register_proc =
 {
   TRUE, TRUE,
   "gimp-plugin-help-register",
@@ -424,11 +424,11 @@ static ProcRecord plugin_help_register_proc =
 };
 
 static Argument *
-plugin_menu_register_invoker (ProcRecord   *proc_record,
-                              Gimp         *gimp,
-                              GimpContext  *context,
-                              GimpProgress *progress,
-                              Argument     *args)
+plugin_menu_register_invoker (GimpProcedure *procedure,
+                              Gimp          *gimp,
+                              GimpContext   *context,
+                              GimpProgress  *progress,
+                              Argument      *args)
 {
   gboolean success = TRUE;
   gchar *procedure_name;
@@ -453,10 +453,10 @@ plugin_menu_register_invoker (ProcRecord   *proc_record,
         }
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord plugin_menu_register_proc =
+static GimpProcedure plugin_menu_register_proc =
 {
   TRUE, TRUE,
   "gimp-plugin-menu-register",
@@ -473,11 +473,11 @@ static ProcRecord plugin_menu_register_proc =
 };
 
 static Argument *
-plugin_menu_branch_register_invoker (ProcRecord   *proc_record,
-                                     Gimp         *gimp,
-                                     GimpContext  *context,
-                                     GimpProgress *progress,
-                                     Argument     *args)
+plugin_menu_branch_register_invoker (GimpProcedure *procedure,
+                                     Gimp          *gimp,
+                                     GimpContext   *context,
+                                     GimpProgress  *progress,
+                                     Argument      *args)
 {
   gboolean success = TRUE;
   gchar *menu_path;
@@ -505,10 +505,10 @@ plugin_menu_branch_register_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord plugin_menu_branch_register_proc =
+static GimpProcedure plugin_menu_branch_register_proc =
 {
   TRUE, TRUE,
   "gimp-plugin-menu-branch-register",
@@ -525,11 +525,11 @@ static ProcRecord plugin_menu_branch_register_proc =
 };
 
 static Argument *
-plugin_icon_register_invoker (ProcRecord   *proc_record,
-                              Gimp         *gimp,
-                              GimpContext  *context,
-                              GimpProgress *progress,
-                              Argument     *args)
+plugin_icon_register_invoker (GimpProcedure *procedure,
+                              Gimp          *gimp,
+                              GimpContext   *context,
+                              GimpProgress  *progress,
+                              Argument      *args)
 {
   gboolean success = TRUE;
   gchar *procedure_name;
@@ -566,10 +566,10 @@ plugin_icon_register_invoker (ProcRecord   *proc_record,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (proc_record, success);
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
-static ProcRecord plugin_icon_register_proc =
+static GimpProcedure plugin_icon_register_proc =
 {
   TRUE, TRUE,
   "gimp-plugin-icon-register",

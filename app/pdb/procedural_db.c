@@ -180,13 +180,13 @@ procedural_db_init_procs (Gimp *gimp)
 }
 
 void
-procedural_db_register (Gimp       *gimp,
-                        ProcRecord *procedure)
+procedural_db_register (Gimp          *gimp,
+                        GimpProcedure *procedure)
 {
   GList *list;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (procedure != NULL);
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
   list = g_hash_table_lookup (gimp->procedural_ht, procedure->name);
 
@@ -217,7 +217,7 @@ procedural_db_unregister (Gimp        *gimp,
     }
 }
 
-ProcRecord *
+GimpProcedure *
 procedural_db_lookup (Gimp        *gimp,
                       const gchar *name)
 {
@@ -268,9 +268,9 @@ procedural_db_execute (Gimp         *gimp,
 
   for (; list; list = g_list_next (list))
     {
-      ProcRecord *procedure = list->data;
+      GimpProcedure *procedure = list->data;
 
-      g_return_val_if_fail (procedure != NULL, NULL);
+      g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
       return_vals = gimp_procedure_execute (procedure,
                                             gimp, context, progress,
@@ -306,11 +306,11 @@ procedural_db_run_proc (Gimp         *gimp,
                         gint         *n_return_vals,
                         ...)
 {
-  ProcRecord *proc;
-  Argument   *params;
-  Argument   *return_vals;
-  va_list     args;
-  gint        i;
+  GimpProcedure *procedure;
+  Argument      *params;
+  Argument      *return_vals;
+  va_list        args;
+  gint           i;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -318,9 +318,9 @@ procedural_db_run_proc (Gimp         *gimp,
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (n_return_vals != NULL, NULL);
 
-  proc = procedural_db_lookup (gimp, name);
+  procedure = procedural_db_lookup (gimp, name);
 
-  if (proc == NULL)
+  if (procedure == NULL)
     {
       g_message (_("PDB calling error:\nprocedure '%s' not found"), name);
 
@@ -332,13 +332,13 @@ procedural_db_run_proc (Gimp         *gimp,
       return return_vals;
     }
 
-  *n_return_vals = proc->num_values + 1;
+  *n_return_vals = procedure->num_values + 1;
 
-  params = gimp_procedure_get_arguments (proc);
+  params = gimp_procedure_get_arguments (procedure);
 
   va_start (args, n_return_vals);
 
-  for (i = 0; i < proc->num_args; i++)
+  for (i = 0; i < procedure->num_args; i++)
     {
       GimpPDBArgType  arg_type = va_arg (args, GimpPDBArgType);
       GValue         *value;
@@ -348,19 +348,19 @@ procedural_db_run_proc (Gimp         *gimp,
 
       if (arg_type != params[i].type)
         {
-          gchar *expected = procedural_db_type_name (proc->args[i].type);
+          gchar *expected = procedural_db_type_name (procedure->args[i].type);
           gchar *got      = procedural_db_type_name (arg_type);
 
-          procedural_db_destroy_args (params, proc->num_args, FALSE);
+          procedural_db_destroy_args (params, procedure->num_args, TRUE);
 
           g_message (_("PDB calling error for procedure '%s':\n"
                        "Argument #%d type mismatch (expected %s, got %s)"),
-                     proc->name, i + 1, expected, got);
+                     procedure->name, i + 1, expected, got);
 
           g_free (expected);
           g_free (got);
 
-          return_vals = gimp_procedure_get_return_values (proc, FALSE);
+          return_vals = gimp_procedure_get_return_values (procedure, FALSE);
           g_value_set_enum (&return_vals->value, GIMP_PDB_CALLING_ERROR);
 
           return return_vals;
@@ -441,10 +441,10 @@ procedural_db_run_proc (Gimp         *gimp,
   va_end (args);
 
   return_vals = procedural_db_execute (gimp, context, progress, name,
-                                       params, proc->num_args,
+                                       params, procedure->num_args,
                                        n_return_vals);
 
-  procedural_db_destroy_args (params, proc->num_args, FALSE);
+  procedural_db_destroy_args (params, procedure->num_args, FALSE);
 
   return return_vals;
 }
