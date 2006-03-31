@@ -31,6 +31,7 @@
 
 #include "core/gimp.h"
 
+#include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
 #include "plug-in.h"
@@ -47,6 +48,8 @@ plug_in_proc_def_new (void)
 
   proc_def->icon_data_length = -1;
 
+  proc_def->procedure = gimp_procedure_new ();
+
   return proc_def;
 }
 
@@ -57,22 +60,7 @@ plug_in_proc_def_free (PlugInProcDef *proc_def)
 
   g_return_if_fail (proc_def != NULL);
 
-  g_free (proc_def->db_info.name);
-  g_free (proc_def->db_info.original_name);
-  g_free (proc_def->db_info.blurb);
-  g_free (proc_def->db_info.help);
-  g_free (proc_def->db_info.author);
-  g_free (proc_def->db_info.copyright);
-  g_free (proc_def->db_info.date);
-
-  for (i = 0; i < proc_def->db_info.num_args; i++)
-    g_param_spec_unref (proc_def->db_info.args[i].pspec);
-
-  for (i = 0; i < proc_def->db_info.num_values; i++)
-    g_param_spec_unref (proc_def->db_info.values[i].pspec);
-
-  g_free (proc_def->db_info.args);
-  g_free (proc_def->db_info.values);
+  gimp_procedure_free (proc_def->procedure);
 
   g_free (proc_def->prog);
   g_free (proc_def->menu_label);
@@ -112,7 +100,7 @@ plug_in_proc_def_find (GSList      *list,
     {
       PlugInProcDef *proc_def = l->data;
 
-      if (! strcmp (proc_name, proc_def->db_info.name))
+      if (! strcmp (proc_name, proc_def->procedure->name))
         return proc_def;
     }
 
@@ -124,7 +112,7 @@ plug_in_proc_def_get_proc (const PlugInProcDef *proc_def)
 {
   g_return_val_if_fail (proc_def != NULL, NULL);
 
-  return &proc_def->db_info;
+  return proc_def->procedure;
 }
 
 const gchar *
@@ -132,14 +120,14 @@ plug_in_proc_def_get_progname (const PlugInProcDef *proc_def)
 {
   g_return_val_if_fail (proc_def != NULL, NULL);
 
-  switch (proc_def->db_info.proc_type)
+  switch (proc_def->procedure->proc_type)
     {
     case GIMP_PLUGIN:
     case GIMP_EXTENSION:
       return proc_def->prog;
 
     case GIMP_TEMPORARY:
-      return ((PlugIn *) proc_def->db_info.exec_method.temporary.plug_in)->prog;
+      return ((PlugIn *) proc_def->procedure->exec_method.temporary.plug_in)->prog;
 
     default:
       break;
@@ -276,9 +264,9 @@ plug_in_proc_def_get_help_id (const PlugInProcDef *proc_def,
   g_return_val_if_fail (proc_def != NULL, NULL);
 
   if (help_domain)
-    return g_strconcat (help_domain, "?", proc_def->db_info.name, NULL);
+    return g_strconcat (help_domain, "?", proc_def->procedure->name, NULL);
 
-  return g_strdup (proc_def->db_info.name);
+  return g_strdup (proc_def->procedure->name);
 }
 
 gboolean

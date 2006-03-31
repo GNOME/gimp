@@ -64,6 +64,23 @@ static Argument * xcf_save_invoker (ProcRecord   *procedure,
 				    Argument     *args);
 
 
+static ProcRecord xcf_load_procedure =
+{
+  "gimp-xcf-load",
+  "gimp-xcf-load",
+  "loads file saved in the .xcf file format",
+  "The xcf file format has been designed specifically for loading and "
+  "saving tiled and layered images in the GIMP. This procedure will load "
+  "the specified file.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  NULL,
+  GIMP_INTERNAL,
+  0, NULL, 0, NULL,
+  { { xcf_load_invoker } }
+};
+
 static PlugInProcDef xcf_plug_in_load_proc =
 {
   "gimp-xcf-load",
@@ -76,21 +93,7 @@ static PlugInProcDef xcf_plug_in_load_proc =
   0,    /* ignored for load */
   0,
   FALSE,
-  {
-    "gimp-xcf-load",
-    "gimp-xcf-load",
-    "loads file saved in the .xcf file format",
-    "The xcf file format has been designed specifically for loading and "
-    "saving tiled and layered images in the GIMP. This procedure will load "
-    "the specified file.",
-    "Spencer Kimball & Peter Mattis",
-    "Spencer Kimball & Peter Mattis",
-    "1995-1996",
-    NULL,
-    GIMP_INTERNAL,
-    0, NULL, 0, NULL,
-    { { xcf_load_invoker } },
-  },
+  &xcf_load_procedure,
   TRUE,
   "xcf",
   "",
@@ -99,6 +102,23 @@ static PlugInProcDef xcf_plug_in_load_proc =
   NULL, /* fill me in at runtime */
   NULL, /* fill me in at runtime */
   NULL  /* fill me in at runtime */
+};
+
+static ProcRecord xcf_save_procedure =
+{
+  "gimp-xcf-save",
+  "gimp-xcf-save",
+  "saves file in the .xcf file format",
+  "The xcf file format has been designed specifically for loading and "
+  "saving tiled and layered images in the GIMP. This procedure will save "
+  "the specified image in the xcf file format.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  NULL,
+  GIMP_INTERNAL,
+  0, NULL, 0, NULL,
+  { { xcf_save_invoker } }
 };
 
 static PlugInProcDef xcf_plug_in_save_proc =
@@ -113,21 +133,7 @@ static PlugInProcDef xcf_plug_in_save_proc =
   0, /* fill me in at runtime */
   0,
   FALSE,
-  {
-    "gimp-xcf-save",
-    "gimp-xcf-save",
-    "saves file in the .xcf file format",
-    "The xcf file format has been designed specifically for loading and "
-    "saving tiled and layered images in the GIMP. This procedure will save "
-    "the specified image in the xcf file format.",
-    "Spencer Kimball & Peter Mattis",
-    "Spencer Kimball & Peter Mattis",
-    "1995-1996",
-    NULL,
-    GIMP_INTERNAL,
-    0, NULL, 0, NULL,
-    { { xcf_save_invoker } },
-  },
+  &xcf_save_procedure,
   TRUE,
   "xcf",
   "",
@@ -162,7 +168,7 @@ xcf_init (Gimp *gimp)
    * though they are internal.  The only thing it requires is using a
    * PlugInProcDef struct.  -josh
    */
-  procedure = gimp_procedure_init (&xcf_plug_in_save_proc.db_info, 5, 0);
+  procedure = gimp_procedure_init (&xcf_save_procedure, 5, 0);
   gimp_procedure_add_compat_arg (procedure, gimp,
                                  GIMP_PDB_INT32,
                                  "dummy-param",
@@ -189,7 +195,7 @@ xcf_init (Gimp *gimp)
     plug_ins_image_types_parse (xcf_plug_in_save_proc.image_types);
   plug_ins_add_internal (gimp, &xcf_plug_in_save_proc);
 
-  procedure = gimp_procedure_init (&xcf_plug_in_load_proc.db_info, 3, 1);
+  procedure = gimp_procedure_init (&xcf_load_procedure, 3, 1);
   gimp_procedure_add_compat_arg (procedure, gimp,
                                  GIMP_PDB_INT32,
                                  "dummy-param",
@@ -318,7 +324,7 @@ xcf_save_invoker (ProcRecord   *procedure,
   Argument    *return_vals;
   GimpImage   *image;
   const gchar *filename;
-  gboolean     success  = FALSE;
+  gboolean     success = FALSE;
 
   gimp_set_busy (gimp);
 

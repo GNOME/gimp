@@ -48,6 +48,61 @@
 
 /*  public functions  */
 
+ProcRecord  *
+gimp_procedure_new (void)
+{
+  ProcRecord *procedure = g_new0 (ProcRecord, 1);
+
+  return procedure;
+}
+
+void
+gimp_procedure_free (ProcRecord *procedure)
+{
+  gint i;
+
+  g_return_if_fail (procedure != NULL);
+
+  g_free (procedure->name);
+  g_free (procedure->original_name);
+  g_free (procedure->blurb);
+  g_free (procedure->help);
+  g_free (procedure->author);
+  g_free (procedure->copyright);
+  g_free (procedure->date);
+
+  for (i = 0; i < procedure->num_args; i++)
+    g_param_spec_unref (procedure->args[i].pspec);
+
+  for (i = 0; i < procedure->num_values; i++)
+    g_param_spec_unref (procedure->values[i].pspec);
+
+  g_free (procedure->args);
+  g_free (procedure->values);
+
+  g_free (procedure);
+}
+
+ProcRecord *
+gimp_procedure_init (ProcRecord *procedure,
+                     gint        n_arguments,
+                     gint        n_return_values)
+{
+  g_return_val_if_fail (procedure != NULL, procedure);
+  g_return_val_if_fail (procedure->args == NULL, procedure);
+  g_return_val_if_fail (procedure->values == NULL, procedure);
+  g_return_val_if_fail (n_arguments >= 0, procedure);
+  g_return_val_if_fail (n_return_values >= 0, procedure);
+
+  procedure->num_args = n_arguments;
+  procedure->args     = g_new0 (ProcArg, n_arguments);
+
+  procedure->num_values = n_return_values;
+  procedure->values     = g_new0 (ProcArg, n_return_values);
+
+  return procedure;
+}
+
 Argument *
 gimp_procedure_execute (ProcRecord   *procedure,
                         Gimp         *gimp,
@@ -86,24 +141,59 @@ gimp_procedure_execute (ProcRecord   *procedure,
 
           return return_vals;
         }
-      else if (! (procedure->args[i].pspec->flags & GIMP_PARAM_NO_VALIDATE) &&
-               g_param_value_validate (procedure->args[i].pspec,
-                                       &args[i].value))
+      else if (! (procedure->args[i].pspec->flags & GIMP_PARAM_NO_VALIDATE))
         {
-          gchar *type_name = procedural_db_type_name (procedure->args[i].type);
+          GValue string_value = { 0, };
 
-          g_message (_("PDB calling error for procedure '%s':\n"
-                       "Argument '%s' (#%d, type %s) out of bounds."),
-                     procedure->name,
-                     g_param_spec_get_name (procedure->args[i].pspec),
-                     i + 1, type_name);
+          g_value_init (&string_value, G_TYPE_STRING);
 
-          g_free (type_name);
+          if (g_value_type_transformable (args[i].value.g_type,
+                                          G_TYPE_STRING))
+            g_value_transform (&args[i].value, &string_value);
+          else
+            g_value_set_static_string (&string_value,
+                                       "<not transformable to string>");
 
-          return_vals = gimp_procedure_get_return_values (procedure, FALSE);
-          g_value_set_enum (&return_vals->value, GIMP_PDB_CALLING_ERROR);
+          if (g_param_value_validate (procedure->args[i].pspec,
+                                      &args[i].value))
+            {
+              gchar *type_name;
+              gchar *old_value;
+              gchar *new_value;
 
-          return return_vals;
+              type_name = procedural_db_type_name (procedure->args[i].type);
+
+              old_value = g_value_dup_string (&string_value);
+
+              if (g_value_type_transformable (args[i].value.g_type,
+                                              G_TYPE_STRING))
+                g_value_transform (&args[i].value, &string_value);
+              else
+                g_value_set_static_string (&string_value,
+                                           "<not transformable to string>");
+
+              new_value = g_value_dup_string (&string_value);
+              g_value_unset (&string_value);
+
+              g_message (_("PDB calling error for procedure '%s':\n"
+                           "Argument '%s' (#%d, type %s) out of bounds "
+                           "(value '%s' was changed to '%s')"),
+                         procedure->name,
+                         g_param_spec_get_name (procedure->args[i].pspec),
+                         i + 1, type_name,
+                         old_value, new_value);
+
+              g_free (type_name);
+              g_free (old_value);
+              g_free (new_value);
+
+              return_vals = gimp_procedure_get_return_values (procedure, FALSE);
+              g_value_set_enum (&return_vals->value, GIMP_PDB_CALLING_ERROR);
+
+              return return_vals;
+            }
+
+          g_value_unset (&string_value);
         }
     }
 
@@ -186,26 +276,6 @@ gimp_procedure_get_return_values (const ProcRecord *procedure,
       procedural_db_argument_init (&args[i + 1], &procedure->values[i]);
 
   return args;
-}
-
-ProcRecord *
-gimp_procedure_init (ProcRecord *procedure,
-                     gint        n_arguments,
-                     gint        n_return_values)
-{
-  g_return_val_if_fail (procedure != NULL, procedure);
-  g_return_val_if_fail (procedure->args == NULL, procedure);
-  g_return_val_if_fail (procedure->values == NULL, procedure);
-  g_return_val_if_fail (n_arguments >= 0, procedure);
-  g_return_val_if_fail (n_return_values >= 0, procedure);
-
-  procedure->num_args = n_arguments;
-  procedure->args     = g_new0 (ProcArg, n_arguments);
-
-  procedure->num_values = n_return_values;
-  procedure->values     = g_new0 (ProcArg, n_return_values);
-
-  return procedure;
 }
 
 void

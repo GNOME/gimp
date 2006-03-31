@@ -82,14 +82,14 @@ HELP
 
   for (i = 3; i < proc->num_args; i++)
     if (proc->args[i].type == GIMP_PDB_STRING)
-      g_value_set_string (&new_args[i].value, "");
+      g_value_set_static_string (&new_args[i].value, "");
 
   return_vals = procedural_db_execute (gimp, context, progress,
                                        proc->name,
                                        new_args, proc->num_args,
                                        &n_return_vals);
 
-  procedural_db_destroy_args (new_args, proc->num_args, FALSE);
+  procedural_db_destroy_args (new_args, proc->num_args, TRUE);
 
   return return_vals;
 }
@@ -161,8 +161,7 @@ HELP
     &josh_pdb_misc('1997');
 
     @inargs = (
-	{ name => 'run_mode',
-	  type => 'enum GimpRunMode (no GIMP_RUN_WITH_LAST_VALS)',
+	{ name => 'run_mode', type => 'enum GimpRunMode',
 	  desc => 'The run mode: %%desc%%' },
 	{ name => 'image', type => 'image',
 	  desc => 'Input image' },
@@ -173,7 +172,6 @@ HELP
 	{ name => 'raw_filename', type => 'string', no_validate => 1,
 	  desc => 'The name as entered by the user' }
     );
-
 
     %invoke = (
 	headers => [ qw(<string.h>) ],
@@ -211,14 +209,14 @@ HELP
 
   for (i = 5; i < proc->num_args; i++)
     if (proc->args[i].type == GIMP_PDB_STRING)
-      g_value_set_string (&new_args[i].value, "");
+      g_value_set_static_string (&new_args[i].value, "");
 
   return_vals = procedural_db_execute (gimp, context, progress,
                                        proc->name,
                                        new_args, proc->num_args,
                                        &n_return_vals);
 
-  procedural_db_destroy_args (new_args, proc->num_args, FALSE);
+  procedural_db_destroy_args (new_args, proc->num_args, TRUE);
 
   return return_vals;
 }
@@ -388,7 +386,9 @@ HELP
     %invoke = (
 	headers => [ qw("core/gimp-utils.h") ],
 	code => <<'CODE'
+{
   name = gimp_get_temp_filename (gimp, extension);
+}
 CODE
     );
 }

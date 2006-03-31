@@ -31,6 +31,7 @@
 
 #include "core/gimp.h"
 
+#include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
 #include "plug-ins.h"
@@ -313,29 +314,31 @@ plug_in_proc_def_deserialize (GScanner      *scanner,
                               Gimp          *gimp,
                               PlugInProcDef *proc_def)
 {
-  GTokenType token;
-  gint       n_args;
-  gint       n_return_vals;
-  gint       n_menu_paths;
-  gint       i;
+  ProcRecord *procedure;
+  GTokenType  token;
+  gint        n_args;
+  gint        n_return_vals;
+  gint        n_menu_paths;
+  gint        i;
 
-  if (! gimp_scanner_parse_string (scanner, &proc_def->db_info.original_name))
+  procedure = proc_def->procedure;
+
+  if (! gimp_scanner_parse_string (scanner, &procedure->original_name))
     return G_TOKEN_STRING;
 
-  proc_def->db_info.name =
-    gimp_canonicalize_identifier (proc_def->db_info.original_name);
+  procedure->name = gimp_canonicalize_identifier (procedure->original_name);
 
-  if (! gimp_scanner_parse_int (scanner, (gint *) &proc_def->db_info.proc_type))
+  if (! gimp_scanner_parse_int (scanner, (gint *) &procedure->proc_type))
     return G_TOKEN_INT;
-  if (! gimp_scanner_parse_string (scanner, &proc_def->db_info.blurb))
+  if (! gimp_scanner_parse_string (scanner, &procedure->blurb))
     return G_TOKEN_STRING;
-  if (! gimp_scanner_parse_string (scanner, &proc_def->db_info.help))
+  if (! gimp_scanner_parse_string (scanner, &procedure->help))
     return G_TOKEN_STRING;
-  if (! gimp_scanner_parse_string (scanner, &proc_def->db_info.author))
+  if (! gimp_scanner_parse_string (scanner, &procedure->author))
     return G_TOKEN_STRING;
-  if (! gimp_scanner_parse_string (scanner, &proc_def->db_info.copyright))
+  if (! gimp_scanner_parse_string (scanner, &procedure->copyright))
     return G_TOKEN_STRING;
-  if (! gimp_scanner_parse_string (scanner, &proc_def->db_info.date))
+  if (! gimp_scanner_parse_string (scanner, &procedure->date))
     return G_TOKEN_STRING;
   if (! gimp_scanner_parse_string (scanner, &proc_def->menu_label))
     return G_TOKEN_STRING;
@@ -369,20 +372,18 @@ plug_in_proc_def_deserialize (GScanner      *scanner,
   if (! gimp_scanner_parse_int (scanner, (gint *) &n_return_vals))
     return G_TOKEN_INT;
 
-  gimp_procedure_init (&proc_def->db_info, n_args, n_return_vals);
+  gimp_procedure_init (procedure, n_args, n_return_vals);
 
   for (i = 0; i < n_args; i++)
     {
-      token = plug_in_proc_arg_deserialize (scanner, gimp,
-                                            &proc_def->db_info, FALSE);
+      token = plug_in_proc_arg_deserialize (scanner, gimp, procedure, FALSE);
       if (token != G_TOKEN_LEFT_PAREN)
         return token;
     }
 
   for (i = 0; i < n_return_vals; i++)
     {
-      token = plug_in_proc_arg_deserialize (scanner, gimp,
-                                            &proc_def->db_info, TRUE);
+      token = plug_in_proc_arg_deserialize (scanner, gimp, procedure, TRUE);
       if (token != G_TOKEN_LEFT_PAREN)
         return token;
     }
@@ -490,7 +491,7 @@ plug_in_icon_deserialize (GScanner      *scanner,
       if (! gimp_scanner_parse_string_no_validate (scanner, &icon_name))
         return G_TOKEN_STRING;
 
-      icon_data = icon_name;
+      icon_data = (guint8 *) icon_name;
       break;
 
     case GIMP_ICON_TYPE_INLINE_PIXBUF:
@@ -504,7 +505,7 @@ plug_in_icon_deserialize (GScanner      *scanner,
 
   proc_def->icon_type        = icon_type;
   proc_def->icon_data_length = icon_data_length;
-  proc_def->icon_data        = icon_data;
+  proc_def->icon_data        = (gchar *) icon_data;
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
     return G_TOKEN_RIGHT_PAREN;
@@ -730,12 +731,7 @@ plug_in_rc_write (GSList       *plug_in_defs,
 {
   GimpConfigWriter *writer;
   GEnumClass       *enum_class;
-  PlugInDef        *plug_in_def;
-  PlugInProcDef    *proc_def;
   GSList           *list;
-  GSList           *list2;
-  GList            *list3;
-  gint              i;
 
   writer = gimp_config_writer_new_file (filename,
 					FALSE,
@@ -756,37 +752,41 @@ plug_in_rc_write (GSList       *plug_in_defs,
 
   for (list = plug_in_defs; list; list = list->next)
     {
-      plug_in_def = list->data;
+      PlugInDef *plug_in_def = list->data;
 
       if (plug_in_def->proc_defs)
 	{
+          GSList *list2;
+
           gimp_config_writer_open (writer, "plug-in-def");
           gimp_config_writer_string (writer, plug_in_def->prog);
           gimp_config_writer_printf (writer, "%ld", plug_in_def->mtime);
 
 	  for (list2 = plug_in_def->proc_defs; list2; list2 = list2->next)
 	    {
-              GEnumValue *enum_value;
-
-	      proc_def = list2->data;
+              PlugInProcDef *proc_def  = list2->data;
+              ProcRecord    *procedure = proc_def->procedure;
+              GEnumValue    *enum_value;
+              GList         *list3;
+              gint           i;
 
 	      if (proc_def->installed_during_init)
 		continue;
 
               gimp_config_writer_open (writer, "proc-def");
               gimp_config_writer_printf (writer, "\"%s\" %d",
-                                         proc_def->db_info.original_name,
-                                         proc_def->db_info.proc_type);
+                                         procedure->original_name,
+                                         procedure->proc_type);
               gimp_config_writer_linefeed (writer);
-              gimp_config_writer_string (writer, proc_def->db_info.blurb);
+              gimp_config_writer_string (writer, procedure->blurb);
               gimp_config_writer_linefeed (writer);
-	      gimp_config_writer_string (writer, proc_def->db_info.help);
+	      gimp_config_writer_string (writer, procedure->help);
 	      gimp_config_writer_linefeed (writer);
-	      gimp_config_writer_string (writer, proc_def->db_info.author);
+	      gimp_config_writer_string (writer, procedure->author);
 	      gimp_config_writer_linefeed (writer);
-	      gimp_config_writer_string (writer, proc_def->db_info.copyright);
+	      gimp_config_writer_string (writer, procedure->copyright);
 	      gimp_config_writer_linefeed (writer);
-	      gimp_config_writer_string (writer, proc_def->db_info.date);
+	      gimp_config_writer_string (writer, procedure->date);
 	      gimp_config_writer_linefeed (writer);
 	      gimp_config_writer_string (writer, proc_def->menu_label);
 	      gimp_config_writer_linefeed (writer);
@@ -815,7 +815,7 @@ plug_in_rc_write (GSList       *plug_in_defs,
 
                 case GIMP_ICON_TYPE_INLINE_PIXBUF:
                   gimp_config_writer_data (writer, proc_def->icon_data_length,
-                                           proc_def->icon_data);
+                                           (guint8 *) proc_def->icon_data);
                   break;
                 }
 
@@ -876,33 +876,33 @@ plug_in_rc_write (GSList       *plug_in_defs,
 	      gimp_config_writer_linefeed (writer);
 
 	      gimp_config_writer_printf (writer, "%d %d",
-                                         proc_def->db_info.num_args,
-                                         proc_def->db_info.num_values);
+                                         procedure->num_args,
+                                         procedure->num_values);
 
-	      for (i = 0; i < proc_def->db_info.num_args; i++)
+	      for (i = 0; i < procedure->num_args; i++)
 		{
                   gimp_config_writer_open (writer, "proc-arg");
                   gimp_config_writer_printf (writer, "%d",
-                                             proc_def->db_info.args[i].type);
+                                             procedure->args[i].type);
 
 		  gimp_config_writer_string (writer,
-                                             g_param_spec_get_name (proc_def->db_info.args[i].pspec));
+                                             g_param_spec_get_name (procedure->args[i].pspec));
 		  gimp_config_writer_string (writer,
-                                             g_param_spec_get_blurb (proc_def->db_info.args[i].pspec));
+                                             g_param_spec_get_blurb (procedure->args[i].pspec));
 
                   gimp_config_writer_close (writer);
 		}
 
-	      for (i = 0; i < proc_def->db_info.num_values; i++)
+	      for (i = 0; i < procedure->num_values; i++)
 		{
 		  gimp_config_writer_open (writer, "proc-arg");
                   gimp_config_writer_printf (writer, "%d",
-                                             proc_def->db_info.values[i].type);
+                                             procedure->values[i].type);
 
 		  gimp_config_writer_string (writer,
-                                             g_param_spec_get_name (proc_def->db_info.values[i].pspec));
+                                             g_param_spec_get_name (procedure->values[i].pspec));
 		  gimp_config_writer_string (writer,
-                                             g_param_spec_get_blurb (proc_def->db_info.values[i].pspec));
+                                             g_param_spec_get_blurb (procedure->values[i].pspec));
 
                   gimp_config_writer_close (writer);
 		}

@@ -36,6 +36,7 @@
 
 #include "core/gimp.h"
 
+#include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
 #include "plug-in-proc-def.h"
@@ -135,7 +136,7 @@ plug_ins_query (Gimp          *gimp,
   for (list = matched; list; list = g_slist_next (list))
     {
       PlugInProcDef *proc_def = list->data;
-      ProcRecord    *proc_rec = &proc_def->db_info;
+      ProcRecord    *proc_rec = proc_def->procedure;
       gchar         *name;
 
       if (proc_def->menu_label)

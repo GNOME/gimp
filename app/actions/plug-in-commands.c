@@ -37,6 +37,7 @@
 #include "plug-in/plug-in-run.h"
 #include "plug-in/plug-in-proc-def.h"
 
+#include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -75,7 +76,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
   if (! gimp)
     return;
 
-  procedure = &proc_def->db_info;
+  procedure = proc_def->procedure;
 
   args = gimp_procedure_get_arguments (procedure);
 

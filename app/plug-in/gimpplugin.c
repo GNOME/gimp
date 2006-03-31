@@ -76,6 +76,8 @@
 #include "core/gimpinterpreterdb.h"
 #include "core/gimpprogress.h"
 
+#include "pdb/gimpprocedure.h"
+
 #include "plug-in.h"
 #include "plug-ins.h"
 #include "plug-in-debug.h"
@@ -1054,10 +1056,10 @@ plug_in_menu_register (PlugIn      *plug_in,
                                  plug_in->prog,
                                  proc_name,
                                  menu_path,
-                                 proc_def->db_info.args,
-                                 proc_def->db_info.num_args,
-                                 proc_def->db_info.values,
-                                 proc_def->db_info.num_values,
+                                 proc_def->procedure->args,
+                                 proc_def->procedure->num_args,
+                                 proc_def->procedure->values,
+                                 proc_def->procedure->num_values,
                                  &error))
     {
       g_message (error->message);
@@ -1066,7 +1068,7 @@ plug_in_menu_register (PlugIn      *plug_in,
       return FALSE;
     }
 
-  switch (proc_def->db_info.proc_type)
+  switch (proc_def->procedure->proc_type)
     {
     case GIMP_INTERNAL:
       return FALSE;
@@ -1083,7 +1085,7 @@ plug_in_menu_register (PlugIn      *plug_in,
   proc_def->menu_paths = g_list_append (proc_def->menu_paths,
                                         g_strdup (menu_path));
 
-  if (proc_def->db_info.proc_type == GIMP_TEMPORARY
+  if (proc_def->procedure->proc_type == GIMP_TEMPORARY
       && ! plug_in->gimp->no_interface)
     {
       gimp_menus_create_item (plug_in->gimp, proc_def, menu_path);

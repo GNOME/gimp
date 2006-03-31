@@ -36,6 +36,7 @@
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 
+#include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
 #include "plug-in.h"
@@ -737,7 +738,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 
   /*  The procedural database procedure  */
 
-  proc = &proc_def->db_info;
+  proc = proc_def->procedure;
 
   proc->name          = canonical;
   proc->original_name = g_strdup (proc_install->name);

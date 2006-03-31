@@ -95,6 +95,9 @@ struct _ProcRecord
 
 /*  Functions  */
 
+ProcRecord   * gimp_procedure_new               (void);
+void           gimp_procedure_free              (ProcRecord       *procedure);
+
 ProcRecord   * gimp_procedure_init              (ProcRecord       *procedure,
                                                  gint              n_arguments,
                                                  gint              n_return_vals);

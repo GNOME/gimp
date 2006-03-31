@@ -1,3 +1,36 @@
+2006-03-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/pdb/gimpprocedure.[ch]: added gimp_procedure_new() and
+	gimp_procedure_free() functions.
+
+	* app/plug-in/plug-in-proc-def.h (struct PlugInProcDef): use a
+	ProcRecord pointer instead of including the entire struct.
+
+	* app/plug-in/plug-in-proc-def.c: use the new() and free()
+	functions above to allocate/free the ProcRecord.
+
+	* app/actions/plug-in-actions.c
+	* app/actions/plug-in-commands.c
+	* app/menus/plug-in-menus.c
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-rc.c
+	* app/plug-in/plug-in-run.c
+	* app/plug-in/plug-in.c
+	* app/plug-in/plug-ins-query.c
+	* app/plug-in/plug-ins.c
+	* app/xcf/xcf.c: changed accordingly.
+
+	Unrelated:
+
+	* app/pdb/gimpprocedure.c (gimp_procedure_execute): be more verbose
+	when warning about out-of-bounds parameter values.
+
+	* tools/pdbgen/pdb/fileops.pdb: allow GIMP_RUN_WITH_LAST_VALS for
+	file_save because indirect saving (e.g. remote or compressed)
+	needs it.
+
+	* app/pdb/fileops_cmds.c: regenerated.
+
 2006-03-31  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/scale-funcs.c: fixed compiler warning and

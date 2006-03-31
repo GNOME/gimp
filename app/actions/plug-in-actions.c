@@ -33,6 +33,8 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
+#include "pdb/gimpprocedure.h"
+
 #include "plug-in/plug-ins.h"
 #include "plug-in/plug-in-proc-def.h"
 
@@ -217,7 +219,7 @@ plug_in_actions_update (GimpActionGroup *group,
           gboolean sensitive = plug_in_proc_def_get_sensitive (proc_def, type);
 
           gimp_action_group_set_action_sensitive (group,
-                                                  proc_def->db_info.name,
+                                                  proc_def->procedure->name,
                                                   sensitive);
 	}
     }
@@ -296,10 +298,10 @@ plug_in_actions_add_proc (GimpActionGroup *group,
       label = p2 + 1;
     }
 
-  if (proc_def->db_info.blurb)
-    tooltip = dgettext (locale_domain, proc_def->db_info.blurb);
+  if (proc_def->procedure->blurb)
+    tooltip = dgettext (locale_domain, proc_def->procedure->blurb);
 
-  entry.name        = proc_def->db_info.name;
+  entry.name        = proc_def->procedure->name;
   entry.stock_id    = plug_in_proc_def_get_stock_id (proc_def);
   entry.label       = label;
   entry.accelerator = NULL;
@@ -308,7 +310,8 @@ plug_in_actions_add_proc (GimpActionGroup *group,
   entry.help_id     = plug_in_proc_def_get_help_id (proc_def, help_domain);
 
 #if 0
-  g_print ("adding plug-in action '%s' (%s)\n", proc_def->db_info.name, label);
+  g_print ("adding plug-in action '%s' (%s)\n",
+           proc_def->procedure->name, label);
 #endif
 
   gimp_action_group_add_plug_in_actions (group, &entry, 1,
@@ -375,13 +378,13 @@ plug_in_actions_remove_proc (GimpActionGroup *group,
   g_return_if_fail (proc_def != NULL);
 
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                        proc_def->db_info.name);
+                                        proc_def->procedure->name);
 
   if (action)
     {
 #if 0
       g_print ("removing plug-in action '%s'\n",
-               proc_def->db_info.name);
+               proc_def->procedure->name);
 #endif
 
       gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);

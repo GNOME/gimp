@@ -187,14 +187,12 @@ register_fileops_procs (Gimp *gimp)
   procedure = gimp_procedure_init (&file_save_proc, 5, 0);
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_INT32,
-                               gimp_param_spec_enum ("run-mode",
-                                                     "run mode",
-                                                     "The run mode: { GIMP_RUN_INTERACTIVE (0), GIMP_RUN_NONINTERACTIVE (1) }",
-                                                     GIMP_TYPE_RUN_MODE,
-                                                     GIMP_RUN_INTERACTIVE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[0].pspec),
-                                      GIMP_RUN_WITH_LAST_VALS);
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode: { GIMP_RUN_INTERACTIVE (0), GIMP_RUN_NONINTERACTIVE (1), GIMP_RUN_WITH_LAST_VALS (2) }",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
@@ -502,14 +500,14 @@ file_load_invoker (ProcRecord   *proc_record,
 
   for (i = 3; i < proc->num_args; i++)
     if (proc->args[i].type == GIMP_PDB_STRING)
-      g_value_set_string (&new_args[i].value, "");
+      g_value_set_static_string (&new_args[i].value, "");
 
   return_vals = procedural_db_execute (gimp, context, progress,
                                        proc->name,
                                        new_args, proc->num_args,
                                        &n_return_vals);
 
-  procedural_db_destroy_args (new_args, proc->num_args, FALSE);
+  procedural_db_destroy_args (new_args, proc->num_args, TRUE);
 
   return return_vals;
 }
@@ -722,14 +720,14 @@ file_save_invoker (ProcRecord   *proc_record,
 
   for (i = 5; i < proc->num_args; i++)
     if (proc->args[i].type == GIMP_PDB_STRING)
-      g_value_set_string (&new_args[i].value, "");
+      g_value_set_static_string (&new_args[i].value, "");
 
   return_vals = procedural_db_execute (gimp, context, progress,
                                        proc->name,
                                        new_args, proc->num_args,
                                        &n_return_vals);
 
-  procedural_db_destroy_args (new_args, proc->num_args, FALSE);
+  procedural_db_destroy_args (new_args, proc->num_args, TRUE);
 
   return return_vals;
 }
@@ -826,7 +824,9 @@ temp_name_invoker (ProcRecord   *proc_record,
   extension = (gchar *) g_value_get_string (&args[0].value);
 
   if (success)
+    {
       name = gimp_get_temp_filename (gimp, extension);
+    }
 
   return_vals = gimp_procedure_get_return_values (proc_record, success);
 

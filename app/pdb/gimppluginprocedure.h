@@ -25,8 +25,6 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "pdb/gimpprocedure.h"  /* ProcRecord */
-
 
 struct _PlugInProcDef
 {
@@ -41,7 +39,8 @@ struct _PlugInProcDef
   PlugInImageType  image_types_val;
   time_t           mtime;
   gboolean	   installed_during_init;
-  ProcRecord       db_info;
+
+  ProcRecord      *procedure;
 
   /*  file proc specific members  */
   gboolean         file_proc;

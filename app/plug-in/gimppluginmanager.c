@@ -38,6 +38,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
+#include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
 #include "plug-in.h"
@@ -244,7 +245,7 @@ plug_ins_init (Gimp               *gimp,
 
               g_printerr ("removing duplicate PDB procedure \"%s\" "
                           "registered by '%s'\n",
-                          overridden_proc_def->db_info.name,
+                          overridden_proc_def->procedure->name,
                           gimp_filename_to_utf8 (overridden_proc_def->prog));
 
               /* search the plugin list to see if any plugins had references to
@@ -325,9 +326,9 @@ plug_ins_init (Gimp               *gimp,
     {
       PlugInProcDef *proc_def = list->data;
 
-      if (proc_def->prog                                &&
-	  proc_def->db_info.proc_type == GIMP_EXTENSION &&
-	  proc_def->db_info.num_args  == 0)
+      if (proc_def->prog                                   &&
+	  proc_def->procedure->proc_type == GIMP_EXTENSION &&
+	  proc_def->procedure->num_args  == 0)
 	{
           extensions = g_list_prepend (extensions, proc_def);
         }
@@ -348,12 +349,13 @@ plug_ins_init (Gimp               *gimp,
           PlugInProcDef *proc_def = list->data;
 
 	  if (gimp->be_verbose)
-	    g_print (_("Starting extension: '%s'\n"), proc_def->db_info.name);
+	    g_print (_("Starting extension: '%s'\n"),
+                     proc_def->procedure->name);
 
-	  status_callback (NULL, proc_def->db_info.name,
+	  status_callback (NULL, proc_def->procedure->name,
                            (gdouble) nth / (gdouble) n_extensions);
 
-	  plug_in_run (gimp, context, NULL, &proc_def->db_info,
+	  plug_in_run (gimp, context, NULL, proc_def->procedure,
                        NULL, 0, FALSE, TRUE, -1);
 	}
 
@@ -646,7 +648,7 @@ plug_ins_temp_proc_def_add (Gimp          *gimp,
     }
 
   /*  Register the procedural database entry  */
-  procedural_db_register (gimp, &proc_def->db_info);
+  procedural_db_register (gimp, proc_def->procedure);
 
   /*  Add the definition to the global list  */
   gimp->plug_in_proc_defs = g_slist_prepend (gimp->plug_in_proc_defs, proc_def);
@@ -666,7 +668,7 @@ plug_ins_temp_proc_def_remove (Gimp          *gimp,
     }
 
   /*  Unregister the procedural database entry  */
-  procedural_db_unregister (gimp, proc_def->db_info.name);
+  procedural_db_unregister (gimp, proc_def->procedure->name);
 
   /*  Remove the definition from the global list  */
   gimp->plug_in_proc_defs = g_slist_remove (gimp->plug_in_proc_defs, proc_def);
@@ -868,7 +870,7 @@ plug_ins_proc_def_find (Gimp       *gimp,
     {
       PlugInProcDef *proc_def = list->data;
 
-      if (proc_rec == &proc_def->db_info)
+      if (proc_rec == proc_def->procedure)
         return proc_def;
     }
 
@@ -1044,10 +1046,10 @@ plug_ins_add_to_db (Gimp        *gimp,
     {
       proc_def = list->data;
 
-      if (proc_def->prog && (proc_def->db_info.proc_type != GIMP_INTERNAL))
+      if (proc_def->prog && (proc_def->procedure->proc_type != GIMP_INTERNAL))
 	{
-	  proc_def->db_info.exec_method.plug_in.filename = proc_def->prog;
-	  procedural_db_register (gimp, &proc_def->db_info);
+	  proc_def->procedure->exec_method.plug_in.filename = proc_def->prog;
+	  procedural_db_register (gimp, proc_def->procedure);
 	}
     }
 
@@ -1066,7 +1068,7 @@ plug_ins_add_to_db (Gimp        *gimp,
                 procedural_db_run_proc (gimp, context, NULL,
                                         "gimp-register-save-handler",
                                         &n_return_vals,
-                                        GIMP_PDB_STRING, proc_def->db_info.name,
+                                        GIMP_PDB_STRING, proc_def->procedure->name,
                                         GIMP_PDB_STRING, proc_def->extensions,
                                         GIMP_PDB_STRING, proc_def->prefixes,
                                         GIMP_PDB_END);
@@ -1077,7 +1079,7 @@ plug_ins_add_to_db (Gimp        *gimp,
                 procedural_db_run_proc (gimp, context, NULL,
                                         "gimp-register-magic-load-handler",
                                         &n_return_vals,
-                                        GIMP_PDB_STRING, proc_def->db_info.name,
+                                        GIMP_PDB_STRING, proc_def->procedure->name,
                                         GIMP_PDB_STRING, proc_def->extensions,
                                         GIMP_PDB_STRING, proc_def->prefixes,
                                         GIMP_PDB_STRING, proc_def->magics,
@@ -1099,7 +1101,7 @@ plug_ins_proc_def_insert (Gimp          *gimp,
     {
       PlugInProcDef *tmp_proc_def = list->data;
 
-      if (strcmp (proc_def->db_info.name, tmp_proc_def->db_info.name) == 0)
+      if (strcmp (proc_def->procedure->name, tmp_proc_def->procedure->name) == 0)
 	{
 	  list->data = proc_def;
 

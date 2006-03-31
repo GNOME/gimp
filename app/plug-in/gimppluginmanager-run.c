@@ -38,6 +38,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpprogress.h"
 
+#include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
 #include "plug-in.h"
@@ -220,8 +221,7 @@ plug_in_repeat (Gimp         *gimp,
 
   if (proc_def)
     {
-      /* construct the procedures arguments */
-      args = gimp_procedure_get_arguments (&proc_def->db_info);
+      args = gimp_procedure_get_arguments (proc_def->procedure);
 
       g_value_set_int (&args[0].value,
                        with_interface ?
@@ -230,11 +230,11 @@ plug_in_repeat (Gimp         *gimp,
       g_value_set_int (&args[2].value, drawable_ID);
 
       /* run the plug-in procedure */
-      plug_in_run (gimp, context, progress, &proc_def->db_info,
-                   args, 3 /* not proc_def->db_info.num_args */,
+      plug_in_run (gimp, context, progress, proc_def->procedure,
+                   args, 3 /* not proc_def->procedure->num_args */,
                    FALSE, TRUE, display_ID);
 
-      procedural_db_destroy_args (args, proc_def->db_info.num_args, TRUE);
+      procedural_db_destroy_args (args, proc_def->procedure->num_args, TRUE);
     }
 }
 

@@ -30,6 +30,8 @@
 
 #include "core/gimp.h"
 
+#include "pdb/gimpprocedure.h"
+
 #include "plug-in/plug-ins.h"
 #include "plug-in/plug-in-def.h"
 #include "plug-in/plug-in-proc-def.h"
@@ -266,7 +268,7 @@ plug_in_menus_add_proc (GimpUIManager *manager,
       *p = '\0';
     }
 
-  merge_key = g_strdup_printf ("%s-merge-id", proc_def->db_info.name);
+  merge_key = g_strdup_printf ("%s-merge-id", proc_def->procedure->name);
 
   merge_id = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (manager),
                                                   merge_key));
@@ -303,13 +305,13 @@ plug_in_menus_add_proc (GimpUIManager *manager,
 
 #if 0
   g_print ("adding menu item for '%s' (@ %s)\n",
-           proc_def->db_info.name, action_path);
+           proc_def->procedure->name, action_path);
 #endif
 
   gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
                          action_path,
-                         proc_def->db_info.name,
-                         proc_def->db_info.name,
+                         proc_def->procedure->name,
+                         proc_def->procedure->name,
                          GTK_UI_MANAGER_MENUITEM,
                          FALSE);
 
@@ -327,7 +329,7 @@ plug_in_menus_remove_proc (GimpUIManager *manager,
   g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
   g_return_if_fail (proc_def != NULL);
 
-  merge_key = g_strdup_printf ("%s-merge-id", proc_def->db_info.name);
+  merge_key = g_strdup_printf ("%s-merge-id", proc_def->procedure->name);
   merge_id = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (manager),
                                                   merge_key));
   g_free (merge_key);
