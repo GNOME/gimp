@@ -34,7 +34,7 @@ struct _PlugInProcDef
   GList           *menu_paths;
   GimpIconType     icon_type;
   gint             icon_data_length;
-  gchar           *icon_data;
+  guint8          *icon_data;
   gchar           *image_types;
   PlugInImageType  image_types_val;
   time_t           mtime;
@@ -67,7 +67,7 @@ gchar            * plug_in_proc_def_get_label    (const PlugInProcDef *proc_def,
 
 void               plug_in_proc_def_set_icon     (PlugInProcDef       *proc_def,
                                                   GimpIconType         type,
-                                                  const gchar         *data,
+                                                  const guint8        *data,
                                                   gint                 data_length);
 const gchar      * plug_in_proc_def_get_stock_id (const PlugInProcDef *proc_def);
 GdkPixbuf        * plug_in_proc_def_get_pixbuf   (const PlugInProcDef *proc_def);

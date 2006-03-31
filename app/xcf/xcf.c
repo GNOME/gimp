@@ -89,7 +89,7 @@ static PlugInProcDef xcf_plug_in_load_proc =
   NULL,
   GIMP_ICON_TYPE_STOCK_ID,
   -1,
-  "gimp-wilber",
+  (guint8 *) "gimp-wilber",
   NULL, /* ignored for load */
   0,    /* ignored for load */
   0,
@@ -130,7 +130,7 @@ static PlugInProcDef xcf_plug_in_save_proc =
   NULL,
   GIMP_ICON_TYPE_STOCK_ID,
   -1,
-  "gimp-wilber",
+  (guint8 *) "gimp-wilber",
   "RGB*, GRAY*, INDEXED*",
   0, /* fill me in at runtime */
   0,

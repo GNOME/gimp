@@ -1,5 +1,16 @@
 2006-03-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/plug-in-proc-def.h (struct PlugInProcDef)
+	(plug_in_proc_def_set_icon): changed "icon_data" from gchar* to
+	guint8*.
+
+	* app/plug-in/plug-in-proc-def.c
+	* app/plug-in/plug-in-rc.c
+	* app/xcf/xcf.c: cast a bit to the fix resulting warnings. There
+	are less casts needed than before.
+
+2006-03-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/pdb/gimpprocedure.[ch] (struct ProcRecord): added new member
 	"gboolean static_proc" which indicates whether a ProcRecord struct
 	and its strings are static.

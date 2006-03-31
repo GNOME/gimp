@@ -56,8 +56,6 @@ plug_in_proc_def_new (void)
 void
 plug_in_proc_def_free (PlugInProcDef *proc_def)
 {
-  gint i;
-
   g_return_if_fail (proc_def != NULL);
 
   gimp_procedure_free (proc_def->procedure);
@@ -166,7 +164,7 @@ plug_in_proc_def_get_label (const PlugInProcDef *proc_def,
 void
 plug_in_proc_def_set_icon (PlugInProcDef *proc_def,
                            GimpIconType   icon_type,
-                           const gchar   *icon_data,
+                           const guint8  *icon_data,
                            gint           icon_data_length)
 {
   g_return_if_fail (proc_def != NULL);
@@ -187,7 +185,7 @@ plug_in_proc_def_set_icon (PlugInProcDef *proc_def,
     case GIMP_ICON_TYPE_STOCK_ID:
     case GIMP_ICON_TYPE_IMAGE_FILE:
       proc_def->icon_data_length = -1;
-      proc_def->icon_data        = g_strdup (icon_data);
+      proc_def->icon_data        = (guint8 *) g_strdup ((gchar *) icon_data);
       break;
 
     case GIMP_ICON_TYPE_INLINE_PIXBUF:
@@ -206,7 +204,7 @@ plug_in_proc_def_get_stock_id (const PlugInProcDef *proc_def)
   switch (proc_def->icon_type)
     {
     case GIMP_ICON_TYPE_STOCK_ID:
-      return proc_def->icon_data;
+      return (gchar *) proc_def->icon_data;
 
     default:
       return NULL;
@@ -226,24 +224,21 @@ plug_in_proc_def_get_pixbuf (const PlugInProcDef *proc_def)
     case GIMP_ICON_TYPE_INLINE_PIXBUF:
       pixbuf = gdk_pixbuf_new_from_inline (proc_def->icon_data_length,
                                            proc_def->icon_data, TRUE, &error);
-      if (! pixbuf)
-        {
-          g_printerr (error->message);
-          g_clear_error (&error);
-        }
       break;
 
     case GIMP_ICON_TYPE_IMAGE_FILE:
-      pixbuf = gdk_pixbuf_new_from_file (proc_def->icon_data, &error);
-      if (! pixbuf)
-        {
-          g_printerr (error->message);
-          g_clear_error (&error);
-        }
+      pixbuf = gdk_pixbuf_new_from_file ((gchar *) proc_def->icon_data,
+                                         &error);
       break;
 
     default:
       break;
+    }
+
+  if (! pixbuf && error)
+    {
+      g_printerr (error->message);
+      g_clear_error (&error);
     }
 
   return pixbuf;

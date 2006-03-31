@@ -505,7 +505,7 @@ plug_in_icon_deserialize (GScanner      *scanner,
 
   proc_def->icon_type        = icon_type;
   proc_def->icon_data_length = icon_data_length;
-  proc_def->icon_data        = (gchar *) icon_data;
+  proc_def->icon_data        = icon_data;
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
     return G_TOKEN_RIGHT_PAREN;
@@ -810,12 +810,13 @@ plug_in_rc_write (GSList       *plug_in_defs,
                 {
                 case GIMP_ICON_TYPE_STOCK_ID:
                 case GIMP_ICON_TYPE_IMAGE_FILE:
-                  gimp_config_writer_string (writer, proc_def->icon_data);
+                  gimp_config_writer_string (writer,
+                                             (gchar *) proc_def->icon_data);
                   break;
 
                 case GIMP_ICON_TYPE_INLINE_PIXBUF:
                   gimp_config_writer_data (writer, proc_def->icon_data_length,
-                                           (guint8 *) proc_def->icon_data);
+                                           proc_def->icon_data);
                   break;
                 }
 
