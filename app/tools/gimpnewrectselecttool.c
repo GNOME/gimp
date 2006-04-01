@@ -294,6 +294,7 @@ gimp_new_rect_select_tool_execute (GimpRectangleTool  *rectangle,
   GimpImage             *image;
   gint                   max_x, max_y;
   gboolean               rectangle_exists;
+  gboolean               auto_shrink;
   gboolean               selected;
   gint                   val;
   GimpChannel           *selection_mask;
@@ -315,23 +316,30 @@ gimp_new_rect_select_tool_execute (GimpRectangleTool  *rectangle,
                       x + w >= 0 && y + h >= 0 &&
                       w > 0 && h > 0);
 
-  if (x < 0)
-    {
-      w += x;
-      x = 0;
-    }
+  g_object_get (options,
+                "auto-shrink", &auto_shrink,
+                NULL);
 
-  if (y < 0)
-    {
-      h += y;
-      y = 0;
-    }
+  if (auto_shrink)
+  {
+    if (x < 0)
+      {
+        w += x;
+        x = 0;
+      }
 
-  if (x + w > max_x)
-    w = max_x - x;
+    if (y < 0)
+      {
+        h += y;
+        y = 0;
+      }
 
-  if (y + h > max_y)
-    h = max_y - y;
+    if (x + w > max_x)
+      w = max_x - x;
+
+    if (y + h > max_y)
+      h = max_y - y;
+  }
 
   /* if rectangle exists, turn it into a selection */
   if (rectangle_exists)
