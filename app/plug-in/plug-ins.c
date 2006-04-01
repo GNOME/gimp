@@ -1087,7 +1087,7 @@ plug_ins_add_to_db (Gimp        *gimp,
                                         GIMP_PDB_END);
             }
 
-          gimp_arguments_destroy (return_vals, n_return_vals, TRUE);
+          gimp_arguments_destroy (return_vals, n_return_vals);
 	}
     }
 }

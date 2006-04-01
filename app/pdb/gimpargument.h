@@ -39,8 +39,7 @@ void   gimp_argument_init_compat (GimpArgument     *arg,
                                   GimpPDBArgType    arg_type);
 
 void   gimp_arguments_destroy    (GimpArgument     *args,
-                                  gint              n_args,
-                                  gboolean          full_destroy);
+                                  gint              n_args);
 
 
 #endif  /*  __GIMP_ARGUMENT_H__  */

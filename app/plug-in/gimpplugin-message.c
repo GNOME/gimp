@@ -462,8 +462,8 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
 	  return;
 	}
 
-      gimp_arguments_destroy (args, n_args, FALSE);
-      gimp_arguments_destroy (return_vals, n_return_vals, TRUE);
+      gimp_arguments_destroy (args, n_args);
+      gimp_arguments_destroy (return_vals, n_return_vals);
       plug_in_params_destroy (proc_return.params, proc_return.nparams, FALSE);
     }
   else

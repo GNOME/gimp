@@ -75,10 +75,10 @@ register_patterns_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_STRINGARRAY,
-                                   g_param_spec_pointer ("pattern-list",
-                                                         "pattern list",
-                                                         "The list of pattern names",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_string_array ("pattern-list",
+                                                                 "pattern list",
+                                                                 "The list of pattern names",
+                                                                 GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -159,10 +159,10 @@ register_patterns_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_INT8ARRAY,
-                                   g_param_spec_pointer ("mask-data",
-                                                         "mask data",
-                                                         "The pattern mask data",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("mask-data",
+                                                          "mask data",
+                                                          "The pattern mask data",
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
 }
@@ -220,7 +220,7 @@ patterns_get_list_invoker (GimpProcedure *procedure,
   if (success)
     {
       g_value_set_int (&return_vals[1].value, num_patterns);
-      g_value_set_pointer (&return_vals[2].value, pattern_list);
+      gimp_value_take_stringarray (&return_vals[2].value, pattern_list, num_patterns);
     }
 
   return return_vals;
@@ -351,7 +351,7 @@ patterns_get_pattern_data_invoker (GimpProcedure *procedure,
       g_value_set_int (&return_vals[3].value, height);
       g_value_set_int (&return_vals[4].value, mask_bpp);
       g_value_set_int (&return_vals[5].value, length);
-      g_value_set_pointer (&return_vals[6].value, mask_data);
+      gimp_value_take_int8array (&return_vals[6].value, mask_data, length);
     }
 
   return return_vals;

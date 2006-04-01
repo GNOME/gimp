@@ -166,11 +166,23 @@ CODE
 	    my ($pdbtype) = &arg_parse($_->{type});
 	    my $arg = $arg_types{$pdbtype};
 	    my $var = $_->{name};
+	    my $var_len;
 	    my $value;
 
 	    $argc++;
 
 	    $value = "&return_vals[$argc].value";
+
+	    if (exists $_->{array}) {
+		my $arrayarg = $_->{array};
+
+		if (exists $arrayarg->{name}) {
+		    $var_len = $arrayarg->{name};
+		}
+		else {
+		    $var_len = 'num_' . $_->{name};
+		}
+	    }
 
 	    $outargs .= eval qq/"  $arg->{set_value_func};\n"/;
 	}
@@ -451,13 +463,20 @@ CODE
     elsif ($pdbtype eq 'int32array' ||
 	   $pdbtype eq 'int16array' ||
 	   $pdbtype eq 'int8array'  ||
-	   $pdbtype eq 'floatarray' ||
-	   $pdbtype eq 'stringarray') {
+	   $pdbtype eq 'floatarray') {
 	$pspec = <<CODE;
-g_param_spec_pointer ("$name",
-                      "$nick",
-                      "$blurb",
-                      $flags)
+gimp_param_spec_array ("$name",
+                       "$nick",
+                       "$blurb",
+                       $flags)
+CODE
+    }
+    elsif ($pdbtype eq 'stringarray') {
+	$pspec = <<CODE;
+gimp_param_spec_string_array ("$name",
+                              "$nick",
+                              "$blurb",
+                              $flags)
 CODE
     }
     else {

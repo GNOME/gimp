@@ -280,10 +280,10 @@ register_brush_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_INT8ARRAY,
-                                   g_param_spec_pointer ("mask-bytes",
-                                                         "mask bytes",
-                                                         "The brush mask data",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("mask-bytes",
+                                                          "mask bytes",
+                                                          "The brush mask data",
+                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_INT32,
                                    g_param_spec_int ("color-bpp",
@@ -300,10 +300,10 @@ register_brush_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_INT8ARRAY,
-                                   g_param_spec_pointer ("color-bytes",
-                                                         "color bytes",
-                                                         "The brush color data",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("color-bytes",
+                                                          "color bytes",
+                                                          "The brush color data",
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -1080,10 +1080,10 @@ brush_get_pixels_invoker (GimpProcedure *procedure,
       g_value_set_int (&return_vals[2].value, height);
       g_value_set_int (&return_vals[3].value, mask_bpp);
       g_value_set_int (&return_vals[4].value, num_mask_bytes);
-      g_value_set_pointer (&return_vals[5].value, mask_bytes);
+      gimp_value_take_int8array (&return_vals[5].value, mask_bytes, num_mask_bytes);
       g_value_set_int (&return_vals[6].value, color_bpp);
       g_value_set_int (&return_vals[7].value, num_color_bytes);
-      g_value_set_pointer (&return_vals[8].value, color_bytes);
+      gimp_value_take_int8array (&return_vals[8].value, color_bytes, num_color_bytes);
     }
 
   return return_vals;

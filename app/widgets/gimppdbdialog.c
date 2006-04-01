@@ -322,7 +322,7 @@ gimp_pdb_dialog_run_callback (GimpPdbDialog *dialog,
                          g_type_name (G_TYPE_FROM_INSTANCE (dialog)));
             }
 
-          gimp_arguments_destroy (return_vals, n_return_vals, TRUE);
+          gimp_arguments_destroy (return_vals, n_return_vals);
         }
 
       dialog->callback_busy = FALSE;

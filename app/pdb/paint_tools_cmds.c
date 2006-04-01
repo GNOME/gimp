@@ -88,10 +88,10 @@ register_paint_tools_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_FLOATARRAY,
-                               g_param_spec_pointer ("strokes",
-                                                     "strokes",
-                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("strokes",
+                                                      "strokes",
+                                                      "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -115,10 +115,10 @@ register_paint_tools_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_FLOATARRAY,
-                               g_param_spec_pointer ("strokes",
-                                                     "strokes",
-                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("strokes",
+                                                      "strokes",
+                                                      "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -172,10 +172,10 @@ register_paint_tools_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_FLOATARRAY,
-                               g_param_spec_pointer ("strokes",
-                                                     "strokes",
-                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("strokes",
+                                                      "strokes",
+                                                      "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -199,10 +199,10 @@ register_paint_tools_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_FLOATARRAY,
-                               g_param_spec_pointer ("strokes",
-                                                     "strokes",
-                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("strokes",
+                                                      "strokes",
+                                                      "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -241,10 +241,10 @@ register_paint_tools_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_FLOATARRAY,
-                               g_param_spec_pointer ("strokes",
-                                                     "strokes",
-                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("strokes",
+                                                      "strokes",
+                                                      "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -268,10 +268,10 @@ register_paint_tools_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_FLOATARRAY,
-                               g_param_spec_pointer ("strokes",
-                                                     "strokes",
-                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("strokes",
+                                                      "strokes",
+                                                      "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -318,10 +318,10 @@ register_paint_tools_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_FLOATARRAY,
-                               g_param_spec_pointer ("strokes",
-                                                     "strokes",
-                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("strokes",
+                                                      "strokes",
+                                                      "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -345,10 +345,10 @@ register_paint_tools_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_FLOATARRAY,
-                               g_param_spec_pointer ("strokes",
-                                                     "strokes",
-                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("strokes",
+                                                      "strokes",
+                                                      "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -372,10 +372,10 @@ register_paint_tools_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_FLOATARRAY,
-                               g_param_spec_pointer ("strokes",
-                                                     "strokes",
-                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("strokes",
+                                                      "strokes",
+                                                      "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_INT32,
                                g_param_spec_enum ("hardness",
@@ -415,10 +415,10 @@ register_paint_tools_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_FLOATARRAY,
-                               g_param_spec_pointer ("strokes",
-                                                     "strokes",
-                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("strokes",
+                                                      "strokes",
+                                                      "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -449,10 +449,10 @@ register_paint_tools_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_FLOATARRAY,
-                               g_param_spec_pointer ("strokes",
-                                                     "strokes",
-                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("strokes",
+                                                      "strokes",
+                                                      "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_INT32,
                                g_param_spec_enum ("method",
@@ -491,10 +491,10 @@ register_paint_tools_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_FLOATARRAY,
-                               g_param_spec_pointer ("strokes",
-                                                     "strokes",
-                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("strokes",
+                                                      "strokes",
+                                                      "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -518,10 +518,10 @@ register_paint_tools_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_FLOATARRAY,
-                               g_param_spec_pointer ("strokes",
-                                                     "strokes",
-                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("strokes",
+                                                      "strokes",
+                                                      "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -552,10 +552,10 @@ register_paint_tools_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_FLOATARRAY,
-                               g_param_spec_pointer ("strokes",
-                                                     "strokes",
-                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("strokes",
+                                                      "strokes",
+                                                      "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -579,10 +579,10 @@ register_paint_tools_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_FLOATARRAY,
-                               g_param_spec_pointer ("strokes",
-                                                     "strokes",
-                                                     "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("strokes",
+                                                      "strokes",
+                                                      "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
 }
@@ -656,7 +656,7 @@ airbrush_invoker (GimpProcedure *procedure,
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   pressure = g_value_get_double (&args[1].value);
   num_strokes = g_value_get_int (&args[2].value);
-  strokes = g_value_get_pointer (&args[3].value);
+  strokes = (gdouble *) gimp_value_get_floatarray (&args[3].value);
 
   if (success)
     {
@@ -711,7 +711,7 @@ airbrush_default_invoker (GimpProcedure *procedure,
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   num_strokes = g_value_get_int (&args[1].value);
-  strokes = g_value_get_pointer (&args[2].value);
+  strokes = (gdouble *) gimp_value_get_floatarray (&args[2].value);
 
   if (success)
     {
@@ -770,7 +770,7 @@ clone_invoker (GimpProcedure *procedure,
   src_x = g_value_get_double (&args[3].value);
   src_y = g_value_get_double (&args[4].value);
   num_strokes = g_value_get_int (&args[5].value);
-  strokes = g_value_get_pointer (&args[6].value);
+  strokes = (gdouble *) gimp_value_get_floatarray (&args[6].value);
 
   if (success)
     {
@@ -829,7 +829,7 @@ clone_default_invoker (GimpProcedure *procedure,
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   num_strokes = g_value_get_int (&args[1].value);
-  strokes = g_value_get_pointer (&args[2].value);
+  strokes = (gdouble *) gimp_value_get_floatarray (&args[2].value);
 
   if (success)
     {
@@ -884,7 +884,7 @@ convolve_invoker (GimpProcedure *procedure,
   pressure = g_value_get_double (&args[1].value);
   convolve_type = g_value_get_enum (&args[2].value);
   num_strokes = g_value_get_int (&args[3].value);
-  strokes = g_value_get_pointer (&args[4].value);
+  strokes = (gdouble *) gimp_value_get_floatarray (&args[4].value);
 
   if (success)
     {
@@ -940,7 +940,7 @@ convolve_default_invoker (GimpProcedure *procedure,
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   num_strokes = g_value_get_int (&args[1].value);
-  strokes = g_value_get_pointer (&args[2].value);
+  strokes = (gdouble *) gimp_value_get_floatarray (&args[2].value);
 
   if (success)
     {
@@ -997,7 +997,7 @@ dodgeburn_invoker (GimpProcedure *procedure,
   dodgeburn_type = g_value_get_enum (&args[2].value);
   dodgeburn_mode = g_value_get_enum (&args[3].value);
   num_strokes = g_value_get_int (&args[4].value);
-  strokes = g_value_get_pointer (&args[5].value);
+  strokes = (gdouble *) gimp_value_get_floatarray (&args[5].value);
 
   if (success)
     {
@@ -1054,7 +1054,7 @@ dodgeburn_default_invoker (GimpProcedure *procedure,
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   num_strokes = g_value_get_int (&args[1].value);
-  strokes = g_value_get_pointer (&args[2].value);
+  strokes = (gdouble *) gimp_value_get_floatarray (&args[2].value);
 
   if (success)
     {
@@ -1107,7 +1107,7 @@ eraser_invoker (GimpProcedure *procedure,
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   num_strokes = g_value_get_int (&args[1].value);
-  strokes = g_value_get_pointer (&args[2].value);
+  strokes = (gdouble *) gimp_value_get_floatarray (&args[2].value);
   hardness = g_value_get_enum (&args[3].value);
   method = g_value_get_enum (&args[4].value);
 
@@ -1165,7 +1165,7 @@ eraser_default_invoker (GimpProcedure *procedure,
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   num_strokes = g_value_get_int (&args[1].value);
-  strokes = g_value_get_pointer (&args[2].value);
+  strokes = (gdouble *) gimp_value_get_floatarray (&args[2].value);
 
   if (success)
     {
@@ -1220,7 +1220,7 @@ paintbrush_invoker (GimpProcedure *procedure,
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   fade_out = g_value_get_double (&args[1].value);
   num_strokes = g_value_get_int (&args[2].value);
-  strokes = g_value_get_pointer (&args[3].value);
+  strokes = (gdouble *) gimp_value_get_floatarray (&args[3].value);
   method = g_value_get_enum (&args[4].value);
   gradient_length = g_value_get_double (&args[5].value);
 
@@ -1281,7 +1281,7 @@ paintbrush_default_invoker (GimpProcedure *procedure,
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   num_strokes = g_value_get_int (&args[1].value);
-  strokes = g_value_get_pointer (&args[2].value);
+  strokes = (gdouble *) gimp_value_get_floatarray (&args[2].value);
 
   if (success)
     {
@@ -1332,7 +1332,7 @@ pencil_invoker (GimpProcedure *procedure,
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   num_strokes = g_value_get_int (&args[1].value);
-  strokes = g_value_get_pointer (&args[2].value);
+  strokes = (gdouble *) gimp_value_get_floatarray (&args[2].value);
 
   if (success)
     {
@@ -1385,7 +1385,7 @@ smudge_invoker (GimpProcedure *procedure,
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   pressure = g_value_get_double (&args[1].value);
   num_strokes = g_value_get_int (&args[2].value);
-  strokes = g_value_get_pointer (&args[3].value);
+  strokes = (gdouble *) gimp_value_get_floatarray (&args[3].value);
 
   if (success)
     {
@@ -1440,7 +1440,7 @@ smudge_default_invoker (GimpProcedure *procedure,
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   num_strokes = g_value_get_int (&args[1].value);
-  strokes = g_value_get_pointer (&args[2].value);
+  strokes = (gdouble *) gimp_value_get_floatarray (&args[2].value);
 
   if (success)
     {

@@ -145,7 +145,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
     }
 
  error:
-  gimp_arguments_destroy (args, procedure->num_args, TRUE);
+  gimp_arguments_destroy (args, procedure->num_args);
 }
 
 void

@@ -147,10 +147,10 @@ register_image_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_INT32ARRAY,
-                                   g_param_spec_pointer ("image-ids",
-                                                         "image ids",
-                                                         "The list of images currently open",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("image-ids",
+                                                          "image ids",
+                                                          "The list of images currently open",
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -481,10 +481,10 @@ register_image_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_INT32ARRAY,
-                                   g_param_spec_pointer ("layer-ids",
-                                                         "layer ids",
-                                                         "The list of layers contained in the image",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("layer-ids",
+                                                          "layer ids",
+                                                          "The list of layers contained in the image",
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -507,10 +507,10 @@ register_image_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_INT32ARRAY,
-                                   g_param_spec_pointer ("channel-ids",
-                                                         "channel ids",
-                                                         "The list of channels contained in the image",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("channel-ids",
+                                                          "channel ids",
+                                                          "The list of channels contained in the image",
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -533,10 +533,10 @@ register_image_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_INT32ARRAY,
-                                   g_param_spec_pointer ("vector-ids",
-                                                         "vector ids",
-                                                         "The list of vectors contained in the image",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("vector-ids",
+                                                          "vector ids",
+                                                          "The list of vectors contained in the image",
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -1239,10 +1239,10 @@ register_image_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_INT8ARRAY,
-                                   g_param_spec_pointer ("colormap",
-                                                         "colormap",
-                                                         "The image's colormap",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("colormap",
+                                                          "colormap",
+                                                          "The image's colormap",
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -1265,10 +1265,10 @@ register_image_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_INT8ARRAY,
-                               g_param_spec_pointer ("colormap",
-                                                     "colormap",
-                                                     "The new colormap values",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("colormap",
+                                                      "colormap",
+                                                      "The new colormap values",
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -1359,10 +1359,10 @@ register_image_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_INT8ARRAY,
-                                   g_param_spec_pointer ("thumbnail-data",
-                                                         "thumbnail data",
-                                                         "The thumbnail data",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("thumbnail-data",
+                                                          "thumbnail data",
+                                                          "The thumbnail data",
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -1949,7 +1949,7 @@ image_list_invoker (GimpProcedure *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, TRUE);
 
   g_value_set_int (&return_vals[1].value, num_images);
-  g_value_set_pointer (&return_vals[2].value, image_ids);
+  gimp_value_take_int32array (&return_vals[2].value, image_ids, num_images);
 
   return return_vals;
 }
@@ -2558,7 +2558,7 @@ image_get_layers_invoker (GimpProcedure *procedure,
   if (success)
     {
       g_value_set_int (&return_vals[1].value, num_layers);
-      g_value_set_pointer (&return_vals[2].value, layer_ids);
+      gimp_value_take_int32array (&return_vals[2].value, layer_ids, num_layers);
     }
 
   return return_vals;
@@ -2617,7 +2617,7 @@ image_get_channels_invoker (GimpProcedure *procedure,
   if (success)
     {
       g_value_set_int (&return_vals[1].value, num_channels);
-      g_value_set_pointer (&return_vals[2].value, channel_ids);
+      gimp_value_take_int32array (&return_vals[2].value, channel_ids, num_channels);
     }
 
   return return_vals;
@@ -2676,7 +2676,7 @@ image_get_vectors_invoker (GimpProcedure *procedure,
   if (success)
     {
       g_value_set_int (&return_vals[1].value, num_vectors);
-      g_value_set_pointer (&return_vals[2].value, vector_ids);
+      gimp_value_take_int32array (&return_vals[2].value, vector_ids, num_vectors);
     }
 
   return return_vals;
@@ -3876,7 +3876,7 @@ image_get_colormap_invoker (GimpProcedure *procedure,
   if (success)
     {
       g_value_set_int (&return_vals[1].value, num_bytes);
-      g_value_set_pointer (&return_vals[2].value, colormap);
+      gimp_value_take_int8array (&return_vals[2].value, colormap, num_bytes);
     }
 
   return return_vals;
@@ -3912,7 +3912,7 @@ image_set_colormap_invoker (GimpProcedure *procedure,
 
   image = gimp_value_get_image (&args[0].value, gimp);
   num_bytes = g_value_get_int (&args[1].value);
-  colormap = g_value_get_pointer (&args[2].value);
+  colormap = (guint8 *) gimp_value_get_int8array (&args[2].value);
 
   if (success)
     {
@@ -4087,7 +4087,7 @@ image_thumbnail_invoker (GimpProcedure *procedure,
       g_value_set_int (&return_vals[2].value, actual_height);
       g_value_set_int (&return_vals[3].value, bpp);
       g_value_set_int (&return_vals[4].value, thumbnail_data_count);
-      g_value_set_pointer (&return_vals[5].value, thumbnail_data);
+      gimp_value_take_int8array (&return_vals[5].value, thumbnail_data, thumbnail_data_count);
     }
 
   return return_vals;

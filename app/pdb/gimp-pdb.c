@@ -285,7 +285,7 @@ procedural_db_execute (Gimp         *gimp,
            *  and run the next procedure.
            */
           if (g_list_next (list))
-            gimp_arguments_destroy (return_vals, *n_return_vals, TRUE);
+            gimp_arguments_destroy (return_vals, *n_return_vals);
         }
       else
         {
@@ -343,6 +343,8 @@ procedural_db_run_proc (Gimp         *gimp,
     {
       GimpPDBArgType  arg_type = va_arg (va_args, GimpPDBArgType);
       GValue         *value;
+      GimpArray      *array;
+      gint            count;
 
       if (arg_type == GIMP_PDB_END)
         break;
@@ -352,7 +354,7 @@ procedural_db_run_proc (Gimp         *gimp,
           gchar *expected = procedural_db_type_name (procedure->args[i].type);
           gchar *got      = procedural_db_type_name (arg_type);
 
-          gimp_arguments_destroy (args, procedure->num_args, TRUE);
+          gimp_arguments_destroy (args, procedure->num_args);
 
           g_message (_("PDB calling error for procedure '%s':\n"
                        "Argument #%d type mismatch (expected %s, got %s)"),
@@ -399,11 +401,38 @@ procedural_db_run_proc (Gimp         *gimp,
           break;
 
         case GIMP_PDB_INT32ARRAY:
+          count = g_value_get_int (&args[i - 1].value);
+          gimp_value_set_static_int32array (value,
+                                            va_arg (va_args, gpointer),
+                                            count);
+          break;
+
         case GIMP_PDB_INT16ARRAY:
+          count = g_value_get_int (&args[i - 1].value);
+          gimp_value_set_static_int16array (value,
+                                            va_arg (va_args, gpointer),
+                                            count);
+          break;
+
         case GIMP_PDB_INT8ARRAY:
+          count = g_value_get_int (&args[i - 1].value);
+          gimp_value_set_static_int8array (value,
+                                           va_arg (va_args, gpointer),
+                                           count);
+          break;
+
         case GIMP_PDB_FLOATARRAY:
+          count = g_value_get_int (&args[i - 1].value);
+          gimp_value_set_static_floatarray (value,
+                                            va_arg (va_args, gpointer),
+                                            count);
+          break;
+
         case GIMP_PDB_STRINGARRAY:
-          g_value_set_pointer (value, va_arg (va_args, gpointer));
+          count = g_value_get_int (&args[i - 1].value);
+          gimp_value_set_static_stringarray (value,
+                                             va_arg (va_args, gpointer),
+                                             count);
           break;
 
         case GIMP_PDB_COLOR:
@@ -445,7 +474,7 @@ procedural_db_run_proc (Gimp         *gimp,
                                        args, procedure->num_args,
                                        n_return_vals);
 
-  gimp_arguments_destroy (args, procedure->num_args, FALSE);
+  gimp_arguments_destroy (args, procedure->num_args);
 
   return return_vals;
 }

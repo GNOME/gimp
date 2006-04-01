@@ -224,7 +224,7 @@ about_dialog_load_url (GtkAboutDialog *dialog,
                                         &n_return_vals,
                                         GIMP_PDB_STRING, url,
                                         GIMP_PDB_END);
-  gimp_arguments_destroy (return_vals, n_return_vals, TRUE);
+  gimp_arguments_destroy (return_vals, n_return_vals);
 }
 
 

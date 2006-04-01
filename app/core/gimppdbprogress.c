@@ -271,7 +271,7 @@ gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
           retval = g_value_get_double (&return_vals[1].value);
         }
 
-      gimp_arguments_destroy (return_vals, n_return_vals, TRUE);
+      gimp_arguments_destroy (return_vals, n_return_vals);
 
       progress->callback_busy = FALSE;
     }

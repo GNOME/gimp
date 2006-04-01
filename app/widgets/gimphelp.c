@@ -202,7 +202,7 @@ gimp_help_browser (Gimp *gimp)
       plug_in_run (gimp, gimp_get_user_context (gimp), NULL,
                    procedure, args, 1, FALSE, TRUE, -1);
 
-      gimp_arguments_destroy (args, procedure->num_args, TRUE);
+      gimp_arguments_destroy (args, procedure->num_args);
     }
 
   /*  Check if the help browser started properly  */
@@ -290,7 +290,7 @@ gimp_help_call (Gimp        *gimp,
       plug_in_run (gimp, gimp_get_user_context (gimp), NULL,
                    procedure, args, 4, FALSE, TRUE, -1);
 
-      gimp_arguments_destroy (args, procedure->num_args, TRUE);
+      gimp_arguments_destroy (args, procedure->num_args);
     }
 
   /*  Check if the help parser started properly  */
@@ -321,7 +321,7 @@ gimp_help_call (Gimp        *gimp,
                                 GIMP_PDB_STRING, help_id,
                                 GIMP_PDB_END);
 
-      gimp_arguments_destroy (return_vals, n_return_vals, TRUE);
+      gimp_arguments_destroy (return_vals, n_return_vals);
     }
 }
 

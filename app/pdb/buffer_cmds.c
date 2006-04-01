@@ -70,10 +70,10 @@ register_buffer_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_STRINGARRAY,
-                                   g_param_spec_pointer ("buffer-list",
-                                                         "buffer list",
-                                                         "The list of buffer names",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_string_array ("buffer-list",
+                                                                 "buffer list",
+                                                                 "The list of buffer names",
+                                                                 GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -233,7 +233,7 @@ buffers_get_list_invoker (GimpProcedure *procedure,
   if (success)
     {
       g_value_set_int (&return_vals[1].value, num_buffers);
-      g_value_set_pointer (&return_vals[2].value, buffer_list);
+      gimp_value_take_stringarray (&return_vals[2].value, buffer_list, num_buffers);
     }
 
   return return_vals;

@@ -147,10 +147,10 @@ register_procedural_db_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_STRINGARRAY,
-                                   g_param_spec_pointer ("procedure-names",
-                                                         "procedure names",
-                                                         "The list of procedure names",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_string_array ("procedure-names",
+                                                                 "procedure names",
+                                                                 "The list of procedure names",
+                                                                 GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -344,10 +344,10 @@ register_procedural_db_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_INT8ARRAY,
-                                   g_param_spec_pointer ("data",
-                                                         "data",
-                                                         "A byte array containing data",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("data",
+                                                          "data",
+                                                          "A byte array containing data",
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -392,10 +392,10 @@ register_procedural_db_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_INT8ARRAY,
-                               g_param_spec_pointer ("data",
-                                                     "data",
-                                                     "A byte array containing data",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("data",
+                                                      "data",
+                                                      "A byte array containing data",
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
 }
@@ -512,7 +512,7 @@ procedural_db_query_invoker (GimpProcedure *procedure,
   if (success)
     {
       g_value_set_int (&return_vals[1].value, num_matches);
-      g_value_set_pointer (&return_vals[2].value, procedure_names);
+      gimp_value_take_stringarray (&return_vals[2].value, procedure_names, num_matches);
     }
 
   return return_vals;
@@ -799,7 +799,7 @@ procedural_db_get_data_invoker (GimpProcedure *procedure,
   if (success)
     {
       g_value_set_int (&return_vals[1].value, bytes);
-      g_value_set_pointer (&return_vals[2].value, data);
+      gimp_value_take_int8array (&return_vals[2].value, data, bytes);
     }
 
   return return_vals;
@@ -889,7 +889,7 @@ procedural_db_set_data_invoker (GimpProcedure *procedure,
 
   identifier = (gchar *) g_value_get_string (&args[0].value);
   bytes = g_value_get_int (&args[1].value);
-  data = g_value_get_pointer (&args[2].value);
+  data = (guint8 *) gimp_value_get_int8array (&args[2].value);
 
   if (success)
     {

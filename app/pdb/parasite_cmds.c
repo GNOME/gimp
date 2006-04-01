@@ -117,10 +117,10 @@ register_parasite_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_STRINGARRAY,
-                                   g_param_spec_pointer ("parasites",
-                                                         "parasites",
-                                                         "The names of currently attached parasites",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_string_array ("parasites",
+                                                                 "parasites",
+                                                                 "The names of currently attached parasites",
+                                                                 GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -210,10 +210,10 @@ register_parasite_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_STRINGARRAY,
-                                   g_param_spec_pointer ("parasites",
-                                                         "parasites",
-                                                         "The names of currently attached parasites",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_string_array ("parasites",
+                                                                 "parasites",
+                                                                 "The names of currently attached parasites",
+                                                                 GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -307,10 +307,10 @@ register_parasite_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_STRINGARRAY,
-                                   g_param_spec_pointer ("parasites",
-                                                         "parasites",
-                                                         "The names of currently attached parasites",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_string_array ("parasites",
+                                                                 "parasites",
+                                                                 "The names of currently attached parasites",
+                                                                 GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -404,10 +404,10 @@ register_parasite_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_STRINGARRAY,
-                                   g_param_spec_pointer ("parasites",
-                                                         "parasites",
-                                                         "The names of currently attached parasites",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_string_array ("parasites",
+                                                                 "parasites",
+                                                                 "The names of currently attached parasites",
+                                                                 GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
 }
@@ -546,7 +546,7 @@ parasite_list_invoker (GimpProcedure *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, TRUE);
 
   g_value_set_int (&return_vals[1].value, num_parasites);
-  g_value_set_pointer (&return_vals[2].value, parasites);
+  gimp_value_take_stringarray (&return_vals[2].value, parasites, num_parasites);
 
   return return_vals;
 }
@@ -716,7 +716,7 @@ image_parasite_list_invoker (GimpProcedure *procedure,
   if (success)
     {
       g_value_set_int (&return_vals[1].value, num_parasites);
-      g_value_set_pointer (&return_vals[2].value, parasites);
+      gimp_value_take_stringarray (&return_vals[2].value, parasites, num_parasites);
     }
 
   return return_vals;
@@ -888,7 +888,7 @@ drawable_parasite_list_invoker (GimpProcedure *procedure,
   if (success)
     {
       g_value_set_int (&return_vals[1].value, num_parasites);
-      g_value_set_pointer (&return_vals[2].value, parasites);
+      gimp_value_take_stringarray (&return_vals[2].value, parasites, num_parasites);
     }
 
   return return_vals;
@@ -1060,7 +1060,7 @@ vectors_parasite_list_invoker (GimpProcedure *procedure,
   if (success)
     {
       g_value_set_int (&return_vals[1].value, num_parasites);
-      g_value_set_pointer (&return_vals[2].value, parasites);
+      gimp_value_take_stringarray (&return_vals[2].value, parasites, num_parasites);
     }
 
   return return_vals;

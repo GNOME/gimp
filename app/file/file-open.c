@@ -176,7 +176,7 @@ file_open_image (Gimp               *gimp,
                    _("Plug-In could not open image"));
     }
 
-  gimp_arguments_destroy (return_vals, n_return_vals, TRUE);
+  gimp_arguments_destroy (return_vals, n_return_vals);
 
   return image;
 }
@@ -257,7 +257,7 @@ file_open_thumbnail (Gimp          *gimp,
             }
         }
 
-      gimp_arguments_destroy (return_vals, n_return_vals, TRUE);
+      gimp_arguments_destroy (return_vals, n_return_vals);
 
       return image;
     }

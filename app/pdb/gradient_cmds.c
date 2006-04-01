@@ -219,10 +219,10 @@ register_gradient_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_FLOATARRAY,
-                                   g_param_spec_pointer ("color-samples",
-                                                         "color samples",
-                                                         "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("color-samples",
+                                                          "color samples",
+                                                          "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -246,10 +246,10 @@ register_gradient_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_FLOATARRAY,
-                               g_param_spec_pointer ("positions",
-                                                     "positions",
-                                                     "The list of positions to sample along the gradient",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("positions",
+                                                      "positions",
+                                                      "The list of positions to sample along the gradient",
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_INT32,
                                g_param_spec_boolean ("reverse",
@@ -266,10 +266,10 @@ register_gradient_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_FLOATARRAY,
-                                   g_param_spec_pointer ("color-samples",
-                                                         "color samples",
-                                                         "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("color-samples",
+                                                          "color samples",
+                                                          "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -1394,7 +1394,7 @@ gradient_get_uniform_samples_invoker (GimpProcedure *procedure,
   if (success)
     {
       g_value_set_int (&return_vals[1].value, num_color_samples);
-      g_value_set_pointer (&return_vals[2].value, color_samples);
+      gimp_value_take_floatarray (&return_vals[2].value, color_samples, num_color_samples);
     }
 
   return return_vals;
@@ -1434,7 +1434,7 @@ gradient_get_custom_samples_invoker (GimpProcedure *procedure,
 
   name = (gchar *) g_value_get_string (&args[0].value);
   num_samples = g_value_get_int (&args[1].value);
-  positions = g_value_get_pointer (&args[2].value);
+  positions = (gdouble *) gimp_value_get_floatarray (&args[2].value);
   reverse = g_value_get_boolean (&args[3].value);
 
   if (success)
@@ -1475,7 +1475,7 @@ gradient_get_custom_samples_invoker (GimpProcedure *procedure,
   if (success)
     {
       g_value_set_int (&return_vals[1].value, num_color_samples);
-      g_value_set_pointer (&return_vals[2].value, color_samples);
+      gimp_value_take_floatarray (&return_vals[2].value, color_samples, num_color_samples);
     }
 
   return return_vals;

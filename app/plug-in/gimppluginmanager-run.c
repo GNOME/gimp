@@ -193,7 +193,7 @@ plug_in_run (Gimp          *gimp,
  done:
   if (return_vals && destroy_return_vals)
     {
-      gimp_arguments_destroy (return_vals, procedure->num_values, TRUE);
+      gimp_arguments_destroy (return_vals, procedure->num_values);
       return_vals = NULL;
     }
 
@@ -235,7 +235,7 @@ plug_in_repeat (Gimp         *gimp,
                    args, 3 /* not proc_def->procedure->num_args */,
                    FALSE, TRUE, display_ID);
 
-      gimp_arguments_destroy (args, proc_def->procedure->num_args, TRUE);
+      gimp_arguments_destroy (args, proc_def->procedure->num_args);
     }
 }
 

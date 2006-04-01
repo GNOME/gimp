@@ -201,10 +201,10 @@ register_selection_tools_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_FLOATARRAY,
-                               g_param_spec_pointer ("segs",
-                                                     "segs",
-                                                     "Array of points: { p1.x, p1.y, p2.x, p2.y, ..., pn.x, pn.y}",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("segs",
+                                                      "segs",
+                                                      "Array of points: { p1.x, p1.y, p2.x, p2.y, ..., pn.x, pn.y}",
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_INT32,
                                g_param_spec_enum ("operation",
@@ -510,7 +510,7 @@ free_select_invoker (GimpProcedure *procedure,
 
   image = gimp_value_get_image (&args[0].value, gimp);
   num_segs = g_value_get_int (&args[1].value);
-  segs = g_value_get_pointer (&args[2].value);
+  segs = (gdouble *) gimp_value_get_floatarray (&args[2].value);
   operation = g_value_get_enum (&args[3].value);
   antialias = g_value_get_boolean (&args[4].value);
   feather = g_value_get_boolean (&args[5].value);

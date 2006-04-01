@@ -141,7 +141,7 @@ file_save (GimpImage      *image,
 
   status = g_value_get_enum (&return_vals[0].value);
 
-  gimp_arguments_destroy (return_vals, n_return_vals, TRUE);
+  gimp_arguments_destroy (return_vals, n_return_vals);
 
   if (status == GIMP_PDB_SUCCESS)
     {

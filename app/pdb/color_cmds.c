@@ -306,10 +306,10 @@ register_color_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_INT8ARRAY,
-                               g_param_spec_pointer ("control-pts",
-                                                     "control pts",
-                                                     "The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("control-pts",
+                                                      "control pts",
+                                                      "The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }",
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -341,10 +341,10 @@ register_color_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_INT8ARRAY,
-                               g_param_spec_pointer ("curve",
-                                                     "curve",
-                                                     "The explicit curve",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("curve",
+                                                      "curve",
+                                                      "The explicit curve",
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -1050,7 +1050,7 @@ curves_spline_invoker (GimpProcedure *procedure,
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   channel = g_value_get_enum (&args[1].value);
   num_points = g_value_get_int (&args[2].value);
-  control_pts = g_value_get_pointer (&args[3].value);
+  control_pts = (guint8 *) gimp_value_get_int8array (&args[3].value);
 
   if (success)
     {
@@ -1152,7 +1152,7 @@ curves_explicit_invoker (GimpProcedure *procedure,
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   channel = g_value_get_enum (&args[1].value);
   num_bytes = g_value_get_int (&args[2].value);
-  curve = g_value_get_pointer (&args[3].value);
+  curve = (guint8 *) gimp_value_get_int8array (&args[3].value);
 
   if (success)
     {

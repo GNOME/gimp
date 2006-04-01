@@ -472,9 +472,13 @@ gimp_procedure_compat_pspec (Gimp           *gimp,
     case GIMP_PDB_INT16ARRAY:
     case GIMP_PDB_INT8ARRAY:
     case GIMP_PDB_FLOATARRAY:
+      pspec = gimp_param_spec_array (name, name, desc,
+                                     G_PARAM_READWRITE);
+      break;
+
     case GIMP_PDB_STRINGARRAY:
-      pspec = g_param_spec_pointer (name, name, desc,
-                                    G_PARAM_READWRITE);
+      pspec = gimp_param_spec_string_array (name, name, desc,
+                                            G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_COLOR:

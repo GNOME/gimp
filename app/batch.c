@@ -163,8 +163,8 @@ batch_run_cmd (Gimp          *gimp,
       break;
     }
 
-  gimp_arguments_destroy (return_vals, n_return_vals, TRUE);
-  gimp_arguments_destroy (args, procedure->num_args, TRUE);
+  gimp_arguments_destroy (return_vals, n_return_vals);
+  gimp_arguments_destroy (args, procedure->num_args);
 
   return;
 }

@@ -75,10 +75,10 @@ register_gradients_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_STRINGARRAY,
-                                   g_param_spec_pointer ("gradient-list",
-                                                         "gradient list",
-                                                         "The list of gradient names",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_string_array ("gradient-list",
+                                                                 "gradient list",
+                                                                 "The list of gradient names",
+                                                                 GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -108,10 +108,10 @@ register_gradients_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_FLOATARRAY,
-                                   g_param_spec_pointer ("color-samples",
-                                                         "color samples",
-                                                         "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("color-samples",
+                                                          "color samples",
+                                                          "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -127,10 +127,10 @@ register_gradients_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_FLOATARRAY,
-                               g_param_spec_pointer ("positions",
-                                                     "positions",
-                                                     "The list of positions to sample along the gradient",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("positions",
+                                                      "positions",
+                                                      "The list of positions to sample along the gradient",
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_INT32,
                                g_param_spec_boolean ("reverse",
@@ -147,10 +147,10 @@ register_gradients_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_FLOATARRAY,
-                                   g_param_spec_pointer ("color-samples",
-                                                         "color samples",
-                                                         "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("color-samples",
+                                                          "color samples",
+                                                          "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -196,10 +196,10 @@ register_gradients_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_FLOATARRAY,
-                                   g_param_spec_pointer ("grad-data",
-                                                         "grad data",
-                                                         "The gradient sample data",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("grad-data",
+                                                          "grad data",
+                                                          "The gradient sample data",
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
 }
@@ -257,7 +257,7 @@ gradients_get_list_invoker (GimpProcedure *procedure,
   if (success)
     {
       g_value_set_int (&return_vals[1].value, num_gradients);
-      g_value_set_pointer (&return_vals[2].value, gradient_list);
+      gimp_value_take_stringarray (&return_vals[2].value, gradient_list, num_gradients);
     }
 
   return return_vals;
@@ -331,7 +331,7 @@ gradients_sample_uniform_invoker (GimpProcedure *procedure,
   if (success)
     {
       g_value_set_int (&return_vals[1].value, array_length);
-      g_value_set_pointer (&return_vals[2].value, color_samples);
+      gimp_value_take_floatarray (&return_vals[2].value, color_samples, array_length);
     }
 
   return return_vals;
@@ -369,7 +369,7 @@ gradients_sample_custom_invoker (GimpProcedure *procedure,
   gdouble *color_samples = NULL;
 
   num_samples = g_value_get_int (&args[0].value);
-  positions = g_value_get_pointer (&args[1].value);
+  positions = (gdouble *) gimp_value_get_floatarray (&args[1].value);
   reverse = g_value_get_boolean (&args[2].value);
 
   if (success)
@@ -404,7 +404,7 @@ gradients_sample_custom_invoker (GimpProcedure *procedure,
   if (success)
     {
       g_value_set_int (&return_vals[1].value, array_length);
-      g_value_set_pointer (&return_vals[2].value, color_samples);
+      gimp_value_take_floatarray (&return_vals[2].value, color_samples, array_length);
     }
 
   return return_vals;
@@ -502,7 +502,7 @@ gradients_get_gradient_data_invoker (GimpProcedure *procedure,
     {
       g_value_take_string (&return_vals[1].value, actual_name);
       g_value_set_int (&return_vals[2].value, width);
-      g_value_set_pointer (&return_vals[3].value, grad_data);
+      gimp_value_take_floatarray (&return_vals[3].value, grad_data, width);
     }
 
   return return_vals;

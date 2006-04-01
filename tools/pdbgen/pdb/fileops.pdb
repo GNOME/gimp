@@ -89,7 +89,7 @@ HELP
                                        new_args, proc->num_args,
                                        &n_return_vals);
 
-  gimp_arguments_destroy (new_args, proc->num_args, TRUE);
+  gimp_arguments_destroy (new_args, proc->num_args);
 
   return return_vals;
 }
@@ -216,7 +216,7 @@ HELP
                                        new_args, proc->num_args,
                                        &n_return_vals);
 
-  gimp_arguments_destroy (new_args, proc->num_args, TRUE);
+  gimp_arguments_destroy (new_args, proc->num_args);
 
   return return_vals;
 }

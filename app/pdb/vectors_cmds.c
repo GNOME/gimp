@@ -308,10 +308,10 @@ register_vectors_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_INT32ARRAY,
-                                   g_param_spec_pointer ("stroke-ids",
-                                                         "stroke ids",
-                                                         "List of the strokes belonging to the path.",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("stroke-ids",
+                                                          "stroke ids",
+                                                          "List of the strokes belonging to the path.",
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -566,10 +566,10 @@ register_vectors_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_FLOATARRAY,
-                                   g_param_spec_pointer ("coords",
-                                                         "coords",
-                                                         "List of the coords along the path (x0, y0, x1, y1, ...).",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("coords",
+                                                          "coords",
+                                                          "List of the coords along the path (x0, y0, x1, y1, ...).",
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -1265,7 +1265,7 @@ vectors_get_strokes_invoker (GimpProcedure *procedure,
   if (success)
     {
       g_value_set_int (&return_vals[1].value, num_strokes);
-      g_value_set_pointer (&return_vals[2].value, stroke_ids);
+      gimp_value_take_int32array (&return_vals[2].value, stroke_ids, num_strokes);
     }
 
   return return_vals;
@@ -1645,7 +1645,7 @@ vectors_stroke_interpolate_invoker (GimpProcedure *procedure,
     {
       g_value_set_boolean (&return_vals[1].value, closed);
       g_value_set_int (&return_vals[2].value, num_coords);
-      g_value_set_pointer (&return_vals[3].value, coords);
+      gimp_value_take_floatarray (&return_vals[3].value, coords, num_coords);
     }
 
   return return_vals;

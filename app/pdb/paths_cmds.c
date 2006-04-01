@@ -84,10 +84,10 @@ register_paths_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_STRINGARRAY,
-                                   g_param_spec_pointer ("path-list",
-                                                         "path list",
-                                                         "List of the paths belonging to this image.",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_string_array ("path-list",
+                                                                 "path list",
+                                                                 "List of the paths belonging to this image.",
+                                                                 GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -195,10 +195,10 @@ register_paths_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_FLOATARRAY,
-                                   g_param_spec_pointer ("points-pairs",
-                                                         "points pairs",
-                                                         "The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL, 3.0 = BEZIER_MOVE). Note all points are returned in pixel resolution.",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("points-pairs",
+                                                          "points pairs",
+                                                          "The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL, 3.0 = BEZIER_MOVE). Note all points are returned in pixel resolution.",
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -236,10 +236,10 @@ register_paths_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_FLOATARRAY,
-                               g_param_spec_pointer ("points-pairs",
-                                                     "points pairs",
-                                                     "The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL, 3.0= BEZIER_MOVE). Note all points are returned in pixel resolution.",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("points-pairs",
+                                                      "points pairs",
+                                                      "The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL, 3.0= BEZIER_MOVE). Note all points are returned in pixel resolution.",
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -597,7 +597,7 @@ path_list_invoker (GimpProcedure *procedure,
   if (success)
     {
       g_value_set_int (&return_vals[1].value, num_paths);
-      g_value_set_pointer (&return_vals[2].value, path_list);
+      gimp_value_take_stringarray (&return_vals[2].value, path_list, num_paths);
     }
 
   return return_vals;
@@ -820,7 +820,7 @@ path_get_points_invoker (GimpProcedure *procedure,
       g_value_set_int (&return_vals[1].value, path_type);
       g_value_set_int (&return_vals[2].value, path_closed);
       g_value_set_int (&return_vals[3].value, num_path_point_details);
-      g_value_set_pointer (&return_vals[4].value, points_pairs);
+      gimp_value_take_floatarray (&return_vals[4].value, points_pairs, num_path_point_details);
     }
 
   return return_vals;
@@ -860,7 +860,7 @@ path_set_points_invoker (GimpProcedure *procedure,
   name = (gchar *) g_value_get_string (&args[1].value);
   ptype = g_value_get_int (&args[2].value);
   num_path_points = g_value_get_int (&args[3].value);
-  points_pairs = g_value_get_pointer (&args[4].value);
+  points_pairs = (gdouble *) gimp_value_get_floatarray (&args[4].value);
 
   if (success)
     {

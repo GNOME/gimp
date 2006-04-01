@@ -795,10 +795,10 @@ register_drawable_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_INT8ARRAY,
-                                   g_param_spec_pointer ("pixel",
-                                                         "pixel",
-                                                         "The pixel value",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("pixel",
+                                                          "pixel",
+                                                          "The pixel value",
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -836,10 +836,10 @@ register_drawable_procs (Gimp *gimp)
                                                  GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_argument (procedure,
                                GIMP_PDB_INT8ARRAY,
-                               g_param_spec_pointer ("pixel",
-                                                     "pixel",
-                                                     "The pixel value",
-                                                     GIMP_PARAM_READWRITE));
+                               gimp_param_spec_array ("pixel",
+                                                      "pixel",
+                                                      "The pixel value",
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -963,10 +963,10 @@ register_drawable_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_INT8ARRAY,
-                                   g_param_spec_pointer ("thumbnail-data",
-                                                         "thumbnail data",
-                                                         "The thumbnail data",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("thumbnail-data",
+                                                          "thumbnail data",
+                                                          "The thumbnail data",
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -1053,10 +1053,10 @@ register_drawable_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_INT8ARRAY,
-                                   g_param_spec_pointer ("thumbnail-data",
-                                                         "thumbnail data",
-                                                         "The thumbnail data",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("thumbnail-data",
+                                                          "thumbnail data",
+                                                          "The thumbnail data",
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -2355,7 +2355,7 @@ drawable_get_pixel_invoker (GimpProcedure *procedure,
   if (success)
     {
       g_value_set_int (&return_vals[1].value, num_channels);
-      g_value_set_pointer (&return_vals[2].value, pixel);
+      gimp_value_take_int8array (&return_vals[2].value, pixel, num_channels);
     }
 
   return return_vals;
@@ -2395,7 +2395,7 @@ drawable_set_pixel_invoker (GimpProcedure *procedure,
   x_coord = g_value_get_int (&args[1].value);
   y_coord = g_value_get_int (&args[2].value);
   num_channels = g_value_get_int (&args[3].value);
-  pixel = g_value_get_pointer (&args[4].value);
+  pixel = (guint8 *) gimp_value_get_int8array (&args[4].value);
 
   if (success)
     {
@@ -2598,7 +2598,7 @@ drawable_thumbnail_invoker (GimpProcedure *procedure,
       g_value_set_int (&return_vals[2].value, actual_height);
       g_value_set_int (&return_vals[3].value, bpp);
       g_value_set_int (&return_vals[4].value, thumbnail_data_count);
-      g_value_set_pointer (&return_vals[5].value, thumbnail_data);
+      gimp_value_take_int8array (&return_vals[5].value, thumbnail_data, thumbnail_data_count);
     }
 
   return return_vals;
@@ -2695,7 +2695,7 @@ drawable_sub_thumbnail_invoker (GimpProcedure *procedure,
       g_value_set_int (&return_vals[2].value, height);
       g_value_set_int (&return_vals[3].value, bpp);
       g_value_set_int (&return_vals[4].value, thumbnail_data_count);
-      g_value_set_pointer (&return_vals[5].value, thumbnail_data);
+      gimp_value_take_int8array (&return_vals[5].value, thumbnail_data, thumbnail_data_count);
     }
 
   return return_vals;

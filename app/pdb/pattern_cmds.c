@@ -122,10 +122,10 @@ register_pattern_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_INT8ARRAY,
-                                   g_param_spec_pointer ("color-bytes",
-                                                         "color bytes",
-                                                         "The pattern data.",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("color-bytes",
+                                                          "color bytes",
+                                                          "The pattern data.",
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
 }
@@ -234,7 +234,7 @@ pattern_get_pixels_invoker (GimpProcedure *procedure,
       g_value_set_int (&return_vals[2].value, height);
       g_value_set_int (&return_vals[3].value, bpp);
       g_value_set_int (&return_vals[4].value, num_color_bytes);
-      g_value_set_pointer (&return_vals[5].value, color_bytes);
+      gimp_value_take_int8array (&return_vals[5].value, color_bytes, num_color_bytes);
     }
 
   return return_vals;

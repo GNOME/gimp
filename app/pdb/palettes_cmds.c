@@ -76,10 +76,10 @@ register_palettes_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_STRINGARRAY,
-                                   g_param_spec_pointer ("palette-list",
-                                                         "palette list",
-                                                         "The list of palette names",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_string_array ("palette-list",
+                                                                 "palette list",
+                                                                 "The list of palette names",
+                                                                 GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -201,7 +201,7 @@ palettes_get_list_invoker (GimpProcedure *procedure,
   if (success)
     {
       g_value_set_int (&return_vals[1].value, num_palettes);
-      g_value_set_pointer (&return_vals[2].value, palette_list);
+      gimp_value_take_stringarray (&return_vals[2].value, palette_list, num_palettes);
     }
 
   return return_vals;

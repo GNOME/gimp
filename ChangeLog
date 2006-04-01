@@ -1,3 +1,66 @@
+2006-04-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpparamspecs.[ch]: added struct GimpArray which can
+	keep static or allocated data. Added boxed types GIMP_TYPE_ARRAY
+	and GIMP_TYPE_STRING_ARRAY. Added GParamSpecs for PDB int32,
+	int16, int8, float and string arrays. Added functions to get, dup,
+	set and set_static the various arrays from/to GValues.
+
+	* app/pdb/gimpprocedure.c
+	* app/pdb/procedural_db.c
+	* app/plug-in/plug-in-params.c
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/pdb.pl: use the new param pspecs and gimp_value
+	functions to keep arrays in GimpArguments.
+
+	* app/pdb/gimpargument.[ch] (gimp_arguments_destroy): removed
+	parameter "gboolean full_destroy". It's not needed any longer
+	because the GValues fully memory-manage all their data now.
+
+	* app/batch.c
+	* app/actions/plug-in-commands.c
+	* app/actions/vectors-commands.c
+	* app/core/gimppdbprogress.c
+	* app/dialogs/about-dialog.c
+	* app/dialogs/print-size-dialog.c
+	* app/dialogs/resize-dialog.c
+	* app/display/gimpdisplayshell-handlers.c
+	* app/file/file-open.c
+	* app/file/file-save.c
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-run.c
+	* app/plug-in/plug-ins.c
+	* app/widgets/gimphelp.c
+	* app/widgets/gimppdbdialog.c
+	* tools/pdbgen/pdb/fileops.pdb: changed accordingly.
+
+	* app/pdb/brush_cmds.c
+	* app/pdb/brushes_cmds.c
+	* app/pdb/buffer_cmds.c
+	* app/pdb/color_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/fileops_cmds.c
+	* app/pdb/fonts_cmds.c
+	* app/pdb/gimpargument.c
+	* app/pdb/gimpargument.h
+	* app/pdb/gimpprocedure.c
+	* app/pdb/gradient_cmds.c
+	* app/pdb/gradients_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/paint_tools_cmds.c
+	* app/pdb/palettes_cmds.c
+	* app/pdb/parasite_cmds.c
+	* app/pdb/paths_cmds.c
+	* app/pdb/pattern_cmds.c
+	* app/pdb/patterns_cmds.c
+	* app/pdb/plug_in_cmds.c
+	* app/pdb/procedural_db.c
+	* app/pdb/procedural_db_cmds.c
+	* app/pdb/selection_tools_cmds.c
+	* app/pdb/vectors_cmds.c: regenerated.
+
+	... and ported everything to perl btw...
+
 2006-03-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/pdb-types.h

@@ -73,8 +73,11 @@ gimp_argument_init_compat (GimpArgument   *arg,
     case GIMP_PDB_INT16ARRAY:
     case GIMP_PDB_INT8ARRAY:
     case GIMP_PDB_FLOATARRAY:
+      g_value_init (&arg->value, GIMP_TYPE_ARRAY);
+      break;
+
     case GIMP_PDB_STRINGARRAY:
-      g_value_init (&arg->value, G_TYPE_POINTER);
+      g_value_init (&arg->value, GIMP_TYPE_STRING_ARRAY);
       break;
 
     case GIMP_PDB_COLOR:
@@ -110,8 +113,7 @@ gimp_argument_init_compat (GimpArgument   *arg,
 
 void
 gimp_arguments_destroy (GimpArgument *args,
-                        gint          n_args,
-                        gboolean      full_destroy)
+                        gint          n_args)
 {
   gint i;
 
@@ -119,59 +121,7 @@ gimp_arguments_destroy (GimpArgument *args,
     return;
 
   for (i = n_args - 1; i >= 0; i--)
-    {
-      switch (args[i].type)
-        {
-        case GIMP_PDB_INT32:
-        case GIMP_PDB_INT16:
-        case GIMP_PDB_INT8:
-        case GIMP_PDB_FLOAT:
-        case GIMP_PDB_STRING:
-          break;
-
-        case GIMP_PDB_INT32ARRAY:
-        case GIMP_PDB_INT16ARRAY:
-        case GIMP_PDB_INT8ARRAY:
-        case GIMP_PDB_FLOATARRAY:
-          if (full_destroy)
-            g_free (g_value_get_pointer (&args[i].value));
-          break;
-
-        case GIMP_PDB_STRINGARRAY:
-          if (full_destroy)
-            {
-              gchar **array;
-              gint    count;
-              gint    j;
-
-              count = g_value_get_int (&args[i - 1].value);
-              array = g_value_get_pointer (&args[i].value);
-
-              for (j = 0; j < count; j++)
-                g_free (array[j]);
-
-              g_free (array);
-            }
-          break;
-
-        case GIMP_PDB_COLOR:
-        case GIMP_PDB_REGION:
-        case GIMP_PDB_DISPLAY:
-        case GIMP_PDB_IMAGE:
-        case GIMP_PDB_LAYER:
-        case GIMP_PDB_CHANNEL:
-        case GIMP_PDB_DRAWABLE:
-        case GIMP_PDB_SELECTION:
-        case GIMP_PDB_BOUNDARY:
-        case GIMP_PDB_VECTORS:
-        case GIMP_PDB_PARASITE:
-        case GIMP_PDB_STATUS:
-        case GIMP_PDB_END:
-          break;
-        }
-
-      g_value_unset (&args[i].value);
-    }
+    g_value_unset (&args[i].value);
 
   g_free (args);
 }

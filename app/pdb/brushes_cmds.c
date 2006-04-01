@@ -77,10 +77,10 @@ register_brushes_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_STRINGARRAY,
-                                   g_param_spec_pointer ("brush-list",
-                                                         "brush list",
-                                                         "The list of brush names",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_string_array ("brush-list",
+                                                                 "brush list",
+                                                                 "The list of brush names",
+                                                                 GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -209,10 +209,10 @@ register_brushes_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_INT8ARRAY,
-                                   g_param_spec_pointer ("mask-data",
-                                                         "mask data",
-                                                         "The brush mask data",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("mask-data",
+                                                          "mask data",
+                                                          "The brush mask data",
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
 }
@@ -270,7 +270,7 @@ brushes_get_list_invoker (GimpProcedure *procedure,
   if (success)
     {
       g_value_set_int (&return_vals[1].value, num_brushes);
-      g_value_set_pointer (&return_vals[2].value, brush_list);
+      gimp_value_take_stringarray (&return_vals[2].value, brush_list, num_brushes);
     }
 
   return return_vals;
@@ -486,7 +486,7 @@ brushes_get_brush_data_invoker (GimpProcedure *procedure,
       g_value_set_int (&return_vals[5].value, width);
       g_value_set_int (&return_vals[6].value, height);
       g_value_set_int (&return_vals[7].value, length);
-      g_value_set_pointer (&return_vals[8].value, mask_data);
+      gimp_value_take_int8array (&return_vals[8].value, mask_data, length);
     }
 
   return return_vals;

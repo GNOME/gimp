@@ -176,10 +176,10 @@ register_fileops_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_INT8ARRAY,
-                                   g_param_spec_pointer ("thumb-data",
-                                                         "thumb data",
-                                                         "The thumbnail data",
-                                                         GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_array ("thumb-data",
+                                                          "thumb data",
+                                                          "The thumbnail data",
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -508,7 +508,7 @@ file_load_invoker (GimpProcedure *procedure,
                                        new_args, proc->num_args,
                                        &n_return_vals);
 
-  gimp_arguments_destroy (new_args, proc->num_args, TRUE);
+  gimp_arguments_destroy (new_args, proc->num_args);
 
   return return_vals;
 }
@@ -664,7 +664,7 @@ file_load_thumbnail_invoker (GimpProcedure *procedure,
       g_value_set_int (&return_vals[1].value, width);
       g_value_set_int (&return_vals[2].value, height);
       g_value_set_int (&return_vals[3].value, thumb_data_count);
-      g_value_set_pointer (&return_vals[4].value, thumb_data);
+      gimp_value_take_int8array (&return_vals[4].value, thumb_data, thumb_data_count);
     }
 
   return return_vals;
@@ -731,7 +731,7 @@ file_save_invoker (GimpProcedure *procedure,
                                        new_args, proc->num_args,
                                        &n_return_vals);
 
-  gimp_arguments_destroy (new_args, proc->num_args, TRUE);
+  gimp_arguments_destroy (new_args, proc->num_args);
 
   return return_vals;
 }

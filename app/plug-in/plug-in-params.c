@@ -45,7 +45,6 @@ plug_in_params_to_args (GimpArgumentSpec *proc_args,
 			gboolean          full_copy)
 {
   GimpArgument *args;
-  gint          count;
   gint          i;
 
   g_return_val_if_fail ((proc_args != NULL && n_proc_args  > 0) ||
@@ -61,6 +60,7 @@ plug_in_params_to_args (GimpArgumentSpec *proc_args,
   for (i = 0; i < n_params; i++)
     {
       GValue *value = &args[i].value;
+      gint    count;
 
       if (i < n_proc_args && proc_args[i].type == params[i].type)
         {
@@ -104,79 +104,63 @@ plug_in_params_to_args (GimpArgumentSpec *proc_args,
 	  break;
 
 	case GIMP_PDB_INT32ARRAY:
-	  if (full_copy)
-	    {
-	      count = g_value_get_int (&args[i - 1].value);
-	      g_value_set_pointer (value,
-                                   g_memdup (params[i].data.d_int32array,
-                                             count * sizeof (gint32)));
-	    }
-	  else
-	    {
-	      g_value_set_pointer (value, params[i].data.d_int32array);
-	    }
+          count = g_value_get_int (&args[i - 1].value);
+          if (full_copy)
+            gimp_value_set_int32array (value,
+                                       params[i].data.d_int32array,
+                                       count);
+          else
+            gimp_value_set_static_int32array (value,
+                                              params[i].data.d_int32array,
+                                              count);
 	  break;
 
 	case GIMP_PDB_INT16ARRAY:
-	  if (full_copy)
-	    {
-	      count = g_value_get_int (&args[i - 1].value);
-	      g_value_set_pointer (value,
-                                   g_memdup (params[i].data.d_int16array,
-                                             count * sizeof (gint16)));
-	    }
-	  else
-	    {
-	      g_value_set_pointer (value, params[i].data.d_int16array);
-	    }
+          count = g_value_get_int (&args[i - 1].value);
+          if (full_copy)
+            gimp_value_set_int16array (value,
+                                       params[i].data.d_int16array,
+                                       count);
+          else
+            gimp_value_set_static_int16array (value,
+                                              params[i].data.d_int16array,
+                                              count);
 	  break;
 
 	case GIMP_PDB_INT8ARRAY:
-	  if (full_copy)
-	    {
-	      count = g_value_get_int (&args[i - 1].value);
-	      g_value_set_pointer (value,
-                                   g_memdup (params[i].data.d_int8array,
-                                             count));
-	    }
-	  else
-	    {
-	      g_value_set_pointer (value, params[i].data.d_int8array);
-	    }
+          count = g_value_get_int (&args[i - 1].value);
+          if (full_copy)
+            gimp_value_set_int8array (value,
+                                      (guint8 *) params[i].data.d_int8array,
+                                      count);
+          else
+            gimp_value_set_static_int8array (value,
+                                             (guint8 *) params[i].data.d_int8array,
+                                             count);
 	  break;
 
 	case GIMP_PDB_FLOATARRAY:
-	  if (full_copy)
-	    {
-	      count = g_value_get_int (&args[i - 1].value);
-              g_value_set_pointer (value,
-                                   g_memdup (params[i].data.d_floatarray,
-                                             count * sizeof (gdouble)));
-	    }
-	  else
-	    {
-	      g_value_set_pointer (value, params[i].data.d_floatarray);
-	    }
+          count = g_value_get_int (&args[i - 1].value);
+          if (full_copy)
+            gimp_value_set_floatarray (value,
+                                       params[i].data.d_floatarray,
+                                       count);
+          else
+            gimp_value_set_static_floatarray (value,
+                                              params[i].data.d_floatarray,
+                                              count);
 	  break;
 
 	case GIMP_PDB_STRINGARRAY:
-	  if (full_copy)
-	    {
-              gchar **array;
-              gint    j;
-
-	      count = g_value_get_int (&args[i - 1].value);
-
-	      array = g_new (gchar *, count);
-              g_value_set_pointer (value, array);
-
-	      for (j = 0; j < count; j++)
-		array[j] = g_strdup (params[i].data.d_stringarray[j]);
-	    }
-	  else
-	    {
-	      g_value_set_pointer (value, params[i].data.d_stringarray);
-	    }
+          count = g_value_get_int (&args[i - 1].value);
+          if (full_copy)
+            gimp_value_set_stringarray (value,
+                                        (const gchar **) params[i].data.d_stringarray,
+                                        count);
+          else
+            gimp_value_set_static_stringarray (value,
+                                               (const gchar **) params[i].data.d_stringarray,
+                                               count);
 	  break;
 
 	case GIMP_PDB_COLOR:
@@ -244,7 +228,6 @@ plug_in_args_to_params (GimpArgument *args,
 			gboolean      full_copy)
 {
   GPParam *params;
-  gint     count;
   gint     i;
 
   g_return_val_if_fail ((args != NULL && n_args  > 0) ||
@@ -299,77 +282,37 @@ plug_in_args_to_params (GimpArgument *args,
 
 	case GIMP_PDB_INT32ARRAY:
 	  if (full_copy)
-	    {
-              count = g_value_get_int (&args[i - 1].value);
-	      params[i].data.d_int32array =
-                g_memdup (g_value_get_pointer (value),
-                          count * sizeof (gint32));
-	    }
-	  else
-	    {
-	      params[i].data.d_int32array = g_value_get_pointer (value);
-	    }
+            params[i].data.d_int32array = gimp_value_dup_int32array (value);
+          else
+            params[i].data.d_int32array = (gint32 *) gimp_value_get_int32array (value);
 	  break;
 
 	case GIMP_PDB_INT16ARRAY:
 	  if (full_copy)
-	    {
-              count = g_value_get_int (&args[i - 1].value);
-	      params[i].data.d_int16array =
-                g_memdup (g_value_get_pointer (value),
-                          count * sizeof (gint16));
-	    }
-	  else
-	    {
-	      params[i].data.d_int16array = g_value_get_pointer (value);
-	    }
+            params[i].data.d_int16array = gimp_value_dup_int16array (value);
+          else
+            params[i].data.d_int16array = (gint16 *) gimp_value_get_int16array (value);
 	  break;
 
 	case GIMP_PDB_INT8ARRAY:
 	  if (full_copy)
-	    {
-              count = g_value_get_int (&args[i - 1].value);
-	      params[i].data.d_int8array =
-                g_memdup (g_value_get_pointer (value), count);
-	    }
-	  else
-	    {
-	      params[i].data.d_int8array = g_value_get_pointer (value);
-	    }
+            params[i].data.d_int8array = (gint8 *) gimp_value_dup_int8array (value);
+          else
+            params[i].data.d_int8array = (gint8 *) gimp_value_get_int8array (value);
 	  break;
 
 	case GIMP_PDB_FLOATARRAY:
 	  if (full_copy)
-	    {
-              count = g_value_get_int (&args[i - 1].value);
-	      params[i].data.d_floatarray =
-                g_memdup (g_value_get_pointer (value),
-                          count * sizeof (gdouble));
-	    }
-	  else
-	    {
-	      params[i].data.d_floatarray = g_value_get_pointer (value);
-	    }
+            params[i].data.d_floatarray = gimp_value_dup_floatarray (value);
+          else
+            params[i].data.d_floatarray = (gdouble *) gimp_value_get_floatarray (value);
 	  break;
 
 	case GIMP_PDB_STRINGARRAY:
 	  if (full_copy)
-	    {
-              gchar **array;
-              gint    j;
-
-              count = g_value_get_int (&args[i - 1].value);
-
-	      array = g_value_get_pointer (value);
-	      params[i].data.d_stringarray = g_new (gchar *, count);
-
-	      for (j = 0; j < count; j++)
-		params[i].data.d_stringarray[j] = g_strdup (array[j]);
-	    }
-	  else
-	    {
-	      params[i].data.d_stringarray = g_value_get_pointer (value);
-	    }
+            params[i].data.d_stringarray = gimp_value_dup_stringarray (value);
+          else
+            params[i].data.d_stringarray = (gchar **) gimp_value_get_stringarray (value);
 	  break;
 
 	case GIMP_PDB_COLOR:

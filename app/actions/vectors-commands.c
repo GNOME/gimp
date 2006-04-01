@@ -344,7 +344,7 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
                procedure, args, 3 /* not procedure->num_args */,
                FALSE, TRUE, display ? gimp_display_get_ID (display) : 0);
 
-  gimp_arguments_destroy (args, procedure->num_args, TRUE);
+  gimp_arguments_destroy (args, procedure->num_args);
 }
 
 void
