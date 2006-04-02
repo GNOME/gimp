@@ -762,16 +762,11 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   curx = ROUND (coords->x);
   cury = ROUND (coords->y);
 
-  x1 = startx;
-  y1 = starty;
-  x2 = curx;
-  y2 = cury;
-
-  inc_x = (x2 - x1);
-  inc_y = (y2 - y1);
+  inc_x = curx - startx;
+  inc_y = cury - starty;
 
   /*  If there have been no changes... return  */
-  if (lastx == x2 && lasty == y2)
+  if (lastx == curx && lasty == cury)
     return;
 
   options = GIMP_RECTANGLE_OPTIONS (tool->tool_info->tool_options);
@@ -802,6 +797,10 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
                 "x2", &rx2,
                 "y2", &ry2,
                 NULL);
+  x1 = rx1;
+  y1 = ry1;
+  x2 = rx2;
+  y2 = ry2;
 
   switch (function)
     {
@@ -1039,6 +1038,50 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
             x2 = rx1 + (y2 - ry1) * aspect + .5;
           else
             y2 = ry1 + (x2 - rx1) / aspect + .5;
+          break;
+
+        default:
+          break;
+        }
+    }
+
+    /* If the shift key is down, then make the rectangle square (or
+     * ellipse circular)
+     */
+    if (state & GDK_SHIFT_MASK)
+      {
+        switch (function)
+        {
+        case RECT_RESIZING_UPPER_LEFT:
+          if (inc_x != 0)
+            y1 = y2 - (x2 - x1);
+          else
+            x1 = x2 - (y2 - y1);
+          break;
+
+        case RECT_RESIZING_UPPER_RIGHT:
+        case RECT_RESIZING_TOP:
+          if (inc_x != 0)
+            y1 = y2 - (x2 - x1);
+          else
+            x2 = x1 + (y2 - y1);
+          break;
+
+        case RECT_RESIZING_LOWER_LEFT:
+        case RECT_RESIZING_LEFT:
+          if (inc_x != 0)
+            y2 = y1 + (x2 - x1);
+          else
+            x1 = x2 - (y2 - y1);
+          break;
+
+        case RECT_RESIZING_LOWER_RIGHT:
+        case RECT_RESIZING_RIGHT:
+        case RECT_RESIZING_BOTTOM:
+          if (inc_x != 0)
+            y2 = y1 + (x2 - x1);
+          else
+            x2 = x1 + (y2 - y1);
           break;
 
         default:
