@@ -1,5 +1,10 @@
 2006-04-02  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/gimptile.c (gimp_tile_cache_insert): silence warning
+	about unused return value of g_list_concat().
+
+2006-04-02  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb.pl: added a const_type member to all PDB types.
 	Removed casts from all get_value_funcs which return const
 	pointers, they can stay const now.

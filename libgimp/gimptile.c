@@ -306,9 +306,7 @@ gimp_tile_cache_insert (GimpTile *tile)
 
       tile_list_head = g_list_remove_link (tile_list_head, list);
 
-      g_list_concat (tile_list_tail, list);
-
-      tile_list_tail = list;
+      tile_list_tail = g_list_last (g_list_concat (tile_list_tail, list));
     }
   else
     {
