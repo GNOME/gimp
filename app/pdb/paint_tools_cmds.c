@@ -595,7 +595,7 @@ paint_tools_stroke (Gimp             *gimp,
                     GimpPaintOptions *options,
                     GimpDrawable     *drawable,
                     gint              n_strokes,
-                    gdouble          *strokes,
+                    const gdouble    *strokes,
                     const gchar      *first_property_name,
                     ...)
 {
@@ -641,22 +641,22 @@ paint_tools_stroke (Gimp             *gimp,
 }
 
 static GimpArgument *
-airbrush_invoker (GimpProcedure *procedure,
-                  Gimp          *gimp,
-                  GimpContext   *context,
-                  GimpProgress  *progress,
-                  GimpArgument  *args)
+airbrush_invoker (GimpProcedure      *procedure,
+                  Gimp               *gimp,
+                  GimpContext        *context,
+                  GimpProgress       *progress,
+                  const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gdouble pressure;
   gint32 num_strokes;
-  gdouble *strokes;
+  const gdouble *strokes;
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   pressure = g_value_get_double (&args[1].value);
   num_strokes = g_value_get_int (&args[2].value);
-  strokes = (gdouble *) gimp_value_get_floatarray (&args[3].value);
+  strokes = gimp_value_get_floatarray (&args[3].value);
 
   if (success)
     {
@@ -698,20 +698,20 @@ static GimpProcedure airbrush_proc =
 };
 
 static GimpArgument *
-airbrush_default_invoker (GimpProcedure *procedure,
-                          Gimp          *gimp,
-                          GimpContext   *context,
-                          GimpProgress  *progress,
-                          GimpArgument  *args)
+airbrush_default_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gint32 num_strokes;
-  gdouble *strokes;
+  const gdouble *strokes;
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   num_strokes = g_value_get_int (&args[1].value);
-  strokes = (gdouble *) gimp_value_get_floatarray (&args[2].value);
+  strokes = gimp_value_get_floatarray (&args[2].value);
 
   if (success)
     {
@@ -749,11 +749,11 @@ static GimpProcedure airbrush_default_proc =
 };
 
 static GimpArgument *
-clone_invoker (GimpProcedure *procedure,
-               Gimp          *gimp,
-               GimpContext   *context,
-               GimpProgress  *progress,
-               GimpArgument  *args)
+clone_invoker (GimpProcedure      *procedure,
+               Gimp               *gimp,
+               GimpContext        *context,
+               GimpProgress       *progress,
+               const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -762,7 +762,7 @@ clone_invoker (GimpProcedure *procedure,
   gdouble src_x;
   gdouble src_y;
   gint32 num_strokes;
-  gdouble *strokes;
+  const gdouble *strokes;
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   src_drawable = (GimpDrawable *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_DRAWABLE);
@@ -770,7 +770,7 @@ clone_invoker (GimpProcedure *procedure,
   src_x = g_value_get_double (&args[3].value);
   src_y = g_value_get_double (&args[4].value);
   num_strokes = g_value_get_int (&args[5].value);
-  strokes = (gdouble *) gimp_value_get_floatarray (&args[6].value);
+  strokes = gimp_value_get_floatarray (&args[6].value);
 
   if (success)
     {
@@ -816,20 +816,20 @@ static GimpProcedure clone_proc =
 };
 
 static GimpArgument *
-clone_default_invoker (GimpProcedure *procedure,
-                       Gimp          *gimp,
-                       GimpContext   *context,
-                       GimpProgress  *progress,
-                       GimpArgument  *args)
+clone_default_invoker (GimpProcedure      *procedure,
+                       Gimp               *gimp,
+                       GimpContext        *context,
+                       GimpProgress       *progress,
+                       const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gint32 num_strokes;
-  gdouble *strokes;
+  const gdouble *strokes;
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   num_strokes = g_value_get_int (&args[1].value);
-  strokes = (gdouble *) gimp_value_get_floatarray (&args[2].value);
+  strokes = gimp_value_get_floatarray (&args[2].value);
 
   if (success)
     {
@@ -867,24 +867,24 @@ static GimpProcedure clone_default_proc =
 };
 
 static GimpArgument *
-convolve_invoker (GimpProcedure *procedure,
-                  Gimp          *gimp,
-                  GimpContext   *context,
-                  GimpProgress  *progress,
-                  GimpArgument  *args)
+convolve_invoker (GimpProcedure      *procedure,
+                  Gimp               *gimp,
+                  GimpContext        *context,
+                  GimpProgress       *progress,
+                  const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gdouble pressure;
   gint32 convolve_type;
   gint32 num_strokes;
-  gdouble *strokes;
+  const gdouble *strokes;
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   pressure = g_value_get_double (&args[1].value);
   convolve_type = g_value_get_enum (&args[2].value);
   num_strokes = g_value_get_int (&args[3].value);
-  strokes = (gdouble *) gimp_value_get_floatarray (&args[4].value);
+  strokes = gimp_value_get_floatarray (&args[4].value);
 
   if (success)
     {
@@ -927,20 +927,20 @@ static GimpProcedure convolve_proc =
 };
 
 static GimpArgument *
-convolve_default_invoker (GimpProcedure *procedure,
-                          Gimp          *gimp,
-                          GimpContext   *context,
-                          GimpProgress  *progress,
-                          GimpArgument  *args)
+convolve_default_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gint32 num_strokes;
-  gdouble *strokes;
+  const gdouble *strokes;
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   num_strokes = g_value_get_int (&args[1].value);
-  strokes = (gdouble *) gimp_value_get_floatarray (&args[2].value);
+  strokes = gimp_value_get_floatarray (&args[2].value);
 
   if (success)
     {
@@ -978,11 +978,11 @@ static GimpProcedure convolve_default_proc =
 };
 
 static GimpArgument *
-dodgeburn_invoker (GimpProcedure *procedure,
-                   Gimp          *gimp,
-                   GimpContext   *context,
-                   GimpProgress  *progress,
-                   GimpArgument  *args)
+dodgeburn_invoker (GimpProcedure      *procedure,
+                   Gimp               *gimp,
+                   GimpContext        *context,
+                   GimpProgress       *progress,
+                   const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -990,14 +990,14 @@ dodgeburn_invoker (GimpProcedure *procedure,
   gint32 dodgeburn_type;
   gint32 dodgeburn_mode;
   gint32 num_strokes;
-  gdouble *strokes;
+  const gdouble *strokes;
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   exposure = g_value_get_double (&args[1].value);
   dodgeburn_type = g_value_get_enum (&args[2].value);
   dodgeburn_mode = g_value_get_enum (&args[3].value);
   num_strokes = g_value_get_int (&args[4].value);
-  strokes = (gdouble *) gimp_value_get_floatarray (&args[5].value);
+  strokes = gimp_value_get_floatarray (&args[5].value);
 
   if (success)
     {
@@ -1041,20 +1041,20 @@ static GimpProcedure dodgeburn_proc =
 };
 
 static GimpArgument *
-dodgeburn_default_invoker (GimpProcedure *procedure,
-                           Gimp          *gimp,
-                           GimpContext   *context,
-                           GimpProgress  *progress,
-                           GimpArgument  *args)
+dodgeburn_default_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gint32 num_strokes;
-  gdouble *strokes;
+  const gdouble *strokes;
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   num_strokes = g_value_get_int (&args[1].value);
-  strokes = (gdouble *) gimp_value_get_floatarray (&args[2].value);
+  strokes = gimp_value_get_floatarray (&args[2].value);
 
   if (success)
     {
@@ -1092,22 +1092,22 @@ static GimpProcedure dodgeburn_default_proc =
 };
 
 static GimpArgument *
-eraser_invoker (GimpProcedure *procedure,
-                Gimp          *gimp,
-                GimpContext   *context,
-                GimpProgress  *progress,
-                GimpArgument  *args)
+eraser_invoker (GimpProcedure      *procedure,
+                Gimp               *gimp,
+                GimpContext        *context,
+                GimpProgress       *progress,
+                const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gint32 num_strokes;
-  gdouble *strokes;
+  const gdouble *strokes;
   gint32 hardness;
   gint32 method;
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   num_strokes = g_value_get_int (&args[1].value);
-  strokes = (gdouble *) gimp_value_get_floatarray (&args[2].value);
+  strokes = gimp_value_get_floatarray (&args[2].value);
   hardness = g_value_get_enum (&args[3].value);
   method = g_value_get_enum (&args[4].value);
 
@@ -1152,20 +1152,20 @@ static GimpProcedure eraser_proc =
 };
 
 static GimpArgument *
-eraser_default_invoker (GimpProcedure *procedure,
-                        Gimp          *gimp,
-                        GimpContext   *context,
-                        GimpProgress  *progress,
-                        GimpArgument  *args)
+eraser_default_invoker (GimpProcedure      *procedure,
+                        Gimp               *gimp,
+                        GimpContext        *context,
+                        GimpProgress       *progress,
+                        const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gint32 num_strokes;
-  gdouble *strokes;
+  const gdouble *strokes;
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   num_strokes = g_value_get_int (&args[1].value);
-  strokes = (gdouble *) gimp_value_get_floatarray (&args[2].value);
+  strokes = gimp_value_get_floatarray (&args[2].value);
 
   if (success)
     {
@@ -1203,24 +1203,24 @@ static GimpProcedure eraser_default_proc =
 };
 
 static GimpArgument *
-paintbrush_invoker (GimpProcedure *procedure,
-                    Gimp          *gimp,
-                    GimpContext   *context,
-                    GimpProgress  *progress,
-                    GimpArgument  *args)
+paintbrush_invoker (GimpProcedure      *procedure,
+                    Gimp               *gimp,
+                    GimpContext        *context,
+                    GimpProgress       *progress,
+                    const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gdouble fade_out;
   gint32 num_strokes;
-  gdouble *strokes;
+  const gdouble *strokes;
   gint32 method;
   gdouble gradient_length;
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   fade_out = g_value_get_double (&args[1].value);
   num_strokes = g_value_get_int (&args[2].value);
-  strokes = (gdouble *) gimp_value_get_floatarray (&args[3].value);
+  strokes = gimp_value_get_floatarray (&args[3].value);
   method = g_value_get_enum (&args[4].value);
   gradient_length = g_value_get_double (&args[5].value);
 
@@ -1268,20 +1268,20 @@ static GimpProcedure paintbrush_proc =
 };
 
 static GimpArgument *
-paintbrush_default_invoker (GimpProcedure *procedure,
-                            Gimp          *gimp,
-                            GimpContext   *context,
-                            GimpProgress  *progress,
-                            GimpArgument  *args)
+paintbrush_default_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gint32 num_strokes;
-  gdouble *strokes;
+  const gdouble *strokes;
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   num_strokes = g_value_get_int (&args[1].value);
-  strokes = (gdouble *) gimp_value_get_floatarray (&args[2].value);
+  strokes = gimp_value_get_floatarray (&args[2].value);
 
   if (success)
     {
@@ -1319,20 +1319,20 @@ static GimpProcedure paintbrush_default_proc =
 };
 
 static GimpArgument *
-pencil_invoker (GimpProcedure *procedure,
-                Gimp          *gimp,
-                GimpContext   *context,
-                GimpProgress  *progress,
-                GimpArgument  *args)
+pencil_invoker (GimpProcedure      *procedure,
+                Gimp               *gimp,
+                GimpContext        *context,
+                GimpProgress       *progress,
+                const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gint32 num_strokes;
-  gdouble *strokes;
+  const gdouble *strokes;
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   num_strokes = g_value_get_int (&args[1].value);
-  strokes = (gdouble *) gimp_value_get_floatarray (&args[2].value);
+  strokes = gimp_value_get_floatarray (&args[2].value);
 
   if (success)
     {
@@ -1370,22 +1370,22 @@ static GimpProcedure pencil_proc =
 };
 
 static GimpArgument *
-smudge_invoker (GimpProcedure *procedure,
-                Gimp          *gimp,
-                GimpContext   *context,
-                GimpProgress  *progress,
-                GimpArgument  *args)
+smudge_invoker (GimpProcedure      *procedure,
+                Gimp               *gimp,
+                GimpContext        *context,
+                GimpProgress       *progress,
+                const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gdouble pressure;
   gint32 num_strokes;
-  gdouble *strokes;
+  const gdouble *strokes;
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   pressure = g_value_get_double (&args[1].value);
   num_strokes = g_value_get_int (&args[2].value);
-  strokes = (gdouble *) gimp_value_get_floatarray (&args[3].value);
+  strokes = gimp_value_get_floatarray (&args[3].value);
 
   if (success)
     {
@@ -1427,20 +1427,20 @@ static GimpProcedure smudge_proc =
 };
 
 static GimpArgument *
-smudge_default_invoker (GimpProcedure *procedure,
-                        Gimp          *gimp,
-                        GimpContext   *context,
-                        GimpProgress  *progress,
-                        GimpArgument  *args)
+smudge_default_invoker (GimpProcedure      *procedure,
+                        Gimp               *gimp,
+                        GimpContext        *context,
+                        GimpProgress       *progress,
+                        const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gint32 num_strokes;
-  gdouble *strokes;
+  const gdouble *strokes;
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   num_strokes = g_value_get_int (&args[1].value);
-  strokes = (gdouble *) gimp_value_get_floatarray (&args[2].value);
+  strokes = gimp_value_get_floatarray (&args[2].value);
 
   if (success)
     {

@@ -89,16 +89,16 @@ register_message_procs (Gimp *gimp)
 }
 
 static GimpArgument *
-message_invoker (GimpProcedure *procedure,
-                 Gimp          *gimp,
-                 GimpContext   *context,
-                 GimpProgress  *progress,
-                 GimpArgument  *args)
+message_invoker (GimpProcedure      *procedure,
+                 Gimp               *gimp,
+                 GimpContext        *context,
+                 GimpProgress       *progress,
+                 const GimpArgument *args)
 {
   gboolean success = TRUE;
-  gchar *message;
+  const gchar *message;
 
-  message = (gchar *) g_value_get_string (&args[0].value);
+  message = g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -128,11 +128,11 @@ static GimpProcedure message_proc =
 };
 
 static GimpArgument *
-message_get_handler_invoker (GimpProcedure *procedure,
-                             Gimp          *gimp,
-                             GimpContext   *context,
-                             GimpProgress  *progress,
-                             GimpArgument  *args)
+message_get_handler_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GimpArgument *args)
 {
   GimpArgument *return_vals;
   gint32 handler = 0;
@@ -162,11 +162,11 @@ static GimpProcedure message_get_handler_proc =
 };
 
 static GimpArgument *
-message_set_handler_invoker (GimpProcedure *procedure,
-                             Gimp          *gimp,
-                             GimpContext   *context,
-                             GimpProgress  *progress,
-                             GimpArgument  *args)
+message_set_handler_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GimpArgument *args)
 {
   gboolean success = TRUE;
   gint32 handler;

@@ -56,8 +56,10 @@ sub generate {
 
     sub libtype {
 	my $arg = shift;
+	my $outarg = shift;
 	my ($type, $name) = &arg_parse($arg->{type});
 	my $argtype = $arg_types{$type};
+	my $rettype = '';
 	
 	if (exists $argtype->{id}) {
 	    return 'gint32 ';
@@ -67,7 +69,16 @@ sub generate {
 	    return "$name ";
 	}
 
-	my $rettype = $argtype->{type};
+	if ($outarg) {
+	    $rettype .= $argtype->{type};
+	}
+	else {
+	    if (exists $argtype->{struct}) {
+		$rettype .= 'const ';
+	    }
+	    $rettype .= $argtype->{const_type};
+	}
+	
 	$rettype =~ s/int32/int/ unless exists $arg->{keep_size};
 	$rettype .= '*' if exists $argtype->{struct};
 	return $rettype;
@@ -111,7 +122,7 @@ sub generate {
 
 	my $rettype;
 	if ($retarg) {
-	    $rettype = &libtype($retarg);
+	    $rettype = &libtype($retarg, 1);
 	    chop $rettype unless $rettype =~ /\*$/;
 
 	    $retarg->{retval} = 1;
@@ -136,12 +147,7 @@ sub generate {
 
 	    $usednames{$_->{name}}++;
 
-	    if ($type eq 'string' ||
-		$type eq 'color' ||
-		$type =~ /array$/) {
-		$arglist .= 'const '
-	    }
-	    $arglist .= &libtype($_);
+	    $arglist .= &libtype($_, 0);
 	    $arglist .= $_->{name};
 	    $arglist .= '_ID' if $arg->{id};
 	    $arglist .= ', ';
@@ -199,7 +205,7 @@ sub generate {
 		}
 		elsif (exists $_->{retval}) {
 		    $return_args .= "\n" . ' ' x 2;
-		    $return_args .= &libtype($_);
+		    $return_args .= &libtype($_, 1);
 
 		    # The return value variable
 		    $var = $_->{libname};
@@ -331,7 +337,7 @@ CP2
 
 		    unless (exists $_->{retval}) {
 			$var .= '*';
-			$arglist .= &libtype($_);
+			$arglist .= &libtype($_, 1);
 			$arglist .= '*' unless exists $arg->{struct};
 			$arglist .= "$_->{libname}";
 			$arglist .= '_ID' if $arg->{id};

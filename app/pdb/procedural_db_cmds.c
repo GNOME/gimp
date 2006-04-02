@@ -401,11 +401,11 @@ register_procedural_db_procs (Gimp *gimp)
 }
 
 static GimpArgument *
-procedural_db_temp_name_invoker (GimpProcedure *procedure,
-                                 Gimp          *gimp,
-                                 GimpContext   *context,
-                                 GimpProgress  *progress,
-                                 GimpArgument  *args)
+procedural_db_temp_name_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GimpArgument *args)
 {
   GimpArgument *return_vals;
   gchar *temp_name = NULL;
@@ -437,16 +437,16 @@ static GimpProcedure procedural_db_temp_name_proc =
 };
 
 static GimpArgument *
-procedural_db_dump_invoker (GimpProcedure *procedure,
-                            Gimp          *gimp,
-                            GimpContext   *context,
-                            GimpProgress  *progress,
-                            GimpArgument  *args)
+procedural_db_dump_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GimpArgument *args)
 {
   gboolean success = TRUE;
-  gchar *filename;
+  const gchar *filename;
 
-  filename = (gchar *) g_value_get_string (&args[0].value);
+  filename = g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -473,31 +473,31 @@ static GimpProcedure procedural_db_dump_proc =
 };
 
 static GimpArgument *
-procedural_db_query_invoker (GimpProcedure *procedure,
-                             Gimp          *gimp,
-                             GimpContext   *context,
-                             GimpProgress  *progress,
-                             GimpArgument  *args)
+procedural_db_query_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
-  gchar *name;
-  gchar *blurb;
-  gchar *help;
-  gchar *author;
-  gchar *copyright;
-  gchar *date;
-  gchar *proc_type;
+  const gchar *name;
+  const gchar *blurb;
+  const gchar *help;
+  const gchar *author;
+  const gchar *copyright;
+  const gchar *date;
+  const gchar *proc_type;
   gint32 num_matches = 0;
   gchar **procedure_names = NULL;
 
-  name = (gchar *) g_value_get_string (&args[0].value);
-  blurb = (gchar *) g_value_get_string (&args[1].value);
-  help = (gchar *) g_value_get_string (&args[2].value);
-  author = (gchar *) g_value_get_string (&args[3].value);
-  copyright = (gchar *) g_value_get_string (&args[4].value);
-  date = (gchar *) g_value_get_string (&args[5].value);
-  proc_type = (gchar *) g_value_get_string (&args[6].value);
+  name = g_value_get_string (&args[0].value);
+  blurb = g_value_get_string (&args[1].value);
+  help = g_value_get_string (&args[2].value);
+  author = g_value_get_string (&args[3].value);
+  copyright = g_value_get_string (&args[4].value);
+  date = g_value_get_string (&args[5].value);
+  proc_type = g_value_get_string (&args[6].value);
 
   if (success)
     {
@@ -535,15 +535,15 @@ static GimpProcedure procedural_db_query_proc =
 };
 
 static GimpArgument *
-procedural_db_proc_info_invoker (GimpProcedure *procedure,
-                                 Gimp          *gimp,
-                                 GimpContext   *context,
-                                 GimpProgress  *progress,
-                                 GimpArgument  *args)
+procedural_db_proc_info_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
-  gchar *procedure_name;
+  const gchar *procedure_name;
   gchar *blurb = NULL;
   gchar *help = NULL;
   gchar *author = NULL;
@@ -553,7 +553,7 @@ procedural_db_proc_info_invoker (GimpProcedure *procedure,
   gint32 num_args = 0;
   gint32 num_values = 0;
 
-  procedure_name = (gchar *) g_value_get_string (&args[0].value);
+  procedure_name = g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -605,21 +605,21 @@ static GimpProcedure procedural_db_proc_info_proc =
 };
 
 static GimpArgument *
-procedural_db_proc_arg_invoker (GimpProcedure *procedure,
-                                Gimp          *gimp,
-                                GimpContext   *context,
-                                GimpProgress  *progress,
-                                GimpArgument  *args)
+procedural_db_proc_arg_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
-  gchar *procedure_name;
+  const gchar *procedure_name;
   gint32 arg_num;
   gint32 arg_type = 0;
   gchar *arg_name = NULL;
   gchar *arg_desc = NULL;
 
-  procedure_name = (gchar *) g_value_get_string (&args[0].value);
+  procedure_name = g_value_get_string (&args[0].value);
   arg_num = g_value_get_int (&args[1].value);
 
   if (success)
@@ -684,21 +684,21 @@ static GimpProcedure procedural_db_proc_arg_proc =
 };
 
 static GimpArgument *
-procedural_db_proc_val_invoker (GimpProcedure *procedure,
-                                Gimp          *gimp,
-                                GimpContext   *context,
-                                GimpProgress  *progress,
-                                GimpArgument  *args)
+procedural_db_proc_val_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
-  gchar *procedure_name;
+  const gchar *procedure_name;
   gint32 val_num;
   gint32 val_type = 0;
   gchar *val_name = NULL;
   gchar *val_desc = NULL;
 
-  procedure_name = (gchar *) g_value_get_string (&args[0].value);
+  procedure_name = g_value_get_string (&args[0].value);
   val_num = g_value_get_int (&args[1].value);
 
   if (success)
@@ -763,19 +763,19 @@ static GimpProcedure procedural_db_proc_val_proc =
 };
 
 static GimpArgument *
-procedural_db_get_data_invoker (GimpProcedure *procedure,
-                                Gimp          *gimp,
-                                GimpContext   *context,
-                                GimpProgress  *progress,
-                                GimpArgument  *args)
+procedural_db_get_data_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
-  gchar *identifier;
+  const gchar *identifier;
   gint32 bytes = 0;
   guint8 *data = NULL;
 
-  identifier = (gchar *) g_value_get_string (&args[0].value);
+  identifier = g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -822,18 +822,18 @@ static GimpProcedure procedural_db_get_data_proc =
 };
 
 static GimpArgument *
-procedural_db_get_data_size_invoker (GimpProcedure *procedure,
-                                     Gimp          *gimp,
-                                     GimpContext   *context,
-                                     GimpProgress  *progress,
-                                     GimpArgument  *args)
+procedural_db_get_data_size_invoker (GimpProcedure      *procedure,
+                                     Gimp               *gimp,
+                                     GimpContext        *context,
+                                     GimpProgress       *progress,
+                                     const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
-  gchar *identifier;
+  const gchar *identifier;
   gint32 bytes = 0;
 
-  identifier = (gchar *) g_value_get_string (&args[0].value);
+  identifier = g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -876,18 +876,18 @@ static GimpProcedure procedural_db_get_data_size_proc =
 };
 
 static GimpArgument *
-procedural_db_set_data_invoker (GimpProcedure *procedure,
-                                Gimp          *gimp,
-                                GimpContext   *context,
-                                GimpProgress  *progress,
-                                GimpArgument  *args)
+procedural_db_set_data_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GimpArgument *args)
 {
   gboolean success = TRUE;
-  gchar *identifier;
+  const gchar *identifier;
   gint32 bytes;
-  guint8 *data;
+  const guint8 *data;
 
-  identifier = (gchar *) g_value_get_string (&args[0].value);
+  identifier = g_value_get_string (&args[0].value);
   bytes = g_value_get_int (&args[1].value);
   data = (guint8 *) gimp_value_get_int8array (&args[2].value);
 

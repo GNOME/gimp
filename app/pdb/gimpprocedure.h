@@ -30,11 +30,11 @@ typedef struct _TempExec   TempExec;
 struct _IntExec
 {
   /*  Function called to marshal arguments  */
-  GimpArgument * (* marshal_func) (GimpProcedure *procedure,
-                                   Gimp          *gimp,
-                                   GimpContext   *context,
-                                   GimpProgress  *progress,
-                                   GimpArgument  *args);
+  GimpArgument * (* marshal_func) (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GimpArgument *args);
 };
 
 struct _PlugInExec

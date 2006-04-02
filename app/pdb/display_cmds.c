@@ -126,11 +126,11 @@ register_display_procs (Gimp *gimp)
 }
 
 static GimpArgument *
-display_new_invoker (GimpProcedure *procedure,
-                     Gimp          *gimp,
-                     GimpContext   *context,
-                     GimpProgress  *progress,
-                     GimpArgument  *args)
+display_new_invoker (GimpProcedure      *procedure,
+                     Gimp               *gimp,
+                     GimpContext        *context,
+                     GimpProgress       *progress,
+                     const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -178,11 +178,11 @@ static GimpProcedure display_new_proc =
 };
 
 static GimpArgument *
-display_delete_invoker (GimpProcedure *procedure,
-                        Gimp          *gimp,
-                        GimpContext   *context,
-                        GimpProgress  *progress,
-                        GimpArgument  *args)
+display_delete_invoker (GimpProcedure      *procedure,
+                        Gimp               *gimp,
+                        GimpContext        *context,
+                        GimpProgress       *progress,
+                        const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpObject *display;
@@ -214,11 +214,11 @@ static GimpProcedure display_delete_proc =
 };
 
 static GimpArgument *
-display_get_window_handle_invoker (GimpProcedure *procedure,
-                                   Gimp          *gimp,
-                                   GimpContext   *context,
-                                   GimpProgress  *progress,
-                                   GimpArgument  *args)
+display_get_window_handle_invoker (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -257,11 +257,11 @@ static GimpProcedure display_get_window_handle_proc =
 };
 
 static GimpArgument *
-displays_flush_invoker (GimpProcedure *procedure,
-                        Gimp          *gimp,
-                        GimpContext   *context,
-                        GimpProgress  *progress,
-                        GimpArgument  *args)
+displays_flush_invoker (GimpProcedure      *procedure,
+                        Gimp               *gimp,
+                        GimpContext        *context,
+                        GimpProgress       *progress,
+                        const GimpArgument *args)
 {
   gimp_container_foreach (gimp->images, (GFunc) gimp_image_flush, NULL);
   return gimp_procedure_get_return_values (procedure, TRUE);
@@ -284,11 +284,11 @@ static GimpProcedure displays_flush_proc =
 };
 
 static GimpArgument *
-displays_reconnect_invoker (GimpProcedure *procedure,
-                            Gimp          *gimp,
-                            GimpContext   *context,
-                            GimpProgress  *progress,
-                            GimpArgument  *args)
+displays_reconnect_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *old_image;

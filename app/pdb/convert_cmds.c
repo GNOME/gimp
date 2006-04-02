@@ -132,11 +132,11 @@ register_convert_procs (Gimp *gimp)
 }
 
 static GimpArgument *
-image_convert_rgb_invoker (GimpProcedure *procedure,
-                           Gimp          *gimp,
-                           GimpContext   *context,
-                           GimpProgress  *progress,
-                           GimpArgument  *args)
+image_convert_rgb_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -171,11 +171,11 @@ static GimpProcedure image_convert_rgb_proc =
 };
 
 static GimpArgument *
-image_convert_grayscale_invoker (GimpProcedure *procedure,
-                                 Gimp          *gimp,
-                                 GimpContext   *context,
-                                 GimpProgress  *progress,
-                                 GimpArgument  *args)
+image_convert_grayscale_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -210,11 +210,11 @@ static GimpProcedure image_convert_grayscale_proc =
 };
 
 static GimpArgument *
-image_convert_indexed_invoker (GimpProcedure *procedure,
-                               Gimp          *gimp,
-                               GimpContext   *context,
-                               GimpProgress  *progress,
-                               GimpArgument  *args)
+image_convert_indexed_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -223,7 +223,7 @@ image_convert_indexed_invoker (GimpProcedure *procedure,
   gint32 num_cols;
   gboolean alpha_dither;
   gboolean remove_unused;
-  gchar *palette;
+  const gchar *palette;
 
   image = gimp_value_get_image (&args[0].value, gimp);
   dither_type = g_value_get_enum (&args[1].value);
@@ -231,7 +231,7 @@ image_convert_indexed_invoker (GimpProcedure *procedure,
   num_cols = g_value_get_int (&args[3].value);
   alpha_dither = g_value_get_boolean (&args[4].value);
   remove_unused = g_value_get_boolean (&args[5].value);
-  palette = (gchar *) g_value_get_string (&args[6].value);
+  palette = g_value_get_string (&args[6].value);
 
   if (success)
     {

@@ -272,14 +272,14 @@ register_plug_in_procs (Gimp *gimp)
 }
 
 static GimpArgument *
-plugins_query_invoker (GimpProcedure *procedure,
-                       Gimp          *gimp,
-                       GimpContext   *context,
-                       GimpProgress  *progress,
-                       GimpArgument  *args)
+plugins_query_invoker (GimpProcedure      *procedure,
+                       Gimp               *gimp,
+                       GimpContext        *context,
+                       GimpProgress       *progress,
+                       const GimpArgument *args)
 {
   GimpArgument *return_vals;
-  gchar *search_string;
+  const gchar *search_string;
   gint32 num_plugins = 0;
   gchar **menu_path = NULL;
   gchar **plugin_accelerator = NULL;
@@ -288,7 +288,7 @@ plugins_query_invoker (GimpProcedure *procedure,
   gint32 *plugin_install_time = NULL;
   gchar **plugin_real_name = NULL;
 
-  search_string = (gchar *) g_value_get_string (&args[0].value);
+  search_string = g_value_get_string (&args[0].value);
 
   num_plugins = plug_ins_query (gimp, search_string,
                                 &menu_path,
@@ -333,18 +333,18 @@ static GimpProcedure plugins_query_proc =
 };
 
 static GimpArgument *
-plugin_domain_register_invoker (GimpProcedure *procedure,
-                                Gimp          *gimp,
-                                GimpContext   *context,
-                                GimpProgress  *progress,
-                                GimpArgument  *args)
+plugin_domain_register_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GimpArgument *args)
 {
   gboolean success = TRUE;
-  gchar *domain_name;
-  gchar *domain_path;
+  const gchar *domain_name;
+  const gchar *domain_path;
 
-  domain_name = (gchar *) g_value_get_string (&args[0].value);
-  domain_path = (gchar *) g_value_get_string (&args[1].value);
+  domain_name = g_value_get_string (&args[0].value);
+  domain_path = g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -379,18 +379,18 @@ static GimpProcedure plugin_domain_register_proc =
 };
 
 static GimpArgument *
-plugin_help_register_invoker (GimpProcedure *procedure,
-                              Gimp          *gimp,
-                              GimpContext   *context,
-                              GimpProgress  *progress,
-                              GimpArgument  *args)
+plugin_help_register_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GimpArgument *args)
 {
   gboolean success = TRUE;
-  gchar *domain_name;
-  gchar *domain_uri;
+  const gchar *domain_name;
+  const gchar *domain_uri;
 
-  domain_name = (gchar *) g_value_get_string (&args[0].value);
-  domain_uri = (gchar *) g_value_get_string (&args[1].value);
+  domain_name = g_value_get_string (&args[0].value);
+  domain_uri = g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -425,18 +425,18 @@ static GimpProcedure plugin_help_register_proc =
 };
 
 static GimpArgument *
-plugin_menu_register_invoker (GimpProcedure *procedure,
-                              Gimp          *gimp,
-                              GimpContext   *context,
-                              GimpProgress  *progress,
-                              GimpArgument  *args)
+plugin_menu_register_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GimpArgument *args)
 {
   gboolean success = TRUE;
-  gchar *procedure_name;
-  gchar *menu_path;
+  const gchar *procedure_name;
+  const gchar *menu_path;
 
-  procedure_name = (gchar *) g_value_get_string (&args[0].value);
-  menu_path = (gchar *) g_value_get_string (&args[1].value);
+  procedure_name = g_value_get_string (&args[0].value);
+  menu_path = g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -474,18 +474,18 @@ static GimpProcedure plugin_menu_register_proc =
 };
 
 static GimpArgument *
-plugin_menu_branch_register_invoker (GimpProcedure *procedure,
-                                     Gimp          *gimp,
-                                     GimpContext   *context,
-                                     GimpProgress  *progress,
-                                     GimpArgument  *args)
+plugin_menu_branch_register_invoker (GimpProcedure      *procedure,
+                                     Gimp               *gimp,
+                                     GimpContext        *context,
+                                     GimpProgress       *progress,
+                                     const GimpArgument *args)
 {
   gboolean success = TRUE;
-  gchar *menu_path;
-  gchar *menu_name;
+  const gchar *menu_path;
+  const gchar *menu_name;
 
-  menu_path = (gchar *) g_value_get_string (&args[0].value);
-  menu_name = (gchar *) g_value_get_string (&args[1].value);
+  menu_path = g_value_get_string (&args[0].value);
+  menu_name = g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -526,19 +526,19 @@ static GimpProcedure plugin_menu_branch_register_proc =
 };
 
 static GimpArgument *
-plugin_icon_register_invoker (GimpProcedure *procedure,
-                              Gimp          *gimp,
-                              GimpContext   *context,
-                              GimpProgress  *progress,
-                              GimpArgument  *args)
+plugin_icon_register_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GimpArgument *args)
 {
   gboolean success = TRUE;
-  gchar *procedure_name;
+  const gchar *procedure_name;
   gint32 icon_type;
   gint32 icon_data_length;
-  guint8 *icon_data;
+  const guint8 *icon_data;
 
-  procedure_name = (gchar *) g_value_get_string (&args[0].value);
+  procedure_name = g_value_get_string (&args[0].value);
   icon_type = g_value_get_enum (&args[1].value);
   icon_data_length = g_value_get_int (&args[2].value);
   icon_data = (guint8 *) gimp_value_get_int8array (&args[3].value);

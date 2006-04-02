@@ -68,7 +68,7 @@ gimp_parasite_find (const gchar *name)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_parasite_attach (GimpParasite *parasite)
+gimp_parasite_attach (const GimpParasite *parasite)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -205,8 +205,8 @@ gimp_image_parasite_find (gint32       image_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_image_parasite_attach (gint32        image_ID,
-			    GimpParasite *parasite)
+gimp_image_parasite_attach (gint32              image_ID,
+			    const GimpParasite *parasite)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -350,8 +350,8 @@ gimp_drawable_parasite_find (gint32       drawable_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_drawable_parasite_attach (gint32        drawable_ID,
-			       GimpParasite *parasite)
+gimp_drawable_parasite_attach (gint32              drawable_ID,
+			       const GimpParasite *parasite)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -499,8 +499,8 @@ gimp_vectors_parasite_find (gint32       vectors_ID,
  * Since: GIMP 2.4
  */
 gboolean
-gimp_vectors_parasite_attach (gint32        vectors_ID,
-			      GimpParasite *parasite)
+gimp_vectors_parasite_attach (gint32              vectors_ID,
+			      const GimpParasite *parasite)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

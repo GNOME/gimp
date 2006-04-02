@@ -218,11 +218,11 @@ register_brushes_procs (Gimp *gimp)
 }
 
 static GimpArgument *
-brushes_refresh_invoker (GimpProcedure *procedure,
-                         Gimp          *gimp,
-                         GimpContext   *context,
-                         GimpProgress  *progress,
-                         GimpArgument  *args)
+brushes_refresh_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GimpArgument *args)
 {
   gimp_data_factory_data_refresh (gimp->brush_factory);
   return gimp_procedure_get_return_values (procedure, TRUE);
@@ -245,19 +245,19 @@ static GimpProcedure brushes_refresh_proc =
 };
 
 static GimpArgument *
-brushes_get_list_invoker (GimpProcedure *procedure,
-                          Gimp          *gimp,
-                          GimpContext   *context,
-                          GimpProgress  *progress,
-                          GimpArgument  *args)
+brushes_get_list_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
-  gchar *filter;
+  const gchar *filter;
   gint32 num_brushes = 0;
   gchar **brush_list = NULL;
 
-  filter = (gchar *) g_value_get_string (&args[0].value);
+  filter = g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -293,11 +293,11 @@ static GimpProcedure brushes_get_list_proc =
 };
 
 static GimpArgument *
-brushes_get_brush_invoker (GimpProcedure *procedure,
-                           Gimp          *gimp,
-                           GimpContext   *context,
-                           GimpProgress  *progress,
-                           GimpArgument  *args)
+brushes_get_brush_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -348,11 +348,11 @@ static GimpProcedure brushes_get_brush_proc =
 };
 
 static GimpArgument *
-brushes_get_spacing_invoker (GimpProcedure *procedure,
-                             Gimp          *gimp,
-                             GimpContext   *context,
-                             GimpProgress  *progress,
-                             GimpArgument  *args)
+brushes_get_spacing_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -390,11 +390,11 @@ static GimpProcedure brushes_get_spacing_proc =
 };
 
 static GimpArgument *
-brushes_set_spacing_invoker (GimpProcedure *procedure,
-                             Gimp          *gimp,
-                             GimpContext   *context,
-                             GimpProgress  *progress,
-                             GimpArgument  *args)
+brushes_set_spacing_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GimpArgument *args)
 {
   gboolean success = TRUE;
   gint32 spacing;
@@ -426,15 +426,15 @@ static GimpProcedure brushes_set_spacing_proc =
 };
 
 static GimpArgument *
-brushes_get_brush_data_invoker (GimpProcedure *procedure,
-                                Gimp          *gimp,
-                                GimpContext   *context,
-                                GimpProgress  *progress,
-                                GimpArgument  *args)
+brushes_get_brush_data_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
-  gchar *name;
+  const gchar *name;
   gchar *actual_name = NULL;
   gdouble opacity = 0.0;
   gint32 spacing = 0;
@@ -444,7 +444,7 @@ brushes_get_brush_data_invoker (GimpProcedure *procedure,
   gint32 length = 0;
   guint8 *mask_data = NULL;
 
-  name = (gchar *) g_value_get_string (&args[0].value);
+  name = g_value_get_string (&args[0].value);
 
   if (success)
     {

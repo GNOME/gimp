@@ -149,11 +149,11 @@ register_palettes_procs (Gimp *gimp)
 }
 
 static GimpArgument *
-palettes_refresh_invoker (GimpProcedure *procedure,
-                          Gimp          *gimp,
-                          GimpContext   *context,
-                          GimpProgress  *progress,
-                          GimpArgument  *args)
+palettes_refresh_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GimpArgument *args)
 {
   gimp_data_factory_data_refresh (gimp->palette_factory);
   return gimp_procedure_get_return_values (procedure, TRUE);
@@ -176,19 +176,19 @@ static GimpProcedure palettes_refresh_proc =
 };
 
 static GimpArgument *
-palettes_get_list_invoker (GimpProcedure *procedure,
-                           Gimp          *gimp,
-                           GimpContext   *context,
-                           GimpProgress  *progress,
-                           GimpArgument  *args)
+palettes_get_list_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
-  gchar *filter;
+  const gchar *filter;
   gint32 num_palettes = 0;
   gchar **palette_list = NULL;
 
-  filter = (gchar *) g_value_get_string (&args[0].value);
+  filter = g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -224,11 +224,11 @@ static GimpProcedure palettes_get_list_proc =
 };
 
 static GimpArgument *
-palettes_get_palette_invoker (GimpProcedure *procedure,
-                              Gimp          *gimp,
-                              GimpContext   *context,
-                              GimpProgress  *progress,
-                              GimpArgument  *args)
+palettes_get_palette_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -273,21 +273,21 @@ static GimpProcedure palettes_get_palette_proc =
 };
 
 static GimpArgument *
-palettes_get_palette_entry_invoker (GimpProcedure *procedure,
-                                    Gimp          *gimp,
-                                    GimpContext   *context,
-                                    GimpProgress  *progress,
-                                    GimpArgument  *args)
+palettes_get_palette_entry_invoker (GimpProcedure      *procedure,
+                                    Gimp               *gimp,
+                                    GimpContext        *context,
+                                    GimpProgress       *progress,
+                                    const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
-  gchar *name;
+  const gchar *name;
   gint32 entry_num;
   gchar *actual_name = NULL;
   gint32 num_colors = 0;
   GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
 
-  name = (gchar *) g_value_get_string (&args[0].value);
+  name = g_value_get_string (&args[0].value);
   entry_num = g_value_get_int (&args[1].value);
 
   if (success)

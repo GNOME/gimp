@@ -65,18 +65,18 @@ register_help_procs (Gimp *gimp)
 }
 
 static GimpArgument *
-help_invoker (GimpProcedure *procedure,
-              Gimp          *gimp,
-              GimpContext   *context,
-              GimpProgress  *progress,
-              GimpArgument  *args)
+help_invoker (GimpProcedure      *procedure,
+              Gimp               *gimp,
+              GimpContext        *context,
+              GimpProgress       *progress,
+              const GimpArgument *args)
 {
   gboolean success = TRUE;
-  gchar *help_domain;
-  gchar *help_id;
+  const gchar *help_domain;
+  const gchar *help_id;
 
-  help_domain = (gchar *) g_value_get_string (&args[0].value);
-  help_id = (gchar *) g_value_get_string (&args[1].value);
+  help_domain = g_value_get_string (&args[0].value);
+  help_id = g_value_get_string (&args[1].value);
 
   if (success)
     {

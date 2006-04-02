@@ -389,11 +389,11 @@ register_transform_tools_procs (Gimp *gimp)
 }
 
 static GimpArgument *
-flip_invoker (GimpProcedure *procedure,
-              Gimp          *gimp,
-              GimpContext   *context,
-              GimpProgress  *progress,
-              GimpArgument  *args)
+flip_invoker (GimpProcedure      *procedure,
+              Gimp               *gimp,
+              GimpContext        *context,
+              GimpProgress       *progress,
+              const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -442,11 +442,11 @@ static GimpProcedure flip_proc =
 };
 
 static GimpArgument *
-perspective_invoker (GimpProcedure *procedure,
-                     Gimp          *gimp,
-                     GimpContext   *context,
-                     GimpProgress  *progress,
-                     GimpArgument  *args)
+perspective_invoker (GimpProcedure      *procedure,
+                     Gimp               *gimp,
+                     GimpContext        *context,
+                     GimpProgress       *progress,
+                     const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -536,11 +536,11 @@ static GimpProcedure perspective_proc =
 };
 
 static GimpArgument *
-rotate_invoker (GimpProcedure *procedure,
-                Gimp          *gimp,
-                GimpContext   *context,
-                GimpProgress  *progress,
-                GimpArgument  *args)
+rotate_invoker (GimpProcedure      *procedure,
+                Gimp               *gimp,
+                GimpContext        *context,
+                GimpProgress       *progress,
+                const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -612,11 +612,11 @@ static GimpProcedure rotate_proc =
 };
 
 static GimpArgument *
-scale_invoker (GimpProcedure *procedure,
-               Gimp          *gimp,
-               GimpContext   *context,
-               GimpProgress  *progress,
-               GimpArgument  *args)
+scale_invoker (GimpProcedure      *procedure,
+               Gimp               *gimp,
+               GimpContext        *context,
+               GimpProgress       *progress,
+               const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -698,11 +698,11 @@ static GimpProcedure scale_proc =
 };
 
 static GimpArgument *
-shear_invoker (GimpProcedure *procedure,
-               Gimp          *gimp,
-               GimpContext   *context,
-               GimpProgress  *progress,
-               GimpArgument  *args)
+shear_invoker (GimpProcedure      *procedure,
+               Gimp               *gimp,
+               GimpContext        *context,
+               GimpProgress       *progress,
+               const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -777,11 +777,11 @@ static GimpProcedure shear_proc =
 };
 
 static GimpArgument *
-transform_2d_invoker (GimpProcedure *procedure,
-                      Gimp          *gimp,
-                      GimpContext   *context,
-                      GimpProgress  *progress,
-                      GimpArgument  *args)
+transform_2d_invoker (GimpProcedure      *procedure,
+                      Gimp               *gimp,
+                      GimpContext        *context,
+                      GimpProgress       *progress,
+                      const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;

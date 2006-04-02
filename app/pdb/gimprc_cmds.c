@@ -173,18 +173,18 @@ register_gimprc_procs (Gimp *gimp)
 }
 
 static GimpArgument *
-gimprc_query_invoker (GimpProcedure *procedure,
-                      Gimp          *gimp,
-                      GimpContext   *context,
-                      GimpProgress  *progress,
-                      GimpArgument  *args)
+gimprc_query_invoker (GimpProcedure      *procedure,
+                      Gimp               *gimp,
+                      GimpContext        *context,
+                      GimpProgress       *progress,
+                      const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
-  gchar *token;
+  const gchar *token;
   gchar *value = NULL;
 
-  token = (gchar *) g_value_get_string (&args[0].value);
+  token = g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -225,18 +225,18 @@ static GimpProcedure gimprc_query_proc =
 };
 
 static GimpArgument *
-gimprc_set_invoker (GimpProcedure *procedure,
-                    Gimp          *gimp,
-                    GimpContext   *context,
-                    GimpProgress  *progress,
-                    GimpArgument  *args)
+gimprc_set_invoker (GimpProcedure      *procedure,
+                    Gimp               *gimp,
+                    GimpContext        *context,
+                    GimpProgress       *progress,
+                    const GimpArgument *args)
 {
   gboolean success = TRUE;
-  gchar *token;
-  gchar *value;
+  const gchar *token;
+  const gchar *value;
 
-  token = (gchar *) g_value_get_string (&args[0].value);
-  value = (gchar *) g_value_get_string (&args[1].value);
+  token = g_value_get_string (&args[0].value);
+  value = g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -269,11 +269,11 @@ static GimpProcedure gimprc_set_proc =
 };
 
 static GimpArgument *
-get_default_comment_invoker (GimpProcedure *procedure,
-                             Gimp          *gimp,
-                             GimpContext   *context,
-                             GimpProgress  *progress,
-                             GimpArgument  *args)
+get_default_comment_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GimpArgument *args)
 {
   GimpArgument *return_vals;
   gchar *comment = NULL;
@@ -303,11 +303,11 @@ static GimpProcedure get_default_comment_proc =
 };
 
 static GimpArgument *
-get_monitor_resolution_invoker (GimpProcedure *procedure,
-                                Gimp          *gimp,
-                                GimpContext   *context,
-                                GimpProgress  *progress,
-                                GimpArgument  *args)
+get_monitor_resolution_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GimpArgument *args)
 {
   GimpArgument *return_vals;
   gdouble xres = 0.0;
@@ -341,11 +341,11 @@ static GimpProcedure get_monitor_resolution_proc =
 };
 
 static GimpArgument *
-get_theme_dir_invoker (GimpProcedure *procedure,
-                       Gimp          *gimp,
-                       GimpContext   *context,
-                       GimpProgress  *progress,
-                       GimpArgument  *args)
+get_theme_dir_invoker (GimpProcedure      *procedure,
+                       Gimp               *gimp,
+                       GimpContext        *context,
+                       GimpProgress       *progress,
+                       const GimpArgument *args)
 {
   GimpArgument *return_vals;
   gchar *theme_dir = NULL;
@@ -375,11 +375,11 @@ static GimpProcedure get_theme_dir_proc =
 };
 
 static GimpArgument *
-get_color_configuration_invoker (GimpProcedure *procedure,
-                                 Gimp          *gimp,
-                                 GimpContext   *context,
-                                 GimpProgress  *progress,
-                                 GimpArgument  *args)
+get_color_configuration_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GimpArgument *args)
 {
   GimpArgument *return_vals;
   gchar *config = NULL;
@@ -409,11 +409,11 @@ static GimpProcedure get_color_configuration_proc =
 };
 
 static GimpArgument *
-get_module_load_inhibit_invoker (GimpProcedure *procedure,
-                                 Gimp          *gimp,
-                                 GimpContext   *context,
-                                 GimpProgress  *progress,
-                                 GimpArgument  *args)
+get_module_load_inhibit_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GimpArgument *args)
 {
   GimpArgument *return_vals;
   gchar *load_inhibit = NULL;

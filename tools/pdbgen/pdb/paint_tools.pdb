@@ -784,7 +784,7 @@ paint_tools_stroke (Gimp             *gimp,
                     GimpPaintOptions *options,
                     GimpDrawable     *drawable,
                     gint              n_strokes,
-                    gdouble          *strokes,
+                    const gdouble    *strokes,
                     const gchar      *first_property_name,
                     ...)
 {

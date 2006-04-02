@@ -118,21 +118,21 @@ register_gradient_select_procs (Gimp *gimp)
 }
 
 static GimpArgument *
-gradients_popup_invoker (GimpProcedure *procedure,
-                         Gimp          *gimp,
-                         GimpContext   *context,
-                         GimpProgress  *progress,
-                         GimpArgument  *args)
+gradients_popup_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GimpArgument *args)
 {
   gboolean success = TRUE;
-  gchar *gradient_callback;
-  gchar *popup_title;
-  gchar *initial_gradient;
+  const gchar *gradient_callback;
+  const gchar *popup_title;
+  const gchar *initial_gradient;
   gint32 sample_size;
 
-  gradient_callback = (gchar *) g_value_get_string (&args[0].value);
-  popup_title = (gchar *) g_value_get_string (&args[1].value);
-  initial_gradient = (gchar *) g_value_get_string (&args[2].value);
+  gradient_callback = g_value_get_string (&args[0].value);
+  popup_title = g_value_get_string (&args[1].value);
+  initial_gradient = g_value_get_string (&args[2].value);
   sample_size = g_value_get_int (&args[3].value);
 
   if (success)
@@ -169,16 +169,16 @@ static GimpProcedure gradients_popup_proc =
 };
 
 static GimpArgument *
-gradients_close_popup_invoker (GimpProcedure *procedure,
-                               Gimp          *gimp,
-                               GimpContext   *context,
-                               GimpProgress  *progress,
-                               GimpArgument  *args)
+gradients_close_popup_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GimpArgument *args)
 {
   gboolean success = TRUE;
-  gchar *gradient_callback;
+  const gchar *gradient_callback;
 
-  gradient_callback = (gchar *) g_value_get_string (&args[0].value);
+  gradient_callback = g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -209,18 +209,18 @@ static GimpProcedure gradients_close_popup_proc =
 };
 
 static GimpArgument *
-gradients_set_popup_invoker (GimpProcedure *procedure,
-                             Gimp          *gimp,
-                             GimpContext   *context,
-                             GimpProgress  *progress,
-                             GimpArgument  *args)
+gradients_set_popup_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GimpArgument *args)
 {
   gboolean success = TRUE;
-  gchar *gradient_callback;
-  gchar *gradient_name;
+  const gchar *gradient_callback;
+  const gchar *gradient_name;
 
-  gradient_callback = (gchar *) g_value_get_string (&args[0].value);
-  gradient_name = (gchar *) g_value_get_string (&args[1].value);
+  gradient_callback = g_value_get_string (&args[0].value);
+  gradient_name = g_value_get_string (&args[1].value);
 
   if (success)
     {

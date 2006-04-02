@@ -467,11 +467,11 @@ register_text_tool_procs (Gimp *gimp)
 }
 
 static GimpArgument *
-text_fontname_invoker (GimpProcedure *procedure,
-                       Gimp          *gimp,
-                       GimpContext   *context,
-                       GimpProgress  *progress,
-                       GimpArgument  *args)
+text_fontname_invoker (GimpProcedure      *procedure,
+                       Gimp               *gimp,
+                       GimpContext        *context,
+                       GimpProgress       *progress,
+                       const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -479,24 +479,24 @@ text_fontname_invoker (GimpProcedure *procedure,
   GimpDrawable *drawable;
   gdouble x;
   gdouble y;
-  gchar *text;
+  const gchar *text;
   gint32 border;
   gboolean antialias;
   gdouble size;
   gint32 size_type;
-  gchar *fontname;
+  const gchar *fontname;
   GimpLayer *text_layer = NULL;
 
   image = gimp_value_get_image (&args[0].value, gimp);
   drawable = (GimpDrawable *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_DRAWABLE);
   x = g_value_get_double (&args[2].value);
   y = g_value_get_double (&args[3].value);
-  text = (gchar *) g_value_get_string (&args[4].value);
+  text = g_value_get_string (&args[4].value);
   border = g_value_get_int (&args[5].value);
   antialias = g_value_get_boolean (&args[6].value);
   size = g_value_get_double (&args[7].value);
   size_type = g_value_get_enum (&args[8].value);
-  fontname = (gchar *) g_value_get_string (&args[9].value);
+  fontname = g_value_get_string (&args[9].value);
 
   if (success)
     {
@@ -540,27 +540,27 @@ static GimpProcedure text_fontname_proc =
 };
 
 static GimpArgument *
-text_get_extents_fontname_invoker (GimpProcedure *procedure,
-                                   Gimp          *gimp,
-                                   GimpContext   *context,
-                                   GimpProgress  *progress,
-                                   GimpArgument  *args)
+text_get_extents_fontname_invoker (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
-  gchar *text;
+  const gchar *text;
   gdouble size;
   gint32 size_type;
-  gchar *fontname;
+  const gchar *fontname;
   gint32 width = 0;
   gint32 height = 0;
   gint32 ascent = 0;
   gint32 descent = 0;
 
-  text = (gchar *) g_value_get_string (&args[0].value);
+  text = g_value_get_string (&args[0].value);
   size = g_value_get_double (&args[1].value);
   size_type = g_value_get_enum (&args[2].value);
-  fontname = (gchar *) g_value_get_string (&args[3].value);
+  fontname = g_value_get_string (&args[3].value);
 
   if (success)
     {
@@ -603,11 +603,11 @@ static GimpProcedure text_get_extents_fontname_proc =
 };
 
 static GimpArgument *
-text_invoker (GimpProcedure *procedure,
-              Gimp          *gimp,
-              GimpContext   *context,
-              GimpProgress  *progress,
-              GimpArgument  *args)
+text_invoker (GimpProcedure      *procedure,
+              Gimp               *gimp,
+              GimpContext        *context,
+              GimpProgress       *progress,
+              const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -615,38 +615,38 @@ text_invoker (GimpProcedure *procedure,
   GimpDrawable *drawable;
   gdouble x;
   gdouble y;
-  gchar *text;
+  const gchar *text;
   gint32 border;
   gboolean antialias;
   gdouble size;
   gint32 size_type;
-  gchar *foundry;
-  gchar *family;
-  gchar *weight;
-  gchar *slant;
-  gchar *set_width;
-  gchar *spacing;
-  gchar *registry;
-  gchar *encoding;
+  const gchar *foundry;
+  const gchar *family;
+  const gchar *weight;
+  const gchar *slant;
+  const gchar *set_width;
+  const gchar *spacing;
+  const gchar *registry;
+  const gchar *encoding;
   GimpLayer *text_layer = NULL;
 
   image = gimp_value_get_image (&args[0].value, gimp);
   drawable = (GimpDrawable *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_DRAWABLE);
   x = g_value_get_double (&args[2].value);
   y = g_value_get_double (&args[3].value);
-  text = (gchar *) g_value_get_string (&args[4].value);
+  text = g_value_get_string (&args[4].value);
   border = g_value_get_int (&args[5].value);
   antialias = g_value_get_boolean (&args[6].value);
   size = g_value_get_double (&args[7].value);
   size_type = g_value_get_enum (&args[8].value);
-  foundry = (gchar *) g_value_get_string (&args[9].value);
-  family = (gchar *) g_value_get_string (&args[10].value);
-  weight = (gchar *) g_value_get_string (&args[11].value);
-  slant = (gchar *) g_value_get_string (&args[12].value);
-  set_width = (gchar *) g_value_get_string (&args[13].value);
-  spacing = (gchar *) g_value_get_string (&args[14].value);
-  registry = (gchar *) g_value_get_string (&args[15].value);
-  encoding = (gchar *) g_value_get_string (&args[16].value);
+  foundry = g_value_get_string (&args[9].value);
+  family = g_value_get_string (&args[10].value);
+  weight = g_value_get_string (&args[11].value);
+  slant = g_value_get_string (&args[12].value);
+  set_width = g_value_get_string (&args[13].value);
+  spacing = g_value_get_string (&args[14].value);
+  registry = g_value_get_string (&args[15].value);
+  encoding = g_value_get_string (&args[16].value);
 
   if (success)
     {
@@ -690,41 +690,41 @@ static GimpProcedure text_proc =
 };
 
 static GimpArgument *
-text_get_extents_invoker (GimpProcedure *procedure,
-                          Gimp          *gimp,
-                          GimpContext   *context,
-                          GimpProgress  *progress,
-                          GimpArgument  *args)
+text_get_extents_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
-  gchar *text;
+  const gchar *text;
   gdouble size;
   gint32 size_type;
-  gchar *foundry;
-  gchar *family;
-  gchar *weight;
-  gchar *slant;
-  gchar *set_width;
-  gchar *spacing;
-  gchar *registry;
-  gchar *encoding;
+  const gchar *foundry;
+  const gchar *family;
+  const gchar *weight;
+  const gchar *slant;
+  const gchar *set_width;
+  const gchar *spacing;
+  const gchar *registry;
+  const gchar *encoding;
   gint32 width = 0;
   gint32 height = 0;
   gint32 ascent = 0;
   gint32 descent = 0;
 
-  text = (gchar *) g_value_get_string (&args[0].value);
+  text = g_value_get_string (&args[0].value);
   size = g_value_get_double (&args[1].value);
   size_type = g_value_get_enum (&args[2].value);
-  foundry = (gchar *) g_value_get_string (&args[3].value);
-  family = (gchar *) g_value_get_string (&args[4].value);
-  weight = (gchar *) g_value_get_string (&args[5].value);
-  slant = (gchar *) g_value_get_string (&args[6].value);
-  set_width = (gchar *) g_value_get_string (&args[7].value);
-  spacing = (gchar *) g_value_get_string (&args[8].value);
-  registry = (gchar *) g_value_get_string (&args[9].value);
-  encoding = (gchar *) g_value_get_string (&args[10].value);
+  foundry = g_value_get_string (&args[3].value);
+  family = g_value_get_string (&args[4].value);
+  weight = g_value_get_string (&args[5].value);
+  slant = g_value_get_string (&args[6].value);
+  set_width = g_value_get_string (&args[7].value);
+  spacing = g_value_get_string (&args[8].value);
+  registry = g_value_get_string (&args[9].value);
+  encoding = g_value_get_string (&args[10].value);
 
   if (success)
     {

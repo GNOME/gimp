@@ -206,11 +206,11 @@ register_guides_procs (Gimp *gimp)
 }
 
 static GimpArgument *
-image_add_hguide_invoker (GimpProcedure *procedure,
-                          Gimp          *gimp,
-                          GimpContext   *context,
-                          GimpProgress  *progress,
-                          GimpArgument  *args)
+image_add_hguide_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -259,11 +259,11 @@ static GimpProcedure image_add_hguide_proc =
 };
 
 static GimpArgument *
-image_add_vguide_invoker (GimpProcedure *procedure,
-                          Gimp          *gimp,
-                          GimpContext   *context,
-                          GimpProgress  *progress,
-                          GimpArgument  *args)
+image_add_vguide_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -312,11 +312,11 @@ static GimpProcedure image_add_vguide_proc =
 };
 
 static GimpArgument *
-image_delete_guide_invoker (GimpProcedure *procedure,
-                            Gimp          *gimp,
-                            GimpContext   *context,
-                            GimpProgress  *progress,
-                            GimpArgument  *args)
+image_delete_guide_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -355,11 +355,11 @@ static GimpProcedure image_delete_guide_proc =
 };
 
 static GimpArgument *
-image_find_next_guide_invoker (GimpProcedure *procedure,
-                               Gimp          *gimp,
-                               GimpContext   *context,
-                               GimpProgress  *progress,
-                               GimpArgument  *args)
+image_find_next_guide_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -403,11 +403,11 @@ static GimpProcedure image_find_next_guide_proc =
 };
 
 static GimpArgument *
-image_get_guide_orientation_invoker (GimpProcedure *procedure,
-                                     Gimp          *gimp,
-                                     GimpContext   *context,
-                                     GimpProgress  *progress,
-                                     GimpArgument  *args)
+image_get_guide_orientation_invoker (GimpProcedure      *procedure,
+                                     Gimp               *gimp,
+                                     GimpContext        *context,
+                                     GimpProgress       *progress,
+                                     const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -453,11 +453,11 @@ static GimpProcedure image_get_guide_orientation_proc =
 };
 
 static GimpArgument *
-image_get_guide_position_invoker (GimpProcedure *procedure,
-                                  Gimp          *gimp,
-                                  GimpContext   *context,
-                                  GimpProgress  *progress,
-                                  GimpArgument  *args)
+image_get_guide_position_invoker (GimpProcedure      *procedure,
+                                  Gimp               *gimp,
+                                  GimpContext        *context,
+                                  GimpProgress       *progress,
+                                  const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;

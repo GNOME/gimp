@@ -78,11 +78,11 @@ register_fonts_procs (Gimp *gimp)
 }
 
 static GimpArgument *
-fonts_refresh_invoker (GimpProcedure *procedure,
-                       Gimp          *gimp,
-                       GimpContext   *context,
-                       GimpProgress  *progress,
-                       GimpArgument  *args)
+fonts_refresh_invoker (GimpProcedure      *procedure,
+                       Gimp               *gimp,
+                       GimpContext        *context,
+                       GimpProgress       *progress,
+                       const GimpArgument *args)
 {
   gimp_fonts_load (gimp);
   return gimp_procedure_get_return_values (procedure, TRUE);
@@ -105,19 +105,19 @@ static GimpProcedure fonts_refresh_proc =
 };
 
 static GimpArgument *
-fonts_get_list_invoker (GimpProcedure *procedure,
-                        Gimp          *gimp,
-                        GimpContext   *context,
-                        GimpProgress  *progress,
-                        GimpArgument  *args)
+fonts_get_list_invoker (GimpProcedure      *procedure,
+                        Gimp               *gimp,
+                        GimpContext        *context,
+                        GimpProgress       *progress,
+                        const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
-  gchar *filter;
+  const gchar *filter;
   gint32 num_fonts = 0;
   gchar **font_list = NULL;
 
-  filter = (gchar *) g_value_get_string (&args[0].value);
+  filter = g_value_get_string (&args[0].value);
 
   if (success)
     {

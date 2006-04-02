@@ -413,18 +413,18 @@ register_parasite_procs (Gimp *gimp)
 }
 
 static GimpArgument *
-parasite_find_invoker (GimpProcedure *procedure,
-                       Gimp          *gimp,
-                       GimpContext   *context,
-                       GimpProgress  *progress,
-                       GimpArgument  *args)
+parasite_find_invoker (GimpProcedure      *procedure,
+                       Gimp               *gimp,
+                       GimpContext        *context,
+                       GimpProgress       *progress,
+                       const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
-  gchar *name;
+  const gchar *name;
   GimpParasite *parasite = NULL;
 
-  name = (gchar *) g_value_get_string (&args[0].value);
+  name = g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -459,14 +459,14 @@ static GimpProcedure parasite_find_proc =
 };
 
 static GimpArgument *
-parasite_attach_invoker (GimpProcedure *procedure,
-                         Gimp          *gimp,
-                         GimpContext   *context,
-                         GimpProgress  *progress,
-                         GimpArgument  *args)
+parasite_attach_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GimpArgument *args)
 {
   gboolean success = TRUE;
-  GimpParasite *parasite;
+  const GimpParasite *parasite;
 
   parasite = g_value_get_boxed (&args[0].value);
 
@@ -495,16 +495,16 @@ static GimpProcedure parasite_attach_proc =
 };
 
 static GimpArgument *
-parasite_detach_invoker (GimpProcedure *procedure,
-                         Gimp          *gimp,
-                         GimpContext   *context,
-                         GimpProgress  *progress,
-                         GimpArgument  *args)
+parasite_detach_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GimpArgument *args)
 {
   gboolean success = TRUE;
-  gchar *name;
+  const gchar *name;
 
-  name = (gchar *) g_value_get_string (&args[0].value);
+  name = g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -531,11 +531,11 @@ static GimpProcedure parasite_detach_proc =
 };
 
 static GimpArgument *
-parasite_list_invoker (GimpProcedure *procedure,
-                       Gimp          *gimp,
-                       GimpContext   *context,
-                       GimpProgress  *progress,
-                       GimpArgument  *args)
+parasite_list_invoker (GimpProcedure      *procedure,
+                       Gimp               *gimp,
+                       GimpContext        *context,
+                       GimpProgress       *progress,
+                       const GimpArgument *args)
 {
   GimpArgument *return_vals;
   gint32 num_parasites = 0;
@@ -568,20 +568,20 @@ static GimpProcedure parasite_list_proc =
 };
 
 static GimpArgument *
-image_parasite_find_invoker (GimpProcedure *procedure,
-                             Gimp          *gimp,
-                             GimpContext   *context,
-                             GimpProgress  *progress,
-                             GimpArgument  *args)
+image_parasite_find_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
   GimpImage *image;
-  gchar *name;
+  const gchar *name;
   GimpParasite *parasite = NULL;
 
   image = gimp_value_get_image (&args[0].value, gimp);
-  name = (gchar *) g_value_get_string (&args[1].value);
+  name = g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -616,15 +616,15 @@ static GimpProcedure image_parasite_find_proc =
 };
 
 static GimpArgument *
-image_parasite_attach_invoker (GimpProcedure *procedure,
-                               Gimp          *gimp,
-                               GimpContext   *context,
-                               GimpProgress  *progress,
-                               GimpArgument  *args)
+image_parasite_attach_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
-  GimpParasite *parasite;
+  const GimpParasite *parasite;
 
   image = gimp_value_get_image (&args[0].value, gimp);
   parasite = g_value_get_boxed (&args[1].value);
@@ -654,18 +654,18 @@ static GimpProcedure image_parasite_attach_proc =
 };
 
 static GimpArgument *
-image_parasite_detach_invoker (GimpProcedure *procedure,
-                               Gimp          *gimp,
-                               GimpContext   *context,
-                               GimpProgress  *progress,
-                               GimpArgument  *args)
+image_parasite_detach_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gchar *name;
+  const gchar *name;
 
   image = gimp_value_get_image (&args[0].value, gimp);
-  name = (gchar *) g_value_get_string (&args[1].value);
+  name = g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -692,11 +692,11 @@ static GimpProcedure image_parasite_detach_proc =
 };
 
 static GimpArgument *
-image_parasite_list_invoker (GimpProcedure *procedure,
-                             Gimp          *gimp,
-                             GimpContext   *context,
-                             GimpProgress  *progress,
-                             GimpArgument  *args)
+image_parasite_list_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -739,20 +739,20 @@ static GimpProcedure image_parasite_list_proc =
 };
 
 static GimpArgument *
-drawable_parasite_find_invoker (GimpProcedure *procedure,
-                                Gimp          *gimp,
-                                GimpContext   *context,
-                                GimpProgress  *progress,
-                                GimpArgument  *args)
+drawable_parasite_find_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
   GimpDrawable *drawable;
-  gchar *name;
+  const gchar *name;
   GimpParasite *parasite = NULL;
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
-  name = (gchar *) g_value_get_string (&args[1].value);
+  name = g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -788,15 +788,15 @@ static GimpProcedure drawable_parasite_find_proc =
 };
 
 static GimpArgument *
-drawable_parasite_attach_invoker (GimpProcedure *procedure,
-                                  Gimp          *gimp,
-                                  GimpContext   *context,
-                                  GimpProgress  *progress,
-                                  GimpArgument  *args)
+drawable_parasite_attach_invoker (GimpProcedure      *procedure,
+                                  Gimp               *gimp,
+                                  GimpContext        *context,
+                                  GimpProgress       *progress,
+                                  const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  GimpParasite *parasite;
+  const GimpParasite *parasite;
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
   parasite = g_value_get_boxed (&args[1].value);
@@ -826,18 +826,18 @@ static GimpProcedure drawable_parasite_attach_proc =
 };
 
 static GimpArgument *
-drawable_parasite_detach_invoker (GimpProcedure *procedure,
-                                  Gimp          *gimp,
-                                  GimpContext   *context,
-                                  GimpProgress  *progress,
-                                  GimpArgument  *args)
+drawable_parasite_detach_invoker (GimpProcedure      *procedure,
+                                  Gimp               *gimp,
+                                  GimpContext        *context,
+                                  GimpProgress       *progress,
+                                  const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gchar *name;
+  const gchar *name;
 
   drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
-  name = (gchar *) g_value_get_string (&args[1].value);
+  name = g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -864,11 +864,11 @@ static GimpProcedure drawable_parasite_detach_proc =
 };
 
 static GimpArgument *
-drawable_parasite_list_invoker (GimpProcedure *procedure,
-                                Gimp          *gimp,
-                                GimpContext   *context,
-                                GimpProgress  *progress,
-                                GimpArgument  *args)
+drawable_parasite_list_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -911,20 +911,20 @@ static GimpProcedure drawable_parasite_list_proc =
 };
 
 static GimpArgument *
-vectors_parasite_find_invoker (GimpProcedure *procedure,
-                               Gimp          *gimp,
-                               GimpContext   *context,
-                               GimpProgress  *progress,
-                               GimpArgument  *args)
+vectors_parasite_find_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
   GimpVectors *vectors;
-  gchar *name;
+  const gchar *name;
   GimpParasite *parasite = NULL;
 
   vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
-  name = (gchar *) g_value_get_string (&args[1].value);
+  name = g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -960,15 +960,15 @@ static GimpProcedure vectors_parasite_find_proc =
 };
 
 static GimpArgument *
-vectors_parasite_attach_invoker (GimpProcedure *procedure,
-                                 Gimp          *gimp,
-                                 GimpContext   *context,
-                                 GimpProgress  *progress,
-                                 GimpArgument  *args)
+vectors_parasite_attach_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
-  GimpParasite *parasite;
+  const GimpParasite *parasite;
 
   vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
   parasite = g_value_get_boxed (&args[1].value);
@@ -998,18 +998,18 @@ static GimpProcedure vectors_parasite_attach_proc =
 };
 
 static GimpArgument *
-vectors_parasite_detach_invoker (GimpProcedure *procedure,
-                                 Gimp          *gimp,
-                                 GimpContext   *context,
-                                 GimpProgress  *progress,
-                                 GimpArgument  *args)
+vectors_parasite_detach_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
-  gchar *name;
+  const gchar *name;
 
   vectors = (GimpVectors *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_VECTORS);
-  name = (gchar *) g_value_get_string (&args[1].value);
+  name = g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -1036,11 +1036,11 @@ static GimpProcedure vectors_parasite_detach_proc =
 };
 
 static GimpArgument *
-vectors_parasite_list_invoker (GimpProcedure *procedure,
-                               Gimp          *gimp,
-                               GimpContext   *context,
-                               GimpProgress  *progress,
-                               GimpArgument  *args)
+vectors_parasite_list_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;

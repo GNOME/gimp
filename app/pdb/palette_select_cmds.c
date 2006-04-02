@@ -110,20 +110,20 @@ register_palette_select_procs (Gimp *gimp)
 }
 
 static GimpArgument *
-palettes_popup_invoker (GimpProcedure *procedure,
-                        Gimp          *gimp,
-                        GimpContext   *context,
-                        GimpProgress  *progress,
-                        GimpArgument  *args)
+palettes_popup_invoker (GimpProcedure      *procedure,
+                        Gimp               *gimp,
+                        GimpContext        *context,
+                        GimpProgress       *progress,
+                        const GimpArgument *args)
 {
   gboolean success = TRUE;
-  gchar *palette_callback;
-  gchar *popup_title;
-  gchar *initial_palette;
+  const gchar *palette_callback;
+  const gchar *popup_title;
+  const gchar *initial_palette;
 
-  palette_callback = (gchar *) g_value_get_string (&args[0].value);
-  popup_title = (gchar *) g_value_get_string (&args[1].value);
-  initial_palette = (gchar *) g_value_get_string (&args[2].value);
+  palette_callback = g_value_get_string (&args[0].value);
+  popup_title = g_value_get_string (&args[1].value);
+  initial_palette = g_value_get_string (&args[2].value);
 
   if (success)
     {
@@ -155,16 +155,16 @@ static GimpProcedure palettes_popup_proc =
 };
 
 static GimpArgument *
-palettes_close_popup_invoker (GimpProcedure *procedure,
-                              Gimp          *gimp,
-                              GimpContext   *context,
-                              GimpProgress  *progress,
-                              GimpArgument  *args)
+palettes_close_popup_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GimpArgument *args)
 {
   gboolean success = TRUE;
-  gchar *palette_callback;
+  const gchar *palette_callback;
 
-  palette_callback = (gchar *) g_value_get_string (&args[0].value);
+  palette_callback = g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -195,18 +195,18 @@ static GimpProcedure palettes_close_popup_proc =
 };
 
 static GimpArgument *
-palettes_set_popup_invoker (GimpProcedure *procedure,
-                            Gimp          *gimp,
-                            GimpContext   *context,
-                            GimpProgress  *progress,
-                            GimpArgument  *args)
+palettes_set_popup_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GimpArgument *args)
 {
   gboolean success = TRUE;
-  gchar *palette_callback;
-  gchar *palette_name;
+  const gchar *palette_callback;
+  const gchar *palette_name;
 
-  palette_callback = (gchar *) g_value_get_string (&args[0].value);
-  palette_name = (gchar *) g_value_get_string (&args[1].value);
+  palette_callback = g_value_get_string (&args[0].value);
+  palette_name = g_value_get_string (&args[1].value);
 
   if (success)
     {

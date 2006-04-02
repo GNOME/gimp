@@ -1922,11 +1922,11 @@ register_image_procs (Gimp *gimp)
 #endif
 
 static GimpArgument *
-image_list_invoker (GimpProcedure *procedure,
-                    Gimp          *gimp,
-                    GimpContext   *context,
-                    GimpProgress  *progress,
-                    GimpArgument  *args)
+image_list_invoker (GimpProcedure      *procedure,
+                    Gimp               *gimp,
+                    GimpContext        *context,
+                    GimpProgress       *progress,
+                    const GimpArgument *args)
 {
   GimpArgument *return_vals;
   gint32 num_images = 0;
@@ -1971,11 +1971,11 @@ static GimpProcedure image_list_proc =
 };
 
 static GimpArgument *
-image_new_invoker (GimpProcedure *procedure,
-                   Gimp          *gimp,
-                   GimpContext   *context,
-                   GimpProgress  *progress,
-                   GimpArgument  *args)
+image_new_invoker (GimpProcedure      *procedure,
+                   Gimp               *gimp,
+                   GimpContext        *context,
+                   GimpProgress       *progress,
+                   const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -2021,11 +2021,11 @@ static GimpProcedure image_new_proc =
 };
 
 static GimpArgument *
-image_duplicate_invoker (GimpProcedure *procedure,
-                         Gimp          *gimp,
-                         GimpContext   *context,
-                         GimpProgress  *progress,
-                         GimpArgument  *args)
+image_duplicate_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -2067,11 +2067,11 @@ static GimpProcedure image_duplicate_proc =
 };
 
 static GimpArgument *
-image_delete_invoker (GimpProcedure *procedure,
-                      Gimp          *gimp,
-                      GimpContext   *context,
-                      GimpProgress  *progress,
-                      GimpArgument  *args)
+image_delete_invoker (GimpProcedure      *procedure,
+                      Gimp               *gimp,
+                      GimpContext        *context,
+                      GimpProgress       *progress,
+                      const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -2106,11 +2106,11 @@ static GimpProcedure image_delete_proc =
 };
 
 static GimpArgument *
-image_base_type_invoker (GimpProcedure *procedure,
-                         Gimp          *gimp,
-                         GimpContext   *context,
-                         GimpProgress  *progress,
-                         GimpArgument  *args)
+image_base_type_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -2149,11 +2149,11 @@ static GimpProcedure image_base_type_proc =
 };
 
 static GimpArgument *
-image_width_invoker (GimpProcedure *procedure,
-                     Gimp          *gimp,
-                     GimpContext   *context,
-                     GimpProgress  *progress,
-                     GimpArgument  *args)
+image_width_invoker (GimpProcedure      *procedure,
+                     Gimp               *gimp,
+                     GimpContext        *context,
+                     GimpProgress       *progress,
+                     const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -2192,11 +2192,11 @@ static GimpProcedure image_width_proc =
 };
 
 static GimpArgument *
-image_height_invoker (GimpProcedure *procedure,
-                      Gimp          *gimp,
-                      GimpContext   *context,
-                      GimpProgress  *progress,
-                      GimpArgument  *args)
+image_height_invoker (GimpProcedure      *procedure,
+                      Gimp               *gimp,
+                      GimpContext        *context,
+                      GimpProgress       *progress,
+                      const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -2235,11 +2235,11 @@ static GimpProcedure image_height_proc =
 };
 
 static GimpArgument *
-image_free_shadow_invoker (GimpProcedure *procedure,
-                           Gimp          *gimp,
-                           GimpContext   *context,
-                           GimpProgress  *progress,
-                           GimpArgument  *args)
+image_free_shadow_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -2271,11 +2271,11 @@ static GimpProcedure image_free_shadow_proc =
 };
 
 static GimpArgument *
-image_resize_invoker (GimpProcedure *procedure,
-                      Gimp          *gimp,
-                      GimpContext   *context,
-                      GimpProgress  *progress,
-                      GimpArgument  *args)
+image_resize_invoker (GimpProcedure      *procedure,
+                      Gimp               *gimp,
+                      GimpContext        *context,
+                      GimpProgress       *progress,
+                      const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -2316,11 +2316,11 @@ static GimpProcedure image_resize_proc =
 };
 
 static GimpArgument *
-image_resize_to_layers_invoker (GimpProcedure *procedure,
-                                Gimp          *gimp,
-                                GimpContext   *context,
-                                GimpProgress  *progress,
-                                GimpArgument  *args)
+image_resize_to_layers_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -2352,11 +2352,11 @@ static GimpProcedure image_resize_to_layers_proc =
 };
 
 static GimpArgument *
-image_scale_invoker (GimpProcedure *procedure,
-                     Gimp          *gimp,
-                     GimpContext   *context,
-                     GimpProgress  *progress,
-                     GimpArgument  *args)
+image_scale_invoker (GimpProcedure      *procedure,
+                     Gimp               *gimp,
+                     GimpContext        *context,
+                     GimpProgress       *progress,
+                     const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -2394,11 +2394,11 @@ static GimpProcedure image_scale_proc =
 };
 
 static GimpArgument *
-image_crop_invoker (GimpProcedure *procedure,
-                    Gimp          *gimp,
-                    GimpContext   *context,
-                    GimpProgress  *progress,
-                    GimpArgument  *args)
+image_crop_invoker (GimpProcedure      *procedure,
+                    Gimp               *gimp,
+                    GimpContext        *context,
+                    GimpProgress       *progress,
+                    const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -2446,11 +2446,11 @@ static GimpProcedure image_crop_proc =
 };
 
 static GimpArgument *
-image_flip_invoker (GimpProcedure *procedure,
-                    Gimp          *gimp,
-                    GimpContext   *context,
-                    GimpProgress  *progress,
-                    GimpArgument  *args)
+image_flip_invoker (GimpProcedure      *procedure,
+                    Gimp               *gimp,
+                    GimpContext        *context,
+                    GimpProgress       *progress,
+                    const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -2484,11 +2484,11 @@ static GimpProcedure image_flip_proc =
 };
 
 static GimpArgument *
-image_rotate_invoker (GimpProcedure *procedure,
-                      Gimp          *gimp,
-                      GimpContext   *context,
-                      GimpProgress  *progress,
-                      GimpArgument  *args)
+image_rotate_invoker (GimpProcedure      *procedure,
+                      Gimp               *gimp,
+                      GimpContext        *context,
+                      GimpProgress       *progress,
+                      const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -2522,11 +2522,11 @@ static GimpProcedure image_rotate_proc =
 };
 
 static GimpArgument *
-image_get_layers_invoker (GimpProcedure *procedure,
-                          Gimp          *gimp,
-                          GimpContext   *context,
-                          GimpProgress  *progress,
-                          GimpArgument  *args)
+image_get_layers_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -2581,11 +2581,11 @@ static GimpProcedure image_get_layers_proc =
 };
 
 static GimpArgument *
-image_get_channels_invoker (GimpProcedure *procedure,
-                            Gimp          *gimp,
-                            GimpContext   *context,
-                            GimpProgress  *progress,
-                            GimpArgument  *args)
+image_get_channels_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -2640,11 +2640,11 @@ static GimpProcedure image_get_channels_proc =
 };
 
 static GimpArgument *
-image_get_vectors_invoker (GimpProcedure *procedure,
-                           Gimp          *gimp,
-                           GimpContext   *context,
-                           GimpProgress  *progress,
-                           GimpArgument  *args)
+image_get_vectors_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -2699,11 +2699,11 @@ static GimpProcedure image_get_vectors_proc =
 };
 
 static GimpArgument *
-image_get_active_drawable_invoker (GimpProcedure *procedure,
-                                   Gimp          *gimp,
-                                   GimpContext   *context,
-                                   GimpProgress  *progress,
-                                   GimpArgument  *args)
+image_get_active_drawable_invoker (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -2742,11 +2742,11 @@ static GimpProcedure image_get_active_drawable_proc =
 };
 
 static GimpArgument *
-image_unset_active_channel_invoker (GimpProcedure *procedure,
-                                    Gimp          *gimp,
-                                    GimpContext   *context,
-                                    GimpProgress  *progress,
-                                    GimpArgument  *args)
+image_unset_active_channel_invoker (GimpProcedure      *procedure,
+                                    Gimp               *gimp,
+                                    GimpContext        *context,
+                                    GimpProgress       *progress,
+                                    const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -2778,11 +2778,11 @@ static GimpProcedure image_unset_active_channel_proc =
 };
 
 static GimpArgument *
-image_get_floating_sel_invoker (GimpProcedure *procedure,
-                                Gimp          *gimp,
-                                GimpContext   *context,
-                                GimpProgress  *progress,
-                                GimpArgument  *args)
+image_get_floating_sel_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -2821,11 +2821,11 @@ static GimpProcedure image_get_floating_sel_proc =
 };
 
 static GimpArgument *
-image_floating_sel_attached_to_invoker (GimpProcedure *procedure,
-                                        Gimp          *gimp,
-                                        GimpContext   *context,
-                                        GimpProgress  *progress,
-                                        GimpArgument  *args)
+image_floating_sel_attached_to_invoker (GimpProcedure      *procedure,
+                                        Gimp               *gimp,
+                                        GimpContext        *context,
+                                        GimpProgress       *progress,
+                                        const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -2869,11 +2869,11 @@ static GimpProcedure image_floating_sel_attached_to_proc =
 };
 
 static GimpArgument *
-image_pick_color_invoker (GimpProcedure *procedure,
-                          Gimp          *gimp,
-                          GimpContext   *context,
-                          GimpProgress  *progress,
-                          GimpArgument  *args)
+image_pick_color_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -2950,11 +2950,11 @@ static GimpProcedure image_pick_color_proc =
 };
 
 static GimpArgument *
-image_pick_correlate_layer_invoker (GimpProcedure *procedure,
-                                    Gimp          *gimp,
-                                    GimpContext   *context,
-                                    GimpProgress  *progress,
-                                    GimpArgument  *args)
+image_pick_correlate_layer_invoker (GimpProcedure      *procedure,
+                                    Gimp               *gimp,
+                                    GimpContext        *context,
+                                    GimpProgress       *progress,
+                                    const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -2997,11 +2997,11 @@ static GimpProcedure image_pick_correlate_layer_proc =
 };
 
 static GimpArgument *
-image_add_layer_invoker (GimpProcedure *procedure,
-                         Gimp          *gimp,
-                         GimpContext   *context,
-                         GimpProgress  *progress,
-                         GimpArgument  *args)
+image_add_layer_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -3046,11 +3046,11 @@ static GimpProcedure image_add_layer_proc =
 };
 
 static GimpArgument *
-image_remove_layer_invoker (GimpProcedure *procedure,
-                            Gimp          *gimp,
-                            GimpContext   *context,
-                            GimpProgress  *progress,
-                            GimpArgument  *args)
+image_remove_layer_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -3084,11 +3084,11 @@ static GimpProcedure image_remove_layer_proc =
 };
 
 static GimpArgument *
-image_raise_layer_invoker (GimpProcedure *procedure,
-                           Gimp          *gimp,
-                           GimpContext   *context,
-                           GimpProgress  *progress,
-                           GimpArgument  *args)
+image_raise_layer_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -3122,11 +3122,11 @@ static GimpProcedure image_raise_layer_proc =
 };
 
 static GimpArgument *
-image_lower_layer_invoker (GimpProcedure *procedure,
-                           Gimp          *gimp,
-                           GimpContext   *context,
-                           GimpProgress  *progress,
-                           GimpArgument  *args)
+image_lower_layer_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -3160,11 +3160,11 @@ static GimpProcedure image_lower_layer_proc =
 };
 
 static GimpArgument *
-image_raise_layer_to_top_invoker (GimpProcedure *procedure,
-                                  Gimp          *gimp,
-                                  GimpContext   *context,
-                                  GimpProgress  *progress,
-                                  GimpArgument  *args)
+image_raise_layer_to_top_invoker (GimpProcedure      *procedure,
+                                  Gimp               *gimp,
+                                  GimpContext        *context,
+                                  GimpProgress       *progress,
+                                  const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -3198,11 +3198,11 @@ static GimpProcedure image_raise_layer_to_top_proc =
 };
 
 static GimpArgument *
-image_lower_layer_to_bottom_invoker (GimpProcedure *procedure,
-                                     Gimp          *gimp,
-                                     GimpContext   *context,
-                                     GimpProgress  *progress,
-                                     GimpArgument  *args)
+image_lower_layer_to_bottom_invoker (GimpProcedure      *procedure,
+                                     Gimp               *gimp,
+                                     GimpContext        *context,
+                                     GimpProgress       *progress,
+                                     const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -3236,11 +3236,11 @@ static GimpProcedure image_lower_layer_to_bottom_proc =
 };
 
 static GimpArgument *
-image_add_channel_invoker (GimpProcedure *procedure,
-                           Gimp          *gimp,
-                           GimpContext   *context,
-                           GimpProgress  *progress,
-                           GimpArgument  *args)
+image_add_channel_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -3279,11 +3279,11 @@ static GimpProcedure image_add_channel_proc =
 };
 
 static GimpArgument *
-image_remove_channel_invoker (GimpProcedure *procedure,
-                              Gimp          *gimp,
-                              GimpContext   *context,
-                              GimpProgress  *progress,
-                              GimpArgument  *args)
+image_remove_channel_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -3317,11 +3317,11 @@ static GimpProcedure image_remove_channel_proc =
 };
 
 static GimpArgument *
-image_raise_channel_invoker (GimpProcedure *procedure,
-                             Gimp          *gimp,
-                             GimpContext   *context,
-                             GimpProgress  *progress,
-                             GimpArgument  *args)
+image_raise_channel_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -3355,11 +3355,11 @@ static GimpProcedure image_raise_channel_proc =
 };
 
 static GimpArgument *
-image_lower_channel_invoker (GimpProcedure *procedure,
-                             Gimp          *gimp,
-                             GimpContext   *context,
-                             GimpProgress  *progress,
-                             GimpArgument  *args)
+image_lower_channel_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -3393,11 +3393,11 @@ static GimpProcedure image_lower_channel_proc =
 };
 
 static GimpArgument *
-image_add_vectors_invoker (GimpProcedure *procedure,
-                           Gimp          *gimp,
-                           GimpContext   *context,
-                           GimpProgress  *progress,
-                           GimpArgument  *args)
+image_add_vectors_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -3436,11 +3436,11 @@ static GimpProcedure image_add_vectors_proc =
 };
 
 static GimpArgument *
-image_remove_vectors_invoker (GimpProcedure *procedure,
-                              Gimp          *gimp,
-                              GimpContext   *context,
-                              GimpProgress  *progress,
-                              GimpArgument  *args)
+image_remove_vectors_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -3474,11 +3474,11 @@ static GimpProcedure image_remove_vectors_proc =
 };
 
 static GimpArgument *
-image_raise_vectors_invoker (GimpProcedure *procedure,
-                             Gimp          *gimp,
-                             GimpContext   *context,
-                             GimpProgress  *progress,
-                             GimpArgument  *args)
+image_raise_vectors_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -3512,11 +3512,11 @@ static GimpProcedure image_raise_vectors_proc =
 };
 
 static GimpArgument *
-image_lower_vectors_invoker (GimpProcedure *procedure,
-                             Gimp          *gimp,
-                             GimpContext   *context,
-                             GimpProgress  *progress,
-                             GimpArgument  *args)
+image_lower_vectors_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -3550,11 +3550,11 @@ static GimpProcedure image_lower_vectors_proc =
 };
 
 static GimpArgument *
-image_raise_vectors_to_top_invoker (GimpProcedure *procedure,
-                                    Gimp          *gimp,
-                                    GimpContext   *context,
-                                    GimpProgress  *progress,
-                                    GimpArgument  *args)
+image_raise_vectors_to_top_invoker (GimpProcedure      *procedure,
+                                    Gimp               *gimp,
+                                    GimpContext        *context,
+                                    GimpProgress       *progress,
+                                    const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -3588,11 +3588,11 @@ static GimpProcedure image_raise_vectors_to_top_proc =
 };
 
 static GimpArgument *
-image_lower_vectors_to_bottom_invoker (GimpProcedure *procedure,
-                                       Gimp          *gimp,
-                                       GimpContext   *context,
-                                       GimpProgress  *progress,
-                                       GimpArgument  *args)
+image_lower_vectors_to_bottom_invoker (GimpProcedure      *procedure,
+                                       Gimp               *gimp,
+                                       GimpContext        *context,
+                                       GimpProgress       *progress,
+                                       const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -3626,11 +3626,11 @@ static GimpProcedure image_lower_vectors_to_bottom_proc =
 };
 
 static GimpArgument *
-image_flatten_invoker (GimpProcedure *procedure,
-                       Gimp          *gimp,
-                       GimpContext   *context,
-                       GimpProgress  *progress,
-                       GimpArgument  *args)
+image_flatten_invoker (GimpProcedure      *procedure,
+                       Gimp               *gimp,
+                       GimpContext        *context,
+                       GimpProgress       *progress,
+                       const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -3672,11 +3672,11 @@ static GimpProcedure image_flatten_proc =
 };
 
 static GimpArgument *
-image_merge_visible_layers_invoker (GimpProcedure *procedure,
-                                    Gimp          *gimp,
-                                    GimpContext   *context,
-                                    GimpProgress  *progress,
-                                    GimpArgument  *args)
+image_merge_visible_layers_invoker (GimpProcedure      *procedure,
+                                    Gimp               *gimp,
+                                    GimpContext        *context,
+                                    GimpProgress       *progress,
+                                    const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -3720,11 +3720,11 @@ static GimpProcedure image_merge_visible_layers_proc =
 };
 
 static GimpArgument *
-image_merge_down_invoker (GimpProcedure *procedure,
-                          Gimp          *gimp,
-                          GimpContext   *context,
-                          GimpProgress  *progress,
-                          GimpArgument  *args)
+image_merge_down_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -3770,11 +3770,11 @@ static GimpProcedure image_merge_down_proc =
 };
 
 static GimpArgument *
-image_add_layer_mask_invoker (GimpProcedure *procedure,
-                              Gimp          *gimp,
-                              GimpContext   *context,
-                              GimpProgress  *progress,
-                              GimpArgument  *args)
+image_add_layer_mask_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -3811,11 +3811,11 @@ static GimpProcedure image_add_layer_mask_proc =
 };
 
 static GimpArgument *
-image_remove_layer_mask_invoker (GimpProcedure *procedure,
-                                 Gimp          *gimp,
-                                 GimpContext   *context,
-                                 GimpProgress  *progress,
-                                 GimpArgument  *args)
+image_remove_layer_mask_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -3851,11 +3851,11 @@ static GimpProcedure image_remove_layer_mask_proc =
 };
 
 static GimpArgument *
-image_get_colormap_invoker (GimpProcedure *procedure,
-                            Gimp          *gimp,
-                            GimpContext   *context,
-                            GimpProgress  *progress,
-                            GimpArgument  *args)
+image_get_colormap_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -3899,16 +3899,16 @@ static GimpProcedure image_get_colormap_proc =
 };
 
 static GimpArgument *
-image_set_colormap_invoker (GimpProcedure *procedure,
-                            Gimp          *gimp,
-                            GimpContext   *context,
-                            GimpProgress  *progress,
-                            GimpArgument  *args)
+image_set_colormap_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
   gint32 num_bytes;
-  guint8 *colormap;
+  const guint8 *colormap;
 
   image = gimp_value_get_image (&args[0].value, gimp);
   num_bytes = g_value_get_int (&args[1].value);
@@ -3939,11 +3939,11 @@ static GimpProcedure image_set_colormap_proc =
 };
 
 static GimpArgument *
-image_clean_all_invoker (GimpProcedure *procedure,
-                         Gimp          *gimp,
-                         GimpContext   *context,
-                         GimpProgress  *progress,
-                         GimpArgument  *args)
+image_clean_all_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -3975,11 +3975,11 @@ static GimpProcedure image_clean_all_proc =
 };
 
 static GimpArgument *
-image_is_dirty_invoker (GimpProcedure *procedure,
-                        Gimp          *gimp,
-                        GimpContext   *context,
-                        GimpProgress  *progress,
-                        GimpArgument  *args)
+image_is_dirty_invoker (GimpProcedure      *procedure,
+                        Gimp               *gimp,
+                        GimpContext        *context,
+                        GimpProgress       *progress,
+                        const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -4018,11 +4018,11 @@ static GimpProcedure image_is_dirty_proc =
 };
 
 static GimpArgument *
-image_thumbnail_invoker (GimpProcedure *procedure,
-                         Gimp          *gimp,
-                         GimpContext   *context,
-                         GimpProgress  *progress,
-                         GimpArgument  *args)
+image_thumbnail_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -4110,11 +4110,11 @@ static GimpProcedure image_thumbnail_proc =
 };
 
 static GimpArgument *
-image_get_active_layer_invoker (GimpProcedure *procedure,
-                                Gimp          *gimp,
-                                GimpContext   *context,
-                                GimpProgress  *progress,
-                                GimpArgument  *args)
+image_get_active_layer_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -4153,11 +4153,11 @@ static GimpProcedure image_get_active_layer_proc =
 };
 
 static GimpArgument *
-image_set_active_layer_invoker (GimpProcedure *procedure,
-                                Gimp          *gimp,
-                                GimpContext   *context,
-                                GimpProgress  *progress,
-                                GimpArgument  *args)
+image_set_active_layer_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -4192,11 +4192,11 @@ static GimpProcedure image_set_active_layer_proc =
 };
 
 static GimpArgument *
-image_get_active_channel_invoker (GimpProcedure *procedure,
-                                  Gimp          *gimp,
-                                  GimpContext   *context,
-                                  GimpProgress  *progress,
-                                  GimpArgument  *args)
+image_get_active_channel_invoker (GimpProcedure      *procedure,
+                                  Gimp               *gimp,
+                                  GimpContext        *context,
+                                  GimpProgress       *progress,
+                                  const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -4235,11 +4235,11 @@ static GimpProcedure image_get_active_channel_proc =
 };
 
 static GimpArgument *
-image_set_active_channel_invoker (GimpProcedure *procedure,
-                                  Gimp          *gimp,
-                                  GimpContext   *context,
-                                  GimpProgress  *progress,
-                                  GimpArgument  *args)
+image_set_active_channel_invoker (GimpProcedure      *procedure,
+                                  Gimp               *gimp,
+                                  GimpContext        *context,
+                                  GimpProgress       *progress,
+                                  const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -4274,11 +4274,11 @@ static GimpProcedure image_set_active_channel_proc =
 };
 
 static GimpArgument *
-image_get_active_vectors_invoker (GimpProcedure *procedure,
-                                  Gimp          *gimp,
-                                  GimpContext   *context,
-                                  GimpProgress  *progress,
-                                  GimpArgument  *args)
+image_get_active_vectors_invoker (GimpProcedure      *procedure,
+                                  Gimp               *gimp,
+                                  GimpContext        *context,
+                                  GimpProgress       *progress,
+                                  const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -4317,11 +4317,11 @@ static GimpProcedure image_get_active_vectors_proc =
 };
 
 static GimpArgument *
-image_set_active_vectors_invoker (GimpProcedure *procedure,
-                                  Gimp          *gimp,
-                                  GimpContext   *context,
-                                  GimpProgress  *progress,
-                                  GimpArgument  *args)
+image_set_active_vectors_invoker (GimpProcedure      *procedure,
+                                  Gimp               *gimp,
+                                  GimpContext        *context,
+                                  GimpProgress       *progress,
+                                  const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -4356,11 +4356,11 @@ static GimpProcedure image_set_active_vectors_proc =
 };
 
 static GimpArgument *
-image_get_selection_invoker (GimpProcedure *procedure,
-                             Gimp          *gimp,
-                             GimpContext   *context,
-                             GimpProgress  *progress,
-                             GimpArgument  *args)
+image_get_selection_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -4402,11 +4402,11 @@ static GimpProcedure image_get_selection_proc =
 };
 
 static GimpArgument *
-image_get_component_active_invoker (GimpProcedure *procedure,
-                                    Gimp          *gimp,
-                                    GimpContext   *context,
-                                    GimpProgress  *progress,
-                                    GimpArgument  *args)
+image_get_component_active_invoker (GimpProcedure      *procedure,
+                                    Gimp               *gimp,
+                                    GimpContext        *context,
+                                    GimpProgress       *progress,
+                                    const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -4455,11 +4455,11 @@ static GimpProcedure image_get_component_active_proc =
 };
 
 static GimpArgument *
-image_set_component_active_invoker (GimpProcedure *procedure,
-                                    Gimp          *gimp,
-                                    GimpContext   *context,
-                                    GimpProgress  *progress,
-                                    GimpArgument  *args)
+image_set_component_active_invoker (GimpProcedure      *procedure,
+                                    Gimp               *gimp,
+                                    GimpContext        *context,
+                                    GimpProgress       *progress,
+                                    const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -4503,11 +4503,11 @@ static GimpProcedure image_set_component_active_proc =
 };
 
 static GimpArgument *
-image_get_component_visible_invoker (GimpProcedure *procedure,
-                                     Gimp          *gimp,
-                                     GimpContext   *context,
-                                     GimpProgress  *progress,
-                                     GimpArgument  *args)
+image_get_component_visible_invoker (GimpProcedure      *procedure,
+                                     Gimp               *gimp,
+                                     GimpContext        *context,
+                                     GimpProgress       *progress,
+                                     const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -4556,11 +4556,11 @@ static GimpProcedure image_get_component_visible_proc =
 };
 
 static GimpArgument *
-image_set_component_visible_invoker (GimpProcedure *procedure,
-                                     Gimp          *gimp,
-                                     GimpContext   *context,
-                                     GimpProgress  *progress,
-                                     GimpArgument  *args)
+image_set_component_visible_invoker (GimpProcedure      *procedure,
+                                     Gimp               *gimp,
+                                     GimpContext        *context,
+                                     GimpProgress       *progress,
+                                     const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -4604,11 +4604,11 @@ static GimpProcedure image_set_component_visible_proc =
 };
 
 static GimpArgument *
-image_get_filename_invoker (GimpProcedure *procedure,
-                            Gimp          *gimp,
-                            GimpContext   *context,
-                            GimpProgress  *progress,
-                            GimpArgument  *args)
+image_get_filename_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -4647,18 +4647,18 @@ static GimpProcedure image_get_filename_proc =
 };
 
 static GimpArgument *
-image_set_filename_invoker (GimpProcedure *procedure,
-                            Gimp          *gimp,
-                            GimpContext   *context,
-                            GimpProgress  *progress,
-                            GimpArgument  *args)
+image_set_filename_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gchar *filename;
+  const gchar *filename;
 
   image = gimp_value_get_image (&args[0].value, gimp);
-  filename = (gchar *) g_value_get_string (&args[1].value);
+  filename = g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -4703,11 +4703,11 @@ static GimpProcedure image_set_filename_proc =
 };
 
 static GimpArgument *
-image_get_name_invoker (GimpProcedure *procedure,
-                        Gimp          *gimp,
-                        GimpContext   *context,
-                        GimpProgress  *progress,
-                        GimpArgument  *args)
+image_get_name_invoker (GimpProcedure      *procedure,
+                        Gimp               *gimp,
+                        GimpContext        *context,
+                        GimpProgress       *progress,
+                        const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -4751,11 +4751,11 @@ static GimpProcedure image_get_name_proc =
 };
 
 static GimpArgument *
-image_get_resolution_invoker (GimpProcedure *procedure,
-                              Gimp          *gimp,
-                              GimpContext   *context,
-                              GimpProgress  *progress,
-                              GimpArgument  *args)
+image_get_resolution_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -4798,11 +4798,11 @@ static GimpProcedure image_get_resolution_proc =
 };
 
 static GimpArgument *
-image_set_resolution_invoker (GimpProcedure *procedure,
-                              Gimp          *gimp,
-                              GimpContext   *context,
-                              GimpProgress  *progress,
-                              GimpArgument  *args)
+image_set_resolution_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -4850,11 +4850,11 @@ static GimpProcedure image_set_resolution_proc =
 };
 
 static GimpArgument *
-image_get_unit_invoker (GimpProcedure *procedure,
-                        Gimp          *gimp,
-                        GimpContext   *context,
-                        GimpProgress  *progress,
-                        GimpArgument  *args)
+image_get_unit_invoker (GimpProcedure      *procedure,
+                        Gimp               *gimp,
+                        GimpContext        *context,
+                        GimpProgress       *progress,
+                        const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -4893,11 +4893,11 @@ static GimpProcedure image_get_unit_proc =
 };
 
 static GimpArgument *
-image_set_unit_invoker (GimpProcedure *procedure,
-                        Gimp          *gimp,
-                        GimpContext   *context,
-                        GimpProgress  *progress,
-                        GimpArgument  *args)
+image_set_unit_invoker (GimpProcedure      *procedure,
+                        Gimp               *gimp,
+                        GimpContext        *context,
+                        GimpProgress       *progress,
+                        const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -4931,11 +4931,11 @@ static GimpProcedure image_set_unit_proc =
 };
 
 static GimpArgument *
-image_get_tattoo_state_invoker (GimpProcedure *procedure,
-                                Gimp          *gimp,
-                                GimpContext   *context,
-                                GimpProgress  *progress,
-                                GimpArgument  *args)
+image_get_tattoo_state_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -4974,11 +4974,11 @@ static GimpProcedure image_get_tattoo_state_proc =
 };
 
 static GimpArgument *
-image_set_tattoo_state_invoker (GimpProcedure *procedure,
-                                Gimp          *gimp,
-                                GimpContext   *context,
-                                GimpProgress  *progress,
-                                GimpArgument  *args)
+image_set_tattoo_state_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -5012,11 +5012,11 @@ static GimpProcedure image_set_tattoo_state_proc =
 };
 
 static GimpArgument *
-image_get_layer_by_tattoo_invoker (GimpProcedure *procedure,
-                                   Gimp          *gimp,
-                                   GimpContext   *context,
-                                   GimpProgress  *progress,
-                                   GimpArgument  *args)
+image_get_layer_by_tattoo_invoker (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -5057,11 +5057,11 @@ static GimpProcedure image_get_layer_by_tattoo_proc =
 };
 
 static GimpArgument *
-image_get_channel_by_tattoo_invoker (GimpProcedure *procedure,
-                                     Gimp          *gimp,
-                                     GimpContext   *context,
-                                     GimpProgress  *progress,
-                                     GimpArgument  *args)
+image_get_channel_by_tattoo_invoker (GimpProcedure      *procedure,
+                                     Gimp               *gimp,
+                                     GimpContext        *context,
+                                     GimpProgress       *progress,
+                                     const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -5102,11 +5102,11 @@ static GimpProcedure image_get_channel_by_tattoo_proc =
 };
 
 static GimpArgument *
-image_get_vectors_by_tattoo_invoker (GimpProcedure *procedure,
-                                     Gimp          *gimp,
-                                     GimpContext   *context,
-                                     GimpProgress  *progress,
-                                     GimpArgument  *args)
+image_get_vectors_by_tattoo_invoker (GimpProcedure      *procedure,
+                                     Gimp               *gimp,
+                                     GimpContext        *context,
+                                     GimpProgress       *progress,
+                                     const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;

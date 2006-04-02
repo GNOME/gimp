@@ -154,11 +154,11 @@ register_floating_sel_procs (Gimp *gimp)
 }
 
 static GimpArgument *
-floating_sel_remove_invoker (GimpProcedure *procedure,
-                             Gimp          *gimp,
-                             GimpContext   *context,
-                             GimpProgress  *progress,
-                             GimpArgument  *args)
+floating_sel_remove_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
@@ -193,11 +193,11 @@ static GimpProcedure floating_sel_remove_proc =
 };
 
 static GimpArgument *
-floating_sel_anchor_invoker (GimpProcedure *procedure,
-                             Gimp          *gimp,
-                             GimpContext   *context,
-                             GimpProgress  *progress,
-                             GimpArgument  *args)
+floating_sel_anchor_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
@@ -232,11 +232,11 @@ static GimpProcedure floating_sel_anchor_proc =
 };
 
 static GimpArgument *
-floating_sel_to_layer_invoker (GimpProcedure *procedure,
-                               Gimp          *gimp,
-                               GimpContext   *context,
-                               GimpProgress  *progress,
-                               GimpArgument  *args)
+floating_sel_to_layer_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
@@ -271,11 +271,11 @@ static GimpProcedure floating_sel_to_layer_proc =
 };
 
 static GimpArgument *
-floating_sel_attach_invoker (GimpProcedure *procedure,
-                             Gimp          *gimp,
-                             GimpContext   *context,
-                             GimpProgress  *progress,
-                             GimpArgument  *args)
+floating_sel_attach_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -312,11 +312,11 @@ static GimpProcedure floating_sel_attach_proc =
 };
 
 static GimpArgument *
-floating_sel_rigor_invoker (GimpProcedure *procedure,
-                            Gimp          *gimp,
-                            GimpContext   *context,
-                            GimpProgress  *progress,
-                            GimpArgument  *args)
+floating_sel_rigor_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
@@ -353,11 +353,11 @@ static GimpProcedure floating_sel_rigor_proc =
 };
 
 static GimpArgument *
-floating_sel_relax_invoker (GimpProcedure *procedure,
-                            Gimp          *gimp,
-                            GimpContext   *context,
-                            GimpProgress  *progress,
-                            GimpArgument  *args)
+floating_sel_relax_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;

@@ -373,11 +373,11 @@ register_selection_tools_procs (Gimp *gimp)
 }
 
 static GimpArgument *
-by_color_select_invoker (GimpProcedure *procedure,
-                         Gimp          *gimp,
-                         GimpContext   *context,
-                         GimpProgress  *progress,
-                         GimpArgument  *args)
+by_color_select_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -434,11 +434,11 @@ static GimpProcedure by_color_select_proc =
 };
 
 static GimpArgument *
-ellipse_select_invoker (GimpProcedure *procedure,
-                        Gimp          *gimp,
-                        GimpContext   *context,
-                        GimpProgress  *progress,
-                        GimpArgument  *args)
+ellipse_select_invoker (GimpProcedure      *procedure,
+                        Gimp               *gimp,
+                        GimpContext        *context,
+                        GimpProgress       *progress,
+                        const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -493,16 +493,16 @@ static GimpProcedure ellipse_select_proc =
 };
 
 static GimpArgument *
-free_select_invoker (GimpProcedure *procedure,
-                     Gimp          *gimp,
-                     GimpContext   *context,
-                     GimpProgress  *progress,
-                     GimpArgument  *args)
+free_select_invoker (GimpProcedure      *procedure,
+                     Gimp               *gimp,
+                     GimpContext        *context,
+                     GimpProgress       *progress,
+                     const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
   gint32 num_segs;
-  gdouble *segs;
+  const gdouble *segs;
   gint32 operation;
   gboolean antialias;
   gboolean feather;
@@ -510,7 +510,7 @@ free_select_invoker (GimpProcedure *procedure,
 
   image = gimp_value_get_image (&args[0].value, gimp);
   num_segs = g_value_get_int (&args[1].value);
-  segs = (gdouble *) gimp_value_get_floatarray (&args[2].value);
+  segs = gimp_value_get_floatarray (&args[2].value);
   operation = g_value_get_enum (&args[3].value);
   antialias = g_value_get_boolean (&args[4].value);
   feather = g_value_get_boolean (&args[5].value);
@@ -549,11 +549,11 @@ static GimpProcedure free_select_proc =
 };
 
 static GimpArgument *
-fuzzy_select_invoker (GimpProcedure *procedure,
-                      Gimp          *gimp,
-                      GimpContext   *context,
-                      GimpProgress  *progress,
-                      GimpArgument  *args)
+fuzzy_select_invoker (GimpProcedure      *procedure,
+                      Gimp               *gimp,
+                      GimpContext        *context,
+                      GimpProgress       *progress,
+                      const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -614,11 +614,11 @@ static GimpProcedure fuzzy_select_proc =
 };
 
 static GimpArgument *
-rect_select_invoker (GimpProcedure *procedure,
-                     Gimp          *gimp,
-                     GimpContext   *context,
-                     GimpProgress  *progress,
-                     GimpArgument  *args)
+rect_select_invoker (GimpProcedure      *procedure,
+                     Gimp               *gimp,
+                     GimpContext        *context,
+                     GimpProgress       *progress,
+                     const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpImage *image;

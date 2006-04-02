@@ -131,20 +131,20 @@ register_pattern_procs (Gimp *gimp)
 }
 
 static GimpArgument *
-pattern_get_info_invoker (GimpProcedure *procedure,
-                          Gimp          *gimp,
-                          GimpContext   *context,
-                          GimpProgress  *progress,
-                          GimpArgument  *args)
+pattern_get_info_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
-  gchar *name;
+  const gchar *name;
   gint32 width = 0;
   gint32 height = 0;
   gint32 bpp = 0;
 
-  name = (gchar *) g_value_get_string (&args[0].value);
+  name = g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -190,22 +190,22 @@ static GimpProcedure pattern_get_info_proc =
 };
 
 static GimpArgument *
-pattern_get_pixels_invoker (GimpProcedure *procedure,
-                            Gimp          *gimp,
-                            GimpContext   *context,
-                            GimpProgress  *progress,
-                            GimpArgument  *args)
+pattern_get_pixels_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
-  gchar *name;
+  const gchar *name;
   gint32 width = 0;
   gint32 height = 0;
   gint32 bpp = 0;
   gint32 num_color_bytes = 0;
   guint8 *color_bytes = NULL;
 
-  name = (gchar *) g_value_get_string (&args[0].value);
+  name = g_value_get_string (&args[0].value);
 
   if (success)
     {

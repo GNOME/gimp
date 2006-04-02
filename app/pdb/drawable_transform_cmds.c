@@ -1379,11 +1379,11 @@ register_drawable_transform_procs (Gimp *gimp)
 }
 
 static GimpArgument *
-drawable_transform_flip_simple_invoker (GimpProcedure *procedure,
-                                        Gimp          *gimp,
-                                        GimpContext   *context,
-                                        GimpProgress  *progress,
-                                        GimpArgument  *args)
+drawable_transform_flip_simple_invoker (GimpProcedure      *procedure,
+                                        Gimp               *gimp,
+                                        GimpContext        *context,
+                                        GimpProgress       *progress,
+                                        const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -1440,11 +1440,11 @@ static GimpProcedure drawable_transform_flip_simple_proc =
 };
 
 static GimpArgument *
-drawable_transform_flip_invoker (GimpProcedure *procedure,
-                                 Gimp          *gimp,
-                                 GimpContext   *context,
-                                 GimpProgress  *progress,
-                                 GimpArgument  *args)
+drawable_transform_flip_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -1526,11 +1526,11 @@ static GimpProcedure drawable_transform_flip_proc =
 };
 
 static GimpArgument *
-drawable_transform_flip_default_invoker (GimpProcedure *procedure,
-                                         Gimp          *gimp,
-                                         GimpContext   *context,
-                                         GimpProgress  *progress,
-                                         GimpArgument  *args)
+drawable_transform_flip_default_invoker (GimpProcedure      *procedure,
+                                         Gimp               *gimp,
+                                         GimpContext        *context,
+                                         GimpProgress       *progress,
+                                         const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -1610,11 +1610,11 @@ static GimpProcedure drawable_transform_flip_default_proc =
 };
 
 static GimpArgument *
-drawable_transform_perspective_invoker (GimpProcedure *procedure,
-                                        Gimp          *gimp,
-                                        GimpContext   *context,
-                                        GimpProgress  *progress,
-                                        GimpArgument  *args)
+drawable_transform_perspective_invoker (GimpProcedure      *procedure,
+                                        Gimp               *gimp,
+                                        GimpContext        *context,
+                                        GimpProgress       *progress,
+                                        const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -1708,11 +1708,11 @@ static GimpProcedure drawable_transform_perspective_proc =
 };
 
 static GimpArgument *
-drawable_transform_perspective_default_invoker (GimpProcedure *procedure,
-                                                Gimp          *gimp,
-                                                GimpContext   *context,
-                                                GimpProgress  *progress,
-                                                GimpArgument  *args)
+drawable_transform_perspective_default_invoker (GimpProcedure      *procedure,
+                                                Gimp               *gimp,
+                                                GimpContext        *context,
+                                                GimpProgress       *progress,
+                                                const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -1804,11 +1804,11 @@ static GimpProcedure drawable_transform_perspective_default_proc =
 };
 
 static GimpArgument *
-drawable_transform_rotate_simple_invoker (GimpProcedure *procedure,
-                                          Gimp          *gimp,
-                                          GimpContext   *context,
-                                          GimpProgress  *progress,
-                                          GimpArgument  *args)
+drawable_transform_rotate_simple_invoker (GimpProcedure      *procedure,
+                                          Gimp               *gimp,
+                                          GimpContext        *context,
+                                          GimpProgress       *progress,
+                                          const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -1867,11 +1867,11 @@ static GimpProcedure drawable_transform_rotate_simple_proc =
 };
 
 static GimpArgument *
-drawable_transform_rotate_invoker (GimpProcedure *procedure,
-                                   Gimp          *gimp,
-                                   GimpContext   *context,
-                                   GimpProgress  *progress,
-                                   GimpArgument  *args)
+drawable_transform_rotate_invoker (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -1956,11 +1956,11 @@ static GimpProcedure drawable_transform_rotate_proc =
 };
 
 static GimpArgument *
-drawable_transform_rotate_default_invoker (GimpProcedure *procedure,
-                                           Gimp          *gimp,
-                                           GimpContext   *context,
-                                           GimpProgress  *progress,
-                                           GimpArgument  *args)
+drawable_transform_rotate_default_invoker (GimpProcedure      *procedure,
+                                           Gimp               *gimp,
+                                           GimpContext        *context,
+                                           GimpProgress       *progress,
+                                           const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -2043,11 +2043,11 @@ static GimpProcedure drawable_transform_rotate_default_proc =
 };
 
 static GimpArgument *
-drawable_transform_scale_invoker (GimpProcedure *procedure,
-                                  Gimp          *gimp,
-                                  GimpContext   *context,
-                                  GimpProgress  *progress,
-                                  GimpArgument  *args)
+drawable_transform_scale_invoker (GimpProcedure      *procedure,
+                                  Gimp               *gimp,
+                                  GimpContext        *context,
+                                  GimpProgress       *progress,
+                                  const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -2132,11 +2132,11 @@ static GimpProcedure drawable_transform_scale_proc =
 };
 
 static GimpArgument *
-drawable_transform_scale_default_invoker (GimpProcedure *procedure,
-                                          Gimp          *gimp,
-                                          GimpContext   *context,
-                                          GimpProgress  *progress,
-                                          GimpArgument  *args)
+drawable_transform_scale_default_invoker (GimpProcedure      *procedure,
+                                          Gimp               *gimp,
+                                          GimpContext        *context,
+                                          GimpProgress       *progress,
+                                          const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -2219,11 +2219,11 @@ static GimpProcedure drawable_transform_scale_default_proc =
 };
 
 static GimpArgument *
-drawable_transform_shear_invoker (GimpProcedure *procedure,
-                                  Gimp          *gimp,
-                                  GimpContext   *context,
-                                  GimpProgress  *progress,
-                                  GimpArgument  *args)
+drawable_transform_shear_invoker (GimpProcedure      *procedure,
+                                  Gimp               *gimp,
+                                  GimpContext        *context,
+                                  GimpProgress       *progress,
+                                  const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -2302,11 +2302,11 @@ static GimpProcedure drawable_transform_shear_proc =
 };
 
 static GimpArgument *
-drawable_transform_shear_default_invoker (GimpProcedure *procedure,
-                                          Gimp          *gimp,
-                                          GimpContext   *context,
-                                          GimpProgress  *progress,
-                                          GimpArgument  *args)
+drawable_transform_shear_default_invoker (GimpProcedure      *procedure,
+                                          Gimp               *gimp,
+                                          GimpContext        *context,
+                                          GimpProgress       *progress,
+                                          const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -2383,11 +2383,11 @@ static GimpProcedure drawable_transform_shear_default_proc =
 };
 
 static GimpArgument *
-drawable_transform_2d_invoker (GimpProcedure *procedure,
-                               Gimp          *gimp,
-                               GimpContext   *context,
-                               GimpProgress  *progress,
-                               GimpArgument  *args)
+drawable_transform_2d_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -2477,11 +2477,11 @@ static GimpProcedure drawable_transform_2d_proc =
 };
 
 static GimpArgument *
-drawable_transform_2d_default_invoker (GimpProcedure *procedure,
-                                       Gimp          *gimp,
-                                       GimpContext   *context,
-                                       GimpProgress  *progress,
-                                       GimpArgument  *args)
+drawable_transform_2d_default_invoker (GimpProcedure      *procedure,
+                                       Gimp               *gimp,
+                                       GimpContext        *context,
+                                       GimpProgress       *progress,
+                                       const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -2569,11 +2569,11 @@ static GimpProcedure drawable_transform_2d_default_proc =
 };
 
 static GimpArgument *
-drawable_transform_matrix_invoker (GimpProcedure *procedure,
-                                   Gimp          *gimp,
-                                   GimpContext   *context,
-                                   GimpProgress  *progress,
-                                   GimpArgument  *args)
+drawable_transform_matrix_invoker (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
@@ -2671,11 +2671,11 @@ static GimpProcedure drawable_transform_matrix_proc =
 };
 
 static GimpArgument *
-drawable_transform_matrix_default_invoker (GimpProcedure *procedure,
-                                           Gimp          *gimp,
-                                           GimpContext   *context,
-                                           GimpProgress  *progress,
-                                           GimpArgument  *args)
+drawable_transform_matrix_default_invoker (GimpProcedure      *procedure,
+                                           Gimp               *gimp,
+                                           GimpContext        *context,
+                                           GimpProgress       *progress,
+                                           const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;

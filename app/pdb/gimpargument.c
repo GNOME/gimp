@@ -121,7 +121,7 @@ gimp_arguments_destroy (GimpArgument *args,
   if (! args && n_args)
     return;
 
-  for (i = n_args - 1; i >= 0; i--)
+  for (i = 0; i < n_args; i++)
     g_value_unset (&args[i].value);
 
   g_free (args);

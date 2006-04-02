@@ -208,19 +208,19 @@ register_buffer_procs (Gimp *gimp)
 }
 
 static GimpArgument *
-buffers_get_list_invoker (GimpProcedure *procedure,
-                          Gimp          *gimp,
-                          GimpContext   *context,
-                          GimpProgress  *progress,
-                          GimpArgument  *args)
+buffers_get_list_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
-  gchar *filter;
+  const gchar *filter;
   gint32 num_buffers = 0;
   gchar **buffer_list = NULL;
 
-  filter = (gchar *) g_value_get_string (&args[0].value);
+  filter = g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -256,20 +256,20 @@ static GimpProcedure buffers_get_list_proc =
 };
 
 static GimpArgument *
-buffer_rename_invoker (GimpProcedure *procedure,
-                       Gimp          *gimp,
-                       GimpContext   *context,
-                       GimpProgress  *progress,
-                       GimpArgument  *args)
+buffer_rename_invoker (GimpProcedure      *procedure,
+                       Gimp               *gimp,
+                       GimpContext        *context,
+                       GimpProgress       *progress,
+                       const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
-  gchar *buffer_name;
-  gchar *new_name;
+  const gchar *buffer_name;
+  const gchar *new_name;
   gchar *real_name = NULL;
 
-  buffer_name = (gchar *) g_value_get_string (&args[0].value);
-  new_name = (gchar *) g_value_get_string (&args[1].value);
+  buffer_name = g_value_get_string (&args[0].value);
+  new_name = g_value_get_string (&args[1].value);
 
   if (success)
     {
@@ -310,16 +310,16 @@ static GimpProcedure buffer_rename_proc =
 };
 
 static GimpArgument *
-buffer_delete_invoker (GimpProcedure *procedure,
-                       Gimp          *gimp,
-                       GimpContext   *context,
-                       GimpProgress  *progress,
-                       GimpArgument  *args)
+buffer_delete_invoker (GimpProcedure      *procedure,
+                       Gimp               *gimp,
+                       GimpContext        *context,
+                       GimpProgress       *progress,
+                       const GimpArgument *args)
 {
   gboolean success = TRUE;
-  gchar *buffer_name;
+  const gchar *buffer_name;
 
-  buffer_name = (gchar *) g_value_get_string (&args[0].value);
+  buffer_name = g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -352,18 +352,18 @@ static GimpProcedure buffer_delete_proc =
 };
 
 static GimpArgument *
-buffer_get_width_invoker (GimpProcedure *procedure,
-                          Gimp          *gimp,
-                          GimpContext   *context,
-                          GimpProgress  *progress,
-                          GimpArgument  *args)
+buffer_get_width_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
-  gchar *buffer_name;
+  const gchar *buffer_name;
   gint32 width = 0;
 
-  buffer_name = (gchar *) g_value_get_string (&args[0].value);
+  buffer_name = g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -401,18 +401,18 @@ static GimpProcedure buffer_get_width_proc =
 };
 
 static GimpArgument *
-buffer_get_height_invoker (GimpProcedure *procedure,
-                           Gimp          *gimp,
-                           GimpContext   *context,
-                           GimpProgress  *progress,
-                           GimpArgument  *args)
+buffer_get_height_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
-  gchar *buffer_name;
+  const gchar *buffer_name;
   gint32 height = 0;
 
-  buffer_name = (gchar *) g_value_get_string (&args[0].value);
+  buffer_name = g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -450,18 +450,18 @@ static GimpProcedure buffer_get_height_proc =
 };
 
 static GimpArgument *
-buffer_get_bytes_invoker (GimpProcedure *procedure,
-                          Gimp          *gimp,
-                          GimpContext   *context,
-                          GimpProgress  *progress,
-                          GimpArgument  *args)
+buffer_get_bytes_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
-  gchar *buffer_name;
+  const gchar *buffer_name;
   gint32 bytes = 0;
 
-  buffer_name = (gchar *) g_value_get_string (&args[0].value);
+  buffer_name = g_value_get_string (&args[0].value);
 
   if (success)
     {
@@ -499,18 +499,18 @@ static GimpProcedure buffer_get_bytes_proc =
 };
 
 static GimpArgument *
-buffer_get_image_type_invoker (GimpProcedure *procedure,
-                               Gimp          *gimp,
-                               GimpContext   *context,
-                               GimpProgress  *progress,
-                               GimpArgument  *args)
+buffer_get_image_type_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GimpArgument *args)
 {
   gboolean success = TRUE;
   GimpArgument *return_vals;
-  gchar *buffer_name;
+  const gchar *buffer_name;
   gint32 image_type = 0;
 
-  buffer_name = (gchar *) g_value_get_string (&args[0].value);
+  buffer_name = g_value_get_string (&args[0].value);
 
   if (success)
     {

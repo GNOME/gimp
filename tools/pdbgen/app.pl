@@ -62,7 +62,7 @@ sub format_code_frag {
 sub declare_args {
     my $proc = shift;
     my $out = shift;
-    my $init = shift;
+    my $outargs = shift;
 
     local $result = "";
 
@@ -78,9 +78,11 @@ sub declare_args {
 	    }
 
 	    unless (exists $_->{no_declare}) {
-		$result .= ' ' x 2 . $arg->{type} . $_->{name};
-		if ($init) {
-		    $result .= " = $arg->{init_value}";
+		if ($outargs) {
+		    $result .= "  $arg->{type}$_->{name} = $arg->{init_value}";
+		}
+		else {
+		    $result .= "  $arg->{const_type}$_->{name}";
 		}
 		$result .= ";\n";
 
@@ -571,11 +573,11 @@ CODE
 	}
 
 	$out->{code} .= "\nstatic GimpArgument *\n";
-	$out->{code} .= "${name}_invoker (GimpProcedure *procedure,\n";
-	$out->{code} .=  ' ' x length($name) . "          Gimp          *gimp,\n";
-	$out->{code} .=  ' ' x length($name) . "          GimpContext   *context,\n";
-	$out->{code} .=  ' ' x length($name) . "          GimpProgress  *progress,\n";
-	$out->{code} .=  ' ' x length($name) . "          GimpArgument  *args)\n{\n";
+	$out->{code} .= "${name}_invoker (GimpProcedure      *procedure,\n";
+	$out->{code} .=  ' ' x length($name) . "          Gimp               *gimp,\n";
+	$out->{code} .=  ' ' x length($name) . "          GimpContext        *context,\n";
+	$out->{code} .=  ' ' x length($name) . "          GimpProgress       *progress,\n";
+	$out->{code} .=  ' ' x length($name) . "          const GimpArgument *args)\n{\n";
 
 	my $code = "";
 

@@ -224,7 +224,7 @@ sub path_set_points {
   if (success)
     {
       GimpVectors            *vectors;
-      gdouble                *curr_point_pair;
+      const gdouble          *curr_point_pair;
       GimpVectorsCompatPoint *points;
       gint                    n_points;
       gint                    i;
