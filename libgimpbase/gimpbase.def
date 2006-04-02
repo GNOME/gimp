@@ -48,7 +48,9 @@ EXPORTS
 	gimp_message_handler_type_get_type
 	gimp_paint_application_mode_get_type
 	gimp_param_memsize_get_type
+	gimp_param_parasite_get_type
 	gimp_param_spec_memsize
+	gimp_param_spec_parasite
 	gimp_param_spec_unit
 	gimp_param_unit_get_type
 	gimp_parasite_compare
@@ -57,6 +59,7 @@ EXPORTS
 	gimp_parasite_data_size
 	gimp_parasite_flags
 	gimp_parasite_free
+	gimp_parasite_get_type
 	gimp_parasite_has_flag
 	gimp_parasite_is_persistent
 	gimp_parasite_is_type

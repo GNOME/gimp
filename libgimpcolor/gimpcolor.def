@@ -65,3 +65,5 @@ EXPORTS
 	gimp_rgba_set
 	gimp_rgba_set_uchar
 	gimp_rgba_subtract
+	gimp_value_get_rgb
+	gimp_value_set_rgb

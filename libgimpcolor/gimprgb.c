@@ -29,9 +29,11 @@
 #include "gimprgb.h"
 
 
-/*  RGB type  */
+/*
+ * GIMP_TYPE_RGB
+ */
 
-static GimpRGB  * rgb_copy  (const GimpRGB *rgb);
+static GimpRGB * gimp_rgb_copy (const GimpRGB *rgb);
 
 
 GType
@@ -41,14 +43,37 @@ gimp_rgb_get_type (void)
 
   if (!rgb_type)
     rgb_type = g_boxed_type_register_static ("GimpRGB",
-                                             (GBoxedCopyFunc) rgb_copy,
+                                             (GBoxedCopyFunc) gimp_rgb_copy,
                                              (GBoxedFreeFunc) g_free);
 
   return rgb_type;
 }
 
+void
+gimp_value_get_rgb (const GValue *value,
+                    GimpRGB      *rgb)
+{
+  g_return_if_fail (GIMP_VALUE_HOLDS_RGB (value));
+  g_return_if_fail (rgb != NULL);
+
+  if (value->data[0].v_pointer)
+    *rgb = *((GimpRGB *) value->data[0].v_pointer);
+  else
+    gimp_rgba_set (rgb, 0.0, 0.0, 0.0, 1.0);
+}
+
+void
+gimp_value_set_rgb (GValue        *value,
+                    const GimpRGB *rgb)
+{
+  g_return_if_fail (GIMP_VALUE_HOLDS_RGB (value));
+  g_return_if_fail (rgb != NULL);
+
+  g_value_set_boxed (value, rgb);
+}
+
 static GimpRGB *
-rgb_copy (const GimpRGB *rgb)
+gimp_rgb_copy (const GimpRGB *rgb)
 {
   return g_memdup (rgb, sizeof (GimpRGB));
 }

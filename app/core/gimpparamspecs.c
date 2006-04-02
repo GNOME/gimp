@@ -21,7 +21,6 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
 
@@ -722,158 +721,6 @@ gimp_value_set_display (GValue     *value,
 
 
 /*
- * GIMP_TYPE_RGB
- */
-
-void
-gimp_value_get_rgb (const GValue *value,
-                    GimpRGB      *rgb)
-{
-  g_return_if_fail (GIMP_VALUE_HOLDS_RGB (value));
-  g_return_if_fail (rgb != NULL);
-
-  if (value->data[0].v_pointer)
-    *rgb = *((GimpRGB *) value->data[0].v_pointer);
-  else
-    gimp_rgba_set (rgb, 0.0, 0.0, 0.0, 1.0);
-}
-
-void
-gimp_value_set_rgb (GValue  *value,
-                    GimpRGB *rgb)
-{
-  g_return_if_fail (GIMP_VALUE_HOLDS_RGB (value));
-  g_return_if_fail (rgb != NULL);
-
-  g_value_set_boxed (value, rgb);
-}
-
-
-/*
- * GIMP_TYPE_PARASITE
- */
-
-GType
-gimp_parasite_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    type = g_boxed_type_register_static ("GimpParasite",
-                                         (GBoxedCopyFunc) gimp_parasite_copy,
-                                         (GBoxedFreeFunc) gimp_parasite_free);
-
-  return type;
-}
-
-
-/*
- * GIMP_TYPE_PARAM_PARASITE
- */
-
-static void       gimp_param_parasite_class_init  (GParamSpecClass *class);
-static void       gimp_param_parasite_init        (GParamSpec      *pspec);
-static gboolean   gimp_param_parasite_validate    (GParamSpec      *pspec,
-                                                   GValue          *value);
-static gint       gimp_param_parasite_values_cmp  (GParamSpec      *pspec,
-                                                   const GValue    *value1,
-                                                   const GValue    *value2);
-
-GType
-gimp_param_parasite_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo type_info =
-      {
-        sizeof (GParamSpecClass),
-        NULL, NULL,
-        (GClassInitFunc) gimp_param_parasite_class_init,
-        NULL, NULL,
-        sizeof (GimpParamSpecParasite),
-        0,
-        (GInstanceInitFunc) gimp_param_parasite_init
-      };
-
-      type = g_type_register_static (G_TYPE_PARAM_BOXED,
-                                     "GimpParamParasite",
-                                     &type_info, 0);
-    }
-
-  return type;
-}
-
-static void
-gimp_param_parasite_class_init (GParamSpecClass *class)
-{
-  class->value_type     = GIMP_TYPE_PARASITE;
-  class->value_validate = gimp_param_parasite_validate;
-  class->values_cmp     = gimp_param_parasite_values_cmp;
-}
-
-static void
-gimp_param_parasite_init (GParamSpec *pspec)
-{
-}
-
-static gboolean
-gimp_param_parasite_validate (GParamSpec *pspec,
-                              GValue     *value)
-{
-  GimpParasite *parasite = value->data[0].v_pointer;
-
-  if (! parasite)
-    {
-      return TRUE;
-    }
-  else if (parasite->name == NULL                          ||
-           ! g_utf8_validate (parasite->name, -1, NULL)    ||
-           (parasite->size == 0 && parasite->data != NULL) ||
-           (parasite->size >  0 && parasite->data == NULL))
-    {
-      g_value_set_boxed (value, NULL);
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-static gint
-gimp_param_parasite_values_cmp (GParamSpec   *pspec,
-                                const GValue *value1,
-                                const GValue *value2)
-{
-  GimpParasite *parasite1 = value1->data[0].v_pointer;
-  GimpParasite *parasite2 = value2->data[0].v_pointer;
-
-  /*  try to return at least *something*, it's useless anyway...  */
-
-  if (! parasite1)
-    return parasite2 != NULL ? -1 : 0;
-  else if (! parasite2)
-    return parasite1 != NULL;
-  else
-    return gimp_parasite_compare (parasite1, parasite2);
-}
-
-GParamSpec *
-gimp_param_spec_parasite (const gchar *name,
-                          const gchar *nick,
-                          const gchar *blurb,
-                          GParamFlags  flags)
-{
-  GimpParamSpecParasite *parasite_spec;
-
-  parasite_spec = g_param_spec_internal (GIMP_TYPE_PARAM_PARASITE,
-                                         name, nick, blurb, flags);
-
-  return G_PARAM_SPEC (parasite_spec);
-}
-
-
-/*
  * GIMP_TYPE_ARRAY
  */
 
@@ -986,6 +833,18 @@ static gboolean
 gimp_param_array_validate (GParamSpec *pspec,
                            GValue     *value)
 {
+  GimpArray *array = value->data[0].v_pointer;
+
+  if (array)
+    {
+      if ((array->data == NULL && array->length != 0) ||
+          (array->data != NULL && array->length == 0))
+        {
+          g_value_set_boxed (value, NULL);
+          return TRUE;
+        }
+    }
+
   return FALSE;
 }
 
@@ -1002,10 +861,11 @@ gimp_param_array_values_cmp (GParamSpec   *pspec,
   if (! array1)
     return array2 != NULL ? -1 : 0;
   else if (! array2)
-    return array1 != NULL;
-  else
-    {
-    }
+    return array1 != NULL ? 1 : 0;
+  else if (array1->length < array2->length)
+    return -1;
+  else if (array1->length > array2->length)
+    return 1;
 
   return 0;
 }
@@ -1114,7 +974,7 @@ gimp_value_set_int16array (GValue       *value,
                            const gint16 *data,
                            gsize         length)
 {
-  return gimp_value_set_int8array (value, (guint8 *) data,
+  return gimp_value_set_int8array (value, (const guint8 *) data,
                                    length * sizeof (gint16));
 }
 
@@ -1123,7 +983,7 @@ gimp_value_set_static_int16array (GValue       *value,
                                   const gint16 *data,
                                   gsize         length)
 {
-  return gimp_value_set_static_int8array (value, (guint8 *) data,
+  return gimp_value_set_static_int8array (value, (const guint8 *) data,
                                           length * sizeof (gint16));
 }
 
@@ -1153,7 +1013,7 @@ gimp_value_set_int32array (GValue       *value,
                            const gint32 *data,
                            gsize         length)
 {
-  return gimp_value_set_int8array (value, (guint8 *) data,
+  return gimp_value_set_int8array (value, (const guint8 *) data,
                                    length * sizeof (gint32));
 }
 
@@ -1162,7 +1022,7 @@ gimp_value_set_static_int32array (GValue       *value,
                                   const gint32 *data,
                                   gsize         length)
 {
-  return gimp_value_set_static_int8array (value, (guint8 *) data,
+  return gimp_value_set_static_int8array (value, (const guint8 *) data,
                                           length * sizeof (gint32));
 }
 
@@ -1192,7 +1052,7 @@ gimp_value_set_floatarray (GValue        *value,
                            const gdouble *data,
                            gsize         length)
 {
-  return gimp_value_set_int8array (value, (guint8 *) data,
+  return gimp_value_set_int8array (value, (const guint8 *) data,
                                    length * sizeof (gdouble));
 }
 
@@ -1201,7 +1061,7 @@ gimp_value_set_static_floatarray (GValue        *value,
                                   const gdouble *data,
                                   gsize         length)
 {
-  return gimp_value_set_static_int8array (value, (guint8 *) data,
+  return gimp_value_set_static_int8array (value, (const guint8 *) data,
                                           length * sizeof (gdouble));
 }
 
@@ -1351,6 +1211,18 @@ static gboolean
 gimp_param_string_array_validate (GParamSpec *pspec,
                                   GValue     *value)
 {
+  GimpArray *array = value->data[0].v_pointer;
+
+  if (array)
+    {
+      if ((array->data == NULL && array->length != 0) ||
+          (array->data != NULL && array->length == 0))
+        {
+          g_value_set_boxed (value, NULL);
+          return TRUE;
+        }
+    }
+
   return FALSE;
 }
 
@@ -1367,10 +1239,11 @@ gimp_param_string_array_values_cmp (GParamSpec   *pspec,
   if (! array1)
     return array2 != NULL ? -1 : 0;
   else if (! array2)
-    return array1 != NULL;
-  else
-    {
-    }
+    return array1 != NULL ? 1 : 0;
+  else if (array1->length < array2->length)
+    return -1;
+  else if (array1->length > array2->length)
+    return 1;
 
   return 0;
 }

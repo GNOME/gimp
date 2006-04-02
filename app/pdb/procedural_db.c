@@ -343,7 +343,6 @@ procedural_db_run_proc (Gimp         *gimp,
     {
       GimpPDBArgType  arg_type = va_arg (va_args, GimpPDBArgType);
       GValue         *value;
-      GimpArray      *array;
       gint            count;
 
       if (arg_type == GIMP_PDB_END)

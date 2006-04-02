@@ -1,3 +1,18 @@
+2006-04-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpparamspecs.[ch]: removed GIMP_TYPE_PARASITE,
+	GIMP_TYPE_PARAM_PARASITE and the GimpRGB utility functions. Some
+	fixes/cleanup in the new array and string array code.
+
+	* libgimpbase/gimpbase.def
+	* libgimpbase/gimpparasite.[ch]
+	* libgimpcolor/gimpcolor.def
+	* libgimpcolor/gimprgb.[ch]: added the parasite and rgb stuff here.
+
+	* app/pdb/gimpargument.c: #include "libgimpbase/gimpbase.h"
+
+	* app/pdb/procedural_db.c: removed unused variable.
+
 2006-04-01  Karine Delvare  <edhel@gimp.org>
 
 	* app/tools/gimpnewrectselecttool.c: don't automatically

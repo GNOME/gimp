@@ -28,6 +28,39 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+/*
+ * GIMP_TYPE_PARASITE
+ */
+
+#define GIMP_TYPE_PARASITE               (gimp_parasite_get_type ())
+#define GIMP_VALUE_HOLDS_PARASITE(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_PARASITE))
+
+GType   gimp_parasite_get_type           (void) G_GNUC_CONST;
+
+
+/*
+ * GIMP_TYPE_PARAM_PARASITE
+ */
+
+#define GIMP_TYPE_PARAM_PARASITE           (gimp_param_parasite_get_type ())
+#define GIMP_PARAM_SPEC_PARASITE(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_PARASITE, GimpParamSpecParasite))
+#define GIMP_IS_PARAM_SPEC_PARASITE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_PARASITE))
+
+typedef struct _GimpParamSpecParasite GimpParamSpecParasite;
+
+struct _GimpParamSpecParasite
+{
+  GParamSpecBoxed parent_instance;
+};
+
+GType        gimp_param_parasite_get_type  (void) G_GNUC_CONST;
+
+GParamSpec * gimp_param_spec_parasite      (const gchar  *name,
+                                            const gchar  *nick,
+                                            const gchar  *blurb,
+                                            GParamFlags   flags);
+
+
 #define GIMP_PARASITE_PERSISTENT 1
 #define GIMP_PARASITE_UNDOABLE   2
 
