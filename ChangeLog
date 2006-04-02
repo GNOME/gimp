@@ -1,5 +1,16 @@
 2006-04-02  Michael Natterer  <mitch@gimp.org>
 
+	Silence compiler warnings about...
+
+	* app/config/gimprc-unknown.c: ...unused return value of
+	g_slist_concat().
+
+	* app/tools/gimpdrawtool.c: ...uninitialized variabe.
+
+	* app/xcf/xcf-save.c: ...pointer signedness.
+
+2006-04-02  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimptile.c (gimp_tile_cache_insert): silence warning
 	about unused return value of g_list_concat().
 

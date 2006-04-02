@@ -118,7 +118,7 @@ gimp_rc_add_unknown_token (GimpConfig  *config,
 
   if (last)
     {
-      g_slist_append (last, token);
+      last = g_slist_last (g_slist_append (last, token));
     }
   else
     {

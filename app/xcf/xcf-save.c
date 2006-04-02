@@ -1604,8 +1604,8 @@ xcf_save_old_paths (XcfInfo    *info,
       guint32                 pathtype;
       guint32                 tattoo;
       GimpVectorsCompatPoint *points;
-      gint32                  num_points;
-      gint32                  closed;
+      guint32                 num_points;
+      guint32                 closed;
       gint                    i;
 
       /*
@@ -1620,7 +1620,9 @@ xcf_save_old_paths (XcfInfo    *info,
        * then each point.
        */
 
-      points = gimp_vectors_compat_get_points (vectors, &num_points, &closed);
+      points = gimp_vectors_compat_get_points (vectors,
+                                               (gint32 *) &num_points,
+                                               (gint32 *) &closed);
 
       /* if no points are generated because of a faulty path we should
        * skip saving the path - this is unfortunately impossible, because
@@ -1781,7 +1783,8 @@ xcf_save_vectors (XcfInfo    *info,
               continue;
             }
 
-          control_points = gimp_stroke_control_points_get (stroke, &closed);
+          control_points = gimp_stroke_control_points_get (stroke,
+                                                           (gint32 *) &closed);
 
           xcf_write_int32_check_error (info, &stroke_type,         1);
           xcf_write_int32_check_error (info, &closed,              1);

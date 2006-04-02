@@ -919,7 +919,8 @@ gimp_draw_tool_on_vectors_curve (GimpDrawTool      *draw_tool,
   GimpStroke *stroke = NULL;
   GimpAnchor *segment_start;
   GimpAnchor *segment_end;
-  GimpCoords  min_coords, cur_coords;
+  GimpCoords  min_coords = GIMP_COORDS_DEFAULT_VALUES;
+  GimpCoords  cur_coords;
   gdouble     min_dist, cur_dist, cur_pos;
 
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), FALSE);
