@@ -422,7 +422,7 @@ gimp_vectors_stroke_get_length (gint32  vectors_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gdouble length = 0;
+  gdouble length = 0.0;
 
   return_vals = gimp_run_procedure ("gimp-vectors-stroke-get-length",
 				    &nreturn_vals,
@@ -473,7 +473,7 @@ gimp_vectors_stroke_get_point_at_dist (gint32    vectors_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gdouble x_point = 0;
+  gdouble x_point = 0.0;
 
   return_vals = gimp_run_procedure ("gimp-vectors-stroke-get-point-at-dist",
 				    &nreturn_vals,

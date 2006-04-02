@@ -477,7 +477,7 @@ gimp_brush_get_radius (const gchar *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gdouble radius = 0;
+  gdouble radius = 0.0;
 
   return_vals = gimp_run_procedure ("gimp-brush-get-radius",
 				    &nreturn_vals,
@@ -544,7 +544,7 @@ gimp_brush_get_hardness (const gchar *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gdouble hardness = 0;
+  gdouble hardness = 0.0;
 
   return_vals = gimp_run_procedure ("gimp-brush-get-hardness",
 				    &nreturn_vals,
@@ -577,7 +577,7 @@ gimp_brush_get_aspect_ratio (const gchar *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gdouble aspect_ratio = 0;
+  gdouble aspect_ratio = 0.0;
 
   return_vals = gimp_run_procedure ("gimp-brush-get-aspect-ratio",
 				    &nreturn_vals,
@@ -610,7 +610,7 @@ gimp_brush_get_angle (const gchar *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gdouble angle = 0;
+  gdouble angle = 0.0;
 
   return_vals = gimp_run_procedure ("gimp-brush-get-angle",
 				    &nreturn_vals,
@@ -685,7 +685,7 @@ gimp_brush_set_radius (const gchar *name,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gdouble radius_out = 0;
+  gdouble radius_out = 0.0;
 
   return_vals = gimp_run_procedure ("gimp-brush-set-radius",
 				    &nreturn_vals,
@@ -757,7 +757,7 @@ gimp_brush_set_hardness (const gchar *name,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gdouble hardness_out = 0;
+  gdouble hardness_out = 0.0;
 
   return_vals = gimp_run_procedure ("gimp-brush-set-hardness",
 				    &nreturn_vals,
@@ -793,7 +793,7 @@ gimp_brush_set_aspect_ratio (const gchar *name,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gdouble aspect_ratio_out = 0;
+  gdouble aspect_ratio_out = 0.0;
 
   return_vals = gimp_run_procedure ("gimp-brush-set-aspect-ratio",
 				    &nreturn_vals,
@@ -829,7 +829,7 @@ gimp_brush_set_angle (const gchar *name,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gdouble angle_out = 0;
+  gdouble angle_out = 0.0;
 
   return_vals = gimp_run_procedure ("gimp-brush-set-angle",
 				    &nreturn_vals,

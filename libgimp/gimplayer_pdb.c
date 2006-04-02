@@ -869,7 +869,7 @@ gimp_layer_get_opacity (gint32 layer_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gdouble opacity = 0;
+  gdouble opacity = 0.0;
 
   return_vals = gimp_run_procedure ("gimp-layer-get-opacity",
 				    &nreturn_vals,

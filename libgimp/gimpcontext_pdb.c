@@ -371,7 +371,7 @@ gimp_context_get_opacity (void)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gdouble opacity = 0;
+  gdouble opacity = 0.0;
 
   return_vals = gimp_run_procedure ("gimp-context-get-opacity",
 				    &nreturn_vals,

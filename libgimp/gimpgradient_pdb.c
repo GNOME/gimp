@@ -1256,7 +1256,7 @@ gimp_gradient_segment_range_move (const gchar *name,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gdouble final_delta = 0;
+  gdouble final_delta = 0.0;
 
   return_vals = gimp_run_procedure ("gimp-gradient-segment-range-move",
 				    &nreturn_vals,

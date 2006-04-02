@@ -64,7 +64,6 @@ sub generate {
 	}
 
 	if ($type eq 'enum') {
-	    $name = "Gimp$name" if $name !~ /^Gimp/;
 	    return "$name ";
 	}
 
@@ -131,7 +130,6 @@ sub generate {
 	    my ($type) = &arg_parse($_->{type});
 	    my $desc = &desc_clean($_->{desc});
 	    my $arg = $arg_types{$type};
-	    my $id = exists $arg->{id};
 
 	    $wrapped = "_" if exists $_->{wrap};
 	    $attribute = " G_GNUC_INTERNAL" if exists $_->{wrap};
@@ -145,11 +143,11 @@ sub generate {
 	    }
 	    $arglist .= &libtype($_);
 	    $arglist .= $_->{name};
-	    $arglist .= '_ID' if $id;
+	    $arglist .= '_ID' if $arg->{id};
 	    $arglist .= ', ';
 
 	    $argdesc .= " * \@$_->{name}";
-	    $argdesc .= '_ID' if $id;
+	    $argdesc .= '_ID' if $arg->{id};
 	    $argdesc .= ": $desc";
 
 	    # This is what's passed into gimp_run_procedure
@@ -157,7 +155,7 @@ sub generate {
 	    $argpass .= "GIMP_PDB_$arg->{name}, ";
 
 	    $argpass .= "$_->{name}";
-	    $argpass .= '_ID' if $id;
+	    $argpass .= '_ID' if $arg->{id};
 
 	    $argpass .= ',';
 
@@ -184,7 +182,6 @@ sub generate {
 	    foreach (@outargs) {
 		my ($type) = &arg_parse($_->{type});
 		my $arg = $arg_types{$type};
-		my $id = $arg->{id};
 		my $var;
 
 		$return_marshal = "" unless $once++;
@@ -206,29 +203,21 @@ sub generate {
 
 		    # The return value variable
 		    $var = $_->{libname};
-		    $var .= '_ID' if $id;
+		    $var .= '_ID' if $arg->{id};
 		    $return_args .= $var;
 
 		    # Save the first var to "return" it
 		    $firstvar = $var unless defined $firstvar;
 
-		    if (exists $_->{libdef}) {
-			$return_args .= " = $_->{libdef}";
-		    }
-		    elsif ($id) {
+		    if ($arg->{id}) {
 			# Initialize all IDs to -1
 			$return_args .= " = -1";
 		    }
-		    elsif ($arg->{type} =~ /\*/) {
-			# Initialize pointers to NULL
-			$return_args .= " = NULL";
-		    }
-		    elsif ($arg->{type} =~ /boolean/) {
-			$return_args .= " = FALSE";
+		    elsif ($_->{libdef}) {
+			$return_args .= " = $_->{libdef}";
 		    }
 		    else {
-			# Default to 0
-			$return_args .= " = 0";
+			$return_args .= " = $arg->{init_value}";
 		    }
 
 		    $return_args .= ";";
@@ -277,7 +266,6 @@ CODE
 		my ($type) = &arg_parse($_->{type});
                 my $desc = &desc_clean($_->{desc});
 		my $arg = $arg_types{$type};
-		my $id = $arg->{id};
 		my $var;
 	    
 		my $ch = ""; my $cf = "";
@@ -346,17 +334,17 @@ CP2
 			$arglist .= &libtype($_);
 			$arglist .= '*' unless exists $arg->{struct};
 			$arglist .= "$_->{libname}";
-			$arglist .= '_ID' if $id;
+			$arglist .= '_ID' if $arg->{id};
 			$arglist .= ', ';
 
 			$argdesc .= " * \@$_->{libname}";
-			$argdesc .= '_ID' if $id;
+			$argdesc .= '_ID' if $arg->{id};
 			$argdesc .= ": $desc";
 		    }
 
 		    $var = exists $_->{retval} ? "" : '*';
 		    $var .= $_->{libname};
-		    $var .= '_ID' if $id;
+		    $var .= '_ID' if $arg->{id};
 
 		    $return_marshal .= ' ' x 2 if $#outargs;
 		    $return_marshal .= <<CODE

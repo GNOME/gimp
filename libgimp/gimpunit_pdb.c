@@ -248,7 +248,7 @@ _gimp_unit_get_factor (GimpUnit unit_id)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gdouble factor = 0;
+  gdouble factor = 0.0;
 
   return_vals = gimp_run_procedure ("gimp-unit-get-factor",
 				    &nreturn_vals,
