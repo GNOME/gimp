@@ -97,12 +97,14 @@ Functions for querying and changing procedural database (PDB) entries.
 
 </para>
 
-@procedure: 
+@procedure_name: 
 @arg_num: 
 @arg_type: 
 @arg_name: 
 @arg_desc: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@procedure: 
 
 
 <!-- ##### FUNCTION gimp_procedural_db_proc_val ##### -->
@@ -110,12 +112,14 @@ Functions for querying and changing procedural database (PDB) entries.
 
 </para>
 
-@procedure: 
+@procedure_name: 
 @val_num: 
 @val_type: 
 @val_name: 
 @val_desc: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@procedure: 
 
 
 <!-- ##### FUNCTION gimp_procedural_db_get_data_size ##### -->

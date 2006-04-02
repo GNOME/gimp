@@ -33,6 +33,15 @@ Enums and definitions.
 @GIMP_BRUSH_HARD: 
 @GIMP_BRUSH_SOFT: 
 
+<!-- ##### ENUM GimpBrushGeneratedShape ##### -->
+<para>
+
+</para>
+
+@GIMP_BRUSH_GENERATED_CIRCLE: 
+@GIMP_BRUSH_GENERATED_SQUARE: 
+@GIMP_BRUSH_GENERATED_DIAMOND: 
+
 <!-- ##### ENUM GimpConvertDitherType ##### -->
 <para>
 

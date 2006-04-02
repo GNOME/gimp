@@ -122,6 +122,47 @@ gimpvectors
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_vectors_parasite_attach ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@parasite: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_parasite_detach ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_parasite_find ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_parasite_list ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@num_parasites: 
+@parasites: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_vectors_stroke_close ##### -->
 <para>
 

@@ -58,6 +58,7 @@ gimp_attach_new_parasite
 <FILE>gimpenums</FILE>
 gimp_enums_init
 GimpBrushApplicationMode
+GimpBrushGeneratedShape
 GimpConvertDitherType
 GimpConvertPaletteType
 GimpConvolutionType
@@ -77,6 +78,7 @@ GimpRunMode
 gimp_enums_get_type_names
 <SUBSECTION Standard>
 GIMP_TYPE_BRUSH_APPLICATION_MODE
+GIMP_TYPE_BRUSH_GENERATED_SHAPE
 GIMP_TYPE_CONVERT_DITHER_TYPE
 GIMP_TYPE_CONVERT_PALETTE_TYPE
 GIMP_TYPE_CONVOLUTION_TYPE
@@ -94,6 +96,7 @@ GIMP_TYPE_ORIENTATION_TYPE
 GIMP_TYPE_ROTATION_TYPE
 GIMP_TYPE_RUN_MODE
 gimp_brush_application_mode_get_type
+gimp_brush_generated_shape_get_type
 gimp_convert_dither_type_get_type
 gimp_convert_palette_type_get_type
 gimp_convolution_type_get_type
@@ -886,6 +889,10 @@ gimp_vectors_set_name
 gimp_vectors_set_tattoo
 gimp_vectors_set_visible
 gimp_vectors_get_strokes
+gimp_vectors_parasite_attach
+gimp_vectors_parasite_detach
+gimp_vectors_parasite_find
+gimp_vectors_parasite_list
 gimp_vectors_stroke_close
 gimp_vectors_stroke_remove
 gimp_vectors_stroke_get_length

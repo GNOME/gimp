@@ -198,3 +198,45 @@ gimp_parasite_attach() and their related functions.
 
 
 
+<!-- ##### MACRO GIMP_TYPE_PARASITE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_TYPE_PARAM_PARASITE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_IS_PARAM_SPEC_PARASITE ##### -->
+<para>
+
+</para>
+
+@pspec: 
+
+
+<!-- ##### FUNCTION gimp_param_spec_parasite ##### -->
+<para>
+
+</para>
+
+@name: 
+@nick: 
+@blurb: 
+@flags: 
+@Returns: 
+
+
+<!-- ##### MACRO GIMP_VALUE_HOLDS_PARASITE ##### -->
+<para>
+
+</para>
+
+@value: 
+
+
