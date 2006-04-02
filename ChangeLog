@@ -1,5 +1,24 @@
 2006-04-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpparasitelist.[ch] (gimp_parasite_list_add): removed
+	the return value again.
+
+	(gimp_parasite_list_find): return a const parasite.
+
+	* app/core/gimp-parasites.[ch]
+	* app/core/gimpimage.[ch]
+	* app/core/gimpitem.[ch] (*_parasite_attach): take a const
+	parasite. Make a local copy of the parasite struct because
+	gimp_parasite_shift_parent() changes it.
+
+	(*_parasite_find): return a const parasite.
+
+	* app/core/gimptemplate.c
+	* app/text/gimptextlayer-xcf.c
+	* app/xcf/xcf-load.c: changed accordingly.
+
+2006-04-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage-undo-push.[ch]
 	(gimp_image_undo_push_image,item_parasite): use "const GimpParasite*"
 	insted of gpointer for the parasite parameter.

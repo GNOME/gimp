@@ -30,9 +30,12 @@
 
 
 void
-gimp_parasite_attach (Gimp         *gimp,
-		      GimpParasite *parasite)
+gimp_parasite_attach (Gimp               *gimp,
+		      const GimpParasite *parasite)
 {
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (parasite != NULL);
+
   gimp_parasite_list_add (gimp->parasites, parasite);
 }
 
@@ -40,13 +43,19 @@ void
 gimp_parasite_detach (Gimp        *gimp,
 		      const gchar *name)
 {
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (name != NULL);
+
   gimp_parasite_list_remove (gimp->parasites, name);
 }
 
-GimpParasite *
+const GimpParasite *
 gimp_parasite_find (Gimp        *gimp,
 		    const gchar *name)
 {
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+
   return gimp_parasite_list_find (gimp->parasites, name);
 }
 
@@ -65,6 +74,9 @@ gimp_parasite_list (Gimp *gimp,
   gchar **list;
   gchar **current;
 
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (count != NULL, NULL);
+
   *count = gimp_parasite_list_length (gimp->parasites);
 
   list = current = g_new (gchar *, *count);
@@ -80,8 +92,7 @@ gimp_parasite_list (Gimp *gimp,
 void
 gimp_parasite_shift_parent (GimpParasite *parasite)
 {
-  if (parasite == NULL)
-    return;
+  g_return_if_fail (parasite != NULL);
 
   parasite->flags = (parasite->flags >> 8);
 }

@@ -319,11 +319,11 @@ void
 gimp_template_set_from_image (GimpTemplate *template,
                               GimpImage    *image)
 {
-  gdouble            xresolution;
-  gdouble            yresolution;
-  GimpImageBaseType  image_type;
-  GimpParasite      *parasite;
-  gchar             *comment = NULL;
+  gdouble             xresolution;
+  gdouble             yresolution;
+  GimpImageBaseType   image_type;
+  const GimpParasite *parasite;
+  gchar              *comment = NULL;
 
   g_return_if_fail (GIMP_IS_TEMPLATE (template));
   g_return_if_fail (GIMP_IS_IMAGE (image));

@@ -2196,7 +2196,7 @@ gimp_image_free_shadow (GimpImage *image)
 
 /*  parasites  */
 
-GimpParasite *
+const GimpParasite *
 gimp_image_parasite_find (const GimpImage *image,
                           const gchar     *name)
 {
@@ -2231,17 +2231,25 @@ gimp_image_parasite_list (const GimpImage *image,
 }
 
 void
-gimp_image_parasite_attach (GimpImage    *image,
-                            GimpParasite *parasite)
+gimp_image_parasite_attach (GimpImage          *image,
+                            const GimpParasite *parasite)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image) && parasite != NULL);
+  GimpParasite *copy;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (parasite != NULL);
+
+  /*  make a temp copy of the struct because
+   *  gimp_parasite_shift_parent() changes it
+   */
+  copy = g_memdup (parasite, sizeof (GimpParasite));
 
   /* only set the dirty bit manually if we can be saved and the new
      parasite differs from the current one and we aren't undoable */
-  if (gimp_parasite_is_undoable (parasite))
+  if (gimp_parasite_is_undoable (copy))
     gimp_image_undo_push_image_parasite (image,
                                          _("Attach Parasite to Image"),
-                                         parasite);
+                                         copy);
 
   /*  We used to push an cantundo on te stack here. This made the undo stack
       unusable (NULL on the stack) and prevented people from undoing after a
@@ -2250,33 +2258,35 @@ gimp_image_parasite_attach (GimpImage    *image,
       undoable but does not block the undo system.   --Sven
    */
 
-  gimp_parasite_list_add (image->parasites, parasite);
+  gimp_parasite_list_add (image->parasites, copy);
 
-  if (gimp_parasite_has_flag (parasite, GIMP_PARASITE_ATTACH_PARENT))
+  if (gimp_parasite_has_flag (copy, GIMP_PARASITE_ATTACH_PARENT))
     {
-      gimp_parasite_shift_parent (parasite);
-      gimp_parasite_attach (image->gimp, parasite);
+      gimp_parasite_shift_parent (copy);
+      gimp_parasite_attach (image->gimp, copy);
     }
+
+  g_free (copy);
 }
 
 void
 gimp_image_parasite_detach (GimpImage   *image,
-                            const gchar *parasite)
+                            const gchar *name)
 {
-  GimpParasite *p;
+  const GimpParasite *parasite;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (parasite != NULL);
+  g_return_if_fail (name != NULL);
 
-  if (!(p = gimp_parasite_list_find (image->parasites, parasite)))
+  if (! (parasite = gimp_parasite_list_find (image->parasites, name)))
     return;
 
-  if (gimp_parasite_is_undoable (p))
+  if (gimp_parasite_is_undoable (parasite))
     gimp_image_undo_push_image_parasite_remove (image,
                                                 _("Remove Parasite from Image"),
-                                                gimp_parasite_name (p));
+                                                name);
 
-  gimp_parasite_list_remove (image->parasites, parasite);
+  gimp_parasite_list_remove (image->parasites, name);
 }
 
 

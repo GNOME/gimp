@@ -119,16 +119,16 @@ GimpImage *
 xcf_load_image (Gimp    *gimp,
                 XcfInfo *info)
 {
-  GimpImage    *image;
-  GimpLayer    *layer;
-  GimpChannel  *channel;
-  GimpParasite *parasite;
-  guint32       saved_pos;
-  guint32       offset;
-  gint          width;
-  gint          height;
-  gint          image_type;
-  gint          num_successful_elements = 0;
+  GimpImage          *image;
+  GimpLayer          *layer;
+  GimpChannel        *channel;
+  const GimpParasite *parasite;
+  guint32             saved_pos;
+  guint32             offset;
+  gint                width;
+  gint                height;
+  gint                image_type;
+  gint                num_successful_elements = 0;
 
   /* read in the image width, height and type */
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);

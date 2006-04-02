@@ -50,21 +50,21 @@ struct _GimpParasiteListClass
 };
 
 
-GType              gimp_parasite_list_get_type (void) G_GNUC_CONST;
+GType                gimp_parasite_list_get_type (void) G_GNUC_CONST;
 
-GimpParasiteList * gimp_parasite_list_new      (void);
-GimpParasiteList * gimp_parasite_list_copy     (const GimpParasiteList *list);
-GimpParasite     * gimp_parasite_list_add      (GimpParasiteList       *list,
-						const GimpParasite     *parasite);
-void               gimp_parasite_list_remove   (GimpParasiteList       *list,
-						const gchar            *name);
-gint               gimp_parasite_list_length   (GimpParasiteList       *list);
-gint               gimp_parasite_list_persistent_length (GimpParasiteList *list);
-void               gimp_parasite_list_foreach  (GimpParasiteList       *list,
-						GHFunc                  function,
-						gpointer                user_data);
-GimpParasite     * gimp_parasite_list_find     (GimpParasiteList       *list,
-						const gchar            *name);
+GimpParasiteList   * gimp_parasite_list_new      (void);
+GimpParasiteList   * gimp_parasite_list_copy     (const GimpParasiteList *list);
+void                 gimp_parasite_list_add      (GimpParasiteList       *list,
+                                                  const GimpParasite     *parasite);
+void                 gimp_parasite_list_remove   (GimpParasiteList       *list,
+                                                  const gchar            *name);
+gint                 gimp_parasite_list_length   (GimpParasiteList       *list);
+gint                 gimp_parasite_list_persistent_length (GimpParasiteList *list);
+void                 gimp_parasite_list_foreach  (GimpParasiteList       *list,
+                                                  GHFunc                  function,
+                                                  gpointer                user_data);
+const GimpParasite * gimp_parasite_list_find     (GimpParasiteList       *list,
+                                                  const gchar            *name);
 
 
 #endif  /*  __GIMP_PARASITE_LIST_H__  */

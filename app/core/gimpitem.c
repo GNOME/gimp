@@ -1130,62 +1130,71 @@ gimp_item_set_image (GimpItem  *item,
 }
 
 void
-gimp_item_parasite_attach (GimpItem     *item,
-                           GimpParasite *parasite)
+gimp_item_parasite_attach (GimpItem           *item,
+                           const GimpParasite *parasite)
 {
+  GimpParasite *copy;
+
   g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (parasite != NULL);
+
+  /*  make a temp copy of the struct because
+   *  gimp_parasite_shift_parent() changes it
+   */
+  copy = g_memdup (parasite, sizeof (GimpParasite));
 
   if (gimp_item_is_attached (item))
     {
       /*  only set the dirty bit manually if we can be saved and the new
        *  parasite differs from the current one and we aren't undoable
        */
-      if (gimp_parasite_is_undoable (parasite))
+      if (gimp_parasite_is_undoable (copy))
         {
           /* do a group in case we have attach_parent set */
           gimp_image_undo_group_start (item->image,
                                        GIMP_UNDO_GROUP_PARASITE_ATTACH,
                                        _("Attach Parasite"));
 
-          gimp_image_undo_push_item_parasite (item->image, NULL, item,
-                                              parasite);
+          gimp_image_undo_push_item_parasite (item->image, NULL, item, copy);
         }
-      else if (gimp_parasite_is_persistent (parasite) &&
-               ! gimp_parasite_compare (parasite,
+      else if (gimp_parasite_is_persistent (copy) &&
+               ! gimp_parasite_compare (copy,
                                         gimp_item_parasite_find
-                                        (item, gimp_parasite_name (parasite))))
+                                        (item, gimp_parasite_name (copy))))
         {
           gimp_image_undo_push_cantundo (item->image,
                                          _("Attach Parasite to Item"));
         }
     }
 
-  gimp_parasite_list_add (item->parasites, parasite);
+  gimp_parasite_list_add (item->parasites, copy);
 
-  if (gimp_parasite_has_flag (parasite, GIMP_PARASITE_ATTACH_PARENT))
+  if (gimp_parasite_has_flag (copy, GIMP_PARASITE_ATTACH_PARENT))
     {
-      gimp_parasite_shift_parent (parasite);
-      gimp_image_parasite_attach (item->image, parasite);
+      gimp_parasite_shift_parent (copy);
+      gimp_image_parasite_attach (item->image, copy);
     }
-  else if (gimp_parasite_has_flag (parasite, GIMP_PARASITE_ATTACH_GRANDPARENT))
+  else if (gimp_parasite_has_flag (copy, GIMP_PARASITE_ATTACH_GRANDPARENT))
     {
-      gimp_parasite_shift_parent (parasite);
-      gimp_parasite_shift_parent (parasite);
-      gimp_parasite_attach (item->image->gimp, parasite);
+      gimp_parasite_shift_parent (copy);
+      gimp_parasite_shift_parent (copy);
+      gimp_parasite_attach (item->image->gimp, copy);
     }
 
   if (gimp_item_is_attached (item) &&
-      gimp_parasite_is_undoable (parasite))
+      gimp_parasite_is_undoable (copy))
     {
       gimp_image_undo_group_end (item->image);
     }
+
+  g_free (copy);
 }
 
 void
 gimp_item_parasite_detach (GimpItem    *item,
                            const gchar *name)
 {
-  GimpParasite *parasite;
+  const GimpParasite *parasite;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
 
@@ -1210,7 +1219,7 @@ gimp_item_parasite_detach (GimpItem    *item,
   gimp_parasite_list_remove (item->parasites, name);
 }
 
-GimpParasite *
+const GimpParasite *
 gimp_item_parasite_find (const GimpItem *item,
                          const gchar    *name)
 {

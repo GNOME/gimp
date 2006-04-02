@@ -52,9 +52,9 @@ static GimpLayer * gimp_text_layer_from_layer (GimpLayer *layer,
 gboolean
 gimp_text_layer_xcf_load_hack (GimpLayer **layer)
 {
-  const gchar  *name;
-  GimpText     *text = NULL;
-  GimpParasite *parasite;
+  const gchar        *name;
+  GimpText           *text = NULL;
+  const GimpParasite *parasite;
 
   g_return_val_if_fail (layer != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (*layer), FALSE);

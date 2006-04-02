@@ -21,19 +21,19 @@
 
 /* some wrappers to access gimp->parasites, mainly for the PDB */
 
-void            gimp_parasite_attach       (Gimp         *gimp,
-                                            GimpParasite *parasite);
-void            gimp_parasite_detach       (Gimp         *gimp,
-                                            const gchar  *name);
-GimpParasite  * gimp_parasite_find         (Gimp         *gimp,
-                                            const gchar  *name);
-gchar        ** gimp_parasite_list         (Gimp         *gimp,
-                                            gint         *count);
+void                  gimp_parasite_attach       (Gimp               *gimp,
+                                                  const GimpParasite *parasite);
+void                  gimp_parasite_detach       (Gimp               *gimp,
+                                                  const gchar        *name);
+const GimpParasite  * gimp_parasite_find         (Gimp               *gimp,
+                                                  const gchar        *name);
+gchar              ** gimp_parasite_list         (Gimp               *gimp,
+                                                  gint               *count);
 
-void            gimp_parasite_shift_parent (GimpParasite *parasite);
+void                  gimp_parasite_shift_parent (GimpParasite       *parasite);
 
-void            gimp_parasiterc_load       (Gimp         *gimp);
-void            gimp_parasiterc_save       (Gimp         *gimp);
+void                  gimp_parasiterc_load       (Gimp               *gimp);
+void                  gimp_parasiterc_save       (Gimp               *gimp);
 
 
 #endif  /*  __GIMP_PARASITES_H__  */

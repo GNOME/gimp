@@ -376,14 +376,14 @@ void            gimp_image_free_shadow           (GimpImage          *image);
 
 /*  parasites  */
 
-GimpParasite  * gimp_image_parasite_find         (const GimpImage    *image,
+const GimpParasite * gimp_image_parasite_find    (const GimpImage    *image,
                                                   const gchar        *name);
 gchar        ** gimp_image_parasite_list         (const GimpImage    *image,
                                                   gint               *count);
 void            gimp_image_parasite_attach       (GimpImage          *image,
-                                                  GimpParasite       *parasite);
+                                                  const GimpParasite *parasite);
 void            gimp_image_parasite_detach       (GimpImage          *image,
-                                                  const gchar        *parasite);
+                                                  const gchar        *name);
 
 
 /*  tattoos  */
