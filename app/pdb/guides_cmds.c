@@ -136,7 +136,7 @@ register_guides_procs (Gimp *gimp)
                                                   "guide",
                                                   "The ID of the current guide (0 if first invocation)",
                                                   1, G_MAXUINT32, 1,
-                                                  GIMP_PARAM_READWRITE));
+                                                  GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_return_value (procedure,
                                    GIMP_PDB_INT32,
                                    g_param_spec_uint ("next-guide",

@@ -76,6 +76,8 @@ plug_in_params_to_args (GimpArgumentSpec *proc_args,
 	case GIMP_PDB_INT32:
           if (G_VALUE_HOLDS_INT (value))
             g_value_set_int (value, params[i].data.d_int32);
+          else if (G_VALUE_HOLDS_UINT (value))
+            g_value_set_uint (value, params[i].data.d_int32);
           else if (G_VALUE_HOLDS_ENUM (value))
             g_value_set_enum (value, params[i].data.d_int32);
           else if (G_VALUE_HOLDS_BOOLEAN (value))
@@ -249,6 +251,8 @@ plug_in_args_to_params (GimpArgument *args,
 	case GIMP_PDB_INT32:
           if (G_VALUE_HOLDS_INT (value))
             params[i].data.d_int32 = g_value_get_int (value);
+          else if (G_VALUE_HOLDS_UINT (value))
+            params[i].data.d_int32 = g_value_get_uint (value);
           else if (G_VALUE_HOLDS_ENUM (value))
             params[i].data.d_int32 = g_value_get_enum (value);
           else if (G_VALUE_HOLDS_BOOLEAN (value))

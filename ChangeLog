@@ -1,3 +1,15 @@
+2006-04-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in-params.c: handle storage of GIMP_PDB_INT32
+	plug-in params in GValues of type G_TYPE_UINT, they are used for
+	guides and tattoos.
+
+	* tools/pdbgen/pdb/guides.pdb (image_find_next_guide): don't
+	validate the "guide" parameter, because 0 is an allowed value
+	here.
+
+	* app/pdb/guides_cmds.c: regenerated.
+
 2006-04-02  Karine Delvare  <edhel@gimp.org>
 
 	* app/tools/gimprectangletool.c: square constraint with shift key.
