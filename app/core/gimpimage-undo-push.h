@@ -193,7 +193,7 @@ gboolean gimp_image_undo_push_fs_relax              (GimpImage     *image,
 
 gboolean gimp_image_undo_push_image_parasite        (GimpImage     *image,
                                                      const gchar   *undo_desc,
-                                                     gpointer       parasite);
+                                                     const GimpParasite *parasite);
 gboolean gimp_image_undo_push_image_parasite_remove (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      const gchar   *name);
@@ -201,7 +201,7 @@ gboolean gimp_image_undo_push_image_parasite_remove (GimpImage     *image,
 gboolean gimp_image_undo_push_item_parasite         (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpItem      *item,
-                                                     gpointer       parasite);
+                                                     const GimpParasite *parasite);
 gboolean gimp_image_undo_push_item_parasite_remove  (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpItem      *item,

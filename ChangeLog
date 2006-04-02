@@ -1,5 +1,18 @@
 2006-04-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-undo-push.[ch]
+	(gimp_image_undo_push_image,item_parasite): use "const GimpParasite*"
+	insted of gpointer for the parasite parameter.
+
+	* app/core/gimpparasitelist.[ch] (gimp_parasite_list_add): added
+	const to the parasite parameter, return the actually added
+	parasite (which is a copy).
+
+	* app/core/gimpunit.[ch] (_gimp_unit_new): added const to all
+	string parameters.
+
+2006-04-02  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/lib.pl: use the variable initializer defined with
 	the PDB type instead of figuring it manually. Removed a line of
 	code that checked for enums without "Gimp" prefix.

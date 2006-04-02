@@ -54,8 +54,8 @@ GType              gimp_parasite_list_get_type (void) G_GNUC_CONST;
 
 GimpParasiteList * gimp_parasite_list_new      (void);
 GimpParasiteList * gimp_parasite_list_copy     (const GimpParasiteList *list);
-void               gimp_parasite_list_add      (GimpParasiteList       *list,
-						GimpParasite           *parasite);
+GimpParasite     * gimp_parasite_list_add      (GimpParasiteList       *list,
+						const GimpParasite     *parasite);
 void               gimp_parasite_list_remove   (GimpParasiteList       *list,
 						const gchar            *name);
 gint               gimp_parasite_list_length   (GimpParasiteList       *list);

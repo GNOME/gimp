@@ -3062,9 +3062,9 @@ static void     undo_free_parasite (GimpUndo            *undo,
                                     GimpUndoMode         undo_mode);
 
 gboolean
-gimp_image_undo_push_image_parasite (GimpImage   *image,
-                                     const gchar *undo_desc,
-                                     gpointer     parasite)
+gimp_image_undo_push_image_parasite (GimpImage          *image,
+                                     const gchar        *undo_desc,
+                                     const GimpParasite *parasite)
 {
   GimpUndo *new;
 
@@ -3081,7 +3081,7 @@ gimp_image_undo_push_image_parasite (GimpImage   *image,
     {
       ParasiteUndo *pu = new->data;
 
-      pu->image   = image;
+      pu->image    = image;
       pu->item     = NULL;
       pu->name     = g_strdup (gimp_parasite_name (parasite));
       pu->parasite = gimp_parasite_copy (gimp_image_parasite_find (image,
@@ -3113,7 +3113,7 @@ gimp_image_undo_push_image_parasite_remove (GimpImage   *image,
     {
       ParasiteUndo *pu = new->data;
 
-      pu->image   = image;
+      pu->image    = image;
       pu->item     = NULL;
       pu->name     = g_strdup (name);
       pu->parasite = gimp_parasite_copy (gimp_image_parasite_find (image,
@@ -3126,10 +3126,10 @@ gimp_image_undo_push_image_parasite_remove (GimpImage   *image,
 }
 
 gboolean
-gimp_image_undo_push_item_parasite (GimpImage   *image,
-                                    const gchar *undo_desc,
-                                    GimpItem    *item,
-                                    gpointer     parasite)
+gimp_image_undo_push_item_parasite (GimpImage          *image,
+                                    const gchar        *undo_desc,
+                                    GimpItem           *item,
+                                    const GimpParasite *parasite)
 {
   GimpUndo *new;
 
@@ -3148,7 +3148,7 @@ gimp_image_undo_push_item_parasite (GimpImage   *image,
     {
       ParasiteUndo *pu = new->data;
 
-      pu->image   = NULL;
+      pu->image    = NULL;
       pu->item     = item;
       pu->name     = g_strdup (gimp_parasite_name (parasite));
       pu->parasite = gimp_parasite_copy (gimp_item_parasite_find (item,
@@ -3182,7 +3182,7 @@ gimp_image_undo_push_item_parasite_remove (GimpImage   *image,
     {
       ParasiteUndo *pu = new->data;
 
-      pu->image   = NULL;
+      pu->image    = NULL;
       pu->item     = item;
       pu->name     = g_strdup (name);
       pu->parasite = gimp_parasite_copy (gimp_item_parasite_find (item,
