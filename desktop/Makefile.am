@@ -37,6 +37,11 @@ icons64_DATA = 64x64/gimp.png
 iconsscalabledir = @DESKTOP_DATADIR@/icons/hicolor/scalable/apps
 iconsscalable_DATA = scalable/gimp.svg
 
+
+# touch the toplevel icon directory as required by the icon theme spec
+install-data-hook:
+	touch @DESKTOP_DATADIR@/icons/hicolor
+
 endif
 
 
@@ -65,10 +70,5 @@ validate: gimp.desktop
 	  else \
 	    echo "Can't find desktop-file-validate to validate $<; proceed with fingers crossed..."; \
           fi )
-
-
-# touch the toplevel icon directory as required by the icon theme spec
-install-data-hook:
-	touch @DESKTOP_DATADIR@/icons/hicolor
 
 dist-hook: validate
