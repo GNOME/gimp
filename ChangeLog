@@ -1,5 +1,10 @@
 2006-04-03  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-close.c: reduced precision of the
+	display of time since the last change.
+
+2006-04-03  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpscaletool.c: added a GimpSizeBox as a replacement
 	for the InfoDialog widgets. Needs more work ...
 
