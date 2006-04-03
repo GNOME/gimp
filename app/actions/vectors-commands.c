@@ -335,9 +335,9 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
   /*  plug-in arguments as if called by <Image>/Filters/...  */
   args = gimp_procedure_get_arguments (procedure);
 
-  g_value_set_enum     (&args[0].value, GIMP_RUN_INTERACTIVE);
-  gimp_value_set_image (&args[1].value, image);
-  gimp_value_set_item  (&args[2].value, NULL /* unused */);
+  g_value_set_int         (&args[0].value, GIMP_RUN_INTERACTIVE);
+  gimp_value_set_image    (&args[1].value, image);
+  gimp_value_set_drawable (&args[2].value, NULL /* unused */);
 
   plug_in_run (image->gimp, action_data_get_context (data),
                GIMP_PROGRESS (display),

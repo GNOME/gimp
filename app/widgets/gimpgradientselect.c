@@ -30,6 +30,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpgradient.h"
+#include "core/gimpparamspecs.h"
 
 #include "pdb/procedural_db.h"
 
@@ -132,6 +133,8 @@ gimp_gradient_select_run_callback (GimpPdbDialog *dialog,
   gdouble              pos, delta;
   GimpRGB              color;
   gint                 i;
+  GimpArray           *array;
+  GimpArgument        *return_vals;
 
   i      = GIMP_GRADIENT_SELECT (dialog)->sample_size;
   pos    = 0.0;
@@ -152,16 +155,27 @@ gimp_gradient_select_run_callback (GimpPdbDialog *dialog,
       pos += delta;
     }
 
-  return procedural_db_run_proc (dialog->caller_context->gimp,
-                                 dialog->caller_context,
-                                 NULL,
-                                 dialog->callback_name,
-                                 n_return_vals,
-                                 GIMP_PDB_STRING,     GIMP_OBJECT (gradient)->name,
-                                 GIMP_PDB_INT32,      GIMP_GRADIENT_SELECT (dialog)->sample_size * 4,
-                                 GIMP_PDB_FLOATARRAY, values,
-                                 GIMP_PDB_INT32,      closing,
-                                 GIMP_PDB_END);
+  array = gimp_array_new ((guint8 *) values,
+                          GIMP_GRADIENT_SELECT (dialog)->sample_size * 4 *
+                          sizeof (gdouble),
+                          TRUE);
+  array->static_data = FALSE;
+
+  return_vals =
+    procedural_db_run_proc (dialog->caller_context->gimp,
+                            dialog->caller_context,
+                            NULL,
+                            dialog->callback_name,
+                            n_return_vals,
+                            G_TYPE_STRING,         GIMP_OBJECT (gradient)->name,
+                            GIMP_TYPE_INT32,       array->length / sizeof (gdouble),
+                            GIMP_TYPE_FLOAT_ARRAY, array,
+                            GIMP_TYPE_INT32,       closing,
+                            G_TYPE_NONE);
+
+  gimp_array_free (array);
+
+  return return_vals;
 }
 
 static void

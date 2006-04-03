@@ -59,7 +59,6 @@ register_misc_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&version_proc, 0, 1);
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRING,
                                    gimp_param_spec_string ("version",
                                                            "version",
                                                            "The gimp version",
@@ -73,12 +72,11 @@ register_misc_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&getpid_proc, 0, 1);
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
-                                   g_param_spec_int ("pid",
-                                                     "pid",
-                                                     "The PID",
-                                                     G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_int32 ("pid",
+                                                          "pid",
+                                                          "The PID",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -86,7 +84,6 @@ register_misc_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&quit_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_boolean ("force",
                                                      "force",
                                                      "Flag specifying whether to force the gimp to or exit normally",

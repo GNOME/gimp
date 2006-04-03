@@ -23,6 +23,7 @@
 #include <sys/types.h>
 
 #include <glib-object.h>
+#include <gobject/gvaluecollector.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -257,7 +258,8 @@ procedural_db_execute (Gimp         *gimp,
 
   if (list == NULL)
     {
-      g_message (_("PDB calling error:\nprocedure '%s' not found"), name);
+      g_message (_("PDB calling error:\n"
+                   "Procedure '%s' not found"), name);
 
       return_vals = gimp_procedure_get_return_values (NULL, FALSE);
       g_value_set_enum (&return_vals->value, GIMP_PDB_CALLING_ERROR);
@@ -323,7 +325,8 @@ procedural_db_run_proc (Gimp         *gimp,
 
   if (procedure == NULL)
     {
-      g_message (_("PDB calling error:\nprocedure '%s' not found"), name);
+      g_message (_("PDB calling error:\n"
+                   "Procedure '%s' not found"), name);
 
       return_vals = gimp_procedure_get_return_values (NULL, FALSE);
       g_value_set_enum (&return_vals->value, GIMP_PDB_CALLING_ERROR);
@@ -341,17 +344,21 @@ procedural_db_run_proc (Gimp         *gimp,
 
   for (i = 0; i < procedure->num_args; i++)
     {
-      GimpPDBArgType  arg_type = va_arg (va_args, GimpPDBArgType);
-      GValue         *value;
-      gint            count;
+      GValue *value;
+      GType   arg_type;
+      gchar  *error = NULL;
 
-      if (arg_type == GIMP_PDB_END)
+      arg_type = va_arg (va_args, GType);
+
+      if (arg_type == G_TYPE_NONE)
         break;
 
-      if (arg_type != args[i].type)
+      value = &args[i].value;
+
+      if (arg_type != G_VALUE_TYPE (value))
         {
-          gchar *expected = procedural_db_type_name (procedure->args[i].type);
-          gchar *got      = procedural_db_type_name (arg_type);
+          const gchar *expected = g_type_name (G_VALUE_TYPE (value));
+          const gchar *got      = g_type_name (arg_type);
 
           gimp_arguments_destroy (args, procedure->num_args);
 
@@ -359,111 +366,25 @@ procedural_db_run_proc (Gimp         *gimp,
                        "Argument #%d type mismatch (expected %s, got %s)"),
                      procedure->name, i + 1, expected, got);
 
-          g_free (expected);
-          g_free (got);
-
           return_vals = gimp_procedure_get_return_values (procedure, FALSE);
           g_value_set_enum (&return_vals->value, GIMP_PDB_CALLING_ERROR);
 
           return return_vals;
         }
 
-      value = &args[i].value;
+      G_VALUE_COLLECT (value, va_args, G_VALUE_NOCOPY_CONTENTS, &error);
 
-      switch (arg_type)
+      if (error)
         {
-        case GIMP_PDB_INT32:
-          if (G_VALUE_HOLDS_INT (value))
-            g_value_set_int (value, va_arg (va_args, gint));
-          else if (G_VALUE_HOLDS_ENUM (value))
-            g_value_set_enum (value, va_arg (va_args, gint));
-          else if (G_VALUE_HOLDS_BOOLEAN (value))
-            g_value_set_boolean (value, va_arg (va_args, gint) ? TRUE : FALSE);
-          else
-            g_return_val_if_reached (NULL);
-          break;
+          g_warning ("%s: %s", G_STRFUNC, error);
+          g_free (error);
 
-        case GIMP_PDB_INT16:
-          g_value_set_int (value, va_arg (va_args, gint));
-          break;
+          gimp_arguments_destroy (args, procedure->num_args);
 
-        case GIMP_PDB_INT8:
-          g_value_set_uint (value, va_arg (va_args, guint));
-          break;
+          return_vals = gimp_procedure_get_return_values (procedure, FALSE);
+          g_value_set_enum (&return_vals->value, GIMP_PDB_CALLING_ERROR);
 
-        case GIMP_PDB_FLOAT:
-          g_value_set_double (value, va_arg (va_args, gdouble));
-          break;
-
-        case GIMP_PDB_STRING:
-          g_value_set_static_string (value, va_arg (va_args, gchar *));
-          break;
-
-        case GIMP_PDB_INT32ARRAY:
-          count = g_value_get_int (&args[i - 1].value);
-          gimp_value_set_static_int32array (value,
-                                            va_arg (va_args, gpointer),
-                                            count);
-          break;
-
-        case GIMP_PDB_INT16ARRAY:
-          count = g_value_get_int (&args[i - 1].value);
-          gimp_value_set_static_int16array (value,
-                                            va_arg (va_args, gpointer),
-                                            count);
-          break;
-
-        case GIMP_PDB_INT8ARRAY:
-          count = g_value_get_int (&args[i - 1].value);
-          gimp_value_set_static_int8array (value,
-                                           va_arg (va_args, gpointer),
-                                           count);
-          break;
-
-        case GIMP_PDB_FLOATARRAY:
-          count = g_value_get_int (&args[i - 1].value);
-          gimp_value_set_static_floatarray (value,
-                                            va_arg (va_args, gpointer),
-                                            count);
-          break;
-
-        case GIMP_PDB_STRINGARRAY:
-          count = g_value_get_int (&args[i - 1].value);
-          gimp_value_set_static_stringarray (value,
-                                             va_arg (va_args, gpointer),
-                                             count);
-          break;
-
-        case GIMP_PDB_COLOR:
-          {
-            GimpRGB color = va_arg (va_args, GimpRGB);
-            g_value_set_boxed (value, &color);
-          }
-          break;
-
-        case GIMP_PDB_REGION:
-        case GIMP_PDB_BOUNDARY:
-          break;
-
-        case GIMP_PDB_DISPLAY:
-        case GIMP_PDB_IMAGE:
-        case GIMP_PDB_LAYER:
-        case GIMP_PDB_CHANNEL:
-        case GIMP_PDB_DRAWABLE:
-        case GIMP_PDB_SELECTION:
-        case GIMP_PDB_VECTORS:
-          g_value_set_int (value, va_arg (va_args, gint));
-          break;
-
-        case GIMP_PDB_PARASITE:
-          g_value_set_static_boxed (value, va_arg (va_args, gpointer));
-          break;
-
-        case GIMP_PDB_STATUS:
-          g_value_set_enum (value, va_arg (va_args, gint));
-
-        case GIMP_PDB_END:
-          break;
+          return return_vals;
         }
     }
 
@@ -476,18 +397,4 @@ procedural_db_run_proc (Gimp         *gimp,
   gimp_arguments_destroy (args, procedure->num_args);
 
   return return_vals;
-}
-
-gchar *
-procedural_db_type_name (GimpPDBArgType type)
-{
-  const gchar *name;
-
-  if (! gimp_enum_get_value (GIMP_TYPE_PDB_ARG_TYPE, type,
-                             &name, NULL, NULL, NULL))
-    {
-      return  g_strdup_printf ("(PDB type %d unknown)", type);
-    }
-
-  return g_strdup (name);
 }

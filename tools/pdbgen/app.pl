@@ -237,62 +237,56 @@ CODE
     }
     elsif ($pdbtype eq 'drawable') {
 	$pspec = <<CODE;
-gimp_param_spec_item_id ("$name",
-                         "$nick",
-                         "$blurb",
-                         gimp,
-                         GIMP_TYPE_DRAWABLE,
-                         $flags)
+gimp_param_spec_drawable_id ("$name",
+                             "$nick",
+                             "$blurb",
+                             gimp,
+                             $flags)
 CODE
     }
     elsif ($pdbtype eq 'layer') {
 	$pspec = <<CODE;
-gimp_param_spec_item_id ("$name",
-                         "$nick",
-                         "$blurb",
-                         gimp,
-                         GIMP_TYPE_LAYER,
-                         $flags)
+gimp_param_spec_layer_id ("$name",
+                          "$nick",
+                          "$blurb",
+                          gimp,
+                          $flags)
 CODE
     }
     elsif ($pdbtype eq 'channel') {
 	$pspec = <<CODE;
-gimp_param_spec_item_id ("$name",
-                         "$nick",
-                         "$blurb",
-                         gimp,
-                         GIMP_TYPE_CHANNEL,
-                         $flags)
+gimp_param_spec_channel_id ("$name",
+                            "$nick",
+                            "$blurb",
+                            gimp,
+                            $flags)
 CODE
     }
     elsif ($pdbtype eq 'layer_mask') {
 	$pspec = <<CODE;
-gimp_param_spec_item_id ("$name",
-                         "$nick",
-                         "$blurb",
-                         gimp,
-                         GIMP_TYPE_LAYER_MASK,
-                         $flags)
+gimp_param_spec_layer_mask_id ("$name",
+                               "$nick",
+                               "$blurb",
+                               gimp,
+                               $flags)
 CODE
     }
     elsif ($pdbtype eq 'selection') {
 	$pspec = <<CODE;
-gimp_param_spec_item_id ("$name",
-                         "$nick",
-                         "$blurb",
-                         gimp,
-                         GIMP_TYPE_CHANNEL,
-                         $flags)
+gimp_param_spec_selection_id ("$name",
+                              "$nick",
+                              "$blurb",
+                              gimp,
+                              $flags)
 CODE
     }
     elsif ($pdbtype eq 'vectors') {
 	$pspec = <<CODE;
-gimp_param_spec_item_id ("$name",
-                         "$nick",
-                         "$blurb",
-                         gimp,
-                         GIMP_TYPE_VECTORS,
-                         $flags)
+gimp_param_spec_vectors_id ("$name",
+                            "$nick",
+                            "$blurb",
+                            gimp,
+                            $flags)
 CODE
     }
     elsif ($pdbtype eq 'display') {
@@ -339,11 +333,11 @@ CODE
 	$max = defined $typeinfo[2] ? $typeinfo[2] : G_MAXINT32;
 	$default = exists $arg->{default} ? $arg->{default} : defined $typeinfo[0] ? $typeinfo[0] : 0;
 	$pspec = <<CODE;
-g_param_spec_int ("$name",
-                  "$nick",
-                  "$blurb",
-                  $min, $max, $default,
-                  $flags)
+gimp_param_spec_int32 ("$name",
+                       "$nick",
+                       "$blurb",
+                       $min, $max, $default,
+                       $flags)
 CODE
     }
     elsif ($pdbtype eq 'int16') {
@@ -351,23 +345,23 @@ CODE
 	$max = defined $typeinfo[2] ? $typeinfo[2] : G_MAXINT16;
 	$default = exists $arg->{default} ? $arg->{default} : defined $typeinfo[0] ? $typeinfo[0] : 0;
 	$pspec = <<CODE;
-g_param_spec_int ("$name",
-                  "$nick",
-                  "$blurb",
-                  $min, $max, $default,
-                  $flags)
+gimp_param_spec_int16 ("$name",
+                       "$nick",
+                       "$blurb",
+                       $min, $max, $default,
+                       $flags)
 CODE
     }
     elsif ($pdbtype eq 'int8') {
-	$min = defined $typeinfo[0] ? $typeinfo[0] : G_MINUINT8;
+	$min = defined $typeinfo[0] ? $typeinfo[0] : 0;
 	$max = defined $typeinfo[2] ? $typeinfo[2] : G_MAXUINT8;
 	$default = exists $arg->{default} ? $arg->{default} : defined $typeinfo[0] ? $typeinfo[0] : 0;
 	$pspec = <<CODE;
-g_param_spec_uint ("$name",
-                   "$nick",
-                   "$blurb",
-                   $min, $max, $default,
-                   $flags)
+gimp_param_spec_int8 ("$name",
+                      "$nick",
+                      "$blurb",
+                      $min, $max, $default,
+                      $flags)
 CODE
     }
     elsif ($pdbtype eq 'boolean') {
@@ -462,15 +456,36 @@ gimp_param_spec_parasite ("$name",
                           $flags)
 CODE
     }
-    elsif ($pdbtype eq 'int32array' ||
-	   $pdbtype eq 'int16array' ||
-	   $pdbtype eq 'int8array'  ||
-	   $pdbtype eq 'floatarray') {
+    elsif ($pdbtype eq 'int32array') {
 	$pspec = <<CODE;
-gimp_param_spec_array ("$name",
-                       "$nick",
-                       "$blurb",
-                       $flags)
+gimp_param_spec_int32_array ("$name",
+                             "$nick",
+                             "$blurb",
+                             $flags)
+CODE
+    }
+    elsif ($pdbtype eq 'int16array') {
+	$pspec = <<CODE;
+gimp_param_spec_int16_array ("$name",
+                             "$nick",
+                             "$blurb",
+                             $flags)
+CODE
+    }
+    elsif ($pdbtype eq 'int8array') {
+	$pspec = <<CODE;
+gimp_param_spec_int8_array ("$name",
+                            "$nick",
+                            "$blurb",
+                            $flags)
+CODE
+    }
+    elsif ($pdbtype eq 'floatarray') {
+	$pspec = <<CODE;
+gimp_param_spec_float_array ("$name",
+                             "$nick",
+                             "$blurb",
+                             $flags)
 CODE
     }
     elsif ($pdbtype eq 'stringarray') {
@@ -486,7 +501,6 @@ CODE
 	exit -1;
     }
 
-    $pspec = "GIMP_PDB_$arg_types{$pdbtype}->{name},\n" . $pspec;
     $pspec =~ s/\s$//;
 
     return ($pspec, $postproc);

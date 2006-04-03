@@ -50,21 +50,18 @@ register_guides_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_add_hguide_proc, 2, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("yposition",
-                                                 "yposition",
-                                                 "The guide's y-offset from top of image",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("yposition",
+                                                      "yposition",
+                                                      "The guide's y-offset from top of image",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
                                    g_param_spec_uint ("guide",
                                                       "guide",
                                                       "The new guide",
@@ -77,21 +74,18 @@ register_guides_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_add_vguide_proc, 2, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("xposition",
-                                                 "xposition",
-                                                 "The guide's x-offset from left of image",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("xposition",
+                                                      "xposition",
+                                                      "The guide's x-offset from left of image",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
                                    g_param_spec_uint ("guide",
                                                       "guide",
                                                       "The new guide",
@@ -104,14 +98,12 @@ register_guides_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_delete_guide_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_uint ("guide",
                                                   "guide",
                                                   "The ID of the guide to be removed",
@@ -124,21 +116,18 @@ register_guides_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_find_next_guide_proc, 2, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_uint ("guide",
                                                   "guide",
                                                   "The ID of the current guide (0 if first invocation)",
                                                   1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
                                    g_param_spec_uint ("next-guide",
                                                       "next guide",
                                                       "The next guide's ID",
@@ -151,21 +140,18 @@ register_guides_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_get_guide_orientation_proc, 2, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_uint ("guide",
                                                   "guide",
                                                   "The guide",
                                                   1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
                                    gimp_param_spec_enum ("orientation",
                                                          "orientation",
                                                          "The guide's orientation: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }",
@@ -181,26 +167,23 @@ register_guides_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_get_guide_position_proc, 2, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_uint ("guide",
                                                   "guide",
                                                   "The guide",
                                                   1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
-                                   g_param_spec_int ("position",
-                                                     "position",
-                                                     "The guide's position relative to top or left of image",
-                                                     G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_int32 ("position",
+                                                          "position",
+                                                          "The guide's position relative to top or left of image",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
 }

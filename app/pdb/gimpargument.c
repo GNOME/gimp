@@ -39,8 +39,7 @@ gimp_argument_init (GimpArgument     *arg,
   g_return_if_fail (arg != NULL);
   g_return_if_fail (proc_arg != NULL);
 
-  arg->type = proc_arg->type;
-  g_value_init (&arg->value, proc_arg->pspec->value_type);
+  g_value_init (&arg->value, G_PARAM_SPEC_VALUE_TYPE (proc_arg->pspec));
 }
 
 void
@@ -49,17 +48,18 @@ gimp_argument_init_compat (GimpArgument   *arg,
 {
   g_return_if_fail (arg != NULL);
 
-  arg->type = arg_type;
-
   switch (arg_type)
     {
     case GIMP_PDB_INT32:
+      g_value_init (&arg->value, GIMP_TYPE_INT32);
+      break;
+
     case GIMP_PDB_INT16:
-      g_value_init (&arg->value, G_TYPE_INT);
+      g_value_init (&arg->value, GIMP_TYPE_INT16);
       break;
 
     case GIMP_PDB_INT8:
-      g_value_init (&arg->value, G_TYPE_UINT);
+      g_value_init (&arg->value, GIMP_TYPE_INT8);
       break;
 
     case GIMP_PDB_FLOAT:
@@ -71,10 +71,19 @@ gimp_argument_init_compat (GimpArgument   *arg,
       break;
 
     case GIMP_PDB_INT32ARRAY:
+      g_value_init (&arg->value, GIMP_TYPE_INT32_ARRAY);
+      break;
+
     case GIMP_PDB_INT16ARRAY:
+      g_value_init (&arg->value, GIMP_TYPE_INT16_ARRAY);
+      break;
+
     case GIMP_PDB_INT8ARRAY:
+      g_value_init (&arg->value, GIMP_TYPE_INT8_ARRAY);
+      break;
+
     case GIMP_PDB_FLOATARRAY:
-      g_value_init (&arg->value, GIMP_TYPE_ARRAY);
+      g_value_init (&arg->value, GIMP_TYPE_FLOAT_ARRAY);
       break;
 
     case GIMP_PDB_STRINGARRAY:
@@ -90,13 +99,31 @@ gimp_argument_init_compat (GimpArgument   *arg,
       break;
 
     case GIMP_PDB_DISPLAY:
+      g_value_init (&arg->value, GIMP_TYPE_DISPLAY_ID);
+      break;
+
     case GIMP_PDB_IMAGE:
+      g_value_init (&arg->value, GIMP_TYPE_IMAGE_ID);
+      break;
+
     case GIMP_PDB_LAYER:
+      g_value_init (&arg->value, GIMP_TYPE_LAYER_ID);
+      break;
+
     case GIMP_PDB_CHANNEL:
+      g_value_init (&arg->value, GIMP_TYPE_CHANNEL_ID);
+      break;
+
     case GIMP_PDB_DRAWABLE:
+      g_value_init (&arg->value, GIMP_TYPE_DRAWABLE_ID);
+      break;
+
     case GIMP_PDB_SELECTION:
+      g_value_init (&arg->value, GIMP_TYPE_SELECTION_ID);
+      break;
+
     case GIMP_PDB_VECTORS:
-      g_value_init (&arg->value, G_TYPE_INT);
+      g_value_init (&arg->value, GIMP_TYPE_VECTORS_ID);
       break;
 
     case GIMP_PDB_PARASITE:
@@ -125,4 +152,88 @@ gimp_arguments_destroy (GimpArgument *args,
     g_value_unset (&args[i].value);
 
   g_free (args);
+}
+
+GimpPDBArgType
+gimp_argument_type_to_pdb_arg_type (GType type)
+{
+  static GQuark  pdb_type_quark = 0;
+  GimpPDBArgType pdb_type;
+
+  if (! pdb_type_quark)
+    {
+      struct
+      {
+        GType          g_type;
+        GimpPDBArgType pdb_type;
+      }
+      type_mapping[] =
+      {
+        { GIMP_TYPE_INT32,           GIMP_PDB_INT32       },
+        { G_TYPE_INT,                GIMP_PDB_INT32       },
+        { G_TYPE_UINT,               GIMP_PDB_INT32       },
+        { G_TYPE_ENUM,               GIMP_PDB_INT32       },
+        { G_TYPE_BOOLEAN,            GIMP_PDB_INT32       },
+
+        { GIMP_TYPE_INT16,           GIMP_PDB_INT16       },
+        { GIMP_TYPE_INT8,            GIMP_PDB_INT8        },
+        { G_TYPE_DOUBLE,             GIMP_PDB_FLOAT       },
+
+        { G_TYPE_STRING,             GIMP_PDB_STRING      },
+
+        { GIMP_TYPE_INT32_ARRAY,     GIMP_PDB_INT32ARRAY  },
+        { GIMP_TYPE_INT16_ARRAY,     GIMP_PDB_INT16ARRAY  },
+        { GIMP_TYPE_INT8_ARRAY,      GIMP_PDB_INT8ARRAY   },
+        { GIMP_TYPE_FLOAT_ARRAY,     GIMP_PDB_FLOATARRAY  },
+        { GIMP_TYPE_STRING_ARRAY,    GIMP_PDB_STRINGARRAY },
+
+        { GIMP_TYPE_RGB,             GIMP_PDB_COLOR       },
+
+        { GIMP_TYPE_DISPLAY_ID,      GIMP_PDB_DISPLAY     },
+        { GIMP_TYPE_IMAGE_ID,        GIMP_PDB_IMAGE       },
+        { GIMP_TYPE_LAYER_ID,        GIMP_PDB_LAYER       },
+        { GIMP_TYPE_CHANNEL_ID,      GIMP_PDB_CHANNEL     },
+        { GIMP_TYPE_DRAWABLE_ID,     GIMP_PDB_DRAWABLE    },
+        { GIMP_TYPE_SELECTION_ID,    GIMP_PDB_SELECTION   },
+        { GIMP_TYPE_LAYER_MASK_ID,   GIMP_PDB_CHANNEL     },
+        { GIMP_TYPE_VECTORS_ID,      GIMP_PDB_VECTORS     },
+
+        { GIMP_TYPE_PARASITE,        GIMP_PDB_PARASITE    },
+
+        { GIMP_TYPE_PDB_STATUS_TYPE, GIMP_PDB_STATUS      }
+      };
+
+      gint i;
+
+      pdb_type_quark = g_quark_from_static_string ("gimp-pdb-type");
+
+      for (i = 0; i < G_N_ELEMENTS (type_mapping); i++)
+        g_type_set_qdata (type_mapping[i].g_type, pdb_type_quark,
+                          GINT_TO_POINTER (type_mapping[i].pdb_type));
+    }
+
+  pdb_type = GPOINTER_TO_INT (g_type_get_qdata (type, pdb_type_quark));
+
+#if 0
+  g_printerr ("%s: arg_type = %p (%s)  ->  %d (%s)\n",
+              G_STRFUNC,
+              (gpointer) type, g_type_name (type),
+              pdb_type, gimp_pdb_arg_type_to_string (pdb_type));
+#endif
+
+  return pdb_type;
+}
+
+gchar *
+gimp_pdb_arg_type_to_string (GimpPDBArgType type)
+{
+  const gchar *name;
+
+  if (! gimp_enum_get_value (GIMP_TYPE_PDB_ARG_TYPE, type,
+                             &name, NULL, NULL, NULL))
+    {
+      return  g_strdup_printf ("(PDB type %d unknown)", type);
+    }
+
+  return g_strdup (name);
 }

@@ -1069,10 +1069,10 @@ plug_ins_add_to_db (Gimp        *gimp,
                 procedural_db_run_proc (gimp, context, NULL,
                                         "gimp-register-save-handler",
                                         &n_return_vals,
-                                        GIMP_PDB_STRING, proc_def->procedure->name,
-                                        GIMP_PDB_STRING, proc_def->extensions,
-                                        GIMP_PDB_STRING, proc_def->prefixes,
-                                        GIMP_PDB_END);
+                                        G_TYPE_STRING, proc_def->procedure->name,
+                                        G_TYPE_STRING, proc_def->extensions,
+                                        G_TYPE_STRING, proc_def->prefixes,
+                                        G_TYPE_NONE);
             }
           else
             {
@@ -1080,11 +1080,11 @@ plug_ins_add_to_db (Gimp        *gimp,
                 procedural_db_run_proc (gimp, context, NULL,
                                         "gimp-register-magic-load-handler",
                                         &n_return_vals,
-                                        GIMP_PDB_STRING, proc_def->procedure->name,
-                                        GIMP_PDB_STRING, proc_def->extensions,
-                                        GIMP_PDB_STRING, proc_def->prefixes,
-                                        GIMP_PDB_STRING, proc_def->magics,
-                                        GIMP_PDB_END);
+                                        G_TYPE_STRING, proc_def->procedure->name,
+                                        G_TYPE_STRING, proc_def->extensions,
+                                        G_TYPE_STRING, proc_def->prefixes,
+                                        G_TYPE_STRING, proc_def->magics,
+                                        G_TYPE_NONE);
             }
 
           gimp_arguments_destroy (return_vals, n_return_vals);

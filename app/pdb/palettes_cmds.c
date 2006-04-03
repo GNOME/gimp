@@ -60,7 +60,6 @@ register_palettes_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&palettes_get_list_proc, 1, 2);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("filter",
                                                        "filter",
                                                        "An optional regular expression used to filter the list",
@@ -68,14 +67,12 @@ register_palettes_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
-                                   g_param_spec_int ("num-palettes",
-                                                     "num palettes",
-                                                     "The number of palettes in the list",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_int32 ("num-palettes",
+                                                          "num palettes",
+                                                          "The number of palettes in the list",
+                                                          0, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRINGARRAY,
                                    gimp_param_spec_string_array ("palette-list",
                                                                  "palette list",
                                                                  "The list of palette names",
@@ -87,7 +84,6 @@ register_palettes_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&palettes_get_palette_proc, 0, 2);
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRING,
                                    gimp_param_spec_string ("name",
                                                            "name",
                                                            "The palette name",
@@ -95,12 +91,11 @@ register_palettes_procs (Gimp *gimp)
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
-                                   g_param_spec_int ("num-colors",
-                                                     "num colors",
-                                                     "The palette num_colors",
-                                                     G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_int32 ("num-colors",
+                                                          "num colors",
+                                                          "The palette num_colors",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -108,7 +103,6 @@ register_palettes_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&palettes_get_palette_entry_proc, 2, 3);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The palette name (\"\" means currently active palette)",
@@ -116,14 +110,12 @@ register_palettes_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("entry-num",
-                                                 "entry num",
-                                                 "The entry to retrieve",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("entry-num",
+                                                      "entry num",
+                                                      "The entry to retrieve",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRING,
                                    gimp_param_spec_string ("actual-name",
                                                            "actual name",
                                                            "The palette name",
@@ -131,14 +123,12 @@ register_palettes_procs (Gimp *gimp)
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
-                                   g_param_spec_int ("num-colors",
-                                                     "num colors",
-                                                     "The palette num_colors",
-                                                     G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_int32 ("num-colors",
+                                                          "num colors",
+                                                          "The palette num_colors",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_COLOR,
                                    gimp_param_spec_rgb ("color",
                                                         "color",
                                                         "The color requested",

@@ -53,7 +53,6 @@ register_fonts_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&fonts_get_list_proc, 1, 2);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("filter",
                                                        "filter",
                                                        "An optional regular expression used to filter the list",
@@ -61,14 +60,12 @@ register_fonts_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
-                                   g_param_spec_int ("num-fonts",
-                                                     "num fonts",
-                                                     "The number of available fonts",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_int32 ("num-fonts",
+                                                          "num fonts",
+                                                          "The number of available fonts",
+                                                          0, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRINGARRAY,
                                    gimp_param_spec_string_array ("font-list",
                                                                  "font list",
                                                                  "The list of font names",

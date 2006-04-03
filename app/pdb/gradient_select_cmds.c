@@ -47,7 +47,6 @@ register_gradient_select_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradients_popup_proc, 4, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("gradient-callback",
                                                        "gradient callback",
                                                        "The callback PDB proc to call when gradient selection is made",
@@ -55,7 +54,6 @@ register_gradient_select_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("popup-title",
                                                        "popup title",
                                                        "Title to give the gradient popup window",
@@ -63,7 +61,6 @@ register_gradient_select_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("initial-gradient",
                                                        "initial gradient",
                                                        "The name of the pattern to set as the first selected",
@@ -71,12 +68,11 @@ register_gradient_select_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("sample-size",
-                                                 "sample size",
-                                                 "Size of the sample to return when the gradient is changed: (1 <= sample_size <= 10000)",
-                                                 1, 10000, 1,
-                                                 GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+                               gimp_param_spec_int32 ("sample-size",
+                                                      "sample size",
+                                                      "Size of the sample to return when the gradient is changed: (1 <= sample_size <= 10000)",
+                                                      1, 10000, 1,
+                                                      GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -84,7 +80,6 @@ register_gradient_select_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradients_close_popup_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("gradient-callback",
                                                        "gradient callback",
                                                        "The name of the callback registered for this popup",
@@ -98,7 +93,6 @@ register_gradient_select_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradients_set_popup_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("gradient-callback",
                                                        "gradient callback",
                                                        "The name of the callback registered for this popup",
@@ -106,7 +100,6 @@ register_gradient_select_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("gradient-name",
                                                        "gradient name",
                                                        "The name of the gradient to set as selected",

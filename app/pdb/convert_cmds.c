@@ -50,7 +50,6 @@ register_convert_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_convert_rgb_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
@@ -63,7 +62,6 @@ register_convert_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_convert_grayscale_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
@@ -76,14 +74,12 @@ register_convert_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_convert_indexed_proc, 7, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_enum ("dither-type",
                                                   "dither type",
                                                   "The dither type to use: { GIMP_NO_DITHER (0), GIMP_FS_DITHER (1), GIMP_FSLOWBLEED_DITHER (2), GIMP_FIXED_DITHER (3) }",
@@ -91,7 +87,6 @@ register_convert_procs (Gimp *gimp)
                                                   GIMP_NO_DITHER,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_enum ("palette-type",
                                                   "palette type",
                                                   "The type of palette to use: { GIMP_MAKE_PALETTE (0), GIMP_REUSE_PALETTE (1), GIMP_WEB_PALETTE (2), GIMP_MONO_PALETTE (3), GIMP_CUSTOM_PALETTE (4) }",
@@ -99,28 +94,24 @@ register_convert_procs (Gimp *gimp)
                                                   GIMP_MAKE_PALETTE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("num-cols",
-                                                 "num cols",
-                                                 "The number of colors to quantize to, ignored unless (palette_type == GIMP_MAKE_PALETTE)",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("num-cols",
+                                                      "num cols",
+                                                      "The number of colors to quantize to, ignored unless (palette_type == GIMP_MAKE_PALETTE)",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_boolean ("alpha-dither",
                                                      "alpha dither",
                                                      "Dither transparency to fake partial opacity",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_boolean ("remove-unused",
                                                      "remove unused",
                                                      "Remove unused or duplicate color entries from final palette, ignored if (palette_type == GIMP_MAKE_PALETTE)",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("palette",
                                                        "palette",
                                                        "The name of the custom palette to use, ignored unless (palette_type == GIMP_CUSTOM_PALETTE)",

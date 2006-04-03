@@ -52,7 +52,6 @@ register_progress_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&progress_init_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("message",
                                                        "message",
                                                        "Message to use in the progress dialog",
@@ -60,7 +59,6 @@ register_progress_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_DISPLAY,
                                gimp_param_spec_display_id ("gdisplay",
                                                            "gdisplay",
                                                            "GimpDisplay to update progressbar in, or -1 for a seperate window",
@@ -73,7 +71,6 @@ register_progress_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&progress_update_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_FLOAT,
                                g_param_spec_double ("percentage",
                                                     "percentage",
                                                     "Percentage of progress completed which must be between 0.0 and 1.0",
@@ -92,7 +89,6 @@ register_progress_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&progress_set_text_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("message",
                                                        "message",
                                                        "Message to use in the progress dialog",
@@ -106,12 +102,11 @@ register_progress_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&progress_get_window_handle_proc, 0, 1);
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
-                                   g_param_spec_int ("window",
-                                                     "window",
-                                                     "The progress bar's toplevel window",
-                                                     G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_int32 ("window",
+                                                          "window",
+                                                          "The progress bar's toplevel window",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -119,7 +114,6 @@ register_progress_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&progress_install_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("progress-callback",
                                                        "progress callback",
                                                        "The callback PDB proc to call",
@@ -133,7 +127,6 @@ register_progress_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&progress_uninstall_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("progress-callback",
                                                        "progress callback",
                                                        "The name of the callback registered for this progress",
@@ -147,7 +140,6 @@ register_progress_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&progress_cancel_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("progress-callback",
                                                        "progress callback",
                                                        "The name of the callback registered for this progress",

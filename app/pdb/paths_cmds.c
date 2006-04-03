@@ -69,21 +69,18 @@ register_paths_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&path_list_proc, 1, 2);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image to list the paths from",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
-                                   g_param_spec_int ("num-paths",
-                                                     "num paths",
-                                                     "The number of paths returned.",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_int32 ("num-paths",
+                                                          "num paths",
+                                                          "The number of paths returned.",
+                                                          0, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRINGARRAY,
                                    gimp_param_spec_string_array ("path-list",
                                                                  "path list",
                                                                  "List of the paths belonging to this image.",
@@ -95,14 +92,12 @@ register_paths_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&path_get_current_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image to get the current path from",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRING,
                                    gimp_param_spec_string ("name",
                                                            "name",
                                                            "The name of the current path.",
@@ -116,14 +111,12 @@ register_paths_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&path_set_current_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image in which a path will become current",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the path to make current.",
@@ -137,14 +130,12 @@ register_paths_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&path_delete_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image to delete the path from",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the path to delete.",
@@ -158,14 +149,12 @@ register_paths_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&path_get_points_proc, 2, 4);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image to list the paths from",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the path whose points should be listed.",
@@ -173,32 +162,28 @@ register_paths_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
-                                   g_param_spec_int ("path-type",
-                                                     "path type",
-                                                     "The type of the path. Currently only one type (1 = Bezier) is supported",
-                                                     G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
-                                   g_param_spec_int ("path-closed",
-                                                     "path closed",
-                                                     "Return if the path is closed. (0 = path open, 1 = path closed)",
-                                                     G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
-                                   g_param_spec_int ("num-path-point-details",
-                                                     "num path point details",
-                                                     "The number of points returned. Each point is made up of (x, y, pnt_type) of floats.",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_FLOATARRAY,
-                                   gimp_param_spec_array ("points-pairs",
-                                                          "points pairs",
-                                                          "The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL, 3.0 = BEZIER_MOVE). Note all points are returned in pixel resolution.",
+                                   gimp_param_spec_int32 ("path-type",
+                                                          "path type",
+                                                          "The type of the path. Currently only one type (1 = Bezier) is supported",
+                                                          G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("path-closed",
+                                                          "path closed",
+                                                          "Return if the path is closed. (0 = path open, 1 = path closed)",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("num-path-point-details",
+                                                          "num path point details",
+                                                          "The number of points returned. Each point is made up of (x, y, pnt_type) of floats.",
+                                                          0, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_float_array ("points-pairs",
+                                                                "points pairs",
+                                                                "The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL, 3.0 = BEZIER_MOVE). Note all points are returned in pixel resolution.",
+                                                                GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -206,14 +191,12 @@ register_paths_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&path_set_points_proc, 5, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image to set the paths in",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the path to create. If it exists then a unique name will be created - query the list of paths if you want to make sure that the name of the path you create is unique. This will be set as the current path.",
@@ -221,25 +204,22 @@ register_paths_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("ptype",
-                                                 "ptype",
-                                                 "The type of the path. Currently only one type (1 = Bezier) is supported.",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("num-path-points",
-                                                 "num path points",
-                                                 "The number of elements in the array, i.e. the number of points in the path * 3. Each point is made up of (x, y, type) of floats. Currently only the creation of bezier curves is allowed. The type parameter must be set to (1) to indicate a BEZIER type curve. Note that for BEZIER curves, points must be given in the following order: ACCACCAC... If the path is not closed the last control point is missed off. Points consist of three control points (control/anchor/control) so for a curve that is not closed there must be at least two points passed (2 x,y pairs). If (num_path_points/3) % 3 = 0 then the path is assumed to be closed and the points are ACCACCACCACC.",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_FLOATARRAY,
-                               gimp_param_spec_array ("points-pairs",
-                                                      "points pairs",
-                                                      "The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL, 3.0= BEZIER_MOVE). Note all points are returned in pixel resolution.",
+                               gimp_param_spec_int32 ("ptype",
+                                                      "ptype",
+                                                      "The type of the path. Currently only one type (1 = Bezier) is supported.",
+                                                      G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("num-path-points",
+                                                      "num path points",
+                                                      "The number of elements in the array, i.e. the number of points in the path * 3. Each point is made up of (x, y, type) of floats. Currently only the creation of bezier curves is allowed. The type parameter must be set to (1) to indicate a BEZIER type curve. Note that for BEZIER curves, points must be given in the following order: ACCACCAC... If the path is not closed the last control point is missed off. Points consist of three control points (control/anchor/control) so for a curve that is not closed there must be at least two points passed (2 x,y pairs). If (num_path_points/3) % 3 = 0 then the path is assumed to be closed and the points are ACCACCACCACC.",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_float_array ("points-pairs",
+                                                            "points pairs",
+                                                            "The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL, 3.0= BEZIER_MOVE). Note all points are returned in pixel resolution.",
+                                                            GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -247,7 +227,6 @@ register_paths_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&path_stroke_current_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image which contains the path to stroke",
@@ -260,35 +239,30 @@ register_paths_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&path_get_point_at_dist_proc, 2, 3);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image the paths belongs to",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_FLOAT,
                                g_param_spec_double ("distance",
                                                     "distance",
                                                     "The distance along the path.",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
-                                   g_param_spec_int ("x-point",
-                                                     "x point",
-                                                     "The x position of the point.",
-                                                     G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_int32 ("x-point",
+                                                          "x point",
+                                                          "The x position of the point.",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
-                                   g_param_spec_int ("y-point",
-                                                     "y point",
-                                                     "The y position of the point.",
-                                                     G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_int32 ("y-point",
+                                                          "y point",
+                                                          "The y position of the point.",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_FLOAT,
                                    g_param_spec_double ("slope",
                                                         "slope",
                                                         "The slope (dy / dx) at the specified point.",
@@ -301,14 +275,12 @@ register_paths_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&path_get_tattoo_proc, 2, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the path whose tattoo should be obtained.",
@@ -316,12 +288,11 @@ register_paths_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
-                                   g_param_spec_int ("tattoo",
-                                                     "tattoo",
-                                                     "The tattoo associated with the named path.",
-                                                     G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_int32 ("tattoo",
+                                                          "tattoo",
+                                                          "The tattoo associated with the named path.",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -329,14 +300,12 @@ register_paths_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&path_set_tattoo_proc, 3, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "the name of the path whose tattoo should be set",
@@ -344,12 +313,11 @@ register_paths_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("tattovalue",
-                                                 "tattovalue",
-                                                 "The tattoo associated with the name path. Only values returned from 'path_get_tattoo' should be used here",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("tattovalue",
+                                                      "tattovalue",
+                                                      "The tattoo associated with the name path. Only values returned from 'path_get_tattoo' should be used here",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -357,21 +325,18 @@ register_paths_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&get_path_by_tattoo_proc, 2, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("tattoo",
-                                                 "tattoo",
-                                                 "The tattoo of the required path.",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("tattoo",
+                                                      "tattoo",
+                                                      "The tattoo of the required path.",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRING,
                                    gimp_param_spec_string ("name",
                                                            "name",
                                                            "The name of the path with the specified tattoo.",
@@ -385,14 +350,12 @@ register_paths_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&path_get_locked_proc, 2, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the path whose locked status should be obtained.",
@@ -400,7 +363,6 @@ register_paths_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
                                    g_param_spec_boolean ("locked",
                                                          "locked",
                                                          "TRUE if the path is locked, FALSE otherwise",
@@ -413,14 +375,12 @@ register_paths_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&path_set_locked_proc, 3, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "the name of the path whose locked status should be set",
@@ -428,7 +388,6 @@ register_paths_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_boolean ("locked",
                                                      "locked",
                                                      "Whether the path is locked",
@@ -441,14 +400,12 @@ register_paths_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&path_to_selection_proc, 7, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the path which should be made into selection.",
@@ -456,7 +413,6 @@ register_paths_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_enum ("op",
                                                   "op",
                                                   "The desired operation with current selection: { GIMP_CHANNEL_OP_ADD (0), GIMP_CHANNEL_OP_SUBTRACT (1), GIMP_CHANNEL_OP_REPLACE (2), GIMP_CHANNEL_OP_INTERSECT (3) }",
@@ -464,28 +420,24 @@ register_paths_procs (Gimp *gimp)
                                                   GIMP_CHANNEL_OP_ADD,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_boolean ("antialias",
                                                      "antialias",
                                                      "Antialias selection.",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_boolean ("feather",
                                                      "feather",
                                                      "Feather selection.",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_FLOAT,
                                g_param_spec_double ("feather-radius-x",
                                                     "feather radius x",
                                                     "Feather radius x.",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_FLOAT,
                                g_param_spec_double ("feather-radius-y",
                                                     "feather radius y",
                                                     "Feather radius y.",
@@ -498,14 +450,12 @@ register_paths_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&path_import_proc, 4, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("filename",
                                                        "filename",
                                                        "The name of the SVG file to import.",
@@ -513,14 +463,12 @@ register_paths_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_boolean ("merge",
                                                      "merge",
                                                      "Merge paths into a single vectors object.",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_boolean ("scale",
                                                      "scale",
                                                      "Scale the SVG to image dimensions.",
@@ -533,14 +481,12 @@ register_paths_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&path_import_string_proc, 5, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("string",
                                                        "string",
                                                        "A string that must be a complete and valid SVG document.",
@@ -548,21 +494,18 @@ register_paths_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("length",
-                                                 "length",
-                                                 "Number of bytes in string or -1 if the string is NULL terminated.",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("length",
+                                                      "length",
+                                                      "Number of bytes in string or -1 if the string is NULL terminated.",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_boolean ("merge",
                                                      "merge",
                                                      "Merge paths into a single vectors object.",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_boolean ("scale",
                                                      "scale",
                                                      "Scale the SVG to image dimensions.",

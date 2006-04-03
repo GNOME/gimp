@@ -1,5 +1,65 @@
 2006-04-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpparamspecs.[ch]: added a shitload of new GTypes and
+	corresponding GParamSpecs to use them as PDB arguments.
+	Each GimpPDBArgType has one or more corresponding GTypes in the
+	core now.
+
+	* app/pdb/gimpargument.[ch] (struct GimpArgument)
+	(struct GimpArgumentSpec): removed "value" member because the
+	GValue's/GParamSpec's GType carries just as much information now.
+
+	(gimp_argument_type_to_pdb_arg_type): new function which maps
+	GTypes to GimpPDBArgType.
+
+	(gimp_pdb_arg_type_to_string): formerly known as
+	procedural_db_type_name().
+
+	* app/pdb/gimpprocedure.[ch]
+	* app/pdb/procedural_db.[ch]: completely switch to GValue. Use the
+	new GParamSpecs for procedure arguments. GimpPDBArgType is only
+	used for adding compat args/values of plug-in procedures.
+
+	(procedural_db_run_proc): the va_list expects a sequence of
+	(GType, value, GType, value, ..., G_TYPE_NONE) now.
+
+	* app/plug-in/plug-in-params.[ch]: changed accordingly.
+
+	(plug_in_param_defs_check): removed this function.
+
+	* app/plug-in/plug-in-message.c (plug_in_handle_proc_install): use
+	plug_in_proc_args_check() instead and initialize the GimpProcedure
+	before doing so.
+
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/pdb.pl: use the new param spec types and their
+	utility functions. Changed argument/value registration
+	accordingly.
+
+	* app/pdb/procedural-db-query.c
+	* app/actions/plug-in-commands.c
+	* app/actions/vectors-commands.c
+	* app/core/gimppdbprogress.c
+	* app/dialogs/about-dialog.c
+	* app/file/file-open.c
+	* app/file/file-save.c
+	* app/plug-in/plug-in-progress.c
+	* app/plug-in/plug-in-rc.c
+	* app/plug-in/plug-ins.c
+	* app/widgets/gimpbrushselect.c
+	* app/widgets/gimpfontselect.c
+	* app/widgets/gimpgradientselect.c
+	* app/widgets/gimphelp.c
+	* app/widgets/gimppaletteselect.c
+	* app/widgets/gimppatternselect.c
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/procedural_db.pdb: changed accordingly.
+
+	* app/pdb/*_cmds.c: regenerated.
+
+2006-04-03  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/app.pl: remove newline flood.
 
 	* app/pdb/internal_procs.c: regenerated shorter.

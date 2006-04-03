@@ -52,7 +52,6 @@ register_undo_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_undo_group_start_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The ID of the image in which to open an undo group",
@@ -65,7 +64,6 @@ register_undo_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_undo_group_end_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The ID of the image in which to close an undo group",
@@ -78,14 +76,12 @@ register_undo_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_undo_is_enabled_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
                                    g_param_spec_boolean ("enabled",
                                                          "enabled",
                                                          "TRUE if undo is enabled for this image",
@@ -98,14 +94,12 @@ register_undo_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_undo_disable_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
                                    g_param_spec_boolean ("disabled",
                                                          "disabled",
                                                          "TRUE if the image undo has been disabled",
@@ -118,14 +112,12 @@ register_undo_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_undo_enable_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
                                    g_param_spec_boolean ("enabled",
                                                          "enabled",
                                                          "TRUE if the image undo has been enabled",
@@ -138,14 +130,12 @@ register_undo_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_undo_freeze_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
                                    g_param_spec_boolean ("frozen",
                                                          "frozen",
                                                          "TRUE if the image undo has been frozen",
@@ -158,14 +148,12 @@ register_undo_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_undo_thaw_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
                                    g_param_spec_boolean ("thawed",
                                                          "thawed",
                                                          "TRUE if the image undo has been thawed",

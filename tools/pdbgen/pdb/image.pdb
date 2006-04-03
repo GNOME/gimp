@@ -1767,7 +1767,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  selection = gimp_image_get_mask (image);
+  selection = GIMP_SELECTION (gimp_image_get_mask (image));
 
   if (! selection)
     success = FALSE;

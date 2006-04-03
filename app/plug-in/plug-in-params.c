@@ -38,17 +38,18 @@
 
 
 GimpArgument *
-plug_in_params_to_args (GimpArgumentSpec *proc_args,
-                        gint              n_proc_args,
+plug_in_params_to_args (GimpArgumentSpec *arg_specs,
+                        gint              n_arg_specs,
                         GPParam          *params,
 			gint              n_params,
+                        gboolean          return_values,
 			gboolean          full_copy)
 {
   GimpArgument *args;
   gint          i;
 
-  g_return_val_if_fail ((proc_args != NULL && n_proc_args  > 0) ||
-                        (proc_args == NULL && n_proc_args == 0), NULL);
+  g_return_val_if_fail ((arg_specs != NULL && n_arg_specs  > 0) ||
+                        (arg_specs == NULL && n_arg_specs == 0), NULL);
   g_return_val_if_fail ((params != NULL && n_params  > 0) ||
                         (params == NULL && n_params == 0), NULL);
 
@@ -59,19 +60,38 @@ plug_in_params_to_args (GimpArgumentSpec *proc_args,
 
   for (i = 0; i < n_params; i++)
     {
-      GValue *value = &args[i].value;
-      gint    count;
+      GValue         *value = &args[i].value;
+      GimpPDBArgType  arg_type;
+      gint            count;
 
-      if (i < n_proc_args && proc_args[i].type == params[i].type)
-        {
-          gimp_argument_init (&args[i], &proc_args[i]);
-        }
-      else
+      if (i == 0 && return_values)
         {
           gimp_argument_init_compat (&args[i], params[i].type);
         }
+      else
+        {
+          GimpArgumentSpec *spec;
+          gint              spec_index = i;
 
-      switch (args[i].type)
+          if (return_values)
+            spec_index--;
+
+          spec = &arg_specs[spec_index];
+
+          if (spec_index < n_arg_specs &&
+              G_PARAM_SPEC_VALUE_TYPE (spec->pspec) == params[i].type)
+            {
+              gimp_argument_init (&args[i], spec);
+            }
+          else
+            {
+              gimp_argument_init_compat (&args[i], params[i].type);
+            }
+        }
+
+      arg_type = gimp_argument_type_to_pdb_arg_type (G_VALUE_TYPE (value));
+
+      switch (arg_type)
 	{
 	case GIMP_PDB_INT32:
           if (G_VALUE_HOLDS_INT (value))
@@ -83,7 +103,11 @@ plug_in_params_to_args (GimpArgumentSpec *proc_args,
           else if (G_VALUE_HOLDS_BOOLEAN (value))
             g_value_set_boolean (value, params[i].data.d_int32 ? TRUE : FALSE);
           else
-            g_return_val_if_reached (args);
+            {
+              g_printerr ("%s: unhandled GIMP_PDB_INT32 type: %s\n",
+                          G_STRFUNC, g_type_name (G_VALUE_TYPE (value)));
+              g_return_val_if_reached (args);
+            }
 	  break;
 
 	case GIMP_PDB_INT16:
@@ -244,9 +268,9 @@ plug_in_args_to_params (GimpArgument *args,
     {
       GValue *value = &args[i].value;
 
-      params[i].type = args[i].type;
+      params[i].type = gimp_argument_type_to_pdb_arg_type (G_VALUE_TYPE (value));
 
-      switch (args[i].type)
+      switch (params[i].type)
 	{
 	case GIMP_PDB_INT32:
           if (G_VALUE_HOLDS_INT (value))
@@ -259,8 +283,8 @@ plug_in_args_to_params (GimpArgument *args,
             params[i].data.d_int32 = g_value_get_boolean (value);
           else
             {
-              g_printerr ("unhandled GIMP_PDB_INT32 type: %s\n",
-                          g_type_name (value->g_type));
+              g_printerr ("%s: unhandled GIMP_PDB_INT32 type: %s\n",
+                          G_STRFUNC, g_type_name (G_VALUE_TYPE (value)));
               g_return_val_if_reached (params);
             }
 	  break;
@@ -270,7 +294,7 @@ plug_in_args_to_params (GimpArgument *args,
 	  break;
 
 	case GIMP_PDB_INT8:
-	  params[i].data.d_int8 = g_value_get_int (value);
+	  params[i].data.d_int8 = g_value_get_uint (value);
 	  break;
 
 	case GIMP_PDB_FLOAT:
@@ -455,6 +479,8 @@ plug_in_params_destroy (GPParam  *params,
             case GIMP_PDB_CHANNEL:
             case GIMP_PDB_DRAWABLE:
             case GIMP_PDB_SELECTION:
+              break;
+
             case GIMP_PDB_BOUNDARY:
               g_message ("the \"boundary\" arg type is not currently supported");
               break;
@@ -480,46 +506,6 @@ plug_in_params_destroy (GPParam  *params,
     }
 
   g_free (params);
-}
-
-gboolean
-plug_in_param_defs_check (const gchar *plug_in_name,
-                          const gchar *plug_in_prog,
-                          const gchar *procedure_name,
-                          const gchar *menu_path,
-                          GPParamDef  *params,
-                          guint32      n_args,
-                          GPParamDef  *return_vals,
-                          guint32      n_return_vals,
-                          GError     **error)
-{
-  GimpArgumentSpec *args;
-  GimpArgumentSpec *return_args;
-  gboolean          success;
-  gint              i;
-
-  args = g_new0 (GimpArgumentSpec, n_args);
-  for (i = 0; i < n_args; i++)
-    args[i].type = params[i].type;
-
-  return_args = g_new0 (GimpArgumentSpec, n_return_vals);
-  for (i = 0; i < n_return_vals; i++)
-    return_args[i].type = return_vals[i].type;
-
-  success = plug_in_proc_args_check (plug_in_name,
-                                     plug_in_prog,
-                                     procedure_name,
-                                     menu_path,
-                                     args,
-                                     n_args,
-                                     return_args,
-                                     n_return_vals,
-                                     error);
-
-  g_free (args);
-  g_free (return_args);
-
-  return success;
 }
 
 gboolean
@@ -554,7 +540,7 @@ plug_in_proc_args_check (const gchar       *plug_in_name,
       strcmp (prefix, "<Image>")   == 0)
     {
       if ((n_args < 1) ||
-          (args[0].type != GIMP_PDB_INT32))
+          ! GIMP_IS_PARAM_SPEC_INT32 (args[0].pspec))
         {
           g_set_error (error, 0, 0,
                        "Plug-In \"%s\"\n(%s)\n\n"
@@ -570,10 +556,10 @@ plug_in_proc_args_check (const gchar       *plug_in_name,
     }
   else if (strcmp (prefix, "<Load>") == 0)
     {
-      if ((n_args < 3)                      ||
-          (args[0].type != GIMP_PDB_INT32)  ||
-          (args[1].type != GIMP_PDB_STRING) ||
-          (args[2].type != GIMP_PDB_STRING))
+      if ((n_args < 3)                               ||
+          ! GIMP_IS_PARAM_SPEC_INT32 (args[0].pspec) ||
+          ! G_IS_PARAM_SPEC_STRING   (args[0].pspec) ||
+          ! G_IS_PARAM_SPEC_STRING   (args[0].pspec))
         {
           g_set_error (error, 0, 0,
                        "Plug-In \"%s\"\n(%s)\n\n"
@@ -586,15 +572,30 @@ plug_in_proc_args_check (const gchar       *plug_in_name,
                        procedure_name);
           goto failure;
         }
+
+      if ((n_return_vals < 1) ||
+          ! GIMP_IS_PARAM_SPEC_IMAGE_ID (return_vals[0].pspec))
+        {
+          g_set_error (error, 0, 0,
+                       "Plug-In \"%s\"\n(%s)\n\n"
+                       "attempted to install <Load> procedure \"%s\" "
+                       "which does not return the standard <Load> Plug-In "
+                       "values.\n"
+                       "(IMAGE)",
+                       gimp_filename_to_utf8 (plug_in_name),
+                       gimp_filename_to_utf8 (plug_in_prog),
+                       procedure_name);
+          goto failure;
+        }
     }
   else if (strcmp (prefix, "<Save>") == 0)
     {
-      if ((n_args < 5)                        ||
-          (args[0].type != GIMP_PDB_INT32)    ||
-          (args[1].type != GIMP_PDB_IMAGE)    ||
-          (args[2].type != GIMP_PDB_DRAWABLE) ||
-          (args[3].type != GIMP_PDB_STRING)   ||
-          (args[4].type != GIMP_PDB_STRING))
+      if ((n_args < 5)                                     ||
+          ! GIMP_IS_PARAM_SPEC_INT32       (args[0].pspec) ||
+          ! GIMP_IS_PARAM_SPEC_IMAGE_ID    (args[1].pspec) ||
+          ! GIMP_IS_PARAM_SPEC_DRAWABLE_ID (args[2].pspec) ||
+          ! G_IS_PARAM_SPEC_STRING         (args[3].pspec) ||
+          ! G_IS_PARAM_SPEC_STRING         (args[4].pspec))
         {
           g_set_error (error, 0, 0,
                        "Plug-In \"%s\"\n(%s)\n\n"
@@ -616,7 +617,7 @@ plug_in_proc_args_check (const gchar       *plug_in_name,
            strcmp (prefix, "<Buffers>")   == 0)
     {
       if ((n_args < 1) ||
-          (args[0].type != GIMP_PDB_INT32))
+          ! GIMP_IS_PARAM_SPEC_INT32 (args[0].pspec))
         {
           g_set_error (error, 0, 0,
                        "Plug-In \"%s\"\n(%s)\n\n"

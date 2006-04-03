@@ -32,6 +32,7 @@
 #include "pdb/gimpargument.h"
 #include "pdb/procedural_db.h"
 
+#include "gimpparamspecs.h"
 #include "gimppdbprogress.h"
 #include "gimpprogress.h"
 
@@ -255,10 +256,10 @@ gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
                                             NULL,
                                             progress->callback_name,
                                             &n_return_vals,
-                                            GIMP_PDB_INT32,  command,
-                                            GIMP_PDB_STRING, text,
-                                            GIMP_PDB_FLOAT,  value,
-                                            GIMP_PDB_END);
+                                            GIMP_TYPE_INT32, command,
+                                            G_TYPE_STRING,   text,
+                                            G_TYPE_DOUBLE,   value,
+                                            G_TYPE_NONE);
 
       if (g_value_get_enum (&return_vals[0].value) != GIMP_PDB_SUCCESS)
         {
@@ -266,7 +267,8 @@ gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
                        "The corresponding plug-in may have crashed."),
                      g_type_name (G_TYPE_FROM_INSTANCE (progress)));
         }
-      else if (n_return_vals >= 2 && return_vals[1].type == GIMP_PDB_FLOAT)
+      else if (n_return_vals >= 2 &&
+               G_VALUE_HOLDS_DOUBLE (&return_vals[1].value))
         {
           retval = g_value_get_double (&return_vals[1].value);
         }

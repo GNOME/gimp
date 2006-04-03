@@ -22,14 +22,12 @@
 
 struct _GimpArgument
 {
-  GimpPDBArgType type;
-  GValue         value;
+  GValue value;
 };
 
 struct _GimpArgumentSpec
 {
-  GimpPDBArgType  type;
-  GParamSpec     *pspec;
+  GParamSpec *pspec;
 };
 
 
@@ -40,6 +38,9 @@ void   gimp_argument_init_compat (GimpArgument     *arg,
 
 void   gimp_arguments_destroy    (GimpArgument     *args,
                                   gint              n_args);
+
+GimpPDBArgType   gimp_argument_type_to_pdb_arg_type (GType           type);
+gchar          * gimp_pdb_arg_type_to_string        (GimpPDBArgType  type);
 
 
 #endif  /*  __GIMP_ARGUMENT_H__  */

@@ -55,7 +55,6 @@ register_gimprc_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gimprc_query_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("token",
                                                        "token",
                                                        "The token to query for",
@@ -63,7 +62,6 @@ register_gimprc_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRING,
                                    gimp_param_spec_string ("value",
                                                            "value",
                                                            "The value associated with the queried token",
@@ -77,7 +75,6 @@ register_gimprc_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gimprc_set_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("token",
                                                        "token",
                                                        "The token to add or modify",
@@ -85,7 +82,6 @@ register_gimprc_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("value",
                                                        "value",
                                                        "The value to set the token to",
@@ -99,7 +95,6 @@ register_gimprc_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&get_default_comment_proc, 0, 1);
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRING,
                                    gimp_param_spec_string ("comment",
                                                            "comment",
                                                            "Default Image Comment",
@@ -113,14 +108,12 @@ register_gimprc_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&get_monitor_resolution_proc, 0, 2);
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_FLOAT,
                                    g_param_spec_double ("xres",
                                                         "xres",
                                                         "X resolution",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_FLOAT,
                                    g_param_spec_double ("yres",
                                                         "yres",
                                                         "Y resolution",
@@ -133,7 +126,6 @@ register_gimprc_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&get_theme_dir_proc, 0, 1);
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRING,
                                    gimp_param_spec_string ("theme-dir",
                                                            "theme dir",
                                                            "The GUI theme dir",
@@ -147,7 +139,6 @@ register_gimprc_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&get_color_configuration_proc, 0, 1);
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRING,
                                    gimp_param_spec_string ("config",
                                                            "config",
                                                            "Serialized color management configuration",
@@ -161,7 +152,6 @@ register_gimprc_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&get_module_load_inhibit_proc, 0, 1);
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRING,
                                    gimp_param_spec_string ("load-inhibit",
                                                            "load inhibit",
                                                            "The list of modules",

@@ -59,7 +59,6 @@ register_plug_in_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&plugins_query_proc, 1, 12);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("search-string",
                                                        "search string",
                                                        "If not an empty string then use this as a search pattern",
@@ -67,79 +66,67 @@ register_plug_in_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
-                                   g_param_spec_int ("num-plugins",
-                                                     "num plugins",
-                                                     "The number of plugins",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_int32 ("num-plugins",
+                                                          "num plugins",
+                                                          "The number of plugins",
+                                                          0, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRINGARRAY,
                                    gimp_param_spec_string_array ("menu-path",
                                                                  "menu path",
                                                                  "The menu path of the plugin",
                                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
-                                   g_param_spec_int ("num-plugins",
-                                                     "num plugins",
-                                                     "The number of plugins",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_int32 ("num-plugins",
+                                                          "num plugins",
+                                                          "The number of plugins",
+                                                          0, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRINGARRAY,
                                    gimp_param_spec_string_array ("plugin-accelerator",
                                                                  "plugin accelerator",
                                                                  "String representing keyboard accelerator (could be empty string)",
                                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
-                                   g_param_spec_int ("num-plugins",
-                                                     "num plugins",
-                                                     "The number of plugins",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_int32 ("num-plugins",
+                                                          "num plugins",
+                                                          "The number of plugins",
+                                                          0, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRINGARRAY,
                                    gimp_param_spec_string_array ("plugin-location",
                                                                  "plugin location",
                                                                  "Location of the plugin program",
                                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
-                                   g_param_spec_int ("num-plugins",
-                                                     "num plugins",
-                                                     "The number of plugins",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_int32 ("num-plugins",
+                                                          "num plugins",
+                                                          "The number of plugins",
+                                                          0, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRINGARRAY,
                                    gimp_param_spec_string_array ("plugin-image-type",
                                                                  "plugin image type",
                                                                  "Type of image that this plugin will work on",
                                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
-                                   g_param_spec_int ("num-plugins",
-                                                     "num plugins",
-                                                     "The number of plugins",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32ARRAY,
-                                   gimp_param_spec_array ("plugin-install-time",
-                                                          "plugin install time",
-                                                          "Time that the plugin was installed",
+                                   gimp_param_spec_int32 ("num-plugins",
+                                                          "num plugins",
+                                                          "The number of plugins",
+                                                          0, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
-                                   g_param_spec_int ("num-plugins",
-                                                     "num plugins",
-                                                     "The number of plugins",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_int32_array ("plugin-install-time",
+                                                                "plugin install time",
+                                                                "Time that the plugin was installed",
+                                                                GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRINGARRAY,
+                                   gimp_param_spec_int32 ("num-plugins",
+                                                          "num plugins",
+                                                          "The number of plugins",
+                                                          0, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string_array ("plugin-real-name",
                                                                  "plugin real name",
                                                                  "The internal name of the plugin",
@@ -151,7 +138,6 @@ register_plug_in_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&plugin_domain_register_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("domain-name",
                                                        "domain name",
                                                        "The name of the textdomain (must be unique)",
@@ -159,7 +145,6 @@ register_plug_in_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("domain-path",
                                                        "domain path",
                                                        "The absolute path to the compiled message catalog (may be NULL)",
@@ -173,7 +158,6 @@ register_plug_in_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&plugin_help_register_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("domain-name",
                                                        "domain name",
                                                        "The XML namespace of the plug-in's help pages",
@@ -181,7 +165,6 @@ register_plug_in_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("domain-uri",
                                                        "domain uri",
                                                        "The root URI of the plug-in's help pages",
@@ -195,7 +178,6 @@ register_plug_in_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&plugin_menu_register_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
                                                        "The procedure for which to install the menu path",
@@ -203,7 +185,6 @@ register_plug_in_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("menu-path",
                                                        "menu path",
                                                        "The procedure's additional menu path",
@@ -217,7 +198,6 @@ register_plug_in_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&plugin_menu_branch_register_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("menu-path",
                                                        "menu path",
                                                        "The sub-menu's menu path",
@@ -225,7 +205,6 @@ register_plug_in_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("menu-name",
                                                        "menu name",
                                                        "The name of the sub-menu",
@@ -239,7 +218,6 @@ register_plug_in_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&plugin_icon_register_proc, 4, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
                                                        "The procedure for which to install the icon",
@@ -247,7 +225,6 @@ register_plug_in_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_enum ("icon-type",
                                                   "icon type",
                                                   "The type of the icon: { GIMP_ICON_TYPE_STOCK_ID (0), GIMP_ICON_TYPE_INLINE_PIXBUF (1), GIMP_ICON_TYPE_IMAGE_FILE (2) }",
@@ -255,18 +232,16 @@ register_plug_in_procs (Gimp *gimp)
                                                   GIMP_ICON_TYPE_STOCK_ID,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("icon-data-length",
-                                                 "icon data length",
-                                                 "The length of 'icon-data' (1 <= icon_data_length)",
-                                                 1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT8ARRAY,
-                               gimp_param_spec_array ("icon-data",
-                                                      "icon data",
-                                                      "The procedure's icon. The format depends on the 'icon_type' parameter",
+                               gimp_param_spec_int32 ("icon-data-length",
+                                                      "icon data length",
+                                                      "The length of 'icon-data' (1 <= icon_data_length)",
+                                                      1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int8_array ("icon-data",
+                                                           "icon data",
+                                                           "The procedure's icon. The format depends on the 'icon_type' parameter",
+                                                           GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
 }
@@ -541,7 +516,7 @@ plugin_icon_register_invoker (GimpProcedure      *procedure,
   procedure_name = g_value_get_string (&args[0].value);
   icon_type = g_value_get_enum (&args[1].value);
   icon_data_length = g_value_get_int (&args[2].value);
-  icon_data = (guint8 *) gimp_value_get_int8array (&args[3].value);
+  icon_data = gimp_value_get_int8array (&args[3].value);
 
   if (success)
     {

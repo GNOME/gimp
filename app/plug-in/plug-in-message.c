@@ -421,7 +421,7 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
       n_args = proc_run->nparams;
       args   = plug_in_params_to_args (procedure->args, procedure->num_args,
                                        proc_run->params, n_args,
-                                       FALSE);
+                                       FALSE, FALSE);
     }
 
   plug_in_push (plug_in->gimp, plug_in);
@@ -502,7 +502,7 @@ plug_in_handle_proc_return_priv (PlugIn       *plug_in,
                                                         proc_frame->procedure->num_values,
                                                         proc_return->params,
                                                         proc_return->nparams,
-                                                        TRUE);
+                                                        TRUE, TRUE);
       proc_frame->n_return_vals = proc_return->nparams;
     }
   else
@@ -583,33 +583,6 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
   gint           i;
 
   canonical = gimp_canonicalize_identifier (proc_install->name);
-
-  /*  Argument checking
-   *   --only sanity check arguments when the procedure requests a menu path
-   */
-
-  if (proc_install->menu_path && proc_install->menu_path[0] == '<')
-    {
-      GError *error = NULL;
-
-      if (! plug_in_param_defs_check (plug_in->name,
-                                      plug_in->prog,
-                                      canonical,
-                                      proc_install->menu_path,
-                                      proc_install->params,
-                                      proc_install->nparams,
-                                      proc_install->return_vals,
-                                      proc_install->nreturn_vals,
-                                      &error))
-        {
-          g_message (error->message);
-          g_clear_error (&error);
-
-          g_free (canonical);
-
-          return;
-        }
-    }
 
   /*  Sanity check for array arguments  */
 
@@ -715,16 +688,6 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 
   proc_def = plug_in_proc_def_new ();
 
-  if (proc_install->menu_path)
-    {
-      if (proc_install->menu_path[0] == '<')
-        proc_def->menu_paths =
-          g_list_append (proc_def->menu_paths,
-                         g_strdup (proc_install->menu_path));
-      else
-        proc_def->menu_label = g_strdup (proc_install->menu_path);
-    }
-
   proc_def->prog            = g_strdup (prog);
   proc_def->extensions      = NULL;
   proc_def->prefixes        = NULL;
@@ -782,6 +745,38 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
                                        proc_install->return_vals[i].description);
 
       g_free (canonical);
+    }
+
+  if (proc_install->menu_path)
+    {
+      if (proc_install->menu_path[0] == '<')
+        {
+          GError *error = NULL;
+
+          if (! plug_in_proc_args_check (plug_in->name,
+                                         plug_in->prog,
+                                         canonical,
+                                         proc_install->menu_path,
+                                         procedure->args,
+                                         procedure->num_args,
+                                         procedure->values,
+                                         procedure->num_values,
+                                         &error))
+            {
+              g_message (error->message);
+              g_clear_error (&error);
+            }
+          else
+            {
+              proc_def->menu_paths =
+                g_list_append (proc_def->menu_paths,
+                               g_strdup (proc_install->menu_path));
+            }
+        }
+      else
+        {
+          proc_def->menu_label = g_strdup (proc_install->menu_path);
+        }
     }
 
   switch (proc_install->type)

@@ -77,28 +77,24 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_new_proc, 7, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image to which to add the layer",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("width",
-                                                 "width",
-                                                 "The layer width (1 <= width)",
-                                                 1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("width",
+                                                      "width",
+                                                      "The layer width (1 <= width)",
+                                                      1, G_MAXINT32, 1,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("height",
-                                                 "height",
-                                                 "The layer height (1 <= height)",
-                                                 1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("height",
+                                                      "height",
+                                                      "The layer height (1 <= height)",
+                                                      1, G_MAXINT32, 1,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_enum ("type",
                                                   "type",
                                                   "The layer type: { GIMP_RGB_IMAGE (0), GIMP_RGBA_IMAGE (1), GIMP_GRAY_IMAGE (2), GIMP_GRAYA_IMAGE (3), GIMP_INDEXED_IMAGE (4), GIMP_INDEXEDA_IMAGE (5) }",
@@ -106,7 +102,6 @@ register_layer_procs (Gimp *gimp)
                                                   GIMP_RGB_IMAGE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The layer name",
@@ -114,14 +109,12 @@ register_layer_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_FLOAT,
                                g_param_spec_double ("opacity",
                                                     "opacity",
                                                     "The layer opacity (0 <= opacity <= 100)",
                                                     0, 100, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_enum ("mode",
                                                   "mode",
                                                   "The layer combination mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }",
@@ -129,13 +122,11 @@ register_layer_procs (Gimp *gimp)
                                                   GIMP_NORMAL_MODE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_LAYER,
-                                   gimp_param_spec_item_id ("layer",
-                                                            "layer",
-                                                            "The newly created layer",
-                                                            gimp,
-                                                            GIMP_TYPE_LAYER,
-                                                            GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_layer_id ("layer",
+                                                             "layer",
+                                                             "The newly created layer",
+                                                             gimp,
+                                                             GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -143,28 +134,23 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_new_from_drawable_proc, 2, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_DRAWABLE,
-                               gimp_param_spec_item_id ("drawable",
-                                                        "drawable",
-                                                        "The source drawable from where the new layer is copied",
-                                                        gimp,
-                                                        GIMP_TYPE_DRAWABLE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The source drawable from where the new layer is copied",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("dest-image",
                                                          "dest image",
                                                          "The destination image to which to add the layer",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_LAYER,
-                                   gimp_param_spec_item_id ("layer-copy",
-                                                            "layer copy",
-                                                            "The newly copied layer",
-                                                            gimp,
-                                                            GIMP_TYPE_LAYER,
-                                                            GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_layer_id ("layer-copy",
+                                                             "layer copy",
+                                                             "The newly copied layer",
+                                                             gimp,
+                                                             GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -172,28 +158,23 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_copy_proc, 2, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer to copy",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer to copy",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_boolean ("add-alpha",
                                                      "add alpha",
                                                      "Add an alpha channel to the copied layer",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_LAYER,
-                                   gimp_param_spec_item_id ("layer-copy",
-                                                            "layer copy",
-                                                            "The newly copied layer",
-                                                            gimp,
-                                                            GIMP_TYPE_LAYER,
-                                                            GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_layer_id ("layer-copy",
+                                                             "layer copy",
+                                                             "The newly copied layer",
+                                                             gimp,
+                                                             GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -201,13 +182,11 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_add_alpha_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -215,29 +194,24 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_scale_proc, 4, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("new-width",
-                                                 "new width",
-                                                 "New layer width (1 <= new_width)",
-                                                 1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("new-width",
+                                                      "new width",
+                                                      "New layer width (1 <= new_width)",
+                                                      1, G_MAXINT32, 1,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("new-height",
-                                                 "new height",
-                                                 "New layer height (1 <= new_height)",
-                                                 1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("new-height",
+                                                      "new height",
+                                                      "New layer height (1 <= new_height)",
+                                                      1, G_MAXINT32, 1,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_boolean ("local-origin",
                                                      "local origin",
                                                      "Use a local origin (as opposed to the image origin)",
@@ -250,41 +224,35 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_resize_proc, 5, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("new-width",
-                                                 "new width",
-                                                 "New layer width (1 <= new_width)",
-                                                 1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("new-width",
+                                                      "new width",
+                                                      "New layer width (1 <= new_width)",
+                                                      1, G_MAXINT32, 1,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("new-height",
-                                                 "new height",
-                                                 "New layer height (1 <= new_height)",
-                                                 1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("new-height",
+                                                      "new height",
+                                                      "New layer height (1 <= new_height)",
+                                                      1, G_MAXINT32, 1,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("offx",
-                                                 "offx",
-                                                 "x offset between upper left corner of old and new layers: (old - new)",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("offx",
+                                                      "offx",
+                                                      "x offset between upper left corner of old and new layers: (old - new)",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("offy",
-                                                 "offy",
-                                                 "y offset between upper left corner of old and new layers: (old - new)",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("offy",
+                                                      "offy",
+                                                      "y offset between upper left corner of old and new layers: (old - new)",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -292,13 +260,11 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_resize_to_image_size_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer to resize",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer to resize",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -306,27 +272,23 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_translate_proc, 3, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("offx",
-                                                 "offx",
-                                                 "Offset in x direction",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("offx",
+                                                      "offx",
+                                                      "Offset in x direction",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("offy",
-                                                 "offy",
-                                                 "Offset in y direction",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("offy",
+                                                      "offy",
+                                                      "Offset in y direction",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -334,27 +296,23 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_set_offsets_proc, 3, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("offx",
-                                                 "offx",
-                                                 "Offset in x direction",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("offx",
+                                                      "offx",
+                                                      "Offset in x direction",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("offy",
-                                                 "offy",
-                                                 "Offset in y direction",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("offy",
+                                                      "offy",
+                                                      "Offset in y direction",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -362,15 +320,12 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_create_mask_proc, 2, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer to which to add the mask",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer to which to add the mask",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_enum ("mask-type",
                                                   "mask type",
                                                   "The type of mask: { GIMP_ADD_WHITE_MASK (0), GIMP_ADD_BLACK_MASK (1), GIMP_ADD_ALPHA_MASK (2), GIMP_ADD_ALPHA_TRANSFER_MASK (3), GIMP_ADD_SELECTION_MASK (4), GIMP_ADD_COPY_MASK (5) }",
@@ -378,13 +333,11 @@ register_layer_procs (Gimp *gimp)
                                                   GIMP_ADD_WHITE_MASK,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_CHANNEL,
-                                   gimp_param_spec_item_id ("mask",
-                                                            "mask",
-                                                            "The newly created mask",
-                                                            gimp,
-                                                            GIMP_TYPE_LAYER_MASK,
-                                                            GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_layer_mask_id ("mask",
+                                                                  "mask",
+                                                                  "The newly created mask",
+                                                                  gimp,
+                                                                  GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -392,21 +345,17 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_get_mask_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_CHANNEL,
-                                   gimp_param_spec_item_id ("mask",
-                                                            "mask",
-                                                            "The layer mask",
-                                                            gimp,
-                                                            GIMP_TYPE_LAYER_MASK,
-                                                            GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_layer_mask_id ("mask",
+                                                                  "mask",
+                                                                  "The layer mask",
+                                                                  gimp,
+                                                                  GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -414,21 +363,17 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_from_mask_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_CHANNEL,
-                               gimp_param_spec_item_id ("mask",
-                                                        "mask",
-                                                        "Mask for which to return the layer",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER_MASK,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_mask_id ("mask",
+                                                              "mask",
+                                                              "Mask for which to return the layer",
+                                                              gimp,
+                                                              GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_LAYER,
-                                   gimp_param_spec_item_id ("layer",
-                                                            "layer",
-                                                            "The mask's layer",
-                                                            gimp,
-                                                            GIMP_TYPE_LAYER,
-                                                            GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_layer_id ("layer",
+                                                             "layer",
+                                                             "The mask's layer",
+                                                             gimp,
+                                                             GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -436,21 +381,17 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_add_mask_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer to receive the mask",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer to receive the mask",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_CHANNEL,
-                               gimp_param_spec_item_id ("mask",
-                                                        "mask",
-                                                        "The mask to add to the layer",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER_MASK,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_mask_id ("mask",
+                                                              "mask",
+                                                              "The mask to add to the layer",
+                                                              gimp,
+                                                              GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -458,15 +399,12 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_remove_mask_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer from which to remove mask",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer from which to remove mask",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_enum ("mode",
                                                   "mode",
                                                   "Removal mode: { GIMP_MASK_APPLY (0), GIMP_MASK_DISCARD (1) }",
@@ -480,15 +418,12 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_is_floating_sel_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
                                    g_param_spec_boolean ("is-floating-sel",
                                                          "is floating sel",
                                                          "TRUE if the layer is a floating selection",
@@ -501,15 +436,12 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_get_lock_alpha_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
                                    g_param_spec_boolean ("lock-alpha",
                                                          "lock alpha",
                                                          "The layer's lock alpha channel setting",
@@ -522,15 +454,12 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_set_lock_alpha_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_boolean ("lock-alpha",
                                                      "lock alpha",
                                                      "The new layer's lock alpha channel setting",
@@ -543,15 +472,12 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_get_apply_mask_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
                                    g_param_spec_boolean ("apply-mask",
                                                          "apply mask",
                                                          "The layer's apply mask setting",
@@ -564,15 +490,12 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_set_apply_mask_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_boolean ("apply-mask",
                                                      "apply mask",
                                                      "The new layer's apply mask setting",
@@ -585,15 +508,12 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_get_show_mask_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
                                    g_param_spec_boolean ("show-mask",
                                                          "show mask",
                                                          "The layer's show mask setting",
@@ -606,15 +526,12 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_set_show_mask_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_boolean ("show-mask",
                                                      "show mask",
                                                      "The new layer's show mask setting",
@@ -627,15 +544,12 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_get_edit_mask_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
                                    g_param_spec_boolean ("edit-mask",
                                                          "edit mask",
                                                          "The layer's edit mask setting",
@@ -648,15 +562,12 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_set_edit_mask_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_boolean ("edit-mask",
                                                      "edit mask",
                                                      "The new layer's edit mask setting",
@@ -669,15 +580,12 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_get_opacity_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_FLOAT,
                                    g_param_spec_double ("opacity",
                                                         "opacity",
                                                         "The layer opacity",
@@ -690,15 +598,12 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_set_opacity_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_FLOAT,
                                g_param_spec_double ("opacity",
                                                     "opacity",
                                                     "The new layer opacity (0 <= opacity <= 100)",
@@ -711,15 +616,12 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_get_mode_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
                                    g_param_spec_enum ("mode",
                                                       "mode",
                                                       "The layer combination mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }",
@@ -733,15 +635,12 @@ register_layer_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&layer_set_mode_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_LAYER,
-                               gimp_param_spec_item_id ("layer",
-                                                        "layer",
-                                                        "The layer",
-                                                        gimp,
-                                                        GIMP_TYPE_LAYER,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_enum ("mode",
                                                   "mode",
                                                   "The new layer combination mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }",
@@ -790,7 +689,7 @@ layer_new_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (layer));
+    gimp_value_set_layer (&return_vals[1].value, layer);
 
   return return_vals;
 }
@@ -824,7 +723,7 @@ layer_new_from_drawable_invoker (GimpProcedure      *procedure,
   GimpImage *dest_image;
   GimpLayer *layer_copy = NULL;
 
-  drawable = (GimpDrawable *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_DRAWABLE);
+  drawable = gimp_value_get_drawable (&args[0].value, gimp);
   dest_image = gimp_value_get_image (&args[1].value, gimp);
 
   if (success)
@@ -851,7 +750,7 @@ layer_new_from_drawable_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (layer_copy));
+    gimp_value_set_layer (&return_vals[1].value, layer_copy);
 
   return return_vals;
 }
@@ -885,7 +784,7 @@ layer_copy_invoker (GimpProcedure      *procedure,
   gboolean add_alpha;
   GimpLayer *layer_copy = NULL;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
   add_alpha = g_value_get_boolean (&args[1].value);
 
   if (success)
@@ -900,7 +799,7 @@ layer_copy_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (layer_copy));
+    gimp_value_set_layer (&return_vals[1].value, layer_copy);
 
   return return_vals;
 }
@@ -931,7 +830,7 @@ layer_add_alpha_invoker (GimpProcedure      *procedure,
   gboolean success = TRUE;
   GimpLayer *layer;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
 
   if (success)
     {
@@ -970,7 +869,7 @@ layer_scale_invoker (GimpProcedure      *procedure,
   gint32 new_height;
   gboolean local_origin;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
   new_width = g_value_get_int (&args[1].value);
   new_height = g_value_get_int (&args[2].value);
   local_origin = g_value_get_boolean (&args[3].value);
@@ -1018,7 +917,7 @@ layer_resize_invoker (GimpProcedure      *procedure,
   gint32 offx;
   gint32 offy;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
   new_width = g_value_get_int (&args[1].value);
   new_height = g_value_get_int (&args[2].value);
   offx = g_value_get_int (&args[3].value);
@@ -1062,7 +961,7 @@ layer_resize_to_image_size_invoker (GimpProcedure      *procedure,
   gboolean success = TRUE;
   GimpLayer *layer;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
 
   if (success)
     {
@@ -1103,7 +1002,7 @@ layer_translate_invoker (GimpProcedure      *procedure,
   gint32 offx;
   gint32 offy;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
   offx = g_value_get_int (&args[1].value);
   offy = g_value_get_int (&args[2].value);
 
@@ -1153,7 +1052,7 @@ layer_set_offsets_invoker (GimpProcedure      *procedure,
   gint32 offx;
   gint32 offy;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
   offx = g_value_get_int (&args[1].value);
   offy = g_value_get_int (&args[2].value);
 
@@ -1207,7 +1106,7 @@ layer_create_mask_invoker (GimpProcedure      *procedure,
   gint32 mask_type;
   GimpLayerMask *mask = NULL;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
   mask_type = g_value_get_enum (&args[1].value);
 
   if (success)
@@ -1221,7 +1120,7 @@ layer_create_mask_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (mask));
+    gimp_value_set_layer_mask (&return_vals[1].value, mask);
 
   return return_vals;
 }
@@ -1254,7 +1153,7 @@ layer_get_mask_invoker (GimpProcedure      *procedure,
   GimpLayer *layer;
   GimpLayerMask *mask = NULL;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
 
   if (success)
     {
@@ -1264,7 +1163,7 @@ layer_get_mask_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (mask));
+    gimp_value_set_layer_mask (&return_vals[1].value, mask);
 
   return return_vals;
 }
@@ -1297,7 +1196,7 @@ layer_from_mask_invoker (GimpProcedure      *procedure,
   GimpLayerMask *mask;
   GimpLayer *layer = NULL;
 
-  mask = (GimpLayerMask *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER_MASK);
+  mask = gimp_value_get_layer_mask (&args[0].value, gimp);
 
   if (success)
     {
@@ -1307,7 +1206,7 @@ layer_from_mask_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_item (&return_vals[1].value, GIMP_ITEM (layer));
+    gimp_value_set_layer (&return_vals[1].value, layer);
 
   return return_vals;
 }
@@ -1339,8 +1238,8 @@ layer_add_mask_invoker (GimpProcedure      *procedure,
   GimpLayer *layer;
   GimpLayerMask *mask;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
-  mask = (GimpLayerMask *) gimp_value_get_item (&args[1].value, gimp, GIMP_TYPE_LAYER_MASK);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
+  mask = gimp_value_get_layer_mask (&args[1].value, gimp);
 
   if (success)
     {
@@ -1380,7 +1279,7 @@ layer_remove_mask_invoker (GimpProcedure      *procedure,
   GimpLayer *layer;
   gint32 mode;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
   mode = g_value_get_enum (&args[1].value);
 
   if (success)
@@ -1422,7 +1321,7 @@ layer_is_floating_sel_invoker (GimpProcedure      *procedure,
   GimpLayer *layer;
   gboolean is_floating_sel = FALSE;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
 
   if (success)
     {
@@ -1465,7 +1364,7 @@ layer_get_lock_alpha_invoker (GimpProcedure      *procedure,
   GimpLayer *layer;
   gboolean lock_alpha = FALSE;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
 
   if (success)
     {
@@ -1507,7 +1406,7 @@ layer_set_lock_alpha_invoker (GimpProcedure      *procedure,
   GimpLayer *layer;
   gboolean lock_alpha;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
   lock_alpha = g_value_get_boolean (&args[1].value);
 
   if (success)
@@ -1546,7 +1445,7 @@ layer_get_apply_mask_invoker (GimpProcedure      *procedure,
   GimpLayer *layer;
   gboolean apply_mask = FALSE;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
 
   if (success)
     {
@@ -1591,7 +1490,7 @@ layer_set_apply_mask_invoker (GimpProcedure      *procedure,
   GimpLayer *layer;
   gboolean apply_mask;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
   apply_mask = g_value_get_boolean (&args[1].value);
 
   if (success)
@@ -1633,7 +1532,7 @@ layer_get_show_mask_invoker (GimpProcedure      *procedure,
   GimpLayer *layer;
   gboolean show_mask = FALSE;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
 
   if (success)
     {
@@ -1678,7 +1577,7 @@ layer_set_show_mask_invoker (GimpProcedure      *procedure,
   GimpLayer *layer;
   gboolean show_mask;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
   show_mask = g_value_get_boolean (&args[1].value);
 
   if (success)
@@ -1720,7 +1619,7 @@ layer_get_edit_mask_invoker (GimpProcedure      *procedure,
   GimpLayer *layer;
   gboolean edit_mask = FALSE;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
 
   if (success)
     {
@@ -1765,7 +1664,7 @@ layer_set_edit_mask_invoker (GimpProcedure      *procedure,
   GimpLayer *layer;
   gboolean edit_mask;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
   edit_mask = g_value_get_boolean (&args[1].value);
 
   if (success)
@@ -1807,7 +1706,7 @@ layer_get_opacity_invoker (GimpProcedure      *procedure,
   GimpLayer *layer;
   gdouble opacity = 0.0;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
 
   if (success)
     {
@@ -1849,7 +1748,7 @@ layer_set_opacity_invoker (GimpProcedure      *procedure,
   GimpLayer *layer;
   gdouble opacity;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
   opacity = g_value_get_double (&args[1].value);
 
   if (success)
@@ -1888,7 +1787,7 @@ layer_get_mode_invoker (GimpProcedure      *procedure,
   GimpLayer *layer;
   gint32 mode = 0;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
 
   if (success)
     {
@@ -1930,7 +1829,7 @@ layer_set_mode_invoker (GimpProcedure      *procedure,
   GimpLayer *layer;
   gint32 mode;
 
-  layer = (GimpLayer *) gimp_value_get_item (&args[0].value, gimp, GIMP_TYPE_LAYER);
+  layer = gimp_value_get_layer (&args[0].value, gimp);
   mode = g_value_get_enum (&args[1].value);
 
   if (success)

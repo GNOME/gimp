@@ -81,8 +81,8 @@ HELP
     g_value_transform (&args[i].value, &new_args[i].value);
 
   for (i = 3; i < proc->num_args; i++)
-    if (proc->args[i].type == GIMP_PDB_STRING)
-      g_value_set_static_string (&new_args[i].value, "");
+    if (G_IS_PARAM_SPEC_STRING (proc->args[i].pspec))	
+      g_value_set_static_string (&new_args[i].value, "")	;
 
   return_vals = procedural_db_execute (gimp, context, progress,
                                        proc->name,
@@ -208,7 +208,7 @@ HELP
     g_value_transform (&args[i].value, &new_args[i].value);
 
   for (i = 5; i < proc->num_args; i++)
-    if (proc->args[i].type == GIMP_PDB_STRING)
+    if (G_IS_PARAM_SPEC_STRING (proc->args[i].pspec))
       g_value_set_static_string (&new_args[i].value, "");
 
   return_vals = procedural_db_execute (gimp, context, progress,
@@ -495,12 +495,13 @@ HELP
 
   proc = procedural_db_lookup (gimp, canonical);
 
-  if (proc && ((proc->num_args < 5)                      ||
-	       (proc->args[0].type != GIMP_PDB_INT32)    ||
-	       (proc->args[1].type != GIMP_PDB_IMAGE)    ||
-	       (proc->args[2].type != GIMP_PDB_DRAWABLE) ||
-	       (proc->args[3].type != GIMP_PDB_STRING)   ||
-	       (proc->args[4].type != GIMP_PDB_STRING)))
+  if (proc &&
+      ((proc->num_args < 5)                                   ||
+       ! GIMP_IS_PARAM_SPEC_INT32       (proc->args[0].pspec) ||
+       ! GIMP_IS_PARAM_SPEC_IMAGE_ID    (proc->args[1].pspec) ||
+       ! GIMP_IS_PARAM_SPEC_DRAWABLE_ID (proc->args[2].pspec) ||
+       ! G_IS_PARAM_SPEC_STRING         (proc->args[3].pspec) ||
+       ! G_IS_PARAM_SPEC_STRING         (proc->args[4].pspec)))
     {
       g_message ("save handler \"%s\" does not take the standard save handler args",
 		 canonical);
@@ -617,12 +618,13 @@ fileops_register_magic_load_handler (Gimp        *gimp,
 
   procedure = procedural_db_lookup (gimp, canonical);
 
-  if (procedure && ((procedure->num_args < 3)                    ||
-	            (procedure->num_values < 1)                  ||
-	            (procedure->args[0].type != GIMP_PDB_INT32)  ||
-	            (procedure->args[1].type != GIMP_PDB_STRING) ||
-	            (procedure->args[2].type != GIMP_PDB_STRING) ||
-	            (procedure->values[0].type != GIMP_PDB_IMAGE)))
+  if (procedure &&
+      ((procedure->num_args   < 3)                              ||
+       (procedure->num_values < 1)                              ||
+       ! GIMP_IS_PARAM_SPEC_INT32    (procedure->args[0].pspec) ||
+       ! G_IS_PARAM_SPEC_STRING      (procedure->args[1].pspec) ||
+       ! G_IS_PARAM_SPEC_STRING      (procedure->args[2].pspec) ||
+       ! GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->values[0].pspec)))
     {
       g_message ("load handler \"%s\" does not take the standard load handler args",
 		 canonical);

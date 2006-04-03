@@ -49,7 +49,6 @@ register_message_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&message_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("message",
                                                        "message",
                                                        "Message to display in the dialog",
@@ -63,7 +62,6 @@ register_message_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&message_get_handler_proc, 0, 1);
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
                                    g_param_spec_enum ("handler",
                                                       "handler",
                                                       "The current handler type: { GIMP_MESSAGE_BOX (0), GIMP_CONSOLE (1), GIMP_ERROR_CONSOLE (2) }",
@@ -77,7 +75,6 @@ register_message_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&message_set_handler_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_enum ("handler",
                                                   "handler",
                                                   "The new handler type: { GIMP_MESSAGE_BOX (0), GIMP_CONSOLE (1), GIMP_ERROR_CONSOLE (2) }",

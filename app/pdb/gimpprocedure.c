@@ -42,7 +42,6 @@
 
 #include "gimpargument.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 
 #include "gimp-intl.h"
 
@@ -216,53 +215,50 @@ gimp_procedure_execute (GimpProcedure *procedure,
 
   for (i = 0; i < MIN (n_args, procedure->num_args); i++)
     {
-      if (args[i].type != procedure->args[i].type)
+      GValue     *arg       = &args[i].value;
+      GParamSpec *pspec     = procedure->args[i].pspec;
+      GType       arg_type  = G_VALUE_TYPE (arg);
+      GType       spec_type = G_PARAM_SPEC_VALUE_TYPE (pspec);
+
+      if (arg_type != spec_type)
         {
-          gchar *type_name = procedural_db_type_name (procedure->args[i].type);
-          gchar *got       = procedural_db_type_name (args[i].type);
+          const gchar *type_name = g_type_name (spec_type);
+          const gchar *got       = g_type_name (arg_type);
 
           g_message (_("PDB calling error for procedure '%s':\n"
                        "Argument '%s' (#%d, type %s) type mismatch "
                        "(got %s)."),
                      procedure->name,
-                     g_param_spec_get_name (procedure->args[i].pspec),
+                     g_param_spec_get_name (pspec),
                      i + 1, type_name, got);
-
-          g_free (type_name);
-          g_free (got);
 
           return_vals = gimp_procedure_get_return_values (procedure, FALSE);
           g_value_set_enum (&return_vals->value, GIMP_PDB_CALLING_ERROR);
 
           return return_vals;
         }
-      else if (! (procedure->args[i].pspec->flags & GIMP_PARAM_NO_VALIDATE))
+      else if (! (pspec->flags & GIMP_PARAM_NO_VALIDATE))
         {
           GValue string_value = { 0, };
 
           g_value_init (&string_value, G_TYPE_STRING);
 
-          if (g_value_type_transformable (args[i].value.g_type,
-                                          G_TYPE_STRING))
-            g_value_transform (&args[i].value, &string_value);
+          if (g_value_type_transformable (arg_type, G_TYPE_STRING))
+            g_value_transform (arg, &string_value);
           else
             g_value_set_static_string (&string_value,
                                        "<not transformable to string>");
 
-          if (g_param_value_validate (procedure->args[i].pspec,
-                                      &args[i].value))
+          if (g_param_value_validate (pspec, arg))
             {
-              gchar *type_name;
-              gchar *old_value;
-              gchar *new_value;
-
-              type_name = procedural_db_type_name (procedure->args[i].type);
+              const gchar *type_name = g_type_name (spec_type);
+              gchar       *old_value;
+              gchar       *new_value;
 
               old_value = g_value_dup_string (&string_value);
 
-              if (g_value_type_transformable (args[i].value.g_type,
-                                              G_TYPE_STRING))
-                g_value_transform (&args[i].value, &string_value);
+              if (g_value_type_transformable (arg_type, G_TYPE_STRING))
+                g_value_transform (arg, &string_value);
               else
                 g_value_set_static_string (&string_value,
                                            "<not transformable to string>");
@@ -274,11 +270,10 @@ gimp_procedure_execute (GimpProcedure *procedure,
                            "Argument '%s' (#%d, type %s) out of bounds "
                            "(validation changed '%s' to '%s')"),
                          procedure->name,
-                         g_param_spec_get_name (procedure->args[i].pspec),
+                         g_param_spec_get_name (pspec),
                          i + 1, type_name,
                          old_value, new_value);
 
-              g_free (type_name);
               g_free (old_value);
               g_free (new_value);
 
@@ -377,9 +372,8 @@ gimp_procedure_get_return_values (GimpProcedure *procedure,
 }
 
 void
-gimp_procedure_add_argument (GimpProcedure  *procedure,
-                             GimpPDBArgType  arg_type,
-                             GParamSpec     *pspec)
+gimp_procedure_add_argument (GimpProcedure *procedure,
+                             GParamSpec    *pspec)
 {
   gint i;
 
@@ -389,7 +383,6 @@ gimp_procedure_add_argument (GimpProcedure  *procedure,
   for (i = 0; i < procedure->num_args; i++)
     if (procedure->args[i].pspec == NULL)
       {
-        procedure->args[i].type  = arg_type;
         procedure->args[i].pspec = pspec;
 
         g_param_spec_ref (pspec);
@@ -403,9 +396,8 @@ gimp_procedure_add_argument (GimpProcedure  *procedure,
 }
 
 void
-gimp_procedure_add_return_value (GimpProcedure  *procedure,
-                                 GimpPDBArgType  arg_type,
-                                 GParamSpec     *pspec)
+gimp_procedure_add_return_value (GimpProcedure *procedure,
+                                 GParamSpec    *pspec)
 {
   gint i;
 
@@ -415,7 +407,6 @@ gimp_procedure_add_return_value (GimpProcedure  *procedure,
   for (i = 0; i < procedure->num_values; i++)
     if (procedure->values[i].pspec == NULL)
       {
-        procedure->values[i].type  = arg_type;
         procedure->values[i].pspec = pspec;
 
         g_param_spec_ref (pspec);
@@ -439,21 +430,21 @@ gimp_procedure_compat_pspec (Gimp           *gimp,
   switch (arg_type)
     {
     case GIMP_PDB_INT32:
-      pspec = g_param_spec_int (name, name, desc,
-                                G_MININT32, G_MAXINT32, 0,
-                                G_PARAM_READWRITE);
+      pspec = gimp_param_spec_int32 (name, name, desc,
+                                     G_MININT32, G_MAXINT32, 0,
+                                     G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_INT16:
-      pspec = g_param_spec_int (name, name, desc,
-                                G_MININT16, G_MAXINT16, 0,
-                                G_PARAM_READWRITE);
+      pspec = gimp_param_spec_int16 (name, name, desc,
+                                     G_MININT16, G_MAXINT16, 0,
+                                     G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_INT8:
-      pspec = g_param_spec_uint (name, name, desc,
-                                 0, G_MAXUINT8, 0,
-                                 G_PARAM_READWRITE);
+      pspec = gimp_param_spec_int8 (name, name, desc,
+                                    0, G_MAXUINT8, 0,
+                                    G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_FLOAT:
@@ -463,17 +454,30 @@ gimp_procedure_compat_pspec (Gimp           *gimp,
       break;
 
     case GIMP_PDB_STRING:
-      pspec = g_param_spec_string (name, name, desc,
-                                   NULL,
-                                   G_PARAM_READWRITE);
+      pspec = gimp_param_spec_string (name, name, desc,
+                                      TRUE, TRUE,
+                                      NULL,
+                                      G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_INT32ARRAY:
+      pspec = gimp_param_spec_int32_array (name, name, desc,
+                                           G_PARAM_READWRITE);
+      break;
+
     case GIMP_PDB_INT16ARRAY:
+      pspec = gimp_param_spec_int16_array (name, name, desc,
+                                           G_PARAM_READWRITE);
+      break;
+
     case GIMP_PDB_INT8ARRAY:
+      pspec = gimp_param_spec_int8_array (name, name, desc,
+                                          G_PARAM_READWRITE);
+      break;
+
     case GIMP_PDB_FLOATARRAY:
-      pspec = gimp_param_spec_array (name, name, desc,
-                                     G_PARAM_READWRITE);
+      pspec = gimp_param_spec_float_array (name, name, desc,
+                                           G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_STRINGARRAY:
@@ -503,36 +507,36 @@ gimp_procedure_compat_pspec (Gimp           *gimp,
       break;
 
     case GIMP_PDB_LAYER:
-      pspec = gimp_param_spec_item_id (name, name, desc,
-                                       gimp, GIMP_TYPE_LAYER,
-                                       G_PARAM_READWRITE);
+      pspec = gimp_param_spec_layer_id (name, name, desc,
+                                        gimp,
+                                        G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_CHANNEL:
-      pspec = gimp_param_spec_item_id (name, name, desc,
-                                       gimp, GIMP_TYPE_CHANNEL,
-                                       G_PARAM_READWRITE);
+      pspec = gimp_param_spec_channel_id (name, name, desc,
+                                          gimp,
+                                          G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_DRAWABLE:
-      pspec = gimp_param_spec_item_id (name, name, desc,
-                                       gimp, GIMP_TYPE_DRAWABLE,
-                                       G_PARAM_READWRITE);
+      pspec = gimp_param_spec_drawable_id (name, name, desc,
+                                           gimp,
+                                           G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_SELECTION:
-      pspec = gimp_param_spec_item_id (name, name, desc,
-                                       gimp, GIMP_TYPE_CHANNEL,
-                                       G_PARAM_READWRITE);
+      pspec = gimp_param_spec_selection_id (name, name, desc,
+                                            gimp,
+                                            G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_BOUNDARY:
       break;
 
     case GIMP_PDB_VECTORS:
-      pspec = gimp_param_spec_item_id (name, name, desc,
-                                       gimp, GIMP_TYPE_VECTORS,
-                                       G_PARAM_READWRITE);
+      pspec = gimp_param_spec_vectors_id (name, name, desc,
+                                          gimp,
+                                          G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_PARASITE:
@@ -553,7 +557,7 @@ gimp_procedure_compat_pspec (Gimp           *gimp,
 
   if (! pspec)
     g_warning ("%s: returning NULL for %s (%s)",
-               G_STRFUNC, name, procedural_db_type_name (arg_type));
+               G_STRFUNC, name, gimp_pdb_arg_type_to_string (arg_type));
 
   return pspec;
 }
@@ -569,7 +573,7 @@ gimp_procedure_add_compat_arg (GimpProcedure  *procedure,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (name != NULL);
 
-  gimp_procedure_add_argument (procedure, arg_type,
+  gimp_procedure_add_argument (procedure,
                                gimp_procedure_compat_pspec (gimp, arg_type,
                                                             name, desc));
 }
@@ -585,7 +589,7 @@ gimp_procedure_add_compat_value (GimpProcedure  *procedure,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (name != NULL);
 
-  gimp_procedure_add_return_value (procedure, arg_type,
+  gimp_procedure_add_return_value (procedure,
                                    gimp_procedure_compat_pspec (gimp, arg_type,
                                                                 name, desc));
 }

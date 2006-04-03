@@ -133,10 +133,8 @@ void           gimp_procedure_take_strings        (GimpProcedure    *procedure,
                                                    gchar            *deprecated);
 
 void            gimp_procedure_add_argument       (GimpProcedure    *procedure,
-                                                   GimpPDBArgType    arg_type,
                                                    GParamSpec       *pspec);
 void            gimp_procedure_add_return_value   (GimpProcedure    *procedure,
-                                                   GimpPDBArgType    arg_type,
                                                    GParamSpec       *pspec);
 
 void            gimp_procedure_add_compat_arg     (GimpProcedure    *procedure,

@@ -80,7 +80,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_new_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The requested name of the new gradient",
@@ -88,7 +87,6 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRING,
                                    gimp_param_spec_string ("actual-name",
                                                            "actual name",
                                                            "The actual new gradient name",
@@ -102,7 +100,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_duplicate_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -110,7 +107,6 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRING,
                                    gimp_param_spec_string ("copy-name",
                                                            "copy name",
                                                            "The name of the gradient's copy",
@@ -124,7 +120,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_is_editable_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -132,7 +127,6 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
                                    g_param_spec_boolean ("editable",
                                                          "editable",
                                                          "TRUE if the gradient can be edited",
@@ -145,7 +139,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_rename_proc, 2, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -153,7 +146,6 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("new-name",
                                                        "new name",
                                                        "The new name of the gradient",
@@ -161,7 +153,6 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRING,
                                    gimp_param_spec_string ("actual-name",
                                                            "actual name",
                                                            "The actual new name of the gradient",
@@ -175,7 +166,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_delete_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -189,7 +179,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_get_uniform_samples_proc, 3, 2);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -197,32 +186,28 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("num-samples",
-                                                 "num samples",
-                                                 "The number of samples to take",
-                                                 2, G_MAXINT32, 2,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("num-samples",
+                                                      "num samples",
+                                                      "The number of samples to take",
+                                                      2, G_MAXINT32, 2,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_boolean ("reverse",
                                                      "reverse",
                                                      "Use the reverse gradient (TRUE or FALSE)",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
-                                   g_param_spec_int ("num-color-samples",
-                                                     "num color samples",
-                                                     "Length of the color_samples array (4 * num_samples)",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_FLOATARRAY,
-                                   gimp_param_spec_array ("color-samples",
-                                                          "color samples",
-                                                          "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
+                                   gimp_param_spec_int32 ("num-color-samples",
+                                                          "num color samples",
+                                                          "Length of the color_samples array (4 * num_samples)",
+                                                          0, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_float_array ("color-samples",
+                                                                "color samples",
+                                                                "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
+                                                                GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -230,7 +215,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_get_custom_samples_proc, 4, 2);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -238,38 +222,33 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("num-samples",
-                                                 "num samples",
-                                                 "The number of samples to take",
-                                                 1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_FLOATARRAY,
-                               gimp_param_spec_array ("positions",
-                                                      "positions",
-                                                      "The list of positions to sample along the gradient",
+                               gimp_param_spec_int32 ("num-samples",
+                                                      "num samples",
+                                                      "The number of samples to take",
+                                                      1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
+                               gimp_param_spec_float_array ("positions",
+                                                            "positions",
+                                                            "The list of positions to sample along the gradient",
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("reverse",
                                                      "reverse",
                                                      "Use the reverse gradient (TRUE or FALSE)",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
-                                   g_param_spec_int ("num-color-samples",
-                                                     "num color samples",
-                                                     "Length of the color_samples array (4 * num_samples)",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_FLOATARRAY,
-                                   gimp_param_spec_array ("color-samples",
-                                                          "color samples",
-                                                          "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
+                                   gimp_param_spec_int32 ("num-color-samples",
+                                                          "num color samples",
+                                                          "Length of the color_samples array (4 * num_samples)",
+                                                          0, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_float_array ("color-samples",
+                                                                "color samples",
+                                                                "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
+                                                                GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -277,7 +256,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_segment_get_left_color_proc, 2, 2);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -285,21 +263,18 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("segment",
-                                                 "segment",
-                                                 "The index of the segment within the gradient",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("segment",
+                                                      "segment",
+                                                      "The index of the segment within the gradient",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_COLOR,
                                    gimp_param_spec_rgb ("color",
                                                         "color",
                                                         "The return color",
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_FLOAT,
                                    g_param_spec_double ("opacity",
                                                         "opacity",
                                                         "The opacity of the endpoint",
@@ -312,7 +287,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_segment_set_left_color_proc, 4, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -320,21 +294,18 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("segment",
-                                                 "segment",
-                                                 "The index of the segment within the gradient",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("segment",
+                                                      "segment",
+                                                      "The index of the segment within the gradient",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_COLOR,
                                gimp_param_spec_rgb ("color",
                                                     "color",
                                                     "The color to set",
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_FLOAT,
                                g_param_spec_double ("opacity",
                                                     "opacity",
                                                     "The opacity to set for the endpoint",
@@ -347,7 +318,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_segment_get_right_color_proc, 2, 2);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -355,21 +325,18 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("segment",
-                                                 "segment",
-                                                 "The index of the segment within the gradient",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("segment",
+                                                      "segment",
+                                                      "The index of the segment within the gradient",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_COLOR,
                                    gimp_param_spec_rgb ("color",
                                                         "color",
                                                         "The return color",
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_FLOAT,
                                    g_param_spec_double ("opacity",
                                                         "opacity",
                                                         "The opacity of the endpoint",
@@ -382,7 +349,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_segment_set_right_color_proc, 4, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -390,21 +356,18 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("segment",
-                                                 "segment",
-                                                 "The index of the segment within the gradient",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("segment",
+                                                      "segment",
+                                                      "The index of the segment within the gradient",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_COLOR,
                                gimp_param_spec_rgb ("color",
                                                     "color",
                                                     "The color to set",
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_FLOAT,
                                g_param_spec_double ("opacity",
                                                     "opacity",
                                                     "The opacity to set for the endpoint",
@@ -417,7 +380,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_segment_get_left_pos_proc, 2, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -425,14 +387,12 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("segment",
-                                                 "segment",
-                                                 "The index of the segment within the gradient",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("segment",
+                                                      "segment",
+                                                      "The index of the segment within the gradient",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_FLOAT,
                                    g_param_spec_double ("pos",
                                                         "pos",
                                                         "The return position",
@@ -445,7 +405,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_segment_set_left_pos_proc, 3, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -453,21 +412,18 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("segment",
-                                                 "segment",
-                                                 "The index of the segment within the gradient",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("segment",
+                                                      "segment",
+                                                      "The index of the segment within the gradient",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_FLOAT,
                                g_param_spec_double ("pos",
                                                     "pos",
                                                     "The position to set the guidepoint to",
                                                     0.0, 1.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_FLOAT,
                                    g_param_spec_double ("final-pos",
                                                         "final pos",
                                                         "The return position",
@@ -480,7 +436,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_segment_get_middle_pos_proc, 2, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -488,14 +443,12 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("segment",
-                                                 "segment",
-                                                 "The index of the segment within the gradient",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("segment",
+                                                      "segment",
+                                                      "The index of the segment within the gradient",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_FLOAT,
                                    g_param_spec_double ("pos",
                                                         "pos",
                                                         "The return position",
@@ -508,7 +461,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_segment_set_middle_pos_proc, 3, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -516,21 +468,18 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("segment",
-                                                 "segment",
-                                                 "The index of the segment within the gradient",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("segment",
+                                                      "segment",
+                                                      "The index of the segment within the gradient",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_FLOAT,
                                g_param_spec_double ("pos",
                                                     "pos",
                                                     "The position to set the guidepoint to",
                                                     0.0, 1.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_FLOAT,
                                    g_param_spec_double ("final-pos",
                                                         "final pos",
                                                         "The return position",
@@ -543,7 +492,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_segment_get_right_pos_proc, 2, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -551,14 +499,12 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("segment",
-                                                 "segment",
-                                                 "The index of the segment within the gradient",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("segment",
+                                                      "segment",
+                                                      "The index of the segment within the gradient",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_FLOAT,
                                    g_param_spec_double ("pos",
                                                         "pos",
                                                         "The return position",
@@ -571,7 +517,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_segment_set_right_pos_proc, 3, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -579,21 +524,18 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("segment",
-                                                 "segment",
-                                                 "The index of the segment within the gradient",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("segment",
+                                                      "segment",
+                                                      "The index of the segment within the gradient",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_FLOAT,
                                g_param_spec_double ("pos",
                                                     "pos",
                                                     "The position to set the guidepoint to",
                                                     0.0, 1.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_FLOAT,
                                    g_param_spec_double ("final-pos",
                                                         "final pos",
                                                         "The return position",
@@ -606,7 +548,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_segment_get_blending_function_proc, 2, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -614,14 +555,12 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("segment",
-                                                 "segment",
-                                                 "The index of the segment within the gradient",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("segment",
+                                                      "segment",
+                                                      "The index of the segment within the gradient",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
                                    g_param_spec_enum ("blend-func",
                                                       "blend func",
                                                       "The blending function of the segment: { GIMP_GRADIENT_SEGMENT_LINEAR (0), GIMP_GRADIENT_SEGMENT_CURVED (1), GIMP_GRADIENT_SEGMENT_SINE (2), GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING (3), GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING (4) }",
@@ -635,7 +574,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_segment_get_coloring_type_proc, 2, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -643,14 +581,12 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("segment",
-                                                 "segment",
-                                                 "The index of the segment within the gradient",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("segment",
+                                                      "segment",
+                                                      "The index of the segment within the gradient",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
                                    g_param_spec_enum ("coloring-type",
                                                       "coloring type",
                                                       "The coloring type of the segment: { GIMP_GRADIENT_SEGMENT_RGB (0), GIMP_GRADIENT_SEGMENT_HSV_CCW (1), GIMP_GRADIENT_SEGMENT_HSV_CW (2) }",
@@ -664,7 +600,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_segment_range_set_blending_function_proc, 4, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -672,21 +607,18 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("start-segment",
-                                                 "start segment",
-                                                 "The index of the first segment to operate on",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("start-segment",
+                                                      "start segment",
+                                                      "The index of the first segment to operate on",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("end-segment",
-                                                 "end segment",
-                                                 "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("end-segment",
+                                                      "end segment",
+                                                      "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_enum ("blending-function",
                                                   "blending function",
                                                   "The Blending Function: { GIMP_GRADIENT_SEGMENT_LINEAR (0), GIMP_GRADIENT_SEGMENT_CURVED (1), GIMP_GRADIENT_SEGMENT_SINE (2), GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING (3), GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING (4) }",
@@ -700,7 +632,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_segment_range_set_coloring_type_proc, 4, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -708,21 +639,18 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("start-segment",
-                                                 "start segment",
-                                                 "The index of the first segment to operate on",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("start-segment",
+                                                      "start segment",
+                                                      "The index of the first segment to operate on",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("end-segment",
-                                                 "end segment",
-                                                 "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("end-segment",
+                                                      "end segment",
+                                                      "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_enum ("coloring-type",
                                                   "coloring type",
                                                   "The Coloring Type: { GIMP_GRADIENT_SEGMENT_RGB (0), GIMP_GRADIENT_SEGMENT_HSV_CCW (1), GIMP_GRADIENT_SEGMENT_HSV_CW (2) }",
@@ -736,7 +664,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_segment_range_flip_proc, 3, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -744,19 +671,17 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("start-segment",
-                                                 "start segment",
-                                                 "The index of the first segment to operate on",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("start-segment",
+                                                      "start segment",
+                                                      "The index of the first segment to operate on",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("end-segment",
-                                                 "end segment",
-                                                 "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("end-segment",
+                                                      "end segment",
+                                                      "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -764,7 +689,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_segment_range_replicate_proc, 4, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -772,26 +696,23 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("start-segment",
-                                                 "start segment",
-                                                 "The index of the first segment to operate on",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("start-segment",
+                                                      "start segment",
+                                                      "The index of the first segment to operate on",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("end-segment",
-                                                 "end segment",
-                                                 "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("end-segment",
+                                                      "end segment",
+                                                      "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("replicate-times",
-                                                 "replicate times",
-                                                 "The number of times to replicate",
-                                                 2, 20, 2,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("replicate-times",
+                                                      "replicate times",
+                                                      "The number of times to replicate",
+                                                      2, 20, 2,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -799,7 +720,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_segment_range_split_midpoint_proc, 3, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -807,19 +727,17 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("start-segment",
-                                                 "start segment",
-                                                 "The index of the first segment to operate on",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("start-segment",
+                                                      "start segment",
+                                                      "The index of the first segment to operate on",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("end-segment",
-                                                 "end segment",
-                                                 "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("end-segment",
+                                                      "end segment",
+                                                      "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -827,7 +745,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_segment_range_split_uniform_proc, 4, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -835,26 +752,23 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("start-segment",
-                                                 "start segment",
-                                                 "The index of the first segment to operate on",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("start-segment",
+                                                      "start segment",
+                                                      "The index of the first segment to operate on",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("end-segment",
-                                                 "end segment",
-                                                 "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("end-segment",
+                                                      "end segment",
+                                                      "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("split-parts",
-                                                 "split parts",
-                                                 "The number of uniform divisions to split each segment to",
-                                                 2, 20, 2,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("split-parts",
+                                                      "split parts",
+                                                      "The number of uniform divisions to split each segment to",
+                                                      2, 20, 2,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -862,7 +776,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_segment_range_delete_proc, 3, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -870,19 +783,17 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("start-segment",
-                                                 "start segment",
-                                                 "The index of the first segment to operate on",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("start-segment",
+                                                      "start segment",
+                                                      "The index of the first segment to operate on",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("end-segment",
-                                                 "end segment",
-                                                 "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("end-segment",
+                                                      "end segment",
+                                                      "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -890,7 +801,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_segment_range_redistribute_handles_proc, 3, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -898,19 +808,17 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("start-segment",
-                                                 "start segment",
-                                                 "The index of the first segment to operate on",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("start-segment",
+                                                      "start segment",
+                                                      "The index of the first segment to operate on",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("end-segment",
-                                                 "end segment",
-                                                 "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("end-segment",
+                                                      "end segment",
+                                                      "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -918,7 +826,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_segment_range_blend_colors_proc, 3, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -926,19 +833,17 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("start-segment",
-                                                 "start segment",
-                                                 "The index of the first segment to operate on",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("start-segment",
+                                                      "start segment",
+                                                      "The index of the first segment to operate on",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("end-segment",
-                                                 "end segment",
-                                                 "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("end-segment",
+                                                      "end segment",
+                                                      "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -946,7 +851,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_segment_range_blend_opacity_proc, 3, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -954,19 +858,17 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("start-segment",
-                                                 "start segment",
-                                                 "The index of the first segment to operate on",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("start-segment",
+                                                      "start segment",
+                                                      "The index of the first segment to operate on",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("end-segment",
-                                                 "end segment",
-                                                 "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("end-segment",
+                                                      "end segment",
+                                                      "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -974,7 +876,6 @@ register_gradient_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&gradient_segment_range_move_proc, 5, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The gradient name",
@@ -982,35 +883,30 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("start-segment",
-                                                 "start segment",
-                                                 "The index of the first segment to operate on",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("start-segment",
+                                                      "start segment",
+                                                      "The index of the first segment to operate on",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
-                               g_param_spec_int ("end-segment",
-                                                 "end segment",
-                                                 "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               gimp_param_spec_int32 ("end-segment",
+                                                      "end segment",
+                                                      "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_FLOAT,
                                g_param_spec_double ("delta",
                                                     "delta",
                                                     "The delta to move the segment range",
                                                     -1.0, 1.0, -1.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_boolean ("control-compress",
                                                      "control compress",
                                                      "Whether or not to compress the neighboring segments",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_FLOAT,
                                    g_param_spec_double ("final-delta",
                                                         "final delta",
                                                         "The final delta by which the range moved",

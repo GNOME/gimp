@@ -57,21 +57,18 @@ register_grid_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_grid_get_spacing_proc, 1, 2);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_FLOAT,
                                    g_param_spec_double ("xspacing",
                                                         "xspacing",
                                                         "The image's grid horizontal spacing",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_FLOAT,
                                    g_param_spec_double ("yspacing",
                                                         "yspacing",
                                                         "The image's grid vertical spacing",
@@ -84,21 +81,18 @@ register_grid_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_grid_set_spacing_proc, 3, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_FLOAT,
                                g_param_spec_double ("xspacing",
                                                     "xspacing",
                                                     "The image's grid horizontal spacing",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_FLOAT,
                                g_param_spec_double ("yspacing",
                                                     "yspacing",
                                                     "The image's grid vertical spacing",
@@ -111,21 +105,18 @@ register_grid_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_grid_get_offset_proc, 1, 2);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_FLOAT,
                                    g_param_spec_double ("xoffset",
                                                         "xoffset",
                                                         "The image's grid horizontal offset",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_FLOAT,
                                    g_param_spec_double ("yoffset",
                                                         "yoffset",
                                                         "The image's grid vertical offset",
@@ -138,21 +129,18 @@ register_grid_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_grid_set_offset_proc, 3, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_FLOAT,
                                g_param_spec_double ("xoffset",
                                                     "xoffset",
                                                     "The image's grid horizontal offset",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_FLOAT,
                                g_param_spec_double ("yoffset",
                                                     "yoffset",
                                                     "The image's grid vertical offset",
@@ -165,14 +153,12 @@ register_grid_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_grid_get_foreground_color_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_COLOR,
                                    gimp_param_spec_rgb ("fgcolor",
                                                         "fgcolor",
                                                         "The image's grid foreground color",
@@ -185,14 +171,12 @@ register_grid_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_grid_set_foreground_color_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_COLOR,
                                gimp_param_spec_rgb ("fgcolor",
                                                     "fgcolor",
                                                     "The new foreground color",
@@ -205,14 +189,12 @@ register_grid_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_grid_get_background_color_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_COLOR,
                                    gimp_param_spec_rgb ("bgcolor",
                                                         "bgcolor",
                                                         "The image's grid background color",
@@ -225,14 +207,12 @@ register_grid_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_grid_set_background_color_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_COLOR,
                                gimp_param_spec_rgb ("bgcolor",
                                                     "bgcolor",
                                                     "The new background color",
@@ -245,14 +225,12 @@ register_grid_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_grid_get_style_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
                                    g_param_spec_enum ("style",
                                                       "style",
                                                       "The image's grid style: { GIMP_GRID_DOTS (0), GIMP_GRID_INTERSECTIONS (1), GIMP_GRID_ON_OFF_DASH (2), GIMP_GRID_DOUBLE_DASH (3), GIMP_GRID_SOLID (4) }",
@@ -266,14 +244,12 @@ register_grid_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&image_grid_set_style_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_enum ("style",
                                                   "style",
                                                   "The image's grid style: { GIMP_GRID_DOTS (0), GIMP_GRID_INTERSECTIONS (1), GIMP_GRID_ON_OFF_DASH (2), GIMP_GRID_DOUBLE_DASH (3), GIMP_GRID_SOLID (4) }",

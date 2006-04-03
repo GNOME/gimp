@@ -49,14 +49,12 @@ register_display_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&display_new_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_DISPLAY,
                                    gimp_param_spec_display_id ("display",
                                                                "display",
                                                                "The new display",
@@ -69,7 +67,6 @@ register_display_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&display_delete_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_DISPLAY,
                                gimp_param_spec_display_id ("display",
                                                            "display",
                                                            "The display to delete",
@@ -82,19 +79,17 @@ register_display_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&display_get_window_handle_proc, 1, 1);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_DISPLAY,
                                gimp_param_spec_display_id ("display",
                                                            "display",
                                                            "The display to get the window handle from",
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
-                                   g_param_spec_int ("window",
-                                                     "window",
-                                                     "The native window handle or 0",
-                                                     G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_int32 ("window",
+                                                          "window",
+                                                          "The native window handle or 0",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   /*
@@ -108,14 +103,12 @@ register_display_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&displays_reconnect_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("old-image",
                                                          "old image",
                                                          "The old image (must have at least one display)",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_IMAGE,
                                gimp_param_spec_image_id ("new-image",
                                                          "new image",
                                                          "The new image (must not have a display)",

@@ -46,7 +46,5 @@ GimpArgument  * procedural_db_run_proc         (Gimp             *gimp,
                                                 gint             *n_return_vals,
                                                 ...);
 
-gchar         * procedural_db_type_name        (GimpPDBArgType    type);
-
 
 #endif  /*  __PROCEDURAL_DB_H__  */

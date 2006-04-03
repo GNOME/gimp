@@ -45,7 +45,6 @@ register_font_select_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&fonts_popup_proc, 3, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("font-callback",
                                                        "font callback",
                                                        "The callback PDB proc to call when font selection is made",
@@ -53,7 +52,6 @@ register_font_select_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("popup-title",
                                                        "popup title",
                                                        "Title to give the font popup window",
@@ -61,7 +59,6 @@ register_font_select_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("initial-font",
                                                        "initial font",
                                                        "The name of the font to set as the first selected",
@@ -75,7 +72,6 @@ register_font_select_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&fonts_close_popup_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("font-callback",
                                                        "font callback",
                                                        "The name of the callback registered for this popup",
@@ -89,7 +85,6 @@ register_font_select_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&fonts_set_popup_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("font-callback",
                                                        "font callback",
                                                        "The name of the callback registered for this popup",
@@ -97,7 +92,6 @@ register_font_select_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("font-name",
                                                        "font name",
                                                        "The name of the font to set as selected",

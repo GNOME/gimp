@@ -85,7 +85,6 @@ register_context_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&context_get_paint_method_proc, 0, 1);
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRING,
                                    gimp_param_spec_string ("name",
                                                            "name",
                                                            "The name of the active paint method",
@@ -99,7 +98,6 @@ register_context_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&context_set_paint_method_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the paint method",
@@ -113,7 +111,6 @@ register_context_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&context_get_foreground_proc, 0, 1);
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_COLOR,
                                    gimp_param_spec_rgb ("foreground",
                                                         "foreground",
                                                         "The foreground color",
@@ -126,7 +123,6 @@ register_context_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&context_set_foreground_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_COLOR,
                                gimp_param_spec_rgb ("foreground",
                                                     "foreground",
                                                     "The foreground color",
@@ -139,7 +135,6 @@ register_context_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&context_get_background_proc, 0, 1);
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_COLOR,
                                    gimp_param_spec_rgb ("background",
                                                         "background",
                                                         "The background color",
@@ -152,7 +147,6 @@ register_context_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&context_set_background_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_COLOR,
                                gimp_param_spec_rgb ("background",
                                                     "background",
                                                     "The background color",
@@ -177,7 +171,6 @@ register_context_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&context_get_opacity_proc, 0, 1);
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_FLOAT,
                                    g_param_spec_double ("opacity",
                                                         "opacity",
                                                         "The opacity (0 <= opacity <= 100)",
@@ -190,7 +183,6 @@ register_context_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&context_set_opacity_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_FLOAT,
                                g_param_spec_double ("opacity",
                                                     "opacity",
                                                     "The opacity (0 <= opacity <= 100)",
@@ -203,7 +195,6 @@ register_context_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&context_get_paint_mode_proc, 0, 1);
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_INT32,
                                    g_param_spec_enum ("paint-mode",
                                                       "paint mode",
                                                       "The paint mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }",
@@ -217,7 +208,6 @@ register_context_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&context_set_paint_mode_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_INT32,
                                g_param_spec_enum ("paint-mode",
                                                   "paint mode",
                                                   "The paint mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }",
@@ -231,7 +221,6 @@ register_context_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&context_get_brush_proc, 0, 1);
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRING,
                                    gimp_param_spec_string ("name",
                                                            "name",
                                                            "The name of the active brush",
@@ -245,7 +234,6 @@ register_context_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&context_set_brush_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the brush",
@@ -259,7 +247,6 @@ register_context_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&context_get_pattern_proc, 0, 1);
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRING,
                                    gimp_param_spec_string ("name",
                                                            "name",
                                                            "The name of the active pattern",
@@ -273,7 +260,6 @@ register_context_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&context_set_pattern_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the pattern",
@@ -287,7 +273,6 @@ register_context_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&context_get_gradient_proc, 0, 1);
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRING,
                                    gimp_param_spec_string ("name",
                                                            "name",
                                                            "The name of the active gradient",
@@ -301,7 +286,6 @@ register_context_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&context_set_gradient_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the gradient",
@@ -315,7 +299,6 @@ register_context_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&context_get_palette_proc, 0, 1);
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRING,
                                    gimp_param_spec_string ("name",
                                                            "name",
                                                            "The name of the active palette",
@@ -329,7 +312,6 @@ register_context_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&context_set_palette_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the palette",
@@ -343,7 +325,6 @@ register_context_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&context_get_font_proc, 0, 1);
   gimp_procedure_add_return_value (procedure,
-                                   GIMP_PDB_STRING,
                                    gimp_param_spec_string ("name",
                                                            "name",
                                                            "The name of the active font",
@@ -357,7 +338,6 @@ register_context_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&context_set_font_proc, 1, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the font",

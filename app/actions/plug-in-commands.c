@@ -71,10 +71,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
   GimpArgument  *args;
   gint           n_args  = 0;
   GimpDisplay   *display = NULL;
-
-  gimp = action_data_get_gimp (data);
-  if (! gimp)
-    return;
+  return_if_no_gimp (gimp, data);
 
   procedure = proc_def->procedure;
 
@@ -92,7 +89,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
     case GIMP_PLUGIN:
     case GIMP_TEMPORARY:
       if (procedure->num_args > n_args &&
-          procedure->args[n_args].type == GIMP_PDB_IMAGE)
+          GIMP_VALUE_HOLDS_IMAGE_ID (&args[n_args].value))
         {
           display = action_data_get_display (data);
 
@@ -102,7 +99,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
               n_args++;
 
               if (procedure->num_args > n_args &&
-                  procedure->args[n_args].type == GIMP_PDB_DRAWABLE)
+                  GIMP_VALUE_HOLDS_DRAWABLE_ID (&args[n_args].value));
                 {
                   GimpDrawable *drawable;
 
@@ -110,8 +107,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
 
                   if (drawable)
                     {
-                      gimp_value_set_item (&args[n_args].value,
-                                           GIMP_ITEM (drawable));
+                      gimp_value_set_drawable (&args[n_args].value, drawable);
                       n_args++;
                     }
                   else
@@ -136,10 +132,10 @@ plug_in_run_cmd_callback (GtkAction     *action,
                display ? gimp_display_get_ID (display) : -1);
 
   /* remember only "standard" plug-ins */
-  if (procedure->proc_type == GIMP_PLUGIN       &&
-      procedure->num_args >= 3                  &&
-      procedure->args[1].type == GIMP_PDB_IMAGE &&
-      procedure->args[2].type == GIMP_PDB_DRAWABLE)
+  if (procedure->proc_type == GIMP_PLUGIN                       &&
+      procedure->num_args  >= 3                                 &&
+      GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1].pspec) &&
+      GIMP_IS_PARAM_SPEC_DRAWABLE_ID (procedure->args[2].pspec))
     {
       gimp_set_last_plug_in (gimp, proc_def);
     }
@@ -156,10 +152,7 @@ plug_in_repeat_cmd_callback (GtkAction *action,
   GimpDisplay  *display;
   GimpDrawable *drawable;
   gboolean      interactive = TRUE;
-
-  display = action_data_get_display (data);
-  if (! display)
-    return;
+  return_if_no_display (display, data);
 
   drawable = gimp_image_active_drawable (display->image);
   if (! drawable)
@@ -181,11 +174,9 @@ void
 plug_in_reset_all_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
-  Gimp      *gimp = action_data_get_gimp (data);
+  Gimp      *gimp;
   GtkWidget *dialog;
-
-  if (! gimp)
-    return;
+  return_if_no_gimp (gimp, data);
 
   dialog = gimp_message_dialog_new (_("Reset all Filters"), GIMP_STOCK_QUESTION,
                                     NULL, 0,

@@ -309,17 +309,16 @@ gimp_help_call (Gimp        *gimp,
                   help_id      ? help_id      : "(null)");
 #endif
 
-      return_vals =
-        procedural_db_run_proc (gimp,
-                                gimp_get_user_context (gimp),
-                                NULL,
-				"extension-gimp-help-temp",
-                                &n_return_vals,
-                                GIMP_PDB_STRING, procedure_name,
-				GIMP_PDB_STRING, help_domain,
-				GIMP_PDB_STRING, help_locales,
-                                GIMP_PDB_STRING, help_id,
-                                GIMP_PDB_END);
+      return_vals = procedural_db_run_proc (gimp,
+                                            gimp_get_user_context (gimp),
+                                            NULL,
+                                            "extension-gimp-help-temp",
+                                            &n_return_vals,
+                                            G_TYPE_STRING, procedure_name,
+                                            G_TYPE_STRING, help_domain,
+                                            G_TYPE_STRING, help_locales,
+                                            G_TYPE_STRING, help_id,
+                                            G_TYPE_NONE);
 
       gimp_arguments_destroy (return_vals, n_return_vals);
     }

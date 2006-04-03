@@ -45,7 +45,6 @@ register_help_procs (Gimp *gimp)
    */
   procedure = gimp_procedure_init (&help_proc, 2, 0);
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("help-domain",
                                                        "help domain",
                                                        "The help domain in which help_id is registered",
@@ -53,7 +52,6 @@ register_help_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               GIMP_PDB_STRING,
                                gimp_param_spec_string ("help-id",
                                                        "help id",
                                                        "The help page's ID",

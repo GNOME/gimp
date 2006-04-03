@@ -30,6 +30,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimppalette.h"
+#include "core/gimpparamspecs.h"
 
 #include "pdb/procedural_db.h"
 
@@ -114,8 +115,8 @@ gimp_palette_select_run_callback (GimpPdbDialog *dialog,
                                  NULL,
                                  dialog->callback_name,
                                  n_return_vals,
-                                 GIMP_PDB_STRING, GIMP_OBJECT (palette)->name,
-                                 GIMP_PDB_INT32,  palette->n_colors,
-                                 GIMP_PDB_INT32,  closing,
-                                 GIMP_PDB_END);
+                                 G_TYPE_STRING,   GIMP_OBJECT (palette)->name,
+                                 GIMP_TYPE_INT32, palette->n_colors,
+                                 GIMP_TYPE_INT32, closing,
+                                 G_TYPE_NONE);
 }

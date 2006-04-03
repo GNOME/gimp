@@ -32,6 +32,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpbrush.h"
+#include "core/gimpparamspecs.h"
 
 #include "pdb/procedural_db.h"
 
@@ -257,25 +258,36 @@ gimp_brush_select_run_callback (GimpPdbDialog *dialog,
                                 gboolean       closing,
                                 gint          *n_return_vals)
 {
-  GimpBrush *brush = GIMP_BRUSH (object);
+  GimpBrush    *brush = GIMP_BRUSH (object);
+  GimpArray    *array;
+  GimpArgument *return_vals;
 
-  return procedural_db_run_proc (dialog->caller_context->gimp,
-                                 dialog->caller_context,
-                                 NULL,
-                                 dialog->callback_name,
-                                 n_return_vals,
-                                 GIMP_PDB_STRING,    object->name,
-                                 GIMP_PDB_FLOAT,     gimp_context_get_opacity (dialog->context) * 100.0,
-                                 GIMP_PDB_INT32,     GIMP_BRUSH_SELECT (dialog)->spacing,
-                                 GIMP_PDB_INT32,     (gint) gimp_context_get_paint_mode (dialog->context),
-                                 GIMP_PDB_INT32,     brush->mask->width,
-                                 GIMP_PDB_INT32,     brush->mask->height,
-                                 GIMP_PDB_INT32,     (brush->mask->width *
-                                                      brush->mask->height),
-                                 GIMP_PDB_INT8ARRAY, temp_buf_data (brush->mask),
+  array = gimp_array_new (temp_buf_data (brush->mask),
+                          brush->mask->width *
+                          brush->mask->height *
+                          brush->mask->bytes,
+                          TRUE);
 
-                                 GIMP_PDB_INT32,     closing,
-                                 GIMP_PDB_END);
+  return_vals =
+    procedural_db_run_proc (dialog->caller_context->gimp,
+                            dialog->caller_context,
+                            NULL,
+                            dialog->callback_name,
+                            n_return_vals,
+                            G_TYPE_STRING,        object->name,
+                            G_TYPE_DOUBLE,        gimp_context_get_opacity (dialog->context) * 100.0,
+                            GIMP_TYPE_INT32,      GIMP_BRUSH_SELECT (dialog)->spacing,
+                            GIMP_TYPE_INT32,      gimp_context_get_paint_mode (dialog->context),
+                            GIMP_TYPE_INT32,      brush->mask->width,
+                            GIMP_TYPE_INT32,      brush->mask->height,
+                            GIMP_TYPE_INT32,      array->length,
+                            GIMP_TYPE_INT8_ARRAY, array,
+                            GIMP_TYPE_INT32,      closing,
+                            G_TYPE_NONE);
+
+  gimp_array_free (array);
+
+  return return_vals;
 }
 
 static void

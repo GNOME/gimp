@@ -882,28 +882,32 @@ plug_in_rc_write (GSList       *plug_in_defs,
 
 	      for (i = 0; i < procedure->num_args; i++)
 		{
+                  GParamSpec *pspec = procedure->args[i].pspec;
+
                   gimp_config_writer_open (writer, "proc-arg");
                   gimp_config_writer_printf (writer, "%d",
-                                             procedure->args[i].type);
+                                             gimp_argument_type_to_pdb_arg_type (G_PARAM_SPEC_VALUE_TYPE (pspec)));
 
 		  gimp_config_writer_string (writer,
-                                             g_param_spec_get_name (procedure->args[i].pspec));
+                                             g_param_spec_get_name (pspec));
 		  gimp_config_writer_string (writer,
-                                             g_param_spec_get_blurb (procedure->args[i].pspec));
+                                             g_param_spec_get_blurb (pspec));
 
                   gimp_config_writer_close (writer);
 		}
 
 	      for (i = 0; i < procedure->num_values; i++)
 		{
+                  GParamSpec *pspec = procedure->values[i].pspec;
+
 		  gimp_config_writer_open (writer, "proc-arg");
                   gimp_config_writer_printf (writer, "%d",
-                                             procedure->values[i].type);
+                                             gimp_argument_type_to_pdb_arg_type (G_PARAM_SPEC_VALUE_TYPE (pspec)));
 
 		  gimp_config_writer_string (writer,
-                                             g_param_spec_get_name (procedure->values[i].pspec));
+                                             g_param_spec_get_name (pspec));
 		  gimp_config_writer_string (writer,
-                                             g_param_spec_get_blurb (procedure->values[i].pspec));
+                                             g_param_spec_get_blurb (pspec));
 
                   gimp_config_writer_close (writer);
 		}

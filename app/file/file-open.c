@@ -142,10 +142,10 @@ file_open_image (Gimp               *gimp,
   return_vals = procedural_db_run_proc (gimp, context, progress,
                                         file_proc->procedure->name,
                                         &n_return_vals,
-                                        GIMP_PDB_INT32,  run_mode,
-                                        GIMP_PDB_STRING, filename,
-                                        GIMP_PDB_STRING, entered_filename,
-                                        GIMP_PDB_END);
+                                        GIMP_TYPE_INT32, run_mode,
+                                        G_TYPE_STRING,   filename,
+                                        G_TYPE_STRING,   entered_filename,
+                                        G_TYPE_NONE);
 
   g_free (filename);
 
@@ -228,9 +228,9 @@ file_open_thumbnail (Gimp          *gimp,
       return_vals = procedural_db_run_proc (gimp, context, progress,
                                             procedure->name,
                                             &n_return_vals,
-                                            GIMP_PDB_STRING, filename,
-                                            GIMP_PDB_INT32,  size,
-                                            GIMP_PDB_END);
+                                            G_TYPE_STRING,   filename,
+                                            GIMP_TYPE_INT32, size,
+                                            G_TYPE_NONE);
 
       g_free (filename);
 
