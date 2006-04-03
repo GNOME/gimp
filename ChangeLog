@@ -1,5 +1,13 @@
 2006-04-03  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/drawable.pdb: improved API documentation for
+	gimp-drawable-fill (bug #336864).
+
+	* app/pdb/drawable_cmds.c
+	* libgimp/gimpdrawable_pdb.c: regenerated.
+
+2006-04-03  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-close.c: reduced precision of the
 	display of time since the last change.
 
