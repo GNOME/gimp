@@ -1,3 +1,4 @@
+# translation of es.po to Spanish
 # Spanish translation for gimp-libgimp 1.3.X.
 # Copyright © 1998-2000,2003 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
@@ -5,20 +6,21 @@
 # Francisco Javier Fernandez <serrador@cvs.gnome.org>, 2003, 2004.
 # Pablo G. del Campo <pablodc@par001001-703>, 2003, 2004.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2005, 2006.
+# Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2006.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-polibgimp\n"
+"Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-10 19:38+0100\n"
-"PO-Revision-Date: 2006-03-08 15:58+0100\n"
-"Last-Translator: Francisco Vila Doncel <francisco.vila@hispalinux.es>\n"
-"Language-Team:  Equipo de localizadores Hispano <traductores@es.gnome.org>\n"
+"POT-Creation-Date: 2006-03-28 17:31+0200\n"
+"PO-Revision-Date: 2006-04-03 18:36+0200\n"
+"Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
+"Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: emacs 21\n"
+"X-Generator: KBabel 1.9.1\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../libgimp/gimpbrushmenu.c:140
@@ -27,7 +29,7 @@ msgstr "Selección de pincel"
 
 #: ../libgimp/gimpbrushmenu.c:180 ../libgimp/gimppatternmenu.c:165
 msgid "_Browse..."
-msgstr "_Buscar..."
+msgstr "_Examinar..."
 
 #: ../libgimp/gimpexport.c:215 ../libgimp/gimpexport.c:251
 #, c-format
@@ -70,7 +72,7 @@ msgstr "%s no puede manejar máscaras de capas"
 
 #: ../libgimp/gimpexport.c:270
 msgid "Apply Layer Masks"
-msgstr "Aplicar las mascaras de capa"
+msgstr "Aplicar las máscaras de capa"
 
 #: ../libgimp/gimpexport.c:278
 #, c-format
@@ -109,8 +111,7 @@ msgstr ""
 #: ../libgimp/gimpexport.c:306
 #, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr ""
-"%s sólo puede manejar imágenes de mapas de bits (de dos colores) indexados"
+msgstr "%s sólo puede manejar imágenes de mapas de bits (de dos colores) indexados"
 
 #: ../libgimp/gimpexport.c:307
 msgid ""
@@ -294,7 +295,7 @@ msgstr[1] "%d procedimientos"
 
 #: ../libgimp/gimpprocbrowserdialog.c:463
 msgid "No matches for your query"
-msgstr "No hubo coindicencias según su consulta"
+msgstr "No hubo coincidencias según su consulta"
 
 #: ../libgimp/gimpprocbrowserdialog.c:467
 #, c-format
@@ -663,15 +664,15 @@ msgstr "Hacia atrás"
 
 #: ../libgimpbase/gimpbaseenums.c:815
 msgid "Internal GIMP procedure"
-msgstr "Procedimiento interno de El Gimp"
+msgstr "Procedimiento interno de GIMP"
 
 #: ../libgimpbase/gimpbaseenums.c:816
 msgid "GIMP Plug-In"
-msgstr "Complemento de El Gimp"
+msgstr "Complemento de GIMP"
 
 #: ../libgimpbase/gimpbaseenums.c:817
 msgid "GIMP Extension"
-msgstr "Añadido de El Gimp"
+msgstr "Extensión de GIMP"
 
 #: ../libgimpbase/gimpbaseenums.c:818
 msgid "Temporary Procedure"
@@ -748,7 +749,7 @@ msgid ""
 "windowing system. The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"Cuando se encuentre activado, El Gimp tratará de utilizar el perfil de color "
+"Cuando se encuentre activado, GIMP tratará de utilizar el perfil de color "
 "de pantalla a partir del sistema de ventanas. En ese caso, el perfil "
 "configurado del monitor se utilizará sólo como reserva."
 
@@ -771,8 +772,7 @@ msgid "Sets how colors are mapped for your display."
 msgstr "Establece cómo se asignan los colores para su pantalla."
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
-msgid ""
-"Sets how colors are converted from workspace to the print simulation device."
+msgid "Sets how colors are converted from workspace to the print simulation device."
 msgstr ""
 "Establece cómo se convierten los colores del espacio de trabajo al "
 "dispositivo de simulación de impresión."
@@ -1000,7 +1000,7 @@ msgstr "Kilobytes"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:204
 msgid "Megabytes"
-msgstr "MegaBytes"
+msgstr "Megabytes"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:205
 msgid "Gigabytes"
@@ -1306,8 +1306,7 @@ msgstr "C_iclos de contraste:"
 
 #: ../modules/cdisplay_lcms.c:105
 msgid "Color management display filter using ICC color profiles"
-msgstr ""
-"Filtro de gestión del color de la pantalla que utiliza perfiles de color ICC"
+msgstr "Filtro de gestión del color de la pantalla que utiliza perfiles de color ICC"
 
 #: ../modules/cdisplay_lcms.c:173
 msgid "Color Management"
@@ -1415,7 +1414,7 @@ msgstr "_Extracción de negro:"
 msgid "The percentage of black to pull out of the colored inks."
 msgstr "El porcentaje de negro que se extraerá de las tintas coloreadas."
 
-# Painter-style es "estilo pintor". REVISAR. FVD. 
+# Painter-style es "estilo pintor". REVISAR. FVD.
 #: ../modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
 msgstr "Selección de color con paleta triangular"
@@ -1543,8 +1542,7 @@ msgstr "Dispositivo:"
 
 #: ../modules/controller_linux_input.c:223
 msgid "The name of the device to read Linux Input events from."
-msgstr ""
-"Nombre del dispositivo desde el que leer los eventos de entrada de Linux."
+msgstr "Nombre del dispositivo desde el que leer los eventos de entrada de Linux."
 
 #: ../modules/controller_linux_input.c:227
 msgid "Linux Input"
@@ -1607,8 +1605,3 @@ msgstr "MIDI"
 msgid "MIDI Events"
 msgstr "Eventos MIDI"
 
-#~ msgid "Loading module: '%s'\n"
-#~ msgstr "Cargando módulo «%s»\n"
-
-#~ msgid "Skipping module: '%s'\n"
-#~ msgstr "Omitiendo el módulo: «%s»\n"
