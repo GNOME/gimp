@@ -72,14 +72,18 @@ plug_in_params_to_args (GimpArgumentSpec *arg_specs,
         {
           GimpArgumentSpec *spec;
           gint              spec_index = i;
+          GimpPDBArgType    spec_arg_type;
 
           if (return_values)
             spec_index--;
 
           spec = &arg_specs[spec_index];
 
+          spec_arg_type = gimp_argument_type_to_pdb_arg_type
+            (G_PARAM_SPEC_VALUE_TYPE (spec->pspec));
+
           if (spec_index < n_arg_specs &&
-              G_PARAM_SPEC_VALUE_TYPE (spec->pspec) == params[i].type)
+              spec_arg_type == params[i].type)
             {
               gimp_argument_init (&args[i], spec);
             }

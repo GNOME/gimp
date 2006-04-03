@@ -1,3 +1,9 @@
+2006-04-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in-params.c (plug_in_params_to_args): don't
+	compare GType with GimpPDBArgType (never "clean up" before
+	committing ;)
+
 2006-04-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpparamspecs.[ch]: added a shitload of new GTypes and
