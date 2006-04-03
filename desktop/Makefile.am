@@ -66,4 +66,9 @@ validate: gimp.desktop
 	    echo "Can't find desktop-file-validate to validate $<; proceed with fingers crossed..."; \
           fi )
 
+
+# touch the toplevel icon directory as required by the icon theme spec
+install-data-hook:
+	touch @DESKTOP_DATADIR@/icons/hicolor
+
 dist-hook: validate

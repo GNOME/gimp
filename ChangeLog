@@ -1,3 +1,8 @@
+2006-04-03  Sven Neumann  <sven@gimp.org>
+
+	* desktop/Makefile.am: added an install hook that touches the
+	toplevel icon theme directory as required by the spec.
+
 2006-04-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in-params.c: handle storage of GIMP_PDB_INT32
