@@ -1,3 +1,12 @@
+2006-04-04  Tor Lillqvist  <tml@novell.com>
+
+	* app/text/gimpfont.c (gimp_font_get_new_preview): Provide
+	script-specific short sample strings instead of "Aa" for fonts
+	that seem to be designed for some specific non-Latin
+	script. Pending a complete redesign and reimplementation of font
+	selection, this is at least an improvement, and a partial solution
+	to #137624.
+
 2006-04-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in-params.c (plug_in_params_to_args): don't
