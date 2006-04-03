@@ -112,7 +112,9 @@ gimp_scale_tool_dialog (GimpTransformTool *tr_tool)
 {
   GimpScaleTool *scale = GIMP_SCALE_TOOL (tr_tool);
 
-  scale->box = g_object_new (GIMP_TYPE_SIZE_BOX, NULL);
+  scale->box = g_object_new (GIMP_TYPE_SIZE_BOX,
+                             "keep-aspect", FALSE,
+                             NULL);
   gtk_container_set_border_width (GTK_CONTAINER (scale->box), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (tr_tool->dialog)->vbox), scale->box,
                       FALSE, FALSE, 0);
