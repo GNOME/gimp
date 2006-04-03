@@ -786,7 +786,7 @@ GPL
 	push @group_decls, $decl;
 	$longest = length $decl if $longest < length $decl;
 
-	$group_procs .=  ' ' x 2 . "register_${group}_procs (gimp);\n\n";
+	$group_procs .=  ' ' x 2 . "register_${group}_procs (gimp);\n";
 	$pcount += $out->{pcount};
     }
 

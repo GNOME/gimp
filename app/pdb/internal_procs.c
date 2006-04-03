@@ -83,95 +83,49 @@ internal_procs_init (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   register_brush_procs (gimp);
-
   register_brush_select_procs (gimp);
-
   register_brushes_procs (gimp);
-
   register_buffer_procs (gimp);
-
   register_channel_procs (gimp);
-
   register_color_procs (gimp);
-
   register_context_procs (gimp);
-
   register_convert_procs (gimp);
-
   register_display_procs (gimp);
-
   register_drawable_procs (gimp);
-
   register_drawable_transform_procs (gimp);
-
   register_edit_procs (gimp);
-
   register_fileops_procs (gimp);
-
   register_floating_sel_procs (gimp);
-
   register_font_select_procs (gimp);
-
   register_fonts_procs (gimp);
-
   register_gimprc_procs (gimp);
-
   register_gradient_procs (gimp);
-
   register_gradient_select_procs (gimp);
-
   register_gradients_procs (gimp);
-
   register_grid_procs (gimp);
-
   register_guides_procs (gimp);
-
   register_help_procs (gimp);
-
   register_image_procs (gimp);
-
   register_layer_procs (gimp);
-
   register_message_procs (gimp);
-
   register_misc_procs (gimp);
-
   register_paint_tools_procs (gimp);
-
   register_palette_procs (gimp);
-
   register_palette_select_procs (gimp);
-
   register_palettes_procs (gimp);
-
   register_parasite_procs (gimp);
-
   register_paths_procs (gimp);
-
   register_pattern_procs (gimp);
-
   register_pattern_select_procs (gimp);
-
   register_patterns_procs (gimp);
-
   register_plug_in_procs (gimp);
-
   register_procedural_db_procs (gimp);
-
   register_progress_procs (gimp);
-
   register_selection_procs (gimp);
-
   register_selection_tools_procs (gimp);
-
   register_text_tool_procs (gimp);
-
   register_transform_tools_procs (gimp);
-
   register_undo_procs (gimp);
-
   register_unit_procs (gimp);
-
   register_vectors_procs (gimp);
-
 }
