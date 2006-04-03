@@ -37,15 +37,7 @@ struct _GimpScaleTool
 {
   GimpTransformTool  parent_instance;
 
-  /*  scale dialog  */
-  gchar              orig_width_buf[MAX_INFO_BUF];
-  gchar              orig_height_buf[MAX_INFO_BUF];
-  gdouble            size_vals[2];
-  gchar              x_ratio_buf[MAX_INFO_BUF];
-  gchar              y_ratio_buf[MAX_INFO_BUF];
-  gdouble            aspect_ratio_val;
-
-  GtkWidget         *sizeentry;
+  GtkWidget         *box;
 };
 
 struct _GimpScaleToolClass
