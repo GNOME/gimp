@@ -30,7 +30,7 @@
 
 #include "core/gimpparamspecs.h"
 
-#include "pdb/gimpargument.h"
+#include "pdb/gimp-pdb-compat.h"
 #include "pdb/procedural_db.h"
 
 #include "plug-in.h"
@@ -57,42 +57,32 @@ plug_in_params_to_args (GParamSpec **pspecs,
 
   for (i = 0; i < n_params; i++)
     {
-      GValue          value = { 0, };
-      GimpPDBArgType  arg_type;
-      gint            count;
+      GValue value = { 0, };
+      GType  type;
+      gint   count;
 
-      if (i == 0 && return_values)
+      type = gimp_pdb_compat_arg_type_to_gtype (params[i].type);
+
+      if (i > 0 || ! return_values)
         {
-          gimp_argument_init_compat (&value, params[i].type);
-        }
-      else
-        {
-          GParamSpec     *spec;
-          gint            spec_index = i;
-          GimpPDBArgType  spec_arg_type;
+          gint            pspec_index = i;
+          GimpPDBArgType  pspec_arg_type;
 
           if (return_values)
-            spec_index--;
+            pspec_index--;
 
-          spec = pspecs[spec_index];
+          pspec_arg_type = gimp_pdb_compat_arg_type_from_gtype
+            (G_PARAM_SPEC_VALUE_TYPE (pspecs[pspec_index]));
 
-          spec_arg_type = gimp_argument_type_to_pdb_arg_type
-            (G_PARAM_SPEC_VALUE_TYPE (spec));
-
-          if (spec_index < n_pspecs &&
-              spec_arg_type == params[i].type)
+          if (pspec_index < n_pspecs && pspec_arg_type == params[i].type)
             {
-              g_value_init (&value, G_PARAM_SPEC_VALUE_TYPE (spec));
-            }
-          else
-            {
-              gimp_argument_init_compat (&value, params[i].type);
+              type = G_PARAM_SPEC_VALUE_TYPE (pspecs[pspec_index]);
             }
         }
 
-      arg_type = gimp_argument_type_to_pdb_arg_type (G_VALUE_TYPE (&value));
+      g_value_init (&value, type);
 
-      switch (arg_type)
+      switch (gimp_pdb_compat_arg_type_from_gtype (type))
 	{
 	case GIMP_PDB_INT32:
           if (G_VALUE_HOLDS_INT (&value))
@@ -267,7 +257,8 @@ plug_in_args_to_params (GValueArray *args,
     {
       GValue *value = &args->values[i];
 
-      params[i].type = gimp_argument_type_to_pdb_arg_type (G_VALUE_TYPE (value));
+      params[i].type =
+        gimp_pdb_compat_arg_type_from_gtype (G_VALUE_TYPE (value));
 
       switch (params[i].type)
 	{

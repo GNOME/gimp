@@ -37,6 +37,7 @@
 #include "core/gimpdrawable.h"
 
 #include "pdb/gimpprocedure.h"
+#include "pdb/gimp-pdb-compat.h"
 #include "pdb/procedural_db.h"
 
 #include "plug-in.h"
@@ -716,11 +717,11 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
     {
       canonical = gimp_canonicalize_identifier (proc_install->params[i].name);
 
-      gimp_procedure_add_compat_arg (procedure,
-                                     plug_in->gimp,
-                                     proc_install->params[i].type,
-                                     canonical,
-                                     proc_install->params[i].description);
+      gimp_procedure_add_argument (procedure,
+                                   gimp_pdb_compat_param_spec (plug_in->gimp,
+                                                               proc_install->params[i].type,
+                                                               canonical,
+                                                               proc_install->params[i].description));
 
       g_free (canonical);
     }
@@ -729,11 +730,11 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
     {
       canonical = gimp_canonicalize_identifier (proc_install->return_vals[i].name);
 
-      gimp_procedure_add_compat_value (procedure,
-                                       plug_in->gimp,
-                                       proc_install->return_vals[i].type,
-                                       canonical,
-                                       proc_install->return_vals[i].description);
+      gimp_procedure_add_return_value (procedure,
+                                       gimp_pdb_compat_param_spec (plug_in->gimp,
+                                                                   proc_install->return_vals[i].type,
+                                                                   canonical,
+                                                                   proc_install->return_vals[i].description));
 
       g_free (canonical);
     }

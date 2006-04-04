@@ -1,5 +1,28 @@
 2006-04-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/Makefile.am
+	* app/pdb/gimpargument.[ch]: removed...
+
+	* app/pdb/gimp-pdb-compat.[ch]: ...and added with renamed functions.
+	Added gimp_pdb_compat_param_spec().
+
+	* app/pdb/gimpprocedure.[ch]: removed gimp_procedure_add_compat_arg()
+	and _add_compat_value(). Use gimp_pdb_compat_param_spec() plus
+	gimp_procedure_add_argument()/return_value() instead.
+
+	* app/pdb/procedural-db-query.c
+	* app/pdb/procedural_db.c
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-params.c
+	* app/plug-in/plug-in-rc.c
+	* tools/pdbgen/pdb/procedural_db.pdb: changed accordingly.
+
+	* app/xcf/xcf.c: no need to use compat functions here.
+
+	* app/pdb/procedural_db_cmds.c: regnerated.
+
+2006-04-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainertreeview-dnd.c
 	(gimp_container_tree_view_drag_leave)
 	(gimp_container_tree_view_drag_motion): use the correct API to

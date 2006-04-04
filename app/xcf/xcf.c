@@ -33,7 +33,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpparamspecs.h"
 
-#include "pdb/gimpargument.h"
 #include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
@@ -155,27 +154,41 @@ xcf_init (Gimp *gimp)
                                      "1995-1996",
                                      NULL);
 
-  gimp_procedure_add_compat_arg (procedure, gimp,
-                                 GIMP_PDB_INT32,
-                                 "dummy-param",
-                                 "dummy parameter");
-  gimp_procedure_add_compat_arg (procedure, gimp,
-                                 GIMP_PDB_IMAGE,
-                                 "image",
-                                 "Input image");
-  gimp_procedure_add_compat_arg (procedure, gimp,
-                                 GIMP_PDB_DRAWABLE,
-                                 "drawable",
-                                 "Active drawable of input image");
-  gimp_procedure_add_compat_arg (procedure, gimp,
-                                 GIMP_PDB_STRING,
-                                 "filename",
-                                 "The name of the file to save the image in, "
-                                 "in the on-disk character set and encoding");
-  gimp_procedure_add_compat_arg (procedure, gimp,
-                                 GIMP_PDB_STRING,
-                                 "raw_filename",
-                                 "The basename of the file, in UTF-8");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("dummy-param",
+                                                      "Dummy Param",
+                                                      "Dummy parameter",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "Image",
+                                                         "Input image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "Drawable",
+                                                            "Active drawable of input image",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("filename",
+                                                       "Filename",
+                                                       "The name of the file "
+                                                       "to save the image in, "
+                                                       "in the on-disk "
+                                                       "character set and "
+                                                       "encoding",
+                                                       TRUE, FALSE, NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("raw-filename",
+                                                       "Raw filename",
+                                                       "The basename of the "
+                                                       "file, in UTF-8",
+                                                       FALSE, FALSE, NULL,
+                                                       GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
 
   xcf_plug_in_save_proc.image_types_val =
@@ -201,23 +214,35 @@ xcf_init (Gimp *gimp)
                                      "1995-1996",
                                      NULL);
 
-  gimp_procedure_add_compat_arg (procedure, gimp,
-                                 GIMP_PDB_INT32,
-                                 "dummy-param",
-                                 "dummy parameter");
-  gimp_procedure_add_compat_arg (procedure, gimp,
-                                 GIMP_PDB_STRING,
-                                 "filename",
-                                 "The name of the file to load, "
-                                 "in the on-disk character set and encoding");
-  gimp_procedure_add_compat_arg (procedure, gimp,
-                                 GIMP_PDB_STRING,
-                                 "raw-filename",
-                                 "The basename of the file, in UTF-8");
-  gimp_procedure_add_compat_value (procedure, gimp,
-                                  GIMP_PDB_IMAGE,
-                                  "image",
-                                  "Output image");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("dummy-param",
+                                                      "Dummy Param",
+                                                      "Dummy parameter",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("filename",
+                                                       "Filename",
+                                                       "The name of the file "
+                                                       "to load, in the "
+                                                       "on-disk character "
+                                                       "set and encoding",
+                                                       TRUE, FALSE, NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("raw-filename",
+                                                       "Raw filename",
+                                                       "The basename of the "
+                                                       "file, in UTF-8",
+                                                       FALSE, FALSE, NULL,
+                                                       GIMP_PARAM_READWRITE));
+
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_image_id ("image",
+                                                             "Image",
+                                                             "Output image",
+                                                             gimp,
+                                                             GIMP_PARAM_READWRITE));
   procedural_db_register (gimp, procedure);
   xcf_plug_in_load_proc.image_types_val =
     plug_ins_image_types_parse (xcf_plug_in_load_proc.image_types);

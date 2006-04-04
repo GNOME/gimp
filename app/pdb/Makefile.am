@@ -5,8 +5,8 @@ noinst_LIBRARIES = libapppdb.a
 libapppdb_a_SOURCES = \
 	pdb-types.h			\
 	\
-	gimpargument.c			\
-	gimpargument.h			\
+	gimp-pdb-compat.c		\
+	gimp-pdb-compat.h		\
 	gimpprocedure.c			\
 	gimpprocedure.h			\
 	\

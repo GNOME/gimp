@@ -113,7 +113,7 @@ void            gimp_procedure_set_strings        (GimpProcedure    *procedure,
                                                    gchar            *copyright,
                                                    gchar            *date,
                                                    gchar            *deprecated);
-void           gimp_procedure_set_static_strings  (GimpProcedure    *procedure,
+void            gimp_procedure_set_static_strings (GimpProcedure    *procedure,
                                                    gchar            *name,
                                                    gchar            *original_name,
                                                    gchar            *blurb,
@@ -122,7 +122,7 @@ void           gimp_procedure_set_static_strings  (GimpProcedure    *procedure,
                                                    gchar            *copyright,
                                                    gchar            *date,
                                                    gchar            *deprecated);
-void           gimp_procedure_take_strings        (GimpProcedure    *procedure,
+void            gimp_procedure_take_strings       (GimpProcedure    *procedure,
                                                    gchar            *name,
                                                    gchar            *original_name,
                                                    gchar            *blurb,
@@ -136,17 +136,6 @@ void            gimp_procedure_add_argument       (GimpProcedure    *procedure,
                                                    GParamSpec       *pspec);
 void            gimp_procedure_add_return_value   (GimpProcedure    *procedure,
                                                    GParamSpec       *pspec);
-
-void            gimp_procedure_add_compat_arg     (GimpProcedure    *procedure,
-                                                   Gimp             *gimp,
-                                                   GimpPDBArgType    arg_type,
-                                                   const gchar      *name,
-                                                   const gchar      *desc);
-void            gimp_procedure_add_compat_value   (GimpProcedure    *procedure,
-                                                   Gimp             *gimp,
-                                                   GimpPDBArgType    arg_type,
-                                                   const gchar      *name,
-                                                   const gchar      *desc);
 
 GValueArray   * gimp_procedure_get_arguments      (GimpProcedure    *procedure);
 GValueArray   * gimp_procedure_get_return_values  (GimpProcedure    *procedure,

@@ -16,15 +16,18 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_ARGUMENT_H__
-#define __GIMP_ARGUMENT_H__
+#ifndef __GIMP_PDB_COMPAT_H__
+#define __GIMP_PDB_COMPAT_H__
 
 
-void             gimp_argument_init_compat          (GValue         *value,
-                                                     GimpPDBArgType  type);
+GParamSpec     * gimp_pdb_compat_param_spec          (Gimp           *gimp,
+                                                      GimpPDBArgType  arg_type,
+                                                      const gchar    *name,
+                                                      const gchar    *desc);
 
-GimpPDBArgType   gimp_argument_type_to_pdb_arg_type (GType           type);
-gchar          * gimp_pdb_arg_type_to_string        (GimpPDBArgType  type);
+GType            gimp_pdb_compat_arg_type_to_gtype   (GimpPDBArgType  type);
+GimpPDBArgType   gimp_pdb_compat_arg_type_from_gtype (GType           type);
+gchar          * gimp_pdb_compat_arg_type_to_string  (GimpPDBArgType  type);
 
 
 #endif  /*  __GIMP_ARGUMENT_H__  */

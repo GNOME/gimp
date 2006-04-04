@@ -31,8 +31,8 @@
 
 #include "core/gimp.h"
 
-#include "pdb/gimpargument.h"
 #include "pdb/gimpprocedure.h"
+#include "pdb/gimp-pdb-compat.h"
 
 #include "plug-ins.h"
 #include "plug-in-def.h"
@@ -610,6 +610,7 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
   gint        arg_type;
   gchar      *name = NULL;
   gchar      *desc = NULL;
+  GParamSpec *pspec;
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_LEFT_PAREN))
     {
@@ -648,10 +649,12 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
 
   token = G_TOKEN_LEFT_PAREN;
 
+  pspec = gimp_pdb_compat_param_spec (gimp, arg_type, name, desc);
+
   if (return_value)
-    gimp_procedure_add_compat_value (procedure, gimp, arg_type, name, desc);
+    gimp_procedure_add_return_value (procedure, pspec);
   else
-    gimp_procedure_add_compat_arg (procedure, gimp, arg_type, name, desc);
+    gimp_procedure_add_argument (procedure, pspec);
 
  error:
 
@@ -886,7 +889,7 @@ plug_in_rc_write (GSList       *plug_in_defs,
 
                   gimp_config_writer_open (writer, "proc-arg");
                   gimp_config_writer_printf (writer, "%d",
-                                             gimp_argument_type_to_pdb_arg_type (G_PARAM_SPEC_VALUE_TYPE (pspec)));
+                                             gimp_pdb_compat_arg_type_from_gtype (G_PARAM_SPEC_VALUE_TYPE (pspec)));
 
 		  gimp_config_writer_string (writer,
                                              g_param_spec_get_name (pspec));
@@ -902,7 +905,7 @@ plug_in_rc_write (GSList       *plug_in_defs,
 
 		  gimp_config_writer_open (writer, "proc-arg");
                   gimp_config_writer_printf (writer, "%d",
-                                             gimp_argument_type_to_pdb_arg_type (G_PARAM_SPEC_VALUE_TYPE (pspec)));
+                                             gimp_pdb_compat_arg_type_from_gtype (G_PARAM_SPEC_VALUE_TYPE (pspec)));
 
 		  gimp_config_writer_string (writer,
                                              g_param_spec_get_name (pspec));

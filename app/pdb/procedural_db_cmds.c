@@ -31,7 +31,7 @@
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
-#include "gimpargument.h"
+#include "gimp-pdb-compat.h"
 #include "plug-in/plug-in-data.h"
 #include "procedural-db-query.h"
 
@@ -609,7 +609,7 @@ procedural_db_proc_arg_invoker (GimpProcedure     *procedure,
         {
           GParamSpec *pspec = proc->args[arg_num];
 
-          arg_type = gimp_argument_type_to_pdb_arg_type (G_PARAM_SPEC_VALUE_TYPE (pspec));
+          arg_type = gimp_pdb_compat_arg_type_from_gtype (G_PARAM_SPEC_VALUE_TYPE (pspec));
           arg_name = g_strdup (g_param_spec_get_name (pspec));
           arg_desc = g_strdup (g_param_spec_get_blurb (pspec));
         }
@@ -688,7 +688,7 @@ procedural_db_proc_val_invoker (GimpProcedure     *procedure,
         {
           GParamSpec *pspec = proc->values[val_num];
 
-          val_type = gimp_argument_type_to_pdb_arg_type (G_PARAM_SPEC_VALUE_TYPE (pspec));
+          val_type = gimp_pdb_compat_arg_type_from_gtype (G_PARAM_SPEC_VALUE_TYPE (pspec));
           val_name = g_strdup (g_param_spec_get_name (pspec));
           val_desc = g_strdup (g_param_spec_get_blurb (pspec));
         }

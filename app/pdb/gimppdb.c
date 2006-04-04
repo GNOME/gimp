@@ -41,7 +41,6 @@
 
 #include "plug-in/plug-in-run.h"
 
-#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "internal_procs.h"
 #include "procedural_db.h"

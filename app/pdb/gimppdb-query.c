@@ -36,8 +36,8 @@
 
 #include "core/gimp.h"
 
-#include "gimpargument.h"
 #include "gimpprocedure.h"
+#include "gimp-pdb-compat.h"
 #include "procedural_db.h"
 #include "procedural-db-query.h"
 
@@ -409,7 +409,7 @@ procedural_db_print_entry (gpointer key,
 
           fprintf (file, "( ");
 
-          arg_type = gimp_argument_type_to_pdb_arg_type (pspec->value_type);
+          arg_type = gimp_pdb_compat_arg_type_from_gtype (pspec->value_type);
 
           arg_value = g_enum_get_value (arg_class, arg_type);
 
@@ -429,7 +429,7 @@ procedural_db_print_entry (gpointer key,
 
           fprintf (file, "( ");
 
-          arg_type = gimp_argument_type_to_pdb_arg_type (pspec->value_type);
+          arg_type = gimp_pdb_compat_arg_type_from_gtype (pspec->value_type);
 
           arg_value = g_enum_get_value (arg_class, arg_type);
 
