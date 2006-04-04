@@ -618,10 +618,10 @@ static void GIFEncodeClose (FILE *);
 static void GIFEncodeLoopExt (FILE *, guint);
 static void GIFEncodeCommentExt (FILE *, const gchar *comment);
 
-int rowstride;
-guchar *pixels;
-int cur_progress;
-int max_progress;
+static gint     rowstride;
+static guchar * pixels;
+static gint     cur_progress;
+static gint     max_progress;
 
 static void Putword (int, FILE *);
 static void compress (int, FILE *, ifunptr);
@@ -926,9 +926,7 @@ save_image (const gchar *filename,
   /* get a list of layers for this image_ID */
   layers = gimp_image_get_layers (image_ID, &nlayers);
 
-
   drawable_type = gimp_drawable_type (layers[0]);
-
 
   /* If the image has multiple layers (i.e. will be animated), a comment,
      or transparency, then it must be encoded as a GIF89a file, not a vanilla
@@ -981,16 +979,20 @@ save_image (const gchar *filename,
 
   /* find earliest index in palette which is closest to the background
      colour, and ATTEMPT to use that as the GIF's default background colour. */
-  for (i=255; i>=0; --i) {
-    unsigned int local_error = 0;
-    local_error += (Red[i] - bgred)     * (Red[i] - bgred);
-    local_error += (Green[i] - bggreen) * (Green[i] - bggreen);
-    local_error += (Blue[i] - bgblue)   * (Blue[i] - bgblue);
-    if (local_error <= best_error) {
-      bgindex = i;
-      best_error = local_error;
+  for (i = 255; i >= 0; --i)
+    {
+      guint local_error = 0;
+
+      local_error += (Red[i] - bgred)     * (Red[i] - bgred);
+      local_error += (Green[i] - bggreen) * (Green[i] - bggreen);
+      local_error += (Blue[i] - bgblue)   * (Blue[i] - bgblue);
+
+      if (local_error <= best_error)
+        {
+          bgindex = i;
+          best_error = local_error;
+        }
     }
-  }
 
 
   /* open the destination file for writing */
@@ -1048,13 +1050,13 @@ save_image (const gchar *filename,
     }
 
 
-
   /*** Now for each layer in the image, save an image in a compound GIF ***/
   /************************************************************************/
 
-  i = nlayers-1;
+  cur_progress = 0;
+  max_progress = nlayers * rows;
 
-  while (i >= 0)
+  for (i = nlayers - 1; i >= 0; i--, cur_progress = (nlayers - i) * rows)
     {
       drawable_type = gimp_drawable_type (layers[i]);
       drawable = gimp_drawable_get (layers[i]);
@@ -1066,20 +1068,18 @@ save_image (const gchar *filename,
       gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
 			   drawable->width, drawable->height, FALSE, FALSE);
 
-      cur_progress = 0;
-      max_progress = drawable->height;
-
-      pixels = (guchar *) g_malloc (drawable->width *
-				    drawable->height *
-				    (((drawable_type == GIMP_INDEXEDA_IMAGE)||
-				      (drawable_type == GIMP_GRAYA_IMAGE)) ? 2:1) );
+      pixels = g_new (guchar, (drawable->width *
+                               drawable->height *
+                               (((drawable_type == GIMP_INDEXEDA_IMAGE)||
+                                 (drawable_type == GIMP_GRAYA_IMAGE)) ? 2:1)));
 
       gimp_pixel_rgn_get_rect (&pixel_rgn, pixels, 0, 0,
 			       drawable->width, drawable->height);
 
 
       /* sort out whether we need to do transparency jiggery-pokery */
-      if ((drawable_type == GIMP_INDEXEDA_IMAGE)||(drawable_type == GIMP_GRAYA_IMAGE))
+      if ((drawable_type == GIMP_INDEXEDA_IMAGE) ||
+          (drawable_type == GIMP_GRAYA_IMAGE))
 	{
 	  /* Try to find an entry which isn't actually used in the
 	     image, for a transparency index. */
@@ -1130,7 +1130,9 @@ save_image (const gchar *filename,
 	      g_free (layer_name);
 	    }
 	  else
-	    Disposal = gsvals.default_dispose;
+            {
+              Disposal = gsvals.default_dispose;
+            }
 
 	  layer_name = gimp_drawable_get_name (layers[i]);
 	  Delay89 = parse_ms_tag (layer_name);
@@ -1164,18 +1166,16 @@ save_image (const gchar *filename,
 				      GetPixel);
 	}
 
-      GIFEncodeImageData (outfile, cols, rows,
-			  (rows>4) ? gsvals.interlace : 0,
-			  useBPP,
-			  GetPixel,
-			  offset_x, offset_y);
+     GIFEncodeImageData (outfile, cols, rows,
+                         (rows>4) ? gsvals.interlace : 0,
+                         useBPP,
+                         GetPixel,
+                         offset_x, offset_y);
 
-      gimp_drawable_detach (drawable);
+     gimp_drawable_detach (drawable);
 
-      g_free (pixels);
-
-      i--;
-    }
+     g_free (pixels);
+  }
 
   g_free(layers);
 
@@ -1559,8 +1559,9 @@ BumpPixel (void)
   if (curx == Width)
     {
       cur_progress++;
+
       if ((cur_progress % 16) == 0)
-        gimp_progress_update ((double) cur_progress / (double) max_progress);
+        gimp_progress_update ((gdouble) cur_progress / (gdouble) max_progress);
 
       curx = 0;
 
@@ -1925,10 +1926,6 @@ GIFEncodeImageData (FILE    *fp,
   curx = cury = 0;
 
 #endif
-
-
-  cur_progress = 0;
-
 
   /*
    * Write an Image separator
