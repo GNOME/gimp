@@ -32,18 +32,15 @@ void            procedural_db_unregister       (Gimp             *gimp,
 GimpProcedure * procedural_db_lookup           (Gimp             *gimp,
                                                 const gchar      *name);
 
-GimpArgument  * procedural_db_execute          (Gimp             *gimp,
+GValueArray   * procedural_db_execute          (Gimp             *gimp,
                                                 GimpContext      *context,
                                                 GimpProgress     *progress,
                                                 const gchar      *name,
-                                                GimpArgument     *args,
-                                                gint              n_args,
-                                                gint             *n_return_vals);
-GimpArgument  * procedural_db_run_proc         (Gimp             *gimp,
+                                                GValueArray      *args);
+GValueArray   * procedural_db_run_proc         (Gimp             *gimp,
                                                 GimpContext      *context,
                                                 GimpProgress     *progress,
                                                 const gchar      *name,
-                                                gint             *n_return_vals,
                                                 ...);
 
 

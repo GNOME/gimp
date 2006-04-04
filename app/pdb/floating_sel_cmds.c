@@ -24,7 +24,6 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
@@ -137,17 +136,17 @@ register_floating_sel_procs (Gimp *gimp)
 
 }
 
-static GimpArgument *
-floating_sel_remove_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GimpArgument *args)
+static GValueArray *
+floating_sel_remove_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
 
-  floating_sel = gimp_value_get_layer (&args[0].value, gimp);
+  floating_sel = gimp_value_get_layer (&args->values[0], gimp);
 
   if (success)
     {
@@ -176,17 +175,17 @@ static GimpProcedure floating_sel_remove_proc =
   { { floating_sel_remove_invoker } }
 };
 
-static GimpArgument *
-floating_sel_anchor_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GimpArgument *args)
+static GValueArray *
+floating_sel_anchor_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
 
-  floating_sel = gimp_value_get_layer (&args[0].value, gimp);
+  floating_sel = gimp_value_get_layer (&args->values[0], gimp);
 
   if (success)
     {
@@ -215,17 +214,17 @@ static GimpProcedure floating_sel_anchor_proc =
   { { floating_sel_anchor_invoker } }
 };
 
-static GimpArgument *
-floating_sel_to_layer_invoker (GimpProcedure      *procedure,
-                               Gimp               *gimp,
-                               GimpContext        *context,
-                               GimpProgress       *progress,
-                               const GimpArgument *args)
+static GValueArray *
+floating_sel_to_layer_invoker (GimpProcedure     *procedure,
+                               Gimp              *gimp,
+                               GimpContext       *context,
+                               GimpProgress      *progress,
+                               const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
 
-  floating_sel = gimp_value_get_layer (&args[0].value, gimp);
+  floating_sel = gimp_value_get_layer (&args->values[0], gimp);
 
   if (success)
     {
@@ -254,19 +253,19 @@ static GimpProcedure floating_sel_to_layer_proc =
   { { floating_sel_to_layer_invoker } }
 };
 
-static GimpArgument *
-floating_sel_attach_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GimpArgument *args)
+static GValueArray *
+floating_sel_attach_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
   GimpDrawable *drawable;
 
-  layer = gimp_value_get_layer (&args[0].value, gimp);
-  drawable = gimp_value_get_drawable (&args[1].value, gimp);
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+  drawable = gimp_value_get_drawable (&args->values[1], gimp);
 
   if (success)
     {
@@ -295,19 +294,19 @@ static GimpProcedure floating_sel_attach_proc =
   { { floating_sel_attach_invoker } }
 };
 
-static GimpArgument *
-floating_sel_rigor_invoker (GimpProcedure      *procedure,
-                            Gimp               *gimp,
-                            GimpContext        *context,
-                            GimpProgress       *progress,
-                            const GimpArgument *args)
+static GValueArray *
+floating_sel_rigor_invoker (GimpProcedure     *procedure,
+                            Gimp              *gimp,
+                            GimpContext       *context,
+                            GimpProgress      *progress,
+                            const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
   gboolean undo;
 
-  floating_sel = gimp_value_get_layer (&args[0].value, gimp);
-  undo = g_value_get_boolean (&args[1].value);
+  floating_sel = gimp_value_get_layer (&args->values[0], gimp);
+  undo = g_value_get_boolean (&args->values[1]);
 
   if (success)
     {
@@ -336,19 +335,19 @@ static GimpProcedure floating_sel_rigor_proc =
   { { floating_sel_rigor_invoker } }
 };
 
-static GimpArgument *
-floating_sel_relax_invoker (GimpProcedure      *procedure,
-                            Gimp               *gimp,
-                            GimpContext        *context,
-                            GimpProgress       *progress,
-                            const GimpArgument *args)
+static GValueArray *
+floating_sel_relax_invoker (GimpProcedure     *procedure,
+                            Gimp              *gimp,
+                            GimpContext       *context,
+                            GimpProgress      *progress,
+                            const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
   gboolean undo;
 
-  floating_sel = gimp_value_get_layer (&args[0].value, gimp);
-  undo = g_value_get_boolean (&args[1].value);
+  floating_sel = gimp_value_get_layer (&args->values[0], gimp);
+  undo = g_value_get_boolean (&args->values[1]);
 
   if (success)
     {

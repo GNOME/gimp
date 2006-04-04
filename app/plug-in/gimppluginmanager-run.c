@@ -38,7 +38,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimpprogress.h"
 
-#include "pdb/gimpargument.h"
 #include "pdb/gimpprocedure.h"
 
 #include "plug-in.h"
@@ -52,43 +51,38 @@
 
 /*  local function prototypes  */
 
-static GimpArgument * plug_in_temp_run        (GimpProcedure   *procedure,
-                                               GimpContext     *context,
-                                               GimpProgress    *progress,
-                                               GimpArgument    *args,
-                                               gint             n_args);
-static GimpArgument * plug_in_get_return_vals (PlugIn          *plug_in,
-                                               PlugInProcFrame *proc_frame,
-                                               gint            *n_return_vals);
+static GValueArray * plug_in_temp_run        (GimpProcedure   *procedure,
+                                              GimpContext     *context,
+                                              GimpProgress    *progress,
+                                              GValueArray     *args);
+static GValueArray * plug_in_get_return_vals (PlugIn          *plug_in,
+                                              PlugInProcFrame *proc_frame);
 
 
 /*  public functions  */
 
-GimpArgument *
+GValueArray *
 plug_in_run (Gimp          *gimp,
              GimpContext   *context,
              GimpProgress  *progress,
              GimpProcedure *procedure,
-	     GimpArgument  *args,
-	     gint           n_args,
+	     GValueArray   *args,
 	     gboolean       synchronous,
 	     gboolean       destroy_return_vals,
 	     gint           display_ID)
 {
-  GimpArgument *return_vals   = NULL;
-  gint          n_return_vals = 0;
-  PlugIn       *plug_in;
+  GValueArray *return_vals = NULL;
+  PlugIn      *plug_in;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
-  g_return_val_if_fail (n_args == 0 || args != NULL, NULL);
+  g_return_val_if_fail (args != NULL, NULL);
 
   if (procedure->proc_type == GIMP_TEMPORARY)
     {
-      return_vals = plug_in_temp_run (procedure, context, progress,
-                                      args, n_args);
+      return_vals = plug_in_temp_run (procedure, context, progress, args);
       goto done;
     }
 
@@ -133,8 +127,8 @@ plug_in_run (Gimp          *gimp,
       config.monitor_number   = monitor;
 
       proc_run.name    = procedure->original_name;
-      proc_run.nparams = n_args;
-      proc_run.params  = plug_in_args_to_params (args, n_args, FALSE);
+      proc_run.nparams = args->n_values;
+      proc_run.params  = plug_in_args_to_params (args, FALSE);
 
       if (! gp_config_write (plug_in->my_write, &config, plug_in)     ||
           ! gp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
@@ -183,8 +177,7 @@ plug_in_run (Gimp          *gimp,
           plug_in->main_proc_frame.main_loop = NULL;
 
           return_vals = plug_in_get_return_vals (plug_in,
-                                                 &plug_in->main_proc_frame,
-                                                 &n_return_vals);
+                                                 &plug_in->main_proc_frame);
         }
 
       plug_in_unref (plug_in);
@@ -193,7 +186,7 @@ plug_in_run (Gimp          *gimp,
  done:
   if (return_vals && destroy_return_vals)
     {
-      gimp_arguments_destroy (return_vals, procedure->num_values);
+      g_value_array_free (return_vals);
       return_vals = NULL;
     }
 
@@ -211,7 +204,7 @@ plug_in_repeat (Gimp         *gimp,
                 gboolean      with_interface)
 {
   PlugInProcDef *proc_def;
-  GimpArgument  *args;
+  GValueArray   *args;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (index >= 0);
@@ -224,34 +217,31 @@ plug_in_repeat (Gimp         *gimp,
     {
       args = gimp_procedure_get_arguments (proc_def->procedure);
 
-      g_value_set_int (&args[0].value,
+      g_value_set_int (&args->values[0],
                        with_interface ?
                        GIMP_RUN_INTERACTIVE : GIMP_RUN_WITH_LAST_VALS);
-      g_value_set_int (&args[1].value, image_ID);
-      g_value_set_int (&args[2].value, drawable_ID);
+      g_value_set_int (&args->values[1], image_ID);
+      g_value_set_int (&args->values[2], drawable_ID);
 
       /* run the plug-in procedure */
       plug_in_run (gimp, context, progress, proc_def->procedure,
-                   args, 3 /* not proc_def->procedure->num_args */,
-                   FALSE, TRUE, display_ID);
+                   args, FALSE, TRUE, display_ID);
 
-      gimp_arguments_destroy (args, proc_def->procedure->num_args);
+      g_value_array_free (args);
     }
 }
 
 
 /*  private functions  */
 
-static GimpArgument *
+static GValueArray *
 plug_in_temp_run (GimpProcedure *procedure,
                   GimpContext   *context,
                   GimpProgress  *progress,
-		  GimpArgument  *args,
-		  gint           n_args)
+		  GValueArray   *args)
 {
-  GimpArgument *return_vals   = NULL;
-  gint          n_return_vals = 0;
-  PlugIn       *plug_in;
+  GValueArray *return_vals = NULL;
+  PlugIn      *plug_in;
 
   plug_in = (PlugIn *) procedure->exec_method.temporary.plug_in;
 
@@ -264,8 +254,8 @@ plug_in_temp_run (GimpProcedure *procedure,
                                             procedure);
 
       proc_run.name    = procedure->original_name;
-      proc_run.nparams = n_args;
-      proc_run.params  = plug_in_args_to_params (args, n_args, FALSE);
+      proc_run.nparams = args->n_values;
+      proc_run.params  = plug_in_args_to_params (args, FALSE);
 
       if (! gp_temp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
 	  ! gimp_wire_flush (plug_in->my_write, plug_in))
@@ -284,8 +274,7 @@ plug_in_temp_run (GimpProcedure *procedure,
 
       plug_in_main_loop (plug_in);
 
-      return_vals = plug_in_get_return_vals (plug_in, proc_frame,
-                                             &n_return_vals);
+      return_vals = plug_in_get_return_vals (plug_in, proc_frame);
 
       /*  main_loop is quit and proc_frame is popped in
        *  plug_in_handle_temp_proc_return()
@@ -299,22 +288,18 @@ plug_in_temp_run (GimpProcedure *procedure,
   return return_vals;
 }
 
-static GimpArgument *
+static GValueArray *
 plug_in_get_return_vals (PlugIn          *plug_in,
-                         PlugInProcFrame *proc_frame,
-                         gint            *n_return_vals)
+                         PlugInProcFrame *proc_frame)
 {
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
 
   g_return_val_if_fail (plug_in != NULL, NULL);
   g_return_val_if_fail (proc_frame != NULL, NULL);
-  g_return_val_if_fail (n_return_vals != NULL, NULL);
-
-  /* Return the status code plus the current return values. */
-  *n_return_vals = proc_frame->procedure->num_values + 1;
 
   if (proc_frame->return_vals &&
-      proc_frame->n_return_vals == *n_return_vals)
+      proc_frame->return_vals->n_values ==
+      proc_frame->procedure->num_values + 1)
     {
       return_vals = proc_frame->return_vals;
     }
@@ -325,9 +310,9 @@ plug_in_get_return_vals (PlugIn          *plug_in,
                                                       FALSE);
 
       /* Copy all of the arguments we can. */
-      memcpy (return_vals, proc_frame->return_vals,
-	      sizeof (GimpArgument) * MIN (proc_frame->n_return_vals,
-                                           *n_return_vals));
+      memcpy (return_vals->values, proc_frame->return_vals->values,
+	      sizeof (GValue) * MIN (proc_frame->return_vals->n_values,
+                                     proc_frame->procedure->num_values + 1));
 
       /* Free the old argument pointer.  This will cause a memory leak
        * only if there were more values returned than we need (which
@@ -343,8 +328,7 @@ plug_in_get_return_vals (PlugIn          *plug_in,
     }
 
   /* We have consumed any saved values, so clear them. */
-  proc_frame->return_vals   = NULL;
-  proc_frame->n_return_vals = 0;
+  proc_frame->return_vals = NULL;
 
   return return_vals;
 }

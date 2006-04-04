@@ -24,7 +24,6 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
@@ -62,19 +61,19 @@ register_help_procs (Gimp *gimp)
 
 }
 
-static GimpArgument *
-help_invoker (GimpProcedure      *procedure,
-              Gimp               *gimp,
-              GimpContext        *context,
-              GimpProgress       *progress,
-              const GimpArgument *args)
+static GValueArray *
+help_invoker (GimpProcedure     *procedure,
+              Gimp              *gimp,
+              GimpContext       *context,
+              GimpProgress      *progress,
+              const GValueArray *args)
 {
   gboolean success = TRUE;
   const gchar *help_domain;
   const gchar *help_id;
 
-  help_domain = g_value_get_string (&args[0].value);
-  help_id = g_value_get_string (&args[1].value);
+  help_domain = g_value_get_string (&args->values[0]);
+  help_id = g_value_get_string (&args->values[1]);
 
   if (success)
     {

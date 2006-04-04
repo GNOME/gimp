@@ -54,7 +54,6 @@
 #include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
 
-#include "pdb/gimpargument.h"
 #include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
@@ -80,8 +79,7 @@ file_save (GimpImage      *image,
            gboolean        save_a_copy,
            GError        **error)
 {
-  GimpArgument      *return_vals;
-  gint               n_return_vals;
+  GValueArray       *return_vals;
   GimpPDBStatusType  status;
   gchar             *filename;
 
@@ -132,7 +130,6 @@ file_save (GimpImage      *image,
   return_vals =
     procedural_db_run_proc (image->gimp, context, progress,
                             file_proc->procedure->name,
-                            &n_return_vals,
                             GIMP_TYPE_INT32,       run_mode,
                             GIMP_TYPE_IMAGE_ID,    gimp_image_get_ID (image),
                             GIMP_TYPE_DRAWABLE_ID, gimp_item_get_ID (GIMP_ITEM (gimp_image_active_drawable (image))),
@@ -140,9 +137,9 @@ file_save (GimpImage      *image,
                             G_TYPE_STRING,         uri,
                             G_TYPE_NONE);
 
-  status = g_value_get_enum (&return_vals[0].value);
+  status = g_value_get_enum (&return_vals->values[0]);
 
-  gimp_arguments_destroy (return_vals, n_return_vals);
+  g_value_array_free (return_vals);
 
   if (status == GIMP_PDB_SUCCESS)
     {

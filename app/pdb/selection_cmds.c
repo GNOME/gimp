@@ -24,7 +24,6 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
@@ -388,15 +387,15 @@ register_selection_procs (Gimp *gimp)
 
 }
 
-static GimpArgument *
-selection_bounds_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GimpArgument *args)
+static GValueArray *
+selection_bounds_invoker (GimpProcedure     *procedure,
+                          Gimp              *gimp,
+                          GimpContext       *context,
+                          GimpProgress      *progress,
+                          const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   gboolean non_empty = FALSE;
   gint32 x1 = 0;
@@ -404,7 +403,7 @@ selection_bounds_invoker (GimpProcedure      *procedure,
   gint32 x2 = 0;
   gint32 y2 = 0;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -416,11 +415,11 @@ selection_bounds_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      g_value_set_boolean (&return_vals[1].value, non_empty);
-      g_value_set_int (&return_vals[2].value, x1);
-      g_value_set_int (&return_vals[3].value, y1);
-      g_value_set_int (&return_vals[4].value, x2);
-      g_value_set_int (&return_vals[5].value, y2);
+      g_value_set_boolean (&return_vals->values[1], non_empty);
+      g_value_set_int (&return_vals->values[2], x1);
+      g_value_set_int (&return_vals->values[3], y1);
+      g_value_set_int (&return_vals->values[4], x2);
+      g_value_set_int (&return_vals->values[5], y2);
     }
 
   return return_vals;
@@ -442,23 +441,23 @@ static GimpProcedure selection_bounds_proc =
   { { selection_bounds_invoker } }
 };
 
-static GimpArgument *
-selection_value_invoker (GimpProcedure      *procedure,
-                         Gimp               *gimp,
-                         GimpContext        *context,
-                         GimpProgress       *progress,
-                         const GimpArgument *args)
+static GValueArray *
+selection_value_invoker (GimpProcedure     *procedure,
+                         Gimp              *gimp,
+                         GimpContext       *context,
+                         GimpProgress      *progress,
+                         const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   gint32 x;
   gint32 y;
   gint32 value = 0;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  x = g_value_get_int (&args[1].value);
-  y = g_value_get_int (&args[2].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  x = g_value_get_int (&args->values[1]);
+  y = g_value_get_int (&args->values[2]);
 
   if (success)
     {
@@ -468,7 +467,7 @@ selection_value_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_set_int (&return_vals[1].value, value);
+    g_value_set_int (&return_vals->values[1], value);
 
   return return_vals;
 }
@@ -489,19 +488,19 @@ static GimpProcedure selection_value_proc =
   { { selection_value_invoker } }
 };
 
-static GimpArgument *
-selection_is_empty_invoker (GimpProcedure      *procedure,
-                            Gimp               *gimp,
-                            GimpContext        *context,
-                            GimpProgress       *progress,
-                            const GimpArgument *args)
+static GValueArray *
+selection_is_empty_invoker (GimpProcedure     *procedure,
+                            Gimp              *gimp,
+                            GimpContext       *context,
+                            GimpProgress      *progress,
+                            const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   gboolean is_empty = FALSE;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -511,7 +510,7 @@ selection_is_empty_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_set_boolean (&return_vals[1].value, is_empty);
+    g_value_set_boolean (&return_vals->values[1], is_empty);
 
   return return_vals;
 }
@@ -532,21 +531,21 @@ static GimpProcedure selection_is_empty_proc =
   { { selection_is_empty_invoker } }
 };
 
-static GimpArgument *
-selection_translate_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GimpArgument *args)
+static GValueArray *
+selection_translate_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
   gint32 offx;
   gint32 offy;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  offx = g_value_get_int (&args[1].value);
-  offy = g_value_get_int (&args[2].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  offx = g_value_get_int (&args->values[1]);
+  offy = g_value_get_int (&args->values[2]);
 
   if (success)
     {
@@ -573,23 +572,23 @@ static GimpProcedure selection_translate_proc =
   { { selection_translate_invoker } }
 };
 
-static GimpArgument *
-selection_float_invoker (GimpProcedure      *procedure,
-                         Gimp               *gimp,
-                         GimpContext        *context,
-                         GimpProgress       *progress,
-                         const GimpArgument *args)
+static GValueArray *
+selection_float_invoker (GimpProcedure     *procedure,
+                         Gimp              *gimp,
+                         GimpContext       *context,
+                         GimpProgress      *progress,
+                         const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
   gint32 offx;
   gint32 offy;
   GimpLayer *layer = NULL;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  offx = g_value_get_int (&args[1].value);
-  offy = g_value_get_int (&args[2].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  offx = g_value_get_int (&args->values[1]);
+  offy = g_value_get_int (&args->values[2]);
 
   if (success)
     {
@@ -609,7 +608,7 @@ selection_float_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_layer (&return_vals[1].value, layer);
+    gimp_value_set_layer (&return_vals->values[1], layer);
 
   return return_vals;
 }
@@ -630,17 +629,17 @@ static GimpProcedure selection_float_proc =
   { { selection_float_invoker } }
 };
 
-static GimpArgument *
-selection_invert_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GimpArgument *args)
+static GValueArray *
+selection_invert_invoker (GimpProcedure     *procedure,
+                          Gimp              *gimp,
+                          GimpContext       *context,
+                          GimpProgress      *progress,
+                          const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -666,17 +665,17 @@ static GimpProcedure selection_invert_proc =
   { { selection_invert_invoker } }
 };
 
-static GimpArgument *
-selection_sharpen_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GimpArgument *args)
+static GValueArray *
+selection_sharpen_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -702,17 +701,17 @@ static GimpProcedure selection_sharpen_proc =
   { { selection_sharpen_invoker } }
 };
 
-static GimpArgument *
-selection_all_invoker (GimpProcedure      *procedure,
-                       Gimp               *gimp,
-                       GimpContext        *context,
-                       GimpProgress       *progress,
-                       const GimpArgument *args)
+static GValueArray *
+selection_all_invoker (GimpProcedure     *procedure,
+                       Gimp              *gimp,
+                       GimpContext       *context,
+                       GimpProgress      *progress,
+                       const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -738,17 +737,17 @@ static GimpProcedure selection_all_proc =
   { { selection_all_invoker } }
 };
 
-static GimpArgument *
-selection_none_invoker (GimpProcedure      *procedure,
-                        Gimp               *gimp,
-                        GimpContext        *context,
-                        GimpProgress       *progress,
-                        const GimpArgument *args)
+static GValueArray *
+selection_none_invoker (GimpProcedure     *procedure,
+                        Gimp              *gimp,
+                        GimpContext       *context,
+                        GimpProgress      *progress,
+                        const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -774,19 +773,19 @@ static GimpProcedure selection_none_proc =
   { { selection_none_invoker } }
 };
 
-static GimpArgument *
-selection_feather_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GimpArgument *args)
+static GValueArray *
+selection_feather_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
   gdouble radius;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  radius = g_value_get_double (&args[1].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  radius = g_value_get_double (&args->values[1]);
 
   if (success)
     {
@@ -813,19 +812,19 @@ static GimpProcedure selection_feather_proc =
   { { selection_feather_invoker } }
 };
 
-static GimpArgument *
-selection_border_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GimpArgument *args)
+static GValueArray *
+selection_border_invoker (GimpProcedure     *procedure,
+                          Gimp              *gimp,
+                          GimpContext       *context,
+                          GimpProgress      *progress,
+                          const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
   gint32 radius;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  radius = g_value_get_int (&args[1].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  radius = g_value_get_int (&args->values[1]);
 
   if (success)
     {
@@ -852,19 +851,19 @@ static GimpProcedure selection_border_proc =
   { { selection_border_invoker } }
 };
 
-static GimpArgument *
-selection_grow_invoker (GimpProcedure      *procedure,
-                        Gimp               *gimp,
-                        GimpContext        *context,
-                        GimpProgress       *progress,
-                        const GimpArgument *args)
+static GValueArray *
+selection_grow_invoker (GimpProcedure     *procedure,
+                        Gimp              *gimp,
+                        GimpContext       *context,
+                        GimpProgress      *progress,
+                        const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
   gint32 steps;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  steps = g_value_get_int (&args[1].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  steps = g_value_get_int (&args->values[1]);
 
   if (success)
     {
@@ -891,19 +890,19 @@ static GimpProcedure selection_grow_proc =
   { { selection_grow_invoker } }
 };
 
-static GimpArgument *
-selection_shrink_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GimpArgument *args)
+static GValueArray *
+selection_shrink_invoker (GimpProcedure     *procedure,
+                          Gimp              *gimp,
+                          GimpContext       *context,
+                          GimpProgress      *progress,
+                          const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
   gint32 steps;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  steps = g_value_get_int (&args[1].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  steps = g_value_get_int (&args->values[1]);
 
   if (success)
     {
@@ -930,17 +929,17 @@ static GimpProcedure selection_shrink_proc =
   { { selection_shrink_invoker } }
 };
 
-static GimpArgument *
-selection_layer_alpha_invoker (GimpProcedure      *procedure,
-                               Gimp               *gimp,
-                               GimpContext        *context,
-                               GimpProgress       *progress,
-                               const GimpArgument *args)
+static GValueArray *
+selection_layer_alpha_invoker (GimpProcedure     *procedure,
+                               Gimp              *gimp,
+                               GimpContext       *context,
+                               GimpProgress      *progress,
+                               const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
 
-  layer = gimp_value_get_layer (&args[0].value, gimp);
+  layer = gimp_value_get_layer (&args->values[0], gimp);
 
   if (success)
     {
@@ -970,17 +969,17 @@ static GimpProcedure selection_layer_alpha_proc =
   { { selection_layer_alpha_invoker } }
 };
 
-static GimpArgument *
-selection_load_invoker (GimpProcedure      *procedure,
-                        Gimp               *gimp,
-                        GimpContext        *context,
-                        GimpProgress       *progress,
-                        const GimpArgument *args)
+static GValueArray *
+selection_load_invoker (GimpProcedure     *procedure,
+                        Gimp              *gimp,
+                        GimpContext       *context,
+                        GimpProgress      *progress,
+                        const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel;
 
-  channel = gimp_value_get_channel (&args[0].value, gimp);
+  channel = gimp_value_get_channel (&args->values[0], gimp);
 
   if (success)
     {
@@ -1017,19 +1016,19 @@ static GimpProcedure selection_load_proc =
   { { selection_load_invoker } }
 };
 
-static GimpArgument *
-selection_save_invoker (GimpProcedure      *procedure,
-                        Gimp               *gimp,
-                        GimpContext        *context,
-                        GimpProgress       *progress,
-                        const GimpArgument *args)
+static GValueArray *
+selection_save_invoker (GimpProcedure     *procedure,
+                        Gimp              *gimp,
+                        GimpContext       *context,
+                        GimpProgress      *progress,
+                        const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   GimpChannel *channel = NULL;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -1042,7 +1041,7 @@ selection_save_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_channel (&return_vals[1].value, channel);
+    gimp_value_set_channel (&return_vals->values[1], channel);
 
   return return_vals;
 }
@@ -1063,19 +1062,19 @@ static GimpProcedure selection_save_proc =
   { { selection_save_invoker } }
 };
 
-static GimpArgument *
-selection_combine_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GimpArgument *args)
+static GValueArray *
+selection_combine_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel;
   gint32 operation;
 
-  channel = gimp_value_get_channel (&args[0].value, gimp);
-  operation = g_value_get_enum (&args[1].value);
+  channel = gimp_value_get_channel (&args->values[0], gimp);
+  operation = g_value_get_enum (&args->values[1]);
 
   if (success)
     {

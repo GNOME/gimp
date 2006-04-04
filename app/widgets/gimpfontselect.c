@@ -40,14 +40,13 @@
 #include "gimpfontview.h"
 
 
-static GObject      * gimp_font_select_constructor  (GType          type,
-                                                     guint          n_params,
-                                                     GObjectConstructParam *params);
+static GObject     * gimp_font_select_constructor  (GType          type,
+                                                    guint          n_params,
+                                                    GObjectConstructParam *params);
 
-static GimpArgument * gimp_font_select_run_callback (GimpPdbDialog *dialog,
-                                                     GimpObject    *object,
-                                                     gboolean       closing,
-                                                     gint          *n_return_vals);
+static GValueArray * gimp_font_select_run_callback (GimpPdbDialog *dialog,
+                                                    GimpObject    *object,
+                                                    gboolean       closing);
 
 
 G_DEFINE_TYPE (GimpFontSelect, gimp_font_select, GIMP_TYPE_PDB_DIALOG);
@@ -100,17 +99,15 @@ gimp_font_select_constructor (GType                  type,
   return object;
 }
 
-static GimpArgument *
+static GValueArray *
 gimp_font_select_run_callback (GimpPdbDialog *dialog,
                                GimpObject    *object,
-                               gboolean       closing,
-                               gint          *n_return_vals)
+                               gboolean       closing)
 {
   return procedural_db_run_proc (dialog->caller_context->gimp,
                                  dialog->caller_context,
                                  NULL,
                                  dialog->callback_name,
-                                 n_return_vals,
                                  G_TYPE_STRING,   object->name,
                                  GIMP_TYPE_INT32, closing,
                                  G_TYPE_NONE);

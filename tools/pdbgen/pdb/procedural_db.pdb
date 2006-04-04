@@ -246,7 +246,7 @@ HELP
 
   if (proc && (arg_num >= 0 && arg_num < proc->num_args))
     {
-      GParamSpec *pspec = proc->args[arg_num].pspec;
+      GParamSpec *pspec = proc->args[arg_num];
 
       arg_type = gimp_argument_type_to_pdb_arg_type (G_PARAM_SPEC_VALUE_TYPE (pspec));
       arg_name = g_strdup (g_param_spec_get_name (pspec));
@@ -313,7 +313,7 @@ HELP
 
   if (proc && (val_num >= 0 && val_num < proc->num_values))
     {
-      GParamSpec *pspec = proc->values[val_num].pspec;
+      GParamSpec *pspec = proc->values[val_num];
 
       val_type = gimp_argument_type_to_pdb_arg_type (G_PARAM_SPEC_VALUE_TYPE (pspec));
       val_name = g_strdup (g_param_spec_get_name (pspec));
@@ -450,7 +450,7 @@ CODE
 
 
 @headers = qw("libgimpbase/gimpbase.h" "core/gimp.h" "plug-in/plug-in-data.h"
-              "procedural-db-query.h");
+              "gimpargument.h" "procedural-db-query.h");
 
 @procs = qw(procedural_db_temp_name procedural_db_dump
             procedural_db_query procedural_db_proc_info

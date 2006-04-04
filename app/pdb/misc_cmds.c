@@ -38,7 +38,6 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "pdb-types.h"
-#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
@@ -93,20 +92,20 @@ register_misc_procs (Gimp *gimp)
 
 }
 
-static GimpArgument *
-version_invoker (GimpProcedure      *procedure,
-                 Gimp               *gimp,
-                 GimpContext        *context,
-                 GimpProgress       *progress,
-                 const GimpArgument *args)
+static GValueArray *
+version_invoker (GimpProcedure     *procedure,
+                 Gimp              *gimp,
+                 GimpContext       *context,
+                 GimpProgress      *progress,
+                 const GValueArray *args)
 {
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   gchar *version = NULL;
 
   version = g_strdup (GIMP_VERSION);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE);
-  g_value_take_string (&return_vals[1].value, version);
+  g_value_take_string (&return_vals->values[1], version);
 
   return return_vals;
 }
@@ -127,20 +126,20 @@ static GimpProcedure version_proc =
   { { version_invoker } }
 };
 
-static GimpArgument *
-getpid_invoker (GimpProcedure      *procedure,
-                Gimp               *gimp,
-                GimpContext        *context,
-                GimpProgress       *progress,
-                const GimpArgument *args)
+static GValueArray *
+getpid_invoker (GimpProcedure     *procedure,
+                Gimp              *gimp,
+                GimpContext       *context,
+                GimpProgress      *progress,
+                const GValueArray *args)
 {
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   gint32 pid = 0;
 
   pid = getpid ();
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE);
-  g_value_set_int (&return_vals[1].value, pid);
+  g_value_set_int (&return_vals->values[1], pid);
 
   return return_vals;
 }
@@ -161,17 +160,17 @@ static GimpProcedure getpid_proc =
   { { getpid_invoker } }
 };
 
-static GimpArgument *
-quit_invoker (GimpProcedure      *procedure,
-              Gimp               *gimp,
-              GimpContext        *context,
-              GimpProgress       *progress,
-              const GimpArgument *args)
+static GValueArray *
+quit_invoker (GimpProcedure     *procedure,
+              Gimp              *gimp,
+              GimpContext       *context,
+              GimpProgress      *progress,
+              const GValueArray *args)
 {
   gboolean success = TRUE;
   gboolean force;
 
-  force = g_value_get_boolean (&args[0].value);
+  force = g_value_get_boolean (&args->values[0]);
 
   if (success)
     {

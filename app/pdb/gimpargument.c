@@ -33,65 +33,55 @@
 /*  public functions  */
 
 void
-gimp_argument_init (GimpArgument     *arg,
-                    GimpArgumentSpec *proc_arg)
+gimp_argument_init_compat (GValue         *value,
+                           GimpPDBArgType  type)
 {
-  g_return_if_fail (arg != NULL);
-  g_return_if_fail (proc_arg != NULL);
+  g_return_if_fail (value != NULL);
 
-  g_value_init (&arg->value, G_PARAM_SPEC_VALUE_TYPE (proc_arg->pspec));
-}
-
-void
-gimp_argument_init_compat (GimpArgument   *arg,
-                           GimpPDBArgType  arg_type)
-{
-  g_return_if_fail (arg != NULL);
-
-  switch (arg_type)
+  switch (type)
     {
     case GIMP_PDB_INT32:
-      g_value_init (&arg->value, GIMP_TYPE_INT32);
+      g_value_init (value, GIMP_TYPE_INT32);
       break;
 
     case GIMP_PDB_INT16:
-      g_value_init (&arg->value, GIMP_TYPE_INT16);
+      g_value_init (value, GIMP_TYPE_INT16);
       break;
 
     case GIMP_PDB_INT8:
-      g_value_init (&arg->value, GIMP_TYPE_INT8);
+      g_value_init (value, GIMP_TYPE_INT8);
       break;
 
     case GIMP_PDB_FLOAT:
-      g_value_init (&arg->value, G_TYPE_DOUBLE);
+      g_value_init (value, G_TYPE_DOUBLE);
       break;
 
     case GIMP_PDB_STRING:
-      g_value_init (&arg->value, G_TYPE_STRING);
+      g_value_init (value, G_TYPE_STRING);
       break;
 
     case GIMP_PDB_INT32ARRAY:
-      g_value_init (&arg->value, GIMP_TYPE_INT32_ARRAY);
+      g_value_init (value, GIMP_TYPE_INT32_ARRAY);
       break;
 
     case GIMP_PDB_INT16ARRAY:
-      g_value_init (&arg->value, GIMP_TYPE_INT16_ARRAY);
+      g_value_init (value, GIMP_TYPE_INT16_ARRAY);
       break;
 
     case GIMP_PDB_INT8ARRAY:
-      g_value_init (&arg->value, GIMP_TYPE_INT8_ARRAY);
+      g_value_init (value, GIMP_TYPE_INT8_ARRAY);
       break;
 
     case GIMP_PDB_FLOATARRAY:
-      g_value_init (&arg->value, GIMP_TYPE_FLOAT_ARRAY);
+      g_value_init (value, GIMP_TYPE_FLOAT_ARRAY);
       break;
 
     case GIMP_PDB_STRINGARRAY:
-      g_value_init (&arg->value, GIMP_TYPE_STRING_ARRAY);
+      g_value_init (value, GIMP_TYPE_STRING_ARRAY);
       break;
 
     case GIMP_PDB_COLOR:
-      g_value_init (&arg->value, GIMP_TYPE_RGB);
+      g_value_init (value, GIMP_TYPE_RGB);
       break;
 
     case GIMP_PDB_REGION:
@@ -99,59 +89,44 @@ gimp_argument_init_compat (GimpArgument   *arg,
       break;
 
     case GIMP_PDB_DISPLAY:
-      g_value_init (&arg->value, GIMP_TYPE_DISPLAY_ID);
+      g_value_init (value, GIMP_TYPE_DISPLAY_ID);
       break;
 
     case GIMP_PDB_IMAGE:
-      g_value_init (&arg->value, GIMP_TYPE_IMAGE_ID);
+      g_value_init (value, GIMP_TYPE_IMAGE_ID);
       break;
 
     case GIMP_PDB_LAYER:
-      g_value_init (&arg->value, GIMP_TYPE_LAYER_ID);
+      g_value_init (value, GIMP_TYPE_LAYER_ID);
       break;
 
     case GIMP_PDB_CHANNEL:
-      g_value_init (&arg->value, GIMP_TYPE_CHANNEL_ID);
+      g_value_init (value, GIMP_TYPE_CHANNEL_ID);
       break;
 
     case GIMP_PDB_DRAWABLE:
-      g_value_init (&arg->value, GIMP_TYPE_DRAWABLE_ID);
+      g_value_init (value, GIMP_TYPE_DRAWABLE_ID);
       break;
 
     case GIMP_PDB_SELECTION:
-      g_value_init (&arg->value, GIMP_TYPE_SELECTION_ID);
+      g_value_init (value, GIMP_TYPE_SELECTION_ID);
       break;
 
     case GIMP_PDB_VECTORS:
-      g_value_init (&arg->value, GIMP_TYPE_VECTORS_ID);
+      g_value_init (value, GIMP_TYPE_VECTORS_ID);
       break;
 
     case GIMP_PDB_PARASITE:
-      g_value_init (&arg->value, GIMP_TYPE_PARASITE);
+      g_value_init (value, GIMP_TYPE_PARASITE);
       break;
 
     case GIMP_PDB_STATUS:
-      g_value_init (&arg->value, GIMP_TYPE_PDB_STATUS_TYPE);
+      g_value_init (value, GIMP_TYPE_PDB_STATUS_TYPE);
       break;
 
     case GIMP_PDB_END:
       break;
     }
-}
-
-void
-gimp_arguments_destroy (GimpArgument *args,
-                        gint          n_args)
-{
-  gint i;
-
-  if (! args && n_args)
-    return;
-
-  for (i = 0; i < n_args; i++)
-    g_value_unset (&args[i].value);
-
-  g_free (args);
 }
 
 GimpPDBArgType

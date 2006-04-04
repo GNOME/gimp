@@ -29,7 +29,6 @@
 
 #include "core/gimpcontext.h"
 
-#include "pdb/gimpargument.h"
 #include "pdb/procedural_db.h"
 
 #include "about.h"
@@ -215,16 +214,14 @@ about_dialog_load_url (GtkAboutDialog *dialog,
                        const gchar    *url,
                        gpointer        data)
 {
-  GimpContext  *context = GIMP_CONTEXT (data);
-  GimpArgument *return_vals;
-  gint          n_return_vals;
+  GimpContext *context = GIMP_CONTEXT (data);
+  GValueArray *return_vals;
 
   return_vals = procedural_db_run_proc (context->gimp, context, NULL,
                                         PDB_URL_LOAD,
-                                        &n_return_vals,
                                         G_TYPE_STRING, url,
                                         G_TYPE_NONE);
-  gimp_arguments_destroy (return_vals, n_return_vals);
+  g_value_array_free (return_vals);
 }
 
 

@@ -25,7 +25,6 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
@@ -85,17 +84,17 @@ register_message_procs (Gimp *gimp)
 
 }
 
-static GimpArgument *
-message_invoker (GimpProcedure      *procedure,
-                 Gimp               *gimp,
-                 GimpContext        *context,
-                 GimpProgress       *progress,
-                 const GimpArgument *args)
+static GValueArray *
+message_invoker (GimpProcedure     *procedure,
+                 Gimp              *gimp,
+                 GimpContext       *context,
+                 GimpProgress      *progress,
+                 const GValueArray *args)
 {
   gboolean success = TRUE;
   const gchar *message;
 
-  message = g_value_get_string (&args[0].value);
+  message = g_value_get_string (&args->values[0]);
 
   if (success)
     {
@@ -124,20 +123,20 @@ static GimpProcedure message_proc =
   { { message_invoker } }
 };
 
-static GimpArgument *
-message_get_handler_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GimpArgument *args)
+static GValueArray *
+message_get_handler_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
 {
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   gint32 handler = 0;
 
   handler = gimp->message_handler;
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE);
-  g_value_set_enum (&return_vals[1].value, handler);
+  g_value_set_enum (&return_vals->values[1], handler);
 
   return return_vals;
 }
@@ -158,17 +157,17 @@ static GimpProcedure message_get_handler_proc =
   { { message_get_handler_invoker } }
 };
 
-static GimpArgument *
-message_set_handler_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GimpArgument *args)
+static GValueArray *
+message_set_handler_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
 {
   gboolean success = TRUE;
   gint32 handler;
 
-  handler = g_value_get_enum (&args[0].value);
+  handler = g_value_get_enum (&args->values[0]);
 
   if (success)
     {

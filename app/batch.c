@@ -31,7 +31,6 @@
 
 #include "batch.h"
 
-#include "pdb/gimpargument.h"
 #include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
@@ -131,24 +130,22 @@ batch_run_cmd (Gimp          *gimp,
                GimpRunMode    run_mode,
 	       const gchar   *cmd)
 {
-  GimpArgument *args;
-  GimpArgument *return_vals;
-  gint          n_return_vals;
+  GValueArray *args;
+  GValueArray *return_vals;
 
   args = gimp_procedure_get_arguments (procedure);
 
-  g_value_set_int (&args[0].value, run_mode);
+  g_value_set_int (&args->values[0], run_mode);
 
   if (procedure->num_args > 1)
-    g_value_set_static_string (&args[1].value, cmd);
+    g_value_set_static_string (&args->values[1], cmd);
 
   return_vals = procedural_db_execute (gimp,
                                        gimp_get_user_context (gimp), NULL,
                                        proc_name,
-                                       args, procedure->num_args,
-                                       &n_return_vals);
+                                       args);
 
-  switch (g_value_get_enum (&return_vals[0].value))
+  switch (g_value_get_enum (&return_vals->values[0]))
     {
     case GIMP_PDB_EXECUTION_ERROR:
       g_printerr ("batch command: experienced an execution error.\n");
@@ -163,8 +160,8 @@ batch_run_cmd (Gimp          *gimp,
       break;
     }
 
-  gimp_arguments_destroy (return_vals, n_return_vals);
-  gimp_arguments_destroy (args, procedure->num_args);
+  g_value_array_free (return_vals);
+  g_value_array_free (args);
 
   return;
 }

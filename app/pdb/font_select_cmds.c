@@ -24,7 +24,6 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
@@ -102,21 +101,21 @@ register_font_select_procs (Gimp *gimp)
 
 }
 
-static GimpArgument *
-fonts_popup_invoker (GimpProcedure      *procedure,
-                     Gimp               *gimp,
-                     GimpContext        *context,
-                     GimpProgress       *progress,
-                     const GimpArgument *args)
+static GValueArray *
+fonts_popup_invoker (GimpProcedure     *procedure,
+                     Gimp              *gimp,
+                     GimpContext       *context,
+                     GimpProgress      *progress,
+                     const GValueArray *args)
 {
   gboolean success = TRUE;
   const gchar *font_callback;
   const gchar *popup_title;
   const gchar *initial_font;
 
-  font_callback = g_value_get_string (&args[0].value);
-  popup_title = g_value_get_string (&args[1].value);
-  initial_font = g_value_get_string (&args[2].value);
+  font_callback = g_value_get_string (&args->values[0]);
+  popup_title = g_value_get_string (&args->values[1]);
+  initial_font = g_value_get_string (&args->values[2]);
 
   if (success)
     {
@@ -147,17 +146,17 @@ static GimpProcedure fonts_popup_proc =
   { { fonts_popup_invoker } }
 };
 
-static GimpArgument *
-fonts_close_popup_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GimpArgument *args)
+static GValueArray *
+fonts_close_popup_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
 {
   gboolean success = TRUE;
   const gchar *font_callback;
 
-  font_callback = g_value_get_string (&args[0].value);
+  font_callback = g_value_get_string (&args->values[0]);
 
   if (success)
     {
@@ -186,19 +185,19 @@ static GimpProcedure fonts_close_popup_proc =
   { { fonts_close_popup_invoker } }
 };
 
-static GimpArgument *
-fonts_set_popup_invoker (GimpProcedure      *procedure,
-                         Gimp               *gimp,
-                         GimpContext        *context,
-                         GimpProgress       *progress,
-                         const GimpArgument *args)
+static GValueArray *
+fonts_set_popup_invoker (GimpProcedure     *procedure,
+                         Gimp              *gimp,
+                         GimpContext       *context,
+                         GimpProgress      *progress,
+                         const GValueArray *args)
 {
   gboolean success = TRUE;
   const gchar *font_callback;
   const gchar *font_name;
 
-  font_callback = g_value_get_string (&args[0].value);
-  font_name = g_value_get_string (&args[1].value);
+  font_callback = g_value_get_string (&args->values[0]);
+  font_name = g_value_get_string (&args->values[1]);
 
   if (success)
     {

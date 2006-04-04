@@ -38,7 +38,6 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
-#include "pdb/gimpargument.h"
 #include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
@@ -348,6 +347,7 @@ plug_ins_init (Gimp               *gimp,
       for (list = extensions, nth = 0; list; list = g_list_next (list), nth++)
         {
           PlugInProcDef *proc_def = list->data;
+          GValueArray   *args;
 
 	  if (gimp->be_verbose)
 	    g_print (_("Starting extension: '%s'\n"),
@@ -356,8 +356,12 @@ plug_ins_init (Gimp               *gimp,
 	  status_callback (NULL, proc_def->procedure->name,
                            (gdouble) nth / (gdouble) n_extensions);
 
+          args = g_value_array_new (0);
+
 	  plug_in_run (gimp, context, NULL, proc_def->procedure,
-                       NULL, 0, FALSE, TRUE, -1);
+                       args, FALSE, TRUE, -1);
+
+          g_value_array_free (args);
 	}
 
       g_list_free (extensions);
@@ -1060,15 +1064,13 @@ plug_ins_add_to_db (Gimp        *gimp,
 
       if (proc_def->file_proc)
         {
-          GimpArgument *return_vals;
-          gint          n_return_vals;
+          GValueArray *return_vals;
 
           if (proc_def->image_types)
             {
               return_vals =
                 procedural_db_run_proc (gimp, context, NULL,
                                         "gimp-register-save-handler",
-                                        &n_return_vals,
                                         G_TYPE_STRING, proc_def->procedure->name,
                                         G_TYPE_STRING, proc_def->extensions,
                                         G_TYPE_STRING, proc_def->prefixes,
@@ -1079,7 +1081,6 @@ plug_ins_add_to_db (Gimp        *gimp,
               return_vals =
                 procedural_db_run_proc (gimp, context, NULL,
                                         "gimp-register-magic-load-handler",
-                                        &n_return_vals,
                                         G_TYPE_STRING, proc_def->procedure->name,
                                         G_TYPE_STRING, proc_def->extensions,
                                         G_TYPE_STRING, proc_def->prefixes,
@@ -1087,7 +1088,7 @@ plug_ins_add_to_db (Gimp        *gimp,
                                         G_TYPE_NONE);
             }
 
-          gimp_arguments_destroy (return_vals, n_return_vals);
+          g_value_array_free (return_vals);
 	}
     }
 }

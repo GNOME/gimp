@@ -53,16 +53,16 @@ typedef GimpImage * GimpXcfLoaderFunc (Gimp    *gimp,
                                        XcfInfo *info);
 
 
-static GimpArgument * xcf_load_invoker (GimpProcedure      *procedure,
-                                        Gimp               *gimp,
-                                        GimpContext        *context,
-                                        GimpProgress       *progress,
-                                        const GimpArgument *args);
-static GimpArgument * xcf_save_invoker (GimpProcedure      *procedure,
-                                        Gimp               *gimp,
-                                        GimpContext        *context,
-                                        GimpProgress       *progress,
-                                        const GimpArgument *args);
+static GValueArray * xcf_load_invoker (GimpProcedure     *procedure,
+                                       Gimp              *gimp,
+                                       GimpContext       *context,
+                                       GimpProgress      *progress,
+                                       const GValueArray *args);
+static GValueArray * xcf_save_invoker (GimpProcedure     *procedure,
+                                       Gimp              *gimp,
+                                       GimpContext       *context,
+                                       GimpProgress      *progress,
+                                       const GValueArray *args);
 
 
 static PlugInProcDef xcf_plug_in_load_proc =
@@ -230,23 +230,23 @@ xcf_exit (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 }
 
-static GimpArgument *
-xcf_load_invoker (GimpProcedure      *procedure,
-                  Gimp               *gimp,
-                  GimpContext        *context,
-                  GimpProgress       *progress,
-                  const GimpArgument *args)
+static GValueArray *
+xcf_load_invoker (GimpProcedure     *procedure,
+                  Gimp              *gimp,
+                  GimpContext       *context,
+                  GimpProgress      *progress,
+                  const GValueArray *args)
 {
-  XcfInfo       info;
-  GimpArgument *return_vals;
-  GimpImage    *image   = NULL;
-  const gchar  *filename;
-  gboolean      success = FALSE;
-  gchar         id[14];
+  XcfInfo      info;
+  GValueArray *return_vals;
+  GimpImage   *image   = NULL;
+  const gchar *filename;
+  gboolean     success = FALSE;
+  gchar        id[14];
 
   gimp_set_busy (gimp);
 
-  filename = g_value_get_string (&args[1].value);
+  filename = g_value_get_string (&args->values[1]);
 
   info.fp = g_fopen (filename, "rb");
 
@@ -311,30 +311,30 @@ xcf_load_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_image (&return_vals[1].value, image);
+    gimp_value_set_image (&return_vals->values[1], image);
 
   gimp_unset_busy (gimp);
 
   return return_vals;
 }
 
-static GimpArgument *
-xcf_save_invoker (GimpProcedure      *procedure,
-                  Gimp               *gimp,
-                  GimpContext        *context,
-                  GimpProgress       *progress,
-                  const GimpArgument *args)
+static GValueArray *
+xcf_save_invoker (GimpProcedure     *procedure,
+                  Gimp              *gimp,
+                  GimpContext       *context,
+                  GimpProgress      *progress,
+                  const GValueArray *args)
 {
-  XcfInfo       info;
-  GimpArgument *return_vals;
-  GimpImage    *image;
-  const gchar  *filename;
-  gboolean      success = FALSE;
+  XcfInfo      info;
+  GValueArray *return_vals;
+  GimpImage   *image;
+  const gchar *filename;
+  gboolean     success = FALSE;
 
   gimp_set_busy (gimp);
 
-  image    = gimp_value_get_image (&args[1].value, gimp);
-  filename = g_value_get_string (&args[3].value);
+  image    = gimp_value_get_image (&args->values[1], gimp);
+  filename = g_value_get_string (&args->values[3]);
 
   info.fp = g_fopen (filename, "wb");
 

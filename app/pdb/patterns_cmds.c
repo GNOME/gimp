@@ -25,7 +25,6 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
@@ -154,12 +153,12 @@ register_patterns_procs (Gimp *gimp)
 
 }
 
-static GimpArgument *
-patterns_refresh_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GimpArgument *args)
+static GValueArray *
+patterns_refresh_invoker (GimpProcedure     *procedure,
+                          Gimp              *gimp,
+                          GimpContext       *context,
+                          GimpProgress      *progress,
+                          const GValueArray *args)
 {
   gimp_data_factory_data_refresh (gimp->pattern_factory);
   return gimp_procedure_get_return_values (procedure, TRUE);
@@ -181,20 +180,20 @@ static GimpProcedure patterns_refresh_proc =
   { { patterns_refresh_invoker } }
 };
 
-static GimpArgument *
-patterns_get_list_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GimpArgument *args)
+static GValueArray *
+patterns_get_list_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   const gchar *filter;
   gint32 num_patterns = 0;
   gchar **pattern_list = NULL;
 
-  filter = g_value_get_string (&args[0].value);
+  filter = g_value_get_string (&args->values[0]);
 
   if (success)
     {
@@ -206,8 +205,8 @@ patterns_get_list_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      g_value_set_int (&return_vals[1].value, num_patterns);
-      gimp_value_take_stringarray (&return_vals[2].value, pattern_list, num_patterns);
+      g_value_set_int (&return_vals->values[1], num_patterns);
+      gimp_value_take_stringarray (&return_vals->values[2], pattern_list, num_patterns);
     }
 
   return return_vals;
@@ -229,15 +228,15 @@ static GimpProcedure patterns_get_list_proc =
   { { patterns_get_list_invoker } }
 };
 
-static GimpArgument *
-patterns_get_pattern_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GimpArgument *args)
+static GValueArray *
+patterns_get_pattern_invoker (GimpProcedure     *procedure,
+                              Gimp              *gimp,
+                              GimpContext       *context,
+                              GimpProgress      *progress,
+                              const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   gchar *name = NULL;
   gint32 width = 0;
   gint32 height = 0;
@@ -257,9 +256,9 @@ patterns_get_pattern_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      g_value_take_string (&return_vals[1].value, name);
-      g_value_set_int (&return_vals[2].value, width);
-      g_value_set_int (&return_vals[3].value, height);
+      g_value_take_string (&return_vals->values[1], name);
+      g_value_set_int (&return_vals->values[2], width);
+      g_value_set_int (&return_vals->values[3], height);
     }
 
   return return_vals;
@@ -281,15 +280,15 @@ static GimpProcedure patterns_get_pattern_proc =
   { { patterns_get_pattern_invoker } }
 };
 
-static GimpArgument *
-patterns_get_pattern_data_invoker (GimpProcedure      *procedure,
-                                   Gimp               *gimp,
-                                   GimpContext        *context,
-                                   GimpProgress       *progress,
-                                   const GimpArgument *args)
+static GValueArray *
+patterns_get_pattern_data_invoker (GimpProcedure     *procedure,
+                                   Gimp              *gimp,
+                                   GimpContext       *context,
+                                   GimpProgress      *progress,
+                                   const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   const gchar *name;
   gchar *actual_name = NULL;
   gint32 width = 0;
@@ -298,7 +297,7 @@ patterns_get_pattern_data_invoker (GimpProcedure      *procedure,
   gint32 length = 0;
   guint8 *mask_data = NULL;
 
-  name = g_value_get_string (&args[0].value);
+  name = g_value_get_string (&args->values[0]);
 
   if (success)
     {
@@ -333,12 +332,12 @@ patterns_get_pattern_data_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      g_value_take_string (&return_vals[1].value, actual_name);
-      g_value_set_int (&return_vals[2].value, width);
-      g_value_set_int (&return_vals[3].value, height);
-      g_value_set_int (&return_vals[4].value, mask_bpp);
-      g_value_set_int (&return_vals[5].value, length);
-      gimp_value_take_int8array (&return_vals[6].value, mask_data, length);
+      g_value_take_string (&return_vals->values[1], actual_name);
+      g_value_set_int (&return_vals->values[2], width);
+      g_value_set_int (&return_vals->values[3], height);
+      g_value_set_int (&return_vals->values[4], mask_bpp);
+      g_value_set_int (&return_vals->values[5], length);
+      gimp_value_take_int8array (&return_vals->values[6], mask_data, length);
     }
 
   return return_vals;

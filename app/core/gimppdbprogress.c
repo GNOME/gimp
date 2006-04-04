@@ -29,7 +29,6 @@
 
 #include "core/gimpcontext.h"
 
-#include "pdb/gimpargument.h"
 #include "pdb/procedural_db.h"
 
 #include "gimpparamspecs.h"
@@ -246,8 +245,7 @@ gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
 
   if (progress->callback_name && ! progress->callback_busy)
     {
-      GimpArgument *return_vals;
-      gint          n_return_vals;
+      GValueArray *return_vals;
 
       progress->callback_busy = TRUE;
 
@@ -255,25 +253,24 @@ gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
                                             progress->context,
                                             NULL,
                                             progress->callback_name,
-                                            &n_return_vals,
                                             GIMP_TYPE_INT32, command,
                                             G_TYPE_STRING,   text,
                                             G_TYPE_DOUBLE,   value,
                                             G_TYPE_NONE);
 
-      if (g_value_get_enum (&return_vals[0].value) != GIMP_PDB_SUCCESS)
+      if (g_value_get_enum (&return_vals->values[0]) != GIMP_PDB_SUCCESS)
         {
           g_message (_("Unable to run %s callback. "
                        "The corresponding plug-in may have crashed."),
                      g_type_name (G_TYPE_FROM_INSTANCE (progress)));
         }
-      else if (n_return_vals >= 2 &&
-               G_VALUE_HOLDS_DOUBLE (&return_vals[1].value))
+      else if (return_vals->n_values >= 2 &&
+               G_VALUE_HOLDS_DOUBLE (&return_vals->values[1]))
         {
-          retval = g_value_get_double (&return_vals[1].value);
+          retval = g_value_get_double (&return_vals->values[1]);
         }
 
-      gimp_arguments_destroy (return_vals, n_return_vals);
+      g_value_array_free (return_vals);
 
       progress->callback_busy = FALSE;
     }

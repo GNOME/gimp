@@ -24,7 +24,6 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
@@ -103,21 +102,21 @@ register_pattern_select_procs (Gimp *gimp)
 
 }
 
-static GimpArgument *
-patterns_popup_invoker (GimpProcedure      *procedure,
-                        Gimp               *gimp,
-                        GimpContext        *context,
-                        GimpProgress       *progress,
-                        const GimpArgument *args)
+static GValueArray *
+patterns_popup_invoker (GimpProcedure     *procedure,
+                        Gimp              *gimp,
+                        GimpContext       *context,
+                        GimpProgress      *progress,
+                        const GValueArray *args)
 {
   gboolean success = TRUE;
   const gchar *pattern_callback;
   const gchar *popup_title;
   const gchar *initial_pattern;
 
-  pattern_callback = g_value_get_string (&args[0].value);
-  popup_title = g_value_get_string (&args[1].value);
-  initial_pattern = g_value_get_string (&args[2].value);
+  pattern_callback = g_value_get_string (&args->values[0]);
+  popup_title = g_value_get_string (&args->values[1]);
+  initial_pattern = g_value_get_string (&args->values[2]);
 
   if (success)
     {
@@ -148,17 +147,17 @@ static GimpProcedure patterns_popup_proc =
   { { patterns_popup_invoker } }
 };
 
-static GimpArgument *
-patterns_close_popup_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GimpArgument *args)
+static GValueArray *
+patterns_close_popup_invoker (GimpProcedure     *procedure,
+                              Gimp              *gimp,
+                              GimpContext       *context,
+                              GimpProgress      *progress,
+                              const GValueArray *args)
 {
   gboolean success = TRUE;
   const gchar *pattern_callback;
 
-  pattern_callback = g_value_get_string (&args[0].value);
+  pattern_callback = g_value_get_string (&args->values[0]);
 
   if (success)
     {
@@ -188,19 +187,19 @@ static GimpProcedure patterns_close_popup_proc =
   { { patterns_close_popup_invoker } }
 };
 
-static GimpArgument *
-patterns_set_popup_invoker (GimpProcedure      *procedure,
-                            Gimp               *gimp,
-                            GimpContext        *context,
-                            GimpProgress       *progress,
-                            const GimpArgument *args)
+static GValueArray *
+patterns_set_popup_invoker (GimpProcedure     *procedure,
+                            Gimp              *gimp,
+                            GimpContext       *context,
+                            GimpProgress      *progress,
+                            const GValueArray *args)
 {
   gboolean success = TRUE;
   const gchar *pattern_callback;
   const gchar *pattern_name;
 
-  pattern_callback = g_value_get_string (&args[0].value);
-  pattern_name = g_value_get_string (&args[1].value);
+  pattern_callback = g_value_get_string (&args->values[0]);
+  pattern_name = g_value_get_string (&args->values[1]);
 
   if (success)
     {

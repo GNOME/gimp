@@ -236,23 +236,21 @@ procedural_db_lookup (Gimp        *gimp,
     return NULL;
 }
 
-GimpArgument *
+GValueArray *
 procedural_db_execute (Gimp         *gimp,
                        GimpContext  *context,
                        GimpProgress *progress,
                        const gchar  *name,
-                       GimpArgument *args,
-                       gint          n_args,
-                       gint         *n_return_vals)
+                       GValueArray  *args)
 {
-  GimpArgument *return_vals = NULL;
-  GList        *list;
+  GValueArray *return_vals = NULL;
+  GList       *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (name != NULL, NULL);
-  g_return_val_if_fail (n_return_vals != NULL, NULL);
+  g_return_val_if_fail (args != NULL, NULL);
 
   list = g_hash_table_lookup (gimp->procedural_ht, name);
 
@@ -262,9 +260,7 @@ procedural_db_execute (Gimp         *gimp,
                    "Procedure '%s' not found"), name);
 
       return_vals = gimp_procedure_get_return_values (NULL, FALSE);
-      g_value_set_enum (&return_vals->value, GIMP_PDB_CALLING_ERROR);
-
-      *n_return_vals = 1;
+      g_value_set_enum (return_vals->values, GIMP_PDB_CALLING_ERROR);
 
       return return_vals;
     }
@@ -277,17 +273,16 @@ procedural_db_execute (Gimp         *gimp,
 
       return_vals = gimp_procedure_execute (procedure,
                                             gimp, context, progress,
-                                            args, n_args,
-                                            n_return_vals);
+                                            args);
 
-      if (g_value_get_enum (&return_vals[0].value) == GIMP_PDB_PASS_THROUGH)
+      if (g_value_get_enum (&return_vals->values[0]) == GIMP_PDB_PASS_THROUGH)
         {
           /*  If the return value is GIMP_PDB_PASS_THROUGH and there is
            *  a next procedure in the list, destroy the return values
            *  and run the next procedure.
            */
           if (g_list_next (list))
-            gimp_arguments_destroy (return_vals, *n_return_vals);
+            g_value_array_free (return_vals);
         }
       else
         {
@@ -301,17 +296,16 @@ procedural_db_execute (Gimp         *gimp,
   return return_vals;
 }
 
-GimpArgument *
+GValueArray *
 procedural_db_run_proc (Gimp         *gimp,
                         GimpContext  *context,
                         GimpProgress *progress,
                         const gchar  *name,
-                        gint         *n_return_vals,
                         ...)
 {
   GimpProcedure *procedure;
-  GimpArgument  *args;
-  GimpArgument  *return_vals;
+  GValueArray   *args;
+  GValueArray   *return_vals;
   va_list        va_args;
   gint           i;
 
@@ -319,7 +313,6 @@ procedural_db_run_proc (Gimp         *gimp,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (name != NULL, NULL);
-  g_return_val_if_fail (n_return_vals != NULL, NULL);
 
   procedure = procedural_db_lookup (gimp, name);
 
@@ -329,18 +322,14 @@ procedural_db_run_proc (Gimp         *gimp,
                    "Procedure '%s' not found"), name);
 
       return_vals = gimp_procedure_get_return_values (NULL, FALSE);
-      g_value_set_enum (&return_vals->value, GIMP_PDB_CALLING_ERROR);
-
-      *n_return_vals = 1;
+      g_value_set_enum (return_vals->values, GIMP_PDB_CALLING_ERROR);
 
       return return_vals;
     }
 
-  *n_return_vals = procedure->num_values + 1;
-
   args = gimp_procedure_get_arguments (procedure);
 
-  va_start (va_args, n_return_vals);
+  va_start (va_args, name);
 
   for (i = 0; i < procedure->num_args; i++)
     {
@@ -353,21 +342,21 @@ procedural_db_run_proc (Gimp         *gimp,
       if (arg_type == G_TYPE_NONE)
         break;
 
-      value = &args[i].value;
+      value = &args->values[i];
 
       if (arg_type != G_VALUE_TYPE (value))
         {
           const gchar *expected = g_type_name (G_VALUE_TYPE (value));
           const gchar *got      = g_type_name (arg_type);
 
-          gimp_arguments_destroy (args, procedure->num_args);
+          g_value_array_free (args);
 
           g_message (_("PDB calling error for procedure '%s':\n"
                        "Argument #%d type mismatch (expected %s, got %s)"),
                      procedure->name, i + 1, expected, got);
 
           return_vals = gimp_procedure_get_return_values (procedure, FALSE);
-          g_value_set_enum (&return_vals->value, GIMP_PDB_CALLING_ERROR);
+          g_value_set_enum (return_vals->values, GIMP_PDB_CALLING_ERROR);
 
           return return_vals;
         }
@@ -379,10 +368,10 @@ procedural_db_run_proc (Gimp         *gimp,
           g_warning ("%s: %s", G_STRFUNC, error);
           g_free (error);
 
-          gimp_arguments_destroy (args, procedure->num_args);
+          g_value_array_free (args);
 
           return_vals = gimp_procedure_get_return_values (procedure, FALSE);
-          g_value_set_enum (&return_vals->value, GIMP_PDB_CALLING_ERROR);
+          g_value_set_enum (return_vals->values, GIMP_PDB_CALLING_ERROR);
 
           return return_vals;
         }
@@ -390,11 +379,9 @@ procedural_db_run_proc (Gimp         *gimp,
 
   va_end (va_args);
 
-  return_vals = procedural_db_execute (gimp, context, progress, name,
-                                       args, procedure->num_args,
-                                       n_return_vals);
+  return_vals = procedural_db_execute (gimp, context, progress, name, args);
 
-  gimp_arguments_destroy (args, procedure->num_args);
+  g_value_array_free (args);
 
   return return_vals;
 }

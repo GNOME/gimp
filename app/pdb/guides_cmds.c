@@ -24,7 +24,6 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
@@ -158,7 +157,7 @@ register_guides_procs (Gimp *gimp)
                                                          GIMP_TYPE_ORIENTATION_TYPE,
                                                          GIMP_ORIENTATION_HORIZONTAL,
                                                          GIMP_PARAM_READWRITE));
-  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->values[0].pspec),
+  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->values[0]),
                                       GIMP_ORIENTATION_UNKNOWN);
   procedural_db_register (gimp, procedure);
 
@@ -188,21 +187,21 @@ register_guides_procs (Gimp *gimp)
 
 }
 
-static GimpArgument *
-image_add_hguide_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GimpArgument *args)
+static GValueArray *
+image_add_hguide_invoker (GimpProcedure     *procedure,
+                          Gimp              *gimp,
+                          GimpContext       *context,
+                          GimpProgress      *progress,
+                          const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   gint32 yposition;
   gint32 guide = 0;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  yposition = g_value_get_int (&args[1].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  yposition = g_value_get_int (&args->values[1]);
 
   if (success)
     {
@@ -220,7 +219,7 @@ image_add_hguide_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_set_uint (&return_vals[1].value, guide);
+    g_value_set_uint (&return_vals->values[1], guide);
 
   return return_vals;
 }
@@ -241,21 +240,21 @@ static GimpProcedure image_add_hguide_proc =
   { { image_add_hguide_invoker } }
 };
 
-static GimpArgument *
-image_add_vguide_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GimpArgument *args)
+static GValueArray *
+image_add_vguide_invoker (GimpProcedure     *procedure,
+                          Gimp              *gimp,
+                          GimpContext       *context,
+                          GimpProgress      *progress,
+                          const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   gint32 xposition;
   gint32 guide = 0;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  xposition = g_value_get_int (&args[1].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  xposition = g_value_get_int (&args->values[1]);
 
   if (success)
     {
@@ -273,7 +272,7 @@ image_add_vguide_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_set_uint (&return_vals[1].value, guide);
+    g_value_set_uint (&return_vals->values[1], guide);
 
   return return_vals;
 }
@@ -294,19 +293,19 @@ static GimpProcedure image_add_vguide_proc =
   { { image_add_vguide_invoker } }
 };
 
-static GimpArgument *
-image_delete_guide_invoker (GimpProcedure      *procedure,
-                            Gimp               *gimp,
-                            GimpContext        *context,
-                            GimpProgress       *progress,
-                            const GimpArgument *args)
+static GValueArray *
+image_delete_guide_invoker (GimpProcedure     *procedure,
+                            Gimp              *gimp,
+                            GimpContext       *context,
+                            GimpProgress      *progress,
+                            const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
   gint32 guide;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  guide = g_value_get_uint (&args[1].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  guide = g_value_get_uint (&args->values[1]);
 
   if (success)
     {
@@ -337,21 +336,21 @@ static GimpProcedure image_delete_guide_proc =
   { { image_delete_guide_invoker } }
 };
 
-static GimpArgument *
-image_find_next_guide_invoker (GimpProcedure      *procedure,
-                               Gimp               *gimp,
-                               GimpContext        *context,
-                               GimpProgress       *progress,
-                               const GimpArgument *args)
+static GValueArray *
+image_find_next_guide_invoker (GimpProcedure     *procedure,
+                               Gimp              *gimp,
+                               GimpContext       *context,
+                               GimpProgress      *progress,
+                               const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   gint32 guide;
   gint32 next_guide = 0;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  guide = g_value_get_uint (&args[1].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  guide = g_value_get_uint (&args->values[1]);
 
   if (success)
     {
@@ -364,7 +363,7 @@ image_find_next_guide_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_set_uint (&return_vals[1].value, next_guide);
+    g_value_set_uint (&return_vals->values[1], next_guide);
 
   return return_vals;
 }
@@ -385,21 +384,21 @@ static GimpProcedure image_find_next_guide_proc =
   { { image_find_next_guide_invoker } }
 };
 
-static GimpArgument *
-image_get_guide_orientation_invoker (GimpProcedure      *procedure,
-                                     Gimp               *gimp,
-                                     GimpContext        *context,
-                                     GimpProgress       *progress,
-                                     const GimpArgument *args)
+static GValueArray *
+image_get_guide_orientation_invoker (GimpProcedure     *procedure,
+                                     Gimp              *gimp,
+                                     GimpContext       *context,
+                                     GimpProgress      *progress,
+                                     const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   gint32 guide;
   gint32 orientation = 0;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  guide = g_value_get_uint (&args[1].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  guide = g_value_get_uint (&args->values[1]);
 
   if (success)
     {
@@ -414,7 +413,7 @@ image_get_guide_orientation_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_set_enum (&return_vals[1].value, orientation);
+    g_value_set_enum (&return_vals->values[1], orientation);
 
   return return_vals;
 }
@@ -435,21 +434,21 @@ static GimpProcedure image_get_guide_orientation_proc =
   { { image_get_guide_orientation_invoker } }
 };
 
-static GimpArgument *
-image_get_guide_position_invoker (GimpProcedure      *procedure,
-                                  Gimp               *gimp,
-                                  GimpContext        *context,
-                                  GimpProgress       *progress,
-                                  const GimpArgument *args)
+static GValueArray *
+image_get_guide_position_invoker (GimpProcedure     *procedure,
+                                  Gimp              *gimp,
+                                  GimpContext       *context,
+                                  GimpProgress      *progress,
+                                  const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   gint32 guide;
   gint32 position = 0;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  guide = g_value_get_uint (&args[1].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  guide = g_value_get_uint (&args->values[1]);
 
   if (success)
     {
@@ -464,7 +463,7 @@ image_get_guide_position_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_set_int (&return_vals[1].value, position);
+    g_value_set_int (&return_vals->values[1], position);
 
   return return_vals;
 }

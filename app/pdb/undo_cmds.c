@@ -24,7 +24,6 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
@@ -163,17 +162,17 @@ register_undo_procs (Gimp *gimp)
 
 }
 
-static GimpArgument *
-image_undo_group_start_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GimpArgument *args)
+static GValueArray *
+image_undo_group_start_invoker (GimpProcedure     *procedure,
+                                Gimp              *gimp,
+                                GimpContext       *context,
+                                GimpProgress      *progress,
+                                const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -207,17 +206,17 @@ static GimpProcedure image_undo_group_start_proc =
   { { image_undo_group_start_invoker } }
 };
 
-static GimpArgument *
-image_undo_group_end_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GimpArgument *args)
+static GValueArray *
+image_undo_group_end_invoker (GimpProcedure     *procedure,
+                              Gimp              *gimp,
+                              GimpContext       *context,
+                              GimpProgress      *progress,
+                              const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -243,19 +242,19 @@ static GimpProcedure image_undo_group_end_proc =
   { { image_undo_group_end_invoker } }
 };
 
-static GimpArgument *
-image_undo_is_enabled_invoker (GimpProcedure      *procedure,
-                               Gimp               *gimp,
-                               GimpContext        *context,
-                               GimpProgress       *progress,
-                               const GimpArgument *args)
+static GValueArray *
+image_undo_is_enabled_invoker (GimpProcedure     *procedure,
+                               Gimp              *gimp,
+                               GimpContext       *context,
+                               GimpProgress      *progress,
+                               const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   gboolean enabled = FALSE;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -265,7 +264,7 @@ image_undo_is_enabled_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_set_boolean (&return_vals[1].value, enabled);
+    g_value_set_boolean (&return_vals->values[1], enabled);
 
   return return_vals;
 }
@@ -286,19 +285,19 @@ static GimpProcedure image_undo_is_enabled_proc =
   { { image_undo_is_enabled_invoker } }
 };
 
-static GimpArgument *
-image_undo_disable_invoker (GimpProcedure      *procedure,
-                            Gimp               *gimp,
-                            GimpContext        *context,
-                            GimpProgress       *progress,
-                            const GimpArgument *args)
+static GValueArray *
+image_undo_disable_invoker (GimpProcedure     *procedure,
+                            Gimp              *gimp,
+                            GimpContext       *context,
+                            GimpProgress      *progress,
+                            const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   gboolean disabled = FALSE;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -308,7 +307,7 @@ image_undo_disable_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_set_boolean (&return_vals[1].value, disabled);
+    g_value_set_boolean (&return_vals->values[1], disabled);
 
   return return_vals;
 }
@@ -329,19 +328,19 @@ static GimpProcedure image_undo_disable_proc =
   { { image_undo_disable_invoker } }
 };
 
-static GimpArgument *
-image_undo_enable_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GimpArgument *args)
+static GValueArray *
+image_undo_enable_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   gboolean enabled = FALSE;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -351,7 +350,7 @@ image_undo_enable_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_set_boolean (&return_vals[1].value, enabled);
+    g_value_set_boolean (&return_vals->values[1], enabled);
 
   return return_vals;
 }
@@ -372,19 +371,19 @@ static GimpProcedure image_undo_enable_proc =
   { { image_undo_enable_invoker } }
 };
 
-static GimpArgument *
-image_undo_freeze_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GimpArgument *args)
+static GValueArray *
+image_undo_freeze_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   gboolean frozen = FALSE;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -394,7 +393,7 @@ image_undo_freeze_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_set_boolean (&return_vals[1].value, frozen);
+    g_value_set_boolean (&return_vals->values[1], frozen);
 
   return return_vals;
 }
@@ -415,19 +414,19 @@ static GimpProcedure image_undo_freeze_proc =
   { { image_undo_freeze_invoker } }
 };
 
-static GimpArgument *
-image_undo_thaw_invoker (GimpProcedure      *procedure,
-                         Gimp               *gimp,
-                         GimpContext        *context,
-                         GimpProgress       *progress,
-                         const GimpArgument *args)
+static GValueArray *
+image_undo_thaw_invoker (GimpProcedure     *procedure,
+                         Gimp              *gimp,
+                         GimpContext       *context,
+                         GimpProgress      *progress,
+                         const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   gboolean thawed = FALSE;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -437,7 +436,7 @@ image_undo_thaw_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_set_boolean (&return_vals[1].value, thawed);
+    g_value_set_boolean (&return_vals->values[1], thawed);
 
   return return_vals;
 }

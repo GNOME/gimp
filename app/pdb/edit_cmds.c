@@ -25,7 +25,6 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
@@ -489,19 +488,19 @@ register_edit_procs (Gimp *gimp)
 
 }
 
-static GimpArgument *
-edit_cut_invoker (GimpProcedure      *procedure,
-                  Gimp               *gimp,
-                  GimpContext        *context,
-                  GimpProgress       *progress,
-                  const GimpArgument *args)
+static GValueArray *
+edit_cut_invoker (GimpProcedure     *procedure,
+                  Gimp              *gimp,
+                  GimpContext       *context,
+                  GimpProgress      *progress,
+                  const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
   gboolean non_empty = FALSE;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
 
   if (success)
     {
@@ -518,7 +517,7 @@ edit_cut_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_set_boolean (&return_vals[1].value, non_empty);
+    g_value_set_boolean (&return_vals->values[1], non_empty);
 
   return return_vals;
 }
@@ -539,19 +538,19 @@ static GimpProcedure edit_cut_proc =
   { { edit_cut_invoker } }
 };
 
-static GimpArgument *
-edit_copy_invoker (GimpProcedure      *procedure,
-                   Gimp               *gimp,
-                   GimpContext        *context,
-                   GimpProgress       *progress,
-                   const GimpArgument *args)
+static GValueArray *
+edit_copy_invoker (GimpProcedure     *procedure,
+                   Gimp              *gimp,
+                   GimpContext       *context,
+                   GimpProgress      *progress,
+                   const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
   gboolean non_empty = FALSE;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
 
   if (success)
     {
@@ -568,7 +567,7 @@ edit_copy_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_set_boolean (&return_vals[1].value, non_empty);
+    g_value_set_boolean (&return_vals->values[1], non_empty);
 
   return return_vals;
 }
@@ -589,19 +588,19 @@ static GimpProcedure edit_copy_proc =
   { { edit_copy_invoker } }
 };
 
-static GimpArgument *
-edit_copy_visible_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GimpArgument *args)
+static GValueArray *
+edit_copy_visible_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   gboolean non_empty = FALSE;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -611,7 +610,7 @@ edit_copy_visible_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_set_boolean (&return_vals[1].value, non_empty);
+    g_value_set_boolean (&return_vals->values[1], non_empty);
 
   return return_vals;
 }
@@ -632,21 +631,21 @@ static GimpProcedure edit_copy_visible_proc =
   { { edit_copy_visible_invoker } }
 };
 
-static GimpArgument *
-edit_paste_invoker (GimpProcedure      *procedure,
-                    Gimp               *gimp,
-                    GimpContext        *context,
-                    GimpProgress       *progress,
-                    const GimpArgument *args)
+static GValueArray *
+edit_paste_invoker (GimpProcedure     *procedure,
+                    Gimp              *gimp,
+                    GimpContext       *context,
+                    GimpProgress      *progress,
+                    const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
   gboolean paste_into;
   GimpLayer *floating_sel = NULL;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  paste_into = g_value_get_boolean (&args[1].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  paste_into = g_value_get_boolean (&args->values[1]);
 
   if (success)
     {
@@ -666,7 +665,7 @@ edit_paste_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_layer (&return_vals[1].value, floating_sel);
+    gimp_value_set_layer (&return_vals->values[1], floating_sel);
 
   return return_vals;
 }
@@ -687,15 +686,15 @@ static GimpProcedure edit_paste_proc =
   { { edit_paste_invoker } }
 };
 
-static GimpArgument *
-edit_paste_as_new_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GimpArgument *args)
+static GValueArray *
+edit_paste_as_new_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image = NULL;
 
   if (gimp->global_buffer)
@@ -711,7 +710,7 @@ edit_paste_as_new_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_image (&return_vals[1].value, image);
+    gimp_value_set_image (&return_vals->values[1], image);
 
   return return_vals;
 }
@@ -732,21 +731,21 @@ static GimpProcedure edit_paste_as_new_proc =
   { { edit_paste_as_new_invoker } }
 };
 
-static GimpArgument *
-edit_named_cut_invoker (GimpProcedure      *procedure,
-                        Gimp               *gimp,
-                        GimpContext        *context,
-                        GimpProgress       *progress,
-                        const GimpArgument *args)
+static GValueArray *
+edit_named_cut_invoker (GimpProcedure     *procedure,
+                        Gimp              *gimp,
+                        GimpContext       *context,
+                        GimpProgress      *progress,
+                        const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
   const gchar *buffer_name;
   gchar *real_name = NULL;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  buffer_name = g_value_get_string (&args[1].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  buffer_name = g_value_get_string (&args->values[1]);
 
   if (success)
     {
@@ -769,7 +768,7 @@ edit_named_cut_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_take_string (&return_vals[1].value, real_name);
+    g_value_take_string (&return_vals->values[1], real_name);
 
   return return_vals;
 }
@@ -790,21 +789,21 @@ static GimpProcedure edit_named_cut_proc =
   { { edit_named_cut_invoker } }
 };
 
-static GimpArgument *
-edit_named_copy_invoker (GimpProcedure      *procedure,
-                         Gimp               *gimp,
-                         GimpContext        *context,
-                         GimpProgress       *progress,
-                         const GimpArgument *args)
+static GValueArray *
+edit_named_copy_invoker (GimpProcedure     *procedure,
+                         Gimp              *gimp,
+                         GimpContext       *context,
+                         GimpProgress      *progress,
+                         const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
   const gchar *buffer_name;
   gchar *real_name = NULL;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  buffer_name = g_value_get_string (&args[1].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  buffer_name = g_value_get_string (&args->values[1]);
 
   if (success)
     {
@@ -827,7 +826,7 @@ edit_named_copy_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_take_string (&return_vals[1].value, real_name);
+    g_value_take_string (&return_vals->values[1], real_name);
 
   return return_vals;
 }
@@ -848,21 +847,21 @@ static GimpProcedure edit_named_copy_proc =
   { { edit_named_copy_invoker } }
 };
 
-static GimpArgument *
-edit_named_copy_visible_invoker (GimpProcedure      *procedure,
-                                 Gimp               *gimp,
-                                 GimpContext        *context,
-                                 GimpProgress       *progress,
-                                 const GimpArgument *args)
+static GValueArray *
+edit_named_copy_visible_invoker (GimpProcedure     *procedure,
+                                 Gimp              *gimp,
+                                 GimpContext       *context,
+                                 GimpProgress      *progress,
+                                 const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   const gchar *buffer_name;
   gchar *real_name = NULL;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  buffer_name = g_value_get_string (&args[1].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  buffer_name = g_value_get_string (&args->values[1]);
 
   if (success)
     {
@@ -883,7 +882,7 @@ edit_named_copy_visible_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_take_string (&return_vals[1].value, real_name);
+    g_value_take_string (&return_vals->values[1], real_name);
 
   return return_vals;
 }
@@ -904,23 +903,23 @@ static GimpProcedure edit_named_copy_visible_proc =
   { { edit_named_copy_visible_invoker } }
 };
 
-static GimpArgument *
-edit_named_paste_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GimpArgument *args)
+static GValueArray *
+edit_named_paste_invoker (GimpProcedure     *procedure,
+                          Gimp              *gimp,
+                          GimpContext       *context,
+                          GimpProgress      *progress,
+                          const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
   const gchar *buffer_name;
   gboolean paste_into;
   GimpLayer *floating_sel = NULL;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  buffer_name = g_value_get_string (&args[1].value);
-  paste_into = g_value_get_boolean (&args[2].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  buffer_name = g_value_get_string (&args->values[1]);
+  paste_into = g_value_get_boolean (&args->values[2]);
 
   if (success)
     {
@@ -942,7 +941,7 @@ edit_named_paste_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_layer (&return_vals[1].value, floating_sel);
+    gimp_value_set_layer (&return_vals->values[1], floating_sel);
 
   return return_vals;
 }
@@ -963,19 +962,19 @@ static GimpProcedure edit_named_paste_proc =
   { { edit_named_paste_invoker } }
 };
 
-static GimpArgument *
-edit_named_paste_as_new_invoker (GimpProcedure      *procedure,
-                                 Gimp               *gimp,
-                                 GimpContext        *context,
-                                 GimpProgress       *progress,
-                                 const GimpArgument *args)
+static GValueArray *
+edit_named_paste_as_new_invoker (GimpProcedure     *procedure,
+                                 Gimp              *gimp,
+                                 GimpContext       *context,
+                                 GimpProgress      *progress,
+                                 const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   const gchar *buffer_name;
   GimpImage *image = NULL;
 
-  buffer_name = g_value_get_string (&args[0].value);
+  buffer_name = g_value_get_string (&args->values[0]);
 
   if (success)
     {
@@ -996,7 +995,7 @@ edit_named_paste_as_new_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_image (&return_vals[1].value, image);
+    gimp_value_set_image (&return_vals->values[1], image);
 
   return return_vals;
 }
@@ -1017,17 +1016,17 @@ static GimpProcedure edit_named_paste_as_new_proc =
   { { edit_named_paste_as_new_invoker } }
 };
 
-static GimpArgument *
-edit_clear_invoker (GimpProcedure      *procedure,
-                    Gimp               *gimp,
-                    GimpContext        *context,
-                    GimpProgress       *progress,
-                    const GimpArgument *args)
+static GValueArray *
+edit_clear_invoker (GimpProcedure     *procedure,
+                    Gimp              *gimp,
+                    GimpContext       *context,
+                    GimpProgress      *progress,
+                    const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
 
   if (success)
     {
@@ -1060,19 +1059,19 @@ static GimpProcedure edit_clear_proc =
   { { edit_clear_invoker } }
 };
 
-static GimpArgument *
-edit_fill_invoker (GimpProcedure      *procedure,
-                   Gimp               *gimp,
-                   GimpContext        *context,
-                   GimpProgress       *progress,
-                   const GimpArgument *args)
+static GValueArray *
+edit_fill_invoker (GimpProcedure     *procedure,
+                   Gimp              *gimp,
+                   GimpContext       *context,
+                   GimpProgress      *progress,
+                   const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gint32 fill_type;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  fill_type = g_value_get_enum (&args[1].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  fill_type = g_value_get_enum (&args->values[1]);
 
   if (success)
     {
@@ -1106,12 +1105,12 @@ static GimpProcedure edit_fill_proc =
   { { edit_fill_invoker } }
 };
 
-static GimpArgument *
-edit_bucket_fill_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GimpArgument *args)
+static GValueArray *
+edit_bucket_fill_invoker (GimpProcedure     *procedure,
+                          Gimp              *gimp,
+                          GimpContext       *context,
+                          GimpProgress      *progress,
+                          const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1123,14 +1122,14 @@ edit_bucket_fill_invoker (GimpProcedure      *procedure,
   gdouble x;
   gdouble y;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  fill_mode = g_value_get_enum (&args[1].value);
-  paint_mode = g_value_get_enum (&args[2].value);
-  opacity = g_value_get_double (&args[3].value);
-  threshold = g_value_get_double (&args[4].value);
-  sample_merged = g_value_get_boolean (&args[5].value);
-  x = g_value_get_double (&args[6].value);
-  y = g_value_get_double (&args[7].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  fill_mode = g_value_get_enum (&args->values[1]);
+  paint_mode = g_value_get_enum (&args->values[2]);
+  opacity = g_value_get_double (&args->values[3]);
+  threshold = g_value_get_double (&args->values[4]);
+  sample_merged = g_value_get_boolean (&args->values[5]);
+  x = g_value_get_double (&args->values[6]);
+  y = g_value_get_double (&args->values[7]);
 
   if (success)
     {
@@ -1170,12 +1169,12 @@ static GimpProcedure edit_bucket_fill_proc =
   { { edit_bucket_fill_invoker } }
 };
 
-static GimpArgument *
-edit_blend_invoker (GimpProcedure      *procedure,
-                    Gimp               *gimp,
-                    GimpContext        *context,
-                    GimpProgress       *progress,
-                    const GimpArgument *args)
+static GValueArray *
+edit_blend_invoker (GimpProcedure     *procedure,
+                    Gimp              *gimp,
+                    GimpContext       *context,
+                    GimpProgress      *progress,
+                    const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1195,22 +1194,22 @@ edit_blend_invoker (GimpProcedure      *procedure,
   gdouble x2;
   gdouble y2;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  blend_mode = g_value_get_enum (&args[1].value);
-  paint_mode = g_value_get_enum (&args[2].value);
-  gradient_type = g_value_get_enum (&args[3].value);
-  opacity = g_value_get_double (&args[4].value);
-  offset = g_value_get_double (&args[5].value);
-  repeat = g_value_get_enum (&args[6].value);
-  reverse = g_value_get_boolean (&args[7].value);
-  supersample = g_value_get_boolean (&args[8].value);
-  max_depth = g_value_get_int (&args[9].value);
-  threshold = g_value_get_double (&args[10].value);
-  dither = g_value_get_boolean (&args[11].value);
-  x1 = g_value_get_double (&args[12].value);
-  y1 = g_value_get_double (&args[13].value);
-  x2 = g_value_get_double (&args[14].value);
-  y2 = g_value_get_double (&args[15].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  blend_mode = g_value_get_enum (&args->values[1]);
+  paint_mode = g_value_get_enum (&args->values[2]);
+  gradient_type = g_value_get_enum (&args->values[3]);
+  opacity = g_value_get_double (&args->values[4]);
+  offset = g_value_get_double (&args->values[5]);
+  repeat = g_value_get_enum (&args->values[6]);
+  reverse = g_value_get_boolean (&args->values[7]);
+  supersample = g_value_get_boolean (&args->values[8]);
+  max_depth = g_value_get_int (&args->values[9]);
+  threshold = g_value_get_double (&args->values[10]);
+  dither = g_value_get_boolean (&args->values[11]);
+  x1 = g_value_get_double (&args->values[12]);
+  y1 = g_value_get_double (&args->values[13]);
+  x2 = g_value_get_double (&args->values[14]);
+  y2 = g_value_get_double (&args->values[15]);
 
   if (success)
     {
@@ -1266,17 +1265,17 @@ static GimpProcedure edit_blend_proc =
   { { edit_blend_invoker } }
 };
 
-static GimpArgument *
-edit_stroke_invoker (GimpProcedure      *procedure,
-                     Gimp               *gimp,
-                     GimpContext        *context,
-                     GimpProgress       *progress,
-                     const GimpArgument *args)
+static GValueArray *
+edit_stroke_invoker (GimpProcedure     *procedure,
+                     Gimp              *gimp,
+                     GimpContext       *context,
+                     GimpProgress      *progress,
+                     const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
 
   if (success)
     {

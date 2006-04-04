@@ -137,7 +137,7 @@ sub marshal_inargs {
 	my $var = $_->{name};
 	my $value;
 
-	$value = "&args[$argc].value";
+	$value = "&args->values[$argc]";
 	$result .= eval qq/"  $arg->{get_value_func};\n"/;
 
 	$argc++;
@@ -173,7 +173,7 @@ CODE
 
 	    $argc++;
 
-	    $value = "&return_vals[$argc].value";
+	    $value = "&return_vals->values[$argc]";
 
 	    if (exists $_->{array}) {
 		my $arrayarg = $_->{array};
@@ -545,7 +545,7 @@ ${pspec});
 CODE
 
             if (! ($postproc eq '')) {
-		$pspec = "procedure->args[$argc].pspec";
+		$pspec = "procedure->args[$argc]";
 		$postproc =~ s/^/'  '/meg;
 		$out->{register} .= eval qq/"$postproc"/;
 	    }
@@ -567,7 +567,7 @@ ${pspec});
 CODE
 
             if (! ($postproc eq '')) {
-		$pspec = "procedure->values[$argc].pspec";
+		$pspec = "procedure->values[$argc]";
 		$postproc =~ s/^/'  '/meg;
 		$out->{register} .= eval qq/"$postproc"/;
 	    }
@@ -586,12 +586,12 @@ CODE
 	    }
 	}
 
-	$out->{code} .= "\nstatic GimpArgument *\n";
-	$out->{code} .= "${name}_invoker (GimpProcedure      *procedure,\n";
-	$out->{code} .=  ' ' x length($name) . "          Gimp               *gimp,\n";
-	$out->{code} .=  ' ' x length($name) . "          GimpContext        *context,\n";
-	$out->{code} .=  ' ' x length($name) . "          GimpProgress       *progress,\n";
-	$out->{code} .=  ' ' x length($name) . "          const GimpArgument *args)\n{\n";
+	$out->{code} .= "\nstatic GValueArray *\n";
+	$out->{code} .= "${name}_invoker (GimpProcedure     *procedure,\n";
+	$out->{code} .=  ' ' x length($name) . "          Gimp              *gimp,\n";
+	$out->{code} .=  ' ' x length($name) . "          GimpContext       *context,\n";
+	$out->{code} .=  ' ' x length($name) . "          GimpProgress      *progress,\n";
+	$out->{code} .=  ' ' x length($name) . "          const GValueArray *args)\n{\n";
 
 	my $code = "";
 
@@ -601,7 +601,7 @@ CODE
 	else {
 	    my $invoker = "";
 	
-	    $invoker .= ' ' x 2 . "GimpArgument *return_vals;\n" if scalar @outargs;
+	    $invoker .= ' ' x 2 . "GValueArray *return_vals;\n" if scalar @outargs;
 	    $invoker .= &declare_args($proc, $out, 0, qw(inargs));
 	    $invoker .= &declare_args($proc, $out, 1, qw(outargs));
 
@@ -736,8 +736,6 @@ GPL
 		    $base = 1;
 
 		    $headers .= '#include "pdb-types.h"';
-		    $headers .= "\n";
-		    $headers .= '#include "gimpargument.h"';
 		    $headers .= "\n";
 		    $headers .= '#include "gimpprocedure.h"';
 		    $headers .= "\n";

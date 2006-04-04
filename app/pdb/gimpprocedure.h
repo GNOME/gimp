@@ -30,11 +30,11 @@ typedef struct _TempExec   TempExec;
 struct _IntExec
 {
   /*  Function called to marshal arguments  */
-  GimpArgument * (* marshal_func) (GimpProcedure      *procedure,
-                                   Gimp               *gimp,
-                                   GimpContext        *context,
-                                   GimpProgress       *progress,
-                                   const GimpArgument *args);
+  GValueArray * (* marshal_func) (GimpProcedure     *procedure,
+                                  Gimp              *gimp,
+                                  GimpContext       *context,
+                                  GimpProgress      *progress,
+                                  const GValueArray *args);
 };
 
 struct _PlugInExec
@@ -79,12 +79,12 @@ struct _GimpProcedure
   GimpPDBProcType  proc_type;  /* Type of procedure                          */
 
   /*  Input arguments  */
-  gint32            num_args;  /* Number of procedure arguments              */
-  GimpArgumentSpec *args;      /* Array of procedure arguments               */
+  gint32       num_args;       /* Number of procedure arguments              */
+  GParamSpec **args;           /* Array of procedure arguments               */
 
   /*  Output values  */
-  gint32            num_values;/* Number of return values                    */
-  GimpArgumentSpec *values;    /* Array of return values                     */
+  gint32       num_values;     /* Number of return values                    */
+  GParamSpec **values;         /* Array of return values                     */
 
   /*  Method of procedure execution  */
   union _ExecMethod
@@ -148,17 +148,15 @@ void            gimp_procedure_add_compat_value   (GimpProcedure    *procedure,
                                                    const gchar      *name,
                                                    const gchar      *desc);
 
-GimpArgument  * gimp_procedure_get_arguments      (GimpProcedure    *procedure);
-GimpArgument  * gimp_procedure_get_return_values  (GimpProcedure    *procedure,
+GValueArray   * gimp_procedure_get_arguments      (GimpProcedure    *procedure);
+GValueArray   * gimp_procedure_get_return_values  (GimpProcedure    *procedure,
                                                    gboolean          success);
 
-GimpArgument  * gimp_procedure_execute            (GimpProcedure    *procedure,
+GValueArray   * gimp_procedure_execute            (GimpProcedure    *procedure,
                                                    Gimp             *gimp,
                                                    GimpContext      *context,
                                                    GimpProgress     *progress,
-                                                   GimpArgument     *args,
-                                                   gint              n_args,
-                                                   gint             *n_return_vals);
+                                                   GValueArray      *args);
 
 
 #endif  /*  __GIMP_PROCEDURE_H__  */

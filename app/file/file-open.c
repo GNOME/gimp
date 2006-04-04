@@ -56,7 +56,6 @@
 #include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
 
-#include "pdb/gimpargument.h"
 #include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
@@ -87,10 +86,9 @@ file_open_image (Gimp               *gimp,
                  const gchar       **mime_type,
                  GError            **error)
 {
-  GimpArgument *return_vals;
-  gint          n_return_vals;
-  gchar        *filename;
-  GimpImage    *image = NULL;
+  GValueArray *return_vals;
+  gchar       *filename;
+  GimpImage   *image = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -141,7 +139,6 @@ file_open_image (Gimp               *gimp,
 
   return_vals = procedural_db_run_proc (gimp, context, progress,
                                         file_proc->procedure->name,
-                                        &n_return_vals,
                                         GIMP_TYPE_INT32, run_mode,
                                         G_TYPE_STRING,   filename,
                                         G_TYPE_STRING,   entered_filename,
@@ -149,11 +146,11 @@ file_open_image (Gimp               *gimp,
 
   g_free (filename);
 
-  *status = g_value_get_enum (&return_vals[0].value);
+  *status = g_value_get_enum (&return_vals->values[0]);
 
   if (*status == GIMP_PDB_SUCCESS)
     {
-      image = gimp_value_get_image (&return_vals[1].value, gimp);
+      image = gimp_value_get_image (&return_vals->values[1], gimp);
 
       if (image)
         {
@@ -176,7 +173,7 @@ file_open_image (Gimp               *gimp,
                    _("Plug-In could not open image"));
     }
 
-  gimp_arguments_destroy (return_vals, n_return_vals);
+  g_value_array_free (return_vals);
 
   return image;
 }
@@ -215,8 +212,7 @@ file_open_thumbnail (Gimp          *gimp,
   if (procedure && procedure->num_args >= 2 && procedure->num_values >= 1)
     {
       GimpPDBStatusType  status;
-      GimpArgument      *return_vals;
-      gint               n_return_vals;
+      GValueArray       *return_vals;
       gchar             *filename;
       GimpImage         *image = NULL;
 
@@ -227,23 +223,22 @@ file_open_thumbnail (Gimp          *gimp,
 
       return_vals = procedural_db_run_proc (gimp, context, progress,
                                             procedure->name,
-                                            &n_return_vals,
                                             G_TYPE_STRING,   filename,
                                             GIMP_TYPE_INT32, size,
                                             G_TYPE_NONE);
 
       g_free (filename);
 
-      status = g_value_get_enum (&return_vals[0].value);
+      status = g_value_get_enum (&return_vals->values[0]);
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          image = gimp_value_get_image (&return_vals[1].value, gimp);
+          image = gimp_value_get_image (&return_vals->values[1], gimp);
 
-          if (n_return_vals >= 3)
+          if (return_vals->n_values >= 3)
             {
-              *image_width  = MAX (0, g_value_get_int (&return_vals[2].value));
-              *image_height = MAX (0, g_value_get_int (&return_vals[3].value));
+              *image_width  = MAX (0, g_value_get_int (&return_vals->values[2]));
+              *image_height = MAX (0, g_value_get_int (&return_vals->values[3]));
             }
 
           if (image)
@@ -257,7 +252,7 @@ file_open_thumbnail (Gimp          *gimp,
             }
         }
 
-      gimp_arguments_destroy (return_vals, n_return_vals);
+      g_value_array_free (return_vals);
 
       return image;
     }

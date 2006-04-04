@@ -1,3 +1,48 @@
+2006-04-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/pdb/pdb-types.h
+	* app/pdb/gimpargument.[ch]: removed struct GimpArgument, struct
+	GimpArgumentSpec, gimp_argument_init() and
+	gimp_arguments_destroy().
+
+	* app/pdb/gimpprocedure.h (struct GimpProcedure): use arrays of
+	GParamSpec* for kepping proc inargs/outargs.
+
+	* app/pdb/gimpprocedure.[ch]
+	* app/pdb/procedural_db.[ch]
+	* app/plug-in/plug-in-params.[ch]
+	* app/plug-in/plug-in-proc-frame.[ch]
+	* app/plug-in/plug-in-run.[ch]: use GValueArrays for procedure
+	arguments and return values. Removed all n_args and n_return_vals
+	parameters because GValueArrays know their length.
+
+	* app/batch.c
+	* app/actions/plug-in-commands.c
+	* app/actions/vectors-commands.c
+	* app/core/gimppdbprogress.c
+	* app/dialogs/about-dialog.c
+	* app/file/file-open.c
+	* app/file/file-save.c
+	* app/pdb/procedural-db-query.c
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-progress.c
+	* app/plug-in/plug-in-rc.c
+	* app/plug-in/plug-ins.c
+	* app/widgets/gimpbrushselect.c
+	* app/widgets/gimpfontselect.c
+	* app/widgets/gimpgradientselect.c
+	* app/widgets/gimphelp.c
+	* app/widgets/gimppaletteselect.c
+	* app/widgets/gimppatternselect.c
+	* app/widgets/gimppdbdialog.[ch]
+	* app/xcf/xcf.c
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/procedural_db.pdb: changed accordingly. Also
+	removed #include "gimpargument.h" from most files.
+
+	* app/pdb/*_cmds.c: regenerated.
+
 2006-04-04  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimpfont.c: moved new code to a utility function. Avoid
@@ -26,7 +71,7 @@
 	core now.
 
 	* app/pdb/gimpargument.[ch] (struct GimpArgument)
-	(struct GimpArgumentSpec): removed "value" member because the
+	(struct GimpArgumentSpec): removed "type" member because the
 	GValue's/GParamSpec's GType carries just as much information now.
 
 	(gimp_argument_type_to_pdb_arg_type): new function which maps

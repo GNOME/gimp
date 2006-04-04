@@ -61,11 +61,10 @@ static void       gimp_brush_select_set_property (GObject         *object,
                                                   const GValue    *value,
                                                   GParamSpec      *pspec);
 
-static GimpArgument *
+static GValueArray *
                   gimp_brush_select_run_callback (GimpPdbDialog   *dialog,
                                                   GimpObject      *object,
-                                                  gboolean         closing,
-                                                  gint            *n_return_vals);
+                                                  gboolean         closing);
 
 static void   gimp_brush_select_opacity_changed  (GimpContext     *context,
                                                   gdouble          opacity,
@@ -252,15 +251,14 @@ gimp_brush_select_set_property (GObject      *object,
     }
 }
 
-static GimpArgument *
+static GValueArray *
 gimp_brush_select_run_callback (GimpPdbDialog *dialog,
                                 GimpObject    *object,
-                                gboolean       closing,
-                                gint          *n_return_vals)
+                                gboolean       closing)
 {
-  GimpBrush    *brush = GIMP_BRUSH (object);
-  GimpArray    *array;
-  GimpArgument *return_vals;
+  GimpBrush   *brush = GIMP_BRUSH (object);
+  GimpArray   *array;
+  GValueArray *return_vals;
 
   array = gimp_array_new (temp_buf_data (brush->mask),
                           brush->mask->width *
@@ -273,7 +271,6 @@ gimp_brush_select_run_callback (GimpPdbDialog *dialog,
                             dialog->caller_context,
                             NULL,
                             dialog->callback_name,
-                            n_return_vals,
                             G_TYPE_STRING,        object->name,
                             G_TYPE_DOUBLE,        gimp_context_get_opacity (dialog->context) * 100.0,
                             GIMP_TYPE_INT32,      GIMP_BRUSH_SELECT (dialog)->spacing,

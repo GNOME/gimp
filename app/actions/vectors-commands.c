@@ -40,7 +40,6 @@
 #include "core/gimpstrokedesc.h"
 #include "core/gimptoolinfo.h"
 
-#include "pdb/gimpargument.h"
 #include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
@@ -313,7 +312,7 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
 {
   GimpImage     *image;
   GimpProcedure *procedure;
-  GimpArgument  *args;
+  GValueArray   *args;
   GimpDisplay   *display;
   return_if_no_image (image, data);
 
@@ -335,16 +334,16 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
   /*  plug-in arguments as if called by <Image>/Filters/...  */
   args = gimp_procedure_get_arguments (procedure);
 
-  g_value_set_int         (&args[0].value, GIMP_RUN_INTERACTIVE);
-  gimp_value_set_image    (&args[1].value, image);
-  gimp_value_set_drawable (&args[2].value, NULL /* unused */);
+  g_value_set_int         (&args->values[0], GIMP_RUN_INTERACTIVE);
+  gimp_value_set_image    (&args->values[1], image);
+  gimp_value_set_drawable (&args->values[2], NULL /* unused */);
 
   plug_in_run (image->gimp, action_data_get_context (data),
                GIMP_PROGRESS (display),
-               procedure, args, 3 /* not procedure->num_args */,
+               procedure, args,
                FALSE, TRUE, display ? gimp_display_get_ID (display) : 0);
 
-  gimp_arguments_destroy (args, procedure->num_args);
+  g_value_array_free (args);
 }
 
 void

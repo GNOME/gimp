@@ -25,7 +25,6 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
@@ -186,12 +185,12 @@ register_gradients_procs (Gimp *gimp)
 
 }
 
-static GimpArgument *
-gradients_refresh_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GimpArgument *args)
+static GValueArray *
+gradients_refresh_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
 {
   gimp_data_factory_data_refresh (gimp->gradient_factory);
   return gimp_procedure_get_return_values (procedure, TRUE);
@@ -213,20 +212,20 @@ static GimpProcedure gradients_refresh_proc =
   { { gradients_refresh_invoker } }
 };
 
-static GimpArgument *
-gradients_get_list_invoker (GimpProcedure      *procedure,
-                            Gimp               *gimp,
-                            GimpContext        *context,
-                            GimpProgress       *progress,
-                            const GimpArgument *args)
+static GValueArray *
+gradients_get_list_invoker (GimpProcedure     *procedure,
+                            Gimp              *gimp,
+                            GimpContext       *context,
+                            GimpProgress      *progress,
+                            const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   const gchar *filter;
   gint32 num_gradients = 0;
   gchar **gradient_list = NULL;
 
-  filter = g_value_get_string (&args[0].value);
+  filter = g_value_get_string (&args->values[0]);
 
   if (success)
     {
@@ -238,8 +237,8 @@ gradients_get_list_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      g_value_set_int (&return_vals[1].value, num_gradients);
-      gimp_value_take_stringarray (&return_vals[2].value, gradient_list, num_gradients);
+      g_value_set_int (&return_vals->values[1], num_gradients);
+      gimp_value_take_stringarray (&return_vals->values[2], gradient_list, num_gradients);
     }
 
   return return_vals;
@@ -261,22 +260,22 @@ static GimpProcedure gradients_get_list_proc =
   { { gradients_get_list_invoker } }
 };
 
-static GimpArgument *
-gradients_sample_uniform_invoker (GimpProcedure      *procedure,
-                                  Gimp               *gimp,
-                                  GimpContext        *context,
-                                  GimpProgress       *progress,
-                                  const GimpArgument *args)
+static GValueArray *
+gradients_sample_uniform_invoker (GimpProcedure     *procedure,
+                                  Gimp              *gimp,
+                                  GimpContext       *context,
+                                  GimpProgress      *progress,
+                                  const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   gint32 num_samples;
   gboolean reverse;
   gint32 array_length = 0;
   gdouble *color_samples = NULL;
 
-  num_samples = g_value_get_int (&args[0].value);
-  reverse = g_value_get_boolean (&args[1].value);
+  num_samples = g_value_get_int (&args->values[0]);
+  reverse = g_value_get_boolean (&args->values[1]);
 
   if (success)
     {
@@ -312,8 +311,8 @@ gradients_sample_uniform_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      g_value_set_int (&return_vals[1].value, array_length);
-      gimp_value_take_floatarray (&return_vals[2].value, color_samples, array_length);
+      g_value_set_int (&return_vals->values[1], array_length);
+      gimp_value_take_floatarray (&return_vals->values[2], color_samples, array_length);
     }
 
   return return_vals;
@@ -335,24 +334,24 @@ static GimpProcedure gradients_sample_uniform_proc =
   { { gradients_sample_uniform_invoker } }
 };
 
-static GimpArgument *
-gradients_sample_custom_invoker (GimpProcedure      *procedure,
-                                 Gimp               *gimp,
-                                 GimpContext        *context,
-                                 GimpProgress       *progress,
-                                 const GimpArgument *args)
+static GValueArray *
+gradients_sample_custom_invoker (GimpProcedure     *procedure,
+                                 Gimp              *gimp,
+                                 GimpContext       *context,
+                                 GimpProgress      *progress,
+                                 const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   gint32 num_samples;
   const gdouble *positions;
   gboolean reverse;
   gint32 array_length = 0;
   gdouble *color_samples = NULL;
 
-  num_samples = g_value_get_int (&args[0].value);
-  positions = gimp_value_get_floatarray (&args[1].value);
-  reverse = g_value_get_boolean (&args[2].value);
+  num_samples = g_value_get_int (&args->values[0]);
+  positions = gimp_value_get_floatarray (&args->values[1]);
+  reverse = g_value_get_boolean (&args->values[2]);
 
   if (success)
     {
@@ -385,8 +384,8 @@ gradients_sample_custom_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      g_value_set_int (&return_vals[1].value, array_length);
-      gimp_value_take_floatarray (&return_vals[2].value, color_samples, array_length);
+      g_value_set_int (&return_vals->values[1], array_length);
+      gimp_value_take_floatarray (&return_vals->values[2], color_samples, array_length);
     }
 
   return return_vals;
@@ -408,15 +407,15 @@ static GimpProcedure gradients_sample_custom_proc =
   { { gradients_sample_custom_invoker } }
 };
 
-static GimpArgument *
-gradients_get_gradient_data_invoker (GimpProcedure      *procedure,
-                                     Gimp               *gimp,
-                                     GimpContext        *context,
-                                     GimpProgress       *progress,
-                                     const GimpArgument *args)
+static GValueArray *
+gradients_get_gradient_data_invoker (GimpProcedure     *procedure,
+                                     Gimp              *gimp,
+                                     GimpContext       *context,
+                                     GimpProgress      *progress,
+                                     const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   const gchar *name;
   gint32 sample_size;
   gboolean reverse;
@@ -424,9 +423,9 @@ gradients_get_gradient_data_invoker (GimpProcedure      *procedure,
   gint32 width = 0;
   gdouble *grad_data = NULL;
 
-  name = g_value_get_string (&args[0].value);
-  sample_size = g_value_get_int (&args[1].value);
-  reverse = g_value_get_boolean (&args[2].value);
+  name = g_value_get_string (&args->values[0]);
+  sample_size = g_value_get_int (&args->values[1]);
+  reverse = g_value_get_boolean (&args->values[2]);
 
   if (success)
     {
@@ -482,9 +481,9 @@ gradients_get_gradient_data_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      g_value_take_string (&return_vals[1].value, actual_name);
-      g_value_set_int (&return_vals[2].value, width);
-      gimp_value_take_floatarray (&return_vals[3].value, grad_data, width);
+      g_value_take_string (&return_vals->values[1], actual_name);
+      g_value_set_int (&return_vals->values[2], width);
+      gimp_value_take_floatarray (&return_vals->values[3], grad_data, width);
     }
 
   return return_vals;

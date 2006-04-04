@@ -25,7 +25,6 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
@@ -515,20 +514,20 @@ register_paths_procs (Gimp *gimp)
 
 }
 
-static GimpArgument *
-path_list_invoker (GimpProcedure      *procedure,
-                   Gimp               *gimp,
-                   GimpContext        *context,
-                   GimpProgress       *progress,
-                   const GimpArgument *args)
+static GValueArray *
+path_list_invoker (GimpProcedure     *procedure,
+                   Gimp              *gimp,
+                   GimpContext       *context,
+                   GimpProgress      *progress,
+                   const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   gint32 num_paths = 0;
   gchar **path_list = NULL;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -539,8 +538,8 @@ path_list_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      g_value_set_int (&return_vals[1].value, num_paths);
-      gimp_value_take_stringarray (&return_vals[2].value, path_list, num_paths);
+      g_value_set_int (&return_vals->values[1], num_paths);
+      gimp_value_take_stringarray (&return_vals->values[2], path_list, num_paths);
     }
 
   return return_vals;
@@ -562,19 +561,19 @@ static GimpProcedure path_list_proc =
   { { path_list_invoker } }
 };
 
-static GimpArgument *
-path_get_current_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GimpArgument *args)
+static GValueArray *
+path_get_current_invoker (GimpProcedure     *procedure,
+                          Gimp              *gimp,
+                          GimpContext       *context,
+                          GimpProgress      *progress,
+                          const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   gchar *name = NULL;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -589,7 +588,7 @@ path_get_current_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_take_string (&return_vals[1].value, name);
+    g_value_take_string (&return_vals->values[1], name);
 
   return return_vals;
 }
@@ -610,19 +609,19 @@ static GimpProcedure path_get_current_proc =
   { { path_get_current_invoker } }
 };
 
-static GimpArgument *
-path_set_current_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GimpArgument *args)
+static GValueArray *
+path_set_current_invoker (GimpProcedure     *procedure,
+                          Gimp              *gimp,
+                          GimpContext       *context,
+                          GimpProgress      *progress,
+                          const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
   const gchar *name;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  name = g_value_get_string (&args[1].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  name = g_value_get_string (&args->values[1]);
 
   if (success)
     {
@@ -653,19 +652,19 @@ static GimpProcedure path_set_current_proc =
   { { path_set_current_invoker } }
 };
 
-static GimpArgument *
-path_delete_invoker (GimpProcedure      *procedure,
-                     Gimp               *gimp,
-                     GimpContext        *context,
-                     GimpProgress       *progress,
-                     const GimpArgument *args)
+static GValueArray *
+path_delete_invoker (GimpProcedure     *procedure,
+                     Gimp              *gimp,
+                     GimpContext       *context,
+                     GimpProgress      *progress,
+                     const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
   const gchar *name;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  name = g_value_get_string (&args[1].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  name = g_value_get_string (&args->values[1]);
 
   if (success)
     {
@@ -696,15 +695,15 @@ static GimpProcedure path_delete_proc =
   { { path_delete_invoker } }
 };
 
-static GimpArgument *
-path_get_points_invoker (GimpProcedure      *procedure,
-                         Gimp               *gimp,
-                         GimpContext        *context,
-                         GimpProgress       *progress,
-                         const GimpArgument *args)
+static GValueArray *
+path_get_points_invoker (GimpProcedure     *procedure,
+                         Gimp              *gimp,
+                         GimpContext       *context,
+                         GimpProgress      *progress,
+                         const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   const gchar *name;
   gint32 path_type = 0;
@@ -712,8 +711,8 @@ path_get_points_invoker (GimpProcedure      *procedure,
   gint32 num_path_point_details = 0;
   gdouble *points_pairs = NULL;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  name = g_value_get_string (&args[1].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  name = g_value_get_string (&args->values[1]);
 
   if (success)
     {
@@ -760,10 +759,10 @@ path_get_points_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      g_value_set_int (&return_vals[1].value, path_type);
-      g_value_set_int (&return_vals[2].value, path_closed);
-      g_value_set_int (&return_vals[3].value, num_path_point_details);
-      gimp_value_take_floatarray (&return_vals[4].value, points_pairs, num_path_point_details);
+      g_value_set_int (&return_vals->values[1], path_type);
+      g_value_set_int (&return_vals->values[2], path_closed);
+      g_value_set_int (&return_vals->values[3], num_path_point_details);
+      gimp_value_take_floatarray (&return_vals->values[4], points_pairs, num_path_point_details);
     }
 
   return return_vals;
@@ -785,12 +784,12 @@ static GimpProcedure path_get_points_proc =
   { { path_get_points_invoker } }
 };
 
-static GimpArgument *
-path_set_points_invoker (GimpProcedure      *procedure,
-                         Gimp               *gimp,
-                         GimpContext        *context,
-                         GimpProgress       *progress,
-                         const GimpArgument *args)
+static GValueArray *
+path_set_points_invoker (GimpProcedure     *procedure,
+                         Gimp              *gimp,
+                         GimpContext       *context,
+                         GimpProgress      *progress,
+                         const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -799,11 +798,11 @@ path_set_points_invoker (GimpProcedure      *procedure,
   gint32 num_path_points;
   const gdouble *points_pairs;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  name = g_value_get_string (&args[1].value);
-  ptype = g_value_get_int (&args[2].value);
-  num_path_points = g_value_get_int (&args[3].value);
-  points_pairs = gimp_value_get_floatarray (&args[4].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  name = g_value_get_string (&args->values[1]);
+  ptype = g_value_get_int (&args->values[2]);
+  num_path_points = g_value_get_int (&args->values[3]);
+  points_pairs = gimp_value_get_floatarray (&args->values[4]);
 
   if (success)
     {
@@ -866,17 +865,17 @@ static GimpProcedure path_set_points_proc =
   { { path_set_points_invoker } }
 };
 
-static GimpArgument *
-path_stroke_current_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GimpArgument *args)
+static GValueArray *
+path_stroke_current_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -917,23 +916,23 @@ static GimpProcedure path_stroke_current_proc =
   { { path_stroke_current_invoker } }
 };
 
-static GimpArgument *
-path_get_point_at_dist_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GimpArgument *args)
+static GValueArray *
+path_get_point_at_dist_invoker (GimpProcedure     *procedure,
+                                Gimp              *gimp,
+                                GimpContext       *context,
+                                GimpProgress      *progress,
+                                const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   gdouble distance;
   gint32 x_point = 0;
   gint32 y_point = 0;
   gdouble slope = 0.0;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  distance = g_value_get_double (&args[1].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  distance = g_value_get_double (&args->values[1]);
 
   if (success)
     {
@@ -992,9 +991,9 @@ path_get_point_at_dist_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      g_value_set_int (&return_vals[1].value, x_point);
-      g_value_set_int (&return_vals[2].value, y_point);
-      g_value_set_double (&return_vals[3].value, slope);
+      g_value_set_int (&return_vals->values[1], x_point);
+      g_value_set_int (&return_vals->values[2], y_point);
+      g_value_set_double (&return_vals->values[3], slope);
     }
 
   return return_vals;
@@ -1016,21 +1015,21 @@ static GimpProcedure path_get_point_at_dist_proc =
   { { path_get_point_at_dist_invoker } }
 };
 
-static GimpArgument *
-path_get_tattoo_invoker (GimpProcedure      *procedure,
-                         Gimp               *gimp,
-                         GimpContext        *context,
-                         GimpProgress       *progress,
-                         const GimpArgument *args)
+static GValueArray *
+path_get_tattoo_invoker (GimpProcedure     *procedure,
+                         Gimp              *gimp,
+                         GimpContext       *context,
+                         GimpProgress      *progress,
+                         const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   const gchar *name;
   gint32 tattoo = 0;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  name = g_value_get_string (&args[1].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  name = g_value_get_string (&args->values[1]);
 
   if (success)
     {
@@ -1045,7 +1044,7 @@ path_get_tattoo_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_set_int (&return_vals[1].value, tattoo);
+    g_value_set_int (&return_vals->values[1], tattoo);
 
   return return_vals;
 }
@@ -1066,21 +1065,21 @@ static GimpProcedure path_get_tattoo_proc =
   { { path_get_tattoo_invoker } }
 };
 
-static GimpArgument *
-path_set_tattoo_invoker (GimpProcedure      *procedure,
-                         Gimp               *gimp,
-                         GimpContext        *context,
-                         GimpProgress       *progress,
-                         const GimpArgument *args)
+static GValueArray *
+path_set_tattoo_invoker (GimpProcedure     *procedure,
+                         Gimp              *gimp,
+                         GimpContext       *context,
+                         GimpProgress      *progress,
+                         const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
   const gchar *name;
   gint32 tattovalue;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  name = g_value_get_string (&args[1].value);
-  tattovalue = g_value_get_int (&args[2].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  name = g_value_get_string (&args->values[1]);
+  tattovalue = g_value_get_int (&args->values[2]);
 
   if (success)
     {
@@ -1111,21 +1110,21 @@ static GimpProcedure path_set_tattoo_proc =
   { { path_set_tattoo_invoker } }
 };
 
-static GimpArgument *
-get_path_by_tattoo_invoker (GimpProcedure      *procedure,
-                            Gimp               *gimp,
-                            GimpContext        *context,
-                            GimpProgress       *progress,
-                            const GimpArgument *args)
+static GValueArray *
+get_path_by_tattoo_invoker (GimpProcedure     *procedure,
+                            Gimp              *gimp,
+                            GimpContext       *context,
+                            GimpProgress      *progress,
+                            const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   gint32 tattoo;
   gchar *name = NULL;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  tattoo = g_value_get_int (&args[1].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  tattoo = g_value_get_int (&args->values[1]);
 
   if (success)
     {
@@ -1140,7 +1139,7 @@ get_path_by_tattoo_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_take_string (&return_vals[1].value, name);
+    g_value_take_string (&return_vals->values[1], name);
 
   return return_vals;
 }
@@ -1161,21 +1160,21 @@ static GimpProcedure get_path_by_tattoo_proc =
   { { get_path_by_tattoo_invoker } }
 };
 
-static GimpArgument *
-path_get_locked_invoker (GimpProcedure      *procedure,
-                         Gimp               *gimp,
-                         GimpContext        *context,
-                         GimpProgress       *progress,
-                         const GimpArgument *args)
+static GValueArray *
+path_get_locked_invoker (GimpProcedure     *procedure,
+                         Gimp              *gimp,
+                         GimpContext       *context,
+                         GimpProgress      *progress,
+                         const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   const gchar *name;
   gboolean locked = FALSE;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  name = g_value_get_string (&args[1].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  name = g_value_get_string (&args->values[1]);
 
   if (success)
     {
@@ -1190,7 +1189,7 @@ path_get_locked_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_set_boolean (&return_vals[1].value, locked);
+    g_value_set_boolean (&return_vals->values[1], locked);
 
   return return_vals;
 }
@@ -1211,21 +1210,21 @@ static GimpProcedure path_get_locked_proc =
   { { path_get_locked_invoker } }
 };
 
-static GimpArgument *
-path_set_locked_invoker (GimpProcedure      *procedure,
-                         Gimp               *gimp,
-                         GimpContext        *context,
-                         GimpProgress       *progress,
-                         const GimpArgument *args)
+static GValueArray *
+path_set_locked_invoker (GimpProcedure     *procedure,
+                         Gimp              *gimp,
+                         GimpContext       *context,
+                         GimpProgress      *progress,
+                         const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
   const gchar *name;
   gboolean locked;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  name = g_value_get_string (&args[1].value);
-  locked = g_value_get_boolean (&args[2].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  name = g_value_get_string (&args->values[1]);
+  locked = g_value_get_boolean (&args->values[2]);
 
   if (success)
     {
@@ -1256,12 +1255,12 @@ static GimpProcedure path_set_locked_proc =
   { { path_set_locked_invoker } }
 };
 
-static GimpArgument *
-path_to_selection_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GimpArgument *args)
+static GValueArray *
+path_to_selection_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -1272,13 +1271,13 @@ path_to_selection_invoker (GimpProcedure      *procedure,
   gdouble feather_radius_x;
   gdouble feather_radius_y;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  name = g_value_get_string (&args[1].value);
-  op = g_value_get_enum (&args[2].value);
-  antialias = g_value_get_boolean (&args[3].value);
-  feather = g_value_get_boolean (&args[4].value);
-  feather_radius_x = g_value_get_double (&args[5].value);
-  feather_radius_y = g_value_get_double (&args[6].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  name = g_value_get_string (&args->values[1]);
+  op = g_value_get_enum (&args->values[2]);
+  antialias = g_value_get_boolean (&args->values[3]);
+  feather = g_value_get_boolean (&args->values[4]);
+  feather_radius_x = g_value_get_double (&args->values[5]);
+  feather_radius_y = g_value_get_double (&args->values[6]);
 
   if (success)
     {
@@ -1316,12 +1315,12 @@ static GimpProcedure path_to_selection_proc =
   { { path_to_selection_invoker } }
 };
 
-static GimpArgument *
-path_import_invoker (GimpProcedure      *procedure,
-                     Gimp               *gimp,
-                     GimpContext        *context,
-                     GimpProgress       *progress,
-                     const GimpArgument *args)
+static GValueArray *
+path_import_invoker (GimpProcedure     *procedure,
+                     Gimp              *gimp,
+                     GimpContext       *context,
+                     GimpProgress      *progress,
+                     const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -1329,10 +1328,10 @@ path_import_invoker (GimpProcedure      *procedure,
   gboolean merge;
   gboolean scale;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  filename = g_value_get_string (&args[1].value);
-  merge = g_value_get_boolean (&args[2].value);
-  scale = g_value_get_boolean (&args[3].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  filename = g_value_get_string (&args->values[1]);
+  merge = g_value_get_boolean (&args->values[2]);
+  scale = g_value_get_boolean (&args->values[3]);
 
   if (success)
     {
@@ -1358,12 +1357,12 @@ static GimpProcedure path_import_proc =
   { { path_import_invoker } }
 };
 
-static GimpArgument *
-path_import_string_invoker (GimpProcedure      *procedure,
-                            Gimp               *gimp,
-                            GimpContext        *context,
-                            GimpProgress       *progress,
-                            const GimpArgument *args)
+static GValueArray *
+path_import_string_invoker (GimpProcedure     *procedure,
+                            Gimp              *gimp,
+                            GimpContext       *context,
+                            GimpProgress      *progress,
+                            const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -1372,11 +1371,11 @@ path_import_string_invoker (GimpProcedure      *procedure,
   gboolean merge;
   gboolean scale;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  string = g_value_get_string (&args[1].value);
-  length = g_value_get_int (&args[2].value);
-  merge = g_value_get_boolean (&args[3].value);
-  scale = g_value_get_boolean (&args[4].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  string = g_value_get_string (&args->values[1]);
+  length = g_value_get_int (&args->values[2]);
+  merge = g_value_get_boolean (&args->values[3]);
+  scale = g_value_get_boolean (&args->values[4]);
 
   if (success)
     {

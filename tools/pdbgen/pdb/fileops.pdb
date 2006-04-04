@@ -51,16 +51,15 @@ HELP
 	no_marshalling => 1,
 	code => <<'CODE'
 {
-  GimpArgument  *new_args;
-  GimpArgument  *return_vals;
+  GValueArray   *new_args;
+  GValueArray   *return_vals;
   PlugInProcDef *file_proc;
   GimpProcedure *proc;
   gchar         *uri;
-  gint           n_return_vals;
   gint           i;
 
   uri = file_utils_filename_to_uri (gimp->load_procs,
-                                    g_value_get_string (&args[1].value),
+                                    g_value_get_string (&args->values[1]),
                                     NULL);
 
   if (! uri)
@@ -78,18 +77,17 @@ HELP
   new_args = gimp_procedure_get_arguments (proc);
 
   for (i = 0; i < 3; i++)
-    g_value_transform (&args[i].value, &new_args[i].value);
+    g_value_transform (&args->values[i], &new_args->values[i]);
 
   for (i = 3; i < proc->num_args; i++)
-    if (G_IS_PARAM_SPEC_STRING (proc->args[i].pspec))	
-      g_value_set_static_string (&new_args[i].value, "")	;
+    if (G_IS_PARAM_SPEC_STRING (proc->args[i]))	
+      g_value_set_static_string (&new_args->values[i], "")	;
 
   return_vals = procedural_db_execute (gimp, context, progress,
                                        proc->name,
-                                       new_args, proc->num_args,
-                                       &n_return_vals);
+                                       new_args);
 
-  gimp_arguments_destroy (new_args, proc->num_args);
+  g_value_array_free (new_args);
 
   return return_vals;
 }
@@ -178,16 +176,15 @@ HELP
 	no_marshalling => 1,
 	code => <<'CODE'
 {
-  GimpArgument  *new_args;
-  GimpArgument  *return_vals;
+  GValueArray   *new_args;
+  GValueArray   *return_vals;
   PlugInProcDef *file_proc;
   GimpProcedure *proc;
   gchar         *uri;
-  gint           n_return_vals;
   gint           i;
 
   uri = file_utils_filename_to_uri (gimp->load_procs,
-                                    g_value_get_string (&args[3].value),
+                                    g_value_get_string (&args->values[3]),
                                     NULL);
 
   if (! uri)
@@ -205,18 +202,17 @@ HELP
   new_args = gimp_procedure_get_arguments (proc);
 
   for (i = 0; i < 5; i++)
-    g_value_transform (&args[i].value, &new_args[i].value);
+    g_value_transform (&args->values[i], &new_args->values[i]);
 
   for (i = 5; i < proc->num_args; i++)
-    if (G_IS_PARAM_SPEC_STRING (proc->args[i].pspec))
-      g_value_set_static_string (&new_args[i].value, "");
+    if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
+      g_value_set_static_string (&new_args->values[i], "");
 
   return_vals = procedural_db_execute (gimp, context, progress,
                                        proc->name,
-                                       new_args, proc->num_args,
-                                       &n_return_vals);
+                                       new_args);
 
-  gimp_arguments_destroy (new_args, proc->num_args);
+  g_value_array_free (new_args);
 
   return return_vals;
 }
@@ -496,12 +492,12 @@ HELP
   proc = procedural_db_lookup (gimp, canonical);
 
   if (proc &&
-      ((proc->num_args < 5)                                   ||
-       ! GIMP_IS_PARAM_SPEC_INT32       (proc->args[0].pspec) ||
-       ! GIMP_IS_PARAM_SPEC_IMAGE_ID    (proc->args[1].pspec) ||
-       ! GIMP_IS_PARAM_SPEC_DRAWABLE_ID (proc->args[2].pspec) ||
-       ! G_IS_PARAM_SPEC_STRING         (proc->args[3].pspec) ||
-       ! G_IS_PARAM_SPEC_STRING         (proc->args[4].pspec)))
+      ((proc->num_args < 5)                             ||
+       ! GIMP_IS_PARAM_SPEC_INT32       (proc->args[0]) ||
+       ! GIMP_IS_PARAM_SPEC_IMAGE_ID    (proc->args[1]) ||
+       ! GIMP_IS_PARAM_SPEC_DRAWABLE_ID (proc->args[2]) ||
+       ! G_IS_PARAM_SPEC_STRING         (proc->args[3]) ||
+       ! G_IS_PARAM_SPEC_STRING         (proc->args[4])))
     {
       g_message ("save handler \"%s\" does not take the standard save handler args",
 		 canonical);
@@ -619,12 +615,12 @@ fileops_register_magic_load_handler (Gimp        *gimp,
   procedure = procedural_db_lookup (gimp, canonical);
 
   if (procedure &&
-      ((procedure->num_args   < 3)                              ||
-       (procedure->num_values < 1)                              ||
-       ! GIMP_IS_PARAM_SPEC_INT32    (procedure->args[0].pspec) ||
-       ! G_IS_PARAM_SPEC_STRING      (procedure->args[1].pspec) ||
-       ! G_IS_PARAM_SPEC_STRING      (procedure->args[2].pspec) ||
-       ! GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->values[0].pspec)))
+      ((procedure->num_args   < 3)                        ||
+       (procedure->num_values < 1)                        ||
+       ! GIMP_IS_PARAM_SPEC_INT32    (procedure->args[0]) ||
+       ! G_IS_PARAM_SPEC_STRING      (procedure->args[1]) ||
+       ! G_IS_PARAM_SPEC_STRING      (procedure->args[2]) ||
+       ! GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->values[0])))
     {
       g_message ("load handler \"%s\" does not take the standard load handler args",
 		 canonical);

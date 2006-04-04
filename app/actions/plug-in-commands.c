@@ -37,7 +37,6 @@
 #include "plug-in/plug-in-run.h"
 #include "plug-in/plug-in-proc-def.h"
 
-#include "pdb/gimpargument.h"
 #include "pdb/gimpprocedure.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -68,7 +67,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
 {
   Gimp          *gimp;
   GimpProcedure *procedure;
-  GimpArgument  *args;
+  GValueArray   *args;
   gint           n_args  = 0;
   GimpDisplay   *display = NULL;
   return_if_no_gimp (gimp, data);
@@ -78,7 +77,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
   args = gimp_procedure_get_arguments (procedure);
 
   /* initialize the first argument  */
-  g_value_set_int (&args[n_args].value, GIMP_RUN_INTERACTIVE);
+  g_value_set_int (&args->values[n_args], GIMP_RUN_INTERACTIVE);
   n_args++;
 
   switch (procedure->proc_type)
@@ -88,18 +87,18 @@ plug_in_run_cmd_callback (GtkAction     *action,
 
     case GIMP_PLUGIN:
     case GIMP_TEMPORARY:
-      if (procedure->num_args > n_args &&
-          GIMP_VALUE_HOLDS_IMAGE_ID (&args[n_args].value))
+      if (args->n_values > n_args &&
+          GIMP_VALUE_HOLDS_IMAGE_ID (&args->values[n_args]))
         {
           display = action_data_get_display (data);
 
           if (display)
             {
-              gimp_value_set_image (&args[n_args].value, display->image);
+              gimp_value_set_image (&args->values[n_args], display->image);
               n_args++;
 
-              if (procedure->num_args > n_args &&
-                  GIMP_VALUE_HOLDS_DRAWABLE_ID (&args[n_args].value));
+              if (args->n_values > n_args &&
+                  GIMP_VALUE_HOLDS_DRAWABLE_ID (&args->values[n_args]));
                 {
                   GimpDrawable *drawable;
 
@@ -107,7 +106,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
 
                   if (drawable)
                     {
-                      gimp_value_set_drawable (&args[n_args].value, drawable);
+                      gimp_value_set_drawable (&args->values[n_args], drawable);
                       n_args++;
                     }
                   else
@@ -128,20 +127,20 @@ plug_in_run_cmd_callback (GtkAction     *action,
   /* run the plug-in procedure */
   plug_in_run (gimp, gimp_get_user_context (gimp),
                GIMP_PROGRESS (display),
-               procedure, args, n_args, FALSE, TRUE,
+               procedure, args, FALSE, TRUE,
                display ? gimp_display_get_ID (display) : -1);
 
   /* remember only "standard" plug-ins */
-  if (procedure->proc_type == GIMP_PLUGIN                       &&
-      procedure->num_args  >= 3                                 &&
-      GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1].pspec) &&
-      GIMP_IS_PARAM_SPEC_DRAWABLE_ID (procedure->args[2].pspec))
+  if (procedure->proc_type == GIMP_PLUGIN                 &&
+      procedure->num_args  >= 3                           &&
+      GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1]) &&
+      GIMP_IS_PARAM_SPEC_DRAWABLE_ID (procedure->args[2]))
     {
       gimp_set_last_plug_in (gimp, proc_def);
     }
 
  error:
-  gimp_arguments_destroy (args, procedure->num_args);
+  g_value_array_free (args);
 }
 
 void

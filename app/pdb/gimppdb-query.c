@@ -404,18 +404,18 @@ procedural_db_print_entry (gpointer key,
       fprintf (file, "( ");
       for (i = 0; i < procedure->num_args; i++)
         {
-          GimpArgumentSpec *arg = &procedure->args[i];
-          GimpPDBArgType    arg_type;
+          GParamSpec     *pspec = procedure->args[i];
+          GimpPDBArgType  arg_type;
 
           fprintf (file, "( ");
 
-          arg_type = gimp_argument_type_to_pdb_arg_type (arg->pspec->value_type);
+          arg_type = gimp_argument_type_to_pdb_arg_type (pspec->value_type);
 
           arg_value = g_enum_get_value (arg_class, arg_type);
 
-          output_string (file, g_param_spec_get_name (arg->pspec));
+          output_string (file, g_param_spec_get_name (pspec));
           output_string (file, arg_value->value_name);
-          output_string (file, g_param_spec_get_blurb (arg->pspec));
+          output_string (file, g_param_spec_get_blurb (pspec));
 
           fprintf (file, " ) ");
         }
@@ -424,18 +424,18 @@ procedural_db_print_entry (gpointer key,
       fprintf (file, "( ");
       for (i = 0; i < procedure->num_values; i++)
         {
-          GimpArgumentSpec *arg = &procedure->values[i];
-          GimpPDBArgType    arg_type;
+          GParamSpec     *pspec = procedure->values[i];
+          GimpPDBArgType  arg_type;
 
           fprintf (file, "( ");
 
-          arg_type = gimp_argument_type_to_pdb_arg_type (arg->pspec->value_type);
+          arg_type = gimp_argument_type_to_pdb_arg_type (pspec->value_type);
 
           arg_value = g_enum_get_value (arg_class, arg_type);
 
-          output_string (file, g_param_spec_get_name (arg->pspec));
+          output_string (file, g_param_spec_get_name (pspec));
           output_string (file, arg_value->value_name);
-          output_string (file, g_param_spec_get_blurb (arg->pspec));
+          output_string (file, g_param_spec_get_blurb (pspec));
 
           fprintf (file, " ) ");
         }

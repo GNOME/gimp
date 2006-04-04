@@ -27,7 +27,6 @@
 #include "libgimpcolor/gimpcolor.h"
 
 #include "pdb-types.h"
-#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
@@ -260,20 +259,20 @@ register_grid_procs (Gimp *gimp)
 
 }
 
-static GimpArgument *
-image_grid_get_spacing_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GimpArgument *args)
+static GValueArray *
+image_grid_get_spacing_invoker (GimpProcedure     *procedure,
+                                Gimp              *gimp,
+                                GimpContext       *context,
+                                GimpProgress      *progress,
+                                const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   gdouble xspacing = 0.0;
   gdouble yspacing = 0.0;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -292,8 +291,8 @@ image_grid_get_spacing_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      g_value_set_double (&return_vals[1].value, xspacing);
-      g_value_set_double (&return_vals[2].value, yspacing);
+      g_value_set_double (&return_vals->values[1], xspacing);
+      g_value_set_double (&return_vals->values[2], yspacing);
     }
 
   return return_vals;
@@ -315,21 +314,21 @@ static GimpProcedure image_grid_get_spacing_proc =
   { { image_grid_get_spacing_invoker } }
 };
 
-static GimpArgument *
-image_grid_set_spacing_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GimpArgument *args)
+static GValueArray *
+image_grid_set_spacing_invoker (GimpProcedure     *procedure,
+                                Gimp              *gimp,
+                                GimpContext       *context,
+                                GimpProgress      *progress,
+                                const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
   gdouble xspacing;
   gdouble yspacing;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  xspacing = g_value_get_double (&args[1].value);
-  yspacing = g_value_get_double (&args[2].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  xspacing = g_value_get_double (&args->values[1]);
+  yspacing = g_value_get_double (&args->values[2]);
 
   if (success)
     {
@@ -363,20 +362,20 @@ static GimpProcedure image_grid_set_spacing_proc =
   { { image_grid_set_spacing_invoker } }
 };
 
-static GimpArgument *
-image_grid_get_offset_invoker (GimpProcedure      *procedure,
-                               Gimp               *gimp,
-                               GimpContext        *context,
-                               GimpProgress       *progress,
-                               const GimpArgument *args)
+static GValueArray *
+image_grid_get_offset_invoker (GimpProcedure     *procedure,
+                               Gimp              *gimp,
+                               GimpContext       *context,
+                               GimpProgress      *progress,
+                               const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   gdouble xoffset = 0.0;
   gdouble yoffset = 0.0;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -395,8 +394,8 @@ image_grid_get_offset_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      g_value_set_double (&return_vals[1].value, xoffset);
-      g_value_set_double (&return_vals[2].value, yoffset);
+      g_value_set_double (&return_vals->values[1], xoffset);
+      g_value_set_double (&return_vals->values[2], yoffset);
     }
 
   return return_vals;
@@ -418,21 +417,21 @@ static GimpProcedure image_grid_get_offset_proc =
   { { image_grid_get_offset_invoker } }
 };
 
-static GimpArgument *
-image_grid_set_offset_invoker (GimpProcedure      *procedure,
-                               Gimp               *gimp,
-                               GimpContext        *context,
-                               GimpProgress       *progress,
-                               const GimpArgument *args)
+static GValueArray *
+image_grid_set_offset_invoker (GimpProcedure     *procedure,
+                               Gimp              *gimp,
+                               GimpContext       *context,
+                               GimpProgress      *progress,
+                               const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
   gdouble xoffset;
   gdouble yoffset;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  xoffset = g_value_get_double (&args[1].value);
-  yoffset = g_value_get_double (&args[2].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  xoffset = g_value_get_double (&args->values[1]);
+  yoffset = g_value_get_double (&args->values[2]);
 
   if (success)
     {
@@ -466,19 +465,19 @@ static GimpProcedure image_grid_set_offset_proc =
   { { image_grid_set_offset_invoker } }
 };
 
-static GimpArgument *
-image_grid_get_foreground_color_invoker (GimpProcedure      *procedure,
-                                         Gimp               *gimp,
-                                         GimpContext        *context,
-                                         GimpProgress       *progress,
-                                         const GimpArgument *args)
+static GValueArray *
+image_grid_get_foreground_color_invoker (GimpProcedure     *procedure,
+                                         Gimp              *gimp,
+                                         GimpContext       *context,
+                                         GimpProgress      *progress,
+                                         const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   GimpRGB fgcolor = { 0.0, 0.0, 0.0, 1.0 };
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -493,7 +492,7 @@ image_grid_get_foreground_color_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_rgb (&return_vals[1].value, &fgcolor);
+    gimp_value_set_rgb (&return_vals->values[1], &fgcolor);
 
   return return_vals;
 }
@@ -514,19 +513,19 @@ static GimpProcedure image_grid_get_foreground_color_proc =
   { { image_grid_get_foreground_color_invoker } }
 };
 
-static GimpArgument *
-image_grid_set_foreground_color_invoker (GimpProcedure      *procedure,
-                                         Gimp               *gimp,
-                                         GimpContext        *context,
-                                         GimpProgress       *progress,
-                                         const GimpArgument *args)
+static GValueArray *
+image_grid_set_foreground_color_invoker (GimpProcedure     *procedure,
+                                         Gimp              *gimp,
+                                         GimpContext       *context,
+                                         GimpProgress      *progress,
+                                         const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
   GimpRGB fgcolor;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  gimp_value_get_rgb (&args[1].value, &fgcolor);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  gimp_value_get_rgb (&args->values[1], &fgcolor);
 
   if (success)
     {
@@ -557,19 +556,19 @@ static GimpProcedure image_grid_set_foreground_color_proc =
   { { image_grid_set_foreground_color_invoker } }
 };
 
-static GimpArgument *
-image_grid_get_background_color_invoker (GimpProcedure      *procedure,
-                                         Gimp               *gimp,
-                                         GimpContext        *context,
-                                         GimpProgress       *progress,
-                                         const GimpArgument *args)
+static GValueArray *
+image_grid_get_background_color_invoker (GimpProcedure     *procedure,
+                                         Gimp              *gimp,
+                                         GimpContext       *context,
+                                         GimpProgress      *progress,
+                                         const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   GimpRGB bgcolor = { 0.0, 0.0, 0.0, 1.0 };
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -584,7 +583,7 @@ image_grid_get_background_color_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_rgb (&return_vals[1].value, &bgcolor);
+    gimp_value_set_rgb (&return_vals->values[1], &bgcolor);
 
   return return_vals;
 }
@@ -605,19 +604,19 @@ static GimpProcedure image_grid_get_background_color_proc =
   { { image_grid_get_background_color_invoker } }
 };
 
-static GimpArgument *
-image_grid_set_background_color_invoker (GimpProcedure      *procedure,
-                                         Gimp               *gimp,
-                                         GimpContext        *context,
-                                         GimpProgress       *progress,
-                                         const GimpArgument *args)
+static GValueArray *
+image_grid_set_background_color_invoker (GimpProcedure     *procedure,
+                                         Gimp              *gimp,
+                                         GimpContext       *context,
+                                         GimpProgress      *progress,
+                                         const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
   GimpRGB bgcolor;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  gimp_value_get_rgb (&args[1].value, &bgcolor);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  gimp_value_get_rgb (&args->values[1], &bgcolor);
 
   if (success)
     {
@@ -648,19 +647,19 @@ static GimpProcedure image_grid_set_background_color_proc =
   { { image_grid_set_background_color_invoker } }
 };
 
-static GimpArgument *
-image_grid_get_style_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GimpArgument *args)
+static GValueArray *
+image_grid_get_style_invoker (GimpProcedure     *procedure,
+                              Gimp              *gimp,
+                              GimpContext       *context,
+                              GimpProgress      *progress,
+                              const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   gint32 style = 0;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -675,7 +674,7 @@ image_grid_get_style_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_set_enum (&return_vals[1].value, style);
+    g_value_set_enum (&return_vals->values[1], style);
 
   return return_vals;
 }
@@ -696,19 +695,19 @@ static GimpProcedure image_grid_get_style_proc =
   { { image_grid_get_style_invoker } }
 };
 
-static GimpArgument *
-image_grid_set_style_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GimpArgument *args)
+static GValueArray *
+image_grid_set_style_invoker (GimpProcedure     *procedure,
+                              Gimp              *gimp,
+                              GimpContext       *context,
+                              GimpProgress      *progress,
+                              const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
   gint32 style;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  style = g_value_get_enum (&args[1].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  style = g_value_get_enum (&args->values[1]);
 
   if (success)
     {

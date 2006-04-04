@@ -73,7 +73,7 @@ gimp_procedure_free (GimpProcedure *procedure)
   if (procedure->args)
     {
       for (i = 0; i < procedure->num_args; i++)
-        g_param_spec_unref (procedure->args[i].pspec);
+        g_param_spec_unref (procedure->args[i]);
 
       g_free (procedure->args);
       procedure->args = NULL;
@@ -82,7 +82,7 @@ gimp_procedure_free (GimpProcedure *procedure)
   if (procedure->values)
     {
       for (i = 0; i < procedure->num_values; i++)
-        g_param_spec_unref (procedure->values[i].pspec);
+        g_param_spec_unref (procedure->values[i]);
 
       g_free (procedure->values);
       procedure->values = NULL;
@@ -104,10 +104,10 @@ gimp_procedure_init (GimpProcedure *procedure,
   g_return_val_if_fail (n_return_values >= 0, procedure);
 
   procedure->num_args = n_arguments;
-  procedure->args     = g_new0 (GimpArgumentSpec, n_arguments);
+  procedure->args     = g_new0 (GParamSpec *, n_arguments);
 
   procedure->num_values = n_return_values;
-  procedure->values     = g_new0 (GimpArgumentSpec, n_return_values);
+  procedure->values     = g_new0 (GParamSpec *, n_return_values);
 
   return procedure;
 }
@@ -193,30 +193,26 @@ gimp_procedure_take_strings (GimpProcedure *procedure,
   procedure->static_strings = FALSE;
 }
 
-GimpArgument *
+GValueArray *
 gimp_procedure_execute (GimpProcedure *procedure,
                         Gimp          *gimp,
                         GimpContext   *context,
                         GimpProgress  *progress,
-                        GimpArgument  *args,
-                        gint           n_args,
-                        gint          *n_return_vals)
+                        GValueArray   *args)
 {
-  GimpArgument *return_vals = NULL;
-  gint          i;
+  GValueArray *return_vals = NULL;
+  gint         i;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
-  g_return_val_if_fail (n_return_vals != NULL, NULL);
+  g_return_val_if_fail (args != NULL, NULL);
 
-  *n_return_vals = procedure->num_values + 1;
-
-  for (i = 0; i < MIN (n_args, procedure->num_args); i++)
+  for (i = 0; i < MIN (args->n_values, procedure->num_args); i++)
     {
-      GValue     *arg       = &args[i].value;
-      GParamSpec *pspec     = procedure->args[i].pspec;
+      GValue     *arg       = &args->values[i];
+      GParamSpec *pspec     = procedure->args[i];
       GType       arg_type  = G_VALUE_TYPE (arg);
       GType       spec_type = G_PARAM_SPEC_VALUE_TYPE (pspec);
 
@@ -233,7 +229,7 @@ gimp_procedure_execute (GimpProcedure *procedure,
                      i + 1, type_name, got);
 
           return_vals = gimp_procedure_get_return_values (procedure, FALSE);
-          g_value_set_enum (&return_vals->value, GIMP_PDB_CALLING_ERROR);
+          g_value_set_enum (return_vals->values, GIMP_PDB_CALLING_ERROR);
 
           return return_vals;
         }
@@ -278,7 +274,7 @@ gimp_procedure_execute (GimpProcedure *procedure,
               g_free (new_value);
 
               return_vals = gimp_procedure_get_return_values (procedure, FALSE);
-              g_value_set_enum (&return_vals->value, GIMP_PDB_CALLING_ERROR);
+              g_value_set_enum (return_vals->values, GIMP_PDB_CALLING_ERROR);
 
               return return_vals;
             }
@@ -291,7 +287,7 @@ gimp_procedure_execute (GimpProcedure *procedure,
   switch (procedure->proc_type)
     {
     case GIMP_INTERNAL:
-      g_return_val_if_fail (n_args >= procedure->num_args, NULL);
+      g_return_val_if_fail (args->n_values >= procedure->num_args, NULL);
 
       return_vals = procedure->exec_method.internal.marshal_func (procedure,
                                                                   gimp, context,
@@ -303,8 +299,7 @@ gimp_procedure_execute (GimpProcedure *procedure,
     case GIMP_EXTENSION:
     case GIMP_TEMPORARY:
       return_vals = plug_in_run (gimp, context, progress, procedure,
-                                 args, n_args,
-                                 TRUE, FALSE, -1);
+                                 args, TRUE, FALSE, -1);
       break;
 
     default:
@@ -315,7 +310,7 @@ gimp_procedure_execute (GimpProcedure *procedure,
   if (! return_vals)
     {
       return_vals = gimp_procedure_get_return_values (procedure, FALSE);
-      g_value_set_enum (&return_vals->value, GIMP_PDB_EXECUTION_ERROR);
+      g_value_set_enum (return_vals->values, GIMP_PDB_EXECUTION_ERROR);
 
       return return_vals;
     }
@@ -323,29 +318,35 @@ gimp_procedure_execute (GimpProcedure *procedure,
   return return_vals;
 }
 
-GimpArgument *
+GValueArray *
 gimp_procedure_get_arguments (GimpProcedure *procedure)
 {
-  GimpArgument *args;
-  gint          i;
+  GValueArray *args;
+  GValue       value = { 0, };
+  gint         i;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
-  args = g_new0 (GimpArgument, procedure->num_args);
+  args = g_value_array_new (procedure->num_args);
 
   for (i = 0; i < procedure->num_args; i++)
-    gimp_argument_init (&args[i], &procedure->args[i]);
+    {
+      g_value_init (&value, G_PARAM_SPEC_VALUE_TYPE (procedure->args[i]));
+      g_value_array_append (args, &value);
+      g_value_unset (&value);
+    }
 
   return args;
 }
 
-GimpArgument *
+GValueArray *
 gimp_procedure_get_return_values (GimpProcedure *procedure,
                                   gboolean       success)
 {
-  GimpArgument *args;
-  gint          n_args;
-  gint          i;
+  GValueArray *args;
+  GValue       value = { 0, };
+  gint         n_args;
+  gint         i;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure) ||
                         success == FALSE, NULL);
@@ -355,18 +356,21 @@ gimp_procedure_get_return_values (GimpProcedure *procedure,
   else
     n_args = 1;
 
-  args = g_new0 (GimpArgument, n_args);
+  args = g_value_array_new (n_args);
 
-  gimp_argument_init_compat (&args[0], GIMP_PDB_STATUS);
-
-  if (success)
-    g_value_set_enum (&args[0].value, GIMP_PDB_SUCCESS);
-  else
-    g_value_set_enum (&args[0].value, GIMP_PDB_EXECUTION_ERROR);
+  g_value_init (&value, GIMP_TYPE_PDB_STATUS_TYPE);
+  g_value_set_enum (&value,
+                    success ? GIMP_PDB_SUCCESS : GIMP_PDB_EXECUTION_ERROR);
+  g_value_array_append (args, &value);
+  g_value_unset (&value);
 
   if (procedure)
     for (i = 0; i < procedure->num_values; i++)
-      gimp_argument_init (&args[i + 1], &procedure->values[i]);
+      {
+        g_value_init (&value, G_PARAM_SPEC_VALUE_TYPE (procedure->values[i]));
+        g_value_array_append (args, &value);
+        g_value_unset (&value);
+      }
 
   return args;
 }
@@ -381,9 +385,9 @@ gimp_procedure_add_argument (GimpProcedure *procedure,
   g_return_if_fail (G_IS_PARAM_SPEC (pspec));
 
   for (i = 0; i < procedure->num_args; i++)
-    if (procedure->args[i].pspec == NULL)
+    if (procedure->args[i] == NULL)
       {
-        procedure->args[i].pspec = pspec;
+        procedure->args[i] = pspec;
 
         g_param_spec_ref (pspec);
         g_param_spec_sink (pspec);
@@ -405,9 +409,9 @@ gimp_procedure_add_return_value (GimpProcedure *procedure,
   g_return_if_fail (G_IS_PARAM_SPEC (pspec));
 
   for (i = 0; i < procedure->num_values; i++)
-    if (procedure->values[i].pspec == NULL)
+    if (procedure->values[i] == NULL)
       {
-        procedure->values[i].pspec = pspec;
+        procedure->values[i] = pspec;
 
         g_param_spec_ref (pspec);
         g_param_spec_sink (pspec);

@@ -26,7 +26,6 @@
 #include "libgimpmath/gimpmath.h"
 
 #include "pdb-types.h"
-#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
@@ -79,7 +78,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                      GIMP_TYPE_ORIENTATION_TYPE,
                                                      GIMP_ORIENTATION_HORIZONTAL,
                                                      GIMP_PARAM_READWRITE));
-  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[1].pspec),
+  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[1]),
                                       GIMP_ORIENTATION_UNKNOWN);
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("auto-center",
@@ -733,7 +732,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                      GIMP_TYPE_ORIENTATION_TYPE,
                                                      GIMP_ORIENTATION_HORIZONTAL,
                                                      GIMP_PARAM_READWRITE));
-  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[1].pspec),
+  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[1]),
                                       GIMP_ORIENTATION_UNKNOWN);
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("magnitude",
@@ -798,7 +797,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                      GIMP_TYPE_ORIENTATION_TYPE,
                                                      GIMP_ORIENTATION_HORIZONTAL,
                                                      GIMP_PARAM_READWRITE));
-  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[1].pspec),
+  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[1]),
                                       GIMP_ORIENTATION_UNKNOWN);
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("magnitude",
@@ -1180,26 +1179,26 @@ register_drawable_transform_procs (Gimp *gimp)
 
 }
 
-static GimpArgument *
-drawable_transform_flip_simple_invoker (GimpProcedure      *procedure,
-                                        Gimp               *gimp,
-                                        GimpContext        *context,
-                                        GimpProgress       *progress,
-                                        const GimpArgument *args)
+static GValueArray *
+drawable_transform_flip_simple_invoker (GimpProcedure     *procedure,
+                                        Gimp              *gimp,
+                                        GimpContext       *context,
+                                        GimpProgress      *progress,
+                                        const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
   gint32 flip_type;
   gboolean auto_center;
   gdouble axis;
   gboolean clip_result;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  flip_type = g_value_get_enum (&args[1].value);
-  auto_center = g_value_get_boolean (&args[2].value);
-  axis = g_value_get_double (&args[3].value);
-  clip_result = g_value_get_boolean (&args[4].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  flip_type = g_value_get_enum (&args->values[1]);
+  auto_center = g_value_get_boolean (&args->values[2]);
+  axis = g_value_get_double (&args->values[3]);
+  clip_result = g_value_get_boolean (&args->values[4]);
 
   if (success)
     {
@@ -1220,7 +1219,7 @@ drawable_transform_flip_simple_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_drawable (&return_vals[1].value, drawable);
+    gimp_value_set_drawable (&return_vals->values[1], drawable);
 
   return return_vals;
 }
@@ -1241,15 +1240,15 @@ static GimpProcedure drawable_transform_flip_simple_proc =
   { { drawable_transform_flip_simple_invoker } }
 };
 
-static GimpArgument *
-drawable_transform_flip_invoker (GimpProcedure      *procedure,
-                                 Gimp               *gimp,
-                                 GimpContext        *context,
-                                 GimpProgress       *progress,
-                                 const GimpArgument *args)
+static GValueArray *
+drawable_transform_flip_invoker (GimpProcedure     *procedure,
+                                 Gimp              *gimp,
+                                 GimpContext       *context,
+                                 GimpProgress      *progress,
+                                 const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
   gdouble x0;
   gdouble y0;
@@ -1261,16 +1260,16 @@ drawable_transform_flip_invoker (GimpProcedure      *procedure,
   gint32 recursion_level;
   gboolean clip_result;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  x0 = g_value_get_double (&args[1].value);
-  y0 = g_value_get_double (&args[2].value);
-  x1 = g_value_get_double (&args[3].value);
-  y1 = g_value_get_double (&args[4].value);
-  transform_direction = g_value_get_enum (&args[5].value);
-  interpolation = g_value_get_enum (&args[6].value);
-  supersample = g_value_get_boolean (&args[7].value);
-  recursion_level = g_value_get_int (&args[8].value);
-  clip_result = g_value_get_boolean (&args[9].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  x0 = g_value_get_double (&args->values[1]);
+  y0 = g_value_get_double (&args->values[2]);
+  x1 = g_value_get_double (&args->values[3]);
+  y1 = g_value_get_double (&args->values[4]);
+  transform_direction = g_value_get_enum (&args->values[5]);
+  interpolation = g_value_get_enum (&args->values[6]);
+  supersample = g_value_get_boolean (&args->values[7]);
+  recursion_level = g_value_get_int (&args->values[8]);
+  clip_result = g_value_get_boolean (&args->values[9]);
 
   if (success)
     {
@@ -1306,7 +1305,7 @@ drawable_transform_flip_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_drawable (&return_vals[1].value, drawable);
+    gimp_value_set_drawable (&return_vals->values[1], drawable);
 
   return return_vals;
 }
@@ -1327,15 +1326,15 @@ static GimpProcedure drawable_transform_flip_proc =
   { { drawable_transform_flip_invoker } }
 };
 
-static GimpArgument *
-drawable_transform_flip_default_invoker (GimpProcedure      *procedure,
-                                         Gimp               *gimp,
-                                         GimpContext        *context,
-                                         GimpProgress       *progress,
-                                         const GimpArgument *args)
+static GValueArray *
+drawable_transform_flip_default_invoker (GimpProcedure     *procedure,
+                                         Gimp              *gimp,
+                                         GimpContext       *context,
+                                         GimpProgress      *progress,
+                                         const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
   gdouble x0;
   gdouble y0;
@@ -1344,13 +1343,13 @@ drawable_transform_flip_default_invoker (GimpProcedure      *procedure,
   gboolean interpolate;
   gboolean clip_result;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  x0 = g_value_get_double (&args[1].value);
-  y0 = g_value_get_double (&args[2].value);
-  x1 = g_value_get_double (&args[3].value);
-  y1 = g_value_get_double (&args[4].value);
-  interpolate = g_value_get_boolean (&args[5].value);
-  clip_result = g_value_get_boolean (&args[6].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  x0 = g_value_get_double (&args->values[1]);
+  y0 = g_value_get_double (&args->values[2]);
+  x1 = g_value_get_double (&args->values[3]);
+  y1 = g_value_get_double (&args->values[4]);
+  interpolate = g_value_get_boolean (&args->values[5]);
+  clip_result = g_value_get_boolean (&args->values[6]);
 
   if (success)
     {
@@ -1390,7 +1389,7 @@ drawable_transform_flip_default_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_drawable (&return_vals[1].value, drawable);
+    gimp_value_set_drawable (&return_vals->values[1], drawable);
 
   return return_vals;
 }
@@ -1411,15 +1410,15 @@ static GimpProcedure drawable_transform_flip_default_proc =
   { { drawable_transform_flip_default_invoker } }
 };
 
-static GimpArgument *
-drawable_transform_perspective_invoker (GimpProcedure      *procedure,
-                                        Gimp               *gimp,
-                                        GimpContext        *context,
-                                        GimpProgress       *progress,
-                                        const GimpArgument *args)
+static GValueArray *
+drawable_transform_perspective_invoker (GimpProcedure     *procedure,
+                                        Gimp              *gimp,
+                                        GimpContext       *context,
+                                        GimpProgress      *progress,
+                                        const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
   gdouble x0;
   gdouble y0;
@@ -1435,20 +1434,20 @@ drawable_transform_perspective_invoker (GimpProcedure      *procedure,
   gint32 recursion_level;
   gboolean clip_result;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  x0 = g_value_get_double (&args[1].value);
-  y0 = g_value_get_double (&args[2].value);
-  x1 = g_value_get_double (&args[3].value);
-  y1 = g_value_get_double (&args[4].value);
-  x2 = g_value_get_double (&args[5].value);
-  y2 = g_value_get_double (&args[6].value);
-  x3 = g_value_get_double (&args[7].value);
-  y3 = g_value_get_double (&args[8].value);
-  transform_direction = g_value_get_enum (&args[9].value);
-  interpolation = g_value_get_enum (&args[10].value);
-  supersample = g_value_get_boolean (&args[11].value);
-  recursion_level = g_value_get_int (&args[12].value);
-  clip_result = g_value_get_boolean (&args[13].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  x0 = g_value_get_double (&args->values[1]);
+  y0 = g_value_get_double (&args->values[2]);
+  x1 = g_value_get_double (&args->values[3]);
+  y1 = g_value_get_double (&args->values[4]);
+  x2 = g_value_get_double (&args->values[5]);
+  y2 = g_value_get_double (&args->values[6]);
+  x3 = g_value_get_double (&args->values[7]);
+  y3 = g_value_get_double (&args->values[8]);
+  transform_direction = g_value_get_enum (&args->values[9]);
+  interpolation = g_value_get_enum (&args->values[10]);
+  supersample = g_value_get_boolean (&args->values[11]);
+  recursion_level = g_value_get_int (&args->values[12]);
+  clip_result = g_value_get_boolean (&args->values[13]);
 
   if (success)
     {
@@ -1488,7 +1487,7 @@ drawable_transform_perspective_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_drawable (&return_vals[1].value, drawable);
+    gimp_value_set_drawable (&return_vals->values[1], drawable);
 
   return return_vals;
 }
@@ -1509,15 +1508,15 @@ static GimpProcedure drawable_transform_perspective_proc =
   { { drawable_transform_perspective_invoker } }
 };
 
-static GimpArgument *
-drawable_transform_perspective_default_invoker (GimpProcedure      *procedure,
-                                                Gimp               *gimp,
-                                                GimpContext        *context,
-                                                GimpProgress       *progress,
-                                                const GimpArgument *args)
+static GValueArray *
+drawable_transform_perspective_default_invoker (GimpProcedure     *procedure,
+                                                Gimp              *gimp,
+                                                GimpContext       *context,
+                                                GimpProgress      *progress,
+                                                const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
   gdouble x0;
   gdouble y0;
@@ -1530,17 +1529,17 @@ drawable_transform_perspective_default_invoker (GimpProcedure      *procedure,
   gboolean interpolate;
   gboolean clip_result;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  x0 = g_value_get_double (&args[1].value);
-  y0 = g_value_get_double (&args[2].value);
-  x1 = g_value_get_double (&args[3].value);
-  y1 = g_value_get_double (&args[4].value);
-  x2 = g_value_get_double (&args[5].value);
-  y2 = g_value_get_double (&args[6].value);
-  x3 = g_value_get_double (&args[7].value);
-  y3 = g_value_get_double (&args[8].value);
-  interpolate = g_value_get_boolean (&args[9].value);
-  clip_result = g_value_get_boolean (&args[10].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  x0 = g_value_get_double (&args->values[1]);
+  y0 = g_value_get_double (&args->values[2]);
+  x1 = g_value_get_double (&args->values[3]);
+  y1 = g_value_get_double (&args->values[4]);
+  x2 = g_value_get_double (&args->values[5]);
+  y2 = g_value_get_double (&args->values[6]);
+  x3 = g_value_get_double (&args->values[7]);
+  y3 = g_value_get_double (&args->values[8]);
+  interpolate = g_value_get_boolean (&args->values[9]);
+  clip_result = g_value_get_boolean (&args->values[10]);
 
   if (success)
     {
@@ -1584,7 +1583,7 @@ drawable_transform_perspective_default_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_drawable (&return_vals[1].value, drawable);
+    gimp_value_set_drawable (&return_vals->values[1], drawable);
 
   return return_vals;
 }
@@ -1605,15 +1604,15 @@ static GimpProcedure drawable_transform_perspective_default_proc =
   { { drawable_transform_perspective_default_invoker } }
 };
 
-static GimpArgument *
-drawable_transform_rotate_simple_invoker (GimpProcedure      *procedure,
-                                          Gimp               *gimp,
-                                          GimpContext        *context,
-                                          GimpProgress       *progress,
-                                          const GimpArgument *args)
+static GValueArray *
+drawable_transform_rotate_simple_invoker (GimpProcedure     *procedure,
+                                          Gimp              *gimp,
+                                          GimpContext       *context,
+                                          GimpProgress      *progress,
+                                          const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
   gint32 rotate_type;
   gboolean auto_center;
@@ -1621,12 +1620,12 @@ drawable_transform_rotate_simple_invoker (GimpProcedure      *procedure,
   gint32 center_y;
   gboolean clip_result;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  rotate_type = g_value_get_enum (&args[1].value);
-  auto_center = g_value_get_boolean (&args[2].value);
-  center_x = g_value_get_int (&args[3].value);
-  center_y = g_value_get_int (&args[4].value);
-  clip_result = g_value_get_boolean (&args[5].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  rotate_type = g_value_get_enum (&args->values[1]);
+  auto_center = g_value_get_boolean (&args->values[2]);
+  center_x = g_value_get_int (&args->values[3]);
+  center_y = g_value_get_int (&args->values[4]);
+  clip_result = g_value_get_boolean (&args->values[5]);
 
   if (success)
     {
@@ -1647,7 +1646,7 @@ drawable_transform_rotate_simple_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_drawable (&return_vals[1].value, drawable);
+    gimp_value_set_drawable (&return_vals->values[1], drawable);
 
   return return_vals;
 }
@@ -1668,15 +1667,15 @@ static GimpProcedure drawable_transform_rotate_simple_proc =
   { { drawable_transform_rotate_simple_invoker } }
 };
 
-static GimpArgument *
-drawable_transform_rotate_invoker (GimpProcedure      *procedure,
-                                   Gimp               *gimp,
-                                   GimpContext        *context,
-                                   GimpProgress       *progress,
-                                   const GimpArgument *args)
+static GValueArray *
+drawable_transform_rotate_invoker (GimpProcedure     *procedure,
+                                   Gimp              *gimp,
+                                   GimpContext       *context,
+                                   GimpProgress      *progress,
+                                   const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
   gdouble angle;
   gboolean auto_center;
@@ -1688,16 +1687,16 @@ drawable_transform_rotate_invoker (GimpProcedure      *procedure,
   gint32 recursion_level;
   gboolean clip_result;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  angle = g_value_get_double (&args[1].value);
-  auto_center = g_value_get_boolean (&args[2].value);
-  center_x = g_value_get_int (&args[3].value);
-  center_y = g_value_get_int (&args[4].value);
-  transform_direction = g_value_get_enum (&args[5].value);
-  interpolation = g_value_get_enum (&args[6].value);
-  supersample = g_value_get_boolean (&args[7].value);
-  recursion_level = g_value_get_int (&args[8].value);
-  clip_result = g_value_get_boolean (&args[9].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  angle = g_value_get_double (&args->values[1]);
+  auto_center = g_value_get_boolean (&args->values[2]);
+  center_x = g_value_get_int (&args->values[3]);
+  center_y = g_value_get_int (&args->values[4]);
+  transform_direction = g_value_get_enum (&args->values[5]);
+  interpolation = g_value_get_enum (&args->values[6]);
+  supersample = g_value_get_boolean (&args->values[7]);
+  recursion_level = g_value_get_int (&args->values[8]);
+  clip_result = g_value_get_boolean (&args->values[9]);
 
   if (success)
     {
@@ -1736,7 +1735,7 @@ drawable_transform_rotate_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_drawable (&return_vals[1].value, drawable);
+    gimp_value_set_drawable (&return_vals->values[1], drawable);
 
   return return_vals;
 }
@@ -1757,15 +1756,15 @@ static GimpProcedure drawable_transform_rotate_proc =
   { { drawable_transform_rotate_invoker } }
 };
 
-static GimpArgument *
-drawable_transform_rotate_default_invoker (GimpProcedure      *procedure,
-                                           Gimp               *gimp,
-                                           GimpContext        *context,
-                                           GimpProgress       *progress,
-                                           const GimpArgument *args)
+static GValueArray *
+drawable_transform_rotate_default_invoker (GimpProcedure     *procedure,
+                                           Gimp              *gimp,
+                                           GimpContext       *context,
+                                           GimpProgress      *progress,
+                                           const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
   gdouble angle;
   gboolean auto_center;
@@ -1774,13 +1773,13 @@ drawable_transform_rotate_default_invoker (GimpProcedure      *procedure,
   gboolean interpolate;
   gboolean clip_result;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  angle = g_value_get_double (&args[1].value);
-  auto_center = g_value_get_boolean (&args[2].value);
-  center_x = g_value_get_int (&args[3].value);
-  center_y = g_value_get_int (&args[4].value);
-  interpolate = g_value_get_boolean (&args[5].value);
-  clip_result = g_value_get_boolean (&args[6].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  angle = g_value_get_double (&args->values[1]);
+  auto_center = g_value_get_boolean (&args->values[2]);
+  center_x = g_value_get_int (&args->values[3]);
+  center_y = g_value_get_int (&args->values[4]);
+  interpolate = g_value_get_boolean (&args->values[5]);
+  clip_result = g_value_get_boolean (&args->values[6]);
 
   if (success)
     {
@@ -1823,7 +1822,7 @@ drawable_transform_rotate_default_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_drawable (&return_vals[1].value, drawable);
+    gimp_value_set_drawable (&return_vals->values[1], drawable);
 
   return return_vals;
 }
@@ -1844,15 +1843,15 @@ static GimpProcedure drawable_transform_rotate_default_proc =
   { { drawable_transform_rotate_default_invoker } }
 };
 
-static GimpArgument *
-drawable_transform_scale_invoker (GimpProcedure      *procedure,
-                                  Gimp               *gimp,
-                                  GimpContext        *context,
-                                  GimpProgress       *progress,
-                                  const GimpArgument *args)
+static GValueArray *
+drawable_transform_scale_invoker (GimpProcedure     *procedure,
+                                  Gimp              *gimp,
+                                  GimpContext       *context,
+                                  GimpProgress      *progress,
+                                  const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
   gdouble x0;
   gdouble y0;
@@ -1864,16 +1863,16 @@ drawable_transform_scale_invoker (GimpProcedure      *procedure,
   gint32 recursion_level;
   gboolean clip_result;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  x0 = g_value_get_double (&args[1].value);
-  y0 = g_value_get_double (&args[2].value);
-  x1 = g_value_get_double (&args[3].value);
-  y1 = g_value_get_double (&args[4].value);
-  transform_direction = g_value_get_enum (&args[5].value);
-  interpolation = g_value_get_enum (&args[6].value);
-  supersample = g_value_get_boolean (&args[7].value);
-  recursion_level = g_value_get_int (&args[8].value);
-  clip_result = g_value_get_boolean (&args[9].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  x0 = g_value_get_double (&args->values[1]);
+  y0 = g_value_get_double (&args->values[2]);
+  x1 = g_value_get_double (&args->values[3]);
+  y1 = g_value_get_double (&args->values[4]);
+  transform_direction = g_value_get_enum (&args->values[5]);
+  interpolation = g_value_get_enum (&args->values[6]);
+  supersample = g_value_get_boolean (&args->values[7]);
+  recursion_level = g_value_get_int (&args->values[8]);
+  clip_result = g_value_get_boolean (&args->values[9]);
 
   if (success)
     {
@@ -1912,7 +1911,7 @@ drawable_transform_scale_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_drawable (&return_vals[1].value, drawable);
+    gimp_value_set_drawable (&return_vals->values[1], drawable);
 
   return return_vals;
 }
@@ -1933,15 +1932,15 @@ static GimpProcedure drawable_transform_scale_proc =
   { { drawable_transform_scale_invoker } }
 };
 
-static GimpArgument *
-drawable_transform_scale_default_invoker (GimpProcedure      *procedure,
-                                          Gimp               *gimp,
-                                          GimpContext        *context,
-                                          GimpProgress       *progress,
-                                          const GimpArgument *args)
+static GValueArray *
+drawable_transform_scale_default_invoker (GimpProcedure     *procedure,
+                                          Gimp              *gimp,
+                                          GimpContext       *context,
+                                          GimpProgress      *progress,
+                                          const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
   gdouble x0;
   gdouble y0;
@@ -1950,13 +1949,13 @@ drawable_transform_scale_default_invoker (GimpProcedure      *procedure,
   gboolean interpolate;
   gboolean clip_result;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  x0 = g_value_get_double (&args[1].value);
-  y0 = g_value_get_double (&args[2].value);
-  x1 = g_value_get_double (&args[3].value);
-  y1 = g_value_get_double (&args[4].value);
-  interpolate = g_value_get_boolean (&args[5].value);
-  clip_result = g_value_get_boolean (&args[6].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  x0 = g_value_get_double (&args->values[1]);
+  y0 = g_value_get_double (&args->values[2]);
+  x1 = g_value_get_double (&args->values[3]);
+  y1 = g_value_get_double (&args->values[4]);
+  interpolate = g_value_get_boolean (&args->values[5]);
+  clip_result = g_value_get_boolean (&args->values[6]);
 
   if (success)
     {
@@ -1999,7 +1998,7 @@ drawable_transform_scale_default_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_drawable (&return_vals[1].value, drawable);
+    gimp_value_set_drawable (&return_vals->values[1], drawable);
 
   return return_vals;
 }
@@ -2020,15 +2019,15 @@ static GimpProcedure drawable_transform_scale_default_proc =
   { { drawable_transform_scale_default_invoker } }
 };
 
-static GimpArgument *
-drawable_transform_shear_invoker (GimpProcedure      *procedure,
-                                  Gimp               *gimp,
-                                  GimpContext        *context,
-                                  GimpProgress       *progress,
-                                  const GimpArgument *args)
+static GValueArray *
+drawable_transform_shear_invoker (GimpProcedure     *procedure,
+                                  Gimp              *gimp,
+                                  GimpContext       *context,
+                                  GimpProgress      *progress,
+                                  const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
   gint32 shear_type;
   gdouble magnitude;
@@ -2038,14 +2037,14 @@ drawable_transform_shear_invoker (GimpProcedure      *procedure,
   gint32 recursion_level;
   gboolean clip_result;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  shear_type = g_value_get_enum (&args[1].value);
-  magnitude = g_value_get_double (&args[2].value);
-  transform_direction = g_value_get_enum (&args[3].value);
-  interpolation = g_value_get_enum (&args[4].value);
-  supersample = g_value_get_boolean (&args[5].value);
-  recursion_level = g_value_get_int (&args[6].value);
-  clip_result = g_value_get_boolean (&args[7].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  shear_type = g_value_get_enum (&args->values[1]);
+  magnitude = g_value_get_double (&args->values[2]);
+  transform_direction = g_value_get_enum (&args->values[3]);
+  interpolation = g_value_get_enum (&args->values[4]);
+  supersample = g_value_get_boolean (&args->values[5]);
+  recursion_level = g_value_get_int (&args->values[6]);
+  clip_result = g_value_get_boolean (&args->values[7]);
 
   if (success)
     {
@@ -2082,7 +2081,7 @@ drawable_transform_shear_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_drawable (&return_vals[1].value, drawable);
+    gimp_value_set_drawable (&return_vals->values[1], drawable);
 
   return return_vals;
 }
@@ -2103,26 +2102,26 @@ static GimpProcedure drawable_transform_shear_proc =
   { { drawable_transform_shear_invoker } }
 };
 
-static GimpArgument *
-drawable_transform_shear_default_invoker (GimpProcedure      *procedure,
-                                          Gimp               *gimp,
-                                          GimpContext        *context,
-                                          GimpProgress       *progress,
-                                          const GimpArgument *args)
+static GValueArray *
+drawable_transform_shear_default_invoker (GimpProcedure     *procedure,
+                                          Gimp              *gimp,
+                                          GimpContext       *context,
+                                          GimpProgress      *progress,
+                                          const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
   gint32 shear_type;
   gdouble magnitude;
   gboolean interpolate;
   gboolean clip_result;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  shear_type = g_value_get_enum (&args[1].value);
-  magnitude = g_value_get_double (&args[2].value);
-  interpolate = g_value_get_boolean (&args[3].value);
-  clip_result = g_value_get_boolean (&args[4].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  shear_type = g_value_get_enum (&args->values[1]);
+  magnitude = g_value_get_double (&args->values[2]);
+  interpolate = g_value_get_boolean (&args->values[3]);
+  clip_result = g_value_get_boolean (&args->values[4]);
 
   if (success)
     {
@@ -2163,7 +2162,7 @@ drawable_transform_shear_default_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_drawable (&return_vals[1].value, drawable);
+    gimp_value_set_drawable (&return_vals->values[1], drawable);
 
   return return_vals;
 }
@@ -2184,15 +2183,15 @@ static GimpProcedure drawable_transform_shear_default_proc =
   { { drawable_transform_shear_default_invoker } }
 };
 
-static GimpArgument *
-drawable_transform_2d_invoker (GimpProcedure      *procedure,
-                               Gimp               *gimp,
-                               GimpContext        *context,
-                               GimpProgress       *progress,
-                               const GimpArgument *args)
+static GValueArray *
+drawable_transform_2d_invoker (GimpProcedure     *procedure,
+                               Gimp              *gimp,
+                               GimpContext       *context,
+                               GimpProgress      *progress,
+                               const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
   gdouble source_x;
   gdouble source_y;
@@ -2207,19 +2206,19 @@ drawable_transform_2d_invoker (GimpProcedure      *procedure,
   gint32 recursion_level;
   gboolean clip_result;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  source_x = g_value_get_double (&args[1].value);
-  source_y = g_value_get_double (&args[2].value);
-  scale_x = g_value_get_double (&args[3].value);
-  scale_y = g_value_get_double (&args[4].value);
-  angle = g_value_get_double (&args[5].value);
-  dest_x = g_value_get_double (&args[6].value);
-  dest_y = g_value_get_double (&args[7].value);
-  transform_direction = g_value_get_enum (&args[8].value);
-  interpolation = g_value_get_enum (&args[9].value);
-  supersample = g_value_get_boolean (&args[10].value);
-  recursion_level = g_value_get_int (&args[11].value);
-  clip_result = g_value_get_boolean (&args[12].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  source_x = g_value_get_double (&args->values[1]);
+  source_y = g_value_get_double (&args->values[2]);
+  scale_x = g_value_get_double (&args->values[3]);
+  scale_y = g_value_get_double (&args->values[4]);
+  angle = g_value_get_double (&args->values[5]);
+  dest_x = g_value_get_double (&args->values[6]);
+  dest_y = g_value_get_double (&args->values[7]);
+  transform_direction = g_value_get_enum (&args->values[8]);
+  interpolation = g_value_get_enum (&args->values[9]);
+  supersample = g_value_get_boolean (&args->values[10]);
+  recursion_level = g_value_get_int (&args->values[11]);
+  clip_result = g_value_get_boolean (&args->values[12]);
 
   if (success)
     {
@@ -2257,7 +2256,7 @@ drawable_transform_2d_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_drawable (&return_vals[1].value, drawable);
+    gimp_value_set_drawable (&return_vals->values[1], drawable);
 
   return return_vals;
 }
@@ -2278,15 +2277,15 @@ static GimpProcedure drawable_transform_2d_proc =
   { { drawable_transform_2d_invoker } }
 };
 
-static GimpArgument *
-drawable_transform_2d_default_invoker (GimpProcedure      *procedure,
-                                       Gimp               *gimp,
-                                       GimpContext        *context,
-                                       GimpProgress       *progress,
-                                       const GimpArgument *args)
+static GValueArray *
+drawable_transform_2d_default_invoker (GimpProcedure     *procedure,
+                                       Gimp              *gimp,
+                                       GimpContext       *context,
+                                       GimpProgress      *progress,
+                                       const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
   gdouble source_x;
   gdouble source_y;
@@ -2298,16 +2297,16 @@ drawable_transform_2d_default_invoker (GimpProcedure      *procedure,
   gboolean interpolate;
   gboolean clip_result;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  source_x = g_value_get_double (&args[1].value);
-  source_y = g_value_get_double (&args[2].value);
-  scale_x = g_value_get_double (&args[3].value);
-  scale_y = g_value_get_double (&args[4].value);
-  angle = g_value_get_double (&args[5].value);
-  dest_x = g_value_get_double (&args[6].value);
-  dest_y = g_value_get_double (&args[7].value);
-  interpolate = g_value_get_boolean (&args[8].value);
-  clip_result = g_value_get_boolean (&args[9].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  source_x = g_value_get_double (&args->values[1]);
+  source_y = g_value_get_double (&args->values[2]);
+  scale_x = g_value_get_double (&args->values[3]);
+  scale_y = g_value_get_double (&args->values[4]);
+  angle = g_value_get_double (&args->values[5]);
+  dest_x = g_value_get_double (&args->values[6]);
+  dest_y = g_value_get_double (&args->values[7]);
+  interpolate = g_value_get_boolean (&args->values[8]);
+  clip_result = g_value_get_boolean (&args->values[9]);
 
   if (success)
     {
@@ -2349,7 +2348,7 @@ drawable_transform_2d_default_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_drawable (&return_vals[1].value, drawable);
+    gimp_value_set_drawable (&return_vals->values[1], drawable);
 
   return return_vals;
 }
@@ -2370,15 +2369,15 @@ static GimpProcedure drawable_transform_2d_default_proc =
   { { drawable_transform_2d_default_invoker } }
 };
 
-static GimpArgument *
-drawable_transform_matrix_invoker (GimpProcedure      *procedure,
-                                   Gimp               *gimp,
-                                   GimpContext        *context,
-                                   GimpProgress       *progress,
-                                   const GimpArgument *args)
+static GValueArray *
+drawable_transform_matrix_invoker (GimpProcedure     *procedure,
+                                   Gimp              *gimp,
+                                   GimpContext       *context,
+                                   GimpProgress      *progress,
+                                   const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
   gdouble coeff_0_0;
   gdouble coeff_0_1;
@@ -2395,21 +2394,21 @@ drawable_transform_matrix_invoker (GimpProcedure      *procedure,
   gint32 recursion_level;
   gboolean clip_result;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  coeff_0_0 = g_value_get_double (&args[1].value);
-  coeff_0_1 = g_value_get_double (&args[2].value);
-  coeff_0_2 = g_value_get_double (&args[3].value);
-  coeff_1_0 = g_value_get_double (&args[4].value);
-  coeff_1_1 = g_value_get_double (&args[5].value);
-  coeff_1_2 = g_value_get_double (&args[6].value);
-  coeff_2_0 = g_value_get_double (&args[7].value);
-  coeff_2_1 = g_value_get_double (&args[8].value);
-  coeff_2_2 = g_value_get_double (&args[9].value);
-  transform_direction = g_value_get_enum (&args[10].value);
-  interpolation = g_value_get_enum (&args[11].value);
-  supersample = g_value_get_boolean (&args[12].value);
-  recursion_level = g_value_get_int (&args[13].value);
-  clip_result = g_value_get_boolean (&args[14].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  coeff_0_0 = g_value_get_double (&args->values[1]);
+  coeff_0_1 = g_value_get_double (&args->values[2]);
+  coeff_0_2 = g_value_get_double (&args->values[3]);
+  coeff_1_0 = g_value_get_double (&args->values[4]);
+  coeff_1_1 = g_value_get_double (&args->values[5]);
+  coeff_1_2 = g_value_get_double (&args->values[6]);
+  coeff_2_0 = g_value_get_double (&args->values[7]);
+  coeff_2_1 = g_value_get_double (&args->values[8]);
+  coeff_2_2 = g_value_get_double (&args->values[9]);
+  transform_direction = g_value_get_enum (&args->values[10]);
+  interpolation = g_value_get_enum (&args->values[11]);
+  supersample = g_value_get_boolean (&args->values[12]);
+  recursion_level = g_value_get_int (&args->values[13]);
+  clip_result = g_value_get_boolean (&args->values[14]);
 
   if (success)
     {
@@ -2451,7 +2450,7 @@ drawable_transform_matrix_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_drawable (&return_vals[1].value, drawable);
+    gimp_value_set_drawable (&return_vals->values[1], drawable);
 
   return return_vals;
 }
@@ -2472,15 +2471,15 @@ static GimpProcedure drawable_transform_matrix_proc =
   { { drawable_transform_matrix_invoker } }
 };
 
-static GimpArgument *
-drawable_transform_matrix_default_invoker (GimpProcedure      *procedure,
-                                           Gimp               *gimp,
-                                           GimpContext        *context,
-                                           GimpProgress       *progress,
-                                           const GimpArgument *args)
+static GValueArray *
+drawable_transform_matrix_default_invoker (GimpProcedure     *procedure,
+                                           Gimp              *gimp,
+                                           GimpContext       *context,
+                                           GimpProgress      *progress,
+                                           const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
   gdouble coeff_0_0;
   gdouble coeff_0_1;
@@ -2494,18 +2493,18 @@ drawable_transform_matrix_default_invoker (GimpProcedure      *procedure,
   gboolean interpolate;
   gboolean clip_result;
 
-  drawable = gimp_value_get_drawable (&args[0].value, gimp);
-  coeff_0_0 = g_value_get_double (&args[1].value);
-  coeff_0_1 = g_value_get_double (&args[2].value);
-  coeff_0_2 = g_value_get_double (&args[3].value);
-  coeff_1_0 = g_value_get_double (&args[4].value);
-  coeff_1_1 = g_value_get_double (&args[5].value);
-  coeff_1_2 = g_value_get_double (&args[6].value);
-  coeff_2_0 = g_value_get_double (&args[7].value);
-  coeff_2_1 = g_value_get_double (&args[8].value);
-  coeff_2_2 = g_value_get_double (&args[9].value);
-  interpolate = g_value_get_boolean (&args[10].value);
-  clip_result = g_value_get_boolean (&args[11].value);
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  coeff_0_0 = g_value_get_double (&args->values[1]);
+  coeff_0_1 = g_value_get_double (&args->values[2]);
+  coeff_0_2 = g_value_get_double (&args->values[3]);
+  coeff_1_0 = g_value_get_double (&args->values[4]);
+  coeff_1_1 = g_value_get_double (&args->values[5]);
+  coeff_1_2 = g_value_get_double (&args->values[6]);
+  coeff_2_0 = g_value_get_double (&args->values[7]);
+  coeff_2_1 = g_value_get_double (&args->values[8]);
+  coeff_2_2 = g_value_get_double (&args->values[9]);
+  interpolate = g_value_get_boolean (&args->values[10]);
+  clip_result = g_value_get_boolean (&args->values[11]);
 
   if (success)
     {
@@ -2551,7 +2550,7 @@ drawable_transform_matrix_default_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_drawable (&return_vals[1].value, drawable);
+    gimp_value_set_drawable (&return_vals->values[1], drawable);
 
   return return_vals;
 }

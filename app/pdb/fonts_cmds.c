@@ -24,7 +24,6 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
@@ -74,12 +73,12 @@ register_fonts_procs (Gimp *gimp)
 
 }
 
-static GimpArgument *
-fonts_refresh_invoker (GimpProcedure      *procedure,
-                       Gimp               *gimp,
-                       GimpContext        *context,
-                       GimpProgress       *progress,
-                       const GimpArgument *args)
+static GValueArray *
+fonts_refresh_invoker (GimpProcedure     *procedure,
+                       Gimp              *gimp,
+                       GimpContext       *context,
+                       GimpProgress      *progress,
+                       const GValueArray *args)
 {
   gimp_fonts_load (gimp);
   return gimp_procedure_get_return_values (procedure, TRUE);
@@ -101,20 +100,20 @@ static GimpProcedure fonts_refresh_proc =
   { { fonts_refresh_invoker } }
 };
 
-static GimpArgument *
-fonts_get_list_invoker (GimpProcedure      *procedure,
-                        Gimp               *gimp,
-                        GimpContext        *context,
-                        GimpProgress       *progress,
-                        const GimpArgument *args)
+static GValueArray *
+fonts_get_list_invoker (GimpProcedure     *procedure,
+                        Gimp              *gimp,
+                        GimpContext       *context,
+                        GimpProgress      *progress,
+                        const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   const gchar *filter;
   gint32 num_fonts = 0;
   gchar **font_list = NULL;
 
-  filter = g_value_get_string (&args[0].value);
+  filter = g_value_get_string (&args->values[0]);
 
   if (success)
     {
@@ -126,8 +125,8 @@ fonts_get_list_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      g_value_set_int (&return_vals[1].value, num_fonts);
-      gimp_value_take_stringarray (&return_vals[2].value, font_list, num_fonts);
+      g_value_set_int (&return_vals->values[1], num_fonts);
+      gimp_value_take_stringarray (&return_vals->values[2], font_list, num_fonts);
     }
 
   return return_vals;

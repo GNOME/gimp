@@ -26,7 +26,6 @@
 #include "libgimpcolor/gimpcolor.h"
 
 #include "pdb-types.h"
-#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
@@ -348,12 +347,12 @@ register_context_procs (Gimp *gimp)
 
 }
 
-static GimpArgument *
-context_push_invoker (GimpProcedure      *procedure,
-                      Gimp               *gimp,
-                      GimpContext        *context,
-                      GimpProgress       *progress,
-                      const GimpArgument *args)
+static GValueArray *
+context_push_invoker (GimpProcedure     *procedure,
+                      Gimp              *gimp,
+                      GimpContext       *context,
+                      GimpProgress      *progress,
+                      const GValueArray *args)
 {
   gboolean success = TRUE;
   if (gimp->current_plug_in && gimp->current_plug_in->open)
@@ -379,12 +378,12 @@ static GimpProcedure context_push_proc =
   { { context_push_invoker } }
 };
 
-static GimpArgument *
-context_pop_invoker (GimpProcedure      *procedure,
-                     Gimp               *gimp,
-                     GimpContext        *context,
-                     GimpProgress       *progress,
-                     const GimpArgument *args)
+static GValueArray *
+context_pop_invoker (GimpProcedure     *procedure,
+                     Gimp              *gimp,
+                     GimpContext       *context,
+                     GimpProgress      *progress,
+                     const GValueArray *args)
 {
   gboolean success = TRUE;
   if (gimp->current_plug_in && gimp->current_plug_in->open)
@@ -410,15 +409,15 @@ static GimpProcedure context_pop_proc =
   { { context_pop_invoker } }
 };
 
-static GimpArgument *
-context_get_paint_method_invoker (GimpProcedure      *procedure,
-                                  Gimp               *gimp,
-                                  GimpContext        *context,
-                                  GimpProgress       *progress,
-                                  const GimpArgument *args)
+static GValueArray *
+context_get_paint_method_invoker (GimpProcedure     *procedure,
+                                  Gimp              *gimp,
+                                  GimpContext       *context,
+                                  GimpProgress      *progress,
+                                  const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   gchar *name = NULL;
 
   GimpPaintInfo *paint_info = gimp_context_get_paint_info (context);
@@ -431,7 +430,7 @@ context_get_paint_method_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_take_string (&return_vals[1].value, name);
+    g_value_take_string (&return_vals->values[1], name);
 
   return return_vals;
 }
@@ -452,17 +451,17 @@ static GimpProcedure context_get_paint_method_proc =
   { { context_get_paint_method_invoker } }
 };
 
-static GimpArgument *
-context_set_paint_method_invoker (GimpProcedure      *procedure,
-                                  Gimp               *gimp,
-                                  GimpContext        *context,
-                                  GimpProgress       *progress,
-                                  const GimpArgument *args)
+static GValueArray *
+context_set_paint_method_invoker (GimpProcedure     *procedure,
+                                  Gimp              *gimp,
+                                  GimpContext       *context,
+                                  GimpProgress      *progress,
+                                  const GValueArray *args)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (&args[0].value);
+  name = g_value_get_string (&args->values[0]);
 
   if (success)
     {
@@ -494,20 +493,20 @@ static GimpProcedure context_set_paint_method_proc =
   { { context_set_paint_method_invoker } }
 };
 
-static GimpArgument *
-context_get_foreground_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GimpArgument *args)
+static GValueArray *
+context_get_foreground_invoker (GimpProcedure     *procedure,
+                                Gimp              *gimp,
+                                GimpContext       *context,
+                                GimpProgress      *progress,
+                                const GValueArray *args)
 {
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpRGB foreground = { 0.0, 0.0, 0.0, 1.0 };
 
   gimp_context_get_foreground (context, &foreground);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE);
-  gimp_value_set_rgb (&return_vals[1].value, &foreground);
+  gimp_value_set_rgb (&return_vals->values[1], &foreground);
 
   return return_vals;
 }
@@ -528,17 +527,17 @@ static GimpProcedure context_get_foreground_proc =
   { { context_get_foreground_invoker } }
 };
 
-static GimpArgument *
-context_set_foreground_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GimpArgument *args)
+static GValueArray *
+context_set_foreground_invoker (GimpProcedure     *procedure,
+                                Gimp              *gimp,
+                                GimpContext       *context,
+                                GimpProgress      *progress,
+                                const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpRGB foreground;
 
-  gimp_value_get_rgb (&args[0].value, &foreground);
+  gimp_value_get_rgb (&args->values[0], &foreground);
 
   if (success)
     {
@@ -565,20 +564,20 @@ static GimpProcedure context_set_foreground_proc =
   { { context_set_foreground_invoker } }
 };
 
-static GimpArgument *
-context_get_background_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GimpArgument *args)
+static GValueArray *
+context_get_background_invoker (GimpProcedure     *procedure,
+                                Gimp              *gimp,
+                                GimpContext       *context,
+                                GimpProgress      *progress,
+                                const GValueArray *args)
 {
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpRGB background = { 0.0, 0.0, 0.0, 1.0 };
 
   gimp_context_get_background (context, &background);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE);
-  gimp_value_set_rgb (&return_vals[1].value, &background);
+  gimp_value_set_rgb (&return_vals->values[1], &background);
 
   return return_vals;
 }
@@ -599,17 +598,17 @@ static GimpProcedure context_get_background_proc =
   { { context_get_background_invoker } }
 };
 
-static GimpArgument *
-context_set_background_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GimpArgument *args)
+static GValueArray *
+context_set_background_invoker (GimpProcedure     *procedure,
+                                Gimp              *gimp,
+                                GimpContext       *context,
+                                GimpProgress      *progress,
+                                const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpRGB background;
 
-  gimp_value_get_rgb (&args[0].value, &background);
+  gimp_value_get_rgb (&args->values[0], &background);
 
   if (success)
     {
@@ -636,12 +635,12 @@ static GimpProcedure context_set_background_proc =
   { { context_set_background_invoker } }
 };
 
-static GimpArgument *
-context_set_default_colors_invoker (GimpProcedure      *procedure,
-                                    Gimp               *gimp,
-                                    GimpContext        *context,
-                                    GimpProgress       *progress,
-                                    const GimpArgument *args)
+static GValueArray *
+context_set_default_colors_invoker (GimpProcedure     *procedure,
+                                    Gimp              *gimp,
+                                    GimpContext       *context,
+                                    GimpProgress      *progress,
+                                    const GValueArray *args)
 {
   gimp_context_set_default_colors (context);
   return gimp_procedure_get_return_values (procedure, TRUE);
@@ -663,12 +662,12 @@ static GimpProcedure context_set_default_colors_proc =
   { { context_set_default_colors_invoker } }
 };
 
-static GimpArgument *
-context_swap_colors_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GimpArgument *args)
+static GValueArray *
+context_swap_colors_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
 {
   gimp_context_swap_colors (context);
   return gimp_procedure_get_return_values (procedure, TRUE);
@@ -690,20 +689,20 @@ static GimpProcedure context_swap_colors_proc =
   { { context_swap_colors_invoker } }
 };
 
-static GimpArgument *
-context_get_opacity_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GimpArgument *args)
+static GValueArray *
+context_get_opacity_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
 {
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   gdouble opacity = 0.0;
 
   opacity = gimp_context_get_opacity (context) * 100.0;
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE);
-  g_value_set_double (&return_vals[1].value, opacity);
+  g_value_set_double (&return_vals->values[1], opacity);
 
   return return_vals;
 }
@@ -724,17 +723,17 @@ static GimpProcedure context_get_opacity_proc =
   { { context_get_opacity_invoker } }
 };
 
-static GimpArgument *
-context_set_opacity_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GimpArgument *args)
+static GValueArray *
+context_set_opacity_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
 {
   gboolean success = TRUE;
   gdouble opacity;
 
-  opacity = g_value_get_double (&args[0].value);
+  opacity = g_value_get_double (&args->values[0]);
 
   if (success)
     {
@@ -760,20 +759,20 @@ static GimpProcedure context_set_opacity_proc =
   { { context_set_opacity_invoker } }
 };
 
-static GimpArgument *
-context_get_paint_mode_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GimpArgument *args)
+static GValueArray *
+context_get_paint_mode_invoker (GimpProcedure     *procedure,
+                                Gimp              *gimp,
+                                GimpContext       *context,
+                                GimpProgress      *progress,
+                                const GValueArray *args)
 {
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   gint32 paint_mode = 0;
 
   paint_mode = gimp_context_get_paint_mode (context);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE);
-  g_value_set_enum (&return_vals[1].value, paint_mode);
+  g_value_set_enum (&return_vals->values[1], paint_mode);
 
   return return_vals;
 }
@@ -794,17 +793,17 @@ static GimpProcedure context_get_paint_mode_proc =
   { { context_get_paint_mode_invoker } }
 };
 
-static GimpArgument *
-context_set_paint_mode_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GimpArgument *args)
+static GValueArray *
+context_set_paint_mode_invoker (GimpProcedure     *procedure,
+                                Gimp              *gimp,
+                                GimpContext       *context,
+                                GimpProgress      *progress,
+                                const GValueArray *args)
 {
   gboolean success = TRUE;
   gint32 paint_mode;
 
-  paint_mode = g_value_get_enum (&args[0].value);
+  paint_mode = g_value_get_enum (&args->values[0]);
 
   if (success)
     {
@@ -830,15 +829,15 @@ static GimpProcedure context_set_paint_mode_proc =
   { { context_set_paint_mode_invoker } }
 };
 
-static GimpArgument *
-context_get_brush_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GimpArgument *args)
+static GValueArray *
+context_get_brush_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   gchar *name = NULL;
 
   GimpBrush *brush = gimp_context_get_brush (context);
@@ -851,7 +850,7 @@ context_get_brush_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_take_string (&return_vals[1].value, name);
+    g_value_take_string (&return_vals->values[1], name);
 
   return return_vals;
 }
@@ -872,17 +871,17 @@ static GimpProcedure context_get_brush_proc =
   { { context_get_brush_invoker } }
 };
 
-static GimpArgument *
-context_set_brush_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GimpArgument *args)
+static GValueArray *
+context_set_brush_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (&args[0].value);
+  name = g_value_get_string (&args->values[0]);
 
   if (success)
     {
@@ -914,15 +913,15 @@ static GimpProcedure context_set_brush_proc =
   { { context_set_brush_invoker } }
 };
 
-static GimpArgument *
-context_get_pattern_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GimpArgument *args)
+static GValueArray *
+context_get_pattern_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   gchar *name = NULL;
 
   GimpPattern *pattern = gimp_context_get_pattern (context);
@@ -935,7 +934,7 @@ context_get_pattern_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_take_string (&return_vals[1].value, name);
+    g_value_take_string (&return_vals->values[1], name);
 
   return return_vals;
 }
@@ -956,17 +955,17 @@ static GimpProcedure context_get_pattern_proc =
   { { context_get_pattern_invoker } }
 };
 
-static GimpArgument *
-context_set_pattern_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GimpArgument *args)
+static GValueArray *
+context_set_pattern_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (&args[0].value);
+  name = g_value_get_string (&args->values[0]);
 
   if (success)
     {
@@ -998,15 +997,15 @@ static GimpProcedure context_set_pattern_proc =
   { { context_set_pattern_invoker } }
 };
 
-static GimpArgument *
-context_get_gradient_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GimpArgument *args)
+static GValueArray *
+context_get_gradient_invoker (GimpProcedure     *procedure,
+                              Gimp              *gimp,
+                              GimpContext       *context,
+                              GimpProgress      *progress,
+                              const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   gchar *name = NULL;
 
   GimpGradient *gradient = gimp_context_get_gradient (context);
@@ -1019,7 +1018,7 @@ context_get_gradient_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_take_string (&return_vals[1].value, name);
+    g_value_take_string (&return_vals->values[1], name);
 
   return return_vals;
 }
@@ -1040,17 +1039,17 @@ static GimpProcedure context_get_gradient_proc =
   { { context_get_gradient_invoker } }
 };
 
-static GimpArgument *
-context_set_gradient_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GimpArgument *args)
+static GValueArray *
+context_set_gradient_invoker (GimpProcedure     *procedure,
+                              Gimp              *gimp,
+                              GimpContext       *context,
+                              GimpProgress      *progress,
+                              const GValueArray *args)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (&args[0].value);
+  name = g_value_get_string (&args->values[0]);
 
   if (success)
     {
@@ -1082,15 +1081,15 @@ static GimpProcedure context_set_gradient_proc =
   { { context_set_gradient_invoker } }
 };
 
-static GimpArgument *
-context_get_palette_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GimpArgument *args)
+static GValueArray *
+context_get_palette_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   gchar *name = NULL;
 
   GimpPalette *palette = gimp_context_get_palette (context);
@@ -1103,7 +1102,7 @@ context_get_palette_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_take_string (&return_vals[1].value, name);
+    g_value_take_string (&return_vals->values[1], name);
 
   return return_vals;
 }
@@ -1124,17 +1123,17 @@ static GimpProcedure context_get_palette_proc =
   { { context_get_palette_invoker } }
 };
 
-static GimpArgument *
-context_set_palette_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GimpArgument *args)
+static GValueArray *
+context_set_palette_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (&args[0].value);
+  name = g_value_get_string (&args->values[0]);
 
   if (success)
     {
@@ -1166,15 +1165,15 @@ static GimpProcedure context_set_palette_proc =
   { { context_set_palette_invoker } }
 };
 
-static GimpArgument *
-context_get_font_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GimpArgument *args)
+static GValueArray *
+context_get_font_invoker (GimpProcedure     *procedure,
+                          Gimp              *gimp,
+                          GimpContext       *context,
+                          GimpProgress      *progress,
+                          const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   gchar *name = NULL;
 
   GimpFont *font = gimp_context_get_font (context);
@@ -1187,7 +1186,7 @@ context_get_font_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_take_string (&return_vals[1].value, name);
+    g_value_take_string (&return_vals->values[1], name);
 
   return return_vals;
 }
@@ -1208,17 +1207,17 @@ static GimpProcedure context_get_font_proc =
   { { context_get_font_invoker } }
 };
 
-static GimpArgument *
-context_set_font_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GimpArgument *args)
+static GValueArray *
+context_set_font_invoker (GimpProcedure     *procedure,
+                          Gimp              *gimp,
+                          GimpContext       *context,
+                          GimpProgress      *progress,
+                          const GValueArray *args)
 {
   gboolean success = TRUE;
   const gchar *name;
 
-  name = g_value_get_string (&args[0].value);
+  name = g_value_get_string (&args->values[0]);
 
   if (success)
     {

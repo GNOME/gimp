@@ -23,9 +23,7 @@
 #include "core/core-types.h"
 
 
-typedef struct _GimpArgument     GimpArgument;
-typedef struct _GimpArgumentSpec GimpArgumentSpec;
-typedef struct _GimpProcedure    GimpProcedure;
+typedef struct _GimpProcedure GimpProcedure;
 
 
 typedef enum

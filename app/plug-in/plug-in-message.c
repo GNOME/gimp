@@ -36,7 +36,6 @@
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 
-#include "pdb/gimpargument.h"
 #include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
@@ -354,10 +353,8 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
   gchar           *canonical;
   const gchar     *proc_name     = NULL;
   GimpProcedure   *procedure;
-  GimpArgument    *args          = NULL;
-  gint             n_args        = 0;
-  GimpArgument    *return_vals   = NULL;
-  gint             n_return_vals = 0;
+  GValueArray     *args          = NULL;
+  GValueArray     *return_vals   = NULL;
 
   canonical = gimp_canonicalize_identifier (proc_run->name);
 
@@ -417,12 +414,9 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
     proc_name = canonical;
 
   if (procedure)
-    {
-      n_args = proc_run->nparams;
-      args   = plug_in_params_to_args (procedure->args, procedure->num_args,
-                                       proc_run->params, n_args,
-                                       FALSE, FALSE);
-    }
+    args = plug_in_params_to_args (procedure->args, procedure->num_args,
+                                   proc_run->params, proc_run->nparams,
+                                   FALSE, FALSE);
 
   plug_in_push (plug_in->gimp, plug_in);
 
@@ -435,8 +429,7 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
                                        proc_frame->main_context,
                                        proc_frame->progress,
                                        proc_name,
-                                       args, n_args,
-                                       &n_return_vals);
+                                       args);
 
   plug_in_pop (plug_in->gimp);
 
@@ -451,9 +444,8 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
        *  and canonical may be different too.
        */
       proc_return.name    = proc_run->name;
-      proc_return.nparams = n_return_vals;
-      proc_return.params  = plug_in_args_to_params (return_vals, n_return_vals,
-                                                    FALSE);
+      proc_return.nparams = return_vals->n_values;
+      proc_return.params  = plug_in_args_to_params (return_vals, FALSE);
 
       if (! gp_proc_return_write (plug_in->my_write, &proc_return, plug_in))
 	{
@@ -462,8 +454,8 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
 	  return;
 	}
 
-      gimp_arguments_destroy (args, n_args);
-      gimp_arguments_destroy (return_vals, n_return_vals);
+      g_value_array_free (args);
+      g_value_array_free (return_vals);
       plug_in_params_destroy (proc_return.params, proc_return.nparams, FALSE);
     }
   else
@@ -503,7 +495,6 @@ plug_in_handle_proc_return_priv (PlugIn       *plug_in,
                                                         proc_return->params,
                                                         proc_return->nparams,
                                                         TRUE, TRUE);
-      proc_frame->n_return_vals = proc_return->nparams;
     }
   else
     {

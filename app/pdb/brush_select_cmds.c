@@ -24,7 +24,6 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
@@ -141,12 +140,12 @@ register_brush_select_procs (Gimp *gimp)
 
 }
 
-static GimpArgument *
-brushes_popup_invoker (GimpProcedure      *procedure,
-                       Gimp               *gimp,
-                       GimpContext        *context,
-                       GimpProgress       *progress,
-                       const GimpArgument *args)
+static GValueArray *
+brushes_popup_invoker (GimpProcedure     *procedure,
+                       Gimp              *gimp,
+                       GimpContext       *context,
+                       GimpProgress      *progress,
+                       const GValueArray *args)
 {
   gboolean success = TRUE;
   const gchar *brush_callback;
@@ -156,12 +155,12 @@ brushes_popup_invoker (GimpProcedure      *procedure,
   gint32 spacing;
   gint32 paint_mode;
 
-  brush_callback = g_value_get_string (&args[0].value);
-  popup_title = g_value_get_string (&args[1].value);
-  initial_brush = g_value_get_string (&args[2].value);
-  opacity = g_value_get_double (&args[3].value);
-  spacing = g_value_get_int (&args[4].value);
-  paint_mode = g_value_get_enum (&args[5].value);
+  brush_callback = g_value_get_string (&args->values[0]);
+  popup_title = g_value_get_string (&args->values[1]);
+  initial_brush = g_value_get_string (&args->values[2]);
+  opacity = g_value_get_double (&args->values[3]);
+  spacing = g_value_get_int (&args->values[4]);
+  paint_mode = g_value_get_enum (&args->values[5]);
 
   if (success)
     {
@@ -195,17 +194,17 @@ static GimpProcedure brushes_popup_proc =
   { { brushes_popup_invoker } }
 };
 
-static GimpArgument *
-brushes_close_popup_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GimpArgument *args)
+static GValueArray *
+brushes_close_popup_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
 {
   gboolean success = TRUE;
   const gchar *brush_callback;
 
-  brush_callback = g_value_get_string (&args[0].value);
+  brush_callback = g_value_get_string (&args->values[0]);
 
   if (success)
     {
@@ -235,12 +234,12 @@ static GimpProcedure brushes_close_popup_proc =
   { { brushes_close_popup_invoker } }
 };
 
-static GimpArgument *
-brushes_set_popup_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GimpArgument *args)
+static GValueArray *
+brushes_set_popup_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
 {
   gboolean success = TRUE;
   const gchar *brush_callback;
@@ -249,11 +248,11 @@ brushes_set_popup_invoker (GimpProcedure      *procedure,
   gint32 spacing;
   gint32 paint_mode;
 
-  brush_callback = g_value_get_string (&args[0].value);
-  brush_name = g_value_get_string (&args[1].value);
-  opacity = g_value_get_double (&args[2].value);
-  spacing = g_value_get_int (&args[3].value);
-  paint_mode = g_value_get_enum (&args[4].value);
+  brush_callback = g_value_get_string (&args->values[0]);
+  brush_name = g_value_get_string (&args->values[1]);
+  opacity = g_value_get_double (&args->values[2]);
+  spacing = g_value_get_int (&args->values[3]);
+  paint_mode = g_value_get_enum (&args->values[4]);
 
   if (success)
     {

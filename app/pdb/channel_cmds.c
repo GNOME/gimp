@@ -26,7 +26,6 @@
 #include "libgimpcolor/gimpcolor.h"
 
 #include "pdb-types.h"
-#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
@@ -297,15 +296,15 @@ register_channel_procs (Gimp *gimp)
 
 }
 
-static GimpArgument *
-channel_new_invoker (GimpProcedure      *procedure,
-                     Gimp               *gimp,
-                     GimpContext        *context,
-                     GimpProgress       *progress,
-                     const GimpArgument *args)
+static GValueArray *
+channel_new_invoker (GimpProcedure     *procedure,
+                     Gimp              *gimp,
+                     GimpContext       *context,
+                     GimpProgress      *progress,
+                     const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   gint32 width;
   gint32 height;
@@ -314,12 +313,12 @@ channel_new_invoker (GimpProcedure      *procedure,
   GimpRGB color;
   GimpChannel *channel = NULL;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  width = g_value_get_int (&args[1].value);
-  height = g_value_get_int (&args[2].value);
-  name = g_value_get_string (&args[3].value);
-  opacity = g_value_get_double (&args[4].value);
-  gimp_value_get_rgb (&args[5].value, &color);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  width = g_value_get_int (&args->values[1]);
+  height = g_value_get_int (&args->values[2]);
+  name = g_value_get_string (&args->values[3]);
+  opacity = g_value_get_double (&args->values[4]);
+  gimp_value_get_rgb (&args->values[5], &color);
 
   if (success)
     {
@@ -335,7 +334,7 @@ channel_new_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_channel (&return_vals[1].value, channel);
+    gimp_value_set_channel (&return_vals->values[1], channel);
 
   return return_vals;
 }
@@ -356,23 +355,23 @@ static GimpProcedure channel_new_proc =
   { { channel_new_invoker } }
 };
 
-static GimpArgument *
-channel_new_from_component_invoker (GimpProcedure      *procedure,
-                                    Gimp               *gimp,
-                                    GimpContext        *context,
-                                    GimpProgress       *progress,
-                                    const GimpArgument *args)
+static GValueArray *
+channel_new_from_component_invoker (GimpProcedure     *procedure,
+                                    Gimp              *gimp,
+                                    GimpContext       *context,
+                                    GimpProgress      *progress,
+                                    const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   gint32 component;
   const gchar *name;
   GimpChannel *channel = NULL;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  component = g_value_get_enum (&args[1].value);
-  name = g_value_get_string (&args[2].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  component = g_value_get_enum (&args->values[1]);
+  name = g_value_get_string (&args->values[2]);
 
   if (success)
     {
@@ -389,7 +388,7 @@ channel_new_from_component_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_channel (&return_vals[1].value, channel);
+    gimp_value_set_channel (&return_vals->values[1], channel);
 
   return return_vals;
 }
@@ -410,19 +409,19 @@ static GimpProcedure channel_new_from_component_proc =
   { { channel_new_from_component_invoker } }
 };
 
-static GimpArgument *
-channel_copy_invoker (GimpProcedure      *procedure,
-                      Gimp               *gimp,
-                      GimpContext        *context,
-                      GimpProgress       *progress,
-                      const GimpArgument *args)
+static GValueArray *
+channel_copy_invoker (GimpProcedure     *procedure,
+                      Gimp              *gimp,
+                      GimpContext       *context,
+                      GimpProgress      *progress,
+                      const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpChannel *channel;
   GimpChannel *channel_copy = NULL;
 
-  channel = gimp_value_get_channel (&args[0].value, gimp);
+  channel = gimp_value_get_channel (&args->values[0], gimp);
 
   if (success)
     {
@@ -436,7 +435,7 @@ channel_copy_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_channel (&return_vals[1].value, channel_copy);
+    gimp_value_set_channel (&return_vals->values[1], channel_copy);
 
   return return_vals;
 }
@@ -457,12 +456,12 @@ static GimpProcedure channel_copy_proc =
   { { channel_copy_invoker } }
 };
 
-static GimpArgument *
-channel_combine_masks_invoker (GimpProcedure      *procedure,
-                               Gimp               *gimp,
-                               GimpContext        *context,
-                               GimpProgress       *progress,
-                               const GimpArgument *args)
+static GValueArray *
+channel_combine_masks_invoker (GimpProcedure     *procedure,
+                               Gimp              *gimp,
+                               GimpContext       *context,
+                               GimpProgress      *progress,
+                               const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel1;
@@ -471,11 +470,11 @@ channel_combine_masks_invoker (GimpProcedure      *procedure,
   gint32 offx;
   gint32 offy;
 
-  channel1 = gimp_value_get_channel (&args[0].value, gimp);
-  channel2 = gimp_value_get_channel (&args[1].value, gimp);
-  operation = g_value_get_enum (&args[2].value);
-  offx = g_value_get_int (&args[3].value);
-  offy = g_value_get_int (&args[4].value);
+  channel1 = gimp_value_get_channel (&args->values[0], gimp);
+  channel2 = gimp_value_get_channel (&args->values[1], gimp);
+  operation = g_value_get_enum (&args->values[2]);
+  offx = g_value_get_int (&args->values[3]);
+  offy = g_value_get_int (&args->values[4]);
 
   if (success)
     {
@@ -501,19 +500,19 @@ static GimpProcedure channel_combine_masks_proc =
   { { channel_combine_masks_invoker } }
 };
 
-static GimpArgument *
-channel_get_show_masked_invoker (GimpProcedure      *procedure,
-                                 Gimp               *gimp,
-                                 GimpContext        *context,
-                                 GimpProgress       *progress,
-                                 const GimpArgument *args)
+static GValueArray *
+channel_get_show_masked_invoker (GimpProcedure     *procedure,
+                                 Gimp              *gimp,
+                                 GimpContext       *context,
+                                 GimpProgress      *progress,
+                                 const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpChannel *channel;
   gboolean show_masked = FALSE;
 
-  channel = gimp_value_get_channel (&args[0].value, gimp);
+  channel = gimp_value_get_channel (&args->values[0], gimp);
 
   if (success)
     {
@@ -523,7 +522,7 @@ channel_get_show_masked_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_set_boolean (&return_vals[1].value, show_masked);
+    g_value_set_boolean (&return_vals->values[1], show_masked);
 
   return return_vals;
 }
@@ -544,19 +543,19 @@ static GimpProcedure channel_get_show_masked_proc =
   { { channel_get_show_masked_invoker } }
 };
 
-static GimpArgument *
-channel_set_show_masked_invoker (GimpProcedure      *procedure,
-                                 Gimp               *gimp,
-                                 GimpContext        *context,
-                                 GimpProgress       *progress,
-                                 const GimpArgument *args)
+static GValueArray *
+channel_set_show_masked_invoker (GimpProcedure     *procedure,
+                                 Gimp              *gimp,
+                                 GimpContext       *context,
+                                 GimpProgress      *progress,
+                                 const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel;
   gboolean show_masked;
 
-  channel = gimp_value_get_channel (&args[0].value, gimp);
-  show_masked = g_value_get_boolean (&args[1].value);
+  channel = gimp_value_get_channel (&args->values[0], gimp);
+  show_masked = g_value_get_boolean (&args->values[1]);
 
   if (success)
     {
@@ -582,19 +581,19 @@ static GimpProcedure channel_set_show_masked_proc =
   { { channel_set_show_masked_invoker } }
 };
 
-static GimpArgument *
-channel_get_opacity_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GimpArgument *args)
+static GValueArray *
+channel_get_opacity_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpChannel *channel;
   gdouble opacity = 0.0;
 
-  channel = gimp_value_get_channel (&args[0].value, gimp);
+  channel = gimp_value_get_channel (&args->values[0], gimp);
 
   if (success)
     {
@@ -604,7 +603,7 @@ channel_get_opacity_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_set_double (&return_vals[1].value, opacity);
+    g_value_set_double (&return_vals->values[1], opacity);
 
   return return_vals;
 }
@@ -625,19 +624,19 @@ static GimpProcedure channel_get_opacity_proc =
   { { channel_get_opacity_invoker } }
 };
 
-static GimpArgument *
-channel_set_opacity_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GimpArgument *args)
+static GValueArray *
+channel_set_opacity_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel;
   gdouble opacity;
 
-  channel = gimp_value_get_channel (&args[0].value, gimp);
-  opacity = g_value_get_double (&args[1].value);
+  channel = gimp_value_get_channel (&args->values[0], gimp);
+  opacity = g_value_get_double (&args->values[1]);
 
   if (success)
     {
@@ -663,19 +662,19 @@ static GimpProcedure channel_set_opacity_proc =
   { { channel_set_opacity_invoker } }
 };
 
-static GimpArgument *
-channel_get_color_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GimpArgument *args)
+static GValueArray *
+channel_get_color_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpChannel *channel;
   GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
 
-  channel = gimp_value_get_channel (&args[0].value, gimp);
+  channel = gimp_value_get_channel (&args->values[0], gimp);
 
   if (success)
     {
@@ -685,7 +684,7 @@ channel_get_color_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_rgb (&return_vals[1].value, &color);
+    gimp_value_set_rgb (&return_vals->values[1], &color);
 
   return return_vals;
 }
@@ -706,19 +705,19 @@ static GimpProcedure channel_get_color_proc =
   { { channel_get_color_invoker } }
 };
 
-static GimpArgument *
-channel_set_color_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GimpArgument *args)
+static GValueArray *
+channel_set_color_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel;
   GimpRGB color;
 
-  channel = gimp_value_get_channel (&args[0].value, gimp);
-  gimp_value_get_rgb (&args[1].value, &color);
+  channel = gimp_value_get_channel (&args->values[0], gimp);
+  gimp_value_get_rgb (&args->values[1], &color);
 
   if (success)
     {

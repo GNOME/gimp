@@ -24,7 +24,6 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
@@ -118,19 +117,19 @@ register_display_procs (Gimp *gimp)
 
 }
 
-static GimpArgument *
-display_new_invoker (GimpProcedure      *procedure,
-                     Gimp               *gimp,
-                     GimpContext        *context,
-                     GimpProgress       *progress,
-                     const GimpArgument *args)
+static GValueArray *
+display_new_invoker (GimpProcedure     *procedure,
+                     Gimp              *gimp,
+                     GimpContext       *context,
+                     GimpProgress      *progress,
+                     const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpImage *image;
   GimpObject *display = NULL;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -149,7 +148,7 @@ display_new_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    gimp_value_set_display (&return_vals[1].value, display);
+    gimp_value_set_display (&return_vals->values[1], display);
 
   return return_vals;
 }
@@ -170,17 +169,17 @@ static GimpProcedure display_new_proc =
   { { display_new_invoker } }
 };
 
-static GimpArgument *
-display_delete_invoker (GimpProcedure      *procedure,
-                        Gimp               *gimp,
-                        GimpContext        *context,
-                        GimpProgress       *progress,
-                        const GimpArgument *args)
+static GValueArray *
+display_delete_invoker (GimpProcedure     *procedure,
+                        Gimp              *gimp,
+                        GimpContext       *context,
+                        GimpProgress      *progress,
+                        const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpObject *display;
 
-  display = gimp_value_get_display (&args[0].value, gimp);
+  display = gimp_value_get_display (&args->values[0], gimp);
 
   if (success)
     {
@@ -206,19 +205,19 @@ static GimpProcedure display_delete_proc =
   { { display_delete_invoker } }
 };
 
-static GimpArgument *
-display_get_window_handle_invoker (GimpProcedure      *procedure,
-                                   Gimp               *gimp,
-                                   GimpContext        *context,
-                                   GimpProgress       *progress,
-                                   const GimpArgument *args)
+static GValueArray *
+display_get_window_handle_invoker (GimpProcedure     *procedure,
+                                   Gimp              *gimp,
+                                   GimpContext       *context,
+                                   GimpProgress      *progress,
+                                   const GValueArray *args)
 {
   gboolean success = TRUE;
-  GimpArgument *return_vals;
+  GValueArray *return_vals;
   GimpObject *display;
   gint32 window = 0;
 
-  display = gimp_value_get_display (&args[0].value, gimp);
+  display = gimp_value_get_display (&args->values[0], gimp);
 
   if (success)
     {
@@ -228,7 +227,7 @@ display_get_window_handle_invoker (GimpProcedure      *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
   if (success)
-    g_value_set_int (&return_vals[1].value, window);
+    g_value_set_int (&return_vals->values[1], window);
 
   return return_vals;
 }
@@ -249,12 +248,12 @@ static GimpProcedure display_get_window_handle_proc =
   { { display_get_window_handle_invoker } }
 };
 
-static GimpArgument *
-displays_flush_invoker (GimpProcedure      *procedure,
-                        Gimp               *gimp,
-                        GimpContext        *context,
-                        GimpProgress       *progress,
-                        const GimpArgument *args)
+static GValueArray *
+displays_flush_invoker (GimpProcedure     *procedure,
+                        Gimp              *gimp,
+                        GimpContext       *context,
+                        GimpProgress      *progress,
+                        const GValueArray *args)
 {
   gimp_container_foreach (gimp->images, (GFunc) gimp_image_flush, NULL);
   return gimp_procedure_get_return_values (procedure, TRUE);
@@ -276,19 +275,19 @@ static GimpProcedure displays_flush_proc =
   { { displays_flush_invoker } }
 };
 
-static GimpArgument *
-displays_reconnect_invoker (GimpProcedure      *procedure,
-                            Gimp               *gimp,
-                            GimpContext        *context,
-                            GimpProgress       *progress,
-                            const GimpArgument *args)
+static GValueArray *
+displays_reconnect_invoker (GimpProcedure     *procedure,
+                            Gimp              *gimp,
+                            GimpContext       *context,
+                            GimpProgress      *progress,
+                            const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *old_image;
   GimpImage *new_image;
 
-  old_image = gimp_value_get_image (&args[0].value, gimp);
-  new_image = gimp_value_get_image (&args[1].value, gimp);
+  old_image = gimp_value_get_image (&args->values[0], gimp);
+  new_image = gimp_value_get_image (&args->values[1], gimp);
 
   if (success)
     {

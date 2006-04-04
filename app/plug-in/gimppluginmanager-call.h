@@ -24,12 +24,11 @@
 
 /*  Run a plug-in as if it were a procedure database procedure
  */
-GimpArgument * plug_in_run    (Gimp          *gimp,
+GValueArray  * plug_in_run    (Gimp          *gimp,
                                GimpContext   *context,
                                GimpProgress  *progress,
                                GimpProcedure *procedure,
-                               GimpArgument  *args,
-                               gint           n_args,
+                               GValueArray   *args,
                                gboolean       synchronous,
                                gboolean       destroy_return_vals,
                                gint           display_ID);

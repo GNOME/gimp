@@ -37,164 +37,161 @@
 #include "plug-in-params.h"
 
 
-GimpArgument *
-plug_in_params_to_args (GimpArgumentSpec *arg_specs,
-                        gint              n_arg_specs,
-                        GPParam          *params,
-			gint              n_params,
-                        gboolean          return_values,
-			gboolean          full_copy)
+GValueArray *
+plug_in_params_to_args (GParamSpec **pspecs,
+                        gint         n_pspecs,
+                        GPParam     *params,
+			gint         n_params,
+                        gboolean     return_values,
+			gboolean     full_copy)
 {
-  GimpArgument *args;
-  gint          i;
+  GValueArray *args;
+  gint         i;
 
-  g_return_val_if_fail ((arg_specs != NULL && n_arg_specs  > 0) ||
-                        (arg_specs == NULL && n_arg_specs == 0), NULL);
+  g_return_val_if_fail ((pspecs != NULL && n_pspecs  > 0) ||
+                        (pspecs == NULL && n_pspecs == 0), NULL);
   g_return_val_if_fail ((params != NULL && n_params  > 0) ||
                         (params == NULL && n_params == 0), NULL);
 
-  if (! params)
-    return NULL;
-
-  args = g_new0 (GimpArgument, n_params);
+  args = g_value_array_new (n_params);
 
   for (i = 0; i < n_params; i++)
     {
-      GValue         *value = &args[i].value;
+      GValue          value = { 0, };
       GimpPDBArgType  arg_type;
       gint            count;
 
       if (i == 0 && return_values)
         {
-          gimp_argument_init_compat (&args[i], params[i].type);
+          gimp_argument_init_compat (&value, params[i].type);
         }
       else
         {
-          GimpArgumentSpec *spec;
-          gint              spec_index = i;
-          GimpPDBArgType    spec_arg_type;
+          GParamSpec     *spec;
+          gint            spec_index = i;
+          GimpPDBArgType  spec_arg_type;
 
           if (return_values)
             spec_index--;
 
-          spec = &arg_specs[spec_index];
+          spec = pspecs[spec_index];
 
           spec_arg_type = gimp_argument_type_to_pdb_arg_type
-            (G_PARAM_SPEC_VALUE_TYPE (spec->pspec));
+            (G_PARAM_SPEC_VALUE_TYPE (spec));
 
-          if (spec_index < n_arg_specs &&
+          if (spec_index < n_pspecs &&
               spec_arg_type == params[i].type)
             {
-              gimp_argument_init (&args[i], spec);
+              g_value_init (&value, G_PARAM_SPEC_VALUE_TYPE (spec));
             }
           else
             {
-              gimp_argument_init_compat (&args[i], params[i].type);
+              gimp_argument_init_compat (&value, params[i].type);
             }
         }
 
-      arg_type = gimp_argument_type_to_pdb_arg_type (G_VALUE_TYPE (value));
+      arg_type = gimp_argument_type_to_pdb_arg_type (G_VALUE_TYPE (&value));
 
       switch (arg_type)
 	{
 	case GIMP_PDB_INT32:
-          if (G_VALUE_HOLDS_INT (value))
-            g_value_set_int (value, params[i].data.d_int32);
-          else if (G_VALUE_HOLDS_UINT (value))
-            g_value_set_uint (value, params[i].data.d_int32);
-          else if (G_VALUE_HOLDS_ENUM (value))
-            g_value_set_enum (value, params[i].data.d_int32);
-          else if (G_VALUE_HOLDS_BOOLEAN (value))
-            g_value_set_boolean (value, params[i].data.d_int32 ? TRUE : FALSE);
+          if (G_VALUE_HOLDS_INT (&value))
+            g_value_set_int (&value, params[i].data.d_int32);
+          else if (G_VALUE_HOLDS_UINT (&value))
+            g_value_set_uint (&value, params[i].data.d_int32);
+          else if (G_VALUE_HOLDS_ENUM (&value))
+            g_value_set_enum (&value, params[i].data.d_int32);
+          else if (G_VALUE_HOLDS_BOOLEAN (&value))
+            g_value_set_boolean (&value, params[i].data.d_int32 ? TRUE : FALSE);
           else
             {
               g_printerr ("%s: unhandled GIMP_PDB_INT32 type: %s\n",
-                          G_STRFUNC, g_type_name (G_VALUE_TYPE (value)));
+                          G_STRFUNC, g_type_name (G_VALUE_TYPE (&value)));
               g_return_val_if_reached (args);
             }
 	  break;
 
 	case GIMP_PDB_INT16:
-	  g_value_set_int (value, params[i].data.d_int16);
+	  g_value_set_int (&value, params[i].data.d_int16);
 	  break;
 
 	case GIMP_PDB_INT8:
-	  g_value_set_uint (value, params[i].data.d_int8);
+	  g_value_set_uint (&value, params[i].data.d_int8);
 	  break;
 
 	case GIMP_PDB_FLOAT:
-	  g_value_set_double (value, params[i].data.d_float);
+	  g_value_set_double (&value, params[i].data.d_float);
 	  break;
 
 	case GIMP_PDB_STRING:
 	  if (full_copy)
-	    g_value_set_string (value, params[i].data.d_string);
+	    g_value_set_string (&value, params[i].data.d_string);
 	  else
-	    g_value_set_static_string (value, params[i].data.d_string);
+	    g_value_set_static_string (&value, params[i].data.d_string);
 	  break;
 
 	case GIMP_PDB_INT32ARRAY:
-          count = g_value_get_int (&args[i - 1].value);
+          count = g_value_get_int (&args->values[i - 1]);
           if (full_copy)
-            gimp_value_set_int32array (value,
+            gimp_value_set_int32array (&value,
                                        params[i].data.d_int32array,
                                        count);
           else
-            gimp_value_set_static_int32array (value,
+            gimp_value_set_static_int32array (&value,
                                               params[i].data.d_int32array,
                                               count);
 	  break;
 
 	case GIMP_PDB_INT16ARRAY:
-          count = g_value_get_int (&args[i - 1].value);
+          count = g_value_get_int (&args->values[i - 1]);
           if (full_copy)
-            gimp_value_set_int16array (value,
+            gimp_value_set_int16array (&value,
                                        params[i].data.d_int16array,
                                        count);
           else
-            gimp_value_set_static_int16array (value,
+            gimp_value_set_static_int16array (&value,
                                               params[i].data.d_int16array,
                                               count);
 	  break;
 
 	case GIMP_PDB_INT8ARRAY:
-          count = g_value_get_int (&args[i - 1].value);
+          count = g_value_get_int (&args->values[i - 1]);
           if (full_copy)
-            gimp_value_set_int8array (value,
+            gimp_value_set_int8array (&value,
                                       (guint8 *) params[i].data.d_int8array,
                                       count);
           else
-            gimp_value_set_static_int8array (value,
+            gimp_value_set_static_int8array (&value,
                                              (guint8 *) params[i].data.d_int8array,
                                              count);
 	  break;
 
 	case GIMP_PDB_FLOATARRAY:
-          count = g_value_get_int (&args[i - 1].value);
+          count = g_value_get_int (&args->values[i - 1]);
           if (full_copy)
-            gimp_value_set_floatarray (value,
+            gimp_value_set_floatarray (&value,
                                        params[i].data.d_floatarray,
                                        count);
           else
-            gimp_value_set_static_floatarray (value,
+            gimp_value_set_static_floatarray (&value,
                                               params[i].data.d_floatarray,
                                               count);
 	  break;
 
 	case GIMP_PDB_STRINGARRAY:
-          count = g_value_get_int (&args[i - 1].value);
+          count = g_value_get_int (&args->values[i - 1]);
           if (full_copy)
-            gimp_value_set_stringarray (value,
+            gimp_value_set_stringarray (&value,
                                         (const gchar **) params[i].data.d_stringarray,
                                         count);
           else
-            gimp_value_set_static_stringarray (value,
+            gimp_value_set_static_stringarray (&value,
                                                (const gchar **) params[i].data.d_stringarray,
                                                count);
 	  break;
 
 	case GIMP_PDB_COLOR:
-	  gimp_value_set_rgb (value, &params[i].data.d_color);
+	  gimp_value_set_rgb (&value, &params[i].data.d_color);
 	  break;
 
 	case GIMP_PDB_REGION:
@@ -202,27 +199,27 @@ plug_in_params_to_args (GimpArgumentSpec *arg_specs,
 	  break;
 
 	case GIMP_PDB_DISPLAY:
-	  g_value_set_int (value, params[i].data.d_display);
+	  g_value_set_int (&value, params[i].data.d_display);
 	  break;
 
 	case GIMP_PDB_IMAGE:
-	  g_value_set_int (value, params[i].data.d_image);
+	  g_value_set_int (&value, params[i].data.d_image);
 	  break;
 
 	case GIMP_PDB_LAYER:
-	  g_value_set_int (value, params[i].data.d_layer);
+	  g_value_set_int (&value, params[i].data.d_layer);
 	  break;
 
 	case GIMP_PDB_CHANNEL:
-	  g_value_set_int (value, params[i].data.d_channel);
+	  g_value_set_int (&value, params[i].data.d_channel);
 	  break;
 
 	case GIMP_PDB_DRAWABLE:
-	  g_value_set_int (value, params[i].data.d_drawable);
+	  g_value_set_int (&value, params[i].data.d_drawable);
 	  break;
 
 	case GIMP_PDB_SELECTION:
-	  g_value_set_int (value, params[i].data.d_selection);
+	  g_value_set_int (&value, params[i].data.d_selection);
 	  break;
 
 	case GIMP_PDB_BOUNDARY:
@@ -230,47 +227,45 @@ plug_in_params_to_args (GimpArgumentSpec *arg_specs,
 	  break;
 
 	case GIMP_PDB_VECTORS:
-	  g_value_set_int (value, params[i].data.d_vectors);
+	  g_value_set_int (&value, params[i].data.d_vectors);
 	  break;
 
 	case GIMP_PDB_PARASITE:
 	  if (full_copy)
-	    g_value_set_boxed (value, &params[i].data.d_parasite);
+	    g_value_set_boxed (&value, &params[i].data.d_parasite);
 	  else
-	    g_value_set_static_boxed (value, &params[i].data.d_parasite);
+	    g_value_set_static_boxed (&value, &params[i].data.d_parasite);
 	  break;
 
 	case GIMP_PDB_STATUS:
-	  g_value_set_enum (value, params[i].data.d_status);
+	  g_value_set_enum (&value, params[i].data.d_status);
 	  break;
 
 	case GIMP_PDB_END:
 	  break;
 	}
+
+      g_value_array_append (args, &value);
+      g_value_unset (&value);
     }
 
   return args;
 }
 
 GPParam *
-plug_in_args_to_params (GimpArgument *args,
-			gint          n_args,
-			gboolean      full_copy)
+plug_in_args_to_params (GValueArray *args,
+			gboolean     full_copy)
 {
   GPParam *params;
   gint     i;
 
-  g_return_val_if_fail ((args != NULL && n_args  > 0) ||
-                        (args == NULL && n_args == 0), NULL);
+  g_return_val_if_fail (args != NULL, NULL);
 
-  if (! args)
-    return NULL;
+  params = g_new0 (GPParam, args->n_values);
 
-  params = g_new0 (GPParam, n_args);
-
-  for (i = 0; i < n_args; i++)
+  for (i = 0; i < args->n_values; i++)
     {
-      GValue *value = &args[i].value;
+      GValue *value = &args->values[i];
 
       params[i].type = gimp_argument_type_to_pdb_arg_type (G_VALUE_TYPE (value));
 
@@ -513,15 +508,15 @@ plug_in_params_destroy (GPParam  *params,
 }
 
 gboolean
-plug_in_proc_args_check (const gchar       *plug_in_name,
-                         const gchar       *plug_in_prog,
-                         const gchar       *procedure_name,
-                         const gchar       *menu_path,
-                         GimpArgumentSpec  *args,
-                         guint32            n_args,
-                         GimpArgumentSpec  *return_vals,
-                         guint32            n_return_vals,
-                         GError           **error)
+plug_in_proc_args_check (const gchar  *plug_in_name,
+                         const gchar  *plug_in_prog,
+                         const gchar  *procedure_name,
+                         const gchar  *menu_path,
+                         GParamSpec  **args,
+                         guint32       n_args,
+                         GParamSpec  **return_vals,
+                         guint32       n_return_vals,
+                         GError      **error)
 {
   gchar *prefix;
   gchar *p;
@@ -544,7 +539,7 @@ plug_in_proc_args_check (const gchar       *plug_in_name,
       strcmp (prefix, "<Image>")   == 0)
     {
       if ((n_args < 1) ||
-          ! GIMP_IS_PARAM_SPEC_INT32 (args[0].pspec))
+          ! GIMP_IS_PARAM_SPEC_INT32 (args[0]))
         {
           g_set_error (error, 0, 0,
                        "Plug-In \"%s\"\n(%s)\n\n"
@@ -561,9 +556,9 @@ plug_in_proc_args_check (const gchar       *plug_in_name,
   else if (strcmp (prefix, "<Load>") == 0)
     {
       if ((n_args < 3)                               ||
-          ! GIMP_IS_PARAM_SPEC_INT32 (args[0].pspec) ||
-          ! G_IS_PARAM_SPEC_STRING   (args[0].pspec) ||
-          ! G_IS_PARAM_SPEC_STRING   (args[0].pspec))
+          ! GIMP_IS_PARAM_SPEC_INT32 (args[0]) ||
+          ! G_IS_PARAM_SPEC_STRING   (args[1]) ||
+          ! G_IS_PARAM_SPEC_STRING   (args[2]))
         {
           g_set_error (error, 0, 0,
                        "Plug-In \"%s\"\n(%s)\n\n"
@@ -578,7 +573,7 @@ plug_in_proc_args_check (const gchar       *plug_in_name,
         }
 
       if ((n_return_vals < 1) ||
-          ! GIMP_IS_PARAM_SPEC_IMAGE_ID (return_vals[0].pspec))
+          ! GIMP_IS_PARAM_SPEC_IMAGE_ID (return_vals[0]))
         {
           g_set_error (error, 0, 0,
                        "Plug-In \"%s\"\n(%s)\n\n"
@@ -595,11 +590,11 @@ plug_in_proc_args_check (const gchar       *plug_in_name,
   else if (strcmp (prefix, "<Save>") == 0)
     {
       if ((n_args < 5)                                     ||
-          ! GIMP_IS_PARAM_SPEC_INT32       (args[0].pspec) ||
-          ! GIMP_IS_PARAM_SPEC_IMAGE_ID    (args[1].pspec) ||
-          ! GIMP_IS_PARAM_SPEC_DRAWABLE_ID (args[2].pspec) ||
-          ! G_IS_PARAM_SPEC_STRING         (args[3].pspec) ||
-          ! G_IS_PARAM_SPEC_STRING         (args[4].pspec))
+          ! GIMP_IS_PARAM_SPEC_INT32       (args[0]) ||
+          ! GIMP_IS_PARAM_SPEC_IMAGE_ID    (args[1]) ||
+          ! GIMP_IS_PARAM_SPEC_DRAWABLE_ID (args[2]) ||
+          ! G_IS_PARAM_SPEC_STRING         (args[3]) ||
+          ! G_IS_PARAM_SPEC_STRING         (args[4]))
         {
           g_set_error (error, 0, 0,
                        "Plug-In \"%s\"\n(%s)\n\n"
@@ -621,7 +616,7 @@ plug_in_proc_args_check (const gchar       *plug_in_name,
            strcmp (prefix, "<Buffers>")   == 0)
     {
       if ((n_args < 1) ||
-          ! GIMP_IS_PARAM_SPEC_INT32 (args[0].pspec))
+          ! GIMP_IS_PARAM_SPEC_INT32 (args[0]))
         {
           g_set_error (error, 0, 0,
                        "Plug-In \"%s\"\n(%s)\n\n"

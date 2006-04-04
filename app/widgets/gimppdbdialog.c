@@ -31,7 +31,6 @@
 
 #include "core/gimpcontext.h"
 
-#include "pdb/gimpargument.h"
 #include "pdb/procedural_db.h"
 
 #include "gimpmenufactory.h"
@@ -309,20 +308,18 @@ gimp_pdb_dialog_run_callback (GimpPdbDialog *dialog,
       if (procedural_db_lookup (dialog->caller_context->gimp,
                                 dialog->callback_name))
         {
-          GimpArgument *return_vals;
-          gint          n_return_vals;
+          GValueArray *return_vals;
 
-          return_vals = klass->run_callback (dialog, object, closing,
-                                             &n_return_vals);
+          return_vals = klass->run_callback (dialog, object, closing);
 
-          if (g_value_get_enum (&return_vals[0].value) != GIMP_PDB_SUCCESS)
+          if (g_value_get_enum (&return_vals->values[0]) != GIMP_PDB_SUCCESS)
             {
               g_message (_("Unable to run %s callback. "
                            "The corresponding plug-in may have crashed."),
                          g_type_name (G_TYPE_FROM_INSTANCE (dialog)));
             }
 
-          gimp_arguments_destroy (return_vals, n_return_vals);
+          g_value_array_free (return_vals);
         }
 
       dialog->callback_busy = FALSE;

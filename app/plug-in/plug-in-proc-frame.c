@@ -74,7 +74,6 @@ plug_in_proc_frame_init (PlugInProcFrame *proc_frame,
   proc_frame->procedure          = procedure;
   proc_frame->main_loop          = NULL;
   proc_frame->return_vals        = NULL;
-  proc_frame->n_return_vals      = 0;
   proc_frame->progress           = progress ? g_object_ref (progress) : NULL;
   proc_frame->progress_created   = FALSE;
   proc_frame->progress_cancel_id = 0;

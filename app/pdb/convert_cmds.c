@@ -24,7 +24,6 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimpargument.h"
 #include "gimpprocedure.h"
 #include "procedural_db.h"
 #include "core/gimpparamspecs.h"
@@ -122,17 +121,17 @@ register_convert_procs (Gimp *gimp)
 
 }
 
-static GimpArgument *
-image_convert_rgb_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GimpArgument *args)
+static GValueArray *
+image_convert_rgb_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -161,17 +160,17 @@ static GimpProcedure image_convert_rgb_proc =
   { { image_convert_rgb_invoker } }
 };
 
-static GimpArgument *
-image_convert_grayscale_invoker (GimpProcedure      *procedure,
-                                 Gimp               *gimp,
-                                 GimpContext        *context,
-                                 GimpProgress       *progress,
-                                 const GimpArgument *args)
+static GValueArray *
+image_convert_grayscale_invoker (GimpProcedure     *procedure,
+                                 Gimp              *gimp,
+                                 GimpContext       *context,
+                                 GimpProgress      *progress,
+                                 const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
+  image = gimp_value_get_image (&args->values[0], gimp);
 
   if (success)
     {
@@ -200,12 +199,12 @@ static GimpProcedure image_convert_grayscale_proc =
   { { image_convert_grayscale_invoker } }
 };
 
-static GimpArgument *
-image_convert_indexed_invoker (GimpProcedure      *procedure,
-                               Gimp               *gimp,
-                               GimpContext        *context,
-                               GimpProgress       *progress,
-                               const GimpArgument *args)
+static GValueArray *
+image_convert_indexed_invoker (GimpProcedure     *procedure,
+                               Gimp              *gimp,
+                               GimpContext       *context,
+                               GimpProgress      *progress,
+                               const GValueArray *args)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -216,13 +215,13 @@ image_convert_indexed_invoker (GimpProcedure      *procedure,
   gboolean remove_unused;
   const gchar *palette;
 
-  image = gimp_value_get_image (&args[0].value, gimp);
-  dither_type = g_value_get_enum (&args[1].value);
-  palette_type = g_value_get_enum (&args[2].value);
-  num_cols = g_value_get_int (&args[3].value);
-  alpha_dither = g_value_get_boolean (&args[4].value);
-  remove_unused = g_value_get_boolean (&args[5].value);
-  palette = g_value_get_string (&args[6].value);
+  image = gimp_value_get_image (&args->values[0], gimp);
+  dither_type = g_value_get_enum (&args->values[1]);
+  palette_type = g_value_get_enum (&args->values[2]);
+  num_cols = g_value_get_int (&args->values[3]);
+  alpha_dither = g_value_get_boolean (&args->values[4]);
+  remove_unused = g_value_get_boolean (&args->values[5]);
+  palette = g_value_get_string (&args->values[6]);
 
   if (success)
     {

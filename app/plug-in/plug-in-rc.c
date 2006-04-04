@@ -882,7 +882,7 @@ plug_in_rc_write (GSList       *plug_in_defs,
 
 	      for (i = 0; i < procedure->num_args; i++)
 		{
-                  GParamSpec *pspec = procedure->args[i].pspec;
+                  GParamSpec *pspec = procedure->args[i];
 
                   gimp_config_writer_open (writer, "proc-arg");
                   gimp_config_writer_printf (writer, "%d",
@@ -898,7 +898,7 @@ plug_in_rc_write (GSList       *plug_in_defs,
 
 	      for (i = 0; i < procedure->num_values; i++)
 		{
-                  GParamSpec *pspec = procedure->values[i].pspec;
+                  GParamSpec *pspec = procedure->values[i];
 
 		  gimp_config_writer_open (writer, "proc-arg");
                   gimp_config_writer_printf (writer, "%d",

@@ -36,7 +36,6 @@
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
 
-#include "pdb/gimpargument.h"
 #include "pdb/gimpprocedure.h"
 #include "pdb/procedural_db.h"
 
@@ -179,7 +178,7 @@ gimp_help_browser (Gimp *gimp)
 
   if (! procedure)
     {
-      GimpArgument *args = NULL;
+      GValueArray *args = NULL;
 
       procedure = procedural_db_lookup (gimp, "extension-gimp-help-browser");
 
@@ -197,12 +196,12 @@ gimp_help_browser (Gimp *gimp)
 
       args = gimp_procedure_get_arguments (procedure);
 
-      g_value_set_enum (&args[0].value, GIMP_RUN_INTERACTIVE);
+      g_value_set_enum (&args->values[0], GIMP_RUN_INTERACTIVE);
 
-      plug_in_run (gimp, gimp_get_user_context (gimp), NULL,
-                   procedure, args, 1, FALSE, TRUE, -1);
+      plug_in_run (gimp, gimp_get_user_context (gimp), NULL, procedure,
+                   args, FALSE, TRUE, -1);
 
-      gimp_arguments_destroy (args, procedure->num_args);
+      g_value_array_free (args);
     }
 
   /*  Check if the help browser started properly  */
@@ -267,10 +266,10 @@ gimp_help_call (Gimp        *gimp,
 
   if (! procedure)
     {
-      GimpArgument  *args         = NULL;
-      gint           n_domains    = 0;
-      gchar        **help_domains = NULL;
-      gchar        **help_uris    = NULL;
+      GValueArray  *args         = NULL;
+      gint          n_domains    = 0;
+      gchar       **help_domains = NULL;
+      gchar       **help_uris    = NULL;
 
       procedure = procedural_db_lookup (gimp, "extension-gimp-help");
 
@@ -282,15 +281,15 @@ gimp_help_call (Gimp        *gimp,
 
       args = gimp_procedure_get_arguments (procedure);
 
-      g_value_set_int     (&args[0].value, n_domains);
-      g_value_set_pointer (&args[1].value, help_domains);
-      g_value_set_int     (&args[2].value, n_domains);
-      g_value_set_pointer (&args[3].value, help_uris);
+      g_value_set_int     (&args->values[0], n_domains);
+      g_value_set_pointer (&args->values[1], help_domains);
+      g_value_set_int     (&args->values[2], n_domains);
+      g_value_set_pointer (&args->values[3], help_uris);
 
-      plug_in_run (gimp, gimp_get_user_context (gimp), NULL,
-                   procedure, args, 4, FALSE, TRUE, -1);
+      plug_in_run (gimp, gimp_get_user_context (gimp), NULL, procedure,
+                   args, FALSE, TRUE, -1);
 
-      gimp_arguments_destroy (args, procedure->num_args);
+      g_value_array_free (args);
     }
 
   /*  Check if the help parser started properly  */
@@ -298,8 +297,7 @@ gimp_help_call (Gimp        *gimp,
 
   if (procedure)
     {
-      GimpArgument *return_vals;
-      gint          n_return_vals;
+      GValueArray *return_vals;
 
 #ifdef GIMP_HELP_DEBUG
       g_printerr ("Calling help via %s: %s %s %s\n",
@@ -313,14 +311,13 @@ gimp_help_call (Gimp        *gimp,
                                             gimp_get_user_context (gimp),
                                             NULL,
                                             "extension-gimp-help-temp",
-                                            &n_return_vals,
                                             G_TYPE_STRING, procedure_name,
                                             G_TYPE_STRING, help_domain,
                                             G_TYPE_STRING, help_locales,
                                             G_TYPE_STRING, help_id,
                                             G_TYPE_NONE);
 
-      gimp_arguments_destroy (return_vals, n_return_vals);
+      g_value_array_free (return_vals);
     }
 }
 
