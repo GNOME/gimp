@@ -37,315 +37,6 @@
 #include "plug-in/plug-in-context.h"
 #include "plug-in/plug-in.h"
 
-static GimpProcedure context_push_proc;
-static GimpProcedure context_pop_proc;
-static GimpProcedure context_get_paint_method_proc;
-static GimpProcedure context_set_paint_method_proc;
-static GimpProcedure context_get_foreground_proc;
-static GimpProcedure context_set_foreground_proc;
-static GimpProcedure context_get_background_proc;
-static GimpProcedure context_set_background_proc;
-static GimpProcedure context_set_default_colors_proc;
-static GimpProcedure context_swap_colors_proc;
-static GimpProcedure context_get_opacity_proc;
-static GimpProcedure context_set_opacity_proc;
-static GimpProcedure context_get_paint_mode_proc;
-static GimpProcedure context_set_paint_mode_proc;
-static GimpProcedure context_get_brush_proc;
-static GimpProcedure context_set_brush_proc;
-static GimpProcedure context_get_pattern_proc;
-static GimpProcedure context_set_pattern_proc;
-static GimpProcedure context_get_gradient_proc;
-static GimpProcedure context_set_gradient_proc;
-static GimpProcedure context_get_palette_proc;
-static GimpProcedure context_set_palette_proc;
-static GimpProcedure context_get_font_proc;
-static GimpProcedure context_set_font_proc;
-
-void
-register_context_procs (Gimp *gimp)
-{
-  GimpProcedure *procedure;
-
-  /*
-   * context_push
-   */
-  procedure = gimp_procedure_init (&context_push_proc, 0, 0);
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * context_pop
-   */
-  procedure = gimp_procedure_init (&context_pop_proc, 0, 0);
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * context_get_paint_method
-   */
-  procedure = gimp_procedure_init (&context_get_paint_method_proc, 0, 1);
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("name",
-                                                           "name",
-                                                           "The name of the active paint method",
-                                                           FALSE, FALSE,
-                                                           NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * context_set_paint_method
-   */
-  procedure = gimp_procedure_init (&context_set_paint_method_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The name of the paint method",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * context_get_foreground
-   */
-  procedure = gimp_procedure_init (&context_get_foreground_proc, 0, 1);
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_rgb ("foreground",
-                                                        "foreground",
-                                                        "The foreground color",
-                                                        NULL,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * context_set_foreground
-   */
-  procedure = gimp_procedure_init (&context_set_foreground_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("foreground",
-                                                    "foreground",
-                                                    "The foreground color",
-                                                    NULL,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * context_get_background
-   */
-  procedure = gimp_procedure_init (&context_get_background_proc, 0, 1);
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_rgb ("background",
-                                                        "background",
-                                                        "The background color",
-                                                        NULL,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * context_set_background
-   */
-  procedure = gimp_procedure_init (&context_set_background_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("background",
-                                                    "background",
-                                                    "The background color",
-                                                    NULL,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * context_set_default_colors
-   */
-  procedure = gimp_procedure_init (&context_set_default_colors_proc, 0, 0);
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * context_swap_colors
-   */
-  procedure = gimp_procedure_init (&context_swap_colors_proc, 0, 0);
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * context_get_opacity
-   */
-  procedure = gimp_procedure_init (&context_get_opacity_proc, 0, 1);
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_double ("opacity",
-                                                        "opacity",
-                                                        "The opacity (0 <= opacity <= 100)",
-                                                        0, 100, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * context_set_opacity
-   */
-  procedure = gimp_procedure_init (&context_set_opacity_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("opacity",
-                                                    "opacity",
-                                                    "The opacity (0 <= opacity <= 100)",
-                                                    0, 100, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * context_get_paint_mode
-   */
-  procedure = gimp_procedure_init (&context_get_paint_mode_proc, 0, 1);
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_enum ("paint-mode",
-                                                      "paint mode",
-                                                      "The paint mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }",
-                                                      GIMP_TYPE_LAYER_MODE_EFFECTS,
-                                                      GIMP_NORMAL_MODE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * context_set_paint_mode
-   */
-  procedure = gimp_procedure_init (&context_set_paint_mode_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("paint-mode",
-                                                  "paint mode",
-                                                  "The paint mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }",
-                                                  GIMP_TYPE_LAYER_MODE_EFFECTS,
-                                                  GIMP_NORMAL_MODE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * context_get_brush
-   */
-  procedure = gimp_procedure_init (&context_get_brush_proc, 0, 1);
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("name",
-                                                           "name",
-                                                           "The name of the active brush",
-                                                           FALSE, FALSE,
-                                                           NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * context_set_brush
-   */
-  procedure = gimp_procedure_init (&context_set_brush_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The name of the brush",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * context_get_pattern
-   */
-  procedure = gimp_procedure_init (&context_get_pattern_proc, 0, 1);
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("name",
-                                                           "name",
-                                                           "The name of the active pattern",
-                                                           FALSE, FALSE,
-                                                           NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * context_set_pattern
-   */
-  procedure = gimp_procedure_init (&context_set_pattern_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The name of the pattern",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * context_get_gradient
-   */
-  procedure = gimp_procedure_init (&context_get_gradient_proc, 0, 1);
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("name",
-                                                           "name",
-                                                           "The name of the active gradient",
-                                                           FALSE, FALSE,
-                                                           NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * context_set_gradient
-   */
-  procedure = gimp_procedure_init (&context_set_gradient_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The name of the gradient",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * context_get_palette
-   */
-  procedure = gimp_procedure_init (&context_get_palette_proc, 0, 1);
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("name",
-                                                           "name",
-                                                           "The name of the active palette",
-                                                           FALSE, FALSE,
-                                                           NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * context_set_palette
-   */
-  procedure = gimp_procedure_init (&context_set_palette_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The name of the palette",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * context_get_font
-   */
-  procedure = gimp_procedure_init (&context_get_font_proc, 0, 1);
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("name",
-                                                           "name",
-                                                           "The name of the active font",
-                                                           FALSE, FALSE,
-                                                           NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * context_set_font
-   */
-  procedure = gimp_procedure_init (&context_set_font_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The name of the font",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-}
 
 static GValueArray *
 context_push_invoker (GimpProcedure     *procedure,
@@ -362,22 +53,6 @@ context_push_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure context_push_proc =
-{
-  TRUE, TRUE,
-  "gimp-context-push",
-  "gimp-context-push",
-  "Pushes a context to the top of the plug-in's context stack.",
-  "This procedure creates a new context by copying the current context. This copy becomes the new current context for the calling plug-in until it is popped again using gimp-context-pop.",
-  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-  "Michael Natterer & Sven Neumann",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_push_invoker } }
-};
-
 static GValueArray *
 context_pop_invoker (GimpProcedure     *procedure,
                      Gimp              *gimp,
@@ -392,22 +67,6 @@ context_pop_invoker (GimpProcedure     *procedure,
     success = FALSE;
   return gimp_procedure_get_return_values (procedure, success);
 }
-
-static GimpProcedure context_pop_proc =
-{
-  TRUE, TRUE,
-  "gimp-context-pop",
-  "gimp-context-pop",
-  "Pops the topmost context from the plug-in's context stack.",
-  "This procedure removes the topmost context from the plug-in's context stack. The context that was active before the corresponding call to gimp-context-push becomes the new current context of the plug-in.",
-  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-  "Michael Natterer & Sven Neumann",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_pop_invoker } }
-};
 
 static GValueArray *
 context_get_paint_method_invoker (GimpProcedure     *procedure,
@@ -435,22 +94,6 @@ context_get_paint_method_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure context_get_paint_method_proc =
-{
-  TRUE, TRUE,
-  "gimp-context-get-paint-method",
-  "gimp-context-get-paint-method",
-  "Retrieve the currently active paint method.",
-  "This procedure returns the name of the currently active paint method.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "2005",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_get_paint_method_invoker } }
-};
-
 static GValueArray *
 context_set_paint_method_invoker (GimpProcedure     *procedure,
                                   Gimp              *gimp,
@@ -477,22 +120,6 @@ context_set_paint_method_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure context_set_paint_method_proc =
-{
-  TRUE, TRUE,
-  "gimp-context-set-paint-method",
-  "gimp-context-set-paint-method",
-  "Set the specified paint method as the active paint method.",
-  "This procedure allows the active paint method to be set by specifying its name. The name is simply a string which corresponds to one of the names of the available paint methods. If there is no matching method found, this procedure will return an error. Otherwise, the specified method becomes active and will be used in all subsequent paint operations.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "2005",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_set_paint_method_invoker } }
-};
-
 static GValueArray *
 context_get_foreground_invoker (GimpProcedure     *procedure,
                                 Gimp              *gimp,
@@ -510,22 +137,6 @@ context_get_foreground_invoker (GimpProcedure     *procedure,
 
   return return_vals;
 }
-
-static GimpProcedure context_get_foreground_proc =
-{
-  TRUE, TRUE,
-  "gimp-context-get-foreground",
-  "gimp-context-get-foreground",
-  "Get the current GIMP foreground color.",
-  "This procedure returns the current GIMP foreground color. The foreground color is used in a variety of tools such as paint tools, blending, and bucket fill.",
-  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-  "Michael Natterer & Sven Neumann",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_get_foreground_invoker } }
-};
 
 static GValueArray *
 context_set_foreground_invoker (GimpProcedure     *procedure,
@@ -548,22 +159,6 @@ context_set_foreground_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure context_set_foreground_proc =
-{
-  TRUE, TRUE,
-  "gimp-context-set-foreground",
-  "gimp-context-set-foreground",
-  "Set the current GIMP foreground color.",
-  "This procedure sets the current GIMP foreground color. After this is set, operations which use foreground such as paint tools, blending, and bucket fill will use the new value.",
-  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-  "Michael Natterer & Sven Neumann",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_set_foreground_invoker } }
-};
-
 static GValueArray *
 context_get_background_invoker (GimpProcedure     *procedure,
                                 Gimp              *gimp,
@@ -581,22 +176,6 @@ context_get_background_invoker (GimpProcedure     *procedure,
 
   return return_vals;
 }
-
-static GimpProcedure context_get_background_proc =
-{
-  TRUE, TRUE,
-  "gimp-context-get-background",
-  "gimp-context-get-background",
-  "Get the current GIMP background color.",
-  "This procedure returns the current GIMP background color. The background color is used in a variety of tools such as blending, erasing (with non-alpha images), and image filling.",
-  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-  "Michael Natterer & Sven Neumann",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_get_background_invoker } }
-};
 
 static GValueArray *
 context_set_background_invoker (GimpProcedure     *procedure,
@@ -619,22 +198,6 @@ context_set_background_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure context_set_background_proc =
-{
-  TRUE, TRUE,
-  "gimp-context-set-background",
-  "gimp-context-set-background",
-  "Set the current GIMP background color.",
-  "This procedure sets the current GIMP background color. After this is set, operations which use background such as blending, filling images, clearing, and erasing (in non-alpha images) will use the new value.",
-  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-  "Michael Natterer & Sven Neumann",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_set_background_invoker } }
-};
-
 static GValueArray *
 context_set_default_colors_invoker (GimpProcedure     *procedure,
                                     Gimp              *gimp,
@@ -646,22 +209,6 @@ context_set_default_colors_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, TRUE);
 }
 
-static GimpProcedure context_set_default_colors_proc =
-{
-  TRUE, TRUE,
-  "gimp-context-set-default-colors",
-  "gimp-context-set-default-colors",
-  "Set the current GIMP foreground and background colors to black and white.",
-  "This procedure sets the current GIMP foreground and background colors to their initial default values, black and white.",
-  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-  "Michael Natterer & Sven Neumann",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_set_default_colors_invoker } }
-};
-
 static GValueArray *
 context_swap_colors_invoker (GimpProcedure     *procedure,
                              Gimp              *gimp,
@@ -672,22 +219,6 @@ context_swap_colors_invoker (GimpProcedure     *procedure,
   gimp_context_swap_colors (context);
   return gimp_procedure_get_return_values (procedure, TRUE);
 }
-
-static GimpProcedure context_swap_colors_proc =
-{
-  TRUE, TRUE,
-  "gimp-context-swap-colors",
-  "gimp-context-swap-colors",
-  "Swap the current GIMP foreground and background colors.",
-  "This procedure swaps the current GIMP foreground and background colors, so that the new foreground color becomes the old background color and vice versa.",
-  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-  "Michael Natterer & Sven Neumann",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_swap_colors_invoker } }
-};
 
 static GValueArray *
 context_get_opacity_invoker (GimpProcedure     *procedure,
@@ -706,22 +237,6 @@ context_get_opacity_invoker (GimpProcedure     *procedure,
 
   return return_vals;
 }
-
-static GimpProcedure context_get_opacity_proc =
-{
-  TRUE, TRUE,
-  "gimp-context-get-opacity",
-  "gimp-context-get-opacity",
-  "Get the opacity.",
-  "This procedure returns the opacity setting. The return value is a floating point number between 0 and 100.",
-  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-  "Michael Natterer & Sven Neumann",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_get_opacity_invoker } }
-};
 
 static GValueArray *
 context_set_opacity_invoker (GimpProcedure     *procedure,
@@ -743,22 +258,6 @@ context_set_opacity_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure context_set_opacity_proc =
-{
-  TRUE, TRUE,
-  "gimp-context-set-opacity",
-  "gimp-context-set-opacity",
-  "Set the opacity.",
-  "This procedure modifies the opacity setting. The value should be a floating point number between 0 and 100.",
-  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-  "Michael Natterer & Sven Neumann",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_set_opacity_invoker } }
-};
-
 static GValueArray *
 context_get_paint_mode_invoker (GimpProcedure     *procedure,
                                 Gimp              *gimp,
@@ -776,22 +275,6 @@ context_get_paint_mode_invoker (GimpProcedure     *procedure,
 
   return return_vals;
 }
-
-static GimpProcedure context_get_paint_mode_proc =
-{
-  TRUE, TRUE,
-  "gimp-context-get-paint-mode",
-  "gimp-context-get-paint-mode",
-  "Get the paint mode.",
-  "This procedure returns the paint-mode setting. The return value is an integer which corresponds to the values listed in the argument description.",
-  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-  "Michael Natterer & Sven Neumann",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_get_paint_mode_invoker } }
-};
 
 static GValueArray *
 context_set_paint_mode_invoker (GimpProcedure     *procedure,
@@ -812,22 +295,6 @@ context_set_paint_mode_invoker (GimpProcedure     *procedure,
 
   return gimp_procedure_get_return_values (procedure, success);
 }
-
-static GimpProcedure context_set_paint_mode_proc =
-{
-  TRUE, TRUE,
-  "gimp-context-set-paint-mode",
-  "gimp-context-set-paint-mode",
-  "Set the paint mode.",
-  "This procedure modifies the paint_mode setting.",
-  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-  "Michael Natterer & Sven Neumann",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_set_paint_mode_invoker } }
-};
 
 static GValueArray *
 context_get_brush_invoker (GimpProcedure     *procedure,
@@ -855,22 +322,6 @@ context_get_brush_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure context_get_brush_proc =
-{
-  TRUE, TRUE,
-  "gimp-context-get-brush",
-  "gimp-context-get-brush",
-  "Retrieve the currently active brush.",
-  "This procedure returns the name of the currently active brush. All paint operations and stroke operations use this brush to control the application of paint to the image.",
-  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-  "Michael Natterer & Sven Neumann",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_get_brush_invoker } }
-};
-
 static GValueArray *
 context_set_brush_invoker (GimpProcedure     *procedure,
                            Gimp              *gimp,
@@ -896,22 +347,6 @@ context_set_brush_invoker (GimpProcedure     *procedure,
 
   return gimp_procedure_get_return_values (procedure, success);
 }
-
-static GimpProcedure context_set_brush_proc =
-{
-  TRUE, TRUE,
-  "gimp-context-set-brush",
-  "gimp-context-set-brush",
-  "Set the specified brush as the active brush.",
-  "This procedure allows the active brush to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed brushes. If there is no matching brush found, this procedure will return an error. Otherwise, the specified brush becomes active and will be used in all subsequent paint operations.",
-  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-  "Michael Natterer & Sven Neumann",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_set_brush_invoker } }
-};
 
 static GValueArray *
 context_get_pattern_invoker (GimpProcedure     *procedure,
@@ -939,22 +374,6 @@ context_get_pattern_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure context_get_pattern_proc =
-{
-  TRUE, TRUE,
-  "gimp-context-get-pattern",
-  "gimp-context-get-pattern",
-  "Retrieve the currently active pattern.",
-  "This procedure returns name of the the currently active pattern. All clone and bucket-fill operations with patterns will use this pattern to control the application of paint to the image.",
-  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-  "Michael Natterer & Sven Neumann",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_get_pattern_invoker } }
-};
-
 static GValueArray *
 context_set_pattern_invoker (GimpProcedure     *procedure,
                              Gimp              *gimp,
@@ -980,22 +399,6 @@ context_set_pattern_invoker (GimpProcedure     *procedure,
 
   return gimp_procedure_get_return_values (procedure, success);
 }
-
-static GimpProcedure context_set_pattern_proc =
-{
-  TRUE, TRUE,
-  "gimp-context-set-pattern",
-  "gimp-context-set-pattern",
-  "Set the specified pattern as the active pattern.",
-  "This procedure allows the active pattern to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed patterns. If there is no matching pattern found, this procedure will return an error. Otherwise, the specified pattern becomes active and will be used in all subsequent paint operations.",
-  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-  "Michael Natterer & Sven Neumann",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_set_pattern_invoker } }
-};
 
 static GValueArray *
 context_get_gradient_invoker (GimpProcedure     *procedure,
@@ -1023,22 +426,6 @@ context_get_gradient_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure context_get_gradient_proc =
-{
-  TRUE, TRUE,
-  "gimp-context-get-gradient",
-  "gimp-context-get-gradient",
-  "Retrieve the currently active gradient.",
-  "This procedure returns the name of the currently active gradient.",
-  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-  "Michael Natterer & Sven Neumann",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_get_gradient_invoker } }
-};
-
 static GValueArray *
 context_set_gradient_invoker (GimpProcedure     *procedure,
                               Gimp              *gimp,
@@ -1064,22 +451,6 @@ context_set_gradient_invoker (GimpProcedure     *procedure,
 
   return gimp_procedure_get_return_values (procedure, success);
 }
-
-static GimpProcedure context_set_gradient_proc =
-{
-  TRUE, TRUE,
-  "gimp-context-set-gradient",
-  "gimp-context-set-gradient",
-  "Sets the specified gradient as the active gradient.",
-  "This procedure lets you set the specified gradient as the active or \"current\" one. The name is simply a string which corresponds to one of the loaded gradients. If no matching gradient is found, this procedure will return an error. Otherwise, the specified gradient will become active and will be used for subsequent custom gradient operations.",
-  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-  "Michael Natterer & Sven Neumann",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_set_gradient_invoker } }
-};
 
 static GValueArray *
 context_get_palette_invoker (GimpProcedure     *procedure,
@@ -1107,22 +478,6 @@ context_get_palette_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure context_get_palette_proc =
-{
-  TRUE, TRUE,
-  "gimp-context-get-palette",
-  "gimp-context-get-palette",
-  "Retrieve the currently active palette.",
-  "This procedure returns the name of the the currently active palette.",
-  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-  "Michael Natterer & Sven Neumann",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_get_palette_invoker } }
-};
-
 static GValueArray *
 context_set_palette_invoker (GimpProcedure     *procedure,
                              Gimp              *gimp,
@@ -1148,22 +503,6 @@ context_set_palette_invoker (GimpProcedure     *procedure,
 
   return gimp_procedure_get_return_values (procedure, success);
 }
-
-static GimpProcedure context_set_palette_proc =
-{
-  TRUE, TRUE,
-  "gimp-context-set-palette",
-  "gimp-context-set-palette",
-  "Set the specified palette as the active palette.",
-  "This procedure allows the active palette to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed palettes. If no matching palette is found, this procedure will return an error. Otherwise, the specified palette becomes active and will be used in all subsequent palette operations.",
-  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-  "Michael Natterer & Sven Neumann",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_set_palette_invoker } }
-};
 
 static GValueArray *
 context_get_font_invoker (GimpProcedure     *procedure,
@@ -1191,22 +530,6 @@ context_get_font_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure context_get_font_proc =
-{
-  TRUE, TRUE,
-  "gimp-context-get-font",
-  "gimp-context-get-font",
-  "Retrieve the currently active font.",
-  "This procedure returns the name of the currently active font.",
-  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-  "Michael Natterer & Sven Neumann",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_get_font_invoker } }
-};
-
 static GValueArray *
 context_set_font_invoker (GimpProcedure     *procedure,
                           Gimp              *gimp,
@@ -1233,18 +556,575 @@ context_set_font_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure context_set_font_proc =
+void
+register_context_procs (Gimp *gimp)
 {
-  TRUE, TRUE,
-  "gimp-context-set-font",
-  "gimp-context-set-font",
-  "Set the specified font as the active font.",
-  "This procedure allows the active font to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed fonts. If no matching font is found, this procedure will return an error. Otherwise, the specified font becomes active and will be used in all subsequent font operations.",
-  "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
-  "Michael Natterer & Sven Neumann",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { context_set_font_invoker } }
-};
+  GimpProcedure *procedure;
+
+  /*
+   * gimp-context-push
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 0,
+                             context_push_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-push",
+                                     "gimp-context-push",
+                                     "Pushes a context to the top of the plug-in's context stack.",
+                                     "This procedure creates a new context by copying the current context. This copy becomes the new current context for the calling plug-in until it is popped again using gimp-context-pop.",
+                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                     "Michael Natterer & Sven Neumann",
+                                     "2004",
+                                     NULL);
+
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-context-pop
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 0,
+                             context_pop_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-pop",
+                                     "gimp-context-pop",
+                                     "Pops the topmost context from the plug-in's context stack.",
+                                     "This procedure removes the topmost context from the plug-in's context stack. The context that was active before the corresponding call to gimp-context-push becomes the new current context of the plug-in.",
+                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                     "Michael Natterer & Sven Neumann",
+                                     "2004",
+                                     NULL);
+
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-context-get-paint-method
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
+                             context_get_paint_method_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-paint-method",
+                                     "gimp-context-get-paint-method",
+                                     "Retrieve the currently active paint method.",
+                                     "This procedure returns the name of the currently active paint method.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2005",
+                                     NULL);
+
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("name",
+                                                           "name",
+                                                           "The name of the active paint method",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-context-set-paint-method
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             context_set_paint_method_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-paint-method",
+                                     "gimp-context-set-paint-method",
+                                     "Set the specified paint method as the active paint method.",
+                                     "This procedure allows the active paint method to be set by specifying its name. The name is simply a string which corresponds to one of the names of the available paint methods. If there is no matching method found, this procedure will return an error. Otherwise, the specified method becomes active and will be used in all subsequent paint operations.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2005",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The name of the paint method",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-context-get-foreground
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
+                             context_get_foreground_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-foreground",
+                                     "gimp-context-get-foreground",
+                                     "Get the current GIMP foreground color.",
+                                     "This procedure returns the current GIMP foreground color. The foreground color is used in a variety of tools such as paint tools, blending, and bucket fill.",
+                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                     "Michael Natterer & Sven Neumann",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_rgb ("foreground",
+                                                        "foreground",
+                                                        "The foreground color",
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-context-set-foreground
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             context_set_foreground_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-foreground",
+                                     "gimp-context-set-foreground",
+                                     "Set the current GIMP foreground color.",
+                                     "This procedure sets the current GIMP foreground color. After this is set, operations which use foreground such as paint tools, blending, and bucket fill will use the new value.",
+                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                     "Michael Natterer & Sven Neumann",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_rgb ("foreground",
+                                                    "foreground",
+                                                    "The foreground color",
+                                                    NULL,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-context-get-background
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
+                             context_get_background_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-background",
+                                     "gimp-context-get-background",
+                                     "Get the current GIMP background color.",
+                                     "This procedure returns the current GIMP background color. The background color is used in a variety of tools such as blending, erasing (with non-alpha images), and image filling.",
+                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                     "Michael Natterer & Sven Neumann",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_rgb ("background",
+                                                        "background",
+                                                        "The background color",
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-context-set-background
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             context_set_background_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-background",
+                                     "gimp-context-set-background",
+                                     "Set the current GIMP background color.",
+                                     "This procedure sets the current GIMP background color. After this is set, operations which use background such as blending, filling images, clearing, and erasing (in non-alpha images) will use the new value.",
+                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                     "Michael Natterer & Sven Neumann",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_rgb ("background",
+                                                    "background",
+                                                    "The background color",
+                                                    NULL,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-context-set-default-colors
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 0,
+                             context_set_default_colors_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-default-colors",
+                                     "gimp-context-set-default-colors",
+                                     "Set the current GIMP foreground and background colors to black and white.",
+                                     "This procedure sets the current GIMP foreground and background colors to their initial default values, black and white.",
+                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                     "Michael Natterer & Sven Neumann",
+                                     "2004",
+                                     NULL);
+
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-context-swap-colors
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 0,
+                             context_swap_colors_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-swap-colors",
+                                     "gimp-context-swap-colors",
+                                     "Swap the current GIMP foreground and background colors.",
+                                     "This procedure swaps the current GIMP foreground and background colors, so that the new foreground color becomes the old background color and vice versa.",
+                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                     "Michael Natterer & Sven Neumann",
+                                     "2004",
+                                     NULL);
+
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-context-get-opacity
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
+                             context_get_opacity_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-opacity",
+                                     "gimp-context-get-opacity",
+                                     "Get the opacity.",
+                                     "This procedure returns the opacity setting. The return value is a floating point number between 0 and 100.",
+                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                     "Michael Natterer & Sven Neumann",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("opacity",
+                                                        "opacity",
+                                                        "The opacity (0 <= opacity <= 100)",
+                                                        0, 100, 0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-context-set-opacity
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             context_set_opacity_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-opacity",
+                                     "gimp-context-set-opacity",
+                                     "Set the opacity.",
+                                     "This procedure modifies the opacity setting. The value should be a floating point number between 0 and 100.",
+                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                     "Michael Natterer & Sven Neumann",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("opacity",
+                                                    "opacity",
+                                                    "The opacity (0 <= opacity <= 100)",
+                                                    0, 100, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-context-get-paint-mode
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
+                             context_get_paint_mode_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-paint-mode",
+                                     "gimp-context-get-paint-mode",
+                                     "Get the paint mode.",
+                                     "This procedure returns the paint-mode setting. The return value is an integer which corresponds to the values listed in the argument description.",
+                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                     "Michael Natterer & Sven Neumann",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("paint-mode",
+                                                      "paint mode",
+                                                      "The paint mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }",
+                                                      GIMP_TYPE_LAYER_MODE_EFFECTS,
+                                                      GIMP_NORMAL_MODE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-context-set-paint-mode
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             context_set_paint_mode_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-paint-mode",
+                                     "gimp-context-set-paint-mode",
+                                     "Set the paint mode.",
+                                     "This procedure modifies the paint_mode setting.",
+                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                     "Michael Natterer & Sven Neumann",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("paint-mode",
+                                                  "paint mode",
+                                                  "The paint mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }",
+                                                  GIMP_TYPE_LAYER_MODE_EFFECTS,
+                                                  GIMP_NORMAL_MODE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-context-get-brush
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
+                             context_get_brush_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-brush",
+                                     "gimp-context-get-brush",
+                                     "Retrieve the currently active brush.",
+                                     "This procedure returns the name of the currently active brush. All paint operations and stroke operations use this brush to control the application of paint to the image.",
+                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                     "Michael Natterer & Sven Neumann",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("name",
+                                                           "name",
+                                                           "The name of the active brush",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-context-set-brush
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             context_set_brush_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-brush",
+                                     "gimp-context-set-brush",
+                                     "Set the specified brush as the active brush.",
+                                     "This procedure allows the active brush to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed brushes. If there is no matching brush found, this procedure will return an error. Otherwise, the specified brush becomes active and will be used in all subsequent paint operations.",
+                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                     "Michael Natterer & Sven Neumann",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The name of the brush",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-context-get-pattern
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
+                             context_get_pattern_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-pattern",
+                                     "gimp-context-get-pattern",
+                                     "Retrieve the currently active pattern.",
+                                     "This procedure returns name of the the currently active pattern. All clone and bucket-fill operations with patterns will use this pattern to control the application of paint to the image.",
+                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                     "Michael Natterer & Sven Neumann",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("name",
+                                                           "name",
+                                                           "The name of the active pattern",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-context-set-pattern
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             context_set_pattern_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-pattern",
+                                     "gimp-context-set-pattern",
+                                     "Set the specified pattern as the active pattern.",
+                                     "This procedure allows the active pattern to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed patterns. If there is no matching pattern found, this procedure will return an error. Otherwise, the specified pattern becomes active and will be used in all subsequent paint operations.",
+                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                     "Michael Natterer & Sven Neumann",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The name of the pattern",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-context-get-gradient
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
+                             context_get_gradient_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-gradient",
+                                     "gimp-context-get-gradient",
+                                     "Retrieve the currently active gradient.",
+                                     "This procedure returns the name of the currently active gradient.",
+                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                     "Michael Natterer & Sven Neumann",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("name",
+                                                           "name",
+                                                           "The name of the active gradient",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-context-set-gradient
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             context_set_gradient_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-gradient",
+                                     "gimp-context-set-gradient",
+                                     "Sets the specified gradient as the active gradient.",
+                                     "This procedure lets you set the specified gradient as the active or \"current\" one. The name is simply a string which corresponds to one of the loaded gradients. If no matching gradient is found, this procedure will return an error. Otherwise, the specified gradient will become active and will be used for subsequent custom gradient operations.",
+                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                     "Michael Natterer & Sven Neumann",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The name of the gradient",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-context-get-palette
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
+                             context_get_palette_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-palette",
+                                     "gimp-context-get-palette",
+                                     "Retrieve the currently active palette.",
+                                     "This procedure returns the name of the the currently active palette.",
+                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                     "Michael Natterer & Sven Neumann",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("name",
+                                                           "name",
+                                                           "The name of the active palette",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-context-set-palette
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             context_set_palette_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-palette",
+                                     "gimp-context-set-palette",
+                                     "Set the specified palette as the active palette.",
+                                     "This procedure allows the active palette to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed palettes. If no matching palette is found, this procedure will return an error. Otherwise, the specified palette becomes active and will be used in all subsequent palette operations.",
+                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                     "Michael Natterer & Sven Neumann",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The name of the palette",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-context-get-font
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
+                             context_get_font_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-font",
+                                     "gimp-context-get-font",
+                                     "Retrieve the currently active font.",
+                                     "This procedure returns the name of the currently active font.",
+                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                     "Michael Natterer & Sven Neumann",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("name",
+                                                           "name",
+                                                           "The name of the active font",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-context-set-font
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             context_set_font_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-font",
+                                     "gimp-context-set-font",
+                                     "Set the specified font as the active font.",
+                                     "This procedure allows the active font to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed fonts. If no matching font is found, this procedure will return an error. Otherwise, the specified font becomes active and will be used in all subsequent font operations.",
+                                     "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
+                                     "Michael Natterer & Sven Neumann",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The name of the font",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+}

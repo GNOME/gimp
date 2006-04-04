@@ -523,13 +523,23 @@ sub generate {
 
 	$out->{pcount}++; $total++;
 
-	$out->{procs} .= "static GimpProcedure ${name}_proc;\n";
-
 	$out->{register} .= <<CODE;
   /*
-   * ${name}
+   * gimp-$proc->{canonical_name}
    */
-  procedure = gimp_procedure_init (\&${name}_proc, @{[scalar @inargs]}, @{[scalar @outargs]});
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, @{[scalar @inargs]}, @{[scalar @outargs]},
+                             ${name}_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-$proc->{canonical_name}",
+                                     "gimp-$proc->{canonical_name}",
+                                     @{[ &quotewrap($proc->{blurb}, 2) ]},
+                                     @{[ &quotewrap($proc->{help},  2) ]},
+                                     "$proc->{author}",
+                                     "$proc->{copyright}",
+                                     "$proc->{date}",
+                                     @{[$proc->{deprecated} ? "\"$proc->{deprecated}\"" : 'NULL']});
+
 CODE
 
         $argc = 0;
@@ -544,7 +554,7 @@ CODE
 ${pspec});
 CODE
 
-            if (! ($postproc eq '')) {
+            if ($postproc ne '') {
 		$pspec = "procedure->args[$argc]";
 		$postproc =~ s/^/'  '/meg;
 		$out->{register} .= eval qq/"$postproc"/;
@@ -566,7 +576,7 @@ CODE
 ${pspec});
 CODE
 
-            if (! ($postproc eq '')) {
+            if ($postproc ne '') {
 		$pspec = "procedure->values[$argc]";
 		$postproc =~ s/^/'  '/meg;
 		$out->{register} .= eval qq/"$postproc"/;
@@ -631,25 +641,6 @@ CODE
 	}
 
         $out->{code} .= $code;
-
-	$out->{code} .= <<CODE;
-
-static GimpProcedure ${name}_proc =
-{
-  TRUE, TRUE,
-  "gimp-$proc->{canonical_name}",
-  "gimp-$proc->{canonical_name}",
-  @{[ &quotewrap($proc->{blurb}, 2) ]},
-  @{[ &quotewrap($proc->{help},  2) ]},
-  "$proc->{author}",
-  "$proc->{copyright}",
-  "$proc->{date}",
-  @{[$proc->{deprecated} ? "\"$proc->{deprecated}\"" : 'NULL']},
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { ${name}_invoker } }
-};
-CODE
     }
 
     my $gpl = <<'GPL';
@@ -786,11 +777,10 @@ GPL
 	print CFILE qq/#include "config.h"\n\n/;
 	print CFILE $headers, "\n";
 	print CFILE $extra->{decls}, "\n" if exists $extra->{decls};
-	print CFILE $out->{procs};
-	print CFILE "\nvoid\nregister_${group}_procs (Gimp *gimp)\n";
-	print CFILE "{\n  GimpProcedure *procedure;\n\n$out->{register}}\n";
 	print CFILE "\n", $extra->{code} if exists $extra->{code};
 	print CFILE $out->{code};
+	print CFILE "\nvoid\nregister_${group}_procs (Gimp *gimp)\n";
+	print CFILE "{\n  GimpProcedure *procedure;\n\n$out->{register}}\n";
 	close CFILE;
 	&write_file($cfile);
 

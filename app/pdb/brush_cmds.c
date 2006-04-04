@@ -37,554 +37,6 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimplist.h"
 
-static GimpProcedure brush_new_proc;
-static GimpProcedure brush_duplicate_proc;
-static GimpProcedure brush_is_generated_proc;
-static GimpProcedure brush_rename_proc;
-static GimpProcedure brush_delete_proc;
-static GimpProcedure brush_is_editable_proc;
-static GimpProcedure brush_get_info_proc;
-static GimpProcedure brush_get_pixels_proc;
-static GimpProcedure brush_get_spacing_proc;
-static GimpProcedure brush_set_spacing_proc;
-static GimpProcedure brush_get_shape_proc;
-static GimpProcedure brush_get_radius_proc;
-static GimpProcedure brush_get_spikes_proc;
-static GimpProcedure brush_get_hardness_proc;
-static GimpProcedure brush_get_aspect_ratio_proc;
-static GimpProcedure brush_get_angle_proc;
-static GimpProcedure brush_set_shape_proc;
-static GimpProcedure brush_set_radius_proc;
-static GimpProcedure brush_set_spikes_proc;
-static GimpProcedure brush_set_hardness_proc;
-static GimpProcedure brush_set_aspect_ratio_proc;
-static GimpProcedure brush_set_angle_proc;
-
-void
-register_brush_procs (Gimp *gimp)
-{
-  GimpProcedure *procedure;
-
-  /*
-   * brush_new
-   */
-  procedure = gimp_procedure_init (&brush_new_proc, 1, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The requested name of the new brush",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("actual-name",
-                                                           "actual name",
-                                                           "The actual new brush name",
-                                                           FALSE, FALSE,
-                                                           NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * brush_duplicate
-   */
-  procedure = gimp_procedure_init (&brush_duplicate_proc, 1, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("copy-name",
-                                                           "copy name",
-                                                           "The name of the brush's copy",
-                                                           FALSE, FALSE,
-                                                           NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * brush_is_generated
-   */
-  procedure = gimp_procedure_init (&brush_is_generated_proc, 1, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boolean ("generated",
-                                                         "generated",
-                                                         "TRUE if the brush is generated",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * brush_rename
-   */
-  procedure = gimp_procedure_init (&brush_rename_proc, 2, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("new-name",
-                                                       "new name",
-                                                       "The new name of the brush",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("actual-name",
-                                                           "actual name",
-                                                           "The actual new name of the brush",
-                                                           FALSE, FALSE,
-                                                           NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * brush_delete
-   */
-  procedure = gimp_procedure_init (&brush_delete_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * brush_is_editable
-   */
-  procedure = gimp_procedure_init (&brush_is_editable_proc, 1, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boolean ("editable",
-                                                         "editable",
-                                                         "TRUE if the brush can be edited",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * brush_get_info
-   */
-  procedure = gimp_procedure_init (&brush_get_info_proc, 1, 4);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("width",
-                                                          "width",
-                                                          "The brush width",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("height",
-                                                          "height",
-                                                          "The brush height",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("mask-bpp",
-                                                          "mask bpp",
-                                                          "The brush mask bpp",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("color-bpp",
-                                                          "color bpp",
-                                                          "The brush color bpp",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * brush_get_pixels
-   */
-  procedure = gimp_procedure_init (&brush_get_pixels_proc, 1, 8);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("width",
-                                                          "width",
-                                                          "The brush width",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("height",
-                                                          "height",
-                                                          "The brush height",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("mask-bpp",
-                                                          "mask bpp",
-                                                          "The brush mask bpp",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-mask-bytes",
-                                                          "num mask bytes",
-                                                          "Length of brush mask data",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int8_array ("mask-bytes",
-                                                               "mask bytes",
-                                                               "The brush mask data",
-                                                               GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("color-bpp",
-                                                          "color bpp",
-                                                          "The brush color bpp",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-color-bytes",
-                                                          "num color bytes",
-                                                          "Length of brush color data",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int8_array ("color-bytes",
-                                                               "color bytes",
-                                                               "The brush color data",
-                                                               GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * brush_get_spacing
-   */
-  procedure = gimp_procedure_init (&brush_get_spacing_proc, 1, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("spacing",
-                                                          "spacing",
-                                                          "The brush spacing (0 <= spacing <= 1000)",
-                                                          0, 1000, 0,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * brush_set_spacing
-   */
-  procedure = gimp_procedure_init (&brush_set_spacing_proc, 2, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("spacing",
-                                                      "spacing",
-                                                      "The brush spacing (0 <= spacing <= 1000)",
-                                                      0, 1000, 0,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * brush_get_shape
-   */
-  procedure = gimp_procedure_init (&brush_get_shape_proc, 1, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_enum ("shape",
-                                                      "shape",
-                                                      "The brush shape: { GIMP_BRUSH_GENERATED_CIRCLE (0), GIMP_BRUSH_GENERATED_SQUARE (1), GIMP_BRUSH_GENERATED_DIAMOND (2) }",
-                                                      GIMP_TYPE_BRUSH_GENERATED_SHAPE,
-                                                      GIMP_BRUSH_GENERATED_CIRCLE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * brush_get_radius
-   */
-  procedure = gimp_procedure_init (&brush_get_radius_proc, 1, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_double ("radius",
-                                                        "radius",
-                                                        "The radius of the brush in pixels",
-                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * brush_get_spikes
-   */
-  procedure = gimp_procedure_init (&brush_get_spikes_proc, 1, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("spikes",
-                                                          "spikes",
-                                                          "The number of spikes on the brush.",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * brush_get_hardness
-   */
-  procedure = gimp_procedure_init (&brush_get_hardness_proc, 1, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_double ("hardness",
-                                                        "hardness",
-                                                        "The hardness of the brush.",
-                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * brush_get_aspect_ratio
-   */
-  procedure = gimp_procedure_init (&brush_get_aspect_ratio_proc, 1, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_double ("aspect-ratio",
-                                                        "aspect ratio",
-                                                        "The aspect ratio of the brush.",
-                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * brush_get_angle
-   */
-  procedure = gimp_procedure_init (&brush_get_angle_proc, 1, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_double ("angle",
-                                                        "angle",
-                                                        "The rotation angle of the brush.",
-                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * brush_set_shape
-   */
-  procedure = gimp_procedure_init (&brush_set_shape_proc, 2, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("shape-in",
-                                                  "shape in",
-                                                  "The brush shape: { GIMP_BRUSH_GENERATED_CIRCLE (0), GIMP_BRUSH_GENERATED_SQUARE (1), GIMP_BRUSH_GENERATED_DIAMOND (2) }",
-                                                  GIMP_TYPE_BRUSH_GENERATED_SHAPE,
-                                                  GIMP_BRUSH_GENERATED_CIRCLE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_enum ("shape-out",
-                                                      "shape out",
-                                                      "The brush shape actually assigned: { GIMP_BRUSH_GENERATED_CIRCLE (0), GIMP_BRUSH_GENERATED_SQUARE (1), GIMP_BRUSH_GENERATED_DIAMOND (2) }",
-                                                      GIMP_TYPE_BRUSH_GENERATED_SHAPE,
-                                                      GIMP_BRUSH_GENERATED_CIRCLE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * brush_set_radius
-   */
-  procedure = gimp_procedure_init (&brush_set_radius_proc, 2, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("radius-in",
-                                                    "radius in",
-                                                    "The desired brush radius",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_double ("radius-out",
-                                                        "radius out",
-                                                        "The brush radius actually assigned",
-                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * brush_set_spikes
-   */
-  procedure = gimp_procedure_init (&brush_set_spikes_proc, 2, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("spikes-in",
-                                                      "spikes in",
-                                                      "The desired number of spikes",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("spikes-out",
-                                                          "spikes out",
-                                                          "The number of spikes actually assigned",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * brush_set_hardness
-   */
-  procedure = gimp_procedure_init (&brush_set_hardness_proc, 2, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("hardness-in",
-                                                    "hardness in",
-                                                    "The desired brush hardness",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_double ("hardness-out",
-                                                        "hardness out",
-                                                        "The brush hardness actually assigned",
-                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * brush_set_aspect_ratio
-   */
-  procedure = gimp_procedure_init (&brush_set_aspect_ratio_proc, 2, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("aspect-ratio-in",
-                                                    "aspect ratio in",
-                                                    "The desired brush aspect ratio",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_double ("aspect-ratio-out",
-                                                        "aspect ratio out",
-                                                        "The brush aspect ratio actually assigned",
-                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * brush_set_angle
-   */
-  procedure = gimp_procedure_init (&brush_set_angle_proc, 2, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("angle-in",
-                                                    "angle in",
-                                                    "The desired brush rotation angle",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_double ("angle-out",
-                                                        "angle out",
-                                                        "The brush rotation angle actually assigned",
-                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-}
 
 static GValueArray *
 brush_new_invoker (GimpProcedure     *procedure,
@@ -622,22 +74,6 @@ brush_new_invoker (GimpProcedure     *procedure,
 
   return return_vals;
 }
-
-static GimpProcedure brush_new_proc =
-{
-  TRUE, TRUE,
-  "gimp-brush-new",
-  "gimp-brush-new",
-  "Creates a new brush",
-  "This procedure creates a new, uninitialized brush",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { brush_new_invoker } }
-};
 
 static GValueArray *
 brush_duplicate_invoker (GimpProcedure     *procedure,
@@ -681,22 +117,6 @@ brush_duplicate_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure brush_duplicate_proc =
-{
-  TRUE, TRUE,
-  "gimp-brush-duplicate",
-  "gimp-brush-duplicate",
-  "Duplicates a brush",
-  "This procedure creates an identical brush by a different name",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { brush_duplicate_invoker } }
-};
-
 static GValueArray *
 brush_is_generated_invoker (GimpProcedure     *procedure,
                             Gimp              *gimp,
@@ -729,22 +149,6 @@ brush_is_generated_invoker (GimpProcedure     *procedure,
 
   return return_vals;
 }
-
-static GimpProcedure brush_is_generated_proc =
-{
-  TRUE, TRUE,
-  "gimp-brush-is-generated",
-  "gimp-brush-is-generated",
-  "Tests if brush is generated",
-  "Returns TRUE if this brush is parametric, FALSE for other types",
-  "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-  "Bill Skaggs",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { brush_is_generated_invoker } }
-};
 
 static GValueArray *
 brush_rename_invoker (GimpProcedure     *procedure,
@@ -784,22 +188,6 @@ brush_rename_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure brush_rename_proc =
-{
-  TRUE, TRUE,
-  "gimp-brush-rename",
-  "gimp-brush-rename",
-  "Rename a brush",
-  "This procedure renames a brush",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { brush_rename_invoker } }
-};
-
 static GValueArray *
 brush_delete_invoker (GimpProcedure     *procedure,
                       Gimp              *gimp,
@@ -838,22 +226,6 @@ brush_delete_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure brush_delete_proc =
-{
-  TRUE, TRUE,
-  "gimp-brush-delete",
-  "gimp-brush-delete",
-  "Deletes a brush",
-  "This procedure deletes a brush",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { brush_delete_invoker } }
-};
-
 static GValueArray *
 brush_is_editable_invoker (GimpProcedure     *procedure,
                            Gimp              *gimp,
@@ -886,22 +258,6 @@ brush_is_editable_invoker (GimpProcedure     *procedure,
 
   return return_vals;
 }
-
-static GimpProcedure brush_is_editable_proc =
-{
-  TRUE, TRUE,
-  "gimp-brush-is-editable",
-  "gimp-brush-is-editable",
-  "Tests if brush can be edited",
-  "Returns TRUE if you have permission to change the brush",
-  "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-  "Bill Skaggs",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { brush_is_editable_invoker } }
-};
 
 static GValueArray *
 brush_get_info_invoker (GimpProcedure     *procedure,
@@ -948,22 +304,6 @@ brush_get_info_invoker (GimpProcedure     *procedure,
 
   return return_vals;
 }
-
-static GimpProcedure brush_get_info_proc =
-{
-  TRUE, TRUE,
-  "gimp-brush-get-info",
-  "gimp-brush-get-info",
-  "Retrieve information about the specified brush.",
-  "This procedure retrieves information about the specified brush. This includes the brush name, and the brush extents (width and height).",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { brush_get_info_invoker } }
-};
 
 static GValueArray *
 brush_get_pixels_invoker (GimpProcedure     *procedure,
@@ -1028,22 +368,6 @@ brush_get_pixels_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure brush_get_pixels_proc =
-{
-  TRUE, TRUE,
-  "gimp-brush-get-pixels",
-  "gimp-brush-get-pixels",
-  "Retrieve information about the specified brush.",
-  "This procedure retrieves information about the specified brush. This includes the brush extents (width and height) and its pixels data.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { brush_get_pixels_invoker } }
-};
-
 static GValueArray *
 brush_get_spacing_invoker (GimpProcedure     *procedure,
                            Gimp              *gimp,
@@ -1077,22 +401,6 @@ brush_get_spacing_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure brush_get_spacing_proc =
-{
-  TRUE, TRUE,
-  "gimp-brush-get-spacing",
-  "gimp-brush-get-spacing",
-  "Get the brush spacing.",
-  "This procedure returns the spacing setting for the specified brush. The return value is an integer between 0 and 1000 which represents percentage of the maximum of the width and height of the mask.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { brush_get_spacing_invoker } }
-};
-
 static GValueArray *
 brush_set_spacing_invoker (GimpProcedure     *procedure,
                            Gimp              *gimp,
@@ -1120,22 +428,6 @@ brush_set_spacing_invoker (GimpProcedure     *procedure,
 
   return gimp_procedure_get_return_values (procedure, success);
 }
-
-static GimpProcedure brush_set_spacing_proc =
-{
-  TRUE, TRUE,
-  "gimp-brush-set-spacing",
-  "gimp-brush-set-spacing",
-  "Set the brush spacing.",
-  "This procedure modifies the spacing setting for the specified brush. The value should be a integer between 0 and 1000.",
-  "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-  "Bill Skaggs",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { brush_set_spacing_invoker } }
-};
 
 static GValueArray *
 brush_get_shape_invoker (GimpProcedure     *procedure,
@@ -1170,22 +462,6 @@ brush_get_shape_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure brush_get_shape_proc =
-{
-  TRUE, TRUE,
-  "gimp-brush-get-shape",
-  "gimp-brush-get-shape",
-  "Get the shape of a generated brush.",
-  "This procedure gets the shape value for a generated brush. If called for any other type of brush, it does not succeed. The current possibilities are Circle (GIMP_BRUSH_GENERATED_CIRCLE), Square (GIMP_BRUSH_GENERATED_SQUARE), and Diamond (GIMP_BRUSH_GENERATED_DIAMOND). Other shapes are likely to be added in the future.",
-  "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-  "Bill Skaggs",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { brush_get_shape_invoker } }
-};
-
 static GValueArray *
 brush_get_radius_invoker (GimpProcedure     *procedure,
                           Gimp              *gimp,
@@ -1218,22 +494,6 @@ brush_get_radius_invoker (GimpProcedure     *procedure,
 
   return return_vals;
 }
-
-static GimpProcedure brush_get_radius_proc =
-{
-  TRUE, TRUE,
-  "gimp-brush-get-radius",
-  "gimp-brush-get-radius",
-  "Get the radius of a generated brush.",
-  "This procedure gets the radius value for a generated brush. If called for any other type of brush, it does not succeed.",
-  "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-  "Bill Skaggs",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { brush_get_radius_invoker } }
-};
 
 static GValueArray *
 brush_get_spikes_invoker (GimpProcedure     *procedure,
@@ -1268,22 +528,6 @@ brush_get_spikes_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure brush_get_spikes_proc =
-{
-  TRUE, TRUE,
-  "gimp-brush-get-spikes",
-  "gimp-brush-get-spikes",
-  "Get the number of spikes for a generated brush.",
-  "This procedure gets the number of spikes for a generated brush. If called for any other type of brush, it does not succeed.",
-  "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-  "Bill Skaggs",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { brush_get_spikes_invoker } }
-};
-
 static GValueArray *
 brush_get_hardness_invoker (GimpProcedure     *procedure,
                             Gimp              *gimp,
@@ -1316,22 +560,6 @@ brush_get_hardness_invoker (GimpProcedure     *procedure,
 
   return return_vals;
 }
-
-static GimpProcedure brush_get_hardness_proc =
-{
-  TRUE, TRUE,
-  "gimp-brush-get-hardness",
-  "gimp-brush-get-hardness",
-  "Get the hardness of a generated brush.",
-  "This procedure gets the hardness of a generated brush. The hardness of a brush is the amount its intensity fades at the outside edge. If called for any other type of brush, the function does not succeed.",
-  "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-  "Bill Skaggs",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { brush_get_hardness_invoker } }
-};
 
 static GValueArray *
 brush_get_aspect_ratio_invoker (GimpProcedure     *procedure,
@@ -1366,22 +594,6 @@ brush_get_aspect_ratio_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure brush_get_aspect_ratio_proc =
-{
-  TRUE, TRUE,
-  "gimp-brush-get-aspect-ratio",
-  "gimp-brush-get-aspect-ratio",
-  "Get the aspect ratio of a generated brush.",
-  "This procedure gets the aspect ratio of a generated brush. If called for any other type of brush, it does not succeed.",
-  "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-  "Bill Skaggs",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { brush_get_aspect_ratio_invoker } }
-};
-
 static GValueArray *
 brush_get_angle_invoker (GimpProcedure     *procedure,
                          Gimp              *gimp,
@@ -1414,22 +626,6 @@ brush_get_angle_invoker (GimpProcedure     *procedure,
 
   return return_vals;
 }
-
-static GimpProcedure brush_get_angle_proc =
-{
-  TRUE, TRUE,
-  "gimp-brush-get-angle",
-  "gimp-brush-get-angle",
-  "Get the rotation angle of a generated brush.",
-  "This procedure gets the angle of rotation for a generated brush. If called for any other type of brush, it does not succeed.",
-  "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-  "Bill Skaggs",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { brush_get_angle_invoker } }
-};
 
 static GValueArray *
 brush_set_shape_invoker (GimpProcedure     *procedure,
@@ -1470,22 +666,6 @@ brush_set_shape_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure brush_set_shape_proc =
-{
-  TRUE, TRUE,
-  "gimp-brush-set-shape",
-  "gimp-brush-set-shape",
-  "Set the shape of a generated brush.",
-  "This procedure sets the shape value for a generated brush. If called for any other type of brush, it does not succeed. The current possibilities are Circle (GIMP_BRUSH_GENERATED_CIRCLE), Square (GIMP_BRUSH_GENERATED_SQUARE), and Diamond (GIMP_BRUSH_GENERATED_DIAMOND). Other shapes are likely to be added in the future.",
-  "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-  "Bill Skaggs",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { brush_set_shape_invoker } }
-};
-
 static GValueArray *
 brush_set_radius_invoker (GimpProcedure     *procedure,
                           Gimp              *gimp,
@@ -1524,22 +704,6 @@ brush_set_radius_invoker (GimpProcedure     *procedure,
 
   return return_vals;
 }
-
-static GimpProcedure brush_set_radius_proc =
-{
-  TRUE, TRUE,
-  "gimp-brush-set-radius",
-  "gimp-brush-set-radius",
-  "Set the radius of a generated brush.",
-  "This procedure sets the radius for a generated brush. If called for any other type of brush, it does not succeed.",
-  "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-  "Bill Skaggs",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { brush_set_radius_invoker } }
-};
 
 static GValueArray *
 brush_set_spikes_invoker (GimpProcedure     *procedure,
@@ -1580,22 +744,6 @@ brush_set_spikes_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure brush_set_spikes_proc =
-{
-  TRUE, TRUE,
-  "gimp-brush-set-spikes",
-  "gimp-brush-set-spikes",
-  "Set the number of spikes for a generated brush.",
-  "This procedure sets the number of spikes for a generated brush. If called for any other type of brush, it does not succeed.",
-  "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-  "Bill Skaggs",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { brush_set_spikes_invoker } }
-};
-
 static GValueArray *
 brush_set_hardness_invoker (GimpProcedure     *procedure,
                             Gimp              *gimp,
@@ -1634,22 +782,6 @@ brush_set_hardness_invoker (GimpProcedure     *procedure,
 
   return return_vals;
 }
-
-static GimpProcedure brush_set_hardness_proc =
-{
-  TRUE, TRUE,
-  "gimp-brush-set-hardness",
-  "gimp-brush-set-hardness",
-  "Set the hardness of a generated brush.",
-  "This procedure sets the hardness for a generated brush. If called for any other type of brush, it does not succeed.",
-  "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-  "Bill Skaggs",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { brush_set_hardness_invoker } }
-};
 
 static GValueArray *
 brush_set_aspect_ratio_invoker (GimpProcedure     *procedure,
@@ -1690,22 +822,6 @@ brush_set_aspect_ratio_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure brush_set_aspect_ratio_proc =
-{
-  TRUE, TRUE,
-  "gimp-brush-set-aspect-ratio",
-  "gimp-brush-set-aspect-ratio",
-  "Set the aspect ratio of a generated brush.",
-  "This procedure sets the aspect ratio for a generated brush. If called for any other type of brush, it does not succeed.",
-  "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-  "Bill Skaggs",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { brush_set_aspect_ratio_invoker } }
-};
-
 static GValueArray *
 brush_set_angle_invoker (GimpProcedure     *procedure,
                          Gimp              *gimp,
@@ -1745,18 +861,792 @@ brush_set_angle_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure brush_set_angle_proc =
+void
+register_brush_procs (Gimp *gimp)
 {
-  TRUE, TRUE,
-  "gimp-brush-set-angle",
-  "gimp-brush-set-angle",
-  "Set the rotation angle of a generated brush.",
-  "This procedure sets the rotation angle for a generated brush. If called for any other type of brush, it does not succeed.",
-  "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-  "Bill Skaggs",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { brush_set_angle_invoker } }
-};
+  GimpProcedure *procedure;
+
+  /*
+   * gimp-brush-new
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             brush_new_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-new",
+                                     "gimp-brush-new",
+                                     "Creates a new brush",
+                                     "This procedure creates a new, uninitialized brush",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The requested name of the new brush",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("actual-name",
+                                                           "actual name",
+                                                           "The actual new brush name",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-brush-duplicate
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             brush_duplicate_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-duplicate",
+                                     "gimp-brush-duplicate",
+                                     "Duplicates a brush",
+                                     "This procedure creates an identical brush by a different name",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("copy-name",
+                                                           "copy name",
+                                                           "The name of the brush's copy",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-brush-is-generated
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             brush_is_generated_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-is-generated",
+                                     "gimp-brush-is-generated",
+                                     "Tests if brush is generated",
+                                     "Returns TRUE if this brush is parametric, FALSE for other types",
+                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                     "Bill Skaggs",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("generated",
+                                                         "generated",
+                                                         "TRUE if the brush is generated",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-brush-rename
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
+                             brush_rename_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-rename",
+                                     "gimp-brush-rename",
+                                     "Rename a brush",
+                                     "This procedure renames a brush",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("new-name",
+                                                       "new name",
+                                                       "The new name of the brush",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("actual-name",
+                                                           "actual name",
+                                                           "The actual new name of the brush",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-brush-delete
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             brush_delete_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-delete",
+                                     "gimp-brush-delete",
+                                     "Deletes a brush",
+                                     "This procedure deletes a brush",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-brush-is-editable
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             brush_is_editable_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-is-editable",
+                                     "gimp-brush-is-editable",
+                                     "Tests if brush can be edited",
+                                     "Returns TRUE if you have permission to change the brush",
+                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                     "Bill Skaggs",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("editable",
+                                                         "editable",
+                                                         "TRUE if the brush can be edited",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-brush-get-info
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 4,
+                             brush_get_info_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-get-info",
+                                     "gimp-brush-get-info",
+                                     "Retrieve information about the specified brush.",
+                                     "This procedure retrieves information about the specified brush. This includes the brush name, and the brush extents (width and height).",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("width",
+                                                          "width",
+                                                          "The brush width",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("height",
+                                                          "height",
+                                                          "The brush height",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("mask-bpp",
+                                                          "mask bpp",
+                                                          "The brush mask bpp",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("color-bpp",
+                                                          "color bpp",
+                                                          "The brush color bpp",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-brush-get-pixels
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 8,
+                             brush_get_pixels_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-get-pixels",
+                                     "gimp-brush-get-pixels",
+                                     "Retrieve information about the specified brush.",
+                                     "This procedure retrieves information about the specified brush. This includes the brush extents (width and height) and its pixels data.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("width",
+                                                          "width",
+                                                          "The brush width",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("height",
+                                                          "height",
+                                                          "The brush height",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("mask-bpp",
+                                                          "mask bpp",
+                                                          "The brush mask bpp",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("num-mask-bytes",
+                                                          "num mask bytes",
+                                                          "Length of brush mask data",
+                                                          0, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int8_array ("mask-bytes",
+                                                               "mask bytes",
+                                                               "The brush mask data",
+                                                               GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("color-bpp",
+                                                          "color bpp",
+                                                          "The brush color bpp",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("num-color-bytes",
+                                                          "num color bytes",
+                                                          "Length of brush color data",
+                                                          0, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int8_array ("color-bytes",
+                                                               "color bytes",
+                                                               "The brush color data",
+                                                               GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-brush-get-spacing
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             brush_get_spacing_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-get-spacing",
+                                     "gimp-brush-get-spacing",
+                                     "Get the brush spacing.",
+                                     "This procedure returns the spacing setting for the specified brush. The return value is an integer between 0 and 1000 which represents percentage of the maximum of the width and height of the mask.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("spacing",
+                                                          "spacing",
+                                                          "The brush spacing (0 <= spacing <= 1000)",
+                                                          0, 1000, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-brush-set-spacing
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
+                             brush_set_spacing_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-set-spacing",
+                                     "gimp-brush-set-spacing",
+                                     "Set the brush spacing.",
+                                     "This procedure modifies the spacing setting for the specified brush. The value should be a integer between 0 and 1000.",
+                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                     "Bill Skaggs",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("spacing",
+                                                      "spacing",
+                                                      "The brush spacing (0 <= spacing <= 1000)",
+                                                      0, 1000, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-brush-get-shape
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             brush_get_shape_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-get-shape",
+                                     "gimp-brush-get-shape",
+                                     "Get the shape of a generated brush.",
+                                     "This procedure gets the shape value for a generated brush. If called for any other type of brush, it does not succeed. The current possibilities are Circle (GIMP_BRUSH_GENERATED_CIRCLE), Square (GIMP_BRUSH_GENERATED_SQUARE), and Diamond (GIMP_BRUSH_GENERATED_DIAMOND). Other shapes are likely to be added in the future.",
+                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                     "Bill Skaggs",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("shape",
+                                                      "shape",
+                                                      "The brush shape: { GIMP_BRUSH_GENERATED_CIRCLE (0), GIMP_BRUSH_GENERATED_SQUARE (1), GIMP_BRUSH_GENERATED_DIAMOND (2) }",
+                                                      GIMP_TYPE_BRUSH_GENERATED_SHAPE,
+                                                      GIMP_BRUSH_GENERATED_CIRCLE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-brush-get-radius
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             brush_get_radius_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-get-radius",
+                                     "gimp-brush-get-radius",
+                                     "Get the radius of a generated brush.",
+                                     "This procedure gets the radius value for a generated brush. If called for any other type of brush, it does not succeed.",
+                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                     "Bill Skaggs",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("radius",
+                                                        "radius",
+                                                        "The radius of the brush in pixels",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-brush-get-spikes
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             brush_get_spikes_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-get-spikes",
+                                     "gimp-brush-get-spikes",
+                                     "Get the number of spikes for a generated brush.",
+                                     "This procedure gets the number of spikes for a generated brush. If called for any other type of brush, it does not succeed.",
+                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                     "Bill Skaggs",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("spikes",
+                                                          "spikes",
+                                                          "The number of spikes on the brush.",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-brush-get-hardness
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             brush_get_hardness_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-get-hardness",
+                                     "gimp-brush-get-hardness",
+                                     "Get the hardness of a generated brush.",
+                                     "This procedure gets the hardness of a generated brush. The hardness of a brush is the amount its intensity fades at the outside edge. If called for any other type of brush, the function does not succeed.",
+                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                     "Bill Skaggs",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("hardness",
+                                                        "hardness",
+                                                        "The hardness of the brush.",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-brush-get-aspect-ratio
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             brush_get_aspect_ratio_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-get-aspect-ratio",
+                                     "gimp-brush-get-aspect-ratio",
+                                     "Get the aspect ratio of a generated brush.",
+                                     "This procedure gets the aspect ratio of a generated brush. If called for any other type of brush, it does not succeed.",
+                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                     "Bill Skaggs",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("aspect-ratio",
+                                                        "aspect ratio",
+                                                        "The aspect ratio of the brush.",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-brush-get-angle
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             brush_get_angle_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-get-angle",
+                                     "gimp-brush-get-angle",
+                                     "Get the rotation angle of a generated brush.",
+                                     "This procedure gets the angle of rotation for a generated brush. If called for any other type of brush, it does not succeed.",
+                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                     "Bill Skaggs",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("angle",
+                                                        "angle",
+                                                        "The rotation angle of the brush.",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-brush-set-shape
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
+                             brush_set_shape_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-set-shape",
+                                     "gimp-brush-set-shape",
+                                     "Set the shape of a generated brush.",
+                                     "This procedure sets the shape value for a generated brush. If called for any other type of brush, it does not succeed. The current possibilities are Circle (GIMP_BRUSH_GENERATED_CIRCLE), Square (GIMP_BRUSH_GENERATED_SQUARE), and Diamond (GIMP_BRUSH_GENERATED_DIAMOND). Other shapes are likely to be added in the future.",
+                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                     "Bill Skaggs",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("shape-in",
+                                                  "shape in",
+                                                  "The brush shape: { GIMP_BRUSH_GENERATED_CIRCLE (0), GIMP_BRUSH_GENERATED_SQUARE (1), GIMP_BRUSH_GENERATED_DIAMOND (2) }",
+                                                  GIMP_TYPE_BRUSH_GENERATED_SHAPE,
+                                                  GIMP_BRUSH_GENERATED_CIRCLE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("shape-out",
+                                                      "shape out",
+                                                      "The brush shape actually assigned: { GIMP_BRUSH_GENERATED_CIRCLE (0), GIMP_BRUSH_GENERATED_SQUARE (1), GIMP_BRUSH_GENERATED_DIAMOND (2) }",
+                                                      GIMP_TYPE_BRUSH_GENERATED_SHAPE,
+                                                      GIMP_BRUSH_GENERATED_CIRCLE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-brush-set-radius
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
+                             brush_set_radius_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-set-radius",
+                                     "gimp-brush-set-radius",
+                                     "Set the radius of a generated brush.",
+                                     "This procedure sets the radius for a generated brush. If called for any other type of brush, it does not succeed.",
+                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                     "Bill Skaggs",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("radius-in",
+                                                    "radius in",
+                                                    "The desired brush radius",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("radius-out",
+                                                        "radius out",
+                                                        "The brush radius actually assigned",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-brush-set-spikes
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
+                             brush_set_spikes_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-set-spikes",
+                                     "gimp-brush-set-spikes",
+                                     "Set the number of spikes for a generated brush.",
+                                     "This procedure sets the number of spikes for a generated brush. If called for any other type of brush, it does not succeed.",
+                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                     "Bill Skaggs",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("spikes-in",
+                                                      "spikes in",
+                                                      "The desired number of spikes",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("spikes-out",
+                                                          "spikes out",
+                                                          "The number of spikes actually assigned",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-brush-set-hardness
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
+                             brush_set_hardness_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-set-hardness",
+                                     "gimp-brush-set-hardness",
+                                     "Set the hardness of a generated brush.",
+                                     "This procedure sets the hardness for a generated brush. If called for any other type of brush, it does not succeed.",
+                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                     "Bill Skaggs",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("hardness-in",
+                                                    "hardness in",
+                                                    "The desired brush hardness",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("hardness-out",
+                                                        "hardness out",
+                                                        "The brush hardness actually assigned",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-brush-set-aspect-ratio
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
+                             brush_set_aspect_ratio_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-set-aspect-ratio",
+                                     "gimp-brush-set-aspect-ratio",
+                                     "Set the aspect ratio of a generated brush.",
+                                     "This procedure sets the aspect ratio for a generated brush. If called for any other type of brush, it does not succeed.",
+                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                     "Bill Skaggs",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("aspect-ratio-in",
+                                                    "aspect ratio in",
+                                                    "The desired brush aspect ratio",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("aspect-ratio-out",
+                                                        "aspect ratio out",
+                                                        "The brush aspect ratio actually assigned",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-brush-set-angle
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
+                             brush_set_angle_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-set-angle",
+                                     "gimp-brush-set-angle",
+                                     "Set the rotation angle of a generated brush.",
+                                     "This procedure sets the rotation angle for a generated brush. If called for any other type of brush, it does not succeed.",
+                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                     "Bill Skaggs",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("angle-in",
+                                                    "angle in",
+                                                    "The desired brush rotation angle",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("angle-out",
+                                                        "angle out",
+                                                        "The brush rotation angle actually assigned",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+}

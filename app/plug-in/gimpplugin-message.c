@@ -708,10 +708,12 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 
   g_free (canonical);
 
-  procedure->proc_type = proc_install->type;
-
-  gimp_procedure_init (procedure,
-                       proc_install->nparams, proc_install->nreturn_vals);
+  gimp_procedure_initialize (procedure,
+                             proc_install->type,
+                             proc_install->nparams,
+                             proc_install->nreturn_vals,
+                             proc_install->type == GIMP_TEMPORARY ?
+                             (gpointer) plug_in : (gpointer) prog);
 
   for (i = 0; i < proc_install->nparams; i++)
     {
@@ -782,9 +784,6 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
     case GIMP_TEMPORARY:
       plug_in->temp_proc_defs = g_slist_prepend (plug_in->temp_proc_defs,
                                                  proc_def);
-
-      procedure->exec_method.temporary.plug_in = plug_in;
-
       plug_ins_temp_proc_def_add (plug_in->gimp, proc_def);
       break;
     }

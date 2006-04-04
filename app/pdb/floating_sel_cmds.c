@@ -32,109 +32,6 @@
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayer.h"
 
-static GimpProcedure floating_sel_remove_proc;
-static GimpProcedure floating_sel_anchor_proc;
-static GimpProcedure floating_sel_to_layer_proc;
-static GimpProcedure floating_sel_attach_proc;
-static GimpProcedure floating_sel_rigor_proc;
-static GimpProcedure floating_sel_relax_proc;
-
-void
-register_floating_sel_procs (Gimp *gimp)
-{
-  GimpProcedure *procedure;
-
-  /*
-   * floating_sel_remove
-   */
-  procedure = gimp_procedure_init (&floating_sel_remove_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("floating-sel",
-                                                         "floating sel",
-                                                         "The floating selection",
-                                                         gimp,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * floating_sel_anchor
-   */
-  procedure = gimp_procedure_init (&floating_sel_anchor_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("floating-sel",
-                                                         "floating sel",
-                                                         "The floating selection",
-                                                         gimp,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * floating_sel_to_layer
-   */
-  procedure = gimp_procedure_init (&floating_sel_to_layer_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("floating-sel",
-                                                         "floating sel",
-                                                         "The floating selection",
-                                                         gimp,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * floating_sel_attach
-   */
-  procedure = gimp_procedure_init (&floating_sel_attach_proc, 2, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("layer",
-                                                         "layer",
-                                                         "The layer (is attached as floating selection)",
-                                                         gimp,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable (where to attach the floating selection)",
-                                                            gimp,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * floating_sel_rigor
-   */
-  procedure = gimp_procedure_init (&floating_sel_rigor_proc, 2, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("floating-sel",
-                                                         "floating sel",
-                                                         "The floating selection",
-                                                         gimp,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("undo",
-                                                     "undo",
-                                                     "(TRUE or FALSE)",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * floating_sel_relax
-   */
-  procedure = gimp_procedure_init (&floating_sel_relax_proc, 2, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("floating-sel",
-                                                         "floating sel",
-                                                         "The floating selection",
-                                                         gimp,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("undo",
-                                                     "undo",
-                                                     "(TRUE or FALSE)",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-}
 
 static GValueArray *
 floating_sel_remove_invoker (GimpProcedure     *procedure,
@@ -159,22 +56,6 @@ floating_sel_remove_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure floating_sel_remove_proc =
-{
-  TRUE, TRUE,
-  "gimp-floating-sel-remove",
-  "gimp-floating-sel-remove",
-  "Remove the specified floating selection from its associated drawable.",
-  "This procedure removes the floating selection completely, without any side effects. The associated drawable is then set to active.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { floating_sel_remove_invoker } }
-};
-
 static GValueArray *
 floating_sel_anchor_invoker (GimpProcedure     *procedure,
                              Gimp              *gimp,
@@ -198,22 +79,6 @@ floating_sel_anchor_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure floating_sel_anchor_proc =
-{
-  TRUE, TRUE,
-  "gimp-floating-sel-anchor",
-  "gimp-floating-sel-anchor",
-  "Anchor the specified floating selection to its associated drawable.",
-  "This procedure anchors the floating selection to its associated drawable. This is similar to merging with a merge type of ClipToBottomLayer. The floating selection layer is no longer valid after this operation.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { floating_sel_anchor_invoker } }
-};
-
 static GValueArray *
 floating_sel_to_layer_invoker (GimpProcedure     *procedure,
                                Gimp              *gimp,
@@ -236,22 +101,6 @@ floating_sel_to_layer_invoker (GimpProcedure     *procedure,
 
   return gimp_procedure_get_return_values (procedure, success);
 }
-
-static GimpProcedure floating_sel_to_layer_proc =
-{
-  TRUE, TRUE,
-  "gimp-floating-sel-to-layer",
-  "gimp-floating-sel-to-layer",
-  "Transforms the specified floating selection into a layer.",
-  "This procedure transforms the specified floating selection into a layer with the same offsets and extents. The composited image will look precisely the same, but the floating selection layer will no longer be clipped to the extents of the drawable it was attached to. The floating selection will become the active layer. This procedure will not work if the floating selection has a different base type from the underlying image. This might be the case if the floating selection is above an auxillary channel or a layer mask.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { floating_sel_to_layer_invoker } }
-};
 
 static GValueArray *
 floating_sel_attach_invoker (GimpProcedure     *procedure,
@@ -278,22 +127,6 @@ floating_sel_attach_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure floating_sel_attach_proc =
-{
-  TRUE, TRUE,
-  "gimp-floating-sel-attach",
-  "gimp-floating-sel-attach",
-  "Attach the specified layer as floating to the specified drawable.",
-  "This procedure attaches the layer as floating selection to the drawable.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { floating_sel_attach_invoker } }
-};
-
 static GValueArray *
 floating_sel_rigor_invoker (GimpProcedure     *procedure,
                             Gimp              *gimp,
@@ -318,22 +151,6 @@ floating_sel_rigor_invoker (GimpProcedure     *procedure,
 
   return gimp_procedure_get_return_values (procedure, success);
 }
-
-static GimpProcedure floating_sel_rigor_proc =
-{
-  TRUE, TRUE,
-  "gimp-floating-sel-rigor",
-  "gimp-floating-sel-rigor",
-  "Rigor the floating selection.",
-  "This procedure rigors the floating selection.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { floating_sel_rigor_invoker } }
-};
 
 static GValueArray *
 floating_sel_relax_invoker (GimpProcedure     *procedure,
@@ -360,18 +177,171 @@ floating_sel_relax_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure floating_sel_relax_proc =
+void
+register_floating_sel_procs (Gimp *gimp)
 {
-  TRUE, TRUE,
-  "gimp-floating-sel-relax",
-  "gimp-floating-sel-relax",
-  "Relax the floating selection.",
-  "This procedure relaxes the floating selection.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { floating_sel_relax_invoker } }
-};
+  GimpProcedure *procedure;
+
+  /*
+   * gimp-floating-sel-remove
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             floating_sel_remove_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-floating-sel-remove",
+                                     "gimp-floating-sel-remove",
+                                     "Remove the specified floating selection from its associated drawable.",
+                                     "This procedure removes the floating selection completely, without any side effects. The associated drawable is then set to active.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("floating-sel",
+                                                         "floating sel",
+                                                         "The floating selection",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-floating-sel-anchor
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             floating_sel_anchor_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-floating-sel-anchor",
+                                     "gimp-floating-sel-anchor",
+                                     "Anchor the specified floating selection to its associated drawable.",
+                                     "This procedure anchors the floating selection to its associated drawable. This is similar to merging with a merge type of ClipToBottomLayer. The floating selection layer is no longer valid after this operation.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("floating-sel",
+                                                         "floating sel",
+                                                         "The floating selection",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-floating-sel-to-layer
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             floating_sel_to_layer_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-floating-sel-to-layer",
+                                     "gimp-floating-sel-to-layer",
+                                     "Transforms the specified floating selection into a layer.",
+                                     "This procedure transforms the specified floating selection into a layer with the same offsets and extents. The composited image will look precisely the same, but the floating selection layer will no longer be clipped to the extents of the drawable it was attached to. The floating selection will become the active layer. This procedure will not work if the floating selection has a different base type from the underlying image. This might be the case if the floating selection is above an auxillary channel or a layer mask.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("floating-sel",
+                                                         "floating sel",
+                                                         "The floating selection",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-floating-sel-attach
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
+                             floating_sel_attach_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-floating-sel-attach",
+                                     "gimp-floating-sel-attach",
+                                     "Attach the specified layer as floating to the specified drawable.",
+                                     "This procedure attaches the layer as floating selection to the drawable.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer (is attached as floating selection)",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The drawable (where to attach the floating selection)",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-floating-sel-rigor
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
+                             floating_sel_rigor_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-floating-sel-rigor",
+                                     "gimp-floating-sel-rigor",
+                                     "Rigor the floating selection.",
+                                     "This procedure rigors the floating selection.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("floating-sel",
+                                                         "floating sel",
+                                                         "The floating selection",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("undo",
+                                                     "undo",
+                                                     "(TRUE or FALSE)",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-floating-sel-relax
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
+                             floating_sel_relax_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-floating-sel-relax",
+                                     "gimp-floating-sel-relax",
+                                     "Relax the floating selection.",
+                                     "This procedure relaxes the floating selection.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("floating-sel",
+                                                         "floating sel",
+                                                         "The floating selection",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("undo",
+                                                     "undo",
+                                                     "(TRUE or FALSE)",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+}

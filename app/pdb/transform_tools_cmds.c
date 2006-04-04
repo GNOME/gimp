@@ -39,301 +39,6 @@
 #include "core/gimpprogress.h"
 #include "gimp-intl.h"
 
-static GimpProcedure flip_proc;
-static GimpProcedure perspective_proc;
-static GimpProcedure rotate_proc;
-static GimpProcedure scale_proc;
-static GimpProcedure shear_proc;
-static GimpProcedure transform_2d_proc;
-
-void
-register_transform_tools_procs (Gimp *gimp)
-{
-  GimpProcedure *procedure;
-
-  /*
-   * flip
-   */
-  procedure = gimp_procedure_init (&flip_proc, 2, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            gimp,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_enum ("flip-type",
-                                                     "flip type",
-                                                     "Type of flip: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }",
-                                                     GIMP_TYPE_ORIENTATION_TYPE,
-                                                     GIMP_ORIENTATION_HORIZONTAL,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[1]),
-                                      GIMP_ORIENTATION_UNKNOWN);
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_drawable_id ("drawable",
-                                                                "drawable",
-                                                                "The flipped drawable",
-                                                                gimp,
-                                                                GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * perspective
-   */
-  procedure = gimp_procedure_init (&perspective_proc, 10, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            gimp,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("interpolation",
-                                                     "interpolation",
-                                                     "Whether to use interpolation",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("x0",
-                                                    "x0",
-                                                    "The new x coordinate of upper-left corner of original bounding box",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("y0",
-                                                    "y0",
-                                                    "The new y coordinate of upper-left corner of original bounding box",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("x1",
-                                                    "x1",
-                                                    "The new x coordinate of upper-right corner of original bounding box",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("y1",
-                                                    "y1",
-                                                    "The new y coordinate of upper-right corner of original bounding box",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("x2",
-                                                    "x2",
-                                                    "The new x coordinate of lower-left corner of original bounding box",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("y2",
-                                                    "y2",
-                                                    "The new y coordinate of lower-left corner of original bounding box",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("x3",
-                                                    "x3",
-                                                    "The new x coordinate of lower-right corner of original bounding box",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("y3",
-                                                    "y3",
-                                                    "The new y coordinate of lower-right corner of original bounding box",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_drawable_id ("drawable",
-                                                                "drawable",
-                                                                "The newly mapped drawable",
-                                                                gimp,
-                                                                GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * rotate
-   */
-  procedure = gimp_procedure_init (&rotate_proc, 3, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            gimp,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("interpolation",
-                                                     "interpolation",
-                                                     "Whether to use interpolation",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("angle",
-                                                    "angle",
-                                                    "The angle of rotation (radians)",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_drawable_id ("drawable",
-                                                                "drawable",
-                                                                "The rotated drawable",
-                                                                gimp,
-                                                                GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * scale
-   */
-  procedure = gimp_procedure_init (&scale_proc, 6, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            gimp,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("interpolation",
-                                                     "interpolation",
-                                                     "Whether to use interpolation",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("x0",
-                                                    "x0",
-                                                    "The new x coordinate of the upper-left corner of the scaled region",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("y0",
-                                                    "y0",
-                                                    "The new y coordinate of the upper-left corner of the scaled region",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("x1",
-                                                    "x1",
-                                                    "The new x coordinate of the lower-right corner of the scaled region",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("y1",
-                                                    "y1",
-                                                    "The new y coordinate of the lower-right corner of the scaled region",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_drawable_id ("drawable",
-                                                                "drawable",
-                                                                "The scaled drawable",
-                                                                gimp,
-                                                                GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * shear
-   */
-  procedure = gimp_procedure_init (&shear_proc, 4, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            gimp,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("interpolation",
-                                                     "interpolation",
-                                                     "Whether to use interpolation",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_enum ("shear-type",
-                                                     "shear type",
-                                                     "Type of shear: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }",
-                                                     GIMP_TYPE_ORIENTATION_TYPE,
-                                                     GIMP_ORIENTATION_HORIZONTAL,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[2]),
-                                      GIMP_ORIENTATION_UNKNOWN);
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("magnitude",
-                                                    "magnitude",
-                                                    "The magnitude of the shear",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_drawable_id ("drawable",
-                                                                "drawable",
-                                                                "The sheared drawable",
-                                                                gimp,
-                                                                GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * transform_2d
-   */
-  procedure = gimp_procedure_init (&transform_2d_proc, 9, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            gimp,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("interpolation",
-                                                     "interpolation",
-                                                     "Whether to use interpolation",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("source-x",
-                                                    "source x",
-                                                    "X coordinate of the transformation center",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("source-y",
-                                                    "source y",
-                                                    "Y coordinate of the transformation center",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("scale-x",
-                                                    "scale x",
-                                                    "Amount to scale in x direction",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("scale-y",
-                                                    "scale y",
-                                                    "Amount to scale in y direction",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("angle",
-                                                    "angle",
-                                                    "The angle of rotation (radians)",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("dest-x",
-                                                    "dest x",
-                                                    "X coordinate of where the centre goes",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("dest-y",
-                                                    "dest y",
-                                                    "Y coordinate of where the centre goes",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_drawable_id ("drawable",
-                                                                "drawable",
-                                                                "The transformed drawable",
-                                                                gimp,
-                                                                GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-}
 
 static GValueArray *
 flip_invoker (GimpProcedure     *procedure,
@@ -371,22 +76,6 @@ flip_invoker (GimpProcedure     *procedure,
 
   return return_vals;
 }
-
-static GimpProcedure flip_proc =
-{
-  TRUE, TRUE,
-  "gimp-flip",
-  "gimp-flip",
-  "This procedure is deprecated! Use 'gimp-drawable-transform-flip-simple' instead.",
-  "This procedure is deprecated! Use 'gimp-drawable-transform-flip-simple' instead.",
-  "",
-  "",
-  "",
-  "gimp-drawable-transform-flip-simple",
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { flip_invoker } }
-};
 
 static GValueArray *
 perspective_invoker (GimpProcedure     *procedure,
@@ -466,22 +155,6 @@ perspective_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure perspective_proc =
-{
-  TRUE, TRUE,
-  "gimp-perspective",
-  "gimp-perspective",
-  "This procedure is deprecated! Use 'gimp-drawable-transform-perspective-default' instead.",
-  "This procedure is deprecated! Use 'gimp-drawable-transform-perspective-default' instead.",
-  "",
-  "",
-  "",
-  "gimp-drawable-transform-perspective-default",
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { perspective_invoker } }
-};
-
 static GValueArray *
 rotate_invoker (GimpProcedure     *procedure,
                 Gimp              *gimp,
@@ -541,22 +214,6 @@ rotate_invoker (GimpProcedure     *procedure,
 
   return return_vals;
 }
-
-static GimpProcedure rotate_proc =
-{
-  TRUE, TRUE,
-  "gimp-rotate",
-  "gimp-rotate",
-  "This procedure is deprecated! Use 'gimp-drawable-transform-rotate-default' instead.",
-  "This procedure is deprecated! Use 'gimp-drawable-transform-rotate-default' instead.",
-  "",
-  "",
-  "",
-  "gimp-drawable-transform-rotate-default",
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { rotate_invoker } }
-};
 
 static GValueArray *
 scale_invoker (GimpProcedure     *procedure,
@@ -628,22 +285,6 @@ scale_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure scale_proc =
-{
-  TRUE, TRUE,
-  "gimp-scale",
-  "gimp-scale",
-  "This procedure is deprecated! Use 'gimp-drawable-transform-scale-default' instead.",
-  "This procedure is deprecated! Use 'gimp-drawable-transform-scale-default' instead.",
-  "",
-  "",
-  "",
-  "gimp-drawable-transform-scale-default",
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { scale_invoker } }
-};
-
 static GValueArray *
 shear_invoker (GimpProcedure     *procedure,
                Gimp              *gimp,
@@ -706,22 +347,6 @@ shear_invoker (GimpProcedure     *procedure,
 
   return return_vals;
 }
-
-static GimpProcedure shear_proc =
-{
-  TRUE, TRUE,
-  "gimp-shear",
-  "gimp-shear",
-  "This procedure is deprecated! Use 'gimp-drawable-transform-shear-default' instead.",
-  "This procedure is deprecated! Use 'gimp-drawable-transform-shear-default' instead.",
-  "",
-  "",
-  "",
-  "gimp-drawable-transform-shear-default",
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { shear_invoker } }
-};
 
 static GValueArray *
 transform_2d_invoker (GimpProcedure     *procedure,
@@ -796,18 +421,363 @@ transform_2d_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure transform_2d_proc =
+void
+register_transform_tools_procs (Gimp *gimp)
 {
-  TRUE, TRUE,
-  "gimp-transform-2d",
-  "gimp-transform-2d",
-  "This procedure is deprecated! Use 'gimp-drawable-transform-2d-default' instead.",
-  "This procedure is deprecated! Use 'gimp-drawable-transform-2d-default' instead.",
-  "",
-  "",
-  "",
-  "gimp-drawable-transform-2d-default",
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { transform_2d_invoker } }
-};
+  GimpProcedure *procedure;
+
+  /*
+   * gimp-flip
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
+                             flip_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-flip",
+                                     "gimp-flip",
+                                     "This procedure is deprecated! Use 'gimp-drawable-transform-flip-simple' instead.",
+                                     "This procedure is deprecated! Use 'gimp-drawable-transform-flip-simple' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-drawable-transform-flip-simple");
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_enum ("flip-type",
+                                                     "flip type",
+                                                     "Type of flip: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }",
+                                                     GIMP_TYPE_ORIENTATION_TYPE,
+                                                     GIMP_ORIENTATION_HORIZONTAL,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[1]),
+                                      GIMP_ORIENTATION_UNKNOWN);
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_drawable_id ("drawable",
+                                                                "drawable",
+                                                                "The flipped drawable",
+                                                                gimp,
+                                                                GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-perspective
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 10, 1,
+                             perspective_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-perspective",
+                                     "gimp-perspective",
+                                     "This procedure is deprecated! Use 'gimp-drawable-transform-perspective-default' instead.",
+                                     "This procedure is deprecated! Use 'gimp-drawable-transform-perspective-default' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-drawable-transform-perspective-default");
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("interpolation",
+                                                     "interpolation",
+                                                     "Whether to use interpolation",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("x0",
+                                                    "x0",
+                                                    "The new x coordinate of upper-left corner of original bounding box",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("y0",
+                                                    "y0",
+                                                    "The new y coordinate of upper-left corner of original bounding box",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("x1",
+                                                    "x1",
+                                                    "The new x coordinate of upper-right corner of original bounding box",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("y1",
+                                                    "y1",
+                                                    "The new y coordinate of upper-right corner of original bounding box",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("x2",
+                                                    "x2",
+                                                    "The new x coordinate of lower-left corner of original bounding box",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("y2",
+                                                    "y2",
+                                                    "The new y coordinate of lower-left corner of original bounding box",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("x3",
+                                                    "x3",
+                                                    "The new x coordinate of lower-right corner of original bounding box",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("y3",
+                                                    "y3",
+                                                    "The new y coordinate of lower-right corner of original bounding box",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_drawable_id ("drawable",
+                                                                "drawable",
+                                                                "The newly mapped drawable",
+                                                                gimp,
+                                                                GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-rotate
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 1,
+                             rotate_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-rotate",
+                                     "gimp-rotate",
+                                     "This procedure is deprecated! Use 'gimp-drawable-transform-rotate-default' instead.",
+                                     "This procedure is deprecated! Use 'gimp-drawable-transform-rotate-default' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-drawable-transform-rotate-default");
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("interpolation",
+                                                     "interpolation",
+                                                     "Whether to use interpolation",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("angle",
+                                                    "angle",
+                                                    "The angle of rotation (radians)",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_drawable_id ("drawable",
+                                                                "drawable",
+                                                                "The rotated drawable",
+                                                                gimp,
+                                                                GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-scale
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 6, 1,
+                             scale_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-scale",
+                                     "gimp-scale",
+                                     "This procedure is deprecated! Use 'gimp-drawable-transform-scale-default' instead.",
+                                     "This procedure is deprecated! Use 'gimp-drawable-transform-scale-default' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-drawable-transform-scale-default");
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("interpolation",
+                                                     "interpolation",
+                                                     "Whether to use interpolation",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("x0",
+                                                    "x0",
+                                                    "The new x coordinate of the upper-left corner of the scaled region",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("y0",
+                                                    "y0",
+                                                    "The new y coordinate of the upper-left corner of the scaled region",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("x1",
+                                                    "x1",
+                                                    "The new x coordinate of the lower-right corner of the scaled region",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("y1",
+                                                    "y1",
+                                                    "The new y coordinate of the lower-right corner of the scaled region",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_drawable_id ("drawable",
+                                                                "drawable",
+                                                                "The scaled drawable",
+                                                                gimp,
+                                                                GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-shear
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 4, 1,
+                             shear_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-shear",
+                                     "gimp-shear",
+                                     "This procedure is deprecated! Use 'gimp-drawable-transform-shear-default' instead.",
+                                     "This procedure is deprecated! Use 'gimp-drawable-transform-shear-default' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-drawable-transform-shear-default");
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("interpolation",
+                                                     "interpolation",
+                                                     "Whether to use interpolation",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_enum ("shear-type",
+                                                     "shear type",
+                                                     "Type of shear: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }",
+                                                     GIMP_TYPE_ORIENTATION_TYPE,
+                                                     GIMP_ORIENTATION_HORIZONTAL,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[2]),
+                                      GIMP_ORIENTATION_UNKNOWN);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("magnitude",
+                                                    "magnitude",
+                                                    "The magnitude of the shear",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_drawable_id ("drawable",
+                                                                "drawable",
+                                                                "The sheared drawable",
+                                                                gimp,
+                                                                GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-transform-2d
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 9, 1,
+                             transform_2d_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-transform-2d",
+                                     "gimp-transform-2d",
+                                     "This procedure is deprecated! Use 'gimp-drawable-transform-2d-default' instead.",
+                                     "This procedure is deprecated! Use 'gimp-drawable-transform-2d-default' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-drawable-transform-2d-default");
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("interpolation",
+                                                     "interpolation",
+                                                     "Whether to use interpolation",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("source-x",
+                                                    "source x",
+                                                    "X coordinate of the transformation center",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("source-y",
+                                                    "source y",
+                                                    "Y coordinate of the transformation center",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("scale-x",
+                                                    "scale x",
+                                                    "Amount to scale in x direction",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("scale-y",
+                                                    "scale y",
+                                                    "Amount to scale in y direction",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("angle",
+                                                    "angle",
+                                                    "The angle of rotation (radians)",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("dest-x",
+                                                    "dest x",
+                                                    "X coordinate of where the centre goes",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("dest-y",
+                                                    "dest y",
+                                                    "Y coordinate of where the centre goes",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_drawable_id ("drawable",
+                                                                "drawable",
+                                                                "The transformed drawable",
+                                                                gimp,
+                                                                GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+}

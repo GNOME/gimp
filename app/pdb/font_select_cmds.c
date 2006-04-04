@@ -30,76 +30,6 @@
 
 #include "core/gimp.h"
 
-static GimpProcedure fonts_popup_proc;
-static GimpProcedure fonts_close_popup_proc;
-static GimpProcedure fonts_set_popup_proc;
-
-void
-register_font_select_procs (Gimp *gimp)
-{
-  GimpProcedure *procedure;
-
-  /*
-   * fonts_popup
-   */
-  procedure = gimp_procedure_init (&fonts_popup_proc, 3, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("font-callback",
-                                                       "font callback",
-                                                       "The callback PDB proc to call when font selection is made",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("popup-title",
-                                                       "popup title",
-                                                       "Title to give the font popup window",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("initial-font",
-                                                       "initial font",
-                                                       "The name of the font to set as the first selected",
-                                                       FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * fonts_close_popup
-   */
-  procedure = gimp_procedure_init (&fonts_close_popup_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("font-callback",
-                                                       "font callback",
-                                                       "The name of the callback registered for this popup",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * fonts_set_popup
-   */
-  procedure = gimp_procedure_init (&fonts_set_popup_proc, 2, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("font-callback",
-                                                       "font callback",
-                                                       "The name of the callback registered for this popup",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("font-name",
-                                                       "font name",
-                                                       "The name of the font to set as selected",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-}
 
 static GValueArray *
 fonts_popup_invoker (GimpProcedure     *procedure,
@@ -130,22 +60,6 @@ fonts_popup_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure fonts_popup_proc =
-{
-  TRUE, TRUE,
-  "gimp-fonts-popup",
-  "gimp-fonts-popup",
-  "Invokes the Gimp font selection.",
-  "This procedure popups the font selection dialog.",
-  "Sven Neumann <sven@gimp.org>",
-  "Sven Neumann",
-  "2003",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { fonts_popup_invoker } }
-};
-
 static GValueArray *
 fonts_close_popup_invoker (GimpProcedure     *procedure,
                            Gimp              *gimp,
@@ -168,22 +82,6 @@ fonts_close_popup_invoker (GimpProcedure     *procedure,
 
   return gimp_procedure_get_return_values (procedure, success);
 }
-
-static GimpProcedure fonts_close_popup_proc =
-{
-  TRUE, TRUE,
-  "gimp-fonts-close-popup",
-  "gimp-fonts-close-popup",
-  "Popdown the Gimp font selection.",
-  "This procedure closes an opened font selection dialog.",
-  "Sven Neumann <sven@gimp.org>",
-  "Sven Neumann",
-  "2003",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { fonts_close_popup_invoker } }
-};
 
 static GValueArray *
 fonts_set_popup_invoker (GimpProcedure     *procedure,
@@ -211,18 +109,105 @@ fonts_set_popup_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure fonts_set_popup_proc =
+void
+register_font_select_procs (Gimp *gimp)
 {
-  TRUE, TRUE,
-  "gimp-fonts-set-popup",
-  "gimp-fonts-set-popup",
-  "Sets the current font selection in a popup.",
-  "Sets the current font selection in a popup.",
-  "Sven Neumann <sven@gimp.org>",
-  "Sven Neumann",
-  "2003",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { fonts_set_popup_invoker } }
-};
+  GimpProcedure *procedure;
+
+  /*
+   * gimp-fonts-popup
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
+                             fonts_popup_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-fonts-popup",
+                                     "gimp-fonts-popup",
+                                     "Invokes the Gimp font selection.",
+                                     "This procedure popups the font selection dialog.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2003",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("font-callback",
+                                                       "font callback",
+                                                       "The callback PDB proc to call when font selection is made",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("popup-title",
+                                                       "popup title",
+                                                       "Title to give the font popup window",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("initial-font",
+                                                       "initial font",
+                                                       "The name of the font to set as the first selected",
+                                                       FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-fonts-close-popup
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             fonts_close_popup_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-fonts-close-popup",
+                                     "gimp-fonts-close-popup",
+                                     "Popdown the Gimp font selection.",
+                                     "This procedure closes an opened font selection dialog.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2003",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("font-callback",
+                                                       "font callback",
+                                                       "The name of the callback registered for this popup",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-fonts-set-popup
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
+                             fonts_set_popup_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-fonts-set-popup",
+                                     "gimp-fonts-set-popup",
+                                     "Sets the current font selection in a popup.",
+                                     "Sets the current font selection in a popup.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2003",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("font-callback",
+                                                       "font callback",
+                                                       "The name of the callback registered for this popup",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("font-name",
+                                                       "font name",
+                                                       "The name of the font to set as selected",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+}

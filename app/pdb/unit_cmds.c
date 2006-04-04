@@ -32,18 +32,320 @@
 
 #include "core/gimpunit.h"
 
-static GimpProcedure unit_get_number_of_units_proc;
-static GimpProcedure unit_get_number_of_built_in_units_proc;
-static GimpProcedure unit_new_proc;
-static GimpProcedure unit_get_deletion_flag_proc;
-static GimpProcedure unit_set_deletion_flag_proc;
-static GimpProcedure unit_get_identifier_proc;
-static GimpProcedure unit_get_factor_proc;
-static GimpProcedure unit_get_digits_proc;
-static GimpProcedure unit_get_symbol_proc;
-static GimpProcedure unit_get_abbreviation_proc;
-static GimpProcedure unit_get_singular_proc;
-static GimpProcedure unit_get_plural_proc;
+
+static GValueArray *
+unit_get_number_of_units_invoker (GimpProcedure     *procedure,
+                                  Gimp              *gimp,
+                                  GimpContext       *context,
+                                  GimpProgress      *progress,
+                                  const GValueArray *args)
+{
+  GValueArray *return_vals;
+  gint32 num_units = 0;
+
+  num_units = _gimp_unit_get_number_of_units (gimp);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
+  g_value_set_int (&return_vals->values[1], num_units);
+
+  return return_vals;
+}
+
+static GValueArray *
+unit_get_number_of_built_in_units_invoker (GimpProcedure     *procedure,
+                                           Gimp              *gimp,
+                                           GimpContext       *context,
+                                           GimpProgress      *progress,
+                                           const GValueArray *args)
+{
+  GValueArray *return_vals;
+  gint32 num_units = 0;
+
+  num_units = _gimp_unit_get_number_of_built_in_units (gimp);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
+  g_value_set_int (&return_vals->values[1], num_units);
+
+  return return_vals;
+}
+
+static GValueArray *
+unit_new_invoker (GimpProcedure     *procedure,
+                  Gimp              *gimp,
+                  GimpContext       *context,
+                  GimpProgress      *progress,
+                  const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  const gchar *identifier;
+  gdouble factor;
+  gint32 digits;
+  const gchar *symbol;
+  const gchar *abbreviation;
+  const gchar *singular;
+  const gchar *plural;
+  GimpUnit unit_id = 0;
+
+  identifier = g_value_get_string (&args->values[0]);
+  factor = g_value_get_double (&args->values[1]);
+  digits = g_value_get_int (&args->values[2]);
+  symbol = g_value_get_string (&args->values[3]);
+  abbreviation = g_value_get_string (&args->values[4]);
+  singular = g_value_get_string (&args->values[5]);
+  plural = g_value_get_string (&args->values[6]);
+
+  if (success)
+    {
+      unit_id = _gimp_unit_new (gimp, identifier, factor, digits,
+                                symbol, abbreviation, singular, plural);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_set_int (&return_vals->values[1], unit_id);
+
+  return return_vals;
+}
+
+static GValueArray *
+unit_get_deletion_flag_invoker (GimpProcedure     *procedure,
+                                Gimp              *gimp,
+                                GimpContext       *context,
+                                GimpProgress      *progress,
+                                const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpUnit unit_id;
+  gboolean deletion_flag = FALSE;
+
+  unit_id = g_value_get_int (&args->values[0]);
+
+  if (success)
+    {
+      deletion_flag = _gimp_unit_get_deletion_flag (gimp, unit_id);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_set_boolean (&return_vals->values[1], deletion_flag);
+
+  return return_vals;
+}
+
+static GValueArray *
+unit_set_deletion_flag_invoker (GimpProcedure     *procedure,
+                                Gimp              *gimp,
+                                GimpContext       *context,
+                                GimpProgress      *progress,
+                                const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpUnit unit_id;
+  gboolean deletion_flag;
+
+  unit_id = g_value_get_int (&args->values[0]);
+  deletion_flag = g_value_get_boolean (&args->values[1]);
+
+  if (success)
+    {
+      _gimp_unit_set_deletion_flag (gimp, unit_id, deletion_flag);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+unit_get_identifier_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpUnit unit_id;
+  gchar *identifier = NULL;
+
+  unit_id = g_value_get_int (&args->values[0]);
+
+  if (success)
+    {
+      identifier = g_strdup (_gimp_unit_get_identifier (gimp, unit_id));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_take_string (&return_vals->values[1], identifier);
+
+  return return_vals;
+}
+
+static GValueArray *
+unit_get_factor_invoker (GimpProcedure     *procedure,
+                         Gimp              *gimp,
+                         GimpContext       *context,
+                         GimpProgress      *progress,
+                         const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpUnit unit_id;
+  gdouble factor = 0.0;
+
+  unit_id = g_value_get_int (&args->values[0]);
+
+  if (success)
+    {
+      factor = _gimp_unit_get_factor (gimp, unit_id);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_set_double (&return_vals->values[1], factor);
+
+  return return_vals;
+}
+
+static GValueArray *
+unit_get_digits_invoker (GimpProcedure     *procedure,
+                         Gimp              *gimp,
+                         GimpContext       *context,
+                         GimpProgress      *progress,
+                         const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpUnit unit_id;
+  gint32 digits = 0;
+
+  unit_id = g_value_get_int (&args->values[0]);
+
+  if (success)
+    {
+      digits = _gimp_unit_get_digits (gimp, unit_id);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_set_int (&return_vals->values[1], digits);
+
+  return return_vals;
+}
+
+static GValueArray *
+unit_get_symbol_invoker (GimpProcedure     *procedure,
+                         Gimp              *gimp,
+                         GimpContext       *context,
+                         GimpProgress      *progress,
+                         const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpUnit unit_id;
+  gchar *symbol = NULL;
+
+  unit_id = g_value_get_int (&args->values[0]);
+
+  if (success)
+    {
+      symbol = g_strdup (_gimp_unit_get_symbol (gimp, unit_id));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_take_string (&return_vals->values[1], symbol);
+
+  return return_vals;
+}
+
+static GValueArray *
+unit_get_abbreviation_invoker (GimpProcedure     *procedure,
+                               Gimp              *gimp,
+                               GimpContext       *context,
+                               GimpProgress      *progress,
+                               const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpUnit unit_id;
+  gchar *abbreviation = NULL;
+
+  unit_id = g_value_get_int (&args->values[0]);
+
+  if (success)
+    {
+      abbreviation = g_strdup (_gimp_unit_get_abbreviation (gimp, unit_id));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_take_string (&return_vals->values[1], abbreviation);
+
+  return return_vals;
+}
+
+static GValueArray *
+unit_get_singular_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpUnit unit_id;
+  gchar *singular = NULL;
+
+  unit_id = g_value_get_int (&args->values[0]);
+
+  if (success)
+    {
+      singular = g_strdup (_gimp_unit_get_singular (gimp, unit_id));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_take_string (&return_vals->values[1], singular);
+
+  return return_vals;
+}
+
+static GValueArray *
+unit_get_plural_invoker (GimpProcedure     *procedure,
+                         Gimp              *gimp,
+                         GimpContext       *context,
+                         GimpProgress      *progress,
+                         const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpUnit unit_id;
+  gchar *plural = NULL;
+
+  unit_id = g_value_get_int (&args->values[0]);
+
+  if (success)
+    {
+      plural = g_strdup (_gimp_unit_get_plural (gimp, unit_id));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_take_string (&return_vals->values[1], plural);
+
+  return return_vals;
+}
 
 void
 register_unit_procs (Gimp *gimp)
@@ -51,9 +353,21 @@ register_unit_procs (Gimp *gimp)
   GimpProcedure *procedure;
 
   /*
-   * unit_get_number_of_units
+   * gimp-unit-get-number-of-units
    */
-  procedure = gimp_procedure_init (&unit_get_number_of_units_proc, 0, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
+                             unit_get_number_of_units_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-unit-get-number-of-units",
+                                     "gimp-unit-get-number-of-units",
+                                     "Returns the number of units.",
+                                     "This procedure returns the number of defined units.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "1999",
+                                     NULL);
+
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("num-units",
                                                           "num units",
@@ -63,9 +377,21 @@ register_unit_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * unit_get_number_of_built_in_units
+   * gimp-unit-get-number-of-built-in-units
    */
-  procedure = gimp_procedure_init (&unit_get_number_of_built_in_units_proc, 0, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
+                             unit_get_number_of_built_in_units_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-unit-get-number-of-built-in-units",
+                                     "gimp-unit-get-number-of-built-in-units",
+                                     "Returns the number of built-in units.",
+                                     "This procedure returns the number of defined units built-in to the GIMP.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "1999",
+                                     NULL);
+
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("num-units",
                                                           "num units",
@@ -75,9 +401,21 @@ register_unit_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * unit_new
+   * gimp-unit-new
    */
-  procedure = gimp_procedure_init (&unit_new_proc, 7, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 7, 1,
+                             unit_new_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-unit-new",
+                                     "gimp-unit-new",
+                                     "Creates a new unit and returns it's integer ID.",
+                                     "This procedure creates a new unit and returns it's integer ID. Note that the new unit will have it's deletion flag set to TRUE, so you will have to set it to FALSE with gimp_unit_set_deletion_flag to make it persistent.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "1999",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("identifier",
                                                        "identifier",
@@ -136,9 +474,21 @@ register_unit_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * unit_get_deletion_flag
+   * gimp-unit-get-deletion-flag
    */
-  procedure = gimp_procedure_init (&unit_get_deletion_flag_proc, 1, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             unit_get_deletion_flag_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-unit-get-deletion-flag",
+                                     "gimp-unit-get-deletion-flag",
+                                     "Returns the deletion flag of the unit.",
+                                     "This procedure returns the deletion flag of the unit. If this value is TRUE the unit's definition will not be saved in the user's unitrc file on gimp exit.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "1999",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -156,9 +506,21 @@ register_unit_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * unit_set_deletion_flag
+   * gimp-unit-set-deletion-flag
    */
-  procedure = gimp_procedure_init (&unit_set_deletion_flag_proc, 2, 0);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
+                             unit_set_deletion_flag_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-unit-set-deletion-flag",
+                                     "gimp-unit-set-deletion-flag",
+                                     "Sets the deletion flag of a unit.",
+                                     "This procedure sets the unit's deletion flag. If the deletion flag of a unit is TRUE on gimp exit, this unit's definition will not be saved in the user's unitrc.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "1999",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -176,9 +538,21 @@ register_unit_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * unit_get_identifier
+   * gimp-unit-get-identifier
    */
-  procedure = gimp_procedure_init (&unit_get_identifier_proc, 1, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             unit_get_identifier_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-unit-get-identifier",
+                                     "gimp-unit-get-identifier",
+                                     "Returns the textual identifier of the unit.",
+                                     "This procedure returns the textual identifier of the unit. For built-in units it will be the english singular form of the unit's name. For user-defined units this should equal to the singular form.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "1999",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -197,9 +571,21 @@ register_unit_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * unit_get_factor
+   * gimp-unit-get-factor
    */
-  procedure = gimp_procedure_init (&unit_get_factor_proc, 1, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             unit_get_factor_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-unit-get-factor",
+                                     "gimp-unit-get-factor",
+                                     "Returns the factor of the unit.",
+                                     "This procedure returns the unit's factor which indicates how many units make up an inch. Note that asking for the factor of \"pixels\" will produce an error.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "1999",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -217,9 +603,21 @@ register_unit_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * unit_get_digits
+   * gimp-unit-get-digits
    */
-  procedure = gimp_procedure_init (&unit_get_digits_proc, 1, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             unit_get_digits_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-unit-get-digits",
+                                     "gimp-unit-get-digits",
+                                     "Returns the number of digits of the unit.",
+                                     "This procedure returns the number of digits you should provide in input or output functions to get approximately the same accuracy as with two digits and inches. Note that asking for the digits of \"pixels\" will produce an error.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "1999",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -237,9 +635,21 @@ register_unit_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * unit_get_symbol
+   * gimp-unit-get-symbol
    */
-  procedure = gimp_procedure_init (&unit_get_symbol_proc, 1, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             unit_get_symbol_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-unit-get-symbol",
+                                     "gimp-unit-get-symbol",
+                                     "Returns the symbol of the unit.",
+                                     "This procedure returns the symbol of the unit (\"''\" for inches).",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "1999",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -258,9 +668,21 @@ register_unit_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * unit_get_abbreviation
+   * gimp-unit-get-abbreviation
    */
-  procedure = gimp_procedure_init (&unit_get_abbreviation_proc, 1, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             unit_get_abbreviation_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-unit-get-abbreviation",
+                                     "gimp-unit-get-abbreviation",
+                                     "Returns the abbreviation of the unit.",
+                                     "This procedure returns the abbreviation of the unit (\"in\" for inches).",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "1999",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -279,9 +701,21 @@ register_unit_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * unit_get_singular
+   * gimp-unit-get-singular
    */
-  procedure = gimp_procedure_init (&unit_get_singular_proc, 1, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             unit_get_singular_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-unit-get-singular",
+                                     "gimp-unit-get-singular",
+                                     "Returns the singular form of the unit.",
+                                     "This procedure returns the singular form of the unit.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "1999",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -300,9 +734,21 @@ register_unit_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * unit_get_plural
+   * gimp-unit-get-plural
    */
-  procedure = gimp_procedure_init (&unit_get_plural_proc, 1, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             unit_get_plural_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-unit-get-plural",
+                                     "gimp-unit-get-plural",
+                                     "Returns the plural form of the unit.",
+                                     "This procedure returns the plural form of the unit.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "1999",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -321,509 +767,3 @@ register_unit_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
 }
-
-static GValueArray *
-unit_get_number_of_units_invoker (GimpProcedure     *procedure,
-                                  Gimp              *gimp,
-                                  GimpContext       *context,
-                                  GimpProgress      *progress,
-                                  const GValueArray *args)
-{
-  GValueArray *return_vals;
-  gint32 num_units = 0;
-
-  num_units = _gimp_unit_get_number_of_units (gimp);
-
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
-  g_value_set_int (&return_vals->values[1], num_units);
-
-  return return_vals;
-}
-
-static GimpProcedure unit_get_number_of_units_proc =
-{
-  TRUE, TRUE,
-  "gimp-unit-get-number-of-units",
-  "gimp-unit-get-number-of-units",
-  "Returns the number of units.",
-  "This procedure returns the number of defined units.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { unit_get_number_of_units_invoker } }
-};
-
-static GValueArray *
-unit_get_number_of_built_in_units_invoker (GimpProcedure     *procedure,
-                                           Gimp              *gimp,
-                                           GimpContext       *context,
-                                           GimpProgress      *progress,
-                                           const GValueArray *args)
-{
-  GValueArray *return_vals;
-  gint32 num_units = 0;
-
-  num_units = _gimp_unit_get_number_of_built_in_units (gimp);
-
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
-  g_value_set_int (&return_vals->values[1], num_units);
-
-  return return_vals;
-}
-
-static GimpProcedure unit_get_number_of_built_in_units_proc =
-{
-  TRUE, TRUE,
-  "gimp-unit-get-number-of-built-in-units",
-  "gimp-unit-get-number-of-built-in-units",
-  "Returns the number of built-in units.",
-  "This procedure returns the number of defined units built-in to the GIMP.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { unit_get_number_of_built_in_units_invoker } }
-};
-
-static GValueArray *
-unit_new_invoker (GimpProcedure     *procedure,
-                  Gimp              *gimp,
-                  GimpContext       *context,
-                  GimpProgress      *progress,
-                  const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  const gchar *identifier;
-  gdouble factor;
-  gint32 digits;
-  const gchar *symbol;
-  const gchar *abbreviation;
-  const gchar *singular;
-  const gchar *plural;
-  GimpUnit unit_id = 0;
-
-  identifier = g_value_get_string (&args->values[0]);
-  factor = g_value_get_double (&args->values[1]);
-  digits = g_value_get_int (&args->values[2]);
-  symbol = g_value_get_string (&args->values[3]);
-  abbreviation = g_value_get_string (&args->values[4]);
-  singular = g_value_get_string (&args->values[5]);
-  plural = g_value_get_string (&args->values[6]);
-
-  if (success)
-    {
-      unit_id = _gimp_unit_new (gimp, identifier, factor, digits,
-                                symbol, abbreviation, singular, plural);
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_set_int (&return_vals->values[1], unit_id);
-
-  return return_vals;
-}
-
-static GimpProcedure unit_new_proc =
-{
-  TRUE, TRUE,
-  "gimp-unit-new",
-  "gimp-unit-new",
-  "Creates a new unit and returns it's integer ID.",
-  "This procedure creates a new unit and returns it's integer ID. Note that the new unit will have it's deletion flag set to TRUE, so you will have to set it to FALSE with gimp_unit_set_deletion_flag to make it persistent.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { unit_new_invoker } }
-};
-
-static GValueArray *
-unit_get_deletion_flag_invoker (GimpProcedure     *procedure,
-                                Gimp              *gimp,
-                                GimpContext       *context,
-                                GimpProgress      *progress,
-                                const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpUnit unit_id;
-  gboolean deletion_flag = FALSE;
-
-  unit_id = g_value_get_int (&args->values[0]);
-
-  if (success)
-    {
-      deletion_flag = _gimp_unit_get_deletion_flag (gimp, unit_id);
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_set_boolean (&return_vals->values[1], deletion_flag);
-
-  return return_vals;
-}
-
-static GimpProcedure unit_get_deletion_flag_proc =
-{
-  TRUE, TRUE,
-  "gimp-unit-get-deletion-flag",
-  "gimp-unit-get-deletion-flag",
-  "Returns the deletion flag of the unit.",
-  "This procedure returns the deletion flag of the unit. If this value is TRUE the unit's definition will not be saved in the user's unitrc file on gimp exit.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { unit_get_deletion_flag_invoker } }
-};
-
-static GValueArray *
-unit_set_deletion_flag_invoker (GimpProcedure     *procedure,
-                                Gimp              *gimp,
-                                GimpContext       *context,
-                                GimpProgress      *progress,
-                                const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GimpUnit unit_id;
-  gboolean deletion_flag;
-
-  unit_id = g_value_get_int (&args->values[0]);
-  deletion_flag = g_value_get_boolean (&args->values[1]);
-
-  if (success)
-    {
-      _gimp_unit_set_deletion_flag (gimp, unit_id, deletion_flag);
-    }
-
-  return gimp_procedure_get_return_values (procedure, success);
-}
-
-static GimpProcedure unit_set_deletion_flag_proc =
-{
-  TRUE, TRUE,
-  "gimp-unit-set-deletion-flag",
-  "gimp-unit-set-deletion-flag",
-  "Sets the deletion flag of a unit.",
-  "This procedure sets the unit's deletion flag. If the deletion flag of a unit is TRUE on gimp exit, this unit's definition will not be saved in the user's unitrc.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { unit_set_deletion_flag_invoker } }
-};
-
-static GValueArray *
-unit_get_identifier_invoker (GimpProcedure     *procedure,
-                             Gimp              *gimp,
-                             GimpContext       *context,
-                             GimpProgress      *progress,
-                             const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpUnit unit_id;
-  gchar *identifier = NULL;
-
-  unit_id = g_value_get_int (&args->values[0]);
-
-  if (success)
-    {
-      identifier = g_strdup (_gimp_unit_get_identifier (gimp, unit_id));
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_take_string (&return_vals->values[1], identifier);
-
-  return return_vals;
-}
-
-static GimpProcedure unit_get_identifier_proc =
-{
-  TRUE, TRUE,
-  "gimp-unit-get-identifier",
-  "gimp-unit-get-identifier",
-  "Returns the textual identifier of the unit.",
-  "This procedure returns the textual identifier of the unit. For built-in units it will be the english singular form of the unit's name. For user-defined units this should equal to the singular form.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { unit_get_identifier_invoker } }
-};
-
-static GValueArray *
-unit_get_factor_invoker (GimpProcedure     *procedure,
-                         Gimp              *gimp,
-                         GimpContext       *context,
-                         GimpProgress      *progress,
-                         const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpUnit unit_id;
-  gdouble factor = 0.0;
-
-  unit_id = g_value_get_int (&args->values[0]);
-
-  if (success)
-    {
-      factor = _gimp_unit_get_factor (gimp, unit_id);
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_set_double (&return_vals->values[1], factor);
-
-  return return_vals;
-}
-
-static GimpProcedure unit_get_factor_proc =
-{
-  TRUE, TRUE,
-  "gimp-unit-get-factor",
-  "gimp-unit-get-factor",
-  "Returns the factor of the unit.",
-  "This procedure returns the unit's factor which indicates how many units make up an inch. Note that asking for the factor of \"pixels\" will produce an error.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { unit_get_factor_invoker } }
-};
-
-static GValueArray *
-unit_get_digits_invoker (GimpProcedure     *procedure,
-                         Gimp              *gimp,
-                         GimpContext       *context,
-                         GimpProgress      *progress,
-                         const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpUnit unit_id;
-  gint32 digits = 0;
-
-  unit_id = g_value_get_int (&args->values[0]);
-
-  if (success)
-    {
-      digits = _gimp_unit_get_digits (gimp, unit_id);
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_set_int (&return_vals->values[1], digits);
-
-  return return_vals;
-}
-
-static GimpProcedure unit_get_digits_proc =
-{
-  TRUE, TRUE,
-  "gimp-unit-get-digits",
-  "gimp-unit-get-digits",
-  "Returns the number of digits of the unit.",
-  "This procedure returns the number of digits you should provide in input or output functions to get approximately the same accuracy as with two digits and inches. Note that asking for the digits of \"pixels\" will produce an error.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { unit_get_digits_invoker } }
-};
-
-static GValueArray *
-unit_get_symbol_invoker (GimpProcedure     *procedure,
-                         Gimp              *gimp,
-                         GimpContext       *context,
-                         GimpProgress      *progress,
-                         const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpUnit unit_id;
-  gchar *symbol = NULL;
-
-  unit_id = g_value_get_int (&args->values[0]);
-
-  if (success)
-    {
-      symbol = g_strdup (_gimp_unit_get_symbol (gimp, unit_id));
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_take_string (&return_vals->values[1], symbol);
-
-  return return_vals;
-}
-
-static GimpProcedure unit_get_symbol_proc =
-{
-  TRUE, TRUE,
-  "gimp-unit-get-symbol",
-  "gimp-unit-get-symbol",
-  "Returns the symbol of the unit.",
-  "This procedure returns the symbol of the unit (\"''\" for inches).",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { unit_get_symbol_invoker } }
-};
-
-static GValueArray *
-unit_get_abbreviation_invoker (GimpProcedure     *procedure,
-                               Gimp              *gimp,
-                               GimpContext       *context,
-                               GimpProgress      *progress,
-                               const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpUnit unit_id;
-  gchar *abbreviation = NULL;
-
-  unit_id = g_value_get_int (&args->values[0]);
-
-  if (success)
-    {
-      abbreviation = g_strdup (_gimp_unit_get_abbreviation (gimp, unit_id));
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_take_string (&return_vals->values[1], abbreviation);
-
-  return return_vals;
-}
-
-static GimpProcedure unit_get_abbreviation_proc =
-{
-  TRUE, TRUE,
-  "gimp-unit-get-abbreviation",
-  "gimp-unit-get-abbreviation",
-  "Returns the abbreviation of the unit.",
-  "This procedure returns the abbreviation of the unit (\"in\" for inches).",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { unit_get_abbreviation_invoker } }
-};
-
-static GValueArray *
-unit_get_singular_invoker (GimpProcedure     *procedure,
-                           Gimp              *gimp,
-                           GimpContext       *context,
-                           GimpProgress      *progress,
-                           const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpUnit unit_id;
-  gchar *singular = NULL;
-
-  unit_id = g_value_get_int (&args->values[0]);
-
-  if (success)
-    {
-      singular = g_strdup (_gimp_unit_get_singular (gimp, unit_id));
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_take_string (&return_vals->values[1], singular);
-
-  return return_vals;
-}
-
-static GimpProcedure unit_get_singular_proc =
-{
-  TRUE, TRUE,
-  "gimp-unit-get-singular",
-  "gimp-unit-get-singular",
-  "Returns the singular form of the unit.",
-  "This procedure returns the singular form of the unit.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { unit_get_singular_invoker } }
-};
-
-static GValueArray *
-unit_get_plural_invoker (GimpProcedure     *procedure,
-                         Gimp              *gimp,
-                         GimpContext       *context,
-                         GimpProgress      *progress,
-                         const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpUnit unit_id;
-  gchar *plural = NULL;
-
-  unit_id = g_value_get_int (&args->values[0]);
-
-  if (success)
-    {
-      plural = g_strdup (_gimp_unit_get_plural (gimp, unit_id));
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_take_string (&return_vals->values[1], plural);
-
-  return return_vals;
-}
-
-static GimpProcedure unit_get_plural_proc =
-{
-  TRUE, TRUE,
-  "gimp-unit-get-plural",
-  "gimp-unit-get-plural",
-  "Returns the plural form of the unit.",
-  "This procedure returns the plural form of the unit.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { unit_get_plural_invoker } }
-};

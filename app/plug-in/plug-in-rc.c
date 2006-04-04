@@ -314,12 +314,13 @@ plug_in_proc_def_deserialize (GScanner      *scanner,
                               Gimp          *gimp,
                               PlugInProcDef *proc_def)
 {
-  GimpProcedure *procedure;
-  GTokenType     token;
-  gint           n_args;
-  gint           n_return_vals;
-  gint           n_menu_paths;
-  gint           i;
+  GimpProcedure   *procedure;
+  GTokenType       token;
+  gint             proc_type;
+  gint             n_args;
+  gint             n_return_vals;
+  gint             n_menu_paths;
+  gint             i;
 
   procedure = proc_def->procedure;
 
@@ -328,8 +329,9 @@ plug_in_proc_def_deserialize (GScanner      *scanner,
 
   procedure->name = gimp_canonicalize_identifier (procedure->original_name);
 
-  if (! gimp_scanner_parse_int (scanner, (gint *) &procedure->proc_type))
+  if (! gimp_scanner_parse_int (scanner, &proc_type))
     return G_TOKEN_INT;
+
   if (! gimp_scanner_parse_string (scanner, &procedure->blurb))
     return G_TOKEN_STRING;
   if (! gimp_scanner_parse_string (scanner, &procedure->help))
@@ -372,7 +374,7 @@ plug_in_proc_def_deserialize (GScanner      *scanner,
   if (! gimp_scanner_parse_int (scanner, (gint *) &n_return_vals))
     return G_TOKEN_INT;
 
-  gimp_procedure_init (procedure, n_args, n_return_vals);
+  gimp_procedure_initialize (procedure, proc_type, n_args, n_return_vals, NULL);
 
   for (i = 0; i < n_args; i++)
     {

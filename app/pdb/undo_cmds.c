@@ -33,134 +33,6 @@
 #include "core/gimpimage.h"
 #include "plug-in/plug-in.h"
 
-static GimpProcedure image_undo_group_start_proc;
-static GimpProcedure image_undo_group_end_proc;
-static GimpProcedure image_undo_is_enabled_proc;
-static GimpProcedure image_undo_disable_proc;
-static GimpProcedure image_undo_enable_proc;
-static GimpProcedure image_undo_freeze_proc;
-static GimpProcedure image_undo_thaw_proc;
-
-void
-register_undo_procs (Gimp *gimp)
-{
-  GimpProcedure *procedure;
-
-  /*
-   * image_undo_group_start
-   */
-  procedure = gimp_procedure_init (&image_undo_group_start_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The ID of the image in which to open an undo group",
-                                                         gimp,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * image_undo_group_end
-   */
-  procedure = gimp_procedure_init (&image_undo_group_end_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The ID of the image in which to close an undo group",
-                                                         gimp,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * image_undo_is_enabled
-   */
-  procedure = gimp_procedure_init (&image_undo_is_enabled_proc, 1, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         gimp,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boolean ("enabled",
-                                                         "enabled",
-                                                         "TRUE if undo is enabled for this image",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * image_undo_disable
-   */
-  procedure = gimp_procedure_init (&image_undo_disable_proc, 1, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         gimp,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boolean ("disabled",
-                                                         "disabled",
-                                                         "TRUE if the image undo has been disabled",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * image_undo_enable
-   */
-  procedure = gimp_procedure_init (&image_undo_enable_proc, 1, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         gimp,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boolean ("enabled",
-                                                         "enabled",
-                                                         "TRUE if the image undo has been enabled",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * image_undo_freeze
-   */
-  procedure = gimp_procedure_init (&image_undo_freeze_proc, 1, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         gimp,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boolean ("frozen",
-                                                         "frozen",
-                                                         "TRUE if the image undo has been frozen",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * image_undo_thaw
-   */
-  procedure = gimp_procedure_init (&image_undo_thaw_proc, 1, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         gimp,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boolean ("thawed",
-                                                         "thawed",
-                                                         "TRUE if the image undo has been thawed",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-}
 
 static GValueArray *
 image_undo_group_start_invoker (GimpProcedure     *procedure,
@@ -190,22 +62,6 @@ image_undo_group_start_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure image_undo_group_start_proc =
-{
-  TRUE, TRUE,
-  "gimp-image-undo-group-start",
-  "gimp-image-undo-group-start",
-  "Starts a group undo.",
-  "This function is used to start a group undo--necessary for logically combining two or more undo operations into a single operation. This call must be used in conjunction with a 'gimp-image-undo-group-end' call.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1997",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { image_undo_group_start_invoker } }
-};
-
 static GValueArray *
 image_undo_group_end_invoker (GimpProcedure     *procedure,
                               Gimp              *gimp,
@@ -225,22 +81,6 @@ image_undo_group_end_invoker (GimpProcedure     *procedure,
 
   return gimp_procedure_get_return_values (procedure, success);
 }
-
-static GimpProcedure image_undo_group_end_proc =
-{
-  TRUE, TRUE,
-  "gimp-image-undo-group-end",
-  "gimp-image-undo-group-end",
-  "Finish a group undo.",
-  "This function must be called once for each 'gimp-image-undo-group-start' call that is made.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1997",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { image_undo_group_end_invoker } }
-};
 
 static GValueArray *
 image_undo_is_enabled_invoker (GimpProcedure     *procedure,
@@ -269,22 +109,6 @@ image_undo_is_enabled_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure image_undo_is_enabled_proc =
-{
-  TRUE, TRUE,
-  "gimp-image-undo-is-enabled",
-  "gimp-image-undo-is-enabled",
-  "Check if the image's undo stack is enabled.",
-  "This procedure checks if the image's undo stack is currently enabled or disabled. This is useful when several plugins or scripts call each other and want to check if their caller has already used 'gimp_image_undo_disable' or 'gimp_image_undo_freeze'.",
-  "Raphael Quinet",
-  "Raphael Quinet",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { image_undo_is_enabled_invoker } }
-};
-
 static GValueArray *
 image_undo_disable_invoker (GimpProcedure     *procedure,
                             Gimp              *gimp,
@@ -311,22 +135,6 @@ image_undo_disable_invoker (GimpProcedure     *procedure,
 
   return return_vals;
 }
-
-static GimpProcedure image_undo_disable_proc =
-{
-  TRUE, TRUE,
-  "gimp-image-undo-disable",
-  "gimp-image-undo-disable",
-  "Disable the image's undo stack.",
-  "This procedure disables the image's undo stack, allowing subsequent operations to ignore their undo steps. This is generally called in conjunction with 'gimp_image_undo_enable' to temporarily disable an image undo stack. This is advantageous because saving undo steps can be time and memory intensive.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { image_undo_disable_invoker } }
-};
 
 static GValueArray *
 image_undo_enable_invoker (GimpProcedure     *procedure,
@@ -355,22 +163,6 @@ image_undo_enable_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure image_undo_enable_proc =
-{
-  TRUE, TRUE,
-  "gimp-image-undo-enable",
-  "gimp-image-undo-enable",
-  "Enable the image's undo stack.",
-  "This procedure enables the image's undo stack, allowing subsequent operations to store their undo steps. This is generally called in conjunction with 'gimp_image_undo_disable' to temporarily disable an image undo stack.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { image_undo_enable_invoker } }
-};
-
 static GValueArray *
 image_undo_freeze_invoker (GimpProcedure     *procedure,
                            Gimp              *gimp,
@@ -397,22 +189,6 @@ image_undo_freeze_invoker (GimpProcedure     *procedure,
 
   return return_vals;
 }
-
-static GimpProcedure image_undo_freeze_proc =
-{
-  TRUE, TRUE,
-  "gimp-image-undo-freeze",
-  "gimp-image-undo-freeze",
-  "Freeze the image's undo stack.",
-  "This procedure freezes the image's undo stack, allowing subsequent operations to ignore their undo steps. This is generally called in conjunction with 'gimp_image_undo_thaw' to temporarily disable an image undo stack. This is advantageous because saving undo steps can be time and memory intensive. 'gimp_image_undo_{freeze,thaw}' and 'gimp_image_undo_{disable,enable}' differ in that the former does not free up all undo steps when undo is thawed, so is more suited to interactive in-situ previews. It is important in this case that the image is back to the same state it was frozen in before thawing, else 'undo' behaviour is undefined.",
-  "Adam D. Moss",
-  "Adam D. Moss",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { image_undo_freeze_invoker } }
-};
 
 static GValueArray *
 image_undo_thaw_invoker (GimpProcedure     *procedure,
@@ -441,18 +217,207 @@ image_undo_thaw_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure image_undo_thaw_proc =
+void
+register_undo_procs (Gimp *gimp)
 {
-  TRUE, TRUE,
-  "gimp-image-undo-thaw",
-  "gimp-image-undo-thaw",
-  "Thaw the image's undo stack.",
-  "This procedure thaws the image's undo stack, allowing subsequent operations to store their undo steps. This is generally called in conjunction with 'gimp_image_undo_freeze' to temporarily freeze an image undo stack. 'gimp_image_undo_thaw' does NOT free the undo stack as 'gimp_image_undo_enable' does, so is suited for situations where one wishes to leave the undo stack in the same state in which one found it despite non-destructively playing with the image in the meantime. An example would be in-situ plugin previews. Balancing freezes and thaws and ensuring image consistancy is the responsibility of the caller.",
-  "Adam D. Moss",
-  "Adam D. Moss",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { image_undo_thaw_invoker } }
-};
+  GimpProcedure *procedure;
+
+  /*
+   * gimp-image-undo-group-start
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             image_undo_group_start_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-undo-group-start",
+                                     "gimp-image-undo-group-start",
+                                     "Starts a group undo.",
+                                     "This function is used to start a group undo--necessary for logically combining two or more undo operations into a single operation. This call must be used in conjunction with a 'gimp-image-undo-group-end' call.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1997",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The ID of the image in which to open an undo group",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-image-undo-group-end
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             image_undo_group_end_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-undo-group-end",
+                                     "gimp-image-undo-group-end",
+                                     "Finish a group undo.",
+                                     "This function must be called once for each 'gimp-image-undo-group-start' call that is made.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1997",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The ID of the image in which to close an undo group",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-image-undo-is-enabled
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             image_undo_is_enabled_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-undo-is-enabled",
+                                     "gimp-image-undo-is-enabled",
+                                     "Check if the image's undo stack is enabled.",
+                                     "This procedure checks if the image's undo stack is currently enabled or disabled. This is useful when several plugins or scripts call each other and want to check if their caller has already used 'gimp_image_undo_disable' or 'gimp_image_undo_freeze'.",
+                                     "Raphael Quinet",
+                                     "Raphael Quinet",
+                                     "1999",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("enabled",
+                                                         "enabled",
+                                                         "TRUE if undo is enabled for this image",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-image-undo-disable
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             image_undo_disable_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-undo-disable",
+                                     "gimp-image-undo-disable",
+                                     "Disable the image's undo stack.",
+                                     "This procedure disables the image's undo stack, allowing subsequent operations to ignore their undo steps. This is generally called in conjunction with 'gimp_image_undo_enable' to temporarily disable an image undo stack. This is advantageous because saving undo steps can be time and memory intensive.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("disabled",
+                                                         "disabled",
+                                                         "TRUE if the image undo has been disabled",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-image-undo-enable
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             image_undo_enable_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-undo-enable",
+                                     "gimp-image-undo-enable",
+                                     "Enable the image's undo stack.",
+                                     "This procedure enables the image's undo stack, allowing subsequent operations to store their undo steps. This is generally called in conjunction with 'gimp_image_undo_disable' to temporarily disable an image undo stack.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("enabled",
+                                                         "enabled",
+                                                         "TRUE if the image undo has been enabled",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-image-undo-freeze
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             image_undo_freeze_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-undo-freeze",
+                                     "gimp-image-undo-freeze",
+                                     "Freeze the image's undo stack.",
+                                     "This procedure freezes the image's undo stack, allowing subsequent operations to ignore their undo steps. This is generally called in conjunction with 'gimp_image_undo_thaw' to temporarily disable an image undo stack. This is advantageous because saving undo steps can be time and memory intensive. 'gimp_image_undo_{freeze,thaw}' and 'gimp_image_undo_{disable,enable}' differ in that the former does not free up all undo steps when undo is thawed, so is more suited to interactive in-situ previews. It is important in this case that the image is back to the same state it was frozen in before thawing, else 'undo' behaviour is undefined.",
+                                     "Adam D. Moss",
+                                     "Adam D. Moss",
+                                     "1999",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("frozen",
+                                                         "frozen",
+                                                         "TRUE if the image undo has been frozen",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-image-undo-thaw
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             image_undo_thaw_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-undo-thaw",
+                                     "gimp-image-undo-thaw",
+                                     "Thaw the image's undo stack.",
+                                     "This procedure thaws the image's undo stack, allowing subsequent operations to store their undo steps. This is generally called in conjunction with 'gimp_image_undo_freeze' to temporarily freeze an image undo stack. 'gimp_image_undo_thaw' does NOT free the undo stack as 'gimp_image_undo_enable' does, so is suited for situations where one wishes to leave the undo stack in the same state in which one found it despite non-destructively playing with the image in the meantime. An example would be in-situ plugin previews. Balancing freezes and thaws and ensuring image consistancy is the responsibility of the caller.",
+                                     "Adam D. Moss",
+                                     "Adam D. Moss",
+                                     "1999",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("thawed",
+                                                         "thawed",
+                                                         "TRUE if the image undo has been thawed",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+}

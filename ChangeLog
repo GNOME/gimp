@@ -1,5 +1,24 @@
 2006-04-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/gimpprocedure.[ch]: made it a GObject. Removed member
+	"static_proc". Renamed gimp_procedure_init() to
+	gimp_procedure_initialize().
+
+	* app/pdb/gimp-pdb.c
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-proc-def.c
+	* app/plug-in/plug-in-rc.c
+	* app/xcf/xcf.c: changed accordingly.
+
+	* tools/pdbgen/app.pl: register all internal procs
+	dynamically. The static proc structs are gone.
+
+	* tools/pdbgen/pdb/fileops.pdb: cosmetic change.
+
+	* app/pdb/*_cmds.c: regenerated.
+
+2006-04-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/pdb/Makefile.am
 	* app/pdb/procedural_db.[ch]
 	* app/pdb/procedural-db-query.[ch]: removed...

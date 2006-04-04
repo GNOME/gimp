@@ -57,7 +57,7 @@ plug_in_proc_def_free (PlugInProcDef *proc_def)
 {
   g_return_if_fail (proc_def != NULL);
 
-  gimp_procedure_free (proc_def->procedure);
+  g_object_unref (proc_def->procedure);
 
   g_free (proc_def->prog);
   g_free (proc_def->menu_label);

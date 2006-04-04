@@ -137,9 +137,7 @@ xcf_init (Gimp *gimp)
 
   /*  gimp-xcf-save  */
   procedure = xcf_plug_in_save_proc.procedure = gimp_procedure_new ();
-  gimp_procedure_init (procedure, 5, 0);
-  procedure->proc_type = GIMP_INTERNAL;
-  procedure->exec_method.internal.marshal_func = xcf_save_invoker;
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 5, 0, xcf_save_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-xcf-save",
                                      "gimp-xcf-save",
@@ -197,9 +195,7 @@ xcf_init (Gimp *gimp)
 
   /*  gimp-xcf-load  */
   procedure = xcf_plug_in_load_proc.procedure = gimp_procedure_new ();
-  gimp_procedure_init (procedure, 3, 1);
-  procedure->proc_type = GIMP_INTERNAL;
-  procedure->exec_method.internal.marshal_func = xcf_load_invoker;
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 1, xcf_load_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-xcf-load",
                                      "gimp-xcf-load",

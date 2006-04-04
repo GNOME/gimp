@@ -32,34 +32,6 @@
 #include "plug-in/plug-in.h"
 #include "plug-in/plug-ins.h"
 
-static GimpProcedure help_proc;
-
-void
-register_help_procs (Gimp *gimp)
-{
-  GimpProcedure *procedure;
-
-  /*
-   * help
-   */
-  procedure = gimp_procedure_init (&help_proc, 2, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("help-domain",
-                                                       "help domain",
-                                                       "The help domain in which help_id is registered",
-                                                       FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("help-id",
-                                                       "help id",
-                                                       "The help page's ID",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-}
 
 static GValueArray *
 help_invoker (GimpProcedure     *procedure,
@@ -87,18 +59,41 @@ help_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure help_proc =
+void
+register_help_procs (Gimp *gimp)
 {
-  TRUE, TRUE,
-  "gimp-help",
-  "gimp-help",
-  "Load a help page.",
-  "This procedure loads the specified help page into the helpbrowser or what ever is configured as help viewer. The help page is identified by its domain and ID: if help_domain is NULL, we use the help_domain which was registered using the gimp-plugin-help-register procedure. If help_domain is NULL and no help domain was registered, the help domain of the main GIMP installation is used.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "2000",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { help_invoker } }
-};
+  GimpProcedure *procedure;
+
+  /*
+   * gimp-help
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
+                             help_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-help",
+                                     "gimp-help",
+                                     "Load a help page.",
+                                     "This procedure loads the specified help page into the helpbrowser or what ever is configured as help viewer. The help page is identified by its domain and ID: if help_domain is NULL, we use the help_domain which was registered using the gimp-plugin-help-register procedure. If help_domain is NULL and no help domain was registered, the help domain of the main GIMP installation is used.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2000",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("help-domain",
+                                                       "help domain",
+                                                       "The help domain in which help_id is registered",
+                                                       FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("help-id",
+                                                       "help id",
+                                                       "The help page's ID",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+}

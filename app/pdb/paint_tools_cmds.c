@@ -38,476 +38,6 @@
 #include "paint/gimppaintcore.h"
 #include "paint/gimppaintoptions.h"
 
-static GimpProcedure airbrush_proc;
-static GimpProcedure airbrush_default_proc;
-static GimpProcedure clone_proc;
-static GimpProcedure clone_default_proc;
-static GimpProcedure convolve_proc;
-static GimpProcedure convolve_default_proc;
-static GimpProcedure dodgeburn_proc;
-static GimpProcedure dodgeburn_default_proc;
-static GimpProcedure eraser_proc;
-static GimpProcedure eraser_default_proc;
-static GimpProcedure paintbrush_proc;
-static GimpProcedure paintbrush_default_proc;
-static GimpProcedure pencil_proc;
-static GimpProcedure smudge_proc;
-static GimpProcedure smudge_default_proc;
-
-void
-register_paint_tools_procs (Gimp *gimp)
-{
-  GimpProcedure *procedure;
-
-  /*
-   * airbrush
-   */
-  procedure = gimp_procedure_init (&airbrush_proc, 4, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            gimp,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("pressure",
-                                                    "pressure",
-                                                    "The pressure of the airbrush strokes (0 <= pressure <= 100)",
-                                                    0, 100, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-strokes",
-                                                      "num strokes",
-                                                      "Number of stroke control points (count each coordinate as 2 points)",
-                                                      2, G_MAXINT32, 2,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
-                                                            "strokes",
-                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * airbrush_default
-   */
-  procedure = gimp_procedure_init (&airbrush_default_proc, 3, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            gimp,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-strokes",
-                                                      "num strokes",
-                                                      "Number of stroke control points (count each coordinate as 2 points)",
-                                                      2, G_MAXINT32, 2,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
-                                                            "strokes",
-                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * clone
-   */
-  procedure = gimp_procedure_init (&clone_proc, 7, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            gimp,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("src-drawable",
-                                                            "src drawable",
-                                                            "The source drawable",
-                                                            gimp,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("clone-type",
-                                                  "clone type",
-                                                  "The type of clone: { GIMP_IMAGE_CLONE (0), GIMP_PATTERN_CLONE (1) }",
-                                                  GIMP_TYPE_CLONE_TYPE,
-                                                  GIMP_IMAGE_CLONE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("src-x",
-                                                    "src x",
-                                                    "The x coordinate in the source image",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("src-y",
-                                                    "src y",
-                                                    "The y coordinate in the source image",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-strokes",
-                                                      "num strokes",
-                                                      "Number of stroke control points (count each coordinate as 2 points)",
-                                                      2, G_MAXINT32, 2,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
-                                                            "strokes",
-                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * clone_default
-   */
-  procedure = gimp_procedure_init (&clone_default_proc, 3, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            gimp,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-strokes",
-                                                      "num strokes",
-                                                      "Number of stroke control points (count each coordinate as 2 points)",
-                                                      2, G_MAXINT32, 2,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
-                                                            "strokes",
-                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * convolve
-   */
-  procedure = gimp_procedure_init (&convolve_proc, 5, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            gimp,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("pressure",
-                                                    "pressure",
-                                                    "The pressure (0 <= pressure <= 100)",
-                                                    0, 100, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("convolve-type",
-                                                  "convolve type",
-                                                  "Convolve type: { GIMP_BLUR_CONVOLVE (0), GIMP_SHARPEN_CONVOLVE (1) }",
-                                                  GIMP_TYPE_CONVOLVE_TYPE,
-                                                  GIMP_BLUR_CONVOLVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-strokes",
-                                                      "num strokes",
-                                                      "Number of stroke control points (count each coordinate as 2 points)",
-                                                      2, G_MAXINT32, 2,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
-                                                            "strokes",
-                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * convolve_default
-   */
-  procedure = gimp_procedure_init (&convolve_default_proc, 3, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            gimp,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-strokes",
-                                                      "num strokes",
-                                                      "Number of stroke control points (count each coordinate as 2 points)",
-                                                      2, G_MAXINT32, 2,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
-                                                            "strokes",
-                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * dodgeburn
-   */
-  procedure = gimp_procedure_init (&dodgeburn_proc, 6, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            gimp,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("exposure",
-                                                    "exposure",
-                                                    "The exposure of the strokes (0 <= exposure <= 100)",
-                                                    0, 100, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("dodgeburn-type",
-                                                  "dodgeburn type",
-                                                  "The type either dodge or burn: { GIMP_DODGE (0), GIMP_BURN (1) }",
-                                                  GIMP_TYPE_DODGE_BURN_TYPE,
-                                                  GIMP_DODGE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("dodgeburn-mode",
-                                                  "dodgeburn mode",
-                                                  "The mode: { GIMP_SHADOWS (0), GIMP_MIDTONES (1), GIMP_HIGHLIGHTS (2) }",
-                                                  GIMP_TYPE_TRANSFER_MODE,
-                                                  GIMP_SHADOWS,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-strokes",
-                                                      "num strokes",
-                                                      "Number of stroke control points (count each coordinate as 2 points)",
-                                                      2, G_MAXINT32, 2,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
-                                                            "strokes",
-                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * dodgeburn_default
-   */
-  procedure = gimp_procedure_init (&dodgeburn_default_proc, 3, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            gimp,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-strokes",
-                                                      "num strokes",
-                                                      "Number of stroke control points (count each coordinate as 2 points)",
-                                                      2, G_MAXINT32, 2,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
-                                                            "strokes",
-                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * eraser
-   */
-  procedure = gimp_procedure_init (&eraser_proc, 5, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            gimp,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-strokes",
-                                                      "num strokes",
-                                                      "Number of stroke control points (count each coordinate as 2 points)",
-                                                      2, G_MAXINT32, 2,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
-                                                            "strokes",
-                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("hardness",
-                                                  "hardness",
-                                                  "{ GIMP_BRUSH_HARD (0), GIMP_BRUSH_SOFT (1) }",
-                                                  GIMP_TYPE_BRUSH_APPLICATION_MODE,
-                                                  GIMP_BRUSH_HARD,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("method",
-                                                  "method",
-                                                  "{ GIMP_PAINT_CONSTANT (0), GIMP_PAINT_INCREMENTAL (1) }",
-                                                  GIMP_TYPE_PAINT_APPLICATION_MODE,
-                                                  GIMP_PAINT_CONSTANT,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * eraser_default
-   */
-  procedure = gimp_procedure_init (&eraser_default_proc, 3, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            gimp,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-strokes",
-                                                      "num strokes",
-                                                      "Number of stroke control points (count each coordinate as 2 points)",
-                                                      2, G_MAXINT32, 2,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
-                                                            "strokes",
-                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * paintbrush
-   */
-  procedure = gimp_procedure_init (&paintbrush_proc, 6, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            gimp,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("fade-out",
-                                                    "fade out",
-                                                    "Fade out parameter (0 <= fade_out)",
-                                                    0, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-strokes",
-                                                      "num strokes",
-                                                      "Number of stroke control points (count each coordinate as 2 points)",
-                                                      2, G_MAXINT32, 2,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
-                                                            "strokes",
-                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("method",
-                                                  "method",
-                                                  "{ GIMP_PAINT_CONSTANT (0), GIMP_PAINT_INCREMENTAL (1) }",
-                                                  GIMP_TYPE_PAINT_APPLICATION_MODE,
-                                                  GIMP_PAINT_CONSTANT,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("gradient-length",
-                                                    "gradient length",
-                                                    "Length of gradient to draw (0 <= gradient_length)",
-                                                    0, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * paintbrush_default
-   */
-  procedure = gimp_procedure_init (&paintbrush_default_proc, 3, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            gimp,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-strokes",
-                                                      "num strokes",
-                                                      "Number of stroke control points (count each coordinate as 2 points)",
-                                                      2, G_MAXINT32, 2,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
-                                                            "strokes",
-                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * pencil
-   */
-  procedure = gimp_procedure_init (&pencil_proc, 3, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            gimp,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-strokes",
-                                                      "num strokes",
-                                                      "Number of stroke control points (count each coordinate as 2 points)",
-                                                      2, G_MAXINT32, 2,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
-                                                            "strokes",
-                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * smudge
-   */
-  procedure = gimp_procedure_init (&smudge_proc, 4, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            gimp,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("pressure",
-                                                    "pressure",
-                                                    "The pressure of the smudge strokes (0 <= pressure <= 100)",
-                                                    0, 100, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-strokes",
-                                                      "num strokes",
-                                                      "Number of stroke control points (count each coordinate as 2 points)",
-                                                      2, G_MAXINT32, 2,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
-                                                            "strokes",
-                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * smudge_default
-   */
-  procedure = gimp_procedure_init (&smudge_default_proc, 3, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The affected drawable",
-                                                            gimp,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-strokes",
-                                                      "num strokes",
-                                                      "Number of stroke control points (count each coordinate as 2 points)",
-                                                      2, G_MAXINT32, 2,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("strokes",
-                                                            "strokes",
-                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-}
 
 static const GimpCoords default_coords = GIMP_COORDS_DEFAULT_VALUES;
 
@@ -603,22 +133,6 @@ airbrush_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure airbrush_proc =
-{
-  TRUE, TRUE,
-  "gimp-airbrush",
-  "gimp-airbrush",
-  "Paint in the current brush with varying pressure. Paint application is time-dependent.",
-  "This tool simulates the use of an airbrush. Paint pressure represents the relative intensity of the paint application. High pressure results in a thicker layer of paint while low pressure results in a thinner layer.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { airbrush_invoker } }
-};
-
 static GValueArray *
 airbrush_default_invoker (GimpProcedure     *procedure,
                           Gimp              *gimp,
@@ -653,22 +167,6 @@ airbrush_default_invoker (GimpProcedure     *procedure,
 
   return gimp_procedure_get_return_values (procedure, success);
 }
-
-static GimpProcedure airbrush_default_proc =
-{
-  TRUE, TRUE,
-  "gimp-airbrush-default",
-  "gimp-airbrush-default",
-  "Paint in the current brush with varying pressure. Paint application is time-dependent.",
-  "This tool simulates the use of an airbrush. It is similar to gimp_airbrush except that the pressure is derived from the airbrush tools options box. It the option has not been set the default for the option will be used.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { airbrush_default_invoker } }
-};
 
 static GValueArray *
 clone_invoker (GimpProcedure     *procedure,
@@ -721,22 +219,6 @@ clone_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure clone_proc =
-{
-  TRUE, TRUE,
-  "gimp-clone",
-  "gimp-clone",
-  "Clone from the source to the dest drawable using the current brush",
-  "This tool clones (copies) from the source drawable starting at the specified source coordinates to the dest drawable. If the \"clone_type\" argument is set to PATTERN-CLONE, then the current pattern is used as the source and the \"src_drawable\" argument is ignored. Pattern cloning assumes a tileable pattern and mods the sum of the src coordinates and subsequent stroke offsets with the width and height of the pattern. For image cloning, if the sum of the src coordinates and subsequent stroke offsets exceeds the extents of the src drawable, then no paint is transferred. The clone tool is capable of transforming between any image types including RGB->Indexed--although converting from any type to indexed is significantly slower.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { clone_invoker } }
-};
-
 static GValueArray *
 clone_default_invoker (GimpProcedure     *procedure,
                        Gimp              *gimp,
@@ -771,22 +253,6 @@ clone_default_invoker (GimpProcedure     *procedure,
 
   return gimp_procedure_get_return_values (procedure, success);
 }
-
-static GimpProcedure clone_default_proc =
-{
-  TRUE, TRUE,
-  "gimp-clone-default",
-  "gimp-clone-default",
-  "Clone from the source to the dest drawable using the current brush",
-  "This tool clones (copies) from the source drawable starting at the specified source coordinates to the dest drawable. This function performs exactly the same as the gimp_clone function except that the tools arguments are obtained from the clones option dialog. It this dialog has not been activated then the dialogs default values will be used.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { clone_default_invoker } }
-};
 
 static GValueArray *
 convolve_invoker (GimpProcedure     *procedure,
@@ -832,22 +298,6 @@ convolve_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure convolve_proc =
-{
-  TRUE, TRUE,
-  "gimp-convolve",
-  "gimp-convolve",
-  "Convolve (Blur, Sharpen) using the current brush.",
-  "This tool convolves the specified drawable with either a sharpening or blurring kernel. The pressure parameter controls the magnitude of the operation. Like the paintbrush, this tool linearly interpolates between the specified stroke coordinates.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { convolve_invoker } }
-};
-
 static GValueArray *
 convolve_default_invoker (GimpProcedure     *procedure,
                           Gimp              *gimp,
@@ -882,22 +332,6 @@ convolve_default_invoker (GimpProcedure     *procedure,
 
   return gimp_procedure_get_return_values (procedure, success);
 }
-
-static GimpProcedure convolve_default_proc =
-{
-  TRUE, TRUE,
-  "gimp-convolve-default",
-  "gimp-convolve-default",
-  "Convolve (Blur, Sharpen) using the current brush.",
-  "This tool convolves the specified drawable with either a sharpening or blurring kernel. This function performs exactly the same as the gimp_convolve function except that the tools arguments are obtained from the convolve option dialog. It this dialog has not been activated then the dialogs default values will be used.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { convolve_default_invoker } }
-};
 
 static GValueArray *
 dodgeburn_invoker (GimpProcedure     *procedure,
@@ -946,22 +380,6 @@ dodgeburn_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure dodgeburn_proc =
-{
-  TRUE, TRUE,
-  "gimp-dodgeburn",
-  "gimp-dodgeburn",
-  "Dodgeburn image with varying exposure.",
-  "Dodgeburn. More details here later.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { dodgeburn_invoker } }
-};
-
 static GValueArray *
 dodgeburn_default_invoker (GimpProcedure     *procedure,
                            Gimp              *gimp,
@@ -996,22 +414,6 @@ dodgeburn_default_invoker (GimpProcedure     *procedure,
 
   return gimp_procedure_get_return_values (procedure, success);
 }
-
-static GimpProcedure dodgeburn_default_proc =
-{
-  TRUE, TRUE,
-  "gimp-dodgeburn-default",
-  "gimp-dodgeburn-default",
-  "Dodgeburn image with varying exposure. This is the same as the gimp_dodgeburn function except that the exposure, type and mode are taken from the tools option dialog. If the dialog has not been activated then the defaults as used by the dialog will be used.",
-  "Dodgeburn. More details here later.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { dodgeburn_default_invoker } }
-};
 
 static GValueArray *
 eraser_invoker (GimpProcedure     *procedure,
@@ -1057,22 +459,6 @@ eraser_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure eraser_proc =
-{
-  TRUE, TRUE,
-  "gimp-eraser",
-  "gimp-eraser",
-  "Erase using the current brush.",
-  "This tool erases using the current brush mask. If the specified drawable contains an alpha channel, then the erased pixels will become transparent. Otherwise, the eraser tool replaces the contents of the drawable with the background color. Like paintbrush, this tool linearly interpolates between the specified stroke coordinates.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { eraser_invoker } }
-};
-
 static GValueArray *
 eraser_default_invoker (GimpProcedure     *procedure,
                         Gimp              *gimp,
@@ -1107,22 +493,6 @@ eraser_default_invoker (GimpProcedure     *procedure,
 
   return gimp_procedure_get_return_values (procedure, success);
 }
-
-static GimpProcedure eraser_default_proc =
-{
-  TRUE, TRUE,
-  "gimp-eraser-default",
-  "gimp-eraser-default",
-  "Erase using the current brush.",
-  "This tool erases using the current brush mask. This function performs exactly the same as the gimp_eraser function except that the tools arguments are obtained from the eraser option dialog. It this dialog has not been activated then the dialogs default values will be used.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { eraser_default_invoker } }
-};
 
 static GValueArray *
 paintbrush_invoker (GimpProcedure     *procedure,
@@ -1173,22 +543,6 @@ paintbrush_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure paintbrush_proc =
-{
-  TRUE, TRUE,
-  "gimp-paintbrush",
-  "gimp-paintbrush",
-  "Paint in the current brush with optional fade out parameter and pull colors from a gradient.",
-  "This tool is the standard paintbrush. It draws linearly interpolated lines through the specified stroke coordinates. It operates on the specified drawable in the foreground color with the active brush. The \"fade_out\" parameter is measured in pixels and allows the brush stroke to linearly fall off. The pressure is set to the maximum at the beginning of the stroke. As the distance of the stroke nears the fade_out value, the pressure will approach zero. The gradient_length is the distance to spread the gradient over. It is measured in pixels. If the gradient_length is 0, no gradient is used.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { paintbrush_invoker } }
-};
-
 static GValueArray *
 paintbrush_default_invoker (GimpProcedure     *procedure,
                             Gimp              *gimp,
@@ -1224,22 +578,6 @@ paintbrush_default_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure paintbrush_default_proc =
-{
-  TRUE, TRUE,
-  "gimp-paintbrush-default",
-  "gimp-paintbrush-default",
-  "Paint in the current brush. The fade out parameter and pull colors from a gradient parameter are set from the paintbrush options dialog. If this dialog has not been activated then the dialog defaults will be used.",
-  "This tool is similar to the standard paintbrush. It draws linearly interpolated lines through the specified stroke coordinates. It operates on the specified drawable in the foreground color with the active brush. The \"fade_out\" parameter is measured in pixels and allows the brush stroke to linearly fall off (value obtained from the option dialog). The pressure is set to the maximum at the beginning of the stroke. As the distance of the stroke nears the fade_out value, the pressure will approach zero. The gradient_length (value obtained from the option dialog) is the distance to spread the gradient over. It is measured in pixels. If the gradient_length is 0, no gradient is used.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { paintbrush_default_invoker } }
-};
-
 static GValueArray *
 pencil_invoker (GimpProcedure     *procedure,
                 Gimp              *gimp,
@@ -1274,22 +612,6 @@ pencil_invoker (GimpProcedure     *procedure,
 
   return gimp_procedure_get_return_values (procedure, success);
 }
-
-static GimpProcedure pencil_proc =
-{
-  TRUE, TRUE,
-  "gimp-pencil",
-  "gimp-pencil",
-  "Paint in the current brush without sub-pixel sampling.",
-  "This tool is the standard pencil. It draws linearly interpolated lines through the specified stroke coordinates. It operates on the specified drawable in the foreground color with the active brush. The brush mask is treated as though it contains only black and white values. Any value below half is treated as black; any above half, as white.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { pencil_invoker } }
-};
 
 static GValueArray *
 smudge_invoker (GimpProcedure     *procedure,
@@ -1332,22 +654,6 @@ smudge_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure smudge_proc =
-{
-  TRUE, TRUE,
-  "gimp-smudge",
-  "gimp-smudge",
-  "Smudge image with varying pressure.",
-  "This tool simulates a smudge using the current brush. High pressure results in a greater smudge of paint while low pressure results in a lesser smudge.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { smudge_invoker } }
-};
-
 static GValueArray *
 smudge_default_invoker (GimpProcedure     *procedure,
                         Gimp              *gimp,
@@ -1383,18 +689,637 @@ smudge_default_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure smudge_default_proc =
+void
+register_paint_tools_procs (Gimp *gimp)
 {
-  TRUE, TRUE,
-  "gimp-smudge-default",
-  "gimp-smudge-default",
-  "Smudge image with varying pressure.",
-  "This tool simulates a smudge using the current brush. It behaves exactly the same as gimp_smudge except that the pressure value is taken from the smudge tool options or the options default if the tools option dialog has not been activated.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { smudge_default_invoker } }
-};
+  GimpProcedure *procedure;
+
+  /*
+   * gimp-airbrush
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 4, 0,
+                             airbrush_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-airbrush",
+                                     "gimp-airbrush",
+                                     "Paint in the current brush with varying pressure. Paint application is time-dependent.",
+                                     "This tool simulates the use of an airbrush. Paint pressure represents the relative intensity of the paint application. High pressure results in a thicker layer of paint while low pressure results in a thinner layer.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("pressure",
+                                                    "pressure",
+                                                    "The pressure of the airbrush strokes (0 <= pressure <= 100)",
+                                                    0, 100, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("num-strokes",
+                                                      "num strokes",
+                                                      "Number of stroke control points (count each coordinate as 2 points)",
+                                                      2, G_MAXINT32, 2,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_float_array ("strokes",
+                                                            "strokes",
+                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-airbrush-default
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
+                             airbrush_default_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-airbrush-default",
+                                     "gimp-airbrush-default",
+                                     "Paint in the current brush with varying pressure. Paint application is time-dependent.",
+                                     "This tool simulates the use of an airbrush. It is similar to gimp_airbrush except that the pressure is derived from the airbrush tools options box. It the option has not been set the default for the option will be used.",
+                                     "Andy Thomas",
+                                     "Andy Thomas",
+                                     "1999",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("num-strokes",
+                                                      "num strokes",
+                                                      "Number of stroke control points (count each coordinate as 2 points)",
+                                                      2, G_MAXINT32, 2,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_float_array ("strokes",
+                                                            "strokes",
+                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-clone
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 7, 0,
+                             clone_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-clone",
+                                     "gimp-clone",
+                                     "Clone from the source to the dest drawable using the current brush",
+                                     "This tool clones (copies) from the source drawable starting at the specified source coordinates to the dest drawable. If the \"clone_type\" argument is set to PATTERN-CLONE, then the current pattern is used as the source and the \"src_drawable\" argument is ignored. Pattern cloning assumes a tileable pattern and mods the sum of the src coordinates and subsequent stroke offsets with the width and height of the pattern. For image cloning, if the sum of the src coordinates and subsequent stroke offsets exceeds the extents of the src drawable, then no paint is transferred. The clone tool is capable of transforming between any image types including RGB->Indexed--although converting from any type to indexed is significantly slower.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("src-drawable",
+                                                            "src drawable",
+                                                            "The source drawable",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("clone-type",
+                                                  "clone type",
+                                                  "The type of clone: { GIMP_IMAGE_CLONE (0), GIMP_PATTERN_CLONE (1) }",
+                                                  GIMP_TYPE_CLONE_TYPE,
+                                                  GIMP_IMAGE_CLONE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("src-x",
+                                                    "src x",
+                                                    "The x coordinate in the source image",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("src-y",
+                                                    "src y",
+                                                    "The y coordinate in the source image",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("num-strokes",
+                                                      "num strokes",
+                                                      "Number of stroke control points (count each coordinate as 2 points)",
+                                                      2, G_MAXINT32, 2,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_float_array ("strokes",
+                                                            "strokes",
+                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-clone-default
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
+                             clone_default_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-clone-default",
+                                     "gimp-clone-default",
+                                     "Clone from the source to the dest drawable using the current brush",
+                                     "This tool clones (copies) from the source drawable starting at the specified source coordinates to the dest drawable. This function performs exactly the same as the gimp_clone function except that the tools arguments are obtained from the clones option dialog. It this dialog has not been activated then the dialogs default values will be used.",
+                                     "Andy Thomas",
+                                     "Andy Thomas",
+                                     "1999",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("num-strokes",
+                                                      "num strokes",
+                                                      "Number of stroke control points (count each coordinate as 2 points)",
+                                                      2, G_MAXINT32, 2,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_float_array ("strokes",
+                                                            "strokes",
+                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-convolve
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 5, 0,
+                             convolve_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-convolve",
+                                     "gimp-convolve",
+                                     "Convolve (Blur, Sharpen) using the current brush.",
+                                     "This tool convolves the specified drawable with either a sharpening or blurring kernel. The pressure parameter controls the magnitude of the operation. Like the paintbrush, this tool linearly interpolates between the specified stroke coordinates.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("pressure",
+                                                    "pressure",
+                                                    "The pressure (0 <= pressure <= 100)",
+                                                    0, 100, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("convolve-type",
+                                                  "convolve type",
+                                                  "Convolve type: { GIMP_BLUR_CONVOLVE (0), GIMP_SHARPEN_CONVOLVE (1) }",
+                                                  GIMP_TYPE_CONVOLVE_TYPE,
+                                                  GIMP_BLUR_CONVOLVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("num-strokes",
+                                                      "num strokes",
+                                                      "Number of stroke control points (count each coordinate as 2 points)",
+                                                      2, G_MAXINT32, 2,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_float_array ("strokes",
+                                                            "strokes",
+                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-convolve-default
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
+                             convolve_default_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-convolve-default",
+                                     "gimp-convolve-default",
+                                     "Convolve (Blur, Sharpen) using the current brush.",
+                                     "This tool convolves the specified drawable with either a sharpening or blurring kernel. This function performs exactly the same as the gimp_convolve function except that the tools arguments are obtained from the convolve option dialog. It this dialog has not been activated then the dialogs default values will be used.",
+                                     "Andy Thomas",
+                                     "Andy Thomas",
+                                     "1999",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("num-strokes",
+                                                      "num strokes",
+                                                      "Number of stroke control points (count each coordinate as 2 points)",
+                                                      2, G_MAXINT32, 2,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_float_array ("strokes",
+                                                            "strokes",
+                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-dodgeburn
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 6, 0,
+                             dodgeburn_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-dodgeburn",
+                                     "gimp-dodgeburn",
+                                     "Dodgeburn image with varying exposure.",
+                                     "Dodgeburn. More details here later.",
+                                     "Andy Thomas",
+                                     "Andy Thomas",
+                                     "1999",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("exposure",
+                                                    "exposure",
+                                                    "The exposure of the strokes (0 <= exposure <= 100)",
+                                                    0, 100, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("dodgeburn-type",
+                                                  "dodgeburn type",
+                                                  "The type either dodge or burn: { GIMP_DODGE (0), GIMP_BURN (1) }",
+                                                  GIMP_TYPE_DODGE_BURN_TYPE,
+                                                  GIMP_DODGE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("dodgeburn-mode",
+                                                  "dodgeburn mode",
+                                                  "The mode: { GIMP_SHADOWS (0), GIMP_MIDTONES (1), GIMP_HIGHLIGHTS (2) }",
+                                                  GIMP_TYPE_TRANSFER_MODE,
+                                                  GIMP_SHADOWS,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("num-strokes",
+                                                      "num strokes",
+                                                      "Number of stroke control points (count each coordinate as 2 points)",
+                                                      2, G_MAXINT32, 2,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_float_array ("strokes",
+                                                            "strokes",
+                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-dodgeburn-default
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
+                             dodgeburn_default_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-dodgeburn-default",
+                                     "gimp-dodgeburn-default",
+                                     "Dodgeburn image with varying exposure. This is the same as the gimp_dodgeburn function except that the exposure, type and mode are taken from the tools option dialog. If the dialog has not been activated then the defaults as used by the dialog will be used.",
+                                     "Dodgeburn. More details here later.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("num-strokes",
+                                                      "num strokes",
+                                                      "Number of stroke control points (count each coordinate as 2 points)",
+                                                      2, G_MAXINT32, 2,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_float_array ("strokes",
+                                                            "strokes",
+                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-eraser
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 5, 0,
+                             eraser_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-eraser",
+                                     "gimp-eraser",
+                                     "Erase using the current brush.",
+                                     "This tool erases using the current brush mask. If the specified drawable contains an alpha channel, then the erased pixels will become transparent. Otherwise, the eraser tool replaces the contents of the drawable with the background color. Like paintbrush, this tool linearly interpolates between the specified stroke coordinates.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("num-strokes",
+                                                      "num strokes",
+                                                      "Number of stroke control points (count each coordinate as 2 points)",
+                                                      2, G_MAXINT32, 2,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_float_array ("strokes",
+                                                            "strokes",
+                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("hardness",
+                                                  "hardness",
+                                                  "{ GIMP_BRUSH_HARD (0), GIMP_BRUSH_SOFT (1) }",
+                                                  GIMP_TYPE_BRUSH_APPLICATION_MODE,
+                                                  GIMP_BRUSH_HARD,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("method",
+                                                  "method",
+                                                  "{ GIMP_PAINT_CONSTANT (0), GIMP_PAINT_INCREMENTAL (1) }",
+                                                  GIMP_TYPE_PAINT_APPLICATION_MODE,
+                                                  GIMP_PAINT_CONSTANT,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-eraser-default
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
+                             eraser_default_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-eraser-default",
+                                     "gimp-eraser-default",
+                                     "Erase using the current brush.",
+                                     "This tool erases using the current brush mask. This function performs exactly the same as the gimp_eraser function except that the tools arguments are obtained from the eraser option dialog. It this dialog has not been activated then the dialogs default values will be used.",
+                                     "Andy Thomas",
+                                     "Andy Thomas",
+                                     "1999",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("num-strokes",
+                                                      "num strokes",
+                                                      "Number of stroke control points (count each coordinate as 2 points)",
+                                                      2, G_MAXINT32, 2,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_float_array ("strokes",
+                                                            "strokes",
+                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-paintbrush
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 6, 0,
+                             paintbrush_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-paintbrush",
+                                     "gimp-paintbrush",
+                                     "Paint in the current brush with optional fade out parameter and pull colors from a gradient.",
+                                     "This tool is the standard paintbrush. It draws linearly interpolated lines through the specified stroke coordinates. It operates on the specified drawable in the foreground color with the active brush. The \"fade_out\" parameter is measured in pixels and allows the brush stroke to linearly fall off. The pressure is set to the maximum at the beginning of the stroke. As the distance of the stroke nears the fade_out value, the pressure will approach zero. The gradient_length is the distance to spread the gradient over. It is measured in pixels. If the gradient_length is 0, no gradient is used.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("fade-out",
+                                                    "fade out",
+                                                    "Fade out parameter (0 <= fade_out)",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("num-strokes",
+                                                      "num strokes",
+                                                      "Number of stroke control points (count each coordinate as 2 points)",
+                                                      2, G_MAXINT32, 2,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_float_array ("strokes",
+                                                            "strokes",
+                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("method",
+                                                  "method",
+                                                  "{ GIMP_PAINT_CONSTANT (0), GIMP_PAINT_INCREMENTAL (1) }",
+                                                  GIMP_TYPE_PAINT_APPLICATION_MODE,
+                                                  GIMP_PAINT_CONSTANT,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("gradient-length",
+                                                    "gradient length",
+                                                    "Length of gradient to draw (0 <= gradient_length)",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-paintbrush-default
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
+                             paintbrush_default_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-paintbrush-default",
+                                     "gimp-paintbrush-default",
+                                     "Paint in the current brush. The fade out parameter and pull colors from a gradient parameter are set from the paintbrush options dialog. If this dialog has not been activated then the dialog defaults will be used.",
+                                     "This tool is similar to the standard paintbrush. It draws linearly interpolated lines through the specified stroke coordinates. It operates on the specified drawable in the foreground color with the active brush. The \"fade_out\" parameter is measured in pixels and allows the brush stroke to linearly fall off (value obtained from the option dialog). The pressure is set to the maximum at the beginning of the stroke. As the distance of the stroke nears the fade_out value, the pressure will approach zero. The gradient_length (value obtained from the option dialog) is the distance to spread the gradient over. It is measured in pixels. If the gradient_length is 0, no gradient is used.",
+                                     "Andy Thomas",
+                                     "Andy Thomas",
+                                     "1999",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("num-strokes",
+                                                      "num strokes",
+                                                      "Number of stroke control points (count each coordinate as 2 points)",
+                                                      2, G_MAXINT32, 2,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_float_array ("strokes",
+                                                            "strokes",
+                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-pencil
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
+                             pencil_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-pencil",
+                                     "gimp-pencil",
+                                     "Paint in the current brush without sub-pixel sampling.",
+                                     "This tool is the standard pencil. It draws linearly interpolated lines through the specified stroke coordinates. It operates on the specified drawable in the foreground color with the active brush. The brush mask is treated as though it contains only black and white values. Any value below half is treated as black; any above half, as white.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("num-strokes",
+                                                      "num strokes",
+                                                      "Number of stroke control points (count each coordinate as 2 points)",
+                                                      2, G_MAXINT32, 2,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_float_array ("strokes",
+                                                            "strokes",
+                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-smudge
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 4, 0,
+                             smudge_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-smudge",
+                                     "gimp-smudge",
+                                     "Smudge image with varying pressure.",
+                                     "This tool simulates a smudge using the current brush. High pressure results in a greater smudge of paint while low pressure results in a lesser smudge.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("pressure",
+                                                    "pressure",
+                                                    "The pressure of the smudge strokes (0 <= pressure <= 100)",
+                                                    0, 100, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("num-strokes",
+                                                      "num strokes",
+                                                      "Number of stroke control points (count each coordinate as 2 points)",
+                                                      2, G_MAXINT32, 2,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_float_array ("strokes",
+                                                            "strokes",
+                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-smudge-default
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
+                             smudge_default_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-smudge-default",
+                                     "gimp-smudge-default",
+                                     "Smudge image with varying pressure.",
+                                     "This tool simulates a smudge using the current brush. It behaves exactly the same as gimp_smudge except that the pressure value is taken from the smudge tool options or the options default if the tools option dialog has not been activated.",
+                                     "Andy Thomas",
+                                     "Andy Thomas",
+                                     "1999",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The affected drawable",
+                                                            gimp,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("num-strokes",
+                                                      "num strokes",
+                                                      "Number of stroke control points (count each coordinate as 2 points)",
+                                                      2, G_MAXINT32, 2,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_float_array ("strokes",
+                                                            "strokes",
+                                                            "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
+                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+}

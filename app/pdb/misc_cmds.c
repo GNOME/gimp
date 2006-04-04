@@ -44,53 +44,6 @@
 
 #include "core/gimp.h"
 
-static GimpProcedure version_proc;
-static GimpProcedure getpid_proc;
-static GimpProcedure quit_proc;
-
-void
-register_misc_procs (Gimp *gimp)
-{
-  GimpProcedure *procedure;
-
-  /*
-   * version
-   */
-  procedure = gimp_procedure_init (&version_proc, 0, 1);
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("version",
-                                                           "version",
-                                                           "The gimp version",
-                                                           FALSE, FALSE,
-                                                           NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * getpid
-   */
-  procedure = gimp_procedure_init (&getpid_proc, 0, 1);
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("pid",
-                                                          "pid",
-                                                          "The PID",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * quit
-   */
-  procedure = gimp_procedure_init (&quit_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("force",
-                                                     "force",
-                                                     "Flag specifying whether to force the gimp to or exit normally",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-}
 
 static GValueArray *
 version_invoker (GimpProcedure     *procedure,
@@ -110,22 +63,6 @@ version_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure version_proc =
-{
-  TRUE, TRUE,
-  "gimp-version",
-  "gimp-version",
-  "Returns the host gimp version.",
-  "This procedure returns the version number of the currently running gimp.",
-  "Manish Singh",
-  "Manish Singh",
-  "1999",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { version_invoker } }
-};
-
 static GValueArray *
 getpid_invoker (GimpProcedure     *procedure,
                 Gimp              *gimp,
@@ -143,22 +80,6 @@ getpid_invoker (GimpProcedure     *procedure,
 
   return return_vals;
 }
-
-static GimpProcedure getpid_proc =
-{
-  TRUE, TRUE,
-  "gimp-getpid",
-  "gimp-getpid",
-  "Returns the PID of the host gimp process.",
-  "This procedure returns the process ID of the currently running gimp.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "2005",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { getpid_invoker } }
-};
 
 static GValueArray *
 quit_invoker (GimpProcedure     *procedure,
@@ -180,18 +101,82 @@ quit_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure quit_proc =
+void
+register_misc_procs (Gimp *gimp)
 {
-  TRUE, TRUE,
-  "gimp-quit",
-  "gimp-quit",
-  "Causes the gimp to exit gracefully.",
-  "The internal procedure which can either be used to make the gimp quit. If there are unsaved images in an interactive GIMP session, the user will be asked for confirmation. If force is TRUE, the application is quit without querying the user to save any dirty images.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { quit_invoker } }
-};
+  GimpProcedure *procedure;
+
+  /*
+   * gimp-version
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
+                             version_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-version",
+                                     "gimp-version",
+                                     "Returns the host gimp version.",
+                                     "This procedure returns the version number of the currently running gimp.",
+                                     "Manish Singh",
+                                     "Manish Singh",
+                                     "1999",
+                                     NULL);
+
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("version",
+                                                           "version",
+                                                           "The gimp version",
+                                                           FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-getpid
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
+                             getpid_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-getpid",
+                                     "gimp-getpid",
+                                     "Returns the PID of the host gimp process.",
+                                     "This procedure returns the process ID of the currently running gimp.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2005",
+                                     NULL);
+
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("pid",
+                                                          "pid",
+                                                          "The PID",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-quit
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             quit_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-quit",
+                                     "gimp-quit",
+                                     "Causes the gimp to exit gracefully.",
+                                     "The internal procedure which can either be used to make the gimp quit. If there are unsaved images in an interactive GIMP session, the user will be asked for confirmation. If force is TRUE, the application is quit without querying the user to save any dirty images.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("force",
+                                                     "force",
+                                                     "Flag specifying whether to force the gimp to or exit normally",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+}

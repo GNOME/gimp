@@ -38,33 +38,779 @@
 #include "core/gimplayermask.h"
 #include "gimp-intl.h"
 
-static GimpProcedure layer_new_proc;
-static GimpProcedure layer_new_from_drawable_proc;
-static GimpProcedure layer_copy_proc;
-static GimpProcedure layer_add_alpha_proc;
-static GimpProcedure layer_scale_proc;
-static GimpProcedure layer_resize_proc;
-static GimpProcedure layer_resize_to_image_size_proc;
-static GimpProcedure layer_translate_proc;
-static GimpProcedure layer_set_offsets_proc;
-static GimpProcedure layer_create_mask_proc;
-static GimpProcedure layer_get_mask_proc;
-static GimpProcedure layer_from_mask_proc;
-static GimpProcedure layer_add_mask_proc;
-static GimpProcedure layer_remove_mask_proc;
-static GimpProcedure layer_is_floating_sel_proc;
-static GimpProcedure layer_get_lock_alpha_proc;
-static GimpProcedure layer_set_lock_alpha_proc;
-static GimpProcedure layer_get_apply_mask_proc;
-static GimpProcedure layer_set_apply_mask_proc;
-static GimpProcedure layer_get_show_mask_proc;
-static GimpProcedure layer_set_show_mask_proc;
-static GimpProcedure layer_get_edit_mask_proc;
-static GimpProcedure layer_set_edit_mask_proc;
-static GimpProcedure layer_get_opacity_proc;
-static GimpProcedure layer_set_opacity_proc;
-static GimpProcedure layer_get_mode_proc;
-static GimpProcedure layer_set_mode_proc;
+
+static GValueArray *
+layer_new_invoker (GimpProcedure     *procedure,
+                   Gimp              *gimp,
+                   GimpContext       *context,
+                   GimpProgress      *progress,
+                   const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpImage *image;
+  gint32 width;
+  gint32 height;
+  gint32 type;
+  const gchar *name;
+  gdouble opacity;
+  gint32 mode;
+  GimpLayer *layer = NULL;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  width = g_value_get_int (&args->values[1]);
+  height = g_value_get_int (&args->values[2]);
+  type = g_value_get_enum (&args->values[3]);
+  name = g_value_get_string (&args->values[4]);
+  opacity = g_value_get_double (&args->values[5]);
+  mode = g_value_get_enum (&args->values[6]);
+
+  if (success)
+    {
+      layer = gimp_layer_new (image, width, height, type, name,
+                              opacity / 100.0, mode);
+
+      if (! layer)
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    gimp_value_set_layer (&return_vals->values[1], layer);
+
+  return return_vals;
+}
+
+static GValueArray *
+layer_new_from_drawable_invoker (GimpProcedure     *procedure,
+                                 Gimp              *gimp,
+                                 GimpContext       *context,
+                                 GimpProgress      *progress,
+                                 const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpDrawable *drawable;
+  GimpImage *dest_image;
+  GimpLayer *layer_copy = NULL;
+
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+  dest_image = gimp_value_get_image (&args->values[1], gimp);
+
+  if (success)
+    {
+      GType     new_type;
+      GimpItem *new_item;
+
+      if (GIMP_IS_LAYER (drawable))
+        new_type = G_TYPE_FROM_INSTANCE (drawable);
+      else
+        new_type = GIMP_TYPE_LAYER;
+
+      if (dest_image == gimp_item_get_image (GIMP_ITEM (drawable)))
+        new_item = gimp_item_duplicate (GIMP_ITEM (drawable), new_type, TRUE);
+      else
+        new_item = gimp_item_convert (GIMP_ITEM (drawable), dest_image, new_type, TRUE);
+
+      if (new_item)
+        layer_copy = GIMP_LAYER (new_item);
+      else
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    gimp_value_set_layer (&return_vals->values[1], layer_copy);
+
+  return return_vals;
+}
+
+static GValueArray *
+layer_copy_invoker (GimpProcedure     *procedure,
+                    Gimp              *gimp,
+                    GimpContext       *context,
+                    GimpProgress      *progress,
+                    const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpLayer *layer;
+  gboolean add_alpha;
+  GimpLayer *layer_copy = NULL;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+  add_alpha = g_value_get_boolean (&args->values[1]);
+
+  if (success)
+    {
+      layer_copy = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer),
+                                                    G_TYPE_FROM_INSTANCE (layer),
+                                                    add_alpha));
+      if (! layer_copy)
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    gimp_value_set_layer (&return_vals->values[1], layer_copy);
+
+  return return_vals;
+}
+
+static GValueArray *
+layer_add_alpha_invoker (GimpProcedure     *procedure,
+                         Gimp              *gimp,
+                         GimpContext       *context,
+                         GimpProgress      *progress,
+                         const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+
+  if (success)
+    {
+      gimp_layer_add_alpha (layer);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+layer_scale_invoker (GimpProcedure     *procedure,
+                     Gimp              *gimp,
+                     GimpContext       *context,
+                     GimpProgress      *progress,
+                     const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  gint32 new_width;
+  gint32 new_height;
+  gboolean local_origin;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+  new_width = g_value_get_int (&args->values[1]);
+  new_height = g_value_get_int (&args->values[2]);
+  local_origin = g_value_get_boolean (&args->values[3]);
+
+  if (success)
+    {
+      if (gimp_item_is_attached (GIMP_ITEM (layer)))
+        gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
+                                   gimp->config->interpolation_type, NULL,
+                                   local_origin);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+layer_resize_invoker (GimpProcedure     *procedure,
+                      Gimp              *gimp,
+                      GimpContext       *context,
+                      GimpProgress      *progress,
+                      const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  gint32 new_width;
+  gint32 new_height;
+  gint32 offx;
+  gint32 offy;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+  new_width = g_value_get_int (&args->values[1]);
+  new_height = g_value_get_int (&args->values[2]);
+  offx = g_value_get_int (&args->values[3]);
+  offy = g_value_get_int (&args->values[4]);
+
+  if (success)
+    {
+      if (gimp_item_is_attached (GIMP_ITEM (layer)))
+        gimp_item_resize (GIMP_ITEM (layer), context,
+                          new_width, new_height, offx, offy);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+layer_resize_to_image_size_invoker (GimpProcedure     *procedure,
+                                    Gimp              *gimp,
+                                    GimpContext       *context,
+                                    GimpProgress      *progress,
+                                    const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+
+  if (success)
+    {
+      if (gimp_item_is_attached (GIMP_ITEM (layer)))
+        gimp_layer_resize_to_image (layer, context);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+layer_translate_invoker (GimpProcedure     *procedure,
+                         Gimp              *gimp,
+                         GimpContext       *context,
+                         GimpProgress      *progress,
+                         const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  gint32 offx;
+  gint32 offy;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+  offx = g_value_get_int (&args->values[1]);
+  offy = g_value_get_int (&args->values[2]);
+
+  if (success)
+    {
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
+
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                                   _("Move Layer"));
+
+      gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+
+      if (gimp_item_get_linked (GIMP_ITEM (layer)))
+        gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+
+      gimp_image_undo_group_end (image);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+layer_set_offsets_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  gint32 offx;
+  gint32 offy;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+  offx = g_value_get_int (&args->values[1]);
+  offy = g_value_get_int (&args->values[2]);
+
+  if (success)
+    {
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
+
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                                   _("Move Layer"));
+
+      offx -= GIMP_ITEM (layer)->offset_x;
+      offy -= GIMP_ITEM (layer)->offset_y;
+
+      gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+
+      if (gimp_item_get_linked (GIMP_ITEM (layer)))
+        gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+
+      gimp_image_undo_group_end (image);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+layer_create_mask_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpLayer *layer;
+  gint32 mask_type;
+  GimpLayerMask *mask = NULL;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+  mask_type = g_value_get_enum (&args->values[1]);
+
+  if (success)
+    {
+      mask = gimp_layer_create_mask (layer, (GimpAddMaskType) mask_type);
+
+      if (! mask)
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    gimp_value_set_layer_mask (&return_vals->values[1], mask);
+
+  return return_vals;
+}
+
+static GValueArray *
+layer_get_mask_invoker (GimpProcedure     *procedure,
+                        Gimp              *gimp,
+                        GimpContext       *context,
+                        GimpProgress      *progress,
+                        const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpLayer *layer;
+  GimpLayerMask *mask = NULL;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+
+  if (success)
+    {
+      mask = gimp_layer_get_mask (layer);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    gimp_value_set_layer_mask (&return_vals->values[1], mask);
+
+  return return_vals;
+}
+
+static GValueArray *
+layer_from_mask_invoker (GimpProcedure     *procedure,
+                         Gimp              *gimp,
+                         GimpContext       *context,
+                         GimpProgress      *progress,
+                         const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpLayerMask *mask;
+  GimpLayer *layer = NULL;
+
+  mask = gimp_value_get_layer_mask (&args->values[0], gimp);
+
+  if (success)
+    {
+      layer = gimp_layer_mask_get_layer (mask);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    gimp_value_set_layer (&return_vals->values[1], layer);
+
+  return return_vals;
+}
+
+static GValueArray *
+layer_add_mask_invoker (GimpProcedure     *procedure,
+                        Gimp              *gimp,
+                        GimpContext       *context,
+                        GimpProgress      *progress,
+                        const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  GimpLayerMask *mask;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+  mask = gimp_value_get_layer_mask (&args->values[1], gimp);
+
+  if (success)
+    {
+      if (gimp_item_is_attached (GIMP_ITEM (layer)))
+        gimp_layer_add_mask (layer, mask, TRUE);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+layer_remove_mask_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  gint32 mode;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+  mode = g_value_get_enum (&args->values[1]);
+
+  if (success)
+    {
+      if (gimp_item_is_attached (GIMP_ITEM (layer)))
+        gimp_layer_apply_mask (layer, mode, TRUE);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+layer_is_floating_sel_invoker (GimpProcedure     *procedure,
+                               Gimp              *gimp,
+                               GimpContext       *context,
+                               GimpProgress      *progress,
+                               const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpLayer *layer;
+  gboolean is_floating_sel = FALSE;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+
+  if (success)
+    {
+      is_floating_sel = gimp_layer_is_floating_sel (layer);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_set_boolean (&return_vals->values[1], is_floating_sel);
+
+  return return_vals;
+}
+
+static GValueArray *
+layer_get_lock_alpha_invoker (GimpProcedure     *procedure,
+                              Gimp              *gimp,
+                              GimpContext       *context,
+                              GimpProgress      *progress,
+                              const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpLayer *layer;
+  gboolean lock_alpha = FALSE;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+
+  if (success)
+    {
+      lock_alpha = gimp_layer_get_lock_alpha (layer);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_set_boolean (&return_vals->values[1], lock_alpha);
+
+  return return_vals;
+}
+
+static GValueArray *
+layer_set_lock_alpha_invoker (GimpProcedure     *procedure,
+                              Gimp              *gimp,
+                              GimpContext       *context,
+                              GimpProgress      *progress,
+                              const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  gboolean lock_alpha;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+  lock_alpha = g_value_get_boolean (&args->values[1]);
+
+  if (success)
+    {
+      gimp_layer_set_lock_alpha (layer, lock_alpha, TRUE);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+layer_get_apply_mask_invoker (GimpProcedure     *procedure,
+                              Gimp              *gimp,
+                              GimpContext       *context,
+                              GimpProgress      *progress,
+                              const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpLayer *layer;
+  gboolean apply_mask = FALSE;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+
+  if (success)
+    {
+      if (layer->mask)
+        apply_mask = gimp_layer_mask_get_apply (layer->mask);
+      else
+        apply_mask = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_set_boolean (&return_vals->values[1], apply_mask);
+
+  return return_vals;
+}
+
+static GValueArray *
+layer_set_apply_mask_invoker (GimpProcedure     *procedure,
+                              Gimp              *gimp,
+                              GimpContext       *context,
+                              GimpProgress      *progress,
+                              const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  gboolean apply_mask;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+  apply_mask = g_value_get_boolean (&args->values[1]);
+
+  if (success)
+    {
+      if (layer->mask)
+        gimp_layer_mask_set_apply (layer->mask, apply_mask, TRUE);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+layer_get_show_mask_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpLayer *layer;
+  gboolean show_mask = FALSE;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+
+  if (success)
+    {
+      if (layer->mask)
+        show_mask = gimp_layer_mask_get_show (layer->mask);
+      else
+        show_mask = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_set_boolean (&return_vals->values[1], show_mask);
+
+  return return_vals;
+}
+
+static GValueArray *
+layer_set_show_mask_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  gboolean show_mask;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+  show_mask = g_value_get_boolean (&args->values[1]);
+
+  if (success)
+    {
+      if (layer->mask)
+        gimp_layer_mask_set_show (layer->mask, show_mask, TRUE);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+layer_get_edit_mask_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpLayer *layer;
+  gboolean edit_mask = FALSE;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+
+  if (success)
+    {
+      if (layer->mask)
+        edit_mask = gimp_layer_mask_get_edit (layer->mask);
+      else
+        edit_mask = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_set_boolean (&return_vals->values[1], edit_mask);
+
+  return return_vals;
+}
+
+static GValueArray *
+layer_set_edit_mask_invoker (GimpProcedure     *procedure,
+                             Gimp              *gimp,
+                             GimpContext       *context,
+                             GimpProgress      *progress,
+                             const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  gboolean edit_mask;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+  edit_mask = g_value_get_boolean (&args->values[1]);
+
+  if (success)
+    {
+      if (layer->mask)
+        gimp_layer_mask_set_edit (layer->mask, edit_mask);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+layer_get_opacity_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpLayer *layer;
+  gdouble opacity = 0.0;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+
+  if (success)
+    {
+      opacity = gimp_layer_get_opacity (layer) * 100.0;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_set_double (&return_vals->values[1], opacity);
+
+  return return_vals;
+}
+
+static GValueArray *
+layer_set_opacity_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  gdouble opacity;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+  opacity = g_value_get_double (&args->values[1]);
+
+  if (success)
+    {
+      gimp_layer_set_opacity (layer, opacity / 100.0, TRUE);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+layer_get_mode_invoker (GimpProcedure     *procedure,
+                        Gimp              *gimp,
+                        GimpContext       *context,
+                        GimpProgress      *progress,
+                        const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpLayer *layer;
+  gint32 mode = 0;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+
+  if (success)
+    {
+      mode = gimp_layer_get_mode (layer);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_set_enum (&return_vals->values[1], mode);
+
+  return return_vals;
+}
+
+static GValueArray *
+layer_set_mode_invoker (GimpProcedure     *procedure,
+                        Gimp              *gimp,
+                        GimpContext       *context,
+                        GimpProgress      *progress,
+                        const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  gint32 mode;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+  mode = g_value_get_enum (&args->values[1]);
+
+  if (success)
+    {
+      gimp_layer_set_mode (layer, mode, TRUE);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
 
 void
 register_layer_procs (Gimp *gimp)
@@ -72,9 +818,21 @@ register_layer_procs (Gimp *gimp)
   GimpProcedure *procedure;
 
   /*
-   * layer_new
+   * gimp-layer-new
    */
-  procedure = gimp_procedure_init (&layer_new_proc, 7, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 7, 1,
+                             layer_new_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-new",
+                                     "gimp-layer-new",
+                                     "Create a new layer.",
+                                     "This procedure creates a new layer with the specified width, height, and type. Name, opacity, and mode are also supplied parameters. The new layer still needs to be added to the image, as this is not automatic. Add the new layer with the 'gimp_image_add_layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
@@ -129,9 +887,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_new_from_drawable
+   * gimp-layer-new-from-drawable
    */
-  procedure = gimp_procedure_init (&layer_new_from_drawable_proc, 2, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
+                             layer_new_from_drawable_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-new-from-drawable",
+                                     "gimp-layer-new-from-drawable",
+                                     "Create a new layer by copying an existing drawable.",
+                                     "This procedure creates a new layer as a copy of the specified drawable. The new layer still needs to be added to the image, as this is not automatic. Add the new layer with the 'gimp_image_add_layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -153,9 +923,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_copy
+   * gimp-layer-copy
    */
-  procedure = gimp_procedure_init (&layer_copy_proc, 2, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
+                             layer_copy_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-copy",
+                                     "gimp-layer-copy",
+                                     "Copy a layer.",
+                                     "This procedure copies the specified layer and returns the copy. The newly copied layer is for use within the original layer's image. It should not be subsequently added to any other image. The copied layer can optionally have an added alpha channel. This is useful if the background layer in an image is being copied and added to the same image.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -177,9 +959,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_add_alpha
+   * gimp-layer-add-alpha
    */
-  procedure = gimp_procedure_init (&layer_add_alpha_proc, 1, 0);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             layer_add_alpha_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-add-alpha",
+                                     "gimp-layer-add-alpha",
+                                     "Add an alpha channel to the layer if it doesn't already have one.",
+                                     "This procedure adds an additional component to the specified layer if it does not already possess an alpha channel. An alpha channel makes it possible to move a layer from the bottom of the layer stack and to clear and erase to transparency, instead of the background color. This transforms images of type RGB to RGBA, GRAY to GRAYA, and INDEXED to INDEXEDA.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -189,9 +983,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_scale
+   * gimp-layer-scale
    */
-  procedure = gimp_procedure_init (&layer_scale_proc, 4, 0);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 4, 0,
+                             layer_scale_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-scale",
+                                     "gimp-layer-scale",
+                                     "Scale the layer to the specified extents.",
+                                     "This procedure scales the layer so that its new width and height are equal to the supplied parameters. The \"local_origin\" parameter specifies whether to scale from the center of the layer, or from the image origin. This operation only works if the layer has been added to an image.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -219,9 +1025,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_resize
+   * gimp-layer-resize
    */
-  procedure = gimp_procedure_init (&layer_resize_proc, 5, 0);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 5, 0,
+                             layer_resize_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-resize",
+                                     "gimp-layer-resize",
+                                     "Resize the layer to the specified extents.",
+                                     "This procedure resizes the layer so that its new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous layer's content. This operation only works if the layer has been added to an image.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -255,9 +1073,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_resize_to_image_size
+   * gimp-layer-resize-to-image-size
    */
-  procedure = gimp_procedure_init (&layer_resize_to_image_size_proc, 1, 0);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             layer_resize_to_image_size_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-resize-to-image-size",
+                                     "gimp-layer-resize-to-image-size",
+                                     "Resize a layer to the image size.",
+                                     "This procedure resizes the layer so that it's new width and height are equal to the width and height of its image container.",
+                                     "Manish Singh",
+                                     "Manish Singh",
+                                     "2003",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -267,9 +1097,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_translate
+   * gimp-layer-translate
    */
-  procedure = gimp_procedure_init (&layer_translate_proc, 3, 0);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
+                             layer_translate_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-translate",
+                                     "gimp-layer-translate",
+                                     "Translate the layer by the specified offsets.",
+                                     "This procedure translates the layer by the amounts specified in the x and y arguments. These can be negative, and are considered offsets from the current position. This command only works if the layer has been added to an image. All additional layers contained in the image which have the linked flag set to TRUE w ill also be translated by the specified offsets.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -291,9 +1133,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_set_offsets
+   * gimp-layer-set-offsets
    */
-  procedure = gimp_procedure_init (&layer_set_offsets_proc, 3, 0);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
+                             layer_set_offsets_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-set-offsets",
+                                     "gimp-layer-set-offsets",
+                                     "Set the layer offsets.",
+                                     "This procedure sets the offsets for the specified layer. The offsets are relative to the image origin and can be any values. This operation is valid only on layers which have been added to an image.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -315,9 +1169,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_create_mask
+   * gimp-layer-create-mask
    */
-  procedure = gimp_procedure_init (&layer_create_mask_proc, 2, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
+                             layer_create_mask_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-create-mask",
+                                     "gimp-layer-create-mask",
+                                     "Create a layer mask for the specified specified layer.",
+                                     "This procedure creates a layer mask for the specified layer. Layer masks serve as an additional alpha channel for a layer. A number of ifferent types of masks are allowed for initialisation: completely white masks (which will leave the layer fully visible), completely black masks (which will give the layer complete transparency, the layer's already existing alpha channel (which will leave the layer fully visible, but which may be more useful than a white mask), the current selection or a grayscale copy of the layer. The layer mask still needs to be added to the layer. This can be done with a call to 'gimp_layer_add_mask'.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -340,9 +1206,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_get_mask
+   * gimp-layer-get-mask
    */
-  procedure = gimp_procedure_init (&layer_get_mask_proc, 1, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             layer_get_mask_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-get-mask",
+                                     "gimp-layer-get-mask",
+                                     "Get the specified layer's mask if it exists.",
+                                     "This procedure returns the specified layer's mask, or -1 if none exists.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -358,9 +1236,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_from_mask
+   * gimp-layer-from-mask
    */
-  procedure = gimp_procedure_init (&layer_from_mask_proc, 1, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             layer_from_mask_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-from-mask",
+                                     "gimp-layer-from-mask",
+                                     "Get the specified mask's layer.",
+                                     "This procedure returns the specified mask's layer , or -1 if none exists.",
+                                     "Geert Jordaens",
+                                     "Geert Jordaens",
+                                     "2004",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_mask_id ("mask",
                                                               "mask",
@@ -376,9 +1266,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_add_mask
+   * gimp-layer-add-mask
    */
-  procedure = gimp_procedure_init (&layer_add_mask_proc, 2, 0);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
+                             layer_add_mask_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-add-mask",
+                                     "gimp-layer-add-mask",
+                                     "Add a layer mask to the specified layer.",
+                                     "This procedure adds a layer mask to the specified layer. Layer masks serve as an additional alpha channel for a layer. This procedure will fail if a number of prerequisites aren't met. The layer cannot already have a layer mask. The specified mask must exist and have the same dimensions as the layer. Both the mask and the layer must have been created for use with the specified image.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -394,9 +1296,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_remove_mask
+   * gimp-layer-remove-mask
    */
-  procedure = gimp_procedure_init (&layer_remove_mask_proc, 2, 0);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
+                             layer_remove_mask_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-remove-mask",
+                                     "gimp-layer-remove-mask",
+                                     "Remove the specified layer mask from the layer.",
+                                     "This procedure removes the specified layer mask from the layer. If the mask doesn't exist, an error is returned.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -413,9 +1327,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_is_floating_sel
+   * gimp-layer-is-floating-sel
    */
-  procedure = gimp_procedure_init (&layer_is_floating_sel_proc, 1, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             layer_is_floating_sel_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-is-floating-sel",
+                                     "gimp-layer-is-floating-sel",
+                                     "Is the specified layer a floating selection?",
+                                     "This procedure returns whether the layer is a floating selection. Floating selections are special cases of layers which are attached to a specific drawable.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -431,9 +1357,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_get_lock_alpha
+   * gimp-layer-get-lock-alpha
    */
-  procedure = gimp_procedure_init (&layer_get_lock_alpha_proc, 1, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             layer_get_lock_alpha_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-get-lock-alpha",
+                                     "gimp-layer-get-lock-alpha",
+                                     "Get the lock alpha channel setting of the specified layer.",
+                                     "This procedure returns the specified layer's lock alpha channel setting.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -449,9 +1387,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_set_lock_alpha
+   * gimp-layer-set-lock-alpha
    */
-  procedure = gimp_procedure_init (&layer_set_lock_alpha_proc, 2, 0);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
+                             layer_set_lock_alpha_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-set-lock-alpha",
+                                     "gimp-layer-set-lock-alpha",
+                                     "Set the lock alpha channel setting of the specified layer.",
+                                     "This procedure sets the specified layer's lock alpha channel setting.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -467,9 +1417,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_get_apply_mask
+   * gimp-layer-get-apply-mask
    */
-  procedure = gimp_procedure_init (&layer_get_apply_mask_proc, 1, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             layer_get_apply_mask_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-get-apply-mask",
+                                     "gimp-layer-get-apply-mask",
+                                     "Get the apply mask setting of the specified layer.",
+                                     "This procedure returns the specified layer's apply mask setting. If the value is TRUE, then the layer mask for this layer is currently being composited with the layer's alpha channel.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -485,9 +1447,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_set_apply_mask
+   * gimp-layer-set-apply-mask
    */
-  procedure = gimp_procedure_init (&layer_set_apply_mask_proc, 2, 0);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
+                             layer_set_apply_mask_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-set-apply-mask",
+                                     "gimp-layer-set-apply-mask",
+                                     "Set the apply mask setting of the specified layer.",
+                                     "This procedure sets the specified layer's apply mask setting. This controls whether the layer's mask is currently affecting the alpha channel. If there is no layer mask, this function will return an error.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -503,9 +1477,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_get_show_mask
+   * gimp-layer-get-show-mask
    */
-  procedure = gimp_procedure_init (&layer_get_show_mask_proc, 1, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             layer_get_show_mask_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-get-show-mask",
+                                     "gimp-layer-get-show-mask",
+                                     "Get the show mask setting of the specified layer.",
+                                     "This procedure returns the specified layer's show mask setting. This controls whether the layer or its mask is visible. TRUE indicates that the mask should be visible. If the layer has no mask, then this function returns an error.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -521,9 +1507,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_set_show_mask
+   * gimp-layer-set-show-mask
    */
-  procedure = gimp_procedure_init (&layer_set_show_mask_proc, 2, 0);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
+                             layer_set_show_mask_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-set-show-mask",
+                                     "gimp-layer-set-show-mask",
+                                     "Set the show mask setting of the specified layer.",
+                                     "This procedure sets the specified layer's show mask setting. This controls whether the layer's mask is currently affecting the alpha channel. If there is no layer mask, this function will return an error.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -539,9 +1537,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_get_edit_mask
+   * gimp-layer-get-edit-mask
    */
-  procedure = gimp_procedure_init (&layer_get_edit_mask_proc, 1, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             layer_get_edit_mask_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-get-edit-mask",
+                                     "gimp-layer-get-edit-mask",
+                                     "Get the edit mask setting of the specified layer.",
+                                     "This procedure returns the specified layer's edit mask setting. If the value is TRUE, then the layer mask for this layer is currently active, and not the layer.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -557,9 +1567,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_set_edit_mask
+   * gimp-layer-set-edit-mask
    */
-  procedure = gimp_procedure_init (&layer_set_edit_mask_proc, 2, 0);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
+                             layer_set_edit_mask_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-set-edit-mask",
+                                     "gimp-layer-set-edit-mask",
+                                     "Set the edit mask setting of the specified layer.",
+                                     "This procedure sets the specified layer's edit mask setting. This controls whether the layer or it's mask is currently active for editing. If the specified layer has no layer mask, then this procedure will return an error.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -575,9 +1597,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_get_opacity
+   * gimp-layer-get-opacity
    */
-  procedure = gimp_procedure_init (&layer_get_opacity_proc, 1, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             layer_get_opacity_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-get-opacity",
+                                     "gimp-layer-get-opacity",
+                                     "Get the opacity of the specified layer.",
+                                     "This procedure returns the specified layer's opacity.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -593,9 +1627,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_set_opacity
+   * gimp-layer-set-opacity
    */
-  procedure = gimp_procedure_init (&layer_set_opacity_proc, 2, 0);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
+                             layer_set_opacity_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-set-opacity",
+                                     "gimp-layer-set-opacity",
+                                     "Set the opacity of the specified layer.",
+                                     "This procedure sets the specified layer's opacity.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -611,9 +1657,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_get_mode
+   * gimp-layer-get-mode
    */
-  procedure = gimp_procedure_init (&layer_get_mode_proc, 1, 1);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             layer_get_mode_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-get-mode",
+                                     "gimp-layer-get-mode",
+                                     "Get the combination mode of the specified layer.",
+                                     "This procedure returns the specified layer's combination mode.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -630,9 +1688,21 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * layer_set_mode
+   * gimp-layer-set-mode
    */
-  procedure = gimp_procedure_init (&layer_set_mode_proc, 2, 0);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
+                             layer_set_mode_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-set-mode",
+                                     "gimp-layer-set-mode",
+                                     "Set the combination mode of the specified layer.",
+                                     "This procedure sets the specified layer's combination mode.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -649,1208 +1719,3 @@ register_layer_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
 }
-
-static GValueArray *
-layer_new_invoker (GimpProcedure     *procedure,
-                   Gimp              *gimp,
-                   GimpContext       *context,
-                   GimpProgress      *progress,
-                   const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpImage *image;
-  gint32 width;
-  gint32 height;
-  gint32 type;
-  const gchar *name;
-  gdouble opacity;
-  gint32 mode;
-  GimpLayer *layer = NULL;
-
-  image = gimp_value_get_image (&args->values[0], gimp);
-  width = g_value_get_int (&args->values[1]);
-  height = g_value_get_int (&args->values[2]);
-  type = g_value_get_enum (&args->values[3]);
-  name = g_value_get_string (&args->values[4]);
-  opacity = g_value_get_double (&args->values[5]);
-  mode = g_value_get_enum (&args->values[6]);
-
-  if (success)
-    {
-      layer = gimp_layer_new (image, width, height, type, name,
-                              opacity / 100.0, mode);
-
-      if (! layer)
-        success = FALSE;
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    gimp_value_set_layer (&return_vals->values[1], layer);
-
-  return return_vals;
-}
-
-static GimpProcedure layer_new_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-new",
-  "gimp-layer-new",
-  "Create a new layer.",
-  "This procedure creates a new layer with the specified width, height, and type. Name, opacity, and mode are also supplied parameters. The new layer still needs to be added to the image, as this is not automatic. Add the new layer with the 'gimp_image_add_layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_new_invoker } }
-};
-
-static GValueArray *
-layer_new_from_drawable_invoker (GimpProcedure     *procedure,
-                                 Gimp              *gimp,
-                                 GimpContext       *context,
-                                 GimpProgress      *progress,
-                                 const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpDrawable *drawable;
-  GimpImage *dest_image;
-  GimpLayer *layer_copy = NULL;
-
-  drawable = gimp_value_get_drawable (&args->values[0], gimp);
-  dest_image = gimp_value_get_image (&args->values[1], gimp);
-
-  if (success)
-    {
-      GType     new_type;
-      GimpItem *new_item;
-
-      if (GIMP_IS_LAYER (drawable))
-        new_type = G_TYPE_FROM_INSTANCE (drawable);
-      else
-        new_type = GIMP_TYPE_LAYER;
-
-      if (dest_image == gimp_item_get_image (GIMP_ITEM (drawable)))
-        new_item = gimp_item_duplicate (GIMP_ITEM (drawable), new_type, TRUE);
-      else
-        new_item = gimp_item_convert (GIMP_ITEM (drawable), dest_image, new_type, TRUE);
-
-      if (new_item)
-        layer_copy = GIMP_LAYER (new_item);
-      else
-        success = FALSE;
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    gimp_value_set_layer (&return_vals->values[1], layer_copy);
-
-  return return_vals;
-}
-
-static GimpProcedure layer_new_from_drawable_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-new-from-drawable",
-  "gimp-layer-new-from-drawable",
-  "Create a new layer by copying an existing drawable.",
-  "This procedure creates a new layer as a copy of the specified drawable. The new layer still needs to be added to the image, as this is not automatic. Add the new layer with the 'gimp_image_add_layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_new_from_drawable_invoker } }
-};
-
-static GValueArray *
-layer_copy_invoker (GimpProcedure     *procedure,
-                    Gimp              *gimp,
-                    GimpContext       *context,
-                    GimpProgress      *progress,
-                    const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpLayer *layer;
-  gboolean add_alpha;
-  GimpLayer *layer_copy = NULL;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-  add_alpha = g_value_get_boolean (&args->values[1]);
-
-  if (success)
-    {
-      layer_copy = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer),
-                                                    G_TYPE_FROM_INSTANCE (layer),
-                                                    add_alpha));
-      if (! layer_copy)
-        success = FALSE;
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    gimp_value_set_layer (&return_vals->values[1], layer_copy);
-
-  return return_vals;
-}
-
-static GimpProcedure layer_copy_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-copy",
-  "gimp-layer-copy",
-  "Copy a layer.",
-  "This procedure copies the specified layer and returns the copy. The newly copied layer is for use within the original layer's image. It should not be subsequently added to any other image. The copied layer can optionally have an added alpha channel. This is useful if the background layer in an image is being copied and added to the same image.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_copy_invoker } }
-};
-
-static GValueArray *
-layer_add_alpha_invoker (GimpProcedure     *procedure,
-                         Gimp              *gimp,
-                         GimpContext       *context,
-                         GimpProgress      *progress,
-                         const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GimpLayer *layer;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-
-  if (success)
-    {
-      gimp_layer_add_alpha (layer);
-    }
-
-  return gimp_procedure_get_return_values (procedure, success);
-}
-
-static GimpProcedure layer_add_alpha_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-add-alpha",
-  "gimp-layer-add-alpha",
-  "Add an alpha channel to the layer if it doesn't already have one.",
-  "This procedure adds an additional component to the specified layer if it does not already possess an alpha channel. An alpha channel makes it possible to move a layer from the bottom of the layer stack and to clear and erase to transparency, instead of the background color. This transforms images of type RGB to RGBA, GRAY to GRAYA, and INDEXED to INDEXEDA.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_add_alpha_invoker } }
-};
-
-static GValueArray *
-layer_scale_invoker (GimpProcedure     *procedure,
-                     Gimp              *gimp,
-                     GimpContext       *context,
-                     GimpProgress      *progress,
-                     const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GimpLayer *layer;
-  gint32 new_width;
-  gint32 new_height;
-  gboolean local_origin;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-  new_width = g_value_get_int (&args->values[1]);
-  new_height = g_value_get_int (&args->values[2]);
-  local_origin = g_value_get_boolean (&args->values[3]);
-
-  if (success)
-    {
-      if (gimp_item_is_attached (GIMP_ITEM (layer)))
-        gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
-                                   gimp->config->interpolation_type, NULL,
-                                   local_origin);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success);
-}
-
-static GimpProcedure layer_scale_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-scale",
-  "gimp-layer-scale",
-  "Scale the layer to the specified extents.",
-  "This procedure scales the layer so that its new width and height are equal to the supplied parameters. The \"local_origin\" parameter specifies whether to scale from the center of the layer, or from the image origin. This operation only works if the layer has been added to an image.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_scale_invoker } }
-};
-
-static GValueArray *
-layer_resize_invoker (GimpProcedure     *procedure,
-                      Gimp              *gimp,
-                      GimpContext       *context,
-                      GimpProgress      *progress,
-                      const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GimpLayer *layer;
-  gint32 new_width;
-  gint32 new_height;
-  gint32 offx;
-  gint32 offy;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-  new_width = g_value_get_int (&args->values[1]);
-  new_height = g_value_get_int (&args->values[2]);
-  offx = g_value_get_int (&args->values[3]);
-  offy = g_value_get_int (&args->values[4]);
-
-  if (success)
-    {
-      if (gimp_item_is_attached (GIMP_ITEM (layer)))
-        gimp_item_resize (GIMP_ITEM (layer), context,
-                          new_width, new_height, offx, offy);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success);
-}
-
-static GimpProcedure layer_resize_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-resize",
-  "gimp-layer-resize",
-  "Resize the layer to the specified extents.",
-  "This procedure resizes the layer so that its new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous layer's content. This operation only works if the layer has been added to an image.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_resize_invoker } }
-};
-
-static GValueArray *
-layer_resize_to_image_size_invoker (GimpProcedure     *procedure,
-                                    Gimp              *gimp,
-                                    GimpContext       *context,
-                                    GimpProgress      *progress,
-                                    const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GimpLayer *layer;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-
-  if (success)
-    {
-      if (gimp_item_is_attached (GIMP_ITEM (layer)))
-        gimp_layer_resize_to_image (layer, context);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success);
-}
-
-static GimpProcedure layer_resize_to_image_size_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-resize-to-image-size",
-  "gimp-layer-resize-to-image-size",
-  "Resize a layer to the image size.",
-  "This procedure resizes the layer so that it's new width and height are equal to the width and height of its image container.",
-  "Manish Singh",
-  "Manish Singh",
-  "2003",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_resize_to_image_size_invoker } }
-};
-
-static GValueArray *
-layer_translate_invoker (GimpProcedure     *procedure,
-                         Gimp              *gimp,
-                         GimpContext       *context,
-                         GimpProgress      *progress,
-                         const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GimpLayer *layer;
-  gint32 offx;
-  gint32 offy;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-  offx = g_value_get_int (&args->values[1]);
-  offy = g_value_get_int (&args->values[2]);
-
-  if (success)
-    {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
-
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
-                                   _("Move Layer"));
-
-      gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
-
-      if (gimp_item_get_linked (GIMP_ITEM (layer)))
-        gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
-
-      gimp_image_undo_group_end (image);
-    }
-
-  return gimp_procedure_get_return_values (procedure, success);
-}
-
-static GimpProcedure layer_translate_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-translate",
-  "gimp-layer-translate",
-  "Translate the layer by the specified offsets.",
-  "This procedure translates the layer by the amounts specified in the x and y arguments. These can be negative, and are considered offsets from the current position. This command only works if the layer has been added to an image. All additional layers contained in the image which have the linked flag set to TRUE w ill also be translated by the specified offsets.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_translate_invoker } }
-};
-
-static GValueArray *
-layer_set_offsets_invoker (GimpProcedure     *procedure,
-                           Gimp              *gimp,
-                           GimpContext       *context,
-                           GimpProgress      *progress,
-                           const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GimpLayer *layer;
-  gint32 offx;
-  gint32 offy;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-  offx = g_value_get_int (&args->values[1]);
-  offy = g_value_get_int (&args->values[2]);
-
-  if (success)
-    {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
-
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
-                                   _("Move Layer"));
-
-      offx -= GIMP_ITEM (layer)->offset_x;
-      offy -= GIMP_ITEM (layer)->offset_y;
-
-      gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
-
-      if (gimp_item_get_linked (GIMP_ITEM (layer)))
-        gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
-
-      gimp_image_undo_group_end (image);
-    }
-
-  return gimp_procedure_get_return_values (procedure, success);
-}
-
-static GimpProcedure layer_set_offsets_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-set-offsets",
-  "gimp-layer-set-offsets",
-  "Set the layer offsets.",
-  "This procedure sets the offsets for the specified layer. The offsets are relative to the image origin and can be any values. This operation is valid only on layers which have been added to an image.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_set_offsets_invoker } }
-};
-
-static GValueArray *
-layer_create_mask_invoker (GimpProcedure     *procedure,
-                           Gimp              *gimp,
-                           GimpContext       *context,
-                           GimpProgress      *progress,
-                           const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpLayer *layer;
-  gint32 mask_type;
-  GimpLayerMask *mask = NULL;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-  mask_type = g_value_get_enum (&args->values[1]);
-
-  if (success)
-    {
-      mask = gimp_layer_create_mask (layer, (GimpAddMaskType) mask_type);
-
-      if (! mask)
-        success = FALSE;
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    gimp_value_set_layer_mask (&return_vals->values[1], mask);
-
-  return return_vals;
-}
-
-static GimpProcedure layer_create_mask_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-create-mask",
-  "gimp-layer-create-mask",
-  "Create a layer mask for the specified specified layer.",
-  "This procedure creates a layer mask for the specified layer. Layer masks serve as an additional alpha channel for a layer. A number of ifferent types of masks are allowed for initialisation: completely white masks (which will leave the layer fully visible), completely black masks (which will give the layer complete transparency, the layer's already existing alpha channel (which will leave the layer fully visible, but which may be more useful than a white mask), the current selection or a grayscale copy of the layer. The layer mask still needs to be added to the layer. This can be done with a call to 'gimp_layer_add_mask'.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_create_mask_invoker } }
-};
-
-static GValueArray *
-layer_get_mask_invoker (GimpProcedure     *procedure,
-                        Gimp              *gimp,
-                        GimpContext       *context,
-                        GimpProgress      *progress,
-                        const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpLayer *layer;
-  GimpLayerMask *mask = NULL;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-
-  if (success)
-    {
-      mask = gimp_layer_get_mask (layer);
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    gimp_value_set_layer_mask (&return_vals->values[1], mask);
-
-  return return_vals;
-}
-
-static GimpProcedure layer_get_mask_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-get-mask",
-  "gimp-layer-get-mask",
-  "Get the specified layer's mask if it exists.",
-  "This procedure returns the specified layer's mask, or -1 if none exists.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_get_mask_invoker } }
-};
-
-static GValueArray *
-layer_from_mask_invoker (GimpProcedure     *procedure,
-                         Gimp              *gimp,
-                         GimpContext       *context,
-                         GimpProgress      *progress,
-                         const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpLayerMask *mask;
-  GimpLayer *layer = NULL;
-
-  mask = gimp_value_get_layer_mask (&args->values[0], gimp);
-
-  if (success)
-    {
-      layer = gimp_layer_mask_get_layer (mask);
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    gimp_value_set_layer (&return_vals->values[1], layer);
-
-  return return_vals;
-}
-
-static GimpProcedure layer_from_mask_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-from-mask",
-  "gimp-layer-from-mask",
-  "Get the specified mask's layer.",
-  "This procedure returns the specified mask's layer , or -1 if none exists.",
-  "Geert Jordaens",
-  "Geert Jordaens",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_from_mask_invoker } }
-};
-
-static GValueArray *
-layer_add_mask_invoker (GimpProcedure     *procedure,
-                        Gimp              *gimp,
-                        GimpContext       *context,
-                        GimpProgress      *progress,
-                        const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GimpLayer *layer;
-  GimpLayerMask *mask;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-  mask = gimp_value_get_layer_mask (&args->values[1], gimp);
-
-  if (success)
-    {
-      if (gimp_item_is_attached (GIMP_ITEM (layer)))
-        gimp_layer_add_mask (layer, mask, TRUE);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success);
-}
-
-static GimpProcedure layer_add_mask_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-add-mask",
-  "gimp-layer-add-mask",
-  "Add a layer mask to the specified layer.",
-  "This procedure adds a layer mask to the specified layer. Layer masks serve as an additional alpha channel for a layer. This procedure will fail if a number of prerequisites aren't met. The layer cannot already have a layer mask. The specified mask must exist and have the same dimensions as the layer. Both the mask and the layer must have been created for use with the specified image.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_add_mask_invoker } }
-};
-
-static GValueArray *
-layer_remove_mask_invoker (GimpProcedure     *procedure,
-                           Gimp              *gimp,
-                           GimpContext       *context,
-                           GimpProgress      *progress,
-                           const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GimpLayer *layer;
-  gint32 mode;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-  mode = g_value_get_enum (&args->values[1]);
-
-  if (success)
-    {
-      if (gimp_item_is_attached (GIMP_ITEM (layer)))
-        gimp_layer_apply_mask (layer, mode, TRUE);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success);
-}
-
-static GimpProcedure layer_remove_mask_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-remove-mask",
-  "gimp-layer-remove-mask",
-  "Remove the specified layer mask from the layer.",
-  "This procedure removes the specified layer mask from the layer. If the mask doesn't exist, an error is returned.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_remove_mask_invoker } }
-};
-
-static GValueArray *
-layer_is_floating_sel_invoker (GimpProcedure     *procedure,
-                               Gimp              *gimp,
-                               GimpContext       *context,
-                               GimpProgress      *progress,
-                               const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpLayer *layer;
-  gboolean is_floating_sel = FALSE;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-
-  if (success)
-    {
-      is_floating_sel = gimp_layer_is_floating_sel (layer);
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_set_boolean (&return_vals->values[1], is_floating_sel);
-
-  return return_vals;
-}
-
-static GimpProcedure layer_is_floating_sel_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-is-floating-sel",
-  "gimp-layer-is-floating-sel",
-  "Is the specified layer a floating selection?",
-  "This procedure returns whether the layer is a floating selection. Floating selections are special cases of layers which are attached to a specific drawable.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_is_floating_sel_invoker } }
-};
-
-static GValueArray *
-layer_get_lock_alpha_invoker (GimpProcedure     *procedure,
-                              Gimp              *gimp,
-                              GimpContext       *context,
-                              GimpProgress      *progress,
-                              const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpLayer *layer;
-  gboolean lock_alpha = FALSE;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-
-  if (success)
-    {
-      lock_alpha = gimp_layer_get_lock_alpha (layer);
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_set_boolean (&return_vals->values[1], lock_alpha);
-
-  return return_vals;
-}
-
-static GimpProcedure layer_get_lock_alpha_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-get-lock-alpha",
-  "gimp-layer-get-lock-alpha",
-  "Get the lock alpha channel setting of the specified layer.",
-  "This procedure returns the specified layer's lock alpha channel setting.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_get_lock_alpha_invoker } }
-};
-
-static GValueArray *
-layer_set_lock_alpha_invoker (GimpProcedure     *procedure,
-                              Gimp              *gimp,
-                              GimpContext       *context,
-                              GimpProgress      *progress,
-                              const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GimpLayer *layer;
-  gboolean lock_alpha;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-  lock_alpha = g_value_get_boolean (&args->values[1]);
-
-  if (success)
-    {
-      gimp_layer_set_lock_alpha (layer, lock_alpha, TRUE);
-    }
-
-  return gimp_procedure_get_return_values (procedure, success);
-}
-
-static GimpProcedure layer_set_lock_alpha_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-set-lock-alpha",
-  "gimp-layer-set-lock-alpha",
-  "Set the lock alpha channel setting of the specified layer.",
-  "This procedure sets the specified layer's lock alpha channel setting.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_set_lock_alpha_invoker } }
-};
-
-static GValueArray *
-layer_get_apply_mask_invoker (GimpProcedure     *procedure,
-                              Gimp              *gimp,
-                              GimpContext       *context,
-                              GimpProgress      *progress,
-                              const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpLayer *layer;
-  gboolean apply_mask = FALSE;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-
-  if (success)
-    {
-      if (layer->mask)
-        apply_mask = gimp_layer_mask_get_apply (layer->mask);
-      else
-        apply_mask = FALSE;
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_set_boolean (&return_vals->values[1], apply_mask);
-
-  return return_vals;
-}
-
-static GimpProcedure layer_get_apply_mask_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-get-apply-mask",
-  "gimp-layer-get-apply-mask",
-  "Get the apply mask setting of the specified layer.",
-  "This procedure returns the specified layer's apply mask setting. If the value is TRUE, then the layer mask for this layer is currently being composited with the layer's alpha channel.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_get_apply_mask_invoker } }
-};
-
-static GValueArray *
-layer_set_apply_mask_invoker (GimpProcedure     *procedure,
-                              Gimp              *gimp,
-                              GimpContext       *context,
-                              GimpProgress      *progress,
-                              const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GimpLayer *layer;
-  gboolean apply_mask;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-  apply_mask = g_value_get_boolean (&args->values[1]);
-
-  if (success)
-    {
-      if (layer->mask)
-        gimp_layer_mask_set_apply (layer->mask, apply_mask, TRUE);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success);
-}
-
-static GimpProcedure layer_set_apply_mask_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-set-apply-mask",
-  "gimp-layer-set-apply-mask",
-  "Set the apply mask setting of the specified layer.",
-  "This procedure sets the specified layer's apply mask setting. This controls whether the layer's mask is currently affecting the alpha channel. If there is no layer mask, this function will return an error.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_set_apply_mask_invoker } }
-};
-
-static GValueArray *
-layer_get_show_mask_invoker (GimpProcedure     *procedure,
-                             Gimp              *gimp,
-                             GimpContext       *context,
-                             GimpProgress      *progress,
-                             const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpLayer *layer;
-  gboolean show_mask = FALSE;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-
-  if (success)
-    {
-      if (layer->mask)
-        show_mask = gimp_layer_mask_get_show (layer->mask);
-      else
-        show_mask = FALSE;
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_set_boolean (&return_vals->values[1], show_mask);
-
-  return return_vals;
-}
-
-static GimpProcedure layer_get_show_mask_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-get-show-mask",
-  "gimp-layer-get-show-mask",
-  "Get the show mask setting of the specified layer.",
-  "This procedure returns the specified layer's show mask setting. This controls whether the layer or its mask is visible. TRUE indicates that the mask should be visible. If the layer has no mask, then this function returns an error.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_get_show_mask_invoker } }
-};
-
-static GValueArray *
-layer_set_show_mask_invoker (GimpProcedure     *procedure,
-                             Gimp              *gimp,
-                             GimpContext       *context,
-                             GimpProgress      *progress,
-                             const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GimpLayer *layer;
-  gboolean show_mask;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-  show_mask = g_value_get_boolean (&args->values[1]);
-
-  if (success)
-    {
-      if (layer->mask)
-        gimp_layer_mask_set_show (layer->mask, show_mask, TRUE);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success);
-}
-
-static GimpProcedure layer_set_show_mask_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-set-show-mask",
-  "gimp-layer-set-show-mask",
-  "Set the show mask setting of the specified layer.",
-  "This procedure sets the specified layer's show mask setting. This controls whether the layer's mask is currently affecting the alpha channel. If there is no layer mask, this function will return an error.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_set_show_mask_invoker } }
-};
-
-static GValueArray *
-layer_get_edit_mask_invoker (GimpProcedure     *procedure,
-                             Gimp              *gimp,
-                             GimpContext       *context,
-                             GimpProgress      *progress,
-                             const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpLayer *layer;
-  gboolean edit_mask = FALSE;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-
-  if (success)
-    {
-      if (layer->mask)
-        edit_mask = gimp_layer_mask_get_edit (layer->mask);
-      else
-        edit_mask = FALSE;
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_set_boolean (&return_vals->values[1], edit_mask);
-
-  return return_vals;
-}
-
-static GimpProcedure layer_get_edit_mask_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-get-edit-mask",
-  "gimp-layer-get-edit-mask",
-  "Get the edit mask setting of the specified layer.",
-  "This procedure returns the specified layer's edit mask setting. If the value is TRUE, then the layer mask for this layer is currently active, and not the layer.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_get_edit_mask_invoker } }
-};
-
-static GValueArray *
-layer_set_edit_mask_invoker (GimpProcedure     *procedure,
-                             Gimp              *gimp,
-                             GimpContext       *context,
-                             GimpProgress      *progress,
-                             const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GimpLayer *layer;
-  gboolean edit_mask;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-  edit_mask = g_value_get_boolean (&args->values[1]);
-
-  if (success)
-    {
-      if (layer->mask)
-        gimp_layer_mask_set_edit (layer->mask, edit_mask);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success);
-}
-
-static GimpProcedure layer_set_edit_mask_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-set-edit-mask",
-  "gimp-layer-set-edit-mask",
-  "Set the edit mask setting of the specified layer.",
-  "This procedure sets the specified layer's edit mask setting. This controls whether the layer or it's mask is currently active for editing. If the specified layer has no layer mask, then this procedure will return an error.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_set_edit_mask_invoker } }
-};
-
-static GValueArray *
-layer_get_opacity_invoker (GimpProcedure     *procedure,
-                           Gimp              *gimp,
-                           GimpContext       *context,
-                           GimpProgress      *progress,
-                           const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpLayer *layer;
-  gdouble opacity = 0.0;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-
-  if (success)
-    {
-      opacity = gimp_layer_get_opacity (layer) * 100.0;
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_set_double (&return_vals->values[1], opacity);
-
-  return return_vals;
-}
-
-static GimpProcedure layer_get_opacity_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-get-opacity",
-  "gimp-layer-get-opacity",
-  "Get the opacity of the specified layer.",
-  "This procedure returns the specified layer's opacity.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_get_opacity_invoker } }
-};
-
-static GValueArray *
-layer_set_opacity_invoker (GimpProcedure     *procedure,
-                           Gimp              *gimp,
-                           GimpContext       *context,
-                           GimpProgress      *progress,
-                           const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GimpLayer *layer;
-  gdouble opacity;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-  opacity = g_value_get_double (&args->values[1]);
-
-  if (success)
-    {
-      gimp_layer_set_opacity (layer, opacity / 100.0, TRUE);
-    }
-
-  return gimp_procedure_get_return_values (procedure, success);
-}
-
-static GimpProcedure layer_set_opacity_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-set-opacity",
-  "gimp-layer-set-opacity",
-  "Set the opacity of the specified layer.",
-  "This procedure sets the specified layer's opacity.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_set_opacity_invoker } }
-};
-
-static GValueArray *
-layer_get_mode_invoker (GimpProcedure     *procedure,
-                        Gimp              *gimp,
-                        GimpContext       *context,
-                        GimpProgress      *progress,
-                        const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpLayer *layer;
-  gint32 mode = 0;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-
-  if (success)
-    {
-      mode = gimp_layer_get_mode (layer);
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_set_enum (&return_vals->values[1], mode);
-
-  return return_vals;
-}
-
-static GimpProcedure layer_get_mode_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-get-mode",
-  "gimp-layer-get-mode",
-  "Get the combination mode of the specified layer.",
-  "This procedure returns the specified layer's combination mode.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_get_mode_invoker } }
-};
-
-static GValueArray *
-layer_set_mode_invoker (GimpProcedure     *procedure,
-                        Gimp              *gimp,
-                        GimpContext       *context,
-                        GimpProgress      *progress,
-                        const GValueArray *args)
-{
-  gboolean success = TRUE;
-  GimpLayer *layer;
-  gint32 mode;
-
-  layer = gimp_value_get_layer (&args->values[0], gimp);
-  mode = g_value_get_enum (&args->values[1]);
-
-  if (success)
-    {
-      gimp_layer_set_mode (layer, mode, TRUE);
-    }
-
-  return gimp_procedure_get_return_values (procedure, success);
-}
-
-static GimpProcedure layer_set_mode_proc =
-{
-  TRUE, TRUE,
-  "gimp-layer-set-mode",
-  "gimp-layer-set-mode",
-  "Set the combination mode of the specified layer.",
-  "This procedure sets the specified layer's combination mode.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { layer_set_mode_invoker } }
-};

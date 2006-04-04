@@ -32,122 +32,6 @@
 #include "plug-in/plug-in-progress.h"
 #include "plug-in/plug-in.h"
 
-static GimpProcedure progress_init_proc;
-static GimpProcedure progress_update_proc;
-static GimpProcedure progress_pulse_proc;
-static GimpProcedure progress_set_text_proc;
-static GimpProcedure progress_get_window_handle_proc;
-static GimpProcedure progress_install_proc;
-static GimpProcedure progress_uninstall_proc;
-static GimpProcedure progress_cancel_proc;
-
-void
-register_progress_procs (Gimp *gimp)
-{
-  GimpProcedure *procedure;
-
-  /*
-   * progress_init
-   */
-  procedure = gimp_procedure_init (&progress_init_proc, 2, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("message",
-                                                       "message",
-                                                       "Message to use in the progress dialog",
-                                                       FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_display_id ("gdisplay",
-                                                           "gdisplay",
-                                                           "GimpDisplay to update progressbar in, or -1 for a seperate window",
-                                                           gimp,
-                                                           GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * progress_update
-   */
-  procedure = gimp_procedure_init (&progress_update_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("percentage",
-                                                    "percentage",
-                                                    "Percentage of progress completed which must be between 0.0 and 1.0",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * progress_pulse
-   */
-  procedure = gimp_procedure_init (&progress_pulse_proc, 0, 0);
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * progress_set_text
-   */
-  procedure = gimp_procedure_init (&progress_set_text_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("message",
-                                                       "message",
-                                                       "Message to use in the progress dialog",
-                                                       FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * progress_get_window_handle
-   */
-  procedure = gimp_procedure_init (&progress_get_window_handle_proc, 0, 1);
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("window",
-                                                          "window",
-                                                          "The progress bar's toplevel window",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * progress_install
-   */
-  procedure = gimp_procedure_init (&progress_install_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("progress-callback",
-                                                       "progress callback",
-                                                       "The callback PDB proc to call",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * progress_uninstall
-   */
-  procedure = gimp_procedure_init (&progress_uninstall_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("progress-callback",
-                                                       "progress callback",
-                                                       "The name of the callback registered for this progress",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * progress_cancel
-   */
-  procedure = gimp_procedure_init (&progress_cancel_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("progress-callback",
-                                                       "progress callback",
-                                                       "The name of the callback registered for this progress",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-}
 
 static GValueArray *
 progress_init_invoker (GimpProcedure     *procedure,
@@ -177,22 +61,6 @@ progress_init_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure progress_init_proc =
-{
-  TRUE, TRUE,
-  "gimp-progress-init",
-  "gimp-progress-init",
-  "Initializes the progress bar for the current plug-in.",
-  "Initializes the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { progress_init_invoker } }
-};
-
 static GValueArray *
 progress_update_invoker (GimpProcedure     *procedure,
                          Gimp              *gimp,
@@ -219,22 +87,6 @@ progress_update_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure progress_update_proc =
-{
-  TRUE, TRUE,
-  "gimp-progress-update",
-  "gimp-progress-update",
-  "Updates the progress bar for the current plug-in.",
-  "Updates the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { progress_update_invoker } }
-};
-
 static GValueArray *
 progress_pulse_invoker (GimpProcedure     *procedure,
                         Gimp              *gimp,
@@ -252,22 +104,6 @@ progress_pulse_invoker (GimpProcedure     *procedure,
     success = FALSE;
   return gimp_procedure_get_return_values (procedure, success);
 }
-
-static GimpProcedure progress_pulse_proc =
-{
-  TRUE, TRUE,
-  "gimp-progress-pulse",
-  "gimp-progress-pulse",
-  "Pulses the progress bar for the current plug-in.",
-  "Updates the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in. Use this function instead of gimp_progress_update() if you cannot tell how much progress has been made. This usually causes the the progress bar to enter \"activity mode\", where a block bounces back and forth.",
-  "Sven Neumann <sven@gimp.org>",
-  "Sven Neumann",
-  "2005",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { progress_pulse_invoker } }
-};
 
 static GValueArray *
 progress_set_text_invoker (GimpProcedure     *procedure,
@@ -294,22 +130,6 @@ progress_set_text_invoker (GimpProcedure     *procedure,
 
   return gimp_procedure_get_return_values (procedure, success);
 }
-
-static GimpProcedure progress_set_text_proc =
-{
-  TRUE, TRUE,
-  "gimp-progress-set-text",
-  "gimp-progress-set-text",
-  "Changes the text in the progress bar for the current plug-in.",
-  "This function allows to change the text in the progress bar for the current plug-in. Unlike gimp_progress_init() it does not change the displayed value.",
-  "Sven Neumann <sven@gimp.org>",
-  "Sven Neumann",
-  "2005",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { progress_set_text_invoker } }
-};
 
 static GValueArray *
 progress_get_window_handle_invoker (GimpProcedure     *procedure,
@@ -338,22 +158,6 @@ progress_get_window_handle_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure progress_get_window_handle_proc =
-{
-  TRUE, TRUE,
-  "gimp-progress-get-window-handle",
-  "gimp-progress-get-window-handle",
-  "Returns the native window ID of the toplevel window this plug-in's progress is displayed in.",
-  "This function returns the native window ID of the toplevel window this plug-in\'s progress is displayed in.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { progress_get_window_handle_invoker } }
-};
-
 static GValueArray *
 progress_install_invoker (GimpProcedure     *procedure,
                           Gimp              *gimp,
@@ -377,22 +181,6 @@ progress_install_invoker (GimpProcedure     *procedure,
 
   return gimp_procedure_get_return_values (procedure, success);
 }
-
-static GimpProcedure progress_install_proc =
-{
-  TRUE, TRUE,
-  "gimp-progress-install",
-  "gimp-progress-install",
-  "Installs a progress callback for the current plug-in.",
-  "This function installs a temporary PDB procedure which will handle all progress calls made by this plug-in and any procedure it calls. Calling this function multiple times simply replaces the old progress callbacks.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { progress_install_invoker } }
-};
 
 static GValueArray *
 progress_uninstall_invoker (GimpProcedure     *procedure,
@@ -418,22 +206,6 @@ progress_uninstall_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure progress_uninstall_proc =
-{
-  TRUE, TRUE,
-  "gimp-progress-uninstall",
-  "gimp-progress-uninstall",
-  "Uninstalls the progress callback for the current plug-in.",
-  "This function uninstalls any progress callback installed with gimp_progress_install() before.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { progress_uninstall_invoker } }
-};
-
 static GValueArray *
 progress_cancel_invoker (GimpProcedure     *procedure,
                          Gimp              *gimp,
@@ -458,18 +230,206 @@ progress_cancel_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure progress_cancel_proc =
+void
+register_progress_procs (Gimp *gimp)
 {
-  TRUE, TRUE,
-  "gimp-progress-cancel",
-  "gimp-progress-cancel",
-  "Cancels a running progress.",
-  "This function cancels the currently running progress.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { progress_cancel_invoker } }
-};
+  GimpProcedure *procedure;
+
+  /*
+   * gimp-progress-init
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
+                             progress_init_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-progress-init",
+                                     "gimp-progress-init",
+                                     "Initializes the progress bar for the current plug-in.",
+                                     "Initializes the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("message",
+                                                       "message",
+                                                       "Message to use in the progress dialog",
+                                                       FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_display_id ("gdisplay",
+                                                           "gdisplay",
+                                                           "GimpDisplay to update progressbar in, or -1 for a seperate window",
+                                                           gimp,
+                                                           GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-progress-update
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             progress_update_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-progress-update",
+                                     "gimp-progress-update",
+                                     "Updates the progress bar for the current plug-in.",
+                                     "Updates the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("percentage",
+                                                    "percentage",
+                                                    "Percentage of progress completed which must be between 0.0 and 1.0",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-progress-pulse
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 0,
+                             progress_pulse_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-progress-pulse",
+                                     "gimp-progress-pulse",
+                                     "Pulses the progress bar for the current plug-in.",
+                                     "Updates the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in. Use this function instead of gimp_progress_update() if you cannot tell how much progress has been made. This usually causes the the progress bar to enter \"activity mode\", where a block bounces back and forth.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2005",
+                                     NULL);
+
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-progress-set-text
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             progress_set_text_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-progress-set-text",
+                                     "gimp-progress-set-text",
+                                     "Changes the text in the progress bar for the current plug-in.",
+                                     "This function allows to change the text in the progress bar for the current plug-in. Unlike gimp_progress_init() it does not change the displayed value.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2005",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("message",
+                                                       "message",
+                                                       "Message to use in the progress dialog",
+                                                       FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-progress-get-window-handle
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
+                             progress_get_window_handle_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-progress-get-window-handle",
+                                     "gimp-progress-get-window-handle",
+                                     "Returns the native window ID of the toplevel window this plug-in's progress is displayed in.",
+                                     "This function returns the native window ID of the toplevel window this plug-in\'s progress is displayed in.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("window",
+                                                          "window",
+                                                          "The progress bar's toplevel window",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-progress-install
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             progress_install_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-progress-install",
+                                     "gimp-progress-install",
+                                     "Installs a progress callback for the current plug-in.",
+                                     "This function installs a temporary PDB procedure which will handle all progress calls made by this plug-in and any procedure it calls. Calling this function multiple times simply replaces the old progress callbacks.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("progress-callback",
+                                                       "progress callback",
+                                                       "The callback PDB proc to call",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-progress-uninstall
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             progress_uninstall_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-progress-uninstall",
+                                     "gimp-progress-uninstall",
+                                     "Uninstalls the progress callback for the current plug-in.",
+                                     "This function uninstalls any progress callback installed with gimp_progress_install() before.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("progress-callback",
+                                                       "progress callback",
+                                                       "The name of the callback registered for this progress",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-progress-cancel
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             progress_cancel_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-progress-cancel",
+                                     "gimp-progress-cancel",
+                                     "Cancels a running progress.",
+                                     "This function cancels the currently running progress.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2004",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("progress-callback",
+                                                       "progress callback",
+                                                       "The name of the callback registered for this progress",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+}

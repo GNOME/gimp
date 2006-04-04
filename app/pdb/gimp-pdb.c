@@ -160,9 +160,18 @@ gimp_pdb_init_procs (Gimp *gimp)
     { "gimp-layer-set-preserve-trans",   "gimp-drawable-set-lock-alpha"    }
   };
 
+  GTimer *timer;
+
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
+  timer = g_timer_new ();
+  g_timer_start (timer);
+
   internal_procs_init (gimp);
+
+  g_printerr ("internal_procs_init took %f secs\n",
+              g_timer_elapsed (timer, NULL));
+  g_timer_destroy (timer);
 
   if (gimp->pdb_compat_mode != GIMP_PDB_COMPAT_OFF)
     {
@@ -245,7 +254,6 @@ gimp_pdb_execute (Gimp         *gimp,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (procedure_name != NULL, NULL);
-  g_return_val_if_fail (args != NULL, NULL);
 
   list = g_hash_table_lookup (gimp->procedural_ht, procedure_name);
 
@@ -259,6 +267,8 @@ gimp_pdb_execute (Gimp         *gimp,
 
       return return_vals;
     }
+
+  g_return_val_if_fail (args != NULL, NULL);
 
   for (; list; list = g_list_next (list))
     {
@@ -392,7 +402,7 @@ gimp_pdb_free_entry (gpointer key,
 {
   if (value)
     {
-      g_list_foreach (value, (GFunc) gimp_procedure_free, NULL);
+      g_list_foreach (value, (GFunc) g_object_unref, NULL);
       g_list_free (value);
     }
 }

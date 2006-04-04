@@ -81,7 +81,7 @@ HELP
 
   for (i = 3; i < proc->num_args; i++)
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))	
-      g_value_set_static_string (&new_args->values[i], "")	;
+      g_value_set_static_string (&new_args->values[i], "");
 
   return_vals = gimp_pdb_execute (gimp, context, progress,
                                   proc->name, new_args);

@@ -45,27 +45,42 @@
 #include "gimp-intl.h"
 
 
-/*  local function prototypes  */
+static void          gimp_procedure_finalize     (GObject       *object);
 
-static void   gimp_procedure_free_strings (GimpProcedure *procedure);
+static GValueArray * gimp_procedure_real_execute (GimpProcedure *procedure,
+                                                  Gimp          *gimp,
+                                                  GimpContext   *context,
+                                                  GimpProgress  *progress,
+                                                  GValueArray   *args);
+
+static void          gimp_procedure_free_strings (GimpProcedure *procedure);
 
 
-/*  public functions  */
+G_DEFINE_TYPE (GimpProcedure, gimp_procedure, GIMP_TYPE_OBJECT);
 
-GimpProcedure  *
-gimp_procedure_new (void)
+#define parent_class gimp_procedure_parent_class
+
+
+static void
+gimp_procedure_class_init (GimpProcedureClass *klass)
 {
-  GimpProcedure *procedure = g_new0 (GimpProcedure, 1);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  return procedure;
+  object_class->finalize = gimp_procedure_finalize;
+
+  klass->execute         = gimp_procedure_real_execute;
 }
 
-void
-gimp_procedure_free (GimpProcedure *procedure)
+static void
+gimp_procedure_init (GimpProcedure *procedure)
 {
-  gint i;
+}
 
-  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+static void
+gimp_procedure_finalize (GObject *object)
+{
+  GimpProcedure *procedure = GIMP_PROCEDURE (object);
+  gint           i;
 
   gimp_procedure_free_strings (procedure);
 
@@ -87,14 +102,56 @@ gimp_procedure_free (GimpProcedure *procedure)
       procedure->values = NULL;
     }
 
-  if (! procedure->static_proc)
-    g_free (procedure);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static GValueArray *
+gimp_procedure_real_execute (GimpProcedure *procedure,
+                             Gimp          *gimp,
+                             GimpContext   *context,
+                             GimpProgress  *progress,
+                             GValueArray   *args)
+{
+  switch (procedure->proc_type)
+    {
+    case GIMP_INTERNAL:
+      g_return_val_if_fail (args->n_values >= procedure->num_args, NULL);
+
+      return procedure->exec_method.internal.marshal_func (procedure,
+                                                           gimp, context,
+                                                           progress,
+                                                           args);
+
+    case GIMP_PLUGIN:
+    case GIMP_EXTENSION:
+    case GIMP_TEMPORARY:
+      return plug_in_run (gimp, context, progress, procedure,
+                          args, TRUE, FALSE, -1);
+
+    default:
+      break;
+    }
+
+  return NULL;
+}
+
+
+/*  public functions  */
+
+GimpProcedure  *
+gimp_procedure_new (void)
+{
+  GimpProcedure *procedure = g_object_new (GIMP_TYPE_PROCEDURE, NULL);
+
+  return procedure;
 }
 
 GimpProcedure *
-gimp_procedure_init (GimpProcedure *procedure,
-                     gint           n_arguments,
-                     gint           n_return_values)
+gimp_procedure_initialize (GimpProcedure   *procedure,
+                           GimpPDBProcType  proc_type,
+                           gint             n_arguments,
+                           gint             n_return_values,
+                           gpointer         exec_method)
 {
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), procedure);
   g_return_val_if_fail (procedure->args == NULL, procedure);
@@ -102,11 +159,35 @@ gimp_procedure_init (GimpProcedure *procedure,
   g_return_val_if_fail (n_arguments >= 0, procedure);
   g_return_val_if_fail (n_return_values >= 0, procedure);
 
-  procedure->num_args = n_arguments;
-  procedure->args     = g_new0 (GParamSpec *, n_arguments);
+  procedure->proc_type  = proc_type;
+
+  procedure->num_args   = n_arguments;
+  procedure->args       = g_new0 (GParamSpec *, n_arguments);
 
   procedure->num_values = n_return_values;
   procedure->values     = g_new0 (GParamSpec *, n_return_values);
+
+  if (exec_method)
+    {
+      switch (proc_type)
+        {
+        case GIMP_INTERNAL:
+          procedure->exec_method.internal.marshal_func = exec_method;
+          break;
+
+        case GIMP_PLUGIN:
+          procedure->exec_method.plug_in.filename = g_strdup (exec_method);
+          break;
+
+        case GIMP_EXTENSION:
+          procedure->exec_method.extension.filename = g_strdup (exec_method);
+          break;
+
+        case GIMP_TEMPORARY:
+          procedure->exec_method.temporary.plug_in = exec_method;
+          break;
+        }
+    }
 
   return procedure;
 }
@@ -283,27 +364,11 @@ gimp_procedure_execute (GimpProcedure *procedure,
     }
 
   /*  call the procedure  */
-  switch (procedure->proc_type)
-    {
-    case GIMP_INTERNAL:
-      g_return_val_if_fail (args->n_values >= procedure->num_args, NULL);
-
-      return_vals = procedure->exec_method.internal.marshal_func (procedure,
-                                                                  gimp, context,
-                                                                  progress,
-                                                                  args);
-      break;
-
-    case GIMP_PLUGIN:
-    case GIMP_EXTENSION:
-    case GIMP_TEMPORARY:
-      return_vals = plug_in_run (gimp, context, progress, procedure,
-                                 args, TRUE, FALSE, -1);
-      break;
-
-    default:
-      break;
-    }
+  return_vals = GIMP_PROCEDURE_GET_CLASS (procedure)->execute (procedure,
+                                                               gimp,
+                                                               context,
+                                                               progress,
+                                                               args);
 
   /*  If there are no return arguments, assume an execution error  */
   if (! return_vals)

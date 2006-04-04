@@ -20,6 +20,9 @@
 #define __GIMP_PROCEDURE_H__
 
 
+#include "core/gimpobject.h"
+
+
 /*  Execution types  */
 typedef struct _IntExec    IntExec;
 typedef struct _PlugInExec PlugInExec;
@@ -56,13 +59,21 @@ struct _TempExec
 };
 
 
-#define GIMP_IS_PROCEDURE(obj) ((obj) != NULL)
+#define GIMP_TYPE_PROCEDURE            (gimp_procedure_get_type ())
+#define GIMP_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PROCEDURE, GimpProcedure))
+#define GIMP_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PROCEDURE, GimpProcedureClass))
+#define GIMP_IS_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PROCEDURE))
+#define GIMP_IS_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PROCEDURE))
+#define GIMP_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PROCEDURE, GimpProcedureClass))
 
+
+typedef struct _GimpProcedureClass GimpProcedureClass;
 
 struct _GimpProcedure
 {
+  GimpObject   parent_instance;
+
   /*  Flags  */
-  gboolean     static_proc;    /* Is the procedure allocated?                */
   gboolean     static_strings; /* Are the procedure's strings allocated?     */
 
   /*  Procedure information  */
@@ -96,13 +107,26 @@ struct _GimpProcedure
   } exec_method;
 };
 
+struct _GimpProcedureClass
+{
+  GimpObjectClass parent_class;
+
+  GValueArray * (* execute) (GimpProcedure *procedure,
+                             Gimp          *gimp,
+                             GimpContext   *context,
+                             GimpProgress  *progress,
+                             GValueArray   *args);
+};
+
+
+GType           gimp_procedure_get_type           (void) G_GNUC_CONST;
 
 GimpProcedure * gimp_procedure_new                (void);
-void            gimp_procedure_free               (GimpProcedure    *procedure);
-
-GimpProcedure * gimp_procedure_init               (GimpProcedure    *procedure,
+GimpProcedure * gimp_procedure_initialize         (GimpProcedure    *procedure,
+                                                   GimpPDBProcType   proc_type,
                                                    gint              n_arguments,
-                                                   gint              n_return_vals);
+                                                   gint              n_return_vals,
+                                                   gpointer          exec_method);
 
 void            gimp_procedure_set_strings        (GimpProcedure    *procedure,
                                                    gchar            *name,

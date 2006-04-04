@@ -41,12 +41,225 @@
 #include "plug-in/plug-ins-query.h"
 #include "plug-in/plug-ins.h"
 
-static GimpProcedure plugins_query_proc;
-static GimpProcedure plugin_domain_register_proc;
-static GimpProcedure plugin_help_register_proc;
-static GimpProcedure plugin_menu_register_proc;
-static GimpProcedure plugin_menu_branch_register_proc;
-static GimpProcedure plugin_icon_register_proc;
+
+static GValueArray *
+plugins_query_invoker (GimpProcedure     *procedure,
+                       Gimp              *gimp,
+                       GimpContext       *context,
+                       GimpProgress      *progress,
+                       const GValueArray *args)
+{
+  GValueArray *return_vals;
+  const gchar *search_string;
+  gint32 num_plugins = 0;
+  gchar **menu_path = NULL;
+  gchar **plugin_accelerator = NULL;
+  gchar **plugin_location = NULL;
+  gchar **plugin_image_type = NULL;
+  gint32 *plugin_install_time = NULL;
+  gchar **plugin_real_name = NULL;
+
+  search_string = g_value_get_string (&args->values[0]);
+
+  num_plugins = plug_ins_query (gimp, search_string,
+                                &menu_path,
+                                &plugin_accelerator,
+                                &plugin_location,
+                                &plugin_image_type,
+                                &plugin_real_name,
+                                &plugin_install_time);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
+
+  g_value_set_int (&return_vals->values[1], num_plugins);
+  gimp_value_take_stringarray (&return_vals->values[2], menu_path, num_plugins);
+  g_value_set_int (&return_vals->values[3], num_plugins);
+  gimp_value_take_stringarray (&return_vals->values[4], plugin_accelerator, num_plugins);
+  g_value_set_int (&return_vals->values[5], num_plugins);
+  gimp_value_take_stringarray (&return_vals->values[6], plugin_location, num_plugins);
+  g_value_set_int (&return_vals->values[7], num_plugins);
+  gimp_value_take_stringarray (&return_vals->values[8], plugin_image_type, num_plugins);
+  g_value_set_int (&return_vals->values[9], num_plugins);
+  gimp_value_take_int32array (&return_vals->values[10], plugin_install_time, num_plugins);
+  g_value_set_int (&return_vals->values[11], num_plugins);
+  gimp_value_take_stringarray (&return_vals->values[12], plugin_real_name, num_plugins);
+
+  return return_vals;
+}
+
+static GValueArray *
+plugin_domain_register_invoker (GimpProcedure     *procedure,
+                                Gimp              *gimp,
+                                GimpContext       *context,
+                                GimpProgress      *progress,
+                                const GValueArray *args)
+{
+  gboolean success = TRUE;
+  const gchar *domain_name;
+  const gchar *domain_path;
+
+  domain_name = g_value_get_string (&args->values[0]);
+  domain_path = g_value_get_string (&args->values[1]);
+
+  if (success)
+    {
+      if (gimp->current_plug_in && gimp->current_plug_in->query)
+        {
+          plug_in_def_set_locale_domain_name (gimp->current_plug_in->plug_in_def,
+                                              domain_name);
+          plug_in_def_set_locale_domain_path (gimp->current_plug_in->plug_in_def,
+                                              domain_path);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+plugin_help_register_invoker (GimpProcedure     *procedure,
+                              Gimp              *gimp,
+                              GimpContext       *context,
+                              GimpProgress      *progress,
+                              const GValueArray *args)
+{
+  gboolean success = TRUE;
+  const gchar *domain_name;
+  const gchar *domain_uri;
+
+  domain_name = g_value_get_string (&args->values[0]);
+  domain_uri = g_value_get_string (&args->values[1]);
+
+  if (success)
+    {
+      if (gimp->current_plug_in && gimp->current_plug_in->query)
+        {
+          plug_in_def_set_help_domain_name (gimp->current_plug_in->plug_in_def,
+                                            domain_name);
+          plug_in_def_set_help_domain_uri (gimp->current_plug_in->plug_in_def,
+                                           domain_uri);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+plugin_menu_register_invoker (GimpProcedure     *procedure,
+                              Gimp              *gimp,
+                              GimpContext       *context,
+                              GimpProgress      *progress,
+                              const GValueArray *args)
+{
+  gboolean success = TRUE;
+  const gchar *procedure_name;
+  const gchar *menu_path;
+
+  procedure_name = g_value_get_string (&args->values[0]);
+  menu_path = g_value_get_string (&args->values[1]);
+
+  if (success)
+    {
+      if (gimp->current_plug_in)
+        {
+          gchar *canonical = gimp_canonicalize_identifier (procedure_name);
+
+          success = plug_in_menu_register (gimp->current_plug_in,
+                                           canonical, menu_path);
+          g_free (canonical);
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+plugin_menu_branch_register_invoker (GimpProcedure     *procedure,
+                                     Gimp              *gimp,
+                                     GimpContext       *context,
+                                     GimpProgress      *progress,
+                                     const GValueArray *args)
+{
+  gboolean success = TRUE;
+  const gchar *menu_path;
+  const gchar *menu_name;
+
+  menu_path = g_value_get_string (&args->values[0]);
+  menu_name = g_value_get_string (&args->values[1]);
+
+  if (success)
+    {
+      if (gimp->current_plug_in)
+        {
+          plug_ins_menu_branch_add (gimp, gimp->current_plug_in->prog,
+                                    menu_path, menu_name);
+
+          if (! gimp->no_interface)
+            {
+              gimp_menus_create_branch (gimp, gimp->current_plug_in->prog,
+                                        menu_path, menu_name);
+            }
+          else
+            success = FALSE;
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+plugin_icon_register_invoker (GimpProcedure     *procedure,
+                              Gimp              *gimp,
+                              GimpContext       *context,
+                              GimpProgress      *progress,
+                              const GValueArray *args)
+{
+  gboolean success = TRUE;
+  const gchar *procedure_name;
+  gint32 icon_type;
+  gint32 icon_data_length;
+  const guint8 *icon_data;
+
+  procedure_name = g_value_get_string (&args->values[0]);
+  icon_type = g_value_get_enum (&args->values[1]);
+  icon_data_length = g_value_get_int (&args->values[2]);
+  icon_data = gimp_value_get_int8array (&args->values[3]);
+
+  if (success)
+    {
+      if (gimp->current_plug_in && gimp->current_plug_in->query)
+        {
+          PlugInProcDef *proc_def;
+          gchar         *canonical;
+
+          canonical = gimp_canonicalize_identifier (procedure_name);
+
+          proc_def = plug_in_proc_def_find (gimp->current_plug_in->plug_in_def->proc_defs,
+                                            canonical);
+
+          g_free (canonical);
+
+          if (proc_def)
+            plug_in_proc_def_set_icon (proc_def, icon_type,
+                                       icon_data, icon_data_length);
+          else
+            success = FALSE;
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
 
 void
 register_plug_in_procs (Gimp *gimp)
@@ -54,9 +267,21 @@ register_plug_in_procs (Gimp *gimp)
   GimpProcedure *procedure;
 
   /*
-   * plugins_query
+   * gimp-plugins-query
    */
-  procedure = gimp_procedure_init (&plugins_query_proc, 1, 12);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 12,
+                             plugins_query_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-plugins-query",
+                                     "gimp-plugins-query",
+                                     "Queries the plugin database for its contents.",
+                                     "This procedure queries the contents of the plugin database.",
+                                     "Andy Thomas",
+                                     "Andy Thomas",
+                                     "1998",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("search-string",
                                                        "search string",
@@ -133,9 +358,21 @@ register_plug_in_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * plugin_domain_register
+   * gimp-plugin-domain-register
    */
-  procedure = gimp_procedure_init (&plugin_domain_register_proc, 2, 0);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
+                             plugin_domain_register_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-plugin-domain-register",
+                                     "gimp-plugin-domain-register",
+                                     "Registers a textdomain for localisation.",
+                                     "This procedure adds a textdomain to the list of domains Gimp searches for strings when translating its menu entries. There is no need to call this function for plug-ins that have their strings included in the gimp-std-plugins domain as that is used by default. If the compiled message catalog is not in the standard location, you may specify an absolute path to another location. This procedure can only be called in the query function of a plug-in and it has to be called before any procedure is installed.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2000",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("domain-name",
                                                        "domain name",
@@ -153,9 +390,21 @@ register_plug_in_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * plugin_help_register
+   * gimp-plugin-help-register
    */
-  procedure = gimp_procedure_init (&plugin_help_register_proc, 2, 0);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
+                             plugin_help_register_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-plugin-help-register",
+                                     "gimp-plugin-help-register",
+                                     "Register a help path for a plug-in.",
+                                     "This procedure changes the help rootdir for the plug-in which calls it. All subsequent calls of gimp_help from this plug-in will be interpreted relative to this rootdir.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2000",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("domain-name",
                                                        "domain name",
@@ -173,9 +422,21 @@ register_plug_in_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * plugin_menu_register
+   * gimp-plugin-menu-register
    */
-  procedure = gimp_procedure_init (&plugin_menu_register_proc, 2, 0);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
+                             plugin_menu_register_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-plugin-menu-register",
+                                     "gimp-plugin-menu-register",
+                                     "Register an additional menu path for a plug-in procedure.",
+                                     "This procedure installs an additional menu entry for the given procedure.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2004",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -193,9 +454,21 @@ register_plug_in_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * plugin_menu_branch_register
+   * gimp-plugin-menu-branch-register
    */
-  procedure = gimp_procedure_init (&plugin_menu_branch_register_proc, 2, 0);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
+                             plugin_menu_branch_register_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-plugin-menu-branch-register",
+                                     "gimp-plugin-menu-branch-register",
+                                     "Register a sub-menu.",
+                                     "This procedure installs an sub-menu which does not belong to any procedure.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2005",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("menu-path",
                                                        "menu path",
@@ -213,9 +486,21 @@ register_plug_in_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
   /*
-   * plugin_icon_register
+   * gimp-plugin-icon-register
    */
-  procedure = gimp_procedure_init (&plugin_icon_register_proc, 4, 0);
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 4, 0,
+                             plugin_icon_register_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-plugin-icon-register",
+                                     "gimp-plugin-icon-register",
+                                     "Register an icon for a plug-in procedure.",
+                                     "This procedure installs an icon for the given procedure.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2004",
+                                     NULL);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -244,318 +529,3 @@ register_plug_in_procs (Gimp *gimp)
   gimp_pdb_register (gimp, procedure);
 
 }
-
-static GValueArray *
-plugins_query_invoker (GimpProcedure     *procedure,
-                       Gimp              *gimp,
-                       GimpContext       *context,
-                       GimpProgress      *progress,
-                       const GValueArray *args)
-{
-  GValueArray *return_vals;
-  const gchar *search_string;
-  gint32 num_plugins = 0;
-  gchar **menu_path = NULL;
-  gchar **plugin_accelerator = NULL;
-  gchar **plugin_location = NULL;
-  gchar **plugin_image_type = NULL;
-  gint32 *plugin_install_time = NULL;
-  gchar **plugin_real_name = NULL;
-
-  search_string = g_value_get_string (&args->values[0]);
-
-  num_plugins = plug_ins_query (gimp, search_string,
-                                &menu_path,
-                                &plugin_accelerator,
-                                &plugin_location,
-                                &plugin_image_type,
-                                &plugin_real_name,
-                                &plugin_install_time);
-
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
-
-  g_value_set_int (&return_vals->values[1], num_plugins);
-  gimp_value_take_stringarray (&return_vals->values[2], menu_path, num_plugins);
-  g_value_set_int (&return_vals->values[3], num_plugins);
-  gimp_value_take_stringarray (&return_vals->values[4], plugin_accelerator, num_plugins);
-  g_value_set_int (&return_vals->values[5], num_plugins);
-  gimp_value_take_stringarray (&return_vals->values[6], plugin_location, num_plugins);
-  g_value_set_int (&return_vals->values[7], num_plugins);
-  gimp_value_take_stringarray (&return_vals->values[8], plugin_image_type, num_plugins);
-  g_value_set_int (&return_vals->values[9], num_plugins);
-  gimp_value_take_int32array (&return_vals->values[10], plugin_install_time, num_plugins);
-  g_value_set_int (&return_vals->values[11], num_plugins);
-  gimp_value_take_stringarray (&return_vals->values[12], plugin_real_name, num_plugins);
-
-  return return_vals;
-}
-
-static GimpProcedure plugins_query_proc =
-{
-  TRUE, TRUE,
-  "gimp-plugins-query",
-  "gimp-plugins-query",
-  "Queries the plugin database for its contents.",
-  "This procedure queries the contents of the plugin database.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1998",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { plugins_query_invoker } }
-};
-
-static GValueArray *
-plugin_domain_register_invoker (GimpProcedure     *procedure,
-                                Gimp              *gimp,
-                                GimpContext       *context,
-                                GimpProgress      *progress,
-                                const GValueArray *args)
-{
-  gboolean success = TRUE;
-  const gchar *domain_name;
-  const gchar *domain_path;
-
-  domain_name = g_value_get_string (&args->values[0]);
-  domain_path = g_value_get_string (&args->values[1]);
-
-  if (success)
-    {
-      if (gimp->current_plug_in && gimp->current_plug_in->query)
-        {
-          plug_in_def_set_locale_domain_name (gimp->current_plug_in->plug_in_def,
-                                              domain_name);
-          plug_in_def_set_locale_domain_path (gimp->current_plug_in->plug_in_def,
-                                              domain_path);
-        }
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success);
-}
-
-static GimpProcedure plugin_domain_register_proc =
-{
-  TRUE, TRUE,
-  "gimp-plugin-domain-register",
-  "gimp-plugin-domain-register",
-  "Registers a textdomain for localisation.",
-  "This procedure adds a textdomain to the list of domains Gimp searches for strings when translating its menu entries. There is no need to call this function for plug-ins that have their strings included in the gimp-std-plugins domain as that is used by default. If the compiled message catalog is not in the standard location, you may specify an absolute path to another location. This procedure can only be called in the query function of a plug-in and it has to be called before any procedure is installed.",
-  "Sven Neumann <sven@gimp.org>",
-  "Sven Neumann",
-  "2000",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { plugin_domain_register_invoker } }
-};
-
-static GValueArray *
-plugin_help_register_invoker (GimpProcedure     *procedure,
-                              Gimp              *gimp,
-                              GimpContext       *context,
-                              GimpProgress      *progress,
-                              const GValueArray *args)
-{
-  gboolean success = TRUE;
-  const gchar *domain_name;
-  const gchar *domain_uri;
-
-  domain_name = g_value_get_string (&args->values[0]);
-  domain_uri = g_value_get_string (&args->values[1]);
-
-  if (success)
-    {
-      if (gimp->current_plug_in && gimp->current_plug_in->query)
-        {
-          plug_in_def_set_help_domain_name (gimp->current_plug_in->plug_in_def,
-                                            domain_name);
-          plug_in_def_set_help_domain_uri (gimp->current_plug_in->plug_in_def,
-                                           domain_uri);
-        }
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success);
-}
-
-static GimpProcedure plugin_help_register_proc =
-{
-  TRUE, TRUE,
-  "gimp-plugin-help-register",
-  "gimp-plugin-help-register",
-  "Register a help path for a plug-in.",
-  "This procedure changes the help rootdir for the plug-in which calls it. All subsequent calls of gimp_help from this plug-in will be interpreted relative to this rootdir.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "2000",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { plugin_help_register_invoker } }
-};
-
-static GValueArray *
-plugin_menu_register_invoker (GimpProcedure     *procedure,
-                              Gimp              *gimp,
-                              GimpContext       *context,
-                              GimpProgress      *progress,
-                              const GValueArray *args)
-{
-  gboolean success = TRUE;
-  const gchar *procedure_name;
-  const gchar *menu_path;
-
-  procedure_name = g_value_get_string (&args->values[0]);
-  menu_path = g_value_get_string (&args->values[1]);
-
-  if (success)
-    {
-      if (gimp->current_plug_in)
-        {
-          gchar *canonical = gimp_canonicalize_identifier (procedure_name);
-
-          success = plug_in_menu_register (gimp->current_plug_in,
-                                           canonical, menu_path);
-          g_free (canonical);
-        }
-      else
-        {
-          success = FALSE;
-        }
-    }
-
-  return gimp_procedure_get_return_values (procedure, success);
-}
-
-static GimpProcedure plugin_menu_register_proc =
-{
-  TRUE, TRUE,
-  "gimp-plugin-menu-register",
-  "gimp-plugin-menu-register",
-  "Register an additional menu path for a plug-in procedure.",
-  "This procedure installs an additional menu entry for the given procedure.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { plugin_menu_register_invoker } }
-};
-
-static GValueArray *
-plugin_menu_branch_register_invoker (GimpProcedure     *procedure,
-                                     Gimp              *gimp,
-                                     GimpContext       *context,
-                                     GimpProgress      *progress,
-                                     const GValueArray *args)
-{
-  gboolean success = TRUE;
-  const gchar *menu_path;
-  const gchar *menu_name;
-
-  menu_path = g_value_get_string (&args->values[0]);
-  menu_name = g_value_get_string (&args->values[1]);
-
-  if (success)
-    {
-      if (gimp->current_plug_in)
-        {
-          plug_ins_menu_branch_add (gimp, gimp->current_plug_in->prog,
-                                    menu_path, menu_name);
-
-          if (! gimp->no_interface)
-            {
-              gimp_menus_create_branch (gimp, gimp->current_plug_in->prog,
-                                        menu_path, menu_name);
-            }
-          else
-            success = FALSE;
-        }
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success);
-}
-
-static GimpProcedure plugin_menu_branch_register_proc =
-{
-  TRUE, TRUE,
-  "gimp-plugin-menu-branch-register",
-  "gimp-plugin-menu-branch-register",
-  "Register a sub-menu.",
-  "This procedure installs an sub-menu which does not belong to any procedure.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "2005",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { plugin_menu_branch_register_invoker } }
-};
-
-static GValueArray *
-plugin_icon_register_invoker (GimpProcedure     *procedure,
-                              Gimp              *gimp,
-                              GimpContext       *context,
-                              GimpProgress      *progress,
-                              const GValueArray *args)
-{
-  gboolean success = TRUE;
-  const gchar *procedure_name;
-  gint32 icon_type;
-  gint32 icon_data_length;
-  const guint8 *icon_data;
-
-  procedure_name = g_value_get_string (&args->values[0]);
-  icon_type = g_value_get_enum (&args->values[1]);
-  icon_data_length = g_value_get_int (&args->values[2]);
-  icon_data = gimp_value_get_int8array (&args->values[3]);
-
-  if (success)
-    {
-      if (gimp->current_plug_in && gimp->current_plug_in->query)
-        {
-          PlugInProcDef *proc_def;
-          gchar         *canonical;
-
-          canonical = gimp_canonicalize_identifier (procedure_name);
-
-          proc_def = plug_in_proc_def_find (gimp->current_plug_in->plug_in_def->proc_defs,
-                                            canonical);
-
-          g_free (canonical);
-
-          if (proc_def)
-            plug_in_proc_def_set_icon (proc_def, icon_type,
-                                       icon_data, icon_data_length);
-          else
-            success = FALSE;
-        }
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success);
-}
-
-static GimpProcedure plugin_icon_register_proc =
-{
-  TRUE, TRUE,
-  "gimp-plugin-icon-register",
-  "gimp-plugin-icon-register",
-  "Register an icon for a plug-in procedure.",
-  "This procedure installs an icon for the given procedure.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "2004",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { plugin_icon_register_invoker } }
-};

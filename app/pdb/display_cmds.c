@@ -32,90 +32,6 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 
-static GimpProcedure display_new_proc;
-static GimpProcedure display_delete_proc;
-static GimpProcedure display_get_window_handle_proc;
-static GimpProcedure displays_flush_proc;
-static GimpProcedure displays_reconnect_proc;
-
-void
-register_display_procs (Gimp *gimp)
-{
-  GimpProcedure *procedure;
-
-  /*
-   * display_new
-   */
-  procedure = gimp_procedure_init (&display_new_proc, 1, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         gimp,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_display_id ("display",
-                                                               "display",
-                                                               "The new display",
-                                                               gimp,
-                                                               GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * display_delete
-   */
-  procedure = gimp_procedure_init (&display_delete_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_display_id ("display",
-                                                           "display",
-                                                           "The display to delete",
-                                                           gimp,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * display_get_window_handle
-   */
-  procedure = gimp_procedure_init (&display_get_window_handle_proc, 1, 1);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_display_id ("display",
-                                                           "display",
-                                                           "The display to get the window handle from",
-                                                           gimp,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("window",
-                                                          "window",
-                                                          "The native window handle or 0",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * displays_flush
-   */
-  procedure = gimp_procedure_init (&displays_flush_proc, 0, 0);
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * displays_reconnect
-   */
-  procedure = gimp_procedure_init (&displays_reconnect_proc, 2, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("old-image",
-                                                         "old image",
-                                                         "The old image (must have at least one display)",
-                                                         gimp,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("new-image",
-                                                         "new image",
-                                                         "The new image (must not have a display)",
-                                                         gimp,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-}
 
 static GValueArray *
 display_new_invoker (GimpProcedure     *procedure,
@@ -153,22 +69,6 @@ display_new_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure display_new_proc =
-{
-  TRUE, TRUE,
-  "gimp-display-new",
-  "gimp-display-new",
-  "Create a new display for the specified image.",
-  "Creates a new display for the specified image. If the image already has a display, another is added. Multiple displays are handled transparently by the GIMP. The newly created display is returned and can be subsequently destroyed with a call to 'gimp-display-delete'. This procedure only makes sense for use with the GIMP UI.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { display_new_invoker } }
-};
-
 static GValueArray *
 display_delete_invoker (GimpProcedure     *procedure,
                         Gimp              *gimp,
@@ -188,22 +88,6 @@ display_delete_invoker (GimpProcedure     *procedure,
 
   return gimp_procedure_get_return_values (procedure, success);
 }
-
-static GimpProcedure display_delete_proc =
-{
-  TRUE, TRUE,
-  "gimp-display-delete",
-  "gimp-display-delete",
-  "Delete the specified display.",
-  "This procedure removes the specified display. If this is the last remaining display for the underlying image, then the image is deleted also.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { display_delete_invoker } }
-};
 
 static GValueArray *
 display_get_window_handle_invoker (GimpProcedure     *procedure,
@@ -232,22 +116,6 @@ display_get_window_handle_invoker (GimpProcedure     *procedure,
   return return_vals;
 }
 
-static GimpProcedure display_get_window_handle_proc =
-{
-  TRUE, TRUE,
-  "gimp-display-get-window-handle",
-  "gimp-display-get-window-handle",
-  "Get a handle to the native window for an image display.",
-  "This procedure returns a handle to the native window for a given image display. For example in the X backend of GDK, a native window handle is an Xlib XID. A value of 0 is returned for an invalid display or if this function is unimplemented for the windowing system that is being used.",
-  "Sven Neumann <sven@gimp.org>",
-  "Sven Neumann",
-  "2005",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { display_get_window_handle_invoker } }
-};
-
 static GValueArray *
 displays_flush_invoker (GimpProcedure     *procedure,
                         Gimp              *gimp,
@@ -258,22 +126,6 @@ displays_flush_invoker (GimpProcedure     *procedure,
   gimp_container_foreach (gimp->images, (GFunc) gimp_image_flush, NULL);
   return gimp_procedure_get_return_values (procedure, TRUE);
 }
-
-static GimpProcedure displays_flush_proc =
-{
-  TRUE, TRUE,
-  "gimp-displays-flush",
-  "gimp-displays-flush",
-  "Flush all internal changes to the user interface",
-  "This procedure takes no arguments and returns nothing except a success status. Its purpose is to flush all pending updates of image manipulations to the user interface. It should be called whenever appropriate.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { displays_flush_invoker } }
-};
 
 static GValueArray *
 displays_reconnect_invoker (GimpProcedure     *procedure,
@@ -308,18 +160,141 @@ displays_reconnect_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure displays_reconnect_proc =
+void
+register_display_procs (Gimp *gimp)
 {
-  TRUE, TRUE,
-  "gimp-displays-reconnect",
-  "gimp-displays-reconnect",
-  "Reconnect displays from one image to another image.",
-  "This procedure connects all displays of the old_image to the new_image. If the old_image has no display or new_image already has a display the reconnect is not performed and the procedure returns without success. You should rarely need to use this function.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { displays_reconnect_invoker } }
-};
+  GimpProcedure *procedure;
+
+  /*
+   * gimp-display-new
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             display_new_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-display-new",
+                                     "gimp-display-new",
+                                     "Create a new display for the specified image.",
+                                     "Creates a new display for the specified image. If the image already has a display, another is added. Multiple displays are handled transparently by the GIMP. The newly created display is returned and can be subsequently destroyed with a call to 'gimp-display-delete'. This procedure only makes sense for use with the GIMP UI.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_display_id ("display",
+                                                               "display",
+                                                               "The new display",
+                                                               gimp,
+                                                               GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-display-delete
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             display_delete_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-display-delete",
+                                     "gimp-display-delete",
+                                     "Delete the specified display.",
+                                     "This procedure removes the specified display. If this is the last remaining display for the underlying image, then the image is deleted also.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_display_id ("display",
+                                                           "display",
+                                                           "The display to delete",
+                                                           gimp,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-display-get-window-handle
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
+                             display_get_window_handle_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-display-get-window-handle",
+                                     "gimp-display-get-window-handle",
+                                     "Get a handle to the native window for an image display.",
+                                     "This procedure returns a handle to the native window for a given image display. For example in the X backend of GDK, a native window handle is an Xlib XID. A value of 0 is returned for an invalid display or if this function is unimplemented for the windowing system that is being used.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2005",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_display_id ("display",
+                                                           "display",
+                                                           "The display to get the window handle from",
+                                                           gimp,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("window",
+                                                          "window",
+                                                          "The native window handle or 0",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-displays-flush
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 0,
+                             displays_flush_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-displays-flush",
+                                     "gimp-displays-flush",
+                                     "Flush all internal changes to the user interface",
+                                     "This procedure takes no arguments and returns nothing except a success status. Its purpose is to flush all pending updates of image manipulations to the user interface. It should be called whenever appropriate.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-displays-reconnect
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
+                             displays_reconnect_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-displays-reconnect",
+                                     "gimp-displays-reconnect",
+                                     "Reconnect displays from one image to another image.",
+                                     "This procedure connects all displays of the old_image to the new_image. If the old_image has no display or new_image already has a display the reconnect is not performed and the procedure returns without success. You should rarely need to use this function.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("old-image",
+                                                         "old image",
+                                                         "The old image (must have at least one display)",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("new-image",
+                                                         "new image",
+                                                         "The new image (must not have a display)",
+                                                         gimp,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+}

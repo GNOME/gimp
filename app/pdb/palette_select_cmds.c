@@ -31,76 +31,6 @@
 #include "core/gimp.h"
 #include "core/gimpdatafactory.h"
 
-static GimpProcedure palettes_popup_proc;
-static GimpProcedure palettes_close_popup_proc;
-static GimpProcedure palettes_set_popup_proc;
-
-void
-register_palette_select_procs (Gimp *gimp)
-{
-  GimpProcedure *procedure;
-
-  /*
-   * palettes_popup
-   */
-  procedure = gimp_procedure_init (&palettes_popup_proc, 3, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("palette-callback",
-                                                       "palette callback",
-                                                       "The callback PDB proc to call when palette selection is made",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("popup-title",
-                                                       "popup title",
-                                                       "Title to give the palette popup window",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("initial-palette",
-                                                       "initial palette",
-                                                       "The name of the palette to set as the first selected",
-                                                       FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * palettes_close_popup
-   */
-  procedure = gimp_procedure_init (&palettes_close_popup_proc, 1, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("palette-callback",
-                                                       "palette callback",
-                                                       "The name of the callback registered for this popup",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-  /*
-   * palettes_set_popup
-   */
-  procedure = gimp_procedure_init (&palettes_set_popup_proc, 2, 0);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("palette-callback",
-                                                       "palette callback",
-                                                       "The name of the callback registered for this popup",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("palette-name",
-                                                       "palette name",
-                                                       "The name of the palette to set as selected",
-                                                       FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-
-}
 
 static GValueArray *
 palettes_popup_invoker (GimpProcedure     *procedure,
@@ -131,22 +61,6 @@ palettes_popup_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure palettes_popup_proc =
-{
-  TRUE, TRUE,
-  "gimp-palettes-popup",
-  "gimp-palettes-popup",
-  "Invokes the Gimp palette selection.",
-  "This procedure popups the palette selection dialog.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "2002",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { palettes_popup_invoker } }
-};
-
 static GValueArray *
 palettes_close_popup_invoker (GimpProcedure     *procedure,
                               Gimp              *gimp,
@@ -170,22 +84,6 @@ palettes_close_popup_invoker (GimpProcedure     *procedure,
 
   return gimp_procedure_get_return_values (procedure, success);
 }
-
-static GimpProcedure palettes_close_popup_proc =
-{
-  TRUE, TRUE,
-  "gimp-palettes-close-popup",
-  "gimp-palettes-close-popup",
-  "Popdown the Gimp palette selection.",
-  "This procedure closes an opened palette selection dialog.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "2002",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { palettes_close_popup_invoker } }
-};
 
 static GValueArray *
 palettes_set_popup_invoker (GimpProcedure     *procedure,
@@ -214,18 +112,105 @@ palettes_set_popup_invoker (GimpProcedure     *procedure,
   return gimp_procedure_get_return_values (procedure, success);
 }
 
-static GimpProcedure palettes_set_popup_proc =
+void
+register_palette_select_procs (Gimp *gimp)
 {
-  TRUE, TRUE,
-  "gimp-palettes-set-popup",
-  "gimp-palettes-set-popup",
-  "Sets the current palette selection in a popup.",
-  "Sets the current palette selection in a popup.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "2002",
-  NULL,
-  GIMP_INTERNAL,
-  0, NULL, 0, NULL,
-  { { palettes_set_popup_invoker } }
-};
+  GimpProcedure *procedure;
+
+  /*
+   * gimp-palettes-popup
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
+                             palettes_popup_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-palettes-popup",
+                                     "gimp-palettes-popup",
+                                     "Invokes the Gimp palette selection.",
+                                     "This procedure popups the palette selection dialog.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2002",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("palette-callback",
+                                                       "palette callback",
+                                                       "The callback PDB proc to call when palette selection is made",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("popup-title",
+                                                       "popup title",
+                                                       "Title to give the palette popup window",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("initial-palette",
+                                                       "initial palette",
+                                                       "The name of the palette to set as the first selected",
+                                                       FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-palettes-close-popup
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
+                             palettes_close_popup_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-palettes-close-popup",
+                                     "gimp-palettes-close-popup",
+                                     "Popdown the Gimp palette selection.",
+                                     "This procedure closes an opened palette selection dialog.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2002",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("palette-callback",
+                                                       "palette callback",
+                                                       "The name of the callback registered for this popup",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+  /*
+   * gimp-palettes-set-popup
+   */
+  procedure = gimp_procedure_new ();
+  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
+                             palettes_set_popup_invoker);
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-palettes-set-popup",
+                                     "gimp-palettes-set-popup",
+                                     "Sets the current palette selection in a popup.",
+                                     "Sets the current palette selection in a popup.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2002",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("palette-callback",
+                                                       "palette callback",
+                                                       "The name of the callback registered for this popup",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("palette-name",
+                                                       "palette name",
+                                                       "The name of the palette to set as selected",
+                                                       FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+
+}
