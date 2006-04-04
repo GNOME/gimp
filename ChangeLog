@@ -1,5 +1,10 @@
 2006-04-04  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/gifload.c (ReadImage): update the progress text
+	to show the frame number when loading multi-frame GIFs.
+
+2006-04-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/pdb/pdb-types.h
 	* app/pdb/gimpargument.[ch]: removed struct GimpArgument, struct
 	GimpArgumentSpec, gimp_argument_init() and

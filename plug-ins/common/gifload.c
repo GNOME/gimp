@@ -842,7 +842,7 @@ ReadImage (FILE        *fd,
       return -1;
     }
 
-  if (frame_number == 1 )
+  if (frame_number == 1)
     {
       /* Guard against bogus logical screen size values */
       if (screenwidth == 0)
@@ -889,18 +889,21 @@ ReadImage (FILE        *fd,
     }
   else /* NOT FIRST FRAME */
     {
+      gimp_progress_set_text_printf (_("Opening '%s' (frame %d)"),
+                                     gimp_filename_to_utf8 (filename),
+                                     frame_number);
+
       /* If the colourmap is now different, we have to promote to
 	 RGB! */
       if (!promote_to_rgb)
 	{
-	  for (i=0;i<ncols;i++)
+	  for (i = 0; i < ncols; i++)
 	    {
-	      if (
-		  (used_cmap[0][i] != cmap[0][i]) ||
+	      if ((used_cmap[0][i] != cmap[0][i]) ||
 		  (used_cmap[1][i] != cmap[1][i]) ||
-		  (used_cmap[2][i] != cmap[2][i])
-		  )
-		{ /* Everything is RGB(A) from now on... sigh. */
+		  (used_cmap[2][i] != cmap[2][i]))
+		{
+                  /* Everything is RGB(A) from now on... sigh. */
 		  promote_to_rgb = TRUE;
 
 		  /* Promote everything we have so far into RGB(A) */
