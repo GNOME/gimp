@@ -218,7 +218,7 @@ gimp_container_tree_view_drag_leave (GtkWidget             *widget,
       tree_view->scroll_timeout_id = 0;
     }
 
-  gtk_tree_view_unset_rows_drag_dest (tree_view->view);
+  gtk_tree_view_set_drag_dest_row (tree_view->view, NULL, 0);
 }
 
 gboolean
@@ -276,7 +276,7 @@ gimp_container_tree_view_drag_motion (GtkWidget             *widget,
     }
   else
     {
-      gtk_tree_view_unset_rows_drag_dest (tree_view->view);
+      gtk_tree_view_set_drag_dest_row (tree_view->view, NULL, 0);
     }
 
   /*  always return TRUE so drag_leave() is called  */
