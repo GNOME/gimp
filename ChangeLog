@@ -1,3 +1,8 @@
+2006-04-04  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimpfont.c: moved new code to a utility function. Avoid
+	use of deprecated Pango API. Removed tabs and trailing whitespace.
+
 2006-04-04  Tor Lillqvist  <tml@novell.com>
 
 	* app/text/gimpfont.c (gimp_font_get_new_preview): Provide
