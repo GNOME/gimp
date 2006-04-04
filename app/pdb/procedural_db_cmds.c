@@ -26,14 +26,14 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
 #include "gimp-pdb-compat.h"
+#include "gimp-pdb-query.h"
 #include "plug-in/plug-in-data.h"
-#include "procedural-db-query.h"
 
 static GimpProcedure procedural_db_temp_name_proc;
 static GimpProcedure procedural_db_dump_proc;
@@ -61,7 +61,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * procedural_db_dump
@@ -74,7 +74,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                        TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * procedural_db_query
@@ -140,7 +140,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                                  "procedure names",
                                                                  "The list of procedure names",
                                                                  GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * procedural_db_proc_info
@@ -207,7 +207,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                           "The number of return values",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * procedural_db_proc_arg
@@ -249,7 +249,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * procedural_db_proc_val
@@ -291,7 +291,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * procedural_db_get_data
@@ -315,7 +315,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                                "data",
                                                                "A byte array containing data",
                                                                GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * procedural_db_get_data_size
@@ -334,7 +334,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                           "The number of bytes in the data",
                                                           1, G_MAXINT32, 1,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * procedural_db_set_data
@@ -358,7 +358,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                            "data",
                                                            "A byte array containing data",
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 
@@ -412,7 +412,7 @@ procedural_db_dump_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      success = procedural_db_dump (gimp, filename);
+      success = gimp_pdb_dump (gimp, filename);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -463,10 +463,10 @@ procedural_db_query_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      success = procedural_db_query (gimp,
-                                     name, blurb, help, author,
-                                     copyright, date, proc_type,
-                                     &num_matches, &procedure_names);
+      success = gimp_pdb_query (gimp,
+                                name, blurb, help, author,
+                                copyright, date, proc_type,
+                                &num_matches, &procedure_names);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);
@@ -524,10 +524,10 @@ procedural_db_proc_info_invoker (GimpProcedure     *procedure,
 
       canonical = gimp_canonicalize_identifier (procedure_name);
 
-      success = procedural_db_proc_info (gimp, canonical,
-                                         &blurb, &help, &author,
-                                         &copyright, &date, &ptype,
-                                         &num_args, &num_values);
+      success = gimp_pdb_proc_info (gimp, canonical,
+                                    &blurb, &help, &author,
+                                    &copyright, &date, &ptype,
+                                    &num_args, &num_values);
       proc_type = ptype;
 
       g_free (canonical);
@@ -591,7 +591,7 @@ procedural_db_proc_arg_invoker (GimpProcedure     *procedure,
 
       canonical = gimp_canonicalize_identifier (procedure_name);
 
-      proc = procedural_db_lookup (gimp, canonical);
+      proc = gimp_pdb_lookup (gimp, canonical);
 
       if (! proc)
         {
@@ -600,7 +600,7 @@ procedural_db_proc_arg_invoker (GimpProcedure     *procedure,
           compat_name = g_hash_table_lookup (gimp->procedural_compat_ht, canonical);
 
           if (compat_name)
-            proc = procedural_db_lookup (gimp, compat_name);
+            proc = gimp_pdb_lookup (gimp, compat_name);
         }
 
       g_free (canonical);
@@ -670,7 +670,7 @@ procedural_db_proc_val_invoker (GimpProcedure     *procedure,
 
       canonical = gimp_canonicalize_identifier (procedure_name);
 
-      proc = procedural_db_lookup (gimp, canonical);
+      proc = gimp_pdb_lookup (gimp, canonical);
 
       if (! proc)
         {
@@ -679,7 +679,7 @@ procedural_db_proc_val_invoker (GimpProcedure     *procedure,
           compat_name = g_hash_table_lookup (gimp->procedural_compat_ht, canonical);
 
           if (compat_name)
-            proc = procedural_db_lookup (gimp, compat_name);
+            proc = gimp_pdb_lookup (gimp, compat_name);
         }
 
       g_free (canonical);

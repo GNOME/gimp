@@ -25,8 +25,8 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
@@ -54,7 +54,7 @@ register_message_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * message_get_handler
@@ -67,7 +67,7 @@ register_message_procs (Gimp *gimp)
                                                       GIMP_TYPE_MESSAGE_HANDLER_TYPE,
                                                       GIMP_MESSAGE_BOX,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * message_set_handler
@@ -80,7 +80,7 @@ register_message_procs (Gimp *gimp)
                                                   GIMP_TYPE_MESSAGE_HANDLER_TYPE,
                                                   GIMP_MESSAGE_BOX,
                                                   GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

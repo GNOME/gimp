@@ -25,8 +25,8 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "base/temp-buf.h"
@@ -73,7 +73,7 @@ register_pattern_procs (Gimp *gimp)
                                                           "The pattern bpp",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * pattern_get_pixels
@@ -115,7 +115,7 @@ register_pattern_procs (Gimp *gimp)
                                                                "color bytes",
                                                                "The pattern data.",
                                                                GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

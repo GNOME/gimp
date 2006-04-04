@@ -27,8 +27,8 @@
 #include "libgimpcolor/gimpcolor.h"
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
@@ -75,7 +75,7 @@ register_palette_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * palette_duplicate
@@ -95,7 +95,7 @@ register_palette_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * palette_rename
@@ -122,7 +122,7 @@ register_palette_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * palette_delete
@@ -135,7 +135,7 @@ register_palette_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * palette_is_editable
@@ -154,7 +154,7 @@ register_palette_procs (Gimp *gimp)
                                                          "TRUE if the palette can be edited",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * palette_get_info
@@ -173,7 +173,7 @@ register_palette_procs (Gimp *gimp)
                                                           "The number of colors in the palette",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * palette_get_columns
@@ -192,7 +192,7 @@ register_palette_procs (Gimp *gimp)
                                                           "The number of columns used to display this palette",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * palette_set_columns
@@ -211,7 +211,7 @@ register_palette_procs (Gimp *gimp)
                                                       "The new number of columns",
                                                       0, 64, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * palette_add_entry
@@ -243,7 +243,7 @@ register_palette_procs (Gimp *gimp)
                                                           "The index of the added entry",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * palette_delete_entry
@@ -262,7 +262,7 @@ register_palette_procs (Gimp *gimp)
                                                       "The index of the added entry",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * palette_entry_get_color
@@ -287,7 +287,7 @@ register_palette_procs (Gimp *gimp)
                                                         "The color requested",
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * palette_entry_set_color
@@ -312,7 +312,7 @@ register_palette_procs (Gimp *gimp)
                                                     "The new color",
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * palette_entry_get_name
@@ -338,7 +338,7 @@ register_palette_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * palette_entry_set_name
@@ -364,7 +364,7 @@ register_palette_procs (Gimp *gimp)
                                                        FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

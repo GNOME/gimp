@@ -25,8 +25,8 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "base/temp-buf.h"
@@ -51,7 +51,7 @@ register_patterns_procs (Gimp *gimp)
    * patterns_refresh
    */
   procedure = gimp_procedure_init (&patterns_refresh_proc, 0, 0);
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * patterns_get_list
@@ -75,7 +75,7 @@ register_patterns_procs (Gimp *gimp)
                                                                  "pattern list",
                                                                  "The list of pattern names",
                                                                  GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * patterns_get_pattern
@@ -100,7 +100,7 @@ register_patterns_procs (Gimp *gimp)
                                                           "The pattern height",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * patterns_get_pattern_data
@@ -149,7 +149,7 @@ register_patterns_procs (Gimp *gimp)
                                                                "mask data",
                                                                "The pattern mask data",
                                                                GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

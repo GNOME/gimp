@@ -26,8 +26,8 @@
 #include "libgimpmath/gimpmath.h"
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "config/gimpcoreconfig.h"
@@ -104,7 +104,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 "The flipped drawable",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_transform_flip
@@ -178,7 +178,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 "The flipped drawable",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_transform_flip_default
@@ -232,7 +232,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 "The flipped drawable",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_transform_perspective
@@ -330,7 +330,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 "The newly mapped drawable",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_transform_perspective_default
@@ -408,7 +408,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 "The newly mapped drawable",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_transform_rotate_simple
@@ -457,7 +457,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 "The rotated drawable",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_transform_rotate
@@ -531,7 +531,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 "The rotated drawable",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_transform_rotate_default
@@ -585,7 +585,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 "The rotated drawable",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_transform_scale
@@ -659,7 +659,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 "The scaled drawable",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_transform_scale_default
@@ -713,7 +713,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 "The scaled drawable",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_transform_shear
@@ -778,7 +778,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 "The sheared drawable",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_transform_shear_default
@@ -823,7 +823,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 "The sheared drawable",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_transform_2d
@@ -915,7 +915,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 "The transformed drawable",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_transform_2d_default
@@ -987,7 +987,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 "The transformed drawable",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_transform_matrix
@@ -1091,7 +1091,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 "The transformed drawable",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_transform_matrix_default
@@ -1175,7 +1175,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 "The transformed drawable",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

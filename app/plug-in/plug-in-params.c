@@ -31,7 +31,6 @@
 #include "core/gimpparamspecs.h"
 
 #include "pdb/gimp-pdb-compat.h"
-#include "pdb/procedural_db.h"
 
 #include "plug-in.h"
 #include "plug-in-params.h"

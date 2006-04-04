@@ -27,8 +27,8 @@
 #include "libgimpcolor/gimpcolor.h"
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
@@ -52,7 +52,7 @@ register_palettes_procs (Gimp *gimp)
    * palettes_refresh
    */
   procedure = gimp_procedure_init (&palettes_refresh_proc, 0, 0);
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * palettes_get_list
@@ -76,7 +76,7 @@ register_palettes_procs (Gimp *gimp)
                                                                  "palette list",
                                                                  "The list of palette names",
                                                                  GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * palettes_get_palette
@@ -95,7 +95,7 @@ register_palettes_procs (Gimp *gimp)
                                                           "The palette num_colors",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * palettes_get_palette_entry
@@ -133,7 +133,7 @@ register_palettes_procs (Gimp *gimp)
                                                         "The color requested",
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

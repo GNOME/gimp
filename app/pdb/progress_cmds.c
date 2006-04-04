@@ -24,8 +24,8 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
@@ -63,7 +63,7 @@ register_progress_procs (Gimp *gimp)
                                                            "GimpDisplay to update progressbar in, or -1 for a seperate window",
                                                            gimp,
                                                            GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * progress_update
@@ -75,13 +75,13 @@ register_progress_procs (Gimp *gimp)
                                                     "Percentage of progress completed which must be between 0.0 and 1.0",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * progress_pulse
    */
   procedure = gimp_procedure_init (&progress_pulse_proc, 0, 0);
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * progress_set_text
@@ -94,7 +94,7 @@ register_progress_procs (Gimp *gimp)
                                                        FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * progress_get_window_handle
@@ -106,7 +106,7 @@ register_progress_procs (Gimp *gimp)
                                                           "The progress bar's toplevel window",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * progress_install
@@ -119,7 +119,7 @@ register_progress_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * progress_uninstall
@@ -132,7 +132,7 @@ register_progress_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * progress_cancel
@@ -145,7 +145,7 @@ register_progress_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

@@ -31,8 +31,8 @@
 
 #include "batch.h"
 
+#include "pdb/gimp-pdb.h"
 #include "pdb/gimpprocedure.h"
-#include "pdb/procedural_db.h"
 
 #include "gimp-intl.h"
 
@@ -77,7 +77,7 @@ batch_run (Gimp         *gimp,
       strcmp (batch_commands[0], "-") == 0)
     {
       const gchar   *proc_name = "plug-in-script-fu-text-console";
-      GimpProcedure *procedure = procedural_db_lookup (gimp, proc_name);
+      GimpProcedure *procedure = gimp_pdb_lookup (gimp, proc_name);
 
       if (procedure)
         batch_run_cmd (gimp, proc_name, procedure,
@@ -88,7 +88,7 @@ batch_run (Gimp         *gimp,
     }
   else
     {
-      GimpProcedure *eval_proc = procedural_db_lookup (gimp, batch_interpreter);
+      GimpProcedure *eval_proc = gimp_pdb_lookup (gimp, batch_interpreter);
 
       if (eval_proc)
         {
@@ -140,10 +140,8 @@ batch_run_cmd (Gimp          *gimp,
   if (procedure->num_args > 1)
     g_value_set_static_string (&args->values[1], cmd);
 
-  return_vals = procedural_db_execute (gimp,
-                                       gimp_get_user_context (gimp), NULL,
-                                       proc_name,
-                                       args);
+  return_vals = gimp_pdb_execute (gimp, gimp_get_user_context (gimp), NULL,
+                                  proc_name, args);
 
   switch (g_value_get_enum (&return_vals->values[0]))
     {

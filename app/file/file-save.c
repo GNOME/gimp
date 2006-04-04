@@ -54,8 +54,8 @@
 #include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
 
+#include "pdb/gimp-pdb.h"
 #include "pdb/gimpprocedure.h"
-#include "pdb/procedural_db.h"
 
 #include "plug-in/plug-in.h"
 #include "plug-in/plug-in-proc-def.h"
@@ -127,15 +127,14 @@ file_save (GimpImage      *image,
   /* ref the image, so it can't get deleted during save */
   g_object_ref (image);
 
-  return_vals =
-    procedural_db_run_proc (image->gimp, context, progress,
-                            file_proc->procedure->name,
-                            GIMP_TYPE_INT32,       run_mode,
-                            GIMP_TYPE_IMAGE_ID,    gimp_image_get_ID (image),
-                            GIMP_TYPE_DRAWABLE_ID, gimp_item_get_ID (GIMP_ITEM (gimp_image_active_drawable (image))),
-                            G_TYPE_STRING,         filename,
-                            G_TYPE_STRING,         uri,
-                            G_TYPE_NONE);
+  return_vals = gimp_pdb_run_proc (image->gimp, context, progress,
+                                   file_proc->procedure->name,
+                                   GIMP_TYPE_INT32,       run_mode,
+                                   GIMP_TYPE_IMAGE_ID,    gimp_image_get_ID (image),
+                                   GIMP_TYPE_DRAWABLE_ID, gimp_item_get_ID (GIMP_ITEM (gimp_image_active_drawable (image))),
+                                   G_TYPE_STRING,         filename,
+                                   G_TYPE_STRING,         uri,
+                                   G_TYPE_NONE);
 
   status = g_value_get_enum (&return_vals->values[0]);
 

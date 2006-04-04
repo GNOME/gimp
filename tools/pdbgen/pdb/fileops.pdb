@@ -83,9 +83,8 @@ HELP
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))	
       g_value_set_static_string (&new_args->values[i], "")	;
 
-  return_vals = procedural_db_execute (gimp, context, progress,
-                                       proc->name,
-                                       new_args);
+  return_vals = gimp_pdb_execute (gimp, context, progress,
+                                  proc->name, new_args);
 
   g_value_array_free (new_args);
 
@@ -208,9 +207,8 @@ HELP
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
       g_value_set_static_string (&new_args->values[i], "");
 
-  return_vals = procedural_db_execute (gimp, context, progress,
-                                       proc->name,
-                                       new_args);
+  return_vals = gimp_pdb_execute (gimp, context, progress,
+                                  proc->name, new_args);
 
   g_value_array_free (new_args);
 
@@ -489,7 +487,7 @@ HELP
 
   canonical = gimp_canonicalize_identifier (procedure_name);
 
-  proc = procedural_db_lookup (gimp, canonical);
+  proc = gimp_pdb_lookup (gimp, canonical);
 
   if (proc &&
       ((proc->num_args < 5)                             ||
@@ -612,7 +610,7 @@ fileops_register_magic_load_handler (Gimp        *gimp,
 
   canonical = gimp_canonicalize_identifier (procedure_name);
 
-  procedure = procedural_db_lookup (gimp, canonical);
+  procedure = gimp_pdb_lookup (gimp, canonical);
 
   if (procedure &&
       ((procedure->num_args   < 3)                        ||

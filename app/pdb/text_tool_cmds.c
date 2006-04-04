@@ -26,8 +26,8 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimpdrawable.h"
@@ -118,7 +118,7 @@ register_text_tool_procs (Gimp *gimp)
                                                              "The new text layer or -1 if no layer was created.",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * text_get_extents_fontname
@@ -175,7 +175,7 @@ register_text_tool_procs (Gimp *gimp)
                                                           "The descent of the specified font",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * text
@@ -299,7 +299,7 @@ register_text_tool_procs (Gimp *gimp)
                                                              "The new text layer or -1 if no layer was created.",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * text_get_extents
@@ -405,7 +405,7 @@ register_text_tool_procs (Gimp *gimp)
                                                           "The descent of the specified font",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

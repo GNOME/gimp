@@ -1,6 +1,49 @@
 2006-04-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/Makefile.am
+	* app/pdb/procedural_db.[ch]
+	* app/pdb/procedural-db-query.[ch]: removed...
+
+	* app/pdb/gimp-pdb.[ch]
+	* app/pdb/gimp-pdb-query.[ch]: ...and added namespacefied.
+
+	* app/batch.c
+	* app/actions/vectors-commands.c
+	* app/core/gimp.c
+	* app/core/gimppdbprogress.c
+	* app/dialogs/about-dialog.c
+	* app/file/file-open.c
+	* app/file/file-save.c
+	* app/file/file-utils.c
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-params.c
+	* app/plug-in/plug-in-proc-def.c
+	* app/plug-in/plug-in-progress.c
+	* app/plug-in/plug-ins-query.c
+	* app/plug-in/plug-ins.c
+	* app/widgets/gimpbrushselect.c
+	* app/widgets/gimpfiledialog.c
+	* app/widgets/gimpfontselect.c
+	* app/widgets/gimpgradientselect.c
+	* app/widgets/gimphelp.c
+	* app/widgets/gimppaletteselect.c
+	* app/widgets/gimppatternselect.c
+	* app/widgets/gimppdbdialog.c
+	* app/xcf/xcf.c
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/font_select.pdb
+	* tools/pdbgen/pdb/gradient_select.pdb
+	* tools/pdbgen/pdb/palette_select.pdb
+	* tools/pdbgen/pdb/pattern_select.pdb
+	* tools/pdbgen/pdb/procedural_db.pdb: changed accordingly.
+
+	* app/pdb/*_cmds.c: regenerated.
+
+2006-04-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/pdb/Makefile.am
 	* app/pdb/gimpargument.[ch]: removed...
 
 	* app/pdb/gimp-pdb-compat.[ch]: ...and added with renamed functions.

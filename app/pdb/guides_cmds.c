@@ -24,8 +24,8 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimpimage-guides.h"
@@ -66,7 +66,7 @@ register_guides_procs (Gimp *gimp)
                                                       "The new guide",
                                                       1, G_MAXUINT32, 1,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_add_vguide
@@ -90,7 +90,7 @@ register_guides_procs (Gimp *gimp)
                                                       "The new guide",
                                                       1, G_MAXUINT32, 1,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_delete_guide
@@ -108,7 +108,7 @@ register_guides_procs (Gimp *gimp)
                                                   "The ID of the guide to be removed",
                                                   1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_find_next_guide
@@ -132,7 +132,7 @@ register_guides_procs (Gimp *gimp)
                                                       "The next guide's ID",
                                                       1, G_MAXUINT32, 1,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_get_guide_orientation
@@ -159,7 +159,7 @@ register_guides_procs (Gimp *gimp)
                                                          GIMP_PARAM_READWRITE));
   gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->values[0]),
                                       GIMP_ORIENTATION_UNKNOWN);
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_get_guide_position
@@ -183,7 +183,7 @@ register_guides_procs (Gimp *gimp)
                                                           "The guide's position relative to top or left of image",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

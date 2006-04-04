@@ -24,8 +24,8 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "config/gimpcoreconfig.h"
@@ -126,7 +126,7 @@ register_layer_procs (Gimp *gimp)
                                                              "The newly created layer",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_new_from_drawable
@@ -150,7 +150,7 @@ register_layer_procs (Gimp *gimp)
                                                              "The newly copied layer",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_copy
@@ -174,7 +174,7 @@ register_layer_procs (Gimp *gimp)
                                                              "The newly copied layer",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_add_alpha
@@ -186,7 +186,7 @@ register_layer_procs (Gimp *gimp)
                                                          "The layer",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_scale
@@ -216,7 +216,7 @@ register_layer_procs (Gimp *gimp)
                                                      "Use a local origin (as opposed to the image origin)",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_resize
@@ -252,7 +252,7 @@ register_layer_procs (Gimp *gimp)
                                                       "y offset between upper left corner of old and new layers: (old - new)",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_resize_to_image_size
@@ -264,7 +264,7 @@ register_layer_procs (Gimp *gimp)
                                                          "The layer to resize",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_translate
@@ -288,7 +288,7 @@ register_layer_procs (Gimp *gimp)
                                                       "Offset in y direction",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_set_offsets
@@ -312,7 +312,7 @@ register_layer_procs (Gimp *gimp)
                                                       "Offset in y direction",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_create_mask
@@ -337,7 +337,7 @@ register_layer_procs (Gimp *gimp)
                                                                   "The newly created mask",
                                                                   gimp,
                                                                   GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_get_mask
@@ -355,7 +355,7 @@ register_layer_procs (Gimp *gimp)
                                                                   "The layer mask",
                                                                   gimp,
                                                                   GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_from_mask
@@ -373,7 +373,7 @@ register_layer_procs (Gimp *gimp)
                                                              "The mask's layer",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_add_mask
@@ -391,7 +391,7 @@ register_layer_procs (Gimp *gimp)
                                                               "The mask to add to the layer",
                                                               gimp,
                                                               GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_remove_mask
@@ -410,7 +410,7 @@ register_layer_procs (Gimp *gimp)
                                                   GIMP_TYPE_MASK_APPLY_MODE,
                                                   GIMP_MASK_APPLY,
                                                   GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_is_floating_sel
@@ -428,7 +428,7 @@ register_layer_procs (Gimp *gimp)
                                                          "TRUE if the layer is a floating selection",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_get_lock_alpha
@@ -446,7 +446,7 @@ register_layer_procs (Gimp *gimp)
                                                          "The layer's lock alpha channel setting",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_set_lock_alpha
@@ -464,7 +464,7 @@ register_layer_procs (Gimp *gimp)
                                                      "The new layer's lock alpha channel setting",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_get_apply_mask
@@ -482,7 +482,7 @@ register_layer_procs (Gimp *gimp)
                                                          "The layer's apply mask setting",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_set_apply_mask
@@ -500,7 +500,7 @@ register_layer_procs (Gimp *gimp)
                                                      "The new layer's apply mask setting",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_get_show_mask
@@ -518,7 +518,7 @@ register_layer_procs (Gimp *gimp)
                                                          "The layer's show mask setting",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_set_show_mask
@@ -536,7 +536,7 @@ register_layer_procs (Gimp *gimp)
                                                      "The new layer's show mask setting",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_get_edit_mask
@@ -554,7 +554,7 @@ register_layer_procs (Gimp *gimp)
                                                          "The layer's edit mask setting",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_set_edit_mask
@@ -572,7 +572,7 @@ register_layer_procs (Gimp *gimp)
                                                      "The new layer's edit mask setting",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_get_opacity
@@ -590,7 +590,7 @@ register_layer_procs (Gimp *gimp)
                                                         "The layer opacity",
                                                         0, 100, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_set_opacity
@@ -608,7 +608,7 @@ register_layer_procs (Gimp *gimp)
                                                     "The new layer opacity (0 <= opacity <= 100)",
                                                     0, 100, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_get_mode
@@ -627,7 +627,7 @@ register_layer_procs (Gimp *gimp)
                                                       GIMP_TYPE_LAYER_MODE_EFFECTS,
                                                       GIMP_NORMAL_MODE,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * layer_set_mode
@@ -646,7 +646,7 @@ register_layer_procs (Gimp *gimp)
                                                   GIMP_TYPE_LAYER_MODE_EFFECTS,
                                                   GIMP_NORMAL_MODE,
                                                   GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

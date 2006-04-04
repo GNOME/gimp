@@ -24,8 +24,8 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
@@ -65,7 +65,7 @@ register_palette_select_procs (Gimp *gimp)
                                                        FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * palettes_close_popup
@@ -78,7 +78,7 @@ register_palette_select_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * palettes_set_popup
@@ -98,7 +98,7 @@ register_palette_select_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 
@@ -121,7 +121,7 @@ palettes_popup_invoker (GimpProcedure     *procedure,
   if (success)
     {
       if (gimp->no_interface ||
-          ! procedural_db_lookup (gimp, palette_callback) ||
+          ! gimp_pdb_lookup (gimp, palette_callback) ||
           ! gimp_pdb_dialog_new (gimp, context, gimp->palette_factory->container,
                                  popup_title, palette_callback, initial_palette,
                                  NULL))
@@ -162,7 +162,7 @@ palettes_close_popup_invoker (GimpProcedure     *procedure,
   if (success)
     {
       if (gimp->no_interface ||
-          ! procedural_db_lookup (gimp, palette_callback) ||
+          ! gimp_pdb_lookup (gimp, palette_callback) ||
           ! gimp_pdb_dialog_close (gimp, gimp->palette_factory->container,
                                    palette_callback))
         success = FALSE;
@@ -204,7 +204,7 @@ palettes_set_popup_invoker (GimpProcedure     *procedure,
   if (success)
     {
       if (gimp->no_interface ||
-          ! procedural_db_lookup (gimp, palette_callback) ||
+          ! gimp_pdb_lookup (gimp, palette_callback) ||
           ! gimp_pdb_dialog_set (gimp, gimp->palette_factory->container,
                                  palette_callback, palette_name,
                                  NULL))

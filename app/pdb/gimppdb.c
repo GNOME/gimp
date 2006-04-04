@@ -41,17 +41,24 @@
 
 #include "plug-in/plug-in-run.h"
 
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
 #include "internal_procs.h"
-#include "procedural_db.h"
 
 #include "gimp-intl.h"
+
+
+/*  local function prototypes  */
+
+static void   gimp_pdb_free_entry (gpointer key,
+                                   gpointer value,
+                                   gpointer user_data);
 
 
 /*  public functions  */
 
 void
-procedural_db_init (Gimp *gimp)
+gimp_pdb_init (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -59,27 +66,15 @@ procedural_db_init (Gimp *gimp)
   gimp->procedural_compat_ht = g_hash_table_new (g_str_hash, g_str_equal);
 }
 
-static void
-procedural_db_free_entry (gpointer key,
-                          gpointer value,
-                          gpointer user_data)
-{
-  if (value)
-    {
-      g_list_foreach (value, (GFunc) gimp_procedure_free, NULL);
-      g_list_free (value);
-    }
-}
-
 void
-procedural_db_free (Gimp *gimp)
+gimp_pdb_exit (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   if (gimp->procedural_ht)
     {
       g_hash_table_foreach (gimp->procedural_ht,
-                            procedural_db_free_entry, NULL);
+                            gimp_pdb_free_entry, NULL);
       g_hash_table_destroy (gimp->procedural_ht);
       gimp->procedural_ht = NULL;
     }
@@ -92,7 +87,7 @@ procedural_db_free (Gimp *gimp)
 }
 
 void
-procedural_db_init_procs (Gimp *gimp)
+gimp_pdb_init_procs (Gimp *gimp)
 {
   static const struct
   {
@@ -181,8 +176,8 @@ procedural_db_init_procs (Gimp *gimp)
 }
 
 void
-procedural_db_register (Gimp          *gimp,
-                        GimpProcedure *procedure)
+gimp_pdb_register (Gimp          *gimp,
+                   GimpProcedure *procedure)
 {
   GList *list;
 
@@ -197,50 +192,51 @@ procedural_db_register (Gimp          *gimp,
 }
 
 void
-procedural_db_unregister (Gimp        *gimp,
-                          const gchar *name)
+gimp_pdb_unregister (Gimp        *gimp,
+                     const gchar *procedure_name)
 {
   GList *list;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (name != NULL);
+  g_return_if_fail (procedure_name != NULL);
 
-  list = g_hash_table_lookup (gimp->procedural_ht, name);
+  list = g_hash_table_lookup (gimp->procedural_ht, procedure_name);
 
   if (list)
     {
       list = g_list_remove (list, list->data);
 
       if (list)
-        g_hash_table_insert (gimp->procedural_ht, (gpointer) name, list);
+        g_hash_table_insert (gimp->procedural_ht, (gpointer) procedure_name,
+                             list);
       else
-        g_hash_table_remove (gimp->procedural_ht, name);
+        g_hash_table_remove (gimp->procedural_ht, procedure_name);
     }
 }
 
 GimpProcedure *
-procedural_db_lookup (Gimp        *gimp,
-                      const gchar *name)
+gimp_pdb_lookup (Gimp        *gimp,
+                 const gchar *procedure_name)
 {
   GList *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (procedure_name != NULL, NULL);
 
-  list = g_hash_table_lookup (gimp->procedural_ht, name);
+  list = g_hash_table_lookup (gimp->procedural_ht, procedure_name);
 
   if (list)
     return list->data;
-  else
-    return NULL;
+
+  return NULL;
 }
 
 GValueArray *
-procedural_db_execute (Gimp         *gimp,
-                       GimpContext  *context,
-                       GimpProgress *progress,
-                       const gchar  *name,
-                       GValueArray  *args)
+gimp_pdb_execute (Gimp         *gimp,
+                  GimpContext  *context,
+                  GimpProgress *progress,
+                  const gchar  *procedure_name,
+                  GValueArray  *args)
 {
   GValueArray *return_vals = NULL;
   GList       *list;
@@ -248,15 +244,15 @@ procedural_db_execute (Gimp         *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (procedure_name != NULL, NULL);
   g_return_val_if_fail (args != NULL, NULL);
 
-  list = g_hash_table_lookup (gimp->procedural_ht, name);
+  list = g_hash_table_lookup (gimp->procedural_ht, procedure_name);
 
   if (list == NULL)
     {
       g_message (_("PDB calling error:\n"
-                   "Procedure '%s' not found"), name);
+                   "Procedure '%s' not found"), procedure_name);
 
       return_vals = gimp_procedure_get_return_values (NULL, FALSE);
       g_value_set_enum (return_vals->values, GIMP_PDB_CALLING_ERROR);
@@ -296,11 +292,11 @@ procedural_db_execute (Gimp         *gimp,
 }
 
 GValueArray *
-procedural_db_run_proc (Gimp         *gimp,
-                        GimpContext  *context,
-                        GimpProgress *progress,
-                        const gchar  *name,
-                        ...)
+gimp_pdb_run_proc (Gimp         *gimp,
+                   GimpContext  *context,
+                   GimpProgress *progress,
+                   const gchar  *procedure_name,
+                   ...)
 {
   GimpProcedure *procedure;
   GValueArray   *args;
@@ -311,14 +307,14 @@ procedural_db_run_proc (Gimp         *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (procedure_name != NULL, NULL);
 
-  procedure = procedural_db_lookup (gimp, name);
+  procedure = gimp_pdb_lookup (gimp, procedure_name);
 
   if (procedure == NULL)
     {
       g_message (_("PDB calling error:\n"
-                   "Procedure '%s' not found"), name);
+                   "Procedure '%s' not found"), procedure_name);
 
       return_vals = gimp_procedure_get_return_values (NULL, FALSE);
       g_value_set_enum (return_vals->values, GIMP_PDB_CALLING_ERROR);
@@ -328,7 +324,7 @@ procedural_db_run_proc (Gimp         *gimp,
 
   args = gimp_procedure_get_arguments (procedure);
 
-  va_start (va_args, name);
+  va_start (va_args, procedure_name);
 
   for (i = 0; i < procedure->num_args; i++)
     {
@@ -378,9 +374,25 @@ procedural_db_run_proc (Gimp         *gimp,
 
   va_end (va_args);
 
-  return_vals = procedural_db_execute (gimp, context, progress, name, args);
+  return_vals = gimp_pdb_execute (gimp, context, progress,
+                                  procedure_name, args);
 
   g_value_array_free (args);
 
   return return_vals;
+}
+
+
+/*  private functions  */
+
+static void
+gimp_pdb_free_entry (gpointer key,
+                     gpointer value,
+                     gpointer user_data)
+{
+  if (value)
+    {
+      g_list_foreach (value, (GFunc) gimp_procedure_free, NULL);
+      g_list_free (value);
+    }
 }

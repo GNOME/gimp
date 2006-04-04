@@ -25,8 +25,8 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
@@ -89,7 +89,7 @@ register_vectors_procs (Gimp *gimp)
                                                                "the current vector object, 0 if no vector exists in the image.",
                                                                gimp,
                                                                GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * vectors_get_image
@@ -107,7 +107,7 @@ register_vectors_procs (Gimp *gimp)
                                                              "The vectors image",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * vectors_get_name
@@ -126,7 +126,7 @@ register_vectors_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * vectors_set_name
@@ -145,7 +145,7 @@ register_vectors_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * vectors_get_visible
@@ -163,7 +163,7 @@ register_vectors_procs (Gimp *gimp)
                                                          "TRUE if the path is visible, FALSE otherwise",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * vectors_set_visible
@@ -181,7 +181,7 @@ register_vectors_procs (Gimp *gimp)
                                                      "Whether the path is visible",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * vectors_get_linked
@@ -199,7 +199,7 @@ register_vectors_procs (Gimp *gimp)
                                                          "TRUE if the path is linked, FALSE otherwise",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * vectors_set_linked
@@ -217,7 +217,7 @@ register_vectors_procs (Gimp *gimp)
                                                      "Whether the path is linked",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * vectors_get_tattoo
@@ -235,7 +235,7 @@ register_vectors_procs (Gimp *gimp)
                                                           "The vectors tattoo",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * vectors_set_tattoo
@@ -253,7 +253,7 @@ register_vectors_procs (Gimp *gimp)
                                                       "the new tattoo",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * vectors_get_strokes
@@ -276,7 +276,7 @@ register_vectors_procs (Gimp *gimp)
                                                                 "stroke ids",
                                                                 "List of the strokes belonging to the path.",
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * vectors_stroke_get_length
@@ -306,7 +306,7 @@ register_vectors_procs (Gimp *gimp)
                                                         "The length (in pixels) of the given stroke.",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * vectors_stroke_get_point_at_dist
@@ -360,7 +360,7 @@ register_vectors_procs (Gimp *gimp)
                                                          "Indicator for the validity of the returned data.",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * vectors_stroke_remove
@@ -378,7 +378,7 @@ register_vectors_procs (Gimp *gimp)
                                                       "The stroke ID",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * vectors_stroke_close
@@ -396,7 +396,7 @@ register_vectors_procs (Gimp *gimp)
                                                       "The stroke ID",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * vectors_stroke_translate
@@ -426,7 +426,7 @@ register_vectors_procs (Gimp *gimp)
                                                       "Offset in y direction",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * vectors_stroke_scale
@@ -456,7 +456,7 @@ register_vectors_procs (Gimp *gimp)
                                                     "Scale factor in y direction",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * vectors_stroke_interpolate
@@ -497,7 +497,7 @@ register_vectors_procs (Gimp *gimp)
                                                                 "coords",
                                                                 "List of the coords along the path (x0, y0, x1, y1, ...).",
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * vectors_bezier_stroke_new_moveto
@@ -527,7 +527,7 @@ register_vectors_procs (Gimp *gimp)
                                                           "The resulting stroke",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * vectors_bezier_stroke_lineto
@@ -557,7 +557,7 @@ register_vectors_procs (Gimp *gimp)
                                                     "The y-coordinate of the lineto",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * vectors_bezier_stroke_conicto
@@ -599,7 +599,7 @@ register_vectors_procs (Gimp *gimp)
                                                     "The y-coordinate of the end point",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * vectors_bezier_stroke_cubicto
@@ -653,7 +653,7 @@ register_vectors_procs (Gimp *gimp)
                                                     "The y-coordinate of the end point",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * vectors_bezier_stroke_new_ellipse
@@ -701,7 +701,7 @@ register_vectors_procs (Gimp *gimp)
                                                           "The resulting stroke",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

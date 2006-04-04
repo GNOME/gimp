@@ -24,8 +24,8 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimpchannel-select.h"
@@ -100,7 +100,7 @@ register_selection_procs (Gimp *gimp)
                                                           "y coordinate of lower right corner of selection bounds",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * selection_value
@@ -130,7 +130,7 @@ register_selection_procs (Gimp *gimp)
                                                           "Value of the selection (0 <= value <= 255)",
                                                           0, 255, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * selection_is_empty
@@ -148,7 +148,7 @@ register_selection_procs (Gimp *gimp)
                                                          "Is the selection empty?",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * selection_translate
@@ -172,7 +172,7 @@ register_selection_procs (Gimp *gimp)
                                                       "y offset for translation",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * selection_float
@@ -202,7 +202,7 @@ register_selection_procs (Gimp *gimp)
                                                              "The floated layer",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * selection_invert
@@ -214,7 +214,7 @@ register_selection_procs (Gimp *gimp)
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * selection_sharpen
@@ -226,7 +226,7 @@ register_selection_procs (Gimp *gimp)
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * selection_all
@@ -238,7 +238,7 @@ register_selection_procs (Gimp *gimp)
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * selection_none
@@ -250,7 +250,7 @@ register_selection_procs (Gimp *gimp)
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * selection_feather
@@ -268,7 +268,7 @@ register_selection_procs (Gimp *gimp)
                                                     "Radius of feather (in pixels)",
                                                     0, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * selection_border
@@ -286,7 +286,7 @@ register_selection_procs (Gimp *gimp)
                                                       "Radius of border (in pixels)",
                                                       0, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * selection_grow
@@ -304,7 +304,7 @@ register_selection_procs (Gimp *gimp)
                                                       "Steps of grow (in pixels)",
                                                       0, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * selection_shrink
@@ -322,7 +322,7 @@ register_selection_procs (Gimp *gimp)
                                                       "Steps of shrink (in pixels)",
                                                       0, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * selection_layer_alpha
@@ -334,7 +334,7 @@ register_selection_procs (Gimp *gimp)
                                                          "Layer with alpha",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * selection_load
@@ -346,7 +346,7 @@ register_selection_procs (Gimp *gimp)
                                                            "The channel",
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * selection_save
@@ -364,7 +364,7 @@ register_selection_procs (Gimp *gimp)
                                                                "The new channel",
                                                                gimp,
                                                                GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * selection_combine
@@ -383,7 +383,7 @@ register_selection_procs (Gimp *gimp)
                                                   GIMP_TYPE_CHANNEL_OPS,
                                                   GIMP_CHANNEL_OP_ADD,
                                                   GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

@@ -34,7 +34,7 @@
 #include "core/gimpparamspecs.h"
 #include "core/gimppattern.h"
 
-#include "pdb/procedural_db.h"
+#include "pdb/gimp-pdb.h"
 
 #include "gimpcontainerbox.h"
 #include "gimppatternfactoryview.h"
@@ -117,18 +117,18 @@ gimp_pattern_select_run_callback (GimpPdbDialog *dialog,
                           TRUE);
 
   return_vals =
-    procedural_db_run_proc (dialog->caller_context->gimp,
-                            dialog->caller_context,
-                            NULL,
-                            dialog->callback_name,
-                            G_TYPE_STRING,        GIMP_OBJECT (pattern)->name,
-                            GIMP_TYPE_INT32,      pattern->mask->width,
-                            GIMP_TYPE_INT32,      pattern->mask->height,
-                            GIMP_TYPE_INT32,      pattern->mask->bytes,
-                            GIMP_TYPE_INT32,      array->length,
-                            GIMP_TYPE_INT8_ARRAY, array,
-                            GIMP_TYPE_INT32,      closing,
-                            G_TYPE_NONE);
+    gimp_pdb_run_proc (dialog->caller_context->gimp,
+                       dialog->caller_context,
+                       NULL,
+                       dialog->callback_name,
+                       G_TYPE_STRING,        GIMP_OBJECT (pattern)->name,
+                       GIMP_TYPE_INT32,      pattern->mask->width,
+                       GIMP_TYPE_INT32,      pattern->mask->height,
+                       GIMP_TYPE_INT32,      pattern->mask->bytes,
+                       GIMP_TYPE_INT32,      array->length,
+                       GIMP_TYPE_INT8_ARRAY, array,
+                       GIMP_TYPE_INT32,      closing,
+                       G_TYPE_NONE);
 
   gimp_array_free (array);
 

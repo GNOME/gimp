@@ -16,32 +16,32 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PROCEDURAL_DB_QUERY_H__
-#define __PROCEDURAL_DB_QUERY_H__
+#ifndef __GIMP_PDB_QUERY_H__
+#define __GIMP_PDB_QUERY_H__
 
 
-gboolean   procedural_db_dump      (Gimp             *gimp,
-                                    const gchar      *filename);
-gboolean   procedural_db_query     (Gimp             *gimp,
-                                    const gchar      *name,
-                                    const gchar      *blurb,
-                                    const gchar      *help,
-                                    const gchar      *author,
-                                    const gchar      *copyright,
-                                    const gchar      *date,
-                                    const gchar      *proc_type,
-                                    gint             *num_procs,
-                                    gchar          ***procs);
-gboolean   procedural_db_proc_info (Gimp             *gimp,
-                                    const gchar      *proc_name,
-                                    gchar           **blurb,
-                                    gchar           **help,
-                                    gchar           **author,
-                                    gchar           **copyright,
-                                    gchar           **date,
-                                    GimpPDBProcType  *proc_type,
-                                    gint             *num_args,
-                                    gint             *num_values);
+gboolean   gimp_pdb_dump      (Gimp             *gimp,
+                               const gchar      *filename);
+gboolean   gimp_pdb_query     (Gimp             *gimp,
+                               const gchar      *name,
+                               const gchar      *blurb,
+                               const gchar      *help,
+                               const gchar      *author,
+                               const gchar      *copyright,
+                               const gchar      *date,
+                               const gchar      *proc_type,
+                               gint             *num_procs,
+                               gchar          ***procs);
+gboolean   gimp_pdb_proc_info (Gimp             *gimp,
+                               const gchar      *proc_name,
+                               gchar           **blurb,
+                               gchar           **help,
+                               gchar           **author,
+                               gchar           **copyright,
+                               gchar           **date,
+                               GimpPDBProcType  *proc_type,
+                               gint             *num_args,
+                               gint             *num_values);
 
 
-#endif /* __PROCEDURAL_DB_QUERY_H__ */
+#endif /* __GIMP_PDB_QUERY_H__ */

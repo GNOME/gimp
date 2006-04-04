@@ -25,8 +25,8 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
@@ -51,7 +51,7 @@ register_gradients_procs (Gimp *gimp)
    * gradients_refresh
    */
   procedure = gimp_procedure_init (&gradients_refresh_proc, 0, 0);
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradients_get_list
@@ -75,7 +75,7 @@ register_gradients_procs (Gimp *gimp)
                                                                  "gradient list",
                                                                  "The list of gradient names",
                                                                  GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradients_sample_uniform
@@ -104,7 +104,7 @@ register_gradients_procs (Gimp *gimp)
                                                                 "color samples",
                                                                 "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradients_sample_custom
@@ -138,7 +138,7 @@ register_gradients_procs (Gimp *gimp)
                                                                 "color samples",
                                                                 "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradients_get_gradient_data
@@ -181,7 +181,7 @@ register_gradients_procs (Gimp *gimp)
                                                                 "grad data",
                                                                 "The gradient sample data",
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

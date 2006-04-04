@@ -24,8 +24,8 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimpdrawable.h"
@@ -54,7 +54,7 @@ register_floating_sel_procs (Gimp *gimp)
                                                          "The floating selection",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * floating_sel_anchor
@@ -66,7 +66,7 @@ register_floating_sel_procs (Gimp *gimp)
                                                          "The floating selection",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * floating_sel_to_layer
@@ -78,7 +78,7 @@ register_floating_sel_procs (Gimp *gimp)
                                                          "The floating selection",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * floating_sel_attach
@@ -96,7 +96,7 @@ register_floating_sel_procs (Gimp *gimp)
                                                             "The drawable (where to attach the floating selection)",
                                                             gimp,
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * floating_sel_rigor
@@ -114,7 +114,7 @@ register_floating_sel_procs (Gimp *gimp)
                                                      "(TRUE or FALSE)",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * floating_sel_relax
@@ -132,7 +132,7 @@ register_floating_sel_procs (Gimp *gimp)
                                                      "(TRUE or FALSE)",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

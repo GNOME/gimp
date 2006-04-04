@@ -25,8 +25,8 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
@@ -84,7 +84,7 @@ register_paths_procs (Gimp *gimp)
                                                                  "path list",
                                                                  "List of the paths belonging to this image.",
                                                                  GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * path_get_current
@@ -103,7 +103,7 @@ register_paths_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * path_set_current
@@ -122,7 +122,7 @@ register_paths_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * path_delete
@@ -141,7 +141,7 @@ register_paths_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * path_get_points
@@ -183,7 +183,7 @@ register_paths_procs (Gimp *gimp)
                                                                 "points pairs",
                                                                 "The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL, 3.0 = BEZIER_MOVE). Note all points are returned in pixel resolution.",
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * path_set_points
@@ -219,7 +219,7 @@ register_paths_procs (Gimp *gimp)
                                                             "points pairs",
                                                             "The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL, 3.0= BEZIER_MOVE). Note all points are returned in pixel resolution.",
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * path_stroke_current
@@ -231,7 +231,7 @@ register_paths_procs (Gimp *gimp)
                                                          "The image which contains the path to stroke",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * path_get_point_at_dist
@@ -267,7 +267,7 @@ register_paths_procs (Gimp *gimp)
                                                         "The slope (dy / dx) at the specified point.",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * path_get_tattoo
@@ -292,7 +292,7 @@ register_paths_procs (Gimp *gimp)
                                                           "The tattoo associated with the named path.",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * path_set_tattoo
@@ -317,7 +317,7 @@ register_paths_procs (Gimp *gimp)
                                                       "The tattoo associated with the name path. Only values returned from 'path_get_tattoo' should be used here",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * get_path_by_tattoo
@@ -342,7 +342,7 @@ register_paths_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * path_get_locked
@@ -367,7 +367,7 @@ register_paths_procs (Gimp *gimp)
                                                          "TRUE if the path is locked, FALSE otherwise",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * path_set_locked
@@ -392,7 +392,7 @@ register_paths_procs (Gimp *gimp)
                                                      "Whether the path is locked",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * path_to_selection
@@ -442,7 +442,7 @@ register_paths_procs (Gimp *gimp)
                                                     "Feather radius y.",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * path_import
@@ -473,7 +473,7 @@ register_paths_procs (Gimp *gimp)
                                                      "Scale the SVG to image dimensions.",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * path_import_string
@@ -510,7 +510,7 @@ register_paths_procs (Gimp *gimp)
                                                      "Scale the SVG to image dimensions.",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

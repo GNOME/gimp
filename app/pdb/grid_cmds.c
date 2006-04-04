@@ -27,8 +27,8 @@
 #include "libgimpcolor/gimpcolor.h"
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimpgrid.h"
@@ -73,7 +73,7 @@ register_grid_procs (Gimp *gimp)
                                                         "The image's grid vertical spacing",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_grid_set_spacing
@@ -97,7 +97,7 @@ register_grid_procs (Gimp *gimp)
                                                     "The image's grid vertical spacing",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_grid_get_offset
@@ -121,7 +121,7 @@ register_grid_procs (Gimp *gimp)
                                                         "The image's grid vertical offset",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_grid_set_offset
@@ -145,7 +145,7 @@ register_grid_procs (Gimp *gimp)
                                                     "The image's grid vertical offset",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_grid_get_foreground_color
@@ -163,7 +163,7 @@ register_grid_procs (Gimp *gimp)
                                                         "The image's grid foreground color",
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_grid_set_foreground_color
@@ -181,7 +181,7 @@ register_grid_procs (Gimp *gimp)
                                                     "The new foreground color",
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_grid_get_background_color
@@ -199,7 +199,7 @@ register_grid_procs (Gimp *gimp)
                                                         "The image's grid background color",
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_grid_set_background_color
@@ -217,7 +217,7 @@ register_grid_procs (Gimp *gimp)
                                                     "The new background color",
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_grid_get_style
@@ -236,7 +236,7 @@ register_grid_procs (Gimp *gimp)
                                                       GIMP_TYPE_GRID_STYLE,
                                                       GIMP_GRID_DOTS,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_grid_set_style
@@ -255,7 +255,7 @@ register_grid_procs (Gimp *gimp)
                                                   GIMP_TYPE_GRID_STYLE,
                                                   GIMP_GRID_DOTS,
                                                   GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

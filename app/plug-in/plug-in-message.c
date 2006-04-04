@@ -36,9 +36,9 @@
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 
-#include "pdb/gimpprocedure.h"
+#include "pdb/gimp-pdb.h"
 #include "pdb/gimp-pdb-compat.h"
-#include "pdb/procedural_db.h"
+#include "pdb/gimpprocedure.h"
 
 #include "plug-in.h"
 #include "plug-ins.h"
@@ -361,7 +361,7 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
 
   proc_frame = plug_in_get_proc_frame (plug_in);
 
-  procedure = procedural_db_lookup (plug_in->gimp, canonical);
+  procedure = gimp_pdb_lookup (plug_in->gimp, canonical);
 
   if (! procedure)
     {
@@ -370,7 +370,7 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
 
       if (proc_name)
         {
-          procedure = procedural_db_lookup (plug_in->gimp, proc_name);
+          procedure = gimp_pdb_lookup (plug_in->gimp, proc_name);
 
           if (plug_in->gimp->pdb_compat_mode == GIMP_PDB_COMPAT_WARN)
             {
@@ -421,16 +421,16 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
 
   plug_in_push (plug_in->gimp, plug_in);
 
-  /*  Execute the procedure even if procedural_db_lookup() returned NULL,
-   *  procedural_db_execute() will return appropriate error return_vals.
+  /*  Execute the procedure even if gimp_pdb_lookup() returned NULL,
+   *  gimp_pdb_execute() will return appropriate error return_vals.
    */
-  return_vals = procedural_db_execute (plug_in->gimp,
-                                       proc_frame->context_stack ?
-                                       proc_frame->context_stack->data :
-                                       proc_frame->main_context,
-                                       proc_frame->progress,
-                                       proc_name,
-                                       args);
+  return_vals = gimp_pdb_execute (plug_in->gimp,
+                                  proc_frame->context_stack ?
+                                  proc_frame->context_stack->data :
+                                  proc_frame->main_context,
+                                  proc_frame->progress,
+                                  proc_name,
+                                  args);
 
   plug_in_pop (plug_in->gimp);
 

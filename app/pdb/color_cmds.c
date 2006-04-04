@@ -24,8 +24,8 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "base/color-balance.h"
@@ -93,7 +93,7 @@ register_color_procs (Gimp *gimp)
                                                       "Contrast adjustment (-127 <= contrast <= 127)",
                                                       -127, 127, -127,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * levels
@@ -142,7 +142,7 @@ register_color_procs (Gimp *gimp)
                                                       "Intensity of highest output (0 <= high_output <= 255)",
                                                       0, 255, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * levels_auto
@@ -154,7 +154,7 @@ register_color_procs (Gimp *gimp)
                                                             "The drawable",
                                                             gimp,
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * levels_stretch
@@ -166,7 +166,7 @@ register_color_procs (Gimp *gimp)
                                                             "The drawable",
                                                             gimp,
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * posterize
@@ -184,7 +184,7 @@ register_color_procs (Gimp *gimp)
                                                       "Levels of posterization (2 <= levels <= 255)",
                                                       2, 255, 2,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * desaturate
@@ -196,7 +196,7 @@ register_color_procs (Gimp *gimp)
                                                             "The drawable",
                                                             gimp,
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * desaturate_full
@@ -215,7 +215,7 @@ register_color_procs (Gimp *gimp)
                                                   GIMP_TYPE_DESATURATE_MODE,
                                                   GIMP_DESATURATE_LIGHTNESS,
                                                   GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * equalize
@@ -233,7 +233,7 @@ register_color_procs (Gimp *gimp)
                                                      "Equalization option",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * invert
@@ -245,7 +245,7 @@ register_color_procs (Gimp *gimp)
                                                             "The drawable",
                                                             gimp,
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * curves_spline
@@ -275,7 +275,7 @@ register_color_procs (Gimp *gimp)
                                                            "control pts",
                                                            "The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }",
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * curves_explicit
@@ -305,7 +305,7 @@ register_color_procs (Gimp *gimp)
                                                            "curve",
                                                            "The explicit curve",
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * color_balance
@@ -348,7 +348,7 @@ register_color_procs (Gimp *gimp)
                                                     "Yellow-Blue color balance (-100 <= yellow_blue <= 100)",
                                                     -100, 100, -100,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * colorize
@@ -378,7 +378,7 @@ register_color_procs (Gimp *gimp)
                                                     "Lightness in percent (-100 <= lightness <= 100)",
                                                     -100, 100, -100,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * histogram
@@ -445,7 +445,7 @@ register_color_procs (Gimp *gimp)
                                                         "Percentile that range falls under",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * hue_saturation
@@ -482,7 +482,7 @@ register_color_procs (Gimp *gimp)
                                                     "Saturation modification (-100 <= saturation <= 100)",
                                                     -100, 100, -100,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * threshold
@@ -506,7 +506,7 @@ register_color_procs (Gimp *gimp)
                                                       "The high threshold value (0 <= high_threshold <= 255)",
                                                       0, 255, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

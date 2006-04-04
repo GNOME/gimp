@@ -40,8 +40,8 @@
 #include "core/gimpstrokedesc.h"
 #include "core/gimptoolinfo.h"
 
+#include "pdb/gimp-pdb.h"
 #include "pdb/gimpprocedure.h"
-#include "pdb/procedural_db.h"
 
 #include "plug-in/plug-in-run.h"
 
@@ -317,11 +317,9 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
   return_if_no_image (image, data);
 
   if (value)
-    procedure = procedural_db_lookup (image->gimp,
-                                      "plug-in-sel2path-advanced");
+    procedure = gimp_pdb_lookup (image->gimp, "plug-in-sel2path-advanced");
   else
-    procedure = procedural_db_lookup (image->gimp,
-                                      "plug-in-sel2path");
+    procedure = gimp_pdb_lookup (image->gimp, "plug-in-sel2path");
 
   if (! procedure)
     {

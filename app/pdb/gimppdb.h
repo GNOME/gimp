@@ -16,32 +16,33 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PROCEDURAL_DB_H__
-#define __PROCEDURAL_DB_H__
+#ifndef __GIMP_PDB_H__
+#define __GIMP_PDB_H__
 
 
-void            procedural_db_init             (Gimp             *gimp);
-void            procedural_db_free             (Gimp             *gimp);
+void            gimp_pdb_init       (Gimp          *gimp);
+void            gimp_pdb_exit       (Gimp          *gimp);
 
-void            procedural_db_init_procs       (Gimp             *gimp);
+void            gimp_pdb_init_procs (Gimp          *gimp);
 
-void            procedural_db_register         (Gimp             *gimp,
-                                                GimpProcedure    *procedure);
-void            procedural_db_unregister       (Gimp             *gimp,
-                                                const gchar      *name);
-GimpProcedure * procedural_db_lookup           (Gimp             *gimp,
-                                                const gchar      *name);
+void            gimp_pdb_register   (Gimp          *gimp,
+                                     GimpProcedure *procedure);
+void            gimp_pdb_unregister (Gimp          *gimp,
+                                     const gchar   *procedure_name);
 
-GValueArray   * procedural_db_execute          (Gimp             *gimp,
-                                                GimpContext      *context,
-                                                GimpProgress     *progress,
-                                                const gchar      *name,
-                                                GValueArray      *args);
-GValueArray   * procedural_db_run_proc         (Gimp             *gimp,
-                                                GimpContext      *context,
-                                                GimpProgress     *progress,
-                                                const gchar      *name,
-                                                ...);
+GimpProcedure * gimp_pdb_lookup     (Gimp          *gimp,
+                                     const gchar   *procedure_name);
+
+GValueArray   * gimp_pdb_execute    (Gimp          *gimp,
+                                     GimpContext   *context,
+                                     GimpProgress  *progress,
+                                     const gchar   *procedure_name,
+                                     GValueArray   *args);
+GValueArray   * gimp_pdb_run_proc   (Gimp          *gimp,
+                                     GimpContext   *context,
+                                     GimpProgress  *progress,
+                                     const gchar   *procedure_name,
+                                     ...);
 
 
-#endif  /*  __PROCEDURAL_DB_H__  */
+#endif  /*  __GIMP_PDB_H__  */

@@ -29,7 +29,7 @@
 
 #include "config/gimprc.h"
 
-#include "pdb/procedural_db.h"
+#include "pdb/gimp-pdb.h"
 
 #include "plug-in/plug-ins.h"
 
@@ -234,7 +234,7 @@ gimp_init (Gimp *gimp)
   gimp->gradient_factory    = NULL;
   gimp->palette_factory     = NULL;
 
-  procedural_db_init (gimp);
+  gimp_pdb_init (gimp);
 
   gimp->load_procs          = NULL;
   gimp->save_procs          = NULL;
@@ -325,7 +325,7 @@ gimp_finalize (GObject *object)
 
   xcf_exit (gimp);
 
-  procedural_db_free (gimp);
+  gimp_pdb_exit (gimp);
 
   if (gimp->load_procs)
     {
@@ -608,7 +608,7 @@ gimp_real_initialize (Gimp               *gimp,
 
   /*  register all internal procedures  */
   status_callback (NULL,_("Internal Procedures"), 0.2);
-  procedural_db_init_procs (gimp);
+  gimp_pdb_init_procs (gimp);
 
   status_callback (NULL, _("Plug-In Interpreters"), 0.8);
 

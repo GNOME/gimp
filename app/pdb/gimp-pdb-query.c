@@ -36,10 +36,10 @@
 
 #include "core/gimp.h"
 
-#include "gimpprocedure.h"
+#include "gimp-pdb.h"
 #include "gimp-pdb-compat.h"
-#include "procedural_db.h"
-#include "procedural-db-query.h"
+#include "gimp-pdb-query.h"
+#include "gimpprocedure.h"
 
 #include "gimp-intl.h"
 
@@ -84,22 +84,22 @@ struct _PDBStrings
 
 /*  local function prototypes  */
 
-static void   procedural_db_query_entry (gpointer       key,
-                                         gpointer       value,
-                                         gpointer       user_data);
-static void   procedural_db_print_entry (gpointer       key,
-                                         gpointer       value,
-                                         gpointer       user_data);
-static void   procedural_db_get_strings (PDBStrings    *strings,
-                                         GimpProcedure *procedure,
-                                         gboolean       compat);
+static void   gimp_pdb_query_entry (gpointer       key,
+                                    gpointer       value,
+                                    gpointer       user_data);
+static void   gimp_pdb_print_entry (gpointer       key,
+                                    gpointer       value,
+                                    gpointer       user_data);
+static void   gimp_pdb_get_strings (PDBStrings    *strings,
+                                    GimpProcedure *procedure,
+                                    gboolean       compat);
 
 
 /*  public functions  */
 
 gboolean
-procedural_db_dump (Gimp        *gimp,
-                    const gchar *filename)
+gimp_pdb_dump (Gimp        *gimp,
+               const gchar *filename)
 {
   FILE *file;
 
@@ -112,7 +112,7 @@ procedural_db_dump (Gimp        *gimp,
     return FALSE;
 
   g_hash_table_foreach (gimp->procedural_ht,
-                        procedural_db_print_entry,
+                        gimp_pdb_print_entry,
                         file);
   fclose (file);
 
@@ -120,16 +120,16 @@ procedural_db_dump (Gimp        *gimp,
 }
 
 gboolean
-procedural_db_query (Gimp          *gimp,
-                     const gchar   *name,
-                     const gchar   *blurb,
-                     const gchar   *help,
-                     const gchar   *author,
-                     const gchar   *copyright,
-                     const gchar   *date,
-                     const gchar   *proc_type,
-                     gint          *num_procs,
-                     gchar       ***procs)
+gimp_pdb_query (Gimp          *gimp,
+                const gchar   *name,
+                const gchar   *blurb,
+                const gchar   *help,
+                const gchar   *author,
+                const gchar   *copyright,
+                const gchar   *date,
+                const gchar   *proc_type,
+                gint          *num_procs,
+                gchar       ***procs)
 {
   PDBQuery pdb_query;
   gboolean success = FALSE;
@@ -171,12 +171,12 @@ procedural_db_query (Gimp          *gimp,
   pdb_query.querying_compat = FALSE;
 
   g_hash_table_foreach (gimp->procedural_ht,
-                        procedural_db_query_entry, &pdb_query);
+                        gimp_pdb_query_entry, &pdb_query);
 
   pdb_query.querying_compat = TRUE;
 
   g_hash_table_foreach (gimp->procedural_compat_ht,
-                        procedural_db_query_entry, &pdb_query);
+                        gimp_pdb_query_entry, &pdb_query);
 
  free_proc_type:
   regfree (&pdb_query.proc_type_regex);
@@ -203,16 +203,16 @@ procedural_db_query (Gimp          *gimp,
 }
 
 gboolean
-procedural_db_proc_info (Gimp             *gimp,
-                         const gchar      *proc_name,
-                         gchar           **blurb,
-                         gchar           **help,
-                         gchar           **author,
-                         gchar           **copyright,
-                         gchar           **date,
-                         GimpPDBProcType  *proc_type,
-                         gint             *num_args,
-                         gint             *num_values)
+gimp_pdb_proc_info (Gimp             *gimp,
+                    const gchar      *proc_name,
+                    gchar           **blurb,
+                    gchar           **help,
+                    gchar           **author,
+                    gchar           **copyright,
+                    gchar           **date,
+                    GimpPDBProcType  *proc_type,
+                    gint             *num_args,
+                    gint             *num_values)
 {
   GimpProcedure *procedure;
   PDBStrings     strings;
@@ -220,11 +220,11 @@ procedural_db_proc_info (Gimp             *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (proc_name != NULL, FALSE);
 
-  procedure = procedural_db_lookup (gimp, proc_name);
+  procedure = gimp_pdb_lookup (gimp, proc_name);
 
   if (procedure)
     {
-      procedural_db_get_strings (&strings, procedure, FALSE);
+      gimp_pdb_get_strings (&strings, procedure, FALSE);
     }
   else
     {
@@ -234,10 +234,10 @@ procedural_db_proc_info (Gimp             *gimp,
 
       if (compat_name)
         {
-          procedure = procedural_db_lookup (gimp, compat_name);
+          procedure = gimp_pdb_lookup (gimp, compat_name);
 
           if (procedure)
-            procedural_db_get_strings (&strings, procedure, TRUE);
+            gimp_pdb_get_strings (&strings, procedure, TRUE);
         }
     }
 
@@ -272,9 +272,9 @@ match_strings (regex_t     *preg,
 }
 
 static void
-procedural_db_query_entry (gpointer key,
-                           gpointer value,
-                           gpointer user_data)
+gimp_pdb_query_entry (gpointer key,
+                      gpointer value,
+                      gpointer user_data)
 {
   PDBQuery      *pdb_query = user_data;
   GList         *list;
@@ -296,7 +296,7 @@ procedural_db_query_entry (gpointer key,
 
   procedure = list->data;
 
-  procedural_db_get_strings (&strings, procedure, pdb_query->querying_compat);
+  gimp_pdb_get_strings (&strings, procedure, pdb_query->querying_compat);
 
   enum_class = g_type_class_ref (GIMP_TYPE_PDB_PROC_TYPE);
   type_desc = gimp_enum_get_desc (enum_class, procedure->proc_type);
@@ -355,9 +355,9 @@ output_string (FILE        *file,
 }
 
 static void
-procedural_db_print_entry (gpointer key,
-                           gpointer value,
-                           gpointer user_data)
+gimp_pdb_print_entry (gpointer key,
+                      gpointer value,
+                      gpointer user_data)
 {
   FILE       *file = user_data;
   GEnumClass *arg_class;
@@ -450,9 +450,9 @@ procedural_db_print_entry (gpointer key,
 }
 
 static void
-procedural_db_get_strings (PDBStrings    *strings,
-                           GimpProcedure *procedure,
-                           gboolean       compat)
+gimp_pdb_get_strings (PDBStrings    *strings,
+                      GimpProcedure *procedure,
+                      gboolean       compat)
 {
   strings->compat = compat;
 

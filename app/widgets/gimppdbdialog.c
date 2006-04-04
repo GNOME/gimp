@@ -31,7 +31,7 @@
 
 #include "core/gimpcontext.h"
 
-#include "pdb/procedural_db.h"
+#include "pdb/gimp-pdb.h"
 
 #include "gimpmenufactory.h"
 #include "gimppdbdialog.h"
@@ -305,8 +305,8 @@ gimp_pdb_dialog_run_callback (GimpPdbDialog *dialog,
     {
       dialog->callback_busy = TRUE;
 
-      if (procedural_db_lookup (dialog->caller_context->gimp,
-                                dialog->callback_name))
+      if (gimp_pdb_lookup (dialog->caller_context->gimp,
+                           dialog->callback_name))
         {
           GValueArray *return_vals;
 
@@ -364,8 +364,8 @@ gimp_pdb_dialogs_check_callback (GimpPdbDialogClass *klass)
 
       if (dialog->caller_context && dialog->callback_name)
         {
-          if (! procedural_db_lookup (dialog->caller_context->gimp,
-                                      dialog->callback_name))
+          if (! gimp_pdb_lookup (dialog->caller_context->gimp,
+                                 dialog->callback_name))
             {
               gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
             }

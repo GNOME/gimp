@@ -32,7 +32,7 @@
 #include "core/gimpgradient.h"
 #include "core/gimpparamspecs.h"
 
-#include "pdb/procedural_db.h"
+#include "pdb/gimp-pdb.h"
 
 #include "gimpcontainerbox.h"
 #include "gimpdatafactoryview.h"
@@ -160,15 +160,15 @@ gimp_gradient_select_run_callback (GimpPdbDialog *dialog,
   array->static_data = FALSE;
 
   return_vals =
-    procedural_db_run_proc (dialog->caller_context->gimp,
-                            dialog->caller_context,
-                            NULL,
-                            dialog->callback_name,
-                            G_TYPE_STRING,         GIMP_OBJECT (gradient)->name,
-                            GIMP_TYPE_INT32,       array->length / sizeof (gdouble),
-                            GIMP_TYPE_FLOAT_ARRAY, array,
-                            GIMP_TYPE_INT32,       closing,
-                            G_TYPE_NONE);
+    gimp_pdb_run_proc (dialog->caller_context->gimp,
+                       dialog->caller_context,
+                       NULL,
+                       dialog->callback_name,
+                       G_TYPE_STRING,         GIMP_OBJECT (gradient)->name,
+                       GIMP_TYPE_INT32,       array->length / sizeof (gdouble),
+                       GIMP_TYPE_FLOAT_ARRAY, array,
+                       GIMP_TYPE_INT32,       closing,
+                       G_TYPE_NONE);
 
   gimp_array_free (array);
 

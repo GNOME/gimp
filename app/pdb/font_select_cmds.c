@@ -24,8 +24,8 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
@@ -64,7 +64,7 @@ register_font_select_procs (Gimp *gimp)
                                                        FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * fonts_close_popup
@@ -77,7 +77,7 @@ register_font_select_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * fonts_set_popup
@@ -97,7 +97,7 @@ register_font_select_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 
@@ -120,7 +120,7 @@ fonts_popup_invoker (GimpProcedure     *procedure,
   if (success)
     {
       if (gimp->no_interface ||
-          ! procedural_db_lookup (gimp, font_callback) ||
+          ! gimp_pdb_lookup (gimp, font_callback) ||
           ! gimp_pdb_dialog_new (gimp, context, gimp->fonts,
                                  popup_title, font_callback, initial_font,
                                  NULL))
@@ -161,7 +161,7 @@ fonts_close_popup_invoker (GimpProcedure     *procedure,
   if (success)
     {
       if (gimp->no_interface ||
-          ! procedural_db_lookup (gimp, font_callback) ||
+          ! gimp_pdb_lookup (gimp, font_callback) ||
           ! gimp_pdb_dialog_close (gimp, gimp->fonts, font_callback))
         success = FALSE;
     }
@@ -202,7 +202,7 @@ fonts_set_popup_invoker (GimpProcedure     *procedure,
   if (success)
     {
       if (gimp->no_interface ||
-          ! procedural_db_lookup (gimp, font_callback) ||
+          ! gimp_pdb_lookup (gimp, font_callback) ||
           ! gimp_pdb_dialog_set (gimp, gimp->fonts, font_callback, font_name,
                                  NULL))
         success = FALSE;

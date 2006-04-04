@@ -27,8 +27,8 @@
 #include "libgimpcolor/gimpcolor.h"
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
@@ -92,7 +92,7 @@ register_gradient_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_duplicate
@@ -112,7 +112,7 @@ register_gradient_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_is_editable
@@ -131,7 +131,7 @@ register_gradient_procs (Gimp *gimp)
                                                          "TRUE if the gradient can be edited",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_rename
@@ -158,7 +158,7 @@ register_gradient_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_delete
@@ -171,7 +171,7 @@ register_gradient_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_get_uniform_samples
@@ -207,7 +207,7 @@ register_gradient_procs (Gimp *gimp)
                                                                 "color samples",
                                                                 "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_get_custom_samples
@@ -248,7 +248,7 @@ register_gradient_procs (Gimp *gimp)
                                                                 "color samples",
                                                                 "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_segment_get_left_color
@@ -279,7 +279,7 @@ register_gradient_procs (Gimp *gimp)
                                                         "The opacity of the endpoint",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_segment_set_left_color
@@ -310,7 +310,7 @@ register_gradient_procs (Gimp *gimp)
                                                     "The opacity to set for the endpoint",
                                                     0, 100.0, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_segment_get_right_color
@@ -341,7 +341,7 @@ register_gradient_procs (Gimp *gimp)
                                                         "The opacity of the endpoint",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_segment_set_right_color
@@ -372,7 +372,7 @@ register_gradient_procs (Gimp *gimp)
                                                     "The opacity to set for the endpoint",
                                                     0, 100.0, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_segment_get_left_pos
@@ -397,7 +397,7 @@ register_gradient_procs (Gimp *gimp)
                                                         "The return position",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_segment_set_left_pos
@@ -428,7 +428,7 @@ register_gradient_procs (Gimp *gimp)
                                                         "The return position",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_segment_get_middle_pos
@@ -453,7 +453,7 @@ register_gradient_procs (Gimp *gimp)
                                                         "The return position",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_segment_set_middle_pos
@@ -484,7 +484,7 @@ register_gradient_procs (Gimp *gimp)
                                                         "The return position",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_segment_get_right_pos
@@ -509,7 +509,7 @@ register_gradient_procs (Gimp *gimp)
                                                         "The return position",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_segment_set_right_pos
@@ -540,7 +540,7 @@ register_gradient_procs (Gimp *gimp)
                                                         "The return position",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_segment_get_blending_function
@@ -566,7 +566,7 @@ register_gradient_procs (Gimp *gimp)
                                                       GIMP_TYPE_GRADIENT_SEGMENT_TYPE,
                                                       GIMP_GRADIENT_SEGMENT_LINEAR,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_segment_get_coloring_type
@@ -592,7 +592,7 @@ register_gradient_procs (Gimp *gimp)
                                                       GIMP_TYPE_GRADIENT_SEGMENT_COLOR,
                                                       GIMP_GRADIENT_SEGMENT_RGB,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_segment_range_set_blending_function
@@ -624,7 +624,7 @@ register_gradient_procs (Gimp *gimp)
                                                   GIMP_TYPE_GRADIENT_SEGMENT_TYPE,
                                                   GIMP_GRADIENT_SEGMENT_LINEAR,
                                                   GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_segment_range_set_coloring_type
@@ -656,7 +656,7 @@ register_gradient_procs (Gimp *gimp)
                                                   GIMP_TYPE_GRADIENT_SEGMENT_COLOR,
                                                   GIMP_GRADIENT_SEGMENT_RGB,
                                                   GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_segment_range_flip
@@ -681,7 +681,7 @@ register_gradient_procs (Gimp *gimp)
                                                       "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_segment_range_replicate
@@ -712,7 +712,7 @@ register_gradient_procs (Gimp *gimp)
                                                       "The number of times to replicate",
                                                       2, 20, 2,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_segment_range_split_midpoint
@@ -737,7 +737,7 @@ register_gradient_procs (Gimp *gimp)
                                                       "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_segment_range_split_uniform
@@ -768,7 +768,7 @@ register_gradient_procs (Gimp *gimp)
                                                       "The number of uniform divisions to split each segment to",
                                                       2, 20, 2,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_segment_range_delete
@@ -793,7 +793,7 @@ register_gradient_procs (Gimp *gimp)
                                                       "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_segment_range_redistribute_handles
@@ -818,7 +818,7 @@ register_gradient_procs (Gimp *gimp)
                                                       "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_segment_range_blend_colors
@@ -843,7 +843,7 @@ register_gradient_procs (Gimp *gimp)
                                                       "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_segment_range_blend_opacity
@@ -868,7 +868,7 @@ register_gradient_procs (Gimp *gimp)
                                                       "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * gradient_segment_range_move
@@ -911,7 +911,7 @@ register_gradient_procs (Gimp *gimp)
                                                         "The final delta by which the range moved",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

@@ -26,8 +26,8 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimpunit.h"
@@ -60,7 +60,7 @@ register_unit_procs (Gimp *gimp)
                                                           "The number of units",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * unit_get_number_of_built_in_units
@@ -72,7 +72,7 @@ register_unit_procs (Gimp *gimp)
                                                           "The number of built-in units",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * unit_new
@@ -133,7 +133,7 @@ register_unit_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_UNIT_PIXEL,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * unit_get_deletion_flag
@@ -153,7 +153,7 @@ register_unit_procs (Gimp *gimp)
                                                          "The unit's deletion flag",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * unit_set_deletion_flag
@@ -173,7 +173,7 @@ register_unit_procs (Gimp *gimp)
                                                      "The new deletion flag of the unit",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * unit_get_identifier
@@ -194,7 +194,7 @@ register_unit_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * unit_get_factor
@@ -214,7 +214,7 @@ register_unit_procs (Gimp *gimp)
                                                         "The unit's factor",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * unit_get_digits
@@ -234,7 +234,7 @@ register_unit_procs (Gimp *gimp)
                                                           "The unit's number of digits",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * unit_get_symbol
@@ -255,7 +255,7 @@ register_unit_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * unit_get_abbreviation
@@ -276,7 +276,7 @@ register_unit_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * unit_get_singular
@@ -297,7 +297,7 @@ register_unit_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * unit_get_plural
@@ -318,7 +318,7 @@ register_unit_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

@@ -25,8 +25,8 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "base/temp-buf.h"
@@ -83,7 +83,7 @@ register_brush_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brush_duplicate
@@ -103,7 +103,7 @@ register_brush_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brush_is_generated
@@ -122,7 +122,7 @@ register_brush_procs (Gimp *gimp)
                                                          "TRUE if the brush is generated",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brush_rename
@@ -149,7 +149,7 @@ register_brush_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brush_delete
@@ -162,7 +162,7 @@ register_brush_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brush_is_editable
@@ -181,7 +181,7 @@ register_brush_procs (Gimp *gimp)
                                                          "TRUE if the brush can be edited",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brush_get_info
@@ -218,7 +218,7 @@ register_brush_procs (Gimp *gimp)
                                                           "The brush color bpp",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brush_get_pixels
@@ -277,7 +277,7 @@ register_brush_procs (Gimp *gimp)
                                                                "color bytes",
                                                                "The brush color data",
                                                                GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brush_get_spacing
@@ -296,7 +296,7 @@ register_brush_procs (Gimp *gimp)
                                                           "The brush spacing (0 <= spacing <= 1000)",
                                                           0, 1000, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brush_set_spacing
@@ -315,7 +315,7 @@ register_brush_procs (Gimp *gimp)
                                                       "The brush spacing (0 <= spacing <= 1000)",
                                                       0, 1000, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brush_get_shape
@@ -335,7 +335,7 @@ register_brush_procs (Gimp *gimp)
                                                       GIMP_TYPE_BRUSH_GENERATED_SHAPE,
                                                       GIMP_BRUSH_GENERATED_CIRCLE,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brush_get_radius
@@ -354,7 +354,7 @@ register_brush_procs (Gimp *gimp)
                                                         "The radius of the brush in pixels",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brush_get_spikes
@@ -373,7 +373,7 @@ register_brush_procs (Gimp *gimp)
                                                           "The number of spikes on the brush.",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brush_get_hardness
@@ -392,7 +392,7 @@ register_brush_procs (Gimp *gimp)
                                                         "The hardness of the brush.",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brush_get_aspect_ratio
@@ -411,7 +411,7 @@ register_brush_procs (Gimp *gimp)
                                                         "The aspect ratio of the brush.",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brush_get_angle
@@ -430,7 +430,7 @@ register_brush_procs (Gimp *gimp)
                                                         "The rotation angle of the brush.",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brush_set_shape
@@ -457,7 +457,7 @@ register_brush_procs (Gimp *gimp)
                                                       GIMP_TYPE_BRUSH_GENERATED_SHAPE,
                                                       GIMP_BRUSH_GENERATED_CIRCLE,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brush_set_radius
@@ -482,7 +482,7 @@ register_brush_procs (Gimp *gimp)
                                                         "The brush radius actually assigned",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brush_set_spikes
@@ -507,7 +507,7 @@ register_brush_procs (Gimp *gimp)
                                                           "The number of spikes actually assigned",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brush_set_hardness
@@ -532,7 +532,7 @@ register_brush_procs (Gimp *gimp)
                                                         "The brush hardness actually assigned",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brush_set_aspect_ratio
@@ -557,7 +557,7 @@ register_brush_procs (Gimp *gimp)
                                                         "The brush aspect ratio actually assigned",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brush_set_angle
@@ -582,7 +582,7 @@ register_brush_procs (Gimp *gimp)
                                                         "The brush rotation angle actually assigned",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

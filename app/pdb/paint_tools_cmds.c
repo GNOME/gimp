@@ -26,8 +26,8 @@
 #include "libgimpmath/gimpmath.h"
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
@@ -86,7 +86,7 @@ register_paint_tools_procs (Gimp *gimp)
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * airbrush_default
@@ -109,7 +109,7 @@ register_paint_tools_procs (Gimp *gimp)
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * clone
@@ -157,7 +157,7 @@ register_paint_tools_procs (Gimp *gimp)
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * clone_default
@@ -180,7 +180,7 @@ register_paint_tools_procs (Gimp *gimp)
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * convolve
@@ -216,7 +216,7 @@ register_paint_tools_procs (Gimp *gimp)
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * convolve_default
@@ -239,7 +239,7 @@ register_paint_tools_procs (Gimp *gimp)
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * dodgeburn
@@ -282,7 +282,7 @@ register_paint_tools_procs (Gimp *gimp)
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * dodgeburn_default
@@ -305,7 +305,7 @@ register_paint_tools_procs (Gimp *gimp)
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * eraser
@@ -342,7 +342,7 @@ register_paint_tools_procs (Gimp *gimp)
                                                   GIMP_TYPE_PAINT_APPLICATION_MODE,
                                                   GIMP_PAINT_CONSTANT,
                                                   GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * eraser_default
@@ -365,7 +365,7 @@ register_paint_tools_procs (Gimp *gimp)
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * paintbrush
@@ -407,7 +407,7 @@ register_paint_tools_procs (Gimp *gimp)
                                                     "Length of gradient to draw (0 <= gradient_length)",
                                                     0, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * paintbrush_default
@@ -430,7 +430,7 @@ register_paint_tools_procs (Gimp *gimp)
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * pencil
@@ -453,7 +453,7 @@ register_paint_tools_procs (Gimp *gimp)
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * smudge
@@ -482,7 +482,7 @@ register_paint_tools_procs (Gimp *gimp)
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * smudge_default
@@ -505,7 +505,7 @@ register_paint_tools_procs (Gimp *gimp)
                                                             "strokes",
                                                             "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }",
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

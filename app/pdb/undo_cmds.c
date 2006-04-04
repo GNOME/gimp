@@ -24,8 +24,8 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
@@ -56,7 +56,7 @@ register_undo_procs (Gimp *gimp)
                                                          "The ID of the image in which to open an undo group",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_undo_group_end
@@ -68,7 +68,7 @@ register_undo_procs (Gimp *gimp)
                                                          "The ID of the image in which to close an undo group",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_undo_is_enabled
@@ -86,7 +86,7 @@ register_undo_procs (Gimp *gimp)
                                                          "TRUE if undo is enabled for this image",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_undo_disable
@@ -104,7 +104,7 @@ register_undo_procs (Gimp *gimp)
                                                          "TRUE if the image undo has been disabled",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_undo_enable
@@ -122,7 +122,7 @@ register_undo_procs (Gimp *gimp)
                                                          "TRUE if the image undo has been enabled",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_undo_freeze
@@ -140,7 +140,7 @@ register_undo_procs (Gimp *gimp)
                                                          "TRUE if the image undo has been frozen",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_undo_thaw
@@ -158,7 +158,7 @@ register_undo_procs (Gimp *gimp)
                                                          "TRUE if the image undo has been thawed",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

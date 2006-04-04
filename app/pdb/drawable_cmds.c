@@ -24,8 +24,8 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "base/temp-buf.h"
@@ -94,7 +94,7 @@ register_drawable_procs (Gimp *gimp)
                                                             "The drawable to delete",
                                                             gimp,
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_is_layer
@@ -112,7 +112,7 @@ register_drawable_procs (Gimp *gimp)
                                                          "TRUE if the drawable is a layer",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_is_layer_mask
@@ -130,7 +130,7 @@ register_drawable_procs (Gimp *gimp)
                                                          "TRUE if the drawable is a layer mask",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_is_channel
@@ -148,7 +148,7 @@ register_drawable_procs (Gimp *gimp)
                                                          "TRUE if the drawable is a channel",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_type
@@ -167,7 +167,7 @@ register_drawable_procs (Gimp *gimp)
                                                       GIMP_TYPE_IMAGE_TYPE,
                                                       GIMP_RGB_IMAGE,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_type_with_alpha
@@ -192,7 +192,7 @@ register_drawable_procs (Gimp *gimp)
                                       GIMP_GRAY_IMAGE);
   gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->values[0]),
                                       GIMP_INDEXED_IMAGE);
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_has_alpha
@@ -210,7 +210,7 @@ register_drawable_procs (Gimp *gimp)
                                                          "Does the drawable have an alpha channel?",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_is_rgb
@@ -228,7 +228,7 @@ register_drawable_procs (Gimp *gimp)
                                                          "TRUE if the drawable is an RGB type",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_is_gray
@@ -246,7 +246,7 @@ register_drawable_procs (Gimp *gimp)
                                                          "TRUE if the drawable is a grayscale type",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_is_indexed
@@ -264,7 +264,7 @@ register_drawable_procs (Gimp *gimp)
                                                          "TRUE if the drawable is an indexed type",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_bpp
@@ -282,7 +282,7 @@ register_drawable_procs (Gimp *gimp)
                                                           "Bytes per pixel",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_width
@@ -300,7 +300,7 @@ register_drawable_procs (Gimp *gimp)
                                                           "Width of drawable",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_height
@@ -318,7 +318,7 @@ register_drawable_procs (Gimp *gimp)
                                                           "Height of drawable",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_offsets
@@ -342,7 +342,7 @@ register_drawable_procs (Gimp *gimp)
                                                           "y offset of drawable",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_get_image
@@ -360,7 +360,7 @@ register_drawable_procs (Gimp *gimp)
                                                              "The drawable's image",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_set_image
@@ -378,7 +378,7 @@ register_drawable_procs (Gimp *gimp)
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_get_name
@@ -397,7 +397,7 @@ register_drawable_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_set_name
@@ -416,7 +416,7 @@ register_drawable_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_get_visible
@@ -434,7 +434,7 @@ register_drawable_procs (Gimp *gimp)
                                                          "The drawable visibility",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_set_visible
@@ -452,7 +452,7 @@ register_drawable_procs (Gimp *gimp)
                                                      "The new drawable visibility",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_get_linked
@@ -470,7 +470,7 @@ register_drawable_procs (Gimp *gimp)
                                                          "The drawable linked state (for moves)",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_set_linked
@@ -488,7 +488,7 @@ register_drawable_procs (Gimp *gimp)
                                                      "The new drawable linked state",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_get_tattoo
@@ -506,7 +506,7 @@ register_drawable_procs (Gimp *gimp)
                                                       "The drawable tattoo",
                                                       1, G_MAXUINT32, 1,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_set_tattoo
@@ -524,7 +524,7 @@ register_drawable_procs (Gimp *gimp)
                                                   "The new drawable tattoo",
                                                   1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_mask_bounds
@@ -566,7 +566,7 @@ register_drawable_procs (Gimp *gimp)
                                                           "y coordinate of the lower right corner of selection bounds",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_mask_intersect
@@ -608,7 +608,7 @@ register_drawable_procs (Gimp *gimp)
                                                           "height of the intersection",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_merge_shadow
@@ -626,7 +626,7 @@ register_drawable_procs (Gimp *gimp)
                                                      "Push merge to undo stack?",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_update
@@ -662,7 +662,7 @@ register_drawable_procs (Gimp *gimp)
                                                       "Height of update region",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_get_pixel
@@ -697,7 +697,7 @@ register_drawable_procs (Gimp *gimp)
                                                                "pixel",
                                                                "The pixel value",
                                                                GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_set_pixel
@@ -732,7 +732,7 @@ register_drawable_procs (Gimp *gimp)
                                                            "pixel",
                                                            "The pixel value",
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_fill
@@ -751,7 +751,7 @@ register_drawable_procs (Gimp *gimp)
                                                   GIMP_TYPE_FILL_TYPE,
                                                   GIMP_FOREGROUND_FILL,
                                                   GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_offset
@@ -788,7 +788,7 @@ register_drawable_procs (Gimp *gimp)
                                                       "offset by this amount in Y direction",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_thumbnail
@@ -841,7 +841,7 @@ register_drawable_procs (Gimp *gimp)
                                                                "thumbnail data",
                                                                "The thumbnail data",
                                                                GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_sub_thumbnail
@@ -918,7 +918,7 @@ register_drawable_procs (Gimp *gimp)
                                                                "thumbnail data",
                                                                "The thumbnail data",
                                                                GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * drawable_foreground_extract
@@ -943,7 +943,7 @@ register_drawable_procs (Gimp *gimp)
                                                             "Tri-Map",
                                                             gimp,
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

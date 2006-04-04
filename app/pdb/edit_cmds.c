@@ -25,8 +25,8 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp-edit.h"
@@ -79,7 +79,7 @@ register_edit_procs (Gimp *gimp)
                                                          "TRUE if the cut was successful, FALSE if the selection contained only transparent pixels",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * edit_copy
@@ -97,7 +97,7 @@ register_edit_procs (Gimp *gimp)
                                                          "TRUE if the copy was successful, FALSE if the selection contained only transparent pixels",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * edit_copy_visible
@@ -115,7 +115,7 @@ register_edit_procs (Gimp *gimp)
                                                          "TRUE if the copy was successful, FALSE if the selection contained only transparent pixels",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * edit_paste
@@ -139,7 +139,7 @@ register_edit_procs (Gimp *gimp)
                                                              "The new floating selection",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * edit_paste_as_new
@@ -151,7 +151,7 @@ register_edit_procs (Gimp *gimp)
                                                              "The new image",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * edit_named_cut
@@ -177,7 +177,7 @@ register_edit_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * edit_named_copy
@@ -203,7 +203,7 @@ register_edit_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * edit_named_copy_visible
@@ -229,7 +229,7 @@ register_edit_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * edit_named_paste
@@ -260,7 +260,7 @@ register_edit_procs (Gimp *gimp)
                                                              "The new floating selection",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * edit_named_paste_as_new
@@ -279,7 +279,7 @@ register_edit_procs (Gimp *gimp)
                                                              "The new image",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * edit_clear
@@ -291,7 +291,7 @@ register_edit_procs (Gimp *gimp)
                                                             "The drawable to clear from",
                                                             gimp,
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * edit_fill
@@ -310,7 +310,7 @@ register_edit_procs (Gimp *gimp)
                                                   GIMP_TYPE_FILL_TYPE,
                                                   GIMP_FOREGROUND_FILL,
                                                   GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * edit_bucket_fill
@@ -366,7 +366,7 @@ register_edit_procs (Gimp *gimp)
                                                     "The y coordinate of this bucket fill's application. This parameter is only valid when there is no selection in the specified image.",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * edit_blend
@@ -472,7 +472,7 @@ register_edit_procs (Gimp *gimp)
                                                     "The y coordinate of this blend's ending point",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * edit_stroke
@@ -484,7 +484,7 @@ register_edit_procs (Gimp *gimp)
                                                             "The drawable to stroke to",
                                                             gimp,
                                                             GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

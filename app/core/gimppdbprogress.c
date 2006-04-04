@@ -29,7 +29,7 @@
 
 #include "core/gimpcontext.h"
 
-#include "pdb/procedural_db.h"
+#include "pdb/gimp-pdb.h"
 
 #include "gimpparamspecs.h"
 #include "gimppdbprogress.h"
@@ -249,14 +249,14 @@ gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
 
       progress->callback_busy = TRUE;
 
-      return_vals = procedural_db_run_proc (progress->context->gimp,
-                                            progress->context,
-                                            NULL,
-                                            progress->callback_name,
-                                            GIMP_TYPE_INT32, command,
-                                            G_TYPE_STRING,   text,
-                                            G_TYPE_DOUBLE,   value,
-                                            G_TYPE_NONE);
+      return_vals = gimp_pdb_run_proc (progress->context->gimp,
+                                       progress->context,
+                                       NULL,
+                                       progress->callback_name,
+                                       GIMP_TYPE_INT32, command,
+                                       G_TYPE_STRING,   text,
+                                       G_TYPE_DOUBLE,   value,
+                                       G_TYPE_NONE);
 
       if (g_value_get_enum (&return_vals->values[0]) != GIMP_PDB_SUCCESS)
         {

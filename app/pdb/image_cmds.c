@@ -28,8 +28,8 @@
 #include "libgimpmath/gimpmath.h"
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "base/temp-buf.h"
@@ -149,7 +149,7 @@ register_image_procs (Gimp *gimp)
                                                                 "image ids",
                                                                 "The list of images currently open",
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_new
@@ -180,7 +180,7 @@ register_image_procs (Gimp *gimp)
                                                              "The ID of the newly created image",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_duplicate
@@ -198,7 +198,7 @@ register_image_procs (Gimp *gimp)
                                                              "The new, duplicated image",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_delete
@@ -210,7 +210,7 @@ register_image_procs (Gimp *gimp)
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_base_type
@@ -229,7 +229,7 @@ register_image_procs (Gimp *gimp)
                                                       GIMP_TYPE_IMAGE_BASE_TYPE,
                                                       GIMP_RGB,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_width
@@ -247,7 +247,7 @@ register_image_procs (Gimp *gimp)
                                                           "The image's width",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_height
@@ -265,7 +265,7 @@ register_image_procs (Gimp *gimp)
                                                           "The image's height",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_free_shadow
@@ -277,7 +277,7 @@ register_image_procs (Gimp *gimp)
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_resize
@@ -313,7 +313,7 @@ register_image_procs (Gimp *gimp)
                                                       "y offset between upper left corner of old and new images: (new - old)",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_resize_to_layers
@@ -325,7 +325,7 @@ register_image_procs (Gimp *gimp)
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_scale
@@ -349,7 +349,7 @@ register_image_procs (Gimp *gimp)
                                                       "New image height (1 <= new_height)",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_crop
@@ -385,7 +385,7 @@ register_image_procs (Gimp *gimp)
                                                       "y offset: (0 <= offy <= (height - new_height))",
                                                       0, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_flip
@@ -406,7 +406,7 @@ register_image_procs (Gimp *gimp)
                                                      GIMP_PARAM_READWRITE));
   gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[1]),
                                       GIMP_ORIENTATION_UNKNOWN);
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_rotate
@@ -425,7 +425,7 @@ register_image_procs (Gimp *gimp)
                                                   GIMP_TYPE_ROTATION_TYPE,
                                                   GIMP_ROTATE_90,
                                                   GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_get_layers
@@ -448,7 +448,7 @@ register_image_procs (Gimp *gimp)
                                                                 "layer ids",
                                                                 "The list of layers contained in the image",
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_get_channels
@@ -471,7 +471,7 @@ register_image_procs (Gimp *gimp)
                                                                 "channel ids",
                                                                 "The list of channels contained in the image",
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_get_vectors
@@ -494,7 +494,7 @@ register_image_procs (Gimp *gimp)
                                                                 "vector ids",
                                                                 "The list of vectors contained in the image",
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_get_active_drawable
@@ -512,7 +512,7 @@ register_image_procs (Gimp *gimp)
                                                                 "The active drawable",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_unset_active_channel
@@ -524,7 +524,7 @@ register_image_procs (Gimp *gimp)
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_get_floating_sel
@@ -542,7 +542,7 @@ register_image_procs (Gimp *gimp)
                                                              "The image's floating selection",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_floating_sel_attached_to
@@ -560,7 +560,7 @@ register_image_procs (Gimp *gimp)
                                                                 "The drawable the floating selection is attached to",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_pick_color
@@ -614,7 +614,7 @@ register_image_procs (Gimp *gimp)
                                                         "The return color",
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_pick_correlate_layer
@@ -644,7 +644,7 @@ register_image_procs (Gimp *gimp)
                                                              "The layer found at the specified coordinates",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_add_layer
@@ -668,7 +668,7 @@ register_image_procs (Gimp *gimp)
                                                       "The layer position",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_remove_layer
@@ -686,7 +686,7 @@ register_image_procs (Gimp *gimp)
                                                          "The layer",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_raise_layer
@@ -704,7 +704,7 @@ register_image_procs (Gimp *gimp)
                                                          "The layer to raise",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_lower_layer
@@ -722,7 +722,7 @@ register_image_procs (Gimp *gimp)
                                                          "The layer to lower",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_raise_layer_to_top
@@ -740,7 +740,7 @@ register_image_procs (Gimp *gimp)
                                                          "The layer to raise to top",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_lower_layer_to_bottom
@@ -758,7 +758,7 @@ register_image_procs (Gimp *gimp)
                                                          "The layer to lower to bottom",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_add_channel
@@ -782,7 +782,7 @@ register_image_procs (Gimp *gimp)
                                                       "The channel position",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_remove_channel
@@ -800,7 +800,7 @@ register_image_procs (Gimp *gimp)
                                                            "The channel",
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_raise_channel
@@ -818,7 +818,7 @@ register_image_procs (Gimp *gimp)
                                                            "The channel to raise",
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_lower_channel
@@ -836,7 +836,7 @@ register_image_procs (Gimp *gimp)
                                                            "The channel to lower",
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_add_vectors
@@ -860,7 +860,7 @@ register_image_procs (Gimp *gimp)
                                                       "The vectors objects position",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_remove_vectors
@@ -878,7 +878,7 @@ register_image_procs (Gimp *gimp)
                                                            "The vectors object",
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_raise_vectors
@@ -896,7 +896,7 @@ register_image_procs (Gimp *gimp)
                                                            "The vectors object to raise",
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_lower_vectors
@@ -914,7 +914,7 @@ register_image_procs (Gimp *gimp)
                                                            "The vectors object to lower",
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_raise_vectors_to_top
@@ -932,7 +932,7 @@ register_image_procs (Gimp *gimp)
                                                            "The vectors object to raise to top",
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_lower_vectors_to_bottom
@@ -950,7 +950,7 @@ register_image_procs (Gimp *gimp)
                                                            "The vectors object to lower to bottom",
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_flatten
@@ -968,7 +968,7 @@ register_image_procs (Gimp *gimp)
                                                              "The resulting layer",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_merge_visible_layers
@@ -995,7 +995,7 @@ register_image_procs (Gimp *gimp)
                                                              "The resulting layer",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_merge_down
@@ -1028,7 +1028,7 @@ register_image_procs (Gimp *gimp)
                                                              "The resulting layer",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_add_layer_mask
@@ -1052,7 +1052,7 @@ register_image_procs (Gimp *gimp)
                                                               "The mask to add to the layer",
                                                               gimp,
                                                               GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_remove_layer_mask
@@ -1077,7 +1077,7 @@ register_image_procs (Gimp *gimp)
                                                   GIMP_TYPE_MASK_APPLY_MODE,
                                                   GIMP_MASK_APPLY,
                                                   GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_get_colormap
@@ -1100,7 +1100,7 @@ register_image_procs (Gimp *gimp)
                                                                "colormap",
                                                                "The image's colormap",
                                                                GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_set_colormap
@@ -1123,7 +1123,7 @@ register_image_procs (Gimp *gimp)
                                                            "colormap",
                                                            "The new colormap values",
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_clean_all
@@ -1135,7 +1135,7 @@ register_image_procs (Gimp *gimp)
                                                          "The image",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_is_dirty
@@ -1153,7 +1153,7 @@ register_image_procs (Gimp *gimp)
                                                          "TRUE if the image has unsaved changes.",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_thumbnail
@@ -1206,7 +1206,7 @@ register_image_procs (Gimp *gimp)
                                                                "thumbnail data",
                                                                "The thumbnail data",
                                                                GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_get_active_layer
@@ -1224,7 +1224,7 @@ register_image_procs (Gimp *gimp)
                                                              "The active layer",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_set_active_layer
@@ -1242,7 +1242,7 @@ register_image_procs (Gimp *gimp)
                                                          "The new image active layer",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_get_active_channel
@@ -1260,7 +1260,7 @@ register_image_procs (Gimp *gimp)
                                                                "The active channel",
                                                                gimp,
                                                                GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_set_active_channel
@@ -1278,7 +1278,7 @@ register_image_procs (Gimp *gimp)
                                                            "The new image active channel",
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_get_active_vectors
@@ -1296,7 +1296,7 @@ register_image_procs (Gimp *gimp)
                                                                "The active vectors",
                                                                gimp,
                                                                GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_set_active_vectors
@@ -1314,7 +1314,7 @@ register_image_procs (Gimp *gimp)
                                                            "The new image active vectors",
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_get_selection
@@ -1332,7 +1332,7 @@ register_image_procs (Gimp *gimp)
                                                                  "The selection channel",
                                                                  gimp,
                                                                  GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_get_component_active
@@ -1357,7 +1357,7 @@ register_image_procs (Gimp *gimp)
                                                          "Component is active (TRUE or FALSE)",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_set_component_active
@@ -1382,7 +1382,7 @@ register_image_procs (Gimp *gimp)
                                                      "Component is active (TRUE or FALSE)",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_get_component_visible
@@ -1407,7 +1407,7 @@ register_image_procs (Gimp *gimp)
                                                          "Component is visible (TRUE or FALSE)",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_set_component_visible
@@ -1432,7 +1432,7 @@ register_image_procs (Gimp *gimp)
                                                      "Component is visible (TRUE or FALSE)",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_get_filename
@@ -1451,7 +1451,7 @@ register_image_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_set_filename
@@ -1470,7 +1470,7 @@ register_image_procs (Gimp *gimp)
                                                        TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_get_name
@@ -1489,7 +1489,7 @@ register_image_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_get_resolution
@@ -1513,7 +1513,7 @@ register_image_procs (Gimp *gimp)
                                                         "The resolution in the y-axis, in dots per inch",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_set_resolution
@@ -1537,7 +1537,7 @@ register_image_procs (Gimp *gimp)
                                                     "The new image resolution in the y-axis, in dots per inch",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_get_unit
@@ -1557,7 +1557,7 @@ register_image_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_UNIT_PIXEL,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_set_unit
@@ -1577,7 +1577,7 @@ register_image_procs (Gimp *gimp)
                                                      FALSE,
                                                      GIMP_UNIT_INCH,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_get_tattoo_state
@@ -1595,7 +1595,7 @@ register_image_procs (Gimp *gimp)
                                                       "The tattoo state",
                                                       1, G_MAXUINT32, 1,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_set_tattoo_state
@@ -1613,7 +1613,7 @@ register_image_procs (Gimp *gimp)
                                                   "The new image tattoo state",
                                                   1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_get_layer_by_tattoo
@@ -1637,7 +1637,7 @@ register_image_procs (Gimp *gimp)
                                                              "The layer with the specified tattoo",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_get_channel_by_tattoo
@@ -1661,7 +1661,7 @@ register_image_procs (Gimp *gimp)
                                                                "The channel with the specified tattoo",
                                                                gimp,
                                                                GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * image_get_vectors_by_tattoo
@@ -1685,7 +1685,7 @@ register_image_procs (Gimp *gimp)
                                                                "The vectors with the specified tattoo",
                                                                gimp,
                                                                GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

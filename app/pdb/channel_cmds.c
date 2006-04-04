@@ -26,8 +26,8 @@
 #include "libgimpcolor/gimpcolor.h"
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimpchannel-combine.h"
@@ -97,7 +97,7 @@ register_channel_procs (Gimp *gimp)
                                                                "The newly created channel",
                                                                gimp,
                                                                GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * channel_new_from_component
@@ -129,7 +129,7 @@ register_channel_procs (Gimp *gimp)
                                                                "The newly created channel",
                                                                gimp,
                                                                GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * channel_copy
@@ -147,7 +147,7 @@ register_channel_procs (Gimp *gimp)
                                                                "The newly copied channel",
                                                                gimp,
                                                                GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * channel_combine_masks
@@ -184,7 +184,7 @@ register_channel_procs (Gimp *gimp)
                                                       "y offset between upper left corner of channels: (second - first)",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * channel_get_show_masked
@@ -202,7 +202,7 @@ register_channel_procs (Gimp *gimp)
                                                          "The channel composite method",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * channel_set_show_masked
@@ -220,7 +220,7 @@ register_channel_procs (Gimp *gimp)
                                                      "The new channel composite method",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * channel_get_opacity
@@ -238,7 +238,7 @@ register_channel_procs (Gimp *gimp)
                                                         "The channel opacity",
                                                         0, 100, 0,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * channel_set_opacity
@@ -256,7 +256,7 @@ register_channel_procs (Gimp *gimp)
                                                     "The new channel opacity (0 <= opacity <= 100)",
                                                     0, 100, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * channel_get_color
@@ -274,7 +274,7 @@ register_channel_procs (Gimp *gimp)
                                                         "The channel compositing color",
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * channel_set_color
@@ -292,7 +292,7 @@ register_channel_procs (Gimp *gimp)
                                                     "The new channel compositing color",
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

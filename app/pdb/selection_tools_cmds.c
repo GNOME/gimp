@@ -26,8 +26,8 @@
 #include "libgimpcolor/gimpcolor.h"
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimpchannel-select.h"
@@ -99,7 +99,7 @@ register_selection_tools_procs (Gimp *gimp)
                                                      "Use the composite image, not the drawable",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * ellipse_select
@@ -160,7 +160,7 @@ register_selection_tools_procs (Gimp *gimp)
                                                     "Radius for feather operation",
                                                     0, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * free_select
@@ -208,7 +208,7 @@ register_selection_tools_procs (Gimp *gimp)
                                                     "Radius for feather operation",
                                                     0, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * fuzzy_select
@@ -269,7 +269,7 @@ register_selection_tools_procs (Gimp *gimp)
                                                      "Use the composite image, not the drawable",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * rect_select
@@ -324,7 +324,7 @@ register_selection_tools_procs (Gimp *gimp)
                                                     "Radius for feather operation",
                                                     0, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

@@ -33,8 +33,8 @@
 #include "core/gimpimage.h"
 #include "core/gimpparamspecs.h"
 
+#include "pdb/gimp-pdb.h"
 #include "pdb/gimpprocedure.h"
-#include "pdb/procedural_db.h"
 
 #include "plug-in/plug-ins.h"
 #include "plug-in/plug-in-proc-def.h"
@@ -189,7 +189,7 @@ xcf_init (Gimp *gimp)
                                                        "file, in UTF-8",
                                                        FALSE, FALSE, NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   xcf_plug_in_save_proc.image_types_val =
     plug_ins_image_types_parse (xcf_plug_in_save_proc.image_types);
@@ -243,7 +243,7 @@ xcf_init (Gimp *gimp)
                                                              "Output image",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
   xcf_plug_in_load_proc.image_types_val =
     plug_ins_image_types_parse (xcf_plug_in_load_proc.image_types);
   plug_ins_add_internal (gimp, &xcf_plug_in_load_proc);

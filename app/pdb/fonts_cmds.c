@@ -24,8 +24,8 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
@@ -45,7 +45,7 @@ register_fonts_procs (Gimp *gimp)
    * fonts_refresh
    */
   procedure = gimp_procedure_init (&fonts_refresh_proc, 0, 0);
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * fonts_get_list
@@ -69,7 +69,7 @@ register_fonts_procs (Gimp *gimp)
                                                                  "font list",
                                                                  "The list of font names",
                                                                  GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

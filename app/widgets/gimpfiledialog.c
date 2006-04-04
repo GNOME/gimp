@@ -40,7 +40,7 @@
 #include "plug-in/plug-in-proc-def.h"
 #include "plug-in/plug-ins.h"
 
-#include "pdb/procedural_db.h"
+#include "pdb/gimp-pdb.h"
 
 #include "gimpfiledialog.h"
 #include "gimpfileprocview.h"
@@ -268,7 +268,7 @@ gimp_file_dialog_new (Gimp                 *gimp,
       automatic_help_id = GIMP_HELP_FILE_OPEN_BY_EXTENSION;
 
       /* FIXME */
-      local_only = (procedural_db_lookup (gimp, "file-uri-load") == NULL);
+      local_only = (gimp_pdb_lookup (gimp, "file-uri-load") == NULL);
       break;
 
     case GTK_FILE_CHOOSER_ACTION_SAVE:
@@ -277,7 +277,7 @@ gimp_file_dialog_new (Gimp                 *gimp,
       automatic_help_id = GIMP_HELP_FILE_SAVE_BY_EXTENSION;
 
       /* FIXME */
-      local_only = (procedural_db_lookup (gimp, "file-uri-save") == NULL);
+      local_only = (gimp_pdb_lookup (gimp, "file-uri-save") == NULL);
       break;
 
     default:

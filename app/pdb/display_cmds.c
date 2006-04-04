@@ -24,8 +24,8 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
@@ -59,7 +59,7 @@ register_display_procs (Gimp *gimp)
                                                                "The new display",
                                                                gimp,
                                                                GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * display_delete
@@ -71,7 +71,7 @@ register_display_procs (Gimp *gimp)
                                                            "The display to delete",
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * display_get_window_handle
@@ -89,13 +89,13 @@ register_display_procs (Gimp *gimp)
                                                           "The native window handle or 0",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * displays_flush
    */
   procedure = gimp_procedure_init (&displays_flush_proc, 0, 0);
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * displays_reconnect
@@ -113,7 +113,7 @@ register_display_procs (Gimp *gimp)
                                                          "The new image (must not have a display)",
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

@@ -576,7 +576,7 @@ CODE
 	}
 
 	$out->{register} .= <<CODE;
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 CODE
 
@@ -737,9 +737,9 @@ GPL
 
 		    $headers .= '#include "pdb-types.h"';
 		    $headers .= "\n";
-		    $headers .= '#include "gimpprocedure.h"';
+		    $headers .= '#include "gimp-pdb.h"';
 		    $headers .= "\n";
-		    $headers .= '#include "procedural_db.h"';
+		    $headers .= '#include "gimpprocedure.h"';
 		    $headers .= "\n";
 		    $headers .= '#include "core/gimpparamspecs.h"';
 		    $headers .= "\n\n";

@@ -26,8 +26,8 @@
 #include "libgimpmath/gimpmath.h"
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "config/gimpcoreconfig.h"
@@ -76,7 +76,7 @@ register_transform_tools_procs (Gimp *gimp)
                                                                 "The flipped drawable",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * perspective
@@ -148,7 +148,7 @@ register_transform_tools_procs (Gimp *gimp)
                                                                 "The newly mapped drawable",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * rotate
@@ -178,7 +178,7 @@ register_transform_tools_procs (Gimp *gimp)
                                                                 "The rotated drawable",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * scale
@@ -226,7 +226,7 @@ register_transform_tools_procs (Gimp *gimp)
                                                                 "The scaled drawable",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * shear
@@ -265,7 +265,7 @@ register_transform_tools_procs (Gimp *gimp)
                                                                 "The sheared drawable",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * transform_2d
@@ -331,7 +331,7 @@ register_transform_tools_procs (Gimp *gimp)
                                                                 "The transformed drawable",
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

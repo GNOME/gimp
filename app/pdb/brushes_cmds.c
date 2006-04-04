@@ -25,8 +25,8 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "base/temp-buf.h"
@@ -53,7 +53,7 @@ register_brushes_procs (Gimp *gimp)
    * brushes_refresh
    */
   procedure = gimp_procedure_init (&brushes_refresh_proc, 0, 0);
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brushes_get_list
@@ -77,7 +77,7 @@ register_brushes_procs (Gimp *gimp)
                                                                  "brush list",
                                                                  "The list of brush names",
                                                                  GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brushes_get_brush
@@ -108,7 +108,7 @@ register_brushes_procs (Gimp *gimp)
                                                           "The brush spacing (0 <= spacing <= 1000)",
                                                           0, 1000, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brushes_get_spacing
@@ -120,7 +120,7 @@ register_brushes_procs (Gimp *gimp)
                                                           "The brush spacing (0 <= spacing <= 1000)",
                                                           0, 1000, 0,
                                                           GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brushes_set_spacing
@@ -132,7 +132,7 @@ register_brushes_procs (Gimp *gimp)
                                                       "The brush spacing (0 <= spacing <= 1000)",
                                                       0, 1000, 0,
                                                       GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * brushes_get_brush_data
@@ -194,7 +194,7 @@ register_brushes_procs (Gimp *gimp)
                                                                "mask data",
                                                                "The brush mask data",
                                                                GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 

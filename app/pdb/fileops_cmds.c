@@ -30,8 +30,8 @@
 #include "libgimpthumb/gimpthumb.h"
 
 #include "pdb-types.h"
+#include "gimp-pdb.h"
 #include "gimpprocedure.h"
-#include "procedural_db.h"
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp-utils.h"
@@ -95,7 +95,7 @@ register_fileops_procs (Gimp *gimp)
                                                              "The output image",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * file_load_layer
@@ -129,7 +129,7 @@ register_fileops_procs (Gimp *gimp)
                                                              "The layer created when loading the image file",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * file_load_thumbnail
@@ -165,7 +165,7 @@ register_fileops_procs (Gimp *gimp)
                                                                "thumb data",
                                                                "The thumbnail data",
                                                                GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * file_save
@@ -204,7 +204,7 @@ register_fileops_procs (Gimp *gimp)
                                                        TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * file_save_thumbnail
@@ -223,7 +223,7 @@ register_fileops_procs (Gimp *gimp)
                                                        TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * temp_name
@@ -243,7 +243,7 @@ register_fileops_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * register_magic_load_handler
@@ -277,7 +277,7 @@ register_fileops_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * register_load_handler
@@ -304,7 +304,7 @@ register_fileops_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * register_save_handler
@@ -331,7 +331,7 @@ register_fileops_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * register_file_handler_mime
@@ -351,7 +351,7 @@ register_fileops_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
   /*
    * register_thumbnail_loader
@@ -371,7 +371,7 @@ register_fileops_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  procedural_db_register (gimp, procedure);
+  gimp_pdb_register (gimp, procedure);
 
 }
 
@@ -389,7 +389,7 @@ fileops_register_magic_load_handler (Gimp        *gimp,
 
   canonical = gimp_canonicalize_identifier (procedure_name);
 
-  procedure = procedural_db_lookup (gimp, canonical);
+  procedure = gimp_pdb_lookup (gimp, canonical);
 
   if (procedure &&
       ((procedure->num_args   < 3)                        ||
@@ -464,9 +464,8 @@ file_load_invoker (GimpProcedure     *procedure,
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))        
       g_value_set_static_string (&new_args->values[i], "")        ;
 
-  return_vals = procedural_db_execute (gimp, context, progress,
-                                       proc->name,
-                                       new_args);
+  return_vals = gimp_pdb_execute (gimp, context, progress,
+                                  proc->name, new_args);
 
   g_value_array_free (new_args);
 
@@ -685,9 +684,8 @@ file_save_invoker (GimpProcedure     *procedure,
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
       g_value_set_static_string (&new_args->values[i], "");
 
-  return_vals = procedural_db_execute (gimp, context, progress,
-                                       proc->name,
-                                       new_args);
+  return_vals = gimp_pdb_execute (gimp, context, progress,
+                                  proc->name, new_args);
 
   g_value_array_free (new_args);
 
@@ -928,7 +926,7 @@ register_save_handler_invoker (GimpProcedure     *procedure,
 
       canonical = gimp_canonicalize_identifier (procedure_name);
 
-      proc = procedural_db_lookup (gimp, canonical);
+      proc = gimp_pdb_lookup (gimp, canonical);
 
       if (proc &&
           ((proc->num_args < 5)                             ||
