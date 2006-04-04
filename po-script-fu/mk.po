@@ -7,15 +7,15 @@
 #
 #
 #
-# Maintainer: Vladimir Stefanov <vladoboss@mt.net.mk>, 2004, 2005.
+# Maintainer: Vladimir Stefanov <vladoboss@mt.net.mk>, 2004, 2005, 2006.
 # Vladimir Stefanov <vladoboss@gmail.com>, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD.mk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-02 11:31+0100\n"
-"PO-Revision-Date: 2006-02-10 11:17+0100\n"
-"Last-Translator: Vladimir Stefanov <vladoboss@gmail.com>\n"
+"POT-Creation-Date: 2006-04-03 11:27+0200\n"
+"PO-Revision-Date: 2006-04-04 08:10+0200\n"
+"Last-Translator: Vladimir Stefanov <vladoboss@mt.net.mk>\n"
 "Language-Team: Macedonian <dev@mk.openoffice.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -152,7 +152,7 @@ msgid "Script-Fu _Console"
 msgstr "Скрипт-Фу _Конзола"
 
 #: ../plug-ins/script-fu/script-fu.c:123 ../plug-ins/script-fu/script-fu.c:152
-#: ../plug-ins/script-fu/script-fu.c:313
+#: ../plug-ins/script-fu/script-fu.c:316
 msgid "<Toolbox>/Xtns/Languages/Script-Fu"
 msgstr "<Toolbox>/Проширувања/Јазици/Скрипт-Фу"
 
@@ -160,63 +160,72 @@ msgstr "<Toolbox>/Проширувања/Јазици/Скрипт-Фу"
 msgid "_Start Server..."
 msgstr "_Подигни сервер..."
 
+#: ../plug-ins/script-fu/script-fu.c:269
+msgid "_GIMP Online"
+msgstr "_ГИМП на интернет"
+
 #: ../plug-ins/script-fu/script-fu.c:270
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
+msgid "_User Manual"
+msgstr "_Упатство за корисникот"
+
+#: ../plug-ins/script-fu/script-fu.c:273
 msgid "_Script-Fu"
 msgstr "_Скрипт-Фу"
 
-#: ../plug-ins/script-fu/script-fu.c:272
+#: ../plug-ins/script-fu/script-fu.c:275
 msgid "_Buttons"
 msgstr "Коп_чиња"
 
-#: ../plug-ins/script-fu/script-fu.c:274
+#: ../plug-ins/script-fu/script-fu.c:277
 msgid "_Logos"
 msgstr "_Логоа"
 
-#: ../plug-ins/script-fu/script-fu.c:276
+#: ../plug-ins/script-fu/script-fu.c:279
 msgid "_Misc"
 msgstr "_Разно"
 
-#: ../plug-ins/script-fu/script-fu.c:278
+#: ../plug-ins/script-fu/script-fu.c:281
 msgid "_Patterns"
 msgstr "_Шаблони"
 
-#: ../plug-ins/script-fu/script-fu.c:280
+#: ../plug-ins/script-fu/script-fu.c:283
 msgid "_Test"
 msgstr "_Тест"
 
-#: ../plug-ins/script-fu/script-fu.c:282
+#: ../plug-ins/script-fu/script-fu.c:285
 msgid "_Utils"
 msgstr "_Можности"
 
-#: ../plug-ins/script-fu/script-fu.c:284
+#: ../plug-ins/script-fu/script-fu.c:287
 msgid "_Web Page Themes"
 msgstr "Теми за _веб страни"
 
-#: ../plug-ins/script-fu/script-fu.c:286
+#: ../plug-ins/script-fu/script-fu.c:289
 msgid "_Alien Glow"
 msgstr "Вонземско _светло"
 
-#: ../plug-ins/script-fu/script-fu.c:288
+#: ../plug-ins/script-fu/script-fu.c:291
 msgid "_Beveled Pattern"
 msgstr "_Закосен шаблон"
 
-#: ../plug-ins/script-fu/script-fu.c:290
+#: ../plug-ins/script-fu/script-fu.c:293
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:293
+#: ../plug-ins/script-fu/script-fu.c:296
 msgid "Alpha to _Logo"
 msgstr "Алфа во _лого"
 
-#: ../plug-ins/script-fu/script-fu.c:295
+#: ../plug-ins/script-fu/script-fu.c:298
 msgid "_Decor"
 msgstr "_Декор"
 
-#: ../plug-ins/script-fu/script-fu.c:297
+#: ../plug-ins/script-fu/script-fu.c:300
 msgid "_Render"
 msgstr "_Исцртување"
 
-#: ../plug-ins/script-fu/script-fu.c:305
+#: ../plug-ins/script-fu/script-fu.c:308
 msgid "_Refresh Scripts"
 msgstr "_Освежи скрипти"
 
@@ -2204,8 +2213,8 @@ msgid "_Weave..."
 msgstr "_Бран..."
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
-msgid "Create and use _Selections"
-msgstr "Создади и користи ги _Селекциите"
+msgid "Create and Use _Selections"
+msgstr "Создади и користи ги _селекциите"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
 msgid "Create, Open and Save _Files"
@@ -2216,8 +2225,8 @@ msgid "Drawing _Simple Objects"
 msgstr "Цртање на _Едноставни објекти"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
-msgid "Howto use _Dialogs"
-msgstr "_Дијалози за користење на КакоДа"
+msgid "How to Use _Dialogs"
+msgstr "Како да се користат _дијалозите"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
 msgid "Plug-in _Registry"
@@ -2228,8 +2237,8 @@ msgid "Using _Paths"
 msgstr "Користење на _патеки"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
-msgid "_Basics of TheGIMP"
-msgstr "_Основи на ГИМП"
+msgid "_Basic Concepts"
+msgstr "_Основни концепти"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
 msgid "_Developer Web Site"
@@ -2240,12 +2249,8 @@ msgid "_Main Web Site"
 msgstr "_Главна веб страница"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
-msgid "_Preparing your Images for the web"
-msgstr "Ги _подготвувам вашите слики за на интернет"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
-msgid "_User Manual Web Site"
-msgstr "Веб страница за упатство за _корисникот"
+msgid "_Preparing your Images for the Web"
+msgstr "Ги под_готвува вашите слики за на интернет"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
 msgid "_Working with Digital Camera Photos"
