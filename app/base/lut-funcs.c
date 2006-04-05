@@ -49,8 +49,6 @@ brightness_contrast_lut_func (BrightnessContrastLutData *data,
   if ((nchannels == 2 || nchannels == 4) && channel == nchannels -1)
     return value;
 
-  g_printerr ("%g ", value);
-
   /* apply brightness */
   if (data->brightness < 0.0)
     value = value * (1.0 + data->brightness);
@@ -59,8 +57,6 @@ brightness_contrast_lut_func (BrightnessContrastLutData *data,
 
   slant = tan ((data->contrast + 1) * G_PI_4);
   value = (value - 0.5) * slant + 0.5;
-
-  g_printerr ("%g\n", value);
 
   return value;
 }
