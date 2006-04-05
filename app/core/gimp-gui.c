@@ -24,6 +24,8 @@
 
 #include "core-types.h"
 
+#include "plug-in/plug-in-proc-def.h"
+
 #include "gimp.h"
 #include "gimp-gui.h"
 #include "gimpcontainer.h"
@@ -309,26 +311,26 @@ gimp_menus_init (Gimp        *gimp,
 }
 
 void
-gimp_menus_create_item (Gimp          *gimp,
-                        PlugInProcDef *proc_def,
-                        const gchar   *menu_path)
+gimp_menus_create_item (Gimp                *gimp,
+                        GimpPlugInProcedure *proc,
+                        const gchar         *menu_path)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (proc_def != NULL);
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
   if (gimp->gui.menus_create_item)
-    gimp->gui.menus_create_item (gimp, proc_def, menu_path);
+    gimp->gui.menus_create_item (gimp, proc, menu_path);
 }
 
 void
-gimp_menus_delete_item (Gimp          *gimp,
-                        PlugInProcDef *proc_def)
+gimp_menus_delete_item (Gimp                *gimp,
+                        GimpPlugInProcedure *proc)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (proc_def != NULL);
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
   if (gimp->gui.menus_delete_item)
-    gimp->gui.menus_delete_item (gimp, proc_def);
+    gimp->gui.menus_delete_item (gimp, proc);
 }
 
 void

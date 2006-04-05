@@ -136,7 +136,7 @@ gimp_file_proc_view_new (Gimp        *gimp,
 
   for (list = procedures; list; list = g_slist_next (list))
     {
-      PlugInProcDef *proc = list->data;
+      GimpPlugInProcedure *proc = list->data;
 
       if (! proc->prefixes_list) /*  skip URL loaders  */
         {
@@ -147,9 +147,9 @@ gimp_file_proc_view_new (Gimp        *gimp,
           GSList      *list2;
 
           locale_domain = plug_ins_locale_domain (gimp, proc->prog, NULL);
-          help_domain   = plug_ins_help_domain   (gimp, proc->prog, NULL);
-          label         = plug_in_proc_def_get_label    (proc, locale_domain);
-          help_id       = plug_in_proc_def_get_help_id  (proc, help_domain);
+          help_domain   = plug_ins_help_domain (gimp, proc->prog, NULL);
+          label         = gimp_plug_in_procedure_get_label (proc, locale_domain);
+          help_id       = gimp_plug_in_procedure_get_help_id (proc, help_domain);
 
           if (label)
             {
@@ -223,7 +223,7 @@ gimp_file_proc_view_new (Gimp        *gimp,
   return GTK_WIDGET (view);
 }
 
-PlugInProcDef  *
+GimpPlugInProcedure *
 gimp_file_proc_view_get_proc (GimpFileProcView  *view,
                               gchar            **label)
 {
@@ -237,7 +237,7 @@ gimp_file_proc_view_get_proc (GimpFileProcView  *view,
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
-      PlugInProcDef *proc;
+      GimpPlugInProcedure *proc;
 
       if (label)
         gtk_tree_model_get (model, &iter,
@@ -259,8 +259,8 @@ gimp_file_proc_view_get_proc (GimpFileProcView  *view,
 }
 
 gboolean
-gimp_file_proc_view_set_proc (GimpFileProcView *view,
-                              PlugInProcDef    *proc)
+gimp_file_proc_view_set_proc (GimpFileProcView    *view,
+                              GimpPlugInProcedure *proc)
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
@@ -274,7 +274,7 @@ gimp_file_proc_view_set_proc (GimpFileProcView *view,
        iter_valid;
        iter_valid = gtk_tree_model_iter_next (model, &iter))
     {
-      PlugInProcDef *this;
+      GimpPlugInProcedure *this;
 
       gtk_tree_model_get (model, &iter,
                           COLUMN_PROC, &this,

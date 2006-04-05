@@ -117,13 +117,13 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
                          GimpImage        *image,
                          GtkSelectionData *selection)
 {
-  PlugInProcDef *proc;
-  GdkAtom        property = gdk_atom_intern ("XdndDirectSave0", FALSE);
-  GdkAtom        type     = gdk_atom_intern ("text/plain", FALSE);
-  gint           length;
-  guchar        *data;
-  gchar         *uri;
-  GError        *error = NULL;
+  GimpPlugInProcedure *proc;
+  GdkAtom              property = gdk_atom_intern ("XdndDirectSave0", FALSE);
+  GdkAtom              type     = gdk_atom_intern ("text/plain", FALSE);
+  gint                 length;
+  guchar              *data;
+  gchar               *uri;
+  GError              *error = NULL;
 
   g_return_if_fail (GDK_IS_DRAG_CONTEXT (context));
   g_return_if_fail (GIMP_IS_IMAGE (image));

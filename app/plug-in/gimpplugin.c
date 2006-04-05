@@ -693,8 +693,7 @@ plug_in_close (PlugIn   *plug_in,
       GSList *list;
 
       for (list = plug_in->temp_proc_defs; list; list = g_slist_next (list))
-        plug_ins_temp_proc_def_remove (plug_in->gimp,
-                                       (PlugInProcDef *) list->data);
+        plug_ins_temp_proc_def_remove (plug_in->gimp, list->data);
 
       g_slist_free (plug_in->temp_proc_defs);
       plug_in->temp_proc_defs = NULL;
@@ -976,23 +975,23 @@ plug_in_main_loop_quit (PlugIn *plug_in)
 gchar *
 plug_in_get_undo_desc (PlugIn *plug_in)
 {
-  PlugInProcFrame *proc_frame = NULL;
-  PlugInProcDef   *proc_def   = NULL;
-  gchar           *undo_desc  = NULL;
+  PlugInProcFrame     *proc_frame = NULL;
+  GimpPlugInProcedure *proc       = NULL;
+  gchar               *undo_desc  = NULL;
 
   g_return_val_if_fail (plug_in != NULL, NULL);
 
   proc_frame = plug_in_get_proc_frame (plug_in);
 
   if (proc_frame)
-    proc_def = plug_ins_proc_def_find (plug_in->gimp, proc_frame->procedure);
+    proc = GIMP_PLUG_IN_PROCEDURE (proc_frame->procedure);
 
-  if (proc_def)
+  if (proc)
     {
       const gchar *domain = plug_ins_locale_domain (plug_in->gimp,
                                                     plug_in->prog, NULL);
 
-      undo_desc = plug_in_proc_def_get_label (proc_def, domain);
+      undo_desc = gimp_plug_in_procedure_get_label (proc, domain);
     }
 
   if (! undo_desc)
@@ -1007,22 +1006,21 @@ plug_in_menu_register (PlugIn      *plug_in,
                        const gchar *proc_name,
                        const gchar *menu_path)
 {
-  PlugInProcDef *proc_def = NULL;
-  GError        *error    = NULL;
+  GimpPlugInProcedure *proc  = NULL;
+  GError              *error = NULL;
 
   g_return_val_if_fail (plug_in != NULL, FALSE);
   g_return_val_if_fail (proc_name != NULL, FALSE);
   g_return_val_if_fail (menu_path != NULL, FALSE);
 
   if (plug_in->plug_in_def)
-    proc_def = plug_in_proc_def_find (plug_in->plug_in_def->proc_defs,
-                                      proc_name);
+    proc = gimp_plug_in_procedure_find (plug_in->plug_in_def->proc_defs,
+                                        proc_name);
 
-  if (! proc_def)
-    proc_def = plug_in_proc_def_find (plug_in->temp_proc_defs,
-                                      proc_name);
+  if (! proc)
+    proc = gimp_plug_in_procedure_find (plug_in->temp_proc_defs, proc_name);
 
-  if (! proc_def)
+  if (! proc)
     {
       g_message ("Plug-in \"%s\"\n(%s)\n"
                  "attempted to register the menu item \"%s\" "
@@ -1036,7 +1034,7 @@ plug_in_menu_register (PlugIn      *plug_in,
       return FALSE;
     }
 
-  if (! proc_def->menu_label)
+  if (! proc->menu_label)
     {
       g_message ("Plug-in \"%s\"\n(%s)\n"
                  "attempted to register the menu item \"%s\" "
@@ -1056,10 +1054,10 @@ plug_in_menu_register (PlugIn      *plug_in,
                                  plug_in->prog,
                                  proc_name,
                                  menu_path,
-                                 proc_def->procedure->args,
-                                 proc_def->procedure->num_args,
-                                 proc_def->procedure->values,
-                                 proc_def->procedure->num_values,
+                                 GIMP_PROCEDURE (proc)->args,
+                                 GIMP_PROCEDURE (proc)->num_args,
+                                 GIMP_PROCEDURE (proc)->values,
+                                 GIMP_PROCEDURE (proc)->num_values,
                                  &error))
     {
       g_message (error->message);
@@ -1068,7 +1066,7 @@ plug_in_menu_register (PlugIn      *plug_in,
       return FALSE;
     }
 
-  switch (proc_def->procedure->proc_type)
+  switch (GIMP_PROCEDURE (proc)->proc_type)
     {
     case GIMP_INTERNAL:
       return FALSE;
@@ -1082,13 +1080,12 @@ plug_in_menu_register (PlugIn      *plug_in,
       break;
     }
 
-  proc_def->menu_paths = g_list_append (proc_def->menu_paths,
-                                        g_strdup (menu_path));
+  proc->menu_paths = g_list_append (proc->menu_paths, g_strdup (menu_path));
 
-  if (proc_def->procedure->proc_type == GIMP_TEMPORARY
-      && ! plug_in->gimp->no_interface)
+  if (GIMP_PROCEDURE (proc)->proc_type == GIMP_TEMPORARY &&
+      ! plug_in->gimp->no_interface)
     {
-      gimp_menus_create_item (plug_in->gimp, proc_def, menu_path);
+      gimp_menus_create_item (plug_in->gimp, proc, menu_path);
     }
 
   return TRUE;

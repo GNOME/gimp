@@ -38,29 +38,29 @@ typedef struct _GimpPlugInActionClass GimpPlugInActionClass;
 
 struct _GimpPlugInAction
 {
-  GimpAction     parent_instance;
+  GimpAction           parent_instance;
 
-  PlugInProcDef *proc_def;
+  GimpPlugInProcedure *proc;
 };
 
 struct _GimpPlugInActionClass
 {
   GimpActionClass parent_class;
 
-  void (* selected) (GimpPlugInAction *action,
-                     PlugInProcDef    *proc_def);
+  void (* selected) (GimpPlugInAction    *action,
+                     GimpPlugInProcedure *proc);
 };
 
 
 GType              gimp_plug_in_action_get_type (void) G_GNUC_CONST;
 
-GimpPlugInAction * gimp_plug_in_action_new      (const gchar      *name,
-                                                 const gchar      *label,
-                                                 const gchar      *tooltip,
-                                                 const gchar      *stock_id,
-                                                 PlugInProcDef    *proc_def);
-void               gimp_plug_in_action_selected (GimpPlugInAction *action,
-                                                 PlugInProcDef    *proc_def);
+GimpPlugInAction * gimp_plug_in_action_new      (const gchar         *name,
+                                                 const gchar         *label,
+                                                 const gchar         *tooltip,
+                                                 const gchar         *stock_id,
+                                                 GimpPlugInProcedure *proc);
+void               gimp_plug_in_action_selected (GimpPlugInAction    *action,
+                                                 GimpPlugInProcedure *proc);
 
 
 #endif  /* __GIMP_PLUG_IN_ACTION_H__ */

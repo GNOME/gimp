@@ -56,8 +56,7 @@ plug_in_def_free (PlugInDef *plug_in_def,
   g_free (plug_in_def->help_domain_uri);
 
   if (free_proc_defs)
-    g_slist_foreach (plug_in_def->proc_defs, (GFunc) plug_in_proc_def_free,
-                     NULL);
+    g_slist_foreach (plug_in_def->proc_defs, (GFunc) g_object_unref, NULL);
 
   if (plug_in_def->proc_defs)
     g_slist_free (plug_in_def->proc_defs);
@@ -66,15 +65,16 @@ plug_in_def_free (PlugInDef *plug_in_def,
 }
 
 void
-plug_in_def_add_proc_def (PlugInDef     *plug_in_def,
-                          PlugInProcDef *proc_def)
+plug_in_def_add_procedure (PlugInDef           *plug_in_def,
+                           GimpPlugInProcedure *proc)
 {
   g_return_if_fail (plug_in_def != NULL);
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
-  proc_def->mtime = plug_in_def->mtime;
-  proc_def->prog  = g_strdup (plug_in_def->prog);
+  proc->mtime = plug_in_def->mtime;
+  proc->prog  = g_strdup (plug_in_def->prog);
 
-  plug_in_def->proc_defs = g_slist_append (plug_in_def->proc_defs, proc_def);
+  plug_in_def->proc_defs = g_slist_append (plug_in_def->proc_defs, proc);
 }
 
 void

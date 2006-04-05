@@ -22,20 +22,20 @@
 #define __FILE_UTILS_H__
 
 
-gchar         * file_utils_filename_to_uri        (GSList        *procs,
-                                                   const gchar   *filename,
-                                                   GError       **error);
-gchar         * file_utils_filename_from_uri      (const gchar   *uri);
+gchar               * file_utils_filename_to_uri        (GSList        *procs,
+                                                         const gchar   *filename,
+                                                         GError       **error);
+gchar               * file_utils_filename_from_uri      (const gchar   *uri);
 
-gchar         * file_utils_uri_to_utf8_filename   (const gchar   *uri);
+gchar               * file_utils_uri_to_utf8_filename   (const gchar   *uri);
 
-gchar         * file_utils_uri_display_basename   (const gchar   *uri);
-gchar         * file_utils_uri_display_name       (const gchar   *uri);
+gchar               * file_utils_uri_display_basename   (const gchar   *uri);
+gchar               * file_utils_uri_display_name       (const gchar   *uri);
 
-PlugInProcDef * file_utils_find_proc              (GSList        *procs,
-                                                   const gchar   *filename);
-PlugInProcDef * file_utils_find_proc_by_extension (GSList        *procs,
-                                                   const gchar   *uri);
+GimpPlugInProcedure * file_utils_find_proc              (GSList        *procs,
+                                                         const gchar   *filename);
+GimpPlugInProcedure * file_utils_find_proc_by_extension (GSList        *procs,
+                                                         const gchar   *uri);
 
 
 #endif /* __FILE_UTILS_H__ */

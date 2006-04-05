@@ -22,14 +22,14 @@
 #define __FILE_SAVE_H__
 
 
-GimpPDBStatusType   file_save (GimpImage      *image,
-                               GimpContext    *context,
-                               GimpProgress   *progress,
-                               const gchar    *uri,
-                               PlugInProcDef  *file_proc,
-                               GimpRunMode     run_mode,
-                               gboolean        save_a_copy,
-                               GError        **error);
+GimpPDBStatusType   file_save (GimpImage            *image,
+                               GimpContext          *context,
+                               GimpProgress         *progress,
+                               const gchar          *uri,
+                               GimpPlugInProcedure  *file_proc,
+                               GimpRunMode           run_mode,
+                               gboolean              save_a_copy,
+                               GError              **error);
 
 
 #endif /* __FILE_SAVE_H__ */

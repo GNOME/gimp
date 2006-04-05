@@ -22,50 +22,50 @@
 #define __FILE_OPEN_H__
 
 
-GimpImage * file_open_image                 (Gimp               *gimp,
-                                             GimpContext        *context,
-                                             GimpProgress       *progress,
-                                             const gchar        *uri,
-                                             const gchar        *entered_filename,
-                                             PlugInProcDef      *file_proc,
-                                             GimpRunMode         run_mode,
-                                             GimpPDBStatusType  *status,
-                                             const gchar       **mime_type,
-                                             GError            **error);
+GimpImage * file_open_image                 (Gimp                *gimp,
+                                             GimpContext         *context,
+                                             GimpProgress        *progress,
+                                             const gchar         *uri,
+                                             const gchar         *entered_filename,
+                                             GimpPlugInProcedure *file_proc,
+                                             GimpRunMode          run_mode,
+                                             GimpPDBStatusType   *status,
+                                             const gchar        **mime_type,
+                                             GError             **error);
 
-GimpImage * file_open_thumbnail             (Gimp               *gimp,
-                                             GimpContext        *context,
-                                             GimpProgress       *progress,
-                                             const gchar        *uri,
-                                             gint                size,
-                                             const gchar       **mime_type,
-                                             gint               *image_width,
-                                             gint               *image_height);
-GimpImage * file_open_with_display          (Gimp               *gimp,
-                                             GimpContext        *context,
-                                             GimpProgress       *progress,
-                                             const gchar        *uri,
-                                             GimpPDBStatusType  *status,
-                                             GError            **error);
+GimpImage * file_open_thumbnail             (Gimp                *gimp,
+                                             GimpContext         *context,
+                                             GimpProgress        *progress,
+                                             const gchar         *uri,
+                                             gint                 size,
+                                             const gchar        **mime_type,
+                                             gint                *image_width,
+                                             gint                *image_height);
+GimpImage * file_open_with_display          (Gimp                *gimp,
+                                             GimpContext         *context,
+                                             GimpProgress        *progress,
+                                             const gchar         *uri,
+                                             GimpPDBStatusType   *status,
+                                             GError             **error);
 
-GimpImage * file_open_with_proc_and_display (Gimp               *gimp,
-                                             GimpContext        *context,
-                                             GimpProgress       *progress,
-                                             const gchar        *uri,
-                                             const gchar        *entered_filename,
-                                             PlugInProcDef      *file_proc,
-                                             GimpPDBStatusType  *status,
-                                             GError            **error);
+GimpImage * file_open_with_proc_and_display (Gimp                *gimp,
+                                             GimpContext         *context,
+                                             GimpProgress        *progress,
+                                             const gchar         *uri,
+                                             const gchar         *entered_filename,
+                                             GimpPlugInProcedure *file_proc,
+                                             GimpPDBStatusType   *status,
+                                             GError             **error);
 
-GimpLayer * file_open_layer                 (Gimp               *gimp,
-                                             GimpContext        *context,
-                                             GimpProgress       *progress,
-                                             GimpImage          *dest_image,
-                                             const gchar        *uri,
-                                             GimpRunMode         run_mode,
-                                             PlugInProcDef      *file_proc,
-                                             GimpPDBStatusType  *status,
-                                             GError            **error);
+GimpLayer * file_open_layer                 (Gimp                *gimp,
+                                             GimpContext         *context,
+                                             GimpProgress        *progress,
+                                             GimpImage           *dest_image,
+                                             const gchar         *uri,
+                                             GimpRunMode          run_mode,
+                                             GimpPlugInProcedure *file_proc,
+                                             GimpPDBStatusType   *status,
+                                             GError             **error);
 
 
 #endif /* __FILE_OPEN_H__ */

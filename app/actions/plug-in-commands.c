@@ -61,18 +61,16 @@ static void  plug_in_reset_all_response (GtkWidget *dialog,
 /*  public functions  */
 
 void
-plug_in_run_cmd_callback (GtkAction     *action,
-                          PlugInProcDef *proc_def,
-                          gpointer       data)
+plug_in_run_cmd_callback (GtkAction           *action,
+                          GimpPlugInProcedure *proc,
+                          gpointer             data)
 {
+  GimpProcedure *procedure = GIMP_PROCEDURE (proc);
   Gimp          *gimp;
-  GimpProcedure *procedure;
   GValueArray   *args;
-  gint           n_args  = 0;
-  GimpDisplay   *display = NULL;
+  gint           n_args    = 0;
+  GimpDisplay   *display   = NULL;
   return_if_no_gimp (gimp, data);
-
-  procedure = proc_def->procedure;
 
   args = gimp_procedure_get_arguments (procedure);
 
@@ -136,7 +134,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
       GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1]) &&
       GIMP_IS_PARAM_SPEC_DRAWABLE_ID (procedure->args[2]))
     {
-      gimp_set_last_plug_in (gimp, proc_def);
+      gimp_set_last_plug_in (gimp, proc);
     }
 
  error:

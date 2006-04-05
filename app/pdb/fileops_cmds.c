@@ -53,10 +53,10 @@ fileops_register_magic_load_handler (Gimp        *gimp,
                                      const gchar *prefixes,
                                      const gchar *magics)
 {
-  GimpProcedure *procedure;
-  PlugInProcDef *file_proc;
-  gchar         *canonical;
-  gboolean       success = FALSE;
+  GimpProcedure       *procedure;
+  GimpPlugInProcedure *file_proc;
+  gchar               *canonical;
+  gboolean             success = FALSE;
 
   canonical = gimp_canonicalize_identifier (procedure_name);
 
@@ -103,12 +103,12 @@ file_load_invoker (GimpProcedure     *procedure,
                    GimpProgress      *progress,
                    const GValueArray *args)
 {
-  GValueArray   *new_args;
-  GValueArray   *return_vals;
-  PlugInProcDef *file_proc;
-  GimpProcedure *proc;
-  gchar         *uri;
-  gint           i;
+  GValueArray         *new_args;
+  GValueArray         *return_vals;
+  GimpPlugInProcedure *file_proc;
+  GimpProcedure       *proc;
+  gchar               *uri;
+  gint                 i;
 
   uri = file_utils_filename_to_uri (gimp->load_procs,
                                     g_value_get_string (&args->values[1]),
@@ -124,7 +124,7 @@ file_load_invoker (GimpProcedure     *procedure,
   if (! file_proc)
     return gimp_procedure_get_return_values (procedure, FALSE);
 
-  proc = file_proc->procedure;
+  proc = GIMP_PROCEDURE (file_proc);
 
   new_args = gimp_procedure_get_arguments (proc);
 
@@ -275,12 +275,12 @@ file_save_invoker (GimpProcedure     *procedure,
                    GimpProgress      *progress,
                    const GValueArray *args)
 {
-  GValueArray   *new_args;
-  GValueArray   *return_vals;
-  PlugInProcDef *file_proc;
-  GimpProcedure *proc;
-  gchar         *uri;
-  gint           i;
+  GValueArray         *new_args;
+  GValueArray         *return_vals;
+  GimpPlugInProcedure *file_proc;
+  GimpProcedure       *proc;
+  gchar               *uri;
+  gint                 i;
 
   uri = file_utils_filename_to_uri (gimp->load_procs,
                                     g_value_get_string (&args->values[3]),
@@ -296,7 +296,7 @@ file_save_invoker (GimpProcedure     *procedure,
   if (! file_proc)
     return gimp_procedure_get_return_values (procedure, FALSE);
 
-  proc = file_proc->procedure;
+  proc = GIMP_PROCEDURE (file_proc);
 
   new_args = gimp_procedure_get_arguments (proc);
 
@@ -461,9 +461,9 @@ register_save_handler_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      GimpProcedure *proc;
-      PlugInProcDef *file_proc;
-      gchar         *canonical;
+      GimpProcedure       *proc;
+      GimpPlugInProcedure *file_proc;
+      gchar               *canonical;
 
       success = FALSE;
 

@@ -566,13 +566,13 @@ static void
 plug_in_handle_proc_install (PlugIn        *plug_in,
                              GPProcInstall *proc_install)
 {
-  PlugInDef     *plug_in_def = NULL;
-  PlugInProcDef *proc_def    = NULL;
-  GimpProcedure *procedure   = NULL;
-  gchar         *canonical;
-  gchar         *prog        = NULL;
-  gboolean       valid_utf8  = FALSE;
-  gint           i;
+  PlugInDef           *plug_in_def = NULL;
+  GimpPlugInProcedure *proc        = NULL;
+  GimpProcedure       *procedure   = NULL;
+  gchar               *canonical;
+  gchar               *prog        = NULL;
+  gboolean             valid_utf8  = FALSE;
+  gint                 i;
 
   canonical = gimp_canonicalize_identifier (proc_install->name);
 
@@ -653,13 +653,13 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
       plug_in_def = plug_in->plug_in_def;
       prog        = plug_in_def->prog;
 
-      proc_def = plug_in_proc_def_find (plug_in_def->proc_defs, canonical);
+      proc = gimp_plug_in_procedure_find (plug_in_def->proc_defs, canonical);
 
-      if (proc_def)
+      if (proc)
         {
           plug_in_def->proc_defs = g_slist_remove (plug_in_def->proc_defs,
-                                                   proc_def);
-          plug_in_proc_def_free (proc_def);
+                                                   proc);
+          g_object_unref (proc);
         }
       break;
 
@@ -667,34 +667,26 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
       plug_in_def = NULL;
       prog        = "none";
 
-      proc_def = plug_in_proc_def_find (plug_in->temp_proc_defs, canonical);
+      proc = gimp_plug_in_procedure_find (plug_in->temp_proc_defs, canonical);
 
-      if (proc_def)
+      if (proc)
         {
           plug_in->temp_proc_defs = g_slist_remove (plug_in->temp_proc_defs,
-                                                    proc_def);
-          plug_ins_temp_proc_def_remove (plug_in->gimp, proc_def);
+                                                    proc);
+          plug_ins_temp_proc_def_remove (plug_in->gimp, proc);
         }
       break;
     }
 
-  proc_def = plug_in_proc_def_new ();
+  proc = gimp_plug_in_procedure_new ();
 
-  proc_def->prog            = g_strdup (prog);
-  proc_def->extensions      = NULL;
-  proc_def->prefixes        = NULL;
-  proc_def->magics          = NULL;
-  proc_def->image_types     = g_strdup (proc_install->image_types);
-  proc_def->image_types_val = plug_ins_image_types_parse (proc_def->image_types);
-  /* Install temp one use todays time */
-  proc_def->mtime           = time (NULL);
+  proc->prog                  = g_strdup (prog);
+  proc->mtime                 = time (NULL);
+  proc->installed_during_init = plug_in->init;
 
-  /* Remember if this proc was installed while initing a plug-in */
-  proc_def->installed_during_init = plug_in->init;
+  gimp_plug_in_procedure_set_image_types (proc, proc_install->image_types);
 
-  /*  The procedural database procedure  */
-
-  procedure = proc_def->procedure;
+  procedure = GIMP_PROCEDURE (proc);
 
   gimp_procedure_set_strings (procedure,
                               canonical,
@@ -762,14 +754,14 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
             }
           else
             {
-              proc_def->menu_paths =
-                g_list_append (proc_def->menu_paths,
+              proc->menu_paths =
+                g_list_append (proc->menu_paths,
                                g_strdup (proc_install->menu_path));
             }
         }
       else
         {
-          proc_def->menu_label = g_strdup (proc_install->menu_path);
+          proc->menu_label = g_strdup (proc_install->menu_path);
         }
     }
 
@@ -778,13 +770,13 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
     case GIMP_PLUGIN:
     case GIMP_EXTENSION:
       plug_in_def->proc_defs = g_slist_prepend (plug_in_def->proc_defs,
-                                                proc_def);
+                                                proc);
       break;
 
     case GIMP_TEMPORARY:
       plug_in->temp_proc_defs = g_slist_prepend (plug_in->temp_proc_defs,
-                                                 proc_def);
-      plug_ins_temp_proc_def_add (plug_in->gimp, proc_def);
+                                                 proc);
+      plug_ins_temp_proc_def_add (plug_in->gimp, proc);
       break;
     }
 }
@@ -793,18 +785,18 @@ static void
 plug_in_handle_proc_uninstall (PlugIn          *plug_in,
                                GPProcUninstall *proc_uninstall)
 {
-  PlugInProcDef *proc_def;
-  gchar         *canonical;
+  GimpPlugInProcedure *proc;
+  gchar               *canonical;
 
   canonical = gimp_canonicalize_identifier (proc_uninstall->name);
 
-  proc_def = plug_in_proc_def_find (plug_in->temp_proc_defs, canonical);
+  proc = gimp_plug_in_procedure_find (plug_in->temp_proc_defs, canonical);
 
-  if (proc_def)
+  if (proc)
     {
       plug_in->temp_proc_defs = g_slist_remove (plug_in->temp_proc_defs,
-                                                proc_def);
-      plug_ins_temp_proc_def_remove (plug_in->gimp, proc_def);
+                                                proc);
+      plug_ins_temp_proc_def_remove (plug_in->gimp, proc);
     }
 
   g_free (canonical);

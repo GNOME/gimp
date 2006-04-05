@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * plug-in-proc-def.h
+ * gimppluginprocedure.h
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,16 +18,30 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PLUG_IN_PROC_DEF_H__
-#define __PLUG_IN_PROC_DEF_H__
+#ifndef __GIMP_PLUG_IN_PROCEDURE_H__
+#define __GIMP_PLUG_IN_PROCEDURE_H__
 
 #include <time.h>      /* time_t */
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "pdb/gimpprocedure.h"
 
-struct _PlugInProcDef
+
+#define GIMP_TYPE_PLUG_IN_PROCEDURE            (gimp_plug_in_procedure_get_type ())
+#define GIMP_PLUG_IN_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PLUG_IN_PROCEDURE, GimpPlugInProcedure))
+#define GIMP_PLUG_IN_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PLUG_IN_PROCEDURE, GimpPlugInProcedureClass))
+#define GIMP_IS_PLUG_IN_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PLUG_IN_PROCEDURE))
+#define GIMP_IS_PLUG_IN_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PLUG_IN_PROCEDURE))
+#define GIMP_PLUG_IN_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PLUG_IN_PROCEDURE, GimpPlugInProcedureClass))
+
+
+typedef struct _GimpPlugInProcedureClass GimpPlugInProcedureClass;
+
+struct _GimpPlugInProcedure
 {
+  GimpProcedure    parent_instance;
+
   /*  common members  */
   gchar           *prog;
   gchar           *menu_label;
@@ -39,8 +53,6 @@ struct _PlugInProcDef
   PlugInImageType  image_types_val;
   time_t           mtime;
   gboolean	   installed_during_init;
-
-  GimpProcedure   *procedure;
 
   /*  file proc specific members  */
   gboolean         file_proc;
@@ -54,28 +66,45 @@ struct _PlugInProcDef
   gchar           *thumb_loader;
 };
 
-
-PlugInProcDef    * plug_in_proc_def_new          (void);
-void               plug_in_proc_def_free         (PlugInProcDef       *proc_def);
-
-PlugInProcDef    * plug_in_proc_def_find         (GSList              *list,
-                                                  const gchar         *proc_name);
-
-const gchar      * plug_in_proc_def_get_progname (const PlugInProcDef *proc_def);
-gchar            * plug_in_proc_def_get_label    (const PlugInProcDef *proc_def,
-                                                  const gchar         *locale_domain);
-
-void               plug_in_proc_def_set_icon     (PlugInProcDef       *proc_def,
-                                                  GimpIconType         type,
-                                                  const guint8        *data,
-                                                  gint                 data_length);
-const gchar      * plug_in_proc_def_get_stock_id (const PlugInProcDef *proc_def);
-GdkPixbuf        * plug_in_proc_def_get_pixbuf   (const PlugInProcDef *proc_def);
-
-gchar            * plug_in_proc_def_get_help_id  (const PlugInProcDef *proc_def,
-                                                  const gchar         *help_domain);
-gboolean          plug_in_proc_def_get_sensitive (const PlugInProcDef *proc_def,
-                                                  GimpImageType        image_type);
+struct _GimpPlugInProcedureClass
+{
+  GimpProcedureClass parent_class;
+};
 
 
-#endif /* __PLUG_IN_PROC_DEF_H__ */
+GType                 gimp_plug_in_procedure_get_type     (void) G_GNUC_CONST;
+
+GimpPlugInProcedure * gimp_plug_in_procedure_new          (void);
+
+GimpPlugInProcedure * gimp_plug_in_procedure_find         (GSList              *list,
+                                                           const gchar         *proc_name);
+
+const gchar * gimp_plug_in_procedure_get_progname    (const GimpPlugInProcedure *proc);
+gchar       * gimp_plug_in_procedure_get_label       (const GimpPlugInProcedure *proc,
+                                                      const gchar         *locale_domain);
+
+void          gimp_plug_in_procedure_set_icon        (GimpPlugInProcedure       *proc,
+                                                      GimpIconType         type,
+                                                      const guint8        *data,
+                                                      gint                 data_length);
+const gchar * gimp_plug_in_procedure_get_stock_id    (const GimpPlugInProcedure *proc);
+GdkPixbuf   * gimp_plug_in_procedure_get_pixbuf      (const GimpPlugInProcedure *proc);
+
+gchar       * gimp_plug_in_procedure_get_help_id     (const GimpPlugInProcedure *proc,
+                                                      const gchar         *help_domain);
+gboolean      gimp_plug_in_procedure_get_sensitive   (const GimpPlugInProcedure *proc,
+                                                      GimpImageType        image_type);
+
+void          gimp_plug_in_procedure_set_image_types (GimpPlugInProcedure       *proc,
+                                                      const gchar               *image_types);
+void          gimp_plug_in_procedure_set_file_proc   (GimpPlugInProcedure       *proc,
+                                                      const gchar               *extensions,
+                                                      const gchar               *prefixes,
+                                                      const gchar               *magics);
+void          gimp_plug_in_procedure_set_mime_type   (GimpPlugInProcedure       *proc,
+                                                      const gchar               *mime_ype);
+void          gimp_plug_in_procedure_set_thumb_loader(GimpPlugInProcedure       *proc,
+                                                      const gchar               *thumbnailer);
+
+
+#endif /* __GIMP_PLUG_IN_PROCEDURE_H__ */

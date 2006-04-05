@@ -70,14 +70,14 @@
 /*  public functions  */
 
 GimpPDBStatusType
-file_save (GimpImage      *image,
-           GimpContext    *context,
-           GimpProgress   *progress,
-           const gchar    *uri,
-           PlugInProcDef  *file_proc,
-           GimpRunMode     run_mode,
-           gboolean        save_a_copy,
-           GError        **error)
+file_save (GimpImage           *image,
+           GimpContext         *context,
+           GimpProgress        *progress,
+           const gchar         *uri,
+           GimpPlugInProcedure *file_proc,
+           GimpRunMode          run_mode,
+           gboolean             save_a_copy,
+           GError             **error)
 {
   GValueArray       *return_vals;
   GimpPDBStatusType  status;
@@ -88,7 +88,8 @@ file_save (GimpImage      *image,
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress),
                         GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (uri != NULL, GIMP_PDB_CALLING_ERROR);
-  g_return_val_if_fail (file_proc != NULL, GIMP_PDB_CALLING_ERROR);
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (file_proc),
+                        GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (error == NULL || *error == NULL,
                         GIMP_PDB_CALLING_ERROR);
 
@@ -128,7 +129,7 @@ file_save (GimpImage      *image,
   g_object_ref (image);
 
   return_vals = gimp_pdb_run_proc (image->gimp, context, progress,
-                                   file_proc->procedure->name,
+                                   GIMP_PROCEDURE (file_proc)->name,
                                    GIMP_TYPE_INT32,       run_mode,
                                    GIMP_TYPE_IMAGE_ID,    gimp_image_get_ID (image),
                                    GIMP_TYPE_DRAWABLE_ID, gimp_item_get_ID (GIMP_ITEM (gimp_image_active_drawable (image))),

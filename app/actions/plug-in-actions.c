@@ -140,15 +140,15 @@ plug_in_actions_setup (GimpActionGroup *group)
        list;
        list = g_slist_next (list))
     {
-      PlugInProcDef *proc_def = list->data;
+      GimpPlugInProcedure *proc = list->data;
 
-      if (proc_def->prog         &&
-          proc_def->menu_paths   &&
-          ! proc_def->extensions &&
-          ! proc_def->prefixes   &&
-          ! proc_def->magics)
+      if (proc->prog         &&
+          proc->menu_paths   &&
+          ! proc->extensions &&
+          ! proc->prefixes   &&
+          ! proc->magics)
         {
-          plug_in_actions_add_proc (group, proc_def);
+          plug_in_actions_add_proc (group, proc);
         }
     }
 
@@ -208,24 +208,24 @@ plug_in_actions_update (GimpActionGroup *group,
        list;
        list = g_slist_next (list))
     {
-      PlugInProcDef *proc_def = list->data;
+      GimpPlugInProcedure *proc = list->data;
 
-      if (proc_def->menu_paths      &&
-          proc_def->image_types_val &&
-          ! proc_def->extensions    &&
-          ! proc_def->prefixes      &&
-          ! proc_def->magics)
+      if (proc->menu_paths      &&
+          proc->image_types_val &&
+          ! proc->extensions    &&
+          ! proc->prefixes      &&
+          ! proc->magics)
         {
-          gboolean sensitive = plug_in_proc_def_get_sensitive (proc_def, type);
+          gboolean sensitive = gimp_plug_in_procedure_get_sensitive (proc, type);
 
           gimp_action_group_set_action_sensitive (group,
-                                                  proc_def->procedure->name,
+                                                  GIMP_PROCEDURE (proc)->name,
                                                   sensitive);
 	}
     }
 
   if (group->gimp->last_plug_ins &&
-      plug_in_proc_def_get_sensitive (group->gimp->last_plug_ins->data, type))
+      gimp_plug_in_procedure_get_sensitive (group->gimp->last_plug_ins->data, type))
     {
       gimp_action_group_set_action_sensitive (group, "plug-in-repeat", TRUE);
       gimp_action_group_set_action_sensitive (group, "plug-in-reshow", TRUE);
@@ -238,11 +238,12 @@ plug_in_actions_update (GimpActionGroup *group,
 
   for (list = group->gimp->last_plug_ins, i = 0; list; list = list->next, i++)
     {
-      PlugInProcDef *proc_def = list->data;
-      gchar         *name     = g_strdup_printf ("plug-in-recent-%02d", i + 1);
-      gboolean       sensitive;
+      GimpPlugInProcedure *proc = list->data;
+      gchar               *name     = g_strdup_printf ("plug-in-recent-%02d",
+                                                       i + 1);
+      gboolean             sensitive;
 
-      sensitive = plug_in_proc_def_get_sensitive (proc_def, type);
+      sensitive = gimp_plug_in_procedure_get_sensitive (proc, type);
 
       gimp_action_group_set_action_sensitive (group, name, sensitive);
 
@@ -251,8 +252,8 @@ plug_in_actions_update (GimpActionGroup *group,
 }
 
 void
-plug_in_actions_add_proc (GimpActionGroup *group,
-                          PlugInProcDef   *proc_def)
+plug_in_actions_add_proc (GimpActionGroup     *group,
+                          GimpPlugInProcedure *proc)
 {
   GimpPlugInActionEntry  entry;
   const gchar           *progname;
@@ -264,22 +265,22 @@ plug_in_actions_add_proc (GimpActionGroup *group,
   gchar                 *path_translated  = NULL;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
-  g_return_if_fail (proc_def != NULL);
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
-  progname = plug_in_proc_def_get_progname (proc_def);
+  progname = gimp_plug_in_procedure_get_progname (proc);
 
   locale_domain = plug_ins_locale_domain (group->gimp, progname, NULL);
   help_domain   = plug_ins_help_domain (group->gimp, progname, NULL);
 
-  if (proc_def->menu_label)
+  if (proc->menu_label)
     {
-      label = dgettext (locale_domain, proc_def->menu_label);
+      label = dgettext (locale_domain, proc->menu_label);
     }
   else
     {
       gchar *p1, *p2;
 
-      path_original   = proc_def->menu_paths->data;
+      path_original   = proc->menu_paths->data;
       path_translated = dgettext (locale_domain, path_original);
 
       path_original = g_strdup (path_original);
@@ -298,20 +299,20 @@ plug_in_actions_add_proc (GimpActionGroup *group,
       label = p2 + 1;
     }
 
-  if (proc_def->procedure->blurb)
-    tooltip = dgettext (locale_domain, proc_def->procedure->blurb);
+  if (GIMP_PROCEDURE (proc)->blurb)
+    tooltip = dgettext (locale_domain, GIMP_PROCEDURE (proc)->blurb);
 
-  entry.name        = proc_def->procedure->name;
-  entry.stock_id    = plug_in_proc_def_get_stock_id (proc_def);
+  entry.name        = GIMP_PROCEDURE (proc)->name;
+  entry.stock_id    = gimp_plug_in_procedure_get_stock_id (proc);
   entry.label       = label;
   entry.accelerator = NULL;
   entry.tooltip     = tooltip;
-  entry.proc_def    = proc_def;
-  entry.help_id     = plug_in_proc_def_get_help_id (proc_def, help_domain);
+  entry.procedure   = proc;
+  entry.help_id     = gimp_plug_in_procedure_get_help_id (proc, help_domain);
 
 #if 0
   g_print ("adding plug-in action '%s' (%s)\n",
-           proc_def->procedure->name, label);
+           GIMP_PROCEDURE (proc)->name, label);
 #endif
 
   gimp_action_group_add_plug_in_actions (group, &entry, 1,
@@ -319,11 +320,11 @@ plug_in_actions_add_proc (GimpActionGroup *group,
 
   g_free ((gchar *) entry.help_id);
 
-  if (proc_def->menu_label)
+  if (proc->menu_label)
     {
       GList *list;
 
-      for (list = proc_def->menu_paths; list; list = g_list_next (list))
+      for (list = proc->menu_paths; list; list = g_list_next (list))
         {
           const gchar *original   = list->data;
           const gchar *translated = dgettext (locale_domain, original);
@@ -344,19 +345,19 @@ plug_in_actions_add_proc (GimpActionGroup *group,
 }
 
 void
-plug_in_actions_add_path (GimpActionGroup *group,
-                          PlugInProcDef   *proc_def,
-                          const gchar     *menu_path)
+plug_in_actions_add_path (GimpActionGroup     *group,
+                          GimpPlugInProcedure *proc,
+                          const gchar         *menu_path)
 {
   const gchar *progname;
   const gchar *locale_domain;
   const gchar *path_translated;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
-  g_return_if_fail (proc_def != NULL);
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
   g_return_if_fail (menu_path != NULL);
 
-  progname = plug_in_proc_def_get_progname (proc_def);
+  progname = gimp_plug_in_procedure_get_progname (proc);
 
   locale_domain = plug_ins_locale_domain (group->gimp, progname, NULL);
 
@@ -369,22 +370,22 @@ plug_in_actions_add_path (GimpActionGroup *group,
 }
 
 void
-plug_in_actions_remove_proc (GimpActionGroup *group,
-                             PlugInProcDef   *proc_def)
+plug_in_actions_remove_proc (GimpActionGroup     *group,
+                             GimpPlugInProcedure *proc)
 {
   GtkAction *action;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
-  g_return_if_fail (proc_def != NULL);
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                        proc_def->procedure->name);
+                                        GIMP_PROCEDURE (proc)->name);
 
   if (action)
     {
 #if 0
       g_print ("removing plug-in action '%s'\n",
-               proc_def->procedure->name);
+               GIMP_PROCEDURE (proc)->name);
 #endif
 
       gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);
@@ -438,15 +439,15 @@ plug_in_actions_last_changed (Gimp            *gimp,
 
   if (gimp->last_plug_ins)
     {
-      PlugInProcDef *proc_def = gimp->last_plug_ins->data;
-      gchar         *label;
-      gchar         *repeat;
-      gchar         *reshow;
+      GimpPlugInProcedure *proc = gimp->last_plug_ins->data;
+      gchar               *label;
+      gchar               *repeat;
+      gchar               *reshow;
 
-      progname = plug_in_proc_def_get_progname (proc_def);
+      progname = gimp_plug_in_procedure_get_progname (proc);
       domain   = plug_ins_locale_domain (gimp, progname, NULL);
 
-      label = plug_in_proc_def_get_label (proc_def, domain);
+      label = gimp_plug_in_procedure_get_label (proc, domain);
 
       repeat = g_strdup_printf (_("Re_peat \"%s\""),  label);
       reshow = g_strdup_printf (_("R_e-Show \"%s\""), label);
@@ -469,23 +470,24 @@ plug_in_actions_last_changed (Gimp            *gimp,
 
   for (list = gimp->last_plug_ins, i = 0; list; list = list->next, i++)
     {
-      GtkAction     *action;
-      PlugInProcDef *proc_def = list->data;
-      gchar         *name     = g_strdup_printf ("plug-in-recent-%02d", i + 1);
-      gchar         *label;
+      GtkAction           *action;
+      GimpPlugInProcedure *proc = list->data;
+      gchar               *name = g_strdup_printf ("plug-in-recent-%02d",
+                                                   i + 1);
+      gchar               *label;
 
       action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), name);
       g_free (name);
 
-      progname = plug_in_proc_def_get_progname (proc_def);
+      progname = gimp_plug_in_procedure_get_progname (proc);
       domain   = plug_ins_locale_domain (gimp, progname, NULL);
 
-      label = plug_in_proc_def_get_label (proc_def, domain);
+      label = gimp_plug_in_procedure_get_label (proc, domain);
 
       g_object_set (action,
                     "label",    label,
                     "visible",  TRUE,
-                    "stock-id", plug_in_proc_def_get_stock_id (proc_def),
+                    "stock-id", gimp_plug_in_procedure_get_stock_id (proc),
                     NULL);
 
       g_free (label);

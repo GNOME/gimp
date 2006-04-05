@@ -75,16 +75,16 @@ static void  file_open_sanitize_image (GimpImage *image);
 /*  public functions  */
 
 GimpImage *
-file_open_image (Gimp               *gimp,
-                 GimpContext        *context,
-                 GimpProgress       *progress,
-		 const gchar        *uri,
-		 const gchar        *entered_filename,
-		 PlugInProcDef      *file_proc,
-		 GimpRunMode         run_mode,
-		 GimpPDBStatusType  *status,
-                 const gchar       **mime_type,
-                 GError            **error)
+file_open_image (Gimp                *gimp,
+                 GimpContext         *context,
+                 GimpProgress        *progress,
+		 const gchar         *uri,
+		 const gchar         *entered_filename,
+		 GimpPlugInProcedure *file_proc,
+		 GimpRunMode          run_mode,
+		 GimpPDBStatusType   *status,
+                 const gchar        **mime_type,
+                 GError             **error)
 {
   GValueArray *return_vals;
   gchar       *filename;
@@ -138,7 +138,7 @@ file_open_image (Gimp               *gimp,
     }
 
   return_vals = gimp_pdb_run_proc (gimp, context, progress,
-                                   file_proc->procedure->name,
+                                   GIMP_PROCEDURE (file_proc)->name,
                                    GIMP_TYPE_INT32, run_mode,
                                    G_TYPE_STRING,   filename,
                                    G_TYPE_STRING,   entered_filename,
@@ -189,8 +189,8 @@ file_open_thumbnail (Gimp          *gimp,
                      gint          *image_width,
                      gint          *image_height)
 {
-  PlugInProcDef *file_proc;
-  GimpProcedure *procedure;
+  GimpPlugInProcedure *file_proc;
+  GimpProcedure       *procedure;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -273,14 +273,14 @@ file_open_with_display (Gimp               *gimp,
 }
 
 GimpImage *
-file_open_with_proc_and_display (Gimp               *gimp,
-                                 GimpContext        *context,
-                                 GimpProgress       *progress,
-                                 const gchar        *uri,
-                                 const gchar        *entered_filename,
-                                 PlugInProcDef      *file_proc,
-                                 GimpPDBStatusType  *status,
-                                 GError            **error)
+file_open_with_proc_and_display (Gimp                *gimp,
+                                 GimpContext         *context,
+                                 GimpProgress        *progress,
+                                 const gchar         *uri,
+                                 const gchar         *entered_filename,
+                                 GimpPlugInProcedure *file_proc,
+                                 GimpPDBStatusType   *status,
+                                 GError             **error)
 {
   GimpImage   *image;
   const gchar *mime_type = NULL;
@@ -331,15 +331,15 @@ file_open_with_proc_and_display (Gimp               *gimp,
 }
 
 GimpLayer *
-file_open_layer (Gimp               *gimp,
-                 GimpContext        *context,
-                 GimpProgress       *progress,
-                 GimpImage          *dest_image,
-                 const gchar        *uri,
-                 GimpRunMode         run_mode,
-                 PlugInProcDef      *file_proc,
-                 GimpPDBStatusType  *status,
-                 GError            **error)
+file_open_layer (Gimp                *gimp,
+                 GimpContext         *context,
+                 GimpProgress        *progress,
+                 GimpImage           *dest_image,
+                 const gchar         *uri,
+                 GimpRunMode          run_mode,
+                 GimpPlugInProcedure *file_proc,
+                 GimpPDBStatusType   *status,
+                 GError             **error)
 {
   GimpLayer   *new_layer = NULL;
   GimpImage   *new_image;

@@ -39,21 +39,21 @@ void              plug_ins_exit                 (Gimp          *gimp);
  * handlers, which are organized around the plug-in data structure.
  * This could all be done a little better, but oh well.  -josh
  */
-void              plug_ins_add_internal         (Gimp          *gimp,
-                                                 PlugInProcDef *proc_def);
+void              plug_ins_add_internal         (Gimp                *gimp,
+                                                 GimpPlugInProcedure *proc);
 
 /* Add in the file load/save handler fields procedure. */
-PlugInProcDef   * plug_ins_file_register_magic  (Gimp          *gimp,
+GimpPlugInProcedure * plug_ins_file_register_magic  (Gimp          *gimp,
                                                  const gchar   *name,
                                                  const gchar   *extensions,
                                                  const gchar   *prefixes,
                                                  const gchar   *magics);
 
-PlugInProcDef   * plug_ins_file_register_mime   (Gimp          *gimp,
+GimpPlugInProcedure * plug_ins_file_register_mime   (Gimp          *gimp,
                                                  const gchar   *name,
                                                  const gchar   *mime_type);
 
-PlugInProcDef   * plug_ins_file_register_thumb_loader
+GimpPlugInProcedure * plug_ins_file_register_thumb_loader
                                                 (Gimp          *gimp,
                                                  const gchar   *load_proc,
                                                  const gchar   *thumb_proc);
@@ -64,10 +64,10 @@ void              plug_ins_def_add_from_rc      (Gimp          *gimp,
                                                  PlugInDef     *plug_in_def);
 
 /* Add/Remove temporary procedures. */
-void              plug_ins_temp_proc_def_add    (Gimp          *gimp,
-                                                 PlugInProcDef *proc_def);
-void              plug_ins_temp_proc_def_remove (Gimp          *gimp,
-                                                 PlugInProcDef *proc_def);
+void              plug_ins_temp_proc_def_add    (Gimp                *gimp,
+                                                 GimpPlugInProcedure *proc);
+void              plug_ins_temp_proc_def_remove (Gimp                *gimp,
+                                                 GimpPlugInProcedure *proc);
 
 /* Add a menu branch */
 void              plug_ins_menu_branch_add      (Gimp          *gimp,
@@ -101,14 +101,6 @@ const gchar     * plug_ins_help_domain          (Gimp          *gimp,
 gint              plug_ins_help_domains         (Gimp          *gimp,
                                                  gchar       ***help_domains,
                                                  gchar       ***help_uris);
-
-/* Retreive a plug-ins proc_def from its GimpProcedure */
-PlugInProcDef   * plug_ins_proc_def_find        (Gimp          *gimp,
-                                                 GimpProcedure *procedure);
-
-
-GSList          * plug_ins_extensions_parse     (gchar         *extensions);
-PlugInImageType   plug_ins_image_types_parse    (gchar         *image_types);
 
 
 #endif /* __PLUG_INS_H__ */

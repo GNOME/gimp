@@ -120,14 +120,14 @@ struct _GimpStringActionEntry
 
 struct _GimpPlugInActionEntry
 {
-  const gchar   *name;
-  const gchar   *stock_id;
-  const gchar   *label;
-  const gchar   *accelerator;
-  const gchar   *tooltip;
-  PlugInProcDef *proc_def;
+  const gchar         *name;
+  const gchar         *stock_id;
+  const gchar         *label;
+  const gchar         *accelerator;
+  const gchar         *tooltip;
+  GimpPlugInProcedure *procedure;
 
-  const gchar   *help_id;
+  const gchar         *help_id;
 };
 
 

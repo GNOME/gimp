@@ -604,7 +604,7 @@ gimp_action_group_add_plug_in_actions (GimpActionGroup       *group,
                                         label,
                                         entries[i].tooltip,
                                         entries[i].stock_id,
-                                        entries[i].proc_def);
+                                        entries[i].procedure);
 
       if (! group->mnemonics)
         g_free (label);

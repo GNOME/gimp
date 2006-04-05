@@ -197,8 +197,8 @@ file_save_cmd_callback (GtkAction *action,
   if (image->dirty ||
       ! GIMP_GUI_CONFIG (image->gimp->config)->trust_dirty_flag)
     {
-      const gchar   *uri;
-      PlugInProcDef *save_proc = NULL;
+      const gchar         *uri;
+      GimpPlugInProcedure *save_proc = NULL;
 
       uri       = gimp_object_get_name (GIMP_OBJECT (image));
       save_proc = gimp_image_get_save_proc (image);

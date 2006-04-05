@@ -203,19 +203,19 @@ plug_in_repeat (Gimp         *gimp,
                 gint          drawable_ID,
                 gboolean      with_interface)
 {
-  PlugInProcDef *proc_def;
-  GValueArray   *args;
+  GimpPlugInProcedure *proc;
+  GValueArray         *args;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (index >= 0);
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  proc_def = g_slist_nth_data (gimp->last_plug_ins, index);
+  proc = g_slist_nth_data (gimp->last_plug_ins, index);
 
-  if (proc_def)
+  if (proc)
     {
-      args = gimp_procedure_get_arguments (proc_def->procedure);
+      args = gimp_procedure_get_arguments (GIMP_PROCEDURE (proc));
 
       g_value_set_int (&args->values[0],
                        with_interface ?
@@ -224,7 +224,7 @@ plug_in_repeat (Gimp         *gimp,
       g_value_set_int (&args->values[2], drawable_ID);
 
       /* run the plug-in procedure */
-      plug_in_run (gimp, context, progress, proc_def->procedure,
+      plug_in_run (gimp, context, progress, GIMP_PROCEDURE (proc),
                    args, FALSE, TRUE, display_ID);
 
       g_value_array_free (args);

@@ -49,21 +49,21 @@
 
 /*  local function prototypes  */
 
-static void       file_save_dialog_response      (GtkWidget      *save_dialog,
-                                                  gint            response_id,
-                                                  Gimp           *gimp);
-static gboolean   file_save_dialog_check_uri     (GtkWidget      *save_dialog,
-                                                  Gimp           *gimp,
-                                                  gchar         **ret_uri,
-                                                  gchar         **ret_basename,
-                                                  PlugInProcDef **ret_save_proc);
-static gboolean   file_save_dialog_use_extension (GtkWidget      *save_dialog,
-                                                  const gchar    *uri);
-static gboolean   file_save_dialog_save_image    (GtkWidget      *save_dialog,
-                                                  GimpImage      *image,
-                                                  const gchar    *uri,
-                                                  PlugInProcDef  *save_proc,
-                                                  gboolean        save_a_copy);
+static void       file_save_dialog_response      (GtkWidget            *save_dialog,
+                                                  gint                  response_id,
+                                                  Gimp                 *gimp);
+static gboolean   file_save_dialog_check_uri     (GtkWidget            *save_dialog,
+                                                  Gimp                 *gimp,
+                                                  gchar               **ret_uri,
+                                                  gchar               **ret_basename,
+                                                  GimpPlugInProcedure **ret_save_proc);
+static gboolean   file_save_dialog_use_extension (GtkWidget            *save_dialog,
+                                                  const gchar          *uri);
+static gboolean   file_save_dialog_save_image    (GtkWidget            *save_dialog,
+                                                  GimpImage            *image,
+                                                  const gchar          *uri,
+                                                  GimpPlugInProcedure  *save_proc,
+                                                  gboolean              save_a_copy);
 
 
 /*  public functions  */
@@ -122,10 +122,10 @@ file_save_dialog_response (GtkWidget *save_dialog,
                            gint       response_id,
                            Gimp      *gimp)
 {
-  GimpFileDialog *dialog = GIMP_FILE_DIALOG (save_dialog);
-  gchar          *uri;
-  gchar          *basename;
-  PlugInProcDef  *save_proc;
+  GimpFileDialog      *dialog = GIMP_FILE_DIALOG (save_dialog);
+  gchar               *uri;
+  gchar               *basename;
+  GimpPlugInProcedure *save_proc;
 
   if (response_id != GTK_RESPONSE_OK)
     {
@@ -157,18 +157,18 @@ file_save_dialog_response (GtkWidget *save_dialog,
 }
 
 static gboolean
-file_save_dialog_check_uri (GtkWidget      *save_dialog,
-                            Gimp           *gimp,
-                            gchar         **ret_uri,
-                            gchar         **ret_basename,
-                            PlugInProcDef **ret_save_proc)
+file_save_dialog_check_uri (GtkWidget            *save_dialog,
+                            Gimp                 *gimp,
+                            gchar               **ret_uri,
+                            gchar               **ret_basename,
+                            GimpPlugInProcedure **ret_save_proc)
 {
-  GimpFileDialog *dialog = GIMP_FILE_DIALOG (save_dialog);
-  gchar          *uri;
-  gchar          *basename;
-  PlugInProcDef  *save_proc;
-  PlugInProcDef  *uri_proc;
-  PlugInProcDef  *basename_proc;
+  GimpFileDialog      *dialog = GIMP_FILE_DIALOG (save_dialog);
+  gchar               *uri;
+  gchar               *basename;
+  GimpPlugInProcedure *save_proc;
+  GimpPlugInProcedure *uri_proc;
+  GimpPlugInProcedure *basename_proc;
 
   uri = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (save_dialog));
 
@@ -426,11 +426,11 @@ file_save_dialog_use_extension (GtkWidget   *save_dialog,
 }
 
 static gboolean
-file_save_dialog_save_image (GtkWidget     *save_dialog,
-                             GimpImage     *image,
-                             const gchar   *uri,
-                             PlugInProcDef *save_proc,
-                             gboolean       save_a_copy)
+file_save_dialog_save_image (GtkWidget           *save_dialog,
+                             GimpImage           *image,
+                             const gchar         *uri,
+                             GimpPlugInProcedure *save_proc,
+                             gboolean             save_a_copy)
 {
   GimpPDBStatusType  status;
   GError            *error   = NULL;

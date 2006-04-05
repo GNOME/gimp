@@ -37,29 +37,29 @@ struct _PlugInDef
 };
 
 
-PlugInDef * plug_in_def_new                    (const gchar   *prog);
-void        plug_in_def_free                   (PlugInDef     *plug_in_def,
-                                                gboolean       free_proc_defs);
+PlugInDef * plug_in_def_new                    (const gchar         *prog);
+void        plug_in_def_free                   (PlugInDef           *plug_in_def,
+                                                gboolean             free_proc_defs);
 
-void        plug_in_def_add_proc_def           (PlugInDef     *plug_in_def,
-                                                PlugInProcDef *proc_def);
+void        plug_in_def_add_procedure          (PlugInDef           *plug_in_def,
+                                                GimpPlugInProcedure *proc);
 
-void        plug_in_def_set_locale_domain_name (PlugInDef     *plug_in_def,
-                                                const gchar   *domain_name);
-void        plug_in_def_set_locale_domain_path (PlugInDef     *plug_in_def,
-                                                const gchar   *domain_path);
+void        plug_in_def_set_locale_domain_name (PlugInDef           *plug_in_def,
+                                                const gchar         *domain_name);
+void        plug_in_def_set_locale_domain_path (PlugInDef           *plug_in_def,
+                                                const gchar         *domain_path);
 
-void        plug_in_def_set_help_domain_name   (PlugInDef     *plug_in_def,
-                                                const gchar   *domain_name);
-void        plug_in_def_set_help_domain_uri    (PlugInDef     *plug_in_def,
-                                                const gchar   *domain_uri);
+void        plug_in_def_set_help_domain_name   (PlugInDef           *plug_in_def,
+                                                const gchar         *domain_name);
+void        plug_in_def_set_help_domain_uri    (PlugInDef           *plug_in_def,
+                                                const gchar         *domain_uri);
 
-void        plug_in_def_set_mtime              (PlugInDef     *plug_in_def,
-                                                time_t         mtime);
-void        plug_in_def_set_needs_query        (PlugInDef     *plug_in_def,
-                                                gboolean       needs_query);
-void        plug_in_def_set_has_init           (PlugInDef     *plug_in_def,
-                                                gboolean       has_init);
+void        plug_in_def_set_mtime              (PlugInDef           *plug_in_def,
+                                                time_t               mtime);
+void        plug_in_def_set_needs_query        (PlugInDef           *plug_in_def,
+                                                gboolean             needs_query);
+void        plug_in_def_set_has_init           (PlugInDef           *plug_in_def,
+                                                gboolean             has_init);
 
 
 #endif /* __PLUG_IN_DEF_H__ */

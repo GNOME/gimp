@@ -20,15 +20,15 @@
 #define __PLUG_IN_COMMANDS_H__
 
 
-void   plug_in_run_cmd_callback       (GtkAction     *action,
-                                       PlugInProcDef *proc_def,
-                                       gpointer       data);
-void   plug_in_repeat_cmd_callback    (GtkAction     *action,
-                                       gint           value,
-                                       gpointer       data);
+void   plug_in_run_cmd_callback       (GtkAction           *action,
+                                       GimpPlugInProcedure *proc,
+                                       gpointer             data);
+void   plug_in_repeat_cmd_callback    (GtkAction           *action,
+                                       gint                 value,
+                                       gpointer             data);
 
-void   plug_in_reset_all_cmd_callback (GtkAction     *action,
-                                       gpointer       data);
+void   plug_in_reset_all_cmd_callback (GtkAction           *action,
+                                       gpointer             data);
 
 
 #endif /* __PLUG_IN_COMMANDS_H__ */

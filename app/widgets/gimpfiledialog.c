@@ -351,8 +351,8 @@ gimp_file_dialog_set_sensitive (GimpFileDialog *dialog,
 }
 
 void
-gimp_file_dialog_set_file_proc (GimpFileDialog *dialog,
-                                PlugInProcDef  *file_proc)
+gimp_file_dialog_set_file_proc (GimpFileDialog      *dialog,
+                                GimpPlugInProcedure *file_proc)
 {
   g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
 
@@ -449,7 +449,7 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
 
   for (list = file_procs; list; list = g_slist_next (list))
     {
-      PlugInProcDef *file_proc = list->data;
+      GimpPlugInProcedure *file_proc = list->data;
 
       if (file_proc->extensions_list)
         {
@@ -462,7 +462,7 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
 
           domain = plug_ins_locale_domain (gimp, file_proc->prog, NULL);
 
-          label = plug_in_proc_def_get_label (file_proc, domain);
+          label = gimp_plug_in_procedure_get_label (file_proc, domain);
 
           str = g_string_new (label);
           g_free (label);
@@ -593,7 +593,7 @@ gimp_file_dialog_proc_changed (GimpFileProcView *view,
 
   if (gtk_file_chooser_get_action (chooser) == GTK_FILE_CHOOSER_ACTION_SAVE)
     {
-      PlugInProcDef *proc = dialog->file_proc;
+      GimpPlugInProcedure *proc = dialog->file_proc;
 
       if (proc && proc->extensions_list)
         {

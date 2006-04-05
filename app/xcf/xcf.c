@@ -64,6 +64,7 @@ static GValueArray * xcf_save_invoker (GimpProcedure     *procedure,
                                        const GValueArray *args);
 
 
+#if 0
 static PlugInProcDef xcf_plug_in_load_proc =
 {
   "gimp-xcf-load",
@@ -109,6 +110,7 @@ static PlugInProcDef xcf_plug_in_save_proc =
   NULL, /* fill me in at runtime */
   NULL  /* fill me in at runtime */
 };
+#endif
 
 
 static GimpXcfLoaderFunc *xcf_loaders[] =
@@ -122,7 +124,8 @@ static GimpXcfLoaderFunc *xcf_loaders[] =
 void
 xcf_init (Gimp *gimp)
 {
-  GimpProcedure *procedure;
+  GimpPlugInProcedure *proc;
+  GimpProcedure       *procedure;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -136,7 +139,19 @@ xcf_init (Gimp *gimp)
    */
 
   /*  gimp-xcf-save  */
-  procedure = xcf_plug_in_save_proc.procedure = gimp_procedure_new ();
+  proc = gimp_plug_in_procedure_new ();
+  proc->prog = g_strdup ("gimp-xcf-save");
+  proc->menu_label = g_strdup (N_("GIMP XCF image"));
+  gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_STOCK_ID,
+                                   (const guint8 *) "gimp-wilber",
+                                   strlen ("gimp-wilber") + 1);
+  gimp_plug_in_procedure_set_image_types (proc, "RGB*, GRAY*, INDEXED*");
+  proc->file_proc  = TRUE;
+  proc->extensions = g_strdup ("xcf");
+  proc->prefixes   = g_strdup ("");
+  proc->mime_type  = g_strdup ("image/xcf");
+
+  procedure = GIMP_PROCEDURE (proc);
   gimp_procedure_initialize (procedure, GIMP_INTERNAL, 5, 0, xcf_save_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-xcf-save",
@@ -188,13 +203,23 @@ xcf_init (Gimp *gimp)
                                                        FALSE, FALSE, NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
-
-  xcf_plug_in_save_proc.image_types_val =
-    plug_ins_image_types_parse (xcf_plug_in_save_proc.image_types);
-  plug_ins_add_internal (gimp, &xcf_plug_in_save_proc);
+  plug_ins_add_internal (gimp, proc);
 
   /*  gimp-xcf-load  */
-  procedure = xcf_plug_in_load_proc.procedure = gimp_procedure_new ();
+  proc = gimp_plug_in_procedure_new ();
+  proc->prog = g_strdup ("gimp-xcf-load");
+  proc->menu_label = g_strdup (N_("GIMP XCF image"));
+  gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_STOCK_ID,
+                                   (const guint8 *) "gimp-wilber",
+                                   strlen ("gimp-wilber") + 1);
+  gimp_plug_in_procedure_set_image_types (proc, NULL);
+  proc->file_proc  = TRUE;
+  proc->extensions = g_strdup ("xcf");
+  proc->prefixes   = g_strdup ("");
+  proc->magics     = g_strdup ("0,string,gimp\\040xcf\\040");
+  proc->mime_type  = g_strdup ("image/xcf");
+
+  procedure = GIMP_PROCEDURE (proc);
   gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 1, xcf_load_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-xcf-load",
@@ -240,9 +265,7 @@ xcf_init (Gimp *gimp)
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
-  xcf_plug_in_load_proc.image_types_val =
-    plug_ins_image_types_parse (xcf_plug_in_load_proc.image_types);
-  plug_ins_add_internal (gimp, &xcf_plug_in_load_proc);
+  plug_ins_add_internal (gimp, proc);
 }
 
 void

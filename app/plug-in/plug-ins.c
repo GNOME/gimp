@@ -75,15 +75,15 @@ struct _PlugInHelpDomain
 };
 
 
-static void            plug_ins_init_file   (const GimpDatafileData *file_data,
-                                             gpointer                data);
-static void            plug_ins_add_to_db         (Gimp             *gimp,
-                                                   GimpContext      *context);
-static PlugInProcDef * plug_ins_proc_def_insert   (Gimp             *gimp,
-                                                   PlugInProcDef    *proc_def);
-static gint            plug_ins_file_proc_compare (gconstpointer     a,
-                                                   gconstpointer     b,
-                                                   gpointer          data);
+static void                  plug_ins_init_file         (const GimpDatafileData *file_data,
+                                                         gpointer                data);
+static void                  plug_ins_add_to_db         (Gimp             *gimp,
+                                                         GimpContext      *context);
+static GimpPlugInProcedure * plug_ins_proc_def_insert   (Gimp             *gimp,
+                                                         GimpPlugInProcedure *proc);
+static gint                  plug_ins_file_proc_compare (gconstpointer     a,
+                                                         gconstpointer     b,
+                                                         gpointer          data);
 
 
 /*  public functions  */
@@ -232,41 +232,40 @@ plug_ins_init (Gimp               *gimp,
 
       for (list2 = plug_in_def->proc_defs; list2; list2 = list2->next)
 	{
-	  PlugInProcDef *proc_def = list2->data;
-          PlugInProcDef *overridden_proc_def;
+	  GimpPlugInProcedure *proc = list2->data;
+          GimpPlugInProcedure *overridden_proc;
 
- 	  proc_def->mtime = plug_in_def->mtime;
+ 	  proc->mtime = plug_in_def->mtime;
 
-	  overridden_proc_def = plug_ins_proc_def_insert (gimp, proc_def);
+	  overridden_proc = plug_ins_proc_def_insert (gimp, proc);
 
-          if (overridden_proc_def)
+          if (overridden_proc)
             {
               GSList *list3;
 
               g_printerr ("removing duplicate PDB procedure \"%s\" "
                           "registered by '%s'\n",
-                          overridden_proc_def->procedure->name,
-                          gimp_filename_to_utf8 (overridden_proc_def->prog));
+                          GIMP_PROCEDURE (overridden_proc)->name,
+                          gimp_filename_to_utf8 (overridden_proc->prog));
 
               /* search the plugin list to see if any plugins had references to
-               * the overridden_proc_def.
+               * the overridden_proc.
                */
               for (list3 = gimp->plug_in_defs; list3; list3 = list3->next)
                 {
                   PlugInDef *plug_in_def2 = list3->data;
 
                   plug_in_def2->proc_defs =
-                    g_slist_remove (plug_in_def2->proc_defs,
-                                    overridden_proc_def);
+                    g_slist_remove (plug_in_def2->proc_defs, overridden_proc);
                 }
 
               /* also remove it from the lists of load and save procs */
               gimp->load_procs = g_slist_remove (gimp->load_procs,
-                                                 overridden_proc_def);
+                                                 overridden_proc);
               gimp->save_procs = g_slist_remove (gimp->save_procs,
-                                                 overridden_proc_def);
+                                                 overridden_proc);
 
-              plug_in_proc_def_free (overridden_proc_def);
+              g_object_unref (overridden_proc);
             }
 	}
     }
@@ -324,13 +323,13 @@ plug_ins_init (Gimp               *gimp,
   /* build list of automatically started extensions */
   for (list = gimp->plug_in_proc_defs, nth = 0; list; list = list->next, nth++)
     {
-      PlugInProcDef *proc_def = list->data;
+      GimpPlugInProcedure *proc = list->data;
 
-      if (proc_def->prog                                   &&
-	  proc_def->procedure->proc_type == GIMP_EXTENSION &&
-	  proc_def->procedure->num_args  == 0)
+      if (proc->prog                                         &&
+	  GIMP_PROCEDURE (proc)->proc_type == GIMP_EXTENSION &&
+	  GIMP_PROCEDURE (proc)->num_args  == 0)
 	{
-          extensions = g_list_prepend (extensions, proc_def);
+          extensions = g_list_prepend (extensions, proc);
         }
     }
 
@@ -346,19 +345,19 @@ plug_ins_init (Gimp               *gimp,
 
       for (list = extensions, nth = 0; list; list = g_list_next (list), nth++)
         {
-          PlugInProcDef *proc_def = list->data;
-          GValueArray   *args;
+          GimpPlugInProcedure *proc = list->data;
+          GValueArray         *args;
 
 	  if (gimp->be_verbose)
 	    g_print (_("Starting extension: '%s'\n"),
-                     proc_def->procedure->name);
+                     GIMP_PROCEDURE (proc)->name);
 
-	  status_callback (NULL, proc_def->procedure->name,
+	  status_callback (NULL, GIMP_PROCEDURE (proc)->name,
                            (gdouble) nth / (gdouble) n_extensions);
 
           args = g_value_array_new (0);
 
-	  plug_in_run (gimp, context, NULL, proc_def->procedure,
+	  plug_in_run (gimp, context, NULL, GIMP_PROCEDURE (proc),
                        args, FALSE, TRUE, -1);
 
           g_value_array_free (args);
@@ -427,25 +426,25 @@ plug_ins_exit (Gimp *gimp)
 }
 
 void
-plug_ins_add_internal (Gimp          *gimp,
-                       PlugInProcDef *proc_def)
+plug_ins_add_internal (Gimp                *gimp,
+                       GimpPlugInProcedure *proc)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (proc_def != NULL);
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
   gimp->plug_in_proc_defs = g_slist_prepend (gimp->plug_in_proc_defs,
-                                             proc_def);
+                                             proc);
 }
 
-PlugInProcDef *
+GimpPlugInProcedure *
 plug_ins_file_register_magic (Gimp        *gimp,
                               const gchar *name,
                               const gchar *extensions,
                               const gchar *prefixes,
                               const gchar *magics)
 {
-  PlugInProcDef *proc_def;
-  GSList        *list;
+  GimpPlugInProcedure *proc;
+  GSList              *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (name != NULL, NULL);
@@ -455,53 +454,21 @@ plug_ins_file_register_magic (Gimp        *gimp,
   else
     list = gimp->plug_in_proc_defs;
 
-  proc_def = plug_in_proc_def_find (list, name);
+  proc = gimp_plug_in_procedure_find (list, name);
 
-  if (proc_def)
-    {
-      proc_def->file_proc = TRUE;
+  if (proc)
+    gimp_plug_in_procedure_set_file_proc (proc, extensions, prefixes, magics);
 
-      if (proc_def->extensions != extensions)
-        {
-          if (proc_def->extensions)
-            g_free (proc_def->extensions);
-          proc_def->extensions = g_strdup (extensions);
-        }
-
-      proc_def->extensions_list =
-        plug_ins_extensions_parse (proc_def->extensions);
-
-      if (proc_def->prefixes != prefixes)
-        {
-          if (proc_def->prefixes)
-            g_free (proc_def->prefixes);
-          proc_def->prefixes = g_strdup (prefixes);
-        }
-
-      proc_def->prefixes_list =
-        plug_ins_extensions_parse (proc_def->prefixes);
-
-      if (proc_def->magics != magics)
-        {
-          if (proc_def->magics)
-            g_free (proc_def->magics);
-          proc_def->magics = g_strdup (magics);
-        }
-
-      proc_def->magics_list =
-        plug_ins_extensions_parse (proc_def->magics);
-    }
-
-  return proc_def;
+  return proc;
 }
 
-PlugInProcDef *
+GimpPlugInProcedure *
 plug_ins_file_register_mime (Gimp        *gimp,
                              const gchar *name,
                              const gchar *mime_type)
 {
-  PlugInProcDef *proc_def;
-  GSList        *list;
+  GimpPlugInProcedure *proc;
+  GSList              *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (name != NULL, NULL);
@@ -512,25 +479,21 @@ plug_ins_file_register_mime (Gimp        *gimp,
   else
     list = gimp->plug_in_proc_defs;
 
-  proc_def = plug_in_proc_def_find (list, name);
+  proc = gimp_plug_in_procedure_find (list, name);
 
-  if (proc_def)
-    {
-      if (proc_def->mime_type)
-        g_free (proc_def->mime_type);
-      proc_def->mime_type = g_strdup (mime_type);
-    }
+  if (proc)
+    gimp_plug_in_procedure_set_mime_type (proc, mime_type);
 
-  return proc_def;
+  return proc;
 }
 
-PlugInProcDef *
+GimpPlugInProcedure *
 plug_ins_file_register_thumb_loader (Gimp        *gimp,
                                      const gchar *load_proc,
                                      const gchar *thumb_proc)
 {
-  PlugInProcDef *proc_def;
-  GSList        *list;
+  GimpPlugInProcedure *proc;
+  GSList              *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (load_proc, NULL);
@@ -541,17 +504,12 @@ plug_ins_file_register_thumb_loader (Gimp        *gimp,
   else
     list = gimp->plug_in_proc_defs;
 
-  proc_def = plug_in_proc_def_find (list, load_proc);
+  proc = gimp_plug_in_procedure_find (list, load_proc);
 
-  if (proc_def)
-    {
-      if (proc_def->thumb_loader)
-        g_free (proc_def->thumb_loader);
+  if (proc)
+    gimp_plug_in_procedure_set_thumb_loader (proc, thumb_proc);
 
-      proc_def->thumb_loader = g_strdup (thumb_proc);
-    }
-
-  return proc_def;
+  return proc;
 }
 
 void
@@ -583,16 +541,16 @@ plug_ins_def_add_from_rc (Gimp      *gimp,
    */
   for (list = plug_in_def->proc_defs; list; list = list->next)
     {
-      PlugInProcDef *proc_def = list->data;
+      GimpPlugInProcedure *proc = list->data;
 
-      if (! proc_def->extensions &&
-          ! proc_def->prefixes   &&
-          ! proc_def->magics     &&
-	  proc_def->menu_paths   &&
-	  (! strncmp (proc_def->menu_paths->data, "<Load>", 6) ||
-	   ! strncmp (proc_def->menu_paths->data, "<Save>", 6)))
+      if (! proc->extensions &&
+          ! proc->prefixes   &&
+          ! proc->magics     &&
+	  proc->menu_paths   &&
+	  (! strncmp (proc->menu_paths->data, "<Load>", 6) ||
+	   ! strncmp (proc->menu_paths->data, "<Save>", 6)))
 	{
-	  proc_def->extensions = g_strdup ("");
+	  proc->extensions = g_strdup ("");
 	}
     }
 
@@ -640,46 +598,46 @@ plug_ins_def_add_from_rc (Gimp      *gimp,
 }
 
 void
-plug_ins_temp_proc_def_add (Gimp          *gimp,
-                            PlugInProcDef *proc_def)
+plug_ins_temp_proc_def_add (Gimp                *gimp,
+                            GimpPlugInProcedure *proc)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (proc_def != NULL);
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
   if (! gimp->no_interface)
     {
-      if (proc_def->menu_label || proc_def->menu_paths)
-        gimp_menus_create_item (gimp, proc_def, NULL);
+      if (proc->menu_label || proc->menu_paths)
+        gimp_menus_create_item (gimp, proc, NULL);
     }
 
   /*  Register the procedural database entry  */
-  gimp_pdb_register (gimp, proc_def->procedure);
+  gimp_pdb_register (gimp, GIMP_PROCEDURE (proc));
 
   /*  Add the definition to the global list  */
-  gimp->plug_in_proc_defs = g_slist_prepend (gimp->plug_in_proc_defs, proc_def);
+  gimp->plug_in_proc_defs = g_slist_prepend (gimp->plug_in_proc_defs, proc);
 }
 
 void
-plug_ins_temp_proc_def_remove (Gimp          *gimp,
-                               PlugInProcDef *proc_def)
+plug_ins_temp_proc_def_remove (Gimp                *gimp,
+                               GimpPlugInProcedure *proc)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (proc_def != NULL);
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
   if (! gimp->no_interface)
     {
-      if (proc_def->menu_label || proc_def->menu_paths)
-        gimp_menus_delete_item (gimp, proc_def);
+      if (proc->menu_label || proc->menu_paths)
+        gimp_menus_delete_item (gimp, proc);
     }
 
   /*  Unregister the procedural database entry  */
-  gimp_pdb_unregister (gimp, proc_def->procedure->name);
+  gimp_pdb_unregister (gimp, GIMP_PROCEDURE (proc)->name);
 
   /*  Remove the definition from the global list  */
-  gimp->plug_in_proc_defs = g_slist_remove (gimp->plug_in_proc_defs, proc_def);
+  gimp->plug_in_proc_defs = g_slist_remove (gimp->plug_in_proc_defs, proc);
 
   /*  Destroy the definition  */
-  plug_in_proc_def_free (proc_def);
+  g_object_unref (proc);
 }
 
 void
@@ -862,145 +820,6 @@ plug_ins_help_domains (Gimp    *gimp,
   return n_domains;
 }
 
-PlugInProcDef *
-plug_ins_proc_def_find (Gimp          *gimp,
-                        GimpProcedure *procedure)
-{
-  GSList *list;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
-
-  for (list = gimp->plug_in_proc_defs; list; list = list->next)
-    {
-      PlugInProcDef *proc_def = list->data;
-
-      if (procedure == proc_def->procedure)
-        return proc_def;
-    }
-
-  return NULL;
-}
-
-GSList *
-plug_ins_extensions_parse (gchar *extensions)
-{
-  GSList *list = NULL;
-
-  /* EXTENSIONS can be NULL.  Avoid calling strtok if it is.  */
-  if (extensions)
-    {
-      gchar *extension;
-      gchar *next_token;
-
-      extensions = g_strdup (extensions);
-
-      next_token = extensions;
-      extension = strtok (next_token, " \t,");
-
-      while (extension)
-	{
-	  list = g_slist_prepend (list, g_strdup (extension));
-	  extension = strtok (NULL, " \t,");
-	}
-
-      g_free (extensions);
-    }
-
-  return g_slist_reverse (list);
-}
-
-PlugInImageType
-plug_ins_image_types_parse (gchar *image_types)
-{
-  gchar           *type_spec = image_types;
-  PlugInImageType  types     = 0;
-
-  /*  If the plug_in registers with image_type == NULL or "", return 0
-   *  By doing so it won't be touched by plug_in_set_menu_sensitivity()
-   */
-  if (! image_types)
-    return types;
-
-  while (*image_types)
-    {
-      while (*image_types &&
-	     ((*image_types == ' ') ||
-	      (*image_types == '\t') ||
-	      (*image_types == ',')))
-	image_types++;
-
-      if (*image_types)
-	{
-	  if (strncmp (image_types, "RGBA", 4) == 0)
-	    {
-	      types |= PLUG_IN_RGBA_IMAGE;
-	      image_types += 4;
-	    }
-	  else if (strncmp (image_types, "RGB*", 4) == 0)
-	    {
-	      types |= PLUG_IN_RGB_IMAGE | PLUG_IN_RGBA_IMAGE;
-	      image_types += 4;
-	    }
-	  else if (strncmp (image_types, "RGB", 3) == 0)
-	    {
-	      types |= PLUG_IN_RGB_IMAGE;
-	      image_types += 3;
-	    }
-	  else if (strncmp (image_types, "GRAYA", 5) == 0)
-	    {
-	      types |= PLUG_IN_GRAYA_IMAGE;
-	      image_types += 5;
-	    }
-	  else if (strncmp (image_types, "GRAY*", 5) == 0)
-	    {
-	      types |= PLUG_IN_GRAY_IMAGE | PLUG_IN_GRAYA_IMAGE;
-	      image_types += 5;
-	    }
-	  else if (strncmp (image_types, "GRAY", 4) == 0)
-	    {
-	      types |= PLUG_IN_GRAY_IMAGE;
-	      image_types += 4;
-	    }
-	  else if (strncmp (image_types, "INDEXEDA", 8) == 0)
-	    {
-	      types |= PLUG_IN_INDEXEDA_IMAGE;
-	      image_types += 8;
-	    }
-	  else if (strncmp (image_types, "INDEXED*", 8) == 0)
-	    {
-	      types |= PLUG_IN_INDEXED_IMAGE | PLUG_IN_INDEXEDA_IMAGE;
-	      image_types += 8;
-	    }
-	  else if (strncmp (image_types, "INDEXED", 7) == 0)
-	    {
-	      types |= PLUG_IN_INDEXED_IMAGE;
-	      image_types += 7;
-	    }
-	  else if (strncmp (image_types, "*", 1) == 0)
-	    {
-	      types |= PLUG_IN_RGB_IMAGE | PLUG_IN_RGBA_IMAGE
-	             | PLUG_IN_GRAY_IMAGE | PLUG_IN_GRAYA_IMAGE
-	             | PLUG_IN_INDEXED_IMAGE | PLUG_IN_INDEXEDA_IMAGE;
-	      image_types += 1;
-	    }
-	  else
-	    {
-              g_printerr ("image_type contains unrecognizable parts: '%s'\n",
-                          type_spec);
-
-	      while (*image_types &&
-                     ((*image_types != ' ') ||
-                      (*image_types != '\t') ||
-                      (*image_types != ',')))
-		image_types++;
-	    }
-	}
-    }
-
-  return types;
-}
-
 
 /*  private functions  */
 
@@ -1044,36 +863,36 @@ static void
 plug_ins_add_to_db (Gimp        *gimp,
                     GimpContext *context)
 {
-  PlugInProcDef *proc_def;
-  GSList        *list;
+  GimpPlugInProcedure *proc;
+  GSList              *list;
 
   for (list = gimp->plug_in_proc_defs; list; list = list->next)
     {
-      proc_def = list->data;
+      proc = list->data;
 
-      if (proc_def->prog && (proc_def->procedure->proc_type != GIMP_INTERNAL))
+      if (proc->prog && (GIMP_PROCEDURE (proc)->proc_type != GIMP_INTERNAL))
 	{
-	  proc_def->procedure->exec_method.plug_in.filename = proc_def->prog;
-          gimp_pdb_register (gimp, proc_def->procedure);
+	  GIMP_PROCEDURE (proc)->exec_method.plug_in.filename = proc->prog;
+          gimp_pdb_register (gimp, GIMP_PROCEDURE (proc));
 	}
     }
 
   for (list = gimp->plug_in_proc_defs; list; list = list->next)
     {
-      proc_def = list->data;
+      proc = list->data;
 
-      if (proc_def->file_proc)
+      if (proc->file_proc)
         {
           GValueArray *return_vals;
 
-          if (proc_def->image_types)
+          if (proc->image_types)
             {
               return_vals =
                 gimp_pdb_run_proc (gimp, context, NULL,
                                    "gimp-register-save-handler",
-                                   G_TYPE_STRING, proc_def->procedure->name,
-                                   G_TYPE_STRING, proc_def->extensions,
-                                   G_TYPE_STRING, proc_def->prefixes,
+                                   G_TYPE_STRING, GIMP_PROCEDURE (proc)->name,
+                                   G_TYPE_STRING, proc->extensions,
+                                   G_TYPE_STRING, proc->prefixes,
                                    G_TYPE_NONE);
             }
           else
@@ -1081,10 +900,10 @@ plug_ins_add_to_db (Gimp        *gimp,
               return_vals =
                 gimp_pdb_run_proc (gimp, context, NULL,
                                    "gimp-register-magic-load-handler",
-                                   G_TYPE_STRING, proc_def->procedure->name,
-                                   G_TYPE_STRING, proc_def->extensions,
-                                   G_TYPE_STRING, proc_def->prefixes,
-                                   G_TYPE_STRING, proc_def->magics,
+                                   G_TYPE_STRING, GIMP_PROCEDURE (proc)->name,
+                                   G_TYPE_STRING, proc->extensions,
+                                   G_TYPE_STRING, proc->prefixes,
+                                   G_TYPE_STRING, proc->magics,
                                    G_TYPE_NONE);
             }
 
@@ -1093,26 +912,26 @@ plug_ins_add_to_db (Gimp        *gimp,
     }
 }
 
-static PlugInProcDef *
-plug_ins_proc_def_insert (Gimp          *gimp,
-                          PlugInProcDef *proc_def)
+static GimpPlugInProcedure *
+plug_ins_proc_def_insert (Gimp                *gimp,
+                          GimpPlugInProcedure *proc)
 {
   GSList *list;
 
   for (list = gimp->plug_in_proc_defs; list; list = list->next)
     {
-      PlugInProcDef *tmp_proc_def = list->data;
+      GimpPlugInProcedure *tmp_proc = list->data;
 
-      if (strcmp (proc_def->procedure->name, tmp_proc_def->procedure->name) == 0)
+      if (strcmp (GIMP_PROCEDURE (proc)->name,
+                  GIMP_PROCEDURE (tmp_proc)->name) == 0)
 	{
-	  list->data = proc_def;
+	  list->data = proc;
 
-	  return tmp_proc_def;
+	  return tmp_proc;
 	}
     }
 
-  gimp->plug_in_proc_defs = g_slist_prepend (gimp->plug_in_proc_defs,
-                                             proc_def);
+  gimp->plug_in_proc_defs = g_slist_prepend (gimp->plug_in_proc_defs, proc);
 
   return NULL;
 }
@@ -1122,12 +941,12 @@ plug_ins_file_proc_compare (gconstpointer a,
                             gconstpointer b,
                             gpointer      data)
 {
-  Gimp                *gimp   = data;
-  const PlugInProcDef *proc_a = a;
-  const PlugInProcDef *proc_b = b;
-  gchar               *label_a;
-  gchar               *label_b;
-  gint                 retval = 0;
+  Gimp                      *gimp   = data;
+  const GimpPlugInProcedure *proc_a = a;
+  const GimpPlugInProcedure *proc_b = b;
+  gchar                     *label_a;
+  gchar                     *label_b;
+  gint                       retval = 0;
 
   if (strncmp (proc_a->prog, "gimp-xcf", 8) == 0)
     return -1;
@@ -1135,14 +954,14 @@ plug_ins_file_proc_compare (gconstpointer a,
   if (strncmp (proc_b->prog, "gimp-xcf", 8) == 0)
     return 1;
 
-  label_a = plug_in_proc_def_get_label (proc_a,
-                                        plug_ins_locale_domain (gimp,
-                                                                proc_a->prog,
-                                                                NULL));
-  label_b = plug_in_proc_def_get_label (proc_b,
-                                        plug_ins_locale_domain (gimp,
-                                                                proc_b->prog,
-                                                                NULL));
+  label_a = gimp_plug_in_procedure_get_label (proc_a,
+                                              plug_ins_locale_domain (gimp,
+                                                                      proc_a->prog,
+                                                                      NULL));
+  label_b = gimp_plug_in_procedure_get_label (proc_b,
+                                              plug_ins_locale_domain (gimp,
+                                                                      proc_b->prog,
+                                                                      NULL));
 
   if (label_a && label_b)
     retval = g_utf8_collate (label_a, label_b);

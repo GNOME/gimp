@@ -54,29 +54,29 @@
 
 /*  local function prototypes  */
 
-static PlugInProcDef * file_proc_find_by_prefix    (GSList       *procs,
-                                                    const gchar  *uri,
-                                                    gboolean      skip_magic);
-static PlugInProcDef * file_proc_find_by_extension (GSList       *procs,
-                                                    const gchar  *uri,
-                                                    gboolean      skip_magic);
-static PlugInProcDef * file_proc_find_by_name      (GSList       *procs,
-                                                    const gchar  *uri,
-                                                    gboolean      skip_magic);
-static void            file_convert_string         (const gchar  *instr,
-                                                    gchar        *outmem,
-                                                    gint          maxmem,
-                                                    gint         *nmem);
-static gint            file_check_single_magic     (const gchar  *offset,
-                                                    const gchar  *type,
-                                                    const gchar  *value,
-                                                    const guchar *file_head,
-                                                    gint          headsize,
-                                                    FILE         *ifp);
-static gint            file_check_magic_list       (GSList       *magics_list,
-                                                    const guchar *head,
-                                                    gint          headsize,
-                                                    FILE         *ifp);
+static GimpPlugInProcedure * file_proc_find_by_prefix    (GSList       *procs,
+                                                          const gchar  *uri,
+                                                          gboolean      skip_magic);
+static GimpPlugInProcedure * file_proc_find_by_extension (GSList       *procs,
+                                                          const gchar  *uri,
+                                                          gboolean      skip_magic);
+static GimpPlugInProcedure * file_proc_find_by_name      (GSList       *procs,
+                                                          const gchar  *uri,
+                                                          gboolean      skip_magic);
+static void                  file_convert_string         (const gchar  *instr,
+                                                          gchar        *outmem,
+                                                          gint          maxmem,
+                                                          gint         *nmem);
+static gint                  file_check_single_magic     (const gchar  *offset,
+                                                          const gchar  *type,
+                                                          const gchar  *value,
+                                                          const guchar *file_head,
+                                                          gint          headsize,
+                                                          FILE         *ifp);
+static gint                  file_check_magic_list       (GSList       *magics_list,
+                                                          const guchar *head,
+                                                          gint          headsize,
+                                                          FILE         *ifp);
 
 
 /*  public functions  */
@@ -174,13 +174,13 @@ file_utils_filename_from_uri (const gchar *uri)
   return filename;
 }
 
-PlugInProcDef *
+GimpPlugInProcedure *
 file_utils_find_proc (GSList       *procs,
                       const gchar  *uri)
 {
-  PlugInProcDef *file_proc;
-  GSList        *all_procs = procs;
-  gchar         *filename;
+  GimpPlugInProcedure *file_proc;
+  GSList              *all_procs = procs;
+  gchar               *filename;
 
   g_return_val_if_fail (procs != NULL, NULL);
   g_return_val_if_fail (uri != NULL, NULL);
@@ -196,12 +196,12 @@ file_utils_find_proc (GSList       *procs,
   /* Then look for magics */
   if (filename)
     {
-      PlugInProcDef *size_matched_proc = NULL;
-      FILE          *ifp               = NULL;
-      gint           head_size         = -2;
-      gint           size_match_count  = 0;
-      gint           match_val;
-      guchar         head[256];
+      GimpPlugInProcedure *size_matched_proc = NULL;
+      FILE                *ifp               = NULL;
+      gint                 head_size         = -2;
+      gint                 size_match_count  = 0;
+      gint                 match_val;
+      guchar               head[256];
 
       while (procs)
         {
@@ -252,7 +252,7 @@ file_utils_find_proc (GSList       *procs,
   return file_proc_find_by_name (all_procs, uri, FALSE);
 }
 
-PlugInProcDef *
+GimpPlugInProcedure *
 file_utils_find_proc_by_extension (GSList      *procs,
                                    const gchar *uri)
 {
@@ -369,7 +369,7 @@ file_utils_uri_display_name (const gchar *uri)
 
 /*  private functions  */
 
-static PlugInProcDef *
+static GimpPlugInProcedure *
 file_proc_find_by_prefix (GSList      *procs,
                           const gchar *uri,
                           gboolean     skip_magic)
@@ -378,8 +378,8 @@ file_proc_find_by_prefix (GSList      *procs,
 
   for (p = procs; p; p = g_slist_next (p))
     {
-      PlugInProcDef *proc = p->data;
-      GSList        *prefixes;
+      GimpPlugInProcedure *proc = p->data;
+      GSList              *prefixes;
 
       if (skip_magic && proc->magics_list)
 	continue;
@@ -396,7 +396,7 @@ file_proc_find_by_prefix (GSList      *procs,
   return NULL;
 }
 
-static PlugInProcDef *
+static GimpPlugInProcedure *
 file_proc_find_by_extension (GSList      *procs,
                              const gchar *uri,
                              gboolean     skip_magic)
@@ -411,8 +411,8 @@ file_proc_find_by_extension (GSList      *procs,
 
   for (p = procs; p; p = g_slist_next (p))
     {
-      PlugInProcDef *proc = p->data;
-      GSList        *extensions;
+      GimpPlugInProcedure *proc = p->data;
+      GSList              *extensions;
 
       for (extensions = proc->extensions_list;
 	   ext && extensions;
@@ -441,12 +441,12 @@ file_proc_find_by_extension (GSList      *procs,
   return NULL;
 }
 
-static PlugInProcDef *
+static GimpPlugInProcedure *
 file_proc_find_by_name (GSList      *procs,
 		        const gchar *uri,
 		        gboolean     skip_magic)
 {
-  PlugInProcDef *proc;
+  GimpPlugInProcedure *proc;
 
   proc = file_proc_find_by_prefix (procs, uri, skip_magic);
 

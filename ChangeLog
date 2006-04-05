@@ -1,3 +1,52 @@
+2006-04-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in-types.h
+	* app/plug-in/plug-in-proc-def.[ch]: renamed to GimpPlugInProcedure
+	and made a GObject derived from GimpProcedure (instead of having
+	a pointer to a GimpProcedure). Added image_types and file_magic
+	utility functions taken from plug-ins.[ch]. Still lives in the
+	same crappy files because I am undecided where to put it...
+
+	* app/pdb/gimpprocedure.c (gimp_procedure_real_execute): removed
+	switch() statement and always call the internal marshaller because
+	GimpProcedure::execute() is properly overridden by
+	GimpPlugInProcedure now.
+
+	* app/plug-in/plug-ins.[ch]: removed the mime_type and file_magic
+	utilities added to GimpPlugInProcedure.
+
+	* app/actions/file-commands.c
+	* app/actions/plug-in-actions.[ch]
+	* app/actions/plug-in-commands.[ch]
+	* app/core/gimp-gui.[ch]
+	* app/core/gimp.[ch]
+	* app/core/gimpimage.[ch]
+	* app/dialogs/file-open-dialog.c
+	* app/dialogs/file-save-dialog.c
+	* app/dialogs/print-size-dialog.c
+	* app/file/file-open.[ch]
+	* app/file/file-save.[ch]
+	* app/file/file-utils.[ch]
+	* app/gui/gui-vtable.c
+	* app/menus/plug-in-menus.[ch]
+	* app/plug-in/plug-in-def.[ch]
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-rc.c
+	* app/plug-in/plug-in-run.c
+	* app/plug-in/plug-in.c
+	* app/plug-in/plug-ins-query.c
+	* app/widgets/gimpactiongroup.[ch]
+	* app/widgets/gimpdnd-xds.c
+	* app/widgets/gimpfiledialog.[ch]
+	* app/widgets/gimpfileprocview.[ch]
+	* app/widgets/gimppluginaction.[ch]
+	* app/xcf/xcf.c
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/plug_in.pdb: changed addordingly.
+
+	* app/pdb/fileops_cmds.c
+	* app/pdb/plug_in_cmds.c: regenerated.
+
 2006-04-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/gimpprocedure.[ch]: made it a GObject. Removed member

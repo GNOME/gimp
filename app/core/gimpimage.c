@@ -1355,15 +1355,15 @@ gimp_image_get_filename (const GimpImage *image)
 }
 
 void
-gimp_image_set_save_proc (GimpImage     *image,
-                          PlugInProcDef *proc)
+gimp_image_set_save_proc (GimpImage           *image,
+                          GimpPlugInProcedure *proc)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
   image->save_proc = proc;
 }
 
-PlugInProcDef *
+GimpPlugInProcedure *
 gimp_image_get_save_proc (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);

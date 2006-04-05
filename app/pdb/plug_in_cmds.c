@@ -238,19 +238,19 @@ plugin_icon_register_invoker (GimpProcedure     *procedure,
     {
       if (gimp->current_plug_in && gimp->current_plug_in->query)
         {
-          PlugInProcDef *proc_def;
-          gchar         *canonical;
+          GimpPlugInProcedure *proc;
+          gchar               *canonical;
 
           canonical = gimp_canonicalize_identifier (procedure_name);
 
-          proc_def = plug_in_proc_def_find (gimp->current_plug_in->plug_in_def->proc_defs,
-                                            canonical);
+          proc = gimp_plug_in_procedure_find (gimp->current_plug_in->plug_in_def->proc_defs,
+                                              canonical);
 
           g_free (canonical);
 
-          if (proc_def)
-            plug_in_proc_def_set_icon (proc_def, icon_type,
-                                       icon_data, icon_data_length);
+          if (proc)
+            gimp_plug_in_procedure_set_icon (proc, icon_type,
+                                             icon_data, icon_data_length);
           else
             success = FALSE;
         }

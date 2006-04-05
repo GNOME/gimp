@@ -112,27 +112,11 @@ gimp_procedure_real_execute (GimpProcedure *procedure,
                              GimpProgress  *progress,
                              GValueArray   *args)
 {
-  switch (procedure->proc_type)
-    {
-    case GIMP_INTERNAL:
-      g_return_val_if_fail (args->n_values >= procedure->num_args, NULL);
+  g_return_val_if_fail (args->n_values >= procedure->num_args, NULL);
 
-      return procedure->exec_method.internal.marshal_func (procedure,
-                                                           gimp, context,
-                                                           progress,
-                                                           args);
-
-    case GIMP_PLUGIN:
-    case GIMP_EXTENSION:
-    case GIMP_TEMPORARY:
-      return plug_in_run (gimp, context, progress, procedure,
-                          args, TRUE, FALSE, -1);
-
-    default:
-      break;
-    }
-
-  return NULL;
+  return procedure->exec_method.internal.marshal_func (procedure, gimp,
+                                                       context, progress,
+                                                       args);
 }
 
 

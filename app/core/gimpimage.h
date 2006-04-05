@@ -103,7 +103,7 @@ struct _GimpImage
 
   gint               ID;                    /*  provides a unique ID         */
 
-  PlugInProcDef     *save_proc;             /*  last PDB save proc used      */
+  GimpPlugInProcedure *save_proc;           /*  last PDB save proc used      */
 
   gint               width, height;         /*  width and height attributes  */
   gdouble            xresolution;           /*  image x-res, in dpi          */
@@ -249,8 +249,8 @@ void            gimp_image_set_filename          (GimpImage          *image,
 gchar         * gimp_image_get_filename          (const GimpImage    *image);
 
 void            gimp_image_set_save_proc         (GimpImage          *image,
-                                                  PlugInProcDef      *proc);
-PlugInProcDef * gimp_image_get_save_proc         (const GimpImage    *image);
+                                                  GimpPlugInProcedure *proc);
+GimpPlugInProcedure * gimp_image_get_save_proc   (const GimpImage    *image);
 
 void            gimp_image_set_resolution        (GimpImage          *image,
                                                   gdouble             xres,

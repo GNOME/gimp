@@ -45,19 +45,19 @@
 
 /*  local function prototypes  */
 
-static void       file_open_dialog_response   (GtkWidget     *open_dialog,
-                                               gint           response_id,
-                                               Gimp          *gimp);
-static gboolean   file_open_dialog_open_image (GtkWidget     *open_dialog,
-                                               Gimp          *gimp,
-                                               const gchar   *uri,
-                                               const gchar   *entered_filename,
-                                               PlugInProcDef *load_proc);
-static gboolean   file_open_dialog_open_layer (GtkWidget     *open_dialog,
-                                               GimpImage     *image,
-                                               const gchar   *uri,
-                                               const gchar   *entered_filename,
-                                               PlugInProcDef *load_proc);
+static void       file_open_dialog_response   (GtkWidget           *open_dialog,
+                                               gint                 response_id,
+                                               Gimp                *gimp);
+static gboolean   file_open_dialog_open_image (GtkWidget           *open_dialog,
+                                               Gimp                *gimp,
+                                               const gchar         *uri,
+                                               const gchar         *entered_filename,
+                                               GimpPlugInProcedure *load_proc);
+static gboolean   file_open_dialog_open_layer (GtkWidget           *open_dialog,
+                                               GimpImage           *image,
+                                               const gchar         *uri,
+                                               const gchar         *entered_filename,
+                                               GimpPlugInProcedure *load_proc);
 
 
 /*  public functions  */
@@ -178,11 +178,11 @@ file_open_dialog_response (GtkWidget *open_dialog,
 }
 
 static gboolean
-file_open_dialog_open_image (GtkWidget     *open_dialog,
-                             Gimp          *gimp,
-                             const gchar   *uri,
-                             const gchar   *entered_filename,
-                             PlugInProcDef *load_proc)
+file_open_dialog_open_image (GtkWidget           *open_dialog,
+                             Gimp                *gimp,
+                             const gchar         *uri,
+                             const gchar         *entered_filename,
+                             GimpPlugInProcedure *load_proc)
 {
   GimpImage         *image;
   GimpPDBStatusType  status;
@@ -216,11 +216,11 @@ file_open_dialog_open_image (GtkWidget     *open_dialog,
 }
 
 static gboolean
-file_open_dialog_open_layer (GtkWidget     *open_dialog,
-                             GimpImage     *image,
-                             const gchar   *uri,
-                             const gchar   *entered_filename,
-                             PlugInProcDef *load_proc)
+file_open_dialog_open_layer (GtkWidget           *open_dialog,
+                             GimpImage           *image,
+                             const gchar         *uri,
+                             const gchar         *entered_filename,
+                             GimpPlugInProcedure *load_proc)
 {
   GimpLayer         *new_layer;
   GimpPDBStatusType  status;
