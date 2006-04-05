@@ -709,28 +709,24 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 
   for (i = 0; i < proc_install->nparams; i++)
     {
-      canonical = gimp_canonicalize_identifier (proc_install->params[i].name);
+      GParamSpec *pspec =
+        gimp_pdb_compat_param_spec (plug_in->gimp,
+                                    proc_install->params[i].type,
+                                    proc_install->params[i].name,
+                                    proc_install->params[i].description);
 
-      gimp_procedure_add_argument (procedure,
-                                   gimp_pdb_compat_param_spec (plug_in->gimp,
-                                                               proc_install->params[i].type,
-                                                               canonical,
-                                                               proc_install->params[i].description));
-
-      g_free (canonical);
+      gimp_procedure_add_argument (procedure, pspec);
     }
 
   for (i = 0; i < proc_install->nreturn_vals; i++)
     {
-      canonical = gimp_canonicalize_identifier (proc_install->return_vals[i].name);
+      GParamSpec *pspec =
+        gimp_pdb_compat_param_spec (plug_in->gimp,
+                                    proc_install->return_vals[i].type,
+                                    proc_install->return_vals[i].name,
+                                    proc_install->return_vals[i].description);
 
-      gimp_procedure_add_return_value (procedure,
-                                       gimp_pdb_compat_param_spec (plug_in->gimp,
-                                                                   proc_install->return_vals[i].type,
-                                                                   canonical,
-                                                                   proc_install->return_vals[i].description));
-
-      g_free (canonical);
+      gimp_procedure_add_return_value (procedure, pspec);
     }
 
   if (proc_install->menu_path)

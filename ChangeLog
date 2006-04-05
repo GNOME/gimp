@@ -1,5 +1,10 @@
 2006-04-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/plug-in-message.c (plug_in_handle_proc_install):
+	don't canonicalize names of GParamSpecs, they do this themselves.
+
+2006-04-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/plug-in-types.h
 	* app/plug-in/plug-in-proc-def.[ch]: renamed to GimpPlugInProcedure
 	and made a GObject derived from GimpProcedure (instead of having
