@@ -40,20 +40,22 @@ struct _PlugInProcFrame
 };
 
 
-PlugInProcFrame * plug_in_proc_frame_new     (GimpContext     *context,
-                                              GimpProgress    *progress,
-                                              GimpProcedure   *procedure);
-void              plug_in_proc_frame_init    (PlugInProcFrame *proc_frame,
-                                              GimpContext     *context,
-                                              GimpProgress    *progress,
-                                              GimpProcedure   *procedure);
+PlugInProcFrame * plug_in_proc_frame_new         (GimpContext     *context,
+                                                  GimpProgress    *progress,
+                                                  GimpProcedure   *procedure);
+void              plug_in_proc_frame_init        (PlugInProcFrame *proc_frame,
+                                                  GimpContext     *context,
+                                                  GimpProgress    *progress,
+                                                  GimpProcedure   *procedure);
 
-void              plug_in_proc_frame_dispose (PlugInProcFrame *proc_frame,
-                                              PlugIn          *plug_in);
+void              plug_in_proc_frame_dispose     (PlugInProcFrame *proc_frame,
+                                                  PlugIn          *plug_in);
 
-PlugInProcFrame * plug_in_proc_frame_ref     (PlugInProcFrame *proc_frame);
-void              plug_in_proc_frame_unref   (PlugInProcFrame *proc_frame,
-                                              PlugIn          *plug_in);
+PlugInProcFrame * plug_in_proc_frame_ref         (PlugInProcFrame *proc_frame);
+void              plug_in_proc_frame_unref       (PlugInProcFrame *proc_frame,
+                                                  PlugIn          *plug_in);
+
+GValueArray * plug_in_proc_frame_get_return_vals (PlugInProcFrame *proc_frame);
 
 
 #endif /* __PLUG_IN_PROC_FRAME_H__ */

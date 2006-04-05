@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -51,12 +49,10 @@
 
 /*  local function prototypes  */
 
-static GValueArray * plug_in_temp_run        (GimpProcedure   *procedure,
-                                              GimpContext     *context,
-                                              GimpProgress    *progress,
-                                              GValueArray     *args);
-static GValueArray * plug_in_get_return_vals (PlugIn          *plug_in,
-                                              PlugInProcFrame *proc_frame);
+static GValueArray * plug_in_temp_run (GimpProcedure *procedure,
+                                       GimpContext   *context,
+                                       GimpProgress  *progress,
+                                       GValueArray   *args);
 
 
 /*  public functions  */
@@ -134,15 +130,15 @@ plug_in_run (Gimp          *gimp,
           ! gp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
           ! gimp_wire_flush (plug_in->my_write, plug_in))
         {
-          return_vals = gimp_procedure_get_return_values (procedure, FALSE);
-
           g_free (config.display_name);
+          plug_in_params_destroy (proc_run.params, proc_run.nparams, FALSE);
+
+          return_vals = gimp_procedure_get_return_values (procedure, FALSE);
 
           goto done;
         }
 
       g_free (config.display_name);
-
       plug_in_params_destroy (proc_run.params, proc_run.nparams, FALSE);
 
       plug_in_ref (plug_in);
@@ -158,6 +154,8 @@ plug_in_run (Gimp          *gimp,
           g_main_loop_run (plug_in->ext_main_loop);
           gimp_threads_enter (gimp);
 
+          /*  main_loop is quit in plug_in_handle_extension_ack()  */
+
           g_main_loop_unref (plug_in->ext_main_loop);
           plug_in->ext_main_loop = NULL;
         }
@@ -167,17 +165,20 @@ plug_in_run (Gimp          *gimp,
        */
       if (synchronous)
         {
-          plug_in->main_proc_frame.main_loop = g_main_loop_new (NULL, FALSE);
+          PlugInProcFrame *proc_frame = &plug_in->main_proc_frame;
+
+          proc_frame->main_loop = g_main_loop_new (NULL, FALSE);
 
           gimp_threads_leave (gimp);
-          g_main_loop_run (plug_in->main_proc_frame.main_loop);
+          g_main_loop_run (proc_frame->main_loop);
           gimp_threads_enter (gimp);
 
-          g_main_loop_unref (plug_in->main_proc_frame.main_loop);
-          plug_in->main_proc_frame.main_loop = NULL;
+          /*  main_loop is quit in plug_in_handle_proc_return()  */
 
-          return_vals = plug_in_get_return_vals (plug_in,
-                                                 &plug_in->main_proc_frame);
+          g_main_loop_unref (proc_frame->main_loop);
+          proc_frame->main_loop = NULL;
+
+          return_vals = plug_in_proc_frame_get_return_vals (proc_frame);
         }
 
       plug_in_unref (plug_in);
@@ -260,9 +261,10 @@ plug_in_temp_run (GimpProcedure *procedure,
       if (! gp_temp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
 	  ! gimp_wire_flush (plug_in->my_write, plug_in))
 	{
-	  return_vals = gimp_procedure_get_return_values (procedure, FALSE);
-
+          plug_in_params_destroy (proc_run.params, proc_run.nparams, FALSE);
           plug_in_proc_frame_pop (plug_in);
+
+	  return_vals = gimp_procedure_get_return_values (procedure, FALSE);
 
 	  goto done;
 	}
@@ -274,61 +276,16 @@ plug_in_temp_run (GimpProcedure *procedure,
 
       plug_in_main_loop (plug_in);
 
-      return_vals = plug_in_get_return_vals (plug_in, proc_frame);
-
       /*  main_loop is quit and proc_frame is popped in
        *  plug_in_handle_temp_proc_return()
        */
+
+      return_vals = plug_in_proc_frame_get_return_vals (proc_frame);
 
       plug_in_proc_frame_unref (proc_frame, plug_in);
       plug_in_unref (plug_in);
     }
 
  done:
-  return return_vals;
-}
-
-static GValueArray *
-plug_in_get_return_vals (PlugIn          *plug_in,
-                         PlugInProcFrame *proc_frame)
-{
-  GValueArray *return_vals;
-
-  g_return_val_if_fail (plug_in != NULL, NULL);
-  g_return_val_if_fail (proc_frame != NULL, NULL);
-
-  if (proc_frame->return_vals &&
-      proc_frame->return_vals->n_values ==
-      proc_frame->procedure->num_values + 1)
-    {
-      return_vals = proc_frame->return_vals;
-    }
-  else if (proc_frame->return_vals)
-    {
-      /* Allocate new return values of the correct size. */
-      return_vals = gimp_procedure_get_return_values (proc_frame->procedure,
-                                                      FALSE);
-
-      /* Copy all of the arguments we can. */
-      memcpy (return_vals->values, proc_frame->return_vals->values,
-	      sizeof (GValue) * MIN (proc_frame->return_vals->n_values,
-                                     proc_frame->procedure->num_values + 1));
-
-      /* Free the old argument pointer.  This will cause a memory leak
-       * only if there were more values returned than we need (which
-       * shouldn't ever happen).
-       */
-      g_free (proc_frame->return_vals);
-    }
-  else
-    {
-      /* Just return a dummy set of values. */
-      return_vals = gimp_procedure_get_return_values (proc_frame->procedure,
-                                                      FALSE);
-    }
-
-  /* We have consumed any saved values, so clear them. */
-  proc_frame->return_vals = NULL;
-
   return return_vals;
 }

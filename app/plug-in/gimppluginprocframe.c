@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <glib-object.h>
 
 #include "plug-in-types.h"
@@ -144,4 +146,47 @@ plug_in_proc_frame_unref (PlugInProcFrame *proc_frame,
 
   if (proc_frame->ref_count < 1)
     plug_in_proc_frame_free (proc_frame, plug_in);
+}
+
+GValueArray *
+plug_in_proc_frame_get_return_vals (PlugInProcFrame *proc_frame)
+{
+  GValueArray *return_vals;
+
+  g_return_val_if_fail (proc_frame != NULL, NULL);
+
+  if (proc_frame->return_vals &&
+      proc_frame->return_vals->n_values ==
+      proc_frame->procedure->num_values + 1)
+    {
+      return_vals = proc_frame->return_vals;
+    }
+  else if (proc_frame->return_vals)
+    {
+      /* Allocate new return values of the correct size. */
+      return_vals = gimp_procedure_get_return_values (proc_frame->procedure,
+                                                      FALSE);
+
+      /* Copy all of the arguments we can. */
+      memcpy (return_vals->values, proc_frame->return_vals->values,
+	      sizeof (GValue) * MIN (proc_frame->return_vals->n_values,
+                                     proc_frame->procedure->num_values + 1));
+
+      /* Free the old argument pointer.  This will cause a memory leak
+       * only if there were more values returned than we need (which
+       * shouldn't ever happen).
+       */
+      g_free (proc_frame->return_vals);
+    }
+  else
+    {
+      /* Just return a dummy set of values. */
+      return_vals = gimp_procedure_get_return_values (proc_frame->procedure,
+                                                      FALSE);
+    }
+
+  /* We have consumed any saved values, so clear them. */
+  proc_frame->return_vals = NULL;
+
+  return return_vals;
 }

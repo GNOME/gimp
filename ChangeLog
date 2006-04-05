@@ -1,3 +1,12 @@
+2006-04-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in-proc-frame.[ch]: added
+	plug_in_proc_frame_get_return_vals().
+
+	* app/plug-in/plug-in-run.c: removed plug_in_get_return_vals()
+	and call plug_in_proc_frame_get_return_vals() instead.
+	Don't leak stuff in case calling the plug-in fails.
+
 2006-04-05  Tor Lillqvist  <tml@novell.com>
 
 	* app/core/gimpobject.c (gimp_object_get_memsize): Check if
