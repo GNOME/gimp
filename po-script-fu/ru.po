@@ -3,22 +3,23 @@
 #
 # Valek Filippov <frob@df.ru>, 2000-2002.
 # Anatoly A. Yakushin <jaa@altlinux.ru>, 2003, 2004.
-# Roxana Chernogolova <mavka@justos.org>, 2003-2005.
 # AnatolyA. Yakushin <jaa@altlinux.ru>, 2004.
+# Roxana Chernogolova <mavka@justos.org>, 2003-2006.
 # Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005, 2006.
 msgid ""
 msgstr ""
-"Project-Id-Version: ru\n"
+"Project-Id-Version: gimp script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-06 04:29+0000\n"
-"PO-Revision-Date: 2006-02-08 23:37+0000\n"
+"POT-Creation-Date: 2006-03-21 04:28+0300\n"
+"PO-Revision-Date: 2006-04-02 22:03+0400\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.1\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:144
 msgid "Script-Fu Console"
@@ -148,7 +149,7 @@ msgid "Script-Fu _Console"
 msgstr "_Консоль Скрипт-Фу"
 
 #: ../plug-ins/script-fu/script-fu.c:123 ../plug-ins/script-fu/script-fu.c:152
-#: ../plug-ins/script-fu/script-fu.c:313
+#: ../plug-ins/script-fu/script-fu.c:316
 msgid "<Toolbox>/Xtns/Languages/Script-Fu"
 msgstr "<Toolbox>/Расш./Языки/Скрипт-Фу"
 
@@ -156,63 +157,72 @@ msgstr "<Toolbox>/Расш./Языки/Скрипт-Фу"
 msgid "_Start Server..."
 msgstr "_Запустить сервер..."
 
+#: ../plug-ins/script-fu/script-fu.c:269
+msgid "_GIMP Online"
+msgstr "GIMP в _Интернете"
+
 #: ../plug-ins/script-fu/script-fu.c:270
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
+msgid "_User Manual"
+msgstr "_Руководство пользователя"
+
+#: ../plug-ins/script-fu/script-fu.c:273
 msgid "_Script-Fu"
 msgstr "С_крипт-Фу"
 
-#: ../plug-ins/script-fu/script-fu.c:272
+#: ../plug-ins/script-fu/script-fu.c:275
 msgid "_Buttons"
 msgstr "_Кнопки"
 
-#: ../plug-ins/script-fu/script-fu.c:274
+#: ../plug-ins/script-fu/script-fu.c:277
 msgid "_Logos"
 msgstr "_Логотипы"
 
-#: ../plug-ins/script-fu/script-fu.c:276
+#: ../plug-ins/script-fu/script-fu.c:279
 msgid "_Misc"
 msgstr "_Разное"
 
-#: ../plug-ins/script-fu/script-fu.c:278
+#: ../plug-ins/script-fu/script-fu.c:281
 msgid "_Patterns"
 msgstr "_Текстуры"
 
-#: ../plug-ins/script-fu/script-fu.c:280
+#: ../plug-ins/script-fu/script-fu.c:283
 msgid "_Test"
 msgstr "_Тест"
 
-#: ../plug-ins/script-fu/script-fu.c:282
+#: ../plug-ins/script-fu/script-fu.c:285
 msgid "_Utils"
 msgstr "_Утилиты"
 
-#: ../plug-ins/script-fu/script-fu.c:284
+#: ../plug-ins/script-fu/script-fu.c:287
 msgid "_Web Page Themes"
 msgstr "Темы _веб-страниц"
 
-#: ../plug-ins/script-fu/script-fu.c:286
+#: ../plug-ins/script-fu/script-fu.c:289
 msgid "_Alien Glow"
 msgstr "_Чужое свечение..."
 
-#: ../plug-ins/script-fu/script-fu.c:288
+#: ../plug-ins/script-fu/script-fu.c:291
 msgid "_Beveled Pattern"
 msgstr "_Приподнятые объекты"
 
-#: ../plug-ins/script-fu/script-fu.c:290
+#: ../plug-ins/script-fu/script-fu.c:293
 msgid "_Classic.Gimp.Org"
 msgstr "_Классический Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:293
+#: ../plug-ins/script-fu/script-fu.c:296
 msgid "Alpha to _Logo"
 msgstr "_Альфа в логотип"
 
-#: ../plug-ins/script-fu/script-fu.c:295
+#: ../plug-ins/script-fu/script-fu.c:298
 msgid "_Decor"
 msgstr "_Декор"
 
-#: ../plug-ins/script-fu/script-fu.c:297
+#: ../plug-ins/script-fu/script-fu.c:300
 msgid "_Render"
 msgstr "_Отрисовка"
 
-#: ../plug-ins/script-fu/script-fu.c:305
+#: ../plug-ins/script-fu/script-fu.c:308
 msgid "_Refresh Scripts"
 msgstr "Обновить скрипты"
 
@@ -2200,7 +2210,7 @@ msgid "_Weave..."
 msgstr "Плетение..."
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
-msgid "Create and use _Selections"
+msgid "Create and Use _Selections"
 msgstr "Сохранить и использовать _выделения"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
@@ -2212,7 +2222,7 @@ msgid "Drawing _Simple Objects"
 msgstr "_Рисование простых объектов"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
-msgid "Howto use _Dialogs"
+msgid "How to Use _Dialogs"
 msgstr "Как использовать _диалоги"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
@@ -2224,8 +2234,8 @@ msgid "Using _Paths"
 msgstr "Ис_пользование контуров"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
-msgid "_Basics of TheGIMP"
-msgstr "_Основы GIMP"
+msgid "_Basic Concepts"
+msgstr "Основные _концепции"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
 msgid "_Developer Web Site"
@@ -2236,12 +2246,8 @@ msgid "_Main Web Site"
 msgstr "Официальный _сайт"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
-msgid "_Preparing your Images for the web"
-msgstr "По_дготовка _изображений к публикации а Интернете"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
-msgid "_User Manual Web Site"
-msgstr "Сайт с _руководством пользователя"
+msgid "_Preparing your Images for the Web"
+msgstr "По_дготовка _изображений к публикации в Интернете"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
 msgid "_Working with Digital Camera Photos"
@@ -2282,4 +2288,3 @@ msgstr "Непрозрачность бликов"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
 msgid "_Xach-Effect..."
 msgstr "_Xach-Effect..."
-
