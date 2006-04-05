@@ -454,9 +454,9 @@ gimp_size_box_update_resolution (GimpSizeBox *box)
       gint   yres = ROUND (box->yresolution);
 
       if (xres != yres)
-        text = g_strdup_printf (_("%d × %d dpi"), xres, yres);
+        text = g_strdup_printf (_("%d × %d ppi"), xres, yres);
       else
-        text = g_strdup_printf (_("%d dpi"), yres);
+        text = g_strdup_printf (_("%d ppi"), yres);
 
       gtk_label_set_text (GTK_LABEL (priv->res_label), text);
       g_free (text);

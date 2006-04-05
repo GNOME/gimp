@@ -665,9 +665,9 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
   yres = ROUND (template->yresolution);
 
   if (xres != yres)
-    text = g_strdup_printf (_("%d × %d dpi, %s"), xres, yres, desc);
+    text = g_strdup_printf (_("%d × %d ppi, %s"), xres, yres, desc);
   else
-    text = g_strdup_printf (_("%d dpi, %s"), yres, desc);
+    text = g_strdup_printf (_("%d ppi, %s"), yres, desc);
 
   gtk_label_set_text (GTK_LABEL (editor->more_label), text);
   g_free (text);

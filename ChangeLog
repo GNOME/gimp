@@ -1,3 +1,11 @@
+2006-04-05   Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/preferences-dialog.c
+	* app/widgets/gimpimagepropview.c
+	* app/widgets/gimpsizebox.c
+	* app/widgets/gimptemplateeditor.c: replaced "dpi" with "ppi"
+	(bug #326718).
+
 2006-04-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in-proc-frame.[ch]: added

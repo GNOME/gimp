@@ -348,7 +348,7 @@ gimp_image_prop_view_update (GimpImagePropView *view)
   g_snprintf (buf, sizeof (buf), _("%g × %g %s"),
               image->xresolution / unit_factor,
               image->yresolution / unit_factor,
-              unit == GIMP_UNIT_INCH ? _("dpi") : format_buf);
+              unit == GIMP_UNIT_INCH ? _("ppi") : format_buf);
   gtk_label_set_text (GTK_LABEL (view->resolution_label), buf);
 
   /*  color type  */

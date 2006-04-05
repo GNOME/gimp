@@ -2068,7 +2068,7 @@ prefs_dialog_new (Gimp       *gimp,
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
                                 _("Vertical"), 0, 2, 0.0);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
-                                _("dpi"), 1, 4, 0.0);
+                                _("ppi"), 1, 4, 0.0);
 
   hbox = gtk_hbox_new (FALSE, 0);
 
@@ -2084,7 +2084,8 @@ prefs_dialog_new (Gimp       *gimp,
 
     gimp_get_screen_resolution (NULL, &xres, &yres);
 
-    str = g_strdup_printf (_("From _windowing system (currently %d × %d dpi)"),
+    str = g_strdup_printf (_("From _windowing system "
+                             "(currently %d × %d ppi)"),
                            ROUND (xres), ROUND (yres));
 
     button = gtk_radio_button_new_with_mnemonic (group, str);
