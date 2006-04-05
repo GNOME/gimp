@@ -1,3 +1,10 @@
+2006-04-05  Sven Neumann  <sven@gimp.org>
+
+	* app/base/lut-funcs.[ch]: minor code cleanup, renamed a function,
+	declared some functions as static.
+
+	* app/core/gimpdrawable-equalize.c: changed accordingly.
+
 2006-04-05   Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/preferences-dialog.c

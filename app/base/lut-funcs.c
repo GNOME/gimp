@@ -31,23 +31,25 @@
 
 /* ---------- Brightness/Contrast -----------*/
 
-typedef struct B_C_struct
+typedef struct
 {
   gdouble brightness;
   gdouble contrast;
-} B_C_struct;
+} BrightnessContrastLutData;
 
 static gfloat
-brightness_contrast_lut_func (B_C_struct *data,
-                              gint        nchannels,
-                              gint        channel,
-                              gfloat      value)
+brightness_contrast_lut_func (BrightnessContrastLutData *data,
+                              gint                       nchannels,
+                              gint                       channel,
+                              gfloat                     value)
 {
   gdouble slant;
 
   /* return the original value for the alpha channel */
   if ((nchannels == 2 || nchannels == 4) && channel == nchannels -1)
     return value;
+
+  g_printerr ("%g ", value);
 
   /* apply brightness */
   if (data->brightness < 0.0)
@@ -58,21 +60,9 @@ brightness_contrast_lut_func (B_C_struct *data,
   slant = tan ((data->contrast + 1) * G_PI_4);
   value = (value - 0.5) * slant + 0.5;
 
+  g_printerr ("%g\n", value);
+
   return value;
-}
-
-GimpLut *
-brightness_contrast_lut_new (gdouble brightness,
-                             gdouble contrast,
-                             gint    n_channels)
-{
-  GimpLut *lut;
-
-  lut = gimp_lut_new ();
-
-  brightness_contrast_lut_setup (lut, brightness, contrast, n_channels);
-
-  return lut;
 }
 
 void
@@ -81,7 +71,7 @@ brightness_contrast_lut_setup (GimpLut *lut,
                                gdouble  contrast,
                                gint     n_channels)
 {
-  B_C_struct data;
+  BrightnessContrastLutData data;
 
   g_return_if_fail (lut != NULL);
 
@@ -90,6 +80,18 @@ brightness_contrast_lut_setup (GimpLut *lut,
 
   gimp_lut_setup (lut, (GimpLutFunc) brightness_contrast_lut_func,
                   (gpointer) &data, n_channels);
+}
+
+GimpLut *
+brightness_contrast_lut_new (gdouble brightness,
+                             gdouble contrast,
+                             gint    n_channels)
+{
+  GimpLut *lut = gimp_lut_new ();
+
+  brightness_contrast_lut_setup (lut, brightness, contrast, n_channels);
+
+  return lut;
 }
 
 /* ---------------- invert ------------------ */
@@ -107,19 +109,7 @@ invert_lut_func (gpointer  unused,
   return 1.0 - value;
 }
 
-GimpLut *
-invert_lut_new (gint n_channels)
-{
-  GimpLut *lut;
-
-  lut = gimp_lut_new ();
-
-  invert_lut_setup (lut, n_channels);
-
-  return lut;
-}
-
-void
+static void
 invert_lut_setup (GimpLut *lut,
                   gint     n_channels)
 {
@@ -127,6 +117,16 @@ invert_lut_setup (GimpLut *lut,
 
   gimp_lut_setup_exact (lut, (GimpLutFunc) invert_lut_func,
                         NULL , n_channels);
+}
+
+GimpLut *
+invert_lut_new (gint n_channels)
+{
+  GimpLut *lut = gimp_lut_new ();
+
+  invert_lut_setup (lut, n_channels);
+
+  return lut;
 }
 
 /* ---------------- add (or subract)------------------ */
@@ -144,20 +144,7 @@ add_lut_func (gdouble *amount,
   return (value + *amount);
 }
 
-GimpLut *
-add_lut_new (gdouble amount,
-             gint    n_channels)
-{
-  GimpLut *lut;
-
-  lut = gimp_lut_new ();
-
-  add_lut_setup (lut, amount, n_channels);
-
-  return lut;
-}
-
-void
+static void
 add_lut_setup (GimpLut *lut,
                gdouble  amount,
                gint     n_channels)
@@ -166,6 +153,17 @@ add_lut_setup (GimpLut *lut,
 
   gimp_lut_setup (lut, (GimpLutFunc) add_lut_func,
                   (gpointer) &amount, n_channels);
+}
+
+GimpLut *
+add_lut_new (gdouble amount,
+             gint    n_channels)
+{
+  GimpLut *lut = gimp_lut_new ();
+
+  add_lut_setup (lut, amount, n_channels);
+
+  return lut;
 }
 
 /* ---------------- intersect (MIN (pixel, value)) ------------------ */
@@ -183,20 +181,7 @@ intersect_lut_func (gdouble *min,
   return MIN (value, *min);
 }
 
-GimpLut *
-intersect_lut_new (gdouble value,
-                   gint    n_channels)
-{
-  GimpLut *lut;
-
-  lut = gimp_lut_new ();
-
-  intersect_lut_setup (lut, value, n_channels);
-
-  return lut;
-}
-
-void
+static void
 intersect_lut_setup (GimpLut *lut,
                      gdouble  value,
                      gint     n_channels)
@@ -205,6 +190,17 @@ intersect_lut_setup (GimpLut *lut,
 
   gimp_lut_setup_exact (lut, (GimpLutFunc) intersect_lut_func,
                         (gpointer) &value , n_channels);
+}
+
+GimpLut *
+intersect_lut_new (gdouble value,
+                   gint    n_channels)
+{
+  GimpLut *lut = gimp_lut_new ();
+
+  intersect_lut_setup (lut, value, n_channels);
+
+  return lut;
 }
 
 /* ---------------- Threshold ------------------ */
@@ -225,20 +221,7 @@ threshold_lut_func (gdouble *min,
   return 1.0;
 }
 
-GimpLut *
-threshold_lut_new (gdouble value,
-                   gint    n_channels)
-{
-  GimpLut *lut;
-
-  lut = gimp_lut_new ();
-
-  threshold_lut_setup (lut, value, n_channels);
-
-  return lut;
-}
-
-void
+static void
 threshold_lut_setup (GimpLut *lut,
                      gdouble  value,
                      gint     n_channels)
@@ -247,6 +230,17 @@ threshold_lut_setup (GimpLut *lut,
 
   gimp_lut_setup_exact (lut, (GimpLutFunc) threshold_lut_func,
                         (gpointer) &value , n_channels);
+}
+
+GimpLut *
+threshold_lut_new (gdouble value,
+                   gint    n_channels)
+{
+  GimpLut *lut = gimp_lut_new ();
+
+  threshold_lut_setup (lut, value, n_channels);
+
+  return lut;
 }
 
 /* --------------- posterize ---------------- */
@@ -273,19 +267,6 @@ posterize_lut_func (gint   *ilevels,
   return value;
 }
 
-GimpLut *
-posterize_lut_new (gint levels,
-                   gint n_channels)
-{
-  GimpLut *lut;
-
-  lut = gimp_lut_new ();
-
-  posterize_lut_setup (lut, levels, n_channels);
-
-  return lut;
-}
-
 void
 posterize_lut_setup (GimpLut *lut,
                      gint     levels,
@@ -295,6 +276,17 @@ posterize_lut_setup (GimpLut *lut,
 
   gimp_lut_setup_exact (lut, (GimpLutFunc) posterize_lut_func,
                         (gpointer) &levels, n_channels);
+}
+
+GimpLut *
+posterize_lut_new (gint levels,
+                   gint n_channels)
+{
+  GimpLut *lut = gimp_lut_new ();
+
+  posterize_lut_setup (lut, levels, n_channels);
+
+  return lut;
 }
 
 /* --------------- equalize ------------- */
@@ -322,25 +314,10 @@ equalize_lut_func (hist_lut_struct *hlut,
   return i / 255.0;
 }
 
-GimpLut *
-eq_histogram_lut_new (GimpHistogram *histogram,
-                      gint           n_channels)
-{
-  GimpLut *lut;
-
-  g_return_val_if_fail (histogram != NULL, NULL);
-
-  lut = gimp_lut_new ();
-
-  eq_histogram_lut_setup (lut, histogram, n_channels);
-
-  return lut;
-}
-
-void
-eq_histogram_lut_setup (GimpLut       *lut,
-                        GimpHistogram *hist,
-                        gint           n_channels)
+static void
+equalize_lut_setup (GimpLut       *lut,
+                    GimpHistogram *hist,
+                    gint           n_channels)
 {
   gint            i, k, j;
   hist_lut_struct hlut;
@@ -389,4 +366,19 @@ eq_histogram_lut_setup (GimpLut       *lut,
 
   gimp_lut_setup (lut, (GimpLutFunc) equalize_lut_func,
                   (gpointer) &hlut, n_channels);
+}
+
+GimpLut *
+equalize_lut_new (GimpHistogram *histogram,
+                  gint           n_channels)
+{
+  GimpLut *lut;
+
+  g_return_val_if_fail (histogram != NULL, NULL);
+
+  lut = gimp_lut_new ();
+
+  equalize_lut_setup (lut, histogram, n_channels);
+
+  return lut;
 }
