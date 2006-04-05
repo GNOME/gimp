@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-04-01 15:00+0200\n"
-"PO-Revision-Date: 2006-04-01 14:57+0200\n"
+"PO-Revision-Date: 2006-04-05 12:36+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -6389,7 +6389,7 @@ msgstr "Sposta a caso alcuni pixel verso il basso (effetto scioglimento)"
 
 #: ../plug-ins/common/randomize.c:231
 msgid "_Hurl..."
-msgstr "_Disturbo..."
+msgstr "_Casuale..."
 
 #: ../plug-ins/common/randomize.c:243
 msgid "_Pick..."

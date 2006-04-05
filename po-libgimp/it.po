@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-23 09:49+0100\n"
+"POT-Creation-Date: 2006-04-01 15:01+0200\n"
 "PO-Revision-Date: 2006-02-24 08:27+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -30,7 +30,7 @@ msgid "%s can't handle layers"
 msgstr "%s non è possibile agire sui livelli"
 
 #: ../libgimp/gimpexport.c:216 ../libgimp/gimpexport.c:225
-#: ../libgimp/gimpexport.c:234
+#: ../libgimp/gimpexport.c:234 ../libgimp/gimpexport.c:252
 msgid "Merge Visible Layers"
 msgstr "Incolla livelli visibili"
 
@@ -171,11 +171,11 @@ msgstr ""
 "seguenti ragioni:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:568
+#: ../libgimp/gimpexport.c:571
 msgid "The export conversion won't modify your original image."
 msgstr "L'esportazione non modificherà l'immagine originale."
 
-#: ../libgimp/gimpexport.c:668
+#: ../libgimp/gimpexport.c:671
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -184,7 +184,7 @@ msgstr ""
 "Si è in procinto di salvare una maschera di livello con nome %s.\n"
 "Non verranno salvati i livelli visibili."
 
-#: ../libgimp/gimpexport.c:674
+#: ../libgimp/gimpexport.c:677
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -1400,15 +1400,15 @@ msgstr "Selettore colori a triangolo stile pittore"
 msgid "Triangle"
 msgstr "Triangolo"
 
-#: ../modules/colorsel_water.c:88
+#: ../modules/colorsel_water.c:84
 msgid "Watercolor style color selector"
 msgstr "Selettore colori stile acquerelli"
 
-#: ../modules/colorsel_water.c:154
+#: ../modules/colorsel_water.c:150
 msgid "Watercolor"
 msgstr "Acquerelli"
 
-#: ../modules/colorsel_water.c:220
+#: ../modules/colorsel_water.c:213
 msgid "Pressure"
 msgstr "Pressione"
 
@@ -1570,7 +1570,9 @@ msgstr "Canale:"
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
-msgstr "Il canale MIDI da cui leggere gli eventi. Impostare a -1 per leggere gli eventi MIDI da tutti i canali."
+msgstr ""
+"Il canale MIDI da cui leggere gli eventi. Impostare a -1 per leggere gli "
+"eventi MIDI da tutti i canali."
 
 #: ../modules/controller_midi.c:258
 msgid "MIDI"

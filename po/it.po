@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-04-01 15:00+0200\n"
-"PO-Revision-Date: 2006-03-31 21:28+0200\n"
+"PO-Revision-Date: 2006-04-05 17:21+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -2907,7 +2907,7 @@ msgstr "Sfocat_ure"
 
 #: ../app/actions/plug-in-actions.c:69
 msgid "_Noise"
-msgstr "_Disturbo"
+msgstr "Dist_urbo"
 
 #: ../app/actions/plug-in-actions.c:70
 msgid "Edge-De_tect"
@@ -2915,7 +2915,7 @@ msgstr "Rilevamen_to margini"
 
 #: ../app/actions/plug-in-actions.c:71
 msgid "En_hance"
-msgstr "_Incremento"
+msgstr "_Miglioramento"
 
 #: ../app/actions/plug-in-actions.c:72
 msgid "C_ombine"

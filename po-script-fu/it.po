@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-24 08:57+0100\n"
-"PO-Revision-Date: 2006-02-24 09:05+0100\n"
+"POT-Creation-Date: 2006-04-01 15:01+0200\n"
+"PO-Revision-Date: 2006-02-25 17:16+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1839,7 +1839,7 @@ msgstr "Numero"
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:6
 msgid "_Slide..."
-msgstr "_dia..."
+msgstr "_Diapositive"
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
 msgid "SOTA Chrome..."
@@ -2137,7 +2137,7 @@ msgstr "RLE"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:7
 msgid "_Tileable Blur..."
-msgstr "Sfocatura pias_trellabile..."
+msgstr "Pias_trellabile..."
 
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:5
 msgid "Web Title Header..."
