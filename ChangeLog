@@ -1,3 +1,9 @@
+2006-04-05  Tor Lillqvist  <tml@novell.com>
+
+	* app/core/gimpobject.c (gimp_object_get_memsize): Check if
+	object->name is NULL before attempting to pass it to
+	g_strdup_printf(). Use "anonymous" for unnamed objects.
+
 2006-04-05  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/gifload.c: pulse the progress when loading an

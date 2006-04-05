@@ -386,7 +386,7 @@ gimp_object_get_memsize (GimpObject *object,
                                      "(%" G_GINT64_FORMAT ")\n",
                                      indent_buf,
                                      g_type_name (G_TYPE_FROM_INSTANCE (object)),
-                                     object->name,
+                                     object->name ? object->name : "anonymous",
                                      memsize,
                                      gui_memsize);
 
