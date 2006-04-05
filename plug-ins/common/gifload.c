@@ -892,9 +892,9 @@ ReadImage (FILE        *fd,
       gimp_progress_set_text_printf (_("Opening '%s' (frame %d)"),
                                      gimp_filename_to_utf8 (filename),
                                      frame_number);
+      gimp_progress_pulse ();
 
-      /* If the colourmap is now different, we have to promote to
-	 RGB! */
+       /* If the colourmap is now different, we have to promote to RGB! */
       if (!promote_to_rgb)
 	{
 	  for (i = 0; i < ncols; i++)
@@ -1075,10 +1075,14 @@ ReadImage (FILE        *fd,
 	      ypos++;
 	    }
 
-          cur_progress++;
-          if ((cur_progress % 16) == 0)
-            gimp_progress_update ((double) cur_progress / (double) max_progress);
-	}
+          if (frame_number == 1)
+            {
+              cur_progress++;
+              if ((cur_progress % 16) == 0)
+                gimp_progress_update ((gdouble) cur_progress /
+                                      (gdouble) max_progress);
+            }
+        }
 
       if (ypos >= height)
 	break;
@@ -1143,14 +1147,6 @@ typedef unsigned short int count_short;
 #else /*SIGNED_COMPARE_SLOW */
 typedef long int count_int;
 #endif /*SIGNED_COMPARE_SLOW */
-
-
-
-int rowstride;
-guchar *pixels;
-int cur_progress;
-int max_progress;
-
 
 
 
