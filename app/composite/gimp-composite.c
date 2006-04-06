@@ -23,7 +23,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 
 #include <glib-object.h>
@@ -33,10 +32,12 @@
 #include "gimp-composite.h"
 
 #include "gimp-composite-generic.h"
+
 #ifdef ARCH_X86
 #include "gimp-composite-mmx.h"
 #include "gimp-composite-sse.h"
 #endif
+
 
 /*
  * Details about pixel formats, bits-per-pixel alpha and non alpha
@@ -64,27 +65,6 @@ const guchar gimp_composite_pixel_bpp[] =
     8, /* GIMP_PIXELFORMAT_RGBA32  */
 #endif
     0, /* GIMP_PIXELFORMAT_ANY */
-  };
-
-const gchar *gimp_composite_pixel_name[] =
-  {
-    "GIMP_PIXELFORMAT_V8",
-    "GIMP_PIXELFORMAT_VA8",
-    "GIMP_PIXELFORMAT_RGB8",
-    "GIMP_PIXELFORMAT_RGBA8",
-#if GIMP_COMPOSITE_16BIT
-    "GIMP_PIXELFORMAT_V16",
-    "GIMP_PIXELFORMAT_VA16",
-    "GIMP_PIXELFORMAT_RGB16 ",
-    "GIMP_PIXELFORMAT_RGBA16 ",
-#endif
-#if GIMP_COMPOSITE_32BIT
-    "GIMP_PIXELFORMAT_V32",
-    "GIMP_PIXELFORMAT_VA32",
-    "GIMP_PIXELFORMAT_RGB32 ",
-    "GIMP_PIXELFORMAT_RGBA32 ",
-#endif
-    "GIMP_PIXELFORMAT_ANY",
   };
 
 /*
@@ -174,18 +154,14 @@ struct GimpCompositeOperationEffects gimp_composite_operation_effects[] =
     { FALSE, FALSE, FALSE },      /*  GIMP_CONVERT */
   };
 
-struct
-{
-  gchar announce_function;
-} gimp_composite_debug;
-
 struct GimpCompositeOptions gimp_composite_options =
   {
     GIMP_COMPOSITE_OPTION_USE
   };
 
 const gchar * gimp_composite_function_name[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N];
-void (*gimp_composite_function[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N])(GimpCompositeContext *);
+
+void (* gimp_composite_function[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N])(GimpCompositeContext *);
 
 /**
  * gimp_composite_dispatch:
@@ -198,7 +174,7 @@ void (*gimp_composite_function[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELF
 void
 gimp_composite_dispatch (GimpCompositeContext *ctx)
 {
-  void (*function) (GimpCompositeContext *);
+  void (* function) (GimpCompositeContext *);
 
   function = gimp_composite_function[ctx->op][ctx->pixelformat_A][ctx->pixelformat_B][ctx->pixelformat_D];
 
@@ -206,19 +182,19 @@ gimp_composite_dispatch (GimpCompositeContext *ctx)
     {
       if (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_VERBOSE)
         {
-          printf ("%s %s %s %s = %p\n",
-                  gimp_composite_mode_astext (ctx->op),
-                  gimp_composite_pixelformat_astext (ctx->pixelformat_A),
-                  gimp_composite_pixelformat_astext (ctx->pixelformat_B),
-                  gimp_composite_pixelformat_astext (ctx->pixelformat_D),
-                  function);
+          g_print ("%s %s %s %s = %p\n",
+                   gimp_composite_mode_astext (ctx->op),
+                   gimp_composite_pixelformat_astext (ctx->pixelformat_A),
+                   gimp_composite_pixelformat_astext (ctx->pixelformat_B),
+                   gimp_composite_pixelformat_astext (ctx->pixelformat_D),
+                   function);
         }
 
-      (*function) (ctx);
+      function (ctx);
     }
   else
     {
-      printf ("gimp_composite: unsupported operation: %s %s %s %s\n",
+      g_print ("gimp_composite: unsupported operation: %s %s %s %s\n",
               gimp_composite_mode_astext (ctx->op),
               gimp_composite_pixelformat_astext (ctx->pixelformat_A),
               gimp_composite_pixelformat_astext (ctx->pixelformat_B),
@@ -235,18 +211,18 @@ gimp_composite_dispatch (GimpCompositeContext *ctx)
 void
 gimp_composite_context_print (GimpCompositeContext *ctx)
 {
-  printf ("%p: op=%s\n  A=%s(%d):%p\n  B=%s(%d):%p\n  D=%s(%d):%p\n  M=%s(%d):%p\n  n_pixels=%lu\n",
-          ctx,
-          gimp_composite_mode_astext (ctx->op),
-          gimp_composite_pixelformat_astext (ctx->pixelformat_A),
-          ctx->pixelformat_A, ctx->A,
-          gimp_composite_pixelformat_astext (ctx->pixelformat_B),
-          ctx->pixelformat_B, ctx->B,
-          gimp_composite_pixelformat_astext (ctx->pixelformat_D),
-          ctx->pixelformat_D, ctx->D,
-          gimp_composite_pixelformat_astext (ctx->pixelformat_M),
-          ctx->pixelformat_M, ctx->M,
-          ctx->n_pixels);
+  g_print ("%p: op=%s\n  A=%s(%d):%p\n  B=%s(%d):%p\n  D=%s(%d):%p\n  M=%s(%d):%p\n  n_pixels=%lu\n",
+           ctx,
+           gimp_composite_mode_astext (ctx->op),
+           gimp_composite_pixelformat_astext (ctx->pixelformat_A),
+           ctx->pixelformat_A, ctx->A,
+           gimp_composite_pixelformat_astext (ctx->pixelformat_B),
+           ctx->pixelformat_B, ctx->B,
+           gimp_composite_pixelformat_astext (ctx->pixelformat_D),
+           ctx->pixelformat_D, ctx->D,
+           gimp_composite_pixelformat_astext (ctx->pixelformat_M),
+           ctx->pixelformat_M, ctx->M,
+           ctx->n_pixels);
 }
 
 /**

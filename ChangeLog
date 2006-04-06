@@ -1,5 +1,9 @@
 2006-04-06  Sven Neumann  <sven@gimp.org>
 
+	* app/composite/gimp-composite.c: removed unused global arrays.
+
+2006-04-06  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/enumcode.pl: generate a const arrays of const strings.
 
 	* libgimp/gimpenums.c.tail: regenerated.
