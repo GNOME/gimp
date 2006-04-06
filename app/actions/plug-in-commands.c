@@ -146,9 +146,12 @@ plug_in_repeat_cmd_callback (GtkAction *action,
                              gint       value,
                              gpointer   data)
 {
-  GimpDisplay  *display;
-  GimpDrawable *drawable;
-  gboolean      interactive = TRUE;
+  GimpProcedure *procedure;
+  Gimp          *gimp;
+  GimpDisplay   *display;
+  GimpDrawable  *drawable;
+  gboolean       interactive = TRUE;
+  return_if_no_gimp (gimp, data);
   return_if_no_display (display, data);
 
   drawable = gimp_image_active_drawable (display->image);
@@ -158,13 +161,26 @@ plug_in_repeat_cmd_callback (GtkAction *action,
   if (strcmp (gtk_action_get_name (action), "plug-in-repeat") == 0)
     interactive = FALSE;
 
-  plug_in_repeat (display->image->gimp, value,
-                  gimp_get_user_context (display->image->gimp),
-                  GIMP_PROGRESS (display),
-                  gimp_display_get_ID (display),
-                  gimp_image_get_ID (display->image),
-                  gimp_item_get_ID (GIMP_ITEM (drawable)),
-                  interactive);
+  procedure = g_slist_nth_data (gimp->last_plug_ins, value);
+
+  if (procedure)
+    {
+      GValueArray *args = gimp_procedure_get_arguments (procedure);
+
+      g_value_set_int         (&args->values[0],
+                               interactive ?
+                               GIMP_RUN_INTERACTIVE : GIMP_RUN_WITH_LAST_VALS);
+      gimp_value_set_image    (&args->values[1], display->image);
+      gimp_value_set_drawable (&args->values[2], drawable);
+
+      /* run the plug-in procedure */
+      plug_in_run (gimp, gimp_get_user_context (gimp),
+                   GIMP_PROGRESS (display),
+                   procedure, args, FALSE, TRUE,
+                   gimp_display_get_ID (display));
+
+      g_value_array_free (args);
+    }
 }
 
 void

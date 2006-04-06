@@ -194,44 +194,6 @@ plug_in_run (Gimp          *gimp,
   return return_vals;
 }
 
-void
-plug_in_repeat (Gimp         *gimp,
-                gint          index,
-                GimpContext  *context,
-                GimpProgress *progress,
-                gint          display_ID,
-                gint          image_ID,
-                gint          drawable_ID,
-                gboolean      with_interface)
-{
-  GimpPlugInProcedure *proc;
-  GValueArray         *args;
-
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (index >= 0);
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
-
-  proc = g_slist_nth_data (gimp->last_plug_ins, index);
-
-  if (proc)
-    {
-      args = gimp_procedure_get_arguments (GIMP_PROCEDURE (proc));
-
-      g_value_set_int (&args->values[0],
-                       with_interface ?
-                       GIMP_RUN_INTERACTIVE : GIMP_RUN_WITH_LAST_VALS);
-      g_value_set_int (&args->values[1], image_ID);
-      g_value_set_int (&args->values[2], drawable_ID);
-
-      /* run the plug-in procedure */
-      plug_in_run (gimp, context, progress, GIMP_PROCEDURE (proc),
-                   args, FALSE, TRUE, display_ID);
-
-      g_value_array_free (args);
-    }
-}
-
 
 /*  private functions  */
 
