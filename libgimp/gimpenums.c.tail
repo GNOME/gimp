@@ -49,7 +49,7 @@ static const GimpGetTypeFunc get_type_funcs[] =
   gimp_transform_direction_get_type
 };
 
-static const gchar *type_names[] =
+static const gchar * const type_names[] =
 {
   "GimpAddMaskType",
   "GimpBlendMode",

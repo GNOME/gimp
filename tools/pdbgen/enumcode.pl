@@ -140,7 +140,7 @@ print ENUMFILE "\n" unless $first;
 print ENUMFILE <<CODE;
 };
 
-static const gchar *type_names[] =
+static const gchar * const type_names[] =
 {
 CODE
 

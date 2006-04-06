@@ -1,5 +1,11 @@
 2006-04-06  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/enumcode.pl: generate a const arrays of const strings.
+
+	* libgimp/gimpenums.c.tail: regenerated.
+
+2006-04-06  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/authors.xsl: generate const arrays of const strings.
 
 	* app/dialogs/authors.h: regenerated.
