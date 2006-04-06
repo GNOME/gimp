@@ -24,9 +24,9 @@
 
 #include "plug-in-types.h"
 
-#include "plug-in.h"
+#include "pdb/gimppluginprocedure.h"
+
 #include "plug-in-def.h"
-#include "plug-in-proc-def.h"
 
 
 PlugInDef *

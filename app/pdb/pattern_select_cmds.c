@@ -120,9 +120,7 @@ register_pattern_select_procs (Gimp *gimp)
   /*
    * gimp-patterns-popup
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
-                             patterns_popup_invoker);
+  procedure = gimp_procedure_new (patterns_popup_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-patterns-popup",
                                      "gimp-patterns-popup",
@@ -159,9 +157,7 @@ register_pattern_select_procs (Gimp *gimp)
   /*
    * gimp-patterns-close-popup
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             patterns_close_popup_invoker);
+  procedure = gimp_procedure_new (patterns_close_popup_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-patterns-close-popup",
                                      "gimp-patterns-close-popup",
@@ -184,9 +180,7 @@ register_pattern_select_procs (Gimp *gimp)
   /*
    * gimp-patterns-set-popup
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             patterns_set_popup_invoker);
+  procedure = gimp_procedure_new (patterns_set_popup_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-patterns-set-popup",
                                      "gimp-patterns-set-popup",

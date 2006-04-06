@@ -139,9 +139,7 @@ register_pattern_procs (Gimp *gimp)
   /*
    * gimp-pattern-get-info
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 3,
-                             pattern_get_info_invoker);
+  procedure = gimp_procedure_new (pattern_get_info_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-pattern-get-info",
                                      "gimp-pattern-get-info",
@@ -182,9 +180,7 @@ register_pattern_procs (Gimp *gimp)
   /*
    * gimp-pattern-get-pixels
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 5,
-                             pattern_get_pixels_invoker);
+  procedure = gimp_procedure_new (pattern_get_pixels_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-pattern-get-pixels",
                                      "gimp-pattern-get-pixels",

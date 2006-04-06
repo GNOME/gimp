@@ -23,40 +23,11 @@
 #include "core/gimpobject.h"
 
 
-/*  Execution types  */
-typedef struct _IntExec    IntExec;
-typedef struct _PlugInExec PlugInExec;
-typedef struct _ExtExec    ExtExec;
-typedef struct _TempExec   TempExec;
-
-
-struct _IntExec
-{
-  /*  Function called to marshal arguments  */
-  GValueArray * (* marshal_func) (GimpProcedure     *procedure,
-                                  Gimp              *gimp,
-                                  GimpContext       *context,
-                                  GimpProgress      *progress,
-                                  const GValueArray *args);
-};
-
-struct _PlugInExec
-{
-  /*  Where is the executable on disk?  */
-  gchar *filename;
-};
-
-struct _ExtExec
-{
-  /*  Where is the executable on disk?  */
-  gchar *filename;
-};
-
-struct _TempExec
-{
-  /*  Plug-in that registered this temp proc  */
-  void *plug_in;
-};
+typedef GValueArray * (* GimpMarshalFunc) (GimpProcedure     *procedure,
+                                           Gimp              *gimp,
+                                           GimpContext       *context,
+                                           GimpProgress      *progress,
+                                           const GValueArray *args);
 
 
 #define GIMP_TYPE_PROCEDURE            (gimp_procedure_get_type ())
@@ -71,40 +42,28 @@ typedef struct _GimpProcedureClass GimpProcedureClass;
 
 struct _GimpProcedure
 {
-  GimpObject   parent_instance;
+  GimpObject        parent_instance;
 
-  /*  Flags  */
-  gboolean     static_strings; /* Are the procedure's strings allocated?     */
+  GimpPDBProcType   proc_type;      /* Type of procedure              */
 
-  /*  Procedure information  */
-  gchar       *name;           /* Procedure name                             */
-  gchar       *original_name;  /* Procedure name before canonicalization     */
-  gchar       *blurb;          /* Short procedure description                */
-  gchar       *help;           /* Detailed help instructions                 */
-  gchar       *author;         /* Author field                               */
-  gchar       *copyright;      /* Copyright field                            */
-  gchar       *date;           /* Date field                                 */
-  gchar       *deprecated;     /* Replacement if the procedure is deprecated */
+  gboolean          static_strings; /* Are the strings allocated?     */
 
-  /*  Procedure type  */
-  GimpPDBProcType  proc_type;  /* Type of procedure                          */
+  gchar            *name;           /* Procedure name                 */
+  gchar            *original_name;  /* Uncanonicalized procedure name */
+  gchar            *blurb;          /* Short procedure description    */
+  gchar            *help;           /* Detailed help instructions     */
+  gchar            *author;         /* Author field                   */
+  gchar            *copyright;      /* Copyright field                */
+  gchar            *date;           /* Date field                     */
+  gchar            *deprecated;     /* Replacement if deprecated      */
 
-  /*  Input arguments  */
-  gint32       num_args;       /* Number of procedure arguments              */
-  GParamSpec **args;           /* Array of procedure arguments               */
+  gint32            num_args;       /* Number of procedure arguments  */
+  GParamSpec      **args;           /* Array of procedure arguments   */
 
-  /*  Output values  */
-  gint32       num_values;     /* Number of return values                    */
-  GParamSpec **values;         /* Array of return values                     */
+  gint32            num_values;     /* Number of return values        */
+  GParamSpec      **values;         /* Array of return values         */
 
-  /*  Method of procedure execution  */
-  union _ExecMethod
-  {
-    IntExec     internal;      /* Execution information for internal procs   */
-    PlugInExec  plug_in;       /* ..................... for plug-ins         */
-    ExtExec     extension;     /* ..................... for extensions       */
-    TempExec    temporary;     /* ..................... for temp procs       */
-  } exec_method;
+  GimpMarshalFunc   marshal_func;   /* Marshaller for internal procs  */
 };
 
 struct _GimpProcedureClass
@@ -121,12 +80,7 @@ struct _GimpProcedureClass
 
 GType           gimp_procedure_get_type           (void) G_GNUC_CONST;
 
-GimpProcedure * gimp_procedure_new                (void);
-GimpProcedure * gimp_procedure_initialize         (GimpProcedure    *procedure,
-                                                   GimpPDBProcType   proc_type,
-                                                   gint              n_arguments,
-                                                   gint              n_return_vals,
-                                                   gpointer          exec_method);
+GimpProcedure * gimp_procedure_new                (GimpMarshalFunc   marshal_func);
 
 void            gimp_procedure_set_strings        (GimpProcedure    *procedure,
                                                    gchar            *name,

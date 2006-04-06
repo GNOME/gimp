@@ -355,9 +355,7 @@ register_unit_procs (Gimp *gimp)
   /*
    * gimp-unit-get-number-of-units
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
-                             unit_get_number_of_units_invoker);
+  procedure = gimp_procedure_new (unit_get_number_of_units_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-get-number-of-units",
                                      "gimp-unit-get-number-of-units",
@@ -379,9 +377,7 @@ register_unit_procs (Gimp *gimp)
   /*
    * gimp-unit-get-number-of-built-in-units
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
-                             unit_get_number_of_built_in_units_invoker);
+  procedure = gimp_procedure_new (unit_get_number_of_built_in_units_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-get-number-of-built-in-units",
                                      "gimp-unit-get-number-of-built-in-units",
@@ -403,9 +399,7 @@ register_unit_procs (Gimp *gimp)
   /*
    * gimp-unit-new
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 7, 1,
-                             unit_new_invoker);
+  procedure = gimp_procedure_new (unit_new_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-new",
                                      "gimp-unit-new",
@@ -476,9 +470,7 @@ register_unit_procs (Gimp *gimp)
   /*
    * gimp-unit-get-deletion-flag
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             unit_get_deletion_flag_invoker);
+  procedure = gimp_procedure_new (unit_get_deletion_flag_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-get-deletion-flag",
                                      "gimp-unit-get-deletion-flag",
@@ -508,9 +500,7 @@ register_unit_procs (Gimp *gimp)
   /*
    * gimp-unit-set-deletion-flag
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             unit_set_deletion_flag_invoker);
+  procedure = gimp_procedure_new (unit_set_deletion_flag_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-set-deletion-flag",
                                      "gimp-unit-set-deletion-flag",
@@ -540,9 +530,7 @@ register_unit_procs (Gimp *gimp)
   /*
    * gimp-unit-get-identifier
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             unit_get_identifier_invoker);
+  procedure = gimp_procedure_new (unit_get_identifier_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-get-identifier",
                                      "gimp-unit-get-identifier",
@@ -573,9 +561,7 @@ register_unit_procs (Gimp *gimp)
   /*
    * gimp-unit-get-factor
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             unit_get_factor_invoker);
+  procedure = gimp_procedure_new (unit_get_factor_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-get-factor",
                                      "gimp-unit-get-factor",
@@ -605,9 +591,7 @@ register_unit_procs (Gimp *gimp)
   /*
    * gimp-unit-get-digits
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             unit_get_digits_invoker);
+  procedure = gimp_procedure_new (unit_get_digits_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-get-digits",
                                      "gimp-unit-get-digits",
@@ -637,9 +621,7 @@ register_unit_procs (Gimp *gimp)
   /*
    * gimp-unit-get-symbol
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             unit_get_symbol_invoker);
+  procedure = gimp_procedure_new (unit_get_symbol_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-get-symbol",
                                      "gimp-unit-get-symbol",
@@ -670,9 +652,7 @@ register_unit_procs (Gimp *gimp)
   /*
    * gimp-unit-get-abbreviation
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             unit_get_abbreviation_invoker);
+  procedure = gimp_procedure_new (unit_get_abbreviation_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-get-abbreviation",
                                      "gimp-unit-get-abbreviation",
@@ -703,9 +683,7 @@ register_unit_procs (Gimp *gimp)
   /*
    * gimp-unit-get-singular
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             unit_get_singular_invoker);
+  procedure = gimp_procedure_new (unit_get_singular_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-get-singular",
                                      "gimp-unit-get-singular",
@@ -736,9 +714,7 @@ register_unit_procs (Gimp *gimp)
   /*
    * gimp-unit-get-plural
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             unit_get_plural_invoker);
+  procedure = gimp_procedure_new (unit_get_plural_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-get-plural",
                                      "gimp-unit-get-plural",

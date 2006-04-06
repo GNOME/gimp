@@ -13,6 +13,10 @@ libapppdb_a_SOURCES = \
 	gimp-pdb-query.h		\
 	gimpprocedure.c			\
 	gimpprocedure.h			\
+	gimppluginprocedure.c		\
+	gimppluginprocedure.h		\
+	gimptemporaryprocedure.c	\
+	gimptemporaryprocedure.h	\
 	\
 	internal_procs.c		\
 	internal_procs.h		\

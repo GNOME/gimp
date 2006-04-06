@@ -564,9 +564,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-push
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 0,
-                             context_push_invoker);
+  procedure = gimp_procedure_new (context_push_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-push",
                                      "gimp-context-push",
@@ -582,9 +580,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-pop
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 0,
-                             context_pop_invoker);
+  procedure = gimp_procedure_new (context_pop_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-pop",
                                      "gimp-context-pop",
@@ -600,9 +596,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-get-paint-method
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
-                             context_get_paint_method_invoker);
+  procedure = gimp_procedure_new (context_get_paint_method_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-get-paint-method",
                                      "gimp-context-get-paint-method",
@@ -625,9 +619,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-set-paint-method
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             context_set_paint_method_invoker);
+  procedure = gimp_procedure_new (context_set_paint_method_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-set-paint-method",
                                      "gimp-context-set-paint-method",
@@ -650,9 +642,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-get-foreground
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
-                             context_get_foreground_invoker);
+  procedure = gimp_procedure_new (context_get_foreground_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-get-foreground",
                                      "gimp-context-get-foreground",
@@ -674,9 +664,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-set-foreground
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             context_set_foreground_invoker);
+  procedure = gimp_procedure_new (context_set_foreground_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-set-foreground",
                                      "gimp-context-set-foreground",
@@ -698,9 +686,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-get-background
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
-                             context_get_background_invoker);
+  procedure = gimp_procedure_new (context_get_background_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-get-background",
                                      "gimp-context-get-background",
@@ -722,9 +708,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-set-background
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             context_set_background_invoker);
+  procedure = gimp_procedure_new (context_set_background_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-set-background",
                                      "gimp-context-set-background",
@@ -746,9 +730,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-set-default-colors
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 0,
-                             context_set_default_colors_invoker);
+  procedure = gimp_procedure_new (context_set_default_colors_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-set-default-colors",
                                      "gimp-context-set-default-colors",
@@ -764,9 +746,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-swap-colors
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 0,
-                             context_swap_colors_invoker);
+  procedure = gimp_procedure_new (context_swap_colors_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-swap-colors",
                                      "gimp-context-swap-colors",
@@ -782,9 +762,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-get-opacity
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
-                             context_get_opacity_invoker);
+  procedure = gimp_procedure_new (context_get_opacity_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-get-opacity",
                                      "gimp-context-get-opacity",
@@ -806,9 +784,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-set-opacity
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             context_set_opacity_invoker);
+  procedure = gimp_procedure_new (context_set_opacity_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-set-opacity",
                                      "gimp-context-set-opacity",
@@ -830,9 +806,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-get-paint-mode
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
-                             context_get_paint_mode_invoker);
+  procedure = gimp_procedure_new (context_get_paint_mode_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-get-paint-mode",
                                      "gimp-context-get-paint-mode",
@@ -855,9 +829,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-set-paint-mode
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             context_set_paint_mode_invoker);
+  procedure = gimp_procedure_new (context_set_paint_mode_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-set-paint-mode",
                                      "gimp-context-set-paint-mode",
@@ -880,9 +852,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-get-brush
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
-                             context_get_brush_invoker);
+  procedure = gimp_procedure_new (context_get_brush_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-get-brush",
                                      "gimp-context-get-brush",
@@ -905,9 +875,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-set-brush
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             context_set_brush_invoker);
+  procedure = gimp_procedure_new (context_set_brush_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-set-brush",
                                      "gimp-context-set-brush",
@@ -930,9 +898,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-get-pattern
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
-                             context_get_pattern_invoker);
+  procedure = gimp_procedure_new (context_get_pattern_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-get-pattern",
                                      "gimp-context-get-pattern",
@@ -955,9 +921,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-set-pattern
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             context_set_pattern_invoker);
+  procedure = gimp_procedure_new (context_set_pattern_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-set-pattern",
                                      "gimp-context-set-pattern",
@@ -980,9 +944,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-get-gradient
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
-                             context_get_gradient_invoker);
+  procedure = gimp_procedure_new (context_get_gradient_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-get-gradient",
                                      "gimp-context-get-gradient",
@@ -1005,9 +967,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-set-gradient
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             context_set_gradient_invoker);
+  procedure = gimp_procedure_new (context_set_gradient_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-set-gradient",
                                      "gimp-context-set-gradient",
@@ -1030,9 +990,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-get-palette
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
-                             context_get_palette_invoker);
+  procedure = gimp_procedure_new (context_get_palette_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-get-palette",
                                      "gimp-context-get-palette",
@@ -1055,9 +1013,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-set-palette
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             context_set_palette_invoker);
+  procedure = gimp_procedure_new (context_set_palette_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-set-palette",
                                      "gimp-context-set-palette",
@@ -1080,9 +1036,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-get-font
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
-                             context_get_font_invoker);
+  procedure = gimp_procedure_new (context_get_font_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-get-font",
                                      "gimp-context-get-font",
@@ -1105,9 +1059,7 @@ register_context_procs (Gimp *gimp)
   /*
    * gimp-context-set-font
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             context_set_font_invoker);
+  procedure = gimp_procedure_new (context_set_font_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-set-font",
                                      "gimp-context-set-font",

@@ -109,9 +109,7 @@ register_misc_procs (Gimp *gimp)
   /*
    * gimp-version
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
-                             version_invoker);
+  procedure = gimp_procedure_new (version_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-version",
                                      "gimp-version",
@@ -134,9 +132,7 @@ register_misc_procs (Gimp *gimp)
   /*
    * gimp-getpid
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
-                             getpid_invoker);
+  procedure = gimp_procedure_new (getpid_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-getpid",
                                      "gimp-getpid",
@@ -158,9 +154,7 @@ register_misc_procs (Gimp *gimp)
   /*
    * gimp-quit
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             quit_invoker);
+  procedure = gimp_procedure_new (quit_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-quit",
                                      "gimp-quit",

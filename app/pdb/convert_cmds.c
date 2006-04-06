@@ -151,9 +151,7 @@ register_convert_procs (Gimp *gimp)
   /*
    * gimp-image-convert-rgb
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             image_convert_rgb_invoker);
+  procedure = gimp_procedure_new (image_convert_rgb_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-convert-rgb",
                                      "gimp-image-convert-rgb",
@@ -175,9 +173,7 @@ register_convert_procs (Gimp *gimp)
   /*
    * gimp-image-convert-grayscale
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             image_convert_grayscale_invoker);
+  procedure = gimp_procedure_new (image_convert_grayscale_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-convert-grayscale",
                                      "gimp-image-convert-grayscale",
@@ -199,9 +195,7 @@ register_convert_procs (Gimp *gimp)
   /*
    * gimp-image-convert-indexed
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 7, 0,
-                             image_convert_indexed_invoker);
+  procedure = gimp_procedure_new (image_convert_indexed_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-convert-indexed",
                                      "gimp-image-convert-indexed",

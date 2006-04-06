@@ -637,9 +637,7 @@ register_edit_procs (Gimp *gimp)
   /*
    * gimp-edit-cut
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             edit_cut_invoker);
+  procedure = gimp_procedure_new (edit_cut_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-cut",
                                      "gimp-edit-cut",
@@ -667,9 +665,7 @@ register_edit_procs (Gimp *gimp)
   /*
    * gimp-edit-copy
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             edit_copy_invoker);
+  procedure = gimp_procedure_new (edit_copy_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-copy",
                                      "gimp-edit-copy",
@@ -697,9 +693,7 @@ register_edit_procs (Gimp *gimp)
   /*
    * gimp-edit-copy-visible
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             edit_copy_visible_invoker);
+  procedure = gimp_procedure_new (edit_copy_visible_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-copy-visible",
                                      "gimp-edit-copy-visible",
@@ -727,9 +721,7 @@ register_edit_procs (Gimp *gimp)
   /*
    * gimp-edit-paste
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             edit_paste_invoker);
+  procedure = gimp_procedure_new (edit_paste_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-paste",
                                      "gimp-edit-paste",
@@ -763,9 +755,7 @@ register_edit_procs (Gimp *gimp)
   /*
    * gimp-edit-paste-as-new
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
-                             edit_paste_as_new_invoker);
+  procedure = gimp_procedure_new (edit_paste_as_new_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-paste-as-new",
                                      "gimp-edit-paste-as-new",
@@ -787,9 +777,7 @@ register_edit_procs (Gimp *gimp)
   /*
    * gimp-edit-named-cut
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             edit_named_cut_invoker);
+  procedure = gimp_procedure_new (edit_named_cut_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-named-cut",
                                      "gimp-edit-named-cut",
@@ -825,9 +813,7 @@ register_edit_procs (Gimp *gimp)
   /*
    * gimp-edit-named-copy
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             edit_named_copy_invoker);
+  procedure = gimp_procedure_new (edit_named_copy_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-named-copy",
                                      "gimp-edit-named-copy",
@@ -863,9 +849,7 @@ register_edit_procs (Gimp *gimp)
   /*
    * gimp-edit-named-copy-visible
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             edit_named_copy_visible_invoker);
+  procedure = gimp_procedure_new (edit_named_copy_visible_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-named-copy-visible",
                                      "gimp-edit-named-copy-visible",
@@ -901,9 +885,7 @@ register_edit_procs (Gimp *gimp)
   /*
    * gimp-edit-named-paste
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 1,
-                             edit_named_paste_invoker);
+  procedure = gimp_procedure_new (edit_named_paste_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-named-paste",
                                      "gimp-edit-named-paste",
@@ -944,9 +926,7 @@ register_edit_procs (Gimp *gimp)
   /*
    * gimp-edit-named-paste-as-new
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             edit_named_paste_as_new_invoker);
+  procedure = gimp_procedure_new (edit_named_paste_as_new_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-named-paste-as-new",
                                      "gimp-edit-named-paste-as-new",
@@ -975,9 +955,7 @@ register_edit_procs (Gimp *gimp)
   /*
    * gimp-edit-clear
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             edit_clear_invoker);
+  procedure = gimp_procedure_new (edit_clear_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-clear",
                                      "gimp-edit-clear",
@@ -999,9 +977,7 @@ register_edit_procs (Gimp *gimp)
   /*
    * gimp-edit-fill
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             edit_fill_invoker);
+  procedure = gimp_procedure_new (edit_fill_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-fill",
                                      "gimp-edit-fill",
@@ -1030,9 +1006,7 @@ register_edit_procs (Gimp *gimp)
   /*
    * gimp-edit-bucket-fill
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 8, 0,
-                             edit_bucket_fill_invoker);
+  procedure = gimp_procedure_new (edit_bucket_fill_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-bucket-fill",
                                      "gimp-edit-bucket-fill",
@@ -1098,9 +1072,7 @@ register_edit_procs (Gimp *gimp)
   /*
    * gimp-edit-blend
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 16, 0,
-                             edit_blend_invoker);
+  procedure = gimp_procedure_new (edit_blend_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-blend",
                                      "gimp-edit-blend",
@@ -1216,9 +1188,7 @@ register_edit_procs (Gimp *gimp)
   /*
    * gimp-edit-stroke
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             edit_stroke_invoker);
+  procedure = gimp_procedure_new (edit_stroke_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-stroke",
                                      "gimp-edit-stroke",

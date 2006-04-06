@@ -203,9 +203,7 @@ register_gimprc_procs (Gimp *gimp)
   /*
    * gimp-gimprc-query
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             gimprc_query_invoker);
+  procedure = gimp_procedure_new (gimprc_query_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gimprc-query",
                                      "gimp-gimprc-query",
@@ -235,9 +233,7 @@ register_gimprc_procs (Gimp *gimp)
   /*
    * gimp-gimprc-set
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             gimprc_set_invoker);
+  procedure = gimp_procedure_new (gimprc_set_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gimprc-set",
                                      "gimp-gimprc-set",
@@ -267,9 +263,7 @@ register_gimprc_procs (Gimp *gimp)
   /*
    * gimp-get-default-comment
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
-                             get_default_comment_invoker);
+  procedure = gimp_procedure_new (get_default_comment_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-get-default-comment",
                                      "gimp-get-default-comment",
@@ -292,9 +286,7 @@ register_gimprc_procs (Gimp *gimp)
   /*
    * gimp-get-monitor-resolution
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 2,
-                             get_monitor_resolution_invoker);
+  procedure = gimp_procedure_new (get_monitor_resolution_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-get-monitor-resolution",
                                      "gimp-get-monitor-resolution",
@@ -322,9 +314,7 @@ register_gimprc_procs (Gimp *gimp)
   /*
    * gimp-get-theme-dir
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
-                             get_theme_dir_invoker);
+  procedure = gimp_procedure_new (get_theme_dir_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-get-theme-dir",
                                      "gimp-get-theme-dir",
@@ -347,9 +337,7 @@ register_gimprc_procs (Gimp *gimp)
   /*
    * gimp-get-color-configuration
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
-                             get_color_configuration_invoker);
+  procedure = gimp_procedure_new (get_color_configuration_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-get-color-configuration",
                                      "gimp-get-color-configuration",
@@ -372,9 +360,7 @@ register_gimprc_procs (Gimp *gimp)
   /*
    * gimp-get-module-load-inhibit
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
-                             get_module_load_inhibit_invoker);
+  procedure = gimp_procedure_new (get_module_load_inhibit_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-get-module-load-inhibit",
                                      "gimp-get-module-load-inhibit",

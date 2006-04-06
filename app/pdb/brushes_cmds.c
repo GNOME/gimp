@@ -241,9 +241,7 @@ register_brushes_procs (Gimp *gimp)
   /*
    * gimp-brushes-refresh
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 0,
-                             brushes_refresh_invoker);
+  procedure = gimp_procedure_new (brushes_refresh_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brushes-refresh",
                                      "gimp-brushes-refresh",
@@ -259,9 +257,7 @@ register_brushes_procs (Gimp *gimp)
   /*
    * gimp-brushes-get-list
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 2,
-                             brushes_get_list_invoker);
+  procedure = gimp_procedure_new (brushes_get_list_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brushes-get-list",
                                      "gimp-brushes-get-list",
@@ -295,9 +291,7 @@ register_brushes_procs (Gimp *gimp)
   /*
    * gimp-brushes-get-brush
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 4,
-                             brushes_get_brush_invoker);
+  procedure = gimp_procedure_new (brushes_get_brush_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brushes-get-brush",
                                      "gimp-brushes-get-brush",
@@ -338,9 +332,7 @@ register_brushes_procs (Gimp *gimp)
   /*
    * gimp-brushes-get-spacing
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
-                             brushes_get_spacing_invoker);
+  procedure = gimp_procedure_new (brushes_get_spacing_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brushes-get-spacing",
                                      "gimp-brushes-get-spacing",
@@ -362,9 +354,7 @@ register_brushes_procs (Gimp *gimp)
   /*
    * gimp-brushes-set-spacing
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             brushes_set_spacing_invoker);
+  procedure = gimp_procedure_new (brushes_set_spacing_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brushes-set-spacing",
                                      "gimp-brushes-set-spacing",
@@ -386,9 +376,7 @@ register_brushes_procs (Gimp *gimp)
   /*
    * gimp-brushes-get-brush-data
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 8,
-                             brushes_get_brush_data_invoker);
+  procedure = gimp_procedure_new (brushes_get_brush_data_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brushes-get-brush-data",
                                      "gimp-brushes-get-brush-data",

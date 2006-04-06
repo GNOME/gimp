@@ -185,9 +185,7 @@ register_palettes_procs (Gimp *gimp)
   /*
    * gimp-palettes-refresh
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 0,
-                             palettes_refresh_invoker);
+  procedure = gimp_procedure_new (palettes_refresh_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palettes-refresh",
                                      "gimp-palettes-refresh",
@@ -203,9 +201,7 @@ register_palettes_procs (Gimp *gimp)
   /*
    * gimp-palettes-get-list
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 2,
-                             palettes_get_list_invoker);
+  procedure = gimp_procedure_new (palettes_get_list_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palettes-get-list",
                                      "gimp-palettes-get-list",
@@ -239,9 +235,7 @@ register_palettes_procs (Gimp *gimp)
   /*
    * gimp-palettes-get-palette
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 2,
-                             palettes_get_palette_invoker);
+  procedure = gimp_procedure_new (palettes_get_palette_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palettes-get-palette",
                                      "gimp-palettes-get-palette",
@@ -270,9 +264,7 @@ register_palettes_procs (Gimp *gimp)
   /*
    * gimp-palettes-get-palette-entry
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 3,
-                             palettes_get_palette_entry_invoker);
+  procedure = gimp_procedure_new (palettes_get_palette_entry_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palettes-get-palette-entry",
                                      "gimp-palettes-get-palette-entry",

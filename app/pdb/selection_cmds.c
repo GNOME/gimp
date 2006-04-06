@@ -498,9 +498,7 @@ register_selection_procs (Gimp *gimp)
   /*
    * gimp-selection-bounds
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 5,
-                             selection_bounds_invoker);
+  procedure = gimp_procedure_new (selection_bounds_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-bounds",
                                      "gimp-selection-bounds",
@@ -552,9 +550,7 @@ register_selection_procs (Gimp *gimp)
   /*
    * gimp-selection-value
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 1,
-                             selection_value_invoker);
+  procedure = gimp_procedure_new (selection_value_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-value",
                                      "gimp-selection-value",
@@ -594,9 +590,7 @@ register_selection_procs (Gimp *gimp)
   /*
    * gimp-selection-is-empty
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             selection_is_empty_invoker);
+  procedure = gimp_procedure_new (selection_is_empty_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-is-empty",
                                      "gimp-selection-is-empty",
@@ -624,9 +618,7 @@ register_selection_procs (Gimp *gimp)
   /*
    * gimp-selection-translate
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
-                             selection_translate_invoker);
+  procedure = gimp_procedure_new (selection_translate_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-translate",
                                      "gimp-selection-translate",
@@ -660,9 +652,7 @@ register_selection_procs (Gimp *gimp)
   /*
    * gimp-selection-float
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 1,
-                             selection_float_invoker);
+  procedure = gimp_procedure_new (selection_float_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-float",
                                      "gimp-selection-float",
@@ -702,9 +692,7 @@ register_selection_procs (Gimp *gimp)
   /*
    * gimp-selection-invert
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             selection_invert_invoker);
+  procedure = gimp_procedure_new (selection_invert_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-invert",
                                      "gimp-selection-invert",
@@ -726,9 +714,7 @@ register_selection_procs (Gimp *gimp)
   /*
    * gimp-selection-sharpen
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             selection_sharpen_invoker);
+  procedure = gimp_procedure_new (selection_sharpen_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-sharpen",
                                      "gimp-selection-sharpen",
@@ -750,9 +736,7 @@ register_selection_procs (Gimp *gimp)
   /*
    * gimp-selection-all
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             selection_all_invoker);
+  procedure = gimp_procedure_new (selection_all_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-all",
                                      "gimp-selection-all",
@@ -774,9 +758,7 @@ register_selection_procs (Gimp *gimp)
   /*
    * gimp-selection-none
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             selection_none_invoker);
+  procedure = gimp_procedure_new (selection_none_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-none",
                                      "gimp-selection-none",
@@ -798,9 +780,7 @@ register_selection_procs (Gimp *gimp)
   /*
    * gimp-selection-feather
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             selection_feather_invoker);
+  procedure = gimp_procedure_new (selection_feather_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-feather",
                                      "gimp-selection-feather",
@@ -828,9 +808,7 @@ register_selection_procs (Gimp *gimp)
   /*
    * gimp-selection-border
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             selection_border_invoker);
+  procedure = gimp_procedure_new (selection_border_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-border",
                                      "gimp-selection-border",
@@ -858,9 +836,7 @@ register_selection_procs (Gimp *gimp)
   /*
    * gimp-selection-grow
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             selection_grow_invoker);
+  procedure = gimp_procedure_new (selection_grow_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-grow",
                                      "gimp-selection-grow",
@@ -888,9 +864,7 @@ register_selection_procs (Gimp *gimp)
   /*
    * gimp-selection-shrink
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             selection_shrink_invoker);
+  procedure = gimp_procedure_new (selection_shrink_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-shrink",
                                      "gimp-selection-shrink",
@@ -918,9 +892,7 @@ register_selection_procs (Gimp *gimp)
   /*
    * gimp-selection-layer-alpha
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             selection_layer_alpha_invoker);
+  procedure = gimp_procedure_new (selection_layer_alpha_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-layer-alpha",
                                      "gimp-selection-layer-alpha",
@@ -942,9 +914,7 @@ register_selection_procs (Gimp *gimp)
   /*
    * gimp-selection-load
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             selection_load_invoker);
+  procedure = gimp_procedure_new (selection_load_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-load",
                                      "gimp-selection-load",
@@ -966,9 +936,7 @@ register_selection_procs (Gimp *gimp)
   /*
    * gimp-selection-save
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             selection_save_invoker);
+  procedure = gimp_procedure_new (selection_save_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-save",
                                      "gimp-selection-save",
@@ -996,9 +964,7 @@ register_selection_procs (Gimp *gimp)
   /*
    * gimp-selection-combine
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             selection_combine_invoker);
+  procedure = gimp_procedure_new (selection_combine_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-combine",
                                      "gimp-selection-combine",

@@ -333,9 +333,7 @@ register_channel_procs (Gimp *gimp)
   /*
    * gimp-channel-new
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 6, 1,
-                             channel_new_invoker);
+  procedure = gimp_procedure_new (channel_new_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-channel-new",
                                      "gimp-channel-new",
@@ -394,9 +392,7 @@ register_channel_procs (Gimp *gimp)
   /*
    * gimp-channel-new-from-component
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 1,
-                             channel_new_from_component_invoker);
+  procedure = gimp_procedure_new (channel_new_from_component_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-channel-new-from-component",
                                      "gimp-channel-new-from-component",
@@ -438,9 +434,7 @@ register_channel_procs (Gimp *gimp)
   /*
    * gimp-channel-copy
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             channel_copy_invoker);
+  procedure = gimp_procedure_new (channel_copy_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-channel-copy",
                                      "gimp-channel-copy",
@@ -468,9 +462,7 @@ register_channel_procs (Gimp *gimp)
   /*
    * gimp-channel-combine-masks
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 5, 0,
-                             channel_combine_masks_invoker);
+  procedure = gimp_procedure_new (channel_combine_masks_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-channel-combine-masks",
                                      "gimp-channel-combine-masks",
@@ -517,9 +509,7 @@ register_channel_procs (Gimp *gimp)
   /*
    * gimp-channel-get-show-masked
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             channel_get_show_masked_invoker);
+  procedure = gimp_procedure_new (channel_get_show_masked_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-channel-get-show-masked",
                                      "gimp-channel-get-show-masked",
@@ -547,9 +537,7 @@ register_channel_procs (Gimp *gimp)
   /*
    * gimp-channel-set-show-masked
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             channel_set_show_masked_invoker);
+  procedure = gimp_procedure_new (channel_set_show_masked_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-channel-set-show-masked",
                                      "gimp-channel-set-show-masked",
@@ -577,9 +565,7 @@ register_channel_procs (Gimp *gimp)
   /*
    * gimp-channel-get-opacity
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             channel_get_opacity_invoker);
+  procedure = gimp_procedure_new (channel_get_opacity_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-channel-get-opacity",
                                      "gimp-channel-get-opacity",
@@ -607,9 +593,7 @@ register_channel_procs (Gimp *gimp)
   /*
    * gimp-channel-set-opacity
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             channel_set_opacity_invoker);
+  procedure = gimp_procedure_new (channel_set_opacity_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-channel-set-opacity",
                                      "gimp-channel-set-opacity",
@@ -637,9 +621,7 @@ register_channel_procs (Gimp *gimp)
   /*
    * gimp-channel-get-color
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             channel_get_color_invoker);
+  procedure = gimp_procedure_new (channel_get_color_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-channel-get-color",
                                      "gimp-channel-get-color",
@@ -667,9 +649,7 @@ register_channel_procs (Gimp *gimp)
   /*
    * gimp-channel-set-color
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             channel_set_color_invoker);
+  procedure = gimp_procedure_new (channel_set_color_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-channel-set-color",
                                      "gimp-channel-set-color",

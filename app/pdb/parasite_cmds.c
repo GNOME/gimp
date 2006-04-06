@@ -458,9 +458,7 @@ register_parasite_procs (Gimp *gimp)
   /*
    * gimp-parasite-find
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             parasite_find_invoker);
+  procedure = gimp_procedure_new (parasite_find_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-parasite-find",
                                      "gimp-parasite-find",
@@ -488,9 +486,7 @@ register_parasite_procs (Gimp *gimp)
   /*
    * gimp-parasite-attach
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             parasite_attach_invoker);
+  procedure = gimp_procedure_new (parasite_attach_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-parasite-attach",
                                      "gimp-parasite-attach",
@@ -511,9 +507,7 @@ register_parasite_procs (Gimp *gimp)
   /*
    * gimp-parasite-detach
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             parasite_detach_invoker);
+  procedure = gimp_procedure_new (parasite_detach_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-parasite-detach",
                                      "gimp-parasite-detach",
@@ -536,9 +530,7 @@ register_parasite_procs (Gimp *gimp)
   /*
    * gimp-parasite-list
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 2,
-                             parasite_list_invoker);
+  procedure = gimp_procedure_new (parasite_list_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-parasite-list",
                                      "gimp-parasite-list",
@@ -565,9 +557,7 @@ register_parasite_procs (Gimp *gimp)
   /*
    * gimp-image-parasite-find
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             image_parasite_find_invoker);
+  procedure = gimp_procedure_new (image_parasite_find_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-parasite-find",
                                      "gimp-image-parasite-find",
@@ -601,9 +591,7 @@ register_parasite_procs (Gimp *gimp)
   /*
    * gimp-image-parasite-attach
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             image_parasite_attach_invoker);
+  procedure = gimp_procedure_new (image_parasite_attach_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-parasite-attach",
                                      "gimp-image-parasite-attach",
@@ -630,9 +618,7 @@ register_parasite_procs (Gimp *gimp)
   /*
    * gimp-image-parasite-detach
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             image_parasite_detach_invoker);
+  procedure = gimp_procedure_new (image_parasite_detach_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-parasite-detach",
                                      "gimp-image-parasite-detach",
@@ -661,9 +647,7 @@ register_parasite_procs (Gimp *gimp)
   /*
    * gimp-image-parasite-list
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 2,
-                             image_parasite_list_invoker);
+  procedure = gimp_procedure_new (image_parasite_list_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-parasite-list",
                                      "gimp-image-parasite-list",
@@ -696,9 +680,7 @@ register_parasite_procs (Gimp *gimp)
   /*
    * gimp-drawable-parasite-find
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             drawable_parasite_find_invoker);
+  procedure = gimp_procedure_new (drawable_parasite_find_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-parasite-find",
                                      "gimp-drawable-parasite-find",
@@ -732,9 +714,7 @@ register_parasite_procs (Gimp *gimp)
   /*
    * gimp-drawable-parasite-attach
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             drawable_parasite_attach_invoker);
+  procedure = gimp_procedure_new (drawable_parasite_attach_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-parasite-attach",
                                      "gimp-drawable-parasite-attach",
@@ -761,9 +741,7 @@ register_parasite_procs (Gimp *gimp)
   /*
    * gimp-drawable-parasite-detach
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             drawable_parasite_detach_invoker);
+  procedure = gimp_procedure_new (drawable_parasite_detach_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-parasite-detach",
                                      "gimp-drawable-parasite-detach",
@@ -792,9 +770,7 @@ register_parasite_procs (Gimp *gimp)
   /*
    * gimp-drawable-parasite-list
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 2,
-                             drawable_parasite_list_invoker);
+  procedure = gimp_procedure_new (drawable_parasite_list_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-parasite-list",
                                      "gimp-drawable-parasite-list",
@@ -827,9 +803,7 @@ register_parasite_procs (Gimp *gimp)
   /*
    * gimp-vectors-parasite-find
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             vectors_parasite_find_invoker);
+  procedure = gimp_procedure_new (vectors_parasite_find_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-parasite-find",
                                      "gimp-vectors-parasite-find",
@@ -863,9 +837,7 @@ register_parasite_procs (Gimp *gimp)
   /*
    * gimp-vectors-parasite-attach
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             vectors_parasite_attach_invoker);
+  procedure = gimp_procedure_new (vectors_parasite_attach_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-parasite-attach",
                                      "gimp-vectors-parasite-attach",
@@ -892,9 +864,7 @@ register_parasite_procs (Gimp *gimp)
   /*
    * gimp-vectors-parasite-detach
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             vectors_parasite_detach_invoker);
+  procedure = gimp_procedure_new (vectors_parasite_detach_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-parasite-detach",
                                      "gimp-vectors-parasite-detach",
@@ -923,9 +893,7 @@ register_parasite_procs (Gimp *gimp)
   /*
    * gimp-vectors-parasite-list
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 2,
-                             vectors_parasite_list_invoker);
+  procedure = gimp_procedure_new (vectors_parasite_list_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-parasite-list",
                                      "gimp-vectors-parasite-list",

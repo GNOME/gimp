@@ -44,8 +44,7 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 
-#include "plug-in/plug-in.h"
-#include "plug-in/plug-in-proc-def.h"
+#include "pdb/gimppluginprocedure.h"
 
 #include "file-utils.h"
 

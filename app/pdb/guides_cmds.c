@@ -242,9 +242,7 @@ register_guides_procs (Gimp *gimp)
   /*
    * gimp-image-add-hguide
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             image_add_hguide_invoker);
+  procedure = gimp_procedure_new (image_add_hguide_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-add-hguide",
                                      "gimp-image-add-hguide",
@@ -278,9 +276,7 @@ register_guides_procs (Gimp *gimp)
   /*
    * gimp-image-add-vguide
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             image_add_vguide_invoker);
+  procedure = gimp_procedure_new (image_add_vguide_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-add-vguide",
                                      "gimp-image-add-vguide",
@@ -314,9 +310,7 @@ register_guides_procs (Gimp *gimp)
   /*
    * gimp-image-delete-guide
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             image_delete_guide_invoker);
+  procedure = gimp_procedure_new (image_delete_guide_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-delete-guide",
                                      "gimp-image-delete-guide",
@@ -344,9 +338,7 @@ register_guides_procs (Gimp *gimp)
   /*
    * gimp-image-find-next-guide
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             image_find_next_guide_invoker);
+  procedure = gimp_procedure_new (image_find_next_guide_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-find-next-guide",
                                      "gimp-image-find-next-guide",
@@ -380,9 +372,7 @@ register_guides_procs (Gimp *gimp)
   /*
    * gimp-image-get-guide-orientation
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             image_get_guide_orientation_invoker);
+  procedure = gimp_procedure_new (image_get_guide_orientation_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-get-guide-orientation",
                                      "gimp-image-get-guide-orientation",
@@ -419,9 +409,7 @@ register_guides_procs (Gimp *gimp)
   /*
    * gimp-image-get-guide-position
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             image_get_guide_position_invoker);
+  procedure = gimp_procedure_new (image_get_guide_position_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-get-guide-position",
                                      "gimp-image-get-guide-position",

@@ -85,9 +85,7 @@ register_fonts_procs (Gimp *gimp)
   /*
    * gimp-fonts-refresh
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 0,
-                             fonts_refresh_invoker);
+  procedure = gimp_procedure_new (fonts_refresh_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-fonts-refresh",
                                      "gimp-fonts-refresh",
@@ -103,9 +101,7 @@ register_fonts_procs (Gimp *gimp)
   /*
    * gimp-fonts-get-list
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 2,
-                             fonts_get_list_invoker);
+  procedure = gimp_procedure_new (fonts_get_list_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-fonts-get-list",
                                      "gimp-fonts-get-list",

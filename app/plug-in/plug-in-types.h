@@ -25,13 +25,11 @@
 #include "plug-in/plug-in-enums.h"
 
 
-typedef struct _PlugIn              PlugIn;
-typedef struct _PlugInDef           PlugInDef;
-typedef struct _PlugInMenuBranch    PlugInMenuBranch;
-typedef struct _PlugInProcFrame     PlugInProcFrame;
-typedef struct _PlugInShm           PlugInShm;
-
-typedef struct _GimpPlugInProcedure GimpPlugInProcedure;
+typedef struct _PlugIn           PlugIn;
+typedef struct _PlugInDef        PlugInDef;
+typedef struct _PlugInMenuBranch PlugInMenuBranch;
+typedef struct _PlugInProcFrame  PlugInProcFrame;
+typedef struct _PlugInShm        PlugInShm;
 
 
 #endif /* __PLUG_IN_TYPES_H__ */

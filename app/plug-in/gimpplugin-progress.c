@@ -30,7 +30,7 @@
 #include "core/gimpprogress.h"
 
 #include "pdb/gimp-pdb.h"
-#include "pdb/gimpprocedure.h"
+#include "pdb/gimptemporaryprocedure.h"
 
 #include "plug-in.h"
 #include "plug-in-progress.h"
@@ -205,12 +205,11 @@ plug_in_progress_install (PlugIn      *plug_in,
 
   procedure = gimp_pdb_lookup (plug_in->gimp, progress_callback);
 
-  if (! procedure                                                ||
-      procedure->proc_type                     != GIMP_TEMPORARY ||
-      procedure->exec_method.temporary.plug_in != plug_in        ||
-      procedure->num_args                      != 3              ||
-      ! GIMP_IS_PARAM_SPEC_INT32 (procedure->args[0])            ||
-      ! G_IS_PARAM_SPEC_STRING   (procedure->args[1])            ||
+  if (! GIMP_IS_TEMPORARY_PROCEDURE (procedure)                ||
+      GIMP_TEMPORARY_PROCEDURE (procedure)->plug_in != plug_in ||
+      procedure->num_args                           != 3       ||
+      ! GIMP_IS_PARAM_SPEC_INT32 (procedure->args[0])          ||
+      ! G_IS_PARAM_SPEC_STRING   (procedure->args[1])          ||
       ! G_IS_PARAM_SPEC_DOUBLE   (procedure->args[2]))
     {
       return FALSE;

@@ -578,9 +578,7 @@ register_palette_procs (Gimp *gimp)
   /*
    * gimp-palette-new
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             palette_new_invoker);
+  procedure = gimp_procedure_new (palette_new_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-new",
                                      "gimp-palette-new",
@@ -610,9 +608,7 @@ register_palette_procs (Gimp *gimp)
   /*
    * gimp-palette-duplicate
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             palette_duplicate_invoker);
+  procedure = gimp_procedure_new (palette_duplicate_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-duplicate",
                                      "gimp-palette-duplicate",
@@ -642,9 +638,7 @@ register_palette_procs (Gimp *gimp)
   /*
    * gimp-palette-rename
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             palette_rename_invoker);
+  procedure = gimp_procedure_new (palette_rename_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-rename",
                                      "gimp-palette-rename",
@@ -681,9 +675,7 @@ register_palette_procs (Gimp *gimp)
   /*
    * gimp-palette-delete
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             palette_delete_invoker);
+  procedure = gimp_procedure_new (palette_delete_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-delete",
                                      "gimp-palette-delete",
@@ -706,9 +698,7 @@ register_palette_procs (Gimp *gimp)
   /*
    * gimp-palette-is-editable
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             palette_is_editable_invoker);
+  procedure = gimp_procedure_new (palette_is_editable_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-is-editable",
                                      "gimp-palette-is-editable",
@@ -737,9 +727,7 @@ register_palette_procs (Gimp *gimp)
   /*
    * gimp-palette-get-info
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             palette_get_info_invoker);
+  procedure = gimp_procedure_new (palette_get_info_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-get-info",
                                      "gimp-palette-get-info",
@@ -768,9 +756,7 @@ register_palette_procs (Gimp *gimp)
   /*
    * gimp-palette-get-columns
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             palette_get_columns_invoker);
+  procedure = gimp_procedure_new (palette_get_columns_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-get-columns",
                                      "gimp-palette-get-columns",
@@ -799,9 +785,7 @@ register_palette_procs (Gimp *gimp)
   /*
    * gimp-palette-set-columns
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             palette_set_columns_invoker);
+  procedure = gimp_procedure_new (palette_set_columns_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-set-columns",
                                      "gimp-palette-set-columns",
@@ -830,9 +814,7 @@ register_palette_procs (Gimp *gimp)
   /*
    * gimp-palette-add-entry
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 1,
-                             palette_add_entry_invoker);
+  procedure = gimp_procedure_new (palette_add_entry_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-add-entry",
                                      "gimp-palette-add-entry",
@@ -874,9 +856,7 @@ register_palette_procs (Gimp *gimp)
   /*
    * gimp-palette-delete-entry
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             palette_delete_entry_invoker);
+  procedure = gimp_procedure_new (palette_delete_entry_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-delete-entry",
                                      "gimp-palette-delete-entry",
@@ -905,9 +885,7 @@ register_palette_procs (Gimp *gimp)
   /*
    * gimp-palette-entry-get-color
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             palette_entry_get_color_invoker);
+  procedure = gimp_procedure_new (palette_entry_get_color_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-entry-get-color",
                                      "gimp-palette-entry-get-color",
@@ -942,9 +920,7 @@ register_palette_procs (Gimp *gimp)
   /*
    * gimp-palette-entry-set-color
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
-                             palette_entry_set_color_invoker);
+  procedure = gimp_procedure_new (palette_entry_set_color_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-entry-set-color",
                                      "gimp-palette-entry-set-color",
@@ -979,9 +955,7 @@ register_palette_procs (Gimp *gimp)
   /*
    * gimp-palette-entry-get-name
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             palette_entry_get_name_invoker);
+  procedure = gimp_procedure_new (palette_entry_get_name_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-entry-get-name",
                                      "gimp-palette-entry-get-name",
@@ -1017,9 +991,7 @@ register_palette_procs (Gimp *gimp)
   /*
    * gimp-palette-entry-set-name
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
-                             palette_entry_set_name_invoker);
+  procedure = gimp_procedure_new (palette_entry_set_name_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-entry-set-name",
                                      "gimp-palette-entry-set-name",

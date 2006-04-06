@@ -67,9 +67,7 @@ register_help_procs (Gimp *gimp)
   /*
    * gimp-help
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             help_invoker);
+  procedure = gimp_procedure_new (help_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-help",
                                      "gimp-help",

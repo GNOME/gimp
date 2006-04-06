@@ -38,13 +38,12 @@
 
 #include "pdb/gimp-pdb.h"
 #include "pdb/gimp-pdb-compat.h"
-#include "pdb/gimpprocedure.h"
+#include "pdb/gimptemporaryprocedure.h"
 
 #include "plug-in.h"
 #include "plug-ins.h"
 #include "plug-in-def.h"
 #include "plug-in-params.h"
-#include "plug-in-proc-def.h"
 #include "plug-in-shm.h"
 
 
@@ -570,7 +569,6 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
   GimpPlugInProcedure *proc        = NULL;
   GimpProcedure       *procedure   = NULL;
   gchar               *canonical;
-  gchar               *prog        = NULL;
   gboolean             valid_utf8  = FALSE;
   gint                 i;
 
@@ -585,7 +583,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 	   proc_install->params[i].type == GIMP_PDB_FLOATARRAY ||
 	   proc_install->params[i].type == GIMP_PDB_STRINGARRAY)
           &&
-	  proc_install->params[i-1].type != GIMP_PDB_INT32)
+	  proc_install->params[i - 1].type != GIMP_PDB_INT32)
 	{
 	  g_message ("Plug-In \"%s\"\n(%s)\n\n"
                      "attempted to install procedure \"%s\" "
@@ -651,7 +649,6 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
     case GIMP_PLUGIN:
     case GIMP_EXTENSION:
       plug_in_def = plug_in->plug_in_def;
-      prog        = plug_in_def->prog;
 
       proc = gimp_plug_in_procedure_find (plug_in_def->proc_defs, canonical);
 
@@ -661,11 +658,13 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
                                                    proc);
           g_object_unref (proc);
         }
+
+      procedure = gimp_plug_in_procedure_new (proc_install->type,
+                                              plug_in->prog);
       break;
 
     case GIMP_TEMPORARY:
       plug_in_def = NULL;
-      prog        = "none";
 
       proc = gimp_plug_in_procedure_find (plug_in->temp_proc_defs, canonical);
 
@@ -675,18 +674,17 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
                                                     proc);
           plug_ins_temp_proc_def_remove (plug_in->gimp, proc);
         }
+
+      procedure = gimp_temporary_procedure_new (plug_in);
       break;
     }
 
-  proc = gimp_plug_in_procedure_new ();
+  proc = GIMP_PLUG_IN_PROCEDURE (procedure);
 
-  proc->prog                  = g_strdup (prog);
   proc->mtime                 = time (NULL);
   proc->installed_during_init = plug_in->init;
 
   gimp_plug_in_procedure_set_image_types (proc, proc_install->image_types);
-
-  procedure = GIMP_PROCEDURE (proc);
 
   gimp_procedure_set_strings (procedure,
                               canonical,
@@ -699,13 +697,6 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
                               NULL);
 
   g_free (canonical);
-
-  gimp_procedure_initialize (procedure,
-                             proc_install->type,
-                             proc_install->nparams,
-                             proc_install->nreturn_vals,
-                             proc_install->type == GIMP_TEMPORARY ?
-                             (gpointer) plug_in : (gpointer) prog);
 
   for (i = 0; i < proc_install->nparams; i++)
     {
@@ -728,6 +719,8 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 
       gimp_procedure_add_return_value (procedure, pspec);
     }
+
+  /*  Sanity check menu path  */
 
   if (proc_install->menu_path)
     {
@@ -760,6 +753,8 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
           proc->menu_label = g_strdup (proc_install->menu_path);
         }
     }
+
+  /*  Install the procedure  */
 
   switch (proc_install->type)
     {

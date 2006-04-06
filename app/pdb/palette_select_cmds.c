@@ -120,9 +120,7 @@ register_palette_select_procs (Gimp *gimp)
   /*
    * gimp-palettes-popup
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
-                             palettes_popup_invoker);
+  procedure = gimp_procedure_new (palettes_popup_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palettes-popup",
                                      "gimp-palettes-popup",
@@ -159,9 +157,7 @@ register_palette_select_procs (Gimp *gimp)
   /*
    * gimp-palettes-close-popup
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             palettes_close_popup_invoker);
+  procedure = gimp_procedure_new (palettes_close_popup_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palettes-close-popup",
                                      "gimp-palettes-close-popup",
@@ -184,9 +180,7 @@ register_palette_select_procs (Gimp *gimp)
   /*
    * gimp-palettes-set-popup
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             palettes_set_popup_invoker);
+  procedure = gimp_procedure_new (palettes_set_popup_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palettes-set-popup",
                                      "gimp-palettes-set-popup",

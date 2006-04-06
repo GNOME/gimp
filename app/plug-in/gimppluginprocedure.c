@@ -27,27 +27,28 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "plug-in-types.h"
+#include "pdb-types.h"
 
 #include "core/gimp.h"
 
-#include "pdb/gimpprocedure.h"
+#include "plug-in/plug-in.h"
+#include "plug-in/plug-ins.h"
+#include "plug-in/plug-in-run.h"
 
-#include "plug-in.h"
-#include "plug-ins.h"
-#include "plug-in-proc-def.h"
-#include "plug-in-run.h"
+#include "gimppluginprocedure.h"
 
 #include "gimp-intl.h"
 
 
-static void          gimp_plug_in_procedure_finalize (GObject       *object);
+static void          gimp_plug_in_procedure_finalize   (GObject       *object);
 
-static GValueArray * gimp_plug_in_procedure_execute  (GimpProcedure *procedure,
-                                                      Gimp          *gimp,
-                                                      GimpContext   *context,
-                                                      GimpProgress  *progress,
-                                                      GValueArray   *args);
+static GValueArray * gimp_plug_in_procedure_execute    (GimpProcedure *procedure,
+                                                        Gimp          *gimp,
+                                                        GimpContext   *context,
+                                                        GimpProgress  *progress,
+                                                        GValueArray   *args);
+
+const gchar * gimp_plug_in_procedure_real_get_progname (const GimpPlugInProcedure *procedure);
 
 
 G_DEFINE_TYPE (GimpPlugInProcedure, gimp_plug_in_procedure,
@@ -65,11 +66,15 @@ gimp_plug_in_procedure_class_init (GimpPlugInProcedureClass *klass)
   object_class->finalize = gimp_plug_in_procedure_finalize;
 
   proc_class->execute    = gimp_plug_in_procedure_execute;
+
+  klass->get_progname    = gimp_plug_in_procedure_real_get_progname;
 }
 
 static void
 gimp_plug_in_procedure_init (GimpPlugInProcedure *proc)
 {
+  GIMP_PROCEDURE (proc)->proc_type = GIMP_PLUGIN;
+
   proc->icon_data_length = -1;
 }
 
@@ -107,11 +112,11 @@ gimp_plug_in_procedure_finalize (GObject *object)
 }
 
 static GValueArray *
-gimp_plug_in_procedure_execute  (GimpProcedure *procedure,
-                                 Gimp          *gimp,
-                                 GimpContext   *context,
-                                 GimpProgress  *progress,
-                                 GValueArray   *args)
+gimp_plug_in_procedure_execute (GimpProcedure *procedure,
+                                Gimp          *gimp,
+                                GimpContext   *context,
+                                GimpProgress  *progress,
+                                GValueArray   *args)
 {
   if (procedure->proc_type == GIMP_INTERNAL)
     return GIMP_PROCEDURE_CLASS (parent_class)->execute (procedure, gimp,
@@ -122,15 +127,32 @@ gimp_plug_in_procedure_execute  (GimpProcedure *procedure,
                       args, TRUE, FALSE, -1);
 }
 
+const gchar *
+gimp_plug_in_procedure_real_get_progname (const GimpPlugInProcedure *procedure)
+{
+  return procedure->prog;
+}
+
 
 /*  public functions  */
 
-GimpPlugInProcedure *
-gimp_plug_in_procedure_new (void)
+GimpProcedure *
+gimp_plug_in_procedure_new (GimpPDBProcType  proc_type,
+                            const gchar     *prog)
 {
-  GimpPlugInProcedure *proc = g_object_new (GIMP_TYPE_PLUG_IN_PROCEDURE, NULL);
+  GimpPlugInProcedure *proc;
 
-  return proc;
+  g_return_val_if_fail (proc_type == GIMP_PLUGIN ||
+                        proc_type == GIMP_EXTENSION, NULL);
+  g_return_val_if_fail (prog != NULL, NULL);
+
+  proc = g_object_new (GIMP_TYPE_PLUG_IN_PROCEDURE, NULL);
+
+  proc->prog = g_strdup (prog);
+
+  GIMP_PROCEDURE (proc)->proc_type = proc_type;
+
+  return GIMP_PROCEDURE (proc);
 }
 
 GimpPlugInProcedure *
@@ -155,20 +177,7 @@ gimp_plug_in_procedure_get_progname (const GimpPlugInProcedure *proc)
 {
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
 
-  switch (GIMP_PROCEDURE (proc)->proc_type)
-    {
-    case GIMP_PLUGIN:
-    case GIMP_EXTENSION:
-      return proc->prog;
-
-    case GIMP_TEMPORARY:
-      return ((PlugIn *) GIMP_PROCEDURE (proc)->exec_method.temporary.plug_in)->prog;
-
-    default:
-      break;
-    }
-
-  return NULL;
+  return GIMP_PLUG_IN_PROCEDURE_GET_CLASS (proc)->get_progname (proc);
 }
 
 gchar *

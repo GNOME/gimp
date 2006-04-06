@@ -260,9 +260,7 @@ register_selection_tools_procs (Gimp *gimp)
   /*
    * gimp-by-color-select
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 8, 0,
-                             by_color_select_invoker);
+  procedure = gimp_procedure_new (by_color_select_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-by-color-select",
                                      "gimp-by-color-select",
@@ -327,9 +325,7 @@ register_selection_tools_procs (Gimp *gimp)
   /*
    * gimp-ellipse-select
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 9, 0,
-                             ellipse_select_invoker);
+  procedure = gimp_procedure_new (ellipse_select_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-ellipse-select",
                                      "gimp-ellipse-select",
@@ -400,9 +396,7 @@ register_selection_tools_procs (Gimp *gimp)
   /*
    * gimp-free-select
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 7, 0,
-                             free_select_invoker);
+  procedure = gimp_procedure_new (free_select_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-free-select",
                                      "gimp-free-select",
@@ -460,9 +454,7 @@ register_selection_tools_procs (Gimp *gimp)
   /*
    * gimp-fuzzy-select
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 9, 0,
-                             fuzzy_select_invoker);
+  procedure = gimp_procedure_new (fuzzy_select_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-fuzzy-select",
                                      "gimp-fuzzy-select",
@@ -534,9 +526,7 @@ register_selection_tools_procs (Gimp *gimp)
   /*
    * gimp-rect-select
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 8, 0,
-                             rect_select_invoker);
+  procedure = gimp_procedure_new (rect_select_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-rect-select",
                                      "gimp-rect-select",

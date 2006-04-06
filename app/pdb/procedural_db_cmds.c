@@ -421,9 +421,7 @@ register_procedural_db_procs (Gimp *gimp)
   /*
    * gimp-procedural-db-temp-name
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
-                             procedural_db_temp_name_invoker);
+  procedure = gimp_procedure_new (procedural_db_temp_name_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-procedural-db-temp-name",
                                      "gimp-procedural-db-temp-name",
@@ -446,9 +444,7 @@ register_procedural_db_procs (Gimp *gimp)
   /*
    * gimp-procedural-db-dump
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             procedural_db_dump_invoker);
+  procedure = gimp_procedure_new (procedural_db_dump_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-procedural-db-dump",
                                      "gimp-procedural-db-dump",
@@ -471,9 +467,7 @@ register_procedural_db_procs (Gimp *gimp)
   /*
    * gimp-procedural-db-query
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 7, 2,
-                             procedural_db_query_invoker);
+  procedure = gimp_procedure_new (procedural_db_query_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-procedural-db-query",
                                      "gimp-procedural-db-query",
@@ -549,9 +543,7 @@ register_procedural_db_procs (Gimp *gimp)
   /*
    * gimp-procedural-db-proc-info
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 8,
-                             procedural_db_proc_info_invoker);
+  procedure = gimp_procedure_new (procedural_db_proc_info_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-procedural-db-proc-info",
                                      "gimp-procedural-db-proc-info",
@@ -628,9 +620,7 @@ register_procedural_db_procs (Gimp *gimp)
   /*
    * gimp-procedural-db-proc-arg
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 3,
-                             procedural_db_proc_arg_invoker);
+  procedure = gimp_procedure_new (procedural_db_proc_arg_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-procedural-db-proc-arg",
                                      "gimp-procedural-db-proc-arg",
@@ -682,9 +672,7 @@ register_procedural_db_procs (Gimp *gimp)
   /*
    * gimp-procedural-db-proc-val
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 3,
-                             procedural_db_proc_val_invoker);
+  procedure = gimp_procedure_new (procedural_db_proc_val_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-procedural-db-proc-val",
                                      "gimp-procedural-db-proc-val",
@@ -736,9 +724,7 @@ register_procedural_db_procs (Gimp *gimp)
   /*
    * gimp-procedural-db-get-data
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 2,
-                             procedural_db_get_data_invoker);
+  procedure = gimp_procedure_new (procedural_db_get_data_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-procedural-db-get-data",
                                      "gimp-procedural-db-get-data",
@@ -772,9 +758,7 @@ register_procedural_db_procs (Gimp *gimp)
   /*
    * gimp-procedural-db-get-data-size
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             procedural_db_get_data_size_invoker);
+  procedure = gimp_procedure_new (procedural_db_get_data_size_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-procedural-db-get-data-size",
                                      "gimp-procedural-db-get-data-size",
@@ -803,9 +787,7 @@ register_procedural_db_procs (Gimp *gimp)
   /*
    * gimp-procedural-db-set-data
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
-                             procedural_db_set_data_invoker);
+  procedure = gimp_procedure_new (procedural_db_set_data_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-procedural-db-set-data",
                                      "gimp-procedural-db-set-data",

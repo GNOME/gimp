@@ -653,7 +653,6 @@ CODE
               "libgimpthumb/gimpthumb.h"
               "core/gimp.h" "core/gimpimagefile.h"
               "plug-in/plug-in.h" "plug-in/plug-ins.h"
-              "plug-in/plug-in-proc-def.h"
               "file/file-utils.h");
 
 @procs = qw(file_load file_load_layer file_load_thumbnail

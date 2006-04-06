@@ -31,12 +31,11 @@
 
 #include "core/gimp.h"
 
-#include "pdb/gimpprocedure.h"
 #include "pdb/gimp-pdb-compat.h"
+#include "pdb/gimppluginprocedure.h"
 
 #include "plug-ins.h"
 #include "plug-in-def.h"
-#include "plug-in-proc-def.h"
 #include "plug-in-rc.h"
 
 #include "gimp-intl.h"
@@ -47,27 +46,28 @@
  *  or the GTokenType they would have expected but didn't get.
  */
 
-static GTokenType plug_in_def_deserialize        (Gimp               *gimp,
-                                                  GScanner           *scanner);
-static GTokenType plug_in_procedure_deserialize  (GScanner            *scanner,
-                                                  Gimp                *gimp,
-                                                  GimpPlugInProcedure *proc);
-static GTokenType plug_in_menu_path_deserialize  (GScanner            *scanner,
-                                                  GimpPlugInProcedure *proc);
-static GTokenType plug_in_icon_deserialize       (GScanner            *scanner,
-                                                  GimpPlugInProcedure *proc);
-static GTokenType plug_in_file_proc_deserialize  (GScanner            *scanner,
-                                                  GimpPlugInProcedure *proc);
-static GTokenType plug_in_proc_arg_deserialize   (GScanner            *scanner,
-                                                  Gimp                *gimp,
-                                                  GimpProcedure       *procedure,
-                                                  gboolean             return_value);
-static GTokenType plug_in_locale_def_deserialize (GScanner            *scanner,
-                                                  PlugInDef           *plug_in_def);
-static GTokenType plug_in_help_def_deserialize   (GScanner            *scanner,
-                                                  PlugInDef           *plug_in_def);
-static GTokenType plug_in_has_init_deserialize   (GScanner            *scanner,
-                                                  PlugInDef           *plug_in_def);
+static GTokenType plug_in_def_deserialize        (Gimp                 *gimp,
+                                                  GScanner             *scanner);
+static GTokenType plug_in_procedure_deserialize  (GScanner             *scanner,
+                                                  Gimp                 *gimp,
+                                                  const gchar          *prog,
+                                                  GimpPlugInProcedure **proc);
+static GTokenType plug_in_menu_path_deserialize  (GScanner             *scanner,
+                                                  GimpPlugInProcedure  *proc);
+static GTokenType plug_in_icon_deserialize       (GScanner             *scanner,
+                                                  GimpPlugInProcedure  *proc);
+static GTokenType plug_in_file_proc_deserialize  (GScanner             *scanner,
+                                                  GimpPlugInProcedure  *proc);
+static GTokenType plug_in_proc_arg_deserialize   (GScanner             *scanner,
+                                                  Gimp                 *gimp,
+                                                  GimpProcedure        *procedure,
+                                                  gboolean              return_value);
+static GTokenType plug_in_locale_def_deserialize (GScanner             *scanner,
+                                                  PlugInDef            *plug_in_def);
+static GTokenType plug_in_help_def_deserialize   (GScanner             *scanner,
+                                                  PlugInDef            *plug_in_def);
+static GTokenType plug_in_has_init_deserialize   (GScanner             *scanner,
+                                                  PlugInDef            *plug_in_def);
 
 
 enum
@@ -227,18 +227,18 @@ plug_in_def_deserialize (Gimp     *gimp,
 {
   gchar               *name;
   PlugInDef           *plug_in_def;
-  GimpPlugInProcedure *proc;
+  GimpPlugInProcedure *proc = NULL;
   GTokenType           token;
 
   if (! gimp_scanner_parse_string (scanner, &name))
     return G_TOKEN_STRING;
 
   plug_in_def = plug_in_def_new (name);
-  g_free (name);
 
   if (! gimp_scanner_parse_int (scanner, (gint *) &plug_in_def->mtime))
     {
       plug_in_def_free (plug_in_def, TRUE);
+      g_free (name);
       return G_TOKEN_INT;
     }
 
@@ -258,12 +258,11 @@ plug_in_def_deserialize (Gimp     *gimp,
           switch (GPOINTER_TO_INT (scanner->value.v_symbol))
             {
             case PROC_DEF:
-              proc = gimp_plug_in_procedure_new ();
-              token = plug_in_procedure_deserialize (scanner, gimp, proc);
+              token = plug_in_procedure_deserialize (scanner, gimp, name, &proc);
 
               if (token == G_TOKEN_LEFT_PAREN)
                 plug_in_def_add_procedure (plug_in_def, proc);
-              else
+              else if (proc)
                 g_object_unref (proc);
               break;
 
@@ -293,6 +292,8 @@ plug_in_def_deserialize (Gimp     *gimp,
         }
     }
 
+  g_free (name);
+
   if (token == G_TOKEN_LEFT_PAREN)
     {
       token = G_TOKEN_RIGHT_PAREN;
@@ -310,9 +311,10 @@ plug_in_def_deserialize (Gimp     *gimp,
 }
 
 static GTokenType
-plug_in_procedure_deserialize (GScanner            *scanner,
-                               Gimp                *gimp,
-                               GimpPlugInProcedure *proc)
+plug_in_procedure_deserialize (GScanner             *scanner,
+                               Gimp                 *gimp,
+                               const gchar          *prog,
+                               GimpPlugInProcedure **proc)
 {
   GimpProcedure   *procedure;
   GTokenType       token;
@@ -323,15 +325,21 @@ plug_in_procedure_deserialize (GScanner            *scanner,
   gint             n_menu_paths;
   gint             i;
 
-  procedure = GIMP_PROCEDURE (proc);
-
-  if (! gimp_scanner_parse_string (scanner, &procedure->original_name))
+  if (! gimp_scanner_parse_string (scanner, &str))
     return G_TOKEN_STRING;
 
-  procedure->name = gimp_canonicalize_identifier (procedure->original_name);
-
   if (! gimp_scanner_parse_int (scanner, &proc_type))
-    return G_TOKEN_INT;
+    {
+      g_free (str);
+      return G_TOKEN_INT;
+    }
+
+  procedure = gimp_plug_in_procedure_new (proc_type, prog);
+
+  *proc = GIMP_PLUG_IN_PROCEDURE (procedure);
+
+  procedure->original_name = str;
+  procedure->name = gimp_canonicalize_identifier (procedure->original_name);
 
   if (! gimp_scanner_parse_string (scanner, &procedure->blurb))
     return G_TOKEN_STRING;
@@ -343,7 +351,7 @@ plug_in_procedure_deserialize (GScanner            *scanner,
     return G_TOKEN_STRING;
   if (! gimp_scanner_parse_string (scanner, &procedure->date))
     return G_TOKEN_STRING;
-  if (! gimp_scanner_parse_string (scanner, &proc->menu_label))
+  if (! gimp_scanner_parse_string (scanner, &(*proc)->menu_label))
     return G_TOKEN_STRING;
 
   if (! gimp_scanner_parse_int (scanner, &n_menu_paths))
@@ -351,31 +359,29 @@ plug_in_procedure_deserialize (GScanner            *scanner,
 
   for (i = 0; i < n_menu_paths; i++)
     {
-      token = plug_in_menu_path_deserialize (scanner, proc);
+      token = plug_in_menu_path_deserialize (scanner, *proc);
       if (token != G_TOKEN_LEFT_PAREN)
         return token;
     }
 
-  token = plug_in_icon_deserialize (scanner, proc);
+  token = plug_in_icon_deserialize (scanner, *proc);
   if (token != G_TOKEN_LEFT_PAREN)
     return token;
 
-  token = plug_in_file_proc_deserialize (scanner, proc);
+  token = plug_in_file_proc_deserialize (scanner, *proc);
   if (token != G_TOKEN_LEFT_PAREN)
     return token;
 
   if (! gimp_scanner_parse_string (scanner, &str))
     return G_TOKEN_STRING;
 
-  gimp_plug_in_procedure_set_image_types (proc, str);
+  gimp_plug_in_procedure_set_image_types (*proc, str);
   g_free (str);
 
   if (! gimp_scanner_parse_int (scanner, (gint *) &n_args))
     return G_TOKEN_INT;
   if (! gimp_scanner_parse_int (scanner, (gint *) &n_return_vals))
     return G_TOKEN_INT;
-
-  gimp_procedure_initialize (procedure, proc_type, n_args, n_return_vals, NULL);
 
   for (i = 0; i < n_args; i++)
     {

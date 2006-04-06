@@ -820,9 +820,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-new
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 7, 1,
-                             layer_new_invoker);
+  procedure = gimp_procedure_new (layer_new_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-new",
                                      "gimp-layer-new",
@@ -889,9 +887,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-new-from-drawable
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             layer_new_from_drawable_invoker);
+  procedure = gimp_procedure_new (layer_new_from_drawable_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-new-from-drawable",
                                      "gimp-layer-new-from-drawable",
@@ -925,9 +921,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-copy
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             layer_copy_invoker);
+  procedure = gimp_procedure_new (layer_copy_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-copy",
                                      "gimp-layer-copy",
@@ -961,9 +955,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-add-alpha
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             layer_add_alpha_invoker);
+  procedure = gimp_procedure_new (layer_add_alpha_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-add-alpha",
                                      "gimp-layer-add-alpha",
@@ -985,9 +977,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-scale
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 4, 0,
-                             layer_scale_invoker);
+  procedure = gimp_procedure_new (layer_scale_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-scale",
                                      "gimp-layer-scale",
@@ -1027,9 +1017,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-resize
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 5, 0,
-                             layer_resize_invoker);
+  procedure = gimp_procedure_new (layer_resize_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-resize",
                                      "gimp-layer-resize",
@@ -1075,9 +1063,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-resize-to-image-size
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             layer_resize_to_image_size_invoker);
+  procedure = gimp_procedure_new (layer_resize_to_image_size_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-resize-to-image-size",
                                      "gimp-layer-resize-to-image-size",
@@ -1099,9 +1085,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-translate
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
-                             layer_translate_invoker);
+  procedure = gimp_procedure_new (layer_translate_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-translate",
                                      "gimp-layer-translate",
@@ -1135,9 +1119,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-set-offsets
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
-                             layer_set_offsets_invoker);
+  procedure = gimp_procedure_new (layer_set_offsets_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-set-offsets",
                                      "gimp-layer-set-offsets",
@@ -1171,9 +1153,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-create-mask
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             layer_create_mask_invoker);
+  procedure = gimp_procedure_new (layer_create_mask_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-create-mask",
                                      "gimp-layer-create-mask",
@@ -1208,9 +1188,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-get-mask
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             layer_get_mask_invoker);
+  procedure = gimp_procedure_new (layer_get_mask_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-get-mask",
                                      "gimp-layer-get-mask",
@@ -1238,9 +1216,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-from-mask
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             layer_from_mask_invoker);
+  procedure = gimp_procedure_new (layer_from_mask_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-from-mask",
                                      "gimp-layer-from-mask",
@@ -1268,9 +1244,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-add-mask
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             layer_add_mask_invoker);
+  procedure = gimp_procedure_new (layer_add_mask_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-add-mask",
                                      "gimp-layer-add-mask",
@@ -1298,9 +1272,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-remove-mask
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             layer_remove_mask_invoker);
+  procedure = gimp_procedure_new (layer_remove_mask_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-remove-mask",
                                      "gimp-layer-remove-mask",
@@ -1329,9 +1301,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-is-floating-sel
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             layer_is_floating_sel_invoker);
+  procedure = gimp_procedure_new (layer_is_floating_sel_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-is-floating-sel",
                                      "gimp-layer-is-floating-sel",
@@ -1359,9 +1329,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-get-lock-alpha
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             layer_get_lock_alpha_invoker);
+  procedure = gimp_procedure_new (layer_get_lock_alpha_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-get-lock-alpha",
                                      "gimp-layer-get-lock-alpha",
@@ -1389,9 +1357,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-set-lock-alpha
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             layer_set_lock_alpha_invoker);
+  procedure = gimp_procedure_new (layer_set_lock_alpha_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-set-lock-alpha",
                                      "gimp-layer-set-lock-alpha",
@@ -1419,9 +1385,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-get-apply-mask
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             layer_get_apply_mask_invoker);
+  procedure = gimp_procedure_new (layer_get_apply_mask_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-get-apply-mask",
                                      "gimp-layer-get-apply-mask",
@@ -1449,9 +1413,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-set-apply-mask
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             layer_set_apply_mask_invoker);
+  procedure = gimp_procedure_new (layer_set_apply_mask_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-set-apply-mask",
                                      "gimp-layer-set-apply-mask",
@@ -1479,9 +1441,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-get-show-mask
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             layer_get_show_mask_invoker);
+  procedure = gimp_procedure_new (layer_get_show_mask_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-get-show-mask",
                                      "gimp-layer-get-show-mask",
@@ -1509,9 +1469,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-set-show-mask
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             layer_set_show_mask_invoker);
+  procedure = gimp_procedure_new (layer_set_show_mask_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-set-show-mask",
                                      "gimp-layer-set-show-mask",
@@ -1539,9 +1497,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-get-edit-mask
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             layer_get_edit_mask_invoker);
+  procedure = gimp_procedure_new (layer_get_edit_mask_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-get-edit-mask",
                                      "gimp-layer-get-edit-mask",
@@ -1569,9 +1525,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-set-edit-mask
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             layer_set_edit_mask_invoker);
+  procedure = gimp_procedure_new (layer_set_edit_mask_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-set-edit-mask",
                                      "gimp-layer-set-edit-mask",
@@ -1599,9 +1553,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-get-opacity
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             layer_get_opacity_invoker);
+  procedure = gimp_procedure_new (layer_get_opacity_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-get-opacity",
                                      "gimp-layer-get-opacity",
@@ -1629,9 +1581,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-set-opacity
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             layer_set_opacity_invoker);
+  procedure = gimp_procedure_new (layer_set_opacity_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-set-opacity",
                                      "gimp-layer-set-opacity",
@@ -1659,9 +1609,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-get-mode
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             layer_get_mode_invoker);
+  procedure = gimp_procedure_new (layer_get_mode_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-get-mode",
                                      "gimp-layer-get-mode",
@@ -1690,9 +1638,7 @@ register_layer_procs (Gimp *gimp)
   /*
    * gimp-layer-set-mode
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             layer_set_mode_invoker);
+  procedure = gimp_procedure_new (layer_set_mode_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-set-mode",
                                      "gimp-layer-set-mode",

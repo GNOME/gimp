@@ -527,9 +527,7 @@ sub generate {
   /*
    * gimp-$proc->{canonical_name}
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, @{[scalar @inargs]}, @{[scalar @outargs]},
-                             ${name}_invoker);
+  procedure = gimp_procedure_new (${name}_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-$proc->{canonical_name}",
                                      "gimp-$proc->{canonical_name}",

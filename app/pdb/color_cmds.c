@@ -839,9 +839,7 @@ register_color_procs (Gimp *gimp)
   /*
    * gimp-brightness-contrast
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
-                             brightness_contrast_invoker);
+  procedure = gimp_procedure_new (brightness_contrast_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brightness-contrast",
                                      "gimp-brightness-contrast",
@@ -875,9 +873,7 @@ register_color_procs (Gimp *gimp)
   /*
    * gimp-levels
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 7, 0,
-                             levels_invoker);
+  procedure = gimp_procedure_new (levels_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-levels",
                                      "gimp-levels",
@@ -936,9 +932,7 @@ register_color_procs (Gimp *gimp)
   /*
    * gimp-levels-auto
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             levels_auto_invoker);
+  procedure = gimp_procedure_new (levels_auto_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-levels-auto",
                                      "gimp-levels-auto",
@@ -960,9 +954,7 @@ register_color_procs (Gimp *gimp)
   /*
    * gimp-levels-stretch
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             levels_stretch_invoker);
+  procedure = gimp_procedure_new (levels_stretch_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-levels-stretch",
                                      "gimp-levels-stretch",
@@ -984,9 +976,7 @@ register_color_procs (Gimp *gimp)
   /*
    * gimp-posterize
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             posterize_invoker);
+  procedure = gimp_procedure_new (posterize_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-posterize",
                                      "gimp-posterize",
@@ -1014,9 +1004,7 @@ register_color_procs (Gimp *gimp)
   /*
    * gimp-desaturate
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             desaturate_invoker);
+  procedure = gimp_procedure_new (desaturate_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-desaturate",
                                      "gimp-desaturate",
@@ -1038,9 +1026,7 @@ register_color_procs (Gimp *gimp)
   /*
    * gimp-desaturate-full
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             desaturate_full_invoker);
+  procedure = gimp_procedure_new (desaturate_full_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-desaturate-full",
                                      "gimp-desaturate-full",
@@ -1069,9 +1055,7 @@ register_color_procs (Gimp *gimp)
   /*
    * gimp-equalize
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             equalize_invoker);
+  procedure = gimp_procedure_new (equalize_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-equalize",
                                      "gimp-equalize",
@@ -1099,9 +1083,7 @@ register_color_procs (Gimp *gimp)
   /*
    * gimp-invert
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             invert_invoker);
+  procedure = gimp_procedure_new (invert_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-invert",
                                      "gimp-invert",
@@ -1123,9 +1105,7 @@ register_color_procs (Gimp *gimp)
   /*
    * gimp-curves-spline
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 4, 0,
-                             curves_spline_invoker);
+  procedure = gimp_procedure_new (curves_spline_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-curves-spline",
                                      "gimp-curves-spline",
@@ -1165,9 +1145,7 @@ register_color_procs (Gimp *gimp)
   /*
    * gimp-curves-explicit
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 4, 0,
-                             curves_explicit_invoker);
+  procedure = gimp_procedure_new (curves_explicit_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-curves-explicit",
                                      "gimp-curves-explicit",
@@ -1207,9 +1185,7 @@ register_color_procs (Gimp *gimp)
   /*
    * gimp-color-balance
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 6, 0,
-                             color_balance_invoker);
+  procedure = gimp_procedure_new (color_balance_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-color-balance",
                                      "gimp-color-balance",
@@ -1262,9 +1238,7 @@ register_color_procs (Gimp *gimp)
   /*
    * gimp-colorize
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 4, 0,
-                             colorize_invoker);
+  procedure = gimp_procedure_new (colorize_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-colorize",
                                      "gimp-colorize",
@@ -1304,9 +1278,7 @@ register_color_procs (Gimp *gimp)
   /*
    * gimp-histogram
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 4, 6,
-                             histogram_invoker);
+  procedure = gimp_procedure_new (histogram_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-histogram",
                                      "gimp-histogram",
@@ -1383,9 +1355,7 @@ register_color_procs (Gimp *gimp)
   /*
    * gimp-hue-saturation
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 5, 0,
-                             hue_saturation_invoker);
+  procedure = gimp_procedure_new (hue_saturation_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-hue-saturation",
                                      "gimp-hue-saturation",
@@ -1432,9 +1402,7 @@ register_color_procs (Gimp *gimp)
   /*
    * gimp-threshold
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
-                             threshold_invoker);
+  procedure = gimp_procedure_new (threshold_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-threshold",
                                      "gimp-threshold",

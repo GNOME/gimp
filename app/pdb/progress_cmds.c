@@ -238,9 +238,7 @@ register_progress_procs (Gimp *gimp)
   /*
    * gimp-progress-init
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             progress_init_invoker);
+  procedure = gimp_procedure_new (progress_init_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-progress-init",
                                      "gimp-progress-init",
@@ -269,9 +267,7 @@ register_progress_procs (Gimp *gimp)
   /*
    * gimp-progress-update
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             progress_update_invoker);
+  procedure = gimp_procedure_new (progress_update_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-progress-update",
                                      "gimp-progress-update",
@@ -293,9 +289,7 @@ register_progress_procs (Gimp *gimp)
   /*
    * gimp-progress-pulse
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 0,
-                             progress_pulse_invoker);
+  procedure = gimp_procedure_new (progress_pulse_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-progress-pulse",
                                      "gimp-progress-pulse",
@@ -311,9 +305,7 @@ register_progress_procs (Gimp *gimp)
   /*
    * gimp-progress-set-text
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             progress_set_text_invoker);
+  procedure = gimp_procedure_new (progress_set_text_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-progress-set-text",
                                      "gimp-progress-set-text",
@@ -336,9 +328,7 @@ register_progress_procs (Gimp *gimp)
   /*
    * gimp-progress-get-window-handle
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
-                             progress_get_window_handle_invoker);
+  procedure = gimp_procedure_new (progress_get_window_handle_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-progress-get-window-handle",
                                      "gimp-progress-get-window-handle",
@@ -360,9 +350,7 @@ register_progress_procs (Gimp *gimp)
   /*
    * gimp-progress-install
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             progress_install_invoker);
+  procedure = gimp_procedure_new (progress_install_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-progress-install",
                                      "gimp-progress-install",
@@ -385,9 +373,7 @@ register_progress_procs (Gimp *gimp)
   /*
    * gimp-progress-uninstall
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             progress_uninstall_invoker);
+  procedure = gimp_procedure_new (progress_uninstall_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-progress-uninstall",
                                      "gimp-progress-uninstall",
@@ -410,9 +396,7 @@ register_progress_procs (Gimp *gimp)
   /*
    * gimp-progress-cancel
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             progress_cancel_invoker);
+  procedure = gimp_procedure_new (progress_cancel_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-progress-cancel",
                                      "gimp-progress-cancel",

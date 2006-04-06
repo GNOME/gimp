@@ -1,3 +1,53 @@
+2006-04-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/Makefile.am
+	* app/plug-in/plug-in-types.h
+	* app/plug-in/plug-in-proc-def.[ch]: removed...
+
+	* app/pdb/Makefile.am
+	* app/pdb/pdb-types.h
+	* app/pdb/gimppluginprocedure.[ch]: ...and added here. Virtualized
+	get_progname().
+
+	* app/pdb/gimptemporaryprocedure.[ch]: new class derived from
+	GimpPlugInProcedure.
+
+	* app/pdb/gimpprocedure.[ch] (struct GimpProcedure): remove union
+	exec_method and all the structs it needed. Procedure execution is
+	properly virtualized now. Removed gimp_procedure_initialize() and
+	grow the args and values arrays dynamically in
+	gimp_procedure_add_argument()/return_value(). Added marshal_func
+	parameter to gimp_procedure_new().
+
+	* app/actions/plug-in-actions.c
+	* app/actions/plug-in-commands.c
+	* app/core/gimp-gui.c
+	* app/dialogs/file-save-dialog.c
+	* app/file/file-open.c
+	* app/file/file-save.c
+	* app/file/file-utils.c
+	* app/gui/gui-vtable.c
+	* app/menus/plug-in-menus.c
+	* app/plug-in/plug-in-def.c
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-progress.c
+	* app/plug-in/plug-in-rc.c
+	* app/plug-in/plug-in-run.c
+	* app/plug-in/plug-in.c
+	* app/plug-in/plug-ins-query.c
+	* app/plug-in/plug-ins.c
+	* app/widgets/gimpfiledialog.c
+	* app/widgets/gimpfileprocview.c
+	* app/widgets/gimppluginaction.c
+	* app/xcf/xcf.c
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/plug_in.pdb
+	* tools/pdbgen/app.pl: changed accordingly.
+
+	* app/pdb/*_cmds.c: regenerated.
+
+	* app/pdb/gimp-pdb.c: added uglyness to make the app link again.
+
 2006-04-06  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/compose.c: add layers in the expected order.
@@ -115,7 +165,7 @@
 	* app/widgets/gimppluginaction.[ch]
 	* app/xcf/xcf.c
 	* tools/pdbgen/pdb/fileops.pdb
-	* tools/pdbgen/pdb/plug_in.pdb: changed addordingly.
+	* tools/pdbgen/pdb/plug_in.pdb: changed accordingly.
 
 	* app/pdb/fileops_cmds.c
 	* app/pdb/plug_in_cmds.c: regenerated.

@@ -34,10 +34,9 @@
 #include "core/gimpparamspecs.h"
 
 #include "pdb/gimp-pdb.h"
-#include "pdb/gimpprocedure.h"
+#include "pdb/gimppluginprocedure.h"
 
 #include "plug-in/plug-ins.h"
-#include "plug-in/plug-in-proc-def.h"
 
 #include "xcf.h"
 #include "xcf-private.h"
@@ -139,20 +138,19 @@ xcf_init (Gimp *gimp)
    */
 
   /*  gimp-xcf-save  */
-  proc = gimp_plug_in_procedure_new ();
-  proc->prog = g_strdup ("gimp-xcf-save");
+  procedure = gimp_plug_in_procedure_new (GIMP_PLUGIN, "gimp-xcf-save");
+  procedure->proc_type    = GIMP_INTERNAL;
+  procedure->marshal_func = xcf_save_invoker;
+
+  proc = GIMP_PLUG_IN_PROCEDURE (procedure);
   proc->menu_label = g_strdup (N_("GIMP XCF image"));
   gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_STOCK_ID,
                                    (const guint8 *) "gimp-wilber",
                                    strlen ("gimp-wilber") + 1);
   gimp_plug_in_procedure_set_image_types (proc, "RGB*, GRAY*, INDEXED*");
-  proc->file_proc  = TRUE;
-  proc->extensions = g_strdup ("xcf");
-  proc->prefixes   = g_strdup ("");
-  proc->mime_type  = g_strdup ("image/xcf");
+  gimp_plug_in_procedure_set_file_proc (proc, "xcf", "", NULL);
+  gimp_plug_in_procedure_set_mime_type (proc, "image/xcf");
 
-  procedure = GIMP_PROCEDURE (proc);
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 5, 0, xcf_save_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-xcf-save",
                                      "gimp-xcf-save",
@@ -206,21 +204,20 @@ xcf_init (Gimp *gimp)
   plug_ins_add_internal (gimp, proc);
 
   /*  gimp-xcf-load  */
-  proc = gimp_plug_in_procedure_new ();
-  proc->prog = g_strdup ("gimp-xcf-load");
+  procedure = gimp_plug_in_procedure_new (GIMP_PLUGIN, "gimp-xcf-load");
+  procedure->proc_type    = GIMP_INTERNAL;
+  procedure->marshal_func = xcf_load_invoker;
+
+  proc = GIMP_PLUG_IN_PROCEDURE (procedure);
   proc->menu_label = g_strdup (N_("GIMP XCF image"));
   gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_STOCK_ID,
                                    (const guint8 *) "gimp-wilber",
                                    strlen ("gimp-wilber") + 1);
   gimp_plug_in_procedure_set_image_types (proc, NULL);
-  proc->file_proc  = TRUE;
-  proc->extensions = g_strdup ("xcf");
-  proc->prefixes   = g_strdup ("");
-  proc->magics     = g_strdup ("0,string,gimp\\040xcf\\040");
-  proc->mime_type  = g_strdup ("image/xcf");
+  gimp_plug_in_procedure_set_file_proc (proc, "xcf", "",
+                                        "0,string,gimp\\040xcf\\040");
+  gimp_plug_in_procedure_set_mime_type (proc, "image/xcf");
 
-  procedure = GIMP_PROCEDURE (proc);
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 1, xcf_load_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-xcf-load",
                                      "gimp-xcf-load",

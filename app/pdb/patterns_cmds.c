@@ -188,9 +188,7 @@ register_patterns_procs (Gimp *gimp)
   /*
    * gimp-patterns-refresh
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 0,
-                             patterns_refresh_invoker);
+  procedure = gimp_procedure_new (patterns_refresh_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-patterns-refresh",
                                      "gimp-patterns-refresh",
@@ -206,9 +204,7 @@ register_patterns_procs (Gimp *gimp)
   /*
    * gimp-patterns-get-list
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 2,
-                             patterns_get_list_invoker);
+  procedure = gimp_procedure_new (patterns_get_list_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-patterns-get-list",
                                      "gimp-patterns-get-list",
@@ -242,9 +238,7 @@ register_patterns_procs (Gimp *gimp)
   /*
    * gimp-patterns-get-pattern
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 3,
-                             patterns_get_pattern_invoker);
+  procedure = gimp_procedure_new (patterns_get_pattern_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-patterns-get-pattern",
                                      "gimp-patterns-get-pattern",
@@ -279,9 +273,7 @@ register_patterns_procs (Gimp *gimp)
   /*
    * gimp-patterns-get-pattern-data
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 6,
-                             patterns_get_pattern_data_invoker);
+  procedure = gimp_procedure_new (patterns_get_pattern_data_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-patterns-get-pattern-data",
                                      "gimp-patterns-get-pattern-data",

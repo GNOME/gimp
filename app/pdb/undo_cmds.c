@@ -225,9 +225,7 @@ register_undo_procs (Gimp *gimp)
   /*
    * gimp-image-undo-group-start
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             image_undo_group_start_invoker);
+  procedure = gimp_procedure_new (image_undo_group_start_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-undo-group-start",
                                      "gimp-image-undo-group-start",
@@ -249,9 +247,7 @@ register_undo_procs (Gimp *gimp)
   /*
    * gimp-image-undo-group-end
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             image_undo_group_end_invoker);
+  procedure = gimp_procedure_new (image_undo_group_end_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-undo-group-end",
                                      "gimp-image-undo-group-end",
@@ -273,9 +269,7 @@ register_undo_procs (Gimp *gimp)
   /*
    * gimp-image-undo-is-enabled
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             image_undo_is_enabled_invoker);
+  procedure = gimp_procedure_new (image_undo_is_enabled_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-undo-is-enabled",
                                      "gimp-image-undo-is-enabled",
@@ -303,9 +297,7 @@ register_undo_procs (Gimp *gimp)
   /*
    * gimp-image-undo-disable
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             image_undo_disable_invoker);
+  procedure = gimp_procedure_new (image_undo_disable_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-undo-disable",
                                      "gimp-image-undo-disable",
@@ -333,9 +325,7 @@ register_undo_procs (Gimp *gimp)
   /*
    * gimp-image-undo-enable
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             image_undo_enable_invoker);
+  procedure = gimp_procedure_new (image_undo_enable_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-undo-enable",
                                      "gimp-image-undo-enable",
@@ -363,9 +353,7 @@ register_undo_procs (Gimp *gimp)
   /*
    * gimp-image-undo-freeze
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             image_undo_freeze_invoker);
+  procedure = gimp_procedure_new (image_undo_freeze_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-undo-freeze",
                                      "gimp-image-undo-freeze",
@@ -393,9 +381,7 @@ register_undo_procs (Gimp *gimp)
   /*
    * gimp-image-undo-thaw
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             image_undo_thaw_invoker);
+  procedure = gimp_procedure_new (image_undo_thaw_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-undo-thaw",
                                      "gimp-image-undo-thaw",

@@ -34,9 +34,9 @@
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
+#include "gimppluginprocedure.h"
 #include "plug-in/plug-in-def.h"
 #include "plug-in/plug-in-params.h"
-#include "plug-in/plug-in-proc-def.h"
 #include "plug-in/plug-in.h"
 #include "plug-in/plug-ins-query.h"
 #include "plug-in/plug-ins.h"
@@ -269,9 +269,7 @@ register_plug_in_procs (Gimp *gimp)
   /*
    * gimp-plugins-query
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 12,
-                             plugins_query_invoker);
+  procedure = gimp_procedure_new (plugins_query_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-plugins-query",
                                      "gimp-plugins-query",
@@ -360,9 +358,7 @@ register_plug_in_procs (Gimp *gimp)
   /*
    * gimp-plugin-domain-register
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             plugin_domain_register_invoker);
+  procedure = gimp_procedure_new (plugin_domain_register_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-plugin-domain-register",
                                      "gimp-plugin-domain-register",
@@ -392,9 +388,7 @@ register_plug_in_procs (Gimp *gimp)
   /*
    * gimp-plugin-help-register
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             plugin_help_register_invoker);
+  procedure = gimp_procedure_new (plugin_help_register_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-plugin-help-register",
                                      "gimp-plugin-help-register",
@@ -424,9 +418,7 @@ register_plug_in_procs (Gimp *gimp)
   /*
    * gimp-plugin-menu-register
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             plugin_menu_register_invoker);
+  procedure = gimp_procedure_new (plugin_menu_register_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-plugin-menu-register",
                                      "gimp-plugin-menu-register",
@@ -456,9 +448,7 @@ register_plug_in_procs (Gimp *gimp)
   /*
    * gimp-plugin-menu-branch-register
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             plugin_menu_branch_register_invoker);
+  procedure = gimp_procedure_new (plugin_menu_branch_register_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-plugin-menu-branch-register",
                                      "gimp-plugin-menu-branch-register",
@@ -488,9 +478,7 @@ register_plug_in_procs (Gimp *gimp)
   /*
    * gimp-plugin-icon-register
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 4, 0,
-                             plugin_icon_register_invoker);
+  procedure = gimp_procedure_new (plugin_icon_register_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-plugin-icon-register",
                                      "gimp-plugin-icon-register",

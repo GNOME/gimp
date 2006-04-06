@@ -138,9 +138,7 @@ register_brush_select_procs (Gimp *gimp)
   /*
    * gimp-brushes-popup
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 6, 0,
-                             brushes_popup_invoker);
+  procedure = gimp_procedure_new (brushes_popup_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brushes-popup",
                                      "gimp-brushes-popup",
@@ -196,9 +194,7 @@ register_brush_select_procs (Gimp *gimp)
   /*
    * gimp-brushes-close-popup
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             brushes_close_popup_invoker);
+  procedure = gimp_procedure_new (brushes_close_popup_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brushes-close-popup",
                                      "gimp-brushes-close-popup",
@@ -221,9 +217,7 @@ register_brush_select_procs (Gimp *gimp)
   /*
    * gimp-brushes-set-popup
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 5, 0,
-                             brushes_set_popup_invoker);
+  procedure = gimp_procedure_new (brushes_set_popup_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brushes-set-popup",
                                      "gimp-brushes-set-popup",

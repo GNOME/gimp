@@ -36,11 +36,10 @@
 #include "core/gimpcontext.h"
 #include "core/gimpprogress.h"
 
-#include "pdb/gimpprocedure.h"
+#include "pdb/gimptemporaryprocedure.h"
 
 #include "plug-in.h"
 #include "plug-in-params.h"
-#include "plug-in-proc-def.h"
 #include "plug-in-run.h"
 #include "plug-in-shm.h"
 
@@ -83,7 +82,7 @@ plug_in_run (Gimp          *gimp,
     }
 
   plug_in = plug_in_new (gimp, context, progress, procedure,
-                         procedure->exec_method.plug_in.filename);
+                         GIMP_PLUG_IN_PROCEDURE (procedure)->prog);
 
   if (plug_in)
     {
@@ -206,7 +205,7 @@ plug_in_temp_run (GimpProcedure *procedure,
   GValueArray *return_vals = NULL;
   PlugIn      *plug_in;
 
-  plug_in = (PlugIn *) procedure->exec_method.temporary.plug_in;
+  plug_in = GIMP_TEMPORARY_PROCEDURE (procedure)->plug_in;
 
   if (plug_in)
     {

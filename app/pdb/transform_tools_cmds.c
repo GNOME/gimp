@@ -429,9 +429,7 @@ register_transform_tools_procs (Gimp *gimp)
   /*
    * gimp-flip
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             flip_invoker);
+  procedure = gimp_procedure_new (flip_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-flip",
                                      "gimp-flip",
@@ -468,9 +466,7 @@ register_transform_tools_procs (Gimp *gimp)
   /*
    * gimp-perspective
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 10, 1,
-                             perspective_invoker);
+  procedure = gimp_procedure_new (perspective_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-perspective",
                                      "gimp-perspective",
@@ -552,9 +548,7 @@ register_transform_tools_procs (Gimp *gimp)
   /*
    * gimp-rotate
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 1,
-                             rotate_invoker);
+  procedure = gimp_procedure_new (rotate_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-rotate",
                                      "gimp-rotate",
@@ -594,9 +588,7 @@ register_transform_tools_procs (Gimp *gimp)
   /*
    * gimp-scale
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 6, 1,
-                             scale_invoker);
+  procedure = gimp_procedure_new (scale_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-scale",
                                      "gimp-scale",
@@ -654,9 +646,7 @@ register_transform_tools_procs (Gimp *gimp)
   /*
    * gimp-shear
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 4, 1,
-                             shear_invoker);
+  procedure = gimp_procedure_new (shear_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-shear",
                                      "gimp-shear",
@@ -705,9 +695,7 @@ register_transform_tools_procs (Gimp *gimp)
   /*
    * gimp-transform-2d
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 9, 1,
-                             transform_2d_invoker);
+  procedure = gimp_procedure_new (transform_2d_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-transform-2d",
                                      "gimp-transform-2d",

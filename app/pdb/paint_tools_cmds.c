@@ -697,9 +697,7 @@ register_paint_tools_procs (Gimp *gimp)
   /*
    * gimp-airbrush
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 4, 0,
-                             airbrush_invoker);
+  procedure = gimp_procedure_new (airbrush_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-airbrush",
                                      "gimp-airbrush",
@@ -738,9 +736,7 @@ register_paint_tools_procs (Gimp *gimp)
   /*
    * gimp-airbrush-default
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
-                             airbrush_default_invoker);
+  procedure = gimp_procedure_new (airbrush_default_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-airbrush-default",
                                      "gimp-airbrush-default",
@@ -773,9 +769,7 @@ register_paint_tools_procs (Gimp *gimp)
   /*
    * gimp-clone
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 7, 0,
-                             clone_invoker);
+  procedure = gimp_procedure_new (clone_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-clone",
                                      "gimp-clone",
@@ -833,9 +827,7 @@ register_paint_tools_procs (Gimp *gimp)
   /*
    * gimp-clone-default
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
-                             clone_default_invoker);
+  procedure = gimp_procedure_new (clone_default_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-clone-default",
                                      "gimp-clone-default",
@@ -868,9 +860,7 @@ register_paint_tools_procs (Gimp *gimp)
   /*
    * gimp-convolve
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 5, 0,
-                             convolve_invoker);
+  procedure = gimp_procedure_new (convolve_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-convolve",
                                      "gimp-convolve",
@@ -916,9 +906,7 @@ register_paint_tools_procs (Gimp *gimp)
   /*
    * gimp-convolve-default
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
-                             convolve_default_invoker);
+  procedure = gimp_procedure_new (convolve_default_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-convolve-default",
                                      "gimp-convolve-default",
@@ -951,9 +939,7 @@ register_paint_tools_procs (Gimp *gimp)
   /*
    * gimp-dodgeburn
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 6, 0,
-                             dodgeburn_invoker);
+  procedure = gimp_procedure_new (dodgeburn_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-dodgeburn",
                                      "gimp-dodgeburn",
@@ -1006,9 +992,7 @@ register_paint_tools_procs (Gimp *gimp)
   /*
    * gimp-dodgeburn-default
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
-                             dodgeburn_default_invoker);
+  procedure = gimp_procedure_new (dodgeburn_default_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-dodgeburn-default",
                                      "gimp-dodgeburn-default",
@@ -1041,9 +1025,7 @@ register_paint_tools_procs (Gimp *gimp)
   /*
    * gimp-eraser
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 5, 0,
-                             eraser_invoker);
+  procedure = gimp_procedure_new (eraser_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-eraser",
                                      "gimp-eraser",
@@ -1090,9 +1072,7 @@ register_paint_tools_procs (Gimp *gimp)
   /*
    * gimp-eraser-default
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
-                             eraser_default_invoker);
+  procedure = gimp_procedure_new (eraser_default_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-eraser-default",
                                      "gimp-eraser-default",
@@ -1125,9 +1105,7 @@ register_paint_tools_procs (Gimp *gimp)
   /*
    * gimp-paintbrush
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 6, 0,
-                             paintbrush_invoker);
+  procedure = gimp_procedure_new (paintbrush_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-paintbrush",
                                      "gimp-paintbrush",
@@ -1179,9 +1157,7 @@ register_paint_tools_procs (Gimp *gimp)
   /*
    * gimp-paintbrush-default
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
-                             paintbrush_default_invoker);
+  procedure = gimp_procedure_new (paintbrush_default_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-paintbrush-default",
                                      "gimp-paintbrush-default",
@@ -1214,9 +1190,7 @@ register_paint_tools_procs (Gimp *gimp)
   /*
    * gimp-pencil
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
-                             pencil_invoker);
+  procedure = gimp_procedure_new (pencil_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-pencil",
                                      "gimp-pencil",
@@ -1249,9 +1223,7 @@ register_paint_tools_procs (Gimp *gimp)
   /*
    * gimp-smudge
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 4, 0,
-                             smudge_invoker);
+  procedure = gimp_procedure_new (smudge_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-smudge",
                                      "gimp-smudge",
@@ -1290,9 +1262,7 @@ register_paint_tools_procs (Gimp *gimp)
   /*
    * gimp-smudge-default
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
-                             smudge_default_invoker);
+  procedure = gimp_procedure_new (smudge_default_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-smudge-default",
                                      "gimp-smudge-default",

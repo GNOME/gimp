@@ -278,7 +278,7 @@ CODE
               "plug-in/plug-in.h" "plug-in/plug-ins.h"
               "plug-in/plug-ins-query.h"
               "plug-in/plug-in-def.h" "plug-in/plug-in-params.h"
-              "plug-in/plug-in-proc-def.h");
+              "gimppluginprocedure.h");
 
 @procs = qw(plugins_query
 	    plugin_domain_register plugin_help_register

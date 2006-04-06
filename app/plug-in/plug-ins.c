@@ -39,14 +39,13 @@
 #include "core/gimpimage.h"
 
 #include "pdb/gimp-pdb.h"
-#include "pdb/gimpprocedure.h"
+#include "pdb/gimppluginprocedure.h"
 
 #include "plug-in.h"
 #include "plug-ins.h"
 #include "plug-in-data.h"
 #include "plug-in-def.h"
 #include "plug-in-params.h"
-#include "plug-in-proc-def.h"
 #include "plug-in-progress.h"
 #include "plug-in-rc.h"
 #include "plug-in-run.h"
@@ -870,11 +869,15 @@ plug_ins_add_to_db (Gimp        *gimp,
     {
       proc = list->data;
 
-      if (proc->prog && (GIMP_PROCEDURE (proc)->proc_type != GIMP_INTERNAL))
+      if (GIMP_PROCEDURE (proc)->proc_type != GIMP_INTERNAL)
 	{
-	  GIMP_PROCEDURE (proc)->exec_method.plug_in.filename = proc->prog;
           gimp_pdb_register (gimp, GIMP_PROCEDURE (proc));
 	}
+      else
+        {
+          g_printerr ("%s: NOT adding %s (prog = %s) to PDB\n",
+                      G_STRFUNC, GIMP_PROCEDURE (proc)->name, proc->prog);
+        }
     }
 
   for (list = gimp->plug_in_proc_defs; list; list = list->next)

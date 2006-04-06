@@ -869,9 +869,7 @@ register_brush_procs (Gimp *gimp)
   /*
    * gimp-brush-new
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             brush_new_invoker);
+  procedure = gimp_procedure_new (brush_new_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brush-new",
                                      "gimp-brush-new",
@@ -901,9 +899,7 @@ register_brush_procs (Gimp *gimp)
   /*
    * gimp-brush-duplicate
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             brush_duplicate_invoker);
+  procedure = gimp_procedure_new (brush_duplicate_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brush-duplicate",
                                      "gimp-brush-duplicate",
@@ -933,9 +929,7 @@ register_brush_procs (Gimp *gimp)
   /*
    * gimp-brush-is-generated
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             brush_is_generated_invoker);
+  procedure = gimp_procedure_new (brush_is_generated_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brush-is-generated",
                                      "gimp-brush-is-generated",
@@ -964,9 +958,7 @@ register_brush_procs (Gimp *gimp)
   /*
    * gimp-brush-rename
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             brush_rename_invoker);
+  procedure = gimp_procedure_new (brush_rename_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brush-rename",
                                      "gimp-brush-rename",
@@ -1003,9 +995,7 @@ register_brush_procs (Gimp *gimp)
   /*
    * gimp-brush-delete
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             brush_delete_invoker);
+  procedure = gimp_procedure_new (brush_delete_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brush-delete",
                                      "gimp-brush-delete",
@@ -1028,9 +1018,7 @@ register_brush_procs (Gimp *gimp)
   /*
    * gimp-brush-is-editable
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             brush_is_editable_invoker);
+  procedure = gimp_procedure_new (brush_is_editable_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brush-is-editable",
                                      "gimp-brush-is-editable",
@@ -1059,9 +1047,7 @@ register_brush_procs (Gimp *gimp)
   /*
    * gimp-brush-get-info
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 4,
-                             brush_get_info_invoker);
+  procedure = gimp_procedure_new (brush_get_info_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brush-get-info",
                                      "gimp-brush-get-info",
@@ -1108,9 +1094,7 @@ register_brush_procs (Gimp *gimp)
   /*
    * gimp-brush-get-pixels
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 8,
-                             brush_get_pixels_invoker);
+  procedure = gimp_procedure_new (brush_get_pixels_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brush-get-pixels",
                                      "gimp-brush-get-pixels",
@@ -1179,9 +1163,7 @@ register_brush_procs (Gimp *gimp)
   /*
    * gimp-brush-get-spacing
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             brush_get_spacing_invoker);
+  procedure = gimp_procedure_new (brush_get_spacing_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brush-get-spacing",
                                      "gimp-brush-get-spacing",
@@ -1210,9 +1192,7 @@ register_brush_procs (Gimp *gimp)
   /*
    * gimp-brush-set-spacing
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             brush_set_spacing_invoker);
+  procedure = gimp_procedure_new (brush_set_spacing_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brush-set-spacing",
                                      "gimp-brush-set-spacing",
@@ -1241,9 +1221,7 @@ register_brush_procs (Gimp *gimp)
   /*
    * gimp-brush-get-shape
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             brush_get_shape_invoker);
+  procedure = gimp_procedure_new (brush_get_shape_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brush-get-shape",
                                      "gimp-brush-get-shape",
@@ -1273,9 +1251,7 @@ register_brush_procs (Gimp *gimp)
   /*
    * gimp-brush-get-radius
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             brush_get_radius_invoker);
+  procedure = gimp_procedure_new (brush_get_radius_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brush-get-radius",
                                      "gimp-brush-get-radius",
@@ -1304,9 +1280,7 @@ register_brush_procs (Gimp *gimp)
   /*
    * gimp-brush-get-spikes
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             brush_get_spikes_invoker);
+  procedure = gimp_procedure_new (brush_get_spikes_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brush-get-spikes",
                                      "gimp-brush-get-spikes",
@@ -1335,9 +1309,7 @@ register_brush_procs (Gimp *gimp)
   /*
    * gimp-brush-get-hardness
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             brush_get_hardness_invoker);
+  procedure = gimp_procedure_new (brush_get_hardness_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brush-get-hardness",
                                      "gimp-brush-get-hardness",
@@ -1366,9 +1338,7 @@ register_brush_procs (Gimp *gimp)
   /*
    * gimp-brush-get-aspect-ratio
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             brush_get_aspect_ratio_invoker);
+  procedure = gimp_procedure_new (brush_get_aspect_ratio_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brush-get-aspect-ratio",
                                      "gimp-brush-get-aspect-ratio",
@@ -1397,9 +1367,7 @@ register_brush_procs (Gimp *gimp)
   /*
    * gimp-brush-get-angle
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             brush_get_angle_invoker);
+  procedure = gimp_procedure_new (brush_get_angle_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brush-get-angle",
                                      "gimp-brush-get-angle",
@@ -1428,9 +1396,7 @@ register_brush_procs (Gimp *gimp)
   /*
    * gimp-brush-set-shape
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             brush_set_shape_invoker);
+  procedure = gimp_procedure_new (brush_set_shape_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brush-set-shape",
                                      "gimp-brush-set-shape",
@@ -1467,9 +1433,7 @@ register_brush_procs (Gimp *gimp)
   /*
    * gimp-brush-set-radius
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             brush_set_radius_invoker);
+  procedure = gimp_procedure_new (brush_set_radius_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brush-set-radius",
                                      "gimp-brush-set-radius",
@@ -1504,9 +1468,7 @@ register_brush_procs (Gimp *gimp)
   /*
    * gimp-brush-set-spikes
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             brush_set_spikes_invoker);
+  procedure = gimp_procedure_new (brush_set_spikes_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brush-set-spikes",
                                      "gimp-brush-set-spikes",
@@ -1541,9 +1503,7 @@ register_brush_procs (Gimp *gimp)
   /*
    * gimp-brush-set-hardness
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             brush_set_hardness_invoker);
+  procedure = gimp_procedure_new (brush_set_hardness_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brush-set-hardness",
                                      "gimp-brush-set-hardness",
@@ -1578,9 +1538,7 @@ register_brush_procs (Gimp *gimp)
   /*
    * gimp-brush-set-aspect-ratio
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             brush_set_aspect_ratio_invoker);
+  procedure = gimp_procedure_new (brush_set_aspect_ratio_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brush-set-aspect-ratio",
                                      "gimp-brush-set-aspect-ratio",
@@ -1615,9 +1573,7 @@ register_brush_procs (Gimp *gimp)
   /*
    * gimp-brush-set-angle
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             brush_set_angle_invoker);
+  procedure = gimp_procedure_new (brush_set_angle_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brush-set-angle",
                                      "gimp-brush-set-angle",

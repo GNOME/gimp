@@ -37,10 +37,10 @@
 
 #include "file/file-utils.h"
 
-#include "plug-in/plug-in-proc-def.h"
 #include "plug-in/plug-ins.h"
 
 #include "pdb/gimp-pdb.h"
+#include "pdb/gimppluginprocedure.h"
 
 #include "gimpfiledialog.h"
 #include "gimpfileprocview.h"

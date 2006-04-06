@@ -272,9 +272,7 @@ register_buffer_procs (Gimp *gimp)
   /*
    * gimp-buffers-get-list
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 2,
-                             buffers_get_list_invoker);
+  procedure = gimp_procedure_new (buffers_get_list_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-buffers-get-list",
                                      "gimp-buffers-get-list",
@@ -308,9 +306,7 @@ register_buffer_procs (Gimp *gimp)
   /*
    * gimp-buffer-rename
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             buffer_rename_invoker);
+  procedure = gimp_procedure_new (buffer_rename_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-buffer-rename",
                                      "gimp-buffer-rename",
@@ -347,9 +343,7 @@ register_buffer_procs (Gimp *gimp)
   /*
    * gimp-buffer-delete
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             buffer_delete_invoker);
+  procedure = gimp_procedure_new (buffer_delete_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-buffer-delete",
                                      "gimp-buffer-delete",
@@ -372,9 +366,7 @@ register_buffer_procs (Gimp *gimp)
   /*
    * gimp-buffer-get-width
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             buffer_get_width_invoker);
+  procedure = gimp_procedure_new (buffer_get_width_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-buffer-get-width",
                                      "gimp-buffer-get-width",
@@ -403,9 +395,7 @@ register_buffer_procs (Gimp *gimp)
   /*
    * gimp-buffer-get-height
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             buffer_get_height_invoker);
+  procedure = gimp_procedure_new (buffer_get_height_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-buffer-get-height",
                                      "gimp-buffer-get-height",
@@ -434,9 +424,7 @@ register_buffer_procs (Gimp *gimp)
   /*
    * gimp-buffer-get-bytes
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             buffer_get_bytes_invoker);
+  procedure = gimp_procedure_new (buffer_get_bytes_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-buffer-get-bytes",
                                      "gimp-buffer-get-bytes",
@@ -465,9 +453,7 @@ register_buffer_procs (Gimp *gimp)
   /*
    * gimp-buffer-get-image-type
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             buffer_get_image_type_invoker);
+  procedure = gimp_procedure_new (buffer_get_image_type_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-buffer-get-image-type",
                                      "gimp-buffer-get-image-type",

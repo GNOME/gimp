@@ -57,10 +57,7 @@
 #include "core/gimpprogress.h"
 
 #include "pdb/gimp-pdb.h"
-#include "pdb/gimpprocedure.h"
-
-#include "plug-in/plug-in.h"
-#include "plug-in/plug-in-proc-def.h"
+#include "pdb/gimppluginprocedure.h"
 
 #include "file-open.h"
 #include "file-utils.h"

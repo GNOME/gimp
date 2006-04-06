@@ -285,9 +285,7 @@ register_gradients_procs (Gimp *gimp)
   /*
    * gimp-gradients-refresh
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 0,
-                             gradients_refresh_invoker);
+  procedure = gimp_procedure_new (gradients_refresh_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradients-refresh",
                                      "gimp-gradients-refresh",
@@ -303,9 +301,7 @@ register_gradients_procs (Gimp *gimp)
   /*
    * gimp-gradients-get-list
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 2,
-                             gradients_get_list_invoker);
+  procedure = gimp_procedure_new (gradients_get_list_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradients-get-list",
                                      "gimp-gradients-get-list",
@@ -339,9 +335,7 @@ register_gradients_procs (Gimp *gimp)
   /*
    * gimp-gradients-sample-uniform
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 2,
-                             gradients_sample_uniform_invoker);
+  procedure = gimp_procedure_new (gradients_sample_uniform_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradients-sample-uniform",
                                      "gimp-gradients-sample-uniform",
@@ -380,9 +374,7 @@ register_gradients_procs (Gimp *gimp)
   /*
    * gimp-gradients-sample-custom
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 2,
-                             gradients_sample_custom_invoker);
+  procedure = gimp_procedure_new (gradients_sample_custom_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradients-sample-custom",
                                      "gimp-gradients-sample-custom",
@@ -426,9 +418,7 @@ register_gradients_procs (Gimp *gimp)
   /*
    * gimp-gradients-get-gradient-data
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 3,
-                             gradients_get_gradient_data_invoker);
+  procedure = gimp_procedure_new (gradients_get_gradient_data_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradients-get-gradient-data",
                                      "gimp-gradients-get-gradient-data",

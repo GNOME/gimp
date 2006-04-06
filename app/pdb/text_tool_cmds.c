@@ -280,9 +280,7 @@ register_text_tool_procs (Gimp *gimp)
   /*
    * gimp-text-fontname
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 10, 1,
-                             text_fontname_invoker);
+  procedure = gimp_procedure_new (text_fontname_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-text-fontname",
                                      "gimp-text-fontname",
@@ -367,9 +365,7 @@ register_text_tool_procs (Gimp *gimp)
   /*
    * gimp-text-get-extents-fontname
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 4, 4,
-                             text_get_extents_fontname_invoker);
+  procedure = gimp_procedure_new (text_get_extents_fontname_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-text-get-extents-fontname",
                                      "gimp-text-get-extents-fontname",
@@ -436,9 +432,7 @@ register_text_tool_procs (Gimp *gimp)
   /*
    * gimp-text
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 17, 1,
-                             text_invoker);
+  procedure = gimp_procedure_new (text_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-text",
                                      "gimp-text",
@@ -572,9 +566,7 @@ register_text_tool_procs (Gimp *gimp)
   /*
    * gimp-text-get-extents
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 11, 4,
-                             text_get_extents_invoker);
+  procedure = gimp_procedure_new (text_get_extents_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-text-get-extents",
                                      "gimp-text-get-extents",

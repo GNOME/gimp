@@ -185,9 +185,7 @@ register_floating_sel_procs (Gimp *gimp)
   /*
    * gimp-floating-sel-remove
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             floating_sel_remove_invoker);
+  procedure = gimp_procedure_new (floating_sel_remove_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-floating-sel-remove",
                                      "gimp-floating-sel-remove",
@@ -209,9 +207,7 @@ register_floating_sel_procs (Gimp *gimp)
   /*
    * gimp-floating-sel-anchor
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             floating_sel_anchor_invoker);
+  procedure = gimp_procedure_new (floating_sel_anchor_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-floating-sel-anchor",
                                      "gimp-floating-sel-anchor",
@@ -233,9 +229,7 @@ register_floating_sel_procs (Gimp *gimp)
   /*
    * gimp-floating-sel-to-layer
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             floating_sel_to_layer_invoker);
+  procedure = gimp_procedure_new (floating_sel_to_layer_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-floating-sel-to-layer",
                                      "gimp-floating-sel-to-layer",
@@ -257,9 +251,7 @@ register_floating_sel_procs (Gimp *gimp)
   /*
    * gimp-floating-sel-attach
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             floating_sel_attach_invoker);
+  procedure = gimp_procedure_new (floating_sel_attach_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-floating-sel-attach",
                                      "gimp-floating-sel-attach",
@@ -287,9 +279,7 @@ register_floating_sel_procs (Gimp *gimp)
   /*
    * gimp-floating-sel-rigor
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             floating_sel_rigor_invoker);
+  procedure = gimp_procedure_new (floating_sel_rigor_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-floating-sel-rigor",
                                      "gimp-floating-sel-rigor",
@@ -317,9 +307,7 @@ register_floating_sel_procs (Gimp *gimp)
   /*
    * gimp-floating-sel-relax
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             floating_sel_relax_invoker);
+  procedure = gimp_procedure_new (floating_sel_relax_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-floating-sel-relax",
                                      "gimp-floating-sel-relax",

@@ -835,9 +835,7 @@ register_vectors_procs (Gimp *gimp)
   /*
    * gimp-vectors-new
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 1,
-                             vectors_new_invoker);
+  procedure = gimp_procedure_new (vectors_new_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-new",
                                      "gimp-vectors-new",
@@ -872,9 +870,7 @@ register_vectors_procs (Gimp *gimp)
   /*
    * gimp-vectors-get-image
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             vectors_get_image_invoker);
+  procedure = gimp_procedure_new (vectors_get_image_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-get-image",
                                      "gimp-vectors-get-image",
@@ -902,9 +898,7 @@ register_vectors_procs (Gimp *gimp)
   /*
    * gimp-vectors-get-name
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             vectors_get_name_invoker);
+  procedure = gimp_procedure_new (vectors_get_name_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-get-name",
                                      "gimp-vectors-get-name",
@@ -933,9 +927,7 @@ register_vectors_procs (Gimp *gimp)
   /*
    * gimp-vectors-set-name
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             vectors_set_name_invoker);
+  procedure = gimp_procedure_new (vectors_set_name_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-set-name",
                                      "gimp-vectors-set-name",
@@ -964,9 +956,7 @@ register_vectors_procs (Gimp *gimp)
   /*
    * gimp-vectors-get-visible
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             vectors_get_visible_invoker);
+  procedure = gimp_procedure_new (vectors_get_visible_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-get-visible",
                                      "gimp-vectors-get-visible",
@@ -994,9 +984,7 @@ register_vectors_procs (Gimp *gimp)
   /*
    * gimp-vectors-set-visible
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             vectors_set_visible_invoker);
+  procedure = gimp_procedure_new (vectors_set_visible_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-set-visible",
                                      "gimp-vectors-set-visible",
@@ -1024,9 +1012,7 @@ register_vectors_procs (Gimp *gimp)
   /*
    * gimp-vectors-get-linked
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             vectors_get_linked_invoker);
+  procedure = gimp_procedure_new (vectors_get_linked_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-get-linked",
                                      "gimp-vectors-get-linked",
@@ -1054,9 +1040,7 @@ register_vectors_procs (Gimp *gimp)
   /*
    * gimp-vectors-set-linked
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             vectors_set_linked_invoker);
+  procedure = gimp_procedure_new (vectors_set_linked_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-set-linked",
                                      "gimp-vectors-set-linked",
@@ -1084,9 +1068,7 @@ register_vectors_procs (Gimp *gimp)
   /*
    * gimp-vectors-get-tattoo
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             vectors_get_tattoo_invoker);
+  procedure = gimp_procedure_new (vectors_get_tattoo_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-get-tattoo",
                                      "gimp-vectors-get-tattoo",
@@ -1114,9 +1096,7 @@ register_vectors_procs (Gimp *gimp)
   /*
    * gimp-vectors-set-tattoo
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             vectors_set_tattoo_invoker);
+  procedure = gimp_procedure_new (vectors_set_tattoo_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-set-tattoo",
                                      "gimp-vectors-set-tattoo",
@@ -1144,9 +1124,7 @@ register_vectors_procs (Gimp *gimp)
   /*
    * gimp-vectors-get-strokes
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 2,
-                             vectors_get_strokes_invoker);
+  procedure = gimp_procedure_new (vectors_get_strokes_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-get-strokes",
                                      "gimp-vectors-get-strokes",
@@ -1179,9 +1157,7 @@ register_vectors_procs (Gimp *gimp)
   /*
    * gimp-vectors-stroke-get-length
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 1,
-                             vectors_stroke_get_length_invoker);
+  procedure = gimp_procedure_new (vectors_stroke_get_length_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-stroke-get-length",
                                      "gimp-vectors-stroke-get-length",
@@ -1221,9 +1197,7 @@ register_vectors_procs (Gimp *gimp)
   /*
    * gimp-vectors-stroke-get-point-at-dist
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 4, 4,
-                             vectors_stroke_get_point_at_dist_invoker);
+  procedure = gimp_procedure_new (vectors_stroke_get_point_at_dist_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-stroke-get-point-at-dist",
                                      "gimp-vectors-stroke-get-point-at-dist",
@@ -1287,9 +1261,7 @@ register_vectors_procs (Gimp *gimp)
   /*
    * gimp-vectors-stroke-remove
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             vectors_stroke_remove_invoker);
+  procedure = gimp_procedure_new (vectors_stroke_remove_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-stroke-remove",
                                      "gimp-vectors-stroke-remove",
@@ -1317,9 +1289,7 @@ register_vectors_procs (Gimp *gimp)
   /*
    * gimp-vectors-stroke-close
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             vectors_stroke_close_invoker);
+  procedure = gimp_procedure_new (vectors_stroke_close_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-stroke-close",
                                      "gimp-vectors-stroke-close",
@@ -1347,9 +1317,7 @@ register_vectors_procs (Gimp *gimp)
   /*
    * gimp-vectors-stroke-translate
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 4, 0,
-                             vectors_stroke_translate_invoker);
+  procedure = gimp_procedure_new (vectors_stroke_translate_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-stroke-translate",
                                      "gimp-vectors-stroke-translate",
@@ -1389,9 +1357,7 @@ register_vectors_procs (Gimp *gimp)
   /*
    * gimp-vectors-stroke-scale
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 4, 0,
-                             vectors_stroke_scale_invoker);
+  procedure = gimp_procedure_new (vectors_stroke_scale_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-stroke-scale",
                                      "gimp-vectors-stroke-scale",
@@ -1431,9 +1397,7 @@ register_vectors_procs (Gimp *gimp)
   /*
    * gimp-vectors-stroke-interpolate
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 3,
-                             vectors_stroke_interpolate_invoker);
+  procedure = gimp_procedure_new (vectors_stroke_interpolate_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-stroke-interpolate",
                                      "gimp-vectors-stroke-interpolate",
@@ -1484,9 +1448,7 @@ register_vectors_procs (Gimp *gimp)
   /*
    * gimp-vectors-bezier-stroke-new-moveto
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 1,
-                             vectors_bezier_stroke_new_moveto_invoker);
+  procedure = gimp_procedure_new (vectors_bezier_stroke_new_moveto_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-bezier-stroke-new-moveto",
                                      "gimp-vectors-bezier-stroke-new-moveto",
@@ -1526,9 +1488,7 @@ register_vectors_procs (Gimp *gimp)
   /*
    * gimp-vectors-bezier-stroke-lineto
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 4, 0,
-                             vectors_bezier_stroke_lineto_invoker);
+  procedure = gimp_procedure_new (vectors_bezier_stroke_lineto_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-bezier-stroke-lineto",
                                      "gimp-vectors-bezier-stroke-lineto",
@@ -1568,9 +1528,7 @@ register_vectors_procs (Gimp *gimp)
   /*
    * gimp-vectors-bezier-stroke-conicto
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 6, 0,
-                             vectors_bezier_stroke_conicto_invoker);
+  procedure = gimp_procedure_new (vectors_bezier_stroke_conicto_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-bezier-stroke-conicto",
                                      "gimp-vectors-bezier-stroke-conicto",
@@ -1622,9 +1580,7 @@ register_vectors_procs (Gimp *gimp)
   /*
    * gimp-vectors-bezier-stroke-cubicto
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 8, 0,
-                             vectors_bezier_stroke_cubicto_invoker);
+  procedure = gimp_procedure_new (vectors_bezier_stroke_cubicto_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-bezier-stroke-cubicto",
                                      "gimp-vectors-bezier-stroke-cubicto",
@@ -1688,9 +1644,7 @@ register_vectors_procs (Gimp *gimp)
   /*
    * gimp-vectors-bezier-stroke-new-ellipse
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 6, 1,
-                             vectors_bezier_stroke_new_ellipse_invoker);
+  procedure = gimp_procedure_new (vectors_bezier_stroke_new_ellipse_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-bezier-stroke-new-ellipse",
                                      "gimp-vectors-bezier-stroke-new-ellipse",

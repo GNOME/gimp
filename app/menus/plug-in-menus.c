@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include "string.h"
+#include <string.h>
 
 #include <gtk/gtk.h>
 
@@ -30,11 +30,10 @@
 
 #include "core/gimp.h"
 
-#include "pdb/gimpprocedure.h"
+#include "pdb/gimppluginprocedure.h"
 
 #include "plug-in/plug-ins.h"
 #include "plug-in/plug-in-def.h"
-#include "plug-in/plug-in-proc-def.h"
 
 #include "widgets/gimpuimanager.h"
 

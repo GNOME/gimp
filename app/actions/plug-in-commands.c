@@ -35,7 +35,6 @@
 
 #include "plug-in/plug-in-data.h"
 #include "plug-in/plug-in-run.h"
-#include "plug-in/plug-in-proc-def.h"
 
 #include "pdb/gimpprocedure.h"
 

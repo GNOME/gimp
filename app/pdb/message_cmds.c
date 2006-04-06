@@ -104,9 +104,7 @@ register_message_procs (Gimp *gimp)
   /*
    * gimp-message
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             message_invoker);
+  procedure = gimp_procedure_new (message_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-message",
                                      "gimp-message",
@@ -129,9 +127,7 @@ register_message_procs (Gimp *gimp)
   /*
    * gimp-message-get-handler
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 1,
-                             message_get_handler_invoker);
+  procedure = gimp_procedure_new (message_get_handler_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-message-get-handler",
                                      "gimp-message-get-handler",
@@ -154,9 +150,7 @@ register_message_procs (Gimp *gimp)
   /*
    * gimp-message-set-handler
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             message_set_handler_invoker);
+  procedure = gimp_procedure_new (message_set_handler_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-message-set-handler",
                                      "gimp-message-set-handler",

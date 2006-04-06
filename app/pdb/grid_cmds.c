@@ -363,9 +363,7 @@ register_grid_procs (Gimp *gimp)
   /*
    * gimp-image-grid-get-spacing
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 2,
-                             image_grid_get_spacing_invoker);
+  procedure = gimp_procedure_new (image_grid_get_spacing_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-grid-get-spacing",
                                      "gimp-image-grid-get-spacing",
@@ -399,9 +397,7 @@ register_grid_procs (Gimp *gimp)
   /*
    * gimp-image-grid-set-spacing
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
-                             image_grid_set_spacing_invoker);
+  procedure = gimp_procedure_new (image_grid_set_spacing_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-grid-set-spacing",
                                      "gimp-image-grid-set-spacing",
@@ -435,9 +431,7 @@ register_grid_procs (Gimp *gimp)
   /*
    * gimp-image-grid-get-offset
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 2,
-                             image_grid_get_offset_invoker);
+  procedure = gimp_procedure_new (image_grid_get_offset_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-grid-get-offset",
                                      "gimp-image-grid-get-offset",
@@ -471,9 +465,7 @@ register_grid_procs (Gimp *gimp)
   /*
    * gimp-image-grid-set-offset
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
-                             image_grid_set_offset_invoker);
+  procedure = gimp_procedure_new (image_grid_set_offset_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-grid-set-offset",
                                      "gimp-image-grid-set-offset",
@@ -507,9 +499,7 @@ register_grid_procs (Gimp *gimp)
   /*
    * gimp-image-grid-get-foreground-color
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             image_grid_get_foreground_color_invoker);
+  procedure = gimp_procedure_new (image_grid_get_foreground_color_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-grid-get-foreground-color",
                                      "gimp-image-grid-get-foreground-color",
@@ -537,9 +527,7 @@ register_grid_procs (Gimp *gimp)
   /*
    * gimp-image-grid-set-foreground-color
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             image_grid_set_foreground_color_invoker);
+  procedure = gimp_procedure_new (image_grid_set_foreground_color_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-grid-set-foreground-color",
                                      "gimp-image-grid-set-foreground-color",
@@ -567,9 +555,7 @@ register_grid_procs (Gimp *gimp)
   /*
    * gimp-image-grid-get-background-color
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             image_grid_get_background_color_invoker);
+  procedure = gimp_procedure_new (image_grid_get_background_color_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-grid-get-background-color",
                                      "gimp-image-grid-get-background-color",
@@ -597,9 +583,7 @@ register_grid_procs (Gimp *gimp)
   /*
    * gimp-image-grid-set-background-color
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             image_grid_set_background_color_invoker);
+  procedure = gimp_procedure_new (image_grid_set_background_color_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-grid-set-background-color",
                                      "gimp-image-grid-set-background-color",
@@ -627,9 +611,7 @@ register_grid_procs (Gimp *gimp)
   /*
    * gimp-image-grid-get-style
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             image_grid_get_style_invoker);
+  procedure = gimp_procedure_new (image_grid_get_style_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-grid-get-style",
                                      "gimp-image-grid-get-style",
@@ -658,9 +640,7 @@ register_grid_procs (Gimp *gimp)
   /*
    * gimp-image-grid-set-style
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             image_grid_set_style_invoker);
+  procedure = gimp_procedure_new (image_grid_set_style_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-grid-set-style",
                                      "gimp-image-grid-set-style",

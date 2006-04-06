@@ -1161,9 +1161,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-delete
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             drawable_delete_invoker);
+  procedure = gimp_procedure_new (drawable_delete_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-delete",
                                      "gimp-drawable-delete",
@@ -1185,9 +1183,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-is-layer
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             drawable_is_layer_invoker);
+  procedure = gimp_procedure_new (drawable_is_layer_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-is-layer",
                                      "gimp-drawable-is-layer",
@@ -1215,9 +1211,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-is-layer-mask
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             drawable_is_layer_mask_invoker);
+  procedure = gimp_procedure_new (drawable_is_layer_mask_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-is-layer-mask",
                                      "gimp-drawable-is-layer-mask",
@@ -1245,9 +1239,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-is-channel
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             drawable_is_channel_invoker);
+  procedure = gimp_procedure_new (drawable_is_channel_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-is-channel",
                                      "gimp-drawable-is-channel",
@@ -1275,9 +1267,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-type
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             drawable_type_invoker);
+  procedure = gimp_procedure_new (drawable_type_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-type",
                                      "gimp-drawable-type",
@@ -1306,9 +1296,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-type-with-alpha
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             drawable_type_with_alpha_invoker);
+  procedure = gimp_procedure_new (drawable_type_with_alpha_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-type-with-alpha",
                                      "gimp-drawable-type-with-alpha",
@@ -1343,9 +1331,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-has-alpha
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             drawable_has_alpha_invoker);
+  procedure = gimp_procedure_new (drawable_has_alpha_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-has-alpha",
                                      "gimp-drawable-has-alpha",
@@ -1373,9 +1359,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-is-rgb
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             drawable_is_rgb_invoker);
+  procedure = gimp_procedure_new (drawable_is_rgb_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-is-rgb",
                                      "gimp-drawable-is-rgb",
@@ -1403,9 +1387,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-is-gray
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             drawable_is_gray_invoker);
+  procedure = gimp_procedure_new (drawable_is_gray_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-is-gray",
                                      "gimp-drawable-is-gray",
@@ -1433,9 +1415,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-is-indexed
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             drawable_is_indexed_invoker);
+  procedure = gimp_procedure_new (drawable_is_indexed_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-is-indexed",
                                      "gimp-drawable-is-indexed",
@@ -1463,9 +1443,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-bpp
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             drawable_bpp_invoker);
+  procedure = gimp_procedure_new (drawable_bpp_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-bpp",
                                      "gimp-drawable-bpp",
@@ -1493,9 +1471,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-width
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             drawable_width_invoker);
+  procedure = gimp_procedure_new (drawable_width_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-width",
                                      "gimp-drawable-width",
@@ -1523,9 +1499,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-height
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             drawable_height_invoker);
+  procedure = gimp_procedure_new (drawable_height_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-height",
                                      "gimp-drawable-height",
@@ -1553,9 +1527,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-offsets
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 2,
-                             drawable_offsets_invoker);
+  procedure = gimp_procedure_new (drawable_offsets_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-offsets",
                                      "gimp-drawable-offsets",
@@ -1589,9 +1561,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-get-image
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             drawable_get_image_invoker);
+  procedure = gimp_procedure_new (drawable_get_image_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-get-image",
                                      "gimp-drawable-get-image",
@@ -1619,9 +1589,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-set-image
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             drawable_set_image_invoker);
+  procedure = gimp_procedure_new (drawable_set_image_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-set-image",
                                      "gimp-drawable-set-image",
@@ -1649,9 +1617,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-get-name
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             drawable_get_name_invoker);
+  procedure = gimp_procedure_new (drawable_get_name_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-get-name",
                                      "gimp-drawable-get-name",
@@ -1680,9 +1646,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-set-name
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             drawable_set_name_invoker);
+  procedure = gimp_procedure_new (drawable_set_name_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-set-name",
                                      "gimp-drawable-set-name",
@@ -1711,9 +1675,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-get-visible
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             drawable_get_visible_invoker);
+  procedure = gimp_procedure_new (drawable_get_visible_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-get-visible",
                                      "gimp-drawable-get-visible",
@@ -1741,9 +1703,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-set-visible
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             drawable_set_visible_invoker);
+  procedure = gimp_procedure_new (drawable_set_visible_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-set-visible",
                                      "gimp-drawable-set-visible",
@@ -1771,9 +1731,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-get-linked
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             drawable_get_linked_invoker);
+  procedure = gimp_procedure_new (drawable_get_linked_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-get-linked",
                                      "gimp-drawable-get-linked",
@@ -1801,9 +1759,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-set-linked
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             drawable_set_linked_invoker);
+  procedure = gimp_procedure_new (drawable_set_linked_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-set-linked",
                                      "gimp-drawable-set-linked",
@@ -1831,9 +1787,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-get-tattoo
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             drawable_get_tattoo_invoker);
+  procedure = gimp_procedure_new (drawable_get_tattoo_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-get-tattoo",
                                      "gimp-drawable-get-tattoo",
@@ -1861,9 +1815,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-set-tattoo
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             drawable_set_tattoo_invoker);
+  procedure = gimp_procedure_new (drawable_set_tattoo_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-set-tattoo",
                                      "gimp-drawable-set-tattoo",
@@ -1891,9 +1843,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-mask-bounds
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 5,
-                             drawable_mask_bounds_invoker);
+  procedure = gimp_procedure_new (drawable_mask_bounds_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-mask-bounds",
                                      "gimp-drawable-mask-bounds",
@@ -1945,9 +1895,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-mask-intersect
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 5,
-                             drawable_mask_intersect_invoker);
+  procedure = gimp_procedure_new (drawable_mask_intersect_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-mask-intersect",
                                      "gimp-drawable-mask-intersect",
@@ -1999,9 +1947,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-merge-shadow
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             drawable_merge_shadow_invoker);
+  procedure = gimp_procedure_new (drawable_merge_shadow_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-merge-shadow",
                                      "gimp-drawable-merge-shadow",
@@ -2029,9 +1975,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-update
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 5, 0,
-                             drawable_update_invoker);
+  procedure = gimp_procedure_new (drawable_update_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-update",
                                      "gimp-drawable-update",
@@ -2077,9 +2021,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-get-pixel
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 2,
-                             drawable_get_pixel_invoker);
+  procedure = gimp_procedure_new (drawable_get_pixel_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-get-pixel",
                                      "gimp-drawable-get-pixel",
@@ -2124,9 +2066,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-set-pixel
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 5, 0,
-                             drawable_set_pixel_invoker);
+  procedure = gimp_procedure_new (drawable_set_pixel_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-set-pixel",
                                      "gimp-drawable-set-pixel",
@@ -2171,9 +2111,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-fill
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             drawable_fill_invoker);
+  procedure = gimp_procedure_new (drawable_fill_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-fill",
                                      "gimp-drawable-fill",
@@ -2202,9 +2140,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-offset
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 5, 0,
-                             drawable_offset_invoker);
+  procedure = gimp_procedure_new (drawable_offset_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-offset",
                                      "gimp-drawable-offset",
@@ -2251,9 +2187,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-thumbnail
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 5,
-                             drawable_thumbnail_invoker);
+  procedure = gimp_procedure_new (drawable_thumbnail_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-thumbnail",
                                      "gimp-drawable-thumbnail",
@@ -2316,9 +2250,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-sub-thumbnail
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 7, 5,
-                             drawable_sub_thumbnail_invoker);
+  procedure = gimp_procedure_new (drawable_sub_thumbnail_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-sub-thumbnail",
                                      "gimp-drawable-sub-thumbnail",
@@ -2405,9 +2337,7 @@ register_drawable_procs (Gimp *gimp)
   /*
    * gimp-drawable-foreground-extract
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
-                             drawable_foreground_extract_invoker);
+  procedure = gimp_procedure_new (drawable_foreground_extract_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-foreground-extract",
                                      "gimp-drawable-foreground-extract",

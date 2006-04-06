@@ -25,7 +25,7 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "pdb/gimpprocedure.h"
+#include "gimpprocedure.h"
 
 
 #define GIMP_TYPE_PLUG_IN_PROCEDURE            (gimp_plug_in_procedure_get_type ())
@@ -69,31 +69,34 @@ struct _GimpPlugInProcedure
 struct _GimpPlugInProcedureClass
 {
   GimpProcedureClass parent_class;
+
+  const gchar * (* get_progname) (const GimpPlugInProcedure *procedure);
 };
 
 
-GType                 gimp_plug_in_procedure_get_type     (void) G_GNUC_CONST;
+GType           gimp_plug_in_procedure_get_type      (void) G_GNUC_CONST;
 
-GimpPlugInProcedure * gimp_plug_in_procedure_new          (void);
+GimpProcedure * gimp_plug_in_procedure_new           (GimpPDBProcType            proc_type,
+                                                      const gchar               *prog);
 
-GimpPlugInProcedure * gimp_plug_in_procedure_find         (GSList              *list,
-                                                           const gchar         *proc_name);
+GimpPlugInProcedure * gimp_plug_in_procedure_find    (GSList                    *list,
+                                                      const gchar               *proc_name);
 
 const gchar * gimp_plug_in_procedure_get_progname    (const GimpPlugInProcedure *proc);
 gchar       * gimp_plug_in_procedure_get_label       (const GimpPlugInProcedure *proc,
-                                                      const gchar         *locale_domain);
+                                                      const gchar               *locale_domain);
 
 void          gimp_plug_in_procedure_set_icon        (GimpPlugInProcedure       *proc,
-                                                      GimpIconType         type,
-                                                      const guint8        *data,
-                                                      gint                 data_length);
+                                                      GimpIconType               type,
+                                                      const guint8              *data,
+                                                      gint                       data_length);
 const gchar * gimp_plug_in_procedure_get_stock_id    (const GimpPlugInProcedure *proc);
 GdkPixbuf   * gimp_plug_in_procedure_get_pixbuf      (const GimpPlugInProcedure *proc);
 
 gchar       * gimp_plug_in_procedure_get_help_id     (const GimpPlugInProcedure *proc,
-                                                      const gchar         *help_domain);
+                                                      const gchar               *help_domain);
 gboolean      gimp_plug_in_procedure_get_sensitive   (const GimpPlugInProcedure *proc,
-                                                      GimpImageType        image_type);
+                                                      GimpImageType              image_type);
 
 void          gimp_plug_in_procedure_set_image_types (GimpPlugInProcedure       *proc,
                                                       const gchar               *image_types);

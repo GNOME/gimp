@@ -168,9 +168,7 @@ register_display_procs (Gimp *gimp)
   /*
    * gimp-display-new
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             display_new_invoker);
+  procedure = gimp_procedure_new (display_new_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-display-new",
                                      "gimp-display-new",
@@ -198,9 +196,7 @@ register_display_procs (Gimp *gimp)
   /*
    * gimp-display-delete
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 0,
-                             display_delete_invoker);
+  procedure = gimp_procedure_new (display_delete_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-display-delete",
                                      "gimp-display-delete",
@@ -222,9 +218,7 @@ register_display_procs (Gimp *gimp)
   /*
    * gimp-display-get-window-handle
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             display_get_window_handle_invoker);
+  procedure = gimp_procedure_new (display_get_window_handle_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-display-get-window-handle",
                                      "gimp-display-get-window-handle",
@@ -252,9 +246,7 @@ register_display_procs (Gimp *gimp)
   /*
    * gimp-displays-flush
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 0, 0,
-                             displays_flush_invoker);
+  procedure = gimp_procedure_new (displays_flush_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-displays-flush",
                                      "gimp-displays-flush",
@@ -270,9 +262,7 @@ register_display_procs (Gimp *gimp)
   /*
    * gimp-displays-reconnect
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             displays_reconnect_invoker);
+  procedure = gimp_procedure_new (displays_reconnect_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-displays-reconnect",
                                      "gimp-displays-reconnect",

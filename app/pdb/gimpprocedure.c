@@ -74,6 +74,7 @@ gimp_procedure_class_init (GimpProcedureClass *klass)
 static void
 gimp_procedure_init (GimpProcedure *procedure)
 {
+  procedure->proc_type = GIMP_INTERNAL;
 }
 
 static void
@@ -114,64 +115,24 @@ gimp_procedure_real_execute (GimpProcedure *procedure,
 {
   g_return_val_if_fail (args->n_values >= procedure->num_args, NULL);
 
-  return procedure->exec_method.internal.marshal_func (procedure, gimp,
-                                                       context, progress,
-                                                       args);
+  return procedure->marshal_func (procedure, gimp,
+                                  context, progress,
+                                  args);
 }
 
 
 /*  public functions  */
 
 GimpProcedure  *
-gimp_procedure_new (void)
+gimp_procedure_new (GimpMarshalFunc marshal_func)
 {
-  GimpProcedure *procedure = g_object_new (GIMP_TYPE_PROCEDURE, NULL);
+  GimpProcedure *procedure;
 
-  return procedure;
-}
+  g_return_val_if_fail (marshal_func != NULL, NULL);
 
-GimpProcedure *
-gimp_procedure_initialize (GimpProcedure   *procedure,
-                           GimpPDBProcType  proc_type,
-                           gint             n_arguments,
-                           gint             n_return_values,
-                           gpointer         exec_method)
-{
-  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), procedure);
-  g_return_val_if_fail (procedure->args == NULL, procedure);
-  g_return_val_if_fail (procedure->values == NULL, procedure);
-  g_return_val_if_fail (n_arguments >= 0, procedure);
-  g_return_val_if_fail (n_return_values >= 0, procedure);
+  procedure = g_object_new (GIMP_TYPE_PROCEDURE, NULL);
 
-  procedure->proc_type  = proc_type;
-
-  procedure->num_args   = n_arguments;
-  procedure->args       = g_new0 (GParamSpec *, n_arguments);
-
-  procedure->num_values = n_return_values;
-  procedure->values     = g_new0 (GParamSpec *, n_return_values);
-
-  if (exec_method)
-    {
-      switch (proc_type)
-        {
-        case GIMP_INTERNAL:
-          procedure->exec_method.internal.marshal_func = exec_method;
-          break;
-
-        case GIMP_PLUGIN:
-          procedure->exec_method.plug_in.filename = g_strdup (exec_method);
-          break;
-
-        case GIMP_EXTENSION:
-          procedure->exec_method.extension.filename = g_strdup (exec_method);
-          break;
-
-        case GIMP_TEMPORARY:
-          procedure->exec_method.temporary.plug_in = exec_method;
-          break;
-        }
-    }
+  procedure->marshal_func = marshal_func;
 
   return procedure;
 }
@@ -427,48 +388,36 @@ void
 gimp_procedure_add_argument (GimpProcedure *procedure,
                              GParamSpec    *pspec)
 {
-  gint i;
-
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
   g_return_if_fail (G_IS_PARAM_SPEC (pspec));
 
-  for (i = 0; i < procedure->num_args; i++)
-    if (procedure->args[i] == NULL)
-      {
-        procedure->args[i] = pspec;
+  procedure->args = g_renew (GParamSpec *, procedure->args,
+                             procedure->num_args + 1);
 
-        g_param_spec_ref (pspec);
-        g_param_spec_sink (pspec);
+  procedure->args[procedure->num_args] = pspec;
 
-        return;
-      }
+  g_param_spec_ref (pspec);
+  g_param_spec_sink (pspec);
 
-  g_warning ("%s: can't register more than %d arguments for procedure %s",
-             G_STRFUNC, procedure->num_args, procedure->name);
+  procedure->num_args++;
 }
 
 void
 gimp_procedure_add_return_value (GimpProcedure *procedure,
                                  GParamSpec    *pspec)
 {
-  gint i;
-
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
   g_return_if_fail (G_IS_PARAM_SPEC (pspec));
 
-  for (i = 0; i < procedure->num_values; i++)
-    if (procedure->values[i] == NULL)
-      {
-        procedure->values[i] = pspec;
+  procedure->values = g_renew (GParamSpec *, procedure->values,
+                               procedure->num_values + 1);
 
-        g_param_spec_ref (pspec);
-        g_param_spec_sink (pspec);
+  procedure->values[procedure->num_values] = pspec;
 
-        return;
-      }
+  g_param_spec_ref (pspec);
+  g_param_spec_sink (pspec);
 
-  g_warning ("%s: can't register more than %d return values for procedure %s",
-             G_STRFUNC, procedure->num_values, procedure->name);
+  procedure->num_values++;
 }
 
 

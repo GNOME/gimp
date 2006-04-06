@@ -1184,9 +1184,7 @@ register_drawable_transform_procs (Gimp *gimp)
   /*
    * gimp-drawable-transform-flip-simple
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 5, 1,
-                             drawable_transform_flip_simple_invoker);
+  procedure = gimp_procedure_new (drawable_transform_flip_simple_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-flip-simple",
                                      "gimp-drawable-transform-flip-simple",
@@ -1241,9 +1239,7 @@ register_drawable_transform_procs (Gimp *gimp)
   /*
    * gimp-drawable-transform-flip
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 10, 1,
-                             drawable_transform_flip_invoker);
+  procedure = gimp_procedure_new (drawable_transform_flip_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-flip",
                                      "gimp-drawable-transform-flip",
@@ -1327,9 +1323,7 @@ register_drawable_transform_procs (Gimp *gimp)
   /*
    * gimp-drawable-transform-flip-default
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 7, 1,
-                             drawable_transform_flip_default_invoker);
+  procedure = gimp_procedure_new (drawable_transform_flip_default_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-flip-default",
                                      "gimp-drawable-transform-flip-default",
@@ -1393,9 +1387,7 @@ register_drawable_transform_procs (Gimp *gimp)
   /*
    * gimp-drawable-transform-perspective
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 14, 1,
-                             drawable_transform_perspective_invoker);
+  procedure = gimp_procedure_new (drawable_transform_perspective_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-perspective",
                                      "gimp-drawable-transform-perspective",
@@ -1503,9 +1495,7 @@ register_drawable_transform_procs (Gimp *gimp)
   /*
    * gimp-drawable-transform-perspective-default
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 11, 1,
-                             drawable_transform_perspective_default_invoker);
+  procedure = gimp_procedure_new (drawable_transform_perspective_default_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-perspective-default",
                                      "gimp-drawable-transform-perspective-default",
@@ -1593,9 +1583,7 @@ register_drawable_transform_procs (Gimp *gimp)
   /*
    * gimp-drawable-transform-rotate-simple
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 6, 1,
-                             drawable_transform_rotate_simple_invoker);
+  procedure = gimp_procedure_new (drawable_transform_rotate_simple_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-rotate-simple",
                                      "gimp-drawable-transform-rotate-simple",
@@ -1654,9 +1642,7 @@ register_drawable_transform_procs (Gimp *gimp)
   /*
    * gimp-drawable-transform-rotate
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 10, 1,
-                             drawable_transform_rotate_invoker);
+  procedure = gimp_procedure_new (drawable_transform_rotate_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-rotate",
                                      "gimp-drawable-transform-rotate",
@@ -1740,9 +1726,7 @@ register_drawable_transform_procs (Gimp *gimp)
   /*
    * gimp-drawable-transform-rotate-default
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 7, 1,
-                             drawable_transform_rotate_default_invoker);
+  procedure = gimp_procedure_new (drawable_transform_rotate_default_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-rotate-default",
                                      "gimp-drawable-transform-rotate-default",
@@ -1806,9 +1790,7 @@ register_drawable_transform_procs (Gimp *gimp)
   /*
    * gimp-drawable-transform-scale
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 10, 1,
-                             drawable_transform_scale_invoker);
+  procedure = gimp_procedure_new (drawable_transform_scale_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-scale",
                                      "gimp-drawable-transform-scale",
@@ -1892,9 +1874,7 @@ register_drawable_transform_procs (Gimp *gimp)
   /*
    * gimp-drawable-transform-scale-default
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 7, 1,
-                             drawable_transform_scale_default_invoker);
+  procedure = gimp_procedure_new (drawable_transform_scale_default_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-scale-default",
                                      "gimp-drawable-transform-scale-default",
@@ -1958,9 +1938,7 @@ register_drawable_transform_procs (Gimp *gimp)
   /*
    * gimp-drawable-transform-shear
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 8, 1,
-                             drawable_transform_shear_invoker);
+  procedure = gimp_procedure_new (drawable_transform_shear_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-shear",
                                      "gimp-drawable-transform-shear",
@@ -2035,9 +2013,7 @@ register_drawable_transform_procs (Gimp *gimp)
   /*
    * gimp-drawable-transform-shear-default
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 5, 1,
-                             drawable_transform_shear_default_invoker);
+  procedure = gimp_procedure_new (drawable_transform_shear_default_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-shear-default",
                                      "gimp-drawable-transform-shear-default",
@@ -2092,9 +2068,7 @@ register_drawable_transform_procs (Gimp *gimp)
   /*
    * gimp-drawable-transform-2d
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 13, 1,
-                             drawable_transform_2d_invoker);
+  procedure = gimp_procedure_new (drawable_transform_2d_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-2d",
                                      "gimp-drawable-transform-2d",
@@ -2196,9 +2170,7 @@ register_drawable_transform_procs (Gimp *gimp)
   /*
    * gimp-drawable-transform-2d-default
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 10, 1,
-                             drawable_transform_2d_default_invoker);
+  procedure = gimp_procedure_new (drawable_transform_2d_default_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-2d-default",
                                      "gimp-drawable-transform-2d-default",
@@ -2280,9 +2252,7 @@ register_drawable_transform_procs (Gimp *gimp)
   /*
    * gimp-drawable-transform-matrix
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 15, 1,
-                             drawable_transform_matrix_invoker);
+  procedure = gimp_procedure_new (drawable_transform_matrix_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-matrix",
                                      "gimp-drawable-transform-matrix",
@@ -2396,9 +2366,7 @@ register_drawable_transform_procs (Gimp *gimp)
   /*
    * gimp-drawable-transform-matrix-default
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 12, 1,
-                             drawable_transform_matrix_default_invoker);
+  procedure = gimp_procedure_new (drawable_transform_matrix_default_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-matrix-default",
                                      "gimp-drawable-transform-matrix-default",

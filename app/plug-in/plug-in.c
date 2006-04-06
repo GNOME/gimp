@@ -76,7 +76,7 @@
 #include "core/gimpinterpreterdb.h"
 #include "core/gimpprogress.h"
 
-#include "pdb/gimpprocedure.h"
+#include "pdb/gimppluginprocedure.h"
 
 #include "plug-in.h"
 #include "plug-ins.h"
@@ -84,7 +84,6 @@
 #include "plug-in-def.h"
 #include "plug-in-message.h"
 #include "plug-in-params.h"
-#include "plug-in-proc-def.h"
 #include "plug-in-progress.h"
 #include "plug-in-shm.h"
 

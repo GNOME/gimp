@@ -36,9 +36,7 @@
 
 #include "core/gimp.h"
 
-#include "pdb/gimpprocedure.h"
-
-#include "plug-in-proc-def.h"
+#include "pdb/gimppluginprocedure.h"
 
 
 static int

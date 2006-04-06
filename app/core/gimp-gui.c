@@ -24,7 +24,7 @@
 
 #include "core-types.h"
 
-#include "plug-in/plug-in-proc-def.h"
+#include "pdb/gimppluginprocedure.h"
 
 #include "gimp.h"
 #include "gimp-gui.h"

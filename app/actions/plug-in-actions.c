@@ -33,10 +33,9 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
-#include "pdb/gimpprocedure.h"
+#include "pdb/gimppluginprocedure.h"
 
 #include "plug-in/plug-ins.h"
-#include "plug-in/plug-in-proc-def.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"

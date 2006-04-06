@@ -43,6 +43,7 @@
 
 #include "gimp-pdb.h"
 #include "gimpprocedure.h"
+#include "gimptemporaryprocedure.h" /* eek */
 #include "internal_procs.h"
 
 #include "gimp-intl.h"
@@ -64,6 +65,12 @@ gimp_pdb_init (Gimp *gimp)
 
   gimp->procedural_ht        = g_hash_table_new (g_str_hash, g_str_equal);
   gimp->procedural_compat_ht = g_hash_table_new (g_str_hash, g_str_equal);
+
+  {
+    volatile GType eek;
+
+    eek = GIMP_TYPE_TEMPORARY_PROCEDURE;
+  }
 }
 
 void

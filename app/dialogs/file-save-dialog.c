@@ -31,7 +31,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpprogress.h"
 
-#include "plug-in/plug-in-proc-def.h"
+#include "pdb/gimppluginprocedure.h"
 
 #include "file/file-save.h"
 #include "file/file-utils.h"

@@ -41,7 +41,6 @@
 #include "core/gimplayer.h"
 #include "file/file-open.h"
 #include "file/file-utils.h"
-#include "plug-in/plug-in-proc-def.h"
 #include "plug-in/plug-in.h"
 #include "plug-in/plug-ins.h"
 
@@ -572,9 +571,7 @@ register_fileops_procs (Gimp *gimp)
   /*
    * gimp-file-load
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 1,
-                             file_load_invoker);
+  procedure = gimp_procedure_new (file_load_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-file-load",
                                      "gimp-file-load",
@@ -619,9 +616,7 @@ register_fileops_procs (Gimp *gimp)
   /*
    * gimp-file-load-layer
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 1,
-                             file_load_layer_invoker);
+  procedure = gimp_procedure_new (file_load_layer_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-file-load-layer",
                                      "gimp-file-load-layer",
@@ -665,9 +660,7 @@ register_fileops_procs (Gimp *gimp)
   /*
    * gimp-file-load-thumbnail
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 4,
-                             file_load_thumbnail_invoker);
+  procedure = gimp_procedure_new (file_load_thumbnail_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-file-load-thumbnail",
                                      "gimp-file-load-thumbnail",
@@ -713,9 +706,7 @@ register_fileops_procs (Gimp *gimp)
   /*
    * gimp-file-save
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 5, 0,
-                             file_save_invoker);
+  procedure = gimp_procedure_new (file_save_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-file-save",
                                      "gimp-file-save",
@@ -764,9 +755,7 @@ register_fileops_procs (Gimp *gimp)
   /*
    * gimp-file-save-thumbnail
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             file_save_thumbnail_invoker);
+  procedure = gimp_procedure_new (file_save_thumbnail_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-file-save-thumbnail",
                                      "gimp-file-save-thumbnail",
@@ -795,9 +784,7 @@ register_fileops_procs (Gimp *gimp)
   /*
    * gimp-temp-name
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 1, 1,
-                             temp_name_invoker);
+  procedure = gimp_procedure_new (temp_name_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-temp-name",
                                      "gimp-temp-name",
@@ -827,9 +814,7 @@ register_fileops_procs (Gimp *gimp)
   /*
    * gimp-register-magic-load-handler
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 4, 0,
-                             register_magic_load_handler_invoker);
+  procedure = gimp_procedure_new (register_magic_load_handler_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-register-magic-load-handler",
                                      "gimp-register-magic-load-handler",
@@ -873,9 +858,7 @@ register_fileops_procs (Gimp *gimp)
   /*
    * gimp-register-load-handler
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
-                             register_load_handler_invoker);
+  procedure = gimp_procedure_new (register_load_handler_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-register-load-handler",
                                      "gimp-register-load-handler",
@@ -912,9 +895,7 @@ register_fileops_procs (Gimp *gimp)
   /*
    * gimp-register-save-handler
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 3, 0,
-                             register_save_handler_invoker);
+  procedure = gimp_procedure_new (register_save_handler_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-register-save-handler",
                                      "gimp-register-save-handler",
@@ -951,9 +932,7 @@ register_fileops_procs (Gimp *gimp)
   /*
    * gimp-register-file-handler-mime
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             register_file_handler_mime_invoker);
+  procedure = gimp_procedure_new (register_file_handler_mime_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-register-file-handler-mime",
                                      "gimp-register-file-handler-mime",
@@ -983,9 +962,7 @@ register_fileops_procs (Gimp *gimp)
   /*
    * gimp-register-thumbnail-loader
    */
-  procedure = gimp_procedure_new ();
-  gimp_procedure_initialize (procedure, GIMP_INTERNAL, 2, 0,
-                             register_thumbnail_loader_invoker);
+  procedure = gimp_procedure_new (register_thumbnail_loader_invoker);
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-register-thumbnail-loader",
                                      "gimp-register-thumbnail-loader",
