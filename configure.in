@@ -1542,11 +1542,9 @@ if test x"$os_win32" = xyes; then
   WINPRINT='winprint$(EXEEXT)'
 else
   MAIL='mail$(EXEEXT)'
-  SCREENSHOT='screenshot$(EXEEXT)'
 fi
 
 AC_SUBST(MAIL)
-AC_SUBST(SCREENSHOT)
 AC_SUBST(WINPRINT)
 AC_SUBST(WMF)
 

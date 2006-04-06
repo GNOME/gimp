@@ -138,7 +138,7 @@ libexec_PROGRAMS = \
 	rotate \
 	sample_colorize \
 	scatter_hsv \
-	$(SCREENSHOT) \
+	screenshot \
 	sel_gauss \
 	semiflatten \
 	sharpen \

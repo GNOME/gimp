@@ -1,3 +1,10 @@
+2006-04-05  Michael Schumacher  <schumaml@cvs.gnome.org>
+
+	* configure.in: don't exclude the screenshot plug-in on os_win32
+	* plug-ins/common/Makefile.am: change $(SCREENSHOT) into screenshot
+	to make the screenshot plug-in build and install on the Microsoft
+	Windows platform.
+
 2006-04-05  Sven Neumann  <sven@gimp.org>
 
 	* app/base/lut-funcs.[ch]: minor code cleanup, renamed a function,
