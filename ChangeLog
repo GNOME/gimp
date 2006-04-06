@@ -1,3 +1,11 @@
+2006-04-06  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdata.c (gimp_data_error_quark)
+	* libgimpconfig/gimpconfig-error.c (gimp_config_error_quark)
+	* libgimpthumb/gimpthumb-error.c (gimp_thumb_error_quark):
+	g_quark_from_static_string() is already reasonably fast, not much
+	point in caching the result.
+
 2006-04-06  DindinX  <dindinx@gimp.org>
 
 	* libgimp/gimpzoompreview.c: added some documentation.

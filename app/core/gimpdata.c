@@ -692,10 +692,5 @@ gimp_data_name_compare (GimpData *data1,
 GQuark
 gimp_data_error_quark (void)
 {
-  static GQuark quark = 0;
-
-  if (! quark)
-    quark = g_quark_from_static_string ("gimp-data-error-quark");
-
-  return quark;
+  return g_quark_from_static_string ("gimp-data-error-quark");
 }
