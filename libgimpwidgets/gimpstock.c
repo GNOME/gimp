@@ -305,7 +305,7 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_TOOL_ZOOM,                NULL,        0, 0, LIBGIMP_DOMAIN }
 };
 
-static struct
+static const struct
 {
   const gchar   *stock_id;
   gconstpointer  inline_data;
