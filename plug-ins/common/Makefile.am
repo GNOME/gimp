@@ -185,7 +185,6 @@ EXTRA_PROGRAMS = \
 	png \
 	poppler \
 	psp \
-	screenshot \
 	svg \
 	tiff \
 	winprint \

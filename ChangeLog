@@ -1,3 +1,12 @@
+2006-04-06  Michael Schumacher  <schumaml@cvs.gnome.org>
+
+	* plug-ins/common/mkgen.pl
+	* plug-ins/common/plugin-defs.pl: introduced a new parameter
+	'extralibs' and changed mkgen.pl to treat this equally to
+	'optional' for non-optional plug-ins that needs different libs on
+	different platforms 
+	* plug-ins/common/Makefile.am: regenerated
+
 2006-04-05  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* configure.in: don't exclude the screenshot plug-in on os_win32
