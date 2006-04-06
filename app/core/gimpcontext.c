@@ -279,7 +279,7 @@ enum
   LAST_SIGNAL
 };
 
-static gchar *gimp_context_prop_names[] =
+static const gchar *gimp_context_prop_names[] =
 {
   NULL, /* PROP_0 */
   "gimp",

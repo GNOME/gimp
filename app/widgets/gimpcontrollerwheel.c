@@ -39,10 +39,10 @@ typedef struct _WheelEvent WheelEvent;
 
 struct _WheelEvent
 {
-  GdkScrollDirection  direction;
-  GdkModifierType     modifiers;
-  const gchar        *name;
-  gchar              *blurb;
+  const GdkScrollDirection  direction;
+  const GdkModifierType     modifiers;
+  const gchar              *name;
+  gchar                    *blurb;
 };
 
 

@@ -140,10 +140,10 @@ typedef struct _GimpCursor GimpCursor;
 
 struct _GimpCursor
 {
-  guchar       *bits;
-  guchar       *mask_bits;
-  gint          width, height;
-  gint          x_hot, y_hot;
+  const guchar *bits;
+  const guchar *mask_bits;
+  const gint    width, height;
+  const gint    x_hot, y_hot;
   const guint8 *pixbuf_data;
 
   GdkBitmap    *bitmap;
@@ -166,7 +166,7 @@ static GimpCursor gimp_cursors[] =
     cursor_mouse_bits, cursor_mouse_mask_bits,
     cursor_mouse_width, cursor_mouse_height,
     cursor_mouse_x_hot, cursor_mouse_y_hot,
-    cursor_mouse,
+    cursor_mouse, NULL, NULL, NULL
   },
   {
     cursor_crosshair_bits, cursor_crosshair_mask_bits,

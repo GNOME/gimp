@@ -48,7 +48,7 @@ G_DEFINE_TYPE (GimpChainButton, gimp_chain_button, GTK_TYPE_TABLE);
 
 static guint gimp_chain_button_signals[LAST_SIGNAL] = { 0 };
 
-static const gchar *gimp_chain_stock_items[] =
+static const gchar * const gimp_chain_stock_items[] =
 {
   GIMP_STOCK_HCHAIN,
   GIMP_STOCK_HCHAIN_BROKEN,

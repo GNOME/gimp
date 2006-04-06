@@ -94,7 +94,7 @@ G_DEFINE_TYPE (GimpDockable, gimp_dockable, GTK_TYPE_BIN);
 
 #define parent_class gimp_dockable_parent_class
 
-static GtkTargetEntry dialog_target_table[] = { GIMP_TARGET_DIALOG };
+static const GtkTargetEntry dialog_target_table[] = { GIMP_TARGET_DIALOG };
 
 
 static void

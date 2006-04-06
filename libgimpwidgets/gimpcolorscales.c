@@ -114,9 +114,12 @@ gimp_color_scales_init (GimpColorScales *scales)
   GSList            *group;
   gint               i;
 
-  static gdouble slider_initial_vals[] = {   0,   0,   0,   0,   0,   0,   0 };
-  static gdouble slider_max_vals[]     = { 360, 100, 100, 255, 255, 255, 100 };
-  static gdouble slider_incs[]         = {  30,  10,  10,  16,  16,  16,  10 };
+  static const gdouble slider_initial_vals[] =
+    {   0,   0,   0,   0,   0,   0,   0 };
+  static const gdouble slider_max_vals[] =
+    { 360, 100, 100, 255, 255, 255, 100 };
+  static const gdouble slider_incs[] =
+    {  30,  10,  10,  16,  16,  16,  10 };
 
   /*  don't needs the toggles for our own operation  */
   selector->toggles_visible = FALSE;

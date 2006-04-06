@@ -47,9 +47,10 @@
 typedef struct _LayerMode LayerMode;
 struct _LayerMode
 {
-  guint   affect_alpha     : 1; /*  does the layer mode affect the alpha channel  */
-  guint   increase_opacity : 1; /*  layer mode can increase opacity */
-  guint   decrease_opacity : 1; /*  layer mode can decrease opacity */
+  const guint   affect_alpha     : 1; /*  does the layer mode affect the
+                                          alpha channel  */
+  const guint   increase_opacity : 1; /*  layer mode can increase opacity */
+  const guint   decrease_opacity : 1; /*  layer mode can decrease opacity */
 };
 
 static const LayerMode layer_modes[] =
@@ -86,8 +87,10 @@ static const LayerMode layer_modes[] =
   { TRUE,  TRUE,  FALSE, }   /*  GIMP_ANTI_ERASE_MODE    */
 };
 
+
 typedef void (* LayerModeFunc) (struct apply_layer_mode_struct *);
-static LayerModeFunc layer_mode_funcs[] =
+
+static const LayerModeFunc layer_mode_funcs[] =
 {
   layer_normal_mode,
   layer_dissolve_mode,

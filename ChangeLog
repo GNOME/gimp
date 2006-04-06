@@ -1,5 +1,27 @@
 2006-04-06  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpcontext.c
+	* app/core/gimpimage.c
+	* app/paint-funcs/paint-funcs.c
+	* app/widgets/gimpcontrollerkeyboard.c
+	* app/widgets/gimpcontrollerwheel.c
+	* app/widgets/gimpcursor.c
+	* app/widgets/gimpdockable.c
+	* app/widgets/gimpdockbook.c
+	* app/widgets/gimpdockseparator.c
+	* libgimp/gimpbrushselect.c
+	* libgimp/gimpfontselect.c
+	* libgimp/gimpgradientselect.c
+	* libgimp/gimppaletteselect.c
+	* libgimp/gimppatternselect.c
+	* libgimpwidgets/gimpchainbutton.c
+	* libgimpwidgets/gimpcolorscales.c
+	* libgimpwidgets/gimpcolorselect.c
+	* libgimpwidgets/gimppickbutton.c
+	* libgimpwidgets/gimpstock.c: sprinkled some const qualifiers.
+
+2006-04-06  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdata.c (gimp_data_error_quark)
 	* libgimpconfig/gimpconfig-error.c (gimp_config_error_quark)
 	* libgimpthumb/gimpthumb-error.c (gimp_thumb_error_quark):

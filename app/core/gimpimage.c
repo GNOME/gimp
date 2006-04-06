@@ -179,7 +179,7 @@ static void     gimp_image_channel_color_changed (GimpChannel    *channel,
                                                   GimpImage      *image);
 
 
-static gint valid_combinations[][MAX_CHANNELS + 1] =
+static const gint valid_combinations[][MAX_CHANNELS + 1] =
 {
   /* GIMP_RGB_IMAGE */
   { -1, -1, -1, COMBINE_INTEN_INTEN, COMBINE_INTEN_INTEN_A },

@@ -197,7 +197,7 @@ G_DEFINE_TYPE (GimpColorSelect, gimp_color_select, GIMP_TYPE_COLOR_SELECTOR);
 
 #define parent_class gimp_color_select_parent_class
 
-static ColorSelectFillUpdateProc update_procs[] =
+static const ColorSelectFillUpdateProc update_procs[] =
 {
   color_select_update_hue,
   color_select_update_saturation,

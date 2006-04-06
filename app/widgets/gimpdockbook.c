@@ -101,10 +101,7 @@ G_DEFINE_TYPE (GimpDockbook, gimp_dockbook, GTK_TYPE_NOTEBOOK);
 
 static guint dockbook_signals[LAST_SIGNAL] = { 0 };
 
-static GtkTargetEntry dialog_target_table[] =
-{
-  GIMP_TARGET_DIALOG
-};
+static const GtkTargetEntry dialog_target_table[] = { GIMP_TARGET_DIALOG };
 
 
 static void

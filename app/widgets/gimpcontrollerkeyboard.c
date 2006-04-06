@@ -40,10 +40,10 @@ typedef struct _KeyboardEvent KeyboardEvent;
 
 struct _KeyboardEvent
 {
-  guint            keyval;
-  GdkModifierType  modifiers;
-  const gchar     *name;
-  gchar           *blurb;
+  const guint            keyval;
+  const GdkModifierType  modifiers;
+  const gchar           *name;
+  gchar                 *blurb;
 };
 
 

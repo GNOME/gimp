@@ -60,7 +60,7 @@ gimp_palette_select_new (const gchar            *title,
                          GimpRunPaletteCallback  callback,
                          gpointer                data)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_STRING, "str",           "String" },
     { GIMP_PDB_INT32,  "dialog status", "If the dialog was closing "

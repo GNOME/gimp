@@ -108,7 +108,7 @@ add_sized_with_same_fallback (GtkIconFactory *factory,
 }
 
 
-static GtkStockItem gimp_stock_items[] =
+static const GtkStockItem gimp_stock_items[] =
 {
   { GIMP_STOCK_ANCHOR,         N_("Anchor"),          0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CENTER,         N_("C_enter"),         0, 0, LIBGIMP_DOMAIN },
@@ -445,7 +445,7 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_VIDEO,                    stock_video_24                    }
 };
 
-static struct
+static const struct
 {
   const gchar   *stock_id;
   gconstpointer  inline_data;
@@ -600,7 +600,7 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_JOIN_BEVEL,               stock_join_bevel_16               }
 };
 
-static struct
+static const struct
 {
   const gchar   *stock_id;
   gconstpointer  inline_data;
@@ -621,7 +621,7 @@ gimp_stock_dnd_pixbufs[] =
   { GIMP_STOCK_FLOATING_SELECTION,   stock_floating_selection_32   }
 };
 
-static struct
+static const struct
 {
   const gchar   *stock_id;
   gconstpointer  inline_data;
@@ -652,7 +652,7 @@ gimp_stock_dialog_pixbufs[] =
   { GIMP_STOCK_TEXTURE,              stock_texture_64              }
 };
 
-static struct
+static const struct
 {
   const gchar   *stock_id;
   gconstpointer  inline_data_ltr;

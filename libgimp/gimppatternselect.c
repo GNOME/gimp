@@ -64,7 +64,7 @@ gimp_pattern_select_new (const gchar            *title,
                          GimpRunPatternCallback  callback,
                          gpointer                data)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_STRING,   "str",           "String" },
     { GIMP_PDB_INT32,    "mask width",    "Pattern width" },

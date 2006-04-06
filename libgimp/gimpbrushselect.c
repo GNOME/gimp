@@ -69,7 +69,7 @@ gimp_brush_select_new (const gchar          *title,
                        GimpRunBrushCallback  callback,
                        gpointer              data)
 {
-  static GimpParamDef args[] =
+  static const GimpParamDef args[] =
   {
     { GIMP_PDB_STRING,    "str",           "String" },
     { GIMP_PDB_FLOAT,     "opacity",       "Opacity" },

@@ -67,7 +67,7 @@ G_DEFINE_TYPE (GimpDockSeparator, gimp_dock_separator, GTK_TYPE_EVENT_BOX);
 
 #define parent_class gimp_dock_separator_parent_class
 
-static GtkTargetEntry dialog_target_table[] = { GIMP_TARGET_DIALOG };
+static const GtkTargetEntry dialog_target_table[] = { GIMP_TARGET_DIALOG };
 
 
 static void
