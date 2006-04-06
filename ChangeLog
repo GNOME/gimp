@@ -1,3 +1,10 @@
+2006-04-06  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/compose.c: add layers in the expected order.
+
+	* plug-ins/common/decompose.c: fixed out-of-bounds access to layer
+	array (bug #322310).
+
 2006-04-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in-run.[ch]: removed plug_in_repeat()...

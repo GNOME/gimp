@@ -73,6 +73,7 @@ static gint32  create_new_image (const gchar        *filename,
                                  GimpDrawable      **drawable,
                                  GimpPixelRgn       *pixel_rgn);
 static gint32  create_new_layer (gint32              image_ID,
+                                 gint                position,
                                  const gchar        *layername,
                                  guint               width,
                                  guint               height,
@@ -512,7 +513,7 @@ decompose (gint32  image_ID,
                                                 drawable_dst + j,
                                                 pixel_rgn_dst + j);
           else
-            layer_ID_dst[j] = create_new_layer (image_ID_dst[0], layername,
+            layer_ID_dst[j] = create_new_layer (image_ID_dst[0], j, layername,
                                                 width, height, GIMP_GRAY,
                                                 drawable_dst + j,
                                                 pixel_rgn_dst + j);
@@ -593,7 +594,7 @@ create_new_image (const gchar        *filename,
   gimp_image_set_filename (image_ID, filename);
   gimp_image_set_resolution (image_ID, xres, yres);
 
-  *layer_ID = create_new_layer (image_ID,
+  *layer_ID = create_new_layer (image_ID, 0,
                                 layername, width, height, type,
                                 drawable, pixel_rgn);
 
@@ -603,6 +604,7 @@ create_new_image (const gchar        *filename,
 
 static gint32
 create_new_layer (gint32              image_ID,
+                  gint                position,
                   const gchar        *layername,
                   guint               width,
                   guint               height,
@@ -631,7 +633,7 @@ create_new_layer (gint32              image_ID,
 
   layer_ID = gimp_layer_new (image_ID, layername, width, height,
                              gdtype, 100, GIMP_NORMAL_MODE);
-  gimp_image_add_layer (image_ID, layer_ID, 0);
+  gimp_image_add_layer (image_ID, layer_ID, position);
 
   *drawable = gimp_drawable_get (layer_ID);
   gimp_pixel_rgn_init (pixel_rgn, *drawable, 0, 0, (*drawable)->width,
