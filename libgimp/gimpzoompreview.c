@@ -111,6 +111,13 @@ gimp_zoom_preview_class_init (GimpZoomPreviewClass *klass)
 
   g_type_class_add_private (object_class, sizeof (GimpZoomPreviewPrivate));
 
+  /**
+   * GimpZoomPreview:drawable:
+   *
+   * The drawable the #GimpZoomPreview is currently attached to.
+   *
+   * Since: GIMP 2.4
+   */
   g_object_class_install_property (object_class, PROP_DRAWABLE,
                                    g_param_spec_pointer ("drawable", NULL, NULL,
                                                          GIMP_PARAM_READWRITE |
@@ -578,6 +585,8 @@ gimp_zoom_preview_new (GimpDrawable *drawable)
  * gimp_zoom_get_drawable:
  * @preview: a #GimpZoomPreview widget
  *
+ * Returns the #GimpDrawable the #GimpZoomPreview is attached to.
+ * 
  * Return Value: the #GimpDrawable that was passed to gimp_zoom_preview_new().
  *
  * Since: GIMP 2.4
@@ -594,6 +603,8 @@ gimp_zoom_preview_get_drawable (GimpZoomPreview *preview)
  * gimp_zoom_get_factor:
  * @preview: a #GimpZoomPreview widget
  *
+ * Returns the zoom factor of the zoom model the preview is currently using.
+ *
  * Return Value: the current zoom factor
  *
  * Since: GIMP 2.4
@@ -608,11 +619,18 @@ gimp_zoom_preview_get_factor (GimpZoomPreview *preview)
 
 /**
  * gimp_zoom_preview_get_source:
- * @preview:
- * @width:
- * @height:
- * @bpp:
+ * @preview: a #GimpZoomPreview widget
+ * @width: a pointer to an int where the current width of the zoom widget
+ *         will be put.
+ * @height: a pointer to an int where the current width of the zoom widget
+ *          will be put.
+ * @bpp: a pointer to an int where the bpp of the current drawable the zoom
+ *       widget is using will be put.
  *
+ * Returns the scaled image data of the part of the drawable the
+ * #GimpZoomPreview is currently showing, as a newly allocated array of guchar.
+ * This function also allow to get the current width, height and bpp of the
+ * #GimpZoomPreview.
  *
  * Return Value:
  *
