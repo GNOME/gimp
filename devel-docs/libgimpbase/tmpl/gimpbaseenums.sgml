@@ -280,6 +280,15 @@ Basic GIMP enumeration data types.
 @GIMP_REPEAT_SAWTOOTH: 
 @GIMP_REPEAT_TRIANGULAR: 
 
+<!-- ##### ENUM GimpRunMode ##### -->
+<para>
+
+</para>
+
+@GIMP_RUN_INTERACTIVE: 
+@GIMP_RUN_NONINTERACTIVE: 
+@GIMP_RUN_WITH_LAST_VALS: 
+
 <!-- ##### ENUM GimpSizeType ##### -->
 <para>
 
