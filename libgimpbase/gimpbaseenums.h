@@ -274,6 +274,18 @@ typedef enum
 } GimpRepeatMode;
 
 
+#define GIMP_TYPE_RUN_MODE (gimp_run_mode_get_type ())
+
+GType gimp_run_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_RUN_INTERACTIVE,     /*< desc="Run interactively"         >*/
+  GIMP_RUN_NONINTERACTIVE,  /*< desc="Run non-interactively"     >*/
+  GIMP_RUN_WITH_LAST_VALS   /*< desc="Run with last used values" >*/
+} GimpRunMode;
+
+
 #define GIMP_TYPE_SIZE_TYPE (gimp_size_type_get_type ())
 
 GType gimp_size_type_get_type (void) G_GNUC_CONST;

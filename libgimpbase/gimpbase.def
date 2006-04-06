@@ -80,6 +80,7 @@ EXPORTS
 	gimp_plug_in_directory
 	gimp_progress_command_get_type
 	gimp_repeat_mode_get_type
+	gimp_run_mode_get_type
 	gimp_signal_private
 	gimp_size_type_get_type
 	gimp_stack_trace_mode_get_type

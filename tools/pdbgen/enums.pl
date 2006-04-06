@@ -198,6 +198,15 @@ package Gimp::CodeGen::enums;
 		       GIMP_REPEAT_SAWTOOTH => '1',
 		       GIMP_REPEAT_TRIANGULAR => '2' }
 	},
+    GimpRunMode =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_RUN_INTERACTIVE GIMP_RUN_NONINTERACTIVE
+			  GIMP_RUN_WITH_LAST_VALS) ],
+	  mapping => { GIMP_RUN_INTERACTIVE => '0',
+		       GIMP_RUN_NONINTERACTIVE => '1',
+		       GIMP_RUN_WITH_LAST_VALS => '2' }
+	},
     GimpSizeType =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
@@ -520,15 +529,6 @@ package Gimp::CodeGen::enums;
 	  symbols => [ qw(GIMP_BLUR_CONVOLVE GIMP_SHARPEN_CONVOLVE) ],
 	  mapping => { GIMP_BLUR_CONVOLVE => '0',
 		       GIMP_SHARPEN_CONVOLVE => '1' }
-	},
-    GimpRunMode =>
-	{ contig => 1,
-	  header => 'plug-in/plug-in-enums.h',
-	  symbols => [ qw(GIMP_RUN_INTERACTIVE GIMP_RUN_NONINTERACTIVE
-			  GIMP_RUN_WITH_LAST_VALS) ],
-	  mapping => { GIMP_RUN_INTERACTIVE => '0',
-		       GIMP_RUN_NONINTERACTIVE => '1',
-		       GIMP_RUN_WITH_LAST_VALS => '2' }
 	}
 );
 

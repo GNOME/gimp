@@ -259,18 +259,6 @@ typedef enum
 } GimpRotationType;
 
 
-#define GIMP_TYPE_RUN_MODE (gimp_run_mode_get_type ())
-
-GType gimp_run_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_RUN_INTERACTIVE,
-  GIMP_RUN_NONINTERACTIVE,
-  GIMP_RUN_WITH_LAST_VALS
-} GimpRunMode;
-
-
 void           gimp_enums_init           (void);
 
 const gchar ** gimp_enums_get_type_names (gint *n_type_names);

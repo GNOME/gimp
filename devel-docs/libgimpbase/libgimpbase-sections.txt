@@ -36,6 +36,7 @@ GimpPDBProcType
 GimpPDBStatusType
 GimpProgressCommand
 GimpRepeatMode
+GimpRunMode
 GimpSizeType
 GimpStackTraceMode
 GimpTransferMode
@@ -65,6 +66,7 @@ GIMP_TYPE_PDB_PROC_TYPE
 GIMP_TYPE_PDB_STATUS_TYPE
 GIMP_TYPE_PROGRESS_COMMAND
 GIMP_TYPE_REPEAT_MODE
+GIMP_TYPE_RUN_MODE
 GIMP_TYPE_SIZE_TYPE
 GIMP_TYPE_STACK_TRACE_MODE
 GIMP_TYPE_TRANSFER_MODE
@@ -93,6 +95,7 @@ gimp_pdb_proc_type_get_type
 gimp_pdb_status_type_get_type
 gimp_progress_command_get_type
 gimp_repeat_mode_get_type
+gimp_run_mode_get_type
 gimp_size_type_get_type
 gimp_stack_trace_mode_get_type
 gimp_transfer_mode_get_type
