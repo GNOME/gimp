@@ -109,7 +109,7 @@ gimp_drawable_foreground_extract_siox_init (GimpDrawable *drawable,
   if (! intersect)
     return NULL;
 
-  return siox_init (gimp_drawable_data (drawable), colormap,
+  return siox_init (gimp_drawable_get_tiles (drawable), colormap,
                     offset_x, offset_y,
                     x, y, width, height);
 }
@@ -149,7 +149,7 @@ gimp_drawable_foreground_extract_siox (GimpDrawable       *mask,
     }
 
   siox_foreground_extract (state, refinement,
-                           gimp_drawable_data (mask), x1, y1, x2, y2,
+                           gimp_drawable_get_tiles (mask), x1, y1, x2, y2,
                            smoothness, sensitivity, multiblob,
                            (SioxProgressFunc) gimp_progress_set_value,
                            progress);

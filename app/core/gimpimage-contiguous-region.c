@@ -141,7 +141,7 @@ gimp_image_contiguous_region_by_seed (GimpImage    *image,
                      FALSE);
 
   mask = gimp_channel_new_mask (image, srcPR.w, srcPR.h);
-  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)),
+  pixel_region_init (&maskPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
 		     0, 0,
 		     gimp_item_width  (GIMP_ITEM (mask)),
 		     gimp_item_height (GIMP_ITEM (mask)),
@@ -265,7 +265,7 @@ gimp_image_contiguous_region_by_color (GimpImage     *image,
 
   mask = gimp_channel_new_mask (image, width, height);
 
-  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)),
+  pixel_region_init (&maskPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
 		     0, 0, width, height,
                      TRUE);
 

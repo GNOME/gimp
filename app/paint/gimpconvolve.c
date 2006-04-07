@@ -192,7 +192,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
     return;
 
   /*  configure the source pixel region  */
-  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
 		     area->x, area->y, area->width, area->height, FALSE);
 
   /*  configure the destination pixel region  */

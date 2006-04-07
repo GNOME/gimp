@@ -677,7 +677,7 @@ gimp_selection_extract (GimpChannel  *selection,
   tile_manager_set_offsets (tiles, x1 + off_x, y1 + off_y);
 
   /* configure the pixel regions  */
-  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
 		     x1, y1,
                      x2 - x1, y2 - y1,
                      cut_image);
@@ -688,7 +688,8 @@ gimp_selection_extract (GimpChannel  *selection,
 
   if (non_empty) /*  If there is a selection, extract from it  */
     {
-      pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (selection)),
+      pixel_region_init (&maskPR,
+                         gimp_drawable_get_tiles (GIMP_DRAWABLE (selection)),
 			 (x1 + off_x), (y1 + off_y), (x2 - x1), (y2 - y1),
 			 FALSE);
 

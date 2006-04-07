@@ -1,3 +1,10 @@
+2006-04-07  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable.[ch]: renamed gimp_drawable_data() to
+	gimp_drawable_get_tiles().
+
+	[lots of files]: changed accordingly.
+
 2006-04-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/gimp-pdb.c (gimp_pdb_register)
@@ -30,7 +37,7 @@
 
 	* app/plug-in/plug-in-message.c: use the new APIs instead of
 	adding/removing procs and temp procs from their lists manually.
-	Unref the newly created procedure after adding then to the
+	Unref the newly created procedure after adding them to the
 	plug_in_def or plug_in.
 
 	* app/plug-in/plug-in-rc.[ch]

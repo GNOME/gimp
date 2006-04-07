@@ -297,7 +297,7 @@ floating_sel_store (GimpLayer *layer,
   if ((x2 - x1) > 0 && (y2 - y1) > 0)
     {
       /*  Copy the area from the drawable to the backing store  */
-      pixel_region_init (&srcPR, gimp_drawable_data (layer->fs.drawable),
+      pixel_region_init (&srcPR, gimp_drawable_get_tiles (layer->fs.drawable),
 			 (x1 - offx), (y1 - offy), (x2 - x1), (y2 - y1), FALSE);
       pixel_region_init (&destPR, layer->fs.backing_store,
 			 (x1 - GIMP_ITEM (layer)->offset_x),
@@ -350,7 +350,7 @@ floating_sel_restore (GimpLayer *layer,
 			 (x1 - GIMP_ITEM (layer)->offset_x),
 			 (y1 - GIMP_ITEM (layer)->offset_y),
 			 (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, gimp_drawable_data (layer->fs.drawable),
+      pixel_region_init (&destPR, gimp_drawable_get_tiles (layer->fs.drawable),
 			 (x1 - offx), (y1 - offy), (x2 - x1), (y2 - y1), TRUE);
 
       copy_region (&srcPR, &destPR);
@@ -537,7 +537,8 @@ floating_sel_boundary (GimpLayer *layer,
       if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
         {
           /*  find the segments  */
-          pixel_region_init (&bPR, gimp_drawable_data (GIMP_DRAWABLE (layer)),
+          pixel_region_init (&bPR,
+                             gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
                              0, 0, width, height, FALSE);
           layer->fs.segs = boundary_find (&bPR, BOUNDARY_WITHIN_BOUNDS,
                                           0, 0, width, height,

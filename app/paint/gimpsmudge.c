@@ -201,7 +201,7 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
       g_free (fill);
     }
 
-  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
 		     area->x, area->y, area->width, area->height, FALSE);
 
   pixel_region_init_data (&smudge->accumPR, smudge->accum_data,
@@ -258,7 +258,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
     return;
 
   /* srcPR will be the pixels under the current painthit from the drawable */
-  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
 		     area->x, area->y, area->width, area->height, FALSE);
 
   /* Enable pressure sensitive rate */

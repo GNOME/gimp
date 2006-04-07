@@ -1516,9 +1516,9 @@ gimp_channel_new_from_alpha (GimpImage     *image,
 
   gimp_channel_clear (channel, NULL, FALSE);
 
-  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                      0, 0, width, height, FALSE);
-  pixel_region_init (&destPR, gimp_drawable_data (GIMP_DRAWABLE (channel)),
+  pixel_region_init (&destPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
                      0, 0, width, height, TRUE);
 
   extract_alpha_region (&srcPR, NULL, &destPR);
@@ -1558,7 +1558,7 @@ gimp_channel_new_from_component (GimpImage       *image,
 
   pixel_region_init (&src, projection,
                      0, 0, width, height, FALSE);
-  pixel_region_init (&dest, gimp_drawable_data (GIMP_DRAWABLE (channel)),
+  pixel_region_init (&dest, gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
                      0, 0, width, height, TRUE);
 
   copy_component (&src, &dest, pixel);

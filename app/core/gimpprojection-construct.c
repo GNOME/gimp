@@ -121,7 +121,7 @@ gimp_projection_construct (GimpProjection *proj,
 
               g_printerr ("cow-projection!");
 
-              pixel_region_init (&srcPR, gimp_drawable_data (layer),
+              pixel_region_init (&srcPR, gimp_drawable_get_tiles (layer),
                                  x, y, w,h, FALSE);
               pixel_region_init (&destPR, gimp_projection_get_tiles (proj),
                                  x, y, w,h, TRUE);
@@ -217,7 +217,7 @@ gimp_projection_construct_layers (GimpProjection *proj,
       if (layer->mask && layer->mask->show_mask)
 	{
 	  pixel_region_init (&src2PR,
-			     gimp_drawable_data (GIMP_DRAWABLE (layer->mask)),
+			     gimp_drawable_get_tiles (GIMP_DRAWABLE (layer->mask)),
 			     (x1 - off_x), (y1 - off_y),
 			     (x2 - x1), (y2 - y1), FALSE);
 
@@ -229,14 +229,14 @@ gimp_projection_construct_layers (GimpProjection *proj,
           PixelRegion *mask = NULL;
 
 	  pixel_region_init (&src2PR,
-			     gimp_drawable_data (GIMP_DRAWABLE (layer)),
+			     gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
 			     (x1 - off_x), (y1 - off_y),
 			     (x2 - x1), (y2 - y1), FALSE);
 
 	  if (layer->mask && layer->mask->apply_mask)
 	    {
 	      pixel_region_init (&maskPR,
-				 gimp_drawable_data (GIMP_DRAWABLE (layer->mask)),
+				 gimp_drawable_get_tiles (GIMP_DRAWABLE (layer->mask)),
 				 (x1 - off_x), (y1 - off_y),
 				 (x2 - x1), (y2 - y1), FALSE);
 	      mask = &maskPR;
@@ -311,7 +311,7 @@ gimp_projection_construct_channels (GimpProjection *proj,
 			     x, y, w, h,
 			     TRUE);
 	  pixel_region_init (&src2PR,
-			     gimp_drawable_data (GIMP_DRAWABLE (channel)),
+			     gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
 			     x, y, w, h,
 			     FALSE);
 

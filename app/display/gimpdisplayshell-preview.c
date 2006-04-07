@@ -476,7 +476,7 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
 
   bytes = gdk_pixbuf_get_n_channels (row);
   pptr  = gdk_pixbuf_get_pixels (row);
-  tiles = gimp_drawable_data (texture);
+  tiles = gimp_drawable_get_tiles (texture);
 
   if (x1 > x2)
     {
@@ -637,12 +637,12 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
   bytes     = gdk_pixbuf_get_n_channels (row);
   alpha     = bytes - 1;
   pptr      = gdk_pixbuf_get_pixels (row);
-  tiles     = gimp_drawable_data (texture);
-  masktiles = gimp_drawable_data (GIMP_DRAWABLE (mask));
+  tiles     = gimp_drawable_get_tiles (texture);
+  masktiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (mask));
 
   if (x1 > x2)
     {
-      gint tmp;
+      gint   tmp;
       gfloat ftmp;
 
       tmp  = x2;  x2 = x1;  x1 = tmp;

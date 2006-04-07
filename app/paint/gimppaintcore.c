@@ -406,7 +406,7 @@ gimp_paint_core_cancel (GimpPaintCore *core,
     return;
 
   gimp_paint_core_copy_valid_tiles (core->undo_tiles,
-                                    gimp_drawable_data (drawable),
+                                    gimp_drawable_get_tiles (drawable),
                                     core->x1, core->y1,
                                     core->x2 - core->x1,
                                     core->y2 - core->y1);
@@ -533,7 +533,7 @@ gimp_paint_core_get_orig_image (GimpPaintCore *core,
   y2 = CLAMP (y2, 0, drawable_height);
 
   /*  configure the pixel regions  */
-  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                      x1, y1,
                      (x2 - x1), (y2 - y1),
                      FALSE);
@@ -978,8 +978,9 @@ gimp_paint_core_validate_undo_tiles (GimpPaintCore *core,
 
           if (! tile_is_valid (dest_tile))
             {
-              src_tile = tile_manager_get_tile (gimp_drawable_data (drawable),
-                                                j, i, TRUE, FALSE);
+              src_tile =
+                tile_manager_get_tile (gimp_drawable_get_tiles (drawable),
+                                       j, i, TRUE, FALSE);
               tile_manager_map_tile (core->undo_tiles, j, i, src_tile);
               tile_release (src_tile, FALSE);
             }

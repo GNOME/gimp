@@ -182,8 +182,10 @@ gimp_image_duplicate (GimpImage *image)
     TileManager *dest_tiles;
     PixelRegion  srcPR, destPR;
 
-    src_tiles  = gimp_drawable_data (GIMP_DRAWABLE (image->selection_mask));
-    dest_tiles = gimp_drawable_data (GIMP_DRAWABLE (new_image->selection_mask));
+    src_tiles  =
+      gimp_drawable_get_tiles (GIMP_DRAWABLE (image->selection_mask));
+    dest_tiles =
+      gimp_drawable_get_tiles (GIMP_DRAWABLE (new_image->selection_mask));
 
     pixel_region_init (&srcPR, src_tiles,
                        0, 0, image->width, image->height, FALSE);

@@ -838,7 +838,7 @@ drawable_get_pixel_invoker (GimpProcedure     *procedure,
           num_channels = gimp_drawable_bytes (drawable);
           pixel = g_new (guint8, num_channels);
 
-          tile = tile_manager_get_tile (gimp_drawable_data (drawable),
+          tile = tile_manager_get_tile (gimp_drawable_get_tiles (drawable),
                                         x_coord, y_coord,
                                         TRUE, TRUE);
 
@@ -896,7 +896,7 @@ drawable_set_pixel_invoker (GimpProcedure     *procedure,
           guint8 *p;
           gint    b;
 
-          tile = tile_manager_get_tile (gimp_drawable_data (drawable),
+          tile = tile_manager_get_tile (gimp_drawable_get_tiles (drawable),
                                         x_coord, y_coord,
                                         TRUE, TRUE);
 

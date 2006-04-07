@@ -40,6 +40,7 @@
 #include "gimpdrawable-preview.h"
 #include "gimpdrawable-transform.h"
 #include "gimpimage.h"
+#include "gimpimage-colormap.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
@@ -233,7 +234,7 @@ gimp_drawable_pickable_iface_init (GimpPickableInterface *iface)
   iface->get_image      = gimp_item_get_image;
   iface->get_image_type = gimp_drawable_type;
   iface->get_bytes      = gimp_drawable_bytes;
-  iface->get_tiles      = gimp_drawable_data;
+  iface->get_tiles      = gimp_drawable_get_tiles;
   iface->get_color_at   = gimp_drawable_get_color_at;
 }
 
@@ -604,7 +605,7 @@ gimp_drawable_get_color_at (GimpPickable *pickable,
 
   dest = g_new (guchar, 5);
 
-  tile = tile_manager_get_tile (gimp_drawable_data (drawable), x, y,
+  tile = tile_manager_get_tile (gimp_drawable_get_tiles (drawable), x, y,
                                 TRUE, FALSE);
   src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
 
@@ -698,7 +699,7 @@ gimp_drawable_real_push_undo (GimpDrawable *drawable,
       PixelRegion srcPR, destPR;
 
       tiles = tile_manager_new (width, height, gimp_drawable_bytes (drawable));
-      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                          x, y, width, height, FALSE);
       pixel_region_init (&destPR, tiles,
                          0, 0, width, height, TRUE);
@@ -717,13 +718,13 @@ gimp_drawable_real_push_undo (GimpDrawable *drawable,
 }
 
 static void
-gimp_drawable_real_swap_pixels (GimpDrawable      *drawable,
-                                TileManager       *tiles,
-                                gboolean           sparse,
-                                gint               x,
-                                gint               y,
-                                gint               width,
-                                gint               height)
+gimp_drawable_real_swap_pixels (GimpDrawable *drawable,
+                                TileManager  *tiles,
+                                gboolean      sparse,
+                                gint          x,
+                                gint          y,
+                                gint          width,
+                                gint          height)
 {
   if (sparse)
     {
@@ -744,11 +745,12 @@ gimp_drawable_real_swap_pixels (GimpDrawable      *drawable,
 
                   src_tile = tile_manager_get_tile (tiles,
                                                     j, i, TRUE, FALSE /*TRUE*/);
-                  dest_tile = tile_manager_get_tile (gimp_drawable_data (drawable), j, i, TRUE, FALSE /* TRUE */);
+                  dest_tile = tile_manager_get_tile (gimp_drawable_get_tiles (drawable),
+                                                     j, i, TRUE, FALSE /* TRUE */);
 
                   tile_manager_map_tile (tiles,
                                          j, i, dest_tile);
-                  tile_manager_map_tile (gimp_drawable_data (drawable),
+                  tile_manager_map_tile (gimp_drawable_get_tiles (drawable),
                                          j, i, src_tile);
 #if 0
                   swap_pixels (tile_data_pointer (src_tile, 0, 0),
@@ -768,7 +770,7 @@ gimp_drawable_real_swap_pixels (GimpDrawable      *drawable,
 
       pixel_region_init (&PR1, tiles,
                          0, 0, width, height, TRUE);
-      pixel_region_init (&PR2, gimp_drawable_data (drawable),
+      pixel_region_init (&PR2, gimp_drawable_get_tiles (drawable),
                          x, y, width, height, TRUE);
 
       swap_region (&PR1, &PR2);
@@ -901,6 +903,14 @@ gimp_drawable_replace_region (GimpDrawable *drawable,
                                                       push_undo, undo_desc,
                                                       opacity, maskPR,
                                                       x, y);
+}
+
+TileManager *
+gimp_drawable_get_tiles (const GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  return drawable->tiles;
 }
 
 void
@@ -1097,7 +1107,7 @@ gimp_drawable_fill (GimpDrawable      *drawable,
 
   drawable_type = gimp_drawable_type (drawable);
 
-  pixel_region_init (&destPR, gimp_drawable_data (drawable),
+  pixel_region_init (&destPR, gimp_drawable_get_tiles (drawable),
                      0, 0, gimp_item_width  (item), gimp_item_height (item),
                      TRUE);
 
@@ -1392,15 +1402,7 @@ gimp_drawable_has_floating_sel (const GimpDrawable *drawable)
   return (floating_sel && floating_sel->fs.drawable == drawable);
 }
 
-TileManager *
-gimp_drawable_data (const GimpDrawable *drawable)
-{
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-
-  return drawable->tiles;
-}
-
-guchar *
+const guchar *
 gimp_drawable_cmap (const GimpDrawable *drawable)
 {
   GimpImage *image;
@@ -1409,8 +1411,5 @@ gimp_drawable_cmap (const GimpDrawable *drawable)
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  if (image)
-    return image->cmap;
-
-  return NULL;
+  return image ? gimp_image_get_colormap (image) : NULL;
 }

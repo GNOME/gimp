@@ -236,7 +236,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
       if (tile_info->shadow)
 	tm = gimp_drawable_shadow (drawable);
       else
-	tm = gimp_drawable_data (drawable);
+	tm = gimp_drawable_get_tiles (drawable);
 
       tile = tile_manager_get (tm, tile_info->tile_num, TRUE, TRUE);
 
@@ -289,7 +289,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
       if (tile_req->shadow)
 	tm = gimp_drawable_shadow (drawable);
       else
-	tm = gimp_drawable_data (drawable);
+	tm = gimp_drawable_get_tiles (drawable);
 
       tile = tile_manager_get (tm, tile_req->tile_num, TRUE, FALSE);
 

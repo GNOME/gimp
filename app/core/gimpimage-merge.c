@@ -367,7 +367,7 @@ gimp_image_merge_layers (GimpImage     *image,
 
       /*  init the pixel region  */
       pixel_region_init (&src1PR,
-                         gimp_drawable_data (GIMP_DRAWABLE (merge_layer)),
+                         gimp_drawable_get_tiles (GIMP_DRAWABLE (merge_layer)),
                          0, 0,
                          image->width, image->height,
                          TRUE);
@@ -402,7 +402,7 @@ gimp_image_merge_layers (GimpImage     *image,
 
       /*  Set the layer to transparent  */
       pixel_region_init (&src1PR,
-                         gimp_drawable_data (GIMP_DRAWABLE (merge_layer)),
+                         gimp_drawable_get_tiles (GIMP_DRAWABLE (merge_layer)),
                          0, 0,
                          (x2 - x1), (y2 - y1),
                          TRUE);
@@ -457,11 +457,11 @@ gimp_image_merge_layers (GimpImage     *image,
 
       /* configure the pixel regions  */
       pixel_region_init (&src1PR,
-                         gimp_drawable_data (GIMP_DRAWABLE (merge_layer)),
+                         gimp_drawable_get_tiles (GIMP_DRAWABLE (merge_layer)),
                          (x3 - x1), (y3 - y1), (x4 - x3), (y4 - y3),
                          TRUE);
       pixel_region_init (&src2PR,
-                         gimp_drawable_data (GIMP_DRAWABLE (layer)),
+                         gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
                          (x3 - off_x), (y3 - off_y),
                          (x4 - x3), (y4 - y3),
                          FALSE);
@@ -469,7 +469,7 @@ gimp_image_merge_layers (GimpImage     *image,
       if (layer->mask && layer->mask->apply_mask)
         {
           pixel_region_init (&maskPR,
-                             gimp_drawable_data (GIMP_DRAWABLE (layer->mask)),
+                             gimp_drawable_get_tiles (GIMP_DRAWABLE (layer->mask)),
                              (x3 - off_x), (y3 - off_y),
                              (x4 - x3), (y4 - y3),
                              FALSE);

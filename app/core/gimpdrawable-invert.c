@@ -48,7 +48,7 @@ gimp_drawable_invert (GimpDrawable *drawable)
 
   lut = invert_lut_new (gimp_drawable_bytes (drawable));
 
-  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
 		     x, y, width, height, FALSE);
   pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
 		     x, y, width, height, TRUE);

@@ -147,6 +147,7 @@ void            gimp_drawable_replace_region     (GimpDrawable       *drawable,
                                                   gint                x,
                                                   gint                y);
 
+TileManager   * gimp_drawable_get_tiles          (const GimpDrawable *drawable);
 void            gimp_drawable_set_tiles          (GimpDrawable       *drawable,
                                                   gboolean            push_undo,
                                                   const gchar        *undo_desc,
@@ -212,9 +213,7 @@ gint            gimp_drawable_bytes_without_alpha(const GimpDrawable *drawable);
 
 gboolean        gimp_drawable_has_floating_sel   (const GimpDrawable *drawable);
 
-TileManager   * gimp_drawable_data               (const GimpDrawable *drawable);
-
-guchar        * gimp_drawable_cmap               (const GimpDrawable *drawable);
+const guchar  * gimp_drawable_cmap               (const GimpDrawable *drawable);
 
 
 #endif /* __GIMP_DRAWABLE_H__ */

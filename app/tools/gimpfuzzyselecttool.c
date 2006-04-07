@@ -389,7 +389,7 @@ gimp_fuzzy_select_tool_calculate (GimpFuzzySelectTool *fuzzy_sel,
    *  of the color-contiguous region
    */
   pixel_region_init (&maskPR,
-                     gimp_drawable_data (GIMP_DRAWABLE (fuzzy_sel->fuzzy_mask)),
+                     gimp_drawable_get_tiles (GIMP_DRAWABLE (fuzzy_sel->fuzzy_mask)),
                      0, 0,
                      gimp_item_width  (GIMP_ITEM (fuzzy_sel->fuzzy_mask)),
                      gimp_item_height (GIMP_ITEM (fuzzy_sel->fuzzy_mask)),

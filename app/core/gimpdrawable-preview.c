@@ -161,7 +161,7 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
          (dest_height * (subsample + 1) * 2 < src_width))
     subsample += 1;
 
-  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                      src_x, src_y, src_width, src_height,
                      FALSE);
 

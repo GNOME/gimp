@@ -63,7 +63,7 @@ gimp_drawable_equalize (GimpDrawable *drawable,
   lut = equalize_lut_new (hist, bytes);
 
   /*  Apply the histogram  */
-  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
 		     x, y, width, height, FALSE);
   pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
 		     x, y, width, height, TRUE);

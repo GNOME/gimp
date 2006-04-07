@@ -115,7 +115,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
   /*  Copy the center region  */
   if (width && height)
     {
-      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
 			 src_x, src_y, width, height, FALSE);
       pixel_region_init (&destPR, new_tiles,
 			 dest_x, dest_y, width, height, TRUE);
@@ -158,7 +158,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
       /*  intersecting region  */
       if (offset_x != 0 && offset_y != 0)
 	{
-	  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+	  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
 			     src_x, src_y,
                              ABS (offset_x), ABS (offset_y),
 			     FALSE);
@@ -174,7 +174,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
 	{
 	  if (offset_y >= 0)
 	    {
-	      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+	      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
 				 src_x, 0, ABS (offset_x),
 				 gimp_item_height (item) - ABS (offset_y),
 				 FALSE);
@@ -186,7 +186,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
 	    }
 	  else if (offset_y < 0)
 	    {
-	      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+	      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
 				 src_x, src_y - offset_y,
 				 ABS (offset_x),
 				 gimp_item_height (item) - ABS (offset_y),
@@ -206,7 +206,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
 	{
 	  if (offset_x >= 0)
 	    {
-	      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+	      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
 				 0, src_y,
 				 gimp_item_width (item) - ABS (offset_x),
 				 ABS (offset_y), FALSE);
@@ -216,7 +216,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
 	    }
 	  else if (offset_x < 0)
 	    {
-	      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+	      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
 				 src_x - offset_x, src_y,
 				 gimp_item_width (item) - ABS (offset_x),
 				 ABS (offset_y), FALSE);

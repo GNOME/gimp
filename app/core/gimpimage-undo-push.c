@@ -937,7 +937,7 @@ gimp_image_undo_push_mask (GimpImage   *image,
       undo_tiles = tile_manager_new (x2 - x1, y2 - y1,
                                      gimp_drawable_bytes (drawable));
 
-      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                          x1, y1, x2 - x1, y2 - y1, FALSE);
       pixel_region_init (&destPR, undo_tiles,
                          0, 0, x2 - x1, y2 - y1, TRUE);

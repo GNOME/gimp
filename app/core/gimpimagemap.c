@@ -318,7 +318,7 @@ gimp_image_map_apply (GimpImageMap          *image_map,
 
       /*  Copy from the image to the new tiles  */
       pixel_region_init (&image_map->srcPR,
-                         gimp_drawable_data (image_map->drawable),
+                         gimp_drawable_get_tiles (image_map->drawable),
                          x, y, width, height, FALSE);
       pixel_region_init (&image_map->destPR, image_map->undo_tiles,
                          0, 0, width, height, TRUE);
@@ -337,7 +337,7 @@ gimp_image_map_apply (GimpImageMap          *image_map,
       pixel_region_init (&image_map->srcPR, image_map->undo_tiles,
                          0, 0, undo_width, undo_height, FALSE);
       pixel_region_init (&image_map->destPR,
-                         gimp_drawable_data (image_map->drawable),
+                         gimp_drawable_get_tiles (image_map->drawable),
                          undo_offset_x, undo_offset_y,
                          undo_width, undo_height, TRUE);
 
@@ -444,7 +444,7 @@ gimp_image_map_clear (GimpImageMap *image_map)
       /*  Copy from the drawable to the tiles  */
       pixel_region_init (&srcPR, image_map->undo_tiles,
                          0, 0, width, height, FALSE);
-      pixel_region_init (&destPR, gimp_drawable_data (image_map->drawable),
+      pixel_region_init (&destPR, gimp_drawable_get_tiles (image_map->drawable),
                          offset_x, offset_y, width, height, TRUE);
 
       /* if the user has changed the image depth get out quickly */

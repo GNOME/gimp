@@ -407,7 +407,7 @@ gimp_palette_import_from_drawable (GimpDrawable *drawable,
     {
       colors =
         gimp_palette_import_extract (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                     gimp_drawable_data (drawable),
+                                     gimp_drawable_get_tiles (drawable),
                                      gimp_drawable_type (drawable),
                                      0, 0, width, height,
                                      n_colors, threshold);

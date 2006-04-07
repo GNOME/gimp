@@ -86,7 +86,7 @@ brightness_contrast_invoker (GimpProcedure     *procedure,
                                                  contrast / 127.0,
                                                  gimp_drawable_bytes (drawable));
 
-              pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+              pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                                  x, y, width, height, FALSE);
               pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                                  x, y, width, height, TRUE);
@@ -233,7 +233,7 @@ posterize_invoker (GimpProcedure     *procedure,
 
               lut = posterize_lut_new (levels, gimp_drawable_bytes (drawable));
 
-              pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+              pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                                  x, y, width, height, FALSE);
               pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                                  x, y, width, height, TRUE);
@@ -423,7 +423,7 @@ curves_spline_invoker (GimpProcedure     *procedure,
                               &c,
                               gimp_drawable_bytes (drawable));
 
-              pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+              pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                                  x, y, width, height, FALSE);
               pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                                  x, y, width, height, TRUE);
@@ -500,7 +500,7 @@ curves_explicit_invoker (GimpProcedure     *procedure,
                               &c,
                               gimp_drawable_bytes (drawable));
 
-              pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+              pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                                  x, y, width, height, FALSE);
               pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                                  x, y, width, height, TRUE);
@@ -568,7 +568,7 @@ color_balance_invoker (GimpProcedure     *procedure,
 
               color_balance_create_lookup_tables (&cb);
 
-              pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+              pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                                  x, y, width, height, FALSE);
               pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                                  x, y, width, height, TRUE);
@@ -627,7 +627,7 @@ colorize_invoker (GimpProcedure     *procedure,
 
               colorize_calculate (&colors);
 
-              pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+              pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                                  x, y, width, height, FALSE);
               pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                                  x, y, width, height, TRUE);
@@ -760,7 +760,7 @@ hue_saturation_invoker (GimpProcedure     *procedure,
               /* Calculate the transfer arrays */
               hue_saturation_calculate_transfers (&hs);
 
-              pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+              pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                                  x, y, width, height, FALSE);
               pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                                  x, y, width, height, TRUE);
@@ -814,7 +814,7 @@ threshold_invoker (GimpProcedure     *procedure,
               tr.low_threshold  = low_threshold;
               tr.high_threshold = high_threshold;
 
-              pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+              pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                                  x, y, width, height, FALSE);
               pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                                  x, y, width, height, TRUE);

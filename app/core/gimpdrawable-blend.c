@@ -601,7 +601,7 @@ gradient_precalc_shapeburst (GimpImage    *image,
       gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
       gimp_item_offsets (GIMP_ITEM (drawable), &offx, &offy);
 
-      pixel_region_init (&maskR, gimp_drawable_data (GIMP_DRAWABLE (mask)),
+      pixel_region_init (&maskR, gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
 			 x1 + offx, y1 + offy, (x2 - x1), (y2 - y1), FALSE);
 
       /*  copy the mask to the temp mask  */
@@ -614,7 +614,7 @@ gradient_precalc_shapeburst (GimpImage    *image,
 	{
 	  PixelRegion drawableR;
 
-	  pixel_region_init (&drawableR, gimp_drawable_data (drawable),
+	  pixel_region_init (&drawableR, gimp_drawable_get_tiles (drawable),
 			     PR->x, PR->y, PR->w, PR->h, FALSE);
 
 	  extract_alpha_region (&drawableR, NULL, &tempR);

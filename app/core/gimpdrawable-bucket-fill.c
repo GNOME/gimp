@@ -213,7 +213,8 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
 	  x2 = CLAMP (x2, off_x, (off_x + gimp_item_width (item)));
 	  y2 = CLAMP (y2, off_y, (off_y + gimp_item_height (item)));
 
-	  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)),
+	  pixel_region_init (&maskPR,
+                             gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
 			     x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
 	  /*  translate mask bounds to drawable coords  */
@@ -224,7 +225,8 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
 	}
       else
         {
-          pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)),
+          pixel_region_init (&maskPR,
+                             gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
                              x1, y1, (x2 - x1), (y2 - y1), TRUE);
         }
 

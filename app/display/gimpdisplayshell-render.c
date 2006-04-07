@@ -253,7 +253,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   else if (shell->mask)
     {
       render_image_init_info (&info, shell, x, y,
-                              gimp_drawable_data (shell->mask));
+                              gimp_drawable_get_tiles (shell->mask));
 
       gimp_display_shell_render_mask (shell, &info);
     }
