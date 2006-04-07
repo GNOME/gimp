@@ -117,15 +117,13 @@ gimp_object_init (GimpObject *object)
 static void
 gimp_object_dispose (GObject *object)
 {
-  gboolean disconnected;
+  GimpObject *gimp_object = GIMP_OBJECT (object);
 
-  disconnected = GPOINTER_TO_INT (g_object_get_data (object, "disconnected"));
-
-  if (! disconnected)
+  if (! gimp_object->disconnected)
     {
       g_signal_emit (object, object_signals[DISCONNECT], 0);
 
-      g_object_set_data (object, "disconnected", GINT_TO_POINTER (TRUE));
+      gimp_object->disconnected = TRUE;
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);

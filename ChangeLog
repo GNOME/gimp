@@ -1,3 +1,12 @@
+2006-04-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpobject.h: added "guint disconnected : 1", we
+	have enough space for flags now.
+
+	* app/core/gimpobject.c (gimp_object_dispose): use the new
+	object->disconnected flag instead of attaching that boolean to the
+	object.
+
 2006-04-07  Sven Neumann  <sven@gimp.org>
 
 	* app/xcf/xcf.c (xcf_loaders): declared the array as const.

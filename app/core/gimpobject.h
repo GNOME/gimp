@@ -38,7 +38,8 @@ struct _GimpObject
 
   /*<  private  >*/
   gchar   *normalized;
-  guint    static_name : 1;
+  guint    static_name  : 1;
+  guint    disconnected : 1;
 };
 
 struct _GimpObjectClass
