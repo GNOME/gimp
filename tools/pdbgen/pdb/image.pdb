@@ -790,7 +790,7 @@ HELP
 	headers => [ qw("core/gimpimage-merge.h") ],
 	code => <<'CODE'
 {
-  layer = gimp_image_merge_visible_layers (image, context, merge_type);
+  layer = gimp_image_merge_visible_layers (image, context, merge_type, FALSE);
 
   if (! layer)
     success = FALSE;

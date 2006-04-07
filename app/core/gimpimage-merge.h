@@ -22,7 +22,8 @@
 
 GimpLayer   * gimp_image_merge_visible_layers  (GimpImage     *image,
                                                 GimpContext   *context,
-                                                GimpMergeType  merge_type);
+                                                GimpMergeType  merge_type,
+                                                gboolean       discard_invisible);
 GimpLayer   * gimp_image_merge_down            (GimpImage     *image,
                                                 GimpLayer     *current_layer,
                                                 GimpContext   *context,

@@ -379,7 +379,7 @@ file_open_layer (Gimp                *gimp,
 
       if (n_visible > 1)
         layer = gimp_image_merge_visible_layers (new_image, context,
-                                                 GIMP_CLIP_TO_IMAGE);
+                                                 GIMP_CLIP_TO_IMAGE, FALSE);
 
       if (layer)
         {

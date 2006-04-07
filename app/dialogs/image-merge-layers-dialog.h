@@ -29,13 +29,16 @@ struct _ImageMergeLayersDialog
   GimpImage     *image;
   GimpContext   *context;
   GimpMergeType  merge_type;
+  gboolean       discard_invisible;
 };
 
 
-ImageMergeLayersDialog * image_merge_layers_dialog_new (GimpImage     *image,
-                                                        GimpContext   *context,
-                                                        GtkWidget     *parent,
-                                                        GimpMergeType  merge_type);
+ImageMergeLayersDialog *
+  image_merge_layers_dialog_new (GimpImage     *image,
+                                 GimpContext   *context,
+                                 GtkWidget     *parent,
+                                 GimpMergeType  merge_type,
+                                 gboolean       discard_invisible);
 
 
 #endif /* __IMAGE_MERGE_LAYERS_DIALOG_H__ */

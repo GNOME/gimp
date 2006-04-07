@@ -1,3 +1,17 @@
+2006-04-07  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage-merge.[ch] (gimp_image_merge_visible_layers):
+	allow to discard invisible layers as suggested in bug #337557.
+
+	* app/actions/image-commands.c
+	* app/dialogs/image-merge-layers-dialog.[ch]: added a check button
+	to the Merge Visible Layers dialog to control the new feature.
+
+	* app/file/file-open.c
+	* tools/pdbgen/pdb/image.pdb: pass FALSE for the new parameter.
+
+	* app/pdb/image_cmds.c: regenerated.
+
 2006-04-06  Sven Neumann  <sven@gimp.org>
 
 	* app/composite/gimp-composite.c: removed unused global arrays.

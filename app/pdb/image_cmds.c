@@ -1195,7 +1195,7 @@ image_merge_visible_layers_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      layer = gimp_image_merge_visible_layers (image, context, merge_type);
+      layer = gimp_image_merge_visible_layers (image, context, merge_type, FALSE);
 
       if (! layer)
         success = FALSE;

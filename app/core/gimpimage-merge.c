@@ -56,10 +56,12 @@
 GimpLayer *
 gimp_image_merge_visible_layers (GimpImage     *image,
                                  GimpContext   *context,
-                                 GimpMergeType  merge_type)
+                                 GimpMergeType  merge_type,
+                                 gboolean       discard_invisible)
 {
   GList     *list;
   GSList    *merge_list       = NULL;
+  GSList    *invisible_list   = NULL;
   gboolean   had_floating_sel = FALSE;
   GimpLayer *layer            = NULL;
 
@@ -77,19 +79,46 @@ gimp_image_merge_visible_layers (GimpImage     *image,
        list;
        list = g_list_next (list))
     {
-      layer = (GimpLayer *) list->data;
+      layer = list->data;
 
       if (gimp_item_get_visible (GIMP_ITEM (layer)))
-        merge_list = g_slist_append (merge_list, layer);
+        {
+          merge_list = g_slist_append (merge_list, layer);
+        }
+      else if (discard_invisible)
+        {
+          invisible_list = g_slist_append (invisible_list, layer);
+        }
     }
 
   if (merge_list && merge_list->next)
     {
+      const gchar *undo_desc = _("Merge Visible Layers");
+
       gimp_set_busy (image->gimp);
+
+      if (invisible_list)
+        {
+          gimp_image_undo_group_start (image,
+                                       GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE,
+                                       undo_desc);
+        }
 
       layer = gimp_image_merge_layers (image, merge_list, context, merge_type,
                                        _("Merge Visible Layers"));
       g_slist_free (merge_list);
+
+      if (invisible_list)
+        {
+          GSList *list;
+
+          for (list = invisible_list; list; list = g_slist_next (list))
+            gimp_image_remove_layer (image, list->data);
+
+          gimp_image_undo_group_end (image);
+          g_slist_free (invisible_list);
+        }
+
 
       gimp_unset_busy (image->gimp);
 
