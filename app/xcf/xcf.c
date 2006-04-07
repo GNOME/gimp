@@ -151,8 +151,8 @@ xcf_init (Gimp *gimp)
   gimp_plug_in_procedure_set_file_proc (proc, "xcf", "", NULL);
   gimp_plug_in_procedure_set_mime_type (proc, "image/xcf");
 
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-xcf-save");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-xcf-save",
                                      "gimp-xcf-save",
                                      "saves file in the .xcf file format",
                                      "The xcf file format has been designed "
@@ -219,8 +219,8 @@ xcf_init (Gimp *gimp)
                                         "0,string,gimp\\040xcf\\040");
   gimp_plug_in_procedure_set_mime_type (proc, "image/xcf");
 
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-xcf-load");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-xcf-load",
                                      "gimp-xcf-load",
                                      "loads file saved in the .xcf file format",
                                      "The xcf file format has been designed "

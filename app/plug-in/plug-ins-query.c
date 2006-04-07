@@ -146,7 +146,7 @@ plug_ins_query (Gimp          *gimp,
       (*accel_strs)[i]    = NULL;
       (*prog_strs)[i]     = g_strdup (proc->prog);
       (*types_strs)[i]    = g_strdup (proc->image_types);
-      (*realname_strs)[i] = g_strdup (GIMP_PROCEDURE (proc)->name);
+      (*realname_strs)[i] = g_strdup (GIMP_OBJECT (proc)->name);
       (*time_ints)[i]     = proc->mtime;
 
       g_free (name);

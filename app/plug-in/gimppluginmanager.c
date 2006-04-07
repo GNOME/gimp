@@ -242,7 +242,7 @@ plug_ins_init (Gimp               *gimp,
 
               g_printerr ("removing duplicate PDB procedure \"%s\" "
                           "registered by '%s'\n",
-                          GIMP_PROCEDURE (overridden_proc)->name,
+                          GIMP_OBJECT (overridden_proc)->name,
                           gimp_filename_to_utf8 (overridden_proc->prog));
 
               /* search the plugin list to see if any plugins had references to
@@ -348,9 +348,9 @@ plug_ins_init (Gimp               *gimp,
 
 	  if (gimp->be_verbose)
 	    g_print (_("Starting extension: '%s'\n"),
-                     GIMP_PROCEDURE (proc)->name);
+                     GIMP_OBJECT (proc)->name);
 
-	  status_callback (NULL, GIMP_PROCEDURE (proc)->name,
+	  status_callback (NULL, GIMP_OBJECT (proc)->name,
                            (gdouble) nth / (gdouble) n_extensions);
 
           args = g_value_array_new (0);
@@ -639,7 +639,7 @@ plug_ins_temp_procedure_remove (Gimp                   *gimp,
   gimp->plug_in_procedures = g_slist_remove (gimp->plug_in_procedures, proc);
 
   /*  Unregister the procedural database entry  */
-  gimp_pdb_unregister (gimp, GIMP_PROCEDURE (proc)->name);
+  gimp_pdb_unregister (gimp, GIMP_OBJECT (proc)->name);
 
   g_object_unref (proc);
 }
@@ -880,7 +880,7 @@ plug_ins_add_to_db (Gimp        *gimp,
       else
         {
           g_printerr ("%s: NOT adding %s (prog = %s) to PDB\n",
-                      G_STRFUNC, GIMP_PROCEDURE (proc)->name, proc->prog);
+                      G_STRFUNC, GIMP_OBJECT (proc)->name, proc->prog);
         }
     }
 
@@ -897,7 +897,7 @@ plug_ins_add_to_db (Gimp        *gimp,
               return_vals =
                 gimp_pdb_run_proc (gimp, context, NULL,
                                    "gimp-register-save-handler",
-                                   G_TYPE_STRING, GIMP_PROCEDURE (proc)->name,
+                                   G_TYPE_STRING, GIMP_OBJECT (proc)->name,
                                    G_TYPE_STRING, proc->extensions,
                                    G_TYPE_STRING, proc->prefixes,
                                    G_TYPE_NONE);
@@ -907,7 +907,7 @@ plug_ins_add_to_db (Gimp        *gimp,
               return_vals =
                 gimp_pdb_run_proc (gimp, context, NULL,
                                    "gimp-register-magic-load-handler",
-                                   G_TYPE_STRING, GIMP_PROCEDURE (proc)->name,
+                                   G_TYPE_STRING, GIMP_OBJECT (proc)->name,
                                    G_TYPE_STRING, proc->extensions,
                                    G_TYPE_STRING, proc->prefixes,
                                    G_TYPE_STRING, proc->magics,
@@ -929,8 +929,8 @@ plug_ins_procedure_insert (Gimp                *gimp,
     {
       GimpPlugInProcedure *tmp_proc = list->data;
 
-      if (strcmp (GIMP_PROCEDURE (proc)->name,
-                  GIMP_PROCEDURE (tmp_proc)->name) == 0)
+      if (strcmp (GIMP_OBJECT (proc)->name,
+                  GIMP_OBJECT (tmp_proc)->name) == 0)
 	{
 	  list->data = g_object_ref (proc);
 

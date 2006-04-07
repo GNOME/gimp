@@ -281,8 +281,8 @@ register_text_tool_procs (Gimp *gimp)
    * gimp-text-fontname
    */
   procedure = gimp_procedure_new (text_fontname_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-text-fontname");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-text-fontname",
                                      "gimp-text-fontname",
                                      "Add text at the specified location as a floating selection or a new layer.",
                                      "This tool requires a fontname matching an installed PangoFT2 font. You can specify the fontsize in units of pixels or points, and the appropriate metric is specified using the size_type argument. The x and y parameters together control the placement of the new text by specifying the upper left corner of the text bounding box. If the specified drawable parameter is valid, the text will be created as a floating selection attached to the drawable. If the drawable parameter is not valid (-1), the text will appear as a new layer. Finally, a border can be specified around the final rendered text. The border is measured in pixels.",
@@ -367,8 +367,8 @@ register_text_tool_procs (Gimp *gimp)
    * gimp-text-get-extents-fontname
    */
   procedure = gimp_procedure_new (text_get_extents_fontname_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-text-get-extents-fontname");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-text-get-extents-fontname",
                                      "gimp-text-get-extents-fontname",
                                      "Get extents of the bounding box for the specified text.",
                                      "This tool returns the width and height of a bounding box for the specified text string with the specified font information. Ascent and descent for the specified font are returned as well.",
@@ -435,8 +435,8 @@ register_text_tool_procs (Gimp *gimp)
    * gimp-text
    */
   procedure = gimp_procedure_new (text_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-text");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-text",
                                      "gimp-text",
                                      "This procedure is deprecated! Use 'gimp-text-fontname' instead.",
                                      "This procedure is deprecated! Use 'gimp-text-fontname' instead.",
@@ -570,8 +570,8 @@ register_text_tool_procs (Gimp *gimp)
    * gimp-text-get-extents
    */
   procedure = gimp_procedure_new (text_get_extents_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-text-get-extents");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-text-get-extents",
                                      "gimp-text-get-extents",
                                      "This procedure is deprecated! Use 'gimp-text-get-extents-fontname' instead.",
                                      "This procedure is deprecated! Use 'gimp-text-get-extents-fontname' instead.",

@@ -261,8 +261,8 @@ register_selection_tools_procs (Gimp *gimp)
    * gimp-by-color-select
    */
   procedure = gimp_procedure_new (by_color_select_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-by-color-select");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-by-color-select",
                                      "gimp-by-color-select",
                                      "Create a selection by selecting all pixels (in the specified drawable) with the same (or similar) color to that specified.",
                                      "This tool creates a selection over the specified image. A by-color selection is determined by the supplied color under the constraints of the specified threshold. Essentially, all pixels (in the drawable) that have color sufficiently close to the specified color (as determined by the threshold value) are included in the selection. The antialiasing parameter allows the final selection mask to contain intermediate values based on close misses to the threshold bar. Feathering can be enabled optionally and is controlled with the \"feather_radius\" parameter. If the sample_merged parameter is TRUE, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored.",
@@ -327,8 +327,8 @@ register_selection_tools_procs (Gimp *gimp)
    * gimp-ellipse-select
    */
   procedure = gimp_procedure_new (ellipse_select_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-ellipse-select");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-ellipse-select",
                                      "gimp-ellipse-select",
                                      "Create an elliptical selection over the specified image.",
                                      "This tool creates an elliptical selection over the specified image. The elliptical region can be either added to, subtracted from, or replace the contents of the previous selection mask. If antialiasing is turned on, the edges of the elliptical region will contain intermediate values which give the appearance of a sharper, less pixelized edge. This should be set as TRUE most of the time. If the feather option is enabled, the resulting selection is blurred before combining. The blur is a gaussian blur with the specified feather radius.",
@@ -399,8 +399,8 @@ register_selection_tools_procs (Gimp *gimp)
    * gimp-free-select
    */
   procedure = gimp_procedure_new (free_select_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-free-select");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-free-select",
                                      "gimp-free-select",
                                      "Create a polygonal selection over the specified image.",
                                      "This tool creates a polygonal selection over the specified image. The polygonal region can be either added to, subtracted from, or replace the contents of the previous selection mask. The polygon is specified through an array of floating point numbers and its length. The length of array must be 2n, where n is the number of points. Each point is defined by 2 floating point values which correspond to the x and y coordinates. If the final point does not connect to the starting point, a connecting segment is automatically added. If the feather option is enabled, the resulting selection is blurred before combining. The blur is a gaussian blur with the specified feather radius.",
@@ -458,8 +458,8 @@ register_selection_tools_procs (Gimp *gimp)
    * gimp-fuzzy-select
    */
   procedure = gimp_procedure_new (fuzzy_select_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-fuzzy-select");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-fuzzy-select",
                                      "gimp-fuzzy-select",
                                      "Create a fuzzy selection starting at the specified coordinates on the specified drawable.",
                                      "This tool creates a fuzzy selection over the specified image. A fuzzy selection is determined by a seed fill under the constraints of the specified threshold. Essentially, the color at the specified coordinates (in the drawable) is measured and the selection expands outwards from that point to any adjacent pixels which are not significantly different (as determined by the threshold value). This process continues until no more expansion is possible. The antialiasing parameter allows the final selection mask to contain intermediate values based on close misses to the threshold bar at pixels along the seed fill boundary. Feathering can be enabled optionally and is controlled with the \"feather_radius\" paramter. If the sample_merged parameter is TRUE, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored. If"
@@ -531,8 +531,8 @@ register_selection_tools_procs (Gimp *gimp)
    * gimp-rect-select
    */
   procedure = gimp_procedure_new (rect_select_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-rect-select");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-rect-select",
                                      "gimp-rect-select",
                                      "Create a rectangular selection over the specified image;",
                                      "This tool creates a rectangular selection over the specified image. The rectangular region can be either added to, subtracted from, or replace the contents of the previous selection mask. If the feather option is enabled, the resulting selection is blurred before combining. The blur is a gaussian blur with the specified feather radius.",

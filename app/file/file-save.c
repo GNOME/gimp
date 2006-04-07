@@ -126,7 +126,7 @@ file_save (GimpImage           *image,
   g_object_ref (image);
 
   return_vals = gimp_pdb_run_proc (image->gimp, context, progress,
-                                   GIMP_PROCEDURE (file_proc)->name,
+                                   GIMP_OBJECT (file_proc)->name,
                                    GIMP_TYPE_INT32,       run_mode,
                                    GIMP_TYPE_IMAGE_ID,    gimp_image_get_ID (image),
                                    GIMP_TYPE_DRAWABLE_ID, gimp_item_get_ID (GIMP_ITEM (gimp_image_active_drawable (image))),

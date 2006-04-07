@@ -270,8 +270,8 @@ register_plug_in_procs (Gimp *gimp)
    * gimp-plugins-query
    */
   procedure = gimp_procedure_new (plugins_query_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-plugins-query");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-plugins-query",
                                      "gimp-plugins-query",
                                      "Queries the plugin database for its contents.",
                                      "This procedure queries the contents of the plugin database.",
@@ -360,8 +360,8 @@ register_plug_in_procs (Gimp *gimp)
    * gimp-plugin-domain-register
    */
   procedure = gimp_procedure_new (plugin_domain_register_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-plugin-domain-register");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-plugin-domain-register",
                                      "gimp-plugin-domain-register",
                                      "Registers a textdomain for localisation.",
                                      "This procedure adds a textdomain to the list of domains Gimp searches for strings when translating its menu entries. There is no need to call this function for plug-ins that have their strings included in the gimp-std-plugins domain as that is used by default. If the compiled message catalog is not in the standard location, you may specify an absolute path to another location. This procedure can only be called in the query function of a plug-in and it has to be called before any procedure is installed.",
@@ -391,8 +391,8 @@ register_plug_in_procs (Gimp *gimp)
    * gimp-plugin-help-register
    */
   procedure = gimp_procedure_new (plugin_help_register_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-plugin-help-register");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-plugin-help-register",
                                      "gimp-plugin-help-register",
                                      "Register a help path for a plug-in.",
                                      "This procedure changes the help rootdir for the plug-in which calls it. All subsequent calls of gimp_help from this plug-in will be interpreted relative to this rootdir.",
@@ -422,8 +422,8 @@ register_plug_in_procs (Gimp *gimp)
    * gimp-plugin-menu-register
    */
   procedure = gimp_procedure_new (plugin_menu_register_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-plugin-menu-register");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-plugin-menu-register",
                                      "gimp-plugin-menu-register",
                                      "Register an additional menu path for a plug-in procedure.",
                                      "This procedure installs an additional menu entry for the given procedure.",
@@ -453,8 +453,8 @@ register_plug_in_procs (Gimp *gimp)
    * gimp-plugin-menu-branch-register
    */
   procedure = gimp_procedure_new (plugin_menu_branch_register_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-plugin-menu-branch-register");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-plugin-menu-branch-register",
                                      "gimp-plugin-menu-branch-register",
                                      "Register a sub-menu.",
                                      "This procedure installs an sub-menu which does not belong to any procedure.",
@@ -484,8 +484,8 @@ register_plug_in_procs (Gimp *gimp)
    * gimp-plugin-icon-register
    */
   procedure = gimp_procedure_new (plugin_icon_register_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-plugin-icon-register");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-plugin-icon-register",
                                      "gimp-plugin-icon-register",
                                      "Register an icon for a plug-in procedure.",
                                      "This procedure installs an icon for the given procedure.",

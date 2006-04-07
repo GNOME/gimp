@@ -38,6 +38,7 @@ struct _GimpObject
 
   /*<  private  >*/
   gchar   *normalized;
+  guint    static_name : 1;
 };
 
 struct _GimpObjectClass
@@ -54,20 +55,24 @@ struct _GimpObjectClass
 };
 
 
-GType         gimp_object_get_type      (void) G_GNUC_CONST;
+GType         gimp_object_get_type        (void) G_GNUC_CONST;
 
-void          gimp_object_set_name      (GimpObject       *object,
-                                         const gchar      *name);
-const gchar * gimp_object_get_name      (const GimpObject *object);
-void          gimp_object_set_name_safe (GimpObject       *object,
-                                         const gchar      *name);
-void          gimp_object_name_changed  (GimpObject       *object);
-void          gimp_object_name_free     (GimpObject       *object);
+void          gimp_object_set_name        (GimpObject       *object,
+                                           const gchar      *name);
+void          gimp_object_set_name_safe   (GimpObject       *object,
+                                           const gchar      *name);
+void          gimp_object_set_static_name (GimpObject       *object,
+                                           const gchar      *name);
+void          gimp_object_take_name       (GimpObject       *object,
+                                           gchar            *name);
+const gchar * gimp_object_get_name        (const GimpObject *object);
+void          gimp_object_name_changed    (GimpObject       *object);
+void          gimp_object_name_free       (GimpObject       *object);
 
-gint          gimp_object_name_collate  (GimpObject       *object1,
-                                         GimpObject       *object2);
-gint64        gimp_object_get_memsize   (GimpObject       *object,
-                                         gint64           *gui_size);
+gint          gimp_object_name_collate    (GimpObject       *object1,
+                                           GimpObject       *object2);
+gint64        gimp_object_get_memsize     (GimpObject       *object,
+                                           gint64           *gui_size);
 
 
 #endif  /* __GIMP_OBJECT_H__ */

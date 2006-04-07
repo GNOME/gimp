@@ -189,8 +189,8 @@ register_patterns_procs (Gimp *gimp)
    * gimp-patterns-refresh
    */
   procedure = gimp_procedure_new (patterns_refresh_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-patterns-refresh");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-patterns-refresh",
                                      "gimp-patterns-refresh",
                                      "Refresh current patterns. This function always succeeds.",
                                      "This procedure retrieves all patterns currently in the user's pattern path and updates all pattern dialogs accordingly.",
@@ -206,8 +206,8 @@ register_patterns_procs (Gimp *gimp)
    * gimp-patterns-get-list
    */
   procedure = gimp_procedure_new (patterns_get_list_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-patterns-get-list");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-patterns-get-list",
                                      "gimp-patterns-get-list",
                                      "Retrieve a complete listing of the available patterns.",
                                      "This procedure returns a complete listing of available GIMP patterns. Each name returned can be used as input to the 'gimp-context-set-pattern'.",
@@ -241,8 +241,8 @@ register_patterns_procs (Gimp *gimp)
    * gimp-patterns-get-pattern
    */
   procedure = gimp_procedure_new (patterns_get_pattern_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-patterns-get-pattern");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-patterns-get-pattern",
                                      "gimp-patterns-get-pattern",
                                      "This procedure is deprecated! Use 'gimp-context-get-pattern' instead.",
                                      "This procedure is deprecated! Use 'gimp-context-get-pattern' instead.",
@@ -277,8 +277,8 @@ register_patterns_procs (Gimp *gimp)
    * gimp-patterns-get-pattern-data
    */
   procedure = gimp_procedure_new (patterns_get_pattern_data_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-patterns-get-pattern-data");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-patterns-get-pattern-data",
                                      "gimp-patterns-get-pattern-data",
                                      "This procedure is deprecated! Use 'gimp-pattern-get-pixels' instead.",
                                      "This procedure is deprecated! Use 'gimp-pattern-get-pixels' instead.",

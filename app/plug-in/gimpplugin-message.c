@@ -678,8 +678,8 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 
   gimp_plug_in_procedure_set_image_types (proc, proc_install->image_types);
 
+  gimp_object_take_name (GIMP_OBJECT (procedure), canonical);
   gimp_procedure_set_strings (procedure,
-                              canonical,
                               proc_install->name,
                               proc_install->blurb,
                               proc_install->help,
@@ -687,8 +687,6 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
                               proc_install->copyright,
                               proc_install->date,
                               NULL);
-
-  g_free (canonical);
 
   for (i = 0; i < proc_install->nparams; i++)
     {

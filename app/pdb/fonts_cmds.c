@@ -86,8 +86,8 @@ register_fonts_procs (Gimp *gimp)
    * gimp-fonts-refresh
    */
   procedure = gimp_procedure_new (fonts_refresh_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-fonts-refresh");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-fonts-refresh",
                                      "gimp-fonts-refresh",
                                      "Refresh current fonts. This function always succeeds.",
                                      "This procedure retrieves all fonts currently in the user's font path and updates the font dialogs accordingly.",
@@ -103,8 +103,8 @@ register_fonts_procs (Gimp *gimp)
    * gimp-fonts-get-list
    */
   procedure = gimp_procedure_new (fonts_get_list_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-fonts-get-list");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-fonts-get-list",
                                      "gimp-fonts-get-list",
                                      "Retrieve the list of loaded fonts.",
                                      "This procedure returns a list of the fonts that are currently available.",

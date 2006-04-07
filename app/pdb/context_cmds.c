@@ -565,8 +565,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-push
    */
   procedure = gimp_procedure_new (context_push_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-push");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-push",
                                      "gimp-context-push",
                                      "Pushes a context to the top of the plug-in's context stack.",
                                      "This procedure creates a new context by copying the current context. This copy becomes the new current context for the calling plug-in until it is popped again using gimp-context-pop.",
@@ -582,8 +582,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-pop
    */
   procedure = gimp_procedure_new (context_pop_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-pop");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-pop",
                                      "gimp-context-pop",
                                      "Pops the topmost context from the plug-in's context stack.",
                                      "This procedure removes the topmost context from the plug-in's context stack. The context that was active before the corresponding call to gimp-context-push becomes the new current context of the plug-in.",
@@ -599,8 +599,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-get-paint-method
    */
   procedure = gimp_procedure_new (context_get_paint_method_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-get-paint-method");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-get-paint-method",
                                      "gimp-context-get-paint-method",
                                      "Retrieve the currently active paint method.",
                                      "This procedure returns the name of the currently active paint method.",
@@ -623,8 +623,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-set-paint-method
    */
   procedure = gimp_procedure_new (context_set_paint_method_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-set-paint-method");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-set-paint-method",
                                      "gimp-context-set-paint-method",
                                      "Set the specified paint method as the active paint method.",
                                      "This procedure allows the active paint method to be set by specifying its name. The name is simply a string which corresponds to one of the names of the available paint methods. If there is no matching method found, this procedure will return an error. Otherwise, the specified method becomes active and will be used in all subsequent paint operations.",
@@ -647,8 +647,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-get-foreground
    */
   procedure = gimp_procedure_new (context_get_foreground_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-get-foreground");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-get-foreground",
                                      "gimp-context-get-foreground",
                                      "Get the current GIMP foreground color.",
                                      "This procedure returns the current GIMP foreground color. The foreground color is used in a variety of tools such as paint tools, blending, and bucket fill.",
@@ -670,8 +670,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-set-foreground
    */
   procedure = gimp_procedure_new (context_set_foreground_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-set-foreground");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-set-foreground",
                                      "gimp-context-set-foreground",
                                      "Set the current GIMP foreground color.",
                                      "This procedure sets the current GIMP foreground color. After this is set, operations which use foreground such as paint tools, blending, and bucket fill will use the new value.",
@@ -693,8 +693,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-get-background
    */
   procedure = gimp_procedure_new (context_get_background_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-get-background");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-get-background",
                                      "gimp-context-get-background",
                                      "Get the current GIMP background color.",
                                      "This procedure returns the current GIMP background color. The background color is used in a variety of tools such as blending, erasing (with non-alpha images), and image filling.",
@@ -716,8 +716,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-set-background
    */
   procedure = gimp_procedure_new (context_set_background_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-set-background");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-set-background",
                                      "gimp-context-set-background",
                                      "Set the current GIMP background color.",
                                      "This procedure sets the current GIMP background color. After this is set, operations which use background such as blending, filling images, clearing, and erasing (in non-alpha images) will use the new value.",
@@ -739,8 +739,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-set-default-colors
    */
   procedure = gimp_procedure_new (context_set_default_colors_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-set-default-colors");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-set-default-colors",
                                      "gimp-context-set-default-colors",
                                      "Set the current GIMP foreground and background colors to black and white.",
                                      "This procedure sets the current GIMP foreground and background colors to their initial default values, black and white.",
@@ -756,8 +756,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-swap-colors
    */
   procedure = gimp_procedure_new (context_swap_colors_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-swap-colors");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-swap-colors",
                                      "gimp-context-swap-colors",
                                      "Swap the current GIMP foreground and background colors.",
                                      "This procedure swaps the current GIMP foreground and background colors, so that the new foreground color becomes the old background color and vice versa.",
@@ -773,8 +773,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-get-opacity
    */
   procedure = gimp_procedure_new (context_get_opacity_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-get-opacity");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-get-opacity",
                                      "gimp-context-get-opacity",
                                      "Get the opacity.",
                                      "This procedure returns the opacity setting. The return value is a floating point number between 0 and 100.",
@@ -796,8 +796,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-set-opacity
    */
   procedure = gimp_procedure_new (context_set_opacity_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-set-opacity");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-set-opacity",
                                      "gimp-context-set-opacity",
                                      "Set the opacity.",
                                      "This procedure modifies the opacity setting. The value should be a floating point number between 0 and 100.",
@@ -819,8 +819,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-get-paint-mode
    */
   procedure = gimp_procedure_new (context_get_paint_mode_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-get-paint-mode");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-get-paint-mode",
                                      "gimp-context-get-paint-mode",
                                      "Get the paint mode.",
                                      "This procedure returns the paint-mode setting. The return value is an integer which corresponds to the values listed in the argument description.",
@@ -843,8 +843,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-set-paint-mode
    */
   procedure = gimp_procedure_new (context_set_paint_mode_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-set-paint-mode");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-set-paint-mode",
                                      "gimp-context-set-paint-mode",
                                      "Set the paint mode.",
                                      "This procedure modifies the paint_mode setting.",
@@ -867,8 +867,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-get-brush
    */
   procedure = gimp_procedure_new (context_get_brush_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-get-brush");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-get-brush",
                                      "gimp-context-get-brush",
                                      "Retrieve the currently active brush.",
                                      "This procedure returns the name of the currently active brush. All paint operations and stroke operations use this brush to control the application of paint to the image.",
@@ -891,8 +891,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-set-brush
    */
   procedure = gimp_procedure_new (context_set_brush_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-set-brush");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-set-brush",
                                      "gimp-context-set-brush",
                                      "Set the specified brush as the active brush.",
                                      "This procedure allows the active brush to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed brushes. If there is no matching brush found, this procedure will return an error. Otherwise, the specified brush becomes active and will be used in all subsequent paint operations.",
@@ -915,8 +915,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-get-pattern
    */
   procedure = gimp_procedure_new (context_get_pattern_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-get-pattern");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-get-pattern",
                                      "gimp-context-get-pattern",
                                      "Retrieve the currently active pattern.",
                                      "This procedure returns name of the the currently active pattern. All clone and bucket-fill operations with patterns will use this pattern to control the application of paint to the image.",
@@ -939,8 +939,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-set-pattern
    */
   procedure = gimp_procedure_new (context_set_pattern_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-set-pattern");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-set-pattern",
                                      "gimp-context-set-pattern",
                                      "Set the specified pattern as the active pattern.",
                                      "This procedure allows the active pattern to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed patterns. If there is no matching pattern found, this procedure will return an error. Otherwise, the specified pattern becomes active and will be used in all subsequent paint operations.",
@@ -963,8 +963,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-get-gradient
    */
   procedure = gimp_procedure_new (context_get_gradient_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-get-gradient");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-get-gradient",
                                      "gimp-context-get-gradient",
                                      "Retrieve the currently active gradient.",
                                      "This procedure returns the name of the currently active gradient.",
@@ -987,8 +987,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-set-gradient
    */
   procedure = gimp_procedure_new (context_set_gradient_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-set-gradient");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-set-gradient",
                                      "gimp-context-set-gradient",
                                      "Sets the specified gradient as the active gradient.",
                                      "This procedure lets you set the specified gradient as the active or \"current\" one. The name is simply a string which corresponds to one of the loaded gradients. If no matching gradient is found, this procedure will return an error. Otherwise, the specified gradient will become active and will be used for subsequent custom gradient operations.",
@@ -1011,8 +1011,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-get-palette
    */
   procedure = gimp_procedure_new (context_get_palette_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-get-palette");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-get-palette",
                                      "gimp-context-get-palette",
                                      "Retrieve the currently active palette.",
                                      "This procedure returns the name of the the currently active palette.",
@@ -1035,8 +1035,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-set-palette
    */
   procedure = gimp_procedure_new (context_set_palette_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-set-palette");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-set-palette",
                                      "gimp-context-set-palette",
                                      "Set the specified palette as the active palette.",
                                      "This procedure allows the active palette to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed palettes. If no matching palette is found, this procedure will return an error. Otherwise, the specified palette becomes active and will be used in all subsequent palette operations.",
@@ -1059,8 +1059,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-get-font
    */
   procedure = gimp_procedure_new (context_get_font_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-get-font");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-get-font",
                                      "gimp-context-get-font",
                                      "Retrieve the currently active font.",
                                      "This procedure returns the name of the currently active font.",
@@ -1083,8 +1083,8 @@ register_context_procs (Gimp *gimp)
    * gimp-context-set-font
    */
   procedure = gimp_procedure_new (context_set_font_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-set-font");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-set-font",
                                      "gimp-context-set-font",
                                      "Set the specified font as the active font.",
                                      "This procedure allows the active font to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed fonts. If no matching font is found, this procedure will return an error. Otherwise, the specified font becomes active and will be used in all subsequent font operations.",

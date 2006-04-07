@@ -135,7 +135,7 @@ file_load_invoker (GimpProcedure     *procedure,
       g_value_set_static_string (&new_args->values[i], "");
 
   return_vals = gimp_pdb_execute (gimp, context, progress,
-                                  proc->name, new_args);
+                                  GIMP_OBJECT (proc)->name, new_args);
 
   g_value_array_free (new_args);
 
@@ -307,7 +307,7 @@ file_save_invoker (GimpProcedure     *procedure,
       g_value_set_static_string (&new_args->values[i], "");
 
   return_vals = gimp_pdb_execute (gimp, context, progress,
-                                  proc->name, new_args);
+                                  GIMP_OBJECT (proc)->name, new_args);
 
   g_value_array_free (new_args);
 
@@ -572,8 +572,8 @@ register_fileops_procs (Gimp *gimp)
    * gimp-file-load
    */
   procedure = gimp_procedure_new (file_load_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-file-load");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-file-load",
                                      "gimp-file-load",
                                      "Loads an image file by invoking the right load handler.",
                                      "This procedure invokes the correct file load handler using magic if possible, and falling back on the file's extension and/or prefix if not. The name of the file to load is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path. The reason for this is that if the user types http://www.xcf/~gimp/ he wants to fetch a URL, and the full pathname will not look like a URL.\"",
@@ -618,8 +618,8 @@ register_fileops_procs (Gimp *gimp)
    * gimp-file-load-layer
    */
   procedure = gimp_procedure_new (file_load_layer_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-file-load-layer");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-file-load-layer",
                                      "gimp-file-load-layer",
                                      "Loads an image file as a layer into an already opened image.",
                                      "This procedure behaves like the file-load procedure but opens the specified image as a layer into an already opened image.",
@@ -663,8 +663,8 @@ register_fileops_procs (Gimp *gimp)
    * gimp-file-load-thumbnail
    */
   procedure = gimp_procedure_new (file_load_thumbnail_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-file-load-thumbnail");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-file-load-thumbnail",
                                      "gimp-file-load-thumbnail",
                                      "Loads the thumbnail for a file.",
                                      "This procedure tries to load a thumbnail that belongs to the file with the given filename. This name is a full pathname. The returned data is an array of colordepth 3 (RGB), regardless of the image type. Width and height of the thumbnail are also returned. Don't use this function if you need a thumbnail of an already opened image, use gimp_image_thumbnail instead.",
@@ -710,8 +710,8 @@ register_fileops_procs (Gimp *gimp)
    * gimp-file-save
    */
   procedure = gimp_procedure_new (file_save_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-file-save");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-file-save",
                                      "gimp-file-save",
                                      "Saves a file by extension.",
                                      "This procedure invokes the correct file save handler according to the file's extension and/or prefix. The name of the file to save is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path. The reason for this is that if the user types http://www.xcf/~gimp/ she wants to fetch a URL, and the full pathname will not look like a URL.",
@@ -760,8 +760,8 @@ register_fileops_procs (Gimp *gimp)
    * gimp-file-save-thumbnail
    */
   procedure = gimp_procedure_new (file_save_thumbnail_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-file-save-thumbnail");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-file-save-thumbnail",
                                      "gimp-file-save-thumbnail",
                                      "Saves a thumbnail for the given image",
                                      "This procedure saves a thumbnail for the given image according to the Free Desktop Thumbnail Managing Standard. The thumbnail is saved so that it belongs to the file with the given filename. This means you have to save the image under this name first, otherwise this procedure will fail. This procedure may become useful if you want to explicitely save a thumbnail with a file.",
@@ -790,8 +790,8 @@ register_fileops_procs (Gimp *gimp)
    * gimp-temp-name
    */
   procedure = gimp_procedure_new (temp_name_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-temp-name");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-temp-name",
                                      "gimp-temp-name",
                                      "Generates a unique filename.",
                                      "Generates a unique filename using the temp path supplied in the user's gimprc.",
@@ -821,8 +821,8 @@ register_fileops_procs (Gimp *gimp)
    * gimp-register-magic-load-handler
    */
   procedure = gimp_procedure_new (register_magic_load_handler_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-register-magic-load-handler");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-register-magic-load-handler",
                                      "gimp-register-magic-load-handler",
                                      "Registers a file load handler procedure.",
                                      "Registers a procedural database procedure to be called to load files of a particular file format using magic file information.",
@@ -866,8 +866,8 @@ register_fileops_procs (Gimp *gimp)
    * gimp-register-load-handler
    */
   procedure = gimp_procedure_new (register_load_handler_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-register-load-handler");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-register-load-handler",
                                      "gimp-register-load-handler",
                                      "Registers a file load handler procedure.",
                                      "Registers a procedural database procedure to be called to load files of a particular file format.",
@@ -904,8 +904,8 @@ register_fileops_procs (Gimp *gimp)
    * gimp-register-save-handler
    */
   procedure = gimp_procedure_new (register_save_handler_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-register-save-handler");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-register-save-handler",
                                      "gimp-register-save-handler",
                                      "Registers a file save handler procedure.",
                                      "Registers a procedural database procedure to be called to save files in a particular file format.",
@@ -942,8 +942,8 @@ register_fileops_procs (Gimp *gimp)
    * gimp-register-file-handler-mime
    */
   procedure = gimp_procedure_new (register_file_handler_mime_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-register-file-handler-mime");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-register-file-handler-mime",
                                      "gimp-register-file-handler-mime",
                                      "Associates a MIME type with a file handler procedure.",
                                      "Registers a MIME type for a file handler procedure. This allows GIMP to determine the MIME type of the file opened or saved using this procedure.",
@@ -973,8 +973,8 @@ register_fileops_procs (Gimp *gimp)
    * gimp-register-thumbnail-loader
    */
   procedure = gimp_procedure_new (register_thumbnail_loader_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-register-thumbnail-loader");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-register-thumbnail-loader",
                                      "gimp-register-thumbnail-loader",
                                      "Associates a thumbnail loader with a file load procedure.",
                                      "Some file formats allow for embedded thumbnails, other file formats contain a scalable image or provide the image data in different resolutions. A file plug-in for such a format may register a special procedure that allows GIMP to load a thumbnail preview of the image. This procedure is then associated with the standard load procedure using this function.",

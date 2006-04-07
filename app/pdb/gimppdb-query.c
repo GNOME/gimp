@@ -384,12 +384,12 @@ gimp_pdb_print_entry (gpointer key,
 
       if (list || num != 1)
         {
-          g_string_printf (buf, "%s <%d>", procedure->name, num);
+          g_string_printf (buf, "%s <%d>", GIMP_OBJECT (procedure)->name, num);
           output_string (file, buf->str);
         }
       else
         {
-          output_string (file, procedure->name);
+          output_string (file, GIMP_OBJECT (procedure)->name);
         }
 
       type_desc = gimp_enum_get_desc (proc_class, procedure->proc_type);
@@ -458,7 +458,8 @@ gimp_pdb_get_strings (PDBStrings    *strings,
 
   if (compat)
     {
-      strings->blurb     = g_strdup_printf (COMPAT_BLURB, procedure->name);
+      strings->blurb     = g_strdup_printf (COMPAT_BLURB,
+                                            GIMP_OBJECT (procedure)->name);
       strings->help      = g_strdup (strings->blurb);
       strings->author    = NULL;
       strings->copyright = NULL;

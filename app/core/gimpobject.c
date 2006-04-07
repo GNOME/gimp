@@ -169,7 +169,10 @@ gimp_object_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_NAME:
-      g_value_set_string (value, gimp_object->name);
+      if (gimp_object->static_name)
+        g_value_set_static_string (value, gimp_object->name);
+      else
+        g_value_set_string (value, gimp_object->name);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -198,6 +201,7 @@ gimp_object_set_name (GimpObject  *object,
   gimp_object_name_free (object);
 
   object->name = g_strdup (name);
+  object->static_name = FALSE;
 
   gimp_object_name_changed (object);
   g_object_notify (G_OBJECT (object), "name");
@@ -225,6 +229,37 @@ gimp_object_set_name_safe (GimpObject  *object,
   gimp_object_name_free (object);
 
   object->name = gimp_utf8_strtrim (name, 30);
+  object->static_name = FALSE;
+
+  gimp_object_name_changed (object);
+  g_object_notify (G_OBJECT (object), "name");
+}
+
+void
+gimp_object_set_static_name (GimpObject  *object,
+                             const gchar *name)
+{
+  g_return_if_fail (GIMP_IS_OBJECT (object));
+
+  gimp_object_name_free (object);
+
+  object->name = (gchar *) name;
+  object->static_name = TRUE;
+
+  gimp_object_name_changed (object);
+  g_object_notify (G_OBJECT (object), "name");
+}
+
+void
+gimp_object_take_name (GimpObject *object,
+                       gchar      *name)
+{
+  g_return_if_fail (GIMP_IS_OBJECT (object));
+
+  gimp_object_name_free (object);
+
+  object->name = name;
+  object->static_name = FALSE;
 
   gimp_object_name_changed (object);
   g_object_notify (G_OBJECT (object), "name");
@@ -286,8 +321,11 @@ gimp_object_name_free (GimpObject *object)
 
   if (object->name)
     {
-      g_free (object->name);
+      if (! object->static_name)
+        g_free (object->name);
+
       object->name = NULL;
+      object->static_name = FALSE;
     }
 }
 
@@ -420,7 +458,7 @@ gimp_object_real_get_memsize (GimpObject *object,
 {
   gint64 memsize = 0;
 
-  if (object->name)
+  if (object->name && ! object->static_name)
     memsize += strlen (object->name) + 1;
 
   return memsize + gimp_g_object_get_memsize ((GObject *) object);

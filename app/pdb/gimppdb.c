@@ -195,15 +195,17 @@ void
 gimp_pdb_register (Gimp          *gimp,
                    GimpProcedure *procedure)
 {
-  GList *list;
+  const gchar *name;
+  GList       *list;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
-  list = g_hash_table_lookup (gimp->procedural_ht, procedure->name);
+  name = gimp_object_get_name (GIMP_OBJECT (procedure));
 
-  g_hash_table_insert (gimp->procedural_ht,
-                       procedure->name,
+  list = g_hash_table_lookup (gimp->procedural_ht, name);
+
+  g_hash_table_insert (gimp->procedural_ht, (gpointer) name,
                        g_list_prepend (list, g_object_ref (procedure)));
 }
 
@@ -369,7 +371,8 @@ gimp_pdb_run_proc (Gimp         *gimp,
 
           g_message (_("PDB calling error for procedure '%s':\n"
                        "Argument #%d type mismatch (expected %s, got %s)"),
-                     procedure->name, i + 1, expected, got);
+                     gimp_object_get_name (GIMP_OBJECT (procedure)),
+                     i + 1, expected, got);
 
           return_vals = gimp_procedure_get_return_values (procedure, FALSE);
           g_value_set_enum (return_vals->values, GIMP_PDB_CALLING_ERROR);

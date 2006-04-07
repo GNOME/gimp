@@ -84,7 +84,7 @@ HELP
       g_value_set_static_string (&new_args->values[i], "");
 
   return_vals = gimp_pdb_execute (gimp, context, progress,
-                                  proc->name, new_args);
+                                  GIMP_OBJECT (proc)->name, new_args);
 
   g_value_array_free (new_args);
 
@@ -208,7 +208,7 @@ HELP
       g_value_set_static_string (&new_args->values[i], "");
 
   return_vals = gimp_pdb_execute (gimp, context, progress,
-                                  proc->name, new_args);
+                                  GIMP_OBJECT (proc)->name, new_args);
 
   g_value_array_free (new_args);
 

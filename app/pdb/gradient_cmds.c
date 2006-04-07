@@ -1338,8 +1338,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-new
    */
   procedure = gimp_procedure_new (gradient_new_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-new");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-new",
                                      "gimp-gradient-new",
                                      "Creates a new gradient",
                                      "This procedure creates a new, uninitialized gradient",
@@ -1369,8 +1369,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-duplicate
    */
   procedure = gimp_procedure_new (gradient_duplicate_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-duplicate");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-duplicate",
                                      "gimp-gradient-duplicate",
                                      "Duplicates a gradient",
                                      "This procedure creates an identical gradient by a different name",
@@ -1400,8 +1400,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-is-editable
    */
   procedure = gimp_procedure_new (gradient_is_editable_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-is-editable");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-is-editable",
                                      "gimp-gradient-is-editable",
                                      "Tests if gradient can be edited",
                                      "Returns TRUE if you have permission to change the gradient",
@@ -1430,8 +1430,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-rename
    */
   procedure = gimp_procedure_new (gradient_rename_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-rename");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-rename",
                                      "gimp-gradient-rename",
                                      "Rename a gradient",
                                      "This procedure renames a gradient",
@@ -1468,8 +1468,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-delete
    */
   procedure = gimp_procedure_new (gradient_delete_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-delete");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-delete",
                                      "gimp-gradient-delete",
                                      "Deletes a gradient",
                                      "This procedure deletes a gradient",
@@ -1492,8 +1492,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-get-uniform-samples
    */
   procedure = gimp_procedure_new (gradient_get_uniform_samples_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-get-uniform-samples");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-get-uniform-samples",
                                      "gimp-gradient-get-uniform-samples",
                                      "Sample the specified in uniform parts.",
                                      "This procedure samples the active gradient in the specified number of uniform parts. It returns a list of floating-point values which correspond to the RGBA values for each sample. The minimum number of samples to take is 2, in which case the returned colors will correspond to the { 0.0, 1.0 } positions in the gradient. For example, if the number of samples is 3, the procedure will return the colors at positions { 0.0, 0.5, 1.0 }.",
@@ -1539,8 +1539,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-get-custom-samples
    */
   procedure = gimp_procedure_new (gradient_get_custom_samples_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-get-custom-samples");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-get-custom-samples",
                                      "gimp-gradient-get-custom-samples",
                                      "Sample the spacified gradient in custom positions.",
                                      "This procedure samples the active gradient in the specified number of points. The procedure will sample the gradient in the specified positions from the list. The left endpoint of the gradient corresponds to position 0.0, and the right endpoint corresponds to 1.0. The procedure returns a list of floating-point values which correspond to the RGBA values for each sample.",
@@ -1591,8 +1591,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-segment-get-left-color
    */
   procedure = gimp_procedure_new (gradient_segment_get_left_color_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-get-left-color");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-segment-get-left-color",
                                      "gimp-gradient-segment-get-left-color",
                                      "Retrieves the left endpoint color of the specified segment",
                                      "This procedure retrieves the left endpoint color of the specified segment of the specified gradient.",
@@ -1633,8 +1633,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-segment-set-left-color
    */
   procedure = gimp_procedure_new (gradient_segment_set_left_color_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-set-left-color");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-segment-set-left-color",
                                      "gimp-gradient-segment-set-left-color",
                                      "Retrieves the left endpoint color of the specified segment",
                                      "This procedure retrieves the left endpoint color of the specified segment of the specified gradient.",
@@ -1675,8 +1675,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-segment-get-right-color
    */
   procedure = gimp_procedure_new (gradient_segment_get_right_color_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-get-right-color");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-segment-get-right-color",
                                      "gimp-gradient-segment-get-right-color",
                                      "Retrieves the right endpoint color of the specified segment",
                                      "This procedure retrieves the right endpoint color of the specified segment of the specified gradient.",
@@ -1717,8 +1717,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-segment-set-right-color
    */
   procedure = gimp_procedure_new (gradient_segment_set_right_color_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-set-right-color");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-segment-set-right-color",
                                      "gimp-gradient-segment-set-right-color",
                                      "Retrieves the right endpoint color of the specified segment",
                                      "This procedure retrieves the right endpoint color of the specified segment of the specified gradient.",
@@ -1759,8 +1759,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-segment-get-left-pos
    */
   procedure = gimp_procedure_new (gradient_segment_get_left_pos_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-get-left-pos");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-segment-get-left-pos",
                                      "gimp-gradient-segment-get-left-pos",
                                      "Retrieves the left endpoint position of the specified segment",
                                      "This procedure retrieves the left endpoint position of the specified segment of the specified gradient.",
@@ -1795,8 +1795,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-segment-set-left-pos
    */
   procedure = gimp_procedure_new (gradient_segment_set_left_pos_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-set-left-pos");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-segment-set-left-pos",
                                      "gimp-gradient-segment-set-left-pos",
                                      "Sets the left endpoint position of the specified segment",
                                      "This procedure sets the left endpoint position of the specified segment of the specified gradient. The final position will be between the position of the middle point to the left to the middle point of the current segement. This procedure returns the final position.",
@@ -1837,8 +1837,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-segment-get-middle-pos
    */
   procedure = gimp_procedure_new (gradient_segment_get_middle_pos_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-get-middle-pos");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-segment-get-middle-pos",
                                      "gimp-gradient-segment-get-middle-pos",
                                      "Retrieves the middle point position of the specified segment",
                                      "This procedure retrieves the middle point position of the specified segment of the specified gradient.",
@@ -1873,8 +1873,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-segment-set-middle-pos
    */
   procedure = gimp_procedure_new (gradient_segment_set_middle_pos_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-set-middle-pos");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-segment-set-middle-pos",
                                      "gimp-gradient-segment-set-middle-pos",
                                      "Sets the middle point position of the specified segment",
                                      "This procedure sets the middle point position of the specified segment of the specified gradient. The final position will be between the two endpoints of the segment. This procedure returns the final position.",
@@ -1915,8 +1915,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-segment-get-right-pos
    */
   procedure = gimp_procedure_new (gradient_segment_get_right_pos_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-get-right-pos");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-segment-get-right-pos",
                                      "gimp-gradient-segment-get-right-pos",
                                      "Retrieves the right endpoint position of the specified segment",
                                      "This procedure retrieves the right endpoint position of the specified segment of the specified gradient.",
@@ -1951,8 +1951,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-segment-set-right-pos
    */
   procedure = gimp_procedure_new (gradient_segment_set_right_pos_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-set-right-pos");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-segment-set-right-pos",
                                      "gimp-gradient-segment-set-right-pos",
                                      "Sets the right endpoint position of the specified segment",
                                      "This procedure sets the right endpoint position of the specified segment of the specified gradient. The final position will be between the position of the middle point of the current segment and the middle point of the segment to the right. This procedure returns the final position.",
@@ -1993,8 +1993,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-segment-get-blending-function
    */
   procedure = gimp_procedure_new (gradient_segment_get_blending_function_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-get-blending-function");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-segment-get-blending-function",
                                      "gimp-gradient-segment-get-blending-function",
                                      "Retrieves the gradient segment's blending function",
                                      "This procedure retrieves the blending function of the segment at the specified gradient name and segment index.",
@@ -2030,8 +2030,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-segment-get-coloring-type
    */
   procedure = gimp_procedure_new (gradient_segment_get_coloring_type_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-get-coloring-type");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-segment-get-coloring-type",
                                      "gimp-gradient-segment-get-coloring-type",
                                      "Retrieves the gradient segment's coloring type",
                                      "This procedure retrieves the coloring type of the segment at the specified gradient name and segment index.",
@@ -2067,8 +2067,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-segment-range-set-blending-function
    */
   procedure = gimp_procedure_new (gradient_segment_range_set_blending_function_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-range-set-blending-function");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-segment-range-set-blending-function",
                                      "gimp-gradient-segment-range-set-blending-function",
                                      "Change the blending function of a segments range",
                                      "This function changes the blending function of a segment range to the specified blending function.",
@@ -2110,8 +2110,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-segment-range-set-coloring-type
    */
   procedure = gimp_procedure_new (gradient_segment_range_set_coloring_type_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-range-set-coloring-type");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-segment-range-set-coloring-type",
                                      "gimp-gradient-segment-range-set-coloring-type",
                                      "Change the coloring type of a segments range",
                                      "This function changes the coloring type of a segment range to the specified coloring type.",
@@ -2153,8 +2153,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-segment-range-flip
    */
   procedure = gimp_procedure_new (gradient_segment_range_flip_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-range-flip");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-segment-range-flip",
                                      "gimp-gradient-segment-range-flip",
                                      "Flip the segment range",
                                      "This function flips a segment range.",
@@ -2189,8 +2189,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-segment-range-replicate
    */
   procedure = gimp_procedure_new (gradient_segment_range_replicate_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-range-replicate");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-segment-range-replicate",
                                      "gimp-gradient-segment-range-replicate",
                                      "Replicate the segment range",
                                      "This function replicates a segment range a given number of times. Instead of the original segment range, several smaller scaled copies of it will appear in equal widths.",
@@ -2231,8 +2231,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-segment-range-split-midpoint
    */
   procedure = gimp_procedure_new (gradient_segment_range_split_midpoint_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-range-split-midpoint");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-segment-range-split-midpoint",
                                      "gimp-gradient-segment-range-split-midpoint",
                                      "Splits each segment in the segment range at midpoint",
                                      "This function splits each segment in the segment range at its midpoint.",
@@ -2267,8 +2267,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-segment-range-split-uniform
    */
   procedure = gimp_procedure_new (gradient_segment_range_split_uniform_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-range-split-uniform");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-segment-range-split-uniform",
                                      "gimp-gradient-segment-range-split-uniform",
                                      "Splits each segment in the segment range uniformly",
                                      "This function splits each segment in the segment range uniformly according to the number of times specified by the parameter.",
@@ -2309,8 +2309,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-segment-range-delete
    */
   procedure = gimp_procedure_new (gradient_segment_range_delete_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-range-delete");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-segment-range-delete",
                                      "gimp-gradient-segment-range-delete",
                                      "Delete the segment range",
                                      "This function deletes a segment range.",
@@ -2345,8 +2345,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-segment-range-redistribute-handles
    */
   procedure = gimp_procedure_new (gradient_segment_range_redistribute_handles_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-range-redistribute-handles");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-segment-range-redistribute-handles",
                                      "gimp-gradient-segment-range-redistribute-handles",
                                      "Uniformly redistribute the segment range's handles",
                                      "This function redistributes the handles of the specified segment range of the specified gradient, so they'll be evenly spaced.",
@@ -2381,8 +2381,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-segment-range-blend-colors
    */
   procedure = gimp_procedure_new (gradient_segment_range_blend_colors_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-range-blend-colors");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-segment-range-blend-colors",
                                      "gimp-gradient-segment-range-blend-colors",
                                      "Blend the colors of the segment range.",
                                      "This function blends the colors (but not the opacity) of the segments' range of the gradient. Using it, the colors' transition will be uniform across the range.",
@@ -2417,8 +2417,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-segment-range-blend-opacity
    */
   procedure = gimp_procedure_new (gradient_segment_range_blend_opacity_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-range-blend-opacity");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-segment-range-blend-opacity",
                                      "gimp-gradient-segment-range-blend-opacity",
                                      "Blend the opacity of the segment range.",
                                      "This function blends the opacity (but not the colors) of the segments' range of the gradient. Using it, the opacity's transition will be uniform across the range.",
@@ -2453,8 +2453,8 @@ register_gradient_procs (Gimp *gimp)
    * gimp-gradient-segment-range-move
    */
   procedure = gimp_procedure_new (gradient_segment_range_move_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradient-segment-range-move");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradient-segment-range-move",
                                      "gimp-gradient-segment-range-move",
                                      "Move the position of an entire segment range by a delta.",
                                      "This funtions moves the position of an entire segment range by a delta. The actual delta (which is returned) will be limited by the control points of the neighboring segments.",

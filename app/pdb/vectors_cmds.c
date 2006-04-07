@@ -836,8 +836,8 @@ register_vectors_procs (Gimp *gimp)
    * gimp-vectors-new
    */
   procedure = gimp_procedure_new (vectors_new_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-new");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-new",
                                      "gimp-vectors-new",
                                      "Creates a new empty vectors object.",
                                      "Creates a new empty vectors object. Needs to be added to an image using gimp_image_add_vectors.",
@@ -872,8 +872,8 @@ register_vectors_procs (Gimp *gimp)
    * gimp-vectors-get-image
    */
   procedure = gimp_procedure_new (vectors_get_image_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-get-image");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-get-image",
                                      "gimp-vectors-get-image",
                                      "Returns the vectors objects image.",
                                      "Returns the vectors objects image.",
@@ -901,8 +901,8 @@ register_vectors_procs (Gimp *gimp)
    * gimp-vectors-get-name
    */
   procedure = gimp_procedure_new (vectors_get_name_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-get-name");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-get-name",
                                      "gimp-vectors-get-name",
                                      "Gets the name of the vectors object.",
                                      "Gets the name of the vectors object.",
@@ -931,8 +931,8 @@ register_vectors_procs (Gimp *gimp)
    * gimp-vectors-set-name
    */
   procedure = gimp_procedure_new (vectors_set_name_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-set-name");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-set-name",
                                      "gimp-vectors-set-name",
                                      "Sets the name of the vectors object.",
                                      "Sets the name of the vectors object.",
@@ -961,8 +961,8 @@ register_vectors_procs (Gimp *gimp)
    * gimp-vectors-get-visible
    */
   procedure = gimp_procedure_new (vectors_get_visible_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-get-visible");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-get-visible",
                                      "gimp-vectors-get-visible",
                                      "Gets the visibility of the vectors object.",
                                      "Gets the visibility of the vectors object.",
@@ -990,8 +990,8 @@ register_vectors_procs (Gimp *gimp)
    * gimp-vectors-set-visible
    */
   procedure = gimp_procedure_new (vectors_set_visible_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-set-visible");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-set-visible",
                                      "gimp-vectors-set-visible",
                                      "Sets the visibility of the vectors object.",
                                      "Sets the visibility of the vectors object.",
@@ -1019,8 +1019,8 @@ register_vectors_procs (Gimp *gimp)
    * gimp-vectors-get-linked
    */
   procedure = gimp_procedure_new (vectors_get_linked_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-get-linked");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-get-linked",
                                      "gimp-vectors-get-linked",
                                      "Gets the linked state of the vectors object.",
                                      "Gets the linked state of the vectors object.",
@@ -1048,8 +1048,8 @@ register_vectors_procs (Gimp *gimp)
    * gimp-vectors-set-linked
    */
   procedure = gimp_procedure_new (vectors_set_linked_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-set-linked");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-set-linked",
                                      "gimp-vectors-set-linked",
                                      "Sets the linked state of the vectors object.",
                                      "Sets the linked state of the vectors object.",
@@ -1077,8 +1077,8 @@ register_vectors_procs (Gimp *gimp)
    * gimp-vectors-get-tattoo
    */
   procedure = gimp_procedure_new (vectors_get_tattoo_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-get-tattoo");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-get-tattoo",
                                      "gimp-vectors-get-tattoo",
                                      "Get the tattoo of the vectors object.",
                                      "Get the tattoo state of the vectors object.",
@@ -1106,8 +1106,8 @@ register_vectors_procs (Gimp *gimp)
    * gimp-vectors-set-tattoo
    */
   procedure = gimp_procedure_new (vectors_set_tattoo_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-set-tattoo");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-set-tattoo",
                                      "gimp-vectors-set-tattoo",
                                      "Set the tattoo of the vectors object.",
                                      "Set the tattoo of the vectors object.",
@@ -1135,8 +1135,8 @@ register_vectors_procs (Gimp *gimp)
    * gimp-vectors-get-strokes
    */
   procedure = gimp_procedure_new (vectors_get_strokes_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-get-strokes");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-get-strokes",
                                      "gimp-vectors-get-strokes",
                                      "List the strokes associated with the passed path.",
                                      "Returns an Array with the stroke-IDs associated with the passed path.",
@@ -1169,8 +1169,8 @@ register_vectors_procs (Gimp *gimp)
    * gimp-vectors-stroke-get-length
    */
   procedure = gimp_procedure_new (vectors_stroke_get_length_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-stroke-get-length");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-stroke-get-length",
                                      "gimp-vectors-stroke-get-length",
                                      "Measure the length of the given stroke.",
                                      "Measure the length of the given stroke.",
@@ -1210,8 +1210,8 @@ register_vectors_procs (Gimp *gimp)
    * gimp-vectors-stroke-get-point-at-dist
    */
   procedure = gimp_procedure_new (vectors_stroke_get_point_at_dist_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-stroke-get-point-at-dist");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-stroke-get-point-at-dist",
                                      "gimp-vectors-stroke-get-point-at-dist",
                                      "Get point at a specified distance along the stroke.",
                                      "This will return the x,y position of a point at a given distance along the stroke. The distance will be obtained by first digitizing the curve internally and then walking along the curve. For a closed stroke the start of the path is the first point on the path that was created. This might not be obvious. If the stroke is not long enough, a \"valid\" flag will be FALSE.",
@@ -1275,8 +1275,8 @@ register_vectors_procs (Gimp *gimp)
    * gimp-vectors-stroke-remove
    */
   procedure = gimp_procedure_new (vectors_stroke_remove_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-stroke-remove");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-stroke-remove",
                                      "gimp-vectors-stroke-remove",
                                      "remove the stroke from a vectors object.",
                                      "Remove the stroke from a vectors object.",
@@ -1304,8 +1304,8 @@ register_vectors_procs (Gimp *gimp)
    * gimp-vectors-stroke-close
    */
   procedure = gimp_procedure_new (vectors_stroke_close_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-stroke-close");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-stroke-close",
                                      "gimp-vectors-stroke-close",
                                      "closes the specified stroke.",
                                      "Closes the specified stroke.",
@@ -1333,8 +1333,8 @@ register_vectors_procs (Gimp *gimp)
    * gimp-vectors-stroke-translate
    */
   procedure = gimp_procedure_new (vectors_stroke_translate_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-stroke-translate");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-stroke-translate",
                                      "gimp-vectors-stroke-translate",
                                      "translate the given stroke.",
                                      "Translate the given stroke.",
@@ -1374,8 +1374,8 @@ register_vectors_procs (Gimp *gimp)
    * gimp-vectors-stroke-scale
    */
   procedure = gimp_procedure_new (vectors_stroke_scale_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-stroke-scale");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-stroke-scale",
                                      "gimp-vectors-stroke-scale",
                                      "scales the given stroke.",
                                      "Scale the given stroke.",
@@ -1415,8 +1415,8 @@ register_vectors_procs (Gimp *gimp)
    * gimp-vectors-stroke-interpolate
    */
   procedure = gimp_procedure_new (vectors_stroke_interpolate_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-stroke-interpolate");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-stroke-interpolate",
                                      "gimp-vectors-stroke-interpolate",
                                      "returns polygonal approximation of the stroke.",
                                      "returns polygonal approximation of the stroke.",
@@ -1467,8 +1467,8 @@ register_vectors_procs (Gimp *gimp)
    * gimp-vectors-bezier-stroke-new-moveto
    */
   procedure = gimp_procedure_new (vectors_bezier_stroke_new_moveto_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-bezier-stroke-new-moveto");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-bezier-stroke-new-moveto",
                                      "gimp-vectors-bezier-stroke-new-moveto",
                                      "Adds a bezier stroke with a single moveto to the vectors object.",
                                      "Adds a bezier stroke with a single moveto to the vectors object.",
@@ -1508,8 +1508,8 @@ register_vectors_procs (Gimp *gimp)
    * gimp-vectors-bezier-stroke-lineto
    */
   procedure = gimp_procedure_new (vectors_bezier_stroke_lineto_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-bezier-stroke-lineto");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-bezier-stroke-lineto",
                                      "gimp-vectors-bezier-stroke-lineto",
                                      "Extends a bezier stroke with a lineto.",
                                      "Extends a bezier stroke with a lineto.",
@@ -1549,8 +1549,8 @@ register_vectors_procs (Gimp *gimp)
    * gimp-vectors-bezier-stroke-conicto
    */
   procedure = gimp_procedure_new (vectors_bezier_stroke_conicto_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-bezier-stroke-conicto");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-bezier-stroke-conicto",
                                      "gimp-vectors-bezier-stroke-conicto",
                                      "Extends a bezier stroke with a conic bezier spline.",
                                      "Extends a bezier stroke with a conic bezier spline. Actually a cubic bezier spline gets added that realizes the shape of a conic bezier spline.",
@@ -1602,8 +1602,8 @@ register_vectors_procs (Gimp *gimp)
    * gimp-vectors-bezier-stroke-cubicto
    */
   procedure = gimp_procedure_new (vectors_bezier_stroke_cubicto_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-bezier-stroke-cubicto");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-bezier-stroke-cubicto",
                                      "gimp-vectors-bezier-stroke-cubicto",
                                      "Extends a bezier stroke with a cubic bezier spline.",
                                      "Extends a bezier stroke with a cubic bezier spline.",
@@ -1667,8 +1667,8 @@ register_vectors_procs (Gimp *gimp)
    * gimp-vectors-bezier-stroke-new-ellipse
    */
   procedure = gimp_procedure_new (vectors_bezier_stroke_new_ellipse_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-bezier-stroke-new-ellipse");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-bezier-stroke-new-ellipse",
                                      "gimp-vectors-bezier-stroke-new-ellipse",
                                      "Adds a bezier stroke describing an ellipse the vectors object.",
                                      "Adds a bezier stroke describing an ellipse the vectors object.",

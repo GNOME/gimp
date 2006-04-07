@@ -638,8 +638,8 @@ register_edit_procs (Gimp *gimp)
    * gimp-edit-cut
    */
   procedure = gimp_procedure_new (edit_cut_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-cut");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-edit-cut",
                                      "gimp-edit-cut",
                                      "Cut from the specified drawable.",
                                      "If there is a selection in the image, then the area specified by the selection is cut from the specified drawable and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the specified drawable will be removed and its contents stored in the internal GIMP edit buffer.",
@@ -667,8 +667,8 @@ register_edit_procs (Gimp *gimp)
    * gimp-edit-copy
    */
   procedure = gimp_procedure_new (edit_copy_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-copy");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-edit-copy",
                                      "gimp-edit-copy",
                                      "Copy from the specified drawable.",
                                      "If there is a selection in the image, then the area specified by the selection is copied from the specified drawable and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the specified drawable's contents will be stored in the internal GIMP edit buffer.",
@@ -696,8 +696,8 @@ register_edit_procs (Gimp *gimp)
    * gimp-edit-copy-visible
    */
   procedure = gimp_procedure_new (edit_copy_visible_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-copy-visible");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-edit-copy-visible",
                                      "gimp-edit-copy-visible",
                                      "Copy from the projection.",
                                      "If there is a selection in the image, then the area specified by the selection is copied from the projection and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the projection's contents will be stored in the internal GIMP edit buffer.",
@@ -725,8 +725,8 @@ register_edit_procs (Gimp *gimp)
    * gimp-edit-paste
    */
   procedure = gimp_procedure_new (edit_paste_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-paste");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-edit-paste",
                                      "gimp-edit-paste",
                                      "Paste buffer to the specified drawable.",
                                      "This procedure pastes a copy of the internal GIMP edit buffer to the specified drawable. The GIMP edit buffer will be empty unless a call was previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. The \"paste_into\" option specifies whether to clear the current image selection, or to paste the buffer \"behind\" the selection. This allows the selection to act as a mask for the pasted buffer. Anywhere that the selection mask is non-zero, the pasted buffer will show through. The pasted buffer will be a new layer in the image which is designated as the image floating selection. If the image has a floating selection at the time of pasting, the old floating selection will be anchored to it's drawable before the new floating selection is added. This procedure returns the new floating layer. The resulting floating selection will already be attached to the specified drawable, and a subsequent call to floating_sel_attach is not needed.",
@@ -760,8 +760,8 @@ register_edit_procs (Gimp *gimp)
    * gimp-edit-paste-as-new
    */
   procedure = gimp_procedure_new (edit_paste_as_new_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-paste-as-new");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-edit-paste-as-new",
                                      "gimp-edit-paste-as-new",
                                      "Paste buffer to a new image.",
                                      "This procedure pastes a copy of the internal GIMP edit buffer to a new image. The GIMP edit buffer will be empty unless a call was previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. This procedure returns the new image.",
@@ -783,8 +783,8 @@ register_edit_procs (Gimp *gimp)
    * gimp-edit-named-cut
    */
   procedure = gimp_procedure_new (edit_named_cut_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-named-cut");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-edit-named-cut",
                                      "gimp-edit-named-cut",
                                      "Cut into a named buffer.",
                                      "This procedure works like gimp-edit-cut, but additionally stores the cut buffer into a named buffer that will stay available for later pasting, regardless of any intermediate copy or cut operations.",
@@ -820,8 +820,8 @@ register_edit_procs (Gimp *gimp)
    * gimp-edit-named-copy
    */
   procedure = gimp_procedure_new (edit_named_copy_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-named-copy");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-edit-named-copy",
                                      "gimp-edit-named-copy",
                                      "Copy into a named buffer.",
                                      "This procedure works like gimp-edit-copy, but additionally stores the copied buffer into a named buffer that will stay available for later pasting, regardless of any intermediate copy or cut operations.",
@@ -857,8 +857,8 @@ register_edit_procs (Gimp *gimp)
    * gimp-edit-named-copy-visible
    */
   procedure = gimp_procedure_new (edit_named_copy_visible_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-named-copy-visible");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-edit-named-copy-visible",
                                      "gimp-edit-named-copy-visible",
                                      "Copy from the projection into a named buffer.",
                                      "This procedure works like gimp-edit-copy-visible, but additionally stores the copied buffer into a named buffer that will stay available for later pasting, regardless of any intermediate copy or cut operations.",
@@ -894,8 +894,8 @@ register_edit_procs (Gimp *gimp)
    * gimp-edit-named-paste
    */
   procedure = gimp_procedure_new (edit_named_paste_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-named-paste");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-edit-named-paste",
                                      "gimp-edit-named-paste",
                                      "Paste named buffer to the specified drawable.",
                                      "This procedure works like gimp-edit-paste but pastes a named buffer instead of the global buffer.",
@@ -936,8 +936,8 @@ register_edit_procs (Gimp *gimp)
    * gimp-edit-named-paste-as-new
    */
   procedure = gimp_procedure_new (edit_named_paste_as_new_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-named-paste-as-new");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-edit-named-paste-as-new",
                                      "gimp-edit-named-paste-as-new",
                                      "Paste named buffer to a new image.",
                                      "This procedure works like gimp-edit-paste-as-new but pastes a named buffer instead of the global buffer.",
@@ -966,8 +966,8 @@ register_edit_procs (Gimp *gimp)
    * gimp-edit-clear
    */
   procedure = gimp_procedure_new (edit_clear_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-clear");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-edit-clear",
                                      "gimp-edit-clear",
                                      "Clear selected area of drawable.",
                                      "This procedure clears the specified drawable. If the drawable has an alpha channel, the cleared pixels will become transparent. If the drawable does not have an alpha channel, cleared pixels will be set to the background color. This procedure only affects regions within a selection if there is a selection active.",
@@ -989,8 +989,8 @@ register_edit_procs (Gimp *gimp)
    * gimp-edit-fill
    */
   procedure = gimp_procedure_new (edit_fill_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-fill");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-edit-fill",
                                      "gimp-edit-fill",
                                      "Fill selected area of drawable.",
                                      "This procedure fills the specified drawable with the fill mode. If the fill mode is foreground, the current foreground color is used. If the fill mode is background, the current background color is used. Other fill modes should not be used. This procedure only affects regions within a selection if there is a selection active. If you want to fill the whole drawable, regardless of the selection, use gimp_drawable_fill().",
@@ -1019,8 +1019,8 @@ register_edit_procs (Gimp *gimp)
    * gimp-edit-bucket-fill
    */
   procedure = gimp_procedure_new (edit_bucket_fill_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-bucket-fill");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-edit-bucket-fill",
                                      "gimp-edit-bucket-fill",
                                      "Fill the area specified either by the current selection if there is one, or by a seed fill starting at the specified coordinates.",
                                      "This tool requires information on the paint application mode, and the fill mode, which can either be in the foreground color, or in the currently active pattern. If there is no selection, a seed fill is executed at the specified coordinates and extends outward in keeping with the threshold parameter. If there is a selection in the target image, the threshold, sample merged, x, and y arguments are unused. If the sample_merged parameter is TRUE, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of merged sampling, the x and y coordinates are relative to the image's origin; otherwise, they are relative to the drawable's origin.",
@@ -1086,8 +1086,8 @@ register_edit_procs (Gimp *gimp)
    * gimp-edit-blend
    */
   procedure = gimp_procedure_new (edit_blend_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-blend");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-edit-blend",
                                      "gimp-edit-blend",
                                      "Blend between the starting and ending coordinates with the specified blend mode and gradient type.",
                                      "This tool requires information on the paint application mode, the blend mode, and the gradient type. It creates the specified variety of blend using the starting and ending coordinates as defined for each gradient type.",
@@ -1203,8 +1203,8 @@ register_edit_procs (Gimp *gimp)
    * gimp-edit-stroke
    */
   procedure = gimp_procedure_new (edit_stroke_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-stroke");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-edit-stroke",
                                      "gimp-edit-stroke",
                                      "Stroke the current selection",
                                      "This procedure strokes the current selection, painting along the selection boundary with the active brush and foreground color. The paint is applied to the specified drawable regardless of the active selection.",

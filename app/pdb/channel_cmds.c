@@ -334,8 +334,8 @@ register_channel_procs (Gimp *gimp)
    * gimp-channel-new
    */
   procedure = gimp_procedure_new (channel_new_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-channel-new");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-channel-new",
                                      "gimp-channel-new",
                                      "Create a new channel.",
                                      "This procedure creates a new channel with the specified width and height. Name, opacity, and color are also supplied parameters. The new channel still needs to be added to the image, as this is not automatic. Add the new channel with the 'gimp_image_add_channel' command. Other attributes such as channel show masked, should be set with explicit procedure calls. The channel's contents are undefined initially.",
@@ -394,8 +394,8 @@ register_channel_procs (Gimp *gimp)
    * gimp-channel-new-from-component
    */
   procedure = gimp_procedure_new (channel_new_from_component_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-channel-new-from-component");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-channel-new-from-component",
                                      "gimp-channel-new-from-component",
                                      "Create a new channel from a color component",
                                      "This procedure creates a new channel from a color component.",
@@ -437,8 +437,8 @@ register_channel_procs (Gimp *gimp)
    * gimp-channel-copy
    */
   procedure = gimp_procedure_new (channel_copy_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-channel-copy");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-channel-copy",
                                      "gimp-channel-copy",
                                      "Copy a channel.",
                                      "This procedure copies the specified channel and returns the copy.",
@@ -466,8 +466,8 @@ register_channel_procs (Gimp *gimp)
    * gimp-channel-combine-masks
    */
   procedure = gimp_procedure_new (channel_combine_masks_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-channel-combine-masks");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-channel-combine-masks",
                                      "gimp-channel-combine-masks",
                                      "Combine two channel masks.",
                                      "This procedure combines two channel masks. The result is stored in the first channel.",
@@ -514,8 +514,8 @@ register_channel_procs (Gimp *gimp)
    * gimp-channel-get-show-masked
    */
   procedure = gimp_procedure_new (channel_get_show_masked_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-channel-get-show-masked");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-channel-get-show-masked",
                                      "gimp-channel-get-show-masked",
                                      "Get the composite method of the specified channel.",
                                      "This procedure returns the specified channel's composite method. If it is TRUE, then the channel is composited with the image so that masked regions are shown. Otherwise, selected regions are shown.",
@@ -543,8 +543,8 @@ register_channel_procs (Gimp *gimp)
    * gimp-channel-set-show-masked
    */
   procedure = gimp_procedure_new (channel_set_show_masked_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-channel-set-show-masked");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-channel-set-show-masked",
                                      "gimp-channel-set-show-masked",
                                      "Set the composite method of the specified channel.",
                                      "This procedure sets the specified channel's composite method. If it is TRUE, then the channel is composited with the image so that masked regions are shown. Otherwise, selected regions are shown.",
@@ -572,8 +572,8 @@ register_channel_procs (Gimp *gimp)
    * gimp-channel-get-opacity
    */
   procedure = gimp_procedure_new (channel_get_opacity_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-channel-get-opacity");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-channel-get-opacity",
                                      "gimp-channel-get-opacity",
                                      "Get the opacity of the specified channel.",
                                      "This procedure returns the specified channel's opacity.",
@@ -601,8 +601,8 @@ register_channel_procs (Gimp *gimp)
    * gimp-channel-set-opacity
    */
   procedure = gimp_procedure_new (channel_set_opacity_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-channel-set-opacity");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-channel-set-opacity",
                                      "gimp-channel-set-opacity",
                                      "Set the opacity of the specified channel.",
                                      "This procedure sets the specified channel's opacity.",
@@ -630,8 +630,8 @@ register_channel_procs (Gimp *gimp)
    * gimp-channel-get-color
    */
   procedure = gimp_procedure_new (channel_get_color_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-channel-get-color");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-channel-get-color",
                                      "gimp-channel-get-color",
                                      "Get the compositing color of the specified channel.",
                                      "This procedure returns the specified channel's compositing color.",
@@ -659,8 +659,8 @@ register_channel_procs (Gimp *gimp)
    * gimp-channel-set-color
    */
   procedure = gimp_procedure_new (channel_set_color_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-channel-set-color");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-channel-set-color",
                                      "gimp-channel-set-color",
                                      "Set the compositing color of the specified channel.",
                                      "This procedure sets the specified channel's compositing color.",

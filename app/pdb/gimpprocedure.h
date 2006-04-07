@@ -48,7 +48,6 @@ struct _GimpProcedure
 
   gboolean          static_strings; /* Are the strings allocated?     */
 
-  gchar            *name;           /* Procedure name                 */
   gchar            *original_name;  /* Uncanonicalized procedure name */
   gchar            *blurb;          /* Short procedure description    */
   gchar            *help;           /* Detailed help instructions     */
@@ -83,7 +82,6 @@ GType           gimp_procedure_get_type           (void) G_GNUC_CONST;
 GimpProcedure * gimp_procedure_new                (GimpMarshalFunc   marshal_func);
 
 void            gimp_procedure_set_strings        (GimpProcedure    *procedure,
-                                                   gchar            *name,
                                                    gchar            *original_name,
                                                    gchar            *blurb,
                                                    gchar            *help,
@@ -92,7 +90,6 @@ void            gimp_procedure_set_strings        (GimpProcedure    *procedure,
                                                    gchar            *date,
                                                    gchar            *deprecated);
 void            gimp_procedure_set_static_strings (GimpProcedure    *procedure,
-                                                   gchar            *name,
                                                    gchar            *original_name,
                                                    gchar            *blurb,
                                                    gchar            *help,
@@ -101,7 +98,6 @@ void            gimp_procedure_set_static_strings (GimpProcedure    *procedure,
                                                    gchar            *date,
                                                    gchar            *deprecated);
 void            gimp_procedure_take_strings       (GimpProcedure    *procedure,
-                                                   gchar            *name,
                                                    gchar            *original_name,
                                                    gchar            *blurb,
                                                    gchar            *help,

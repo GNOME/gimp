@@ -186,8 +186,8 @@ register_palettes_procs (Gimp *gimp)
    * gimp-palettes-refresh
    */
   procedure = gimp_procedure_new (palettes_refresh_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-palettes-refresh");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palettes-refresh",
                                      "gimp-palettes-refresh",
                                      "Refreshes current palettes. This function always succeeds.",
                                      "This procedure retrieves all palettes currently in the user's palette path and updates the palette dialogs accordingly.",
@@ -203,8 +203,8 @@ register_palettes_procs (Gimp *gimp)
    * gimp-palettes-get-list
    */
   procedure = gimp_procedure_new (palettes_get_list_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-palettes-get-list");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palettes-get-list",
                                      "gimp-palettes-get-list",
                                      "Retrieves a list of all of the available palettes",
                                      "This procedure returns a complete listing of available palettes. Each name returned can be used as input to the command 'gimp-context-set-palette'.",
@@ -238,8 +238,8 @@ register_palettes_procs (Gimp *gimp)
    * gimp-palettes-get-palette
    */
   procedure = gimp_procedure_new (palettes_get_palette_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-palettes-get-palette");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palettes-get-palette",
                                      "gimp-palettes-get-palette",
                                      "This procedure is deprecated! Use 'gimp-context-get-palette' instead.",
                                      "This procedure is deprecated! Use 'gimp-context-get-palette' instead.",
@@ -268,8 +268,8 @@ register_palettes_procs (Gimp *gimp)
    * gimp-palettes-get-palette-entry
    */
   procedure = gimp_procedure_new (palettes_get_palette_entry_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-palettes-get-palette-entry");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palettes-get-palette-entry",
                                      "gimp-palettes-get-palette-entry",
                                      "This procedure is deprecated! Use 'gimp-palette-entry-get-color' instead.",
                                      "This procedure is deprecated! Use 'gimp-palette-entry-get-color' instead.",

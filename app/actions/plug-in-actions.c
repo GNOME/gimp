@@ -218,7 +218,7 @@ plug_in_actions_update (GimpActionGroup *group,
           gboolean sensitive = gimp_plug_in_procedure_get_sensitive (proc, type);
 
           gimp_action_group_set_action_sensitive (group,
-                                                  GIMP_PROCEDURE (proc)->name,
+                                                  GIMP_OBJECT (proc)->name,
                                                   sensitive);
 	}
     }
@@ -301,7 +301,7 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
   if (GIMP_PROCEDURE (proc)->blurb)
     tooltip = dgettext (locale_domain, GIMP_PROCEDURE (proc)->blurb);
 
-  entry.name        = GIMP_PROCEDURE (proc)->name;
+  entry.name        = GIMP_OBJECT (proc)->name;
   entry.stock_id    = gimp_plug_in_procedure_get_stock_id (proc);
   entry.label       = label;
   entry.accelerator = NULL;
@@ -311,7 +311,7 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
 
 #if 0
   g_print ("adding plug-in action '%s' (%s)\n",
-           GIMP_PROCEDURE (proc)->name, label);
+           GIMP_OBJECT (proc)->name, label);
 #endif
 
   gimp_action_group_add_plug_in_actions (group, &entry, 1,
@@ -378,13 +378,13 @@ plug_in_actions_remove_proc (GimpActionGroup     *group,
   g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                        GIMP_PROCEDURE (proc)->name);
+                                        GIMP_OBJECT (proc)->name);
 
   if (action)
     {
 #if 0
       g_print ("removing plug-in action '%s'\n",
-               GIMP_PROCEDURE (proc)->name);
+               GIMP_OBJECT (proc)->name);
 #endif
 
       gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);

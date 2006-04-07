@@ -135,7 +135,7 @@ file_open_image (Gimp                *gimp,
     }
 
   return_vals = gimp_pdb_run_proc (gimp, context, progress,
-                                   GIMP_PROCEDURE (file_proc)->name,
+                                   GIMP_OBJECT (file_proc)->name,
                                    GIMP_TYPE_INT32, run_mode,
                                    G_TYPE_STRING,   filename,
                                    G_TYPE_STRING,   entered_filename,
@@ -219,7 +219,7 @@ file_open_thumbnail (Gimp          *gimp,
         filename = g_strdup (uri);
 
       return_vals = gimp_pdb_run_proc (gimp, context, progress,
-                                       procedure->name,
+                                       GIMP_OBJECT (procedure)->name,
                                        G_TYPE_STRING,   filename,
                                        GIMP_TYPE_INT32, size,
                                        G_TYPE_NONE);

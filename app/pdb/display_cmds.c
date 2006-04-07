@@ -169,8 +169,8 @@ register_display_procs (Gimp *gimp)
    * gimp-display-new
    */
   procedure = gimp_procedure_new (display_new_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-display-new");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-display-new",
                                      "gimp-display-new",
                                      "Create a new display for the specified image.",
                                      "Creates a new display for the specified image. If the image already has a display, another is added. Multiple displays are handled transparently by the GIMP. The newly created display is returned and can be subsequently destroyed with a call to 'gimp-display-delete'. This procedure only makes sense for use with the GIMP UI.",
@@ -198,8 +198,8 @@ register_display_procs (Gimp *gimp)
    * gimp-display-delete
    */
   procedure = gimp_procedure_new (display_delete_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-display-delete");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-display-delete",
                                      "gimp-display-delete",
                                      "Delete the specified display.",
                                      "This procedure removes the specified display. If this is the last remaining display for the underlying image, then the image is deleted also.",
@@ -221,8 +221,8 @@ register_display_procs (Gimp *gimp)
    * gimp-display-get-window-handle
    */
   procedure = gimp_procedure_new (display_get_window_handle_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-display-get-window-handle");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-display-get-window-handle",
                                      "gimp-display-get-window-handle",
                                      "Get a handle to the native window for an image display.",
                                      "This procedure returns a handle to the native window for a given image display. For example in the X backend of GDK, a native window handle is an Xlib XID. A value of 0 is returned for an invalid display or if this function is unimplemented for the windowing system that is being used.",
@@ -250,8 +250,8 @@ register_display_procs (Gimp *gimp)
    * gimp-displays-flush
    */
   procedure = gimp_procedure_new (displays_flush_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-displays-flush");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-displays-flush",
                                      "gimp-displays-flush",
                                      "Flush all internal changes to the user interface",
                                      "This procedure takes no arguments and returns nothing except a success status. Its purpose is to flush all pending updates of image manipulations to the user interface. It should be called whenever appropriate.",
@@ -267,8 +267,8 @@ register_display_procs (Gimp *gimp)
    * gimp-displays-reconnect
    */
   procedure = gimp_procedure_new (displays_reconnect_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-displays-reconnect");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-displays-reconnect",
                                      "gimp-displays-reconnect",
                                      "Reconnect displays from one image to another image.",
                                      "This procedure connects all displays of the old_image to the new_image. If the old_image has no display or new_image already has a display the reconnect is not performed and the procedure returns without success. You should rarely need to use this function.",

@@ -139,8 +139,8 @@ register_brush_select_procs (Gimp *gimp)
    * gimp-brushes-popup
    */
   procedure = gimp_procedure_new (brushes_popup_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-brushes-popup");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-brushes-popup",
                                      "gimp-brushes-popup",
                                      "Invokes the Gimp brush selection.",
                                      "This procedure popups the brush selection dialog.",
@@ -196,8 +196,8 @@ register_brush_select_procs (Gimp *gimp)
    * gimp-brushes-close-popup
    */
   procedure = gimp_procedure_new (brushes_close_popup_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-brushes-close-popup");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-brushes-close-popup",
                                      "gimp-brushes-close-popup",
                                      "Popdown the Gimp brush selection.",
                                      "This procedure closes an opened brush selection dialog.",
@@ -220,8 +220,8 @@ register_brush_select_procs (Gimp *gimp)
    * gimp-brushes-set-popup
    */
   procedure = gimp_procedure_new (brushes_set_popup_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-brushes-set-popup");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-brushes-set-popup",
                                      "gimp-brushes-set-popup",
                                      "Sets the current brush selection in a popup.",
                                      "Sets the current brush selection in a popup.",

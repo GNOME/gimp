@@ -1,3 +1,29 @@
+2006-04-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpobject.[ch]: added flag "guint static_name : 1" and
+	new APIs gimp_object_set_static_name() and _take_name().
+
+	* app/pdb/gimpprocedure.[ch]: removed member "name". Use
+	GimpObject's name instead.
+
+	* app/actions/plug-in-actions.c
+	* app/file/file-open.c
+	* app/file/file-save.c
+	* app/menus/plug-in-menus.c
+	* app/pdb/gimp-pdb-query.c
+	* app/pdb/gimp-pdb.c
+	* app/pdb/gimppluginprocedure.c
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-rc.c
+	* app/plug-in/plug-ins-query.c
+	* app/plug-in/plug-ins.c
+	* app/xcf/xcf.c
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/pdb/fileops.pdb: use GimpObject API to set/get
+	a procedure's name.
+
+	* app/pdb/*_cmds.c: regenerated.
+
 2006-04-07  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdrawable.[ch]: renamed gimp_drawable_shadow() to

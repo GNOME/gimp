@@ -163,10 +163,10 @@ gimp_plug_in_procedure_find (GSList      *list,
 
   for (l = list; l; l = g_slist_next (l))
     {
-      GimpProcedure *proc = l->data;
+      GimpObject *object = l->data;
 
-      if (! strcmp (proc_name, proc->name))
-        return GIMP_PLUG_IN_PROCEDURE (proc);
+      if (! strcmp (proc_name, object->name))
+        return GIMP_PLUG_IN_PROCEDURE (object);
     }
 
   return NULL;
@@ -304,9 +304,9 @@ gimp_plug_in_procedure_get_help_id (const GimpPlugInProcedure *proc,
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
 
   if (help_domain)
-    return g_strconcat (help_domain, "?", GIMP_PROCEDURE (proc)->name, NULL);
+    return g_strconcat (help_domain, "?", GIMP_OBJECT (proc)->name, NULL);
 
-  return g_strdup (GIMP_PROCEDURE (proc)->name);
+  return g_strdup (GIMP_OBJECT (proc)->name);
 }
 
 gboolean

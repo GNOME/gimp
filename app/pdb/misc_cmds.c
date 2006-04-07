@@ -110,8 +110,8 @@ register_misc_procs (Gimp *gimp)
    * gimp-version
    */
   procedure = gimp_procedure_new (version_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-version");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-version",
                                      "gimp-version",
                                      "Returns the host gimp version.",
                                      "This procedure returns the version number of the currently running gimp.",
@@ -134,8 +134,8 @@ register_misc_procs (Gimp *gimp)
    * gimp-getpid
    */
   procedure = gimp_procedure_new (getpid_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-getpid");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-getpid",
                                      "gimp-getpid",
                                      "Returns the PID of the host gimp process.",
                                      "This procedure returns the process ID of the currently running gimp.",
@@ -157,8 +157,8 @@ register_misc_procs (Gimp *gimp)
    * gimp-quit
    */
   procedure = gimp_procedure_new (quit_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-quit");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-quit",
                                      "gimp-quit",
                                      "Causes the gimp to exit gracefully.",
                                      "The internal procedure which can either be used to make the gimp quit. If there are unsaved images in an interactive GIMP session, the user will be asked for confirmation. If force is TRUE, the application is quit without querying the user to save any dirty images.",

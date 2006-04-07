@@ -840,8 +840,8 @@ register_color_procs (Gimp *gimp)
    * gimp-brightness-contrast
    */
   procedure = gimp_procedure_new (brightness_contrast_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-brightness-contrast");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-brightness-contrast",
                                      "gimp-brightness-contrast",
                                      "Modify brightness/contrast in the specified drawable.",
                                      "This procedures allows the brightness and contrast of the specified drawable to be modified. Both 'brightness' and 'contrast' parameters are defined between -127 and 127.",
@@ -875,8 +875,8 @@ register_color_procs (Gimp *gimp)
    * gimp-levels
    */
   procedure = gimp_procedure_new (levels_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-levels");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-levels",
                                      "gimp-levels",
                                      "Modifies intensity levels in the specified drawable.",
                                      "This tool allows intensity levels in the specified drawable to be remapped according to a set of parameters. The low/high input levels specify an initial mapping from the source intensities. The gamma value determines how intensities between the low and high input intensities are interpolated. A gamma value of 1.0 results in a linear interpolation. Higher gamma values result in more high-level intensities. Lower gamma values result in more low-level intensities. The low/high output levels constrain the final intensity mapping--that is, no final intensity will be lower than the low output level and no final intensity will be higher than the high output level. This tool is only valid on RGB color and grayscale images. It will not operate on indexed drawables.",
@@ -935,8 +935,8 @@ register_color_procs (Gimp *gimp)
    * gimp-levels-auto
    */
   procedure = gimp_procedure_new (levels_auto_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-levels-auto");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-levels-auto",
                                      "gimp-levels-auto",
                                      "This procedure is deprecated! Use 'gimp_levels_stretch' instead.",
                                      "This procedure is deprecated! Use 'gimp_levels_stretch' instead.",
@@ -958,8 +958,8 @@ register_color_procs (Gimp *gimp)
    * gimp-levels-stretch
    */
   procedure = gimp_procedure_new (levels_stretch_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-levels-stretch");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-levels-stretch",
                                      "gimp-levels-stretch",
                                      "Automatically modifies intensity levels in the specified drawable.",
                                      "This procedure allows intensity levels in the specified drawable to be remapped according to a set of guessed parameters. It is equivalent to clicking the \"Auto\" button in the Levels tool. This procedure is only valid on RGB color and grayscale images. It will not operate on indexed drawables.",
@@ -981,8 +981,8 @@ register_color_procs (Gimp *gimp)
    * gimp-posterize
    */
   procedure = gimp_procedure_new (posterize_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-posterize");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-posterize",
                                      "gimp-posterize",
                                      "Posterize the specified drawable.",
                                      "This procedures reduces the number of shades allows in each intensity channel to the specified 'levels' parameter.",
@@ -1010,8 +1010,8 @@ register_color_procs (Gimp *gimp)
    * gimp-desaturate
    */
   procedure = gimp_procedure_new (desaturate_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-desaturate");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-desaturate",
                                      "gimp-desaturate",
                                      "Desaturate the contents of the specified drawable.",
                                      "This procedure desaturates the contents of the specified drawable. This procedure only works on drawables of type RGB color.",
@@ -1033,8 +1033,8 @@ register_color_procs (Gimp *gimp)
    * gimp-desaturate-full
    */
   procedure = gimp_procedure_new (desaturate_full_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-desaturate-full");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-desaturate-full",
                                      "gimp-desaturate-full",
                                      "Desaturate the contents of the specified drawable, with the specified formula.",
                                      "This procedure desaturates the contents of the specified drawable, with the specified formula. This procedure only works on drawables of type RGB color.",
@@ -1063,8 +1063,8 @@ register_color_procs (Gimp *gimp)
    * gimp-equalize
    */
   procedure = gimp_procedure_new (equalize_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-equalize");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-equalize",
                                      "gimp-equalize",
                                      "Equalize the contents of the specified drawable.",
                                      "This procedure equalizes the contents of the specified drawable. Each intensity channel is equalizeed independently. The equalized intensity is given as inten' = (255 - inten). Indexed color drawables are not valid for this operation. The 'mask_only' option specifies whether to adjust only the area of the image within the selection bounds, or the entire image based on the histogram of the selected area. If there is no selection, the entire image is adjusted based on the histogram for the entire image.",
@@ -1092,8 +1092,8 @@ register_color_procs (Gimp *gimp)
    * gimp-invert
    */
   procedure = gimp_procedure_new (invert_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-invert");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-invert",
                                      "gimp-invert",
                                      "Invert the contents of the specified drawable.",
                                      "This procedure inverts the contents of the specified drawable. Each intensity channel is inverted independently. The inverted intensity is given as inten' = (255 - inten). Indexed color drawables are not valid for this operation.",
@@ -1115,8 +1115,8 @@ register_color_procs (Gimp *gimp)
    * gimp-curves-spline
    */
   procedure = gimp_procedure_new (curves_spline_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-curves-spline");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-curves-spline",
                                      "gimp-curves-spline",
                                      "Modifies the intensity curve(s) for specified drawable.",
                                      "Modifies the intensity mapping for one channel in the specified drawable. The drawable must be either grayscale or RGB, and the channel can be either an intensity component, or the value. The 'control_pts' parameter is an array of integers which define a set of control points which describe a Catmull Rom spline which yields the final intensity curve. Use the 'gimp_curves_explicit' function to explicitly modify intensity levels.",
@@ -1156,8 +1156,8 @@ register_color_procs (Gimp *gimp)
    * gimp-curves-explicit
    */
   procedure = gimp_procedure_new (curves_explicit_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-curves-explicit");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-curves-explicit",
                                      "gimp-curves-explicit",
                                      "Modifies the intensity curve(s) for specified drawable.",
                                      "Modifies the intensity mapping for one channel in the specified drawable. The drawable must be either grayscale or RGB, and the channel can be either an intensity component, or the value. The 'curve' parameter is an array of bytes which explicitly defines how each pixel value in the drawable will be modified. Use the 'gimp_curves_spline' function to modify intensity levels with Catmull Rom splines.",
@@ -1197,8 +1197,8 @@ register_color_procs (Gimp *gimp)
    * gimp-color-balance
    */
   procedure = gimp_procedure_new (color_balance_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-color-balance");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-color-balance",
                                      "gimp-color-balance",
                                      "Modify the color balance of the specified drawable.",
                                      "Modify the color balance of the specified drawable. There are three axis which can be modified: cyan-red, magenta-green, and yellow-blue. Negative values increase the amount of the former, positive values increase the amount of the latter. Color balance can be controlled with the 'transfer_mode' setting, which allows shadows, midtones, and highlights in an image to be affected differently. The 'preserve_lum' parameter, if TRUE, ensures that the luminosity of each pixel remains fixed.",
@@ -1251,8 +1251,8 @@ register_color_procs (Gimp *gimp)
    * gimp-colorize
    */
   procedure = gimp_procedure_new (colorize_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-colorize");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-colorize",
                                      "gimp-colorize",
                                      "Render the drawable as a grayscale image seen through a colored glass.",
                                      "Desatures the drawable, then tints it with the specified color. This tool is only valid on RGB color images. It will not operate on grayscale or indexed drawables.",
@@ -1292,8 +1292,8 @@ register_color_procs (Gimp *gimp)
    * gimp-histogram
    */
   procedure = gimp_procedure_new (histogram_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-histogram");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-histogram",
                                      "gimp-histogram",
                                      "Returns information on the intensity histogram for the specified drawable.",
                                      "This tool makes it possible to gather information about the intensity histogram of a drawable. A channel to examine is first specified. This can be either value, red, green, or blue, depending on whether the drawable is of type color or grayscale. The drawable may not be indexed. Second, a range of intensities are specified. The gimp_histogram function returns statistics based on the pixels in the drawable that fall under this range of values. Mean, standard deviation, median, number of pixels, and percentile are all returned. Additionally, the total count of pixels in the image is returned. Counts of pixels are weighted by any associated alpha values and by the current selection mask. That is, pixels that lie outside an active selection mask will not be counted. Similarly, pixels with transparent alpha values will not be counted.",
@@ -1370,8 +1370,8 @@ register_color_procs (Gimp *gimp)
    * gimp-hue-saturation
    */
   procedure = gimp_procedure_new (hue_saturation_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-hue-saturation");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-hue-saturation",
                                      "gimp-hue-saturation",
                                      "Modify hue, lightness, and saturation in the specified drawable.",
                                      "This procedures allows the hue, lightness, and saturation in the specified drawable to be modified. The 'hue_range' parameter provides the capability to limit range of affected hues.",
@@ -1418,8 +1418,8 @@ register_color_procs (Gimp *gimp)
    * gimp-threshold
    */
   procedure = gimp_procedure_new (threshold_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-threshold");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-threshold",
                                      "gimp-threshold",
                                      "Threshold the specified drawable.",
                                      "This procedures generates a threshold map of the specified drawable. All pixels between the values of 'low_threshold' and 'high_threshold' are replaced with white, and all other pixels with black.",

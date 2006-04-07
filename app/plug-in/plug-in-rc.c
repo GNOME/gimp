@@ -339,8 +339,10 @@ plug_in_procedure_deserialize (GScanner             *scanner,
 
   *proc = GIMP_PLUG_IN_PROCEDURE (procedure);
 
+  gimp_object_take_name (GIMP_OBJECT (procedure),
+                         gimp_canonicalize_identifier (str));
+
   procedure->original_name = str;
-  procedure->name = gimp_canonicalize_identifier (procedure->original_name);
 
   if (! gimp_scanner_parse_string (scanner, &procedure->blurb))
     return G_TOKEN_STRING;

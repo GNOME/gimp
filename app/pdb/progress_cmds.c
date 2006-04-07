@@ -239,8 +239,8 @@ register_progress_procs (Gimp *gimp)
    * gimp-progress-init
    */
   procedure = gimp_procedure_new (progress_init_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-progress-init");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-progress-init",
                                      "gimp-progress-init",
                                      "Initializes the progress bar for the current plug-in.",
                                      "Initializes the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in.",
@@ -269,8 +269,8 @@ register_progress_procs (Gimp *gimp)
    * gimp-progress-update
    */
   procedure = gimp_procedure_new (progress_update_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-progress-update");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-progress-update",
                                      "gimp-progress-update",
                                      "Updates the progress bar for the current plug-in.",
                                      "Updates the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in.",
@@ -292,8 +292,8 @@ register_progress_procs (Gimp *gimp)
    * gimp-progress-pulse
    */
   procedure = gimp_procedure_new (progress_pulse_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-progress-pulse");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-progress-pulse",
                                      "gimp-progress-pulse",
                                      "Pulses the progress bar for the current plug-in.",
                                      "Updates the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in. Use this function instead of gimp_progress_update() if you cannot tell how much progress has been made. This usually causes the the progress bar to enter \"activity mode\", where a block bounces back and forth.",
@@ -309,8 +309,8 @@ register_progress_procs (Gimp *gimp)
    * gimp-progress-set-text
    */
   procedure = gimp_procedure_new (progress_set_text_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-progress-set-text");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-progress-set-text",
                                      "gimp-progress-set-text",
                                      "Changes the text in the progress bar for the current plug-in.",
                                      "This function allows to change the text in the progress bar for the current plug-in. Unlike gimp_progress_init() it does not change the displayed value.",
@@ -333,8 +333,8 @@ register_progress_procs (Gimp *gimp)
    * gimp-progress-get-window-handle
    */
   procedure = gimp_procedure_new (progress_get_window_handle_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-progress-get-window-handle");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-progress-get-window-handle",
                                      "gimp-progress-get-window-handle",
                                      "Returns the native window ID of the toplevel window this plug-in's progress is displayed in.",
                                      "This function returns the native window ID of the toplevel window this plug-in\'s progress is displayed in.",
@@ -356,8 +356,8 @@ register_progress_procs (Gimp *gimp)
    * gimp-progress-install
    */
   procedure = gimp_procedure_new (progress_install_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-progress-install");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-progress-install",
                                      "gimp-progress-install",
                                      "Installs a progress callback for the current plug-in.",
                                      "This function installs a temporary PDB procedure which will handle all progress calls made by this plug-in and any procedure it calls. Calling this function multiple times simply replaces the old progress callbacks.",
@@ -380,8 +380,8 @@ register_progress_procs (Gimp *gimp)
    * gimp-progress-uninstall
    */
   procedure = gimp_procedure_new (progress_uninstall_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-progress-uninstall");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-progress-uninstall",
                                      "gimp-progress-uninstall",
                                      "Uninstalls the progress callback for the current plug-in.",
                                      "This function uninstalls any progress callback installed with gimp_progress_install() before.",
@@ -404,8 +404,8 @@ register_progress_procs (Gimp *gimp)
    * gimp-progress-cancel
    */
   procedure = gimp_procedure_new (progress_cancel_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-progress-cancel");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-progress-cancel",
                                      "gimp-progress-cancel",
                                      "Cancels a running progress.",
                                      "This function cancels the currently running progress.",

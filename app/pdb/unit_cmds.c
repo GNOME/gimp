@@ -356,8 +356,8 @@ register_unit_procs (Gimp *gimp)
    * gimp-unit-get-number-of-units
    */
   procedure = gimp_procedure_new (unit_get_number_of_units_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-get-number-of-units");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-get-number-of-units",
                                      "gimp-unit-get-number-of-units",
                                      "Returns the number of units.",
                                      "This procedure returns the number of defined units.",
@@ -379,8 +379,8 @@ register_unit_procs (Gimp *gimp)
    * gimp-unit-get-number-of-built-in-units
    */
   procedure = gimp_procedure_new (unit_get_number_of_built_in_units_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-get-number-of-built-in-units");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-get-number-of-built-in-units",
                                      "gimp-unit-get-number-of-built-in-units",
                                      "Returns the number of built-in units.",
                                      "This procedure returns the number of defined units built-in to the GIMP.",
@@ -402,8 +402,8 @@ register_unit_procs (Gimp *gimp)
    * gimp-unit-new
    */
   procedure = gimp_procedure_new (unit_new_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-new");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-new",
                                      "gimp-unit-new",
                                      "Creates a new unit and returns it's integer ID.",
                                      "This procedure creates a new unit and returns it's integer ID. Note that the new unit will have it's deletion flag set to TRUE, so you will have to set it to FALSE with gimp_unit_set_deletion_flag to make it persistent.",
@@ -474,8 +474,8 @@ register_unit_procs (Gimp *gimp)
    * gimp-unit-get-deletion-flag
    */
   procedure = gimp_procedure_new (unit_get_deletion_flag_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-get-deletion-flag");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-get-deletion-flag",
                                      "gimp-unit-get-deletion-flag",
                                      "Returns the deletion flag of the unit.",
                                      "This procedure returns the deletion flag of the unit. If this value is TRUE the unit's definition will not be saved in the user's unitrc file on gimp exit.",
@@ -505,8 +505,8 @@ register_unit_procs (Gimp *gimp)
    * gimp-unit-set-deletion-flag
    */
   procedure = gimp_procedure_new (unit_set_deletion_flag_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-set-deletion-flag");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-set-deletion-flag",
                                      "gimp-unit-set-deletion-flag",
                                      "Sets the deletion flag of a unit.",
                                      "This procedure sets the unit's deletion flag. If the deletion flag of a unit is TRUE on gimp exit, this unit's definition will not be saved in the user's unitrc.",
@@ -536,8 +536,8 @@ register_unit_procs (Gimp *gimp)
    * gimp-unit-get-identifier
    */
   procedure = gimp_procedure_new (unit_get_identifier_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-get-identifier");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-get-identifier",
                                      "gimp-unit-get-identifier",
                                      "Returns the textual identifier of the unit.",
                                      "This procedure returns the textual identifier of the unit. For built-in units it will be the english singular form of the unit's name. For user-defined units this should equal to the singular form.",
@@ -568,8 +568,8 @@ register_unit_procs (Gimp *gimp)
    * gimp-unit-get-factor
    */
   procedure = gimp_procedure_new (unit_get_factor_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-get-factor");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-get-factor",
                                      "gimp-unit-get-factor",
                                      "Returns the factor of the unit.",
                                      "This procedure returns the unit's factor which indicates how many units make up an inch. Note that asking for the factor of \"pixels\" will produce an error.",
@@ -599,8 +599,8 @@ register_unit_procs (Gimp *gimp)
    * gimp-unit-get-digits
    */
   procedure = gimp_procedure_new (unit_get_digits_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-get-digits");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-get-digits",
                                      "gimp-unit-get-digits",
                                      "Returns the number of digits of the unit.",
                                      "This procedure returns the number of digits you should provide in input or output functions to get approximately the same accuracy as with two digits and inches. Note that asking for the digits of \"pixels\" will produce an error.",
@@ -630,8 +630,8 @@ register_unit_procs (Gimp *gimp)
    * gimp-unit-get-symbol
    */
   procedure = gimp_procedure_new (unit_get_symbol_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-get-symbol");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-get-symbol",
                                      "gimp-unit-get-symbol",
                                      "Returns the symbol of the unit.",
                                      "This procedure returns the symbol of the unit (\"''\" for inches).",
@@ -662,8 +662,8 @@ register_unit_procs (Gimp *gimp)
    * gimp-unit-get-abbreviation
    */
   procedure = gimp_procedure_new (unit_get_abbreviation_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-get-abbreviation");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-get-abbreviation",
                                      "gimp-unit-get-abbreviation",
                                      "Returns the abbreviation of the unit.",
                                      "This procedure returns the abbreviation of the unit (\"in\" for inches).",
@@ -694,8 +694,8 @@ register_unit_procs (Gimp *gimp)
    * gimp-unit-get-singular
    */
   procedure = gimp_procedure_new (unit_get_singular_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-get-singular");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-get-singular",
                                      "gimp-unit-get-singular",
                                      "Returns the singular form of the unit.",
                                      "This procedure returns the singular form of the unit.",
@@ -726,8 +726,8 @@ register_unit_procs (Gimp *gimp)
    * gimp-unit-get-plural
    */
   procedure = gimp_procedure_new (unit_get_plural_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-get-plural");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-get-plural",
                                      "gimp-unit-get-plural",
                                      "Returns the plural form of the unit.",
                                      "This procedure returns the plural form of the unit.",

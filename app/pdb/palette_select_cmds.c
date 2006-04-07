@@ -121,8 +121,8 @@ register_palette_select_procs (Gimp *gimp)
    * gimp-palettes-popup
    */
   procedure = gimp_procedure_new (palettes_popup_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-palettes-popup");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palettes-popup",
                                      "gimp-palettes-popup",
                                      "Invokes the Gimp palette selection.",
                                      "This procedure popups the palette selection dialog.",
@@ -159,8 +159,8 @@ register_palette_select_procs (Gimp *gimp)
    * gimp-palettes-close-popup
    */
   procedure = gimp_procedure_new (palettes_close_popup_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-palettes-close-popup");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palettes-close-popup",
                                      "gimp-palettes-close-popup",
                                      "Popdown the Gimp palette selection.",
                                      "This procedure closes an opened palette selection dialog.",
@@ -183,8 +183,8 @@ register_palette_select_procs (Gimp *gimp)
    * gimp-palettes-set-popup
    */
   procedure = gimp_procedure_new (palettes_set_popup_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-palettes-set-popup");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palettes-set-popup",
                                      "gimp-palettes-set-popup",
                                      "Sets the current palette selection in a popup.",
                                      "Sets the current palette selection in a popup.",

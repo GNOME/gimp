@@ -2149,8 +2149,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-list
    */
   procedure = gimp_procedure_new (image_list_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-list");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-list",
                                      "gimp-image-list",
                                      "Returns the list of images currently open.",
                                      "This procedure returns the list of images currently open in the GIMP.",
@@ -2177,8 +2177,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-new
    */
   procedure = gimp_procedure_new (image_new_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-new");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-new",
                                      "gimp-image-new",
                                      "Creates a new image with the specified width, height, and type.",
                                      "Creates a new image, undisplayed with the specified extents and type. A layer should be created and added before this image is displayed, or subsequent calls to 'gimp_display_new' with this image as an argument will fail. Layers can be created using the 'gimp_layer_new' commands. They can be added to an image using the 'gimp_image_add_layer' command.",
@@ -2219,8 +2219,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-duplicate
    */
   procedure = gimp_procedure_new (image_duplicate_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-duplicate");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-duplicate",
                                      "gimp-image-duplicate",
                                      "Duplicate the specified image",
                                      "This procedure duplicates the specified image, copying all layers, channels, and image information.",
@@ -2248,8 +2248,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-delete
    */
   procedure = gimp_procedure_new (image_delete_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-delete");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-delete",
                                      "gimp-image-delete",
                                      "Delete the specified image.",
                                      "If there are no displays associated with this image it will be deleted. This means that you can not delete an image through the PDB that was created by the user. If the associated display was however created through the PDB and you know the display ID, you may delete the display. Removal of the last associated display will then delete the image.",
@@ -2271,8 +2271,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-base-type
    */
   procedure = gimp_procedure_new (image_base_type_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-base-type");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-base-type",
                                      "gimp-image-base-type",
                                      "Get the base type of the image.",
                                      "This procedure returns the image's base type. Layers in the image must be of this subtype, but can have an optional alpha channel.",
@@ -2301,8 +2301,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-width
    */
   procedure = gimp_procedure_new (image_width_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-width");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-width",
                                      "gimp-image-width",
                                      "Return the width of the image",
                                      "This procedure returns the image's width. This value is independent of any of the layers in this image. This is the \"canvas\" width.",
@@ -2330,8 +2330,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-height
    */
   procedure = gimp_procedure_new (image_height_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-height");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-height",
                                      "gimp-image-height",
                                      "Return the height of the image",
                                      "This procedure returns the image's height. This value is independent of any of the layers in this image. This is the \"canvas\" height.",
@@ -2359,8 +2359,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-free-shadow
    */
   procedure = gimp_procedure_new (image_free_shadow_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-free-shadow");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-free-shadow",
                                      "gimp-image-free-shadow",
                                      "Free the specified image's shadow data (if it exists).",
                                      "This procedure is intended as a memory saving device. If any shadow memory has been allocated, it will be freed automatically on a call to 'gimp_image_delete'.",
@@ -2382,8 +2382,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-resize
    */
   procedure = gimp_procedure_new (image_resize_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-resize");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-resize",
                                      "gimp-image-resize",
                                      "Resize the image to the specified extents.",
                                      "This procedure resizes the image so that it's new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous image's content. No bounds checking is currently provided, so don't supply parameters that are out of bounds. All channels within the image are resized according to the specified parameters; this includes the image selection mask. All layers within the image are repositioned according to the specified offsets.",
@@ -2429,8 +2429,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-resize-to-layers
    */
   procedure = gimp_procedure_new (image_resize_to_layers_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-resize-to-layers");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-resize-to-layers",
                                      "gimp-image-resize-to-layers",
                                      "Resize the image to fit all layers.",
                                      "This procedure resizes the image to the bounding box of all layers of the image. All channels within the image are resized to the new size; this includes the image selection mask. All layers within the image are repositioned to the new image area.",
@@ -2452,8 +2452,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-scale
    */
   procedure = gimp_procedure_new (image_scale_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-scale");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-scale",
                                      "gimp-image-scale",
                                      "Scale the image to the specified extents.",
                                      "This procedure scales the image so that its new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous image's content. No bounds checking is currently provided, so don't supply parameters that are out of bounds. All channels within the image are scaled according to the specified parameters; this includes the image selection mask. All layers within the image are repositioned according to the specified offsets.",
@@ -2487,8 +2487,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-crop
    */
   procedure = gimp_procedure_new (image_crop_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-crop");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-crop",
                                      "gimp-image-crop",
                                      "Crop the image to the specified extents.",
                                      "This procedure crops the image so that it's new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous image's content. All channels and layers within the image are cropped to the new image extents; this includes the image selection mask. If any parameters are out of range, an error is returned.",
@@ -2534,8 +2534,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-flip
    */
   procedure = gimp_procedure_new (image_flip_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-flip");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-flip",
                                      "gimp-image-flip",
                                      "Flips the image horizontally or vertically.",
                                      "This procedure flips (mirrors) the image.",
@@ -2566,8 +2566,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-rotate
    */
   procedure = gimp_procedure_new (image_rotate_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-rotate");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-rotate",
                                      "gimp-image-rotate",
                                      "Rotates the image by the specified degrees.",
                                      "This procedure rotates the image.",
@@ -2596,8 +2596,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-get-layers
    */
   procedure = gimp_procedure_new (image_get_layers_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-get-layers");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-layers",
                                      "gimp-image-get-layers",
                                      "Returns the list of layers contained in the specified image.",
                                      "This procedure returns the list of layers contained in the specified image. The order of layers is from topmost to bottommost.",
@@ -2630,8 +2630,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-get-channels
    */
   procedure = gimp_procedure_new (image_get_channels_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-get-channels");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-channels",
                                      "gimp-image-get-channels",
                                      "Returns the list of channels contained in the specified image.",
                                      "This procedure returns the list of channels contained in the specified image. This does not include the selection mask, or layer masks. The order is from topmost to bottommost.",
@@ -2664,8 +2664,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-get-vectors
    */
   procedure = gimp_procedure_new (image_get_vectors_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-get-vectors");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-vectors",
                                      "gimp-image-get-vectors",
                                      "Returns the list of vectors contained in the specified image.",
                                      "This procedure returns the list of vectors contained in the specified image.",
@@ -2698,8 +2698,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-get-active-drawable
    */
   procedure = gimp_procedure_new (image_get_active_drawable_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-get-active-drawable");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-active-drawable",
                                      "gimp-image-get-active-drawable",
                                      "Get the image's active drawable",
                                      "This procedure returns the ID of the image's active drawable. This can be either a layer, a channel, or a layer mask. The active drawable is specified by the active image channel. If that is -1, then by the active image layer. If the active image layer has a layer mask and the layer mask is in edit mode, then the layer mask is the active drawable.",
@@ -2727,8 +2727,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-unset-active-channel
    */
   procedure = gimp_procedure_new (image_unset_active_channel_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-unset-active-channel");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-unset-active-channel",
                                      "gimp-image-unset-active-channel",
                                      "Unsets the active channel in the specified image.",
                                      "If an active channel exists, it is unset. There then exists no active channel, and if desired, one can be set through a call to 'Set Active Channel'. No error is returned in the case of no existing active channel.",
@@ -2750,8 +2750,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-get-floating-sel
    */
   procedure = gimp_procedure_new (image_get_floating_sel_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-get-floating-sel");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-floating-sel",
                                      "gimp-image-get-floating-sel",
                                      "Return the floating selection of the image.",
                                      "This procedure returns the image's floating selection, if it exists. If it doesn't exist, -1 is returned as the layer ID.",
@@ -2779,8 +2779,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-floating-sel-attached-to
    */
   procedure = gimp_procedure_new (image_floating_sel_attached_to_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-floating-sel-attached-to");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-floating-sel-attached-to",
                                      "gimp-image-floating-sel-attached-to",
                                      "Return the drawable the floating selection is attached to.",
                                      "This procedure returns the drawable the image's floating selection is attached to, if it exists. If it doesn't exist, -1 is returned as the drawable ID.",
@@ -2808,8 +2808,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-pick-color
    */
   procedure = gimp_procedure_new (image_pick_color_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-pick-color");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-pick-color",
                                      "gimp-image-pick-color",
                                      "Determine the color at the given drawable coordinates",
                                      "This tool determines the color at the specified coordinates. The returned color is an RGB triplet even for grayscale and indexed drawables. If the coordinates lie outside of the extents of the specified drawable, then an error is returned. If the drawable has an alpha channel, the algorithm examines the alpha value of the drawable at the coordinates. If the alpha value is completely transparent (0), then an error is returned. If the sample_merged parameter is TRUE, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored.",
@@ -2873,8 +2873,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-pick-correlate-layer
    */
   procedure = gimp_procedure_new (image_pick_correlate_layer_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-pick-correlate-layer");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-pick-correlate-layer",
                                      "gimp-image-pick-correlate-layer",
                                      "Find the layer visible at the specified coordinates.",
                                      "This procedure finds the layer which is visible at the specified coordinates. Layers which do not qualify are those whose extents do not pass within the specified coordinates, or which are transparent at the specified coordinates. This procedure will return -1 if no layer is found.",
@@ -2914,8 +2914,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-add-layer
    */
   procedure = gimp_procedure_new (image_add_layer_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-add-layer");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-add-layer",
                                      "gimp-image-add-layer",
                                      "Add the specified layer to the image.",
                                      "This procedure adds the specified layer to the image at the given position. If the position is specified as -1, then the layer is inserted at the top of the layer stack. If the layer to be added has no alpha channel, it must be added at position 0. The layer type must be compatible with the image base type.",
@@ -2949,8 +2949,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-remove-layer
    */
   procedure = gimp_procedure_new (image_remove_layer_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-remove-layer");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-remove-layer",
                                      "gimp-image-remove-layer",
                                      "Remove the specified layer from the image.",
                                      "This procedure removes the specified layer from the image. If the layer doesn't exist, an error is returned. If there are no layers left in the image, this call will fail. If this layer is the last layer remaining, the image will become empty and have no active layer.",
@@ -2978,8 +2978,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-raise-layer
    */
   procedure = gimp_procedure_new (image_raise_layer_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-raise-layer");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-raise-layer",
                                      "gimp-image-raise-layer",
                                      "Raise the specified layer in the image's layer stack",
                                      "This procedure raises the specified layer one step in the existing layer stack. It will not move the layer if there is no layer above it.",
@@ -3007,8 +3007,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-lower-layer
    */
   procedure = gimp_procedure_new (image_lower_layer_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-lower-layer");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-lower-layer",
                                      "gimp-image-lower-layer",
                                      "Lower the specified layer in the image's layer stack",
                                      "This procedure lowers the specified layer one step in the existing layer stack. It will not move the layer if there is no layer below it.",
@@ -3036,8 +3036,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-raise-layer-to-top
    */
   procedure = gimp_procedure_new (image_raise_layer_to_top_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-raise-layer-to-top");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-raise-layer-to-top",
                                      "gimp-image-raise-layer-to-top",
                                      "Raise the specified layer in the image's layer stack to top of stack",
                                      "This procedure raises the specified layer to top of the existing layer stack. It will not move the layer if there is no layer above it.",
@@ -3065,8 +3065,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-lower-layer-to-bottom
    */
   procedure = gimp_procedure_new (image_lower_layer_to_bottom_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-lower-layer-to-bottom");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-lower-layer-to-bottom",
                                      "gimp-image-lower-layer-to-bottom",
                                      "Lower the specified layer in the image's layer stack to bottom of stack",
                                      "This procedure lowers the specified layer to bottom of the existing layer stack. It will not move the layer if there is no layer below it.",
@@ -3094,8 +3094,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-add-channel
    */
   procedure = gimp_procedure_new (image_add_channel_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-add-channel");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-add-channel",
                                      "gimp-image-add-channel",
                                      "Add the specified channel to the image.",
                                      "This procedure adds the specified channel to the image. The position channel is not currently used, so the channel is always inserted at the top of the channel stack.",
@@ -3129,8 +3129,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-remove-channel
    */
   procedure = gimp_procedure_new (image_remove_channel_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-remove-channel");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-remove-channel",
                                      "gimp-image-remove-channel",
                                      "Remove the specified channel from the image.",
                                      "This procedure removes the specified channel from the image. If the channel doesn't exist, an error is returned.",
@@ -3158,8 +3158,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-raise-channel
    */
   procedure = gimp_procedure_new (image_raise_channel_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-raise-channel");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-raise-channel",
                                      "gimp-image-raise-channel",
                                      "Raise the specified channel in the image's channel stack",
                                      "This procedure raises the specified channel one step in the existing channel stack. It will not move the channel if there is no channel above it.",
@@ -3187,8 +3187,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-lower-channel
    */
   procedure = gimp_procedure_new (image_lower_channel_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-lower-channel");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-lower-channel",
                                      "gimp-image-lower-channel",
                                      "Lower the specified channel in the image's channel stack",
                                      "This procedure lowers the specified channel one step in the existing channel stack. It will not move the channel if there is no channel below it.",
@@ -3216,8 +3216,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-add-vectors
    */
   procedure = gimp_procedure_new (image_add_vectors_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-add-vectors");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-add-vectors",
                                      "gimp-image-add-vectors",
                                      "Add the specified vectors object to the image.",
                                      "This procedure adds the specified vectors object to the image at the given position. If the position is specified as -1, then the vectors object is inserted at the top of the vectors stack.",
@@ -3251,8 +3251,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-remove-vectors
    */
   procedure = gimp_procedure_new (image_remove_vectors_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-remove-vectors");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-remove-vectors",
                                      "gimp-image-remove-vectors",
                                      "Remove the specified path from the image.",
                                      "This procedure removes the specified path from the image. If the path doesn't exist, an error is returned.",
@@ -3280,8 +3280,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-raise-vectors
    */
   procedure = gimp_procedure_new (image_raise_vectors_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-raise-vectors");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-raise-vectors",
                                      "gimp-image-raise-vectors",
                                      "Raise the specified vectors in the image's vectors stack",
                                      "This procedure raises the specified vectors one step in the existing vectors stack. It will not move the vectors if there is no vectors above it.",
@@ -3309,8 +3309,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-lower-vectors
    */
   procedure = gimp_procedure_new (image_lower_vectors_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-lower-vectors");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-lower-vectors",
                                      "gimp-image-lower-vectors",
                                      "Lower the specified vectors in the image's vectors stack",
                                      "This procedure lowers the specified vectors one step in the existing vectors stack. It will not move the vectors if there is no vectors below it.",
@@ -3338,8 +3338,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-raise-vectors-to-top
    */
   procedure = gimp_procedure_new (image_raise_vectors_to_top_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-raise-vectors-to-top");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-raise-vectors-to-top",
                                      "gimp-image-raise-vectors-to-top",
                                      "Raise the specified vectors in the image's vectors stack to top of stack",
                                      "This procedure raises the specified vectors to top of the existing vectors stack. It will not move the vectors if there is no vectors above it.",
@@ -3367,8 +3367,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-lower-vectors-to-bottom
    */
   procedure = gimp_procedure_new (image_lower_vectors_to_bottom_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-lower-vectors-to-bottom");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-lower-vectors-to-bottom",
                                      "gimp-image-lower-vectors-to-bottom",
                                      "Lower the specified vectors in the image's vectors stack to bottom of stack",
                                      "This procedure lowers the specified vectors to bottom of the existing vectors stack. It will not move the vectors if there is no vectors below it.",
@@ -3396,8 +3396,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-flatten
    */
   procedure = gimp_procedure_new (image_flatten_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-flatten");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-flatten",
                                      "gimp-image-flatten",
                                      "Flatten all visible layers into a single layer. Discard all invisible layers.",
                                      "This procedure combines the visible layers in a manner analogous to merging with the CLIP_TO_IMAGE merge type. Non-visible layers are discarded, and the resulting image is stripped of its alpha channel.",
@@ -3425,8 +3425,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-merge-visible-layers
    */
   procedure = gimp_procedure_new (image_merge_visible_layers_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-merge-visible-layers");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-merge-visible-layers",
                                      "gimp-image-merge-visible-layers",
                                      "Merge the visible image layers into one.",
                                      "This procedure combines the visible layers into a single layer using the specified merge type. A merge type of EXPAND_AS_NECESSARY expands the final layer to encompass the areas of the visible layers. A merge type of CLIP_TO_IMAGE clips the final layer to the extents of the image. A merge type of CLIP_TO_BOTTOM_LAYER clips the final layer to the size of the bottommost layer.",
@@ -3463,8 +3463,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-merge-down
    */
   procedure = gimp_procedure_new (image_merge_down_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-merge-down");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-merge-down",
                                      "gimp-image-merge-down",
                                      "Merge the layer passed and the first visible layer below.",
                                      "This procedure combines the passed layer and the first visible layer below it using the specified merge type. A merge type of EXPAND_AS_NECESSARY expands the final layer to encompass the areas of the visible layers. A merge type of CLIP_TO_IMAGE clips the final layer to the extents of the image. A merge type of CLIP_TO_BOTTOM_LAYER clips the final layer to the size of the bottommost layer.",
@@ -3507,8 +3507,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-add-layer-mask
    */
   procedure = gimp_procedure_new (image_add_layer_mask_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-add-layer-mask");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-add-layer-mask",
                                      "gimp-image-add-layer-mask",
                                      "This procedure is deprecated! Use 'gimp-layer-add-mask' instead.",
                                      "This procedure is deprecated! Use 'gimp-layer-add-mask' instead.",
@@ -3542,8 +3542,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-remove-layer-mask
    */
   procedure = gimp_procedure_new (image_remove_layer_mask_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-remove-layer-mask");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-remove-layer-mask",
                                      "gimp-image-remove-layer-mask",
                                      "This procedure is deprecated! Use 'gimp-layer-remove-mask' instead.",
                                      "This procedure is deprecated! Use 'gimp-layer-remove-mask' instead.",
@@ -3578,8 +3578,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-get-colormap
    */
   procedure = gimp_procedure_new (image_get_colormap_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-get-colormap");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-colormap",
                                      "gimp-image-get-colormap",
                                      "Returns the image's colormap",
                                      "This procedure returns an actual pointer to the image's colormap, as well as the number of bytes contained in the colormap. The actual number of colors in the transmitted colormap will be \"num_bytes\" / 3. If the image is not of base type GIMP_INDEXED, this pointer will be NULL.",
@@ -3612,8 +3612,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-set-colormap
    */
   procedure = gimp_procedure_new (image_set_colormap_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-set-colormap");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-set-colormap",
                                      "gimp-image-set-colormap",
                                      "Sets the entries in the image's colormap.",
                                      "This procedure sets the entries in the specified image's colormap. The number of entries is specified by the \"num_bytes\" parameter and corresponds to the number of INT8 triples that must be contained in the \"colormap\" array. The actual number of colors in the transmitted colormap is \"num_bytes\" / 3.",
@@ -3646,8 +3646,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-clean-all
    */
   procedure = gimp_procedure_new (image_clean_all_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-clean-all");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-clean-all",
                                      "gimp-image-clean-all",
                                      "Set the image dirty count to 0.",
                                      "This procedure sets the specified image's dirty count to 0, allowing operations to occur without having a 'dirtied' image. This is especially useful for creating and loading images which should not initially be considered dirty, even though layers must be created, filled, and installed in the image. Note that save plug-ins must NOT call this function themselves after saving the image.",
@@ -3669,8 +3669,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-is-dirty
    */
   procedure = gimp_procedure_new (image_is_dirty_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-is-dirty");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-is-dirty",
                                      "gimp-image-is-dirty",
                                      "Checks if the image has unsaved changes.",
                                      "This procedure checks the specified image's dirty count to see if it needs to be saved. Note that saving the image does not automatically set the dirty count to 0, you need to call gimp-image-clean-all after calling a save procedure to make the image clean.",
@@ -3698,8 +3698,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-thumbnail
    */
   procedure = gimp_procedure_new (image_thumbnail_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-thumbnail");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-thumbnail",
                                      "gimp-image-thumbnail",
                                      "Get a thumbnail of an image.",
                                      "This function gets data from which a thumbnail of an image preview can be created. Maximum x or y dimension is 1024 pixels. The pixels are returned in RGB[A] or GRAY[A] format. The bpp return value gives the number of bits per pixel in the image.",
@@ -3762,8 +3762,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-get-active-layer
    */
   procedure = gimp_procedure_new (image_get_active_layer_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-get-active-layer");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-active-layer",
                                      "gimp-image-get-active-layer",
                                      "Returns the specified image's active layer.",
                                      "If there is an active layer, its ID will be returned, otherwise, -1. If a channel is currently active, then no layer will be. If a layer mask is active, then this will return the associated layer.",
@@ -3791,8 +3791,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-set-active-layer
    */
   procedure = gimp_procedure_new (image_set_active_layer_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-set-active-layer");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-set-active-layer",
                                      "gimp-image-set-active-layer",
                                      "Sets the specified image's active layer.",
                                      "If the layer exists, it is set as the active layer in the image. Any previous active layer or channel is set to inactive. An exception is a previously existing floating selection, in which case this procedure will return an execution error.",
@@ -3820,8 +3820,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-get-active-channel
    */
   procedure = gimp_procedure_new (image_get_active_channel_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-get-active-channel");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-active-channel",
                                      "gimp-image-get-active-channel",
                                      "Returns the specified image's active channel.",
                                      "If there is an active channel, this will return the channel ID, otherwise, -1.",
@@ -3849,8 +3849,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-set-active-channel
    */
   procedure = gimp_procedure_new (image_set_active_channel_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-set-active-channel");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-set-active-channel",
                                      "gimp-image-set-active-channel",
                                      "Sets the specified image's active channel.",
                                      "If the channel exists, it is set as the active channel in the image. Any previous active channel or channel is set to inactive. An exception is a previously existing floating selection, in which case this procedure will return an execution error.",
@@ -3878,8 +3878,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-get-active-vectors
    */
   procedure = gimp_procedure_new (image_get_active_vectors_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-get-active-vectors");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-active-vectors",
                                      "gimp-image-get-active-vectors",
                                      "Returns the specified image's active vectors.",
                                      "If there is an active path, its ID will be returned, otherwise, -1.",
@@ -3907,8 +3907,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-set-active-vectors
    */
   procedure = gimp_procedure_new (image_set_active_vectors_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-set-active-vectors");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-set-active-vectors",
                                      "gimp-image-set-active-vectors",
                                      "Sets the specified image's active vectors.",
                                      "If the path exists, it is set as the active path in the image.",
@@ -3936,8 +3936,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-get-selection
    */
   procedure = gimp_procedure_new (image_get_selection_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-get-selection");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-selection",
                                      "gimp-image-get-selection",
                                      "Returns the specified image's selection.",
                                      "This will always return a valid ID for a selection -- which is represented as a channel internally.",
@@ -3965,8 +3965,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-get-component-active
    */
   procedure = gimp_procedure_new (image_get_component_active_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-get-component-active");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-component-active",
                                      "gimp-image-get-component-active",
                                      "Returns if the specified image's image component is active.",
                                      "This procedure returns if the specified image's image component (i.e. Red, Green, Blue intensity channels in an RGB image) is active or inactive -- whether or not it can be modified. If the specified component is not valid for the image type, an error is returned.",
@@ -4001,8 +4001,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-set-component-active
    */
   procedure = gimp_procedure_new (image_set_component_active_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-set-component-active");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-set-component-active",
                                      "gimp-image-set-component-active",
                                      "Sets if the specified image's image component is active.",
                                      "This procedure sets if the specified image's image component (i.e. Red, Green, Blue intensity channels in an RGB image) is active or inactive -- whether or not it can be modified. If the specified component is not valid for the image type, an error is returned.",
@@ -4037,8 +4037,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-get-component-visible
    */
   procedure = gimp_procedure_new (image_get_component_visible_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-get-component-visible");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-component-visible",
                                      "gimp-image-get-component-visible",
                                      "Returns if the specified image's image component is visible.",
                                      "This procedure returns if the specified image's image component (i.e. Red, Green, Blue intensity channels in an RGB image) is visible or invisible -- whether or not it can be seen. If the specified component is not valid for the image type, an error is returned.",
@@ -4073,8 +4073,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-set-component-visible
    */
   procedure = gimp_procedure_new (image_set_component_visible_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-set-component-visible");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-set-component-visible",
                                      "gimp-image-set-component-visible",
                                      "Sets if the specified image's image component is visible.",
                                      "This procedure sets if the specified image's image component (i.e. Red, Green, Blue intensity channels in an RGB image) is visible or invisible -- whether or not it can be seen. If the specified component is not valid for the image type, an error is returned.",
@@ -4109,8 +4109,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-get-filename
    */
   procedure = gimp_procedure_new (image_get_filename_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-get-filename");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-filename",
                                      "gimp-image-get-filename",
                                      "Returns the specified image's filename.",
                                      "This procedure returns the specified image's filename in the filesystem encoding. The image has a filename only if it was loaded or has since been saved. Otherwise, this function returns %NULL.",
@@ -4139,8 +4139,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-set-filename
    */
   procedure = gimp_procedure_new (image_set_filename_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-set-filename");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-set-filename",
                                      "gimp-image-set-filename",
                                      "Sets the specified image's filename.",
                                      "This procedure sets the specified image's filename. The filename should be in the filesystem encoding.",
@@ -4169,8 +4169,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-get-name
    */
   procedure = gimp_procedure_new (image_get_name_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-get-name");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-name",
                                      "gimp-image-get-name",
                                      "Returns the specified image's name.",
                                      "This procedure returns the specified image's name.",
@@ -4199,8 +4199,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-get-resolution
    */
   procedure = gimp_procedure_new (image_get_resolution_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-get-resolution");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-resolution",
                                      "gimp-image-get-resolution",
                                      "Returns the specified image's resolution.",
                                      "This procedure returns the specified image's resolution in dots per inch. This value is independent of any of the layers in this image.",
@@ -4234,8 +4234,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-set-resolution
    */
   procedure = gimp_procedure_new (image_set_resolution_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-set-resolution");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-set-resolution",
                                      "gimp-image-set-resolution",
                                      "Sets the specified image's resolution.",
                                      "This procedure sets the specified image's resolution in dots per inch. This value is independent of any of the layers in this image. No scaling or resizing is performed.",
@@ -4269,8 +4269,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-get-unit
    */
   procedure = gimp_procedure_new (image_get_unit_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-get-unit");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-unit",
                                      "gimp-image-get-unit",
                                      "Returns the specified image's unit.",
                                      "This procedure returns the specified image's unit. This value is independent of any of the layers in this image. See the gimp_unit_* procedure definitions for the valid range of unit IDs and a description of the unit system.",
@@ -4300,8 +4300,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-set-unit
    */
   procedure = gimp_procedure_new (image_set_unit_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-set-unit");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-set-unit",
                                      "gimp-image-set-unit",
                                      "Sets the specified image's unit.",
                                      "This procedure sets the specified image's unit. No scaling or resizing is performed. This value is independent of any of the layers in this image. See the gimp_unit_* procedure definitions for the valid range of unit IDs and a description of the unit system.",
@@ -4331,8 +4331,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-get-tattoo-state
    */
   procedure = gimp_procedure_new (image_get_tattoo_state_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-get-tattoo-state");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-tattoo-state",
                                      "gimp-image-get-tattoo-state",
                                      "Returns the tattoo state associated with the image.",
                                      "This procedure returns the tattoo state of the image. Use only by save/load plugins that wish to preserve an images tattoo state. Using this function at other times will produce unexpected results.",
@@ -4360,8 +4360,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-set-tattoo-state
    */
   procedure = gimp_procedure_new (image_set_tattoo_state_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-set-tattoo-state");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-set-tattoo-state",
                                      "gimp-image-set-tattoo-state",
                                      "Set the tattoo state associated with the image.",
                                      "This procedure sets the tattoo state of the image. Use only by save/load plugins that wish to preserve an images tattoo state. Using this function at other times will produce unexpected results. A full check of uniqueness of states in layers, channels and paths will be performed by this procedure and a execution failure will be returned if this fails. A failure will also be returned if the new tattoo state value is less than the maximum tattoo value from all of the tattoos from the paths, layers and channels. After the image data has been loaded and all the tattoos have been set then this is the last procedure that should be called. If effectively does a status check on the tattoo values that have been set to make sure that all is OK.",
@@ -4389,8 +4389,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-get-layer-by-tattoo
    */
   procedure = gimp_procedure_new (image_get_layer_by_tattoo_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-get-layer-by-tattoo");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-layer-by-tattoo",
                                      "gimp-image-get-layer-by-tattoo",
                                      "Find a layer with a given tattoo in an image.",
                                      "This procedure returns the layer with the given tattoo in the specified image.",
@@ -4424,8 +4424,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-get-channel-by-tattoo
    */
   procedure = gimp_procedure_new (image_get_channel_by_tattoo_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-get-channel-by-tattoo");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-channel-by-tattoo",
                                      "gimp-image-get-channel-by-tattoo",
                                      "Find a channel with a given tattoo in an image.",
                                      "This procedure returns the channel with the given tattoo in the specified image.",
@@ -4459,8 +4459,8 @@ register_image_procs (Gimp *gimp)
    * gimp-image-get-vectors-by-tattoo
    */
   procedure = gimp_procedure_new (image_get_vectors_by_tattoo_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-get-vectors-by-tattoo");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-vectors-by-tattoo",
                                      "gimp-image-get-vectors-by-tattoo",
                                      "Find a vectors with a given tattoo in an image.",
                                      "This procedure returns the vectors with the given tattoo in the specified image.",

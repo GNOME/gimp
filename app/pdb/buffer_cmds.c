@@ -273,8 +273,8 @@ register_buffer_procs (Gimp *gimp)
    * gimp-buffers-get-list
    */
   procedure = gimp_procedure_new (buffers_get_list_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-buffers-get-list");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-buffers-get-list",
                                      "gimp-buffers-get-list",
                                      "Retrieve a complete listing of the available buffers.",
                                      "This procedure returns a complete listing of available named buffers.",
@@ -308,8 +308,8 @@ register_buffer_procs (Gimp *gimp)
    * gimp-buffer-rename
    */
   procedure = gimp_procedure_new (buffer_rename_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-buffer-rename");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-buffer-rename",
                                      "gimp-buffer-rename",
                                      "Renames a named buffer.",
                                      "This procedure renames a named buffer.",
@@ -346,8 +346,8 @@ register_buffer_procs (Gimp *gimp)
    * gimp-buffer-delete
    */
   procedure = gimp_procedure_new (buffer_delete_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-buffer-delete");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-buffer-delete",
                                      "gimp-buffer-delete",
                                      "Deletes a named buffer.",
                                      "This procedure deletes a named buffer.",
@@ -370,8 +370,8 @@ register_buffer_procs (Gimp *gimp)
    * gimp-buffer-get-width
    */
   procedure = gimp_procedure_new (buffer_get_width_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-buffer-get-width");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-buffer-get-width",
                                      "gimp-buffer-get-width",
                                      "Retrieves the specified buffer's width.",
                                      "This procedure retrieves the specified named buffer's width.",
@@ -400,8 +400,8 @@ register_buffer_procs (Gimp *gimp)
    * gimp-buffer-get-height
    */
   procedure = gimp_procedure_new (buffer_get_height_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-buffer-get-height");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-buffer-get-height",
                                      "gimp-buffer-get-height",
                                      "Retrieves the specified buffer's height.",
                                      "This procedure retrieves the specified named buffer's height.",
@@ -430,8 +430,8 @@ register_buffer_procs (Gimp *gimp)
    * gimp-buffer-get-bytes
    */
   procedure = gimp_procedure_new (buffer_get_bytes_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-buffer-get-bytes");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-buffer-get-bytes",
                                      "gimp-buffer-get-bytes",
                                      "Retrieves the specified buffer's bytes.",
                                      "This procedure retrieves the specified named buffer's bytes.",
@@ -460,8 +460,8 @@ register_buffer_procs (Gimp *gimp)
    * gimp-buffer-get-image-type
    */
   procedure = gimp_procedure_new (buffer_get_image_type_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-buffer-get-image-type");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-buffer-get-image-type",
                                      "gimp-buffer-get-image-type",
                                      "Retrieves the specified buffer's image type.",
                                      "This procedure retrieves the specified named buffer's image type.",

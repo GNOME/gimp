@@ -139,7 +139,6 @@ gimp_procedure_new (GimpMarshalFunc marshal_func)
 
 void
 gimp_procedure_set_strings (GimpProcedure *procedure,
-                            gchar         *name,
                             gchar         *original_name,
                             gchar         *blurb,
                             gchar         *help,
@@ -152,7 +151,6 @@ gimp_procedure_set_strings (GimpProcedure *procedure,
 
   gimp_procedure_free_strings (procedure);
 
-  procedure->name          = g_strdup (name);
   procedure->original_name = g_strdup (original_name);
   procedure->blurb         = g_strdup (blurb);
   procedure->help          = g_strdup (help);
@@ -166,7 +164,6 @@ gimp_procedure_set_strings (GimpProcedure *procedure,
 
 void
 gimp_procedure_set_static_strings (GimpProcedure *procedure,
-                                   gchar         *name,
                                    gchar         *original_name,
                                    gchar         *blurb,
                                    gchar         *help,
@@ -179,7 +176,6 @@ gimp_procedure_set_static_strings (GimpProcedure *procedure,
 
   gimp_procedure_free_strings (procedure);
 
-  procedure->name          = name;
   procedure->original_name = original_name;
   procedure->blurb         = blurb;
   procedure->help          = help;
@@ -193,7 +189,6 @@ gimp_procedure_set_static_strings (GimpProcedure *procedure,
 
 void
 gimp_procedure_take_strings (GimpProcedure *procedure,
-                             gchar         *name,
                              gchar         *original_name,
                              gchar         *blurb,
                              gchar         *help,
@@ -206,7 +201,6 @@ gimp_procedure_take_strings (GimpProcedure *procedure,
 
   gimp_procedure_free_strings (procedure);
 
-  procedure->name          = name;
   procedure->original_name = original_name;
   procedure->blurb         = blurb;
   procedure->help          = help;
@@ -249,7 +243,7 @@ gimp_procedure_execute (GimpProcedure *procedure,
           g_message (_("PDB calling error for procedure '%s':\n"
                        "Argument '%s' (#%d, type %s) type mismatch "
                        "(got %s)."),
-                     procedure->name,
+                     gimp_object_get_name (GIMP_OBJECT (procedure)),
                      g_param_spec_get_name (pspec),
                      i + 1, type_name, got);
 
@@ -290,7 +284,7 @@ gimp_procedure_execute (GimpProcedure *procedure,
               g_message (_("PDB calling error for procedure '%s':\n"
                            "Argument '%s' (#%d, type %s) out of bounds "
                            "(validation changed '%s' to '%s')"),
-                         procedure->name,
+                         gimp_object_get_name (GIMP_OBJECT (procedure)),
                          g_param_spec_get_name (pspec),
                          i + 1, type_name,
                          old_value, new_value);
@@ -428,7 +422,6 @@ gimp_procedure_free_strings (GimpProcedure *procedure)
 {
   if (! procedure->static_strings)
     {
-      g_free (procedure->name);
       g_free (procedure->original_name);
       g_free (procedure->blurb);
       g_free (procedure->help);
@@ -438,7 +431,6 @@ gimp_procedure_free_strings (GimpProcedure *procedure)
       g_free (procedure->deprecated);
     }
 
-  procedure->name          = NULL;
   procedure->original_name = NULL;
   procedure->blurb         = NULL;
   procedure->help          = NULL;
