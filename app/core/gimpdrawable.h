@@ -177,7 +177,7 @@ void            gimp_drawable_push_undo          (GimpDrawable       *drawable,
 						  TileManager        *tiles,
 						  gboolean            sparse);
 
-TileManager   * gimp_drawable_shadow             (GimpDrawable       *drawable);
+TileManager   * gimp_drawable_get_shadow_tiles   (GimpDrawable       *drawable);
 void            gimp_drawable_merge_shadow       (GimpDrawable       *drawable,
 						  gboolean            push_undo,
                                                   const gchar        *undo_desc);

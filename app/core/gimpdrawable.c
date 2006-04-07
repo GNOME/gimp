@@ -1041,7 +1041,7 @@ gimp_drawable_push_undo (GimpDrawable *drawable,
 }
 
 TileManager *
-gimp_drawable_shadow (GimpDrawable *drawable)
+gimp_drawable_get_shadow_tiles (GimpDrawable *drawable)
 {
   GimpItem *item;
 
@@ -1051,9 +1051,9 @@ gimp_drawable_shadow (GimpDrawable *drawable)
 
   g_return_val_if_fail (gimp_item_is_attached (item), NULL);
 
-  return gimp_image_shadow (gimp_item_get_image (item),
-                            item->width, item->height,
-                            drawable->bytes);
+  return gimp_image_get_shadow_tiles (gimp_item_get_image (item),
+                                      item->width, item->height,
+                                      drawable->bytes);
 }
 
 void

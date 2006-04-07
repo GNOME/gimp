@@ -374,7 +374,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_image_free_shadow (image);
+  gimp_image_free_shadow_tiles (image);
 }
 CODE
     );

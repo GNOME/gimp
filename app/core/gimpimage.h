@@ -367,11 +367,11 @@ TempBuf       * gimp_image_transform_temp_buf    (const GimpImage    *dest_image
 
 /*  shadow tiles  */
 
-TileManager   * gimp_image_shadow                (GimpImage          *image,
+TileManager   * gimp_image_get_shadow_tiles      (GimpImage          *image,
                                                   gint                width,
                                                   gint                height,
                                                   gint                bpp);
-void            gimp_image_free_shadow           (GimpImage          *image);
+void            gimp_image_free_shadow_tiles     (GimpImage          *image);
 
 
 /*  parasites  */

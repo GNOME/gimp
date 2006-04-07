@@ -282,7 +282,7 @@ image_free_shadow_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      gimp_image_free_shadow (image);
+      gimp_image_free_shadow_tiles (image);
     }
 
   return gimp_procedure_get_return_values (procedure, success);

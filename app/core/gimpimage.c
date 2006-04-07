@@ -807,7 +807,7 @@ gimp_image_finalize (GObject *object)
     }
 
   if (image->shadow)
-    gimp_image_free_shadow (image);
+    gimp_image_free_shadow_tiles (image);
 
   if (image->cmap)
     {
@@ -2155,10 +2155,10 @@ gimp_image_transform_temp_buf (const GimpImage    *dest_image,
 /*  shadow tiles  */
 
 TileManager *
-gimp_image_shadow (GimpImage *image,
-                   gint       width,
-                   gint       height,
-                   gint       bpp)
+gimp_image_get_shadow_tiles (GimpImage *image,
+                             gint       width,
+                             gint       height,
+                             gint       bpp)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -2168,7 +2168,7 @@ gimp_image_shadow (GimpImage *image,
           (height != tile_manager_height (image->shadow)) ||
           (bpp    != tile_manager_bpp    (image->shadow)))
         {
-          gimp_image_free_shadow (image);
+          gimp_image_free_shadow_tiles (image);
         }
       else
         {
@@ -2182,7 +2182,7 @@ gimp_image_shadow (GimpImage *image,
 }
 
 void
-gimp_image_free_shadow (GimpImage *image)
+gimp_image_free_shadow_tiles (GimpImage *image)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
 

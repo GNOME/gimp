@@ -350,7 +350,7 @@ gimp_image_map_apply (GimpImageMap          *image_map,
 
   /*  Configure the dest as the shadow buffer  */
   pixel_region_init (&image_map->destPR,
-                     gimp_drawable_shadow (image_map->drawable),
+                     gimp_drawable_get_shadow_tiles (image_map->drawable),
                      x, y, width, height, TRUE);
 
   /*  Apply the image transformation to the pixels  */

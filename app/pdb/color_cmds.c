@@ -88,7 +88,7 @@ brightness_contrast_invoker (GimpProcedure     *procedure,
 
               pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                                  x, y, width, height, FALSE);
-              pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+              pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
                                  x, y, width, height, TRUE);
 
               pixel_regions_process_parallel ((PixelProcessorFunc)
@@ -235,7 +235,7 @@ posterize_invoker (GimpProcedure     *procedure,
 
               pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                                  x, y, width, height, FALSE);
-              pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+              pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
                                  x, y, width, height, TRUE);
 
               pixel_regions_process_parallel ((PixelProcessorFunc)
@@ -425,7 +425,7 @@ curves_spline_invoker (GimpProcedure     *procedure,
 
               pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                                  x, y, width, height, FALSE);
-              pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+              pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
                                  x, y, width, height, TRUE);
 
               pixel_regions_process_parallel ((PixelProcessorFunc)
@@ -502,7 +502,7 @@ curves_explicit_invoker (GimpProcedure     *procedure,
 
               pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                                  x, y, width, height, FALSE);
-              pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+              pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
                                  x, y, width, height, TRUE);
 
               pixel_regions_process_parallel ((PixelProcessorFunc)
@@ -570,7 +570,7 @@ color_balance_invoker (GimpProcedure     *procedure,
 
               pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                                  x, y, width, height, FALSE);
-              pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+              pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
                                  x, y, width, height, TRUE);
 
               pixel_regions_process_parallel ((PixelProcessorFunc) color_balance,
@@ -629,7 +629,7 @@ colorize_invoker (GimpProcedure     *procedure,
 
               pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                                  x, y, width, height, FALSE);
-              pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+              pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
                                  x, y, width, height, TRUE);
 
               pixel_regions_process_parallel ((PixelProcessorFunc) colorize,
@@ -762,7 +762,7 @@ hue_saturation_invoker (GimpProcedure     *procedure,
 
               pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                                  x, y, width, height, FALSE);
-              pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+              pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
                                  x, y, width, height, TRUE);
 
               pixel_regions_process_parallel ((PixelProcessorFunc) hue_saturation,
@@ -816,7 +816,7 @@ threshold_invoker (GimpProcedure     *procedure,
 
               pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                                  x, y, width, height, FALSE);
-              pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+              pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
                                  x, y, width, height, TRUE);
 
               pixel_regions_process_parallel ((PixelProcessorFunc) threshold,

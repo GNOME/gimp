@@ -1,5 +1,26 @@
 2006-04-07  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdrawable.[ch]: renamed gimp_drawable_shadow() to
+	gimp_drawable_get_shadow_tiles().
+
+	* app/core/gimpimage.[ch]: renamed gimp_image_shadow() to
+	gimp_image_get_shadow_tiles() and gimp_image_free_shadow() to
+	gimp_image_free_shadow_tiles().
+
+	* app/core/gimpdrawable-desaturate.c
+	* app/core/gimpdrawable-equalize.c
+	* app/core/gimpdrawable-invert.c
+	* app/core/gimpdrawable-levels.c
+	* app/core/gimpimagemap.c
+	* app/plug-in/plug-in-message.c
+	* tools/pdbgen/pdb/color.pdb
+	* tools/pdbgen/pdb/image.pdb: changed accordingly.
+
+	* app/pdb/color_cmds.c
+	* app/pdb/image_cmds.c: regenerated.
+
+2006-04-07  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdrawable.[ch]: renamed gimp_drawable_cmap() to
 	gimp_drawable_get_colormap() and let it return a const array.
 
