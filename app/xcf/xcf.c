@@ -112,7 +112,7 @@ static PlugInProcDef xcf_plug_in_save_proc =
 #endif
 
 
-static GimpXcfLoaderFunc *xcf_loaders[] =
+static GimpXcfLoaderFunc * const xcf_loaders[] =
 {
   xcf_load_image,   /* version 0 */
   xcf_load_image,   /* version 1 */

@@ -1,5 +1,9 @@
 2006-04-07  Sven Neumann  <sven@gimp.org>
 
+	* app/xcf/xcf.c (xcf_loaders): declared the array as const.
+
+2006-04-07  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/tool-options-commands.c
 	* app/core/gimp.c
 	* app/core/gimpbrushpipe.c
