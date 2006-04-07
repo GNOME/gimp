@@ -398,11 +398,10 @@ gimp_layer_name_changed (GimpObject *object)
 
   if (layer->mask)
     {
-      gchar *mask_name;
+      gchar *mask_name = g_strdup_printf (_("%s mask"),
+                                          gimp_object_get_name (object));
 
-      mask_name = g_strdup_printf (_("%s mask"), gimp_object_get_name (object));
-      gimp_object_set_name (GIMP_OBJECT (layer->mask), mask_name);
-      g_free (mask_name);
+      gimp_object_take_name (GIMP_OBJECT (layer->mask), mask_name);
     }
 }
 

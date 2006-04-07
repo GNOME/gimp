@@ -281,7 +281,6 @@ gimp_toolbox_drop_component (GtkWidget       *widget,
   GimpImage   *new_image;
   GimpLayer   *new_layer;
   const gchar *desc;
-  gchar       *name;
 
   if (context->gimp->busy)
     return;
@@ -306,9 +305,8 @@ gimp_toolbox_drop_component (GtkWidget       *widget,
 
   gimp_enum_get_value (GIMP_TYPE_CHANNEL_TYPE, component,
                        NULL, NULL, &desc, NULL);
-  name = g_strdup_printf (_("%s Channel Copy"), desc);
-  gimp_object_set_name (GIMP_OBJECT (new_layer), name);
-  g_free (name);
+  gimp_object_take_name (GIMP_OBJECT (new_layer),
+                         g_strdup_printf (_("%s Channel Copy"), desc));
 
   gimp_image_add_layer (new_image, new_layer, 0);
 

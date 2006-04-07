@@ -1323,10 +1323,10 @@ gimp_context_set_name (GimpContext *context,
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
-  if (! name)
-    name = _("Unnamed");
-
-  gimp_object_set_name (GIMP_OBJECT (context), name);
+  if (name)
+    gimp_object_set_name (GIMP_OBJECT (context), name);
+  else
+    gimp_object_set_static_name (GIMP_OBJECT (context), _("Unnamed"));
 }
 
 GimpContext *

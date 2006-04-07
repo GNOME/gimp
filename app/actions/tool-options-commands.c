@@ -94,15 +94,11 @@ tool_options_save_to_cmd_callback (GtkAction *action,
 
   if (options)
     {
-      gchar *name;
-
-      name = g_strdup (gimp_object_get_name (GIMP_OBJECT (options)));
+      gchar *name = g_strdup (gimp_object_get_name (GIMP_OBJECT (options)));
 
       gimp_config_sync (G_OBJECT (tool_info->tool_options),
                         G_OBJECT (options), 0);
-      gimp_object_set_name (GIMP_OBJECT (options), name);
-
-      g_free (name);
+      gimp_object_take_name (GIMP_OBJECT (options), name);
     }
 }
 
@@ -242,12 +238,12 @@ tool_options_save_callback (GtkWidget   *widget,
   GimpToolInfo *tool_info = GIMP_TOOL_INFO (data);
   GimpConfig   *copy;
 
-  if (! name || ! strlen (name))
-    name = _("Saved Options");
-
   copy = gimp_config_duplicate (GIMP_CONFIG (tool_info->tool_options));
 
-  gimp_object_set_name (GIMP_OBJECT (copy), name);
+  if (name && strlen (name))
+    gimp_object_set_name (GIMP_OBJECT (copy), name);
+  else
+    gimp_object_set_static_name (GIMP_OBJECT (copy), _("Saved Options"));
 
   gimp_container_insert (tool_info->options_presets, GIMP_OBJECT (copy), -1);
   g_object_unref (copy);
@@ -260,8 +256,8 @@ tool_options_rename_callback (GtkWidget   *widget,
 {
   GimpToolOptions *options = GIMP_TOOL_OPTIONS (data);
 
-  if (! name || ! strlen (name))
-    name = _("Saved Options");
-
-  gimp_object_set_name (GIMP_OBJECT (options), name);
+  if (name && strlen (name))
+    gimp_object_set_name (GIMP_OBJECT (options), name);
+  else
+    gimp_object_set_static_name (GIMP_OBJECT (options), _("Saved Options"));
 }

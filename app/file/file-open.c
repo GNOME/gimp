@@ -389,12 +389,10 @@ file_open_layer (Gimp                *gimp,
 
           if (item)
             {
-              gchar *basename = file_utils_uri_display_basename (uri);
-
               new_layer = GIMP_LAYER (item);
 
-              gimp_object_set_name (GIMP_OBJECT (new_layer), basename);
-              g_free (basename);
+              gimp_object_take_name (GIMP_OBJECT (new_layer),
+                                     file_utils_uri_display_basename (uri));
 
               gimp_document_list_add_uri (GIMP_DOCUMENT_LIST (gimp->documents),
                                           uri, mime_type);

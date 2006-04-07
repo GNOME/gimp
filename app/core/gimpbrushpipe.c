@@ -199,9 +199,9 @@ gimp_brush_pipe_select_brush (GimpBrush  *brush,
   if (pipe->nbrushes == 1)
     return GIMP_BRUSH (pipe->current);
 
-  
+
   /* calculates brush native spacing in pixels, based on it's width)*/
-  spacing = ((gdouble) pipe->current->spacing / 100) *  
+  spacing = ((gdouble) pipe->current->spacing / 100) *
              MAX (brush->mask->width, brush->mask->height);
 
   brushix = 0;

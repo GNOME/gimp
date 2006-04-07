@@ -524,7 +524,10 @@ gimp_item_configure (GimpItem    *item,
   g_object_notify (G_OBJECT (item), "width");
   g_object_notify (G_OBJECT (item), "height");
 
-  gimp_object_set_name (GIMP_OBJECT (item), name ? name : _("Unnamed"));
+  if (name)
+    gimp_object_set_name (GIMP_OBJECT (item), name);
+  else
+    gimp_object_set_static_name (GIMP_OBJECT (item), _("Unnamed"));
 
   g_object_thaw_notify (G_OBJECT (item));
 }

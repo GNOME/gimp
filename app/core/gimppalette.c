@@ -373,10 +373,8 @@ gimp_palette_load (const gchar  *filename,
       utf8 = gimp_any_to_utf8 (&str[strlen ("Name: ")], -1,
                                _("Invalid UTF-8 string in palette file '%s'"),
                                gimp_filename_to_utf8 (filename));
-      g_strstrip (utf8);
 
-      gimp_object_set_name (GIMP_OBJECT (palette), utf8);
-      g_free (utf8);
+      gimp_object_take_name (GIMP_OBJECT (palette), g_strstrip (utf8));
 
       if (! fgets (str, sizeof (str), file))
         {
@@ -424,10 +422,8 @@ gimp_palette_load (const gchar  *filename,
     }
   else /* old palette format */
     {
-      gchar *name = g_filename_display_basename (filename);
-
-      gimp_object_set_name (GIMP_OBJECT (palette), name);
-      g_free (name);
+      gimp_object_take_name (GIMP_OBJECT (palette),
+                             g_filename_display_basename (filename));
     }
 
   while (! feof (file))

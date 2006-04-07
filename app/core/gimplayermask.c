@@ -203,8 +203,8 @@ gimp_layer_mask_set_layer (GimpLayerMask *layer_mask,
 
       mask_name = g_strdup_printf (_("%s mask"),
                                    gimp_object_get_name (GIMP_OBJECT (layer)));
-      gimp_object_set_name (GIMP_OBJECT (layer_mask), mask_name);
-      g_free (mask_name);
+
+      gimp_object_take_name (GIMP_OBJECT (layer_mask), mask_name);
     }
 }
 

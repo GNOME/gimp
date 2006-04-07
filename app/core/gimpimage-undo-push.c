@@ -1143,8 +1143,7 @@ undo_pop_item_rename (GimpUndo            *undo,
   undo->size -= strlen (iru->name);
 
   tmp = g_strdup (gimp_object_get_name (GIMP_OBJECT (item)));
-  gimp_object_set_name (GIMP_OBJECT (item), iru->name);
-  g_free (iru->name);
+  gimp_object_take_name (GIMP_OBJECT (item), iru->name);
   iru->name = tmp;
 
   undo->size += strlen (iru->name);

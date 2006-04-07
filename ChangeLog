@@ -1,3 +1,30 @@
+2006-04-07  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/tool-options-commands.c
+	* app/core/gimp.c
+	* app/core/gimpbrushpipe.c
+	* app/core/gimpbuffer.c
+	* app/core/gimpcontext.c
+	* app/core/gimpdatafactory.c
+	* app/core/gimpgradient-load.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-undo-push.c
+	* app/core/gimpitem.c
+	* app/core/gimplayer.c
+	* app/core/gimplayermask.c
+	* app/core/gimplist.c
+	* app/core/gimppalette.c
+	* app/dialogs/template-options-dialog.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/file/file-open.c
+	* app/paint/gimp-paint.c
+	* app/widgets/gimpdataeditor.c
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimptemplateview.c
+	* app/widgets/gimptoolbox-dnd.c: use gimp_object_set_static_name()
+	and gimp_object_take_name() where appropriate.
+
 2006-04-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpobject.[ch]: added flag "guint static_name : 1" and

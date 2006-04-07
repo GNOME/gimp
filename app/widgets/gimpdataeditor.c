@@ -488,13 +488,8 @@ gimp_data_editor_name_activate (GtkWidget      *widget,
                                 GimpDataEditor *editor)
 {
   if (editor->data)
-    {
-      const gchar *entry_text;
-
-      entry_text = gtk_entry_get_text (GTK_ENTRY (widget));
-
-      gimp_object_set_name (GIMP_OBJECT (editor->data), entry_text);
-    }
+    gimp_object_set_name (GIMP_OBJECT (editor->data),
+                          gtk_entry_get_text (GTK_ENTRY (widget)));
 }
 
 static gboolean

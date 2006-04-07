@@ -471,7 +471,6 @@ gimp_display_shell_drop_component (GtkWidget       *widget,
   GimpChannel      *channel;
   GimpItem         *new_item;
   const gchar      *desc;
-  gchar            *name;
 
   D (g_print ("drop component on canvas\n"));
 
@@ -493,9 +492,8 @@ gimp_display_shell_drop_component (GtkWidget       *widget,
 
       gimp_enum_get_value (GIMP_TYPE_CHANNEL_TYPE, component,
                            NULL, NULL, &desc, NULL);
-      name = g_strdup_printf (_("%s Channel Copy"), desc);
-      gimp_object_set_name (GIMP_OBJECT (new_layer), name);
-      g_free (name);
+      gimp_object_take_name (GIMP_OBJECT (new_layer),
+                             g_strdup_printf (_("%s Channel Copy"), desc));
 
       gimp_image_undo_group_start (dest_image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                    _("Drop New Layer"));

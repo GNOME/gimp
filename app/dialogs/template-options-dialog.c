@@ -77,7 +77,8 @@ template_options_dialog_new (Gimp         *gimp,
     {
       template =
         gimp_config_duplicate (GIMP_CONFIG (gimp->config->default_image));
-      gimp_object_set_name (GIMP_OBJECT (template), _("Unnamed"));
+
+      gimp_object_set_static_name (GIMP_OBJECT (template), _("Unnamed"));
     }
 
   options->dialog =

@@ -217,7 +217,8 @@ gimp_template_view_tree_name_edited (GtkCellRendererText *cell,
         }
       else
         {
-          gchar *name = gimp_viewable_get_description (renderer->viewable, NULL);
+          gchar *name = gimp_viewable_get_description (renderer->viewable,
+                                                       NULL);
 
           gtk_list_store_set (GTK_LIST_STORE (tree_view->model), &iter,
                               tree_view->model_column_name, name,

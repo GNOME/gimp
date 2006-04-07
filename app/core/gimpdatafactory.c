@@ -494,9 +494,7 @@ gimp_data_factory_data_duplicate (GimpDataFactory *factory,
           new_name = g_strdup_printf (_("%s copy"), name);
         }
 
-      gimp_object_set_name (GIMP_OBJECT (new_data), new_name);
-
-      g_free (new_name);
+      gimp_object_take_name (GIMP_OBJECT (new_data), new_name);
 
       gimp_container_add (factory->container, GIMP_OBJECT (new_data));
       g_object_unref (new_data);

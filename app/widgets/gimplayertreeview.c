@@ -745,9 +745,8 @@ gimp_layer_tree_view_drop_component (GimpContainerTreeView   *tree_view,
   GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (tree_view);
   GimpChannel      *channel;
   GimpItem         *new_item;
-  gint              index     = -1;
   const gchar      *desc;
-  gchar            *name;
+  gint              index = -1;
 
   if (dest_viewable)
     {
@@ -767,9 +766,8 @@ gimp_layer_tree_view_drop_component (GimpContainerTreeView   *tree_view,
 
   gimp_enum_get_value (GIMP_TYPE_CHANNEL_TYPE, component,
                        NULL, NULL, &desc, NULL);
-  name = g_strdup_printf (_("%s Channel Copy"), desc);
-  gimp_object_set_name (GIMP_OBJECT (new_item), name);
-  g_free (name);
+  gimp_object_take_name (GIMP_OBJECT (new_item),
+                         g_strdup_printf (_("%s Channel Copy"), desc));
 
   gimp_image_add_layer (item_view->image, GIMP_LAYER (new_item), index);
   gimp_image_flush (item_view->image);

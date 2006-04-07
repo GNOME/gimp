@@ -525,8 +525,7 @@ gimp_image_merge_layers (GimpImage     *image,
   /* set the name after the original layers have been removed so we
    * don't end up with #2 appended to the name
    */
-  gimp_object_set_name (GIMP_OBJECT (merge_layer), name);
-  g_free (name);
+  gimp_object_take_name (GIMP_OBJECT (merge_layer), name);
 
   gimp_item_set_visible (GIMP_ITEM (merge_layer), TRUE, TRUE);
 
@@ -594,8 +593,7 @@ gimp_image_merge_visible_vectors (GimpImage *image)
           cur_item = g_slist_next (cur_item);
         }
 
-      gimp_object_set_name (GIMP_OBJECT (target_vectors), name);
-      g_free (name);
+      gimp_object_take_name (GIMP_OBJECT (target_vectors), name);
 
       g_slist_free (merge_list);
 

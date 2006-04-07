@@ -209,7 +209,7 @@ gimp_init (Gimp *gimp)
   gimp->plug_in_data_list   = NULL;
 
   gimp->images              = gimp_list_new_weak (GIMP_TYPE_IMAGE, FALSE);
-  gimp_object_set_name (GIMP_OBJECT (gimp->images), "images");
+  gimp_object_set_static_name (GIMP_OBJECT (gimp->images), "images");
 
   gimp->next_image_ID        = 1;
   gimp->next_guide_ID        = 1;
@@ -220,13 +220,14 @@ gimp_init (Gimp *gimp)
   gimp->item_table          = g_hash_table_new (g_direct_hash, NULL);
 
   gimp->displays            = gimp_list_new_weak (GIMP_TYPE_OBJECT, FALSE);
-  gimp_object_set_name (GIMP_OBJECT (gimp->displays), "displays");
+  gimp_object_set_static_name (GIMP_OBJECT (gimp->displays), "displays");
 
   gimp->next_display_ID     = 1;
 
   gimp->global_buffer       = NULL;
   gimp->named_buffers       = gimp_list_new (GIMP_TYPE_BUFFER, TRUE);
-  gimp_object_set_name (GIMP_OBJECT (gimp->named_buffers), "named buffers");
+  gimp_object_set_static_name (GIMP_OBJECT (gimp->named_buffers),
+                               "named buffers");
 
   gimp->fonts               = NULL;
   gimp->brush_factory       = NULL;
@@ -242,14 +243,15 @@ gimp_init (Gimp *gimp)
   xcf_init (gimp);
 
   gimp->tool_info_list      = gimp_list_new (GIMP_TYPE_TOOL_INFO, FALSE);
-  gimp_object_set_name (GIMP_OBJECT (gimp->tool_info_list), "tool infos");
+  gimp_object_set_static_name (GIMP_OBJECT (gimp->tool_info_list),
+                               "tool infos");
 
   gimp->standard_tool_info  = NULL;
 
   gimp->documents           = gimp_document_list_new (gimp);
 
   gimp->templates           = gimp_list_new (GIMP_TYPE_TEMPLATE, TRUE);
-  gimp_object_set_name (GIMP_OBJECT (gimp->templates), "templates");
+  gimp_object_set_static_name (GIMP_OBJECT (gimp->templates), "templates");
 
   gimp->image_new_last_template = NULL;
 
@@ -562,7 +564,8 @@ gimp_real_initialize (Gimp               *gimp,
                            G_N_ELEMENTS (brush_loader_entries),
                            gimp_brush_new,
                            gimp_brush_get_standard);
-  gimp_object_set_name (GIMP_OBJECT (gimp->brush_factory), "brush factory");
+  gimp_object_set_static_name (GIMP_OBJECT (gimp->brush_factory),
+                               "brush factory");
 
   gimp->pattern_factory =
     gimp_data_factory_new (gimp,
@@ -572,7 +575,8 @@ gimp_real_initialize (Gimp               *gimp,
                            G_N_ELEMENTS (pattern_loader_entries),
                            NULL,
                            gimp_pattern_get_standard);
-  gimp_object_set_name (GIMP_OBJECT (gimp->pattern_factory), "pattern factory");
+  gimp_object_set_static_name (GIMP_OBJECT (gimp->pattern_factory),
+                               "pattern factory");
 
   gimp->gradient_factory =
     gimp_data_factory_new (gimp,
@@ -582,7 +586,8 @@ gimp_real_initialize (Gimp               *gimp,
                            G_N_ELEMENTS (gradient_loader_entries),
                            gimp_gradient_new,
                            gimp_gradient_get_standard);
-  gimp_object_set_name (GIMP_OBJECT (gimp->gradient_factory), "gradient factory");
+  gimp_object_set_static_name (GIMP_OBJECT (gimp->gradient_factory),
+                               "gradient factory");
 
   gimp->palette_factory =
     gimp_data_factory_new (gimp,
@@ -592,7 +597,8 @@ gimp_real_initialize (Gimp               *gimp,
                            G_N_ELEMENTS (palette_loader_entries),
                            gimp_palette_new,
                            gimp_palette_get_standard);
-  gimp_object_set_name (GIMP_OBJECT (gimp->palette_factory), "palette factory");
+  gimp_object_set_static_name (GIMP_OBJECT (gimp->palette_factory),
+                               "palette factory");
 
   gimp_paint_init (gimp);
 

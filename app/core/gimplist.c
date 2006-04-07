@@ -527,8 +527,7 @@ gimp_list_uniquefy_name (GimpList   *gimp_list,
             }
           while (list2);
 
-          gimp_object_set_name (object, new_name);
-          g_free (new_name);
+          gimp_object_take_name (object, new_name);
 	  break;
 	}
     }
