@@ -302,6 +302,7 @@ register_buffer_procs (Gimp *gimp)
                                                                  "The list of buffer names",
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-buffer-rename
@@ -339,6 +340,7 @@ register_buffer_procs (Gimp *gimp)
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-buffer-delete
@@ -362,6 +364,7 @@ register_buffer_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-buffer-get-width
@@ -391,6 +394,7 @@ register_buffer_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-buffer-get-height
@@ -420,6 +424,7 @@ register_buffer_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-buffer-get-bytes
@@ -449,6 +454,7 @@ register_buffer_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-buffer-get-image-type
@@ -479,5 +485,6 @@ register_buffer_procs (Gimp *gimp)
                                                       GIMP_RGB,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

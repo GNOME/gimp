@@ -26,7 +26,7 @@
 gboolean  plug_in_rc_parse (Gimp         *gimp,
                             const gchar  *filename,
                             GError      **error);
-gboolean  plug_in_rc_write (GSList       *proc_defs,
+gboolean  plug_in_rc_write (GSList       *plug_in_defs,
                             const gchar  *filename,
                             GError      **error);
 

@@ -388,6 +388,7 @@ register_channel_procs (Gimp *gimp)
                                                                gimp,
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-channel-new-from-component
@@ -430,6 +431,7 @@ register_channel_procs (Gimp *gimp)
                                                                gimp,
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-channel-copy
@@ -458,6 +460,7 @@ register_channel_procs (Gimp *gimp)
                                                                gimp,
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-channel-combine-masks
@@ -505,6 +508,7 @@ register_channel_procs (Gimp *gimp)
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-channel-get-show-masked
@@ -533,6 +537,7 @@ register_channel_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-channel-set-show-masked
@@ -561,6 +566,7 @@ register_channel_procs (Gimp *gimp)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-channel-get-opacity
@@ -589,6 +595,7 @@ register_channel_procs (Gimp *gimp)
                                                         0, 100, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-channel-set-opacity
@@ -617,6 +624,7 @@ register_channel_procs (Gimp *gimp)
                                                     0, 100, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-channel-get-color
@@ -645,6 +653,7 @@ register_channel_procs (Gimp *gimp)
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-channel-set-color
@@ -673,5 +682,6 @@ register_channel_procs (Gimp *gimp)
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

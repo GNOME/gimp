@@ -612,6 +612,7 @@ register_fileops_procs (Gimp *gimp)
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-file-load-layer
@@ -656,6 +657,7 @@ register_fileops_procs (Gimp *gimp)
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-file-load-thumbnail
@@ -702,6 +704,7 @@ register_fileops_procs (Gimp *gimp)
                                                                "The thumbnail data",
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-file-save
@@ -751,6 +754,7 @@ register_fileops_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-file-save-thumbnail
@@ -780,6 +784,7 @@ register_fileops_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-temp-name
@@ -810,6 +815,7 @@ register_fileops_procs (Gimp *gimp)
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-register-magic-load-handler
@@ -854,6 +860,7 @@ register_fileops_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-register-load-handler
@@ -891,6 +898,7 @@ register_fileops_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-register-save-handler
@@ -928,6 +936,7 @@ register_fileops_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-register-file-handler-mime
@@ -958,6 +967,7 @@ register_fileops_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-register-thumbnail-loader
@@ -988,5 +998,6 @@ register_fileops_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

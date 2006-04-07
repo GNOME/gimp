@@ -203,6 +203,7 @@ register_floating_sel_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-floating-sel-anchor
@@ -225,6 +226,7 @@ register_floating_sel_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-floating-sel-to-layer
@@ -247,6 +249,7 @@ register_floating_sel_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-floating-sel-attach
@@ -275,6 +278,7 @@ register_floating_sel_procs (Gimp *gimp)
                                                             gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-floating-sel-rigor
@@ -303,6 +307,7 @@ register_floating_sel_procs (Gimp *gimp)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-floating-sel-relax
@@ -331,5 +336,6 @@ register_floating_sel_procs (Gimp *gimp)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

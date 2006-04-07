@@ -84,32 +84,31 @@ plug_in_menus_init (Gimp        *gimp,
 
   for (tmp = plug_in_defs; tmp; tmp = g_slist_next (tmp))
     {
-      PlugInDef   *plug_in_def;
-      const gchar *locale_domain;
-      const gchar *locale_path;
-      GSList      *list;
+      PlugInDef *plug_in_def = tmp->data;
 
-      plug_in_def = (PlugInDef *) tmp->data;
-
-      if (! plug_in_def->proc_defs)
-        continue;
-
-      locale_domain = plug_ins_locale_domain (gimp,
-                                              plug_in_def->prog,
-                                              &locale_path);
-
-      for (list = domains; list; list = list->next)
-        if (! strcmp (locale_domain, (const gchar *) list->data))
-          break;
-
-      if (! list)
+      if (plug_in_def->procedures)
         {
-          domains = g_slist_append (domains, (gpointer) locale_domain);
+          const gchar *locale_domain;
+          const gchar *locale_path;
+          GSList      *list;
 
-          bindtextdomain (locale_domain, locale_path);
+          locale_domain = plug_ins_locale_domain (gimp,
+                                                  plug_in_def->prog,
+                                                  &locale_path);
+
+          for (list = domains; list; list = list->next)
+            if (! strcmp (locale_domain, (const gchar *) list->data))
+              break;
+
+          if (! list)
+            {
+              domains = g_slist_append (domains, (gpointer) locale_domain);
+
+              bindtextdomain (locale_domain, locale_path);
 #ifdef HAVE_BIND_TEXTDOMAIN_CODESET
-          bind_textdomain_codeset (locale_domain, "UTF-8");
+              bind_textdomain_codeset (locale_domain, "UTF-8");
 #endif
+            }
         }
     }
 
@@ -154,7 +153,7 @@ plug_in_menus_setup (GimpUIManager *manager,
   menu_entries = g_tree_new_full ((GCompareDataFunc) strcmp, NULL,
                                   g_free, g_free);
 
-  for (list = manager->gimp->plug_in_proc_defs;
+  for (list = manager->gimp->plug_in_procedures;
        list;
        list = g_slist_next (list))
     {

@@ -153,6 +153,7 @@ register_palette_select_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-palettes-close-popup
@@ -176,6 +177,7 @@ register_palette_select_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-palettes-set-popup
@@ -206,5 +208,6 @@ register_palette_select_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

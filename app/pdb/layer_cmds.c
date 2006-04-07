@@ -883,6 +883,7 @@ register_layer_procs (Gimp *gimp)
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-new-from-drawable
@@ -917,6 +918,7 @@ register_layer_procs (Gimp *gimp)
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-copy
@@ -951,6 +953,7 @@ register_layer_procs (Gimp *gimp)
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-add-alpha
@@ -973,6 +976,7 @@ register_layer_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-scale
@@ -1013,6 +1017,7 @@ register_layer_procs (Gimp *gimp)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-resize
@@ -1059,6 +1064,7 @@ register_layer_procs (Gimp *gimp)
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-resize-to-image-size
@@ -1081,6 +1087,7 @@ register_layer_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-translate
@@ -1115,6 +1122,7 @@ register_layer_procs (Gimp *gimp)
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-set-offsets
@@ -1149,6 +1157,7 @@ register_layer_procs (Gimp *gimp)
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-create-mask
@@ -1184,6 +1193,7 @@ register_layer_procs (Gimp *gimp)
                                                                   gimp,
                                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-get-mask
@@ -1212,6 +1222,7 @@ register_layer_procs (Gimp *gimp)
                                                                   gimp,
                                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-from-mask
@@ -1240,6 +1251,7 @@ register_layer_procs (Gimp *gimp)
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-add-mask
@@ -1268,6 +1280,7 @@ register_layer_procs (Gimp *gimp)
                                                               gimp,
                                                               GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-remove-mask
@@ -1297,6 +1310,7 @@ register_layer_procs (Gimp *gimp)
                                                   GIMP_MASK_APPLY,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-is-floating-sel
@@ -1325,6 +1339,7 @@ register_layer_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-get-lock-alpha
@@ -1353,6 +1368,7 @@ register_layer_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-set-lock-alpha
@@ -1381,6 +1397,7 @@ register_layer_procs (Gimp *gimp)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-get-apply-mask
@@ -1409,6 +1426,7 @@ register_layer_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-set-apply-mask
@@ -1437,6 +1455,7 @@ register_layer_procs (Gimp *gimp)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-get-show-mask
@@ -1465,6 +1484,7 @@ register_layer_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-set-show-mask
@@ -1493,6 +1513,7 @@ register_layer_procs (Gimp *gimp)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-get-edit-mask
@@ -1521,6 +1542,7 @@ register_layer_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-set-edit-mask
@@ -1549,6 +1571,7 @@ register_layer_procs (Gimp *gimp)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-get-opacity
@@ -1577,6 +1600,7 @@ register_layer_procs (Gimp *gimp)
                                                         0, 100, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-set-opacity
@@ -1605,6 +1629,7 @@ register_layer_procs (Gimp *gimp)
                                                     0, 100, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-get-mode
@@ -1634,6 +1659,7 @@ register_layer_procs (Gimp *gimp)
                                                       GIMP_NORMAL_MODE,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-layer-set-mode
@@ -1663,5 +1689,6 @@ register_layer_procs (Gimp *gimp)
                                                   GIMP_NORMAL_MODE,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

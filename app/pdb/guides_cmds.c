@@ -272,6 +272,7 @@ register_guides_procs (Gimp *gimp)
                                                       1, G_MAXUINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-add-vguide
@@ -306,6 +307,7 @@ register_guides_procs (Gimp *gimp)
                                                       1, G_MAXUINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-delete-guide
@@ -334,6 +336,7 @@ register_guides_procs (Gimp *gimp)
                                                   1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-find-next-guide
@@ -368,6 +371,7 @@ register_guides_procs (Gimp *gimp)
                                                       1, G_MAXUINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-get-guide-orientation
@@ -405,6 +409,7 @@ register_guides_procs (Gimp *gimp)
   gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->values[0]),
                                       GIMP_ORIENTATION_UNKNOWN);
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-get-guide-position
@@ -439,5 +444,6 @@ register_guides_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

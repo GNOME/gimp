@@ -918,7 +918,7 @@ gimp_set_global_buffer (Gimp       *gimp,
 
 void
 gimp_set_last_plug_in (Gimp                *gimp,
-                       GimpPlugInProcedure *proc)
+                       GimpPlugInProcedure *procedure)
 {
   GSList *list;
   gint    history_size;
@@ -927,8 +927,8 @@ gimp_set_last_plug_in (Gimp                *gimp,
 
   history_size = MAX (1, gimp->config->plug_in_history_size);
 
-  gimp->last_plug_ins = g_slist_remove (gimp->last_plug_ins, proc);
-  gimp->last_plug_ins = g_slist_prepend (gimp->last_plug_ins, proc);
+  gimp->last_plug_ins = g_slist_remove (gimp->last_plug_ins, procedure);
+  gimp->last_plug_ins = g_slist_prepend (gimp->last_plug_ins, procedure);
 
   list = g_slist_nth (gimp->last_plug_ins, history_size);
 

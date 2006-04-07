@@ -197,6 +197,7 @@ register_palettes_procs (Gimp *gimp)
                                      NULL);
 
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-palettes-get-list
@@ -231,6 +232,7 @@ register_palettes_procs (Gimp *gimp)
                                                                  "The list of palette names",
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-palettes-get-palette
@@ -260,6 +262,7 @@ register_palettes_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-palettes-get-palette-entry
@@ -308,5 +311,6 @@ register_palettes_procs (Gimp *gimp)
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

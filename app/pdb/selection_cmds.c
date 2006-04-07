@@ -546,6 +546,7 @@ register_selection_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-selection-value
@@ -586,6 +587,7 @@ register_selection_procs (Gimp *gimp)
                                                           0, 255, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-selection-is-empty
@@ -614,6 +616,7 @@ register_selection_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-selection-translate
@@ -648,6 +651,7 @@ register_selection_procs (Gimp *gimp)
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-selection-float
@@ -688,6 +692,7 @@ register_selection_procs (Gimp *gimp)
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-selection-invert
@@ -710,6 +715,7 @@ register_selection_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-selection-sharpen
@@ -732,6 +738,7 @@ register_selection_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-selection-all
@@ -754,6 +761,7 @@ register_selection_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-selection-none
@@ -776,6 +784,7 @@ register_selection_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-selection-feather
@@ -804,6 +813,7 @@ register_selection_procs (Gimp *gimp)
                                                     0, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-selection-border
@@ -832,6 +842,7 @@ register_selection_procs (Gimp *gimp)
                                                       0, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-selection-grow
@@ -860,6 +871,7 @@ register_selection_procs (Gimp *gimp)
                                                       0, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-selection-shrink
@@ -888,6 +900,7 @@ register_selection_procs (Gimp *gimp)
                                                       0, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-selection-layer-alpha
@@ -910,6 +923,7 @@ register_selection_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-selection-load
@@ -932,6 +946,7 @@ register_selection_procs (Gimp *gimp)
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-selection-save
@@ -960,6 +975,7 @@ register_selection_procs (Gimp *gimp)
                                                                gimp,
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-selection-combine
@@ -989,5 +1005,6 @@ register_selection_procs (Gimp *gimp)
                                                   GIMP_CHANNEL_OP_ADD,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

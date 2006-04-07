@@ -895,6 +895,7 @@ register_brush_procs (Gimp *gimp)
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brush-duplicate
@@ -925,6 +926,7 @@ register_brush_procs (Gimp *gimp)
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brush-is-generated
@@ -954,6 +956,7 @@ register_brush_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brush-rename
@@ -991,6 +994,7 @@ register_brush_procs (Gimp *gimp)
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brush-delete
@@ -1014,6 +1018,7 @@ register_brush_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brush-is-editable
@@ -1043,6 +1048,7 @@ register_brush_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brush-get-info
@@ -1090,6 +1096,7 @@ register_brush_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brush-get-pixels
@@ -1159,6 +1166,7 @@ register_brush_procs (Gimp *gimp)
                                                                "The brush color data",
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brush-get-spacing
@@ -1188,6 +1196,7 @@ register_brush_procs (Gimp *gimp)
                                                           0, 1000, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brush-set-spacing
@@ -1217,6 +1226,7 @@ register_brush_procs (Gimp *gimp)
                                                       0, 1000, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brush-get-shape
@@ -1247,6 +1257,7 @@ register_brush_procs (Gimp *gimp)
                                                       GIMP_BRUSH_GENERATED_CIRCLE,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brush-get-radius
@@ -1276,6 +1287,7 @@ register_brush_procs (Gimp *gimp)
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brush-get-spikes
@@ -1305,6 +1317,7 @@ register_brush_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brush-get-hardness
@@ -1334,6 +1347,7 @@ register_brush_procs (Gimp *gimp)
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brush-get-aspect-ratio
@@ -1363,6 +1377,7 @@ register_brush_procs (Gimp *gimp)
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brush-get-angle
@@ -1392,6 +1407,7 @@ register_brush_procs (Gimp *gimp)
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brush-set-shape
@@ -1429,6 +1445,7 @@ register_brush_procs (Gimp *gimp)
                                                       GIMP_BRUSH_GENERATED_CIRCLE,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brush-set-radius
@@ -1464,6 +1481,7 @@ register_brush_procs (Gimp *gimp)
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brush-set-spikes
@@ -1499,6 +1517,7 @@ register_brush_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brush-set-hardness
@@ -1534,6 +1553,7 @@ register_brush_procs (Gimp *gimp)
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brush-set-aspect-ratio
@@ -1569,6 +1589,7 @@ register_brush_procs (Gimp *gimp)
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brush-set-angle
@@ -1604,5 +1625,6 @@ register_brush_procs (Gimp *gimp)
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

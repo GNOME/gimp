@@ -1,3 +1,44 @@
+2006-04-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/pdb/gimp-pdb.c (gimp_pdb_register)
+	(gimp_pdb_unregister): ref all registered procedures.
+
+	* app/xcf/xcf.c
+	* tools/pdbgen/app.pl: unref newly created procedures after
+	registering them.
+
+	* app/core/gimp.[ch]: renamed member "plug_in_proc_defs" to
+	"plug_in_procedures". Renamed "proc_def" variables to "procedure".
+
+	* app/actions/plug-in-actions.c
+	* app/menus/plug-in-menus.c: changed accordingly.
+
+	* app/plug-in/plug-ins.[ch]: keep a reference to all procs which
+	are in gimp->plug_in_procedures.
+
+	(plug_ins_exit): unref them all and free the list. Apparently we
+	were leaking them before on exit.
+
+	* app/plug-in/plug-in-def.[ch]: s/proc_defs/procedures/. Ref
+	procedures added with plug_in_def_add_procedure(). Added
+	plug_in_def_remove_procedure() which unrefs them again. Removed
+	"free_proc_defs" parameter from plug_in_def_free() and always
+	unref the procedures.
+
+	* app/plug-in/plug-in.[ch]: added plug_in_add_temp_proc() and
+	plug_in_remove_temp() proc. Ref the added procedures.
+
+	* app/plug-in/plug-in-message.c: use the new APIs instead of
+	adding/removing procs and temp procs from their lists manually.
+	Unref the newly created procedure after adding then to the
+	plug_in_def or plug_in.
+
+	* app/plug-in/plug-in-rc.[ch]
+	* app/plug-in/plug-ins-query.c
+	* tools/pdbgen/pdb/plug_in.pdb: changed accordingly.
+
+	* app/pdb/*_cmds.c: regenerated.
+
 2006-04-07  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage-merge.[ch] (gimp_image_merge_visible_layers):

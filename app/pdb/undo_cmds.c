@@ -243,6 +243,7 @@ register_undo_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-undo-group-end
@@ -265,6 +266,7 @@ register_undo_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-undo-is-enabled
@@ -293,6 +295,7 @@ register_undo_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-undo-disable
@@ -321,6 +324,7 @@ register_undo_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-undo-enable
@@ -349,6 +353,7 @@ register_undo_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-undo-freeze
@@ -377,6 +382,7 @@ register_undo_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-undo-thaw
@@ -405,5 +411,6 @@ register_undo_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

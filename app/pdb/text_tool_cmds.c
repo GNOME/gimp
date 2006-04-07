@@ -361,6 +361,7 @@ register_text_tool_procs (Gimp *gimp)
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-text-get-extents-fontname
@@ -428,6 +429,7 @@ register_text_tool_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-text
@@ -562,6 +564,7 @@ register_text_tool_procs (Gimp *gimp)
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-text-get-extents
@@ -678,5 +681,6 @@ register_text_tool_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

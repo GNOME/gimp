@@ -585,6 +585,7 @@ CODE
 
 	$out->{register} .= <<CODE;
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 CODE
 

@@ -200,6 +200,7 @@ register_patterns_procs (Gimp *gimp)
                                      NULL);
 
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-patterns-get-list
@@ -234,6 +235,7 @@ register_patterns_procs (Gimp *gimp)
                                                                  "The list of pattern names",
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-patterns-get-pattern
@@ -269,6 +271,7 @@ register_patterns_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-patterns-get-pattern-data
@@ -328,5 +331,6 @@ register_patterns_procs (Gimp *gimp)
                                                                "The pattern mask data",
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

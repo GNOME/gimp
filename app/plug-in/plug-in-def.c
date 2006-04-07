@@ -44,8 +44,7 @@ plug_in_def_new (const gchar *prog)
 }
 
 void
-plug_in_def_free (PlugInDef *plug_in_def,
-		  gboolean   free_proc_defs)
+plug_in_def_free (PlugInDef *plug_in_def)
 {
   g_return_if_fail (plug_in_def != NULL);
 
@@ -55,11 +54,8 @@ plug_in_def_free (PlugInDef *plug_in_def,
   g_free (plug_in_def->help_domain_name);
   g_free (plug_in_def->help_domain_uri);
 
-  if (free_proc_defs)
-    g_slist_foreach (plug_in_def->proc_defs, (GFunc) g_object_unref, NULL);
-
-  if (plug_in_def->proc_defs)
-    g_slist_free (plug_in_def->proc_defs);
+  g_slist_foreach (plug_in_def->procedures, (GFunc) g_object_unref, NULL);
+  g_slist_free (plug_in_def->procedures);
 
   g_free (plug_in_def);
 }
@@ -72,9 +68,20 @@ plug_in_def_add_procedure (PlugInDef           *plug_in_def,
   g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
   proc->mtime = plug_in_def->mtime;
-  proc->prog  = g_strdup (plug_in_def->prog);
 
-  plug_in_def->proc_defs = g_slist_append (plug_in_def->proc_defs, proc);
+  plug_in_def->procedures = g_slist_append (plug_in_def->procedures,
+                                            g_object_ref (proc));
+}
+
+void
+plug_in_def_remove_procedure (PlugInDef           *plug_in_def,
+                              GimpPlugInProcedure *proc)
+{
+  g_return_if_fail (plug_in_def != NULL);
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
+
+  plug_in_def->procedures = g_slist_remove (plug_in_def->procedures, proc);
+  g_object_unref (proc);
 }
 
 void

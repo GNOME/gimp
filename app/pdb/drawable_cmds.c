@@ -1179,6 +1179,7 @@ register_drawable_procs (Gimp *gimp)
                                                             gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-is-layer
@@ -1207,6 +1208,7 @@ register_drawable_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-is-layer-mask
@@ -1235,6 +1237,7 @@ register_drawable_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-is-channel
@@ -1263,6 +1266,7 @@ register_drawable_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-type
@@ -1292,6 +1296,7 @@ register_drawable_procs (Gimp *gimp)
                                                       GIMP_RGB_IMAGE,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-type-with-alpha
@@ -1327,6 +1332,7 @@ register_drawable_procs (Gimp *gimp)
   gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->values[0]),
                                       GIMP_INDEXED_IMAGE);
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-has-alpha
@@ -1355,6 +1361,7 @@ register_drawable_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-is-rgb
@@ -1383,6 +1390,7 @@ register_drawable_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-is-gray
@@ -1411,6 +1419,7 @@ register_drawable_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-is-indexed
@@ -1439,6 +1448,7 @@ register_drawable_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-bpp
@@ -1467,6 +1477,7 @@ register_drawable_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-width
@@ -1495,6 +1506,7 @@ register_drawable_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-height
@@ -1523,6 +1535,7 @@ register_drawable_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-offsets
@@ -1557,6 +1570,7 @@ register_drawable_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-get-image
@@ -1585,6 +1599,7 @@ register_drawable_procs (Gimp *gimp)
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-set-image
@@ -1613,6 +1628,7 @@ register_drawable_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-get-name
@@ -1642,6 +1658,7 @@ register_drawable_procs (Gimp *gimp)
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-set-name
@@ -1671,6 +1688,7 @@ register_drawable_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-get-visible
@@ -1699,6 +1717,7 @@ register_drawable_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-set-visible
@@ -1727,6 +1746,7 @@ register_drawable_procs (Gimp *gimp)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-get-linked
@@ -1755,6 +1775,7 @@ register_drawable_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-set-linked
@@ -1783,6 +1804,7 @@ register_drawable_procs (Gimp *gimp)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-get-tattoo
@@ -1811,6 +1833,7 @@ register_drawable_procs (Gimp *gimp)
                                                       1, G_MAXUINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-set-tattoo
@@ -1839,6 +1862,7 @@ register_drawable_procs (Gimp *gimp)
                                                   1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-mask-bounds
@@ -1891,6 +1915,7 @@ register_drawable_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-mask-intersect
@@ -1943,6 +1968,7 @@ register_drawable_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-merge-shadow
@@ -1971,6 +1997,7 @@ register_drawable_procs (Gimp *gimp)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-update
@@ -2017,6 +2044,7 @@ register_drawable_procs (Gimp *gimp)
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-get-pixel
@@ -2062,6 +2090,7 @@ register_drawable_procs (Gimp *gimp)
                                                                "The pixel value",
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-set-pixel
@@ -2107,6 +2136,7 @@ register_drawable_procs (Gimp *gimp)
                                                            "The pixel value",
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-fill
@@ -2136,6 +2166,7 @@ register_drawable_procs (Gimp *gimp)
                                                   GIMP_FOREGROUND_FILL,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-offset
@@ -2183,6 +2214,7 @@ register_drawable_procs (Gimp *gimp)
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-thumbnail
@@ -2246,6 +2278,7 @@ register_drawable_procs (Gimp *gimp)
                                                                "The thumbnail data",
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-sub-thumbnail
@@ -2333,6 +2366,7 @@ register_drawable_procs (Gimp *gimp)
                                                                "The thumbnail data",
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-foreground-extract
@@ -2368,5 +2402,6 @@ register_drawable_procs (Gimp *gimp)
                                                             gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

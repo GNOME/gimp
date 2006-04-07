@@ -192,6 +192,7 @@ register_display_procs (Gimp *gimp)
                                                                gimp,
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-display-delete
@@ -214,6 +215,7 @@ register_display_procs (Gimp *gimp)
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-display-get-window-handle
@@ -242,6 +244,7 @@ register_display_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-displays-flush
@@ -258,6 +261,7 @@ register_display_procs (Gimp *gimp)
                                      NULL);
 
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-displays-reconnect
@@ -286,5 +290,6 @@ register_display_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

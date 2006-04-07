@@ -866,6 +866,7 @@ register_vectors_procs (Gimp *gimp)
                                                                gimp,
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-get-image
@@ -894,6 +895,7 @@ register_vectors_procs (Gimp *gimp)
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-get-name
@@ -923,6 +925,7 @@ register_vectors_procs (Gimp *gimp)
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-set-name
@@ -952,6 +955,7 @@ register_vectors_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-get-visible
@@ -980,6 +984,7 @@ register_vectors_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-set-visible
@@ -1008,6 +1013,7 @@ register_vectors_procs (Gimp *gimp)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-get-linked
@@ -1036,6 +1042,7 @@ register_vectors_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-set-linked
@@ -1064,6 +1071,7 @@ register_vectors_procs (Gimp *gimp)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-get-tattoo
@@ -1092,6 +1100,7 @@ register_vectors_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-set-tattoo
@@ -1120,6 +1129,7 @@ register_vectors_procs (Gimp *gimp)
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-get-strokes
@@ -1153,6 +1163,7 @@ register_vectors_procs (Gimp *gimp)
                                                                 "List of the strokes belonging to the path.",
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-stroke-get-length
@@ -1193,6 +1204,7 @@ register_vectors_procs (Gimp *gimp)
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-stroke-get-point-at-dist
@@ -1257,6 +1269,7 @@ register_vectors_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-stroke-remove
@@ -1285,6 +1298,7 @@ register_vectors_procs (Gimp *gimp)
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-stroke-close
@@ -1313,6 +1327,7 @@ register_vectors_procs (Gimp *gimp)
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-stroke-translate
@@ -1353,6 +1368,7 @@ register_vectors_procs (Gimp *gimp)
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-stroke-scale
@@ -1393,6 +1409,7 @@ register_vectors_procs (Gimp *gimp)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-stroke-interpolate
@@ -1444,6 +1461,7 @@ register_vectors_procs (Gimp *gimp)
                                                                 "List of the coords along the path (x0, y0, x1, y1, ...).",
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-bezier-stroke-new-moveto
@@ -1484,6 +1502,7 @@ register_vectors_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-bezier-stroke-lineto
@@ -1524,6 +1543,7 @@ register_vectors_procs (Gimp *gimp)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-bezier-stroke-conicto
@@ -1576,6 +1596,7 @@ register_vectors_procs (Gimp *gimp)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-bezier-stroke-cubicto
@@ -1640,6 +1661,7 @@ register_vectors_procs (Gimp *gimp)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-bezier-stroke-new-ellipse
@@ -1698,5 +1720,6 @@ register_vectors_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

@@ -135,7 +135,7 @@ plug_in_actions_setup (GimpActionGroup *group)
                                   branch->menu_label);
     }
 
-  for (list = group->gimp->plug_in_proc_defs;
+  for (list = group->gimp->plug_in_procedures;
        list;
        list = g_slist_next (list))
     {
@@ -203,7 +203,7 @@ plug_in_actions_update (GimpActionGroup *group,
         type = gimp_drawable_type (drawable);
     }
 
-  for (list = group->gimp->plug_in_proc_defs;
+  for (list = group->gimp->plug_in_procedures;
        list;
        list = g_slist_next (list))
     {

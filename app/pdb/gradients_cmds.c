@@ -297,6 +297,7 @@ register_gradients_procs (Gimp *gimp)
                                      NULL);
 
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradients-get-list
@@ -331,6 +332,7 @@ register_gradients_procs (Gimp *gimp)
                                                                  "The list of gradient names",
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradients-sample-uniform
@@ -370,6 +372,7 @@ register_gradients_procs (Gimp *gimp)
                                                                 "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradients-sample-custom
@@ -414,6 +417,7 @@ register_gradients_procs (Gimp *gimp)
                                                                 "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradients-get-gradient-data
@@ -467,5 +471,6 @@ register_gradients_procs (Gimp *gimp)
                                                                 "The gradient sample data",
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

@@ -190,6 +190,7 @@ register_brush_select_procs (Gimp *gimp)
                                                   GIMP_NORMAL_MODE,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brushes-close-popup
@@ -213,6 +214,7 @@ register_brush_select_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brushes-set-popup
@@ -262,5 +264,6 @@ register_brush_select_procs (Gimp *gimp)
                                                   GIMP_NORMAL_MODE,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

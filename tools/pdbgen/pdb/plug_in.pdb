@@ -253,7 +253,7 @@ HELP
 
       canonical = gimp_canonicalize_identifier (procedure_name);
 
-      proc = gimp_plug_in_procedure_find (gimp->current_plug_in->plug_in_def->proc_defs,
+      proc = gimp_plug_in_procedure_find (gimp->current_plug_in->plug_in_def->procedures,
                                           canonical);
 
       g_free (canonical);

@@ -97,6 +97,7 @@ register_fonts_procs (Gimp *gimp)
                                      NULL);
 
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-fonts-get-list
@@ -131,5 +132,6 @@ register_fonts_procs (Gimp *gimp)
                                                                  "The list of font names",
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

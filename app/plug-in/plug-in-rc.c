@@ -237,7 +237,7 @@ plug_in_def_deserialize (Gimp     *gimp,
 
   if (! gimp_scanner_parse_int (scanner, (gint *) &plug_in_def->mtime))
     {
-      plug_in_def_free (plug_in_def, TRUE);
+      plug_in_def_free (plug_in_def);
       g_free (name);
       return G_TOKEN_INT;
     }
@@ -262,7 +262,8 @@ plug_in_def_deserialize (Gimp     *gimp,
 
               if (token == G_TOKEN_LEFT_PAREN)
                 plug_in_def_add_procedure (plug_in_def, proc);
-              else if (proc)
+
+              if (proc)
                 g_object_unref (proc);
               break;
 
@@ -305,7 +306,7 @@ plug_in_def_deserialize (Gimp     *gimp,
         }
     }
 
-  plug_in_def_free (plug_in_def, TRUE);
+  plug_in_def_free (plug_in_def);
 
   return token;
 }
@@ -766,7 +767,7 @@ plug_in_rc_write (GSList       *plug_in_defs,
     {
       PlugInDef *plug_in_def = list->data;
 
-      if (plug_in_def->proc_defs)
+      if (plug_in_def->procedures)
 	{
           GSList *list2;
 
@@ -774,7 +775,7 @@ plug_in_rc_write (GSList       *plug_in_defs,
           gimp_config_writer_string (writer, plug_in_def->prog);
           gimp_config_writer_printf (writer, "%ld", plug_in_def->mtime);
 
-	  for (list2 = plug_in_def->proc_defs; list2; list2 = list2->next)
+	  for (list2 = plug_in_def->procedures; list2; list2 = list2->next)
 	    {
               GimpPlugInProcedure *proc      = list2->data;
               GimpProcedure       *procedure = GIMP_PROCEDURE (proc);

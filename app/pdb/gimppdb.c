@@ -204,7 +204,7 @@ gimp_pdb_register (Gimp          *gimp,
 
   g_hash_table_insert (gimp->procedural_ht,
                        procedure->name,
-                       g_list_prepend (list, procedure));
+                       g_list_prepend (list, g_object_ref (procedure)));
 }
 
 void
@@ -220,13 +220,17 @@ gimp_pdb_unregister (Gimp        *gimp,
 
   if (list)
     {
-      list = g_list_remove (list, list->data);
+      GimpProcedure *procedure = list->data;
+
+      list = g_list_remove (list, procedure);
 
       if (list)
         g_hash_table_insert (gimp->procedural_ht, (gpointer) procedure_name,
                              list);
       else
         g_hash_table_remove (gimp->procedural_ht, procedure_name);
+
+      g_object_unref (procedure);
     }
 }
 

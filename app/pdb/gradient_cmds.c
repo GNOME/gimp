@@ -1363,6 +1363,7 @@ register_gradient_procs (Gimp *gimp)
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-duplicate
@@ -1393,6 +1394,7 @@ register_gradient_procs (Gimp *gimp)
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-is-editable
@@ -1422,6 +1424,7 @@ register_gradient_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-rename
@@ -1459,6 +1462,7 @@ register_gradient_procs (Gimp *gimp)
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-delete
@@ -1482,6 +1486,7 @@ register_gradient_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-get-uniform-samples
@@ -1528,6 +1533,7 @@ register_gradient_procs (Gimp *gimp)
                                                                 "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-get-custom-samples
@@ -1579,6 +1585,7 @@ register_gradient_procs (Gimp *gimp)
                                                                 "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-segment-get-left-color
@@ -1620,6 +1627,7 @@ register_gradient_procs (Gimp *gimp)
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-segment-set-left-color
@@ -1661,6 +1669,7 @@ register_gradient_procs (Gimp *gimp)
                                                     0, 100.0, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-segment-get-right-color
@@ -1702,6 +1711,7 @@ register_gradient_procs (Gimp *gimp)
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-segment-set-right-color
@@ -1743,6 +1753,7 @@ register_gradient_procs (Gimp *gimp)
                                                     0, 100.0, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-segment-get-left-pos
@@ -1778,6 +1789,7 @@ register_gradient_procs (Gimp *gimp)
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-segment-set-left-pos
@@ -1819,6 +1831,7 @@ register_gradient_procs (Gimp *gimp)
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-segment-get-middle-pos
@@ -1854,6 +1867,7 @@ register_gradient_procs (Gimp *gimp)
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-segment-set-middle-pos
@@ -1895,6 +1909,7 @@ register_gradient_procs (Gimp *gimp)
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-segment-get-right-pos
@@ -1930,6 +1945,7 @@ register_gradient_procs (Gimp *gimp)
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-segment-set-right-pos
@@ -1971,6 +1987,7 @@ register_gradient_procs (Gimp *gimp)
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-segment-get-blending-function
@@ -2007,6 +2024,7 @@ register_gradient_procs (Gimp *gimp)
                                                       GIMP_GRADIENT_SEGMENT_LINEAR,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-segment-get-coloring-type
@@ -2043,6 +2061,7 @@ register_gradient_procs (Gimp *gimp)
                                                       GIMP_GRADIENT_SEGMENT_RGB,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-segment-range-set-blending-function
@@ -2085,6 +2104,7 @@ register_gradient_procs (Gimp *gimp)
                                                   GIMP_GRADIENT_SEGMENT_LINEAR,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-segment-range-set-coloring-type
@@ -2127,6 +2147,7 @@ register_gradient_procs (Gimp *gimp)
                                                   GIMP_GRADIENT_SEGMENT_RGB,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-segment-range-flip
@@ -2162,6 +2183,7 @@ register_gradient_procs (Gimp *gimp)
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-segment-range-replicate
@@ -2203,6 +2225,7 @@ register_gradient_procs (Gimp *gimp)
                                                       2, 20, 2,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-segment-range-split-midpoint
@@ -2238,6 +2261,7 @@ register_gradient_procs (Gimp *gimp)
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-segment-range-split-uniform
@@ -2279,6 +2303,7 @@ register_gradient_procs (Gimp *gimp)
                                                       2, 20, 2,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-segment-range-delete
@@ -2314,6 +2339,7 @@ register_gradient_procs (Gimp *gimp)
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-segment-range-redistribute-handles
@@ -2349,6 +2375,7 @@ register_gradient_procs (Gimp *gimp)
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-segment-range-blend-colors
@@ -2384,6 +2411,7 @@ register_gradient_procs (Gimp *gimp)
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-segment-range-blend-opacity
@@ -2419,6 +2447,7 @@ register_gradient_procs (Gimp *gimp)
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradient-segment-range-move
@@ -2472,5 +2501,6 @@ register_gradient_procs (Gimp *gimp)
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

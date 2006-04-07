@@ -202,6 +202,7 @@ xcf_init (Gimp *gimp)
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
   plug_ins_add_internal (gimp, proc);
+  g_object_unref (procedure);
 
   /*  gimp-xcf-load  */
   procedure = gimp_plug_in_procedure_new (GIMP_PLUGIN, "gimp-xcf-load");
@@ -263,6 +264,7 @@ xcf_init (Gimp *gimp)
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
   plug_ins_add_internal (gimp, proc);
+  g_object_unref (procedure);
 }
 
 void

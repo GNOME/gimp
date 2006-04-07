@@ -393,6 +393,7 @@ register_grid_procs (Gimp *gimp)
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-grid-set-spacing
@@ -427,6 +428,7 @@ register_grid_procs (Gimp *gimp)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-grid-get-offset
@@ -461,6 +463,7 @@ register_grid_procs (Gimp *gimp)
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-grid-set-offset
@@ -495,6 +498,7 @@ register_grid_procs (Gimp *gimp)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-grid-get-foreground-color
@@ -523,6 +527,7 @@ register_grid_procs (Gimp *gimp)
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-grid-set-foreground-color
@@ -551,6 +556,7 @@ register_grid_procs (Gimp *gimp)
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-grid-get-background-color
@@ -579,6 +585,7 @@ register_grid_procs (Gimp *gimp)
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-grid-set-background-color
@@ -607,6 +614,7 @@ register_grid_procs (Gimp *gimp)
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-grid-get-style
@@ -636,6 +644,7 @@ register_grid_procs (Gimp *gimp)
                                                       GIMP_GRID_DOTS,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-grid-set-style
@@ -665,5 +674,6 @@ register_grid_procs (Gimp *gimp)
                                                   GIMP_GRID_DOTS,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

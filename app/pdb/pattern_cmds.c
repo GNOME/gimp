@@ -176,6 +176,7 @@ register_pattern_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-pattern-get-pixels
@@ -228,5 +229,6 @@ register_pattern_procs (Gimp *gimp)
                                                                "The pattern data.",
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

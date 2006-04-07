@@ -869,6 +869,7 @@ register_color_procs (Gimp *gimp)
                                                       -127, 127, -127,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-levels
@@ -928,6 +929,7 @@ register_color_procs (Gimp *gimp)
                                                       0, 255, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-levels-auto
@@ -950,6 +952,7 @@ register_color_procs (Gimp *gimp)
                                                             gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-levels-stretch
@@ -972,6 +975,7 @@ register_color_procs (Gimp *gimp)
                                                             gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-posterize
@@ -1000,6 +1004,7 @@ register_color_procs (Gimp *gimp)
                                                       2, 255, 2,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-desaturate
@@ -1022,6 +1027,7 @@ register_color_procs (Gimp *gimp)
                                                             gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-desaturate-full
@@ -1051,6 +1057,7 @@ register_color_procs (Gimp *gimp)
                                                   GIMP_DESATURATE_LIGHTNESS,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-equalize
@@ -1079,6 +1086,7 @@ register_color_procs (Gimp *gimp)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-invert
@@ -1101,6 +1109,7 @@ register_color_procs (Gimp *gimp)
                                                             gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-curves-spline
@@ -1141,6 +1150,7 @@ register_color_procs (Gimp *gimp)
                                                            "The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }",
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-curves-explicit
@@ -1181,6 +1191,7 @@ register_color_procs (Gimp *gimp)
                                                            "The explicit curve",
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-color-balance
@@ -1234,6 +1245,7 @@ register_color_procs (Gimp *gimp)
                                                     -100, 100, -100,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-colorize
@@ -1274,6 +1286,7 @@ register_color_procs (Gimp *gimp)
                                                     -100, 100, -100,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-histogram
@@ -1351,6 +1364,7 @@ register_color_procs (Gimp *gimp)
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-hue-saturation
@@ -1398,6 +1412,7 @@ register_color_procs (Gimp *gimp)
                                                     -100, 100, -100,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-threshold
@@ -1432,5 +1447,6 @@ register_color_procs (Gimp *gimp)
                                                       0, 255, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

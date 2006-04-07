@@ -72,7 +72,7 @@ struct _Gimp
   GSList                 *plug_in_defs;
   gboolean                write_pluginrc;
 
-  GSList                 *plug_in_proc_defs;
+  GSList                 *plug_in_procedures;
   GSList                 *plug_in_menu_branches;
   GSList                 *plug_in_locale_domains;
   GSList                 *plug_in_help_domains;
@@ -179,7 +179,7 @@ void          gimp_exit                 (Gimp                *gimp,
 void          gimp_set_global_buffer    (Gimp                *gimp,
                                          GimpBuffer          *buffer);
 void          gimp_set_last_plug_in     (Gimp                *gimp,
-                                         GimpPlugInProcedure *proc_def);
+                                         GimpPlugInProcedure *procedure);
 
 GimpImage   * gimp_create_image         (Gimp                *gimp,
 					 gint                 width,

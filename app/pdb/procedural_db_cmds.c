@@ -440,6 +440,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-procedural-db-dump
@@ -463,6 +464,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-procedural-db-query
@@ -539,6 +541,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                                  "The list of procedure names",
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-procedural-db-proc-info
@@ -616,6 +619,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-procedural-db-proc-arg
@@ -668,6 +672,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-procedural-db-proc-val
@@ -720,6 +725,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-procedural-db-get-data
@@ -754,6 +760,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                                "A byte array containing data",
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-procedural-db-get-data-size
@@ -783,6 +790,7 @@ register_procedural_db_procs (Gimp *gimp)
                                                           1, G_MAXINT32, 1,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-procedural-db-set-data
@@ -817,5 +825,6 @@ register_procedural_db_procs (Gimp *gimp)
                                                            "A byte array containing data",
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

@@ -650,14 +650,10 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
     case GIMP_EXTENSION:
       plug_in_def = plug_in->plug_in_def;
 
-      proc = gimp_plug_in_procedure_find (plug_in_def->proc_defs, canonical);
+      proc = gimp_plug_in_procedure_find (plug_in_def->procedures, canonical);
 
       if (proc)
-        {
-          plug_in_def->proc_defs = g_slist_remove (plug_in_def->proc_defs,
-                                                   proc);
-          g_object_unref (proc);
-        }
+        plug_in_def_remove_procedure (plug_in_def, proc);
 
       procedure = gimp_plug_in_procedure_new (proc_install->type,
                                               plug_in->prog);
@@ -666,14 +662,10 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
     case GIMP_TEMPORARY:
       plug_in_def = NULL;
 
-      proc = gimp_plug_in_procedure_find (plug_in->temp_proc_defs, canonical);
+      proc = gimp_plug_in_procedure_find (plug_in->temp_procedures, canonical);
 
       if (proc)
-        {
-          plug_in->temp_proc_defs = g_slist_remove (plug_in->temp_proc_defs,
-                                                    proc);
-          plug_ins_temp_proc_def_remove (plug_in->gimp, proc);
-        }
+        plug_in_remove_temp_proc (plug_in, GIMP_TEMPORARY_PROCEDURE (proc));
 
       procedure = gimp_temporary_procedure_new (plug_in);
       break;
@@ -760,16 +752,15 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
     {
     case GIMP_PLUGIN:
     case GIMP_EXTENSION:
-      plug_in_def->proc_defs = g_slist_prepend (plug_in_def->proc_defs,
-                                                proc);
+      plug_in_def_add_procedure (plug_in_def, proc);
       break;
 
     case GIMP_TEMPORARY:
-      plug_in->temp_proc_defs = g_slist_prepend (plug_in->temp_proc_defs,
-                                                 proc);
-      plug_ins_temp_proc_def_add (plug_in->gimp, proc);
+      plug_in_add_temp_proc (plug_in, GIMP_TEMPORARY_PROCEDURE (proc));
       break;
     }
+
+  g_object_unref (proc);
 }
 
 static void
@@ -781,14 +772,10 @@ plug_in_handle_proc_uninstall (PlugIn          *plug_in,
 
   canonical = gimp_canonicalize_identifier (proc_uninstall->name);
 
-  proc = gimp_plug_in_procedure_find (plug_in->temp_proc_defs, canonical);
+  proc = gimp_plug_in_procedure_find (plug_in->temp_procedures, canonical);
 
   if (proc)
-    {
-      plug_in->temp_proc_defs = g_slist_remove (plug_in->temp_proc_defs,
-                                                proc);
-      plug_ins_temp_proc_def_remove (plug_in->gimp, proc);
-    }
+    plug_in_remove_temp_proc (plug_in, GIMP_TEMPORARY_PROCEDURE (proc));
 
   g_free (canonical);
 }

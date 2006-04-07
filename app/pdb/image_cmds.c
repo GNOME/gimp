@@ -2171,6 +2171,7 @@ register_image_procs (Gimp *gimp)
                                                                 "The list of images currently open",
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-new
@@ -2212,6 +2213,7 @@ register_image_procs (Gimp *gimp)
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-duplicate
@@ -2240,6 +2242,7 @@ register_image_procs (Gimp *gimp)
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-delete
@@ -2262,6 +2265,7 @@ register_image_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-base-type
@@ -2291,6 +2295,7 @@ register_image_procs (Gimp *gimp)
                                                       GIMP_RGB,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-width
@@ -2319,6 +2324,7 @@ register_image_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-height
@@ -2347,6 +2353,7 @@ register_image_procs (Gimp *gimp)
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-free-shadow
@@ -2369,6 +2376,7 @@ register_image_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-resize
@@ -2415,6 +2423,7 @@ register_image_procs (Gimp *gimp)
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-resize-to-layers
@@ -2437,6 +2446,7 @@ register_image_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-scale
@@ -2471,6 +2481,7 @@ register_image_procs (Gimp *gimp)
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-crop
@@ -2517,6 +2528,7 @@ register_image_procs (Gimp *gimp)
                                                       0, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-flip
@@ -2548,6 +2560,7 @@ register_image_procs (Gimp *gimp)
   gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[1]),
                                       GIMP_ORIENTATION_UNKNOWN);
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-rotate
@@ -2577,6 +2590,7 @@ register_image_procs (Gimp *gimp)
                                                   GIMP_ROTATE_90,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-get-layers
@@ -2610,6 +2624,7 @@ register_image_procs (Gimp *gimp)
                                                                 "The list of layers contained in the image",
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-get-channels
@@ -2643,6 +2658,7 @@ register_image_procs (Gimp *gimp)
                                                                 "The list of channels contained in the image",
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-get-vectors
@@ -2676,6 +2692,7 @@ register_image_procs (Gimp *gimp)
                                                                 "The list of vectors contained in the image",
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-get-active-drawable
@@ -2704,6 +2721,7 @@ register_image_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-unset-active-channel
@@ -2726,6 +2744,7 @@ register_image_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-get-floating-sel
@@ -2754,6 +2773,7 @@ register_image_procs (Gimp *gimp)
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-floating-sel-attached-to
@@ -2782,6 +2802,7 @@ register_image_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-pick-color
@@ -2846,6 +2867,7 @@ register_image_procs (Gimp *gimp)
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-pick-correlate-layer
@@ -2886,6 +2908,7 @@ register_image_procs (Gimp *gimp)
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-add-layer
@@ -2920,6 +2943,7 @@ register_image_procs (Gimp *gimp)
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-remove-layer
@@ -2948,6 +2972,7 @@ register_image_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-raise-layer
@@ -2976,6 +3001,7 @@ register_image_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-lower-layer
@@ -3004,6 +3030,7 @@ register_image_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-raise-layer-to-top
@@ -3032,6 +3059,7 @@ register_image_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-lower-layer-to-bottom
@@ -3060,6 +3088,7 @@ register_image_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-add-channel
@@ -3094,6 +3123,7 @@ register_image_procs (Gimp *gimp)
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-remove-channel
@@ -3122,6 +3152,7 @@ register_image_procs (Gimp *gimp)
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-raise-channel
@@ -3150,6 +3181,7 @@ register_image_procs (Gimp *gimp)
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-lower-channel
@@ -3178,6 +3210,7 @@ register_image_procs (Gimp *gimp)
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-add-vectors
@@ -3212,6 +3245,7 @@ register_image_procs (Gimp *gimp)
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-remove-vectors
@@ -3240,6 +3274,7 @@ register_image_procs (Gimp *gimp)
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-raise-vectors
@@ -3268,6 +3303,7 @@ register_image_procs (Gimp *gimp)
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-lower-vectors
@@ -3296,6 +3332,7 @@ register_image_procs (Gimp *gimp)
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-raise-vectors-to-top
@@ -3324,6 +3361,7 @@ register_image_procs (Gimp *gimp)
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-lower-vectors-to-bottom
@@ -3352,6 +3390,7 @@ register_image_procs (Gimp *gimp)
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-flatten
@@ -3380,6 +3419,7 @@ register_image_procs (Gimp *gimp)
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-merge-visible-layers
@@ -3417,6 +3457,7 @@ register_image_procs (Gimp *gimp)
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-merge-down
@@ -3460,6 +3501,7 @@ register_image_procs (Gimp *gimp)
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-add-layer-mask
@@ -3494,6 +3536,7 @@ register_image_procs (Gimp *gimp)
                                                               gimp,
                                                               GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-remove-layer-mask
@@ -3529,6 +3572,7 @@ register_image_procs (Gimp *gimp)
                                                   GIMP_MASK_APPLY,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-get-colormap
@@ -3562,6 +3606,7 @@ register_image_procs (Gimp *gimp)
                                                                "The image's colormap",
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-set-colormap
@@ -3595,6 +3640,7 @@ register_image_procs (Gimp *gimp)
                                                            "The new colormap values",
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-clean-all
@@ -3617,6 +3663,7 @@ register_image_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-is-dirty
@@ -3645,6 +3692,7 @@ register_image_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-thumbnail
@@ -3708,6 +3756,7 @@ register_image_procs (Gimp *gimp)
                                                                "The thumbnail data",
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-get-active-layer
@@ -3736,6 +3785,7 @@ register_image_procs (Gimp *gimp)
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-set-active-layer
@@ -3764,6 +3814,7 @@ register_image_procs (Gimp *gimp)
                                                          gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-get-active-channel
@@ -3792,6 +3843,7 @@ register_image_procs (Gimp *gimp)
                                                                gimp,
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-set-active-channel
@@ -3820,6 +3872,7 @@ register_image_procs (Gimp *gimp)
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-get-active-vectors
@@ -3848,6 +3901,7 @@ register_image_procs (Gimp *gimp)
                                                                gimp,
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-set-active-vectors
@@ -3876,6 +3930,7 @@ register_image_procs (Gimp *gimp)
                                                            gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-get-selection
@@ -3904,6 +3959,7 @@ register_image_procs (Gimp *gimp)
                                                                  gimp,
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-get-component-active
@@ -3939,6 +3995,7 @@ register_image_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-set-component-active
@@ -3974,6 +4031,7 @@ register_image_procs (Gimp *gimp)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-get-component-visible
@@ -4009,6 +4067,7 @@ register_image_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-set-component-visible
@@ -4044,6 +4103,7 @@ register_image_procs (Gimp *gimp)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-get-filename
@@ -4073,6 +4133,7 @@ register_image_procs (Gimp *gimp)
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-set-filename
@@ -4102,6 +4163,7 @@ register_image_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-get-name
@@ -4131,6 +4193,7 @@ register_image_procs (Gimp *gimp)
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-get-resolution
@@ -4165,6 +4228,7 @@ register_image_procs (Gimp *gimp)
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-set-resolution
@@ -4199,6 +4263,7 @@ register_image_procs (Gimp *gimp)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-get-unit
@@ -4229,6 +4294,7 @@ register_image_procs (Gimp *gimp)
                                                          GIMP_UNIT_PIXEL,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-set-unit
@@ -4259,6 +4325,7 @@ register_image_procs (Gimp *gimp)
                                                      GIMP_UNIT_INCH,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-get-tattoo-state
@@ -4287,6 +4354,7 @@ register_image_procs (Gimp *gimp)
                                                       1, G_MAXUINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-set-tattoo-state
@@ -4315,6 +4383,7 @@ register_image_procs (Gimp *gimp)
                                                   1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-get-layer-by-tattoo
@@ -4349,6 +4418,7 @@ register_image_procs (Gimp *gimp)
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-get-channel-by-tattoo
@@ -4383,6 +4453,7 @@ register_image_procs (Gimp *gimp)
                                                                gimp,
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-get-vectors-by-tattoo
@@ -4417,5 +4488,6 @@ register_image_procs (Gimp *gimp)
                                                                gimp,
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

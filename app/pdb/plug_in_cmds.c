@@ -243,7 +243,7 @@ plugin_icon_register_invoker (GimpProcedure     *procedure,
 
           canonical = gimp_canonicalize_identifier (procedure_name);
 
-          proc = gimp_plug_in_procedure_find (gimp->current_plug_in->plug_in_def->proc_defs,
+          proc = gimp_plug_in_procedure_find (gimp->current_plug_in->plug_in_def->procedures,
                                               canonical);
 
           g_free (canonical);
@@ -354,6 +354,7 @@ register_plug_in_procs (Gimp *gimp)
                                                                  "The internal name of the plugin",
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-plugin-domain-register
@@ -384,6 +385,7 @@ register_plug_in_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-plugin-help-register
@@ -414,6 +416,7 @@ register_plug_in_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-plugin-menu-register
@@ -444,6 +447,7 @@ register_plug_in_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-plugin-menu-branch-register
@@ -474,6 +478,7 @@ register_plug_in_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-plugin-icon-register
@@ -515,5 +520,6 @@ register_plug_in_procs (Gimp *gimp)
                                                            "The procedure's icon. The format depends on the 'icon_type' parameter",
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

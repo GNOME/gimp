@@ -462,6 +462,7 @@ register_transform_tools_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-perspective
@@ -544,6 +545,7 @@ register_transform_tools_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-rotate
@@ -584,6 +586,7 @@ register_transform_tools_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-scale
@@ -642,6 +645,7 @@ register_transform_tools_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-shear
@@ -691,6 +695,7 @@ register_transform_tools_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-transform-2d
@@ -767,5 +772,6 @@ register_transform_tools_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

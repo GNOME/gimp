@@ -166,6 +166,7 @@ register_gradient_select_procs (Gimp *gimp)
                                                       1, 10000, 1,
                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradients-close-popup
@@ -189,6 +190,7 @@ register_gradient_select_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-gradients-set-popup
@@ -219,5 +221,6 @@ register_gradient_select_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

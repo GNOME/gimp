@@ -76,7 +76,7 @@
 #include "core/gimpinterpreterdb.h"
 #include "core/gimpprogress.h"
 
-#include "pdb/gimppluginprocedure.h"
+#include "pdb/gimptemporaryprocedure.h"
 
 #include "plug-in.h"
 #include "plug-ins.h"
@@ -276,7 +276,7 @@ plug_in_new (Gimp          *gimp,
   plug_in->input_id           = 0;
   plug_in->write_buffer_index = 0;
 
-  plug_in->temp_proc_defs     = NULL;
+  plug_in->temp_procedures    = NULL;
 
   plug_in->ext_main_loop      = NULL;
 
@@ -687,16 +687,8 @@ plug_in_close (PlugIn   *plug_in,
   plug_in->synchronous = FALSE;
 
   /* Unregister any temporary procedures. */
-  if (plug_in->temp_proc_defs)
-    {
-      GSList *list;
-
-      for (list = plug_in->temp_proc_defs; list; list = g_slist_next (list))
-        plug_ins_temp_proc_def_remove (plug_in->gimp, list->data);
-
-      g_slist_free (plug_in->temp_proc_defs);
-      plug_in->temp_proc_defs = NULL;
-    }
+  while (plug_in->temp_procedures)
+    plug_in_remove_temp_proc (plug_in, plug_in->temp_procedures->data);
 
   /* Close any dialogs that this plugin might have opened */
   gimp_pdb_dialogs_check (plug_in->gimp);
@@ -1013,11 +1005,11 @@ plug_in_menu_register (PlugIn      *plug_in,
   g_return_val_if_fail (menu_path != NULL, FALSE);
 
   if (plug_in->plug_in_def)
-    proc = gimp_plug_in_procedure_find (plug_in->plug_in_def->proc_defs,
+    proc = gimp_plug_in_procedure_find (plug_in->plug_in_def->procedures,
                                         proc_name);
 
   if (! proc)
-    proc = gimp_plug_in_procedure_find (plug_in->temp_proc_defs, proc_name);
+    proc = gimp_plug_in_procedure_find (plug_in->temp_procedures, proc_name);
 
   if (! proc)
     {
@@ -1090,3 +1082,27 @@ plug_in_menu_register (PlugIn      *plug_in,
   return TRUE;
 }
 
+void
+plug_in_add_temp_proc (PlugIn                 *plug_in,
+                       GimpTemporaryProcedure *proc)
+{
+  g_return_if_fail (plug_in != NULL);
+  g_return_if_fail (GIMP_IS_TEMPORARY_PROCEDURE (proc));
+
+  plug_in->temp_procedures = g_slist_prepend (plug_in->temp_procedures,
+                                              g_object_ref (proc));
+  plug_ins_temp_procedure_add (plug_in->gimp, proc);
+}
+
+void
+plug_in_remove_temp_proc (PlugIn                 *plug_in,
+                          GimpTemporaryProcedure *proc)
+{
+  g_return_if_fail (plug_in != NULL);
+  g_return_if_fail (GIMP_IS_TEMPORARY_PROCEDURE (proc));
+
+  plug_in->temp_procedures = g_slist_remove (plug_in->temp_procedures,
+                                             proc);
+  plug_ins_temp_procedure_remove (plug_in->gimp, proc);
+  g_object_unref (proc);
+}

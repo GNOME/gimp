@@ -1235,6 +1235,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-transform-flip
@@ -1319,6 +1320,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-transform-flip-default
@@ -1383,6 +1385,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-transform-perspective
@@ -1491,6 +1494,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-transform-perspective-default
@@ -1579,6 +1583,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-transform-rotate-simple
@@ -1638,6 +1643,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-transform-rotate
@@ -1722,6 +1728,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-transform-rotate-default
@@ -1786,6 +1793,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-transform-scale
@@ -1870,6 +1878,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-transform-scale-default
@@ -1934,6 +1943,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-transform-shear
@@ -2009,6 +2019,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-transform-shear-default
@@ -2064,6 +2075,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-transform-2d
@@ -2166,6 +2178,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-transform-2d-default
@@ -2248,6 +2261,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-transform-matrix
@@ -2362,6 +2376,7 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-transform-matrix-default
@@ -2456,5 +2471,6 @@ register_drawable_transform_procs (Gimp *gimp)
                                                                 gimp,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

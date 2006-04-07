@@ -87,7 +87,7 @@ plug_ins_query (Gimp          *gimp,
    * where we can store the strings.
    */
 
-  for (list = gimp->plug_in_proc_defs; list; list = g_slist_next (list))
+  for (list = gimp->plug_in_procedures; list; list = g_slist_next (list))
     {
       GimpPlugInProcedure *proc = list->data;
 

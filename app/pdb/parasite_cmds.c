@@ -482,6 +482,7 @@ register_parasite_procs (Gimp *gimp)
                                                              "The found parasite",
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-parasite-attach
@@ -503,6 +504,7 @@ register_parasite_procs (Gimp *gimp)
                                                          "The parasite to attach to the gimp",
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-parasite-detach
@@ -526,6 +528,7 @@ register_parasite_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-parasite-list
@@ -553,6 +556,7 @@ register_parasite_procs (Gimp *gimp)
                                                                  "The names of currently attached parasites",
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-parasite-find
@@ -587,6 +591,7 @@ register_parasite_procs (Gimp *gimp)
                                                              "The found parasite",
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-parasite-attach
@@ -614,6 +619,7 @@ register_parasite_procs (Gimp *gimp)
                                                          "The parasite to attach to an image",
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-parasite-detach
@@ -643,6 +649,7 @@ register_parasite_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-image-parasite-list
@@ -676,6 +683,7 @@ register_parasite_procs (Gimp *gimp)
                                                                  "The names of currently attached parasites",
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-parasite-find
@@ -710,6 +718,7 @@ register_parasite_procs (Gimp *gimp)
                                                              "The found parasite",
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-parasite-attach
@@ -737,6 +746,7 @@ register_parasite_procs (Gimp *gimp)
                                                          "The parasite to attach to a drawable",
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-parasite-detach
@@ -766,6 +776,7 @@ register_parasite_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-drawable-parasite-list
@@ -799,6 +810,7 @@ register_parasite_procs (Gimp *gimp)
                                                                  "The names of currently attached parasites",
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-parasite-find
@@ -833,6 +845,7 @@ register_parasite_procs (Gimp *gimp)
                                                              "The found parasite",
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-parasite-attach
@@ -860,6 +873,7 @@ register_parasite_procs (Gimp *gimp)
                                                          "The parasite to attach to a vectors object",
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-parasite-detach
@@ -889,6 +903,7 @@ register_parasite_procs (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-parasite-list
@@ -922,5 +937,6 @@ register_parasite_procs (Gimp *gimp)
                                                                  "The names of currently attached parasites",
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

@@ -253,6 +253,7 @@ register_brushes_procs (Gimp *gimp)
                                      NULL);
 
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brushes-get-list
@@ -287,6 +288,7 @@ register_brushes_procs (Gimp *gimp)
                                                                  "The list of brush names",
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brushes-get-brush
@@ -328,6 +330,7 @@ register_brushes_procs (Gimp *gimp)
                                                           0, 1000, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brushes-get-spacing
@@ -350,6 +353,7 @@ register_brushes_procs (Gimp *gimp)
                                                           0, 1000, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brushes-set-spacing
@@ -372,6 +376,7 @@ register_brushes_procs (Gimp *gimp)
                                                       0, 1000, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-brushes-get-brush-data
@@ -444,5 +449,6 @@ register_brushes_procs (Gimp *gimp)
                                                                "The brush mask data",
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
 
 }

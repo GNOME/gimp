@@ -26,7 +26,7 @@
 struct _PlugInDef
 {
   gchar    *prog;
-  GSList   *proc_defs;
+  GSList   *procedures;
   gchar    *locale_domain_name;
   gchar    *locale_domain_path;
   gchar    *help_domain_name;
@@ -38,10 +38,11 @@ struct _PlugInDef
 
 
 PlugInDef * plug_in_def_new                    (const gchar         *prog);
-void        plug_in_def_free                   (PlugInDef           *plug_in_def,
-                                                gboolean             free_proc_defs);
+void        plug_in_def_free                   (PlugInDef           *plug_in_def);
 
 void        plug_in_def_add_procedure          (PlugInDef           *plug_in_def,
+                                                GimpPlugInProcedure *proc);
+void        plug_in_def_remove_procedure       (PlugInDef           *plug_in_def,
                                                 GimpPlugInProcedure *proc);
 
 void        plug_in_def_set_locale_domain_name (PlugInDef           *plug_in_def,
