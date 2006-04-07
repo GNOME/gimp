@@ -33,6 +33,7 @@
 
 #include "plug-in/plug-in.h"
 #include "plug-in/plug-ins.h"
+#define __YES_I_NEED_PLUG_IN_RUN__
 #include "plug-in/plug-in-run.h"
 
 #include "gimppluginprocedure.h"
@@ -47,6 +48,12 @@ static GValueArray * gimp_plug_in_procedure_execute    (GimpProcedure *procedure
                                                         GimpContext   *context,
                                                         GimpProgress  *progress,
                                                         GValueArray   *args);
+static void       gimp_plug_in_procedure_execute_async (GimpProcedure *procedure,
+                                                        Gimp          *gimp,
+                                                        GimpContext   *context,
+                                                        GimpProgress  *progress,
+                                                        GValueArray   *args,
+                                                        gint32         display_ID);
 
 const gchar * gimp_plug_in_procedure_real_get_progname (const GimpPlugInProcedure *procedure);
 
@@ -65,9 +72,10 @@ gimp_plug_in_procedure_class_init (GimpPlugInProcedureClass *klass)
 
   object_class->finalize = gimp_plug_in_procedure_finalize;
 
-  proc_class->execute    = gimp_plug_in_procedure_execute;
+  proc_class->execute       = gimp_plug_in_procedure_execute;
+  proc_class->execute_async = gimp_plug_in_procedure_execute_async;
 
-  klass->get_progname    = gimp_plug_in_procedure_real_get_progname;
+  klass->get_progname       = gimp_plug_in_procedure_real_get_progname;
 }
 
 static void
@@ -123,8 +131,22 @@ gimp_plug_in_procedure_execute (GimpProcedure *procedure,
                                                          context, progress,
                                                          args);
 
-  return plug_in_run (gimp, context, progress, procedure,
+  return plug_in_run (gimp, context, progress,
+                      GIMP_PLUG_IN_PROCEDURE (procedure),
                       args, TRUE, FALSE, -1);
+}
+
+static void
+gimp_plug_in_procedure_execute_async (GimpProcedure *procedure,
+                                      Gimp          *gimp,
+                                      GimpContext   *context,
+                                      GimpProgress  *progress,
+                                      GValueArray   *args,
+                                      gint32         display_ID)
+{
+  plug_in_run (gimp, context, progress,
+               GIMP_PLUG_IN_PROCEDURE (procedure),
+               args, FALSE, TRUE, display_ID);
 }
 
 const gchar *

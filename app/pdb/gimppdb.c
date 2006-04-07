@@ -39,8 +39,6 @@
 
 #include "vectors/gimpvectors.h"
 
-#include "plug-in/plug-in-run.h"
-
 #include "gimp-pdb.h"
 #include "gimpprocedure.h"
 #include "gimptemporaryprocedure.h" /* eek */

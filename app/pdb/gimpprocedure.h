@@ -69,11 +69,17 @@ struct _GimpProcedureClass
 {
   GimpObjectClass parent_class;
 
-  GValueArray * (* execute) (GimpProcedure *procedure,
-                             Gimp          *gimp,
-                             GimpContext   *context,
-                             GimpProgress  *progress,
-                             GValueArray   *args);
+  GValueArray * (* execute)       (GimpProcedure *procedure,
+                                   Gimp          *gimp,
+                                   GimpContext   *context,
+                                   GimpProgress  *progress,
+                                   GValueArray   *args);
+  void          (* execute_async) (GimpProcedure *procedure,
+                                   Gimp          *gimp,
+                                   GimpContext   *context,
+                                   GimpProgress  *progress,
+                                   GValueArray   *args,
+                                   gint32         display_ID);
 };
 
 
@@ -120,6 +126,12 @@ GValueArray   * gimp_procedure_execute            (GimpProcedure    *procedure,
                                                    GimpContext      *context,
                                                    GimpProgress     *progress,
                                                    GValueArray      *args);
+void            gimp_procedure_execute_async      (GimpProcedure    *procedure,
+                                                   Gimp             *gimp,
+                                                   GimpContext      *context,
+                                                   GimpProgress     *progress,
+                                                   GValueArray      *args,
+                                                   gint32            display_ID);
 
 
 #endif  /*  __GIMP_PROCEDURE_H__  */

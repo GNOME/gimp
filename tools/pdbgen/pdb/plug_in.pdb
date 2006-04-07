@@ -206,14 +206,6 @@ HELP
     {
       plug_ins_menu_branch_add (gimp, gimp->current_plug_in->prog,
                                 menu_path, menu_name);
-
-      if (! gimp->no_interface)
-        {
-          gimp_menus_create_branch (gimp, gimp->current_plug_in->prog,
-                                    menu_path, menu_name);
-        }
-      else
-        success = FALSE;
     }
   else
     success = FALSE;

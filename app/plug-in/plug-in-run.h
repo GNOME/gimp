@@ -21,17 +21,29 @@
 #ifndef __PLUG_IN_RUN_H__
 #define __PLUG_IN_RUN_H__
 
+#ifndef __YES_I_NEED_PLUG_IN_RUN__
+#error Don't use plug_in_run*(), use gimp_procedure_execute*() instead.
+#endif
+
 
 /*  Run a plug-in as if it were a procedure database procedure
  */
-GValueArray * plug_in_run (Gimp          *gimp,
-                           GimpContext   *context,
-                           GimpProgress  *progress,
-                           GimpProcedure *procedure,
-                           GValueArray   *args,
-                           gboolean       synchronous,
-                           gboolean       destroy_return_vals,
-                           gint           display_ID);
+GValueArray * plug_in_run      (Gimp                   *gimp,
+                                GimpContext            *context,
+                                GimpProgress           *progress,
+                                GimpPlugInProcedure    *procedure,
+                                GValueArray            *args,
+                                gboolean                synchronous,
+                                gboolean                destroy_return_vals,
+                                gint                    display_ID);
+
+/*  Run a temp plug-in proc as if it were a procedure database procedure
+ */
+GValueArray * plug_in_run_temp (Gimp                   *gimp,
+                                GimpContext            *context,
+                                GimpProgress           *progress,
+                                GimpTemporaryProcedure *procedure,
+                                GValueArray            *args);
 
 
 #endif /* __PLUG_IN_RUN_H__ */

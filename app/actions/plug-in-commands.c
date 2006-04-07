@@ -27,6 +27,7 @@
 #include "actions-types.h"
 
 #include "core/gimp.h"
+#include "core/gimp-utils.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
@@ -34,7 +35,6 @@
 #include "core/gimpprogress.h"
 
 #include "plug-in/plug-in-data.h"
-#include "plug-in/plug-in-run.h"
 
 #include "pdb/gimpprocedure.h"
 
@@ -121,11 +121,12 @@ plug_in_run_cmd_callback (GtkAction           *action,
       goto error;
     }
 
+  gimp_value_array_truncate (args, n_args);
+
   /* run the plug-in procedure */
-  plug_in_run (gimp, gimp_get_user_context (gimp),
-               GIMP_PROGRESS (display),
-               procedure, args, FALSE, TRUE,
-               display ? gimp_display_get_ID (display) : -1);
+  gimp_procedure_execute_async (procedure, gimp, gimp_get_user_context (gimp),
+                                GIMP_PROGRESS (display), args,
+                                display ? gimp_display_get_ID (display) : -1);
 
   /* remember only "standard" plug-ins */
   if (procedure->proc_type == GIMP_PLUGIN                 &&
@@ -173,10 +174,10 @@ plug_in_repeat_cmd_callback (GtkAction *action,
       gimp_value_set_drawable (&args->values[2], drawable);
 
       /* run the plug-in procedure */
-      plug_in_run (gimp, gimp_get_user_context (gimp),
-                   GIMP_PROGRESS (display),
-                   procedure, args, FALSE, TRUE,
-                   gimp_display_get_ID (display));
+      gimp_procedure_execute_async (procedure, gimp,
+                                    gimp_get_user_context (gimp),
+                                    GIMP_PROGRESS (display), args,
+                                    gimp_display_get_ID (display));
 
       g_value_array_free (args);
     }

@@ -60,6 +60,9 @@ GParameter  * gimp_parameters_append_valist (GType         object_type,
 void          gimp_parameters_free          (GParameter   *params,
                                              gint          n_params);
 
+void          gimp_value_array_truncate     (GValueArray  *args,
+                                             gint          n_values);
+
 gchar       * gimp_get_temp_filename        (Gimp         *gimp,
                                              const gchar  *extension);
 

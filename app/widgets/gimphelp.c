@@ -40,7 +40,6 @@
 #include "pdb/gimpprocedure.h"
 
 #include "plug-in/plug-ins.h"
-#include "plug-in/plug-in-run.h"
 
 #include "gimphelp.h"
 #include "gimphelp-ids.h"
@@ -195,11 +194,13 @@ gimp_help_browser (Gimp *gimp)
 	}
 
       args = gimp_procedure_get_arguments (procedure);
+      gimp_value_array_truncate (args, 1);
 
       g_value_set_enum (&args->values[0], GIMP_RUN_INTERACTIVE);
 
-      plug_in_run (gimp, gimp_get_user_context (gimp), NULL, procedure,
-                   args, FALSE, TRUE, -1);
+      gimp_procedure_execute_async (procedure, gimp,
+                                    gimp_get_user_context (gimp),
+                                    NULL, args, -1);
 
       g_value_array_free (args);
     }
@@ -280,14 +281,16 @@ gimp_help_call (Gimp        *gimp,
       n_domains = plug_ins_help_domains (gimp, &help_domains, &help_uris);
 
       args = gimp_procedure_get_arguments (procedure);
+      gimp_value_array_truncate (args, 4);
 
       g_value_set_int     (&args->values[0], n_domains);
       g_value_set_pointer (&args->values[1], help_domains);
       g_value_set_int     (&args->values[2], n_domains);
       g_value_set_pointer (&args->values[3], help_uris);
 
-      plug_in_run (gimp, gimp_get_user_context (gimp), NULL, procedure,
-                   args, FALSE, TRUE, -1);
+      gimp_procedure_execute_async (procedure, gimp,
+                                    gimp_get_user_context (gimp),
+                                    NULL, args, -1);
 
       g_value_array_free (args);
     }

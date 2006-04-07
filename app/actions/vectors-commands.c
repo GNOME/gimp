@@ -43,8 +43,6 @@
 #include "pdb/gimp-pdb.h"
 #include "pdb/gimpprocedure.h"
 
-#include "plug-in/plug-in-run.h"
-
 #include "vectors/gimpvectors.h"
 #include "vectors/gimpvectors-export.h"
 #include "vectors/gimpvectors-import.h"
@@ -331,15 +329,16 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
 
   /*  plug-in arguments as if called by <Image>/Filters/...  */
   args = gimp_procedure_get_arguments (procedure);
+  gimp_value_array_truncate (args, 3);
 
   g_value_set_int         (&args->values[0], GIMP_RUN_INTERACTIVE);
   gimp_value_set_image    (&args->values[1], image);
   gimp_value_set_drawable (&args->values[2], NULL /* unused */);
 
-  plug_in_run (image->gimp, action_data_get_context (data),
-               GIMP_PROGRESS (display),
-               procedure, args,
-               FALSE, TRUE, display ? gimp_display_get_ID (display) : 0);
+  gimp_procedure_execute_async (procedure, image->gimp,
+                                action_data_get_context (data),
+                                GIMP_PROGRESS (display), args,
+                                display ? gimp_display_get_ID (display) : 0);
 
   g_value_array_free (args);
 }

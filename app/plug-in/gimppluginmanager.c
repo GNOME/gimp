@@ -48,7 +48,6 @@
 #include "plug-in-params.h"
 #include "plug-in-progress.h"
 #include "plug-in-rc.h"
-#include "plug-in-run.h"
 
 #include "gimp-intl.h"
 
@@ -355,8 +354,8 @@ plug_ins_init (Gimp               *gimp,
 
           args = g_value_array_new (0);
 
-	  plug_in_run (gimp, context, NULL, GIMP_PROCEDURE (proc),
-                       args, FALSE, TRUE, -1);
+	  gimp_procedure_execute_async (GIMP_PROCEDURE (proc),
+                                        gimp, context, NULL, args, -1);
 
           g_value_array_free (args);
 	}
@@ -656,6 +655,9 @@ plug_ins_menu_branch_add (Gimp        *gimp,
   g_return_if_fail (prog_name != NULL);
   g_return_if_fail (menu_path != NULL);
   g_return_if_fail (menu_label != NULL);
+
+  if (! gimp->no_interface)
+    gimp_menus_create_branch (gimp, prog_name, menu_path, menu_label);
 
   branch = g_new (PlugInMenuBranch, 1);
 

@@ -40,31 +40,24 @@
 
 #include "plug-in.h"
 #include "plug-in-params.h"
+#define __YES_I_NEED_PLUG_IN_RUN__
 #include "plug-in-run.h"
 #include "plug-in-shm.h"
 
 #include "gimp-intl.h"
 
 
-/*  local function prototypes  */
-
-static GValueArray * plug_in_temp_run (GimpProcedure *procedure,
-                                       GimpContext   *context,
-                                       GimpProgress  *progress,
-                                       GValueArray   *args);
-
-
 /*  public functions  */
 
 GValueArray *
-plug_in_run (Gimp          *gimp,
-             GimpContext   *context,
-             GimpProgress  *progress,
-             GimpProcedure *procedure,
-	     GValueArray   *args,
-	     gboolean       synchronous,
-	     gboolean       destroy_return_vals,
-	     gint           display_ID)
+plug_in_run (Gimp                *gimp,
+             GimpContext         *context,
+             GimpProgress        *progress,
+             GimpPlugInProcedure *procedure,
+	     GValueArray         *args,
+	     gboolean             synchronous,
+	     gboolean             destroy_return_vals,
+	     gint                 display_ID)
 {
   GValueArray *return_vals = NULL;
   PlugIn      *plug_in;
@@ -72,17 +65,11 @@ plug_in_run (Gimp          *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
-  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (args != NULL, NULL);
 
-  if (procedure->proc_type == GIMP_TEMPORARY)
-    {
-      return_vals = plug_in_temp_run (procedure, context, progress, args);
-      goto done;
-    }
-
-  plug_in = plug_in_new (gimp, context, progress, procedure,
-                         GIMP_PLUG_IN_PROCEDURE (procedure)->prog);
+  plug_in = plug_in_new (gimp, context, progress, GIMP_PROCEDURE (procedure),
+                         procedure->prog);
 
   if (plug_in)
     {
@@ -121,7 +108,7 @@ plug_in_run (Gimp          *gimp,
                                                        display_ID, &monitor);
       config.monitor_number   = monitor;
 
-      proc_run.name    = procedure->original_name;
+      proc_run.name    = GIMP_PROCEDURE (procedure)->original_name;
       proc_run.nparams = args->n_values;
       proc_run.params  = plug_in_args_to_params (args, FALSE);
 
@@ -132,7 +119,8 @@ plug_in_run (Gimp          *gimp,
           g_free (config.display_name);
           plug_in_params_destroy (proc_run.params, proc_run.nparams, FALSE);
 
-          return_vals = gimp_procedure_get_return_values (procedure, FALSE);
+          return_vals =
+            gimp_procedure_get_return_values (GIMP_PROCEDURE (procedure), FALSE);
 
           goto done;
         }
@@ -145,7 +133,7 @@ plug_in_run (Gimp          *gimp,
       /* If this is an extension,
        * wait for an installation-confirmation message
        */
-      if (procedure->proc_type == GIMP_EXTENSION)
+      if (GIMP_PROCEDURE (procedure)->proc_type == GIMP_EXTENSION)
         {
           plug_in->ext_main_loop = g_main_loop_new (NULL, FALSE);
 
@@ -193,19 +181,23 @@ plug_in_run (Gimp          *gimp,
   return return_vals;
 }
 
-
-/*  private functions  */
-
-static GValueArray *
-plug_in_temp_run (GimpProcedure *procedure,
-                  GimpContext   *context,
-                  GimpProgress  *progress,
-		  GValueArray   *args)
+GValueArray *
+plug_in_run_temp (Gimp                   *gimp,
+                  GimpContext            *context,
+                  GimpProgress           *progress,
+                  GimpTemporaryProcedure *procedure,
+		  GValueArray            *args)
 {
   GValueArray *return_vals = NULL;
   PlugIn      *plug_in;
 
-  plug_in = GIMP_TEMPORARY_PROCEDURE (procedure)->plug_in;
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (GIMP_IS_TEMPORARY_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (args != NULL, NULL);
+
+  plug_in = procedure->plug_in;
 
   if (plug_in)
     {
@@ -213,9 +205,9 @@ plug_in_temp_run (GimpProcedure *procedure,
       GPProcRun        proc_run;
 
       proc_frame = plug_in_proc_frame_push (plug_in, context, progress,
-                                            procedure);
+                                            GIMP_PROCEDURE (procedure));
 
-      proc_run.name    = procedure->original_name;
+      proc_run.name    = GIMP_PROCEDURE (procedure)->original_name;
       proc_run.nparams = args->n_values;
       proc_run.params  = plug_in_args_to_params (args, FALSE);
 
@@ -225,7 +217,8 @@ plug_in_temp_run (GimpProcedure *procedure,
           plug_in_params_destroy (proc_run.params, proc_run.nparams, FALSE);
           plug_in_proc_frame_pop (plug_in);
 
-	  return_vals = gimp_procedure_get_return_values (procedure, FALSE);
+	  return_vals =
+            gimp_procedure_get_return_values (GIMP_PROCEDURE (procedure), FALSE);
 
 	  goto done;
 	}

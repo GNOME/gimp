@@ -1,5 +1,40 @@
 2006-04-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/plug-in-run.[ch]: made plug_in_run_temp() public and
+	changed its parameters to match the ones of plug_in_run().
+
+	* app/pdb/gimpprocedure.[ch]: added GimpProcedure::execute_async()
+	which takes an additional display_ID parameter and returns nothing.
+
+	* app/pdb/gimppluginprocedure.c
+	* app/pdb/gimptemporaryprocedure.c: implement it, using
+	plug_in_run() and plug_in_run_temp().
+
+	* app/core/gimp-utils.[ch]: added gimp_value_array_truncate()
+	which takes a GValueArray and the number of values to truncate the
+	array to.
+
+	* app/actions/plug-in-commands.c
+	* app/actions/vectors-commands.c
+	* app/pdb/gimp-pdb.c
+	* app/plug-in/plug-ins.c
+	* app/widgets/gimphelp.c: use gimp_procedure_execute_async()
+	instead of plug_in_run() and don't #include "plug-in-run.h".
+	Truncate GValueArray passed to plug-ins again, and don't just pass
+	some default values to the noninteractive args.
+
+	Unrelated:
+
+	* tools/pdbgen/pdb/plug_in.pdb: don't call
+	gimp_menus_create_branch() here.
+
+	* app/plug-in/plug-ins.c (plug_ins_menu_branch_add): call it here
+	instead.
+
+	* app/pdb/plug_in_cmds.c: regenerated.
+
+2006-04-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpobject.h: added "guint disconnected : 1", we
 	have enough space for flags now.
 
