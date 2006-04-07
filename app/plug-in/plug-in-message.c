@@ -41,19 +41,9 @@
 #include "pdb/gimptemporaryprocedure.h"
 
 #include "plug-in.h"
-#include "plug-ins.h"
 #include "plug-in-def.h"
 #include "plug-in-params.h"
 #include "plug-in-shm.h"
-
-
-typedef struct _PlugInBlocked PlugInBlocked;
-
-struct _PlugInBlocked
-{
-  PlugIn *plug_in;
-  gchar  *proc_name;
-};
 
 
 /*  local function prototypes  */
@@ -63,9 +53,6 @@ static void plug_in_handle_tile_req         (PlugIn          *plug_in,
                                              GPTileReq       *tile_req);
 static void plug_in_handle_proc_run         (PlugIn          *plug_in,
                                              GPProcRun       *proc_run);
-static void plug_in_handle_proc_return_priv (PlugIn          *plug_in,
-                                             GPProcReturn    *proc_return,
-                                             gboolean         temp_proc);
 static void plug_in_handle_proc_return      (PlugIn          *plug_in,
                                              GPProcReturn    *proc_return);
 static void plug_in_handle_temp_proc_return (PlugIn          *plug_in,
@@ -76,11 +63,6 @@ static void plug_in_handle_proc_uninstall   (PlugIn          *plug_in,
                                              GPProcUninstall *proc_uninstall);
 static void plug_in_handle_extension_ack    (PlugIn          *plug_in);
 static void plug_in_handle_has_init         (PlugIn          *plug_in);
-
-
-/*  private variables  */
-
-static GSList *blocked_plug_ins = NULL;
 
 
 /*  public functions  */
@@ -223,7 +205,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
       drawable = (GimpDrawable *) gimp_item_get_by_ID (plug_in->gimp,
                                                        tile_info->drawable_ID);
 
-      if (! drawable)
+      if (! GIMP_IS_DRAWABLE (drawable))
 	{
           g_message ("Plug-In \"%s\"\n(%s)\n\n"
                      "requested invalid drawable (killing)",
@@ -276,7 +258,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
       drawable = (GimpDrawable *) gimp_item_get_by_ID (plug_in->gimp,
                                                        tile_req->drawable_ID);
 
-      if (! drawable)
+      if (! GIMP_IS_DRAWABLE (drawable))
 	{
           g_message ("Plug-In \"%s\"\n(%s)\n\n"
                      "requested invalid drawable (killing)",
@@ -355,6 +337,7 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
   GimpProcedure   *procedure;
   GValueArray     *args          = NULL;
   GValueArray     *return_vals   = NULL;
+  GPProcReturn     proc_return;
 
   canonical = gimp_canonicalize_identifier (proc_run->name);
 
@@ -418,11 +401,10 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
                                    proc_run->params, proc_run->nparams,
                                    FALSE, FALSE);
 
-  plug_in_push (plug_in->gimp, plug_in);
-
   /*  Execute the procedure even if gimp_pdb_lookup() returned NULL,
    *  gimp_pdb_execute() will return appropriate error return_vals.
    */
+  plug_in_push (plug_in->gimp, plug_in);
   return_vals = gimp_pdb_execute (plug_in->gimp,
                                   proc_frame->context_stack ?
                                   proc_frame->context_stack->data :
@@ -430,111 +412,45 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
                                   proc_frame->progress,
                                   proc_name,
                                   args);
-
   plug_in_pop (plug_in->gimp);
 
   g_free (canonical);
 
-  if (return_vals)
+  /*  Return the name we got called with, *not* proc_name or canonical,
+   *  since proc_name may have been remapped by gimp->procedural_compat_ht
+   *  and canonical may be different too.
+   */
+  proc_return.name    = proc_run->name;
+  proc_return.nparams = return_vals->n_values;
+  proc_return.params  = plug_in_args_to_params (return_vals, FALSE);
+
+  if (! gp_proc_return_write (plug_in->my_write, &proc_return, plug_in))
     {
-      GPProcReturn proc_return;
-
-      /*  Return the name we got called with, *not* proc_name or canonical,
-       *  since proc_name may have been remapped by gimp->procedural_compat_ht
-       *  and canonical may be different too.
-       */
-      proc_return.name    = proc_run->name;
-      proc_return.nparams = return_vals->n_values;
-      proc_return.params  = plug_in_args_to_params (return_vals, FALSE);
-
-      if (! gp_proc_return_write (plug_in->my_write, &proc_return, plug_in))
-	{
-	  g_warning ("plug_in_handle_proc_run: ERROR");
-	  plug_in_close (plug_in, TRUE);
-	  return;
-	}
-
-      g_value_array_free (args);
-      g_value_array_free (return_vals);
-      plug_in_params_destroy (proc_return.params, proc_return.nparams, FALSE);
+      g_warning ("plug_in_handle_proc_run: ERROR");
+      plug_in_close (plug_in, TRUE);
     }
-  else
-    {
-      PlugInBlocked *blocked;
 
-      g_warning ("%s: EEEEEEEEEK! \n"
-                 "You managed to trigger a code path that \n"
-                 "should be dead. Please report this to bugs.gimp.org.",
-                 G_STRFUNC);
-
-      blocked = g_new0 (PlugInBlocked, 1);
-
-      blocked->plug_in   = plug_in;
-      blocked->proc_name = g_strdup (proc_run->name);
-
-      blocked_plug_ins = g_slist_prepend (blocked_plug_ins, blocked);
-    }
-}
-
-static void
-plug_in_handle_proc_return_priv (PlugIn       *plug_in,
-                                 GPProcReturn *proc_return,
-                                 gboolean      temp_proc)
-{
-  PlugInProcFrame *proc_frame;
-
-  if (temp_proc)
-    proc_frame = plug_in->temp_proc_frames->data;
-  else
-    proc_frame = &plug_in->main_proc_frame;
-
-  if (proc_frame->main_loop)
-    {
-      proc_frame->return_vals = plug_in_params_to_args (proc_frame->procedure->values,
-                                                        proc_frame->procedure->num_values,
-                                                        proc_return->params,
-                                                        proc_return->nparams,
-                                                        TRUE, TRUE);
-    }
-  else
-    {
-      GSList *list;
-
-      for (list = blocked_plug_ins; list; list = g_slist_next (list))
-	{
-          PlugInBlocked *blocked;
-
-	  blocked = (PlugInBlocked *) list->data;
-
-	  if (blocked->proc_name && proc_return->name &&
-	      strcmp (blocked->proc_name, proc_return->name) == 0)
-	    {
-	      if (! gp_proc_return_write (blocked->plug_in->my_write,
-                                          proc_return,
-                                          blocked->plug_in))
-		{
-		  g_message ("plug_in_handle_proc_run: ERROR");
-		  plug_in_close (blocked->plug_in, TRUE);
-		  return;
-		}
-
-	      blocked_plug_ins = g_slist_remove (blocked_plug_ins, blocked);
-	      g_free (blocked->proc_name);
-	      g_free (blocked);
-	      break;
-	    }
-	}
-    }
+  g_value_array_free (args);
+  g_value_array_free (return_vals);
+  plug_in_params_destroy (proc_return.params, proc_return.nparams, FALSE);
 }
 
 static void
 plug_in_handle_proc_return (PlugIn       *plug_in,
                             GPProcReturn *proc_return)
 {
-  plug_in_handle_proc_return_priv (plug_in, proc_return, FALSE);
+  PlugInProcFrame *proc_frame = &plug_in->main_proc_frame;
 
-  if (plug_in->main_proc_frame.main_loop)
-    g_main_loop_quit (plug_in->main_proc_frame.main_loop);
+  if (proc_frame->main_loop)
+    proc_frame->return_vals =
+      plug_in_params_to_args (proc_frame->procedure->values,
+                              proc_frame->procedure->num_values,
+                              proc_return->params,
+                              proc_return->nparams,
+                              TRUE, TRUE);
+
+  if (proc_frame->main_loop)
+    g_main_loop_quit (proc_frame->main_loop);
 
   plug_in_close (plug_in, FALSE);
 }
@@ -545,7 +461,14 @@ plug_in_handle_temp_proc_return (PlugIn       *plug_in,
 {
   if (plug_in->temp_proc_frames)
     {
-      plug_in_handle_proc_return_priv (plug_in, proc_return, TRUE);
+      PlugInProcFrame *proc_frame = plug_in->temp_proc_frames->data;
+
+      proc_frame->return_vals =
+        plug_in_params_to_args (proc_frame->procedure->values,
+                                proc_frame->procedure->num_values,
+                                proc_return->params,
+                                proc_return->nparams,
+                                TRUE, TRUE);
 
       plug_in_main_loop_quit (plug_in);
       plug_in_proc_frame_pop (plug_in);
@@ -565,7 +488,6 @@ static void
 plug_in_handle_proc_install (PlugIn        *plug_in,
                              GPProcInstall *proc_install)
 {
-  PlugInDef           *plug_in_def = NULL;
   GimpPlugInProcedure *proc        = NULL;
   GimpProcedure       *procedure   = NULL;
   gchar               *canonical;
@@ -642,26 +564,23 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
       return;
     }
 
-  /*  Initialization  */
+  /*  Create the procedure object  */
 
   switch (proc_install->type)
     {
     case GIMP_PLUGIN:
     case GIMP_EXTENSION:
-      plug_in_def = plug_in->plug_in_def;
-
-      proc = gimp_plug_in_procedure_find (plug_in_def->procedures, canonical);
+      proc = gimp_plug_in_procedure_find (plug_in->plug_in_def->procedures,
+                                          canonical);
 
       if (proc)
-        plug_in_def_remove_procedure (plug_in_def, proc);
+        plug_in_def_remove_procedure (plug_in->plug_in_def, proc);
 
       procedure = gimp_plug_in_procedure_new (proc_install->type,
                                               plug_in->prog);
       break;
 
     case GIMP_TEMPORARY:
-      plug_in_def = NULL;
-
       proc = gimp_plug_in_procedure_find (plug_in->temp_procedures, canonical);
 
       if (proc)
@@ -750,7 +669,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
     {
     case GIMP_PLUGIN:
     case GIMP_EXTENSION:
-      plug_in_def_add_procedure (plug_in_def, proc);
+      plug_in_def_add_procedure (plug_in->plug_in_def, proc);
       break;
 
     case GIMP_TEMPORARY:

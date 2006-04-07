@@ -1,5 +1,22 @@
 2006-04-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/plug-in-message.c (plug_in_handle_proc_run)
+	(plug_in_handle_proc_return_priv): removed PlugInBlocked cruft,
+	it was probably unused since ages.
+
+	(plug_in_handle_proc_return_priv): removed...
+
+	(plug_in_handle_proc_return)
+	(plug_in_handle_temp_proc_return): ...and added its only remaining
+	function call here.
+
+	(plug_in_handle_tile_req): check if the requested drawable ID
+	is really a drawable (not a vectors or...)
+
+	(plug_in_handle_proc_install): cleanup.
+
+2006-04-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/plug-in-run.[ch]: made plug_in_run_temp() public and
 	changed its parameters to match the ones of plug_in_run().
 
