@@ -694,7 +694,7 @@ gimp_selection_extract (GimpChannel  *selection,
 			 FALSE);
 
       extract_from_region (&srcPR, &destPR, &maskPR,
-			   gimp_drawable_cmap (drawable),
+			   gimp_drawable_get_colormap (drawable),
 			   bg_color, base_type, cut_image);
 
       if (cut_image)
@@ -711,7 +711,7 @@ gimp_selection_extract (GimpChannel  *selection,
       /*  If the layer is indexed...we need to extract pixels  */
       if (base_type == GIMP_INDEXED && !keep_indexed)
 	extract_from_region (&srcPR, &destPR, NULL,
-			     gimp_drawable_cmap (drawable),
+			     gimp_drawable_get_colormap (drawable),
 			     bg_color, base_type, FALSE);
       /*  If the layer doesn't have an alpha channel, add one  */
       else if (bytes > srcPR.bytes)

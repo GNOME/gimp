@@ -453,15 +453,15 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
                                  gfloat        v2,
                                  gint          y)
 {
-  TileManager *tiles;
-  guchar      *pptr;
-  guchar       bytes;
-  gfloat       u, v;
-  gfloat       du, dv;
-  gint         dx;
-  guchar       pixel [4];
-  guchar      *cmap;
-  gint         offset;
+  TileManager  *tiles;
+  guchar       *pptr;
+  guchar        bytes;
+  gfloat        u, v;
+  gfloat        du, dv;
+  gint          dx;
+  guchar        pixel [4];
+  const guchar *cmap;
+  gint          offset;
 
   if (! (x2 - x1))
     return;
@@ -513,7 +513,7 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
   switch (gimp_drawable_type (texture))
     {
     case GIMP_INDEXED_IMAGE:
-      cmap = gimp_drawable_cmap (texture);
+      cmap = gimp_drawable_get_colormap (texture);
 
       while (dx --)
         {
@@ -531,7 +531,7 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
       break;
 
     case GIMP_INDEXEDA_IMAGE:
-      cmap = gimp_drawable_cmap (texture);
+      cmap = gimp_drawable_get_colormap (texture);
 
       while (dx --)
         {
@@ -613,16 +613,16 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
                                       gfloat        v2,
                                       gint          y)
 {
-  TileManager *tiles, *masktiles;
-  guchar      *pptr;
-  guchar       bytes, alpha;
-  gfloat       u, v;
-  gfloat       mu, mv;
-  gfloat       du, dv;
-  gint         dx;
-  guchar       pixel [4], maskval;
-  guchar      *cmap;
-  gint         offset;
+  TileManager  *tiles, *masktiles;
+  guchar       *pptr;
+  guchar        bytes, alpha;
+  gfloat        u, v;
+  gfloat        mu, mv;
+  gfloat        du, dv;
+  gint          dx;
+  guchar        pixel [4], maskval;
+  const guchar *cmap;
+  gint          offset;
 
   if (! (x2 - x1))
     return;
@@ -676,7 +676,7 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
   switch (gimp_drawable_type (texture))
     {
     case GIMP_INDEXED_IMAGE:
-      cmap = gimp_drawable_cmap (texture);
+      cmap = gimp_drawable_get_colormap (texture);
 
       while (dx --)
         {
@@ -698,7 +698,7 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
       break;
 
     case GIMP_INDEXEDA_IMAGE:
-      cmap = gimp_drawable_cmap (texture);
+      cmap = gimp_drawable_get_colormap (texture);
 
       while (dx --)
         {

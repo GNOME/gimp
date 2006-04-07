@@ -1,9 +1,19 @@
 2006-04-07  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdrawable.[ch]: renamed gimp_drawable_cmap() to
+	gimp_drawable_get_colormap() and let it return a const array.
+
+	* app/core/gimpdrawable-convert.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpselection.c
+	* app/display/gimpdisplayshell-preview.c: changed accordingly.
+
+2006-04-07  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdrawable.[ch]: renamed gimp_drawable_data() to
 	gimp_drawable_get_tiles().
 
-	[lots of files]: changed accordingly.
+	* app/[lots of files]: changed accordingly.
 
 2006-04-07  Michael Natterer  <mitch@gimp.org>
 

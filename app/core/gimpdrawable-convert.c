@@ -53,7 +53,7 @@ gimp_drawable_convert_rgb (GimpDrawable      *drawable,
 
   g_return_if_fail (tile_manager_bpp (new_tiles) == (has_alpha ? 4 : 3));
 
-  cmap = gimp_drawable_cmap (drawable);
+  cmap = gimp_drawable_get_colormap (drawable);
 
   pixel_region_init (&srcPR, drawable->tiles,
                      0, 0,
@@ -157,7 +157,7 @@ gimp_drawable_convert_grayscale (GimpDrawable      *drawable,
 
   g_return_if_fail (tile_manager_bpp (new_tiles) == (has_alpha ? 2 : 1));
 
-  cmap = gimp_drawable_cmap (drawable);
+  cmap = gimp_drawable_get_colormap (drawable);
 
   pixel_region_init (&srcPR, drawable->tiles,
                      0, 0,

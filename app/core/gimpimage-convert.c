@@ -570,8 +570,8 @@ typedef struct
 static int
 mapping_compare (const void *a, const void *b)
 {
-  palentryStruct *m1 = (palentryStruct*)a;
-  palentryStruct *m2 = (palentryStruct*)b;
+  palentryStruct *m1 = (palentryStruct *) a;
+  palentryStruct *m2 = (palentryStruct *) b;
 
   return (m2->used_count - m1->used_count);
 }
@@ -745,8 +745,8 @@ static int
 color_quicksort (const void *c1,
                  const void *c2)
 {
-  Color *color1 = (Color *)c1;
-  Color *color2 = (Color *)c2;
+  Color *color1 = (Color *) c1;
+  Color *color2 = (Color *) c2;
 
   double v1 = GIMP_RGB_LUMINANCE (color1->red, color1->green, color1->blue);
   double v2 = GIMP_RGB_LUMINANCE (color2->red, color2->green, color2->blue);
@@ -880,7 +880,7 @@ gimp_image_convert (GimpImage              *image,
                list;
                list = g_list_next (list), nth_layer++)
             {
-              layer = (GimpLayer *) list->data;
+              layer = list->data;
 
               if (old_type == GIMP_GRAY)
                 generate_histogram_gray (quantobj->histogram,
@@ -2718,14 +2718,15 @@ custompal_pass1 (QuantizeObj *quantobj)
   GimpPaletteEntry *entry;
   guchar            r, g, b;
 
-  /* fprintf(stderr, "custompal_pass1: using (theCustomPalette %s) from (file %s)\n",
-                         theCustomPalette->name, theCustomPalette->filename); */
+  /* fprintf(stderr,
+             "custompal_pass1: using (theCustomPalette %s) from (file %s)\n",
+             theCustomPalette->name, theCustomPalette->filename); */
 
   for (i = 0, list = theCustomPalette->colors;
        list;
        i++, list = g_list_next (list))
     {
-      entry = (GimpPaletteEntry *) list->data;
+      entry = list->data;
 
       gimp_rgb_get_uchar (&entry->color, &r, &g, &b);
 
@@ -2733,6 +2734,7 @@ custompal_pass1 (QuantizeObj *quantobj)
       quantobj->cmap[i].green = (gint) g;
       quantobj->cmap[i].blue  = (gint) b;
     }
+
   quantobj -> actual_number_of_colors = i;
 }
 

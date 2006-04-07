@@ -1403,7 +1403,7 @@ gimp_drawable_has_floating_sel (const GimpDrawable *drawable)
 }
 
 const guchar *
-gimp_drawable_cmap (const GimpDrawable *drawable)
+gimp_drawable_get_colormap (const GimpDrawable *drawable)
 {
   GimpImage *image;
 

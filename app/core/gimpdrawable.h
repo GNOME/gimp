@@ -213,7 +213,7 @@ gint            gimp_drawable_bytes_without_alpha(const GimpDrawable *drawable);
 
 gboolean        gimp_drawable_has_floating_sel   (const GimpDrawable *drawable);
 
-const guchar  * gimp_drawable_cmap               (const GimpDrawable *drawable);
+const guchar  * gimp_drawable_get_colormap       (const GimpDrawable *drawable);
 
 
 #endif /* __GIMP_DRAWABLE_H__ */
