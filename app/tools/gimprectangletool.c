@@ -825,7 +825,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
               x1 = max_x - width;
             }
         }
-      else if (fixed_center)
+      else if (fixed_center || state & GDK_CONTROL_MASK)
         {
           x2 = x1 + 2 * (center_x - x1);
           if (x1 < 0)
@@ -864,7 +864,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
               x2 = width;
             }
         }
-      else if (fixed_center)
+      else if (fixed_center || state & GDK_CONTROL_MASK)
         {
           x1 = x2 - 2 * (x2 - center_x);
           if (x2 > max_x)
@@ -922,7 +922,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
               y1 = max_y - height;
             }
         }
-      else if (fixed_center)
+      else if (fixed_center || state & GDK_CONTROL_MASK)
         {
           y2 = y1 + 2 * (center_y - y1);
           if (y1 < 0)
@@ -961,7 +961,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
               y2 = height;
             }
         }
-      else if (fixed_center)
+      else if (fixed_center || state & GDK_CONTROL_MASK)
         {
           y1 = y2 - 2 * (y2 - center_y);
           if (y2 > max_y)

@@ -1,3 +1,8 @@
+2006-04-08  Karine Delvare  <edhel@gimp.org>
+
+	* app/tools/gimprectangletool.c: center constraint with control
+	key.
+
 2006-04-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in-message.c (plug_in_handle_proc_run)
