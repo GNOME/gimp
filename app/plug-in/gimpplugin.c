@@ -860,17 +860,11 @@ plug_in_push (Gimp   *gimp,
 void
 plug_in_pop (Gimp *gimp)
 {
-  GSList *tmp;
-
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   if (gimp->current_plug_in)
-    {
-      tmp = gimp->plug_in_stack;
-      gimp->plug_in_stack = gimp->plug_in_stack->next;
-      tmp->next = NULL;
-      g_slist_free (tmp);
-    }
+    gimp->plug_in_stack = g_slist_remove (gimp->plug_in_stack,
+                                          gimp->plug_in_stack->data);
 
   if (gimp->plug_in_stack)
     gimp->current_plug_in = gimp->plug_in_stack->data;
@@ -1073,8 +1067,7 @@ plug_in_menu_register (PlugIn      *plug_in,
 
   proc->menu_paths = g_list_append (proc->menu_paths, g_strdup (menu_path));
 
-  if (GIMP_PROCEDURE (proc)->proc_type == GIMP_TEMPORARY &&
-      ! plug_in->gimp->no_interface)
+  if (GIMP_IS_TEMPORARY_PROCEDURE (proc) && ! plug_in->gimp->no_interface)
     {
       gimp_menus_create_item (plug_in->gimp, proc, menu_path);
     }

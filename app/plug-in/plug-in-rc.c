@@ -225,20 +225,20 @@ static GTokenType
 plug_in_def_deserialize (Gimp     *gimp,
                          GScanner *scanner)
 {
-  gchar               *name;
   PlugInDef           *plug_in_def;
   GimpPlugInProcedure *proc = NULL;
+  gchar               *name;
   GTokenType           token;
 
   if (! gimp_scanner_parse_string (scanner, &name))
     return G_TOKEN_STRING;
 
   plug_in_def = plug_in_def_new (name);
+  g_free (name);
 
   if (! gimp_scanner_parse_int (scanner, (gint *) &plug_in_def->mtime))
     {
       plug_in_def_free (plug_in_def);
-      g_free (name);
       return G_TOKEN_INT;
     }
 
@@ -258,7 +258,9 @@ plug_in_def_deserialize (Gimp     *gimp,
           switch (GPOINTER_TO_INT (scanner->value.v_symbol))
             {
             case PROC_DEF:
-              token = plug_in_procedure_deserialize (scanner, gimp, name, &proc);
+              token = plug_in_procedure_deserialize (scanner, gimp,
+                                                     plug_in_def->prog,
+                                                     &proc);
 
               if (token == G_TOKEN_LEFT_PAREN)
                 plug_in_def_add_procedure (plug_in_def, proc);
@@ -292,8 +294,6 @@ plug_in_def_deserialize (Gimp     *gimp,
           break;
         }
     }
-
-  g_free (name);
 
   if (token == G_TOKEN_LEFT_PAREN)
     {
@@ -358,7 +358,7 @@ plug_in_procedure_deserialize (GScanner             *scanner,
     return G_TOKEN_STRING;
 
   if (! gimp_scanner_parse_int (scanner, &n_menu_paths))
-    return G_TOKEN_STRING;
+    return G_TOKEN_INT;
 
   for (i = 0; i < n_menu_paths; i++)
     {

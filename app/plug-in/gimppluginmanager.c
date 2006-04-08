@@ -171,20 +171,20 @@ plug_ins_init (Gimp               *gimp,
         {
           PlugInDef *plug_in_def = list->data;
 
-          if (! plug_in_def->needs_query)
-            continue;
+          if (plug_in_def->needs_query)
+            {
+              basename = g_filename_display_basename (plug_in_def->prog);
+              status_callback (NULL, basename,
+                               (gdouble) nth++ / (gdouble) n_plugins);
+              g_free (basename);
 
-          basename = g_filename_display_basename (plug_in_def->prog);
-          status_callback (NULL, basename,
-			   (gdouble) nth++ / (gdouble) n_plugins);
-          g_free (basename);
+              if (gimp->be_verbose)
+                g_print (_("Querying plug-in: '%s'\n"),
+                         gimp_filename_to_utf8 (plug_in_def->prog));
 
-	  if (gimp->be_verbose)
-	    g_print (_("Querying plug-in: '%s'\n"),
-		     gimp_filename_to_utf8 (plug_in_def->prog));
-
-	  plug_in_call_query (gimp, context, plug_in_def);
-	}
+              plug_in_call_query (gimp, context, plug_in_def);
+            }
+        }
     }
 
   /* initialize the plug-ins */
@@ -204,25 +204,25 @@ plug_ins_init (Gimp               *gimp,
         {
           PlugInDef *plug_in_def = list->data;
 
-          if (! plug_in_def->has_init)
-            continue;
+          if (plug_in_def->has_init)
+            {
+              basename = g_filename_display_basename (plug_in_def->prog);
+              status_callback (NULL, basename,
+                               (gdouble) nth++ / (gdouble) n_plugins);
+              g_free (basename);
 
-          basename = g_filename_display_basename (plug_in_def->prog);
-          status_callback (NULL, basename,
-			   (gdouble) nth++ / (gdouble) n_plugins);
-          g_free (basename);
+              if (gimp->be_verbose)
+                g_print (_("Initializing plug-in: '%s'\n"),
+                         gimp_filename_to_utf8 (plug_in_def->prog));
 
-          if (gimp->be_verbose)
-            g_print (_("Initializing plug-in: '%s'\n"),
-                     gimp_filename_to_utf8 (plug_in_def->prog));
-
-          plug_in_call_init (gimp, context, plug_in_def);
+              plug_in_call_init (gimp, context, plug_in_def);
+            }
         }
     }
 
   status_callback (NULL, "", 1.0);
 
-  /* insert the proc defs */
+  /* insert the procedures */
   for (list = gimp->plug_in_defs; list; list = list->next)
     {
       PlugInDef *plug_in_def = list->data;

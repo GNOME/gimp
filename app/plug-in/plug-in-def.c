@@ -132,9 +132,18 @@ void
 plug_in_def_set_mtime (PlugInDef *plug_in_def,
                        time_t     mtime)
 {
+  GSList *list;
+
   g_return_if_fail (plug_in_def != NULL);
 
   plug_in_def->mtime = mtime;
+
+  for (list = plug_in_def->procedures; list; list = g_slist_next (list))
+    {
+      GimpPlugInProcedure *proc = list->data;
+
+      proc->mtime = plug_in_def->mtime;
+    }
 }
 
 void
