@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * plug-ins-locale.c
+ * plug-in-locale-domain.c
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 
 #include "core/gimp.h"
 
-#include "plug-ins-locale.h"
+#include "plug-in-locale-domain.h"
 
 
 typedef struct _PlugInLocaleDomain PlugInLocaleDomain;
@@ -44,7 +44,7 @@ struct _PlugInLocaleDomain
 
 
 void
-plug_ins_locale_exit (Gimp *gimp)
+plug_in_locale_domain_exit (Gimp *gimp)
 {
   GSList *list;
 
@@ -65,10 +65,10 @@ plug_ins_locale_exit (Gimp *gimp)
 }
 
 void
-plug_ins_locale_domain_add (Gimp        *gimp,
-                            const gchar *prog_name,
-                            const gchar *domain_name,
-                            const gchar *domain_path)
+plug_in_locale_domain_add (Gimp        *gimp,
+                           const gchar *prog_name,
+                           const gchar *domain_name,
+                           const gchar *domain_path)
 {
   PlugInLocaleDomain *domain;
 
@@ -94,9 +94,9 @@ plug_ins_locale_domain_add (Gimp        *gimp,
 }
 
 const gchar *
-plug_ins_locale_domain (Gimp         *gimp,
-                        const gchar  *prog_name,
-                        const gchar **domain_path)
+plug_in_locale_domain (Gimp         *gimp,
+                       const gchar  *prog_name,
+                       const gchar **domain_path)
 {
   GSList *list;
 
@@ -123,11 +123,11 @@ plug_ins_locale_domain (Gimp         *gimp,
         }
     }
 
-  return plug_ins_standard_locale_domain ();
+  return plug_in_standard_locale_domain ();
 }
 
 const gchar *
-plug_ins_standard_locale_domain (void)
+plug_in_standard_locale_domain (void)
 {
   return GETTEXT_PACKAGE "-std-plug-ins";
 }

@@ -81,12 +81,12 @@
 #include "plug-in.h"
 #include "plug-in-debug.h"
 #include "plug-in-def.h"
+#include "plug-in-locale-domain.h"
 #include "plug-in-message.h"
 #include "plug-in-params.h"
 #include "plug-in-progress.h"
 #include "plug-in-shm.h"
 #include "plug-ins.h"
-#include "plug-ins-locale.h"
 
 #include "gimp-intl.h"
 
@@ -975,8 +975,8 @@ plug_in_get_undo_desc (PlugIn *plug_in)
 
   if (proc)
     {
-      const gchar *domain = plug_ins_locale_domain (plug_in->gimp,
-                                                    plug_in->prog, NULL);
+      const gchar *domain = plug_in_locale_domain (plug_in->gimp,
+                                                   plug_in->prog, NULL);
 
       undo_desc = gimp_plug_in_procedure_get_label (proc, domain);
     }

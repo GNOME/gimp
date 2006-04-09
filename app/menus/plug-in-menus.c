@@ -33,7 +33,7 @@
 #include "pdb/gimppluginprocedure.h"
 
 #include "plug-in/plug-in-def.h"
-#include "plug-in/plug-ins-locale.h"
+#include "plug-in/plug-in-locale-domain.h"
 
 #include "widgets/gimpuimanager.h"
 
@@ -92,9 +92,9 @@ plug_in_menus_init (Gimp        *gimp,
           const gchar *locale_path;
           GSList      *list;
 
-          locale_domain = plug_ins_locale_domain (gimp,
-                                                  plug_in_def->prog,
-                                                  &locale_path);
+          locale_domain = plug_in_locale_domain (gimp,
+                                                 plug_in_def->prog,
+                                                 &locale_path);
 
           for (list = domains; list; list = list->next)
             if (! strcmp (locale_domain, (const gchar *) list->data))
@@ -181,8 +181,8 @@ plug_in_menus_setup (GimpUIManager *manager,
 
                   progname = gimp_plug_in_procedure_get_progname (proc);
 
-                  locale_domain = plug_ins_locale_domain (manager->gimp,
-                                                          progname, NULL);
+                  locale_domain = plug_in_locale_domain (manager->gimp,
+                                                         progname, NULL);
 
                   if (proc->menu_label)
                     {

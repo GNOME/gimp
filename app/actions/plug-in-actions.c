@@ -35,9 +35,9 @@
 
 #include "pdb/gimppluginprocedure.h"
 
-#include "plug-in/plug-ins.h"
-#include "plug-in/plug-ins-help.h"
-#include "plug-in/plug-ins-locale.h"
+#include "plug-in/plug-in-help-domain.h"
+#include "plug-in/plug-in-locale-domain.h"
+#include "plug-in/plug-in-menu-branch.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
@@ -270,8 +270,8 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
 
   progname = gimp_plug_in_procedure_get_progname (proc);
 
-  locale_domain = plug_ins_locale_domain (group->gimp, progname, NULL);
-  help_domain   = plug_ins_help_domain (group->gimp, progname, NULL);
+  locale_domain = plug_in_locale_domain (group->gimp, progname, NULL);
+  help_domain   = plug_in_help_domain (group->gimp, progname, NULL);
 
   if (proc->menu_label)
     {
@@ -360,7 +360,7 @@ plug_in_actions_add_path (GimpActionGroup     *group,
 
   progname = gimp_plug_in_procedure_get_progname (proc);
 
-  locale_domain = plug_ins_locale_domain (group->gimp, progname, NULL);
+  locale_domain = plug_in_locale_domain (group->gimp, progname, NULL);
 
   path_translated = dgettext (locale_domain, menu_path);
 
@@ -409,7 +409,7 @@ plug_in_actions_add_branch (GimpActionGroup *group,
   g_return_if_fail (menu_path != NULL);
   g_return_if_fail (menu_label != NULL);
 
-  locale_domain = plug_ins_locale_domain (group->gimp, progname, NULL);
+  locale_domain = plug_in_locale_domain (group->gimp, progname, NULL);
 
   path_translated  = dgettext (locale_domain, menu_path);
   label_translated = dgettext (locale_domain, menu_label);
@@ -446,7 +446,7 @@ plug_in_actions_last_changed (Gimp            *gimp,
       gchar               *reshow;
 
       progname = gimp_plug_in_procedure_get_progname (proc);
-      domain   = plug_ins_locale_domain (gimp, progname, NULL);
+      domain   = plug_in_locale_domain (gimp, progname, NULL);
 
       label = gimp_plug_in_procedure_get_label (proc, domain);
 
@@ -481,7 +481,7 @@ plug_in_actions_last_changed (Gimp            *gimp,
       g_free (name);
 
       progname = gimp_plug_in_procedure_get_progname (proc);
-      domain   = plug_ins_locale_domain (gimp, progname, NULL);
+      domain   = plug_in_locale_domain (gimp, progname, NULL);
 
       label = gimp_plug_in_procedure_get_label (proc, domain);
 

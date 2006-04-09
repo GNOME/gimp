@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * plug-ins-locale.h
+ * plug-in-locale-domain.h
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,25 +18,25 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PLUG_INS_LOCALE_H__
-#define __PLUG_INS_LOCALE_H__
+#ifndef __PLUG_IN_LOCALE_DOMAIN_H__
+#define __PLUG_IN_LOCALE_DOMAIN_H__
 
 
-void          plug_ins_locale_exit            (Gimp         *gimp);
+void          plug_in_locale_domain_exit     (Gimp         *gimp);
 
 /* Add a locale domain */
-void          plug_ins_locale_domain_add      (Gimp         *gimp,
-                                               const gchar  *prog_name,
-                                               const gchar  *domain_name,
-                                               const gchar  *domain_path);
+void          plug_in_locale_domain_add      (Gimp         *gimp,
+                                              const gchar  *prog_name,
+                                              const gchar  *domain_name,
+                                              const gchar  *domain_path);
 
 /* Retrieve a plug-ins locale domain */
-const gchar * plug_ins_locale_domain          (Gimp         *gimp,
-                                               const gchar  *prog_name,
-                                               const gchar **locale_path);
+const gchar * plug_in_locale_domain          (Gimp         *gimp,
+                                              const gchar  *prog_name,
+                                              const gchar **locale_path);
 
 /* Retrieve the locale domain of the standard plug-ins */
-const gchar * plug_ins_standard_locale_domain (void) G_GNUC_CONST;
+const gchar * plug_in_standard_locale_domain (void) G_GNUC_CONST;
 
 
-#endif /* __PLUG_INS_LOCALE_H__ */
+#endif /* __PLUG_IN_LOCALE_DOMAIN_H__ */

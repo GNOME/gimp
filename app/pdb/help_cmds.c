@@ -29,8 +29,8 @@
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
+#include "plug-in/plug-in-help-domain.h"
 #include "plug-in/plug-in.h"
-#include "plug-in/plug-ins-help.h"
 
 
 static GValueArray *
@@ -51,7 +51,7 @@ help_invoker (GimpProcedure     *procedure,
     {
       if (! help_domain && gimp->current_plug_in)
         help_domain = (gchar *)
-          plug_ins_help_domain (gimp, gimp->current_plug_in->prog, NULL);
+          plug_in_help_domain (gimp, gimp->current_plug_in->prog, NULL);
 
       gimp_help (gimp, help_domain, help_id);
     }

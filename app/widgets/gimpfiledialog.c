@@ -37,7 +37,7 @@
 
 #include "file/file-utils.h"
 
-#include "plug-in/plug-ins-locale.h"
+#include "plug-in/plug-in-locale-domain.h"
 
 #include "pdb/gimp-pdb.h"
 #include "pdb/gimppluginprocedure.h"
@@ -460,7 +460,7 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
           GSList        *ext;
           gint           i;
 
-          domain = plug_ins_locale_domain (gimp, file_proc->prog, NULL);
+          domain = plug_in_locale_domain (gimp, file_proc->prog, NULL);
 
           label = gimp_plug_in_procedure_get_label (file_proc, domain);
 

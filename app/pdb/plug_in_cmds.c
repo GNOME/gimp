@@ -35,8 +35,8 @@
 #include "core/gimp.h"
 #include "gimppluginprocedure.h"
 #include "plug-in/plug-in-def.h"
+#include "plug-in/plug-in-menu-branch.h"
 #include "plug-in/plug-in.h"
-#include "plug-in/plug-ins-help.h"
 #include "plug-in/plug-ins-query.h"
 #include "plug-in/plug-ins.h"
 
@@ -197,8 +197,8 @@ plugin_menu_branch_register_invoker (GimpProcedure     *procedure,
     {
       if (gimp->current_plug_in)
         {
-          plug_ins_menu_branch_add (gimp, gimp->current_plug_in->prog,
-                                    menu_path, menu_name);
+          plug_in_menu_branch_add (gimp, gimp->current_plug_in->prog,
+                                   menu_path, menu_name);
         }
       else
         success = FALSE;

@@ -28,6 +28,12 @@ libappplug_in_a_SOURCES = \
 	plug-in-debug.h		\
 	plug-in-def.c		\
 	plug-in-def.h		\
+	plug-in-help-domain.c	\
+	plug-in-help-domain.h	\
+	plug-in-locale-domain.c	\
+	plug-in-locale-domain.h	\
+	plug-in-menu-branch.c	\
+	plug-in-menu-branch.h	\
 	plug-in-message.c	\
 	plug-in-message.h	\
 	plug-in-params.c	\
@@ -44,10 +50,6 @@ libappplug_in_a_SOURCES = \
 	plug-in-shm.h		\
 	plug-ins.c		\
 	plug-ins.h		\
-	plug-ins-help.c		\
-	plug-ins-help.h		\
-	plug-ins-locale.c	\
-	plug-ins-locale.h	\
 	plug-ins-query.c	\
 	plug-ins-query.h
 

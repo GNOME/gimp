@@ -204,8 +204,8 @@ HELP
 {
   if (gimp->current_plug_in)
     {
-      plug_ins_menu_branch_add (gimp, gimp->current_plug_in->prog,
-                                menu_path, menu_name);
+      plug_in_menu_branch_add (gimp, gimp->current_plug_in->prog,
+                               menu_path, menu_name);
     }
   else
     success = FALSE;
@@ -267,7 +267,7 @@ CODE
 @headers = qw(<string.h> <stdlib.h>
               "libgimpbase/gimpbase.h" "core/gimp.h"
               "plug-in/plug-in.h" "plug-in/plug-ins.h"
-              "plug-in/plug-ins-help.h"
+              "plug-in/plug-in-menu-branch.h"
               "plug-in/plug-ins-query.h"
               "plug-in/plug-in-def.h"
               "gimppluginprocedure.h");

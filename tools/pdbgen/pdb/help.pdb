@@ -43,7 +43,7 @@ HELP
 {
   if (! help_domain && gimp->current_plug_in)
     help_domain = (gchar *)
-      plug_ins_help_domain (gimp, gimp->current_plug_in->prog, NULL);
+      plug_in_help_domain (gimp, gimp->current_plug_in->prog, NULL);
 
   gimp_help (gimp, help_domain, help_id);
 }
@@ -52,7 +52,7 @@ CODE
 }
 
 
-@headers = qw("core/gimp.h" "plug-in/plug-in.h" "plug-in/plug-ins-help.h");
+@headers = qw("core/gimp.h" "plug-in/plug-in.h" "plug-in/plug-in-help-domain.h");
 
 @procs = qw(help);
 

@@ -22,14 +22,6 @@
 #define __PLUG_INS_H__
 
 
-struct _PlugInMenuBranch
-{
-  gchar *prog_name;
-  gchar *menu_path;
-  gchar *menu_label;
-};
-
-
 void              plug_ins_init                    (Gimp               *gimp,
                                                     GimpContext        *context,
                                                     GimpInitStatusFunc  status_callback);
@@ -63,12 +55,6 @@ void              plug_ins_temp_procedure_add    (Gimp                   *gimp,
                                                   GimpTemporaryProcedure *proc);
 void              plug_ins_temp_procedure_remove (Gimp                   *gimp,
                                                   GimpTemporaryProcedure *proc);
-
-/* Add a menu branch */
-void              plug_ins_menu_branch_add         (Gimp          *gimp,
-                                                    const gchar   *prog_name,
-                                                    const gchar   *menu_path,
-                                                    const gchar   *menu_label);
 
 
 #endif /* __PLUG_INS_H__ */

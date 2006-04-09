@@ -30,8 +30,8 @@
 #include "core/gimp.h"
 #include "core/gimpmarshal.h"
 
-#include "plug-in/plug-ins-help.h"
-#include "plug-in/plug-ins-locale.h"
+#include "plug-in/plug-in-help-domain.h"
+#include "plug-in/plug-in-locale-domain.h"
 
 #include "pdb/gimppluginprocedure.h"
 
@@ -148,8 +148,8 @@ gimp_file_proc_view_new (Gimp        *gimp,
           gchar       *help_id;
           GSList      *list2;
 
-          locale_domain = plug_ins_locale_domain (gimp, proc->prog, NULL);
-          help_domain   = plug_ins_help_domain (gimp, proc->prog, NULL);
+          locale_domain = plug_in_locale_domain (gimp, proc->prog, NULL);
+          help_domain   = plug_in_help_domain (gimp, proc->prog, NULL);
           label         = gimp_plug_in_procedure_get_label (proc, locale_domain);
           help_id       = gimp_plug_in_procedure_get_help_id (proc, help_domain);
 

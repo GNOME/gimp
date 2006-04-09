@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * plug-ins-help.c
+ * plug-in-help-domain.c
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
 
 #include "core/gimp.h"
 
-#include "plug-ins-help.h"
+#include "plug-in-help-domain.h"
 
 
 typedef struct _PlugInHelpDomain PlugInHelpDomain;
@@ -42,7 +42,7 @@ struct _PlugInHelpDomain
 
 
 void
-plug_ins_help_exit (Gimp *gimp)
+plug_in_help_domain_exit (Gimp *gimp)
 {
   GSList *list;
 
@@ -63,10 +63,10 @@ plug_ins_help_exit (Gimp *gimp)
 }
 
 void
-plug_ins_help_domain_add (Gimp        *gimp,
-                          const gchar *prog_name,
-                          const gchar *domain_name,
-                          const gchar *domain_uri)
+plug_in_help_domain_add (Gimp        *gimp,
+                         const gchar *prog_name,
+                         const gchar *domain_name,
+                         const gchar *domain_uri)
 {
   PlugInHelpDomain *domain;
 
@@ -91,9 +91,9 @@ plug_ins_help_domain_add (Gimp        *gimp,
 }
 
 const gchar *
-plug_ins_help_domain (Gimp         *gimp,
-                      const gchar  *prog_name,
-                      const gchar **domain_uri)
+plug_in_help_domain (Gimp         *gimp,
+                     const gchar  *prog_name,
+                     const gchar **domain_uri)
 {
   GSList *list;
 
@@ -124,9 +124,9 @@ plug_ins_help_domain (Gimp         *gimp,
 }
 
 gint
-plug_ins_help_domains (Gimp    *gimp,
-                       gchar ***help_domains,
-                       gchar ***help_uris)
+plug_in_help_domains (Gimp    *gimp,
+                      gchar ***help_domains,
+                      gchar ***help_uris)
 {
   GSList *list;
   gint    n_domains;

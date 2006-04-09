@@ -44,12 +44,13 @@
 #include "plug-in.h"
 #include "plug-in-data.h"
 #include "plug-in-def.h"
+#include "plug-in-help-domain.h"
+#include "plug-in-locale-domain.h"
+#include "plug-in-menu-branch.h"
 #include "plug-in-params.h"
 #include "plug-in-progress.h"
 #include "plug-in-rc.h"
 #include "plug-ins.h"
-#include "plug-ins-help.h"
-#include "plug-ins-locale.h"
 
 #include "gimp-intl.h"
 
@@ -253,16 +254,16 @@ plug_ins_init (Gimp               *gimp,
       PlugInDef *plug_in_def = list->data;
 
       if (plug_in_def->locale_domain_name)
-        plug_ins_locale_domain_add (gimp,
-                                    plug_in_def->prog,
-                                    plug_in_def->locale_domain_name,
-                                    plug_in_def->locale_domain_path);
+        plug_in_locale_domain_add (gimp,
+                                   plug_in_def->prog,
+                                   plug_in_def->locale_domain_name,
+                                   plug_in_def->locale_domain_path);
 
       if (plug_in_def->help_domain_name)
-        plug_ins_help_domain_add (gimp,
-                                  plug_in_def->prog,
-                                  plug_in_def->help_domain_name,
-                                  plug_in_def->help_domain_uri);
+        plug_in_help_domain_add (gimp,
+                                 plug_in_def->prog,
+                                 plug_in_def->help_domain_name,
+                                 plug_in_def->help_domain_uri);
     }
 
   if (! gimp->no_interface)
@@ -275,7 +276,7 @@ plug_ins_init (Gimp               *gimp,
                                                  gimp);
 
       gimp_menus_init (gimp, gimp->plug_in_defs,
-                       plug_ins_standard_locale_domain ());
+                       plug_in_standard_locale_domain ());
     }
 
   /* build list of automatically started extensions */
@@ -335,25 +336,13 @@ plug_ins_init (Gimp               *gimp,
 void
 plug_ins_exit (Gimp *gimp)
 {
-  GSList *list;
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   plug_in_exit (gimp);
 
-  for (list = gimp->plug_in_menu_branches; list; list = list->next)
-    {
-      PlugInMenuBranch *branch = list->data;
-
-      g_free (branch->prog_name);
-      g_free (branch->menu_path);
-      g_free (branch->menu_label);
-      g_free (branch);
-    }
-
-  g_slist_free (gimp->plug_in_menu_branches);
-  gimp->plug_in_menu_branches = NULL;
-
-  plug_ins_locale_exit (gimp);
-  plug_ins_help_exit (gimp);
+  plug_in_menu_branch_exit (gimp);
+  plug_in_locale_domain_exit (gimp);
+  plug_in_help_domain_exit (gimp);
   plug_in_data_free (gimp);
 
   g_slist_foreach (gimp->plug_in_procedures, (GFunc) g_object_unref, NULL);
@@ -532,37 +521,6 @@ plug_ins_temp_procedure_remove (Gimp                   *gimp,
   gimp_pdb_unregister (gimp, GIMP_OBJECT (proc)->name);
 
   g_object_unref (proc);
-}
-
-void
-plug_ins_menu_branch_add (Gimp        *gimp,
-                          const gchar *prog_name,
-                          const gchar *menu_path,
-                          const gchar *menu_label)
-{
-  PlugInMenuBranch *branch;
-
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (prog_name != NULL);
-  g_return_if_fail (menu_path != NULL);
-  g_return_if_fail (menu_label != NULL);
-
-  if (! gimp->no_interface)
-    gimp_menus_create_branch (gimp, prog_name, menu_path, menu_label);
-
-  branch = g_new (PlugInMenuBranch, 1);
-
-  branch->prog_name  = g_strdup (prog_name);
-  branch->menu_path  = g_strdup (menu_path);
-  branch->menu_label = g_strdup (menu_label);
-
-  gimp->plug_in_menu_branches = g_slist_append (gimp->plug_in_menu_branches,
-                                                branch);
-
-#ifdef VERBOSE
-  g_print ("added menu branch \"%s\" at path \"%s\"\n",
-           branch->menu_label, branch->menu_path);
-#endif
 }
 
 
@@ -752,8 +710,8 @@ plug_ins_file_proc_compare (gconstpointer a,
   if (strncmp (proc_b->prog, "gimp-xcf", 8) == 0)
     return 1;
 
-  domain_a = plug_ins_locale_domain (gimp, proc_a->prog, NULL);
-  domain_b = plug_ins_locale_domain (gimp, proc_b->prog, NULL);
+  domain_a = plug_in_locale_domain (gimp, proc_a->prog, NULL);
+  domain_b = plug_in_locale_domain (gimp, proc_b->prog, NULL);
 
   label_a = gimp_plug_in_procedure_get_label (proc_a, domain_a);
   label_b = gimp_plug_in_procedure_get_label (proc_b, domain_b);
