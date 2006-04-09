@@ -30,7 +30,7 @@
 #include "core/gimp.h"
 #include "core/gimpmarshal.h"
 
-#include "plug-in/plug-ins.h"
+#include "plug-in/plug-ins-help.h"
 
 #include "pdb/gimppluginprocedure.h"
 
