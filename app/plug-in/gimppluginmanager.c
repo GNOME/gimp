@@ -73,15 +73,17 @@ struct _PlugInHelpDomain
 };
 
 
-static void                  plug_ins_init_file         (const GimpDatafileData *file_data,
-                                                         gpointer                data);
-static void                  plug_ins_add_to_db         (Gimp             *gimp,
-                                                         GimpContext      *context);
-static GimpPlugInProcedure * plug_ins_procedure_insert  (Gimp             *gimp,
-                                                         GimpPlugInProcedure *proc);
-static gint                  plug_ins_file_proc_compare (gconstpointer     a,
-                                                         gconstpointer     b,
-                                                         gpointer          data);
+static void   plug_ins_add_from_file     (const GimpDatafileData *file_data,
+                                          gpointer                data);
+static void   plug_ins_add_from_rc       (Gimp                *gimp,
+                                          PlugInDef           *plug_in_def);
+static void   plug_ins_add_to_db         (Gimp                *gimp,
+                                          GimpContext         *context);
+static void   plug_ins_procedure_insert  (Gimp                *gimp,
+                                          GimpPlugInProcedure *proc);
+static gint   plug_ins_file_proc_compare (gconstpointer        a,
+                                          gconstpointer        b,
+                                          gpointer             data);
 
 
 /*  public functions  */
@@ -94,6 +96,7 @@ plug_ins_init (Gimp               *gimp,
   gchar   *filename;
   gchar   *basename;
   gchar   *path;
+  GSList  *rc_defs;
   GSList  *list;
   GList   *extensions = NULL;
   gint     n_plugins;
@@ -108,11 +111,13 @@ plug_ins_init (Gimp               *gimp,
   plug_in_init (gimp);
 
   /* search for binaries in the plug-in directory path */
+  status_callback (_("Searching Plug-Ins"), "", 0.0);
+
   path = gimp_config_path_expand (gimp->config->plug_in_path, TRUE, NULL);
 
   gimp_datafiles_read_directories (path,
                                    G_FILE_TEST_IS_EXECUTABLE,
-				   plug_ins_init_file,
+				   plug_ins_add_from_file,
                                    &gimp->plug_in_defs);
 
   g_free (path);
@@ -142,7 +147,16 @@ plug_ins_init (Gimp               *gimp,
   if (gimp->be_verbose)
     g_print (_("Parsing '%s'\n"), gimp_filename_to_utf8 (filename));
 
-  if (! plug_in_rc_parse (gimp, filename, &error))
+  rc_defs = plug_in_rc_parse (gimp, filename, &error);
+
+  if (rc_defs)
+    {
+      for (list = rc_defs; list; list = g_slist_next (list))
+        plug_ins_add_from_rc (gimp, list->data); /* consumes list->data */
+
+      g_slist_free (rc_defs);
+    }
+  else
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
         g_message (error->message);
@@ -229,42 +243,9 @@ plug_ins_init (Gimp               *gimp,
       GSList    *list2;
 
       for (list2 = plug_in_def->procedures; list2; list2 = list2->next)
-	{
-	  GimpPlugInProcedure *proc = list2->data;
-          GimpPlugInProcedure *overridden_proc;
-
-	  overridden_proc = plug_ins_procedure_insert (gimp, proc);
-
-          if (overridden_proc)
-            {
-              GSList *list3;
-
-              g_printerr ("removing duplicate PDB procedure \"%s\" "
-                          "registered by '%s'\n",
-                          GIMP_OBJECT (overridden_proc)->name,
-                          gimp_filename_to_utf8 (overridden_proc->prog));
-
-              /* search the plugin list to see if any plugins had references to
-               * the overridden_proc.
-               */
-              for (list3 = gimp->plug_in_defs; list3; list3 = list3->next)
-                {
-                  PlugInDef *plug_in_def2 = list3->data;
-
-                  if (g_slist_find (plug_in_def2->procedures, overridden_proc))
-                    plug_in_def_remove_procedure (plug_in_def2,
-                                                  overridden_proc);
-                }
-
-              /* also remove it from the lists of load and save procs */
-              gimp->load_procs = g_slist_remove (gimp->load_procs,
-                                                 overridden_proc);
-              gimp->save_procs = g_slist_remove (gimp->save_procs,
-                                                 overridden_proc);
-
-              g_object_unref (overridden_proc);
-            }
-	}
+        {
+	  plug_ins_procedure_insert (gimp, list2->data);
+        }
     }
 
   /* write the pluginrc file if necessary */
@@ -512,91 +493,6 @@ plug_ins_file_register_thumb_loader (Gimp        *gimp,
 }
 
 void
-plug_ins_def_add_from_rc (Gimp      *gimp,
-                          PlugInDef *plug_in_def)
-{
-  GSList *list;
-  gchar  *basename1;
-
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (plug_in_def != NULL);
-  g_return_if_fail (plug_in_def->prog != NULL);
-
-  if (! g_path_is_absolute (plug_in_def->prog))
-    {
-      g_warning ("plug_ins_def_add_from_rc: filename not absolute (skipping)");
-      plug_in_def_free (plug_in_def);
-      return;
-    }
-
-  basename1 = g_path_get_basename (plug_in_def->prog);
-
-  /*  If this is a file load or save plugin, make sure we have
-   *  something for one of the extensions, prefixes, or magic number.
-   *  Other bits of code rely on detecting file plugins by the presence
-   *  of one of these things, but Nick Lamb's alien/unknown format
-   *  loader needs to be able to register no extensions, prefixes or
-   *  magics. -- austin 13/Feb/99
-   */
-  for (list = plug_in_def->procedures; list; list = list->next)
-    {
-      GimpPlugInProcedure *proc = list->data;
-
-      if (! proc->extensions &&
-          ! proc->prefixes   &&
-          ! proc->magics     &&
-	  proc->menu_paths   &&
-	  (! strncmp (proc->menu_paths->data, "<Load>", 6) ||
-	   ! strncmp (proc->menu_paths->data, "<Save>", 6)))
-	{
-	  proc->extensions = g_strdup ("");
-	}
-    }
-
-  /*  Check if the entry mentioned in pluginrc matches an executable
-   *  found in the plug_in_path.
-   */
-  for (list = gimp->plug_in_defs; list; list = list->next)
-    {
-      PlugInDef *ondisk_plug_in_def = list->data;
-      gchar     *basename2;
-
-      basename2 = g_path_get_basename (ondisk_plug_in_def->prog);
-
-      if (! strcmp (basename1, basename2))
-	{
-	  if (! g_ascii_strcasecmp (plug_in_def->prog,
-                                    ondisk_plug_in_def->prog) &&
-	      (plug_in_def->mtime == ondisk_plug_in_def->mtime))
-	    {
-	      /* Use pluginrc entry, deleting ondisk entry */
-	      list->data = plug_in_def;
-	      plug_in_def_free (ondisk_plug_in_def);
-	    }
-	  else
-	    {
-              /* Use ondisk entry, deleting pluginrc entry */
-	      plug_in_def_free (plug_in_def);
-	    }
-
-	  g_free (basename2);
-	  g_free (basename1);
-
-	  return;
-	}
-
-      g_free (basename2);
-    }
-
-  g_free (basename1);
-
-  gimp->write_pluginrc = TRUE;
-  g_printerr ("executable not found: '%s'\n",
-              gimp_filename_to_utf8 (plug_in_def->prog));
-  plug_in_def_free (plug_in_def);
-}
-
-void
 plug_ins_temp_procedure_add (Gimp                   *gimp,
                              GimpTemporaryProcedure *proc)
 {
@@ -830,8 +726,8 @@ plug_ins_help_domains (Gimp    *gimp,
 /*  private functions  */
 
 static void
-plug_ins_init_file (const GimpDatafileData *file_data,
-                    gpointer                data)
+plug_ins_add_from_file (const GimpDatafileData *file_data,
+                        gpointer                data)
 {
   PlugInDef  *plug_in_def;
   GSList    **plug_in_defs = data;
@@ -863,6 +759,91 @@ plug_ins_init_file (const GimpDatafileData *file_data,
   plug_in_def_set_needs_query (plug_in_def, TRUE);
 
   *plug_in_defs = g_slist_prepend (*plug_in_defs, plug_in_def);
+}
+
+static void
+plug_ins_add_from_rc (Gimp      *gimp,
+                      PlugInDef *plug_in_def)
+{
+  GSList *list;
+  gchar  *basename1;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (plug_in_def != NULL);
+  g_return_if_fail (plug_in_def->prog != NULL);
+
+  if (! g_path_is_absolute (plug_in_def->prog))
+    {
+      g_warning ("plug_ins_def_add_from_rc: filename not absolute (skipping)");
+      plug_in_def_free (plug_in_def);
+      return;
+    }
+
+  basename1 = g_path_get_basename (plug_in_def->prog);
+
+  /*  If this is a file load or save plugin, make sure we have
+   *  something for one of the extensions, prefixes, or magic number.
+   *  Other bits of code rely on detecting file plugins by the presence
+   *  of one of these things, but Nick Lamb's alien/unknown format
+   *  loader needs to be able to register no extensions, prefixes or
+   *  magics. -- austin 13/Feb/99
+   */
+  for (list = plug_in_def->procedures; list; list = list->next)
+    {
+      GimpPlugInProcedure *proc = list->data;
+
+      if (! proc->extensions &&
+          ! proc->prefixes   &&
+          ! proc->magics     &&
+	  proc->menu_paths   &&
+	  (! strncmp (proc->menu_paths->data, "<Load>", 6) ||
+	   ! strncmp (proc->menu_paths->data, "<Save>", 6)))
+	{
+	  proc->extensions = g_strdup ("");
+	}
+    }
+
+  /*  Check if the entry mentioned in pluginrc matches an executable
+   *  found in the plug_in_path.
+   */
+  for (list = gimp->plug_in_defs; list; list = list->next)
+    {
+      PlugInDef *ondisk_plug_in_def = list->data;
+      gchar     *basename2;
+
+      basename2 = g_path_get_basename (ondisk_plug_in_def->prog);
+
+      if (! strcmp (basename1, basename2))
+	{
+	  if (! g_ascii_strcasecmp (plug_in_def->prog,
+                                    ondisk_plug_in_def->prog) &&
+	      (plug_in_def->mtime == ondisk_plug_in_def->mtime))
+	    {
+	      /* Use pluginrc entry, deleting ondisk entry */
+	      list->data = plug_in_def;
+	      plug_in_def_free (ondisk_plug_in_def);
+	    }
+	  else
+	    {
+              /* Use ondisk entry, deleting pluginrc entry */
+	      plug_in_def_free (plug_in_def);
+	    }
+
+	  g_free (basename2);
+	  g_free (basename1);
+
+	  return;
+	}
+
+      g_free (basename2);
+    }
+
+  g_free (basename1);
+
+  gimp->write_pluginrc = TRUE;
+  g_printerr ("executable not found: '%s'\n",
+              gimp_filename_to_utf8 (plug_in_def->prog));
+  plug_in_def_free (plug_in_def);
 }
 
 static void
@@ -908,7 +889,7 @@ plug_ins_add_to_db (Gimp        *gimp,
     }
 }
 
-static GimpPlugInProcedure *
+static void
 plug_ins_procedure_insert (Gimp                *gimp,
                            GimpPlugInProcedure *proc)
 {
@@ -921,16 +902,38 @@ plug_ins_procedure_insert (Gimp                *gimp,
       if (strcmp (GIMP_OBJECT (proc)->name,
                   GIMP_OBJECT (tmp_proc)->name) == 0)
 	{
+          GSList *list3;
+
 	  list->data = g_object_ref (proc);
 
-	  return tmp_proc;
+          g_printerr ("removing duplicate PDB procedure \"%s\" "
+                      "registered by '%s'\n",
+                      GIMP_OBJECT (tmp_proc)->name,
+                      gimp_filename_to_utf8 (tmp_proc->prog));
+
+          /* search the plugin list to see if any plugins had references to
+           * the tmp_proc.
+           */
+          for (list3 = gimp->plug_in_defs; list3; list3 = list3->next)
+            {
+              PlugInDef *plug_in_def2 = list3->data;
+
+              if (g_slist_find (plug_in_def2->procedures, tmp_proc))
+                plug_in_def_remove_procedure (plug_in_def2, tmp_proc);
+            }
+
+          /* also remove it from the lists of load and save procs */
+          gimp->load_procs = g_slist_remove (gimp->load_procs, tmp_proc);
+          gimp->save_procs = g_slist_remove (gimp->save_procs, tmp_proc);
+
+          g_object_unref (tmp_proc);
+
+	  return;
 	}
     }
 
   gimp->plug_in_procedures = g_slist_prepend (gimp->plug_in_procedures,
                                               g_object_ref (proc));
-
-  return NULL;
 }
 
 static gint

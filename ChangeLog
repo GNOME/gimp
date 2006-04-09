@@ -1,5 +1,22 @@
 2006-04-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/plug-in-rc.[ch] (plug_in_rc_parse): return a GSList*
+	of PlugInDefs instead of a boolean. Don't return anything if any
+	parse error occurs (before, we trusted PlugInDefs from partially
+	broken files). Don't call plug_ins_def_add_from_rc() and don't
+	#include "plug-ins.h".
+
+	* app/plug-in/plug-ins.[ch]: made plug_ins_def_add_from_rc()
+	private and call it on all PlugInDefs returned by plug_in_rc_parse().
+	Renamed plug_ins_init_file() to plug_ins_add_from_file()
+
+	(plug_ins_init): remove code that checks for duplicate plug-in
+	procedures...
+
+	(plug_ins_procedure_insert): ... and add it where it belongs.
+
+2006-04-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/xcf/xcf.c (xcf_init): don't register the XCF procedures
 	with the PDB here...
 

@@ -58,11 +58,6 @@ GimpPlugInProcedure * plug_ins_file_register_thumb_loader
                                                     const gchar   *load_proc,
                                                     const gchar   *thumb_proc);
 
-
-/* Add a plug-in definition. */
-void              plug_ins_def_add_from_rc         (Gimp          *gimp,
-                                                    PlugInDef     *plug_in_def);
-
 /* Add/Remove temporary procedures. */
 void              plug_ins_temp_procedure_add    (Gimp                   *gimp,
                                                   GimpTemporaryProcedure *proc);

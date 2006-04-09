@@ -34,7 +34,6 @@
 #include "pdb/gimp-pdb-compat.h"
 #include "pdb/gimppluginprocedure.h"
 
-#include "plug-ins.h"
 #include "plug-in-def.h"
 #include "plug-in-rc.h"
 
@@ -47,7 +46,8 @@
  */
 
 static GTokenType plug_in_def_deserialize        (Gimp                 *gimp,
-                                                  GScanner             *scanner);
+                                                  GScanner             *scanner,
+                                                  GSList              **plug_in_defs);
 static GTokenType plug_in_procedure_deserialize  (GScanner             *scanner,
                                                   Gimp                 *gimp,
                                                   const gchar          *prog,
@@ -91,16 +91,16 @@ enum
 };
 
 
-gboolean
+GSList *
 plug_in_rc_parse (Gimp         *gimp,
                   const gchar  *filename,
                   GError      **error)
 {
   GScanner   *scanner;
   GEnumClass *enum_class;
+  GSList     *plug_in_defs = NULL;
+  gint        version      = GIMP_PROTOCOL_VERSION;
   GTokenType  token;
-  gboolean    retval  = FALSE;
-  gint        version = GIMP_PROTOCOL_VERSION;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
@@ -109,7 +109,7 @@ plug_in_rc_parse (Gimp         *gimp,
   scanner = gimp_scanner_new_file (filename, error);
 
   if (! scanner)
-    return FALSE;
+    return NULL;
 
   enum_class = g_type_class_ref (GIMP_TYPE_ICON_TYPE);
 
@@ -179,7 +179,7 @@ plug_in_rc_parse (Gimp         *gimp,
               break;
             case PLUG_IN_DEF:
               g_scanner_set_scope (scanner, PLUG_IN_DEF);
-              token = plug_in_def_deserialize (gimp, scanner);
+              token = plug_in_def_deserialize (gimp, scanner, &plug_in_defs);
               g_scanner_set_scope (scanner, 0);
               break;
             default:
@@ -196,34 +196,39 @@ plug_in_rc_parse (Gimp         *gimp,
         }
     }
 
-  if (version != GIMP_PROTOCOL_VERSION)
+  if (version != GIMP_PROTOCOL_VERSION ||
+      token   != G_TOKEN_LEFT_PAREN)
     {
-      g_set_error (error,
-                   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_VERSION,
-                   _("Skipping '%s': wrong GIMP protocol version."),
-		   gimp_filename_to_utf8 (filename));
-    }
-  else if (token != G_TOKEN_LEFT_PAREN)
-    {
-      g_scanner_get_next_token (scanner);
-      g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
-                             _("fatal parse error"), TRUE);
-    }
-  else
-    {
-      retval = TRUE;
+      if (version != GIMP_PROTOCOL_VERSION)
+        {
+          g_set_error (error,
+                       GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_VERSION,
+                       _("Skipping '%s': wrong GIMP protocol version."),
+                       gimp_filename_to_utf8 (filename));
+        }
+      else
+        {
+          g_scanner_get_next_token (scanner);
+          g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
+                                 _("fatal parse error"), TRUE);
+        }
+
+      g_slist_foreach (plug_in_defs, (GFunc) plug_in_def_free, NULL);
+      g_slist_free (plug_in_defs);
+      plug_in_defs = NULL;
     }
 
   g_type_class_unref (enum_class);
 
   gimp_scanner_destroy (scanner);
 
-  return retval;
+  return g_slist_reverse (plug_in_defs);
 }
 
 static GTokenType
-plug_in_def_deserialize (Gimp     *gimp,
-                         GScanner *scanner)
+plug_in_def_deserialize (Gimp      *gimp,
+                         GScanner  *scanner,
+                         GSList   **plug_in_defs)
 {
   PlugInDef           *plug_in_def;
   GimpPlugInProcedure *proc = NULL;
@@ -301,7 +306,7 @@ plug_in_def_deserialize (Gimp     *gimp,
 
       if (gimp_scanner_parse_token (scanner, token))
         {
-          plug_ins_def_add_from_rc (gimp, plug_in_def);
+          *plug_in_defs = g_slist_prepend (*plug_in_defs, plug_in_def);
           return G_TOKEN_LEFT_PAREN;
         }
     }
