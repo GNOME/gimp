@@ -83,6 +83,9 @@ GimpPlugInProcedure * gimp_plug_in_procedure_find    (GSList                    
                                                       const gchar               *proc_name);
 
 const gchar * gimp_plug_in_procedure_get_progname    (const GimpPlugInProcedure *proc);
+gboolean      gimp_plug_in_procedure_add_menu_path   (GimpPlugInProcedure       *proc,
+                                                      const gchar               *menu_path,
+                                                      GError                   **error);
 gchar       * gimp_plug_in_procedure_get_label       (const GimpPlugInProcedure *proc,
                                                       const gchar               *locale_domain);
 

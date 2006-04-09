@@ -20,28 +20,18 @@
 #define __PLUG_IN_PARAMS_H__
 
 
-GValueArray  * plug_in_params_to_args  (GParamSpec  **pspecs,
-                                        gint          n_pspecs,
-                                        GPParam      *params,
-                                        gint          n_params,
-                                        gboolean      return_values,
-                                        gboolean      full_copy);
-GPParam      * plug_in_args_to_params  (GValueArray  *args,
-                                        gboolean      full_copy);
+GValueArray * plug_in_params_to_args (GParamSpec  **pspecs,
+                                      gint          n_pspecs,
+                                      GPParam      *params,
+                                      gint          n_params,
+                                      gboolean      return_values,
+                                      gboolean      full_copy);
+GPParam     * plug_in_args_to_params (GValueArray  *args,
+                                      gboolean      full_copy);
 
-void           plug_in_params_destroy  (GPParam      *params,
-                                        gint          n_params,
-                                        gboolean      full_destroy);
-
-gboolean       plug_in_proc_args_check (const gchar  *plug_in_name,
-                                        const gchar  *plug_in_prog,
-                                        const gchar  *procedure_name,
-                                        const gchar  *menu_path,
-                                        GParamSpec  **args,
-                                        guint32       n_args,
-                                        GParamSpec  **values,
-                                        guint32       n_return_vals,
-                                        GError      **error);
+void          plug_in_params_destroy (GPParam      *params,
+                                      gint          n_params,
+                                      gboolean      full_destroy);
 
 
 #endif /* __PLUG_IN_PARAMS_H__ */

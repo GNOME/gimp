@@ -1021,6 +1021,20 @@ plug_in_menu_register (PlugIn      *plug_in,
       return FALSE;
     }
 
+  switch (GIMP_PROCEDURE (proc)->proc_type)
+    {
+    case GIMP_INTERNAL:
+      return FALSE;
+
+    case GIMP_PLUGIN:
+    case GIMP_EXTENSION:
+      if (! plug_in->query && ! plug_in->init)
+        return FALSE;
+
+    case GIMP_TEMPORARY:
+      break;
+    }
+
   if (! proc->menu_label)
     {
       g_message ("Plug-in \"%s\"\n(%s)\n"
@@ -1037,37 +1051,13 @@ plug_in_menu_register (PlugIn      *plug_in,
       return FALSE;
     }
 
-  if (! plug_in_proc_args_check (plug_in->name,
-                                 plug_in->prog,
-                                 proc_name,
-                                 menu_path,
-                                 GIMP_PROCEDURE (proc)->args,
-                                 GIMP_PROCEDURE (proc)->num_args,
-                                 GIMP_PROCEDURE (proc)->values,
-                                 GIMP_PROCEDURE (proc)->num_values,
-                                 &error))
+  if (! gimp_plug_in_procedure_add_menu_path (proc, menu_path, &error))
     {
       g_message (error->message);
       g_clear_error (&error);
 
       return FALSE;
     }
-
-  switch (GIMP_PROCEDURE (proc)->proc_type)
-    {
-    case GIMP_INTERNAL:
-      return FALSE;
-
-    case GIMP_PLUGIN:
-    case GIMP_EXTENSION:
-      if (! plug_in->query && ! plug_in->init)
-        return FALSE;
-
-    case GIMP_TEMPORARY:
-      break;
-    }
-
-  proc->menu_paths = g_list_append (proc->menu_paths, g_strdup (menu_path));
 
   if (GIMP_IS_TEMPORARY_PROCEDURE (proc) && ! plug_in->gimp->no_interface)
     {

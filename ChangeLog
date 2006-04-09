@@ -1,5 +1,20 @@
 2006-04-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/plug-in-params.[ch]: removed function
+	plug_in_proc_args_check().
+
+	* app/pdb/gimppluginprocedure.[ch]: added new function
+	gimp_plug_in_procedure_add_menu_path() which performs all menu
+	path checks that were in the function above and adds the new
+	menu_path to the procedure's list of menu_paths.
+
+	* app/plug-in/plug-in-message.c (plug_in_handle_proc_install)
+	* app/plug-in/plug-in.c (plug_in_menu_register): use the new
+	function and removed manual adding of the menu path to
+	proc->menu_paths.
+
+2006-04-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/Makefile.am
 	* app/plug-in/plug-ins-help.[ch]
 	* app/plug-in/plug-ins-locale.[ch]: new files managing plug-in

@@ -30,6 +30,7 @@
 #include "pdb-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpparamspecs.h"
 
 #include "plug-in/plug-in.h"
 #include "plug-in/plug-ins.h"
@@ -200,6 +201,178 @@ gimp_plug_in_procedure_get_progname (const GimpPlugInProcedure *proc)
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
 
   return GIMP_PLUG_IN_PROCEDURE_GET_CLASS (proc)->get_progname (proc);
+}
+
+gboolean
+gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
+                                      const gchar          *menu_path,
+                                      GError              **error)
+{
+  GimpProcedure *procedure;
+  gchar         *basename = NULL;
+  gchar         *prefix;
+  gchar         *p;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), FALSE);
+  g_return_val_if_fail (menu_path != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  procedure = GIMP_PROCEDURE (proc);
+
+  prefix = g_strdup (menu_path);
+
+  p = strchr (prefix, '>') + 1;
+  if (p)
+    *p = '\0';
+
+  if (strcmp (prefix, "<Toolbox>") == 0 ||
+      strcmp (prefix, "<Image>")   == 0)
+    {
+      if ((procedure->num_args < 1) ||
+          ! GIMP_IS_PARAM_SPEC_INT32 (procedure->args[0]))
+        {
+          basename = g_filename_display_basename (proc->prog);
+
+          g_set_error (error, 0, 0,
+                       "Plug-In \"%s\"\n(%s)\n\n"
+                       "attempted to install %s procedure \"%s\" "
+                       "which does not take the standard %s Plug-In "
+                       "arguments.\n"
+                       "(INT32)",
+                       basename, gimp_filename_to_utf8 (proc->prog),
+                       prefix, GIMP_OBJECT (proc)->name, prefix);
+          goto failure;
+        }
+    }
+  else if (strcmp (prefix, "<Load>") == 0)
+    {
+      if ((procedure->num_args < 3)                       ||
+          ! GIMP_IS_PARAM_SPEC_INT32 (procedure->args[0]) ||
+          ! G_IS_PARAM_SPEC_STRING   (procedure->args[1]) ||
+          ! G_IS_PARAM_SPEC_STRING   (procedure->args[2]))
+        {
+          basename = g_filename_display_basename (proc->prog);
+
+          g_set_error (error, 0, 0,
+                       "Plug-In \"%s\"\n(%s)\n\n"
+                       "attempted to install <Load> procedure \"%s\" "
+                       "which does not take the standard <Load> Plug-In "
+                       "arguments.\n"
+                       "(INT32, STRING, STRING)",
+                       basename, gimp_filename_to_utf8 (proc->prog),
+                       GIMP_OBJECT (proc)->name);
+          goto failure;
+        }
+
+      if ((procedure->num_values < 1) ||
+          ! GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->values[0]))
+        {
+          basename = g_filename_display_basename (proc->prog);
+
+          g_set_error (error, 0, 0,
+                       "Plug-In \"%s\"\n(%s)\n\n"
+                       "attempted to install <Load> procedure \"%s\" "
+                       "which does not return the standard <Load> Plug-In "
+                       "values.\n"
+                       "(IMAGE)",
+                       basename, gimp_filename_to_utf8 (proc->prog),
+                       GIMP_OBJECT (proc)->name);
+          goto failure;
+        }
+    }
+  else if (strcmp (prefix, "<Save>") == 0)
+    {
+      if ((procedure->num_args < 5)                             ||
+          ! GIMP_IS_PARAM_SPEC_INT32       (procedure->args[0]) ||
+          ! GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1]) ||
+          ! GIMP_IS_PARAM_SPEC_DRAWABLE_ID (procedure->args[2]) ||
+          ! G_IS_PARAM_SPEC_STRING         (procedure->args[3]) ||
+          ! G_IS_PARAM_SPEC_STRING         (procedure->args[4]))
+        {
+          basename = g_filename_display_basename (proc->prog);
+
+          g_set_error (error, 0, 0,
+                       "Plug-In \"%s\"\n(%s)\n\n"
+                       "attempted to install <Save> procedure \"%s\" "
+                       "which does not take the standard <Save> Plug-In "
+                       "arguments.\n"
+                       "(INT32, IMAGE, DRAWABLE, STRING, STRING)",
+                       basename, gimp_filename_to_utf8 (proc->prog),
+                       GIMP_OBJECT (proc)->name);
+          goto failure;
+        }
+    }
+  else if (strcmp (prefix, "<Brushes>")   == 0 ||
+           strcmp (prefix, "<Gradients>") == 0 ||
+           strcmp (prefix, "<Palettes>")  == 0 ||
+           strcmp (prefix, "<Patterns>")  == 0 ||
+           strcmp (prefix, "<Fonts>")     == 0 ||
+           strcmp (prefix, "<Buffers>")   == 0)
+    {
+      if ((procedure->num_args < 1) ||
+          ! GIMP_IS_PARAM_SPEC_INT32 (procedure->args[0]))
+        {
+          basename = g_filename_display_basename (proc->prog);
+
+          g_set_error (error, 0, 0,
+                       "Plug-In \"%s\"\n(%s)\n\n"
+                       "attempted to install %s procedure \"%s\" "
+                       "which does not take the standard %s Plug-In "
+                       "arguments.\n"
+                       "(INT32)",
+                       basename, gimp_filename_to_utf8 (proc->prog),
+                       prefix, GIMP_OBJECT (proc)->name, prefix);
+          goto failure;
+        }
+    }
+  else
+    {
+      basename = g_filename_display_basename (proc->prog);
+
+      g_set_error (error, 0, 0,
+                   "Plug-In \"%s\"\n(%s)\n"
+                   "attempted to install procedure \"%s\" "
+                   "in the invalid menu location \"%s\".\n"
+                   "Use either \"<Toolbox>\", \"<Image>\", "
+                   "\"<Load>\", \"<Save>\", \"<Brushes>\", "
+                   "\"<Gradients>\", \"<Palettes>\", \"<Patterns>\" or "
+                   "\"<Buffers>\".",
+                   basename, gimp_filename_to_utf8 (proc->prog),
+                   GIMP_OBJECT (proc)->name,
+                   menu_path);
+      goto failure;
+    }
+
+  p = strchr (menu_path, '>') + 1;
+
+  if (*p != '/' && *p != '\0')
+    {
+      basename = g_filename_display_basename (proc->prog);
+
+      g_set_error (error, 0, 0,
+                   "Plug-In \"%s\"\n(%s)\n"
+                   "attempted to install procedure \"%s\"\n"
+                   "in the invalid menu location \"%s\".\n"
+                   "The menu path must look like either \"<Prefix>\" "
+                   "or \"<Prefix>/path/to/item\".",
+                   basename, gimp_filename_to_utf8 (proc->prog),
+                   GIMP_OBJECT (proc)->name,
+                   menu_path);
+      goto failure;
+    }
+
+  g_free (prefix);
+  g_free (basename);
+
+  proc->menu_paths = g_list_append (proc->menu_paths, g_strdup (menu_path));
+
+  return TRUE;
+
+ failure:
+  g_free (prefix);
+  g_free (basename);
+
+  return FALSE;
 }
 
 gchar *

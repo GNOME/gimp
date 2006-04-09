@@ -637,24 +637,12 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
         {
           GError *error = NULL;
 
-          if (! plug_in_proc_args_check (plug_in->name,
-                                         plug_in->prog,
-                                         canonical,
-                                         proc_install->menu_path,
-                                         procedure->args,
-                                         procedure->num_args,
-                                         procedure->values,
-                                         procedure->num_values,
-                                         &error))
+          if (! gimp_plug_in_procedure_add_menu_path (proc,
+                                                      proc_install->menu_path,
+                                                      &error))
             {
               g_message (error->message);
               g_clear_error (&error);
-            }
-          else
-            {
-              proc->menu_paths =
-                g_list_append (proc->menu_paths,
-                               g_strdup (proc_install->menu_path));
             }
         }
       else
