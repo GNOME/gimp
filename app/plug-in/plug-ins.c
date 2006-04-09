@@ -875,20 +875,7 @@ plug_ins_add_to_db (Gimp        *gimp,
     {
       GimpPlugInProcedure *proc = list->data;
 
-      if (GIMP_PROCEDURE (proc)->proc_type != GIMP_INTERNAL)
-	{
-          gimp_pdb_register (gimp, GIMP_PROCEDURE (proc));
-	}
-      else
-        {
-          g_printerr ("%s: NOT adding %s (prog = %s) to PDB\n",
-                      G_STRFUNC, GIMP_OBJECT (proc)->name, proc->prog);
-        }
-    }
-
-  for (list = gimp->plug_in_procedures; list; list = list->next)
-    {
-      GimpPlugInProcedure *proc = list->data;
+      gimp_pdb_register (gimp, GIMP_PROCEDURE (proc));
 
       if (proc->file_proc)
         {

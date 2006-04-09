@@ -200,7 +200,6 @@ xcf_init (Gimp *gimp)
                                                        "file, in UTF-8",
                                                        FALSE, FALSE, NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
   plug_ins_add_internal (gimp, proc);
   g_object_unref (procedure);
 
@@ -262,7 +261,6 @@ xcf_init (Gimp *gimp)
                                                              "Output image",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
   plug_ins_add_internal (gimp, proc);
   g_object_unref (procedure);
 }
