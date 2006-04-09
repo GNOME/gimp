@@ -28,6 +28,8 @@ libappplug_in_a_SOURCES = \
 	plug-in-debug.h		\
 	plug-in-def.c		\
 	plug-in-def.h		\
+	plug-in-file.c		\
+	plug-in-file.h		\
 	plug-in-help-domain.c	\
 	plug-in-help-domain.h	\
 	plug-in-locale-domain.c	\

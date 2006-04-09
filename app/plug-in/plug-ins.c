@@ -20,13 +20,12 @@
 
 #include "config.h"
 
-#include "string.h"
+#include <string.h>
 
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpbase/gimpprotocol.h"
-#include "libgimpbase/gimpwire.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "plug-in-types.h"
@@ -35,8 +34,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
 
 #include "pdb/gimp-pdb.h"
 #include "pdb/gimptemporaryprocedure.h"
@@ -47,23 +44,23 @@
 #include "plug-in-help-domain.h"
 #include "plug-in-locale-domain.h"
 #include "plug-in-menu-branch.h"
-#include "plug-in-params.h"
-#include "plug-in-progress.h"
 #include "plug-in-rc.h"
 #include "plug-ins.h"
 
 #include "gimp-intl.h"
 
 
+/*  local function prototypes  */
+
 static void   plug_ins_add_from_file     (const GimpDatafileData *file_data,
                                           gpointer                data);
-static void   plug_ins_add_from_rc       (Gimp                *gimp,
-                                          PlugInDef           *plug_in_def);
-static void   plug_ins_add_to_db         (Gimp                *gimp,
-                                          GimpContext         *context);
-static gint   plug_ins_file_proc_compare (gconstpointer        a,
-                                          gconstpointer        b,
-                                          gpointer             data);
+static void   plug_ins_add_from_rc       (Gimp                   *gimp,
+                                          PlugInDef              *plug_in_def);
+static void   plug_ins_add_to_db         (Gimp                   *gimp,
+                                          GimpContext            *context);
+static gint   plug_ins_file_proc_compare (gconstpointer           a,
+                                          gconstpointer           b,
+                                          gpointer                data);
 
 
 /*  public functions  */
@@ -348,82 +345,6 @@ plug_ins_exit (Gimp *gimp)
   g_slist_foreach (gimp->plug_in_procedures, (GFunc) g_object_unref, NULL);
   g_slist_free (gimp->plug_in_procedures);
   gimp->plug_in_procedures = NULL;
-}
-
-GimpPlugInProcedure *
-plug_ins_file_register_magic (Gimp        *gimp,
-                              const gchar *name,
-                              const gchar *extensions,
-                              const gchar *prefixes,
-                              const gchar *magics)
-{
-  GimpPlugInProcedure *proc;
-  GSList              *list;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
-
-  if (gimp->current_plug_in && gimp->current_plug_in->plug_in_def)
-    list = gimp->current_plug_in->plug_in_def->procedures;
-  else
-    list = gimp->plug_in_procedures;
-
-  proc = gimp_plug_in_procedure_find (list, name);
-
-  if (proc)
-    gimp_plug_in_procedure_set_file_proc (proc, extensions, prefixes, magics);
-
-  return proc;
-}
-
-GimpPlugInProcedure *
-plug_ins_file_register_mime (Gimp        *gimp,
-                             const gchar *name,
-                             const gchar *mime_type)
-{
-  GimpPlugInProcedure *proc;
-  GSList              *list;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
-  g_return_val_if_fail (mime_type != NULL, NULL);
-
-  if (gimp->current_plug_in && gimp->current_plug_in->plug_in_def)
-    list = gimp->current_plug_in->plug_in_def->procedures;
-  else
-    list = gimp->plug_in_procedures;
-
-  proc = gimp_plug_in_procedure_find (list, name);
-
-  if (proc)
-    gimp_plug_in_procedure_set_mime_type (proc, mime_type);
-
-  return proc;
-}
-
-GimpPlugInProcedure *
-plug_ins_file_register_thumb_loader (Gimp        *gimp,
-                                     const gchar *load_proc,
-                                     const gchar *thumb_proc)
-{
-  GimpPlugInProcedure *proc;
-  GSList              *list;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (load_proc, NULL);
-  g_return_val_if_fail (thumb_proc, NULL);
-
-  if (gimp->current_plug_in && gimp->current_plug_in->plug_in_def)
-    list = gimp->current_plug_in->plug_in_def->procedures;
-  else
-    list = gimp->plug_in_procedures;
-
-  proc = gimp_plug_in_procedure_find (list, load_proc);
-
-  if (proc)
-    gimp_plug_in_procedure_set_thumb_loader (proc, thumb_proc);
-
-  return proc;
 }
 
 void

@@ -414,9 +414,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = fileops_register_magic_load_handler (gimp,
-                                                 procedure_name,
-                                                 extensions, prefixes, magics);
+  gchar *canonical = gimp_canonicalize_identifier (procedure_name);
+
+  success = plug_in_file_register_load_handler (gimp, canonical,
+                                                extensions, prefixes, magics);
+
+  g_free (canonical);
 }
 CODE
     );
@@ -447,9 +450,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = fileops_register_magic_load_handler (gimp,
-                                                 procedure_name,
-                                                 extensions, prefixes, NULL);
+  gchar *canonical = gimp_canonicalize_identifier (procedure_name);
+
+  success = plug_in_file_register_load_handler (gimp, canonical,
+                                                extensions, prefixes, NULL);
+
+  g_free (canonical);
 }
 CODE
     );
@@ -479,45 +485,11 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpProcedure       *proc;
-  GimpPlugInProcedure *file_proc;
-  gchar               *canonical;
+  gchar *canonical = gimp_canonicalize_identifier (procedure_name);
 
-  success = FALSE;
+  success = plug_in_file_register_save_handler (gimp, canonical,
+                                                extensions, prefixes);
 
-  canonical = gimp_canonicalize_identifier (procedure_name);
-
-  proc = gimp_pdb_lookup (gimp, canonical);
-
-  if (proc &&
-      ((proc->num_args < 5)                             ||
-       ! GIMP_IS_PARAM_SPEC_INT32       (proc->args[0]) ||
-       ! GIMP_IS_PARAM_SPEC_IMAGE_ID    (proc->args[1]) ||
-       ! GIMP_IS_PARAM_SPEC_DRAWABLE_ID (proc->args[2]) ||
-       ! G_IS_PARAM_SPEC_STRING         (proc->args[3]) ||
-       ! G_IS_PARAM_SPEC_STRING         (proc->args[4])))
-    {
-      g_message ("save handler \"%s\" does not take the standard save handler args",
-		 canonical);
-      goto done;
-    }
-
-  file_proc = plug_ins_file_register_magic (gimp, canonical,
-                                            extensions, prefixes, NULL);
-
-  if (! file_proc)
-    {
-      g_message ("attempt to register nonexistent save handler \"%s\"",
-		 canonical);
-      goto done;
-    }
-
-  if (! g_slist_find (gimp->save_procs, file_proc))
-    gimp->save_procs = g_slist_prepend (gimp->save_procs, file_proc);
-
-  success = TRUE;
-
-done:
   g_free (canonical);
 }
 CODE
@@ -545,12 +517,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gchar *canonical;
+  gchar *canonical = gimp_canonicalize_identifier (procedure_name);
 
-  canonical = gimp_canonicalize_identifier (procedure_name);
-
-  if (! plug_ins_file_register_mime (gimp, canonical, mime_type))
-    success = FALSE;
+  success = plug_in_file_register_mime_type (gimp, canonical, mime_type);
 
   g_free (canonical);
 }
@@ -581,12 +550,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gchar *canonical;
+  gchar *canonical = gimp_canonicalize_identifier (load_proc);
 
-  canonical = gimp_canonicalize_identifier (load_proc);
-
-  if (! plug_ins_file_register_thumb_loader (gimp, canonical, thumb_proc))
-    success = FALSE;
+  success = plug_in_file_register_thumb_loader (gimp, canonical, thumb_proc);
 
   g_free (canonical);
 }
@@ -595,73 +561,20 @@ CODE
 }
 
 
-$extra{app}->{code} = <<'CODE';
-static gboolean
-fileops_register_magic_load_handler (Gimp        *gimp,
-                                     const gchar *procedure_name,
-                                     const gchar *extensions,
-                                     const gchar *prefixes,
-                                     const gchar *magics)
-{
-  GimpProcedure       *procedure;
-  GimpPlugInProcedure *file_proc;
-  gchar               *canonical;
-  gboolean             success = FALSE;
-
-  canonical = gimp_canonicalize_identifier (procedure_name);
-
-  procedure = gimp_pdb_lookup (gimp, canonical);
-
-  if (procedure &&
-      ((procedure->num_args   < 3)                        ||
-       (procedure->num_values < 1)                        ||
-       ! GIMP_IS_PARAM_SPEC_INT32    (procedure->args[0]) ||
-       ! G_IS_PARAM_SPEC_STRING      (procedure->args[1]) ||
-       ! G_IS_PARAM_SPEC_STRING      (procedure->args[2]) ||
-       ! GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->values[0])))
-    {
-      g_message ("load handler \"%s\" does not take the standard load handler args",
-		 canonical);
-      goto done;
-    }
-
-  file_proc = plug_ins_file_register_magic (gimp, canonical,
-                                            extensions, prefixes, magics);
-
-  if (! file_proc)
-    {
-      g_message ("attempt to register nonexistent load handler \"%s\"",
-		 canonical);
-      goto done;
-    }
-
-  if (! g_slist_find (gimp->load_procs, file_proc))
-    gimp->load_procs = g_slist_prepend (gimp->load_procs, file_proc);
-
-  success = TRUE;
-
-done:
-  g_free (canonical);
-
-  return success;
-}
-CODE
-
-
 @headers = qw(<gdk-pixbuf/gdk-pixbuf.h>
               "libgimpbase/gimpbase.h" "libgimpconfig/gimpconfig.h"
               "libgimpthumb/gimpthumb.h"
               "core/gimp.h" "core/gimpimagefile.h"
-              "plug-in/plug-in.h" "plug-in/plug-ins.h"
+              "plug-in/plug-in-file.h"
               "file/file-utils.h");
 
-@procs = qw(file_load file_load_layer file_load_thumbnail
-            file_save file_save_thumbnail
+@procs = qw(file_load file_load_layer file_save
+            file_load_thumbnail file_save_thumbnail
 	    temp_name register_magic_load_handler register_load_handler
 	    register_save_handler register_file_handler_mime
             register_thumbnail_loader);
 
-%exports = (app => [@procs], lib => [@procs[0,1,3,5..10]]);
+%exports = (app => [@procs], lib => [@procs[0..2,5..10]]);
 
 $desc = 'File Operations';
 

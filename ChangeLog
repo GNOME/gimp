@@ -1,3 +1,19 @@
+2006-04-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-ins.[ch]: removed the plug_ins_file_foo()
+	functions.
+
+	* tools/pdbgen/pdb/fileops.pdb: removed lots of load and save
+	handler register code.
+
+	* app/plug-in/Makefile.am
+	* app/plug-in/plug-in-file.[ch]: added everything in these new
+	files. Load and save handlers are installed with
+	plug_in_file_register_load_handler() and _save_handler() which
+	also check the passed file procedure's parameters.
+
+	* app/pdb/fileops_cmds.c: regenerated.
+
 2006-04-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/Makefile.am

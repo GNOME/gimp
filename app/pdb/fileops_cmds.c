@@ -41,59 +41,8 @@
 #include "core/gimplayer.h"
 #include "file/file-open.h"
 #include "file/file-utils.h"
-#include "plug-in/plug-in.h"
-#include "plug-in/plug-ins.h"
+#include "plug-in/plug-in-file.h"
 
-
-static gboolean
-fileops_register_magic_load_handler (Gimp        *gimp,
-                                     const gchar *procedure_name,
-                                     const gchar *extensions,
-                                     const gchar *prefixes,
-                                     const gchar *magics)
-{
-  GimpProcedure       *procedure;
-  GimpPlugInProcedure *file_proc;
-  gchar               *canonical;
-  gboolean             success = FALSE;
-
-  canonical = gimp_canonicalize_identifier (procedure_name);
-
-  procedure = gimp_pdb_lookup (gimp, canonical);
-
-  if (procedure &&
-      ((procedure->num_args   < 3)                        ||
-       (procedure->num_values < 1)                        ||
-       ! GIMP_IS_PARAM_SPEC_INT32    (procedure->args[0]) ||
-       ! G_IS_PARAM_SPEC_STRING      (procedure->args[1]) ||
-       ! G_IS_PARAM_SPEC_STRING      (procedure->args[2]) ||
-       ! GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->values[0])))
-    {
-      g_message ("load handler \"%s\" does not take the standard load handler args",
-		 canonical);
-      goto done;
-    }
-
-  file_proc = plug_ins_file_register_magic (gimp, canonical,
-                                            extensions, prefixes, magics);
-
-  if (! file_proc)
-    {
-      g_message ("attempt to register nonexistent load handler \"%s\"",
-		 canonical);
-      goto done;
-    }
-
-  if (! g_slist_find (gimp->load_procs, file_proc))
-    gimp->load_procs = g_slist_prepend (gimp->load_procs, file_proc);
-
-  success = TRUE;
-
-done:
-  g_free (canonical);
-
-  return success;
-}
 
 static GValueArray *
 file_load_invoker (GimpProcedure     *procedure,
@@ -188,6 +137,53 @@ file_load_layer_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
+file_save_invoker (GimpProcedure     *procedure,
+                   Gimp              *gimp,
+                   GimpContext       *context,
+                   GimpProgress      *progress,
+                   const GValueArray *args)
+{
+  GValueArray         *new_args;
+  GValueArray         *return_vals;
+  GimpPlugInProcedure *file_proc;
+  GimpProcedure       *proc;
+  gchar               *uri;
+  gint                 i;
+
+  uri = file_utils_filename_to_uri (gimp->load_procs,
+                                    g_value_get_string (&args->values[3]),
+                                    NULL);
+
+  if (! uri)
+    return gimp_procedure_get_return_values (procedure, FALSE);
+
+  file_proc = file_utils_find_proc (gimp->save_procs, uri);
+
+  g_free (uri);
+
+  if (! file_proc)
+    return gimp_procedure_get_return_values (procedure, FALSE);
+
+  proc = GIMP_PROCEDURE (file_proc);
+
+  new_args = gimp_procedure_get_arguments (proc);
+
+  for (i = 0; i < 5; i++)
+    g_value_transform (&args->values[i], &new_args->values[i]);
+
+  for (i = 5; i < proc->num_args; i++)
+    if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
+      g_value_set_static_string (&new_args->values[i], "");
+
+  return_vals = gimp_pdb_execute (gimp, context, progress,
+                                  GIMP_OBJECT (proc)->name, new_args);
+
+  g_value_array_free (new_args);
+
+  return return_vals;
+}
+
+static GValueArray *
 file_load_thumbnail_invoker (GimpProcedure     *procedure,
                              Gimp              *gimp,
                              GimpContext       *context,
@@ -263,53 +259,6 @@ file_load_thumbnail_invoker (GimpProcedure     *procedure,
       g_value_set_int (&return_vals->values[3], thumb_data_count);
       gimp_value_take_int8array (&return_vals->values[4], thumb_data, thumb_data_count);
     }
-
-  return return_vals;
-}
-
-static GValueArray *
-file_save_invoker (GimpProcedure     *procedure,
-                   Gimp              *gimp,
-                   GimpContext       *context,
-                   GimpProgress      *progress,
-                   const GValueArray *args)
-{
-  GValueArray         *new_args;
-  GValueArray         *return_vals;
-  GimpPlugInProcedure *file_proc;
-  GimpProcedure       *proc;
-  gchar               *uri;
-  gint                 i;
-
-  uri = file_utils_filename_to_uri (gimp->load_procs,
-                                    g_value_get_string (&args->values[3]),
-                                    NULL);
-
-  if (! uri)
-    return gimp_procedure_get_return_values (procedure, FALSE);
-
-  file_proc = file_utils_find_proc (gimp->save_procs, uri);
-
-  g_free (uri);
-
-  if (! file_proc)
-    return gimp_procedure_get_return_values (procedure, FALSE);
-
-  proc = GIMP_PROCEDURE (file_proc);
-
-  new_args = gimp_procedure_get_arguments (proc);
-
-  for (i = 0; i < 5; i++)
-    g_value_transform (&args->values[i], &new_args->values[i]);
-
-  for (i = 5; i < proc->num_args; i++)
-    if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
-      g_value_set_static_string (&new_args->values[i], "");
-
-  return_vals = gimp_pdb_execute (gimp, context, progress,
-                                  GIMP_OBJECT (proc)->name, new_args);
-
-  g_value_array_free (new_args);
 
   return return_vals;
 }
@@ -408,9 +357,12 @@ register_magic_load_handler_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      success = fileops_register_magic_load_handler (gimp,
-                                                     procedure_name,
-                                                     extensions, prefixes, magics);
+      gchar *canonical = gimp_canonicalize_identifier (procedure_name);
+
+      success = plug_in_file_register_load_handler (gimp, canonical,
+                                                    extensions, prefixes, magics);
+
+      g_free (canonical);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -434,9 +386,12 @@ register_load_handler_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      success = fileops_register_magic_load_handler (gimp,
-                                                     procedure_name,
-                                                     extensions, prefixes, NULL);
+      gchar *canonical = gimp_canonicalize_identifier (procedure_name);
+
+      success = plug_in_file_register_load_handler (gimp, canonical,
+                                                    extensions, prefixes, NULL);
+
+      g_free (canonical);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -460,45 +415,11 @@ register_save_handler_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      GimpProcedure       *proc;
-      GimpPlugInProcedure *file_proc;
-      gchar               *canonical;
+      gchar *canonical = gimp_canonicalize_identifier (procedure_name);
 
-      success = FALSE;
+      success = plug_in_file_register_save_handler (gimp, canonical,
+                                                    extensions, prefixes);
 
-      canonical = gimp_canonicalize_identifier (procedure_name);
-
-      proc = gimp_pdb_lookup (gimp, canonical);
-
-      if (proc &&
-          ((proc->num_args < 5)                             ||
-           ! GIMP_IS_PARAM_SPEC_INT32       (proc->args[0]) ||
-           ! GIMP_IS_PARAM_SPEC_IMAGE_ID    (proc->args[1]) ||
-           ! GIMP_IS_PARAM_SPEC_DRAWABLE_ID (proc->args[2]) ||
-           ! G_IS_PARAM_SPEC_STRING         (proc->args[3]) ||
-           ! G_IS_PARAM_SPEC_STRING         (proc->args[4])))
-        {
-          g_message ("save handler \"%s\" does not take the standard save handler args",
-                     canonical);
-          goto done;
-        }
-
-      file_proc = plug_ins_file_register_magic (gimp, canonical,
-                                                extensions, prefixes, NULL);
-
-      if (! file_proc)
-        {
-          g_message ("attempt to register nonexistent save handler \"%s\"",
-                     canonical);
-          goto done;
-        }
-
-      if (! g_slist_find (gimp->save_procs, file_proc))
-        gimp->save_procs = g_slist_prepend (gimp->save_procs, file_proc);
-
-      success = TRUE;
-
-    done:
       g_free (canonical);
     }
 
@@ -521,12 +442,9 @@ register_file_handler_mime_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      gchar *canonical;
+      gchar *canonical = gimp_canonicalize_identifier (procedure_name);
 
-      canonical = gimp_canonicalize_identifier (procedure_name);
-
-      if (! plug_ins_file_register_mime (gimp, canonical, mime_type))
-        success = FALSE;
+      success = plug_in_file_register_mime_type (gimp, canonical, mime_type);
 
       g_free (canonical);
     }
@@ -550,12 +468,9 @@ register_thumbnail_loader_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      gchar *canonical;
+      gchar *canonical = gimp_canonicalize_identifier (load_proc);
 
-      canonical = gimp_canonicalize_identifier (load_proc);
-
-      if (! plug_ins_file_register_thumb_loader (gimp, canonical, thumb_proc))
-        success = FALSE;
+      success = plug_in_file_register_thumb_loader (gimp, canonical, thumb_proc);
 
       g_free (canonical);
     }
@@ -660,53 +575,6 @@ register_fileops_procs (Gimp *gimp)
   g_object_unref (procedure);
 
   /*
-   * gimp-file-load-thumbnail
-   */
-  procedure = gimp_procedure_new (file_load_thumbnail_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-file-load-thumbnail");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-file-load-thumbnail",
-                                     "Loads the thumbnail for a file.",
-                                     "This procedure tries to load a thumbnail that belongs to the file with the given filename. This name is a full pathname. The returned data is an array of colordepth 3 (RGB), regardless of the image type. Width and height of the thumbnail are also returned. Don't use this function if you need a thumbnail of an already opened image, use gimp_image_thumbnail instead.",
-                                     "Adam D. Moss, Sven Neumann",
-                                     "Adam D. Moss, Sven Neumann",
-                                     "1999-2003",
-                                     NULL);
-
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("filename",
-                                                       "filename",
-                                                       "The name of the file that owns the thumbnail to load",
-                                                       TRUE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("width",
-                                                          "width",
-                                                          "The width of the thumbnail",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("height",
-                                                          "height",
-                                                          "The height of the thumbnail",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("thumb-data-count",
-                                                          "thumb data count",
-                                                          "The number of bytes in thumbnail data",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int8_array ("thumb-data",
-                                                               "thumb data",
-                                                               "The thumbnail data",
-                                                               GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
-  g_object_unref (procedure);
-
-  /*
    * gimp-file-save
    */
   procedure = gimp_procedure_new (file_save_invoker);
@@ -753,6 +621,53 @@ register_fileops_procs (Gimp *gimp)
                                                        TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register (gimp, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-file-load-thumbnail
+   */
+  procedure = gimp_procedure_new (file_load_thumbnail_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-file-load-thumbnail");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-file-load-thumbnail",
+                                     "Loads the thumbnail for a file.",
+                                     "This procedure tries to load a thumbnail that belongs to the file with the given filename. This name is a full pathname. The returned data is an array of colordepth 3 (RGB), regardless of the image type. Width and height of the thumbnail are also returned. Don't use this function if you need a thumbnail of an already opened image, use gimp_image_thumbnail instead.",
+                                     "Adam D. Moss, Sven Neumann",
+                                     "Adam D. Moss, Sven Neumann",
+                                     "1999-2003",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("filename",
+                                                       "filename",
+                                                       "The name of the file that owns the thumbnail to load",
+                                                       TRUE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("width",
+                                                          "width",
+                                                          "The width of the thumbnail",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("height",
+                                                          "height",
+                                                          "The height of the thumbnail",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("thumb-data-count",
+                                                          "thumb data count",
+                                                          "The number of bytes in thumbnail data",
+                                                          0, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int8_array ("thumb-data",
+                                                               "thumb data",
+                                                               "The thumbnail data",
+                                                               GIMP_PARAM_READWRITE));
   gimp_pdb_register (gimp, procedure);
   g_object_unref (procedure);
 

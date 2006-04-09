@@ -22,39 +22,23 @@
 #define __PLUG_INS_H__
 
 
-void              plug_ins_init                    (Gimp               *gimp,
-                                                    GimpContext        *context,
-                                                    GimpInitStatusFunc  status_callback);
-void              plug_ins_exit                    (Gimp          *gimp);
-
-/* Add in the file load/save handler fields procedure. */
-GimpPlugInProcedure * plug_ins_file_register_magic (Gimp          *gimp,
-                                                    const gchar   *name,
-                                                    const gchar   *extensions,
-                                                    const gchar   *prefixes,
-                                                    const gchar   *magics);
-
-GimpPlugInProcedure * plug_ins_file_register_mime  (Gimp          *gimp,
-                                                    const gchar   *name,
-                                                    const gchar   *mime_type);
-
-GimpPlugInProcedure * plug_ins_file_register_thumb_loader
-                                                   (Gimp          *gimp,
-                                                    const gchar   *load_proc,
-                                                    const gchar   *thumb_proc);
+void   plug_ins_init                  (Gimp                   *gimp,
+                                       GimpContext            *context,
+                                       GimpInitStatusFunc      status_callback);
+void   plug_ins_exit                  (Gimp                   *gimp);
 
 /* Register a plug-in. This function is public for file load-save
  * handlers, which are organized around the plug-in data structure.
  * This could all be done a little better, but oh well.  -josh
  */
-void              plug_ins_procedure_add         (Gimp                   *gimp,
-                                                  GimpPlugInProcedure    *proc);
+void   plug_ins_procedure_add         (Gimp                   *gimp,
+                                       GimpPlugInProcedure    *proc);
 
 /* Add/Remove temporary procedures. */
-void              plug_ins_temp_procedure_add    (Gimp                   *gimp,
-                                                  GimpTemporaryProcedure *proc);
-void              plug_ins_temp_procedure_remove (Gimp                   *gimp,
-                                                  GimpTemporaryProcedure *proc);
+void   plug_ins_temp_procedure_add    (Gimp                   *gimp,
+                                       GimpTemporaryProcedure *proc);
+void   plug_ins_temp_procedure_remove (Gimp                   *gimp,
+                                       GimpTemporaryProcedure *proc);
 
 
 #endif /* __PLUG_INS_H__ */
