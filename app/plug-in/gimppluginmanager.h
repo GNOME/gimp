@@ -35,13 +35,6 @@ void              plug_ins_init                    (Gimp               *gimp,
                                                     GimpInitStatusFunc  status_callback);
 void              plug_ins_exit                    (Gimp          *gimp);
 
-/* Register an internal plug-in.  This is for file load-save
- * handlers, which are organized around the plug-in data structure.
- * This could all be done a little better, but oh well.  -josh
- */
-void              plug_ins_add_internal            (Gimp                *gimp,
-                                                    GimpPlugInProcedure *proc);
-
 /* Add in the file load/save handler fields procedure. */
 GimpPlugInProcedure * plug_ins_file_register_magic (Gimp          *gimp,
                                                     const gchar   *name,
@@ -57,6 +50,13 @@ GimpPlugInProcedure * plug_ins_file_register_thumb_loader
                                                    (Gimp          *gimp,
                                                     const gchar   *load_proc,
                                                     const gchar   *thumb_proc);
+
+/* Register a plug-in. This function is public for file load-save
+ * handlers, which are organized around the plug-in data structure.
+ * This could all be done a little better, but oh well.  -josh
+ */
+void              plug_ins_procedure_add         (Gimp                   *gimp,
+                                                  GimpPlugInProcedure    *proc);
 
 /* Add/Remove temporary procedures. */
 void              plug_ins_temp_procedure_add    (Gimp                   *gimp,

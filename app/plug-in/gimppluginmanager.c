@@ -60,8 +60,6 @@ static void   plug_ins_add_from_rc       (Gimp                *gimp,
                                           PlugInDef           *plug_in_def);
 static void   plug_ins_add_to_db         (Gimp                *gimp,
                                           GimpContext         *context);
-static void   plug_ins_procedure_insert  (Gimp                *gimp,
-                                          GimpPlugInProcedure *proc);
 static gint   plug_ins_file_proc_compare (gconstpointer        a,
                                           gconstpointer        b,
                                           gpointer             data);
@@ -217,7 +215,7 @@ plug_ins_init (Gimp               *gimp,
 
   status_callback (NULL, "", 1.0);
 
-  /* insert the procedures */
+  /* add the procedures to gimp->plug_in_procedures */
   for (list = gimp->plug_in_defs; list; list = list->next)
     {
       PlugInDef *plug_in_def = list->data;
@@ -225,7 +223,7 @@ plug_ins_init (Gimp               *gimp,
 
       for (list2 = plug_in_def->procedures; list2; list2 = list2->next)
         {
-	  plug_ins_procedure_insert (gimp, list2->data);
+	  plug_ins_procedure_add (gimp, list2->data);
         }
     }
 
@@ -363,17 +361,6 @@ plug_ins_exit (Gimp *gimp)
   gimp->plug_in_procedures = NULL;
 }
 
-void
-plug_ins_add_internal (Gimp                *gimp,
-                       GimpPlugInProcedure *proc)
-{
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
-
-  gimp->plug_in_procedures = g_slist_prepend (gimp->plug_in_procedures,
-                                              g_object_ref (proc));
-}
-
 GimpPlugInProcedure *
 plug_ins_file_register_magic (Gimp        *gimp,
                               const gchar *name,
@@ -448,6 +435,56 @@ plug_ins_file_register_thumb_loader (Gimp        *gimp,
     gimp_plug_in_procedure_set_thumb_loader (proc, thumb_proc);
 
   return proc;
+}
+
+void
+plug_ins_procedure_add (Gimp                *gimp,
+                        GimpPlugInProcedure *proc)
+{
+  GSList *list;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
+
+  for (list = gimp->plug_in_procedures; list; list = list->next)
+    {
+      GimpPlugInProcedure *tmp_proc = list->data;
+
+      if (strcmp (GIMP_OBJECT (proc)->name,
+                  GIMP_OBJECT (tmp_proc)->name) == 0)
+        {
+          GSList *list2;
+
+          list->data = g_object_ref (proc);
+
+          g_printerr ("removing duplicate PDB procedure \"%s\" "
+                      "registered by '%s'\n",
+                      GIMP_OBJECT (tmp_proc)->name,
+                      gimp_filename_to_utf8 (tmp_proc->prog));
+
+          /* search the plugin list to see if any plugins had references to
+           * the tmp_proc.
+           */
+          for (list2 = gimp->plug_in_defs; list2; list2 = list2->next)
+            {
+              PlugInDef *plug_in_def = list2->data;
+
+              if (g_slist_find (plug_in_def->procedures, tmp_proc))
+                plug_in_def_remove_procedure (plug_in_def, tmp_proc);
+            }
+
+          /* also remove it from the lists of load and save procs */
+          gimp->load_procs = g_slist_remove (gimp->load_procs, tmp_proc);
+          gimp->save_procs = g_slist_remove (gimp->save_procs, tmp_proc);
+
+          g_object_unref (tmp_proc);
+
+          return;
+        }
+    }
+
+  gimp->plug_in_procedures = g_slist_prepend (gimp->plug_in_procedures,
+                                              g_object_ref (proc));
 }
 
 void
@@ -693,53 +730,6 @@ plug_ins_add_to_db (Gimp        *gimp,
           g_value_array_free (return_vals);
 	}
     }
-}
-
-static void
-plug_ins_procedure_insert (Gimp                *gimp,
-                           GimpPlugInProcedure *proc)
-{
-  GSList *list;
-
-  for (list = gimp->plug_in_procedures; list; list = list->next)
-    {
-      GimpPlugInProcedure *tmp_proc = list->data;
-
-      if (strcmp (GIMP_OBJECT (proc)->name,
-                  GIMP_OBJECT (tmp_proc)->name) == 0)
-	{
-          GSList *list2;
-
-	  list->data = g_object_ref (proc);
-
-          g_printerr ("removing duplicate PDB procedure \"%s\" "
-                      "registered by '%s'\n",
-                      GIMP_OBJECT (tmp_proc)->name,
-                      gimp_filename_to_utf8 (tmp_proc->prog));
-
-          /* search the plugin list to see if any plugins had references to
-           * the tmp_proc.
-           */
-          for (list2 = gimp->plug_in_defs; list2; list2 = list2->next)
-            {
-              PlugInDef *plug_in_def = list2->data;
-
-              if (g_slist_find (plug_in_def->procedures, tmp_proc))
-                plug_in_def_remove_procedure (plug_in_def, tmp_proc);
-            }
-
-          /* also remove it from the lists of load and save procs */
-          gimp->load_procs = g_slist_remove (gimp->load_procs, tmp_proc);
-          gimp->save_procs = g_slist_remove (gimp->save_procs, tmp_proc);
-
-          g_object_unref (tmp_proc);
-
-	  return;
-	}
-    }
-
-  gimp->plug_in_procedures = g_slist_prepend (gimp->plug_in_procedures,
-                                              g_object_ref (proc));
 }
 
 static gint

@@ -1,5 +1,15 @@
 2006-04-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/plug-ins.[ch]: remove plug_ins_add_internal() and
+	made plug_ins_procedure_insert() public as plug_ins_procedure_add().
+	There's no reason internal plug-ins should be treated differently.
+
+	* app/xcf/xcf.c: use plug_ins_procedure_add().
+
+	* app/plug-in/plug-ins-help.c: fix comment.
+
+2006-04-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/plug-in-params.[ch] (plug_in_params_destroy):
 	removed this function. We only have shallow GPParam arrays in the
 	core that can be freed with g_free(), and gp_params_destroy()
