@@ -432,7 +432,7 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
 
   g_value_array_free (args);
   g_value_array_free (return_vals);
-  plug_in_params_destroy (proc_return.params, proc_return.nparams, FALSE);
+  g_free (proc_return.params);
 }
 
 static void

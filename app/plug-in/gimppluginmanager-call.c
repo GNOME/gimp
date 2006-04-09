@@ -117,7 +117,7 @@ plug_in_run (Gimp                *gimp,
           ! gimp_wire_flush (plug_in->my_write, plug_in))
         {
           g_free (config.display_name);
-          plug_in_params_destroy (proc_run.params, proc_run.nparams, FALSE);
+          g_free (proc_run.params);
 
           return_vals =
             gimp_procedure_get_return_values (GIMP_PROCEDURE (procedure), FALSE);
@@ -126,7 +126,7 @@ plug_in_run (Gimp                *gimp,
         }
 
       g_free (config.display_name);
-      plug_in_params_destroy (proc_run.params, proc_run.nparams, FALSE);
+      g_free (proc_run.params);
 
       plug_in_ref (plug_in);
 
@@ -214,7 +214,7 @@ plug_in_run_temp (Gimp                   *gimp,
       if (! gp_temp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
 	  ! gimp_wire_flush (plug_in->my_write, plug_in))
 	{
-          plug_in_params_destroy (proc_run.params, proc_run.nparams, FALSE);
+          g_free (proc_run.params);
           plug_in_proc_frame_pop (plug_in);
 
 	  return_vals =
@@ -223,7 +223,7 @@ plug_in_run_temp (Gimp                   *gimp,
 	  goto done;
 	}
 
-      plug_in_params_destroy (proc_run.params, proc_run.nparams, FALSE);
+      g_free (proc_run.params);
 
       plug_in_ref (plug_in);
       plug_in_proc_frame_ref (proc_frame);

@@ -29,9 +29,5 @@ GValueArray * plug_in_params_to_args (GParamSpec  **pspecs,
 GPParam     * plug_in_args_to_params (GValueArray  *args,
                                       gboolean      full_copy);
 
-void          plug_in_params_destroy (GPParam      *params,
-                                      gint          n_params,
-                                      gboolean      full_destroy);
-
 
 #endif /* __PLUG_IN_PARAMS_H__ */

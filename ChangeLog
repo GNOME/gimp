@@ -1,5 +1,15 @@
 2006-04-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/plug-in-params.[ch] (plug_in_params_destroy):
+	removed this function. We only have shallow GPParam arrays in the
+	core that can be freed with g_free(), and gp_params_destroy()
+	could always be used for freeing deep copies.
+
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-run.c: simply g_free() the GPParam arrays.
+
+2006-04-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/plug-in-params.[ch]: removed function
 	plug_in_proc_args_check().
 
