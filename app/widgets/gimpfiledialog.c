@@ -37,7 +37,7 @@
 
 #include "file/file-utils.h"
 
-#include "plug-in/plug-ins.h"
+#include "plug-in/plug-ins-locale.h"
 
 #include "pdb/gimp-pdb.h"
 #include "pdb/gimppluginprocedure.h"

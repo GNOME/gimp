@@ -31,6 +31,7 @@
 #include "core/gimpmarshal.h"
 
 #include "plug-in/plug-ins-help.h"
+#include "plug-in/plug-ins-locale.h"
 
 #include "pdb/gimppluginprocedure.h"
 

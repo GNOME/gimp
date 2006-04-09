@@ -70,32 +70,5 @@ void              plug_ins_menu_branch_add         (Gimp          *gimp,
                                                     const gchar   *menu_path,
                                                     const gchar   *menu_label);
 
-/* Add a locale domain */
-void              plug_ins_locale_domain_add       (Gimp          *gimp,
-                                                    const gchar   *prog_name,
-                                                    const gchar   *domain_name,
-                                                    const gchar   *domain_path);
-
-/* Retrieve a plug-ins locale domain */
-const gchar     * plug_ins_locale_domain           (Gimp          *gimp,
-                                                    const gchar   *prog_name,
-                                                    const gchar  **locale_path);
-
-/* Add a help domain */
-void              plug_ins_help_domain_add         (Gimp          *gimp,
-                                                    const gchar   *prog_name,
-                                                    const gchar   *domain_name,
-                                                    const gchar   *domain_uri);
-
-/* Retrieve a plug-ins help domain */
-const gchar     * plug_ins_help_domain             (Gimp          *gimp,
-                                                    const gchar   *prog_name,
-                                                    const gchar  **help_uri);
-
-/* Retrieve all help domains */
-gint              plug_ins_help_domains            (Gimp          *gimp,
-                                                    gchar       ***help_domains,
-                                                    gchar       ***help_uris);
-
 
 #endif /* __PLUG_INS_H__ */

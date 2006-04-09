@@ -42,35 +42,16 @@
 #include "pdb/gimptemporaryprocedure.h"
 
 #include "plug-in.h"
-#include "plug-ins.h"
 #include "plug-in-data.h"
 #include "plug-in-def.h"
 #include "plug-in-params.h"
 #include "plug-in-progress.h"
 #include "plug-in-rc.h"
+#include "plug-ins.h"
+#include "plug-ins-help.h"
+#include "plug-ins-locale.h"
 
 #include "gimp-intl.h"
-
-
-#define STD_PLUGINS_DOMAIN  GETTEXT_PACKAGE "-std-plug-ins"
-
-
-typedef struct _PlugInLocaleDomain PlugInLocaleDomain;
-typedef struct _PlugInHelpDomain   PlugInHelpDomain;
-
-struct _PlugInLocaleDomain
-{
-  gchar *prog_name;
-  gchar *domain_name;
-  gchar *domain_path;
-};
-
-struct _PlugInHelpDomain
-{
-  gchar *prog_name;
-  gchar *domain_name;
-  gchar *domain_uri;
-};
 
 
 static void   plug_ins_add_from_file     (const GimpDatafileData *file_data,
@@ -295,7 +276,8 @@ plug_ins_init (Gimp               *gimp,
                                                  plug_ins_file_proc_compare,
                                                  gimp);
 
-      gimp_menus_init (gimp, gimp->plug_in_defs, STD_PLUGINS_DOMAIN);
+      gimp_menus_init (gimp, gimp->plug_in_defs,
+                       plug_ins_standard_locale_domain ());
     }
 
   /* build list of automatically started extensions */
@@ -372,32 +354,8 @@ plug_ins_exit (Gimp *gimp)
   g_slist_free (gimp->plug_in_menu_branches);
   gimp->plug_in_menu_branches = NULL;
 
-  for (list = gimp->plug_in_locale_domains; list; list = list->next)
-    {
-      PlugInLocaleDomain *domain = list->data;
-
-      g_free (domain->prog_name);
-      g_free (domain->domain_name);
-      g_free (domain->domain_path);
-      g_free (domain);
-    }
-
-  g_slist_free (gimp->plug_in_locale_domains);
-  gimp->plug_in_locale_domains = NULL;
-
-  for (list = gimp->plug_in_help_domains; list; list = list->next)
-    {
-      PlugInHelpDomain *domain = list->data;
-
-      g_free (domain->prog_name);
-      g_free (domain->domain_name);
-      g_free (domain->domain_uri);
-      g_free (domain);
-    }
-
-  g_slist_free (gimp->plug_in_help_domains);
-  gimp->plug_in_help_domains = NULL;
-
+  plug_ins_locale_exit (gimp);
+  plug_ins_help_exit (gimp);
   plug_in_data_free (gimp);
 
   g_slist_foreach (gimp->plug_in_procedures, (GFunc) g_object_unref, NULL);
@@ -568,158 +526,6 @@ plug_ins_menu_branch_add (Gimp        *gimp,
   g_print ("added menu branch \"%s\" at path \"%s\"\n",
            branch->menu_label, branch->menu_path);
 #endif
-}
-
-void
-plug_ins_locale_domain_add (Gimp        *gimp,
-                            const gchar *prog_name,
-                            const gchar *domain_name,
-                            const gchar *domain_path)
-{
-  PlugInLocaleDomain *domain;
-
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (prog_name != NULL);
-  g_return_if_fail (domain_name != NULL);
-
-  domain = g_new (PlugInLocaleDomain, 1);
-
-  domain->prog_name   = g_strdup (prog_name);
-  domain->domain_name = g_strdup (domain_name);
-  domain->domain_path = g_strdup (domain_path);
-
-  gimp->plug_in_locale_domains = g_slist_prepend (gimp->plug_in_locale_domains,
-                                                  domain);
-
-#ifdef VERBOSE
-  g_print ("added locale domain \"%s\" for path \"%s\"\n",
-           domain->domain_name ? domain->domain_name : "(null)",
-           domain->domain_path ?
-           gimp_filename_to_utf8 (domain->domain_path) : "(null)");
-#endif
-}
-
-const gchar *
-plug_ins_locale_domain (Gimp         *gimp,
-                        const gchar  *prog_name,
-                        const gchar **domain_path)
-{
-  GSList *list;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  if (domain_path)
-    *domain_path = gimp_locale_directory ();
-
-  /*  A NULL prog_name is GIMP itself, return the default domain  */
-  if (! prog_name)
-    return NULL;
-
-  for (list = gimp->plug_in_locale_domains; list; list = list->next)
-    {
-      PlugInLocaleDomain *domain = list->data;
-
-      if (domain && domain->prog_name &&
-          ! strcmp (domain->prog_name, prog_name))
-        {
-          if (domain_path && domain->domain_path)
-            *domain_path = domain->domain_path;
-
-          return domain->domain_name;
-        }
-    }
-
-  return STD_PLUGINS_DOMAIN;
-}
-
-void
-plug_ins_help_domain_add (Gimp        *gimp,
-                          const gchar *prog_name,
-                          const gchar *domain_name,
-                          const gchar *domain_uri)
-{
-  PlugInHelpDomain *domain;
-
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (prog_name != NULL);
-  g_return_if_fail (domain_name != NULL);
-
-  domain = g_new (PlugInHelpDomain, 1);
-
-  domain->prog_name   = g_strdup (prog_name);
-  domain->domain_name = g_strdup (domain_name);
-  domain->domain_uri  = g_strdup (domain_uri);
-
-  gimp->plug_in_help_domains = g_slist_prepend (gimp->plug_in_help_domains,
-                                                domain);
-
-#ifdef VERBOSE
-  g_print ("added help domain \"%s\" for base uri \"%s\"\n",
-           domain->domain_name ? domain->domain_name : "(null)",
-           domain->domain_uri  ? domain->domain_uri  : "(null)");
-#endif
-}
-
-const gchar *
-plug_ins_help_domain (Gimp         *gimp,
-                      const gchar  *prog_name,
-                      const gchar **domain_uri)
-{
-  GSList *list;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  if (domain_uri)
-    *domain_uri = NULL;
-
-  /*  A NULL prog_name is GIMP itself, return the default domain  */
-  if (! prog_name)
-    return NULL;
-
-  for (list = gimp->plug_in_help_domains; list; list = list->next)
-    {
-      PlugInHelpDomain *domain = list->data;
-
-      if (domain && domain->prog_name &&
-          ! strcmp (domain->prog_name, prog_name))
-        {
-          if (domain_uri && domain->domain_uri)
-            *domain_uri = domain->domain_uri;
-
-          return domain->domain_name;
-        }
-    }
-
-  return NULL;
-}
-
-gint
-plug_ins_help_domains (Gimp    *gimp,
-                       gchar ***help_domains,
-                       gchar ***help_uris)
-{
-  GSList *list;
-  gint    n_domains;
-  gint    i;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), 0);
-  g_return_val_if_fail (help_domains != NULL, 0);
-  g_return_val_if_fail (help_uris != NULL, 0);
-
-  n_domains = g_slist_length (gimp->plug_in_help_domains);
-
-  *help_domains = g_new0 (gchar *, n_domains);
-  *help_uris    = g_new0 (gchar *, n_domains);
-
-  for (list = gimp->plug_in_help_domains, i = 0; list; list = list->next, i++)
-    {
-      PlugInHelpDomain *domain = list->data;
-
-      (*help_domains)[i] = g_strdup (domain->domain_name);
-      (*help_uris)[i]    = g_strdup (domain->domain_uri);
-    }
-
-  return n_domains;
 }
 
 
@@ -902,7 +708,7 @@ plug_ins_procedure_insert (Gimp                *gimp,
       if (strcmp (GIMP_OBJECT (proc)->name,
                   GIMP_OBJECT (tmp_proc)->name) == 0)
 	{
-          GSList *list3;
+          GSList *list2;
 
 	  list->data = g_object_ref (proc);
 
@@ -914,12 +720,12 @@ plug_ins_procedure_insert (Gimp                *gimp,
           /* search the plugin list to see if any plugins had references to
            * the tmp_proc.
            */
-          for (list3 = gimp->plug_in_defs; list3; list3 = list3->next)
+          for (list2 = gimp->plug_in_defs; list2; list2 = list2->next)
             {
-              PlugInDef *plug_in_def2 = list3->data;
+              PlugInDef *plug_in_def = list2->data;
 
-              if (g_slist_find (plug_in_def2->procedures, tmp_proc))
-                plug_in_def_remove_procedure (plug_in_def2, tmp_proc);
+              if (g_slist_find (plug_in_def->procedures, tmp_proc))
+                plug_in_def_remove_procedure (plug_in_def, tmp_proc);
             }
 
           /* also remove it from the lists of load and save procs */
@@ -944,6 +750,8 @@ plug_ins_file_proc_compare (gconstpointer a,
   Gimp                      *gimp   = data;
   const GimpPlugInProcedure *proc_a = a;
   const GimpPlugInProcedure *proc_b = b;
+  const gchar               *domain_a;
+  const gchar               *domain_b;
   gchar                     *label_a;
   gchar                     *label_b;
   gint                       retval = 0;
@@ -954,14 +762,11 @@ plug_ins_file_proc_compare (gconstpointer a,
   if (strncmp (proc_b->prog, "gimp-xcf", 8) == 0)
     return 1;
 
-  label_a = gimp_plug_in_procedure_get_label (proc_a,
-                                              plug_ins_locale_domain (gimp,
-                                                                      proc_a->prog,
-                                                                      NULL));
-  label_b = gimp_plug_in_procedure_get_label (proc_b,
-                                              plug_ins_locale_domain (gimp,
-                                                                      proc_b->prog,
-                                                                      NULL));
+  domain_a = plug_ins_locale_domain (gimp, proc_a->prog, NULL);
+  domain_b = plug_ins_locale_domain (gimp, proc_b->prog, NULL);
+
+  label_a = gimp_plug_in_procedure_get_label (proc_a, domain_a);
+  label_b = gimp_plug_in_procedure_get_label (proc_b, domain_b);
 
   if (label_a && label_b)
     retval = g_utf8_collate (label_a, label_b);

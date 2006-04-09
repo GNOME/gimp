@@ -79,13 +79,14 @@
 #include "pdb/gimptemporaryprocedure.h"
 
 #include "plug-in.h"
-#include "plug-ins.h"
 #include "plug-in-debug.h"
 #include "plug-in-def.h"
 #include "plug-in-message.h"
 #include "plug-in-params.h"
 #include "plug-in-progress.h"
 #include "plug-in-shm.h"
+#include "plug-ins.h"
+#include "plug-ins-locale.h"
 
 #include "gimp-intl.h"
 
@@ -106,6 +107,7 @@ static gboolean   plug_in_recv_message  (GIOChannel   *channel,
 #if !defined(G_OS_WIN32) && !defined (G_WITH_CYGWIN)
 static void       plug_in_prep_for_exec (gpointer      data);
 #endif
+
 
 void
 plug_in_init (Gimp *gimp)

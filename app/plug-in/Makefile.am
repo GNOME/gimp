@@ -44,6 +44,10 @@ libappplug_in_a_SOURCES = \
 	plug-in-shm.h		\
 	plug-ins.c		\
 	plug-ins.h		\
+	plug-ins-help.c		\
+	plug-ins-help.h		\
+	plug-ins-locale.c	\
+	plug-ins-locale.h	\
 	plug-ins-query.c	\
 	plug-ins-query.h
 

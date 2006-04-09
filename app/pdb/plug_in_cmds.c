@@ -26,7 +26,6 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpbase/gimpprotocol.h"
 
 #include "pdb-types.h"
 #include "gimp-pdb.h"
@@ -36,8 +35,8 @@
 #include "core/gimp.h"
 #include "gimppluginprocedure.h"
 #include "plug-in/plug-in-def.h"
-#include "plug-in/plug-in-params.h"
 #include "plug-in/plug-in.h"
+#include "plug-in/plug-ins-help.h"
 #include "plug-in/plug-ins-query.h"
 #include "plug-in/plug-ins.h"
 

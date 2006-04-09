@@ -32,8 +32,8 @@
 
 #include "pdb/gimppluginprocedure.h"
 
-#include "plug-in/plug-ins.h"
 #include "plug-in/plug-in-def.h"
+#include "plug-in/plug-ins-locale.h"
 
 #include "widgets/gimpuimanager.h"
 

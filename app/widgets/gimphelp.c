@@ -39,7 +39,7 @@
 #include "pdb/gimp-pdb.h"
 #include "pdb/gimpprocedure.h"
 
-#include "plug-in/plug-ins.h"
+#include "plug-in/plug-ins-help.h"
 
 #include "gimphelp.h"
 #include "gimphelp-ids.h"
