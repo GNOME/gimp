@@ -1,3 +1,15 @@
+2006-04-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in-file.c: some cleanup.
+
+	(plug_in_file_register_load_handler)
+	(plug_in_file_register_save_handler): first check if we have the
+	procedure, then check its arguments, not the other way around
+	(using an additional lookup). Old weird code was needed because
+	these functions were split between app/plug-in and app/pdb.
+
+	* app/plug-in/plug-in-file.h: whitespace.
+
 2006-04-10  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpzoommodel.c (gimp_zoom_model_zoom_step):

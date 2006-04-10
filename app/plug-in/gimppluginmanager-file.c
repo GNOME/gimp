@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * plug-ins.c
+ * plug-in-file.c
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,27 +44,12 @@ plug_in_file_register_load_handler (Gimp        *gimp,
                                     const gchar *prefixes,
                                     const gchar *magics)
 {
-  GimpProcedure       *procedure;
   GimpPlugInProcedure *file_proc;
+  GimpProcedure       *procedure;
   GSList              *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (name != NULL, FALSE);
-
-  procedure = gimp_pdb_lookup (gimp, name);
-
-  if (procedure &&
-      ((procedure->num_args   < 3)                        ||
-       (procedure->num_values < 1)                        ||
-       ! GIMP_IS_PARAM_SPEC_INT32    (procedure->args[0]) ||
-       ! G_IS_PARAM_SPEC_STRING      (procedure->args[1]) ||
-       ! G_IS_PARAM_SPEC_STRING      (procedure->args[2]) ||
-       ! GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->values[0])))
-    {
-      g_message ("load handler \"%s\" does not take the standard "
-                 "load handler args", name);
-      return FALSE;
-    }
 
   if (gimp->current_plug_in && gimp->current_plug_in->plug_in_def)
     list = gimp->current_plug_in->plug_in_def->procedures;
@@ -77,6 +62,20 @@ plug_in_file_register_load_handler (Gimp        *gimp,
     {
       g_message ("attempt to register nonexistent load handler \"%s\"",
 		 name);
+      return FALSE;
+    }
+
+  procedure = GIMP_PROCEDURE (file_proc);
+
+  if ((procedure->num_args   < 3)                        ||
+      (procedure->num_values < 1)                        ||
+      ! GIMP_IS_PARAM_SPEC_INT32    (procedure->args[0]) ||
+      ! G_IS_PARAM_SPEC_STRING      (procedure->args[1]) ||
+      ! G_IS_PARAM_SPEC_STRING      (procedure->args[2]) ||
+      ! GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->values[0]))
+    {
+      g_message ("load handler \"%s\" does not take the standard "
+                 "load handler args", name);
       return FALSE;
     }
 
@@ -95,27 +94,12 @@ plug_in_file_register_save_handler (Gimp        *gimp,
                                     const gchar *extensions,
                                     const gchar *prefixes)
 {
-  GimpProcedure       *procedure;
   GimpPlugInProcedure *file_proc;
+  GimpProcedure       *procedure;
   GSList              *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (name != NULL, FALSE);
-
-  procedure = gimp_pdb_lookup (gimp, name);
-
-  if (procedure &&
-      ((procedure->num_args < 5)                             ||
-       ! GIMP_IS_PARAM_SPEC_INT32       (procedure->args[0]) ||
-       ! GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1]) ||
-       ! GIMP_IS_PARAM_SPEC_DRAWABLE_ID (procedure->args[2]) ||
-       ! G_IS_PARAM_SPEC_STRING         (procedure->args[3]) ||
-       ! G_IS_PARAM_SPEC_STRING         (procedure->args[4])))
-    {
-      g_message ("save handler \"%s\" does not take the standard "
-                 "save handler args", name);
-      return FALSE;
-    }
 
   if (gimp->current_plug_in && gimp->current_plug_in->plug_in_def)
     list = gimp->current_plug_in->plug_in_def->procedures;
@@ -128,6 +112,20 @@ plug_in_file_register_save_handler (Gimp        *gimp,
     {
       g_message ("attempt to register nonexistent save handler \"%s\"",
 		 name);
+      return FALSE;
+    }
+
+  procedure = GIMP_PROCEDURE (file_proc);
+
+  if ((procedure->num_args < 5)                             ||
+      ! GIMP_IS_PARAM_SPEC_INT32       (procedure->args[0]) ||
+      ! GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1]) ||
+      ! GIMP_IS_PARAM_SPEC_DRAWABLE_ID (procedure->args[2]) ||
+      ! G_IS_PARAM_SPEC_STRING         (procedure->args[3]) ||
+      ! G_IS_PARAM_SPEC_STRING         (procedure->args[4]))
+    {
+      g_message ("save handler \"%s\" does not take the standard "
+                 "save handler args", name);
       return FALSE;
     }
 
@@ -145,7 +143,7 @@ plug_in_file_register_mime_type (Gimp        *gimp,
                                  const gchar *name,
                                  const gchar *mime_type)
 {
-  GimpPlugInProcedure *proc;
+  GimpPlugInProcedure *file_proc;
   GSList              *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
@@ -157,12 +155,12 @@ plug_in_file_register_mime_type (Gimp        *gimp,
   else
     list = gimp->plug_in_procedures;
 
-  proc = gimp_plug_in_procedure_find (list, name);
+  file_proc = gimp_plug_in_procedure_find (list, name);
 
-  if (! proc)
+  if (! file_proc)
     return FALSE;
 
-  gimp_plug_in_procedure_set_mime_type (proc, mime_type);
+  gimp_plug_in_procedure_set_mime_type (file_proc, mime_type);
 
   return TRUE;
 }
@@ -172,7 +170,7 @@ plug_in_file_register_thumb_loader (Gimp        *gimp,
                                     const gchar *load_proc,
                                     const gchar *thumb_proc)
 {
-  GimpPlugInProcedure *proc;
+  GimpPlugInProcedure *file_proc;
   GSList              *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
@@ -184,12 +182,12 @@ plug_in_file_register_thumb_loader (Gimp        *gimp,
   else
     list = gimp->plug_in_procedures;
 
-  proc = gimp_plug_in_procedure_find (list, load_proc);
+  file_proc = gimp_plug_in_procedure_find (list, load_proc);
 
-  if (! proc)
+  if (! file_proc)
     return FALSE;
 
-  gimp_plug_in_procedure_set_thumb_loader (proc, thumb_proc);
+  gimp_plug_in_procedure_set_thumb_loader (file_proc, thumb_proc);
 
   return TRUE;
 }

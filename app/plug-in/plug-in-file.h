@@ -22,23 +22,23 @@
 #define __PLUG_IN_FILE_H__
 
 
-gboolean   plug_in_file_register_load_handler (Gimp          *gimp,
-                                               const gchar   *name,
-                                               const gchar   *extensions,
-                                               const gchar   *prefixes,
-                                               const gchar   *magics);
-gboolean   plug_in_file_register_save_handler (Gimp          *gimp,
-                                               const gchar   *name,
-                                               const gchar   *extensions,
-                                               const gchar   *prefixes);
+gboolean   plug_in_file_register_load_handler (Gimp        *gimp,
+                                               const gchar *name,
+                                               const gchar *extensions,
+                                               const gchar *prefixes,
+                                               const gchar *magics);
+gboolean   plug_in_file_register_save_handler (Gimp        *gimp,
+                                               const gchar *name,
+                                               const gchar *extensions,
+                                               const gchar *prefixes);
 
-gboolean   plug_in_file_register_mime_type    (Gimp          *gimp,
-                                               const gchar   *name,
-                                               const gchar   *mime_type);
+gboolean   plug_in_file_register_mime_type    (Gimp        *gimp,
+                                               const gchar *name,
+                                               const gchar *mime_type);
 
-gboolean   plug_in_file_register_thumb_loader (Gimp          *gimp,
-                                               const gchar   *load_proc,
-                                               const gchar   *thumb_proc);
+gboolean   plug_in_file_register_thumb_loader (Gimp        *gimp,
+                                               const gchar *load_proc,
+                                               const gchar *thumb_proc);
 
 
 #endif /* __PLUG_IN_FILE_H__ */
