@@ -34,7 +34,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry text_editor_actions[] =
+static const GimpActionEntry text_editor_actions[] =
 {
   { "text-editor-toolbar", GTK_STOCK_EDIT,
     "Text Editor Toolbar", NULL, NULL, NULL,
@@ -53,7 +53,7 @@ static GimpActionEntry text_editor_actions[] =
     NULL }
 };
 
-static GimpRadioActionEntry text_editor_direction_actions[] =
+static const GimpRadioActionEntry text_editor_direction_actions[] =
 {
   { "text-editor-direction-ltr", GIMP_STOCK_TEXT_DIR_LTR,
     N_("LTR"), "",

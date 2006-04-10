@@ -50,7 +50,7 @@ static void tool_options_actions_update_presets (GimpActionGroup *group,
 
 /*  global variables  */
 
-static GimpActionEntry tool_options_actions[] =
+static const GimpActionEntry tool_options_actions[] =
 {
   { "tool-options-popup", GIMP_STOCK_TOOL_OPTIONS,
     N_("Tool Options Menu"), NULL, NULL, NULL,

@@ -33,7 +33,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry help_actions[] =
+static const GimpActionEntry help_actions[] =
 {
   { "help-menu", NULL, N_("_Help") },
 

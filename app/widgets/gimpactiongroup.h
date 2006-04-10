@@ -131,46 +131,45 @@ struct _GimpPlugInActionEntry
 };
 
 
-GType            gimp_action_group_get_type (void) G_GNUC_CONST;
+GType            gimp_action_group_get_type   (void) G_GNUC_CONST;
 
-GimpActionGroup *gimp_action_group_new      (Gimp                  *gimp,
-                                             const gchar           *name,
-                                             const gchar           *label,
-                                             const gchar           *stock_id,
-                                             gboolean               mnemonics,
-                                             gpointer               user_data,
-                                             GimpActionGroupUpdateFunc update_func);
+GimpActionGroup *gimp_action_group_new        (Gimp                  *gimp,
+                                               const gchar           *name,
+                                               const gchar           *label,
+                                               const gchar           *stock_id,
+                                               gboolean               mnemonics,
+                                               gpointer               user_data,
+                                               GimpActionGroupUpdateFunc update_func);
 
-GList *gimp_action_groups_from_name         (const gchar           *name);
+GList *gimp_action_groups_from_name           (const gchar           *name);
 
-void   gimp_action_group_update             (GimpActionGroup       *group,
-                                             gpointer               update_data);
+void   gimp_action_group_update               (GimpActionGroup       *group,
+                                               gpointer               update_data);
 
-void   gimp_action_group_add_actions        (GimpActionGroup       *group,
-                                             GimpActionEntry       *entries,
-                                             guint                  n_entries);
-void   gimp_action_group_add_toggle_actions (GimpActionGroup       *group,
-                                             GimpToggleActionEntry *entries,
-                                             guint                  n_entries);
-GSList *gimp_action_group_add_radio_actions (GimpActionGroup       *group,
-                                             GimpRadioActionEntry  *entries,
-                                             guint                  n_entries,
-                                             GSList                *radio_group,
-                                             gint                   value,
-                                             GCallback              callback);
-
-void   gimp_action_group_add_enum_actions   (GimpActionGroup       *group,
-                                             GimpEnumActionEntry   *entries,
-                                             guint                  n_entries,
-                                             GCallback              callback);
-void   gimp_action_group_add_string_actions (GimpActionGroup       *group,
-                                             GimpStringActionEntry *entries,
-                                             guint                  n_entries,
-                                             GCallback              callback);
-void   gimp_action_group_add_plug_in_actions(GimpActionGroup       *group,
-                                             GimpPlugInActionEntry *entries,
-                                             guint                  n_entries,
-                                             GCallback              callback);
+void   gimp_action_group_add_actions          (GimpActionGroup             *group,
+                                               const GimpActionEntry       *entries,
+                                               guint                        n_entries);
+void   gimp_action_group_add_toggle_actions   (GimpActionGroup             *group,
+                                               const GimpToggleActionEntry *entries,
+                                               guint                        n_entries);
+GSList *gimp_action_group_add_radio_actions   (GimpActionGroup             *group,
+                                               const GimpRadioActionEntry  *entries,
+                                               guint                        n_entries,
+                                               GSList                      *radio_group,
+                                               gint                         value,
+                                               GCallback                    callback);
+void   gimp_action_group_add_enum_actions     (GimpActionGroup             *group,
+                                               const GimpEnumActionEntry   *entries,
+                                               guint                        n_entries,
+                                               GCallback                    callback);
+void   gimp_action_group_add_string_actions   (GimpActionGroup             *group,
+                                               const GimpStringActionEntry *entries,
+                                               guint                         n_entries,
+                                               GCallback                     callback);
+void   gimp_action_group_add_plug_in_actions  (GimpActionGroup             *group,
+                                               const GimpPlugInActionEntry *entries,
+                                               guint                        n_entries,
+                                               GCallback                    callback);
 
 void   gimp_action_group_set_action_visible   (GimpActionGroup     *group,
                                                const gchar         *action_name,

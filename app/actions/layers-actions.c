@@ -42,7 +42,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry layers_actions[] =
+static const GimpActionEntry layers_actions[] =
 {
   { "layers-popup", GIMP_STOCK_LAYERS,
     N_("Layers Menu"), NULL, NULL, NULL,
@@ -190,7 +190,7 @@ static GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_ALPHA_REMOVE }
 };
 
-static GimpToggleActionEntry layers_toggle_actions[] =
+static const GimpToggleActionEntry layers_toggle_actions[] =
 {
   { "layers-lock-alpha", GIMP_STOCK_TRANSPARENCY,
     N_("Lock Alph_a Channel"), NULL,
@@ -220,7 +220,7 @@ static GimpToggleActionEntry layers_toggle_actions[] =
     GIMP_HELP_LAYER_MASK_DISABLE }
 };
 
-static GimpEnumActionEntry layers_mask_apply_actions[] =
+static const GimpEnumActionEntry layers_mask_apply_actions[] =
 {
   { "layers-mask-apply", NULL,
     N_("Apply Layer _Mask"), NULL,
@@ -235,7 +235,7 @@ static GimpEnumActionEntry layers_mask_apply_actions[] =
     GIMP_HELP_LAYER_MASK_DELETE }
 };
 
-static GimpEnumActionEntry layers_mask_to_selection_actions[] =
+static const GimpEnumActionEntry layers_mask_to_selection_actions[] =
 {
   { "layers-mask-selection-replace", GIMP_STOCK_SELECTION_REPLACE,
     N_("_Mask to Selection"), NULL,
@@ -262,7 +262,7 @@ static GimpEnumActionEntry layers_mask_to_selection_actions[] =
     GIMP_HELP_LAYER_MASK_SELECTION_INTERSECT }
 };
 
-static GimpEnumActionEntry layers_alpha_to_selection_actions[] =
+static const GimpEnumActionEntry layers_alpha_to_selection_actions[] =
 {
   { "layers-alpha-selection-replace", GIMP_STOCK_SELECTION_REPLACE,
     N_("Al_pha to Selection"), NULL,
@@ -289,7 +289,7 @@ static GimpEnumActionEntry layers_alpha_to_selection_actions[] =
     GIMP_HELP_LAYER_ALPHA_SELECTION_INTERSECT }
 };
 
-static GimpEnumActionEntry layers_select_actions[] =
+static const GimpEnumActionEntry layers_select_actions[] =
 {
   { "layers-select-top", NULL,
     N_("Select _Top Layer"), "Home", NULL,
@@ -312,7 +312,7 @@ static GimpEnumActionEntry layers_select_actions[] =
     GIMP_HELP_LAYER_NEXT }
 };
 
-static GimpEnumActionEntry layers_opacity_actions[] =
+static const GimpEnumActionEntry layers_opacity_actions[] =
 {
   { "layers-opacity-set", GIMP_STOCK_TRANSPARENCY,
     N_("Set Opacity"), NULL, NULL,
@@ -344,7 +344,7 @@ static GimpEnumActionEntry layers_opacity_actions[] =
     GIMP_HELP_LAYER_OPACITY }
 };
 
-static GimpEnumActionEntry layers_mode_actions[] =
+static const GimpEnumActionEntry layers_mode_actions[] =
 {
   { "layers-mode-first", GIMP_STOCK_TOOL_PENCIL,
     "First Layer Mode", NULL, NULL,

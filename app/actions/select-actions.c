@@ -38,7 +38,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry select_actions[] =
+static const GimpActionEntry select_actions[] =
 {
   { "selection-editor-popup", GIMP_STOCK_TOOL_RECT_SELECT,
     N_("Selection Editor Menu"), NULL, NULL, NULL,

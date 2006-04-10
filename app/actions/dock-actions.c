@@ -37,7 +37,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry dock_actions[] =
+static const GimpActionEntry dock_actions[] =
 {
   { "dock-move-to-screen-menu", GIMP_STOCK_MOVE_TO_SCREEN,
     N_("M_ove to Screen"), NULL, NULL, NULL,
@@ -54,7 +54,7 @@ static GimpActionEntry dock_actions[] =
     NULL }
 };
 
-static GimpToggleActionEntry dock_toggle_actions[] =
+static const GimpToggleActionEntry dock_toggle_actions[] =
 {
   { "dock-show-image-menu", NULL,
     N_("_Show Image Selection"), NULL, NULL,

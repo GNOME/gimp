@@ -36,14 +36,14 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry brush_editor_actions[] =
+static const GimpActionEntry brush_editor_actions[] =
 {
   { "brush-editor-popup", GIMP_STOCK_BRUSH,
     N_("Brush Editor Menu"), NULL, NULL, NULL,
     GIMP_HELP_BRUSH_EDITOR_DIALOG }
 };
 
-static GimpToggleActionEntry brush_editor_toggle_actions[] =
+static const GimpToggleActionEntry brush_editor_toggle_actions[] =
 {
   { "brush-editor-edit-active", GIMP_STOCK_LINKED,
     N_("Edit Active Brush"), NULL, NULL,

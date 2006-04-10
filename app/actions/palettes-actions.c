@@ -38,7 +38,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry palettes_actions[] =
+static const GimpActionEntry palettes_actions[] =
 {
   { "palettes-popup", GIMP_STOCK_PALETTE,
     N_("Palettes Menu"), NULL, NULL, NULL,
@@ -87,7 +87,7 @@ static GimpActionEntry palettes_actions[] =
     GIMP_HELP_PALETTE_REFRESH }
 };
 
-static GimpStringActionEntry palettes_edit_actions[] =
+static const GimpStringActionEntry palettes_edit_actions[] =
 {
   { "palettes-edit", GTK_STOCK_EDIT,
     N_("_Edit Palette..."), NULL,

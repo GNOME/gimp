@@ -39,7 +39,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry drawable_actions[] =
+static const GimpActionEntry drawable_actions[] =
 {
   { "drawable-desaturate", GIMP_STOCK_CONVERT_GRAYSCALE,
     N_("_Desaturate..."), NULL,
@@ -72,7 +72,7 @@ static GimpActionEntry drawable_actions[] =
     GIMP_HELP_LAYER_OFFSET }
 };
 
-static GimpToggleActionEntry drawable_toggle_actions[] =
+static const GimpToggleActionEntry drawable_toggle_actions[] =
 {
   { "drawable-linked", GIMP_STOCK_LINKED,
     N_("_Linked"), NULL,
@@ -89,7 +89,7 @@ static GimpToggleActionEntry drawable_toggle_actions[] =
     GIMP_HELP_LAYER_VISIBLE }
 };
 
-static GimpEnumActionEntry drawable_flip_actions[] =
+static const GimpEnumActionEntry drawable_flip_actions[] =
 {
   { "drawable-flip-horizontal", GIMP_STOCK_FLIP_HORIZONTAL,
     N_("Flip _Horizontally"), NULL,
@@ -104,7 +104,7 @@ static GimpEnumActionEntry drawable_flip_actions[] =
     GIMP_HELP_LAYER_FLIP_VERTICAL }
 };
 
-static GimpEnumActionEntry drawable_rotate_actions[] =
+static const GimpEnumActionEntry drawable_rotate_actions[] =
 {
   { "drawable-rotate-90", GIMP_STOCK_ROTATE_90,
     N_("Rotate 90° _clockwise"), NULL,

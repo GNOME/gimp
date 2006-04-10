@@ -34,7 +34,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry error_console_actions[] =
+static const GimpActionEntry error_console_actions[] =
 {
   { "error-console-popup", GIMP_STOCK_WARNING,
     N_("Error Console Menu"), NULL, NULL, NULL,
@@ -47,7 +47,7 @@ static GimpActionEntry error_console_actions[] =
     GIMP_HELP_ERRORS_CLEAR }
 };
 
-static GimpEnumActionEntry error_console_save_actions[] =
+static const GimpEnumActionEntry error_console_save_actions[] =
 {
   { "error-console-save-all", GTK_STOCK_SAVE_AS,
     N_("Save _All Errors to File..."), "",

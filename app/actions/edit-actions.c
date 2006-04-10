@@ -56,7 +56,7 @@ static void   edit_actions_pattern_changed    (GimpContext     *context,
                                                GimpActionGroup *group);
 
 
-static GimpActionEntry edit_actions[] =
+static const GimpActionEntry edit_actions[] =
 {
   { "edit-menu",          NULL, N_("_Edit")     },
   { "edit-paste-as-menu", NULL, N_("_Paste as") },
@@ -153,7 +153,7 @@ static GimpActionEntry edit_actions[] =
     GIMP_HELP_EDIT_CLEAR }
 };
 
-static GimpEnumActionEntry edit_fill_actions[] =
+static const GimpEnumActionEntry edit_fill_actions[] =
 {
   { "edit-fill-fg", GIMP_STOCK_TOOL_BUCKET_FILL,
     N_("Fill with _FG Color"), "<control>comma",

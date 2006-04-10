@@ -36,7 +36,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry templates_actions[] =
+static const GimpActionEntry templates_actions[] =
 {
   { "templates-popup", GIMP_STOCK_TEMPLATE,
     N_("Templates Menu"), NULL, NULL, NULL,

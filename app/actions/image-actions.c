@@ -41,7 +41,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry image_actions[] =
+static const GimpActionEntry image_actions[] =
 {
   { "toolbox-menubar", NULL,
     N_("Toolbox Menu"), NULL, NULL, NULL,
@@ -141,7 +141,7 @@ static GimpActionEntry image_actions[] =
     GIMP_HELP_IMAGE_PROPERTIES }
 };
 
-static GimpEnumActionEntry image_convert_actions[] =
+static const GimpEnumActionEntry image_convert_actions[] =
 {
   { "image-convert-rgb", GIMP_STOCK_CONVERT_RGB,
     N_("_RGB"), NULL,
@@ -162,7 +162,7 @@ static GimpEnumActionEntry image_convert_actions[] =
     GIMP_HELP_IMAGE_CONVERT_INDEXED }
 };
 
-static GimpEnumActionEntry image_flip_actions[] =
+static const GimpEnumActionEntry image_flip_actions[] =
 {
   { "image-flip-horizontal", GIMP_STOCK_FLIP_HORIZONTAL,
     N_("Flip _Horizontally"), NULL,
@@ -177,7 +177,7 @@ static GimpEnumActionEntry image_flip_actions[] =
     GIMP_HELP_IMAGE_FLIP_VERTICAL }
 };
 
-static GimpEnumActionEntry image_rotate_actions[] =
+static const GimpEnumActionEntry image_rotate_actions[] =
 {
   { "image-rotate-90", GIMP_STOCK_ROTATE_90,
     N_("Rotate 90° _clockwise"), NULL,

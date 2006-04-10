@@ -1,3 +1,10 @@
+2006-04-10  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpactiongroup.[ch]: take const arrays of action
+	entries.
+
+	* app/actions/*-actions.c: declare action arrays as const.
+
 2006-04-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-ins.[ch]: removed the plug_ins_file_foo()

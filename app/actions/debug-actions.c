@@ -29,9 +29,10 @@
 #include "debug-actions.h"
 #include "debug-commands.h"
 
+
 #ifdef ENABLE_DEBUG_MENU
 
-static GimpActionEntry debug_actions[] =
+static const GimpActionEntry debug_actions[] =
 {
   { "debug-menu", NULL, "D_ebug" },
 

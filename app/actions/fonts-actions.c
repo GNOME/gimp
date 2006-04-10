@@ -38,7 +38,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry fonts_actions[] =
+static const GimpActionEntry fonts_actions[] =
 {
   { "fonts-popup", GIMP_STOCK_FONT,
     N_("Fonts Menu"), NULL, NULL, NULL,

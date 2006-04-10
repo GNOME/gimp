@@ -333,9 +333,9 @@ gimp_action_group_update (GimpActionGroup *group,
 }
 
 void
-gimp_action_group_add_actions (GimpActionGroup *group,
-                               GimpActionEntry *entries,
-                               guint            n_entries)
+gimp_action_group_add_actions (GimpActionGroup       *group,
+                               const GimpActionEntry *entries,
+                               guint                  n_entries)
 {
   gint i;
 
@@ -378,9 +378,9 @@ gimp_action_group_add_actions (GimpActionGroup *group,
 }
 
 void
-gimp_action_group_add_toggle_actions (GimpActionGroup       *group,
-                                      GimpToggleActionEntry *entries,
-                                      guint                  n_entries)
+gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
+                                      const GimpToggleActionEntry *entries,
+                                      guint                        n_entries)
 {
   gint i;
 
@@ -425,12 +425,12 @@ gimp_action_group_add_toggle_actions (GimpActionGroup       *group,
 }
 
 GSList *
-gimp_action_group_add_radio_actions (GimpActionGroup      *group,
-                                     GimpRadioActionEntry *entries,
-                                     guint                 n_entries,
-                                     GSList               *radio_group,
-                                     gint                  value,
-                                     GCallback             callback)
+gimp_action_group_add_radio_actions (GimpActionGroup            *group,
+                                     const GimpRadioActionEntry *entries,
+                                     guint                       n_entries,
+                                     GSList                     *radio_group,
+                                     gint                        value,
+                                     GCallback                   callback)
 {
   GtkRadioAction *first_action = NULL;
   gint            i;
@@ -486,10 +486,10 @@ gimp_action_group_add_radio_actions (GimpActionGroup      *group,
 }
 
 void
-gimp_action_group_add_enum_actions (GimpActionGroup     *group,
-                                    GimpEnumActionEntry *entries,
-                                    guint                n_entries,
-                                    GCallback            callback)
+gimp_action_group_add_enum_actions (GimpActionGroup           *group,
+                                    const GimpEnumActionEntry *entries,
+                                    guint                      n_entries,
+                                    GCallback                  callback)
 {
   gint i;
 
@@ -534,10 +534,10 @@ gimp_action_group_add_enum_actions (GimpActionGroup     *group,
 }
 
 void
-gimp_action_group_add_string_actions (GimpActionGroup       *group,
-                                      GimpStringActionEntry *entries,
-                                      guint                  n_entries,
-                                      GCallback              callback)
+gimp_action_group_add_string_actions (GimpActionGroup             *group,
+                                      const GimpStringActionEntry *entries,
+                                      guint                        n_entries,
+                                      GCallback                    callback)
 {
   gint i;
 
@@ -581,10 +581,10 @@ gimp_action_group_add_string_actions (GimpActionGroup       *group,
 }
 
 void
-gimp_action_group_add_plug_in_actions (GimpActionGroup       *group,
-                                       GimpPlugInActionEntry *entries,
-                                       guint                  n_entries,
-                                       GCallback              callback)
+gimp_action_group_add_plug_in_actions (GimpActionGroup             *group,
+                                       const GimpPlugInActionEntry *entries,
+                                       guint                        n_entries,
+                                       GCallback                    callback)
 {
   gint i;
 

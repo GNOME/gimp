@@ -37,7 +37,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry patterns_actions[] =
+static const GimpActionEntry patterns_actions[] =
 {
   { "patterns-popup", GIMP_STOCK_PATTERN,
     N_("Patterns Menu"), NULL, NULL, NULL,
@@ -80,7 +80,7 @@ static GimpActionEntry patterns_actions[] =
     GIMP_HELP_PATTERN_REFRESH }
 };
 
-static GimpStringActionEntry patterns_edit_actions[] =
+static const GimpStringActionEntry patterns_edit_actions[] =
 {
   { "patterns-edit", GTK_STOCK_EDIT,
     N_("_Edit Pattern..."), NULL,

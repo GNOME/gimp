@@ -41,7 +41,7 @@
 
 /*  local function prototypes  */
 
-static GimpActionEntry context_actions[] =
+static const GimpActionEntry context_actions[] =
 {
   { "context-menu",            NULL,                      N_("_Context")    },
   { "context-colors-menu",     GIMP_STOCK_DEFAULT_COLORS, N_("_Colors")     },
@@ -74,7 +74,7 @@ static GimpActionEntry context_actions[] =
     GIMP_HELP_TOOLBOX_SWAP_COLORS }
 };
 
-static GimpEnumActionEntry context_foreground_red_actions[] =
+static const GimpEnumActionEntry context_foreground_red_actions[] =
 {
   { "context-foreground-red-set", GIMP_STOCK_CHANNEL_RED,
     "Foreground Red Set", NULL, NULL,
@@ -106,7 +106,7 @@ static GimpEnumActionEntry context_foreground_red_actions[] =
     NULL }
 };
 
-static GimpEnumActionEntry context_foreground_green_actions[] =
+static const GimpEnumActionEntry context_foreground_green_actions[] =
 {
   { "context-foreground-green-set", GIMP_STOCK_CHANNEL_GREEN,
     "Foreground Green Set", NULL, NULL,
@@ -138,7 +138,7 @@ static GimpEnumActionEntry context_foreground_green_actions[] =
     NULL }
 };
 
-static GimpEnumActionEntry context_foreground_blue_actions[] =
+static const GimpEnumActionEntry context_foreground_blue_actions[] =
 {
   { "context-foreground-blue-set", GIMP_STOCK_CHANNEL_BLUE,
     "Foreground Blue Set", NULL, NULL,
@@ -170,7 +170,7 @@ static GimpEnumActionEntry context_foreground_blue_actions[] =
     NULL }
 };
 
-static GimpEnumActionEntry context_background_red_actions[] =
+static const GimpEnumActionEntry context_background_red_actions[] =
 {
   { "context-background-red-set", GIMP_STOCK_CHANNEL_RED,
     "Background Red Set", NULL, NULL,
@@ -202,7 +202,7 @@ static GimpEnumActionEntry context_background_red_actions[] =
     NULL }
 };
 
-static GimpEnumActionEntry context_background_green_actions[] =
+static const GimpEnumActionEntry context_background_green_actions[] =
 {
   { "context-background-green-set", GIMP_STOCK_CHANNEL_GREEN,
     "Background Green Set", NULL, NULL,
@@ -234,7 +234,7 @@ static GimpEnumActionEntry context_background_green_actions[] =
     NULL }
 };
 
-static GimpEnumActionEntry context_background_blue_actions[] =
+static const GimpEnumActionEntry context_background_blue_actions[] =
 {
   { "context-background-blue-set", GIMP_STOCK_CHANNEL_BLUE,
     "Background Blue Set", NULL, NULL,
@@ -266,7 +266,7 @@ static GimpEnumActionEntry context_background_blue_actions[] =
     NULL }
 };
 
-static GimpEnumActionEntry context_foreground_hue_actions[] =
+static const GimpEnumActionEntry context_foreground_hue_actions[] =
 {
   { "context-foreground-hue-set", GIMP_STOCK_TOOL_HUE_SATURATION,
     "Foreground Hue Set", NULL, NULL,
@@ -298,7 +298,7 @@ static GimpEnumActionEntry context_foreground_hue_actions[] =
     NULL }
 };
 
-static GimpEnumActionEntry context_foreground_saturation_actions[] =
+static const GimpEnumActionEntry context_foreground_saturation_actions[] =
 {
   { "context-foreground-saturation-set", GIMP_STOCK_TOOL_HUE_SATURATION,
     "Foreground Saturation Set", NULL, NULL,
@@ -330,7 +330,7 @@ static GimpEnumActionEntry context_foreground_saturation_actions[] =
     NULL }
 };
 
-static GimpEnumActionEntry context_foreground_value_actions[] =
+static const GimpEnumActionEntry context_foreground_value_actions[] =
 {
   { "context-foreground-value-set", GIMP_STOCK_TOOL_HUE_SATURATION,
     "Foreground Value Set", NULL, NULL,
@@ -362,7 +362,7 @@ static GimpEnumActionEntry context_foreground_value_actions[] =
     NULL }
 };
 
-static GimpEnumActionEntry context_background_hue_actions[] =
+static const GimpEnumActionEntry context_background_hue_actions[] =
 {
   { "context-background-hue-set", GIMP_STOCK_TOOL_HUE_SATURATION,
     "Background Hue Set", NULL, NULL,
@@ -394,7 +394,7 @@ static GimpEnumActionEntry context_background_hue_actions[] =
     NULL }
 };
 
-static GimpEnumActionEntry context_background_saturation_actions[] =
+static const GimpEnumActionEntry context_background_saturation_actions[] =
 {
   { "context-background-saturation-set", GIMP_STOCK_TOOL_HUE_SATURATION,
     "Background Saturation Set", NULL, NULL,
@@ -426,7 +426,7 @@ static GimpEnumActionEntry context_background_saturation_actions[] =
     NULL }
 };
 
-static GimpEnumActionEntry context_background_value_actions[] =
+static const GimpEnumActionEntry context_background_value_actions[] =
 {
   { "context-background-value-set", GIMP_STOCK_TOOL_HUE_SATURATION,
     "Background Value Set", NULL, NULL,
@@ -458,7 +458,7 @@ static GimpEnumActionEntry context_background_value_actions[] =
     NULL }
 };
 
-static GimpEnumActionEntry context_opacity_actions[] =
+static const GimpEnumActionEntry context_opacity_actions[] =
 {
   { "context-opacity-set", GIMP_STOCK_TRANSPARENCY,
     "Set Transparency", NULL, NULL,
@@ -490,7 +490,7 @@ static GimpEnumActionEntry context_opacity_actions[] =
     NULL }
 };
 
-static GimpEnumActionEntry context_paint_mode_actions[] =
+static const GimpEnumActionEntry context_paint_mode_actions[] =
 {
   { "context-paint-mode-first", GIMP_STOCK_TOOL_PENCIL,
     "First Paint Mode", NULL, NULL,
@@ -510,7 +510,7 @@ static GimpEnumActionEntry context_paint_mode_actions[] =
     NULL }
 };
 
-static GimpEnumActionEntry context_tool_select_actions[] =
+static const GimpEnumActionEntry context_tool_select_actions[] =
 {
   { "context-tool-select-set", GIMP_STOCK_TOOLS,
     "Select Tool by Index", NULL, NULL,
@@ -534,7 +534,7 @@ static GimpEnumActionEntry context_tool_select_actions[] =
     NULL }
 };
 
-static GimpEnumActionEntry context_brush_select_actions[] =
+static const GimpEnumActionEntry context_brush_select_actions[] =
 {
   { "context-brush-select-set", GIMP_STOCK_BRUSH,
     "Select Brush by Index", NULL, NULL,
@@ -558,7 +558,7 @@ static GimpEnumActionEntry context_brush_select_actions[] =
     NULL }
 };
 
-static GimpEnumActionEntry context_pattern_select_actions[] =
+static const GimpEnumActionEntry context_pattern_select_actions[] =
 {
   { "context-pattern-select-set", GIMP_STOCK_PATTERN,
     "Select Pattern by Index", NULL, NULL,
@@ -582,7 +582,7 @@ static GimpEnumActionEntry context_pattern_select_actions[] =
     NULL }
 };
 
-static GimpEnumActionEntry context_palette_select_actions[] =
+static const GimpEnumActionEntry context_palette_select_actions[] =
 {
   { "context-palette-select-set", GIMP_STOCK_PALETTE,
     "Select Palette by Index", NULL, NULL,
@@ -606,7 +606,7 @@ static GimpEnumActionEntry context_palette_select_actions[] =
     NULL }
 };
 
-static GimpEnumActionEntry context_gradient_select_actions[] =
+static const GimpEnumActionEntry context_gradient_select_actions[] =
 {
   { "context-gradient-select-set", GIMP_STOCK_GRADIENT,
     "Select Gradient by Index", NULL, NULL,
@@ -630,7 +630,7 @@ static GimpEnumActionEntry context_gradient_select_actions[] =
     NULL }
 };
 
-static GimpEnumActionEntry context_font_select_actions[] =
+static const GimpEnumActionEntry context_font_select_actions[] =
 {
   { "context-font-select-set", GIMP_STOCK_FONT,
     "Select Font by Index", NULL, NULL,
@@ -654,7 +654,7 @@ static GimpEnumActionEntry context_font_select_actions[] =
     NULL }
 };
 
-static GimpEnumActionEntry context_brush_shape_actions[] =
+static const GimpEnumActionEntry context_brush_shape_actions[] =
 {
   { "context-brush-shape-circle", GIMP_STOCK_BRUSH,
     "Circular Brush", NULL, NULL,
@@ -670,7 +670,7 @@ static GimpEnumActionEntry context_brush_shape_actions[] =
     NULL }
 };
 
-static GimpEnumActionEntry context_brush_radius_actions[] =
+static const GimpEnumActionEntry context_brush_radius_actions[] =
 {
   { "context-brush-radius-set", GIMP_STOCK_BRUSH,
     "Set Brush Radius", NULL, NULL,
@@ -702,7 +702,7 @@ static GimpEnumActionEntry context_brush_radius_actions[] =
     NULL },
 };
 
-static GimpEnumActionEntry context_brush_spikes_actions[] =
+static const GimpEnumActionEntry context_brush_spikes_actions[] =
 {
   { "context-brush-spikes-set", GIMP_STOCK_BRUSH,
     "Set Brush Spikes", NULL, NULL,
@@ -734,7 +734,7 @@ static GimpEnumActionEntry context_brush_spikes_actions[] =
     NULL },
 };
 
-static GimpEnumActionEntry context_brush_hardness_actions[] =
+static const GimpEnumActionEntry context_brush_hardness_actions[] =
 {
   { "context-brush-hardness-set", GIMP_STOCK_BRUSH,
     "Set Brush Hardness", NULL, NULL,
@@ -766,7 +766,7 @@ static GimpEnumActionEntry context_brush_hardness_actions[] =
     NULL },
 };
 
-static GimpEnumActionEntry context_brush_aspect_actions[] =
+static const GimpEnumActionEntry context_brush_aspect_actions[] =
 {
   { "context-brush-aspect-set", GIMP_STOCK_BRUSH,
     "Set Brush Aspect", NULL, NULL,
@@ -798,7 +798,7 @@ static GimpEnumActionEntry context_brush_aspect_actions[] =
     NULL },
 };
 
-static GimpEnumActionEntry context_brush_angle_actions[] =
+static const GimpEnumActionEntry context_brush_angle_actions[] =
 {
   { "context-brush-angle-set", GIMP_STOCK_BRUSH,
     "Set Brush Angle", NULL, NULL,

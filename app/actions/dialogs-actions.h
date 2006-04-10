@@ -25,8 +25,8 @@
 #error "widgets/gimpactiongroup.h must be included prior to dialog-actions.h"
 #endif
 
-extern GimpStringActionEntry dialogs_dockable_actions[];
-extern gint                  n_dialogs_dockable_actions;
+extern const GimpStringActionEntry dialogs_dockable_actions[];
+extern gint                        n_dialogs_dockable_actions;
 
 
 void   dialogs_actions_setup  (GimpActionGroup *group);

@@ -40,7 +40,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry gradient_editor_actions[] =
+static const GimpActionEntry gradient_editor_actions[] =
 {
   { "gradient-editor-popup", GIMP_STOCK_GRADIENT,
     N_("Gradient Editor Menu"), NULL, NULL, NULL,
@@ -115,7 +115,7 @@ static GimpActionEntry gradient_editor_actions[] =
     GIMP_HELP_GRADIENT_EDITOR_BLEND_OPACITY }
 };
 
-static GimpToggleActionEntry gradient_editor_toggle_actions[] =
+static const GimpToggleActionEntry gradient_editor_toggle_actions[] =
 {
   { "gradient-editor-edit-active", GIMP_STOCK_LINKED,
     N_("Edit Active Gradient"), NULL, NULL,
@@ -146,7 +146,7 @@ static GimpToggleActionEntry gradient_editor_toggle_actions[] =
     (magic), FALSE, \
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_SAVE }
 
-static GimpEnumActionEntry gradient_editor_load_left_actions[] =
+static const GimpEnumActionEntry gradient_editor_load_left_actions[] =
 {
   { "gradient-editor-load-left-left-neighbor", NULL,
     N_("_Left Neighbor's Right Endpoint"), NULL, NULL,
@@ -180,7 +180,7 @@ static GimpEnumActionEntry gradient_editor_load_left_actions[] =
   LOAD_LEFT_FROM ("10", GRADIENT_EDITOR_COLOR_FIRST_CUSTOM + 9)
 };
 
-static GimpEnumActionEntry gradient_editor_save_left_actions[] =
+static const GimpEnumActionEntry gradient_editor_save_left_actions[] =
 {
   SAVE_LEFT_TO ("01", 0),
   SAVE_LEFT_TO ("02", 1),
@@ -194,7 +194,7 @@ static GimpEnumActionEntry gradient_editor_save_left_actions[] =
   SAVE_LEFT_TO ("10", 9)
 };
 
-static GimpEnumActionEntry gradient_editor_load_right_actions[] =
+static const GimpEnumActionEntry gradient_editor_load_right_actions[] =
 {
   { "gradient-editor-load-right-right-neighbor", NULL,
     N_("_Right Neighbor's Left Endpoint"), NULL, NULL,
@@ -228,7 +228,7 @@ static GimpEnumActionEntry gradient_editor_load_right_actions[] =
   LOAD_RIGHT_FROM ("10", GRADIENT_EDITOR_COLOR_FIRST_CUSTOM + 9)
 };
 
-static GimpEnumActionEntry gradient_editor_save_right_actions[] =
+static const GimpEnumActionEntry gradient_editor_save_right_actions[] =
 {
   SAVE_RIGHT_TO ("01", 0),
   SAVE_RIGHT_TO ("02", 1),
@@ -248,7 +248,7 @@ static GimpEnumActionEntry gradient_editor_save_right_actions[] =
 #undef SAVE_RIGHT_TO
 
 
-static GimpRadioActionEntry gradient_editor_blending_actions[] =
+static const GimpRadioActionEntry gradient_editor_blending_actions[] =
 {
   { "gradient-editor-blending-linear", NULL,
     N_("_Linear"), NULL, NULL,
@@ -281,7 +281,7 @@ static GimpRadioActionEntry gradient_editor_blending_actions[] =
     GIMP_HELP_GRADIENT_EDITOR_BLENDING }
 };
 
-static GimpRadioActionEntry gradient_editor_coloring_actions[] =
+static const GimpRadioActionEntry gradient_editor_coloring_actions[] =
 {
   { "gradient-editor-coloring-rgb", NULL,
     N_("_RGB"), NULL, NULL,
@@ -304,7 +304,7 @@ static GimpRadioActionEntry gradient_editor_coloring_actions[] =
     GIMP_HELP_GRADIENT_EDITOR_COLORING }
 };
 
-static GimpEnumActionEntry gradient_editor_zoom_actions[] =
+static const GimpEnumActionEntry gradient_editor_zoom_actions[] =
 {
   { "gradient-editor-zoom-in", GTK_STOCK_ZOOM_IN,
     N_("Zoom In"), NULL,

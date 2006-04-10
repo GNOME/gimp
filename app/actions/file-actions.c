@@ -59,7 +59,7 @@ static void   file_actions_close_all_update    (GimpContainer   *container,
                                                 GimpActionGroup *group);
 
 
-static GimpActionEntry file_actions[] =
+static const GimpActionEntry file_actions[] =
 {
   { "file-menu",             NULL, N_("_File")        },
   { "file-open-recent-menu", NULL, N_("Open _Recent") },

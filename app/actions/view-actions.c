@@ -60,7 +60,7 @@ static void   view_actions_check_type_notify (GimpDisplayConfig *config,
                                               GimpActionGroup   *group);
 
 
-static GimpActionEntry view_actions[] =
+static const GimpActionEntry view_actions[] =
 {
   { "view-menu",                NULL, N_("_View")          },
   { "view-zoom-menu",           NULL, N_("_Zoom")          },
@@ -118,7 +118,7 @@ static GimpActionEntry view_actions[] =
     NULL }
 };
 
-static GimpToggleActionEntry view_toggle_actions[] =
+static const GimpToggleActionEntry view_toggle_actions[] =
 {
   { "view-dot-for-dot", NULL,
     N_("_Dot for Dot"), NULL,
@@ -215,7 +215,7 @@ static GimpToggleActionEntry view_toggle_actions[] =
     GIMP_HELP_VIEW_FULLSCREEN }
 };
 
-static GimpEnumActionEntry view_zoom_actions[] =
+static const GimpEnumActionEntry view_zoom_actions[] =
 {
   { "view-zoom", NULL,
     "Set zoom factor", NULL, NULL,
@@ -267,7 +267,7 @@ static GimpEnumActionEntry view_zoom_actions[] =
     GIMP_HELP_VIEW_ZOOM_IN }
 };
 
-static GimpRadioActionEntry view_zoom_explicit_actions[] =
+static const GimpRadioActionEntry view_zoom_explicit_actions[] =
 {
   { "view-zoom-16-1", NULL,
     N_("1_6:1  (1600%)"), NULL, NULL,
@@ -321,7 +321,7 @@ static GimpRadioActionEntry view_zoom_explicit_actions[] =
     GIMP_HELP_VIEW_ZOOM_OTHER }
 };
 
-static GimpEnumActionEntry view_padding_color_actions[] =
+static const GimpEnumActionEntry view_padding_color_actions[] =
 {
   { "view-padding-color-theme", NULL,
     N_("From _Theme"), NULL, NULL,
@@ -349,7 +349,7 @@ static GimpEnumActionEntry view_padding_color_actions[] =
     GIMP_HELP_VIEW_PADDING_COLOR }
 };
 
-static GimpEnumActionEntry view_scroll_horizontal_actions[] =
+static const GimpEnumActionEntry view_scroll_horizontal_actions[] =
 {
   { "view-scroll-horizontal", NULL,
     "Set horizontal scroll offset", NULL, NULL,
@@ -387,7 +387,7 @@ static GimpEnumActionEntry view_scroll_horizontal_actions[] =
     NULL }
 };
 
-static GimpEnumActionEntry view_scroll_vertical_actions[] =
+static const GimpEnumActionEntry view_scroll_vertical_actions[] =
 {
   { "view-scroll-vertical", NULL,
     "Set vertical scroll offset", NULL, NULL,

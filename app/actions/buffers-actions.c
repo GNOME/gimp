@@ -36,7 +36,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry buffers_actions[] =
+static const GimpActionEntry buffers_actions[] =
 {
   { "buffers-popup", GIMP_STOCK_BUFFER,
     N_("Buffers Menu"), NULL, NULL, NULL,

@@ -37,7 +37,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry colormap_editor_actions[] =
+static const GimpActionEntry colormap_editor_actions[] =
 {
   { "colormap-editor-popup", GIMP_STOCK_INDEXED_PALETTE,
     N_("Colormap Menu"), NULL, NULL, NULL,
@@ -50,7 +50,7 @@ static GimpActionEntry colormap_editor_actions[] =
     GIMP_HELP_INDEXED_PALETTE_EDIT }
 };
 
-static GimpEnumActionEntry colormap_editor_add_color_actions[] =
+static const GimpEnumActionEntry colormap_editor_add_color_actions[] =
 {
   { "colormap-editor-add-color-from-fg", GTK_STOCK_ADD,
     N_("_Add Color from FG"), "",

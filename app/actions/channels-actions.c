@@ -38,7 +38,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry channels_actions[] =
+static const GimpActionEntry channels_actions[] =
 {
   { "channels-popup", GIMP_STOCK_CHANNELS,
     N_("Channels Menu"), NULL, NULL, NULL,
@@ -99,7 +99,7 @@ static GimpActionEntry channels_actions[] =
     GIMP_HELP_CHANNEL_LOWER_TO_BOTTOM }
 };
 
-static GimpEnumActionEntry channels_to_selection_actions[] =
+static const GimpEnumActionEntry channels_to_selection_actions[] =
 {
   { "channels-selection-replace", GIMP_STOCK_SELECTION_REPLACE,
     N_("Channel to Sele_ction"), NULL,

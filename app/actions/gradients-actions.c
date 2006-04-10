@@ -38,7 +38,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry gradients_actions[] =
+static const GimpActionEntry gradients_actions[] =
 {
   { "gradients-popup", GIMP_STOCK_GRADIENT,
     N_("Gradients Menu"), NULL, NULL, NULL,
@@ -81,7 +81,7 @@ static GimpActionEntry gradients_actions[] =
     GIMP_HELP_GRADIENT_REFRESH }
 };
 
-static GimpStringActionEntry gradients_edit_actions[] =
+static const GimpStringActionEntry gradients_edit_actions[] =
 {
   { "gradients-edit", GTK_STOCK_EDIT,
     N_("_Edit Gradient..."), NULL,

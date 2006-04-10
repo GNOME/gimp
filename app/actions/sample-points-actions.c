@@ -34,14 +34,14 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry sample_point_editor_actions[] =
+static const GimpActionEntry sample_point_editor_actions[] =
 {
   { "sample-point-editor-popup", GIMP_STOCK_SAMPLE_POINT,
     N_("Sample Point Menu"), NULL, NULL, NULL,
     GIMP_HELP_SAMPLE_POINT_DIALOG }
 };
 
-static GimpToggleActionEntry sample_point_editor_toggle_actions[] =
+static const GimpToggleActionEntry sample_point_editor_toggle_actions[] =
 {
   { "sample-point-editor-sample-merged", NULL,
     N_("_Sample Merged"), "",

@@ -41,7 +41,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry tools_actions[] =
+static const GimpActionEntry tools_actions[] =
 {
   { "tools-popup", GIMP_STOCK_TOOLS,
     N_("Tools Menu"), NULL, NULL, NULL,
@@ -84,7 +84,7 @@ static GimpActionEntry tools_actions[] =
     NULL }
 };
 
-static GimpToggleActionEntry tools_toggle_actions[] =
+static const GimpToggleActionEntry tools_toggle_actions[] =
 {
   { "tools-visibility", GIMP_STOCK_VISIBLE,
     N_("_Show in Toolbox"), NULL, NULL,
@@ -93,7 +93,7 @@ static GimpToggleActionEntry tools_toggle_actions[] =
     NULL /* FIXME */ }
 };
 
-static GimpStringActionEntry tools_alternative_actions[] =
+static const GimpStringActionEntry tools_alternative_actions[] =
 {
   { "tools-by-color-select-short", GIMP_STOCK_TOOL_BY_COLOR_SELECT,
     N_("_By Color"), NULL, NULL,
@@ -106,7 +106,7 @@ static GimpStringActionEntry tools_alternative_actions[] =
     GIMP_HELP_TOOL_ROTATE }
 };
 
-static GimpEnumActionEntry tools_color_average_radius_actions[] =
+static const GimpEnumActionEntry tools_color_average_radius_actions[] =
 {
   { "tools-color-average-radius-set", GIMP_STOCK_TOOL_COLOR_PICKER,
     "Set Color Picker Radius", NULL, NULL,
@@ -140,7 +140,7 @@ static GimpEnumActionEntry tools_color_average_radius_actions[] =
     NULL },
 };
 
-static GimpEnumActionEntry tools_ink_blob_size_actions[] =
+static const GimpEnumActionEntry tools_ink_blob_size_actions[] =
 {
   { "tools-ink-blob-size-set", GIMP_STOCK_TOOL_INK,
     "Set Ink Blob Size", NULL, NULL,
@@ -172,7 +172,7 @@ static GimpEnumActionEntry tools_ink_blob_size_actions[] =
     NULL },
 };
 
-static GimpEnumActionEntry tools_ink_blob_aspect_actions[] =
+static const GimpEnumActionEntry tools_ink_blob_aspect_actions[] =
 {
   { "tools-ink-blob-aspect-set", GIMP_STOCK_TOOL_INK,
     "Set Ink Blob Aspect", NULL, NULL,
@@ -204,7 +204,7 @@ static GimpEnumActionEntry tools_ink_blob_aspect_actions[] =
     NULL },
 };
 
-static GimpEnumActionEntry tools_ink_blob_angle_actions[] =
+static const GimpEnumActionEntry tools_ink_blob_angle_actions[] =
 {
   { "tools-ink-blob-angle-set", GIMP_STOCK_TOOL_INK,
     "Set Ink Blob Angle", NULL, NULL,
@@ -236,7 +236,7 @@ static GimpEnumActionEntry tools_ink_blob_angle_actions[] =
     NULL },
 };
 
-static GimpEnumActionEntry tools_value_1_actions[] =
+static const GimpEnumActionEntry tools_value_1_actions[] =
 {
   { "tools-value-1-set", GIMP_STOCK_TOOL_OPTIONS,
     "Set Value 1", NULL, NULL,
@@ -268,7 +268,7 @@ static GimpEnumActionEntry tools_value_1_actions[] =
     NULL },
 };
 
-static GimpEnumActionEntry tools_value_2_actions[] =
+static const GimpEnumActionEntry tools_value_2_actions[] =
 {
   { "tools-value-2-set", GIMP_STOCK_TOOL_OPTIONS,
     "Set Value 2", NULL, NULL,
@@ -300,7 +300,7 @@ static GimpEnumActionEntry tools_value_2_actions[] =
     NULL },
 };
 
-static GimpEnumActionEntry tools_value_3_actions[] =
+static const GimpEnumActionEntry tools_value_3_actions[] =
 {
   { "tools-value-3-set", GIMP_STOCK_TOOL_OPTIONS,
     "Set Value 3", NULL, NULL,
@@ -332,7 +332,7 @@ static GimpEnumActionEntry tools_value_3_actions[] =
     NULL },
 };
 
-static GimpEnumActionEntry tools_value_4_actions[] =
+static const GimpEnumActionEntry tools_value_4_actions[] =
 {
   { "tools-value-4-set", GIMP_STOCK_TOOL_OPTIONS,
     "Set Value 4", NULL, NULL,
@@ -364,7 +364,7 @@ static GimpEnumActionEntry tools_value_4_actions[] =
     NULL },
 };
 
-static GimpEnumActionEntry tools_object_1_actions[] =
+static const GimpEnumActionEntry tools_object_1_actions[] =
 {
   { "tools-object-1-set", GIMP_STOCK_TOOL_OPTIONS,
     "Select Object 1 by Index", NULL, NULL,
@@ -388,7 +388,7 @@ static GimpEnumActionEntry tools_object_1_actions[] =
     NULL }
 };
 
-static GimpEnumActionEntry tools_object_2_actions[] =
+static const GimpEnumActionEntry tools_object_2_actions[] =
 {
   { "tools-object-2-set", GIMP_STOCK_TOOL_OPTIONS,
     "Select Object 2 by Index", NULL, NULL,

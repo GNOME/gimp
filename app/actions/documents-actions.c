@@ -36,7 +36,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry documents_actions[] =
+static const GimpActionEntry documents_actions[] =
 {
   { "documents-popup", GTK_STOCK_OPEN,
     N_("Documents Menu"), NULL, NULL, NULL,

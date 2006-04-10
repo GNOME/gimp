@@ -33,7 +33,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry dialogs_actions[] =
+static const GimpActionEntry dialogs_actions[] =
 {
   { "dialogs-menu",          NULL, N_("_Dialogs")         },
   { "dialogs-new-dock-menu", NULL, N_("Create New Doc_k") },
@@ -59,7 +59,7 @@ static GimpActionEntry dialogs_actions[] =
     GIMP_HELP_TOOLBOX }
 };
 
-GimpStringActionEntry dialogs_dockable_actions[] =
+const GimpStringActionEntry dialogs_dockable_actions[] =
 {
   { "dialogs-tool-options", GIMP_STOCK_TOOL_OPTIONS,
     N_("Tool _Options"), NULL, N_("Tool Options"),
@@ -184,7 +184,7 @@ GimpStringActionEntry dialogs_dockable_actions[] =
 
 gint n_dialogs_dockable_actions = G_N_ELEMENTS (dialogs_dockable_actions);
 
-static GimpStringActionEntry dialogs_toplevel_actions[] =
+static const GimpStringActionEntry dialogs_toplevel_actions[] =
 {
   { "dialogs-preferences", GTK_STOCK_PREFERENCES,
     N_("_Preferences"), NULL, NULL,

@@ -38,7 +38,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry vectors_actions[] =
+static const GimpActionEntry vectors_actions[] =
 {
   { "vectors-popup", GIMP_STOCK_PATHS,
     N_("Paths Menu"), NULL, NULL, NULL,
@@ -141,7 +141,7 @@ static GimpActionEntry vectors_actions[] =
     GIMP_HELP_PATH_IMPORT }
 };
 
-static GimpToggleActionEntry vectors_toggle_actions[] =
+static const GimpToggleActionEntry vectors_toggle_actions[] =
 {
   { "vectors-visible", GIMP_STOCK_VISIBLE,
     N_("_Visible"), NULL, NULL,
@@ -156,7 +156,7 @@ static GimpToggleActionEntry vectors_toggle_actions[] =
     GIMP_HELP_PATH_LINKED }
 };
 
-static GimpEnumActionEntry vectors_to_selection_actions[] =
+static const GimpEnumActionEntry vectors_to_selection_actions[] =
 {
   { "vectors-selection-replace", GIMP_STOCK_SELECTION_REPLACE,
     N_("Path to Sele_ction"), NULL,
@@ -188,7 +188,7 @@ static GimpEnumActionEntry vectors_to_selection_actions[] =
     GIMP_HELP_PATH_SELECTION_INTERSECT }
 };
 
-static GimpEnumActionEntry vectors_selection_to_vectors_actions[] =
+static const GimpEnumActionEntry vectors_selection_to_vectors_actions[] =
 {
   { "vectors-selection-to-vectors", GIMP_STOCK_SELECTION_TO_PATH,
     N_("Selecti_on to Path"), NULL,

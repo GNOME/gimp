@@ -37,7 +37,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry brushes_actions[] =
+static const GimpActionEntry brushes_actions[] =
 {
   { "brushes-popup", GIMP_STOCK_BRUSH,
     N_("Brushes Menu"), NULL, NULL, NULL,
@@ -80,7 +80,7 @@ static GimpActionEntry brushes_actions[] =
     GIMP_HELP_BRUSH_REFRESH }
 };
 
-static GimpStringActionEntry brushes_edit_actions[] =
+static const GimpStringActionEntry brushes_edit_actions[] =
 {
   { "brushes-edit", GTK_STOCK_EDIT,
     N_("_Edit Brush..."), NULL,

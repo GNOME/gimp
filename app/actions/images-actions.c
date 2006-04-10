@@ -37,7 +37,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry images_actions[] =
+static const GimpActionEntry images_actions[] =
 {
   { "images-popup", GIMP_STOCK_IMAGES,
     N_("Images Menu"), NULL, NULL, NULL,

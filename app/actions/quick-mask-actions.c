@@ -36,7 +36,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry quick_mask_actions[] =
+static const GimpActionEntry quick_mask_actions[] =
 {
   { "quick-mask-popup", NULL,
     N_("Quick Mask Menu"), NULL, NULL, NULL,
@@ -48,7 +48,7 @@ static GimpActionEntry quick_mask_actions[] =
     GIMP_HELP_QUICK_MASK_EDIT }
 };
 
-static GimpToggleActionEntry quick_mask_toggle_actions[] =
+static const GimpToggleActionEntry quick_mask_toggle_actions[] =
 {
   { "quick-mask-toggle", GIMP_STOCK_QUICK_MASK_ON,
     N_("Toggle _Quick Mask"), "<shift>Q", N_("Toggle Quick Mask"),
@@ -57,7 +57,7 @@ static GimpToggleActionEntry quick_mask_toggle_actions[] =
     GIMP_HELP_QUICK_MASK_TOGGLE }
 };
 
-static GimpRadioActionEntry quick_mask_invert_actions[] =
+static const GimpRadioActionEntry quick_mask_invert_actions[] =
 {
   { "quick-mask-invert-on", NULL,
     N_("Mask _Selected Areas"), NULL, NULL,

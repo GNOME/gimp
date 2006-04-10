@@ -62,7 +62,7 @@ static void     plug_in_actions_build_path        (GimpActionGroup *group,
 
 /*  private variables  */
 
-static GimpActionEntry plug_in_actions[] =
+static const GimpActionEntry plug_in_actions[] =
 {
   { "plug-in-menu",                   NULL, N_("Filte_rs")          },
   { "plug-in-recent-menu",            NULL, N_("Recently Used")     },
@@ -90,7 +90,7 @@ static GimpActionEntry plug_in_actions[] =
     GIMP_HELP_FILTER_RESET_ALL }
 };
 
-static GimpEnumActionEntry plug_in_repeat_actions[] =
+static const GimpEnumActionEntry plug_in_repeat_actions[] =
 {
   { "plug-in-repeat", GTK_STOCK_EXECUTE,
     N_("Re_peat Last"), "<control>F",

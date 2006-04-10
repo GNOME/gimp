@@ -34,14 +34,14 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry cursor_info_actions[] =
+static const GimpActionEntry cursor_info_actions[] =
 {
   { "cursor-info-popup", GIMP_STOCK_CURSOR,
     N_("Pointer Information Menu"), NULL, NULL, NULL,
     GIMP_HELP_POINTER_INFO_DIALOG }
 };
 
-static GimpToggleActionEntry cursor_info_toggle_actions[] =
+static const GimpToggleActionEntry cursor_info_toggle_actions[] =
 {
   { "cursor-info-sample-merged", NULL,
     N_("_Sample Merged"), "",

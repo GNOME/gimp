@@ -38,7 +38,7 @@
 #include "gimp-intl.h"
 
 
-static GimpActionEntry palette_editor_actions[] =
+static const GimpActionEntry palette_editor_actions[] =
 {
   { "palette-editor-popup", GIMP_STOCK_PALETTE,
     N_("Palette Editor Menu"), NULL, NULL, NULL,
@@ -57,7 +57,7 @@ static GimpActionEntry palette_editor_actions[] =
     GIMP_HELP_PALETTE_EDITOR_DELETE }
 };
 
-static GimpToggleActionEntry palette_editor_toggle_actions[] =
+static const GimpToggleActionEntry palette_editor_toggle_actions[] =
 {
   { "palette-editor-edit-active", GIMP_STOCK_LINKED,
     N_("Edit Active Palette"), NULL, NULL,
@@ -66,7 +66,7 @@ static GimpToggleActionEntry palette_editor_toggle_actions[] =
     GIMP_HELP_PALETTE_EDITOR_EDIT_ACTIVE }
 };
 
-static GimpEnumActionEntry palette_editor_new_actions[] =
+static const GimpEnumActionEntry palette_editor_new_actions[] =
 {
   { "palette-editor-new-color-fg", GTK_STOCK_NEW,
     N_("New Color from _FG"), "",
@@ -81,7 +81,7 @@ static GimpEnumActionEntry palette_editor_new_actions[] =
     GIMP_HELP_PALETTE_EDITOR_NEW }
 };
 
-static GimpEnumActionEntry palette_editor_zoom_actions[] =
+static const GimpEnumActionEntry palette_editor_zoom_actions[] =
 {
   { "palette-editor-zoom-in", GTK_STOCK_ZOOM_IN,
     N_("Zoom _In"), "",
