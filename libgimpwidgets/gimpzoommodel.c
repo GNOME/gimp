@@ -597,7 +597,7 @@ gimp_zoom_model_zoom_step (GimpZoomType zoom_type,
 
 #define ZOOM_MIN_STEP 1.1
 
-  gdouble presets[] = {
+  const gdouble presets[] = {
     1.0 / 256, 1.0 / 180, 1.0 / 128, 1.0 / 90,
     1.0 / 64,  1.0 / 45,  1.0 / 32,  1.0 / 23,
     1.0 / 16,  1.0 / 11,  1.0 / 8,   2.0 / 11,

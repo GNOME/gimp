@@ -1,5 +1,10 @@
 2006-04-10  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpzoommodel.c (gimp_zoom_model_zoom_step):
+	declared the array of zoom factors as const.
+
+2006-04-10  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpactiongroup.[ch]: take const arrays of action
 	entries.
 
