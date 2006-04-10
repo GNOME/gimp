@@ -1,21 +1,21 @@
 # Vietnamese translation for GIMP LibGIMP.
-# Copyright © 2005 Gnome i18n Project for Vietnamese.
-# T.M.Thanh <tmthanh@yahoo.com>, 2002 - 2003.
-# Clytie Siddall <clytie@riverland.net.au>, 2005.
+# Copyright © 2006 Gnome i18n Project for Vietnamese.
+# T.M.Thanh <tmthanh@yahoo.com>, 2002-2003.
+# Clytie Siddall <clytie@riverland.net.au>, 2005-2006.
 # 
 msgid ""
 ""
 msgstr "Project-Id-Version: Gimp-libgimp Gnome HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-26 03:44+0100\n"
-"PO-Revision-Date: 2006-01-26 16:18+1030\n"
+"POT-Creation-Date: 2006-04-10 11:12+0200\n"
+"PO-Revision-Date: 2006-04-10 22:06+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"X-Generator: LocFactoryEditor 1.6b31\n"
+"X-Generator: LocFactoryEditor 1.6b36\n"
 
 #:../libgimp/gimpbrushmenu.c:140
 msgid "Brush Selection"
@@ -31,7 +31,7 @@ msgid "%s can't handle layers"
 msgstr "%s không thể xử lý các lớp."
 
 #:../libgimp/gimpexport.c:216 ../libgimp/gimpexport.c:225
-#:../libgimp/gimpexport.c:234
+#:../libgimp/gimpexport.c:234 ../libgimp/gimpexport.c:252
 msgid "Merge Visible Layers"
 msgstr "Hoà nhập các lớp nhìn thấy"
 
@@ -166,11 +166,11 @@ msgid ""
 msgstr "Ảnh nên được xuất ra trước khi nó được lưu là %s, vì những lý do sau:"
 
 #.the footline
-#:../libgimp/gimpexport.c:568
+#:../libgimp/gimpexport.c:571
 msgid "The export conversion won't modify your original image."
 msgstr "Chuyển đổi khi xuất ra sẽ không sửa đổi ảnh gốc của bạn."
 
-#:../libgimp/gimpexport.c:668
+#:../libgimp/gimpexport.c:671
 #,c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -178,7 +178,7 @@ msgid ""
 msgstr "Bạn sắp lưu một mặt nạ lớp là %s.\n"
 "Việc này sẽ không lưu các lớp nhìn được."
 
-#:../libgimp/gimpexport.c:674
+#:../libgimp/gimpexport.c:677
 #,c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -611,47 +611,59 @@ msgstr "Sóng răng cưa"
 msgid "Triangular wave"
 msgstr "Sóng tam giác"
 
-#:../libgimpbase/gimpbaseenums.c:651
+#:../libgimpbase/gimpbaseenums.c:652
+msgid "Run interactively"
+msgstr "Chạy tương tác"
+
+#:../libgimpbase/gimpbaseenums.c:653
+msgid "Run non-interactively"
+msgstr "Chạy không tương tác"
+
+#:../libgimpbase/gimpbaseenums.c:654
+msgid "Run with last used values"
+msgstr "Chạy với các giá trị mới dùng"
+
+#:../libgimpbase/gimpbaseenums.c:682
 msgid "Pixels"
 msgstr "Điểm ảnh"
 
-#:../libgimpbase/gimpbaseenums.c:652
+#:../libgimpbase/gimpbaseenums.c:683
 msgid "Points"
 msgstr "Điểm"
 
-#:../libgimpbase/gimpbaseenums.c:681
+#:../libgimpbase/gimpbaseenums.c:712
 msgid "Shadows"
 msgstr "Bóng"
 
-#:../libgimpbase/gimpbaseenums.c:682
+#:../libgimpbase/gimpbaseenums.c:713
 msgid "Midtones"
 msgstr "Nửa sắc"
 
-#:../libgimpbase/gimpbaseenums.c:683
+#:../libgimpbase/gimpbaseenums.c:714
 msgid "Highlights"
 msgstr "Nổi bật"
 
-#:../libgimpbase/gimpbaseenums.c:711
+#:../libgimpbase/gimpbaseenums.c:742
 msgid "Forward"
 msgstr "Tới"
 
-#:../libgimpbase/gimpbaseenums.c:712
+#:../libgimpbase/gimpbaseenums.c:743
 msgid "Backward"
 msgstr "Lùi"
 
-#:../libgimpbase/gimpbaseenums.c:815
+#:../libgimpbase/gimpbaseenums.c:846
 msgid "Internal GIMP procedure"
 msgstr "Thủ tục GIMP nội bộ"
 
-#:../libgimpbase/gimpbaseenums.c:816
+#:../libgimpbase/gimpbaseenums.c:847
 msgid "GIMP Plug-In"
 msgstr "Bộ cầm phít GIMP"
 
-#:../libgimpbase/gimpbaseenums.c:817
+#:../libgimpbase/gimpbaseenums.c:848
 msgid "GIMP Extension"
 msgstr "Phần mở rộng GIMP"
 
-#:../libgimpbase/gimpbaseenums.c:818
+#:../libgimpbase/gimpbaseenums.c:849
 msgid "Temporary Procedure"
 msgstr "Thủ tục tạm thời"
 
@@ -907,7 +919,7 @@ msgstr "Không thể quyết định thư mục chính hợp lệ.\n"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Lỗi tạo thư mục hình thu nhỏ « %s »."
 
-#:../libgimpthumb/gimpthumbnail.c:887
+#:../libgimpthumb/gimpthumbnail.c:889
 #,c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Không thể tạo hình thu nhỏ cho %s: %s"
@@ -1038,7 +1050,7 @@ msgid "Check Style"
 msgstr "Kiểm trả kiểu dáng"
 
 #.toggle button to (des)activate the instant preview
-#:../libgimpwidgets/gimppreview.c:256
+#:../libgimpwidgets/gimppreview.c:265
 msgid "_Preview"
 msgstr "_Xem thử"
 
@@ -1374,15 +1386,15 @@ msgstr "Bộ chọn màu kiểu dáng thợ sơn"
 msgid "Triangle"
 msgstr "Tam giác"
 
-#:../modules/colorsel_water.c:88
+#:../modules/colorsel_water.c:84
 msgid "Watercolor style color selector"
 msgstr "Bộ chọn màu kiểu dáng màu nước"
 
-#:../modules/colorsel_water.c:154
+#:../modules/colorsel_water.c:150
 msgid "Watercolor"
 msgstr "Màu nước"
 
-#:../modules/colorsel_water.c:220
+#:../modules/colorsel_water.c:213
 msgid "Pressure"
 msgstr "Áp lực"
 
@@ -1544,10 +1556,11 @@ msgstr "Kênh:"
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
-msgstr "Kênh MIDI từ mà cần đọc các sự kiện. Hãy lập nó thành -1 để đọc từ mọi kênh MIDI."
+msgstr "Kênh MIDI từ mà cần đọc các sự kiện. Hãy lập nó thành -1 để đọc từ mọi kênh "
+"MIDI."
 
-#:../modules/controller_midi.c:258
 # Name: don't translate / Tên: đừng dịch
+#:../modules/controller_midi.c:258
 msgid "MIDI"
 msgstr "MIDI"
 
