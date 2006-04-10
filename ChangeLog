@@ -1,3 +1,17 @@
+2006-04-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-ins.c (plug_ins_add_to_db): don't iterate the
+	list of plug-in procedures here, take a GimpPlugInProcedure
+	argument instead.
+
+	(plug_ins_init): iterate the list here, just as all other lists
+	too. Renamed local "filename" variable to "pluginrc". Moved
+	"basename" to local scopes.
+
+	* tools/pdbgen/pdb/procedural_db.pdb: minor cleanup.
+
+	* app/pdb/procedural_db_cmds.c: regenerated.
+
 2006-04-10  Sven Neumann  <sven@gimp.org>
 
 	* libgimpmodule/gimpmoduledb.c (gimp_module_db_module_remove_func):

@@ -57,7 +57,8 @@ static void   plug_ins_add_from_file     (const GimpDatafileData *file_data,
 static void   plug_ins_add_from_rc       (Gimp                   *gimp,
                                           PlugInDef              *plug_in_def);
 static void   plug_ins_add_to_db         (Gimp                   *gimp,
-                                          GimpContext            *context);
+                                          GimpContext            *context,
+                                          GimpPlugInProcedure    *proc);
 static gint   plug_ins_file_proc_compare (gconstpointer           a,
                                           gconstpointer           b,
                                           gpointer                data);
@@ -70,8 +71,7 @@ plug_ins_init (Gimp               *gimp,
                GimpContext        *context,
                GimpInitStatusFunc  status_callback)
 {
-  gchar   *filename;
-  gchar   *basename;
+  gchar   *pluginrc;
   gchar   *path;
   GSList  *rc_defs;
   GSList  *list;
@@ -102,29 +102,29 @@ plug_ins_init (Gimp               *gimp,
   /* read the pluginrc file for cached data */
   if (gimp->config->plug_in_rc_path)
     {
-      filename = gimp_config_path_expand (gimp->config->plug_in_rc_path,
+      pluginrc = gimp_config_path_expand (gimp->config->plug_in_rc_path,
                                           TRUE, NULL);
 
-      if (! g_path_is_absolute (filename))
+      if (! g_path_is_absolute (pluginrc))
         {
-          gchar *str = g_build_filename (gimp_directory (), filename, NULL);
+          gchar *str = g_build_filename (gimp_directory (), pluginrc, NULL);
 
-          g_free (filename);
-          filename = str;
+          g_free (pluginrc);
+          pluginrc = str;
         }
     }
   else
     {
-      filename = gimp_personal_rc_file ("pluginrc");
+      pluginrc = gimp_personal_rc_file ("pluginrc");
     }
 
   status_callback (_("Resource configuration"),
-                   gimp_filename_to_utf8 (filename), 0.0);
+                   gimp_filename_to_utf8 (pluginrc), 0.0);
 
   if (gimp->be_verbose)
-    g_print (_("Parsing '%s'\n"), gimp_filename_to_utf8 (filename));
+    g_print (_("Parsing '%s'\n"), gimp_filename_to_utf8 (pluginrc));
 
-  rc_defs = plug_in_rc_parse (gimp, filename, &error);
+  rc_defs = plug_in_rc_parse (gimp, pluginrc, &error);
 
   if (rc_defs)
     {
@@ -164,6 +164,8 @@ plug_ins_init (Gimp               *gimp,
 
           if (plug_in_def->needs_query)
             {
+              gchar *basename;
+
               basename = g_filename_display_basename (plug_in_def->prog);
               status_callback (NULL, basename,
                                (gdouble) nth++ / (gdouble) n_plugins);
@@ -197,6 +199,8 @@ plug_ins_init (Gimp               *gimp,
 
           if (plug_in_def->has_init)
             {
+              gchar *basename;
+
               basename = g_filename_display_basename (plug_in_def->prog);
               status_callback (NULL, basename,
                                (gdouble) nth++ / (gdouble) n_plugins);
@@ -229,9 +233,9 @@ plug_ins_init (Gimp               *gimp,
   if (gimp->write_pluginrc)
     {
       if (gimp->be_verbose)
-	g_print (_("Writing '%s'\n"), gimp_filename_to_utf8 (filename));
+	g_print (_("Writing '%s'\n"), gimp_filename_to_utf8 (pluginrc));
 
-      if (! plug_in_rc_write (gimp->plug_in_defs, filename, &error))
+      if (! plug_in_rc_write (gimp->plug_in_defs, pluginrc, &error))
         {
           g_message ("%s", error->message);
           g_clear_error (&error);
@@ -240,10 +244,13 @@ plug_ins_init (Gimp               *gimp,
       gimp->write_pluginrc = FALSE;
     }
 
-  g_free (filename);
+  g_free (pluginrc);
 
   /* add the plug-in procs to the procedure database */
-  plug_ins_add_to_db (gimp, context);
+  for (list = gimp->plug_in_procedures; list; list = list->next)
+    {
+      plug_ins_add_to_db (gimp, context, list->data);
+    }
 
   /* create help_path and locale_domain lists */
   for (list = gimp->plug_in_defs; list; list = list->next)
@@ -569,45 +576,39 @@ plug_ins_add_from_rc (Gimp      *gimp,
 }
 
 static void
-plug_ins_add_to_db (Gimp        *gimp,
-                    GimpContext *context)
+plug_ins_add_to_db (Gimp                *gimp,
+                    GimpContext         *context,
+                    GimpPlugInProcedure *proc)
 {
-  GSList *list;
+  gimp_pdb_register (gimp, GIMP_PROCEDURE (proc));
 
-  for (list = gimp->plug_in_procedures; list; list = list->next)
+  if (proc->file_proc)
     {
-      GimpPlugInProcedure *proc = list->data;
+      GValueArray *return_vals;
 
-      gimp_pdb_register (gimp, GIMP_PROCEDURE (proc));
-
-      if (proc->file_proc)
+      if (proc->image_types)
         {
-          GValueArray *return_vals;
+          return_vals =
+            gimp_pdb_run_proc (gimp, context, NULL,
+                               "gimp-register-save-handler",
+                               G_TYPE_STRING, GIMP_OBJECT (proc)->name,
+                               G_TYPE_STRING, proc->extensions,
+                               G_TYPE_STRING, proc->prefixes,
+                               G_TYPE_NONE);
+        }
+      else
+        {
+          return_vals =
+            gimp_pdb_run_proc (gimp, context, NULL,
+                               "gimp-register-magic-load-handler",
+                               G_TYPE_STRING, GIMP_OBJECT (proc)->name,
+                               G_TYPE_STRING, proc->extensions,
+                               G_TYPE_STRING, proc->prefixes,
+                               G_TYPE_STRING, proc->magics,
+                               G_TYPE_NONE);
+        }
 
-          if (proc->image_types)
-            {
-              return_vals =
-                gimp_pdb_run_proc (gimp, context, NULL,
-                                   "gimp-register-save-handler",
-                                   G_TYPE_STRING, GIMP_OBJECT (proc)->name,
-                                   G_TYPE_STRING, proc->extensions,
-                                   G_TYPE_STRING, proc->prefixes,
-                                   G_TYPE_NONE);
-            }
-          else
-            {
-              return_vals =
-                gimp_pdb_run_proc (gimp, context, NULL,
-                                   "gimp-register-magic-load-handler",
-                                   G_TYPE_STRING, GIMP_OBJECT (proc)->name,
-                                   G_TYPE_STRING, proc->extensions,
-                                   G_TYPE_STRING, proc->prefixes,
-                                   G_TYPE_STRING, proc->magics,
-                                   G_TYPE_NONE);
-            }
-
-          g_value_array_free (return_vals);
-	}
+      g_value_array_free (return_vals);
     }
 }
 

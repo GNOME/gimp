@@ -354,10 +354,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
+  gchar        *canonical = gimp_canonicalize_identifier (identifier);
   const guint8 *orig_data;
-  gchar        *canonical;
-
-  canonical = gimp_canonicalize_identifier (identifier);
 
   orig_data = plug_in_data_get (gimp, canonical, &bytes);
 
@@ -396,18 +394,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  const guint8 *data;
-  gchar        *canonical;
+  gchar *canonical = gimp_canonicalize_identifier (identifier);
 
-  canonical = gimp_canonicalize_identifier (identifier);
-
-  data = plug_in_data_get (gimp, canonical, &bytes);
-
-  g_free (canonical);
-
-  if (! data)
+  if (! plug_in_data_get (gimp, canonical, &bytes))
     success = FALSE;
 
+  g_free (canonical);
 }
 CODE
     );
@@ -436,9 +428,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gchar *canonical;
-
-  canonical = gimp_canonicalize_identifier (identifier);
+  gchar *canonical = gimp_canonicalize_identifier (identifier);
 
   plug_in_data_set (gimp, canonical, bytes, data);
 

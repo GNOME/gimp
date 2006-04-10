@@ -319,10 +319,8 @@ procedural_db_get_data_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
+      gchar        *canonical = gimp_canonicalize_identifier (identifier);
       const guint8 *orig_data;
-      gchar        *canonical;
-
-      canonical = gimp_canonicalize_identifier (identifier);
 
       orig_data = plug_in_data_get (gimp, canonical, &bytes);
 
@@ -361,18 +359,12 @@ procedural_db_get_data_size_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      const guint8 *data;
-      gchar        *canonical;
+      gchar *canonical = gimp_canonicalize_identifier (identifier);
 
-      canonical = gimp_canonicalize_identifier (identifier);
-
-      data = plug_in_data_get (gimp, canonical, &bytes);
-
-      g_free (canonical);
-
-      if (! data)
+      if (! plug_in_data_get (gimp, canonical, &bytes))
         success = FALSE;
 
+      g_free (canonical);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);
@@ -401,9 +393,7 @@ procedural_db_set_data_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      gchar *canonical;
-
-      canonical = gimp_canonicalize_identifier (identifier);
+      gchar *canonical = gimp_canonicalize_identifier (identifier);
 
       plug_in_data_set (gimp, canonical, bytes, data);
 
