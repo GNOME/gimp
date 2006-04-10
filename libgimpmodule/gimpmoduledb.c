@@ -455,7 +455,8 @@ gimp_module_db_module_remove_func (gpointer data,
                                         gimp_module_db_module_modified,
                                         db);
 
-  g_list_remove (db->modules, module);
+  db->modules = g_list_remove (db->modules, module);
+
   g_signal_emit (db, db_signals[REMOVE], 0, module);
 }
 
