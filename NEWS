@@ -23,12 +23,18 @@ Changes in GIMP 2.3.8
 - added framework for describing menu entries in the statusbar
 - added lots of helpful blurbs to procedures and core actions
 - remove color from the Watercolor selector if Shift is being pressed
-- ported PDB internals to GParamSpec
+- ported PDB internals to GParamSpec and GValue
 - speedup and UI improvements for the SIOX tool
 - added parasite getters and settors for vectors
 - made PSD load and save plug-ins 64bit clean
 - some string review
 - ported ellipse select tool to the new rectangle tool
+- added basic support for layer masks to the PSD save plug-in
+- avoid relocations by declaring more data as const
+- new application icons in more sizes and as a SVG
+- provide script-specific samples instead of hard-coding "Aa" for font preview
+- build the Screenshot plug-in on all platforms
+- allow to discard invisible layers when merging visible layers
 - bug fixes and code cleanup
 
 

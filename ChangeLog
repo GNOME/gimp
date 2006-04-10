@@ -187,7 +187,7 @@
 	* app/plug-in/plug-in-rc.c: minor cleanup. Fixed one error
 	return value.
 
-	* app/plug-in/plug-in.c (plug_in_push): simply use g_slist_rmove(),
+	* app/plug-in/plug-in.c (plug_in_push): simply use g_slist_remove();
 	fiddling with list nodes manually is a questionable "optimization"
 	for removing the first list element.
 
