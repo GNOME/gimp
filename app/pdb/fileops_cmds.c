@@ -20,14 +20,12 @@
 
 #include "config.h"
 
-#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <string.h>
 
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
-#include "libgimpthumb/gimpthumb.h"
 
 #include "pdb-types.h"
 #include "gimp-pdb.h"
@@ -37,7 +35,6 @@
 #include "core/gimp-utils.h"
 #include "core/gimp.h"
 #include "core/gimpimage.h"
-#include "core/gimpimagefile.h"
 #include "core/gimplayer.h"
 #include "file/file-open.h"
 #include "file/file-utils.h"
@@ -202,42 +199,12 @@ file_load_thumbnail_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      GimpThumbnail *thumbnail = NULL;
-      GdkPixbuf     *pixbuf    = NULL;
-      gchar         *uri;
-
-      uri = g_filename_to_uri (filename, NULL, NULL);
-
-      if (uri)
-        {
-          thumbnail = gimp_thumbnail_new ();
-          gimp_thumbnail_set_uri (thumbnail, uri);
-
-          pixbuf = gimp_thumbnail_load_thumb (thumbnail,
-                                              GIMP_THUMBNAIL_SIZE_NORMAL,
-                                              NULL);
-        }
+      GdkPixbuf *pixbuf = file_utils_load_thumbnail (filename);
 
       if (pixbuf)
         {
-          width  = gdk_pixbuf_get_width (pixbuf);
-          height = gdk_pixbuf_get_height (pixbuf);
-
-          if (gdk_pixbuf_get_n_channels (pixbuf) != 3)
-            {
-              GdkPixbuf *tmp = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
-                                               width, height);
-
-              gdk_pixbuf_composite_color (pixbuf, tmp,
-                                          0, 0, width, height, 0, 0, 1.0, 1.0,
-                                          GDK_INTERP_NEAREST, 255,
-                                          0, 0, GIMP_CHECK_SIZE_SM,
-                                          0x66666666, 0x99999999);
-
-              g_object_unref (pixbuf);
-              pixbuf = tmp;
-            }
-
+          width            = gdk_pixbuf_get_width (pixbuf);
+          height           = gdk_pixbuf_get_height (pixbuf);
           thumb_data_count = 3 * width * height;
           thumb_data       = g_memdup (gdk_pixbuf_get_pixels (pixbuf),
                                        thumb_data_count);
@@ -246,8 +213,6 @@ file_load_thumbnail_invoker (GimpProcedure     *procedure,
         }
       else
         success = FALSE;
-
-      g_free (uri);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);
@@ -279,32 +244,7 @@ file_save_thumbnail_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      const gchar *image_uri = gimp_object_get_name (GIMP_OBJECT (image));
-
-      if (image_uri)
-        {
-          gchar *uri = g_filename_to_uri (filename, NULL, NULL);
-
-          if (uri)
-            {
-              if (! strcmp (uri, image_uri))
-                {
-                  GimpImagefile *imagefile;
-
-                  imagefile = gimp_imagefile_new (gimp, uri);
-                  success = gimp_imagefile_save_thumbnail (imagefile, NULL, image);
-                  g_object_unref (imagefile);
-                }
-              else
-                success = FALSE;
-
-              g_free (uri);
-            }
-          else
-            success = FALSE;
-        }
-      else
-        success = FALSE;
+      success = file_utils_save_thumnail (image, filename);
     }
 
   return gimp_procedure_get_return_values (procedure, success);

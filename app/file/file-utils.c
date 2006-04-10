@@ -37,12 +37,17 @@
 #include <glib-object.h>
 #include <glib/gstdio.h>
 
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpthumb/gimpthumb.h"
 
 #include "core/core-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
+#include "core/gimpimagefile.h"
 
 #include "pdb/gimppluginprocedure.h"
 
@@ -365,6 +370,89 @@ file_utils_uri_display_name (const gchar *uri)
 
   return g_strdup (uri);
 }
+
+GdkPixbuf *
+file_utils_load_thumbnail (const gchar *filename)
+{
+  GimpThumbnail *thumbnail = NULL;
+  GdkPixbuf     *pixbuf    = NULL;
+  gchar         *uri;
+
+  g_return_val_if_fail (filename != NULL, NULL);
+
+  uri = g_filename_to_uri (filename, NULL, NULL);
+
+  if (uri)
+    {
+      thumbnail = gimp_thumbnail_new ();
+      gimp_thumbnail_set_uri (thumbnail, uri);
+
+      pixbuf = gimp_thumbnail_load_thumb (thumbnail,
+                                          GIMP_THUMBNAIL_SIZE_NORMAL,
+                                          NULL);
+    }
+
+  g_free (uri);
+
+  if (pixbuf)
+    {
+      gint width  = gdk_pixbuf_get_width (pixbuf);
+      gint height = gdk_pixbuf_get_height (pixbuf);
+
+      if (gdk_pixbuf_get_n_channels (pixbuf) != 3)
+	{
+          GdkPixbuf *tmp = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
+                                           width, height);
+
+          gdk_pixbuf_composite_color (pixbuf, tmp,
+                                      0, 0, width, height, 0, 0, 1.0, 1.0,
+                                      GDK_INTERP_NEAREST, 255,
+                                      0, 0, GIMP_CHECK_SIZE_SM,
+                                      0x66666666, 0x99999999);
+
+          g_object_unref (pixbuf);
+          pixbuf = tmp;
+        }
+    }
+
+  return pixbuf;
+}
+
+gboolean
+file_utils_save_thumnail (GimpImage   *image,
+                          const gchar *filename)
+{
+  const gchar *image_uri;
+  gboolean     success = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (filename != NULL, FALSE);
+
+  image_uri = gimp_object_get_name (GIMP_OBJECT (image));
+
+  if (image_uri)
+    {
+      gchar *uri = g_filename_to_uri (filename, NULL, NULL);
+
+      if (uri)
+        {
+          if ( ! strcmp (uri, image_uri))
+            {
+              GimpImagefile *imagefile;
+
+              imagefile = gimp_imagefile_new (image->gimp, uri);
+              success = gimp_imagefile_save_thumbnail (imagefile, NULL,
+                                                       image);
+              g_object_unref (imagefile);
+            }
+
+          g_free (uri);
+        }
+    }
+
+  return success;
+}
+
 
 /*  private functions  */
 

@@ -252,42 +252,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpThumbnail *thumbnail = NULL;
-  GdkPixbuf     *pixbuf    = NULL;
-  gchar         *uri;
-
-  uri = g_filename_to_uri (filename, NULL, NULL);
-
-  if (uri)
-    {
-      thumbnail = gimp_thumbnail_new ();
-      gimp_thumbnail_set_uri (thumbnail, uri);
-
-      pixbuf = gimp_thumbnail_load_thumb (thumbnail,
-                                          GIMP_THUMBNAIL_SIZE_NORMAL,
-                                          NULL);
-    }
+  GdkPixbuf *pixbuf = file_utils_load_thumbnail (filename);
 
   if (pixbuf)
     {
-      width  = gdk_pixbuf_get_width (pixbuf);
-      height = gdk_pixbuf_get_height (pixbuf);
-
-      if (gdk_pixbuf_get_n_channels (pixbuf) != 3)
-	{
-          GdkPixbuf *tmp = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
-                                           width, height);
-
-          gdk_pixbuf_composite_color (pixbuf, tmp,
-                                      0, 0, width, height, 0, 0, 1.0, 1.0,
-                                      GDK_INTERP_NEAREST, 255,
-                                      0, 0, GIMP_CHECK_SIZE_SM,
-                                      0x66666666, 0x99999999);
-
-          g_object_unref (pixbuf);
-          pixbuf = tmp;
-        }
-
+      width            = gdk_pixbuf_get_width (pixbuf);
+      height           = gdk_pixbuf_get_height (pixbuf);
       thumb_data_count = 3 * width * height;
       thumb_data       = g_memdup (gdk_pixbuf_get_pixels (pixbuf),
                                    thumb_data_count);
@@ -296,8 +266,6 @@ HELP
     }
   else
     success = FALSE;
-
-  g_free (uri);
 }
 CODE
     );
@@ -327,32 +295,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  const gchar *image_uri = gimp_object_get_name (GIMP_OBJECT (image));
-
-  if (image_uri)
-    {
-      gchar *uri = g_filename_to_uri (filename, NULL, NULL);
-
-      if (uri)
-        {
-          if (! strcmp (uri, image_uri))
-            {
-              GimpImagefile *imagefile;
-
-              imagefile = gimp_imagefile_new (gimp, uri);
-              success = gimp_imagefile_save_thumbnail (imagefile, NULL, image);
-              g_object_unref (imagefile);
-            }
-          else
-            success = FALSE;
-
-          g_free (uri);
-        }
-      else
-        success = FALSE;
-    }
-  else
-    success = FALSE;
+  success = file_utils_save_thumnail (image, filename);
 }
 CODE
     );
@@ -561,12 +504,8 @@ CODE
 }
 
 
-@headers = qw(<gdk-pixbuf/gdk-pixbuf.h>
-              "libgimpbase/gimpbase.h" "libgimpconfig/gimpconfig.h"
-              "libgimpthumb/gimpthumb.h"
-              "core/gimp.h" "core/gimpimagefile.h"
-              "plug-in/plug-in-file.h"
-              "file/file-utils.h");
+@headers = qw("libgimpbase/gimpbase.h" "libgimpconfig/gimpconfig.h"
+              "core/gimp.h" "plug-in/plug-in-file.h" "file/file-utils.h");
 
 @procs = qw(file_load file_load_layer file_save
             file_load_thumbnail file_save_thumbnail

@@ -1,5 +1,15 @@
 2006-04-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/file/file-utils.[ch]: added file_utils_load_thumbnail() and
+	file_utils_save_thumbnail().
+
+	* tools/pdbgen/pdb/fileops.pdb: remove lots of code and includes
+	and use the new functions.
+
+	* app/pdb/fileops_cmds.c: regenerated.
+
+2006-04-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/plug-in-file.c: some cleanup.
 
 	(plug_in_file_register_load_handler)
