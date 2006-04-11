@@ -130,17 +130,13 @@ struct _GimpContextClass
 
 GType         gimp_context_get_type          (void) G_GNUC_CONST;
 
-GimpContext * gimp_context_new               (Gimp              *gimp,
-                                              const gchar       *name,
-                                              GimpContext       *template);
+GimpContext * gimp_context_new               (Gimp                *gimp,
+                                              const gchar         *name,
+                                              GimpContext         *template);
 
-const gchar * gimp_context_get_name          (const GimpContext *context);
-void          gimp_context_set_name          (GimpContext       *context,
-                                              const gchar       *name);
-
-GimpContext * gimp_context_get_parent        (const GimpContext *context);
-void          gimp_context_set_parent        (GimpContext       *context,
-                                              GimpContext       *parent);
+GimpContext * gimp_context_get_parent        (const GimpContext   *context);
+void          gimp_context_set_parent        (GimpContext         *context,
+                                              GimpContext         *parent);
 
 /*  define / undefinine context properties
  *

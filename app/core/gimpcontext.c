@@ -1309,26 +1309,6 @@ gimp_context_new (Gimp        *gimp,
   return context;
 }
 
-const gchar *
-gimp_context_get_name (const GimpContext *context)
-{
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-
-  return gimp_object_get_name (GIMP_OBJECT (context));
-}
-
-void
-gimp_context_set_name (GimpContext *context,
-                       const gchar *name)
-{
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-
-  if (name)
-    gimp_object_set_name (GIMP_OBJECT (context), name);
-  else
-    gimp_object_set_static_name (GIMP_OBJECT (context), _("Unnamed"));
-}
-
 GimpContext *
 gimp_context_get_parent (const GimpContext *context)
 {

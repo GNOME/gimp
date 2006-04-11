@@ -1,3 +1,10 @@
+2006-04-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpcontext.[ch]: removed antique
+	gimp_context_get_name() and _set_name().
+
+	* app/actions/vectors-commands.c: #include "gimp-utils.h"
+
 2006-04-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-ins.c (plug_ins_add_to_db): don't iterate the
