@@ -1,3 +1,9 @@
+2006-04-11  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* app/pdb/gimp-pdb-query.c: Changed formatting of output from
+	gimp-procedural-db-dump to make it more easily human (and machine)
+	readable. Fixes bug #337843.
+
 2006-04-11  Sven Neumann  <sven@gimp.org>
 
 	* app/units.c

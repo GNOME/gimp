@@ -380,7 +380,7 @@ gimp_pdb_print_entry (gpointer key,
 
       num++;
 
-      fprintf (file, "\n(register-procedure ");
+      fprintf (file, "(register-procedure ");
 
       if (list || num != 1)
         {
@@ -394,53 +394,65 @@ gimp_pdb_print_entry (gpointer key,
 
       type_desc = gimp_enum_get_desc (proc_class, procedure->proc_type);
 
+      fprintf (file, "  ");
       output_string (file, procedure->blurb);
+      fprintf (file, "  ");
       output_string (file, procedure->help);
+      fprintf (file, "  ");
       output_string (file, procedure->author);
+      fprintf (file, "  ");
       output_string (file, procedure->copyright);
+      fprintf (file, "  ");
       output_string (file, procedure->date);
+      fprintf (file, "  ");
       output_string (file, type_desc->value_desc);
 
-      fprintf (file, "( ");
+      fprintf (file, "  (");
       for (i = 0; i < procedure->num_args; i++)
         {
           GParamSpec     *pspec = procedure->args[i];
           GimpPDBArgType  arg_type;
 
-          fprintf (file, "( ");
+          fprintf (file, "\n    (\n");
 
           arg_type = gimp_pdb_compat_arg_type_from_gtype (pspec->value_type);
 
           arg_value = g_enum_get_value (arg_class, arg_type);
 
+          fprintf (file, "      ");
           output_string (file, g_param_spec_get_name (pspec));
+          fprintf (file, "      ");
           output_string (file, arg_value->value_name);
+          fprintf (file, "      ");
           output_string (file, g_param_spec_get_blurb (pspec));
 
-          fprintf (file, " ) ");
+          fprintf (file, "    )");
         }
-      fprintf (file, " ) ");
+      fprintf (file, "\n  )\n");
 
-      fprintf (file, "( ");
+      fprintf (file, "  (");
       for (i = 0; i < procedure->num_values; i++)
         {
           GParamSpec     *pspec = procedure->values[i];
           GimpPDBArgType  arg_type;
 
-          fprintf (file, "( ");
+          fprintf (file, "\n    (\n");
 
           arg_type = gimp_pdb_compat_arg_type_from_gtype (pspec->value_type);
 
           arg_value = g_enum_get_value (arg_class, arg_type);
 
+          fprintf (file, "      ");
           output_string (file, g_param_spec_get_name (pspec));
+          fprintf (file, "      ");
           output_string (file, arg_value->value_name);
+          fprintf (file, "      ");
           output_string (file, g_param_spec_get_blurb (pspec));
 
-          fprintf (file, " ) ");
+          fprintf (file, "    )");
         }
-      fprintf (file, " ) ");
-      fprintf (file, " ) ");
+      fprintf (file, "\n  )");
+      fprintf (file, "\n)\n");
     }
 
   g_string_free (buf, TRUE);
