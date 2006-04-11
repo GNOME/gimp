@@ -6,41 +6,41 @@ desktop_files = $(desktop_in_files:.desktop.in.in=.desktop)
 
 if DESKTOP_DATADIR
 
-applicationsdir = @DESKTOP_DATADIR@/applications
+applicationsdir = $(DESKTOP_DATADIR)/applications
 applications_DATA = $(desktop_files)
 
-mimeinfodir = @DESKTOP_DATADIR@/mime-info
+mimeinfodir = $(DESKTOP_DATADIR)/mime-info
 mimeinfo_DATA = gimp.keys
 
-registrydir = @DESKTOP_DATADIR@/application-registry
+registrydir = $(DESKTOP_DATADIR)/application-registry
 registry_DATA = gimp.applications
 
 
-icons16dir = @DESKTOP_DATADIR@/icons/hicolor/16x16/apps
+icons16dir = $(DESKTOP_DATADIR)/icons/hicolor/16x16/apps
 icons16_DATA = 16x16/gimp.png
 
-icons22dir = @DESKTOP_DATADIR@/icons/hicolor/22x22/apps
+icons22dir = $(DESKTOP_DATADIR)/icons/hicolor/22x22/apps
 icons22_DATA = 22x22/gimp.png
 
-icons24dir = @DESKTOP_DATADIR@/icons/hicolor/24x24/apps
+icons24dir = $(DESKTOP_DATADIR)/icons/hicolor/24x24/apps
 icons24_DATA = 24x24/gimp.png
 
-icons32dir = @DESKTOP_DATADIR@/icons/hicolor/32x32/apps
+icons32dir = $(DESKTOP_DATADIR)/icons/hicolor/32x32/apps
 icons32_DATA = 32x32/gimp.png
 
-icons48dir = @DESKTOP_DATADIR@/icons/hicolor/48x48/apps
+icons48dir = $(DESKTOP_DATADIR)/icons/hicolor/48x48/apps
 icons48_DATA = 48x48/gimp.png
 
-icons64dir = @DESKTOP_DATADIR@/icons/hicolor/64x64/apps
+icons64dir = $(DESKTOP_DATADIR)/icons/hicolor/64x64/apps
 icons64_DATA = 64x64/gimp.png
 
-iconsscalabledir = @DESKTOP_DATADIR@/icons/hicolor/scalable/apps
+iconsscalabledir = $(DESKTOP_DATADIR)/icons/hicolor/scalable/apps
 iconsscalable_DATA = scalable/gimp.svg
 
 
 # touch the toplevel icon directory as required by the icon theme spec
 install-data-hook:
-	touch @DESKTOP_DATADIR@/icons/hicolor
+	touch $(DESTDIR)$(DESKTOP_DATADIR)/icons/hicolor
 
 endif
 
