@@ -1288,7 +1288,6 @@ gimp_composite_swap_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 }
 
 
-#if 0
 void
 gimp_composite_addition_va8_va8_va8_mmx (GimpCompositeContext *_op)
 {
@@ -1313,11 +1312,7 @@ gimp_composite_addition_va8_va8_va8_mmx (GimpCompositeContext *_op)
                     "\t" pminub(mm3, mm2, mm4) "\n"
                     "\tpand    %%mm0, %%mm2\n"
                     "\tpor     %%mm2, %%mm1\n"
-#if 0
                     "\tmovq    %%mm1, %0\n"
-#else
-                    "\tmovntq  %%mm1, %0\n"
-#endif
                     : "=m" (*d)
                     : "m" (*a), "m" (*b)
                     : "%mm0", "%mm1", "%mm2", "%mm3", "%mm4");
@@ -1378,7 +1373,6 @@ gimp_composite_addition_va8_va8_va8_mmx (GimpCompositeContext *_op)
   
   asm("emms");
 }
-#endif
 
 #if 0
 void

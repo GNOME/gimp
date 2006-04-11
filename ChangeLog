@@ -1,3 +1,12 @@
+2006-04-11  Sven Neumann  <sven@gimp.org>
+
+	* app/composite/gimp-composite-mmx-installer.c
+	* app/composite/gimp-composite-mmx-test.c
+
+	* app/composite/gimp-composite-mmx.[ch]: disable use of movntq
+	instruction and re-enable MMX acceleration for addition composite
+	mode (bug #162778, patch by Mukund).
+
 2006-03-09  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:
