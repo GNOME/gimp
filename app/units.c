@@ -48,21 +48,21 @@ units_get_number_of_built_in_units (void)
 
 static GimpUnit
 units_unit_new (gchar   *identifier,
-              gdouble  factor,
-              gint     digits,
-              gchar   *symbol,
-              gchar   *abbreviation,
-              gchar   *singular,
-              gchar   *plural)
+                gdouble  factor,
+                gint     digits,
+                gchar   *symbol,
+                gchar   *abbreviation,
+                gchar   *singular,
+                gchar   *plural)
 {
   return _gimp_unit_new (the_unit_gimp,
-			 identifier,
-			 factor,
-			 digits,
-			 symbol,
-			 abbreviation,
-			 singular,
-			 plural);
+                         identifier,
+                         factor,
+                         digits,
+                         symbol,
+                         abbreviation,
+                         singular,
+                         plural);
 }
 
 static gboolean

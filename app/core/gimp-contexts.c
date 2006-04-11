@@ -88,7 +88,7 @@ gimp_contexts_load (Gimp *gimp)
     g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
 
   if (! gimp_config_deserialize_file (GIMP_CONFIG (gimp_get_user_context (gimp)),
-				      filename,
+                                      filename,
                                       NULL, &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
@@ -113,10 +113,10 @@ gimp_contexts_save (Gimp *gimp)
     g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
 
   if (! gimp_config_serialize_to_file (GIMP_CONFIG (gimp_get_user_context (gimp)),
-				       filename,
-				       "GIMP user context",
+                                       filename,
+                                       "GIMP user context",
                                        "end of user context",
-				       NULL, &error))
+                                       NULL, &error))
     {
       g_message (error->message);
       g_error_free (error);

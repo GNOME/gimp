@@ -1,3 +1,8 @@
+2006-04-11  Sven Neumann  <sven@gimp.org>
+
+	* app/units.c
+	* app/core/gimp-contexts.c: converted tabs to spaces.
+
 2006-04-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/file/file-utils.[ch]
