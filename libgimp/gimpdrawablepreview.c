@@ -32,7 +32,7 @@
 #include "gimpdrawablepreview.h"
 
 
-#define SELECTION_BORDER  2
+#define SELECTION_BORDER  8
 
 enum
 {
