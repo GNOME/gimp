@@ -41,7 +41,7 @@ GimpPlugInProcedure * file_utils_find_proc_by_extension (GSList        *procs,
                                                          const gchar   *uri);
 
 GdkPixbuf           * file_utils_load_thumbnail         (const gchar   *filename);
-gboolean              file_utils_save_thumnail          (GimpImage     *image,
+gboolean              file_utils_save_thumbnail         (GimpImage     *image,
                                                          const gchar   *filename);
 
 

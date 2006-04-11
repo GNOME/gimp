@@ -1,5 +1,12 @@
 2006-04-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/file/file-utils.[ch]
+	* tools/pdbgen/pdb/fileops.pdb: fix typo: s/thumnail/thumbnail/
+
+	* app/pdb/fileops_cmds.c: regenerated.
+
+2006-04-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpcontext.[ch]: removed antique
 	gimp_context_get_name() and _set_name().
 

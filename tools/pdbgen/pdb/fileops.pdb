@@ -295,7 +295,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = file_utils_save_thumnail (image, filename);
+  success = file_utils_save_thumbnail (image, filename);
 }
 CODE
     );

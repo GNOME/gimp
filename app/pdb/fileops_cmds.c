@@ -244,7 +244,7 @@ file_save_thumbnail_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      success = file_utils_save_thumnail (image, filename);
+      success = file_utils_save_thumbnail (image, filename);
     }
 
   return gimp_procedure_get_return_values (procedure, success);

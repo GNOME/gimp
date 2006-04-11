@@ -419,8 +419,8 @@ file_utils_load_thumbnail (const gchar *filename)
 }
 
 gboolean
-file_utils_save_thumnail (GimpImage   *image,
-                          const gchar *filename)
+file_utils_save_thumbnail (GimpImage   *image,
+                           const gchar *filename)
 {
   const gchar *image_uri;
   gboolean     success = FALSE;
