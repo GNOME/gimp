@@ -34,8 +34,8 @@ G_BEGIN_DECLS
 typedef void (* GimpSignalHandlerFunc) (gint signum);
 
 GimpSignalHandlerFunc  gimp_signal_private (gint                   signum,
-					    GimpSignalHandlerFunc  handler,
-					    gint                   flags);
+                                            GimpSignalHandlerFunc  handler,
+                                            gint                   flags);
 
 
 G_END_DECLS

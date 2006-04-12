@@ -133,27 +133,27 @@ gimp_thumbnail_class_init (GimpThumbnailClass *klass)
   object_class->get_property = gimp_thumbnail_get_property;
 
   g_object_class_install_property (object_class,
-				   PROP_IMAGE_STATE,
-				   g_param_spec_enum ("image-state", NULL,
+                                   PROP_IMAGE_STATE,
+                                   g_param_spec_enum ("image-state", NULL,
                                                       "State of the image associated to the thumbnail object",
                                                       GIMP_TYPE_THUMB_STATE,
                                                       GIMP_THUMB_STATE_UNKNOWN,
                                                       GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class,
-				   PROP_IMAGE_URI,
-				   g_param_spec_string ("image-uri", NULL,
+                                   PROP_IMAGE_URI,
+                                   g_param_spec_string ("image-uri", NULL,
                                                        "URI of the image file",
-							NULL,
-							GIMP_PARAM_READWRITE));
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class,
-				   PROP_IMAGE_MTIME,
-				   g_param_spec_int64 ("image-mtime", NULL,
+                                   PROP_IMAGE_MTIME,
+                                   g_param_spec_int64 ("image-mtime", NULL,
                                                        "Modification time of the image file in seconds since the Epoch",
                                                        0, G_MAXINT64, 0,
                                                        GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class,
-				   PROP_IMAGE_FILESIZE,
-				   g_param_spec_int64 ("image-filesize", NULL,
+                                   PROP_IMAGE_FILESIZE,
+                                   g_param_spec_int64 ("image-filesize", NULL,
                                                        "Size of the image file in bytes",
                                                        0, G_MAXINT64, 0,
                                                        GIMP_PARAM_READWRITE));
@@ -163,20 +163,20 @@ gimp_thumbnail_class_init (GimpThumbnailClass *klass)
    * Since: GIMP 2.2
    **/
   g_object_class_install_property (object_class,
-				   PROP_IMAGE_MIMETYPE,
-				   g_param_spec_string ("image-mimetype", NULL,
+                                   PROP_IMAGE_MIMETYPE,
+                                   g_param_spec_string ("image-mimetype", NULL,
                                                         "Image mimetype",
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class,
-				   PROP_IMAGE_WIDTH,
-				   g_param_spec_int ("image-width", NULL,
+                                   PROP_IMAGE_WIDTH,
+                                   g_param_spec_int ("image-width", NULL,
                                                      "Width of the image in pixels",
                                                      0, G_MAXINT, 0,
                                                      GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class,
-				   PROP_IMAGE_HEIGHT,
-				   g_param_spec_int ("image-height", NULL,
+                                   PROP_IMAGE_HEIGHT,
+                                   g_param_spec_int ("image-height", NULL,
                                                      "Height of the image in pixels",
                                                      0, G_MAXINT, 0,
                                                      GIMP_PARAM_READWRITE));
@@ -193,8 +193,8 @@ gimp_thumbnail_class_init (GimpThumbnailClass *klass)
                                                      0, G_MAXINT, 0,
                                                      GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class,
-				   PROP_THUMB_STATE,
-				   g_param_spec_enum ("thumb-state", NULL,
+                                   PROP_THUMB_STATE,
+                                   g_param_spec_enum ("thumb-state", NULL,
                                                       "State of the thumbnail file",
                                                       GIMP_TYPE_THUMB_STATE,
                                                       GIMP_THUMB_STATE_UNKNOWN,
@@ -884,10 +884,10 @@ gimp_thumbnail_save (GimpThumbnail  *thumbnail,
 #endif
 
       if (g_rename (tmpname, filename) == -1)
-	{
-	  g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+        {
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                        _("Could not create thumbnail for %s: %s"),
-		       thumbnail->image_uri, g_strerror (errno));
+                       thumbnail->image_uri, g_strerror (errno));
 
           success = FALSE;
         }

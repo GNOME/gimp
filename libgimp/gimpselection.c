@@ -43,13 +43,13 @@
  */
 gint32
 gimp_selection_float (gint32 image_ID,
-		      gint32 drawable_ID,
-		      gint   offx,
-		      gint   offy)
+                      gint32 drawable_ID,
+                      gint   offx,
+                      gint   offy)
 {
   return _gimp_selection_float (drawable_ID,
-				offx,
-				offy);
+                                offx,
+                                offy);
 }
 
 /**

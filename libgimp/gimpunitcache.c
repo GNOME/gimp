@@ -122,12 +122,12 @@ _gimp_unit_cache_new (gchar   *identifier,
                       gchar   *plural)
 {
   return _gimp_unit_new (identifier,
-			 factor,
-			 digits,
-			 symbol,
-			 abbreviation,
-			 singular,
-			 plural);
+                         factor,
+                         digits,
+                         symbol,
+                         abbreviation,
+                         singular,
+                         plural);
 }
 
 gboolean
@@ -151,7 +151,7 @@ _gimp_unit_cache_set_deletion_flag (GimpUnit unit,
     return;
 
   _gimp_unit_set_deletion_flag (unit,
-				deletion_flag);
+                                deletion_flag);
 }
 
 gdouble

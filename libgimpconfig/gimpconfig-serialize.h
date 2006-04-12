@@ -29,13 +29,13 @@ G_BEGIN_DECLS
 
 
 gboolean  gimp_config_serialize_properties         (GimpConfig       *config,
-						    GimpConfigWriter *writer);
+                                                    GimpConfigWriter *writer);
 gboolean  gimp_config_serialize_changed_properties (GimpConfig       *config,
-						    GimpConfigWriter *writer);
+                                                    GimpConfigWriter *writer);
 
 gboolean  gimp_config_serialize_property           (GimpConfig       *config,
-						    GParamSpec       *param_spec,
-						    GimpConfigWriter *writer);
+                                                    GParamSpec       *param_spec,
+                                                    GimpConfigWriter *writer);
 gboolean  gimp_config_serialize_value              (const GValue     *value,
                                                     GString          *str,
                                                     gboolean          escaped);

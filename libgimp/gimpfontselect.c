@@ -70,17 +70,17 @@ gimp_font_select_new (const gchar         *title,
   gchar *font_callback = gimp_procedural_db_temp_name ();
 
   gimp_install_temp_proc (font_callback,
-			  "Temporary font popup callback procedure",
-			  "",
-			  "Andy Thomas",
-			  "Andy Thomas",
-			  "1997",
-			  NULL,
-			  "RGB*, GRAY*",
-			  GIMP_TEMPORARY,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL,
-			  gimp_temp_font_run);
+                          "Temporary font popup callback procedure",
+                          "",
+                          "Andy Thomas",
+                          "Andy Thomas",
+                          "1997",
+                          NULL,
+                          "RGB*, GRAY*",
+                          GIMP_TEMPORARY,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL,
+                          gimp_temp_font_run);
 
   if (gimp_fonts_popup (font_callback, title, font_name))
     {

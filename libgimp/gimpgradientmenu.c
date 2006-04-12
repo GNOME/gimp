@@ -234,12 +234,12 @@ gimp_gradient_select_widget_set (GtkWidget   *widget,
                                              &n_samples,
                                              &samples))
         {
-	  gimp_gradient_select_widget_callback (name,
+          gimp_gradient_select_widget_callback (name,
                                                 n_samples, samples,
                                                 FALSE, gradient_sel);
 
           g_free (samples);
-	}
+        }
 
       g_free (name);
     }
@@ -368,15 +368,15 @@ gimp_gradient_select_preview_expose (GtkWidget      *widget,
       a = src[x * 4 + 3];
 
       if ((x / GIMP_CHECK_SIZE_SM) & 1)
-	{
-	  c0 = GIMP_CHECK_LIGHT;
-	  c1 = GIMP_CHECK_DARK;
-	}
+        {
+          c0 = GIMP_CHECK_LIGHT;
+          c1 = GIMP_CHECK_DARK;
+        }
       else
-	{
-	  c0 = GIMP_CHECK_DARK;
-	  c1 = GIMP_CHECK_LIGHT;
-	}
+        {
+          c0 = GIMP_CHECK_DARK;
+          c1 = GIMP_CHECK_LIGHT;
+        }
 
       *p0++ = (c0 + (r - c0) * a) * 255.0;
       *p0++ = (c0 + (g - c0) * a) * 255.0;

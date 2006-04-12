@@ -31,16 +31,16 @@ G_BEGIN_DECLS
 
 const gchar * gimp_directory                  (void) G_GNUC_CONST;
 const gchar * gimp_data_directory             (void) G_GNUC_CONST;
-const gchar * gimp_locale_directory	      (void) G_GNUC_CONST;
-const gchar * gimp_sysconf_directory	      (void) G_GNUC_CONST;
+const gchar * gimp_locale_directory              (void) G_GNUC_CONST;
+const gchar * gimp_sysconf_directory              (void) G_GNUC_CONST;
 const gchar * gimp_plug_in_directory          (void) G_GNUC_CONST;
 const gchar * gimp_gtkrc                      (void) G_GNUC_CONST;
 gchar       * gimp_personal_rc_file           (const gchar  *basename);
 
 GList       * gimp_path_parse                 (const gchar  *path,
-					       gint          max_paths,
-					       gboolean      check,
-					       GList       **check_failed);
+                                               gint          max_paths,
+                                               gboolean      check,
+                                               GList       **check_failed);
 gchar       * gimp_path_to_str                (GList        *path);
 void          gimp_path_free                  (GList        *path);
 

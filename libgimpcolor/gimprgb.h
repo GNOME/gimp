@@ -106,7 +106,7 @@ gdouble   gimp_rgb_min         (const GimpRGB *rgb);
 void      gimp_rgb_clamp       (GimpRGB       *rgb);
 
 void      gimp_rgb_gamma       (GimpRGB       *rgb,
- 			        gdouble        gamma);
+                                 gdouble        gamma);
 
 gdouble   gimp_rgb_luminance       (const GimpRGB *rgb);
 guchar    gimp_rgb_luminance_uchar (const GimpRGB *rgb);
@@ -154,7 +154,7 @@ void      gimp_rgba_multiply   (GimpRGB       *rgba,
                                 gdouble        factor);
 
 gdouble   gimp_rgba_distance   (const GimpRGB *rgba1,
-			        const GimpRGB *rgba2);
+                                const GimpRGB *rgba2);
 
 
 
@@ -173,8 +173,8 @@ gdouble   gimp_rgba_distance   (const GimpRGB *rgba1,
 #define GIMP_RGB_LUMINANCE_BLUE   (0.0722)
 
 #define GIMP_RGB_LUMINANCE(r,g,b) ((r) * GIMP_RGB_LUMINANCE_RED   + \
-			           (g) * GIMP_RGB_LUMINANCE_GREEN + \
-			           (b) * GIMP_RGB_LUMINANCE_BLUE)
+                                   (g) * GIMP_RGB_LUMINANCE_GREEN + \
+                                   (b) * GIMP_RGB_LUMINANCE_BLUE)
 
 
 #ifndef GIMP_DISABLE_DEPRECATED
@@ -193,8 +193,8 @@ gdouble   gimp_rgba_distance   (const GimpRGB *rgba1,
 #define GIMP_RGB_INTENSITY_BLUE   (0.11)
 
 #define GIMP_RGB_INTENSITY(r,g,b) ((r) * GIMP_RGB_INTENSITY_RED   + \
-			           (g) * GIMP_RGB_INTENSITY_GREEN + \
-			           (b) * GIMP_RGB_INTENSITY_BLUE)
+                                   (g) * GIMP_RGB_INTENSITY_GREEN + \
+                                   (b) * GIMP_RGB_INTENSITY_BLUE)
 
 #endif
 

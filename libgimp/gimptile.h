@@ -44,7 +44,7 @@ struct _GimpTile
 void    gimp_tile_ref          (GimpTile  *tile);
 void    gimp_tile_ref_zero     (GimpTile  *tile);
 void    gimp_tile_unref        (GimpTile  *tile,
-				gboolean   dirty);
+                                gboolean   dirty);
 void    gimp_tile_flush        (GimpTile  *tile);
 
 void    gimp_tile_cache_size   (gulong     kilobytes);

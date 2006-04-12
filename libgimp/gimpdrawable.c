@@ -145,9 +145,9 @@ gimp_drawable_flush (GimpDrawable *drawable)
 
 GimpTile *
 gimp_drawable_get_tile (GimpDrawable *drawable,
-			gboolean      shadow,
-			gint          row,
-			gint          col)
+                        gboolean      shadow,
+                        gint          row,
+                        gint          col)
 {
   GimpTile *tiles;
   guint     right_tile;
@@ -210,9 +210,9 @@ gimp_drawable_get_tile (GimpDrawable *drawable,
 
 GimpTile *
 gimp_drawable_get_tile2 (GimpDrawable *drawable,
-			 gboolean      shadow,
-			 gint          x,
-			 gint          y)
+                         gboolean      shadow,
+                         gint          x,
+                         gint          y)
 {
   gint row;
   gint col;
@@ -264,9 +264,9 @@ gimp_drawable_get_color_uchar (gint32         drawable_ID,
 
 guchar *
 gimp_drawable_get_thumbnail_data (gint32  drawable_ID,
-				  gint   *width,
-				  gint   *height,
-				  gint   *bpp)
+                                  gint   *width,
+                                  gint   *height,
+                                  gint   *bpp)
 {
   gint    ret_width;
   gint    ret_height;
@@ -274,13 +274,13 @@ gimp_drawable_get_thumbnail_data (gint32  drawable_ID,
   gint    data_size;
 
   _gimp_drawable_thumbnail (drawable_ID,
-			    *width,
-			    *height,
-			    &ret_width,
-			    &ret_height,
-			    bpp,
-			    &data_size,
-			    &image_data);
+                            *width,
+                            *height,
+                            &ret_width,
+                            &ret_height,
+                            bpp,
+                            &data_size,
+                            &image_data);
 
   *width  = ret_width;
   *height = ret_height;
@@ -338,10 +338,10 @@ gimp_drawable_get_sub_thumbnail_data (gint32  drawable_ID,
  */
 gboolean
 gimp_drawable_attach_new_parasite (gint32          drawable_ID,
-				   const gchar    *name,
-				   gint            flags,
-				   gint            size,
-				   gconstpointer   data)
+                                   const gchar    *name,
+                                   gint            flags,
+                                   gint            size,
+                                   gconstpointer   data)
 {
   GimpParasite *parasite = gimp_parasite_new (name, flags, size, data);
   gboolean      success;

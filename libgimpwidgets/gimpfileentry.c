@@ -71,12 +71,12 @@ gimp_file_entry_class_init (GimpFileEntryClass *klass)
    **/
   gimp_file_entry_signals[FILENAME_CHANGED] =
     g_signal_new ("filename-changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpFileEntryClass, filename_changed),
-		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpFileEntryClass, filename_changed),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   object_class->destroy   = gimp_file_entry_destroy;
 
@@ -243,7 +243,7 @@ gimp_file_entry_entry_activate (GtkWidget     *widget,
   utf8 = g_strstrip (utf8);
 
   while (((len = strlen (utf8)) > 1) &&
-	 (utf8[len - 1] == G_DIR_SEPARATOR))
+         (utf8[len - 1] == G_DIR_SEPARATOR))
     utf8[len - 1] = '\0';
 
   filename = g_filename_from_utf8 (utf8, -1, NULL, NULL, NULL);
@@ -333,7 +333,7 @@ gimp_file_entry_browse_clicked (GtkWidget     *widget,
 
                                      NULL);
 
-	gtk_dialog_set_alternative_button_order (GTK_DIALOG (entry->file_dialog),
+        gtk_dialog_set_alternative_button_order (GTK_DIALOG (entry->file_dialog),
                                                 GTK_RESPONSE_OK,
                                                 GTK_RESPONSE_CANCEL,
                                                 -1);

@@ -40,14 +40,14 @@ void  gimp_standard_help_func      (const gchar  *help_id,
 
 /*  connect the help callback of a window  */
 void  gimp_help_connect            (GtkWidget    *widget,
-				    GimpHelpFunc  help_func,
-				    const gchar  *help_id,
+                                    GimpHelpFunc  help_func,
+                                    const gchar  *help_id,
                                     gpointer      help_data);
 
 /*  set help data for non-window widgets  */
 void  gimp_help_set_help_data      (GtkWidget    *widget,
-				    const gchar  *tooltip,
-				    const gchar  *help_id);
+                                    const gchar  *tooltip,
+                                    const gchar  *help_id);
 
 /*  activate the context help inspector  */
 void  gimp_context_help            (GtkWidget    *widget);

@@ -66,7 +66,7 @@ GType       gimp_pixmap_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_pixmap_new      (gchar      **xpm_data);
 
 void        gimp_pixmap_set      (GimpPixmap  *pixmap,
-				  gchar      **xpm_data);
+                                  gchar      **xpm_data);
 
 
 G_END_DECLS

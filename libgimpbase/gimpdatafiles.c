@@ -64,21 +64,21 @@ is_script (const gchar *filename)
     {
       pathext = g_getenv ("PATHEXT");
       if (pathext != NULL)
-	{
-	  exts = g_strsplit (pathext, G_SEARCHPATH_SEPARATOR_S, 100);
-	}
+        {
+          exts = g_strsplit (pathext, G_SEARCHPATH_SEPARATOR_S, 100);
+        }
       else
-	{
-	  exts = g_new (gchar *, 1);
-	  exts[0] = NULL;
-	}
+        {
+          exts = g_new (gchar *, 1);
+          exts[0] = NULL;
+        }
     }
 
   i = 0;
   while (exts[i] != NULL)
     {
       if (g_ascii_strcasecmp (ext, exts[i]) == 0)
-	return TRUE;
+        return TRUE;
       i++;
     }
 
@@ -90,7 +90,7 @@ is_script (const gchar *filename)
 
 gboolean
 gimp_datafiles_check_extension (const gchar *filename,
-				const gchar *extension)
+                                const gchar *extension)
 {
   gint name_len;
   gint ext_len;
@@ -109,9 +109,9 @@ gimp_datafiles_check_extension (const gchar *filename,
 
 void
 gimp_datafiles_read_directories (const gchar            *path_str,
-				 GFileTest               flags,
-				 GimpDatafileLoaderFunc  loader_func,
-				 gpointer                user_data)
+                                 GFileTest               flags,
+                                 GimpDatafileLoaderFunc  loader_func,
+                                 gpointer                user_data)
 {
   GimpDatafileData  file_data;
   struct stat       filestat;
@@ -137,12 +137,12 @@ gimp_datafiles_read_directories (const gchar            *path_str,
       dir = g_dir_open (dirname, 0, NULL);
 
       if (dir)
-	{
-	  while ((dir_ent = g_dir_read_name (dir)))
-	    {
-	      filename = g_build_filename (dirname, dir_ent, NULL);
+        {
+          while ((dir_ent = g_dir_read_name (dir)))
+            {
+              filename = g_build_filename (dirname, dir_ent, NULL);
 
-	      err = g_stat (filename, &filestat);
+              err = g_stat (filename, &filestat);
 
               file_data.filename = filename;
               file_data.dirname  = dirname;
@@ -151,8 +151,8 @@ gimp_datafiles_read_directories (const gchar            *path_str,
               file_data.mtime    = filestat.st_mtime;
               file_data.ctime    = filestat.st_ctime;
 
-	      if (! err)
-		{
+              if (! err)
+                {
                   if (flags & G_FILE_TEST_EXISTS)
                     {
                       (* loader_func) (&file_data, user_data);
@@ -162,33 +162,33 @@ gimp_datafiles_read_directories (const gchar            *path_str,
                     {
                       (* loader_func) (&file_data, user_data);
                     }
-		  else if ((flags & G_FILE_TEST_IS_DIR) &&
+                  else if ((flags & G_FILE_TEST_IS_DIR) &&
                            S_ISDIR (filestat.st_mode))
-		    {
-		      (* loader_func) (&file_data, user_data);
-		    }
+                    {
+                      (* loader_func) (&file_data, user_data);
+                    }
 #ifndef G_OS_WIN32
-		  else if ((flags & G_FILE_TEST_IS_SYMLINK) &&
+                  else if ((flags & G_FILE_TEST_IS_SYMLINK) &&
                            S_ISLNK (filestat.st_mode))
-		    {
-		      (* loader_func) (&file_data, user_data);
-		    }
+                    {
+                      (* loader_func) (&file_data, user_data);
+                    }
 #endif
-		  else if ((flags & G_FILE_TEST_IS_EXECUTABLE) &&
+                  else if ((flags & G_FILE_TEST_IS_EXECUTABLE) &&
                            (((filestat.st_mode & S_IXUSR) &&
-			     !S_ISDIR (filestat.st_mode)) ||
+                             !S_ISDIR (filestat.st_mode)) ||
                             (S_ISREG (filestat.st_mode) &&
                              is_script (filename))))
-		    {
-		      (* loader_func) (&file_data, user_data);
-		    }
-		}
+                    {
+                      (* loader_func) (&file_data, user_data);
+                    }
+                }
 
-	      g_free (filename);
-	    }
+              g_free (filename);
+            }
 
-	  g_dir_close (dir);
-	}
+          g_dir_close (dir);
+        }
     }
 
   gimp_path_free (path);

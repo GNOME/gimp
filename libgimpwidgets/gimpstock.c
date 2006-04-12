@@ -81,10 +81,10 @@ icon_set_from_inline (GtkIconSet       *set,
 
 static void
 add_sized_with_same_fallback (GtkIconFactory *factory,
-			      const guchar   *inline_data,
-			      const guchar   *inline_data_rtl,
-			      GtkIconSize     size,
-			      const gchar    *stock_id)
+                              const guchar   *inline_data,
+                              const guchar   *inline_data_rtl,
+                              GtkIconSize     size,
+                              const gchar    *stock_id)
 {
   GtkIconSet *set;
   gboolean    fallback = FALSE;
@@ -688,37 +688,37 @@ gimp_stock_init (void)
   for (i = 0; i < G_N_ELEMENTS (gimp_stock_dialog_pixbufs); i++)
     {
       add_sized_with_same_fallback (gimp_stock_factory,
-				    gimp_stock_dialog_pixbufs[i].inline_data,
+                                    gimp_stock_dialog_pixbufs[i].inline_data,
                                     NULL,
-				    GTK_ICON_SIZE_DIALOG,
-				    gimp_stock_dialog_pixbufs[i].stock_id);
+                                    GTK_ICON_SIZE_DIALOG,
+                                    gimp_stock_dialog_pixbufs[i].stock_id);
     }
 
   for (i = 0; i < G_N_ELEMENTS (gimp_stock_dnd_pixbufs); i++)
     {
       add_sized_with_same_fallback (gimp_stock_factory,
-				    gimp_stock_dnd_pixbufs[i].inline_data,
+                                    gimp_stock_dnd_pixbufs[i].inline_data,
                                     NULL,
-				    GTK_ICON_SIZE_DND,
-				    gimp_stock_dnd_pixbufs[i].stock_id);
+                                    GTK_ICON_SIZE_DND,
+                                    gimp_stock_dnd_pixbufs[i].stock_id);
     }
 
   for (i = 0; i < G_N_ELEMENTS (gimp_stock_button_pixbufs); i++)
     {
       add_sized_with_same_fallback (gimp_stock_factory,
-				    gimp_stock_button_pixbufs[i].inline_data,
+                                    gimp_stock_button_pixbufs[i].inline_data,
                                     NULL,
-				    GTK_ICON_SIZE_BUTTON,
-				    gimp_stock_button_pixbufs[i].stock_id);
+                                    GTK_ICON_SIZE_BUTTON,
+                                    gimp_stock_button_pixbufs[i].stock_id);
     }
 
   for (i = 0; i < G_N_ELEMENTS (gimp_stock_menu_pixbufs); i++)
     {
       add_sized_with_same_fallback (gimp_stock_factory,
-				    gimp_stock_menu_pixbufs[i].inline_data,
+                                    gimp_stock_menu_pixbufs[i].inline_data,
                                     NULL,
-				    GTK_ICON_SIZE_MENU,
-				    gimp_stock_menu_pixbufs[i].stock_id);
+                                    GTK_ICON_SIZE_MENU,
+                                    gimp_stock_menu_pixbufs[i].stock_id);
     }
 
   for (i = 0; i < G_N_ELEMENTS (gimp_stock_direction_pixbufs); i++)

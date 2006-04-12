@@ -79,7 +79,7 @@ struct _GimpParasite
   guint32   flags;  /* save Parasite in XCF file, etc.                */
   guint32   size;   /* amount of data                                 */
   gpointer  data;   /* a pointer to the data.  plugin is              *
-		     * responsible for tracking byte order            */
+                     * responsible for tracking byte order            */
 };
 
 

@@ -97,13 +97,13 @@ gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
 
   toggle_cell_signals[CLICKED] =
     g_signal_new ("clicked",
-		  G_OBJECT_CLASS_TYPE (object_class),
-		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (GimpCellRendererToggleClass, clicked),
-		  NULL, NULL,
-		  _gimp_widgets_marshal_VOID__STRING_FLAGS,
-		  G_TYPE_NONE, 2,
-		  G_TYPE_STRING,
+                  G_OBJECT_CLASS_TYPE (object_class),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpCellRendererToggleClass, clicked),
+                  NULL, NULL,
+                  _gimp_widgets_marshal_VOID__STRING_FLAGS,
+                  G_TYPE_NONE, 2,
+                  G_TYPE_STRING,
                   GDK_TYPE_MODIFIER_TYPE);
 
   object_class->finalize     = gimp_cell_renderer_toggle_finalize;
@@ -192,7 +192,7 @@ gimp_cell_renderer_toggle_set_property (GObject      *object,
     {
     case PROP_STOCK_ID:
       if (toggle->stock_id)
-	g_free (toggle->stock_id);
+        g_free (toggle->stock_id);
       toggle->stock_id = g_value_dup_string (value);
       break;
     case PROP_STOCK_SIZE:
@@ -256,17 +256,17 @@ gimp_cell_renderer_toggle_get_size (GtkCellRenderer *cell,
   if (cell_area)
     {
       if (x_offset)
-	{
-	  *x_offset = (((gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL) ?
+        {
+          *x_offset = (((gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL) ?
                         (1.0 - cell->xalign) : cell->xalign) *
                        (cell_area->width - calc_width));
-	  *x_offset = MAX (*x_offset, 0);
-	}
+          *x_offset = MAX (*x_offset, 0);
+        }
       if (y_offset)
-	{
-	  *y_offset = cell->yalign * (cell_area->height - calc_height);
-	  *y_offset = MAX (*y_offset, 0);
-	}
+        {
+          *y_offset = cell->yalign * (cell_area->height - calc_height);
+          *y_offset = MAX (*y_offset, 0);
+        }
     }
 }
 
@@ -314,9 +314,9 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
   if ((flags & GTK_CELL_RENDERER_SELECTED) == GTK_CELL_RENDERER_SELECTED)
     {
       if (GTK_WIDGET_HAS_FOCUS (widget))
-	state = GTK_STATE_SELECTED;
+        state = GTK_STATE_SELECTED;
       else
-	state = GTK_STATE_ACTIVE;
+        state = GTK_STATE_ACTIVE;
     }
   else
     {

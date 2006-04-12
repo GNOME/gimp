@@ -190,7 +190,7 @@ gimp_drawable_combo_box_new (GimpDrawableConstraintFunc constraint,
 
 G_DEFINE_TYPE(GimpChannelComboBox,
               gimp_channel_combo_box,
-	      GIMP_TYPE_INT_COMBO_BOX);
+              GIMP_TYPE_INT_COMBO_BOX);
 
 static void
 gimp_channel_combo_box_class_init (GimpChannelComboBoxClass *klass)
@@ -269,7 +269,7 @@ gimp_channel_combo_box_new (GimpDrawableConstraintFunc constraint,
 
 G_DEFINE_TYPE(GimpLayerComboBox,
               gimp_layer_combo_box,
-	      GIMP_TYPE_INT_COMBO_BOX);
+              GIMP_TYPE_INT_COMBO_BOX);
 
 static void
 gimp_layer_combo_box_class_init (GimpLayerComboBoxClass *klass)

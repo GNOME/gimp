@@ -79,17 +79,17 @@ gimp_pattern_select_new (const gchar            *title,
   gchar *pattern_callback = gimp_procedural_db_temp_name ();
 
   gimp_install_temp_proc (pattern_callback,
-			  "Temporary pattern popup callback procedure",
-			  "",
-			  "Andy Thomas",
-			  "Andy Thomas",
-			  "1997",
-			  NULL,
-			  "RGB*, GRAY*",
-			  GIMP_TEMPORARY,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL,
-			  gimp_temp_pattern_run);
+                          "Temporary pattern popup callback procedure",
+                          "",
+                          "Andy Thomas",
+                          "Andy Thomas",
+                          "1997",
+                          NULL,
+                          "RGB*, GRAY*",
+                          GIMP_TEMPORARY,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL,
+                          gimp_temp_pattern_run);
 
   if (gimp_patterns_popup (pattern_callback, title, pattern_name))
     {

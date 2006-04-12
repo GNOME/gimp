@@ -69,7 +69,7 @@ static void       gimp_scanner_message (GScanner     *scanner,
  **/
 GScanner *
 gimp_scanner_new_file (const gchar  *filename,
-		       GError      **error)
+                       GError      **error)
 {
   GScanner    *scanner;
   GMappedFile *file;
@@ -114,8 +114,8 @@ gimp_scanner_new_file (const gchar  *filename,
  **/
 GScanner *
 gimp_scanner_new_string (const gchar  *text,
-			 gint          text_len,
-			 GError      **error)
+                         gint          text_len,
+                         GError      **error)
 {
   GScanner *scanner;
 

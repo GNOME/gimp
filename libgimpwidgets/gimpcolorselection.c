@@ -184,8 +184,8 @@ gimp_color_selection_init (GimpColorSelection *selection)
   gtk_widget_set_size_request (frame, -1, COLOR_AREA_SIZE);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Current:"), 1.0, 0.5,
-			     frame, 1, FALSE);
+                             _("Current:"), 1.0, 0.5,
+                             frame, 1, FALSE);
 
   selection->new_color = gimp_color_area_new (&selection->rgb,
                                               selection->show_alpha ?
@@ -197,8 +197,8 @@ gimp_color_selection_init (GimpColorSelection *selection)
   gtk_widget_show (selection->new_color);
 
   g_signal_connect (selection->new_color, "color-changed",
-		    G_CALLBACK (gimp_color_selection_new_color_changed),
-		    selection);
+                    G_CALLBACK (gimp_color_selection_new_color_changed),
+                    selection);
 
   /*  The old color area  */
   frame = gtk_frame_new (NULL);
@@ -206,8 +206,8 @@ gimp_color_selection_init (GimpColorSelection *selection)
   gtk_widget_set_size_request (frame, -1, COLOR_AREA_SIZE);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Old:"), 1.0, 0.5,
-			     frame, 1, FALSE);
+                             _("Old:"), 1.0, 0.5,
+                             frame, 1, FALSE);
 
   selection->old_color = gimp_color_area_new (&selection->rgb,
                                               selection->show_alpha ?
@@ -589,13 +589,13 @@ gimp_color_selection_update (GimpColorSelection *selection,
     {
       g_signal_handlers_block_by_func (selection->new_color,
                                        gimp_color_selection_new_color_changed,
-				       selection);
+                                       selection);
 
       gimp_color_area_set_color (GIMP_COLOR_AREA (selection->new_color),
-				 &selection->rgb);
+                                 &selection->rgb);
 
       g_signal_handlers_unblock_by_func (selection->new_color,
-					 gimp_color_selection_new_color_changed,
-					 selection);
+                                         gimp_color_selection_new_color_changed,
+                                         selection);
     }
 }

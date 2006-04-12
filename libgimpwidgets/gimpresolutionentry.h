@@ -106,13 +106,13 @@ struct _GimpResolutionEntryClass
 GType       gimp_resolution_entry_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_resolution_entry_new          (const gchar   *width_label,
-		                                gdouble        width,
-					        const gchar   *height_label,
+                                                gdouble        width,
+                                                const gchar   *height_label,
                                                 gdouble        height,
-					        GimpUnit       size_unit,
-					        const gchar   *x_label,
+                                                GimpUnit       size_unit,
+                                                const gchar   *x_label,
                                                 gdouble        initial_x,
-					        const gchar   *y_label,
+                                                const gchar   *y_label,
                                                 gdouble        initial_y,
                                                 GimpUnit       intial_unit,
                                                 gboolean       independent,

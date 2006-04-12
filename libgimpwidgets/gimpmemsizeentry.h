@@ -70,10 +70,10 @@ struct _GimpMemsizeEntryClass
 GType       gimp_memsize_entry_get_type  (void) G_GNUC_CONST;
 
 GtkWidget * gimp_memsize_entry_new       (guint64           value,
-					  guint64           lower,
-					  guint64           upper);
+                                          guint64           lower,
+                                          guint64           upper);
 void        gimp_memsize_entry_set_value (GimpMemsizeEntry *entry,
-					  guint64           value);
+                                          guint64           value);
 guint64     gimp_memsize_entry_get_value (GimpMemsizeEntry *entry);
 
 

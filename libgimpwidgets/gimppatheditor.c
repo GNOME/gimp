@@ -85,12 +85,12 @@ gimp_path_editor_class_init (GimpPathEditorClass *klass)
    **/
   gimp_path_editor_signals[PATH_CHANGED] =
     g_signal_new ("path-changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpPathEditorClass, path_changed),
-		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpPathEditorClass, path_changed),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   /**
    * GimpPathEditor::writable-changed:
@@ -101,12 +101,12 @@ gimp_path_editor_class_init (GimpPathEditorClass *klass)
    **/
   gimp_path_editor_signals[WRITABLE_CHANGED] =
     g_signal_new ("writable-changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpPathEditorClass, writable_changed),
-		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpPathEditorClass, writable_changed),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   klass->path_changed     = NULL;
   klass->writable_changed = NULL;
@@ -145,7 +145,7 @@ gimp_path_editor_init (GimpPathEditor *editor)
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_path_editor_new_clicked),
-		    editor);
+                    editor);
 
   editor->up_button = button = gtk_button_new ();
   gtk_widget_set_sensitive (button, FALSE);
@@ -158,7 +158,7 @@ gimp_path_editor_init (GimpPathEditor *editor)
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_path_editor_move_clicked),
-		    editor);
+                    editor);
 
   editor->down_button = button = gtk_button_new ();
   gtk_widget_set_sensitive (button, FALSE);
@@ -171,7 +171,7 @@ gimp_path_editor_init (GimpPathEditor *editor)
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_path_editor_move_clicked),
-		    editor);
+                    editor);
 
   editor->delete_button = button = gtk_button_new ();
   gtk_widget_set_sensitive (button, FALSE);
@@ -184,11 +184,11 @@ gimp_path_editor_init (GimpPathEditor *editor)
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_path_editor_delete_clicked),
-		    editor);
+                    editor);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
-				       GTK_SHADOW_IN);
+                                       GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_ALWAYS);
@@ -218,10 +218,10 @@ gimp_path_editor_init (GimpPathEditor *editor)
   gtk_tree_view_column_set_visible (col, FALSE);
 
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv),
-					       -1, _("Folder"),
-					       gtk_cell_renderer_text_new (),
-					       "text", COLUMN_UTF8,
-					       NULL);
+                                               -1, _("Folder"),
+                                               gtk_cell_renderer_text_new (),
+                                               "text", COLUMN_UTF8,
+                                               NULL);
 
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tv), TRUE);
 
@@ -230,8 +230,8 @@ gimp_path_editor_init (GimpPathEditor *editor)
 
   editor->sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (tv));
   g_signal_connect (editor->sel, "changed",
-		    G_CALLBACK (gimp_path_editor_selection_changed),
-		    editor);
+                    G_CALLBACK (gimp_path_editor_selection_changed),
+                    editor);
 }
 
 /**
@@ -249,7 +249,7 @@ gimp_path_editor_init (GimpPathEditor *editor)
  **/
 GtkWidget *
 gimp_path_editor_new (const gchar *filesel_title,
-		      const gchar *path)
+                      const gchar *path)
 {
   GimpPathEditor *editor;
 
@@ -265,7 +265,7 @@ gimp_path_editor_new (const gchar *filesel_title,
 
   g_signal_connect (editor->file_entry, "filename-changed",
                     G_CALLBACK (gimp_path_editor_file_entry_changed),
-		    editor);
+                    editor);
 
   if (path)
     gimp_path_editor_set_path (editor, path);
@@ -558,13 +558,13 @@ gimp_path_editor_new_clicked (GtkWidget      *widget,
   if (editor->sel_path)
     {
       g_signal_handlers_block_by_func (editor->sel,
-				       gimp_path_editor_selection_changed,
+                                       gimp_path_editor_selection_changed,
                                        editor);
 
       gtk_tree_selection_unselect_path (editor->sel, editor->sel_path);
 
       g_signal_handlers_unblock_by_func (editor->sel,
-					 gimp_path_editor_selection_changed,
+                                         gimp_path_editor_selection_changed,
                                          editor);
 
       gtk_tree_path_free (editor->sel_path);
@@ -652,7 +652,7 @@ gimp_path_editor_delete_clicked (GtkWidget      *widget,
     return;
 
   gtk_tree_model_get_iter (GTK_TREE_MODEL (editor->dir_list), &iter,
-			   editor->sel_path);
+                           editor->sel_path);
 
   gtk_tree_model_get (GTK_TREE_MODEL (editor->dir_list), &iter,
                       COLUMN_WRITABLE, &dir_writable,
@@ -731,7 +731,7 @@ gimp_path_editor_file_entry_changed (GtkWidget      *widget,
   else
     {
       gtk_tree_model_get_iter (GTK_TREE_MODEL (editor->dir_list), &iter,
-			       editor->sel_path);
+                               editor->sel_path);
       gtk_list_store_set (editor->dir_list, &iter,
                           COLUMN_UTF8,      utf8,
                           COLUMN_DIRECTORY, dir,
@@ -772,7 +772,7 @@ gimp_path_editor_selection_changed (GtkTreeSelection *sel,
       g_free (directory);
 
       if (editor->sel_path)
-	gtk_tree_path_free (editor->sel_path);
+        gtk_tree_path_free (editor->sel_path);
 
       editor->sel_path =
         gtk_tree_model_get_path (GTK_TREE_MODEL (editor->dir_list), &iter);

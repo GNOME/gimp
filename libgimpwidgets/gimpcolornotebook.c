@@ -134,7 +134,7 @@ gimp_color_notebook_init (GimpColorNotebook *notebook)
                     notebook);
 
   selector_types = g_type_children (GIMP_TYPE_COLOR_SELECTOR,
-				    &n_selector_types);
+                                    &n_selector_types);
 
   if (n_selector_types == 2)
     {

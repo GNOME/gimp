@@ -78,12 +78,12 @@ gimp_pick_button_class_init (GimpPickButtonClass* klass)
 
   pick_button_signals[COLOR_PICKED] =
     g_signal_new ("color-picked",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpPickButtonClass, color_picked),
-		  NULL, NULL,
-		  g_cclosure_marshal_VOID__POINTER,
-		  G_TYPE_NONE, 1,
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpPickButtonClass, color_picked),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__POINTER,
+                  G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 
   object_class->destroy = gimp_pick_button_destroy;

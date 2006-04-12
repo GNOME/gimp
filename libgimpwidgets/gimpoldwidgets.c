@@ -49,16 +49,16 @@
 GtkWidget *
 gimp_option_menu_new (gboolean            menu_only,
 
-		      /* specify menu items as va_list:
-		       *  const gchar    *label,
-		       *  GCallback       callback,
-		       *  gpointer        callback_data,
-		       *  gpointer        item_data,
-		       *  GtkWidget     **widget_ptr,
-		       *  gboolean        active
-		       */
+                      /* specify menu items as va_list:
+                       *  const gchar    *label,
+                       *  GCallback       callback,
+                       *  gpointer        callback_data,
+                       *  gpointer        item_data,
+                       *  GtkWidget     **widget_ptr,
+                       *  gboolean        active
+                       */
 
-		       ...)
+                       ...)
 {
   GtkWidget *menu;
   GtkWidget *menuitem;
@@ -92,14 +92,14 @@ gimp_option_menu_new (gboolean            menu_only,
       active        = va_arg (args, gboolean);
 
       if (strcmp (label, "---"))
-	{
-	  menuitem = gtk_menu_item_new_with_label (label);
+        {
+          menuitem = gtk_menu_item_new_with_label (label);
 
-	  g_signal_connect (menuitem, "activate",
-			    callback,
-			    callback_data);
+          g_signal_connect (menuitem, "activate",
+                            callback,
+                            callback_data);
 
-	  if (item_data)
+          if (item_data)
             {
               g_object_set_data (G_OBJECT (menuitem), "gimp-item-data",
                                  item_data);
@@ -107,24 +107,24 @@ gimp_option_menu_new (gboolean            menu_only,
               /*  backward compat  */
               g_object_set_data (G_OBJECT (menuitem), "user_data", item_data);
             }
-	}
+        }
       else
-	{
-	  menuitem = gtk_menu_item_new ();
+        {
+          menuitem = gtk_menu_item_new ();
 
-	  gtk_widget_set_sensitive (menuitem, FALSE);
-	}
+          gtk_widget_set_sensitive (menuitem, FALSE);
+        }
 
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
       if (widget_ptr)
-	*widget_ptr = menuitem;
+        *widget_ptr = menuitem;
 
       gtk_widget_show (menuitem);
 
       /*  remember the initial menu item  */
       if (active)
-	initial_index = i;
+        initial_index = i;
 
       label = va_arg (args, const gchar *);
     }
@@ -162,17 +162,17 @@ gimp_option_menu_new (gboolean            menu_only,
  **/
 GtkWidget *
 gimp_option_menu_new2 (gboolean         menu_only,
-		       GCallback        menu_item_callback,
-		       gpointer         callback_data,
-		       gpointer         initial, /* item_data */
+                       GCallback        menu_item_callback,
+                       gpointer         callback_data,
+                       gpointer         initial, /* item_data */
 
-		       /* specify menu items as va_list:
-			*  const gchar *label,
-			*  gpointer     item_data,
-			*  GtkWidget  **widget_ptr,
-			*/
+                       /* specify menu items as va_list:
+                        *  const gchar *label,
+                        *  gpointer     item_data,
+                        *  GtkWidget  **widget_ptr,
+                        */
 
-		       ...)
+                       ...)
 {
   GtkWidget *menu;
   GtkWidget *menuitem;
@@ -200,14 +200,14 @@ gimp_option_menu_new2 (gboolean         menu_only,
       widget_ptr = va_arg (args, GtkWidget **);
 
       if (strcmp (label, "---"))
-	{
-	  menuitem = gtk_menu_item_new_with_label (label);
+        {
+          menuitem = gtk_menu_item_new_with_label (label);
 
-	  g_signal_connect (menuitem, "activate",
-			    menu_item_callback,
-			    callback_data);
+          g_signal_connect (menuitem, "activate",
+                            menu_item_callback,
+                            callback_data);
 
-	  if (item_data)
+          if (item_data)
             {
               g_object_set_data (G_OBJECT (menuitem), "gimp-item-data",
                                  item_data);
@@ -215,24 +215,24 @@ gimp_option_menu_new2 (gboolean         menu_only,
               /*  backward compat  */
               g_object_set_data (G_OBJECT (menuitem), "user_data", item_data);
             }
-	}
+        }
       else
-	{
-	  menuitem = gtk_menu_item_new ();
+        {
+          menuitem = gtk_menu_item_new ();
 
-	  gtk_widget_set_sensitive (menuitem, FALSE);
-	}
+          gtk_widget_set_sensitive (menuitem, FALSE);
+        }
 
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
       if (widget_ptr)
-	*widget_ptr = menuitem;
+        *widget_ptr = menuitem;
 
       gtk_widget_show (menuitem);
 
       /*  remember the initial menu item  */
       if (item_data == initial)
-	initial_index = i;
+        initial_index = i;
 
       label = va_arg (args, const gchar *);
     }
@@ -274,17 +274,17 @@ gimp_option_menu_new2 (gboolean         menu_only,
  **/
 GtkWidget *
 gimp_int_option_menu_new (gboolean         menu_only,
-		          GCallback        menu_item_callback,
-		          gpointer         callback_data,
-		          gint             initial, /* item_data */
+                          GCallback        menu_item_callback,
+                          gpointer         callback_data,
+                          gint             initial, /* item_data */
 
-		          /* specify menu items as va_list:
-			   *  const gchar *label,
-			   *  gint         item_data,
-			   *  GtkWidget  **widget_ptr,
-			   */
+                          /* specify menu items as va_list:
+                           *  const gchar *label,
+                           *  gint         item_data,
+                           *  GtkWidget  **widget_ptr,
+                           */
 
-		          ...)
+                          ...)
 {
   GtkWidget *menu;
   GtkWidget *menuitem;
@@ -315,14 +315,14 @@ gimp_int_option_menu_new (gboolean         menu_only,
       item_ptr = GINT_TO_POINTER (item_data);
 
       if (strcmp (label, "---"))
-	{
-	  menuitem = gtk_menu_item_new_with_label (label);
+        {
+          menuitem = gtk_menu_item_new_with_label (label);
 
-	  g_signal_connect (menuitem, "activate",
-			    menu_item_callback,
-			    callback_data);
+          g_signal_connect (menuitem, "activate",
+                            menu_item_callback,
+                            callback_data);
 
-	  if (item_data)
+          if (item_data)
             {
               g_object_set_data (G_OBJECT (menuitem), "gimp-item-data",
                                  item_ptr);
@@ -330,24 +330,24 @@ gimp_int_option_menu_new (gboolean         menu_only,
               /*  backward compat  */
               g_object_set_data (G_OBJECT (menuitem), "user_data", item_ptr);
             }
-	}
+        }
       else
-	{
-	  menuitem = gtk_menu_item_new ();
+        {
+          menuitem = gtk_menu_item_new ();
 
-	  gtk_widget_set_sensitive (menuitem, FALSE);
-	}
+          gtk_widget_set_sensitive (menuitem, FALSE);
+        }
 
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
       if (widget_ptr)
-	*widget_ptr = menuitem;
+        *widget_ptr = menuitem;
 
       gtk_widget_show (menuitem);
 
       /*  remember the initial menu item  */
       if (item_data == initial)
-	initial_index = i;
+        initial_index = i;
 
       label = va_arg (args, const gchar *);
     }
@@ -382,7 +382,7 @@ gimp_int_option_menu_new (gboolean         menu_only,
  **/
 void
 gimp_option_menu_set_history (GtkOptionMenu *option_menu,
-			      gpointer       item_data)
+                              gpointer       item_data)
 {
   GtkWidget *menu_item;
   GList     *list;
@@ -397,11 +397,11 @@ gimp_option_menu_set_history (GtkOptionMenu *option_menu,
       menu_item = GTK_WIDGET (list->data);
 
       if (GTK_IS_LABEL (GTK_BIN (menu_item)->child) &&
-	  g_object_get_data (G_OBJECT (menu_item),
+          g_object_get_data (G_OBJECT (menu_item),
                              "gimp-item-data") == item_data)
-	{
-	  break;
-	}
+        {
+          break;
+        }
 
       history++;
     }
@@ -423,7 +423,7 @@ gimp_option_menu_set_history (GtkOptionMenu *option_menu,
  **/
 void
 gimp_int_option_menu_set_history (GtkOptionMenu *option_menu,
-			          gint           item_data)
+                                  gint           item_data)
 {
   g_return_if_fail (GTK_IS_OPTION_MENU (option_menu));
 
@@ -467,7 +467,7 @@ gimp_option_menu_set_sensitive (GtkOptionMenu                     *option_menu,
                                          "gimp-item-data");
           sensitive = callback (item_data, callback_data);
           gtk_widget_set_sensitive (menu_item, sensitive);
-	}
+        }
     }
 }
 
@@ -510,7 +510,7 @@ gimp_int_option_menu_set_sensitive (GtkOptionMenu                        *option
                                                           "gimp-item-data"));
           sensitive = callback (item_data, callback_data);
           gtk_widget_set_sensitive (menu_item, sensitive);
-	}
+        }
     }
 }
 
@@ -523,12 +523,12 @@ gimp_int_option_menu_set_sensitive (GtkOptionMenu                        *option
  **/
 void
 gimp_menu_item_update (GtkWidget *widget,
-		       gpointer   data)
+                       gpointer   data)
 {
   gint *item_val;
 
   item_val = (gint *) data;
 
   *item_val = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-						  "gimp-item-data"));
+                                                  "gimp-item-data"));
 }

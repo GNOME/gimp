@@ -196,33 +196,33 @@ void      gp_init                   (void);
 gboolean  gp_quit_write             (GIOChannel      *channel,
                                      gpointer         user_data);
 gboolean  gp_config_write           (GIOChannel      *channel,
-				     GPConfig        *config,
+                                     GPConfig        *config,
                                      gpointer         user_data);
 gboolean  gp_tile_req_write         (GIOChannel      *channel,
-				     GPTileReq       *tile_req,
+                                     GPTileReq       *tile_req,
                                      gpointer         user_data);
 gboolean  gp_tile_ack_write         (GIOChannel      *channel,
                                      gpointer         user_data);
 gboolean  gp_tile_data_write        (GIOChannel      *channel,
-				     GPTileData      *tile_data,
+                                     GPTileData      *tile_data,
                                      gpointer         user_data);
 gboolean  gp_proc_run_write         (GIOChannel      *channel,
-				     GPProcRun       *proc_run,
+                                     GPProcRun       *proc_run,
                                      gpointer         user_data);
 gboolean  gp_proc_return_write      (GIOChannel      *channel,
-				     GPProcReturn    *proc_return,
+                                     GPProcReturn    *proc_return,
                                      gpointer         user_data);
 gboolean  gp_temp_proc_run_write    (GIOChannel      *channel,
-				     GPProcRun       *proc_run,
+                                     GPProcRun       *proc_run,
                                      gpointer         user_data);
 gboolean  gp_temp_proc_return_write (GIOChannel      *channel,
-				     GPProcReturn    *proc_return,
+                                     GPProcReturn    *proc_return,
                                      gpointer         user_data);
 gboolean  gp_proc_install_write     (GIOChannel      *channel,
-				     GPProcInstall   *proc_install,
+                                     GPProcInstall   *proc_install,
                                      gpointer         user_data);
 gboolean  gp_proc_uninstall_write   (GIOChannel      *channel,
-				     GPProcUninstall *proc_uninstall,
+                                     GPProcUninstall *proc_uninstall,
                                      gpointer         user_data);
 gboolean  gp_extension_ack_write    (GIOChannel      *channel,
                                      gpointer         user_data);

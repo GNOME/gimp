@@ -55,18 +55,18 @@
  **/
 GtkWidget *
 gimp_radio_group_new (gboolean            in_frame,
-		      const gchar        *frame_title,
+                      const gchar        *frame_title,
 
-		      /* specify radio buttons as va_list:
-		       *  const gchar    *label,
-		       *  GCallback       callback,
-		       *  gpointer        callback_data,
-		       *  gpointer        item_data,
-		       *  GtkWidget     **widget_ptr,
-		       *  gboolean        active,
-		       */
+                      /* specify radio buttons as va_list:
+                       *  const gchar    *label,
+                       *  GCallback       callback,
+                       *  gpointer        callback_data,
+                       *  gpointer        item_data,
+                       *  GtkWidget     **widget_ptr,
+                       *  gboolean        active,
+                       */
 
-		      ...)
+                      ...)
 {
   GtkWidget *vbox;
   GtkWidget *button;
@@ -98,9 +98,9 @@ gimp_radio_group_new (gboolean            in_frame,
       active        = va_arg (args, gboolean);
 
       if (label != (gpointer) 1)
-	button = gtk_radio_button_new_with_mnemonic (group, label);
+        button = gtk_radio_button_new_with_mnemonic (group, label);
       else
-	button = gtk_radio_button_new (group);
+        button = gtk_radio_button_new (group);
 
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -114,14 +114,14 @@ gimp_radio_group_new (gboolean            in_frame,
         }
 
       if (widget_ptr)
-	*widget_ptr = button;
+        *widget_ptr = button;
 
       if (active)
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
       g_signal_connect (button, "toggled",
-			callback,
-			callback_data);
+                        callback,
+                        callback_data);
 
       gtk_widget_show (button);
 
@@ -164,18 +164,18 @@ gimp_radio_group_new (gboolean            in_frame,
  **/
 GtkWidget *
 gimp_radio_group_new2 (gboolean         in_frame,
-		       const gchar     *frame_title,
-		       GCallback        radio_button_callback,
-		       gpointer         callback_data,
-		       gpointer         initial, /* item_data */
+                       const gchar     *frame_title,
+                       GCallback        radio_button_callback,
+                       gpointer         callback_data,
+                       gpointer         initial, /* item_data */
 
-		       /* specify radio buttons as va_list:
-			*  const gchar *label,
-			*  gpointer     item_data,
-			*  GtkWidget  **widget_ptr,
-			*/
+                       /* specify radio buttons as va_list:
+                        *  const gchar *label,
+                        *  gpointer     item_data,
+                        *  GtkWidget  **widget_ptr,
+                        */
 
-		       ...)
+                       ...)
 {
   GtkWidget *vbox;
   GtkWidget *button;
@@ -202,9 +202,9 @@ gimp_radio_group_new2 (gboolean         in_frame,
       widget_ptr = va_arg (args, GtkWidget **);
 
       if (label != (gpointer) 1)
-	button = gtk_radio_button_new_with_mnemonic (group, label);
+        button = gtk_radio_button_new_with_mnemonic (group, label);
       else
-	button = gtk_radio_button_new (group);
+        button = gtk_radio_button_new (group);
 
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -218,14 +218,14 @@ gimp_radio_group_new2 (gboolean         in_frame,
         }
 
       if (widget_ptr)
-	*widget_ptr = button;
+        *widget_ptr = button;
 
       if (initial == item_data)
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
       g_signal_connect (button, "toggled",
-			radio_button_callback,
-			callback_data);
+                        radio_button_callback,
+                        callback_data);
 
       gtk_widget_show (button);
 
@@ -271,18 +271,18 @@ gimp_radio_group_new2 (gboolean         in_frame,
  **/
 GtkWidget *
 gimp_int_radio_group_new (gboolean         in_frame,
-		          const gchar     *frame_title,
-		          GCallback        radio_button_callback,
-		          gpointer         callback_data,
-		          gint             initial, /* item_data */
+                          const gchar     *frame_title,
+                          GCallback        radio_button_callback,
+                          gpointer         callback_data,
+                          gint             initial, /* item_data */
 
-		          /* specify radio buttons as va_list:
-			   *  const gchar *label,
-			   *  gint         item_data,
-			   *  GtkWidget  **widget_ptr,
-			   */
+                          /* specify radio buttons as va_list:
+                           *  const gchar *label,
+                           *  gint         item_data,
+                           *  GtkWidget  **widget_ptr,
+                           */
 
-		          ...)
+                          ...)
 {
   GtkWidget *vbox;
   GtkWidget *button;
@@ -312,9 +312,9 @@ gimp_int_radio_group_new (gboolean         in_frame,
       item_ptr = GINT_TO_POINTER (item_data);
 
       if (label != GINT_TO_POINTER (1))
-	button = gtk_radio_button_new_with_mnemonic (group, label);
+        button = gtk_radio_button_new_with_mnemonic (group, label);
       else
-	button = gtk_radio_button_new (group);
+        button = gtk_radio_button_new (group);
 
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -328,14 +328,14 @@ gimp_int_radio_group_new (gboolean         in_frame,
         }
 
       if (widget_ptr)
-	*widget_ptr = button;
+        *widget_ptr = button;
 
       if (initial == item_data)
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
       g_signal_connect (button, "toggled",
-			radio_button_callback,
-			callback_data);
+                        radio_button_callback,
+                        callback_data);
 
       gtk_widget_show (button);
 
@@ -428,22 +428,22 @@ gimp_int_radio_group_set_active (GtkRadioButton *radio_button,
  **/
 GtkWidget *
 gimp_spin_button_new (GtkObject **adjustment,  /* return value */
-		      gdouble     value,
-		      gdouble     lower,
-		      gdouble     upper,
-		      gdouble     step_increment,
-		      gdouble     page_increment,
-		      gdouble     page_size,
-		      gdouble     climb_rate,
-		      guint       digits)
+                      gdouble     value,
+                      gdouble     lower,
+                      gdouble     upper,
+                      gdouble     step_increment,
+                      gdouble     page_increment,
+                      gdouble     page_size,
+                      gdouble     climb_rate,
+                      guint       digits)
 {
   GtkWidget *spinbutton;
 
   *adjustment = gtk_adjustment_new (value, lower, upper,
-				    step_increment, page_increment, page_size);
+                                    step_increment, page_increment, page_size);
 
   spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (*adjustment),
-				    climb_rate, digits);
+                                    climb_rate, digits);
 
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 
@@ -452,17 +452,17 @@ gimp_spin_button_new (GtkObject **adjustment,  /* return value */
 
 static void
 gimp_scale_entry_unconstrained_adjustment_callback (GtkAdjustment *adjustment,
-						    GtkAdjustment *other_adj)
+                                                    GtkAdjustment *other_adj)
 {
   g_signal_handlers_block_by_func (other_adj,
-				   gimp_scale_entry_unconstrained_adjustment_callback,
-				   adjustment);
+                                   gimp_scale_entry_unconstrained_adjustment_callback,
+                                   adjustment);
 
   gtk_adjustment_set_value (other_adj, adjustment->value);
 
   g_signal_handlers_unblock_by_func (other_adj,
-				     gimp_scale_entry_unconstrained_adjustment_callback,
-				     adjustment);
+                                     gimp_scale_entry_unconstrained_adjustment_callback,
+                                     adjustment);
 }
 
 static void
@@ -567,24 +567,24 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
       GtkObject *constrained_adj;
 
       constrained_adj = gtk_adjustment_new (value, lower, upper,
-					    step_increment, page_increment,
-					    0.0);
+                                            step_increment, page_increment,
+                                            0.0);
 
       spinbutton = gimp_spin_button_new (&adjustment, value,
-					 unconstrained_lower,
-					 unconstrained_upper,
-					 step_increment, page_increment, 0.0,
-					 1.0, digits);
+                                         unconstrained_lower,
+                                         unconstrained_upper,
+                                         step_increment, page_increment, 0.0,
+                                         1.0, digits);
 
       g_signal_connect
-	(G_OBJECT (constrained_adj), "value-changed",
-	 G_CALLBACK (gimp_scale_entry_unconstrained_adjustment_callback),
-	 adjustment);
+        (G_OBJECT (constrained_adj), "value-changed",
+         G_CALLBACK (gimp_scale_entry_unconstrained_adjustment_callback),
+         adjustment);
 
       g_signal_connect
-	(G_OBJECT (adjustment), "value-changed",
-	 G_CALLBACK (gimp_scale_entry_unconstrained_adjustment_callback),
-	 constrained_adj);
+        (G_OBJECT (adjustment), "value-changed",
+         G_CALLBACK (gimp_scale_entry_unconstrained_adjustment_callback),
+         constrained_adj);
 
       return_adj = adjustment;
 
@@ -593,8 +593,8 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
   else
     {
       spinbutton = gimp_spin_button_new (&adjustment, value, lower, upper,
-					 step_increment, page_increment, 0.0,
-					 1.0, digits);
+                                         step_increment, page_increment, 0.0,
+                                         1.0, digits);
 
       return_adj = adjustment;
     }
@@ -627,13 +627,13 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
   gtk_scale_set_digits (GTK_SCALE (scale), digits);
   gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
   gtk_table_attach (GTK_TABLE (table), scale,
-		    column + 1, column + 2, row, row + 1,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+                    column + 1, column + 2, row, row + 1,
+                    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_widget_show (scale);
 
   gtk_table_attach (GTK_TABLE (table), spinbutton,
-		    column + 2, column + 3, row, row + 1,
-		    GTK_SHRINK, GTK_SHRINK, 0, 0);
+                    column + 2, column + 3, row, row + 1,
+                    GTK_SHRINK, GTK_SHRINK, 0, 0);
   gtk_widget_show (spinbutton);
 
   if (tooltip || help_id)
@@ -685,22 +685,22 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
  **/
 GtkObject *
 gimp_scale_entry_new (GtkTable    *table,
-		      gint         column,
-		      gint         row,
-		      const gchar *text,
-		      gint         scale_width,
-		      gint         spinbutton_width,
-		      gdouble      value,
-		      gdouble      lower,
-		      gdouble      upper,
-		      gdouble      step_increment,
-		      gdouble      page_increment,
-		      guint        digits,
-		      gboolean     constrain,
-		      gdouble      unconstrained_lower,
-		      gdouble      unconstrained_upper,
-		      const gchar *tooltip,
-		      const gchar *help_id)
+                      gint         column,
+                      gint         row,
+                      const gchar *text,
+                      gint         scale_width,
+                      gint         spinbutton_width,
+                      gdouble      value,
+                      gdouble      lower,
+                      gdouble      upper,
+                      gdouble      step_increment,
+                      gdouble      page_increment,
+                      guint        digits,
+                      gboolean     constrain,
+                      gdouble      unconstrained_lower,
+                      gdouble      unconstrained_upper,
+                      const gchar *tooltip,
+                      const gchar *help_id)
 {
   return gimp_scale_entry_new_internal (FALSE,
                                         table, column, row,
@@ -944,7 +944,7 @@ gimp_scale_entry_set_sensitive (GtkObject *adjustment,
 
 static void
 gimp_random_seed_update (GtkWidget *widget,
-		         gpointer   data)
+                         gpointer   data)
 {
   GtkWidget *spinbutton = data;
 
@@ -1063,7 +1063,7 @@ typedef struct
 
 static void
 gimp_coordinates_callback (GtkWidget           *widget,
-			   GimpCoordinatesData *gcd)
+                           GimpCoordinatesData *gcd)
 {
   gdouble new_x;
   gdouble new_y;
@@ -1074,54 +1074,54 @@ gimp_coordinates_callback (GtkWidget           *widget,
   if (gimp_chain_button_get_active (gcd->chainbutton))
     {
       if (gcd->chain_constrains_ratio)
-	{
-	  if ((gcd->orig_x != 0) && (gcd->orig_y != 0))
-	    {
-	      if (new_x != gcd->last_x)
-		{
-		  gcd->last_x = new_x;
-		  new_y = (new_x * gcd->orig_y) / gcd->orig_x;
+        {
+          if ((gcd->orig_x != 0) && (gcd->orig_y != 0))
+            {
+              if (new_x != gcd->last_x)
+                {
+                  gcd->last_x = new_x;
+                  new_y = (new_x * gcd->orig_y) / gcd->orig_x;
 
                   g_signal_stop_emission_by_name (widget, "value-changed");
-		  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1,
+                  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1,
                                               new_y);
-		  gcd->last_y
+                  gcd->last_y
                     = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
-		}
-	      else if (new_y != gcd->last_y)
-		{
-		  gcd->last_y = new_y;
-		  new_x = (new_y * gcd->orig_x) / gcd->orig_y;
+                }
+              else if (new_y != gcd->last_y)
+                {
+                  gcd->last_y = new_y;
+                  new_x = (new_y * gcd->orig_x) / gcd->orig_y;
 
                   g_signal_stop_emission_by_name (widget, "value-changed");
-		  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0,
+                  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0,
                                               new_x);
                   gcd->last_x
                     = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
-		}
-	    }
-	}
+                }
+            }
+        }
       else
-	{
-	  if (new_x != gcd->last_x)
-	    {
-	      new_y = new_x;
+        {
+          if (new_x != gcd->last_x)
+            {
+              new_y = new_x;
 
               g_signal_stop_emission_by_name (widget, "value-changed");
-	      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1, new_x);
+              gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1, new_x);
               gcd->last_y = gcd->last_x
                 = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
-	    }
-	  else if (new_y != gcd->last_y)
-	    {
-	      new_x = new_y;
+            }
+          else if (new_y != gcd->last_y)
+            {
+              new_x = new_y;
 
               g_signal_stop_emission_by_name (widget, "value-changed");
-	      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0, new_y);
+              gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0, new_y);
               gcd->last_x = gcd->last_y
                 = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
-	    }
-	}
+            }
+        }
     }
   else
     {
@@ -1172,30 +1172,30 @@ gimp_coordinates_callback (GtkWidget           *widget,
  **/
 GtkWidget *
 gimp_coordinates_new (GimpUnit         unit,
-		      const gchar     *unit_format,
-		      gboolean         menu_show_pixels,
-		      gboolean         menu_show_percent,
-		      gint             spinbutton_width,
-		      GimpSizeEntryUpdatePolicy  update_policy,
+                      const gchar     *unit_format,
+                      gboolean         menu_show_pixels,
+                      gboolean         menu_show_percent,
+                      gint             spinbutton_width,
+                      GimpSizeEntryUpdatePolicy  update_policy,
 
-		      gboolean         chainbutton_active,
-		      gboolean         chain_constrains_ratio,
+                      gboolean         chainbutton_active,
+                      gboolean         chain_constrains_ratio,
 
-		      const gchar     *xlabel,
-		      gdouble          x,
-		      gdouble          xres,
-		      gdouble          lower_boundary_x,
-		      gdouble          upper_boundary_x,
-		      gdouble          xsize_0,   /* % */
-		      gdouble          xsize_100, /* % */
+                      const gchar     *xlabel,
+                      gdouble          x,
+                      gdouble          xres,
+                      gdouble          lower_boundary_x,
+                      gdouble          upper_boundary_x,
+                      gdouble          xsize_0,   /* % */
+                      gdouble          xsize_100, /* % */
 
-		      const gchar     *ylabel,
-		      gdouble          y,
-		      gdouble          yres,
-		      gdouble          lower_boundary_y,
-		      gdouble          upper_boundary_y,
-		      gdouble          ysize_0,   /* % */
-		      gdouble          ysize_100  /* % */)
+                      const gchar     *ylabel,
+                      gdouble          y,
+                      gdouble          yres,
+                      gdouble          lower_boundary_y,
+                      gdouble          upper_boundary_y,
+                      gdouble          ysize_0,   /* % */
+                      gdouble          ysize_100  /* % */)
 {
   GimpCoordinatesData *gcd;
   GtkObject *adjustment;
@@ -1214,11 +1214,11 @@ gimp_coordinates_new (GimpUnit         unit,
     }
 
   sizeentry = gimp_size_entry_new (1, unit, unit_format,
-				   menu_show_pixels,
-				   menu_show_percent,
-				   FALSE,
-				   spinbutton_width,
-				   update_policy);
+                                   menu_show_pixels,
+                                   menu_show_percent,
+                                   FALSE,
+                                   spinbutton_width,
+                                   update_policy);
   gtk_table_set_col_spacing (GTK_TABLE (sizeentry), 0, 4);
   gtk_table_set_col_spacing (GTK_TABLE (sizeentry), 2, 4);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
@@ -1227,23 +1227,23 @@ gimp_coordinates_new (GimpUnit         unit,
   gtk_widget_show (spinbutton);
 
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry),
-			    (update_policy == GIMP_SIZE_ENTRY_UPDATE_RESOLUTION) ||
+                            (update_policy == GIMP_SIZE_ENTRY_UPDATE_RESOLUTION) ||
                             (menu_show_pixels == FALSE) ?
-			    GIMP_UNIT_INCH : GIMP_UNIT_PIXEL);
+                            GIMP_UNIT_INCH : GIMP_UNIT_PIXEL);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0, xres, TRUE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 1, yres, TRUE);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
-					 lower_boundary_x, upper_boundary_x);
+                                         lower_boundary_x, upper_boundary_x);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 1,
-					 lower_boundary_y, upper_boundary_y);
+                                         lower_boundary_y, upper_boundary_y);
 
   if (menu_show_percent)
     {
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (sizeentry), 0,
-				xsize_0, xsize_100);
+                                xsize_0, xsize_100);
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (sizeentry), 1,
-				ysize_0, ysize_100);
+                                ysize_0, ysize_100);
     }
 
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0, x);
@@ -1258,7 +1258,7 @@ gimp_coordinates_new (GimpUnit         unit,
   if (chainbutton_active)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chainbutton), TRUE);
   gtk_table_attach (GTK_TABLE (sizeentry), chainbutton, 2, 3, 0, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (chainbutton);
 
   gcd = g_new (GimpCoordinatesData, 1);
@@ -1270,12 +1270,12 @@ gimp_coordinates_new (GimpUnit         unit,
   gcd->last_y                 = y;
 
   g_signal_connect_swapped (sizeentry, "destroy",
-			    G_CALLBACK (g_free),
-			    gcd);
+                            G_CALLBACK (g_free),
+                            gcd);
 
   g_signal_connect (sizeentry, "value-changed",
-		    G_CALLBACK (gimp_coordinates_callback),
-		    gcd);
+                    G_CALLBACK (gimp_coordinates_callback),
+                    gcd);
 
   g_object_set_data (G_OBJECT (sizeentry), "chainbutton", chainbutton);
 
@@ -1295,7 +1295,7 @@ gimp_coordinates_new (GimpUnit         unit,
  **/
 GtkWidget *
 gimp_pixmap_button_new (gchar       **xpm_data,
-			const gchar  *text)
+                        const gchar  *text)
 {
   GtkWidget *button;
   GtkWidget *pixmap;
@@ -1393,7 +1393,7 @@ gimp_toggle_button_sensitive_update (GtkToggleButton *toggle_button)
  **/
 void
 gimp_toggle_button_update (GtkWidget *widget,
-			   gpointer   data)
+                           gpointer   data)
 {
   gint *toggle_val;
 
@@ -1417,7 +1417,7 @@ gimp_toggle_button_update (GtkWidget *widget,
  **/
 void
 gimp_radio_button_update (GtkWidget *widget,
-			  gpointer   data)
+                          gpointer   data)
 {
   gint *toggle_val;
 
@@ -1426,7 +1426,7 @@ gimp_radio_button_update (GtkWidget *widget,
       toggle_val = (gint *) data;
 
       *toggle_val = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-							"gimp-item-data"));
+                                                        "gimp-item-data"));
     }
 
   gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
@@ -1443,7 +1443,7 @@ gimp_radio_button_update (GtkWidget *widget,
  **/
 void
 gimp_int_adjustment_update (GtkAdjustment *adjustment,
-			    gpointer       data)
+                            gpointer       data)
 {
   gint *val;
 
@@ -1462,7 +1462,7 @@ gimp_int_adjustment_update (GtkAdjustment *adjustment,
  **/
 void
 gimp_uint_adjustment_update (GtkAdjustment *adjustment,
-			     gpointer       data)
+                             gpointer       data)
 {
   guint *val;
 
@@ -1478,7 +1478,7 @@ gimp_uint_adjustment_update (GtkAdjustment *adjustment,
  **/
 void
 gimp_float_adjustment_update (GtkAdjustment *adjustment,
-			      gpointer       data)
+                              gpointer       data)
 {
   gfloat *val;
 
@@ -1494,7 +1494,7 @@ gimp_float_adjustment_update (GtkAdjustment *adjustment,
  **/
 void
 gimp_double_adjustment_update (GtkAdjustment *adjustment,
-			       gpointer       data)
+                               gpointer       data)
 {
   gdouble *val;
 
@@ -1518,7 +1518,7 @@ gimp_double_adjustment_update (GtkAdjustment *adjustment,
  **/
 void
 gimp_unit_menu_update (GtkWidget *widget,
-		       gpointer   data)
+                       gpointer   data)
 {
   GimpUnit  *val;
   GtkWidget *spinbutton;
@@ -1528,8 +1528,8 @@ gimp_unit_menu_update (GtkWidget *widget,
   *val = gimp_unit_menu_get_unit (GIMP_UNIT_MENU (widget));
 
   digits = ((*val == GIMP_UNIT_PIXEL) ? 0 :
-	    ((*val == GIMP_UNIT_PERCENT) ? 2 :
-	     (MIN (6, MAX (3, gimp_unit_get_digits (*val))))));
+            ((*val == GIMP_UNIT_PERCENT) ? 2 :
+             (MIN (6, MAX (3, gimp_unit_get_digits (*val))))));
 
   digits += gimp_unit_menu_get_pixel_digits (GIMP_UNIT_MENU (widget));
 
@@ -1600,14 +1600,14 @@ find_mnemonic_widget (GtkWidget *widget,
  **/
 GtkWidget *
 gimp_table_attach_aligned (GtkTable    *table,
-			   gint         column,
-			   gint         row,
-			   const gchar *label_text,
-			   gfloat       xalign,
-			   gfloat       yalign,
-			   GtkWidget   *widget,
-			   gint         colspan,
-			   gboolean     left_align)
+                           gint         column,
+                           gint         row,
+                           const gchar *label_text,
+                           gfloat       xalign,
+                           gfloat       yalign,
+                           GtkWidget   *widget,
+                           gint         colspan,
+                           gboolean     left_align)
 {
   GtkWidget *label = NULL;
 
@@ -1619,9 +1619,9 @@ gimp_table_attach_aligned (GtkTable    *table,
       gtk_misc_set_alignment (GTK_MISC (label), xalign, yalign);
       gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
       gtk_table_attach (table, label,
-			column, column + 1,
-			row, row + 1,
-			GTK_FILL, GTK_FILL, 0, 0);
+                        column, column + 1,
+                        row, row + 1,
+                        GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (label);
 
       mnemonic_widget = find_mnemonic_widget (widget, 0);
@@ -1641,9 +1641,9 @@ gimp_table_attach_aligned (GtkTable    *table,
     }
 
   gtk_table_attach (table, widget,
-		    column + 1, column + 1 + colspan,
-		    row, row + 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    column + 1, column + 1 + colspan,
+                    row, row + 1,
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
   gtk_widget_show (widget);
 

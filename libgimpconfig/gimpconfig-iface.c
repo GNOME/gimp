@@ -69,8 +69,8 @@ gimp_config_interface_get_type (void)
       static const GTypeInfo config_iface_info =
       {
         sizeof (GimpConfigInterface),
-	(GBaseInitFunc)     gimp_config_iface_base_init,
-	(GBaseFinalizeFunc) NULL,
+        (GBaseInitFunc)     gimp_config_iface_base_init,
+        (GBaseFinalizeFunc) NULL,
       };
 
       config_iface_type = g_type_register_static (G_TYPE_INTERFACE,
@@ -105,7 +105,7 @@ gimp_config_iface_base_init (GimpConfigInterface *config_iface)
 
 static gboolean
 gimp_config_iface_serialize (GimpConfig       *config,
-			     GimpConfigWriter *writer,
+                             GimpConfigWriter *writer,
                              gpointer          data)
 {
   return gimp_config_serialize_properties (config, writer);
@@ -255,11 +255,11 @@ gimp_config_iface_reset (GimpConfig *config)
  **/
 gboolean
 gimp_config_serialize_to_file (GimpConfig   *config,
-			       const gchar  *filename,
-			       const gchar  *header,
-			       const gchar  *footer,
-			       gpointer      data,
-			       GError      **error)
+                               const gchar  *filename,
+                               const gchar  *header,
+                               const gchar  *footer,
+                               gpointer      data,
+                               GError      **error)
 {
   GimpConfigWriter *writer;
 
@@ -321,7 +321,7 @@ gimp_config_serialize_to_fd (GimpConfig *config,
  **/
 gchar *
 gimp_config_serialize_to_string (GimpConfig *config,
-				 gpointer    data)
+                                 gpointer    data)
 {
   GimpConfigWriter *writer;
   GString          *str;
@@ -356,9 +356,9 @@ gimp_config_serialize_to_string (GimpConfig *config,
  **/
 gboolean
 gimp_config_deserialize_file (GimpConfig   *config,
-			      const gchar  *filename,
-			      gpointer      data,
-			      GError      **error)
+                              const gchar  *filename,
+                              gpointer      data,
+                              GError      **error)
 {
   GScanner *scanner;
   gboolean  success;
@@ -402,7 +402,7 @@ gboolean
 gimp_config_deserialize_string (GimpConfig      *config,
                                 const gchar  *text,
                                 gint          text_len,
-				gpointer      data,
+                                gpointer      data,
                                 GError      **error)
 {
   GScanner *scanner;

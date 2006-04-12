@@ -36,10 +36,10 @@ enum
 
 
 static void      gimp_chain_button_clicked_callback (GtkWidget       *widget,
-						     GimpChainButton *button);
+                                                     GimpChainButton *button);
 static gboolean  gimp_chain_button_draw_lines       (GtkWidget       *widget,
-						     GdkEventExpose  *eevent,
-						     GimpChainButton *button);
+                                                     GdkEventExpose  *eevent,
+                                                     GimpChainButton *button);
 
 
 G_DEFINE_TYPE (GimpChainButton, gimp_chain_button, GTK_TYPE_TABLE);
@@ -62,12 +62,12 @@ gimp_chain_button_class_init (GimpChainButtonClass *klass)
 {
   gimp_chain_button_signals[TOGGLED] =
     g_signal_new ("toggled",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpChainButtonClass, toggled),
-		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpChainButtonClass, toggled),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   klass->toggled = NULL;
 }
@@ -136,21 +136,21 @@ gimp_chain_button_new (GimpChainPosition position)
     {
       gtk_table_resize (GTK_TABLE (button), 3, 1);
       gtk_table_attach (GTK_TABLE (button), button->button, 0, 1, 1, 2,
-			GTK_SHRINK, GTK_SHRINK, 0, 0);
+                        GTK_SHRINK, GTK_SHRINK, 0, 0);
       gtk_table_attach_defaults (GTK_TABLE (button),
-				 button->line1, 0, 1, 0, 1);
+                                 button->line1, 0, 1, 0, 1);
       gtk_table_attach_defaults (GTK_TABLE (button),
-				 button->line2, 0, 1, 2, 3);
+                                 button->line2, 0, 1, 2, 3);
     }
   else
     {
       gtk_table_resize (GTK_TABLE (button), 1, 3);
       gtk_table_attach (GTK_TABLE (button), button->button, 1, 2, 0, 1,
-			GTK_SHRINK, GTK_SHRINK, 0, 0);
+                        GTK_SHRINK, GTK_SHRINK, 0, 0);
       gtk_table_attach_defaults (GTK_TABLE (button),
-				 button->line1, 0, 1, 0, 1);
+                                 button->line1, 0, 1, 0, 1);
       gtk_table_attach_defaults (GTK_TABLE (button),
-				 button->line2, 2, 3, 0, 1);
+                                 button->line2, 2, 3, 0, 1);
     }
 
   gtk_widget_show (button->button);
@@ -170,7 +170,7 @@ gimp_chain_button_new (GimpChainPosition position)
  */
 void
 gimp_chain_button_set_active (GimpChainButton  *button,
-			      gboolean          active)
+                              gboolean          active)
 {
   g_return_if_fail (GIMP_IS_CHAIN_BUTTON (button));
 
@@ -206,7 +206,7 @@ gimp_chain_button_get_active (GimpChainButton *button)
 
 static void
 gimp_chain_button_clicked_callback (GtkWidget       *widget,
-				    GimpChainButton *button)
+                                    GimpChainButton *button)
 {
   g_return_if_fail (GIMP_IS_CHAIN_BUTTON (button));
 
@@ -217,12 +217,12 @@ gimp_chain_button_clicked_callback (GtkWidget       *widget,
 
 static gboolean
 gimp_chain_button_draw_lines (GtkWidget       *widget,
-			      GdkEventExpose  *eevent,
-			      GimpChainButton *button)
+                              GdkEventExpose  *eevent,
+                              GimpChainButton *button)
 {
   GdkPoint           points[3];
   GdkPoint           buf;
-  GtkShadowType	     shadow;
+  GtkShadowType             shadow;
   GimpChainPosition  position;
   gint               which_line;
 
@@ -299,15 +299,15 @@ gimp_chain_button_draw_lines (GtkWidget       *widget,
     }
 
   gtk_paint_polygon (widget->style,
-		     widget->window,
-		     GTK_STATE_NORMAL,
-		     shadow,
-		     &eevent->area,
-		     widget,
-		     "chainbutton",
-		     points,
-		     3,
-		     FALSE);
+                     widget->window,
+                     GTK_STATE_NORMAL,
+                     shadow,
+                     &eevent->area,
+                     widget,
+                     "chainbutton",
+                     points,
+                     3,
+                     FALSE);
 
   return TRUE;
 }

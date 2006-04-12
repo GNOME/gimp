@@ -26,16 +26,16 @@ G_BEGIN_DECLS
 
 
 void      gimp_hsv_set        (GimpHSV       *hsv,
-			       gdouble        hue,
-			       gdouble        saturation,
-			       gdouble        value);
+                               gdouble        hue,
+                               gdouble        saturation,
+                               gdouble        value);
 void      gimp_hsv_clamp      (GimpHSV       *hsv);
 
 void      gimp_hsva_set       (GimpHSV       *hsva,
-			       gdouble        hue,
-			       gdouble        saturation,
-			       gdouble        value,
-			       gdouble        alpha);
+                               gdouble        hue,
+                               gdouble        saturation,
+                               gdouble        value,
+                               gdouble        alpha);
 
 
 G_END_DECLS

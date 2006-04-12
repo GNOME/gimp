@@ -53,8 +53,8 @@
  */
 GimpSignalHandlerFunc
 gimp_signal_private (gint                   signum,
-		     GimpSignalHandlerFunc  handler,
-		     gint                   flags)
+                     GimpSignalHandlerFunc  handler,
+                     gint                   flags)
 {
 #ifndef G_OS_WIN32
   gint ret;
@@ -89,9 +89,9 @@ gimp_signal_private (gint                   signum,
 
   return (GimpSignalHandlerFunc) osa.sa_handler;
 #else
-  return NULL;			/* Or g_error()? Should all calls to
-				 * this function really be inside
-				 * #ifdef G_OS_UNIX?
-				 */
+  return NULL;                        /* Or g_error()? Should all calls to
+                                 * this function really be inside
+                                 * #ifdef G_OS_UNIX?
+                                 */
 #endif
 }

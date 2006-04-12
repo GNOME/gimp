@@ -75,17 +75,17 @@ gimp_gradient_select_new (const gchar             *title,
   gchar *gradient_callback = gimp_procedural_db_temp_name ();
 
   gimp_install_temp_proc (gradient_callback,
-			  "Temporary gradient popup callback procedure",
-			  "",
-			  "Andy Thomas",
-			  "Andy Thomas",
-			  "1997",
-			  NULL,
-			  "RGB*, GRAY*",
-			  GIMP_TEMPORARY,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL,
-			  gimp_temp_gradient_run);
+                          "Temporary gradient popup callback procedure",
+                          "",
+                          "Andy Thomas",
+                          "Andy Thomas",
+                          "1997",
+                          NULL,
+                          "RGB*, GRAY*",
+                          GIMP_TEMPORARY,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL,
+                          gimp_temp_gradient_run);
 
   if (gimp_gradients_popup (gradient_callback, title, gradient_name,
                             sample_size))
@@ -97,7 +97,7 @@ gimp_gradient_select_new (const gchar             *title,
       /* Now add to hash table so we can find it again */
       if (! gimp_gradient_select_ht)
         gimp_gradient_select_ht = g_hash_table_new_full (g_str_hash,
-							 g_str_equal,
+                                                         g_str_equal,
                                                          g_free, g_free);
 
       gradient_data = g_new0 (GimpGradientData, 1);

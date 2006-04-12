@@ -78,7 +78,7 @@ GType       gimp_chain_button_get_type   (void) G_GNUC_CONST;
 GtkWidget * gimp_chain_button_new        (GimpChainPosition  position);
 
 void        gimp_chain_button_set_active (GimpChainButton   *button,
-					  gboolean           active);
+                                          gboolean           active);
 gboolean    gimp_chain_button_get_active (GimpChainButton   *button);
 
 

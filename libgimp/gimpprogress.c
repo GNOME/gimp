@@ -134,17 +134,17 @@ gimp_progress_install_vtable (const GimpProgressVtable *vtable,
   progress_callback = gimp_procedural_db_temp_name ();
 
   gimp_install_temp_proc (progress_callback,
-			  "Temporary progress callback procedure",
-			  "",
-			  "Michael Natterer  <mitch@gimp.org>",
-			  "Michael Natterer",
-			  "2004",
-			  NULL,
-			  "RGB*, GRAY*, INDEXED*",
-			  GIMP_TEMPORARY,
-			  G_N_ELEMENTS (args), G_N_ELEMENTS (values),
-			  args, values,
-			  gimp_temp_progress_run);
+                          "Temporary progress callback procedure",
+                          "",
+                          "Michael Natterer  <mitch@gimp.org>",
+                          "Michael Natterer",
+                          "2004",
+                          NULL,
+                          "RGB*, GRAY*, INDEXED*",
+                          GIMP_TEMPORARY,
+                          G_N_ELEMENTS (args), G_N_ELEMENTS (values),
+                          args, values,
+                          gimp_temp_progress_run);
 
   if (_gimp_progress_install (progress_callback))
     {

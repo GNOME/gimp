@@ -319,7 +319,7 @@ gimp_pattern_select_widget_clicked (GtkWidget     *widget,
   else
     {
       pattern_sel->temp_pattern_callback =
-	gimp_pattern_select_new (pattern_sel->title,
+        gimp_pattern_select_new (pattern_sel->title,
                                  pattern_sel->pattern_name,
                                  gimp_pattern_select_widget_callback,
                                  pattern_sel);
@@ -364,31 +364,31 @@ gimp_pattern_select_preview_events (GtkWidget     *widget,
   if (pattern_sel->mask_data)
     {
       switch (event->type)
-	{
-	case GDK_BUTTON_PRESS:
-	  bevent = (GdkEventButton *) event;
+        {
+        case GDK_BUTTON_PRESS:
+          bevent = (GdkEventButton *) event;
 
-	  if (bevent->button == 1)
-	    {
-	      gtk_grab_add (widget);
-	      gimp_pattern_select_popup_open (pattern_sel,
+          if (bevent->button == 1)
+            {
+              gtk_grab_add (widget);
+              gimp_pattern_select_popup_open (pattern_sel,
                                               bevent->x, bevent->y);
-	    }
-	  break;
+            }
+          break;
 
-	case GDK_BUTTON_RELEASE:
-	  bevent = (GdkEventButton *) event;
+        case GDK_BUTTON_RELEASE:
+          bevent = (GdkEventButton *) event;
 
-	  if (bevent->button == 1)
-	    {
-	      gtk_grab_remove (widget);
-	      gimp_pattern_select_popup_close (pattern_sel);
-	    }
-	  break;
+          if (bevent->button == 1)
+            {
+              gtk_grab_remove (widget);
+              gimp_pattern_select_popup_close (pattern_sel);
+            }
+          break;
 
-	default:
-	  break;
-	}
+        default:
+          break;
+        }
     }
 
   return FALSE;

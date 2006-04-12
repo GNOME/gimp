@@ -376,10 +376,10 @@ gimp_brush_select_widget_clicked (GtkWidget   *widget,
     {
       /*  calling gimp_brushes_set_popup() raises the dialog  */
       gimp_brushes_set_popup (brush_sel->temp_brush_callback,
-			      brush_sel->brush_name,
-			      brush_sel->opacity,
-			      brush_sel->spacing,
-			      brush_sel->paint_mode);
+                              brush_sel->brush_name,
+                              brush_sel->opacity,
+                              brush_sel->spacing,
+                              brush_sel->paint_mode);
     }
   else
     {
@@ -433,30 +433,30 @@ gimp_brush_select_preview_events (GtkWidget   *widget,
   if (brush_sel->mask_data)
     {
       switch (event->type)
-	{
-	case GDK_BUTTON_PRESS:
-	  bevent = (GdkEventButton *) event;
+        {
+        case GDK_BUTTON_PRESS:
+          bevent = (GdkEventButton *) event;
 
-	  if (bevent->button == 1)
-	    {
-	      gtk_grab_add (widget);
-	      gimp_brush_select_popup_open (brush_sel, bevent->x, bevent->y);
-	    }
-	  break;
+          if (bevent->button == 1)
+            {
+              gtk_grab_add (widget);
+              gimp_brush_select_popup_open (brush_sel, bevent->x, bevent->y);
+            }
+          break;
 
-	case GDK_BUTTON_RELEASE:
-	  bevent = (GdkEventButton *) event;
+        case GDK_BUTTON_RELEASE:
+          bevent = (GdkEventButton *) event;
 
-	  if (bevent->button == 1)
-	    {
-	      gtk_grab_remove (widget);
-	      gimp_brush_select_popup_close (brush_sel);
-	    }
-	  break;
+          if (bevent->button == 1)
+            {
+              gtk_grab_remove (widget);
+              gimp_brush_select_popup_close (brush_sel);
+            }
+          break;
 
-	default:
-	  break;
-	}
+        default:
+          break;
+        }
     }
 
   return FALSE;

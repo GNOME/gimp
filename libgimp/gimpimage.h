@@ -32,7 +32,7 @@ guchar   * gimp_image_get_cmap            (gint32          image_ID,
                                            gint           *num_colors);
 gboolean   gimp_image_set_cmap            (gint32          image_ID,
                                            const guchar   *cmap,
-					   gint            num_colors);
+                                           gint            num_colors);
 #endif /* GIMP_DISABLE_DEPRECATED */
 
 guchar   * gimp_image_get_colormap        (gint32          image_ID,

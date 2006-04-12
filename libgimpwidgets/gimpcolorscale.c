@@ -181,7 +181,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
 {
   GimpColorScale *scale = GIMP_COLOR_SCALE (widget);
   GtkRange       *range;
-  GdkRectangle    expose_area;	/* Relative to widget->allocation */
+  GdkRectangle    expose_area;        /* Relative to widget->allocation */
   GdkRectangle    area;
   gint            focus = 0;
   gint            slider_size;

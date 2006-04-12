@@ -52,7 +52,7 @@
  **/
 void
 gimp_rgb_to_hsv (const GimpRGB *rgb,
-		 GimpHSV       *hsv)
+                 GimpHSV       *hsv)
 {
   gdouble max, min, delta;
 
@@ -72,8 +72,8 @@ gimp_rgb_to_hsv (const GimpRGB *rgb,
       if (rgb->r == max)
         {
           hsv->h = (rgb->g - rgb->b) / delta;
-	  if (hsv->h < 0.0)
-	    hsv->h += 6.0;
+          if (hsv->h < 0.0)
+            hsv->h += 6.0;
         }
       else if (rgb->g == max)
         {
@@ -104,7 +104,7 @@ gimp_rgb_to_hsv (const GimpRGB *rgb,
  **/
 void
 gimp_hsv_to_rgb (const GimpHSV *hsv,
-		 GimpRGB       *rgb)
+                 GimpRGB       *rgb)
 {
   gint    i;
   gdouble f, w, q, t;
@@ -211,7 +211,7 @@ gimp_rgb_to_hsl (const GimpRGB *rgb,
       delta = max - min;
 
       if (delta == 0.0)
-	delta = 1.0;
+        delta = 1.0;
 
       if (rgb->r == max)
         {
@@ -269,7 +269,7 @@ gimp_hsl_value (gdouble n1,
  **/
 void
 gimp_hsl_to_rgb (const GimpHSL *hsl,
-		 GimpRGB       *rgb)
+                 GimpRGB       *rgb)
 {
   g_return_if_fail (hsl != NULL);
   g_return_if_fail (rgb != NULL);
@@ -416,9 +416,9 @@ gimp_cmyk_to_rgb (const GimpCMYK *cmyk,
  **/
 void
 gimp_rgb_to_hwb (const GimpRGB *rgb,
-		 gdouble       *hue,
-		 gdouble       *whiteness,
-		 gdouble       *blackness)
+                 gdouble       *hue,
+                 gdouble       *whiteness,
+                 gdouble       *blackness)
 {
   /* RGB are each on [0, 1]. W and B are returned on [0, 1] and H is        */
   /* returned on [0, 6]. Exception: H is returned UNDEFINED if W ==  1 - B. */
@@ -460,9 +460,9 @@ gimp_rgb_to_hwb (const GimpRGB *rgb,
  **/
 void
 gimp_hwb_to_rgb (gdouble  hue,
-		 gdouble  whiteness,
-		 gdouble  blackness,
-		 GimpRGB *rgb)
+                 gdouble  whiteness,
+                 gdouble  blackness,
+                 GimpRGB *rgb)
 {
   /* H is given on [0, 6] or UNDEFINED. whiteness and
    * blackness are given on [0, 1].
@@ -487,7 +487,7 @@ gimp_hwb_to_rgb (gdouble  hue,
       f = h - i;
 
       if (i & 1)
-	f = 1.0 - f;  /* if i is odd */
+        f = 1.0 - f;  /* if i is odd */
 
       n = w + f * (v - w);     /* linear interpolation between w and v */
 
@@ -530,8 +530,8 @@ gimp_hwb_to_rgb (gdouble  hue,
  **/
 void
 gimp_rgb_to_hsv_int (gint *red,
-		     gint *green,
-		     gint *blue)
+                     gint *green,
+                     gint *blue)
 {
   gdouble  r, g, b;
   gdouble  h, s, v;
@@ -565,16 +565,16 @@ gimp_rgb_to_hsv_int (gint *red,
   else
     {
       if (r == v)
-	h = 60.0 * (g - b) / delta;
+        h = 60.0 * (g - b) / delta;
       else if (g == v)
-	h = 120 + 60.0 * (b - r) / delta;
+        h = 120 + 60.0 * (b - r) / delta;
       else
-	h = 240 + 60.0 * (r - g) / delta;
+        h = 240 + 60.0 * (r - g) / delta;
 
       if (h < 0.0)
-	h += 360.0;
+        h += 360.0;
       if (h > 360.0)
-	h -= 360.0;
+        h -= 360.0;
     }
 
   *red   = ROUND (h);
@@ -596,8 +596,8 @@ gimp_rgb_to_hsv_int (gint *red,
  **/
 void
 gimp_hsv_to_rgb_int (gint *hue,
-		     gint *saturation,
-		     gint *value)
+                     gint *saturation,
+                     gint *value)
 {
   gdouble h, s, v, h_temp;
   gdouble f, p, q, t;
@@ -628,43 +628,43 @@ gimp_hsv_to_rgb_int (gint *hue,
       t = v * (1.0 - (s * (1.0 - f)));
 
       switch (i)
-	{
-	case 0:
-	  *hue        = ROUND (v * 255.0);
-	  *saturation = ROUND (t * 255.0);
-	  *value      = ROUND (p * 255.0);
-	  break;
+        {
+        case 0:
+          *hue        = ROUND (v * 255.0);
+          *saturation = ROUND (t * 255.0);
+          *value      = ROUND (p * 255.0);
+          break;
 
-	case 1:
-	  *hue        = ROUND (q * 255.0);
-	  *saturation = ROUND (v * 255.0);
-	  *value      = ROUND (p * 255.0);
-	  break;
+        case 1:
+          *hue        = ROUND (q * 255.0);
+          *saturation = ROUND (v * 255.0);
+          *value      = ROUND (p * 255.0);
+          break;
 
-	case 2:
-	  *hue        = ROUND (p * 255.0);
-	  *saturation = ROUND (v * 255.0);
-	  *value      = ROUND (t * 255.0);
-	  break;
+        case 2:
+          *hue        = ROUND (p * 255.0);
+          *saturation = ROUND (v * 255.0);
+          *value      = ROUND (t * 255.0);
+          break;
 
-	case 3:
-	  *hue        = ROUND (p * 255.0);
-	  *saturation = ROUND (q * 255.0);
-	  *value      = ROUND (v * 255.0);
-	  break;
+        case 3:
+          *hue        = ROUND (p * 255.0);
+          *saturation = ROUND (q * 255.0);
+          *value      = ROUND (v * 255.0);
+          break;
 
-	case 4:
-	  *hue        = ROUND (t * 255.0);
-	  *saturation = ROUND (p * 255.0);
-	  *value      = ROUND (v * 255.0);
-	  break;
+        case 4:
+          *hue        = ROUND (t * 255.0);
+          *saturation = ROUND (p * 255.0);
+          *value      = ROUND (v * 255.0);
+          break;
 
-	case 5:
-	  *hue        = ROUND (v * 255.0);
-	  *saturation = ROUND (p * 255.0);
-	  *value      = ROUND (q * 255.0);
-	  break;
-	}
+        case 5:
+          *hue        = ROUND (v * 255.0);
+          *saturation = ROUND (p * 255.0);
+          *value      = ROUND (q * 255.0);
+          break;
+        }
     }
 }
 
@@ -683,8 +683,8 @@ gimp_hsv_to_rgb_int (gint *hue,
  **/
 void
 gimp_rgb_to_hsl_int (gint *red,
-		     gint *green,
-		     gint *blue)
+                     gint *green,
+                     gint *blue)
 {
   gint    r, g, b;
   gdouble h, s, l;
@@ -718,23 +718,23 @@ gimp_rgb_to_hsl_int (gint *red,
       delta = (max - min);
 
       if (l < 128)
-	s = 255 * (gdouble) delta / (gdouble) (max + min);
+        s = 255 * (gdouble) delta / (gdouble) (max + min);
       else
-	s = 255 * (gdouble) delta / (gdouble) (511 - max - min);
+        s = 255 * (gdouble) delta / (gdouble) (511 - max - min);
 
       if (r == max)
-	h = (g - b) / (gdouble) delta;
+        h = (g - b) / (gdouble) delta;
       else if (g == max)
-	h = 2 + (b - r) / (gdouble) delta;
+        h = 2 + (b - r) / (gdouble) delta;
       else
-	h = 4 + (r - g) / (gdouble) delta;
+        h = 4 + (r - g) / (gdouble) delta;
 
       h = h * 42.5;
 
       if (h < 0)
-	h += 255;
+        h += 255;
       else if (h > 255)
-	h -= 255;
+        h -= 255;
     }
 
   *red   = ROUND (h);
@@ -755,8 +755,8 @@ gimp_rgb_to_hsl_int (gint *red,
  **/
 gint
 gimp_rgb_to_l_int (gint red,
-		   gint green,
-		   gint blue)
+                   gint green,
+                   gint blue)
 {
   gint min, max;
 
@@ -776,8 +776,8 @@ gimp_rgb_to_l_int (gint red,
 
 static gint
 gimp_hsl_value_int (gdouble n1,
-		    gdouble n2,
-		    gdouble hue)
+                    gdouble n2,
+                    gdouble hue)
 {
   gdouble value;
 
@@ -812,8 +812,8 @@ gimp_hsl_value_int (gdouble n1,
  **/
 void
 gimp_hsl_to_rgb_int (gint *hue,
-		     gint *saturation,
-		     gint *lightness)
+                     gint *saturation,
+                     gint *lightness)
 {
   gdouble h, s, l;
 
@@ -833,9 +833,9 @@ gimp_hsl_to_rgb_int (gint *hue,
       gdouble m1, m2;
 
       if (l < 128)
-	m2 = (l * (255 + s)) / 65025.0;
+        m2 = (l * (255 + s)) / 65025.0;
       else
-	m2 = (l + s - (l * s) / 255.0) / 255.0;
+        m2 = (l + s - (l * s) / 255.0) / 255.0;
 
       m1 = (l / 127.5) - m2;
 
@@ -941,9 +941,9 @@ gimp_cmyk_to_rgb_int (gint *cyan,
 
 void
 gimp_rgb_to_hsv4 (guchar  *rgb,
-		  gdouble *hue,
-		  gdouble *saturation,
-		  gdouble *value)
+                  gdouble *hue,
+                  gdouble *saturation,
+                  gdouble *value)
 {
   gdouble red, green, blue;
   gdouble h, s, v;
@@ -981,21 +981,21 @@ gimp_rgb_to_hsv4 (guchar  *rgb,
       delta = max - min;
 
       if (delta == 0.0)
-	delta = 1.0;
+        delta = 1.0;
 
       if (red == max)
-	h = (green - blue) / delta;
+        h = (green - blue) / delta;
       else if (green == max)
-	h = 2 + (blue - red) / delta;
+        h = 2 + (blue - red) / delta;
       else if (blue == max)
-	h = 4 + (red - green) / delta;
+        h = 4 + (red - green) / delta;
 
       h /= 6.0;
 
       if (h < 0.0)
-	h += 1.0;
+        h += 1.0;
       else if (h > 1.0)
-	h -= 1.0;
+        h -= 1.0;
     }
 
   *hue        = h;
@@ -1014,9 +1014,9 @@ gimp_rgb_to_hsv4 (guchar  *rgb,
 
 void
 gimp_hsv_to_rgb4 (guchar  *rgb,
-		  gdouble  hue,
-		  gdouble  saturation,
-		  gdouble  value)
+                  gdouble  hue,
+                  gdouble  saturation,
+                  gdouble  value)
 {
   gdouble h, s, v;
   gdouble f, p, q, t;
@@ -1034,7 +1034,7 @@ gimp_hsv_to_rgb4 (guchar  *rgb,
       v = value;
 
       if (h == 6.0)
-	h = 0.0;
+        h = 0.0;
 
       f = h - (gint) h;
       p = v * (1.0 - s);
@@ -1042,43 +1042,43 @@ gimp_hsv_to_rgb4 (guchar  *rgb,
       t = v * (1.0 - s * (1.0 - f));
 
       switch ((int) h)
-	{
-	case 0:
-	  hue        = v;
-	  saturation = t;
-	  value      = p;
-	  break;
+        {
+        case 0:
+          hue        = v;
+          saturation = t;
+          value      = p;
+          break;
 
-	case 1:
-	  hue        = q;
-	  saturation = v;
-	  value      = p;
-	  break;
+        case 1:
+          hue        = q;
+          saturation = v;
+          value      = p;
+          break;
 
-	case 2:
-	  hue        = p;
-	  saturation = v;
-	  value      = t;
-	  break;
+        case 2:
+          hue        = p;
+          saturation = v;
+          value      = t;
+          break;
 
-	case 3:
-	  hue        = p;
-	  saturation = q;
-	  value      = v;
-	  break;
+        case 3:
+          hue        = p;
+          saturation = q;
+          value      = v;
+          break;
 
-	case 4:
-	  hue        = t;
-	  saturation = p;
-	  value      = v;
-	  break;
+        case 4:
+          hue        = t;
+          saturation = p;
+          value      = v;
+          break;
 
-	case 5:
-	  hue        = v;
-	  saturation = p;
-	  value      = q;
-	  break;
-	}
+        case 5:
+          hue        = v;
+          saturation = p;
+          value      = q;
+          break;
+        }
     }
 
   rgb[0] = ROUND (hue        * 255.0);

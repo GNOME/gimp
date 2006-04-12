@@ -52,29 +52,29 @@
  */
 gboolean
 gimp_procedural_db_proc_info (const gchar      *procedure,
-			      gchar           **blurb,
-			      gchar           **help,
-			      gchar           **author,
-			      gchar           **copyright,
-			      gchar           **date,
-			      GimpPDBProcType  *proc_type,
-			      gint             *num_args,
-			      gint             *num_values,
-			      GimpParamDef    **args,
-			      GimpParamDef    **return_vals)
+                              gchar           **blurb,
+                              gchar           **help,
+                              gchar           **author,
+                              gchar           **copyright,
+                              gchar           **date,
+                              GimpPDBProcType  *proc_type,
+                              gint             *num_args,
+                              gint             *num_values,
+                              GimpParamDef    **args,
+                              GimpParamDef    **return_vals)
 {
   gint i;
   gboolean success = TRUE;
 
   success = _gimp_procedural_db_proc_info (procedure,
-					   blurb,
-					   help,
-					   author,
-					   copyright,
-					   date,
-					   proc_type,
-					   num_args,
-					   num_values);
+                                           blurb,
+                                           help,
+                                           author,
+                                           copyright,
+                                           date,
+                                           proc_type,
+                                           num_args,
+                                           num_values);
 
   if (success)
     {
@@ -84,10 +84,10 @@ gimp_procedural_db_proc_info (const gchar      *procedure,
       for (i = 0; i < *num_args; i++)
         {
           if (! gimp_procedural_db_proc_arg (procedure,
-					     i,
-					     &(*args)[i].type,
-					     &(*args)[i].name,
-					     &(*args)[i].description))
+                                             i,
+                                             &(*args)[i].type,
+                                             &(*args)[i].name,
+                                             &(*args)[i].description))
             {
               g_free (*args);
               g_free (*return_vals);
@@ -99,10 +99,10 @@ gimp_procedural_db_proc_info (const gchar      *procedure,
       for (i = 0; i < *num_values; i++)
         {
           if (! gimp_procedural_db_proc_val (procedure,
-					     i,
-					     &(*return_vals)[i].type,
-					     &(*return_vals)[i].name,
-					     &(*return_vals)[i].description))
+                                             i,
+                                             &(*return_vals)[i].type,
+                                             &(*return_vals)[i].name,
+                                             &(*return_vals)[i].description))
             {
               g_free (*args);
               g_free (*return_vals);
@@ -131,15 +131,15 @@ gimp_procedural_db_proc_info (const gchar      *procedure,
  */
 gboolean
 gimp_procedural_db_get_data (const gchar *identifier,
-			     gpointer     data)
+                             gpointer     data)
 {
   gint      size;
   guint8   *hack;
   gboolean  success;
 
   success = _gimp_procedural_db_get_data (identifier,
-					  &size,
-					  &hack);
+                                          &size,
+                                          &hack);
   if (hack)
     {
       memcpy (data, (gpointer) hack, size * sizeof (guint8));
@@ -165,10 +165,10 @@ gimp_procedural_db_get_data (const gchar *identifier,
  */
 gboolean
 gimp_procedural_db_set_data (const gchar *identifier,
-			     gpointer     data,
-			     guint32      bytes)
+                             gpointer     data,
+                             guint32      bytes)
 {
   return _gimp_procedural_db_set_data (identifier,
-				       bytes,
-				       data);
+                                       bytes,
+                                       data);
 }

@@ -95,9 +95,9 @@ gimp_rgb_copy (const GimpRGB *rgb)
  **/
 void
 gimp_rgb_set (GimpRGB *rgb,
-	      gdouble  r,
-	      gdouble  g,
-	      gdouble  b)
+              gdouble  r,
+              gdouble  g,
+              gdouble  b)
 {
   g_return_if_fail (rgb != NULL);
 
@@ -115,7 +115,7 @@ gimp_rgb_set (GimpRGB *rgb,
  **/
 void
 gimp_rgb_set_alpha (GimpRGB *rgb,
-		    gdouble  a)
+                    gdouble  a)
 {
   g_return_if_fail (rgb != NULL);
 
@@ -134,9 +134,9 @@ gimp_rgb_set_alpha (GimpRGB *rgb,
  **/
 void
 gimp_rgb_set_uchar (GimpRGB *rgb,
-		    guchar   r,
-		    guchar   g,
-		    guchar   b)
+                    guchar   r,
+                    guchar   g,
+                    guchar   b)
 {
   g_return_if_fail (rgb != NULL);
 
@@ -147,9 +147,9 @@ gimp_rgb_set_uchar (GimpRGB *rgb,
 
 void
 gimp_rgb_get_uchar (const GimpRGB *rgb,
-		    guchar        *r,
-		    guchar        *g,
-		    guchar        *b)
+                    guchar        *r,
+                    guchar        *g,
+                    guchar        *b)
 {
   g_return_if_fail (rgb != NULL);
 
@@ -160,7 +160,7 @@ gimp_rgb_get_uchar (const GimpRGB *rgb,
 
 void
 gimp_rgb_add (GimpRGB       *rgb1,
-	      const GimpRGB *rgb2)
+              const GimpRGB *rgb2)
 {
   g_return_if_fail (rgb1 != NULL);
   g_return_if_fail (rgb2 != NULL);
@@ -172,7 +172,7 @@ gimp_rgb_add (GimpRGB       *rgb1,
 
 void
 gimp_rgb_subtract (GimpRGB       *rgb1,
-		   const GimpRGB *rgb2)
+                   const GimpRGB *rgb2)
 {
   g_return_if_fail (rgb1 != NULL);
   g_return_if_fail (rgb2 != NULL);
@@ -184,7 +184,7 @@ gimp_rgb_subtract (GimpRGB       *rgb1,
 
 void
 gimp_rgb_multiply (GimpRGB *rgb,
-		   gdouble  factor)
+                   gdouble  factor)
 {
   g_return_if_fail (rgb != NULL);
 
@@ -195,14 +195,14 @@ gimp_rgb_multiply (GimpRGB *rgb,
 
 gdouble
 gimp_rgb_distance (const GimpRGB *rgb1,
-		   const GimpRGB *rgb2)
+                   const GimpRGB *rgb2)
 {
   g_return_val_if_fail (rgb1 != NULL, 0.0);
   g_return_val_if_fail (rgb2 != NULL, 0.0);
 
   return (fabs (rgb1->r - rgb2->r) +
-	  fabs (rgb1->g - rgb2->g) +
-	  fabs (rgb1->b - rgb2->b));
+          fabs (rgb1->g - rgb2->g) +
+          fabs (rgb1->b - rgb2->b));
 }
 
 gdouble
@@ -238,7 +238,7 @@ gimp_rgb_clamp (GimpRGB *rgb)
 
 void
 gimp_rgb_gamma (GimpRGB *rgb,
-		gdouble  gamma)
+                gdouble  gamma)
 {
   gdouble ig;
 
@@ -328,8 +328,8 @@ gimp_rgb_intensity_uchar (const GimpRGB *rgb)
 
 void
 gimp_rgb_composite (GimpRGB              *color1,
-		    const GimpRGB        *color2,
-		    GimpRGBCompositeMode  mode)
+                    const GimpRGB        *color2,
+                    GimpRGBCompositeMode  mode)
 {
   gdouble factor;
 
@@ -344,29 +344,29 @@ gimp_rgb_composite (GimpRGB              *color1,
     case GIMP_RGB_COMPOSITE_NORMAL:
       /*  put color2 on top of color1  */
       if (color2->a == 1.0)
-	{
-	  *color1 = *color2;
-	}
+        {
+          *color1 = *color2;
+        }
       else
-	{
-	  factor = color1->a * (1.0 - color2->a);
-	  color1->r = color1->r * factor + color2->r * color2->a;
-	  color1->g = color1->g * factor + color2->g * color2->a;
-	  color1->b = color1->b * factor + color2->b * color2->a;
-	  color1->a = factor + color2->a;
-	}
+        {
+          factor = color1->a * (1.0 - color2->a);
+          color1->r = color1->r * factor + color2->r * color2->a;
+          color1->g = color1->g * factor + color2->g * color2->a;
+          color1->b = color1->b * factor + color2->b * color2->a;
+          color1->a = factor + color2->a;
+        }
       break;
 
     case GIMP_RGB_COMPOSITE_BEHIND:
       /*  put color2 below color1  */
       if (color1->a < 1.0)
-	{
-	  factor = color2->a * (1.0 - color1->a);
-	  color1->r = color2->r * factor + color1->r * color1->a;
-	  color1->g = color2->g * factor + color1->g * color1->a;
-	  color1->b = color2->b * factor + color1->b * color1->a;
-	  color1->a = factor + color1->a;
-	}
+        {
+          factor = color2->a * (1.0 - color1->a);
+          color1->r = color2->r * factor + color1->r * color1->a;
+          color1->g = color2->g * factor + color1->g * color1->a;
+          color1->b = color2->b * factor + color1->b * color1->a;
+          color1->a = factor + color1->a;
+        }
       break;
     }
 }
@@ -387,10 +387,10 @@ gimp_rgb_composite (GimpRGB              *color1,
  **/
 void
 gimp_rgba_set (GimpRGB *rgba,
-	       gdouble  r,
-	       gdouble  g,
-	       gdouble  b,
-	       gdouble  a)
+               gdouble  r,
+               gdouble  g,
+               gdouble  b,
+               gdouble  a)
 {
   g_return_if_fail (rgba != NULL);
 
@@ -413,10 +413,10 @@ gimp_rgba_set (GimpRGB *rgba,
  **/
 void
 gimp_rgba_set_uchar (GimpRGB *rgba,
-		     guchar   r,
-		     guchar   g,
-		     guchar   b,
-		     guchar   a)
+                     guchar   r,
+                     guchar   g,
+                     guchar   b,
+                     guchar   a)
 {
   g_return_if_fail (rgba != NULL);
 
@@ -428,10 +428,10 @@ gimp_rgba_set_uchar (GimpRGB *rgba,
 
 void
 gimp_rgba_get_uchar (const GimpRGB *rgba,
-		     guchar        *r,
-		     guchar        *g,
-		     guchar        *b,
-		     guchar        *a)
+                     guchar        *r,
+                     guchar        *g,
+                     guchar        *b,
+                     guchar        *a)
 {
   g_return_if_fail (rgba != NULL);
 
@@ -443,7 +443,7 @@ gimp_rgba_get_uchar (const GimpRGB *rgba,
 
 void
 gimp_rgba_add (GimpRGB       *rgba1,
-	       const GimpRGB *rgba2)
+               const GimpRGB *rgba2)
 {
   g_return_if_fail (rgba1 != NULL);
   g_return_if_fail (rgba2 != NULL);
@@ -456,7 +456,7 @@ gimp_rgba_add (GimpRGB       *rgba1,
 
 void
 gimp_rgba_subtract (GimpRGB       *rgba1,
-		    const GimpRGB *rgba2)
+                    const GimpRGB *rgba2)
 {
   g_return_if_fail (rgba1 != NULL);
   g_return_if_fail (rgba2 != NULL);
@@ -469,7 +469,7 @@ gimp_rgba_subtract (GimpRGB       *rgba1,
 
 void
 gimp_rgba_multiply (GimpRGB *rgba,
-		    gdouble  factor)
+                    gdouble  factor)
 {
   g_return_if_fail (rgba != NULL);
 
@@ -481,7 +481,7 @@ gimp_rgba_multiply (GimpRGB *rgba,
 
 gdouble
 gimp_rgba_distance (const GimpRGB *rgba1,
-		    const GimpRGB *rgba2)
+                    const GimpRGB *rgba2)
 {
   g_return_val_if_fail (rgba1 != NULL, 0.0);
   g_return_val_if_fail (rgba2 != NULL, 0.0);

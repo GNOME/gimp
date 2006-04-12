@@ -101,8 +101,8 @@ gimp_int_store_finalize (GObject *object)
 
 static void
 gimp_int_store_row_inserted (GtkTreeModel *model,
-			     GtkTreePath  *path,
-			     GtkTreeIter  *iter)
+                             GtkTreePath  *path,
+                             GtkTreeIter  *iter)
 {
   GimpIntStore *store = GIMP_INT_STORE (model);
 

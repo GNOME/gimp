@@ -31,7 +31,7 @@
 #include <glib-object.h>
 
 #ifdef G_OS_WIN32
-#include <process.h>		/* For _getpid() */
+#include <process.h>                /* For _getpid() */
 #endif
 
 #include "gimpbasetypes.h"
@@ -189,9 +189,9 @@ gimp_parasite_print (GimpParasite *parasite)
 
 GimpParasite *
 gimp_parasite_new (const gchar    *name,
-		   guint32         flags,
-		   guint32         size,
-		   gconstpointer   data)
+                   guint32         flags,
+                   guint32         size,
+                   gconstpointer   data)
 {
   GimpParasite *parasite;
 
@@ -226,7 +226,7 @@ gimp_parasite_free (GimpParasite *parasite)
 
 gboolean
 gimp_parasite_is_type (const GimpParasite *parasite,
-		       const gchar        *name)
+                       const gchar        *name)
 {
   if (!parasite || !parasite->name)
     return FALSE;
@@ -241,12 +241,12 @@ gimp_parasite_copy (const GimpParasite *parasite)
     return NULL;
 
   return gimp_parasite_new (parasite->name, parasite->flags,
-			    parasite->size, parasite->data);
+                            parasite->size, parasite->data);
 }
 
 gboolean
 gimp_parasite_compare (const GimpParasite *a,
-		       const GimpParasite *b)
+                       const GimpParasite *b)
 {
   if (a && b &&
       a->name && b->name &&
@@ -255,9 +255,9 @@ gimp_parasite_compare (const GimpParasite *a,
       a->size == b->size)
     {
       if (a->data == NULL && b->data == NULL)
-	return TRUE;
+        return TRUE;
       else if (a->data && b->data && memcmp (a->data, b->data, a->size) == 0)
-	return TRUE;
+        return TRUE;
     }
 
   return FALSE;
@@ -292,7 +292,7 @@ gimp_parasite_is_undoable (const GimpParasite *parasite)
 
 gboolean
 gimp_parasite_has_flag (const GimpParasite *parasite,
-			gulong              flag)
+                        gulong              flag)
 {
   if (parasite == NULL)
     return FALSE;

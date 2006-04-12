@@ -48,8 +48,8 @@ gimp_matrix2_get_type (void)
 
   if (!matrix_type)
     matrix_type = g_boxed_type_register_static ("GimpMatrix2",
-					       (GBoxedCopyFunc) matrix2_copy,
-					       (GBoxedFreeFunc) g_free);
+                                               (GBoxedCopyFunc) matrix2_copy,
+                                               (GBoxedFreeFunc) g_free);
 
   return matrix_type;
 }

@@ -30,8 +30,8 @@
 
 gdouble
 gimp_bilinear (gdouble  x,
-	       gdouble  y,
-	       gdouble *values)
+               gdouble  y,
+               gdouble *values)
 {
   gdouble m0, m1;
 
@@ -53,8 +53,8 @@ gimp_bilinear (gdouble  x,
 
 guchar
 gimp_bilinear_8 (gdouble x,
-		 gdouble y,
-		 guchar *values)
+                 gdouble y,
+                 guchar *values)
 {
   gdouble m0, m1;
 
@@ -76,8 +76,8 @@ gimp_bilinear_8 (gdouble x,
 
 guint16
 gimp_bilinear_16 (gdouble  x,
-		  gdouble  y,
-		  guint16 *values)
+                  gdouble  y,
+                  guint16 *values)
 {
   gdouble m0, m1;
 
@@ -99,8 +99,8 @@ gimp_bilinear_16 (gdouble  x,
 
 guint32
 gimp_bilinear_32 (gdouble  x,
-		  gdouble  y,
-		  guint32 *values)
+                  gdouble  y,
+                  guint32 *values)
 {
   gdouble m0, m1;
 
@@ -122,8 +122,8 @@ gimp_bilinear_32 (gdouble  x,
 
 GimpRGB
 gimp_bilinear_rgb (gdouble  x,
-		   gdouble  y,
-		   GimpRGB *values)
+                   gdouble  y,
+                   GimpRGB *values)
 {
   gdouble m0, m1;
   gdouble ix, iy;
@@ -168,8 +168,8 @@ gimp_bilinear_rgb (gdouble  x,
 
 GimpRGB
 gimp_bilinear_rgba (gdouble  x,
-		    gdouble  y,
-		    GimpRGB *values)
+                    gdouble  y,
+                    GimpRGB *values)
 {
   gdouble m0, m1;
   gdouble ix, iy;

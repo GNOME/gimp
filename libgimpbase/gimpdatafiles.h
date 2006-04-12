@@ -41,12 +41,12 @@ struct _GimpDatafileData
 
 
 gboolean   gimp_datafiles_check_extension  (const gchar            *filename,
-					    const gchar            *extension);
+                                            const gchar            *extension);
 
 void       gimp_datafiles_read_directories (const gchar            *path_str,
-					    GFileTest               flags,
-					    GimpDatafileLoaderFunc  loader_func,
-					    gpointer                user_data);
+                                            GFileTest               flags,
+                                            GimpDatafileLoaderFunc  loader_func,
+                                            gpointer                user_data);
 
 
 G_END_DECLS

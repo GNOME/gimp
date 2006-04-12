@@ -112,8 +112,8 @@ gimp_prop_check_button_new (GObject     *config,
   set_param_spec (G_OBJECT (button), button, param_spec);
 
   g_signal_connect (button, "toggled",
-		    G_CALLBACK (gimp_prop_check_button_callback),
-		    config);
+                    G_CALLBACK (gimp_prop_check_button_callback),
+                    config);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_check_button_notify),
@@ -227,8 +227,8 @@ gimp_prop_enum_check_button_new (GObject     *config,
                      GINT_TO_POINTER (true_value));
 
   g_signal_connect (button, "toggled",
-		    G_CALLBACK (gimp_prop_enum_check_button_callback),
-		    config);
+                    G_CALLBACK (gimp_prop_enum_check_button_callback),
+                    config);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_enum_check_button_notify),
@@ -1083,8 +1083,8 @@ gimp_prop_spin_button_new (GObject     *config,
   set_param_spec (G_OBJECT (adjustment), spinbutton, param_spec);
 
   g_signal_connect (adjustment, "value-changed",
-		    G_CALLBACK (gimp_prop_adjustment_callback),
-		    config);
+                    G_CALLBACK (gimp_prop_adjustment_callback),
+                    config);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_adjustment_notify),
@@ -1144,8 +1144,8 @@ gimp_prop_hscale_new (GObject     *config,
   set_param_spec (G_OBJECT (adjustment), scale, param_spec);
 
   g_signal_connect (adjustment, "value-changed",
-		    G_CALLBACK (gimp_prop_adjustment_callback),
-		    config);
+                    G_CALLBACK (gimp_prop_adjustment_callback),
+                    config);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_adjustment_notify),
@@ -1240,8 +1240,8 @@ gimp_prop_scale_entry_new (GObject     *config,
   set_param_spec (G_OBJECT (adjustment), NULL,  param_spec);
 
   g_signal_connect (adjustment, "value-changed",
-		    G_CALLBACK (gimp_prop_adjustment_callback),
-		    config);
+                    G_CALLBACK (gimp_prop_adjustment_callback),
+                    config);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_adjustment_notify),
@@ -1314,8 +1314,8 @@ gimp_prop_opacity_entry_new (GObject     *config,
                      "opacity-scale", GINT_TO_POINTER (TRUE));
 
   g_signal_connect (adjustment, "value-changed",
-		    G_CALLBACK (gimp_prop_adjustment_callback),
-		    config);
+                    G_CALLBACK (gimp_prop_adjustment_callback),
+                    config);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_adjustment_notify),
@@ -1479,10 +1479,10 @@ gimp_prop_adjustment_notify (GObject       *config,
 /*************/
 
 static void   gimp_prop_memsize_callback (GimpMemsizeEntry *entry,
-					  GObject          *config);
+                                          GObject          *config);
 static void   gimp_prop_memsize_notify   (GObject          *config,
-					  GParamSpec       *param_spec,
-					  GimpMemsizeEntry *entry);
+                                          GParamSpec       *param_spec,
+                                          GimpMemsizeEntry *entry);
 
 /**
  * gimp_prop_memsize_entry_new:
@@ -1524,16 +1524,16 @@ gimp_prop_memsize_entry_new (GObject     *config,
   g_return_val_if_fail (uint64_spec->maximum <= GIMP_MAX_MEMSIZE, NULL);
 
   entry = gimp_memsize_entry_new (value,
-				  uint64_spec->minimum,
-				  uint64_spec->maximum);
+                                  uint64_spec->minimum,
+                                  uint64_spec->maximum);
 
   set_param_spec (G_OBJECT (entry),
                   GIMP_MEMSIZE_ENTRY (entry)->spinbutton,
                   param_spec);
 
   g_signal_connect (entry, "value-changed",
-		    G_CALLBACK (gimp_prop_memsize_callback),
-		    config);
+                    G_CALLBACK (gimp_prop_memsize_callback),
+                    config);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_memsize_notify),
@@ -1545,7 +1545,7 @@ gimp_prop_memsize_entry_new (GObject     *config,
 
 static void
 gimp_prop_memsize_callback (GimpMemsizeEntry *entry,
-			    GObject          *config)
+                            GObject          *config)
 {
   GParamSpec *param_spec;
 
@@ -1556,22 +1556,22 @@ gimp_prop_memsize_callback (GimpMemsizeEntry *entry,
   g_return_if_fail (G_IS_PARAM_SPEC_UINT64 (param_spec));
 
   g_object_set (config,
-		param_spec->name, gimp_memsize_entry_get_value (entry),
-		NULL);
+                param_spec->name, gimp_memsize_entry_get_value (entry),
+                NULL);
 }
 
 static void
 gimp_prop_memsize_notify (GObject          *config,
-			  GParamSpec       *param_spec,
-			  GimpMemsizeEntry *entry)
+                          GParamSpec       *param_spec,
+                          GimpMemsizeEntry *entry)
 {
   guint64  value;
 
   g_return_if_fail (G_IS_PARAM_SPEC_UINT64 (param_spec));
 
   g_object_get (config,
-		param_spec->name, &value,
-		NULL);
+                param_spec->name, &value,
+                NULL);
 
   if (entry->value != value)
     {
@@ -1713,8 +1713,8 @@ gimp_prop_entry_new (GObject     *config,
   set_param_spec (G_OBJECT (entry), entry, param_spec);
 
   g_signal_connect (entry, "changed",
-		    G_CALLBACK (gimp_prop_entry_callback),
-		    config);
+                    G_CALLBACK (gimp_prop_entry_callback),
+                    config);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_entry_notify),
@@ -1836,8 +1836,8 @@ gimp_prop_text_buffer_new (GObject     *config,
   set_param_spec (G_OBJECT (text_buffer), NULL, param_spec);
 
   g_signal_connect (text_buffer, "changed",
-		    G_CALLBACK (gimp_prop_text_buffer_callback),
-		    config);
+                    G_CALLBACK (gimp_prop_text_buffer_callback),
+                    config);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_text_buffer_notify),
@@ -1984,8 +1984,8 @@ gimp_prop_file_entry_new (GObject     *config,
                   param_spec);
 
   g_signal_connect (entry, "filename-changed",
-		    G_CALLBACK (gimp_prop_file_entry_callback),
-		    config);
+                    G_CALLBACK (gimp_prop_file_entry_callback),
+                    config);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_file_entry_notify),
@@ -2131,8 +2131,8 @@ gimp_prop_file_chooser_button_new (GObject              *config,
   set_param_spec (G_OBJECT (button), widget, param_spec);
 
   g_signal_connect (button, "selection-changed",
-		    G_CALLBACK (gimp_prop_file_chooser_button_callback),
-		    config);
+                    G_CALLBACK (gimp_prop_file_chooser_button_callback),
+                    config);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_file_chooser_button_notify),
@@ -2280,8 +2280,8 @@ gimp_prop_path_editor_new (GObject     *config,
                      path_param_spec);
 
   g_signal_connect (editor, "path-changed",
-		    G_CALLBACK (gimp_prop_path_editor_path_callback),
-		    config);
+                    G_CALLBACK (gimp_prop_path_editor_path_callback),
+                    config);
 
   connect_notify (config, path_property_name,
                   G_CALLBACK (gimp_prop_path_editor_path_notify),
@@ -2565,8 +2565,8 @@ gimp_prop_size_entry_new (GObject                   *config,
                      param_spec);
 
   g_signal_connect (sizeentry, "value-changed",
-		    G_CALLBACK (gimp_prop_size_entry_callback),
-		    config);
+                    G_CALLBACK (gimp_prop_size_entry_callback),
+                    config);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_size_entry_notify),
@@ -2914,11 +2914,11 @@ gimp_prop_coordinates_connect (GObject     *config,
     }
 
   g_signal_connect (sizeentry, "value-changed",
-		    G_CALLBACK (gimp_prop_coordinates_callback),
-		    config);
+                    G_CALLBACK (gimp_prop_coordinates_callback),
+                    config);
   g_signal_connect (sizeentry, "refval-changed",
-		    G_CALLBACK (gimp_prop_coordinates_callback),
-		    config);
+                    G_CALLBACK (gimp_prop_coordinates_callback),
+                    config);
 
   connect_notify (config, x_property_name,
                   G_CALLBACK (gimp_prop_coordinates_notify_x),
@@ -3214,8 +3214,8 @@ gimp_prop_color_area_new (GObject           *config,
   set_param_spec (G_OBJECT (area), area, param_spec);
 
   g_signal_connect (area, "color-changed",
-		    G_CALLBACK (gimp_prop_color_area_callback),
-		    config);
+                    G_CALLBACK (gimp_prop_color_area_callback),
+                    config);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_color_area_notify),
@@ -3280,10 +3280,10 @@ gimp_prop_color_area_notify (GObject    *config,
 /***************/
 
 static void   gimp_prop_unit_menu_callback (GtkWidget  *menu,
-					    GObject    *config);
+                                            GObject    *config);
 static void   gimp_prop_unit_menu_notify   (GObject    *config,
-					    GParamSpec *param_spec,
-					    GtkWidget  *menu);
+                                            GParamSpec *param_spec,
+                                            GtkWidget  *menu);
 
 /**
  * gimp_prop_unit_menu_new:
@@ -3301,8 +3301,8 @@ static void   gimp_prop_unit_menu_notify   (GObject    *config,
  */
 GtkWidget *
 gimp_prop_unit_menu_new (GObject     *config,
-			 const gchar *property_name,
-			 const gchar *unit_format)
+                         const gchar *property_name,
+                         const gchar *unit_format)
 {
   GParamSpec *param_spec;
   GtkWidget  *menu;
@@ -3336,8 +3336,8 @@ gimp_prop_unit_menu_new (GObject     *config,
   set_param_spec (G_OBJECT (menu), menu, param_spec);
 
   g_signal_connect (menu, "unit-changed",
-		    G_CALLBACK (gimp_prop_unit_menu_callback),
-		    config);
+                    G_CALLBACK (gimp_prop_unit_menu_callback),
+                    config);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_unit_menu_notify),
@@ -3348,7 +3348,7 @@ gimp_prop_unit_menu_new (GObject     *config,
 
 static void
 gimp_prop_unit_menu_callback (GtkWidget *menu,
-			      GObject   *config)
+                              GObject   *config)
 {
   GParamSpec *param_spec;
   GimpUnit    unit;
@@ -3374,8 +3374,8 @@ gimp_prop_unit_menu_callback (GtkWidget *menu,
 
 static void
 gimp_prop_unit_menu_notify (GObject    *config,
-			    GParamSpec *param_spec,
-			    GtkWidget  *menu)
+                            GParamSpec *param_spec,
+                            GtkWidget  *menu)
 {
   GimpUnit  unit;
 
@@ -3521,8 +3521,8 @@ gimp_prop_expander_new (GObject     *config,
   set_param_spec (G_OBJECT (expander), expander, param_spec);
 
   g_signal_connect (expander, "notify::expanded",
-		    G_CALLBACK (gimp_prop_expanded_notify),
-		    config);
+                    G_CALLBACK (gimp_prop_expanded_notify),
+                    config);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_expander_notify),

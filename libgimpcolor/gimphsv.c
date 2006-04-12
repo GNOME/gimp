@@ -30,9 +30,9 @@
 
 void
 gimp_hsv_set (GimpHSV *hsv,
-	      gdouble  h,
-	      gdouble  s,
-	      gdouble  v)
+              gdouble  h,
+              gdouble  s,
+              gdouble  v)
 {
   g_return_if_fail (hsv != NULL);
 
@@ -58,10 +58,10 @@ gimp_hsv_clamp (GimpHSV *hsv)
 
 void
 gimp_hsva_set (GimpHSV *hsva,
-	       gdouble  h,
-	       gdouble  s,
-	       gdouble  v,
-	       gdouble  a)
+               gdouble  h,
+               gdouble  s,
+               gdouble  v,
+               gdouble  a)
 {
   g_return_if_fail (hsva != NULL);
 

@@ -28,21 +28,21 @@ G_BEGIN_DECLS
 
 
 gboolean gimp_procedural_db_proc_info    (const gchar      *procedure,
-					  gchar           **blurb,
-					  gchar           **help,
-					  gchar           **author,
-					  gchar           **copyright,
-					  gchar           **date,
-					  GimpPDBProcType  *proc_type,
-					  gint             *num_args,
-					  gint             *num_values,
-					  GimpParamDef    **args,
-					  GimpParamDef    **return_vals);
+                                          gchar           **blurb,
+                                          gchar           **help,
+                                          gchar           **author,
+                                          gchar           **copyright,
+                                          gchar           **date,
+                                          GimpPDBProcType  *proc_type,
+                                          gint             *num_args,
+                                          gint             *num_values,
+                                          GimpParamDef    **args,
+                                          GimpParamDef    **return_vals);
 gboolean gimp_procedural_db_get_data     (const gchar      *identifier,
-					  gpointer          data);
+                                          gpointer          data);
 gboolean gimp_procedural_db_set_data     (const gchar      *identifier,
-					  gpointer          data,
-					  guint32           bytes);
+                                          gpointer          data,
+                                          guint32           bytes);
 
 
 G_END_DECLS

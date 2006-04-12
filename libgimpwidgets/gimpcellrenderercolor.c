@@ -98,7 +98,7 @@ gimp_cell_renderer_color_class_init (GimpCellRendererColorClass *klass)
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class,
-				   PROP_SIZE,
+                                   PROP_SIZE,
                                    g_param_spec_int ("icon-size", NULL, NULL,
                                                      0, G_MAXINT,
                                                      DEFAULT_ICON_SIZE,
@@ -183,18 +183,18 @@ gimp_cell_renderer_color_get_size (GtkCellRenderer *cell,
   if (cell_area && calc_width > 0 && calc_height > 0)
     {
       if (x_offset)
-	{
-	  *x_offset = (((gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL) ?
+        {
+          *x_offset = (((gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL) ?
                         1.0 - cell->xalign : cell->xalign) *
                        (cell_area->width - calc_width));
-	  *x_offset = MAX (*x_offset, 0) + cell->xpad;
-	}
+          *x_offset = MAX (*x_offset, 0) + cell->xpad;
+        }
       if (y_offset)
-	{
-	  *y_offset = (cell->yalign *
+        {
+          *y_offset = (cell->yalign *
                        (cell_area->height - calc_height));
           *y_offset = MAX (*y_offset, 0) + cell->ypad;
-	}
+        }
     }
   else
     {

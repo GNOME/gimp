@@ -60,7 +60,7 @@ void    gimp_pixpipe_params_init  (GimpPixPipeParams *params);
 
 /* Parse a string into a GimpPixPipeParams */
 void    gimp_pixpipe_params_parse (const gchar       *parameters,
-				   GimpPixPipeParams *params);
+                                   GimpPixPipeParams *params);
 
 /* Build a string representation of GimpPixPipeParams */
 gchar * gimp_pixpipe_params_build (GimpPixPipeParams *params);

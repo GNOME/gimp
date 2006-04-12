@@ -47,7 +47,7 @@
  **/
 gchar *
 gimp_utf8_strtrim (const gchar *str,
-		   gint         max_chars)
+                   gint         max_chars)
 {
   /* FIXME: should we make this translatable? */
   static const gchar *ellipsis = "...";
@@ -77,7 +77,7 @@ gimp_utf8_strtrim (const gchar *str,
               continue;
             }
 
-	  break;
+          break;
         }
 
       if (*p)

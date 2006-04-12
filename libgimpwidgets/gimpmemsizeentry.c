@@ -42,9 +42,9 @@ enum
 static void  gimp_memsize_entry_finalize      (GObject          *object);
 
 static void  gimp_memsize_entry_adj_callback  (GtkAdjustment    *adj,
-					       GimpMemsizeEntry *entry);
+                                               GimpMemsizeEntry *entry);
 static void  gimp_memsize_entry_unit_callback (GtkWidget        *widget,
-					       GimpMemsizeEntry *entry);
+                                               GimpMemsizeEntry *entry);
 
 
 G_DEFINE_TYPE (GimpMemsizeEntry, gimp_memsize_entry, GTK_TYPE_HBOX);
@@ -65,12 +65,12 @@ gimp_memsize_entry_class_init (GimpMemsizeEntryClass *klass)
 
   gimp_memsize_entry_signals[VALUE_CHANGED] =
     g_signal_new ("value-changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpMemsizeEntryClass, value_changed),
-		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpMemsizeEntryClass, value_changed),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 }
 
 static void
@@ -102,7 +102,7 @@ gimp_memsize_entry_finalize (GObject *object)
 
 static void
 gimp_memsize_entry_adj_callback (GtkAdjustment    *adj,
-				 GimpMemsizeEntry *entry)
+                                 GimpMemsizeEntry *entry)
 {
   guint64 size = gtk_adjustment_get_value (adj);
 
@@ -113,7 +113,7 @@ gimp_memsize_entry_adj_callback (GtkAdjustment    *adj,
 
 static void
 gimp_memsize_entry_unit_callback (GtkWidget        *widget,
-				  GimpMemsizeEntry *entry)
+                                  GimpMemsizeEntry *entry)
 {
   guint  shift;
 
@@ -153,8 +153,8 @@ gimp_memsize_entry_unit_callback (GtkWidget        *widget,
  **/
 GtkWidget *
 gimp_memsize_entry_new (guint64  value,
-			guint64  lower,
-			guint64  upper)
+                        guint64  lower,
+                        guint64  upper)
 {
   GimpMemsizeEntry *entry;
   guint             shift;
@@ -227,7 +227,7 @@ gimp_memsize_entry_new (guint64  value,
  **/
 void
 gimp_memsize_entry_set_value (GimpMemsizeEntry *entry,
-			      guint64           value)
+                              guint64           value)
 {
   guint shift;
 

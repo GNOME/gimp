@@ -57,17 +57,17 @@ struct _QueryBox
 
 static QueryBox * create_query_box             (const gchar   *title,
                                                 GtkWidget     *parent,
-						GimpHelpFunc   help_func,
-						const gchar   *help_id,
-						GCallback      response_callback,
+                                                GimpHelpFunc   help_func,
+                                                const gchar   *help_id,
+                                                GCallback      response_callback,
                                                 const gchar   *stock_id,
-						const gchar   *message,
-						const gchar   *ok_button,
-						const gchar   *cancel_button,
-						GObject       *object,
-						const gchar   *signal,
-						GCallback      callback,
-						gpointer       callback_data);
+                                                const gchar   *message,
+                                                const gchar   *ok_button,
+                                                const gchar   *cancel_button,
+                                                GObject       *object,
+                                                const gchar   *signal,
+                                                GCallback      callback,
+                                                gpointer       callback_data);
 
 static void       query_box_disconnect         (QueryBox      *query_box);
 
@@ -96,17 +96,17 @@ static void       query_box_cancel_callback    (QueryBox      *query_box);
 static QueryBox *
 create_query_box (const gchar   *title,
                   GtkWidget     *parent,
-		  GimpHelpFunc   help_func,
-		  const gchar   *help_id,
-		  GCallback      response_callback,
+                  GimpHelpFunc   help_func,
+                  const gchar   *help_id,
+                  GCallback      response_callback,
                   const gchar   *stock_id,
-		  const gchar   *message,
-		  const gchar   *ok_button,
-		  const gchar   *cancel_button,
-		  GObject       *object,
-		  const gchar   *signal,
-		  GCallback      callback,
-		  gpointer       callback_data)
+                  const gchar   *message,
+                  const gchar   *ok_button,
+                  const gchar   *cancel_button,
+                  GObject       *object,
+                  const gchar   *signal,
+                  GCallback      callback,
+                  gpointer       callback_data)
 {
   QueryBox  *query_box;
   GtkWidget *hbox = NULL;
@@ -122,12 +122,12 @@ create_query_box (const gchar   *title,
 
   query_box->qbox = gimp_dialog_new (title, "gimp-query-box",
                                      parent, 0,
-				     help_func, help_id,
+                                     help_func, help_id,
 
-				     cancel_button, GTK_RESPONSE_CANCEL,
-				     ok_button,     GTK_RESPONSE_OK,
+                                     cancel_button, GTK_RESPONSE_CANCEL,
+                                     ok_button,     GTK_RESPONSE_OK,
 
-				     NULL);
+                                     NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (query_box->qbox),
                                            GTK_RESPONSE_OK,
@@ -140,8 +140,8 @@ create_query_box (const gchar   *title,
                       query_box);
 
   g_signal_connect (query_box->qbox, "destroy",
-		    G_CALLBACK (gtk_widget_destroyed),
-		    &query_box->qbox);
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &query_box->qbox);
 
   /*  if we are associated with an object, connect to the provided signal
    */
@@ -227,25 +227,25 @@ create_query_box (const gchar   *title,
 GtkWidget *
 gimp_query_string_box (const gchar             *title,
                        GtkWidget               *parent,
-		       GimpHelpFunc             help_func,
-		       const gchar             *help_id,
-		       const gchar             *message,
-		       const gchar             *initial,
-		       GObject                 *object,
-		       const gchar             *signal,
-		       GimpQueryStringCallback  callback,
-		       gpointer                 data)
+                       GimpHelpFunc             help_func,
+                       const gchar             *help_id,
+                       const gchar             *message,
+                       const gchar             *initial,
+                       GObject                 *object,
+                       const gchar             *signal,
+                       GimpQueryStringCallback  callback,
+                       gpointer                 data)
 {
   QueryBox  *query_box;
   GtkWidget *entry;
 
   query_box = create_query_box (title, parent, help_func, help_id,
-				G_CALLBACK (string_query_box_response),
+                                G_CALLBACK (string_query_box_response),
                                 GTK_STOCK_DIALOG_QUESTION,
-				message,
-				GTK_STOCK_OK, GTK_STOCK_CANCEL,
-				object, signal,
-				G_CALLBACK (callback), data);
+                                message,
+                                GTK_STOCK_OK, GTK_STOCK_CANCEL,
+                                object, signal,
+                                G_CALLBACK (callback), data);
 
   if (! query_box)
     return NULL;
@@ -284,35 +284,35 @@ gimp_query_string_box (const gchar             *title,
 GtkWidget *
 gimp_query_int_box (const gchar          *title,
                     GtkWidget            *parent,
-		    GimpHelpFunc          help_func,
-		    const gchar          *help_id,
-		    const gchar          *message,
-		    gint                  initial,
-		    gint                  lower,
-		    gint                  upper,
-		    GObject              *object,
-		    const gchar          *signal,
-		    GimpQueryIntCallback  callback,
-		    gpointer              data)
+                    GimpHelpFunc          help_func,
+                    const gchar          *help_id,
+                    const gchar          *message,
+                    gint                  initial,
+                    gint                  lower,
+                    gint                  upper,
+                    GObject              *object,
+                    const gchar          *signal,
+                    GimpQueryIntCallback  callback,
+                    gpointer              data)
 {
   QueryBox  *query_box;
   GtkWidget *spinbutton;
   GtkObject *adjustment;
 
   query_box = create_query_box (title, parent, help_func, help_id,
-				G_CALLBACK (int_query_box_response),
+                                G_CALLBACK (int_query_box_response),
                                 GTK_STOCK_DIALOG_QUESTION,
-				message,
-				GTK_STOCK_OK, GTK_STOCK_CANCEL,
-				object, signal,
-				G_CALLBACK (callback), data);
+                                message,
+                                GTK_STOCK_OK, GTK_STOCK_CANCEL,
+                                object, signal,
+                                G_CALLBACK (callback), data);
 
   if (! query_box)
     return NULL;
 
   spinbutton = gimp_spin_button_new (&adjustment,
-				     initial, lower, upper, 1, 10, 0,
-				     1, 0);
+                                     initial, lower, upper, 1, 10, 0,
+                                     1, 0);
   gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (query_box->vbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_grab_focus (spinbutton);
@@ -346,36 +346,36 @@ gimp_query_int_box (const gchar          *title,
 GtkWidget *
 gimp_query_double_box (const gchar             *title,
                        GtkWidget               *parent,
-		       GimpHelpFunc             help_func,
-		       const gchar             *help_id,
-		       const gchar             *message,
-		       gdouble                  initial,
-		       gdouble                  lower,
-		       gdouble                  upper,
-		       gint                     digits,
-		       GObject                 *object,
-		       const gchar             *signal,
-		       GimpQueryDoubleCallback  callback,
-		       gpointer                 data)
+                       GimpHelpFunc             help_func,
+                       const gchar             *help_id,
+                       const gchar             *message,
+                       gdouble                  initial,
+                       gdouble                  lower,
+                       gdouble                  upper,
+                       gint                     digits,
+                       GObject                 *object,
+                       const gchar             *signal,
+                       GimpQueryDoubleCallback  callback,
+                       gpointer                 data)
 {
   QueryBox  *query_box;
   GtkWidget *spinbutton;
   GtkObject *adjustment;
 
   query_box = create_query_box (title, parent, help_func, help_id,
-				G_CALLBACK (double_query_box_response),
+                                G_CALLBACK (double_query_box_response),
                                 GTK_STOCK_DIALOG_QUESTION,
-				message,
-				GTK_STOCK_OK, GTK_STOCK_CANCEL,
-				object, signal,
-				G_CALLBACK (callback), data);
+                                message,
+                                GTK_STOCK_OK, GTK_STOCK_CANCEL,
+                                object, signal,
+                                G_CALLBACK (callback), data);
 
   if (! query_box)
     return NULL;
 
   spinbutton = gimp_spin_button_new (&adjustment,
-				     initial, lower, upper, 1, 10, 0,
-				     1, digits);
+                                     initial, lower, upper, 1, 10, 0,
+                                     1, digits);
   gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (query_box->vbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_grab_focus (spinbutton);
@@ -416,45 +416,45 @@ gimp_query_double_box (const gchar             *title,
 GtkWidget *
 gimp_query_size_box (const gchar           *title,
                      GtkWidget             *parent,
-		     GimpHelpFunc           help_func,
-		     const gchar           *help_id,
-		     const gchar           *message,
-		     gdouble                initial,
-		     gdouble                lower,
-		     gdouble                upper,
-		     gint                   digits,
-		     GimpUnit               unit,
-		     gdouble                resolution,
-		     gboolean               dot_for_dot,
-		     GObject               *object,
-		     const gchar           *signal,
-		     GimpQuerySizeCallback  callback,
-		     gpointer               data)
+                     GimpHelpFunc           help_func,
+                     const gchar           *help_id,
+                     const gchar           *message,
+                     gdouble                initial,
+                     gdouble                lower,
+                     gdouble                upper,
+                     gint                   digits,
+                     GimpUnit               unit,
+                     gdouble                resolution,
+                     gboolean               dot_for_dot,
+                     GObject               *object,
+                     const gchar           *signal,
+                     GimpQuerySizeCallback  callback,
+                     gpointer               data)
 {
   QueryBox  *query_box;
   GtkWidget *sizeentry;
   GtkWidget *spinbutton;
 
   query_box = create_query_box (title, parent, help_func, help_id,
-				G_CALLBACK (size_query_box_response),
+                                G_CALLBACK (size_query_box_response),
                                 GTK_STOCK_DIALOG_QUESTION,
-				message,
-				GTK_STOCK_OK, GTK_STOCK_CANCEL,
-				object, signal,
-				G_CALLBACK (callback), data);
+                                message,
+                                GTK_STOCK_OK, GTK_STOCK_CANCEL,
+                                object, signal,
+                                G_CALLBACK (callback), data);
 
   if (! query_box)
     return NULL;
 
   sizeentry = gimp_size_entry_new (1, unit, "%p", TRUE, FALSE, FALSE, 12,
-				   GIMP_SIZE_ENTRY_UPDATE_SIZE);
+                                   GIMP_SIZE_ENTRY_UPDATE_SIZE);
   if (dot_for_dot)
     gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), GIMP_UNIT_PIXEL);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
-				  resolution, FALSE);
+                                  resolution, FALSE);
   gimp_size_entry_set_refval_digits (GIMP_SIZE_ENTRY (sizeentry), 0, digits);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
-					 lower, upper);
+                                         lower, upper);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0, initial);
 
   spinbutton = gimp_size_entry_get_help_widget (GIMP_SIZE_ENTRY (sizeentry), 0);
@@ -494,26 +494,26 @@ gimp_query_size_box (const gchar           *title,
 GtkWidget *
 gimp_query_boolean_box (const gchar              *title,
                         GtkWidget                *parent,
-			GimpHelpFunc              help_func,
-			const gchar              *help_id,
-			const gchar              *stock_id,
-			const gchar              *message,
-			const gchar              *true_button,
-			const gchar              *false_button,
-			GObject                  *object,
-			const gchar              *signal,
-			GimpQueryBooleanCallback  callback,
-			gpointer                  data)
+                        GimpHelpFunc              help_func,
+                        const gchar              *help_id,
+                        const gchar              *stock_id,
+                        const gchar              *message,
+                        const gchar              *true_button,
+                        const gchar              *false_button,
+                        GObject                  *object,
+                        const gchar              *signal,
+                        GimpQueryBooleanCallback  callback,
+                        gpointer                  data)
 {
   QueryBox  *query_box;
 
   query_box = create_query_box (title, parent, help_func, help_id,
-				G_CALLBACK (boolean_query_box_response),
+                                G_CALLBACK (boolean_query_box_response),
                                 stock_id,
-				message,
-				true_button, false_button,
-				object, signal,
-				G_CALLBACK (callback), data);
+                                message,
+                                true_button, false_button,
+                                object, signal,
+                                G_CALLBACK (callback), data);
 
   if (! query_box)
     return NULL;
@@ -659,9 +659,9 @@ boolean_query_box_response (GtkWidget *widget,
 
   /*  Call the user defined callback  */
   (* (GimpQueryBooleanCallback) query_box->callback) (query_box->qbox,
-						      (response_id ==
+                                                      (response_id ==
                                                        GTK_RESPONSE_OK),
-						      query_box->callback_data);
+                                                      query_box->callback_data);
 
   /*  Destroy the box  */
   if (query_box->qbox)

@@ -40,21 +40,21 @@ typedef void     (* GimpMenuCallback)   (gint32   any_id,
 
 
 GtkWidget * gimp_image_menu_new    (GimpConstraintFunc constraint,
-				    GimpMenuCallback   callback,
-				    gpointer           data,
-				    gint32             active_image);
+                                    GimpMenuCallback   callback,
+                                    gpointer           data,
+                                    gint32             active_image);
 GtkWidget * gimp_layer_menu_new    (GimpConstraintFunc constraint,
-				    GimpMenuCallback   callback,
-				    gpointer           data,
-				    gint32             active_layer);
+                                    GimpMenuCallback   callback,
+                                    gpointer           data,
+                                    gint32             active_layer);
 GtkWidget * gimp_channel_menu_new  (GimpConstraintFunc constraint,
-				    GimpMenuCallback   callback,
-				    gpointer           data,
-				    gint32             active_channel);
+                                    GimpMenuCallback   callback,
+                                    gpointer           data,
+                                    gint32             active_channel);
 GtkWidget * gimp_drawable_menu_new (GimpConstraintFunc constraint,
-				    GimpMenuCallback   callback,
-				    gpointer           data,
-				    gint32             active_drawable);
+                                    GimpMenuCallback   callback,
+                                    gpointer           data,
+                                    gint32             active_drawable);
 
 
 G_END_DECLS

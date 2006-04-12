@@ -121,8 +121,8 @@ gimp_config_deserialize_properties (GimpConfig *config,
   guint          i;
   guint          scope_id;
   guint          old_scope_id;
-  GTokenType	 token;
-  GTokenType	 next;
+  GTokenType         token;
+  GTokenType         next;
 
   g_return_val_if_fail (GIMP_IS_CONFIG (config), FALSE);
 
@@ -486,18 +486,18 @@ gimp_config_deserialize_enum (GValue     *value,
       g_scanner_get_next_token (scanner);
 
       enum_value = g_enum_get_value_by_nick (enum_class,
-					     scanner->value.v_identifier);
+                                             scanner->value.v_identifier);
       if (!enum_value)
-	enum_value = g_enum_get_value_by_name (enum_class,
-					       scanner->value.v_identifier);
+        enum_value = g_enum_get_value_by_name (enum_class,
+                                               scanner->value.v_identifier);
 
       if (!enum_value)
-	{
-	  g_scanner_error (scanner,
-			   _("invalid value '%s' for token %s"),
-			   scanner->value.v_identifier, prop_spec->name);
-	  return G_TOKEN_NONE;
-	}
+        {
+          g_scanner_error (scanner,
+                           _("invalid value '%s' for token %s"),
+                           scanner->value.v_identifier, prop_spec->name);
+          return G_TOKEN_NONE;
+        }
       break;
 
     case G_TOKEN_INT:
@@ -507,12 +507,12 @@ gimp_config_deserialize_enum (GValue     *value,
                                      (gint) scanner->value.v_int64);
 
       if (!enum_value)
-	{
-	  g_scanner_error (scanner,
-			   _("invalid value '%ld' for token %s"),
-			   (glong) scanner->value.v_int64, prop_spec->name);
-	  return G_TOKEN_NONE;
-	}
+        {
+          g_scanner_error (scanner,
+                           _("invalid value '%ld' for token %s"),
+                           (glong) scanner->value.v_int64, prop_spec->name);
+          return G_TOKEN_NONE;
+        }
       break;
 
     default:

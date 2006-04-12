@@ -40,7 +40,7 @@
 
 
 void         gimp_read_expect_msg   (GimpWireMessage *msg,
-				     gint             type);
+                                     gint             type);
 
 static void  gimp_tile_get          (GimpTile        *tile);
 static void  gimp_tile_put          (GimpTile        *tile);
@@ -91,7 +91,7 @@ gimp_tile_ref_zero (GimpTile *tile)
 
 void
 gimp_tile_unref (GimpTile *tile,
-		 gboolean  dirty)
+                 gboolean  dirty)
 {
   g_return_if_fail (tile != NULL);
   g_return_if_fail (tile->ref_count > 0);
@@ -318,24 +318,24 @@ gimp_tile_cache_insert (GimpTile *tile)
        */
 
       if ((cur_cache_size + max_tile_size) > max_cache_size)
-	{
-	  while (tile_list_head &&
+        {
+          while (tile_list_head &&
                  (cur_cache_size +
                   max_cache_size * FREE_QUANTUM) > max_cache_size)
             {
               gimp_tile_cache_flush ((GimpTile *) tile_list_head->data);
             }
 
-	  if ((cur_cache_size + max_tile_size) > max_cache_size)
-	    return;
-	}
+          if ((cur_cache_size + max_tile_size) > max_cache_size)
+            return;
+        }
 
       /* Place the tile at the end of the tile list.
        */
       tile_list_tail = g_list_append (tile_list_tail, tile);
 
       if (! tile_list_head)
-	tile_list_head = tile_list_tail;
+        tile_list_head = tile_list_tail;
 
       tile_list_tail = g_list_last (tile_list_tail);
 

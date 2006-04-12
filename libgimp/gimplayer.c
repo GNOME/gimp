@@ -47,20 +47,20 @@
  */
 gint32
 gimp_layer_new (gint32                image_ID,
-		const gchar          *name,
-		gint                  width,
-		gint                  height,
-		GimpImageType         type,
-		gdouble               opacity,
-		GimpLayerModeEffects  mode)
+                const gchar          *name,
+                gint                  width,
+                gint                  height,
+                GimpImageType         type,
+                gdouble               opacity,
+                GimpLayerModeEffects  mode)
 {
   return _gimp_layer_new (image_ID,
-			  width,
-			  height,
-			  type,
-			  name,
-			  opacity,
-			  mode);
+                          width,
+                          height,
+                          type,
+                          name,
+                          opacity,
+                          mode);
 }
 
 /**

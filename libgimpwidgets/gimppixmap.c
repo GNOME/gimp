@@ -80,7 +80,7 @@ gimp_pixmap_new (gchar **xpm_data)
  **/
 void
 gimp_pixmap_set (GimpPixmap  *pixmap,
-		 gchar      **xpm_data)
+                 gchar      **xpm_data)
 {
   g_return_if_fail (GIMP_IS_PIXMAP (pixmap));
 
@@ -92,21 +92,21 @@ gimp_pixmap_set (GimpPixmap  *pixmap,
   if (! GTK_WIDGET_REALIZED (GTK_WIDGET (pixmap)))
     {
       if (xpm_data)
-	{
-	  gint width, height;
+        {
+          gint width, height;
 
-	  if (sscanf (xpm_data[0], "%d %d", &width, &height) != 2)
-	    {
-	      g_warning ("%s: passed pointer is no XPM data", G_STRFUNC);
-	    }
-	  else
-	    {
-	      GTK_WIDGET (pixmap)->requisition.width =
-		width + GTK_MISC (pixmap)->xpad * 2;
-	      GTK_WIDGET (pixmap)->requisition.height =
-		height + GTK_MISC (pixmap)->ypad * 2;
-	    }
-	}
+          if (sscanf (xpm_data[0], "%d %d", &width, &height) != 2)
+            {
+              g_warning ("%s: passed pointer is no XPM data", G_STRFUNC);
+            }
+          else
+            {
+              GTK_WIDGET (pixmap)->requisition.width =
+                width + GTK_MISC (pixmap)->xpad * 2;
+              GTK_WIDGET (pixmap)->requisition.height =
+                height + GTK_MISC (pixmap)->ypad * 2;
+            }
+        }
     }
   else
     {
@@ -139,9 +139,9 @@ gimp_pixmap_create_from_xpm_d (GimpPixmap *pixmap)
       style = gtk_widget_get_style (widget);
 
       gdk_pixmap = gdk_pixmap_create_from_xpm_d (widget->window,
-						 &mask,
-						 &style->bg[GTK_STATE_NORMAL],
-						 pixmap->xpm_data);
+                                                 &mask,
+                                                 &style->bg[GTK_STATE_NORMAL],
+                                                 pixmap->xpm_data);
     }
 
   gtk_image_set_from_pixmap (GTK_IMAGE (pixmap), gdk_pixmap, mask);

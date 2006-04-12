@@ -82,65 +82,65 @@ G_BEGIN_DECLS
  */
 
 GtkWidget * gimp_int_radio_group_new (gboolean          in_frame,
-				      const gchar      *frame_title,
-				      GCallback         radio_button_callback,
-				      gpointer          radio_button_callback_data,
-				      gint              initial, /* item_data */
+                                      const gchar      *frame_title,
+                                      GCallback         radio_button_callback,
+                                      gpointer          radio_button_callback_data,
+                                      gint              initial, /* item_data */
 
-				      /* specify radio buttons as va_list:
-				       *  const gchar  *label,
-				       *  gint          item_data,
-				       *  GtkWidget   **widget_ptr,
-				       */
+                                      /* specify radio buttons as va_list:
+                                       *  const gchar  *label,
+                                       *  gint          item_data,
+                                       *  GtkWidget   **widget_ptr,
+                                       */
 
-				      ...) G_GNUC_NULL_TERMINATED;
+                                      ...) G_GNUC_NULL_TERMINATED;
 
 void        gimp_int_radio_group_set_active (GtkRadioButton *radio_button,
                                              gint            item_data);
 
 
 GtkWidget * gimp_radio_group_new   (gboolean            in_frame,
-				    const gchar        *frame_title,
+                                    const gchar        *frame_title,
 
-				    /* specify radio buttons as va_list:
-				     *  const gchar    *label,
-				     *  GCallback       callback,
-				     *  gpointer        callback_data,
-				     *  gpointer        item_data,
-				     *  GtkWidget     **widget_ptr,
-				     *  gboolean        active,
-				     */
+                                    /* specify radio buttons as va_list:
+                                     *  const gchar    *label,
+                                     *  GCallback       callback,
+                                     *  gpointer        callback_data,
+                                     *  gpointer        item_data,
+                                     *  GtkWidget     **widget_ptr,
+                                     *  gboolean        active,
+                                     */
 
-				    ...) G_GNUC_NULL_TERMINATED;
+                                    ...) G_GNUC_NULL_TERMINATED;
 GtkWidget * gimp_radio_group_new2  (gboolean            in_frame,
-				    const gchar        *frame_title,
-				    GCallback           radio_button_callback,
-				    gpointer            radio_button_callback_data,
-				    gpointer            initial, /* item_data */
+                                    const gchar        *frame_title,
+                                    GCallback           radio_button_callback,
+                                    gpointer            radio_button_callback_data,
+                                    gpointer            initial, /* item_data */
 
-				    /* specify radio buttons as va_list:
-				     *  const gchar    *label,
-				     *  gpointer        item_data,
-				     *  GtkWidget     **widget_ptr,
-				     */
+                                    /* specify radio buttons as va_list:
+                                     *  const gchar    *label,
+                                     *  gpointer        item_data,
+                                     *  GtkWidget     **widget_ptr,
+                                     */
 
-				    ...) G_GNUC_NULL_TERMINATED;
+                                    ...) G_GNUC_NULL_TERMINATED;
 
 void   gimp_radio_group_set_active (GtkRadioButton     *radio_button,
                                     gpointer            item_data);
 
 
 GtkWidget * gimp_spin_button_new   (/* return value: */
-				    GtkObject         **adjustment,
+                                    GtkObject         **adjustment,
 
-				    gdouble             value,
-				    gdouble             lower,
-				    gdouble             upper,
-				    gdouble             step_increment,
-				    gdouble             page_increment,
-				    gdouble             page_size,
-				    gdouble             climb_rate,
-				    guint               digits);
+                                    gdouble             value,
+                                    gdouble             lower,
+                                    gdouble             upper,
+                                    gdouble             step_increment,
+                                    gdouble             page_increment,
+                                    gdouble             page_size,
+                                    gdouble             climb_rate,
+                                    guint               digits);
 
 #define GIMP_SCALE_ENTRY_LABEL(adj) \
         (g_object_get_data (G_OBJECT (adj), "label"))
@@ -208,42 +208,42 @@ gboolean gimp_scale_entry_get_logarithmic (GtkObject       *adjustment);
         (g_object_get_data (G_OBJECT(hbox), "toggle"))
 
 GtkWidget * gimp_random_seed_new   (guint32            *seed,
-				    gboolean           *random_seed);
+                                    gboolean           *random_seed);
 
 #define GIMP_COORDINATES_CHAINBUTTON(sizeentry) \
         (g_object_get_data (G_OBJECT (sizeentry), "chainbutton"))
 
 GtkWidget * gimp_coordinates_new   (GimpUnit            unit,
-				    const gchar        *unit_format,
-				    gboolean            menu_show_pixels,
-				    gboolean            menu_show_percent,
-				    gint                spinbutton_width,
-				    GimpSizeEntryUpdatePolicy  update_policy,
+                                    const gchar        *unit_format,
+                                    gboolean            menu_show_pixels,
+                                    gboolean            menu_show_percent,
+                                    gint                spinbutton_width,
+                                    GimpSizeEntryUpdatePolicy  update_policy,
 
-				    gboolean            chainbutton_active,
-				    gboolean            chain_constrains_ratio,
+                                    gboolean            chainbutton_active,
+                                    gboolean            chain_constrains_ratio,
 
-				    const gchar        *xlabel,
-				    gdouble             x,
-				    gdouble             xres,
-				    gdouble             lower_boundary_x,
-				    gdouble             upper_boundary_x,
-				    gdouble             xsize_0,   /* % */
-				    gdouble             xsize_100, /* % */
+                                    const gchar        *xlabel,
+                                    gdouble             x,
+                                    gdouble             xres,
+                                    gdouble             lower_boundary_x,
+                                    gdouble             upper_boundary_x,
+                                    gdouble             xsize_0,   /* % */
+                                    gdouble             xsize_100, /* % */
 
-				    const gchar        *ylabel,
-				    gdouble             y,
-				    gdouble             yres,
-				    gdouble             lower_boundary_y,
-				    gdouble             upper_boundary_y,
-				    gdouble             ysize_0,   /* % */
-				    gdouble             ysize_100  /* % */);
+                                    const gchar        *ylabel,
+                                    gdouble             y,
+                                    gdouble             yres,
+                                    gdouble             lower_boundary_y,
+                                    gdouble             upper_boundary_y,
+                                    gdouble             ysize_0,   /* % */
+                                    gdouble             ysize_100  /* % */);
 
 
 #ifndef GIMP_DISABLE_DEPRECATED
 
 GtkWidget * gimp_pixmap_button_new  (gchar             **xpm_data,
-				     const gchar        *text);
+                                     const gchar        *text);
 
 #endif
 
@@ -255,25 +255,25 @@ GtkWidget * gimp_pixmap_button_new  (gchar             **xpm_data,
 void gimp_toggle_button_sensitive_update (GtkToggleButton *toggle_button);
 
 void gimp_toggle_button_update           (GtkWidget       *widget,
-					  gpointer         data);
+                                          gpointer         data);
 
 void gimp_radio_button_update            (GtkWidget       *widget,
-					  gpointer         data);
+                                          gpointer         data);
 
 void gimp_int_adjustment_update          (GtkAdjustment   *adjustment,
-					  gpointer         data);
+                                          gpointer         data);
 
 void gimp_uint_adjustment_update         (GtkAdjustment   *adjustment,
-					  gpointer         data);
+                                          gpointer         data);
 
 void gimp_float_adjustment_update        (GtkAdjustment   *adjustment,
-					  gpointer         data);
+                                          gpointer         data);
 
 void gimp_double_adjustment_update       (GtkAdjustment   *adjustment,
-					  gpointer         data);
+                                          gpointer         data);
 
 void gimp_unit_menu_update               (GtkWidget       *widget,
-					  gpointer         data);
+                                          gpointer         data);
 
 
 /*
@@ -281,14 +281,14 @@ void gimp_unit_menu_update               (GtkWidget       *widget,
  */
 
 GtkWidget * gimp_table_attach_aligned    (GtkTable        *table,
-					  gint             column,
-					  gint             row,
-					  const gchar     *label_text,
-					  gfloat           xalign,
-					  gfloat           yalign,
-					  GtkWidget       *widget,
-					  gint             colspan,
-					  gboolean         left_align);
+                                          gint             column,
+                                          gint             row,
+                                          const gchar     *label_text,
+                                          gfloat           xalign,
+                                          gfloat           yalign,
+                                          GtkWidget       *widget,
+                                          gint             colspan,
+                                          gboolean         left_align);
 
 
 void        gimp_label_set_attributes    (GtkLabel        *label,

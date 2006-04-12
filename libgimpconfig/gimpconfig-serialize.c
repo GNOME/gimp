@@ -253,19 +253,19 @@ gimp_config_serialize_property (GimpConfig       *config,
         }
       else if (! G_VALUE_HOLDS_OBJECT (&value))
         {
-	  GString *str = g_string_new (NULL);
+          GString *str = g_string_new (NULL);
 
           success = gimp_config_serialize_value (&value, str, TRUE);
 
-	  if (success)
+          if (success)
             {
               gimp_config_writer_open (writer, param_spec->name);
               gimp_config_writer_print (writer, str->str, str->len);
               gimp_config_writer_close (writer);
             }
 
-	  g_string_free (str, TRUE);
-	}
+          g_string_free (str, TRUE);
+        }
 
       if (! success)
         {
@@ -395,7 +395,7 @@ gimp_config_serialize_value (const GValue *value,
                            G_ASCII_DTOSTR_BUF_SIZE, "%f", trafo->coeff[i][j]);
 
       g_string_append_printf (str, "(matrix %s %s %s %s)",
-			      buf[0], buf[1], buf[2], buf[3]);
+                              buf[0], buf[1], buf[2], buf[3]);
       return TRUE;
     }
 
@@ -416,7 +416,7 @@ gimp_config_serialize_value (const GValue *value,
               g_string_append (str, " ");
 
               if (! gimp_config_serialize_value (g_value_array_get_nth (array,
-									i),
+                                                                        i),
                                                  str, TRUE))
                 return FALSE;
             }

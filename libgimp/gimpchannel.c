@@ -47,16 +47,16 @@
  */
 gint32
 gimp_channel_new (gint32         image_ID,
-		  const gchar   *name,
-		  guint          width,
-		  guint          height,
-		  gdouble        opacity,
-		  const GimpRGB *color)
+                  const gchar   *name,
+                  guint          width,
+                  guint          height,
+                  gdouble        opacity,
+                  const GimpRGB *color)
 {
   return _gimp_channel_new (image_ID,
-			    width,
-			    height,
-			    name,
-			    opacity,
-			    color);
+                            width,
+                            height,
+                            name,
+                            opacity,
+                            color);
 }

@@ -63,14 +63,14 @@ gimp_offset_area_class_init (GimpOffsetAreaClass *klass)
 
   gimp_offset_area_signals[OFFSETS_CHANGED] =
     g_signal_new ("offsets-changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpOffsetAreaClass, offsets_changed),
-		  NULL, NULL,
-		  _gimp_widgets_marshal_VOID__INT_INT,
-		  G_TYPE_NONE, 2,
-		  G_TYPE_INT,
-		  G_TYPE_INT);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpOffsetAreaClass, offsets_changed),
+                  NULL, NULL,
+                  _gimp_widgets_marshal_VOID__INT_INT,
+                  G_TYPE_NONE, 2,
+                  G_TYPE_INT,
+                  G_TYPE_INT);
 
   widget_class->event         = gimp_offset_area_event;
   widget_class->expose_event  = gimp_offset_area_expose_event;
@@ -328,9 +328,9 @@ gimp_offset_area_event (GtkWidget *widget,
     {
     case GDK_BUTTON_PRESS:
       gdk_pointer_grab (widget->window, FALSE,
-			(GDK_BUTTON1_MOTION_MASK |
-			 GDK_BUTTON_RELEASE_MASK),
-			NULL, NULL, event->button.time);
+                        (GDK_BUTTON1_MOTION_MASK |
+                         GDK_BUTTON_RELEASE_MASK),
+                        NULL, NULL, event->button.time);
 
       orig_offset_x = area->offset_x;
       orig_offset_y = area->offset_y;
@@ -409,26 +409,26 @@ gimp_offset_area_expose_event (GtkWidget      *widget,
   if (area->orig_width > area->width || area->orig_height > area->height)
     {
        if (area->orig_width > area->width)
-	{
-	  x = area->display_ratio_x * (area->orig_width - area->width);
-	  w = area->display_ratio_x * area->width;
-	}
+        {
+          x = area->display_ratio_x * (area->orig_width - area->width);
+          w = area->display_ratio_x * area->width;
+        }
       else
-	{
-	  x = -1;
-	  w = widget->allocation.width + 2;
-	}
+        {
+          x = -1;
+          w = widget->allocation.width + 2;
+        }
 
       if (area->orig_height > area->height)
-	{
-	  y = area->display_ratio_y * (area->orig_height - area->height);
-	  h = area->display_ratio_y * area->height;
-	}
+        {
+          y = area->display_ratio_y * (area->orig_height - area->height);
+          h = area->display_ratio_y * area->height;
+        }
       else
-	{
-	  y = -1;
-	  h = widget->allocation.height + 2;
-	}
+        {
+          y = -1;
+          h = widget->allocation.height + 2;
+        }
 
       w = MAX (w, 1);
       h = MAX (h, 1);

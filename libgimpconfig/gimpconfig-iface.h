@@ -77,7 +77,7 @@ gboolean      gimp_config_serialize_to_fd       (GimpConfig   *config,
                                                  gint          fd,
                                                  gpointer      data);
 gchar       * gimp_config_serialize_to_string   (GimpConfig   *config,
-						 gpointer      data);
+                                                 gpointer      data);
 gboolean      gimp_config_deserialize_file      (GimpConfig   *config,
                                                  const gchar  *filename,
                                                  gpointer      data,

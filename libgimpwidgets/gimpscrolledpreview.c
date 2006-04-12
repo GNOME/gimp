@@ -401,12 +401,12 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
     case GDK_MOTION_NOTIFY:
       if (priv->in_drag)
         {
-	  GtkAdjustment *hadj;
-	  GtkAdjustment *vadj;
+          GtkAdjustment *hadj;
+          GtkAdjustment *vadj;
           gint           x, y;
 
-	  hadj = gtk_range_get_adjustment (GTK_RANGE (preview->hscr));
-	  vadj = gtk_range_get_adjustment (GTK_RANGE (preview->vscr));
+          hadj = gtk_range_get_adjustment (GTK_RANGE (preview->hscr));
+          vadj = gtk_range_get_adjustment (GTK_RANGE (preview->vscr));
 
           gtk_widget_get_pointer (area, &x, &y);
 

@@ -70,17 +70,17 @@ gimp_palette_select_new (const gchar            *title,
   gchar *palette_callback = gimp_procedural_db_temp_name ();
 
   gimp_install_temp_proc (palette_callback,
-			  "Temporary palette popup callback procedure",
-			  "",
-			  "Michael Natterer",
-			  "Michael Natterer",
-			  "2004",
-			  NULL,
-			  "RGB*, GRAY*",
-			  GIMP_TEMPORARY,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL,
-			  gimp_temp_palette_run);
+                          "Temporary palette popup callback procedure",
+                          "",
+                          "Michael Natterer",
+                          "Michael Natterer",
+                          "2004",
+                          NULL,
+                          "RGB*, GRAY*",
+                          GIMP_TEMPORARY,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL,
+                          gimp_temp_palette_run);
 
   if (gimp_palettes_popup (palette_callback, title, palette_name))
     {

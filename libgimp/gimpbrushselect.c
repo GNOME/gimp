@@ -86,17 +86,17 @@ gimp_brush_select_new (const gchar          *title,
   gchar *brush_callback = gimp_procedural_db_temp_name ();
 
   gimp_install_temp_proc (brush_callback,
-			  "Temporary brush popup callback procedure",
-			  "",
-			  "Andy Thomas",
-			  "Andy Thomas",
-			  "1997",
-			  NULL,
-			  "RGB*, GRAY*",
-			  GIMP_TEMPORARY,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL,
-			  gimp_temp_brush_run);
+                          "Temporary brush popup callback procedure",
+                          "",
+                          "Andy Thomas",
+                          "Andy Thomas",
+                          "1997",
+                          NULL,
+                          "RGB*, GRAY*",
+                          GIMP_TEMPORARY,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL,
+                          gimp_temp_brush_run);
 
   if (gimp_brushes_popup (brush_callback, title, brush_name,
                           opacity, spacing, paint_mode))

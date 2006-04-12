@@ -50,15 +50,15 @@ void               gimp_config_writer_data         (GimpConfigWriter  *writer,
                                                     gint               length,
                                                     const guint8      *data);
 void               gimp_config_writer_comment      (GimpConfigWriter  *writer,
-						    const gchar       *comment);
+                                                    const gchar       *comment);
 void               gimp_config_writer_linefeed     (GimpConfigWriter  *writer);
 
 
 void               gimp_config_writer_revert       (GimpConfigWriter  *writer);
 void               gimp_config_writer_close        (GimpConfigWriter  *writer);
 gboolean           gimp_config_writer_finish       (GimpConfigWriter  *writer,
-						    const gchar       *footer,
-						    GError           **error);
+                                                    const gchar       *footer,
+                                                    GError           **error);
 
 
 #endif /* __GIMP_CONFIG_WRITER_H__ */

@@ -64,7 +64,7 @@ gimp_pixpipe_params_init (GimpPixPipeParams *params)
 
 void
 gimp_pixpipe_params_parse (const gchar       *string,
-			   GimpPixPipeParams *params)
+                           GimpPixPipeParams *params)
 {
   gchar *copy;
   gchar *p, *q, *r;
@@ -81,77 +81,77 @@ gimp_pixpipe_params_parse (const gchar       *string,
       q = NULL;
       r = strchr (p, ':');
       if (r)
-	*r = 0;
+        *r = 0;
 
       if (strcmp (p, "ncells") == 0)
-	{
-	  if (r)
-	    params->ncells = atoi (r + 1);
-	}
+        {
+          if (r)
+            params->ncells = atoi (r + 1);
+        }
       else if (strcmp (p, "step") == 0)
-	{
-	  if (r)
-	    params->step = atoi (r + 1);
-	}
+        {
+          if (r)
+            params->step = atoi (r + 1);
+        }
       else if (strcmp (p, "dim") == 0)
-	{
-	  if (r)
+        {
+          if (r)
             {
               params->dim = atoi (r + 1);
               params->dim = CLAMP (params->dim, 1, GIMP_PIXPIPE_MAXDIM);
             }
         }
       else if (strcmp (p, "cols") == 0)
-	{
-	  if (r)
-	    params->cols = atoi (r + 1);
-	}
+        {
+          if (r)
+            params->cols = atoi (r + 1);
+        }
       else if (strcmp (p, "rows") == 0)
-	{
-	  if (r)
-	    params->rows = atoi (r + 1);
-	}
+        {
+          if (r)
+            params->rows = atoi (r + 1);
+        }
       else if (strcmp (p, "cellwidth") == 0)
-	{
-	  if (r)
-	    params->cellwidth = atoi (r + 1);
-	}
+        {
+          if (r)
+            params->cellwidth = atoi (r + 1);
+        }
       else if (strcmp (p, "cellheight") == 0)
-	{
-	  if (r)
-	    params->cellheight = atoi (r + 1);
-	}
+        {
+          if (r)
+            params->cellheight = atoi (r + 1);
+        }
       else if (strcmp (p, "placement") == 0)
-	{
-	  if (r)
-	    {
-	      params->placement = g_strdup (r + 1);
-	      params->free_placement_string = TRUE;
-	    }
-	}
+        {
+          if (r)
+            {
+              params->placement = g_strdup (r + 1);
+              params->free_placement_string = TRUE;
+            }
+        }
       else if (strncmp (p, "rank", strlen ("rank")) == 0 && r)
-	{
-	  if (r)
-	    {
-	      i = atoi (p + strlen ("rank"));
-	      if (i >= 0 && i < params->dim)
-		params->rank[i] = atoi (r + 1);
-	    }
-	}
+        {
+          if (r)
+            {
+              i = atoi (p + strlen ("rank"));
+              if (i >= 0 && i < params->dim)
+                params->rank[i] = atoi (r + 1);
+            }
+        }
       else if (strncmp (p, "sel", strlen ("sel")) == 0 && r)
-	{
-	  if (r)
-	    {
-	      i = atoi (p + strlen ("sel"));
-	      if (i >= 0 && i < params->dim)
-		{
-		  params->selection[i] = g_strdup (r + 1);
-		  params->free_selection_string = TRUE;
-		}
-	    }
-	}
+        {
+          if (r)
+            {
+              i = atoi (p + strlen ("sel"));
+              if (i >= 0 && i < params->dim)
+                {
+                  params->selection[i] = g_strdup (r + 1);
+                  params->free_selection_string = TRUE;
+                }
+            }
+        }
       if (r)
-	*r = ':';
+        *r = ':';
     }
 
   g_free (copy);

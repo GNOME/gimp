@@ -71,21 +71,21 @@ static gboolean  gimp_color_area_expose        (GtkWidget          *widget,
 static void      gimp_color_area_render        (GimpColorArea      *area);
 
 static void  gimp_color_area_drag_begin         (GtkWidget        *widget,
-						 GdkDragContext   *context);
+                                                 GdkDragContext   *context);
 static void  gimp_color_area_drag_end           (GtkWidget        *widget,
-						 GdkDragContext   *context);
+                                                 GdkDragContext   *context);
 static void  gimp_color_area_drag_data_received (GtkWidget        *widget,
-						 GdkDragContext   *context,
-						 gint              x,
-						 gint              y,
-						 GtkSelectionData *selection_data,
-						 guint             info,
-						 guint             time);
+                                                 GdkDragContext   *context,
+                                                 gint              x,
+                                                 gint              y,
+                                                 GtkSelectionData *selection_data,
+                                                 guint             info,
+                                                 guint             time);
 static void  gimp_color_area_drag_data_get      (GtkWidget        *widget,
-						 GdkDragContext   *context,
-						 GtkSelectionData *selection_data,
-						 guint             info,
-						 guint             time);
+                                                 GdkDragContext   *context,
+                                                 GtkSelectionData *selection_data,
+                                                 guint             info,
+                                                 guint             time);
 
 
 G_DEFINE_TYPE (GimpColorArea, gimp_color_area, GTK_TYPE_DRAWING_AREA);
@@ -283,7 +283,7 @@ gimp_color_area_set_property (GObject      *object,
 
 static void
 gimp_color_area_size_allocate (GtkWidget     *widget,
-			       GtkAllocation *allocation)
+                               GtkAllocation *allocation)
 {
   GimpColorArea *area = GIMP_COLOR_AREA (widget);
 
@@ -371,8 +371,8 @@ gimp_color_area_expose (GtkWidget      *widget,
  **/
 GtkWidget *
 gimp_color_area_new (const GimpRGB     *color,
-		     GimpColorAreaType  type,
-		     GdkModifierType    drag_mask)
+                     GimpColorAreaType  type,
+                     GdkModifierType    drag_mask)
 {
   return g_object_new (GIMP_TYPE_COLOR_AREA,
                        "color",     color,
@@ -653,7 +653,7 @@ gimp_color_area_render (GimpColorArea *area)
 
 static void
 gimp_color_area_drag_begin (GtkWidget      *widget,
-			    GdkDragContext *context)
+                            GdkDragContext *context)
 {
   GimpRGB    color;
   GtkWidget *window;

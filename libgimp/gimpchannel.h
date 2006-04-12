@@ -28,11 +28,11 @@ G_BEGIN_DECLS
 
 
 gint32  gimp_channel_new (gint32         image_ID,
-			  const gchar   *name,
-			  guint          width,
-			  guint          height,
-			  gdouble        opacity,
-			  const GimpRGB *color);
+                          const gchar   *name,
+                          guint          width,
+                          guint          height,
+                          gdouble        opacity,
+                          const GimpRGB *color);
 
 
 G_END_DECLS

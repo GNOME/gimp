@@ -144,27 +144,27 @@ gimp_color_scales_init (GimpColorScales *scales)
       enum_desc = gimp_enum_get_desc (enum_class, i);
 
       if (i == GIMP_COLOR_SELECTOR_ALPHA)
-	{
-	  scales->toggles[i] = NULL;
-	}
+        {
+          scales->toggles[i] = NULL;
+        }
       else
-	{
-	  scales->toggles[i] = gtk_radio_button_new (group);
-	  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (scales->toggles[i]));
-	  gtk_table_attach (GTK_TABLE (table), scales->toggles[i],
-			    0, 1, i, i + 1,
-			    GTK_SHRINK, GTK_EXPAND, 0, 0);
+        {
+          scales->toggles[i] = gtk_radio_button_new (group);
+          group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (scales->toggles[i]));
+          gtk_table_attach (GTK_TABLE (table), scales->toggles[i],
+                            0, 1, i, i + 1,
+                            GTK_SHRINK, GTK_EXPAND, 0, 0);
 
           if (selector->toggles_visible)
             gtk_widget_show (scales->toggles[i]);
 
-	  gimp_help_set_help_data (scales->toggles[i],
-				   gettext (enum_desc->value_help), NULL);
+          gimp_help_set_help_data (scales->toggles[i],
+                                   gettext (enum_desc->value_help), NULL);
 
-	  g_signal_connect (scales->toggles[i], "toggled",
-			    G_CALLBACK (gimp_color_scales_toggle_update),
-			    scales);
-	}
+          g_signal_connect (scales->toggles[i], "toggled",
+                            G_CALLBACK (gimp_color_scales_toggle_update),
+                            scales);
+        }
 
       scales->slider_data[i] =
         gimp_color_scale_entry_new (GTK_TABLE (table), 1, i,
@@ -182,8 +182,8 @@ gimp_color_scales_init (GimpColorScales *scales)
       gimp_color_scale_set_channel (GIMP_COLOR_SCALE (scales->sliders[i]), i);
 
       g_signal_connect (scales->slider_data[i], "value-changed",
-			G_CALLBACK (gimp_color_scales_scale_update),
-			scales);
+                        G_CALLBACK (gimp_color_scales_scale_update),
+                        scales);
     }
 
   g_type_class_unref (enum_class);

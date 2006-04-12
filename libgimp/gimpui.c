@@ -65,7 +65,7 @@ static gboolean gimp_ui_initialized = FALSE;
  **/
 void
 gimp_ui_init (const gchar *prog_name,
-	      gboolean     preview)
+              gboolean     preview)
 {
   const gchar  *display_name;
   gint          argc;

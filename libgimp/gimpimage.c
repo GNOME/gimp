@@ -35,7 +35,7 @@
  */
 guchar *
 gimp_image_get_cmap (gint32  image_ID,
-		     gint   *num_colors)
+                     gint   *num_colors)
 {
   return gimp_image_get_colormap (image_ID, num_colors);
 }
@@ -52,8 +52,8 @@ gimp_image_get_cmap (gint32  image_ID,
  */
 gboolean
 gimp_image_set_cmap (gint32        image_ID,
-		     const guchar *cmap,
-		     gint          num_colors)
+                     const guchar *cmap,
+                     gint          num_colors)
 {
   return gimp_image_set_colormap (image_ID, cmap, num_colors);
 }
@@ -110,9 +110,9 @@ gimp_image_set_colormap (gint32        image_ID,
 
 guchar *
 gimp_image_get_thumbnail_data (gint32  image_ID,
-			       gint   *width,
-			       gint   *height,
-			       gint   *bpp)
+                               gint   *width,
+                               gint   *height,
+                               gint   *bpp)
 {
   gint    ret_width;
   gint    ret_height;
@@ -120,13 +120,13 @@ gimp_image_get_thumbnail_data (gint32  image_ID,
   gint    data_size;
 
   _gimp_image_thumbnail (image_ID,
-			 *width,
-			 *height,
-			 &ret_width,
-			 &ret_height,
-			 bpp,
-			 &data_size,
-			 &image_data);
+                         *width,
+                         *height,
+                         &ret_width,
+                         &ret_height,
+                         bpp,
+                         &data_size,
+                         &image_data);
 
   *width  = ret_width;
   *height = ret_height;
@@ -152,10 +152,10 @@ gimp_image_get_thumbnail_data (gint32  image_ID,
  */
 gboolean
 gimp_image_attach_new_parasite (gint32         image_ID,
-				const gchar   *name,
-				gint           flags,
-				gint           size,
-				gconstpointer  data)
+                                const gchar   *name,
+                                gint           flags,
+                                gint           size,
+                                gconstpointer  data)
 {
   GimpParasite *parasite = gimp_parasite_new (name, flags, size, data);
   gboolean      success;

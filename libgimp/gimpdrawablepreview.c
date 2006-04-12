@@ -48,17 +48,17 @@ typedef struct
 
 
 static GObject * gimp_drawable_preview_constructor (GType                  type,
-						    guint                  n_params,
-						    GObjectConstructParam *params);
+                                                    guint                  n_params,
+                                                    GObjectConstructParam *params);
 
 static void  gimp_drawable_preview_get_property  (GObject         *object,
-						  guint            property_id,
-						  GValue          *value,
-						  GParamSpec      *pspec);
+                                                  guint            property_id,
+                                                  GValue          *value,
+                                                  GParamSpec      *pspec);
 static void  gimp_drawable_preview_set_property  (GObject         *object,
-						  guint            property_id,
-						  const GValue    *value,
-						  GParamSpec      *pspec);
+                                                  guint            property_id,
+                                                  const GValue    *value,
+                                                  GParamSpec      *pspec);
 static void  gimp_drawable_preview_destroy       (GtkObject       *object);
 
 static void  gimp_drawable_preview_style_set     (GtkWidget       *widget,
@@ -74,7 +74,7 @@ static void  gimp_drawable_preview_draw_buffer   (GimpPreview     *preview,
                                                   gint             rowstride);
 
 static void  gimp_drawable_preview_set_drawable (GimpDrawablePreview *preview,
-						 GimpDrawable        *drawable);
+                                                 GimpDrawable        *drawable);
 
 
 G_DEFINE_TYPE (GimpDrawablePreview, gimp_drawable_preview,
@@ -110,8 +110,8 @@ gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
    */
   g_object_class_install_property (object_class, PROP_DRAWABLE,
                                    g_param_spec_pointer ("drawable", NULL, NULL,
-							 GIMP_PARAM_READWRITE |
-							 G_PARAM_CONSTRUCT_ONLY));
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -125,8 +125,8 @@ gimp_drawable_preview_init (GimpDrawablePreview *preview)
 
 static GObject *
 gimp_drawable_preview_constructor (GType                  type,
-				   guint                  n_params,
-				   GObjectConstructParam *params)
+                                   guint                  n_params,
+                                   GObjectConstructParam *params)
 {
   GObject         *object;
   PreviewSettings  settings;
@@ -145,9 +145,9 @@ gimp_drawable_preview_constructor (GType                  type,
 
 static void
 gimp_drawable_preview_get_property (GObject    *object,
-				    guint       property_id,
-				    GValue     *value,
-				    GParamSpec *pspec)
+                                    guint       property_id,
+                                    GValue     *value,
+                                    GParamSpec *pspec)
 {
   GimpDrawablePreview *preview = GIMP_DRAWABLE_PREVIEW (object);
 
@@ -155,7 +155,7 @@ gimp_drawable_preview_get_property (GObject    *object,
     {
     case PROP_DRAWABLE:
       g_value_set_pointer (value,
-			   gimp_drawable_preview_get_drawable (preview));
+                           gimp_drawable_preview_get_drawable (preview));
       break;
 
     default:
@@ -166,9 +166,9 @@ gimp_drawable_preview_get_property (GObject    *object,
 
 static void
 gimp_drawable_preview_set_property (GObject      *object,
-				    guint         property_id,
-				    const GValue *value,
-				    GParamSpec   *pspec)
+                                    guint         property_id,
+                                    const GValue *value,
+                                    GParamSpec   *pspec)
 {
   GimpDrawablePreview *preview = GIMP_DRAWABLE_PREVIEW (object);
 
@@ -176,7 +176,7 @@ gimp_drawable_preview_set_property (GObject      *object,
     {
     case PROP_DRAWABLE:
       gimp_drawable_preview_set_drawable (preview,
-					  g_value_get_pointer (value));
+                                          g_value_get_pointer (value));
       break;
 
     default:
@@ -277,9 +277,9 @@ gimp_drawable_preview_draw_thumb (GimpPreview     *preview,
 
 void
 _gimp_drawable_preview_area_draw_thumb (GimpPreviewArea *area,
-					GimpDrawable    *drawable,
-					gint             width,
-					gint             height)
+                                        GimpDrawable    *drawable,
+                                        gint             width,
+                                        gint             height)
 {
   guchar *buffer;
   gint    x1, y1, x2, y2;
@@ -317,13 +317,13 @@ _gimp_drawable_preview_area_draw_thumb (GimpPreviewArea *area,
       buffer = gimp_drawable_get_sub_thumbnail_data (drawable->drawable_id,
                                                      x1, y1, x2 - x1, y2 - y1,
                                                      &nav_width, &nav_height,
-						     &bpp);
+                                                     &bpp);
     }
   else
     {
       buffer = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
                                                  &nav_width, &nav_height,
-						 &bpp);
+                                                 &bpp);
     }
 
   if (buffer)
@@ -467,10 +467,10 @@ gimp_drawable_preview_set_drawable (GimpDrawablePreview *drawable_preview,
 
 gboolean
 _gimp_drawable_preview_get_bounds (GimpDrawable *drawable,
-				   gint         *xmin,
-				   gint         *ymin,
-				   gint         *xmax,
-				   gint         *ymax)
+                                   gint         *xmin,
+                                   gint         *ymin,
+                                   gint         *xmax,
+                                   gint         *ymax)
 {
   gint     width;
   gint     height;
@@ -533,8 +533,8 @@ gimp_drawable_preview_new (GimpDrawable *drawable,
   g_return_val_if_fail (drawable != NULL, NULL);
 
   preview = g_object_new (GIMP_TYPE_DRAWABLE_PREVIEW,
-			  "drawable", drawable,
-			  NULL);
+                          "drawable", drawable,
+                          NULL);
 
   if (toggle)
     {
