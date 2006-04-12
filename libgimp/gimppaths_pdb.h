@@ -31,58 +31,58 @@ G_BEGIN_DECLS
 
 #ifndef GIMP_DISABLE_DEPRECATED
 gchar**  gimp_path_list              (gint32           image_ID,
-				      gint            *num_paths);
+                                      gint            *num_paths);
 gchar*   gimp_path_get_current       (gint32           image_ID);
 gboolean gimp_path_set_current       (gint32           image_ID,
-				      const gchar     *name);
+                                      const gchar     *name);
 gboolean gimp_path_delete            (gint32           image_ID,
-				      const gchar     *name);
+                                      const gchar     *name);
 #endif /* GIMP_DISABLE_DEPRECATED */
 gint     gimp_path_get_points        (gint32           image_ID,
-				      const gchar     *name,
-				      gint            *path_closed,
-				      gint            *num_path_point_details,
-				      gdouble        **points_pairs);
+                                      const gchar     *name,
+                                      gint            *path_closed,
+                                      gint            *num_path_point_details,
+                                      gdouble        **points_pairs);
 gboolean gimp_path_set_points        (gint32           image_ID,
-				      const gchar     *name,
-				      gint             ptype,
-				      gint             num_path_points,
-				      const gdouble   *points_pairs);
+                                      const gchar     *name,
+                                      gint             ptype,
+                                      gint             num_path_points,
+                                      const gdouble   *points_pairs);
 gboolean gimp_path_stroke_current    (gint32           image_ID);
 #ifndef GIMP_DISABLE_DEPRECATED
 gint     gimp_path_get_point_at_dist (gint32           image_ID,
-				      gdouble          distance,
-				      gint            *y_point,
-				      gdouble         *slope);
+                                      gdouble          distance,
+                                      gint            *y_point,
+                                      gdouble         *slope);
 gint     gimp_path_get_tattoo        (gint32           image_ID,
-				      const gchar     *name);
+                                      const gchar     *name);
 gboolean gimp_path_set_tattoo        (gint32           image_ID,
-				      const gchar     *name,
-				      gint             tattovalue);
+                                      const gchar     *name,
+                                      gint             tattovalue);
 gchar*   gimp_get_path_by_tattoo     (gint32           image_ID,
-				      gint             tattoo);
+                                      gint             tattoo);
 gboolean gimp_path_get_locked        (gint32           image_ID,
-				      const gchar     *name);
+                                      const gchar     *name);
 gboolean gimp_path_set_locked        (gint32           image_ID,
-				      const gchar     *name,
-				      gboolean         locked);
+                                      const gchar     *name,
+                                      gboolean         locked);
 #endif /* GIMP_DISABLE_DEPRECATED */
 gboolean gimp_path_to_selection      (gint32           image_ID,
-				      const gchar     *name,
-				      GimpChannelOps   op,
-				      gboolean         antialias,
-				      gboolean         feather,
-				      gdouble          feather_radius_x,
-				      gdouble          feather_radius_y);
+                                      const gchar     *name,
+                                      GimpChannelOps   op,
+                                      gboolean         antialias,
+                                      gboolean         feather,
+                                      gdouble          feather_radius_x,
+                                      gdouble          feather_radius_y);
 gboolean gimp_path_import            (gint32           image_ID,
-				      const gchar     *filename,
-				      gboolean         merge,
-				      gboolean         scale);
+                                      const gchar     *filename,
+                                      gboolean         merge,
+                                      gboolean         scale);
 gboolean gimp_path_import_string     (gint32           image_ID,
-				      const gchar     *string,
-				      gint             length,
-				      gboolean         merge,
-				      gboolean         scale);
+                                      const gchar     *string,
+                                      gint             length,
+                                      gboolean         merge,
+                                      gboolean         scale);
 
 
 G_END_DECLS

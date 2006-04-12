@@ -48,9 +48,9 @@ gimp_edit_cut (gint32 drawable_ID)
   gboolean non_empty = FALSE;
 
   return_vals = gimp_run_procedure ("gimp-edit-cut",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     non_empty = return_vals[1].data.d_int32;
@@ -83,9 +83,9 @@ gimp_edit_copy (gint32 drawable_ID)
   gboolean non_empty = FALSE;
 
   return_vals = gimp_run_procedure ("gimp-edit-copy",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     non_empty = return_vals[1].data.d_int32;
@@ -120,9 +120,9 @@ gimp_edit_copy_visible (gint32 image_ID)
   gboolean non_empty = FALSE;
 
   return_vals = gimp_run_procedure ("gimp-edit-copy-visible",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     non_empty = return_vals[1].data.d_int32;
@@ -159,17 +159,17 @@ gimp_edit_copy_visible (gint32 image_ID)
  */
 gint32
 gimp_edit_paste (gint32   drawable_ID,
-		 gboolean paste_into)
+                 gboolean paste_into)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 floating_sel_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-edit-paste",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_INT32, paste_into,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_INT32, paste_into,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     floating_sel_ID = return_vals[1].data.d_layer;
@@ -201,8 +201,8 @@ gimp_edit_paste_as_new (void)
   gint32 image_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-edit-paste-as-new",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     image_ID = return_vals[1].data.d_image;
@@ -229,17 +229,17 @@ gimp_edit_paste_as_new (void)
  */
 gchar *
 gimp_edit_named_cut (gint32       drawable_ID,
-		     const gchar *buffer_name)
+                     const gchar *buffer_name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gchar *real_name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-edit-named-cut",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_STRING, buffer_name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_STRING, buffer_name,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     real_name = g_strdup (return_vals[1].data.d_string);
@@ -267,17 +267,17 @@ gimp_edit_named_cut (gint32       drawable_ID,
  */
 gchar *
 gimp_edit_named_copy (gint32       drawable_ID,
-		      const gchar *buffer_name)
+                      const gchar *buffer_name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gchar *real_name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-edit-named-copy",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_STRING, buffer_name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_STRING, buffer_name,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     real_name = g_strdup (return_vals[1].data.d_string);
@@ -305,17 +305,17 @@ gimp_edit_named_copy (gint32       drawable_ID,
  */
 gchar *
 gimp_edit_named_copy_visible (gint32       image_ID,
-			      const gchar *buffer_name)
+                              const gchar *buffer_name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gchar *real_name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-edit-named-copy-visible",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_STRING, buffer_name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, buffer_name,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     real_name = g_strdup (return_vals[1].data.d_string);
@@ -342,19 +342,19 @@ gimp_edit_named_copy_visible (gint32       image_ID,
  */
 gint32
 gimp_edit_named_paste (gint32       drawable_ID,
-		       const gchar *buffer_name,
-		       gboolean     paste_into)
+                       const gchar *buffer_name,
+                       gboolean     paste_into)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 floating_sel_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-edit-named-paste",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_STRING, buffer_name,
-				    GIMP_PDB_INT32, paste_into,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_STRING, buffer_name,
+                                    GIMP_PDB_INT32, paste_into,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     floating_sel_ID = return_vals[1].data.d_layer;
@@ -385,9 +385,9 @@ gimp_edit_named_paste_as_new (const gchar *buffer_name)
   gint32 image_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-edit-named-paste-as-new",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, buffer_name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, buffer_name,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     image_ID = return_vals[1].data.d_image;
@@ -419,9 +419,9 @@ gimp_edit_clear (gint32 drawable_ID)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-edit-clear",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -449,17 +449,17 @@ gimp_edit_clear (gint32 drawable_ID)
  */
 gboolean
 gimp_edit_fill (gint32       drawable_ID,
-		GimpFillType fill_type)
+                GimpFillType fill_type)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-edit-fill",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_INT32, fill_type,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_INT32, fill_type,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -499,29 +499,29 @@ gimp_edit_fill (gint32       drawable_ID,
  */
 gboolean
 gimp_edit_bucket_fill (gint32               drawable_ID,
-		       GimpBucketFillMode   fill_mode,
-		       GimpLayerModeEffects paint_mode,
-		       gdouble              opacity,
-		       gdouble              threshold,
-		       gboolean             sample_merged,
-		       gdouble              x,
-		       gdouble              y)
+                       GimpBucketFillMode   fill_mode,
+                       GimpLayerModeEffects paint_mode,
+                       gdouble              opacity,
+                       gdouble              threshold,
+                       gboolean             sample_merged,
+                       gdouble              x,
+                       gdouble              y)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-edit-bucket-fill",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_INT32, fill_mode,
-				    GIMP_PDB_INT32, paint_mode,
-				    GIMP_PDB_FLOAT, opacity,
-				    GIMP_PDB_FLOAT, threshold,
-				    GIMP_PDB_INT32, sample_merged,
-				    GIMP_PDB_FLOAT, x,
-				    GIMP_PDB_FLOAT, y,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_INT32, fill_mode,
+                                    GIMP_PDB_INT32, paint_mode,
+                                    GIMP_PDB_FLOAT, opacity,
+                                    GIMP_PDB_FLOAT, threshold,
+                                    GIMP_PDB_INT32, sample_merged,
+                                    GIMP_PDB_FLOAT, x,
+                                    GIMP_PDB_FLOAT, y,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -561,45 +561,45 @@ gimp_edit_bucket_fill (gint32               drawable_ID,
  */
 gboolean
 gimp_edit_blend (gint32               drawable_ID,
-		 GimpBlendMode        blend_mode,
-		 GimpLayerModeEffects paint_mode,
-		 GimpGradientType     gradient_type,
-		 gdouble              opacity,
-		 gdouble              offset,
-		 GimpRepeatMode       repeat,
-		 gboolean             reverse,
-		 gboolean             supersample,
-		 gint                 max_depth,
-		 gdouble              threshold,
-		 gboolean             dither,
-		 gdouble              x1,
-		 gdouble              y1,
-		 gdouble              x2,
-		 gdouble              y2)
+                 GimpBlendMode        blend_mode,
+                 GimpLayerModeEffects paint_mode,
+                 GimpGradientType     gradient_type,
+                 gdouble              opacity,
+                 gdouble              offset,
+                 GimpRepeatMode       repeat,
+                 gboolean             reverse,
+                 gboolean             supersample,
+                 gint                 max_depth,
+                 gdouble              threshold,
+                 gboolean             dither,
+                 gdouble              x1,
+                 gdouble              y1,
+                 gdouble              x2,
+                 gdouble              y2)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-edit-blend",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_INT32, blend_mode,
-				    GIMP_PDB_INT32, paint_mode,
-				    GIMP_PDB_INT32, gradient_type,
-				    GIMP_PDB_FLOAT, opacity,
-				    GIMP_PDB_FLOAT, offset,
-				    GIMP_PDB_INT32, repeat,
-				    GIMP_PDB_INT32, reverse,
-				    GIMP_PDB_INT32, supersample,
-				    GIMP_PDB_INT32, max_depth,
-				    GIMP_PDB_FLOAT, threshold,
-				    GIMP_PDB_INT32, dither,
-				    GIMP_PDB_FLOAT, x1,
-				    GIMP_PDB_FLOAT, y1,
-				    GIMP_PDB_FLOAT, x2,
-				    GIMP_PDB_FLOAT, y2,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_INT32, blend_mode,
+                                    GIMP_PDB_INT32, paint_mode,
+                                    GIMP_PDB_INT32, gradient_type,
+                                    GIMP_PDB_FLOAT, opacity,
+                                    GIMP_PDB_FLOAT, offset,
+                                    GIMP_PDB_INT32, repeat,
+                                    GIMP_PDB_INT32, reverse,
+                                    GIMP_PDB_INT32, supersample,
+                                    GIMP_PDB_INT32, max_depth,
+                                    GIMP_PDB_FLOAT, threshold,
+                                    GIMP_PDB_INT32, dither,
+                                    GIMP_PDB_FLOAT, x1,
+                                    GIMP_PDB_FLOAT, y1,
+                                    GIMP_PDB_FLOAT, x2,
+                                    GIMP_PDB_FLOAT, y2,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -629,9 +629,9 @@ gimp_edit_stroke (gint32 drawable_ID)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-edit-stroke",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 

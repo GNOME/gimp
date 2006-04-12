@@ -42,25 +42,25 @@
  */
 gboolean
 gimp_brushes_popup (const gchar          *brush_callback,
-		    const gchar          *popup_title,
-		    const gchar          *initial_brush,
-		    gdouble               opacity,
-		    gint                  spacing,
-		    GimpLayerModeEffects  paint_mode)
+                    const gchar          *popup_title,
+                    const gchar          *initial_brush,
+                    gdouble               opacity,
+                    gint                  spacing,
+                    GimpLayerModeEffects  paint_mode)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-brushes-popup",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, brush_callback,
-				    GIMP_PDB_STRING, popup_title,
-				    GIMP_PDB_STRING, initial_brush,
-				    GIMP_PDB_FLOAT, opacity,
-				    GIMP_PDB_INT32, spacing,
-				    GIMP_PDB_INT32, paint_mode,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, brush_callback,
+                                    GIMP_PDB_STRING, popup_title,
+                                    GIMP_PDB_STRING, initial_brush,
+                                    GIMP_PDB_FLOAT, opacity,
+                                    GIMP_PDB_INT32, spacing,
+                                    GIMP_PDB_INT32, paint_mode,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -87,9 +87,9 @@ gimp_brushes_close_popup (const gchar *brush_callback)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-brushes-close-popup",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, brush_callback,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, brush_callback,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -114,23 +114,23 @@ gimp_brushes_close_popup (const gchar *brush_callback)
  */
 gboolean
 gimp_brushes_set_popup (const gchar          *brush_callback,
-			const gchar          *brush_name,
-			gdouble               opacity,
-			gint                  spacing,
-			GimpLayerModeEffects  paint_mode)
+                        const gchar          *brush_name,
+                        gdouble               opacity,
+                        gint                  spacing,
+                        GimpLayerModeEffects  paint_mode)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-brushes-set-popup",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, brush_callback,
-				    GIMP_PDB_STRING, brush_name,
-				    GIMP_PDB_FLOAT, opacity,
-				    GIMP_PDB_INT32, spacing,
-				    GIMP_PDB_INT32, paint_mode,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, brush_callback,
+                                    GIMP_PDB_STRING, brush_name,
+                                    GIMP_PDB_FLOAT, opacity,
+                                    GIMP_PDB_INT32, spacing,
+                                    GIMP_PDB_INT32, paint_mode,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 

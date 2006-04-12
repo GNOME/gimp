@@ -32,15 +32,15 @@ G_BEGIN_DECLS
 gint     _gimp_unit_get_number_of_units          (void) G_GNUC_INTERNAL;
 gint     _gimp_unit_get_number_of_built_in_units (void) G_GNUC_INTERNAL;
 GimpUnit _gimp_unit_new                          (const gchar *identifier,
-						  gdouble      factor,
-						  gint         digits,
-						  const gchar *symbol,
-						  const gchar *abbreviation,
-						  const gchar *singular,
-						  const gchar *plural) G_GNUC_INTERNAL;
+                                                  gdouble      factor,
+                                                  gint         digits,
+                                                  const gchar *symbol,
+                                                  const gchar *abbreviation,
+                                                  const gchar *singular,
+                                                  const gchar *plural) G_GNUC_INTERNAL;
 gboolean _gimp_unit_get_deletion_flag            (GimpUnit     unit_id) G_GNUC_INTERNAL;
 gboolean _gimp_unit_set_deletion_flag            (GimpUnit     unit_id,
-						  gboolean     deletion_flag) G_GNUC_INTERNAL;
+                                                  gboolean     deletion_flag) G_GNUC_INTERNAL;
 gchar*   _gimp_unit_get_identifier               (GimpUnit     unit_id) G_GNUC_INTERNAL;
 gdouble  _gimp_unit_get_factor                   (GimpUnit     unit_id) G_GNUC_INTERNAL;
 gint     _gimp_unit_get_digits                   (GimpUnit     unit_id) G_GNUC_INTERNAL;

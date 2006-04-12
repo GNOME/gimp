@@ -38,7 +38,7 @@
  */
 gchar **
 gimp_path_list (gint32  image_ID,
-		gint   *num_paths)
+                gint   *num_paths)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -46,9 +46,9 @@ gimp_path_list (gint32  image_ID,
   gint i;
 
   return_vals = gimp_run_procedure ("gimp-path-list",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
 
   *num_paths = 0;
 
@@ -82,9 +82,9 @@ gimp_path_get_current (gint32 image_ID)
   gchar *name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-path-get-current",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     name = g_strdup (return_vals[1].data.d_string);
@@ -106,17 +106,17 @@ gimp_path_get_current (gint32 image_ID)
  */
 gboolean
 gimp_path_set_current (gint32       image_ID,
-		       const gchar *name)
+                       const gchar *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-path-set-current",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -137,17 +137,17 @@ gimp_path_set_current (gint32       image_ID,
  */
 gboolean
 gimp_path_delete (gint32       image_ID,
-		  const gchar *name)
+                  const gchar *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-path-delete",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -172,20 +172,20 @@ gimp_path_delete (gint32       image_ID,
  */
 gint
 gimp_path_get_points (gint32        image_ID,
-		      const gchar  *name,
-		      gint         *path_closed,
-		      gint         *num_path_point_details,
-		      gdouble     **points_pairs)
+                      const gchar  *name,
+                      gint         *path_closed,
+                      gint         *num_path_point_details,
+                      gdouble     **points_pairs)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint path_type = 0;
 
   return_vals = gimp_run_procedure ("gimp-path-get-points",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
 
   *num_path_point_details = 0;
 
@@ -220,23 +220,23 @@ gimp_path_get_points (gint32        image_ID,
  */
 gboolean
 gimp_path_set_points (gint32         image_ID,
-		      const gchar   *name,
-		      gint           ptype,
-		      gint           num_path_points,
-		      const gdouble *points_pairs)
+                      const gchar   *name,
+                      gint           ptype,
+                      gint           num_path_points,
+                      const gdouble *points_pairs)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-path-set-points",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_INT32, ptype,
-				    GIMP_PDB_INT32, num_path_points,
-				    GIMP_PDB_FLOATARRAY, points_pairs,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_INT32, ptype,
+                                    GIMP_PDB_INT32, num_path_points,
+                                    GIMP_PDB_FLOATARRAY, points_pairs,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -263,9 +263,9 @@ gimp_path_stroke_current (gint32 image_ID)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-path-stroke-current",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -288,19 +288,19 @@ gimp_path_stroke_current (gint32 image_ID)
  */
 gint
 gimp_path_get_point_at_dist (gint32   image_ID,
-			     gdouble  distance,
-			     gint    *y_point,
-			     gdouble *slope)
+                             gdouble  distance,
+                             gint    *y_point,
+                             gdouble *slope)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint x_point = 0;
 
   return_vals = gimp_run_procedure ("gimp-path-get-point-at-dist",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_FLOAT, distance,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_FLOAT, distance,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
@@ -325,17 +325,17 @@ gimp_path_get_point_at_dist (gint32   image_ID,
  */
 gint
 gimp_path_get_tattoo (gint32       image_ID,
-		      const gchar *name)
+                      const gchar *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint tattoo = 0;
 
   return_vals = gimp_run_procedure ("gimp-path-get-tattoo",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     tattoo = return_vals[1].data.d_int32;
@@ -357,19 +357,19 @@ gimp_path_get_tattoo (gint32       image_ID,
  */
 gboolean
 gimp_path_set_tattoo (gint32       image_ID,
-		      const gchar *name,
-		      gint         tattovalue)
+                      const gchar *name,
+                      gint         tattovalue)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-path-set-tattoo",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_INT32, tattovalue,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_INT32, tattovalue,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -390,17 +390,17 @@ gimp_path_set_tattoo (gint32       image_ID,
  */
 gchar *
 gimp_get_path_by_tattoo (gint32 image_ID,
-			 gint   tattoo)
+                         gint   tattoo)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gchar *name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-get-path-by-tattoo",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_INT32, tattoo,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_INT32, tattoo,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     name = g_strdup (return_vals[1].data.d_string);
@@ -421,17 +421,17 @@ gimp_get_path_by_tattoo (gint32 image_ID,
  */
 gboolean
 gimp_path_get_locked (gint32       image_ID,
-		      const gchar *name)
+                      const gchar *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean locked = FALSE;
 
   return_vals = gimp_run_procedure ("gimp-path-get-locked",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     locked = return_vals[1].data.d_int32;
@@ -453,19 +453,19 @@ gimp_path_get_locked (gint32       image_ID,
  */
 gboolean
 gimp_path_set_locked (gint32       image_ID,
-		      const gchar *name,
-		      gboolean     locked)
+                      const gchar *name,
+                      gboolean     locked)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-path-set-locked",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_INT32, locked,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_INT32, locked,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -492,27 +492,27 @@ gimp_path_set_locked (gint32       image_ID,
  */
 gboolean
 gimp_path_to_selection (gint32          image_ID,
-			const gchar    *name,
-			GimpChannelOps  op,
-			gboolean        antialias,
-			gboolean        feather,
-			gdouble         feather_radius_x,
-			gdouble         feather_radius_y)
+                        const gchar    *name,
+                        GimpChannelOps  op,
+                        gboolean        antialias,
+                        gboolean        feather,
+                        gdouble         feather_radius_x,
+                        gdouble         feather_radius_y)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-path-to-selection",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_INT32, op,
-				    GIMP_PDB_INT32, antialias,
-				    GIMP_PDB_INT32, feather,
-				    GIMP_PDB_FLOAT, feather_radius_x,
-				    GIMP_PDB_FLOAT, feather_radius_y,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_INT32, op,
+                                    GIMP_PDB_INT32, antialias,
+                                    GIMP_PDB_INT32, feather,
+                                    GIMP_PDB_FLOAT, feather_radius_x,
+                                    GIMP_PDB_FLOAT, feather_radius_y,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -537,21 +537,21 @@ gimp_path_to_selection (gint32          image_ID,
  */
 gboolean
 gimp_path_import (gint32       image_ID,
-		  const gchar *filename,
-		  gboolean     merge,
-		  gboolean     scale)
+                  const gchar *filename,
+                  gboolean     merge,
+                  gboolean     scale)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-path-import",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_STRING, filename,
-				    GIMP_PDB_INT32, merge,
-				    GIMP_PDB_INT32, scale,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, filename,
+                                    GIMP_PDB_INT32, merge,
+                                    GIMP_PDB_INT32, scale,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -580,23 +580,23 @@ gimp_path_import (gint32       image_ID,
  */
 gboolean
 gimp_path_import_string (gint32       image_ID,
-			 const gchar *string,
-			 gint         length,
-			 gboolean     merge,
-			 gboolean     scale)
+                         const gchar *string,
+                         gint         length,
+                         gboolean     merge,
+                         gboolean     scale)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-path-import-string",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_STRING, string,
-				    GIMP_PDB_INT32, length,
-				    GIMP_PDB_INT32, merge,
-				    GIMP_PDB_INT32, scale,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, string,
+                                    GIMP_PDB_INT32, length,
+                                    GIMP_PDB_INT32, merge,
+                                    GIMP_PDB_INT32, scale,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 

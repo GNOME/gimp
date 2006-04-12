@@ -43,81 +43,81 @@ gint          gimp_drawable_bpp                (gint32                      draw
 gint          gimp_drawable_width              (gint32                      drawable_ID);
 gint          gimp_drawable_height             (gint32                      drawable_ID);
 gboolean      gimp_drawable_offsets            (gint32                      drawable_ID,
-						gint                       *offset_x,
-						gint                       *offset_y);
+                                                gint                       *offset_x,
+                                                gint                       *offset_y);
 gint32        gimp_drawable_get_image          (gint32                      drawable_ID);
 #ifndef GIMP_DISABLE_DEPRECATED
 gboolean      gimp_drawable_set_image          (gint32                      drawable_ID,
-						gint32                      image_ID);
+                                                gint32                      image_ID);
 #endif /* GIMP_DISABLE_DEPRECATED */
 gchar*        gimp_drawable_get_name           (gint32                      drawable_ID);
 gboolean      gimp_drawable_set_name           (gint32                      drawable_ID,
-						const gchar                *name);
+                                                const gchar                *name);
 gboolean      gimp_drawable_get_visible        (gint32                      drawable_ID);
 gboolean      gimp_drawable_set_visible        (gint32                      drawable_ID,
-						gboolean                    visible);
+                                                gboolean                    visible);
 gboolean      gimp_drawable_get_linked         (gint32                      drawable_ID);
 gboolean      gimp_drawable_set_linked         (gint32                      drawable_ID,
-						gboolean                    linked);
+                                                gboolean                    linked);
 gint          gimp_drawable_get_tattoo         (gint32                      drawable_ID);
 gboolean      gimp_drawable_set_tattoo         (gint32                      drawable_ID,
-						gint                        tattoo);
+                                                gint                        tattoo);
 gboolean      gimp_drawable_mask_bounds        (gint32                      drawable_ID,
-						gint                       *x1,
-						gint                       *y1,
-						gint                       *x2,
-						gint                       *y2);
+                                                gint                       *x1,
+                                                gint                       *y1,
+                                                gint                       *x2,
+                                                gint                       *y2);
 gboolean      gimp_drawable_mask_intersect     (gint32                      drawable_ID,
-						gint                       *x,
-						gint                       *y,
-						gint                       *width,
-						gint                       *height);
+                                                gint                       *x,
+                                                gint                       *y,
+                                                gint                       *width,
+                                                gint                       *height);
 gboolean      gimp_drawable_merge_shadow       (gint32                      drawable_ID,
-						gboolean                    undo);
+                                                gboolean                    undo);
 gboolean      gimp_drawable_update             (gint32                      drawable_ID,
-						gint                        x,
-						gint                        y,
-						gint                        width,
-						gint                        height);
+                                                gint                        x,
+                                                gint                        y,
+                                                gint                        width,
+                                                gint                        height);
 guint8*       gimp_drawable_get_pixel          (gint32                      drawable_ID,
-						gint                        x_coord,
-						gint                        y_coord,
-						gint                       *num_channels);
+                                                gint                        x_coord,
+                                                gint                        y_coord,
+                                                gint                       *num_channels);
 gboolean      gimp_drawable_set_pixel          (gint32                      drawable_ID,
-						gint                        x_coord,
-						gint                        y_coord,
-						gint                        num_channels,
-						const guint8               *pixel);
+                                                gint                        x_coord,
+                                                gint                        y_coord,
+                                                gint                        num_channels,
+                                                const guint8               *pixel);
 gboolean      gimp_drawable_fill               (gint32                      drawable_ID,
-						GimpFillType                fill_type);
+                                                GimpFillType                fill_type);
 gboolean      gimp_drawable_offset             (gint32                      drawable_ID,
-						gboolean                    wrap_around,
-						GimpOffsetType              fill_type,
-						gint                        offset_x,
-						gint                        offset_y);
+                                                gboolean                    wrap_around,
+                                                GimpOffsetType              fill_type,
+                                                gint                        offset_x,
+                                                gint                        offset_y);
 gboolean      _gimp_drawable_thumbnail         (gint32                      drawable_ID,
-						gint                        width,
-						gint                        height,
-						gint                       *actual_width,
-						gint                       *actual_height,
-						gint                       *bpp,
-						gint                       *thumbnail_data_count,
-						guint8                    **thumbnail_data) G_GNUC_INTERNAL;
+                                                gint                        width,
+                                                gint                        height,
+                                                gint                       *actual_width,
+                                                gint                       *actual_height,
+                                                gint                       *bpp,
+                                                gint                       *thumbnail_data_count,
+                                                guint8                    **thumbnail_data) G_GNUC_INTERNAL;
 gboolean      _gimp_drawable_sub_thumbnail     (gint32                      drawable_ID,
-						gint                        src_x,
-						gint                        src_y,
-						gint                        src_width,
-						gint                        src_height,
-						gint                        dest_width,
-						gint                        dest_height,
-						gint                       *width,
-						gint                       *height,
-						gint                       *bpp,
-						gint                       *thumbnail_data_count,
-						guint8                    **thumbnail_data) G_GNUC_INTERNAL;
+                                                gint                        src_x,
+                                                gint                        src_y,
+                                                gint                        src_width,
+                                                gint                        src_height,
+                                                gint                        dest_width,
+                                                gint                        dest_height,
+                                                gint                       *width,
+                                                gint                       *height,
+                                                gint                       *bpp,
+                                                gint                       *thumbnail_data_count,
+                                                guint8                    **thumbnail_data) G_GNUC_INTERNAL;
 gboolean      gimp_drawable_foreground_extract (gint32                      drawable_ID,
-						GimpForegroundExtractMode   mode,
-						gint32                      mask_ID);
+                                                GimpForegroundExtractMode   mode,
+                                                gint32                      mask_ID);
 
 
 G_END_DECLS

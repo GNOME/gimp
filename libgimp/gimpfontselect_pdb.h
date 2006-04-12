@@ -30,11 +30,11 @@ G_BEGIN_DECLS
 
 
 gboolean gimp_fonts_popup       (const gchar *font_callback,
-				 const gchar *popup_title,
-				 const gchar *initial_font);
+                                 const gchar *popup_title,
+                                 const gchar *initial_font);
 gboolean gimp_fonts_close_popup (const gchar *font_callback);
 gboolean gimp_fonts_set_popup   (const gchar *font_callback,
-				 const gchar *font_name);
+                                 const gchar *font_name);
 
 
 G_END_DECLS

@@ -32,32 +32,32 @@ G_BEGIN_DECLS
 gchar*   gimp_palette_new             (const gchar    *name);
 gchar*   gimp_palette_duplicate       (const gchar    *name);
 gchar*   gimp_palette_rename          (const gchar    *name,
-				       const gchar    *new_name);
+                                       const gchar    *new_name);
 gboolean gimp_palette_delete          (const gchar    *name);
 gboolean gimp_palette_is_editable     (const gchar    *name);
 gboolean gimp_palette_get_info        (const gchar    *name,
-				       gint           *num_colors);
+                                       gint           *num_colors);
 gint     gimp_palette_get_columns     (const gchar    *name);
 gboolean gimp_palette_set_columns     (const gchar    *name,
-				       gint            columns);
+                                       gint            columns);
 gboolean gimp_palette_add_entry       (const gchar    *name,
-				       const gchar    *entry_name,
-				       const GimpRGB  *color,
-				       gint           *entry_num);
+                                       const gchar    *entry_name,
+                                       const GimpRGB  *color,
+                                       gint           *entry_num);
 gboolean gimp_palette_delete_entry    (const gchar    *name,
-				       gint            entry_num);
+                                       gint            entry_num);
 gboolean gimp_palette_entry_get_color (const gchar    *name,
-				       gint            entry_num,
-				       GimpRGB        *color);
+                                       gint            entry_num,
+                                       GimpRGB        *color);
 gboolean gimp_palette_entry_set_color (const gchar    *name,
-				       gint            entry_num,
-				       const GimpRGB  *color);
+                                       gint            entry_num,
+                                       const GimpRGB  *color);
 gboolean gimp_palette_entry_get_name  (const gchar    *name,
-				       gint            entry_num,
-				       gchar         **entry_name);
+                                       gint            entry_num,
+                                       gchar         **entry_name);
 gboolean gimp_palette_entry_set_name  (const gchar    *name,
-				       gint            entry_num,
-				       const gchar    *entry_name);
+                                       gint            entry_num,
+                                       const gchar    *entry_name);
 
 
 G_END_DECLS

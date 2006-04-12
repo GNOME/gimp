@@ -30,31 +30,31 @@ G_BEGIN_DECLS
 
 
 gint32   gimp_file_load                   (GimpRunMode  run_mode,
-					   const gchar *filename,
-					   const gchar *raw_filename);
+                                           const gchar *filename,
+                                           const gchar *raw_filename);
 gint32   gimp_file_load_layer             (GimpRunMode  run_mode,
-					   gint32       image_ID,
-					   const gchar *filename);
+                                           gint32       image_ID,
+                                           const gchar *filename);
 gboolean gimp_file_save                   (GimpRunMode  run_mode,
-					   gint32       image_ID,
-					   gint32       drawable_ID,
-					   const gchar *filename,
-					   const gchar *raw_filename);
+                                           gint32       image_ID,
+                                           gint32       drawable_ID,
+                                           const gchar *filename,
+                                           const gchar *raw_filename);
 gchar*   gimp_temp_name                   (const gchar *extension);
 gboolean gimp_register_magic_load_handler (const gchar *procedure_name,
-					   const gchar *extensions,
-					   const gchar *prefixes,
-					   const gchar *magics);
+                                           const gchar *extensions,
+                                           const gchar *prefixes,
+                                           const gchar *magics);
 gboolean gimp_register_load_handler       (const gchar *procedure_name,
-					   const gchar *extensions,
-					   const gchar *prefixes);
+                                           const gchar *extensions,
+                                           const gchar *prefixes);
 gboolean gimp_register_save_handler       (const gchar *procedure_name,
-					   const gchar *extensions,
-					   const gchar *prefixes);
+                                           const gchar *extensions,
+                                           const gchar *prefixes);
 gboolean gimp_register_file_handler_mime  (const gchar *procedure_name,
-					   const gchar *mime_type);
+                                           const gchar *mime_type);
 gboolean gimp_register_thumbnail_loader   (const gchar *load_proc,
-					   const gchar *thumb_proc);
+                                           const gchar *thumb_proc);
 
 
 G_END_DECLS

@@ -46,8 +46,8 @@ gimp_context_push (void)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-context-push",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -78,8 +78,8 @@ gimp_context_pop (void)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-context-pop",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -108,8 +108,8 @@ gimp_context_get_paint_method (void)
   gchar *name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-context-get-paint-method",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     name = g_strdup (return_vals[1].data.d_string);
@@ -144,9 +144,9 @@ gimp_context_set_paint_method (const gchar *name)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-context-set-paint-method",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -177,8 +177,8 @@ gimp_context_get_foreground (GimpRGB *foreground)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-context-get-foreground",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -212,9 +212,9 @@ gimp_context_set_foreground (const GimpRGB *foreground)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-context-set-foreground",
-				    &nreturn_vals,
-				    GIMP_PDB_COLOR, foreground,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_COLOR, foreground,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -245,8 +245,8 @@ gimp_context_get_background (GimpRGB *background)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-context-get-background",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -281,9 +281,9 @@ gimp_context_set_background (const GimpRGB *background)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-context-set-background",
-				    &nreturn_vals,
-				    GIMP_PDB_COLOR, background,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_COLOR, background,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -313,8 +313,8 @@ gimp_context_set_default_colors (void)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-context-set-default-colors",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -344,8 +344,8 @@ gimp_context_swap_colors (void)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-context-swap-colors",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -374,8 +374,8 @@ gimp_context_get_opacity (void)
   gdouble opacity = 0.0;
 
   return_vals = gimp_run_procedure ("gimp-context-get-opacity",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     opacity = return_vals[1].data.d_float;
@@ -406,9 +406,9 @@ gimp_context_set_opacity (gdouble opacity)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-context-set-opacity",
-				    &nreturn_vals,
-				    GIMP_PDB_FLOAT, opacity,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, opacity,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -438,8 +438,8 @@ gimp_context_get_paint_mode (void)
   GimpLayerModeEffects paint_mode = 0;
 
   return_vals = gimp_run_procedure ("gimp-context-get-paint-mode",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     paint_mode = return_vals[1].data.d_int32;
@@ -469,9 +469,9 @@ gimp_context_set_paint_mode (GimpLayerModeEffects paint_mode)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-context-set-paint-mode",
-				    &nreturn_vals,
-				    GIMP_PDB_INT32, paint_mode,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, paint_mode,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -501,8 +501,8 @@ gimp_context_get_brush (void)
   gchar *name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-context-get-brush",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     name = g_strdup (return_vals[1].data.d_string);
@@ -536,9 +536,9 @@ gimp_context_set_brush (const gchar *name)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-context-set-brush",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -568,8 +568,8 @@ gimp_context_get_pattern (void)
   gchar *name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-context-get-pattern",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     name = g_strdup (return_vals[1].data.d_string);
@@ -604,9 +604,9 @@ gimp_context_set_pattern (const gchar *name)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-context-set-pattern",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -634,8 +634,8 @@ gimp_context_get_gradient (void)
   gchar *name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-context-get-gradient",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     name = g_strdup (return_vals[1].data.d_string);
@@ -670,9 +670,9 @@ gimp_context_set_gradient (const gchar *name)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-context-set-gradient",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -700,8 +700,8 @@ gimp_context_get_palette (void)
   gchar *name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-context-get-palette",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     name = g_strdup (return_vals[1].data.d_string);
@@ -736,9 +736,9 @@ gimp_context_set_palette (const gchar *name)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-context-set-palette",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -766,8 +766,8 @@ gimp_context_get_font (void)
   gchar *name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-context-get-font",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     name = g_strdup (return_vals[1].data.d_string);
@@ -801,9 +801,9 @@ gimp_context_set_font (const gchar *name)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-context-set-font",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 

@@ -43,8 +43,8 @@ gimp_fonts_refresh (void)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-fonts-refresh",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -67,7 +67,7 @@ gimp_fonts_refresh (void)
  */
 gchar **
 gimp_fonts_get_list (const gchar *filter,
-		     gint        *num_fonts)
+                     gint        *num_fonts)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -75,9 +75,9 @@ gimp_fonts_get_list (const gchar *filter,
   gint i;
 
   return_vals = gimp_run_procedure ("gimp-fonts-get-list",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, filter,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, filter,
+                                    GIMP_PDB_END);
 
   *num_fonts = 0;
 

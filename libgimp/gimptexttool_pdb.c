@@ -56,33 +56,33 @@
  */
 gint32
 gimp_text_fontname (gint32        image_ID,
-		    gint32        drawable_ID,
-		    gdouble       x,
-		    gdouble       y,
-		    const gchar  *text,
-		    gint          border,
-		    gboolean      antialias,
-		    gdouble       size,
-		    GimpSizeType  size_type,
-		    const gchar  *fontname)
+                    gint32        drawable_ID,
+                    gdouble       x,
+                    gdouble       y,
+                    const gchar  *text,
+                    gint          border,
+                    gboolean      antialias,
+                    gdouble       size,
+                    GimpSizeType  size_type,
+                    const gchar  *fontname)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 text_layer_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-text-fontname",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_FLOAT, x,
-				    GIMP_PDB_FLOAT, y,
-				    GIMP_PDB_STRING, text,
-				    GIMP_PDB_INT32, border,
-				    GIMP_PDB_INT32, antialias,
-				    GIMP_PDB_FLOAT, size,
-				    GIMP_PDB_INT32, size_type,
-				    GIMP_PDB_STRING, fontname,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_FLOAT, x,
+                                    GIMP_PDB_FLOAT, y,
+                                    GIMP_PDB_STRING, text,
+                                    GIMP_PDB_INT32, border,
+                                    GIMP_PDB_INT32, antialias,
+                                    GIMP_PDB_FLOAT, size,
+                                    GIMP_PDB_INT32, size_type,
+                                    GIMP_PDB_STRING, fontname,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     text_layer_ID = return_vals[1].data.d_layer;
@@ -113,25 +113,25 @@ gimp_text_fontname (gint32        image_ID,
  */
 gboolean
 gimp_text_get_extents_fontname (const gchar  *text,
-				gdouble       size,
-				GimpSizeType  size_type,
-				const gchar  *fontname,
-				gint         *width,
-				gint         *height,
-				gint         *ascent,
-				gint         *descent)
+                                gdouble       size,
+                                GimpSizeType  size_type,
+                                const gchar  *fontname,
+                                gint         *width,
+                                gint         *height,
+                                gint         *ascent,
+                                gint         *descent)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-text-get-extents-fontname",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, text,
-				    GIMP_PDB_FLOAT, size,
-				    GIMP_PDB_INT32, size_type,
-				    GIMP_PDB_STRING, fontname,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, text,
+                                    GIMP_PDB_FLOAT, size,
+                                    GIMP_PDB_INT32, size_type,
+                                    GIMP_PDB_STRING, fontname,
+                                    GIMP_PDB_END);
 
   *width = 0;
   *height = 0;
@@ -179,47 +179,47 @@ gimp_text_get_extents_fontname (const gchar  *text,
  */
 gint32
 gimp_text (gint32        image_ID,
-	   gint32        drawable_ID,
-	   gdouble       x,
-	   gdouble       y,
-	   const gchar  *text,
-	   gint          border,
-	   gboolean      antialias,
-	   gdouble       size,
-	   GimpSizeType  size_type,
-	   const gchar  *foundry,
-	   const gchar  *family,
-	   const gchar  *weight,
-	   const gchar  *slant,
-	   const gchar  *set_width,
-	   const gchar  *spacing,
-	   const gchar  *registry,
-	   const gchar  *encoding)
+           gint32        drawable_ID,
+           gdouble       x,
+           gdouble       y,
+           const gchar  *text,
+           gint          border,
+           gboolean      antialias,
+           gdouble       size,
+           GimpSizeType  size_type,
+           const gchar  *foundry,
+           const gchar  *family,
+           const gchar  *weight,
+           const gchar  *slant,
+           const gchar  *set_width,
+           const gchar  *spacing,
+           const gchar  *registry,
+           const gchar  *encoding)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 text_layer_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-text",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_FLOAT, x,
-				    GIMP_PDB_FLOAT, y,
-				    GIMP_PDB_STRING, text,
-				    GIMP_PDB_INT32, border,
-				    GIMP_PDB_INT32, antialias,
-				    GIMP_PDB_FLOAT, size,
-				    GIMP_PDB_INT32, size_type,
-				    GIMP_PDB_STRING, foundry,
-				    GIMP_PDB_STRING, family,
-				    GIMP_PDB_STRING, weight,
-				    GIMP_PDB_STRING, slant,
-				    GIMP_PDB_STRING, set_width,
-				    GIMP_PDB_STRING, spacing,
-				    GIMP_PDB_STRING, registry,
-				    GIMP_PDB_STRING, encoding,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_FLOAT, x,
+                                    GIMP_PDB_FLOAT, y,
+                                    GIMP_PDB_STRING, text,
+                                    GIMP_PDB_INT32, border,
+                                    GIMP_PDB_INT32, antialias,
+                                    GIMP_PDB_FLOAT, size,
+                                    GIMP_PDB_INT32, size_type,
+                                    GIMP_PDB_STRING, foundry,
+                                    GIMP_PDB_STRING, family,
+                                    GIMP_PDB_STRING, weight,
+                                    GIMP_PDB_STRING, slant,
+                                    GIMP_PDB_STRING, set_width,
+                                    GIMP_PDB_STRING, spacing,
+                                    GIMP_PDB_STRING, registry,
+                                    GIMP_PDB_STRING, encoding,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     text_layer_ID = return_vals[1].data.d_layer;
@@ -254,39 +254,39 @@ gimp_text (gint32        image_ID,
  */
 gboolean
 gimp_text_get_extents (const gchar  *text,
-		       gdouble       size,
-		       GimpSizeType  size_type,
-		       const gchar  *foundry,
-		       const gchar  *family,
-		       const gchar  *weight,
-		       const gchar  *slant,
-		       const gchar  *set_width,
-		       const gchar  *spacing,
-		       const gchar  *registry,
-		       const gchar  *encoding,
-		       gint         *width,
-		       gint         *height,
-		       gint         *ascent,
-		       gint         *descent)
+                       gdouble       size,
+                       GimpSizeType  size_type,
+                       const gchar  *foundry,
+                       const gchar  *family,
+                       const gchar  *weight,
+                       const gchar  *slant,
+                       const gchar  *set_width,
+                       const gchar  *spacing,
+                       const gchar  *registry,
+                       const gchar  *encoding,
+                       gint         *width,
+                       gint         *height,
+                       gint         *ascent,
+                       gint         *descent)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-text-get-extents",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, text,
-				    GIMP_PDB_FLOAT, size,
-				    GIMP_PDB_INT32, size_type,
-				    GIMP_PDB_STRING, foundry,
-				    GIMP_PDB_STRING, family,
-				    GIMP_PDB_STRING, weight,
-				    GIMP_PDB_STRING, slant,
-				    GIMP_PDB_STRING, set_width,
-				    GIMP_PDB_STRING, spacing,
-				    GIMP_PDB_STRING, registry,
-				    GIMP_PDB_STRING, encoding,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, text,
+                                    GIMP_PDB_FLOAT, size,
+                                    GIMP_PDB_INT32, size_type,
+                                    GIMP_PDB_STRING, foundry,
+                                    GIMP_PDB_STRING, family,
+                                    GIMP_PDB_STRING, weight,
+                                    GIMP_PDB_STRING, slant,
+                                    GIMP_PDB_STRING, set_width,
+                                    GIMP_PDB_STRING, spacing,
+                                    GIMP_PDB_STRING, registry,
+                                    GIMP_PDB_STRING, encoding,
+                                    GIMP_PDB_END);
 
   *width = 0;
   *height = 0;

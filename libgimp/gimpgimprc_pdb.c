@@ -51,9 +51,9 @@ gimp_gimprc_query (const gchar *token)
   gchar *value = NULL;
 
   return_vals = gimp_run_procedure ("gimp-gimprc-query",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, token,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, token,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     value = g_strdup (return_vals[1].data.d_string);
@@ -80,17 +80,17 @@ gimp_gimprc_query (const gchar *token)
  */
 gboolean
 gimp_gimprc_set (const gchar *token,
-		 const gchar *value)
+                 const gchar *value)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-gimprc-set",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, token,
-				    GIMP_PDB_STRING, value,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, token,
+                                    GIMP_PDB_STRING, value,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -116,8 +116,8 @@ gimp_get_default_comment (void)
   gchar *comment = NULL;
 
   return_vals = gimp_run_procedure ("gimp-get-default-comment",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     comment = g_strdup (return_vals[1].data.d_string);
@@ -143,15 +143,15 @@ gimp_get_default_comment (void)
  */
 gboolean
 gimp_get_monitor_resolution (gdouble *xres,
-			     gdouble *yres)
+                             gdouble *yres)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-get-monitor-resolution",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   *xres = 0.0;
   *yres = 0.0;
@@ -186,8 +186,8 @@ gimp_get_theme_dir (void)
   gchar *theme_dir = NULL;
 
   return_vals = gimp_run_procedure ("gimp-get-theme-dir",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     theme_dir = g_strdup (return_vals[1].data.d_string);
@@ -217,8 +217,8 @@ _gimp_get_color_configuration (void)
   gchar *config = NULL;
 
   return_vals = gimp_run_procedure ("gimp-get-color-configuration",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     config = g_strdup (return_vals[1].data.d_string);
@@ -245,8 +245,8 @@ gimp_get_module_load_inhibit (void)
   gchar *load_inhibit = NULL;
 
   return_vals = gimp_run_procedure ("gimp-get-module-load-inhibit",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     load_inhibit = g_strdup (return_vals[1].data.d_string);

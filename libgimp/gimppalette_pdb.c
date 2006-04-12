@@ -45,9 +45,9 @@ gimp_palette_new (const gchar *name)
   gchar *actual_name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-palette-new",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     actual_name = g_strdup (return_vals[1].data.d_string);
@@ -77,9 +77,9 @@ gimp_palette_duplicate (const gchar *name)
   gchar *copy_name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-palette-duplicate",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     copy_name = g_strdup (return_vals[1].data.d_string);
@@ -104,17 +104,17 @@ gimp_palette_duplicate (const gchar *name)
  */
 gchar *
 gimp_palette_rename (const gchar *name,
-		     const gchar *new_name)
+                     const gchar *new_name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gchar *actual_name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-palette-rename",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_STRING, new_name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_STRING, new_name,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     actual_name = g_strdup (return_vals[1].data.d_string);
@@ -144,9 +144,9 @@ gimp_palette_delete (const gchar *name)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-palette-delete",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -175,9 +175,9 @@ gimp_palette_is_editable (const gchar *name)
   gboolean editable = FALSE;
 
   return_vals = gimp_run_procedure ("gimp-palette-is-editable",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     editable = return_vals[1].data.d_int32;
@@ -203,16 +203,16 @@ gimp_palette_is_editable (const gchar *name)
  */
 gboolean
 gimp_palette_get_info (const gchar *name,
-		       gint        *num_colors)
+                       gint        *num_colors)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-palette-get-info",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
 
   *num_colors = 0;
 
@@ -247,9 +247,9 @@ gimp_palette_get_columns (const gchar *name)
   gint num_columns = 0;
 
   return_vals = gimp_run_procedure ("gimp-palette-get-columns",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     num_columns = return_vals[1].data.d_int32;
@@ -276,17 +276,17 @@ gimp_palette_get_columns (const gchar *name)
  */
 gboolean
 gimp_palette_set_columns (const gchar *name,
-			  gint         columns)
+                          gint         columns)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-palette-set-columns",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_INT32, columns,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_INT32, columns,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -313,20 +313,20 @@ gimp_palette_set_columns (const gchar *name,
  */
 gboolean
 gimp_palette_add_entry (const gchar   *name,
-			const gchar   *entry_name,
-			const GimpRGB *color,
-			gint          *entry_num)
+                        const gchar   *entry_name,
+                        const GimpRGB *color,
+                        gint          *entry_num)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-palette-add-entry",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_STRING, entry_name,
-				    GIMP_PDB_COLOR, color,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_STRING, entry_name,
+                                    GIMP_PDB_COLOR, color,
+                                    GIMP_PDB_END);
 
   *entry_num = 0;
 
@@ -356,17 +356,17 @@ gimp_palette_add_entry (const gchar   *name,
  */
 gboolean
 gimp_palette_delete_entry (const gchar *name,
-			   gint         entry_num)
+                           gint         entry_num)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-palette-delete-entry",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_INT32, entry_num,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_INT32, entry_num,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -393,18 +393,18 @@ gimp_palette_delete_entry (const gchar *name,
  */
 gboolean
 gimp_palette_entry_get_color (const gchar *name,
-			      gint         entry_num,
-			      GimpRGB     *color)
+                              gint         entry_num,
+                              GimpRGB     *color)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-palette-entry-get-color",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_INT32, entry_num,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_INT32, entry_num,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -434,19 +434,19 @@ gimp_palette_entry_get_color (const gchar *name,
  */
 gboolean
 gimp_palette_entry_set_color (const gchar   *name,
-			      gint           entry_num,
-			      const GimpRGB *color)
+                              gint           entry_num,
+                              const GimpRGB *color)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-palette-entry-set-color",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_INT32, entry_num,
-				    GIMP_PDB_COLOR, color,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_INT32, entry_num,
+                                    GIMP_PDB_COLOR, color,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -473,18 +473,18 @@ gimp_palette_entry_set_color (const gchar   *name,
  */
 gboolean
 gimp_palette_entry_get_name (const gchar  *name,
-			     gint          entry_num,
-			     gchar       **entry_name)
+                             gint          entry_num,
+                             gchar       **entry_name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-palette-entry-get-name",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_INT32, entry_num,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_INT32, entry_num,
+                                    GIMP_PDB_END);
 
   *entry_name = NULL;
 
@@ -516,19 +516,19 @@ gimp_palette_entry_get_name (const gchar  *name,
  */
 gboolean
 gimp_palette_entry_set_name (const gchar *name,
-			     gint         entry_num,
-			     const gchar *entry_name)
+                             gint         entry_num,
+                             const gchar *entry_name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-palette-entry-set-name",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_INT32, entry_num,
-				    GIMP_PDB_STRING, entry_name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_INT32, entry_num,
+                                    GIMP_PDB_STRING, entry_name,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 

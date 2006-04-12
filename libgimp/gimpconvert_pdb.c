@@ -46,9 +46,9 @@ gimp_image_convert_rgb (gint32 image_ID)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-image-convert-rgb",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -77,9 +77,9 @@ gimp_image_convert_grayscale (gint32 image_ID)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-image-convert-grayscale",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -118,27 +118,27 @@ gimp_image_convert_grayscale (gint32 image_ID)
  */
 gboolean
 gimp_image_convert_indexed (gint32                  image_ID,
-			    GimpConvertDitherType   dither_type,
-			    GimpConvertPaletteType  palette_type,
-			    gint                    num_cols,
-			    gboolean                alpha_dither,
-			    gboolean                remove_unused,
-			    const gchar            *palette)
+                            GimpConvertDitherType   dither_type,
+                            GimpConvertPaletteType  palette_type,
+                            gint                    num_cols,
+                            gboolean                alpha_dither,
+                            gboolean                remove_unused,
+                            const gchar            *palette)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-image-convert-indexed",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_INT32, dither_type,
-				    GIMP_PDB_INT32, palette_type,
-				    GIMP_PDB_INT32, num_cols,
-				    GIMP_PDB_INT32, alpha_dither,
-				    GIMP_PDB_INT32, remove_unused,
-				    GIMP_PDB_STRING, palette,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_INT32, dither_type,
+                                    GIMP_PDB_INT32, palette_type,
+                                    GIMP_PDB_INT32, num_cols,
+                                    GIMP_PDB_INT32, alpha_dither,
+                                    GIMP_PDB_INT32, remove_unused,
+                                    GIMP_PDB_STRING, palette,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 

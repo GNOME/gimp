@@ -51,23 +51,23 @@
  */
 gint32
 gimp_drawable_transform_flip_simple (gint32              drawable_ID,
-				     GimpOrientationType flip_type,
-				     gboolean            auto_center,
-				     gdouble             axis,
-				     gboolean            clip_result)
+                                     GimpOrientationType flip_type,
+                                     gboolean            auto_center,
+                                     gdouble             axis,
+                                     gboolean            clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-drawable-transform-flip-simple",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_INT32, flip_type,
-				    GIMP_PDB_INT32, auto_center,
-				    GIMP_PDB_FLOAT, axis,
-				    GIMP_PDB_INT32, clip_result,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_INT32, flip_type,
+                                    GIMP_PDB_INT32, auto_center,
+                                    GIMP_PDB_FLOAT, axis,
+                                    GIMP_PDB_INT32, clip_result,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     ret_drawable_ID = return_vals[1].data.d_drawable;
@@ -109,33 +109,33 @@ gimp_drawable_transform_flip_simple (gint32              drawable_ID,
  */
 gint32
 gimp_drawable_transform_flip (gint32                 drawable_ID,
-			      gdouble                x0,
-			      gdouble                y0,
-			      gdouble                x1,
-			      gdouble                y1,
-			      GimpTransformDirection transform_direction,
-			      GimpInterpolationType  interpolation,
-			      gboolean               supersample,
-			      gint                   recursion_level,
-			      gboolean               clip_result)
+                              gdouble                x0,
+                              gdouble                y0,
+                              gdouble                x1,
+                              gdouble                y1,
+                              GimpTransformDirection transform_direction,
+                              GimpInterpolationType  interpolation,
+                              gboolean               supersample,
+                              gint                   recursion_level,
+                              gboolean               clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-drawable-transform-flip",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_FLOAT, x0,
-				    GIMP_PDB_FLOAT, y0,
-				    GIMP_PDB_FLOAT, x1,
-				    GIMP_PDB_FLOAT, y1,
-				    GIMP_PDB_INT32, transform_direction,
-				    GIMP_PDB_INT32, interpolation,
-				    GIMP_PDB_INT32, supersample,
-				    GIMP_PDB_INT32, recursion_level,
-				    GIMP_PDB_INT32, clip_result,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_FLOAT, x0,
+                                    GIMP_PDB_FLOAT, y0,
+                                    GIMP_PDB_FLOAT, x1,
+                                    GIMP_PDB_FLOAT, y1,
+                                    GIMP_PDB_INT32, transform_direction,
+                                    GIMP_PDB_INT32, interpolation,
+                                    GIMP_PDB_INT32, supersample,
+                                    GIMP_PDB_INT32, recursion_level,
+                                    GIMP_PDB_INT32, clip_result,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     ret_drawable_ID = return_vals[1].data.d_drawable;
@@ -167,27 +167,27 @@ gimp_drawable_transform_flip (gint32                 drawable_ID,
  */
 gint32
 gimp_drawable_transform_flip_default (gint32   drawable_ID,
-				      gdouble  x0,
-				      gdouble  y0,
-				      gdouble  x1,
-				      gdouble  y1,
-				      gboolean interpolate,
-				      gboolean clip_result)
+                                      gdouble  x0,
+                                      gdouble  y0,
+                                      gdouble  x1,
+                                      gdouble  y1,
+                                      gboolean interpolate,
+                                      gboolean clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-drawable-transform-flip-default",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_FLOAT, x0,
-				    GIMP_PDB_FLOAT, y0,
-				    GIMP_PDB_FLOAT, x1,
-				    GIMP_PDB_FLOAT, y1,
-				    GIMP_PDB_INT32, interpolate,
-				    GIMP_PDB_INT32, clip_result,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_FLOAT, x0,
+                                    GIMP_PDB_FLOAT, y0,
+                                    GIMP_PDB_FLOAT, x1,
+                                    GIMP_PDB_FLOAT, y1,
+                                    GIMP_PDB_INT32, interpolate,
+                                    GIMP_PDB_INT32, clip_result,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     ret_drawable_ID = return_vals[1].data.d_drawable;
@@ -239,41 +239,41 @@ gimp_drawable_transform_flip_default (gint32   drawable_ID,
  */
 gint32
 gimp_drawable_transform_perspective (gint32                 drawable_ID,
-				     gdouble                x0,
-				     gdouble                y0,
-				     gdouble                x1,
-				     gdouble                y1,
-				     gdouble                x2,
-				     gdouble                y2,
-				     gdouble                x3,
-				     gdouble                y3,
-				     GimpTransformDirection transform_direction,
-				     GimpInterpolationType  interpolation,
-				     gboolean               supersample,
-				     gint                   recursion_level,
-				     gboolean               clip_result)
+                                     gdouble                x0,
+                                     gdouble                y0,
+                                     gdouble                x1,
+                                     gdouble                y1,
+                                     gdouble                x2,
+                                     gdouble                y2,
+                                     gdouble                x3,
+                                     gdouble                y3,
+                                     GimpTransformDirection transform_direction,
+                                     GimpInterpolationType  interpolation,
+                                     gboolean               supersample,
+                                     gint                   recursion_level,
+                                     gboolean               clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-drawable-transform-perspective",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_FLOAT, x0,
-				    GIMP_PDB_FLOAT, y0,
-				    GIMP_PDB_FLOAT, x1,
-				    GIMP_PDB_FLOAT, y1,
-				    GIMP_PDB_FLOAT, x2,
-				    GIMP_PDB_FLOAT, y2,
-				    GIMP_PDB_FLOAT, x3,
-				    GIMP_PDB_FLOAT, y3,
-				    GIMP_PDB_INT32, transform_direction,
-				    GIMP_PDB_INT32, interpolation,
-				    GIMP_PDB_INT32, supersample,
-				    GIMP_PDB_INT32, recursion_level,
-				    GIMP_PDB_INT32, clip_result,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_FLOAT, x0,
+                                    GIMP_PDB_FLOAT, y0,
+                                    GIMP_PDB_FLOAT, x1,
+                                    GIMP_PDB_FLOAT, y1,
+                                    GIMP_PDB_FLOAT, x2,
+                                    GIMP_PDB_FLOAT, y2,
+                                    GIMP_PDB_FLOAT, x3,
+                                    GIMP_PDB_FLOAT, y3,
+                                    GIMP_PDB_INT32, transform_direction,
+                                    GIMP_PDB_INT32, interpolation,
+                                    GIMP_PDB_INT32, supersample,
+                                    GIMP_PDB_INT32, recursion_level,
+                                    GIMP_PDB_INT32, clip_result,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     ret_drawable_ID = return_vals[1].data.d_drawable;
@@ -310,35 +310,35 @@ gimp_drawable_transform_perspective (gint32                 drawable_ID,
  */
 gint32
 gimp_drawable_transform_perspective_default (gint32   drawable_ID,
-					     gdouble  x0,
-					     gdouble  y0,
-					     gdouble  x1,
-					     gdouble  y1,
-					     gdouble  x2,
-					     gdouble  y2,
-					     gdouble  x3,
-					     gdouble  y3,
-					     gboolean interpolate,
-					     gboolean clip_result)
+                                             gdouble  x0,
+                                             gdouble  y0,
+                                             gdouble  x1,
+                                             gdouble  y1,
+                                             gdouble  x2,
+                                             gdouble  y2,
+                                             gdouble  x3,
+                                             gdouble  y3,
+                                             gboolean interpolate,
+                                             gboolean clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-drawable-transform-perspective-default",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_FLOAT, x0,
-				    GIMP_PDB_FLOAT, y0,
-				    GIMP_PDB_FLOAT, x1,
-				    GIMP_PDB_FLOAT, y1,
-				    GIMP_PDB_FLOAT, x2,
-				    GIMP_PDB_FLOAT, y2,
-				    GIMP_PDB_FLOAT, x3,
-				    GIMP_PDB_FLOAT, y3,
-				    GIMP_PDB_INT32, interpolate,
-				    GIMP_PDB_INT32, clip_result,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_FLOAT, x0,
+                                    GIMP_PDB_FLOAT, y0,
+                                    GIMP_PDB_FLOAT, x1,
+                                    GIMP_PDB_FLOAT, y1,
+                                    GIMP_PDB_FLOAT, x2,
+                                    GIMP_PDB_FLOAT, y2,
+                                    GIMP_PDB_FLOAT, x3,
+                                    GIMP_PDB_FLOAT, y3,
+                                    GIMP_PDB_INT32, interpolate,
+                                    GIMP_PDB_INT32, clip_result,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     ret_drawable_ID = return_vals[1].data.d_drawable;
@@ -374,25 +374,25 @@ gimp_drawable_transform_perspective_default (gint32   drawable_ID,
  */
 gint32
 gimp_drawable_transform_rotate_simple (gint32           drawable_ID,
-				       GimpRotationType rotate_type,
-				       gboolean         auto_center,
-				       gint             center_x,
-				       gint             center_y,
-				       gboolean         clip_result)
+                                       GimpRotationType rotate_type,
+                                       gboolean         auto_center,
+                                       gint             center_x,
+                                       gint             center_y,
+                                       gboolean         clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-drawable-transform-rotate-simple",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_INT32, rotate_type,
-				    GIMP_PDB_INT32, auto_center,
-				    GIMP_PDB_INT32, center_x,
-				    GIMP_PDB_INT32, center_y,
-				    GIMP_PDB_INT32, clip_result,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_INT32, rotate_type,
+                                    GIMP_PDB_INT32, auto_center,
+                                    GIMP_PDB_INT32, center_x,
+                                    GIMP_PDB_INT32, center_y,
+                                    GIMP_PDB_INT32, clip_result,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     ret_drawable_ID = return_vals[1].data.d_drawable;
@@ -432,33 +432,33 @@ gimp_drawable_transform_rotate_simple (gint32           drawable_ID,
  */
 gint32
 gimp_drawable_transform_rotate (gint32                 drawable_ID,
-				gdouble                angle,
-				gboolean               auto_center,
-				gint                   center_x,
-				gint                   center_y,
-				GimpTransformDirection transform_direction,
-				GimpInterpolationType  interpolation,
-				gboolean               supersample,
-				gint                   recursion_level,
-				gboolean               clip_result)
+                                gdouble                angle,
+                                gboolean               auto_center,
+                                gint                   center_x,
+                                gint                   center_y,
+                                GimpTransformDirection transform_direction,
+                                GimpInterpolationType  interpolation,
+                                gboolean               supersample,
+                                gint                   recursion_level,
+                                gboolean               clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-drawable-transform-rotate",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_FLOAT, angle,
-				    GIMP_PDB_INT32, auto_center,
-				    GIMP_PDB_INT32, center_x,
-				    GIMP_PDB_INT32, center_y,
-				    GIMP_PDB_INT32, transform_direction,
-				    GIMP_PDB_INT32, interpolation,
-				    GIMP_PDB_INT32, supersample,
-				    GIMP_PDB_INT32, recursion_level,
-				    GIMP_PDB_INT32, clip_result,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_FLOAT, angle,
+                                    GIMP_PDB_INT32, auto_center,
+                                    GIMP_PDB_INT32, center_x,
+                                    GIMP_PDB_INT32, center_y,
+                                    GIMP_PDB_INT32, transform_direction,
+                                    GIMP_PDB_INT32, interpolation,
+                                    GIMP_PDB_INT32, supersample,
+                                    GIMP_PDB_INT32, recursion_level,
+                                    GIMP_PDB_INT32, clip_result,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     ret_drawable_ID = return_vals[1].data.d_drawable;
@@ -491,27 +491,27 @@ gimp_drawable_transform_rotate (gint32                 drawable_ID,
  */
 gint32
 gimp_drawable_transform_rotate_default (gint32   drawable_ID,
-					gdouble  angle,
-					gboolean auto_center,
-					gint     center_x,
-					gint     center_y,
-					gboolean interpolate,
-					gboolean clip_result)
+                                        gdouble  angle,
+                                        gboolean auto_center,
+                                        gint     center_x,
+                                        gint     center_y,
+                                        gboolean interpolate,
+                                        gboolean clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-drawable-transform-rotate-default",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_FLOAT, angle,
-				    GIMP_PDB_INT32, auto_center,
-				    GIMP_PDB_INT32, center_x,
-				    GIMP_PDB_INT32, center_y,
-				    GIMP_PDB_INT32, interpolate,
-				    GIMP_PDB_INT32, clip_result,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_FLOAT, angle,
+                                    GIMP_PDB_INT32, auto_center,
+                                    GIMP_PDB_INT32, center_x,
+                                    GIMP_PDB_INT32, center_y,
+                                    GIMP_PDB_INT32, interpolate,
+                                    GIMP_PDB_INT32, clip_result,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     ret_drawable_ID = return_vals[1].data.d_drawable;
@@ -550,33 +550,33 @@ gimp_drawable_transform_rotate_default (gint32   drawable_ID,
  */
 gint32
 gimp_drawable_transform_scale (gint32                 drawable_ID,
-			       gdouble                x0,
-			       gdouble                y0,
-			       gdouble                x1,
-			       gdouble                y1,
-			       GimpTransformDirection transform_direction,
-			       GimpInterpolationType  interpolation,
-			       gboolean               supersample,
-			       gint                   recursion_level,
-			       gboolean               clip_result)
+                               gdouble                x0,
+                               gdouble                y0,
+                               gdouble                x1,
+                               gdouble                y1,
+                               GimpTransformDirection transform_direction,
+                               GimpInterpolationType  interpolation,
+                               gboolean               supersample,
+                               gint                   recursion_level,
+                               gboolean               clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-drawable-transform-scale",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_FLOAT, x0,
-				    GIMP_PDB_FLOAT, y0,
-				    GIMP_PDB_FLOAT, x1,
-				    GIMP_PDB_FLOAT, y1,
-				    GIMP_PDB_INT32, transform_direction,
-				    GIMP_PDB_INT32, interpolation,
-				    GIMP_PDB_INT32, supersample,
-				    GIMP_PDB_INT32, recursion_level,
-				    GIMP_PDB_INT32, clip_result,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_FLOAT, x0,
+                                    GIMP_PDB_FLOAT, y0,
+                                    GIMP_PDB_FLOAT, x1,
+                                    GIMP_PDB_FLOAT, y1,
+                                    GIMP_PDB_INT32, transform_direction,
+                                    GIMP_PDB_INT32, interpolation,
+                                    GIMP_PDB_INT32, supersample,
+                                    GIMP_PDB_INT32, recursion_level,
+                                    GIMP_PDB_INT32, clip_result,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     ret_drawable_ID = return_vals[1].data.d_drawable;
@@ -608,27 +608,27 @@ gimp_drawable_transform_scale (gint32                 drawable_ID,
  */
 gint32
 gimp_drawable_transform_scale_default (gint32   drawable_ID,
-				       gdouble  x0,
-				       gdouble  y0,
-				       gdouble  x1,
-				       gdouble  y1,
-				       gboolean interpolate,
-				       gboolean clip_result)
+                                       gdouble  x0,
+                                       gdouble  y0,
+                                       gdouble  x1,
+                                       gdouble  y1,
+                                       gboolean interpolate,
+                                       gboolean clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-drawable-transform-scale-default",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_FLOAT, x0,
-				    GIMP_PDB_FLOAT, y0,
-				    GIMP_PDB_FLOAT, x1,
-				    GIMP_PDB_FLOAT, y1,
-				    GIMP_PDB_INT32, interpolate,
-				    GIMP_PDB_INT32, clip_result,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_FLOAT, x0,
+                                    GIMP_PDB_FLOAT, y0,
+                                    GIMP_PDB_FLOAT, x1,
+                                    GIMP_PDB_FLOAT, y1,
+                                    GIMP_PDB_INT32, interpolate,
+                                    GIMP_PDB_INT32, clip_result,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     ret_drawable_ID = return_vals[1].data.d_drawable;
@@ -669,29 +669,29 @@ gimp_drawable_transform_scale_default (gint32   drawable_ID,
  */
 gint32
 gimp_drawable_transform_shear (gint32                 drawable_ID,
-			       GimpOrientationType    shear_type,
-			       gdouble                magnitude,
-			       GimpTransformDirection transform_direction,
-			       GimpInterpolationType  interpolation,
-			       gboolean               supersample,
-			       gint                   recursion_level,
-			       gboolean               clip_result)
+                               GimpOrientationType    shear_type,
+                               gdouble                magnitude,
+                               GimpTransformDirection transform_direction,
+                               GimpInterpolationType  interpolation,
+                               gboolean               supersample,
+                               gint                   recursion_level,
+                               gboolean               clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-drawable-transform-shear",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_INT32, shear_type,
-				    GIMP_PDB_FLOAT, magnitude,
-				    GIMP_PDB_INT32, transform_direction,
-				    GIMP_PDB_INT32, interpolation,
-				    GIMP_PDB_INT32, supersample,
-				    GIMP_PDB_INT32, recursion_level,
-				    GIMP_PDB_INT32, clip_result,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_INT32, shear_type,
+                                    GIMP_PDB_FLOAT, magnitude,
+                                    GIMP_PDB_INT32, transform_direction,
+                                    GIMP_PDB_INT32, interpolation,
+                                    GIMP_PDB_INT32, supersample,
+                                    GIMP_PDB_INT32, recursion_level,
+                                    GIMP_PDB_INT32, clip_result,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     ret_drawable_ID = return_vals[1].data.d_drawable;
@@ -722,23 +722,23 @@ gimp_drawable_transform_shear (gint32                 drawable_ID,
  */
 gint32
 gimp_drawable_transform_shear_default (gint32              drawable_ID,
-				       GimpOrientationType shear_type,
-				       gdouble             magnitude,
-				       gboolean            interpolate,
-				       gboolean            clip_result)
+                                       GimpOrientationType shear_type,
+                                       gdouble             magnitude,
+                                       gboolean            interpolate,
+                                       gboolean            clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-drawable-transform-shear-default",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_INT32, shear_type,
-				    GIMP_PDB_FLOAT, magnitude,
-				    GIMP_PDB_INT32, interpolate,
-				    GIMP_PDB_INT32, clip_result,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_INT32, shear_type,
+                                    GIMP_PDB_FLOAT, magnitude,
+                                    GIMP_PDB_INT32, interpolate,
+                                    GIMP_PDB_INT32, clip_result,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     ret_drawable_ID = return_vals[1].data.d_drawable;
@@ -783,39 +783,39 @@ gimp_drawable_transform_shear_default (gint32              drawable_ID,
  */
 gint32
 gimp_drawable_transform_2d (gint32                 drawable_ID,
-			    gdouble                source_x,
-			    gdouble                source_y,
-			    gdouble                scale_x,
-			    gdouble                scale_y,
-			    gdouble                angle,
-			    gdouble                dest_x,
-			    gdouble                dest_y,
-			    GimpTransformDirection transform_direction,
-			    GimpInterpolationType  interpolation,
-			    gboolean               supersample,
-			    gint                   recursion_level,
-			    gboolean               clip_result)
+                            gdouble                source_x,
+                            gdouble                source_y,
+                            gdouble                scale_x,
+                            gdouble                scale_y,
+                            gdouble                angle,
+                            gdouble                dest_x,
+                            gdouble                dest_y,
+                            GimpTransformDirection transform_direction,
+                            GimpInterpolationType  interpolation,
+                            gboolean               supersample,
+                            gint                   recursion_level,
+                            gboolean               clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-drawable-transform-2d",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_FLOAT, source_x,
-				    GIMP_PDB_FLOAT, source_y,
-				    GIMP_PDB_FLOAT, scale_x,
-				    GIMP_PDB_FLOAT, scale_y,
-				    GIMP_PDB_FLOAT, angle,
-				    GIMP_PDB_FLOAT, dest_x,
-				    GIMP_PDB_FLOAT, dest_y,
-				    GIMP_PDB_INT32, transform_direction,
-				    GIMP_PDB_INT32, interpolation,
-				    GIMP_PDB_INT32, supersample,
-				    GIMP_PDB_INT32, recursion_level,
-				    GIMP_PDB_INT32, clip_result,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_FLOAT, source_x,
+                                    GIMP_PDB_FLOAT, source_y,
+                                    GIMP_PDB_FLOAT, scale_x,
+                                    GIMP_PDB_FLOAT, scale_y,
+                                    GIMP_PDB_FLOAT, angle,
+                                    GIMP_PDB_FLOAT, dest_x,
+                                    GIMP_PDB_FLOAT, dest_y,
+                                    GIMP_PDB_INT32, transform_direction,
+                                    GIMP_PDB_INT32, interpolation,
+                                    GIMP_PDB_INT32, supersample,
+                                    GIMP_PDB_INT32, recursion_level,
+                                    GIMP_PDB_INT32, clip_result,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     ret_drawable_ID = return_vals[1].data.d_drawable;
@@ -850,33 +850,33 @@ gimp_drawable_transform_2d (gint32                 drawable_ID,
  */
 gint32
 gimp_drawable_transform_2d_default (gint32   drawable_ID,
-				    gdouble  source_x,
-				    gdouble  source_y,
-				    gdouble  scale_x,
-				    gdouble  scale_y,
-				    gdouble  angle,
-				    gdouble  dest_x,
-				    gdouble  dest_y,
-				    gboolean interpolate,
-				    gboolean clip_result)
+                                    gdouble  source_x,
+                                    gdouble  source_y,
+                                    gdouble  scale_x,
+                                    gdouble  scale_y,
+                                    gdouble  angle,
+                                    gdouble  dest_x,
+                                    gdouble  dest_y,
+                                    gboolean interpolate,
+                                    gboolean clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-drawable-transform-2d-default",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_FLOAT, source_x,
-				    GIMP_PDB_FLOAT, source_y,
-				    GIMP_PDB_FLOAT, scale_x,
-				    GIMP_PDB_FLOAT, scale_y,
-				    GIMP_PDB_FLOAT, angle,
-				    GIMP_PDB_FLOAT, dest_x,
-				    GIMP_PDB_FLOAT, dest_y,
-				    GIMP_PDB_INT32, interpolate,
-				    GIMP_PDB_INT32, clip_result,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_FLOAT, source_x,
+                                    GIMP_PDB_FLOAT, source_y,
+                                    GIMP_PDB_FLOAT, scale_x,
+                                    GIMP_PDB_FLOAT, scale_y,
+                                    GIMP_PDB_FLOAT, angle,
+                                    GIMP_PDB_FLOAT, dest_x,
+                                    GIMP_PDB_FLOAT, dest_y,
+                                    GIMP_PDB_INT32, interpolate,
+                                    GIMP_PDB_INT32, clip_result,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     ret_drawable_ID = return_vals[1].data.d_drawable;
@@ -921,43 +921,43 @@ gimp_drawable_transform_2d_default (gint32   drawable_ID,
  */
 gint32
 gimp_drawable_transform_matrix (gint32                 drawable_ID,
-				gdouble                coeff_0_0,
-				gdouble                coeff_0_1,
-				gdouble                coeff_0_2,
-				gdouble                coeff_1_0,
-				gdouble                coeff_1_1,
-				gdouble                coeff_1_2,
-				gdouble                coeff_2_0,
-				gdouble                coeff_2_1,
-				gdouble                coeff_2_2,
-				GimpTransformDirection transform_direction,
-				GimpInterpolationType  interpolation,
-				gboolean               supersample,
-				gint                   recursion_level,
-				gboolean               clip_result)
+                                gdouble                coeff_0_0,
+                                gdouble                coeff_0_1,
+                                gdouble                coeff_0_2,
+                                gdouble                coeff_1_0,
+                                gdouble                coeff_1_1,
+                                gdouble                coeff_1_2,
+                                gdouble                coeff_2_0,
+                                gdouble                coeff_2_1,
+                                gdouble                coeff_2_2,
+                                GimpTransformDirection transform_direction,
+                                GimpInterpolationType  interpolation,
+                                gboolean               supersample,
+                                gint                   recursion_level,
+                                gboolean               clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-drawable-transform-matrix",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_FLOAT, coeff_0_0,
-				    GIMP_PDB_FLOAT, coeff_0_1,
-				    GIMP_PDB_FLOAT, coeff_0_2,
-				    GIMP_PDB_FLOAT, coeff_1_0,
-				    GIMP_PDB_FLOAT, coeff_1_1,
-				    GIMP_PDB_FLOAT, coeff_1_2,
-				    GIMP_PDB_FLOAT, coeff_2_0,
-				    GIMP_PDB_FLOAT, coeff_2_1,
-				    GIMP_PDB_FLOAT, coeff_2_2,
-				    GIMP_PDB_INT32, transform_direction,
-				    GIMP_PDB_INT32, interpolation,
-				    GIMP_PDB_INT32, supersample,
-				    GIMP_PDB_INT32, recursion_level,
-				    GIMP_PDB_INT32, clip_result,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_FLOAT, coeff_0_0,
+                                    GIMP_PDB_FLOAT, coeff_0_1,
+                                    GIMP_PDB_FLOAT, coeff_0_2,
+                                    GIMP_PDB_FLOAT, coeff_1_0,
+                                    GIMP_PDB_FLOAT, coeff_1_1,
+                                    GIMP_PDB_FLOAT, coeff_1_2,
+                                    GIMP_PDB_FLOAT, coeff_2_0,
+                                    GIMP_PDB_FLOAT, coeff_2_1,
+                                    GIMP_PDB_FLOAT, coeff_2_2,
+                                    GIMP_PDB_INT32, transform_direction,
+                                    GIMP_PDB_INT32, interpolation,
+                                    GIMP_PDB_INT32, supersample,
+                                    GIMP_PDB_INT32, recursion_level,
+                                    GIMP_PDB_INT32, clip_result,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     ret_drawable_ID = return_vals[1].data.d_drawable;
@@ -994,37 +994,37 @@ gimp_drawable_transform_matrix (gint32                 drawable_ID,
  */
 gint32
 gimp_drawable_transform_matrix_default (gint32   drawable_ID,
-					gdouble  coeff_0_0,
-					gdouble  coeff_0_1,
-					gdouble  coeff_0_2,
-					gdouble  coeff_1_0,
-					gdouble  coeff_1_1,
-					gdouble  coeff_1_2,
-					gdouble  coeff_2_0,
-					gdouble  coeff_2_1,
-					gdouble  coeff_2_2,
-					gboolean interpolate,
-					gboolean clip_result)
+                                        gdouble  coeff_0_0,
+                                        gdouble  coeff_0_1,
+                                        gdouble  coeff_0_2,
+                                        gdouble  coeff_1_0,
+                                        gdouble  coeff_1_1,
+                                        gdouble  coeff_1_2,
+                                        gdouble  coeff_2_0,
+                                        gdouble  coeff_2_1,
+                                        gdouble  coeff_2_2,
+                                        gboolean interpolate,
+                                        gboolean clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-drawable-transform-matrix-default",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_FLOAT, coeff_0_0,
-				    GIMP_PDB_FLOAT, coeff_0_1,
-				    GIMP_PDB_FLOAT, coeff_0_2,
-				    GIMP_PDB_FLOAT, coeff_1_0,
-				    GIMP_PDB_FLOAT, coeff_1_1,
-				    GIMP_PDB_FLOAT, coeff_1_2,
-				    GIMP_PDB_FLOAT, coeff_2_0,
-				    GIMP_PDB_FLOAT, coeff_2_1,
-				    GIMP_PDB_FLOAT, coeff_2_2,
-				    GIMP_PDB_INT32, interpolate,
-				    GIMP_PDB_INT32, clip_result,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_FLOAT, coeff_0_0,
+                                    GIMP_PDB_FLOAT, coeff_0_1,
+                                    GIMP_PDB_FLOAT, coeff_0_2,
+                                    GIMP_PDB_FLOAT, coeff_1_0,
+                                    GIMP_PDB_FLOAT, coeff_1_1,
+                                    GIMP_PDB_FLOAT, coeff_1_2,
+                                    GIMP_PDB_FLOAT, coeff_2_0,
+                                    GIMP_PDB_FLOAT, coeff_2_1,
+                                    GIMP_PDB_FLOAT, coeff_2_2,
+                                    GIMP_PDB_INT32, interpolate,
+                                    GIMP_PDB_INT32, clip_result,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     ret_drawable_ID = return_vals[1].data.d_drawable;

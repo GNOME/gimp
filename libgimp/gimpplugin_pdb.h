@@ -30,17 +30,17 @@ G_BEGIN_DECLS
 
 
 gboolean gimp_plugin_domain_register      (const gchar  *domain_name,
-					   const gchar  *domain_path);
+                                           const gchar  *domain_path);
 gboolean gimp_plugin_help_register        (const gchar  *domain_name,
-					   const gchar  *domain_uri);
+                                           const gchar  *domain_uri);
 gboolean gimp_plugin_menu_register        (const gchar  *procedure_name,
-					   const gchar  *menu_path);
+                                           const gchar  *menu_path);
 gboolean gimp_plugin_menu_branch_register (const gchar  *menu_path,
-					   const gchar  *menu_name);
+                                           const gchar  *menu_name);
 gboolean _gimp_plugin_icon_register       (const gchar  *procedure_name,
-					   GimpIconType  icon_type,
-					   gint          icon_data_length,
-					   const guint8 *icon_data) G_GNUC_INTERNAL;
+                                           GimpIconType  icon_type,
+                                           gint          icon_data_length,
+                                           const guint8 *icon_data) G_GNUC_INTERNAL;
 
 
 G_END_DECLS

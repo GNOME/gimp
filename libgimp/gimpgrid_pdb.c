@@ -42,17 +42,17 @@
  */
 gboolean
 gimp_image_grid_get_spacing (gint32   image_ID,
-			     gdouble *xspacing,
-			     gdouble *yspacing)
+                             gdouble *xspacing,
+                             gdouble *yspacing)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-image-grid-get-spacing",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
 
   *xspacing = 0.0;
   *yspacing = 0.0;
@@ -87,19 +87,19 @@ gimp_image_grid_get_spacing (gint32   image_ID,
  */
 gboolean
 gimp_image_grid_set_spacing (gint32  image_ID,
-			     gdouble xspacing,
-			     gdouble yspacing)
+                             gdouble xspacing,
+                             gdouble yspacing)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-image-grid-set-spacing",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_FLOAT, xspacing,
-				    GIMP_PDB_FLOAT, yspacing,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_FLOAT, xspacing,
+                                    GIMP_PDB_FLOAT, yspacing,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -125,17 +125,17 @@ gimp_image_grid_set_spacing (gint32  image_ID,
  */
 gboolean
 gimp_image_grid_get_offset (gint32   image_ID,
-			    gdouble *xoffset,
-			    gdouble *yoffset)
+                            gdouble *xoffset,
+                            gdouble *yoffset)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-image-grid-get-offset",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
 
   *xoffset = 0.0;
   *yoffset = 0.0;
@@ -170,19 +170,19 @@ gimp_image_grid_get_offset (gint32   image_ID,
  */
 gboolean
 gimp_image_grid_set_offset (gint32  image_ID,
-			    gdouble xoffset,
-			    gdouble yoffset)
+                            gdouble xoffset,
+                            gdouble yoffset)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-image-grid-set-offset",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_FLOAT, xoffset,
-				    GIMP_PDB_FLOAT, yoffset,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_FLOAT, xoffset,
+                                    GIMP_PDB_FLOAT, yoffset,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -206,16 +206,16 @@ gimp_image_grid_set_offset (gint32  image_ID,
  */
 gboolean
 gimp_image_grid_get_foreground_color (gint32   image_ID,
-				      GimpRGB *fgcolor)
+                                      GimpRGB *fgcolor)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-image-grid-get-foreground-color",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -242,17 +242,17 @@ gimp_image_grid_get_foreground_color (gint32   image_ID,
  */
 gboolean
 gimp_image_grid_set_foreground_color (gint32         image_ID,
-				      const GimpRGB *fgcolor)
+                                      const GimpRGB *fgcolor)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-image-grid-set-foreground-color",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_COLOR, fgcolor,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_COLOR, fgcolor,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -276,16 +276,16 @@ gimp_image_grid_set_foreground_color (gint32         image_ID,
  */
 gboolean
 gimp_image_grid_get_background_color (gint32   image_ID,
-				      GimpRGB *bgcolor)
+                                      GimpRGB *bgcolor)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-image-grid-get-background-color",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -312,17 +312,17 @@ gimp_image_grid_get_background_color (gint32   image_ID,
  */
 gboolean
 gimp_image_grid_set_background_color (gint32         image_ID,
-				      const GimpRGB *bgcolor)
+                                      const GimpRGB *bgcolor)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-image-grid-set-background-color",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_COLOR, bgcolor,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_COLOR, bgcolor,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -351,9 +351,9 @@ gimp_image_grid_get_style (gint32 image_ID)
   GimpGridStyle style = 0;
 
   return_vals = gimp_run_procedure ("gimp-image-grid-get-style",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     style = return_vals[1].data.d_int32;
@@ -379,17 +379,17 @@ gimp_image_grid_get_style (gint32 image_ID)
  */
 gboolean
 gimp_image_grid_set_style (gint32        image_ID,
-			   GimpGridStyle style)
+                           GimpGridStyle style)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-image-grid-set-style",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_INT32, style,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_INT32, style,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 

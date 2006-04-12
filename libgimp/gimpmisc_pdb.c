@@ -43,8 +43,8 @@ gimp_version (void)
   gchar *version = NULL;
 
   return_vals = gimp_run_procedure ("gimp-version",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     version = g_strdup (return_vals[1].data.d_string);
@@ -73,8 +73,8 @@ gimp_getpid (void)
   gint pid = 0;
 
   return_vals = gimp_run_procedure ("gimp-getpid",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     pid = return_vals[1].data.d_int32;

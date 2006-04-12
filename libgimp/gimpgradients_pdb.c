@@ -45,8 +45,8 @@ gimp_gradients_refresh (void)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-gradients-refresh",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -70,7 +70,7 @@ gimp_gradients_refresh (void)
  */
 gchar **
 gimp_gradients_get_list (const gchar *filter,
-			 gint        *num_gradients)
+                         gint        *num_gradients)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -78,9 +78,9 @@ gimp_gradients_get_list (const gchar *filter,
   gint i;
 
   return_vals = gimp_run_procedure ("gimp-gradients-get-list",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, filter,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, filter,
+                                    GIMP_PDB_END);
 
   *num_gradients = 0;
 
@@ -109,7 +109,7 @@ gimp_gradients_get_list (const gchar *filter,
  */
 gdouble *
 gimp_gradients_sample_uniform (gint     num_samples,
-			       gboolean reverse)
+                               gboolean reverse)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -117,10 +117,10 @@ gimp_gradients_sample_uniform (gint     num_samples,
   gint num_color_samples;
 
   return_vals = gimp_run_procedure ("gimp-gradients-sample-uniform",
-				    &nreturn_vals,
-				    GIMP_PDB_INT32, num_samples,
-				    GIMP_PDB_INT32, reverse,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, num_samples,
+                                    GIMP_PDB_INT32, reverse,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
@@ -148,8 +148,8 @@ gimp_gradients_sample_uniform (gint     num_samples,
  */
 gdouble *
 gimp_gradients_sample_custom (gint           num_samples,
-			      const gdouble *positions,
-			      gboolean       reverse)
+                              const gdouble *positions,
+                              gboolean       reverse)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -157,11 +157,11 @@ gimp_gradients_sample_custom (gint           num_samples,
   gint num_color_samples;
 
   return_vals = gimp_run_procedure ("gimp-gradients-sample-custom",
-				    &nreturn_vals,
-				    GIMP_PDB_INT32, num_samples,
-				    GIMP_PDB_FLOATARRAY, positions,
-				    GIMP_PDB_INT32, reverse,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, num_samples,
+                                    GIMP_PDB_FLOATARRAY, positions,
+                                    GIMP_PDB_INT32, reverse,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
@@ -191,21 +191,21 @@ gimp_gradients_sample_custom (gint           num_samples,
  */
 gchar *
 gimp_gradients_get_gradient_data (const gchar  *name,
-				  gint          sample_size,
-				  gboolean      reverse,
-				  gint         *width,
-				  gdouble     **grad_data)
+                                  gint          sample_size,
+                                  gboolean      reverse,
+                                  gint         *width,
+                                  gdouble     **grad_data)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gchar *actual_name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-gradients-get-gradient-data",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_INT32, sample_size,
-				    GIMP_PDB_INT32, reverse,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_INT32, sample_size,
+                                    GIMP_PDB_INT32, reverse,
+                                    GIMP_PDB_END);
 
   *width = 0;
 

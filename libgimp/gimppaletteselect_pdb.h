@@ -30,11 +30,11 @@ G_BEGIN_DECLS
 
 
 gboolean gimp_palettes_popup       (const gchar *palette_callback,
-				    const gchar *popup_title,
-				    const gchar *initial_palette);
+                                    const gchar *popup_title,
+                                    const gchar *initial_palette);
 gboolean gimp_palettes_close_popup (const gchar *palette_callback);
 gboolean gimp_palettes_set_popup   (const gchar *palette_callback,
-				    const gchar *palette_name);
+                                    const gchar *palette_name);
 
 
 G_END_DECLS

@@ -30,63 +30,63 @@ G_BEGIN_DECLS
 
 
 gboolean gimp_brightness_contrast (gint32                drawable_ID,
-				   gint                  brightness,
-				   gint                  contrast);
+                                   gint                  brightness,
+                                   gint                  contrast);
 gboolean gimp_levels              (gint32                drawable_ID,
-				   GimpHistogramChannel  channel,
-				   gint                  low_input,
-				   gint                  high_input,
-				   gdouble               gamma,
-				   gint                  low_output,
-				   gint                  high_output);
+                                   GimpHistogramChannel  channel,
+                                   gint                  low_input,
+                                   gint                  high_input,
+                                   gdouble               gamma,
+                                   gint                  low_output,
+                                   gint                  high_output);
 #ifndef GIMP_DISABLE_DEPRECATED
 gboolean gimp_levels_auto         (gint32                drawable_ID);
 #endif /* GIMP_DISABLE_DEPRECATED */
 gboolean gimp_levels_stretch      (gint32                drawable_ID);
 gboolean gimp_posterize           (gint32                drawable_ID,
-				   gint                  levels);
+                                   gint                  levels);
 gboolean gimp_desaturate          (gint32                drawable_ID);
 gboolean gimp_desaturate_full     (gint32                drawable_ID,
-				   GimpDesaturateMode    desaturate_mode);
+                                   GimpDesaturateMode    desaturate_mode);
 gboolean gimp_equalize            (gint32                drawable_ID,
-				   gboolean              mask_only);
+                                   gboolean              mask_only);
 gboolean gimp_invert              (gint32                drawable_ID);
 gboolean gimp_curves_spline       (gint32                drawable_ID,
-				   GimpHistogramChannel  channel,
-				   gint                  num_points,
-				   const guint8         *control_pts);
+                                   GimpHistogramChannel  channel,
+                                   gint                  num_points,
+                                   const guint8         *control_pts);
 gboolean gimp_curves_explicit     (gint32                drawable_ID,
-				   GimpHistogramChannel  channel,
-				   gint                  num_bytes,
-				   const guint8         *curve);
+                                   GimpHistogramChannel  channel,
+                                   gint                  num_bytes,
+                                   const guint8         *curve);
 gboolean gimp_color_balance       (gint32                drawable_ID,
-				   GimpTransferMode      transfer_mode,
-				   gboolean              preserve_lum,
-				   gdouble               cyan_red,
-				   gdouble               magenta_green,
-				   gdouble               yellow_blue);
+                                   GimpTransferMode      transfer_mode,
+                                   gboolean              preserve_lum,
+                                   gdouble               cyan_red,
+                                   gdouble               magenta_green,
+                                   gdouble               yellow_blue);
 gboolean gimp_colorize            (gint32                drawable_ID,
-				   gdouble               hue,
-				   gdouble               saturation,
-				   gdouble               lightness);
+                                   gdouble               hue,
+                                   gdouble               saturation,
+                                   gdouble               lightness);
 gboolean gimp_histogram           (gint32                drawable_ID,
-				   GimpHistogramChannel  channel,
-				   gint                  start_range,
-				   gint                  end_range,
-				   gdouble              *mean,
-				   gdouble              *std_dev,
-				   gdouble              *median,
-				   gdouble              *pixels,
-				   gdouble              *count,
-				   gdouble              *percentile);
+                                   GimpHistogramChannel  channel,
+                                   gint                  start_range,
+                                   gint                  end_range,
+                                   gdouble              *mean,
+                                   gdouble              *std_dev,
+                                   gdouble              *median,
+                                   gdouble              *pixels,
+                                   gdouble              *count,
+                                   gdouble              *percentile);
 gboolean gimp_hue_saturation      (gint32                drawable_ID,
-				   GimpHueRange          hue_range,
-				   gdouble               hue_offset,
-				   gdouble               lightness,
-				   gdouble               saturation);
+                                   GimpHueRange          hue_range,
+                                   gdouble               hue_offset,
+                                   gdouble               lightness,
+                                   gdouble               saturation);
 gboolean gimp_threshold           (gint32                drawable_ID,
-				   gint                  low_threshold,
-				   gint                  high_threshold);
+                                   gint                  low_threshold,
+                                   gint                  high_threshold);
 
 
 G_END_DECLS

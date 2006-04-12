@@ -45,8 +45,8 @@ gimp_brushes_refresh (void)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-brushes-refresh",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -70,7 +70,7 @@ gimp_brushes_refresh (void)
  */
 gchar **
 gimp_brushes_get_list (const gchar *filter,
-		       gint        *num_brushes)
+                       gint        *num_brushes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -78,9 +78,9 @@ gimp_brushes_get_list (const gchar *filter,
   gint i;
 
   return_vals = gimp_run_procedure ("gimp-brushes-get-list",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, filter,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, filter,
+                                    GIMP_PDB_END);
 
   *num_brushes = 0;
 
@@ -109,16 +109,16 @@ gimp_brushes_get_list (const gchar *filter,
  */
 gchar *
 gimp_brushes_get_brush (gint *width,
-			gint *height,
-			gint *spacing)
+                        gint *height,
+                        gint *spacing)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gchar *name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-brushes-get-brush",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
@@ -148,8 +148,8 @@ gimp_brushes_get_spacing (void)
   gint spacing = 0;
 
   return_vals = gimp_run_procedure ("gimp-brushes-get-spacing",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     spacing = return_vals[1].data.d_int32;
@@ -175,9 +175,9 @@ gimp_brushes_set_spacing (gint spacing)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-brushes-set-spacing",
-				    &nreturn_vals,
-				    GIMP_PDB_INT32, spacing,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, spacing,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -203,22 +203,22 @@ gimp_brushes_set_spacing (gint spacing)
  */
 gchar *
 gimp_brushes_get_brush_data (const gchar           *name,
-			     gdouble               *opacity,
-			     gint                  *spacing,
-			     GimpLayerModeEffects  *paint_mode,
-			     gint                  *width,
-			     gint                  *height,
-			     gint                  *length,
-			     guint8               **mask_data)
+                             gdouble               *opacity,
+                             gint                  *spacing,
+                             GimpLayerModeEffects  *paint_mode,
+                             gint                  *width,
+                             gint                  *height,
+                             gint                  *length,
+                             guint8               **mask_data)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gchar *actual_name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-brushes-get-brush-data",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
 
   *length = 0;
 

@@ -157,7 +157,7 @@ sub generate {
 	    $argdesc .= ": $desc";
 
 	    # This is what's passed into gimp_run_procedure
-	    $argpass .= "\n\t\t\t\t" . ' ' x 4;
+	    $argpass .= "\n" . ' ' x 36;
 	    $argpass .= "GIMP_PDB_$arg->{name}, ";
 
 	    $argpass .= "$_->{name}";
@@ -433,8 +433,7 @@ CODE
 
 	my $clist = $arglist;
 	my $padlen = length($wrapped) + length($funcname) + 2;
-	my $padtab = $padlen / 8; my $padspace = $padlen % 8;
-	my $padding = "\t" x $padtab . ' ' x $padspace;
+	my $padding = ' ' x $padlen;
 	$clist =~ s/\t/$padding/eg;
 
         unless ($retdesc =~ /[\.\!\?]$/) { $retdesc .= '.' }
@@ -476,8 +475,8 @@ $wrapped$funcname ($clist)
   gint nreturn_vals;$return_args
 
   return_vals = gimp_run_procedure ("gimp-$proc->{canonical_name}",
-				    \&nreturn_vals,$argpass
-				    GIMP_PDB_END);
+                                    \&nreturn_vals,$argpass
+                                    GIMP_PDB_END);
 
   $return_marshal
 }
@@ -612,8 +611,6 @@ LGPL
 		$arg .= ' ' x ($longest[0] - length($type) + 1) . $func;
 		$arg .= ' ' x ($longest[1] - length($func) + 1) . $arglist;
 		$arg =~ s/\t/' ' x ($longest[0] + $longest[1] + 3)/eg;
-
-		while ($arg =~ /^\t* {8}/m) { $arg =~ s/^(\t*) {8}/$1\t/mg }
 	    }
 	    else {
 		$arg = $_;

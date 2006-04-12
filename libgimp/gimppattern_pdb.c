@@ -45,18 +45,18 @@
  */
 gboolean
 gimp_pattern_get_info (const gchar *name,
-		       gint        *width,
-		       gint        *height,
-		       gint        *bpp)
+                       gint        *width,
+                       gint        *height,
+                       gint        *bpp)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-pattern-get-info",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
 
   *width = 0;
   *height = 0;
@@ -97,20 +97,20 @@ gimp_pattern_get_info (const gchar *name,
  */
 gboolean
 gimp_pattern_get_pixels (const gchar  *name,
-			 gint         *width,
-			 gint         *height,
-			 gint         *bpp,
-			 gint         *num_color_bytes,
-			 guint8      **color_bytes)
+                         gint         *width,
+                         gint         *height,
+                         gint         *bpp,
+                         gint         *num_color_bytes,
+                         guint8      **color_bytes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-pattern-get-pixels",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
 
   *width = 0;
   *height = 0;

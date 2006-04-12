@@ -39,19 +39,19 @@
  */
 gboolean
 gimp_patterns_popup (const gchar *pattern_callback,
-		     const gchar *popup_title,
-		     const gchar *initial_pattern)
+                     const gchar *popup_title,
+                     const gchar *initial_pattern)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-patterns-popup",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, pattern_callback,
-				    GIMP_PDB_STRING, popup_title,
-				    GIMP_PDB_STRING, initial_pattern,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, pattern_callback,
+                                    GIMP_PDB_STRING, popup_title,
+                                    GIMP_PDB_STRING, initial_pattern,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -78,9 +78,9 @@ gimp_patterns_close_popup (const gchar *pattern_callback)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-patterns-close-popup",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, pattern_callback,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, pattern_callback,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -102,17 +102,17 @@ gimp_patterns_close_popup (const gchar *pattern_callback)
  */
 gboolean
 gimp_patterns_set_popup (const gchar *pattern_callback,
-			 const gchar *pattern_name)
+                         const gchar *pattern_name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-patterns-set-popup",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, pattern_callback,
-				    GIMP_PDB_STRING, pattern_name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, pattern_callback,
+                                    GIMP_PDB_STRING, pattern_name,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 

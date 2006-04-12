@@ -44,9 +44,9 @@ gimp_message (const gchar *message)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-message",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, message,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, message,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -74,8 +74,8 @@ gimp_message_get_handler (void)
   GimpMessageHandlerType handler = 0;
 
   return_vals = gimp_run_procedure ("gimp-message-get-handler",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     handler = return_vals[1].data.d_int32;
@@ -105,9 +105,9 @@ gimp_message_set_handler (GimpMessageHandlerType handler)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-message-set-handler",
-				    &nreturn_vals,
-				    GIMP_PDB_INT32, handler,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, handler,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 

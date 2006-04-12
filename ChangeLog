@@ -1,5 +1,11 @@
 2006-04-12  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/lib.pl: create code with spaces instead of tabs.
+
+	* libgimp/gimp*_pdb.[ch]: regenerated.
+
+2006-04-12  Sven Neumann  <sven@gimp.org>
+
 	* tools/gimp-remote.c
 	* tools/kernelgen.c: converted tabs to spaces.
 

@@ -31,18 +31,18 @@ G_BEGIN_DECLS
 
 gboolean gimp_gradients_refresh           (void);
 gchar**  gimp_gradients_get_list          (const gchar    *filter,
-					   gint           *num_gradients);
+                                           gint           *num_gradients);
 #ifndef GIMP_DISABLE_DEPRECATED
 gdouble* gimp_gradients_sample_uniform    (gint            num_samples,
-					   gboolean        reverse);
+                                           gboolean        reverse);
 gdouble* gimp_gradients_sample_custom     (gint            num_samples,
-					   const gdouble  *positions,
-					   gboolean        reverse);
+                                           const gdouble  *positions,
+                                           gboolean        reverse);
 gchar*   gimp_gradients_get_gradient_data (const gchar    *name,
-					   gint            sample_size,
-					   gboolean        reverse,
-					   gint           *width,
-					   gdouble       **grad_data);
+                                           gint            sample_size,
+                                           gboolean        reverse,
+                                           gint           *width,
+                                           gdouble       **grad_data);
 #endif /* GIMP_DISABLE_DEPRECATED */
 
 

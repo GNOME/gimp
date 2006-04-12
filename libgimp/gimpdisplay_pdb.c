@@ -47,9 +47,9 @@ gimp_display_new (gint32 image_ID)
   gint32 display_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-display-new",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     display_ID = return_vals[1].data.d_display;
@@ -79,9 +79,9 @@ gimp_display_delete (gint32 display_ID)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-display-delete",
-				    &nreturn_vals,
-				    GIMP_PDB_DISPLAY, display_ID,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DISPLAY, display_ID,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -114,9 +114,9 @@ gimp_display_get_window_handle (gint32 display_ID)
   gint window = 0;
 
   return_vals = gimp_run_procedure ("gimp-display-get-window-handle",
-				    &nreturn_vals,
-				    GIMP_PDB_DISPLAY, display_ID,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_DISPLAY, display_ID,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     window = return_vals[1].data.d_int32;
@@ -146,8 +146,8 @@ gimp_displays_flush (void)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-displays-flush",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -172,17 +172,17 @@ gimp_displays_flush (void)
  */
 gboolean
 gimp_displays_reconnect (gint32 old_image_ID,
-			 gint32 new_image_ID)
+                         gint32 new_image_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-displays-reconnect",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, old_image_ID,
-				    GIMP_PDB_IMAGE, new_image_ID,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, old_image_ID,
+                                    GIMP_PDB_IMAGE, new_image_ID,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 

@@ -48,25 +48,25 @@
  */
 gint32
 _gimp_channel_new (gint32         image_ID,
-		   gint           width,
-		   gint           height,
-		   const gchar   *name,
-		   gdouble        opacity,
-		   const GimpRGB *color)
+                   gint           width,
+                   gint           height,
+                   const gchar   *name,
+                   gdouble        opacity,
+                   const GimpRGB *color)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 channel_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-channel-new",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_INT32, width,
-				    GIMP_PDB_INT32, height,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_FLOAT, opacity,
-				    GIMP_PDB_COLOR, color,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_INT32, width,
+                                    GIMP_PDB_INT32, height,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_FLOAT, opacity,
+                                    GIMP_PDB_COLOR, color,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     channel_ID = return_vals[1].data.d_channel;
@@ -92,19 +92,19 @@ _gimp_channel_new (gint32         image_ID,
  */
 gint32
 gimp_channel_new_from_component (gint32           image_ID,
-				 GimpChannelType  component,
-				 const gchar     *name)
+                                 GimpChannelType  component,
+                                 const gchar     *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 channel_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-channel-new-from-component",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_INT32, component,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_INT32, component,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     channel_ID = return_vals[1].data.d_channel;
@@ -132,9 +132,9 @@ gimp_channel_copy (gint32 channel_ID)
   gint32 channel_copy_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-channel-copy",
-				    &nreturn_vals,
-				    GIMP_PDB_CHANNEL, channel_ID,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_CHANNEL, channel_ID,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     channel_copy_ID = return_vals[1].data.d_channel;
@@ -161,23 +161,23 @@ gimp_channel_copy (gint32 channel_ID)
  */
 gboolean
 gimp_channel_combine_masks (gint32         channel1_ID,
-			    gint32         channel2_ID,
-			    GimpChannelOps operation,
-			    gint           offx,
-			    gint           offy)
+                            gint32         channel2_ID,
+                            GimpChannelOps operation,
+                            gint           offx,
+                            gint           offy)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-channel-combine-masks",
-				    &nreturn_vals,
-				    GIMP_PDB_CHANNEL, channel1_ID,
-				    GIMP_PDB_CHANNEL, channel2_ID,
-				    GIMP_PDB_INT32, operation,
-				    GIMP_PDB_INT32, offx,
-				    GIMP_PDB_INT32, offy,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_CHANNEL, channel1_ID,
+                                    GIMP_PDB_CHANNEL, channel2_ID,
+                                    GIMP_PDB_INT32, operation,
+                                    GIMP_PDB_INT32, offx,
+                                    GIMP_PDB_INT32, offy,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -206,9 +206,9 @@ gimp_channel_get_show_masked (gint32 channel_ID)
   gboolean show_masked = FALSE;
 
   return_vals = gimp_run_procedure ("gimp-channel-get-show-masked",
-				    &nreturn_vals,
-				    GIMP_PDB_CHANNEL, channel_ID,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_CHANNEL, channel_ID,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     show_masked = return_vals[1].data.d_int32;
@@ -233,17 +233,17 @@ gimp_channel_get_show_masked (gint32 channel_ID)
  */
 gboolean
 gimp_channel_set_show_masked (gint32   channel_ID,
-			      gboolean show_masked)
+                              gboolean show_masked)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-channel-set-show-masked",
-				    &nreturn_vals,
-				    GIMP_PDB_CHANNEL, channel_ID,
-				    GIMP_PDB_INT32, show_masked,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_CHANNEL, channel_ID,
+                                    GIMP_PDB_INT32, show_masked,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -270,9 +270,9 @@ gimp_channel_get_opacity (gint32 channel_ID)
   gdouble opacity = 0.0;
 
   return_vals = gimp_run_procedure ("gimp-channel-get-opacity",
-				    &nreturn_vals,
-				    GIMP_PDB_CHANNEL, channel_ID,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_CHANNEL, channel_ID,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     opacity = return_vals[1].data.d_float;
@@ -295,17 +295,17 @@ gimp_channel_get_opacity (gint32 channel_ID)
  */
 gboolean
 gimp_channel_set_opacity (gint32  channel_ID,
-			  gdouble opacity)
+                          gdouble opacity)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-channel-set-opacity",
-				    &nreturn_vals,
-				    GIMP_PDB_CHANNEL, channel_ID,
-				    GIMP_PDB_FLOAT, opacity,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_CHANNEL, channel_ID,
+                                    GIMP_PDB_FLOAT, opacity,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -327,16 +327,16 @@ gimp_channel_set_opacity (gint32  channel_ID,
  */
 gboolean
 gimp_channel_get_color (gint32   channel_ID,
-			GimpRGB *color)
+                        GimpRGB *color)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-channel-get-color",
-				    &nreturn_vals,
-				    GIMP_PDB_CHANNEL, channel_ID,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_CHANNEL, channel_ID,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -361,17 +361,17 @@ gimp_channel_get_color (gint32   channel_ID,
  */
 gboolean
 gimp_channel_set_color (gint32         channel_ID,
-			const GimpRGB *color)
+                        const GimpRGB *color)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-channel-set-color",
-				    &nreturn_vals,
-				    GIMP_PDB_CHANNEL, channel_ID,
-				    GIMP_PDB_COLOR, color,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_CHANNEL, channel_ID,
+                                    GIMP_PDB_COLOR, color,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 

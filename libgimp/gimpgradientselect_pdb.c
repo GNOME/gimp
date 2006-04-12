@@ -40,21 +40,21 @@
  */
 gboolean
 gimp_gradients_popup (const gchar *gradient_callback,
-		      const gchar *popup_title,
-		      const gchar *initial_gradient,
-		      gint         sample_size)
+                      const gchar *popup_title,
+                      const gchar *initial_gradient,
+                      gint         sample_size)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-gradients-popup",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, gradient_callback,
-				    GIMP_PDB_STRING, popup_title,
-				    GIMP_PDB_STRING, initial_gradient,
-				    GIMP_PDB_INT32, sample_size,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, gradient_callback,
+                                    GIMP_PDB_STRING, popup_title,
+                                    GIMP_PDB_STRING, initial_gradient,
+                                    GIMP_PDB_INT32, sample_size,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -81,9 +81,9 @@ gimp_gradients_close_popup (const gchar *gradient_callback)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-gradients-close-popup",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, gradient_callback,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, gradient_callback,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -105,17 +105,17 @@ gimp_gradients_close_popup (const gchar *gradient_callback)
  */
 gboolean
 gimp_gradients_set_popup (const gchar *gradient_callback,
-			  const gchar *gradient_name)
+                          const gchar *gradient_name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-gradients-set-popup",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, gradient_callback,
-				    GIMP_PDB_STRING, gradient_name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, gradient_callback,
+                                    GIMP_PDB_STRING, gradient_name,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 

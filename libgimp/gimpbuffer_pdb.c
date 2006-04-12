@@ -41,7 +41,7 @@
  */
 gchar **
 gimp_buffers_get_list (const gchar *filter,
-		       gint        *num_buffers)
+                       gint        *num_buffers)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -49,9 +49,9 @@ gimp_buffers_get_list (const gchar *filter,
   gint i;
 
   return_vals = gimp_run_procedure ("gimp-buffers-get-list",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, filter,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, filter,
+                                    GIMP_PDB_END);
 
   *num_buffers = 0;
 
@@ -83,17 +83,17 @@ gimp_buffers_get_list (const gchar *filter,
  */
 gchar *
 gimp_buffer_rename (const gchar *buffer_name,
-		    const gchar *new_name)
+                    const gchar *new_name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gchar *real_name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-buffer-rename",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, buffer_name,
-				    GIMP_PDB_STRING, new_name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, buffer_name,
+                                    GIMP_PDB_STRING, new_name,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     real_name = g_strdup (return_vals[1].data.d_string);
@@ -123,9 +123,9 @@ gimp_buffer_delete (const gchar *buffer_name)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-buffer-delete",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, buffer_name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, buffer_name,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -154,9 +154,9 @@ gimp_buffer_get_width (const gchar *buffer_name)
   gint width = 0;
 
   return_vals = gimp_run_procedure ("gimp-buffer-get-width",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, buffer_name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, buffer_name,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     width = return_vals[1].data.d_int32;
@@ -186,9 +186,9 @@ gimp_buffer_get_height (const gchar *buffer_name)
   gint height = 0;
 
   return_vals = gimp_run_procedure ("gimp-buffer-get-height",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, buffer_name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, buffer_name,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     height = return_vals[1].data.d_int32;
@@ -218,9 +218,9 @@ gimp_buffer_get_bytes (const gchar *buffer_name)
   gint bytes = 0;
 
   return_vals = gimp_run_procedure ("gimp-buffer-get-bytes",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, buffer_name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, buffer_name,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     bytes = return_vals[1].data.d_int32;
@@ -250,9 +250,9 @@ gimp_buffer_get_image_type (const gchar *buffer_name)
   GimpImageBaseType image_type = 0;
 
   return_vals = gimp_run_procedure ("gimp-buffer-get-image-type",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, buffer_name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, buffer_name,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     image_type = return_vals[1].data.d_int32;

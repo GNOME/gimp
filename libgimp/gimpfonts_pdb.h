@@ -31,7 +31,7 @@ G_BEGIN_DECLS
 
 gboolean gimp_fonts_refresh  (void);
 gchar**  gimp_fonts_get_list (const gchar *filter,
-			      gint        *num_fonts);
+                              gint        *num_fonts);
 
 
 G_END_DECLS

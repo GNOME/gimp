@@ -45,19 +45,19 @@
  */
 gint32
 gimp_file_load (GimpRunMode  run_mode,
-		const gchar *filename,
-		const gchar *raw_filename)
+                const gchar *filename,
+                const gchar *raw_filename)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 image_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-file-load",
-				    &nreturn_vals,
-				    GIMP_PDB_INT32, run_mode,
-				    GIMP_PDB_STRING, filename,
-				    GIMP_PDB_STRING, raw_filename,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, run_mode,
+                                    GIMP_PDB_STRING, filename,
+                                    GIMP_PDB_STRING, raw_filename,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     image_ID = return_vals[1].data.d_image;
@@ -84,19 +84,19 @@ gimp_file_load (GimpRunMode  run_mode,
  */
 gint32
 gimp_file_load_layer (GimpRunMode  run_mode,
-		      gint32       image_ID,
-		      const gchar *filename)
+                      gint32       image_ID,
+                      const gchar *filename)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 layer_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp-file-load-layer",
-				    &nreturn_vals,
-				    GIMP_PDB_INT32, run_mode,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_STRING, filename,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, run_mode,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, filename,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     layer_ID = return_vals[1].data.d_layer;
@@ -127,23 +127,23 @@ gimp_file_load_layer (GimpRunMode  run_mode,
  */
 gboolean
 gimp_file_save (GimpRunMode  run_mode,
-		gint32       image_ID,
-		gint32       drawable_ID,
-		const gchar *filename,
-		const gchar *raw_filename)
+                gint32       image_ID,
+                gint32       drawable_ID,
+                const gchar *filename,
+                const gchar *raw_filename)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-file-save",
-				    &nreturn_vals,
-				    GIMP_PDB_INT32, run_mode,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_STRING, filename,
-				    GIMP_PDB_STRING, raw_filename,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, run_mode,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_STRING, filename,
+                                    GIMP_PDB_STRING, raw_filename,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -171,9 +171,9 @@ gimp_temp_name (const gchar *extension)
   gchar *name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-temp-name",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, extension,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, extension,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     name = g_strdup (return_vals[1].data.d_string);
@@ -199,21 +199,21 @@ gimp_temp_name (const gchar *extension)
  */
 gboolean
 gimp_register_magic_load_handler (const gchar *procedure_name,
-				  const gchar *extensions,
-				  const gchar *prefixes,
-				  const gchar *magics)
+                                  const gchar *extensions,
+                                  const gchar *prefixes,
+                                  const gchar *magics)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-register-magic-load-handler",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, procedure_name,
-				    GIMP_PDB_STRING, extensions,
-				    GIMP_PDB_STRING, prefixes,
-				    GIMP_PDB_STRING, magics,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, procedure_name,
+                                    GIMP_PDB_STRING, extensions,
+                                    GIMP_PDB_STRING, prefixes,
+                                    GIMP_PDB_STRING, magics,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -237,19 +237,19 @@ gimp_register_magic_load_handler (const gchar *procedure_name,
  */
 gboolean
 gimp_register_load_handler (const gchar *procedure_name,
-			    const gchar *extensions,
-			    const gchar *prefixes)
+                            const gchar *extensions,
+                            const gchar *prefixes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-register-load-handler",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, procedure_name,
-				    GIMP_PDB_STRING, extensions,
-				    GIMP_PDB_STRING, prefixes,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, procedure_name,
+                                    GIMP_PDB_STRING, extensions,
+                                    GIMP_PDB_STRING, prefixes,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -273,19 +273,19 @@ gimp_register_load_handler (const gchar *procedure_name,
  */
 gboolean
 gimp_register_save_handler (const gchar *procedure_name,
-			    const gchar *extensions,
-			    const gchar *prefixes)
+                            const gchar *extensions,
+                            const gchar *prefixes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-register-save-handler",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, procedure_name,
-				    GIMP_PDB_STRING, extensions,
-				    GIMP_PDB_STRING, prefixes,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, procedure_name,
+                                    GIMP_PDB_STRING, extensions,
+                                    GIMP_PDB_STRING, prefixes,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -311,17 +311,17 @@ gimp_register_save_handler (const gchar *procedure_name,
  */
 gboolean
 gimp_register_file_handler_mime (const gchar *procedure_name,
-				 const gchar *mime_type)
+                                 const gchar *mime_type)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-register-file-handler-mime",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, procedure_name,
-				    GIMP_PDB_STRING, mime_type,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, procedure_name,
+                                    GIMP_PDB_STRING, mime_type,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -350,17 +350,17 @@ gimp_register_file_handler_mime (const gchar *procedure_name,
  */
 gboolean
 gimp_register_thumbnail_loader (const gchar *load_proc,
-				const gchar *thumb_proc)
+                                const gchar *thumb_proc)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-register-thumbnail-loader",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, load_proc,
-				    GIMP_PDB_STRING, thumb_proc,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, load_proc,
+                                    GIMP_PDB_STRING, thumb_proc,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 

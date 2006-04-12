@@ -30,7 +30,7 @@ G_BEGIN_DECLS
 
 
 gboolean gimp_help (const gchar *help_domain,
-		    const gchar *help_id);
+                    const gchar *help_id);
 
 
 G_END_DECLS

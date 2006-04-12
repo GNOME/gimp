@@ -46,8 +46,8 @@ gimp_procedural_db_temp_name (void)
   gchar *temp_name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-procedural-db-temp-name",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     temp_name = g_strdup (return_vals[1].data.d_string);
@@ -79,9 +79,9 @@ gimp_procedural_db_dump (const gchar *filename)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-procedural-db-dump",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, filename,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, filename,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -122,14 +122,14 @@ gimp_procedural_db_dump (const gchar *filename)
  */
 gboolean
 gimp_procedural_db_query (const gchar   *name,
-			  const gchar   *blurb,
-			  const gchar   *help,
-			  const gchar   *author,
-			  const gchar   *copyright,
-			  const gchar   *date,
-			  const gchar   *proc_type,
-			  gint          *num_matches,
-			  gchar       ***procedure_names)
+                          const gchar   *blurb,
+                          const gchar   *help,
+                          const gchar   *author,
+                          const gchar   *copyright,
+                          const gchar   *date,
+                          const gchar   *proc_type,
+                          gint          *num_matches,
+                          gchar       ***procedure_names)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -137,15 +137,15 @@ gimp_procedural_db_query (const gchar   *name,
   gint i;
 
   return_vals = gimp_run_procedure ("gimp-procedural-db-query",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_STRING, blurb,
-				    GIMP_PDB_STRING, help,
-				    GIMP_PDB_STRING, author,
-				    GIMP_PDB_STRING, copyright,
-				    GIMP_PDB_STRING, date,
-				    GIMP_PDB_STRING, proc_type,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_STRING, blurb,
+                                    GIMP_PDB_STRING, help,
+                                    GIMP_PDB_STRING, author,
+                                    GIMP_PDB_STRING, copyright,
+                                    GIMP_PDB_STRING, date,
+                                    GIMP_PDB_STRING, proc_type,
+                                    GIMP_PDB_END);
 
   *num_matches = 0;
   *procedure_names = NULL;
@@ -191,23 +191,23 @@ gimp_procedural_db_query (const gchar   *name,
  */
 gboolean
 _gimp_procedural_db_proc_info (const gchar      *procedure_name,
-			       gchar           **blurb,
-			       gchar           **help,
-			       gchar           **author,
-			       gchar           **copyright,
-			       gchar           **date,
-			       GimpPDBProcType  *proc_type,
-			       gint             *num_args,
-			       gint             *num_values)
+                               gchar           **blurb,
+                               gchar           **help,
+                               gchar           **author,
+                               gchar           **copyright,
+                               gchar           **date,
+                               GimpPDBProcType  *proc_type,
+                               gint             *num_args,
+                               gint             *num_values)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-procedural-db-proc-info",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, procedure_name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, procedure_name,
+                                    GIMP_PDB_END);
 
   *blurb = NULL;
   *help = NULL;
@@ -255,20 +255,20 @@ _gimp_procedural_db_proc_info (const gchar      *procedure_name,
  */
 gboolean
 gimp_procedural_db_proc_arg (const gchar     *procedure_name,
-			     gint             arg_num,
-			     GimpPDBArgType  *arg_type,
-			     gchar          **arg_name,
-			     gchar          **arg_desc)
+                             gint             arg_num,
+                             GimpPDBArgType  *arg_type,
+                             gchar          **arg_name,
+                             gchar          **arg_desc)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-procedural-db-proc-arg",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, procedure_name,
-				    GIMP_PDB_INT32, arg_num,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, procedure_name,
+                                    GIMP_PDB_INT32, arg_num,
+                                    GIMP_PDB_END);
 
   *arg_type = 0;
   *arg_name = NULL;
@@ -307,20 +307,20 @@ gimp_procedural_db_proc_arg (const gchar     *procedure_name,
  */
 gboolean
 gimp_procedural_db_proc_val (const gchar     *procedure_name,
-			     gint             val_num,
-			     GimpPDBArgType  *val_type,
-			     gchar          **val_name,
-			     gchar          **val_desc)
+                             gint             val_num,
+                             GimpPDBArgType  *val_type,
+                             gchar          **val_name,
+                             gchar          **val_desc)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-procedural-db-proc-val",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, procedure_name,
-				    GIMP_PDB_INT32, val_num,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, procedure_name,
+                                    GIMP_PDB_INT32, val_num,
+                                    GIMP_PDB_END);
 
   *val_type = 0;
   *val_name = NULL;
@@ -357,17 +357,17 @@ gimp_procedural_db_proc_val (const gchar     *procedure_name,
  */
 gboolean
 _gimp_procedural_db_get_data (const gchar  *identifier,
-			      gint         *bytes,
-			      guint8      **data)
+                              gint         *bytes,
+                              guint8      **data)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-procedural-db-get-data",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, identifier,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, identifier,
+                                    GIMP_PDB_END);
 
   *bytes = 0;
   *data = NULL;
@@ -407,9 +407,9 @@ gimp_procedural_db_get_data_size (const gchar *identifier)
   gint bytes = 0;
 
   return_vals = gimp_run_procedure ("gimp-procedural-db-get-data-size",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, identifier,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, identifier,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     bytes = return_vals[1].data.d_int32;
@@ -435,19 +435,19 @@ gimp_procedural_db_get_data_size (const gchar *identifier)
  */
 gboolean
 _gimp_procedural_db_set_data (const gchar  *identifier,
-			      gint          bytes,
-			      const guint8 *data)
+                              gint          bytes,
+                              const guint8 *data)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-procedural-db-set-data",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, identifier,
-				    GIMP_PDB_INT32, bytes,
-				    GIMP_PDB_INT8ARRAY, data,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, identifier,
+                                    GIMP_PDB_INT32, bytes,
+                                    GIMP_PDB_INT8ARRAY, data,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 

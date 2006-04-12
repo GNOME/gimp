@@ -45,17 +45,17 @@
  */
 gboolean
 gimp_plugin_domain_register (const gchar *domain_name,
-			     const gchar *domain_path)
+                             const gchar *domain_path)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-plugin-domain-register",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, domain_name,
-				    GIMP_PDB_STRING, domain_path,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, domain_name,
+                                    GIMP_PDB_STRING, domain_path,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -79,17 +79,17 @@ gimp_plugin_domain_register (const gchar *domain_name,
  */
 gboolean
 gimp_plugin_help_register (const gchar *domain_name,
-			   const gchar *domain_uri)
+                           const gchar *domain_uri)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-plugin-help-register",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, domain_name,
-				    GIMP_PDB_STRING, domain_uri,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, domain_name,
+                                    GIMP_PDB_STRING, domain_uri,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -114,17 +114,17 @@ gimp_plugin_help_register (const gchar *domain_name,
  */
 gboolean
 gimp_plugin_menu_register (const gchar *procedure_name,
-			   const gchar *menu_path)
+                           const gchar *menu_path)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-plugin-menu-register",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, procedure_name,
-				    GIMP_PDB_STRING, menu_path,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, procedure_name,
+                                    GIMP_PDB_STRING, menu_path,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -149,17 +149,17 @@ gimp_plugin_menu_register (const gchar *procedure_name,
  */
 gboolean
 gimp_plugin_menu_branch_register (const gchar *menu_path,
-				  const gchar *menu_name)
+                                  const gchar *menu_name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-plugin-menu-branch-register",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, menu_path,
-				    GIMP_PDB_STRING, menu_name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, menu_path,
+                                    GIMP_PDB_STRING, menu_name,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -185,21 +185,21 @@ gimp_plugin_menu_branch_register (const gchar *menu_path,
  */
 gboolean
 _gimp_plugin_icon_register (const gchar  *procedure_name,
-			    GimpIconType  icon_type,
-			    gint          icon_data_length,
-			    const guint8 *icon_data)
+                            GimpIconType  icon_type,
+                            gint          icon_data_length,
+                            const guint8 *icon_data)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-plugin-icon-register",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, procedure_name,
-				    GIMP_PDB_INT32, icon_type,
-				    GIMP_PDB_INT32, icon_data_length,
-				    GIMP_PDB_INT8ARRAY, icon_data,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, procedure_name,
+                                    GIMP_PDB_INT32, icon_type,
+                                    GIMP_PDB_INT32, icon_data_length,
+                                    GIMP_PDB_INT8ARRAY, icon_data,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 

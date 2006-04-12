@@ -31,21 +31,21 @@ G_BEGIN_DECLS
 
 gboolean gimp_brushes_refresh        (void);
 gchar**  gimp_brushes_get_list       (const gchar           *filter,
-				      gint                  *num_brushes);
+                                      gint                  *num_brushes);
 #ifndef GIMP_DISABLE_DEPRECATED
 gchar*   gimp_brushes_get_brush      (gint                  *width,
-				      gint                  *height,
-				      gint                  *spacing);
+                                      gint                  *height,
+                                      gint                  *spacing);
 gint     gimp_brushes_get_spacing    (void);
 gboolean gimp_brushes_set_spacing    (gint                   spacing);
 gchar*   gimp_brushes_get_brush_data (const gchar           *name,
-				      gdouble               *opacity,
-				      gint                  *spacing,
-				      GimpLayerModeEffects  *paint_mode,
-				      gint                  *width,
-				      gint                  *height,
-				      gint                  *length,
-				      guint8               **mask_data);
+                                      gdouble               *opacity,
+                                      gint                  *spacing,
+                                      GimpLayerModeEffects  *paint_mode,
+                                      gint                  *width,
+                                      gint                  *height,
+                                      gint                  *length,
+                                      guint8               **mask_data);
 #endif /* GIMP_DISABLE_DEPRECATED */
 
 

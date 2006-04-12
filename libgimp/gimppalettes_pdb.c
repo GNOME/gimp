@@ -43,8 +43,8 @@ gimp_palettes_refresh (void)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-palettes-refresh",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -68,7 +68,7 @@ gimp_palettes_refresh (void)
  */
 gchar **
 gimp_palettes_get_list (const gchar *filter,
-			gint        *num_palettes)
+                        gint        *num_palettes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -76,9 +76,9 @@ gimp_palettes_get_list (const gchar *filter,
   gint i;
 
   return_vals = gimp_run_procedure ("gimp-palettes-get-list",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, filter,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, filter,
+                                    GIMP_PDB_END);
 
   *num_palettes = 0;
 
@@ -112,8 +112,8 @@ gimp_palettes_get_palette (gint *num_colors)
   gchar *name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-palettes-get-palette",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
@@ -140,19 +140,19 @@ gimp_palettes_get_palette (gint *num_colors)
  */
 gchar *
 gimp_palettes_get_palette_entry (const gchar *name,
-				 gint         entry_num,
-				 gint        *num_colors,
-				 GimpRGB     *color)
+                                 gint         entry_num,
+                                 gint        *num_colors,
+                                 GimpRGB     *color)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gchar *actual_name = NULL;
 
   return_vals = gimp_run_procedure ("gimp-palettes-get-palette-entry",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_INT32, entry_num,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_INT32, entry_num,
+                                    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {

@@ -39,19 +39,19 @@
  */
 gboolean
 gimp_palettes_popup (const gchar *palette_callback,
-		     const gchar *popup_title,
-		     const gchar *initial_palette)
+                     const gchar *popup_title,
+                     const gchar *initial_palette)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-palettes-popup",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, palette_callback,
-				    GIMP_PDB_STRING, popup_title,
-				    GIMP_PDB_STRING, initial_palette,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, palette_callback,
+                                    GIMP_PDB_STRING, popup_title,
+                                    GIMP_PDB_STRING, initial_palette,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -78,9 +78,9 @@ gimp_palettes_close_popup (const gchar *palette_callback)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-palettes-close-popup",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, palette_callback,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, palette_callback,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -102,17 +102,17 @@ gimp_palettes_close_popup (const gchar *palette_callback)
  */
 gboolean
 gimp_palettes_set_popup (const gchar *palette_callback,
-			 const gchar *palette_name)
+                         const gchar *palette_name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-palettes-set-popup",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, palette_callback,
-				    GIMP_PDB_STRING, palette_name,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, palette_callback,
+                                    GIMP_PDB_STRING, palette_name,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 

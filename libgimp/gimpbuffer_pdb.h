@@ -30,9 +30,9 @@ G_BEGIN_DECLS
 
 
 gchar**           gimp_buffers_get_list      (const gchar *filter,
-					      gint        *num_buffers);
+                                              gint        *num_buffers);
 gchar*            gimp_buffer_rename         (const gchar *buffer_name,
-					      const gchar *new_name);
+                                              const gchar *new_name);
 gboolean          gimp_buffer_delete         (const gchar *buffer_name);
 gint              gimp_buffer_get_width      (const gchar *buffer_name);
 gint              gimp_buffer_get_height     (const gchar *buffer_name);

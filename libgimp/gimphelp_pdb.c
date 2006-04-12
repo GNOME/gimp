@@ -43,17 +43,17 @@
  */
 gboolean
 gimp_help (const gchar *help_domain,
-	   const gchar *help_id)
+           const gchar *help_id)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-help",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, help_domain,
-				    GIMP_PDB_STRING, help_id,
-				    GIMP_PDB_END);
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, help_domain,
+                                    GIMP_PDB_STRING, help_id,
+                                    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
