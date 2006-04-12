@@ -235,11 +235,20 @@ gimp_new_rect_select_tool_button_release (GimpTool        *tool,
                                           GdkModifierType  state,
                                           GimpDisplay     *display)
 {
+  GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (tool);
+  guint              function;
+
+  g_object_get (rectangle,
+                "function", &function,
+                NULL);
+
   gimp_tool_pop_status (tool, display);
   gimp_tool_push_status (tool, display,
                          _("Click or press enter to create the selection."));
 
   gimp_rectangle_tool_button_release (tool, coords, time, state, display);
+  if (function >= RECT_RESIZING_UPPER_LEFT && function <= RECT_RESIZING_BOTTOM)
+    gimp_rectangle_tool_response (NULL, GIMP_RECTANGLE_MODE_EXECUTE, rectangle);
 }
 
 static void
