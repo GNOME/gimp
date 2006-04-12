@@ -35,6 +35,7 @@ Changes in GIMP 2.3.8
 - provide script-specific samples instead of hard-coding "Aa" for font preview
 - build the Screenshot plug-in on all platforms
 - allow to discard invisible layers when merging visible layers
+- nicer output from gimp-procedural-db-dump
 - bug fixes and code cleanup
 
 

@@ -209,6 +209,11 @@
 # 
 # (undo-preview-size large)
 
+# How many recently used plug-ins to keep on the Filters menu.  This is an
+# integer value.
+# 
+# (plug-in-history-size 10)
+
 # Sets the pluginrc search path.  This is a single filename.
 # 
 # (pluginrc-path "${gimp_dir}/pluginrc")
@@ -445,17 +450,17 @@
 # This is a parameter list.
 # 
 # (default-fullscreen-view
-#     (show-menubar no)
-#     (show-rulers no)
-#     (show-scrollbars no)
-#     (show-statusbar no)
-#     (show-selection no)
-#     (show-layer-boundary no)
-#     (show-guides no)
+#     (show-menubar yes)
+#     (show-rulers yes)
+#     (show-scrollbars yes)
+#     (show-statusbar yes)
+#     (show-selection yes)
+#     (show-layer-boundary yes)
+#     (show-guides yes)
 #     (show-grid no)
-#     (show-sample-points no)
-#     (padding-mode custom)
-#     (padding-color (color-rgba 0.000000 0.000000 0.000000 1.000000)))
+#     (show-sample-points yes)
+#     (padding-mode default)
+#     (padding-color (color-rgba 1.000000 1.000000 1.000000 1.000000)))
 
 # When enabled, an image will become the active image when its image window
 # receives the focus. This is useful for window managers using "click to
@@ -506,9 +511,10 @@
 # 
 # (show-tips yes)
 
-# Enable tooltips display.  Possible values are yes and no.
+# Show a tooltip when the pointer hovers over an item.  Possible values are
+# yes and no.
 # 
-# (show-tool-tips yes)
+# (show-tooltips yes)
 
 # When enabled, menus can be torn off.  Possible values are yes and no.
 # 
@@ -551,12 +557,12 @@
 # The toolbox-color-area property has no description.  Possible values are
 # yes and no.
 # 
-# (toolbox-color-area yes)
+# (toolbox-color-area no)
 
 # The toolbox-foo-area property has no description.  Possible values are yes
 # and no.
 # 
-# (toolbox-foo-area yes)
+# (toolbox-foo-area no)
 
 # The toolbox-image-area property has no description.  Possible values are
 # yes and no.
@@ -607,13 +613,13 @@
 # window manager decorates and handles the toolbox window.  Possible values
 # are normal, utility and keep-above.
 # 
-# (toolbox-window-hint normal)
+# (toolbox-window-hint utility)
 
 # The window type hint that is set on dock windows. This may affect the way
 # your window manager decorates and handles dock windows.  Possible values
 # are normal, utility and keep-above.
 # 
-# (dock-window-hint normal)
+# (dock-window-hint utility)
 
 # When enabled, dock windows (the toolbox and palettes) are set to be
 # transient to the active image window. Most window managers will keep the

@@ -263,6 +263,12 @@ Sets the size of the previews in the Undo History.  Possible values are tiny,
 extra-small, small, medium, large, extra-large, huge, enormous and gigantic.
 
 .TP
+(plug-in-history-size 10)
+
+How many recently used plug-ins to keep on the Filters menu.  This is an
+integer value.
+
+.TP
 (pluginrc-path "${gimp_dir}/pluginrc")
 
 Sets the pluginrc search path.  This is a single filename.
@@ -578,17 +584,17 @@ Sets the default settings for the image view.  This is a parameter list.
 
 .TP
 (default-fullscreen-view
-    (show-menubar no)
-    (show-rulers no)
-    (show-scrollbars no)
-    (show-statusbar no)
-    (show-selection no)
-    (show-layer-boundary no)
-    (show-guides no)
+    (show-menubar yes)
+    (show-rulers yes)
+    (show-scrollbars yes)
+    (show-statusbar yes)
+    (show-selection yes)
+    (show-layer-boundary yes)
+    (show-guides yes)
     (show-grid no)
-    (show-sample-points no)
-    (padding-mode custom)
-    (padding-color (color-rgba 0.000000 0.000000 0.000000 1.000000)))
+    (show-sample-points yes)
+    (padding-mode default)
+    (padding-color (color-rgba 1.000000 1.000000 1.000000 1.000000)))
 
 Sets the default settings used when an image is viewed in fullscreen mode. 
 This is a parameter list.
@@ -652,9 +658,10 @@ Enable displaying a handy GIMP tip on startup.  Possible values are yes and
 no.
 
 .TP
-(show-tool-tips yes)
+(show-tooltips yes)
 
-Enable tooltips display.  Possible values are yes and no.
+Show a tooltip when the pointer hovers over an item.  Possible values are yes
+and no.
 
 .TP
 (tearoff-menus yes)
@@ -702,13 +709,13 @@ specified in bytes, kilobytes, megabytes or gigabytes. If no suffix is
 specified the size defaults to being specified in kilobytes.
 
 .TP
-(toolbox-color-area yes)
+(toolbox-color-area no)
 
 The toolbox-color-area property has no description.  Possible values are yes
 and no.
 
 .TP
-(toolbox-foo-area yes)
+(toolbox-foo-area no)
 
 The toolbox-foo-area property has no description.  Possible values are yes and
 no.
@@ -766,14 +773,14 @@ contains '%s' it will be replaced with the URL, else the URL will be appended
 to the command with a space separating the two.  This is a single filename.
 
 .TP
-(toolbox-window-hint normal)
+(toolbox-window-hint utility)
 
 The window type hint that is set on the toolbox. This may affect how your
 window manager decorates and handles the toolbox window.  Possible values are
 normal, utility and keep-above.
 
 .TP
-(dock-window-hint normal)
+(dock-window-hint utility)
 
 The window type hint that is set on dock windows. This may affect the way your
 window manager decorates and handles dock windows.  Possible values are
