@@ -195,8 +195,9 @@ gimp_path_get_points (gint32        image_ID,
       *path_closed = return_vals[2].data.d_int32;
       *num_path_point_details = return_vals[3].data.d_int32;
       *points_pairs = g_new (gdouble, *num_path_point_details);
-      memcpy (*points_pairs, return_vals[4].data.d_floatarray,
-	      *num_path_point_details * sizeof (gdouble));
+      memcpy (*points_pairs,
+              return_vals[4].data.d_floatarray,
+              *num_path_point_details * sizeof (gdouble));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

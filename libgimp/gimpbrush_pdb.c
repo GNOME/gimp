@@ -333,13 +333,15 @@ gimp_brush_get_pixels (const gchar  *name,
       *mask_bpp = return_vals[3].data.d_int32;
       *num_mask_bytes = return_vals[4].data.d_int32;
       *mask_bytes = g_new (guint8, *num_mask_bytes);
-      memcpy (*mask_bytes, return_vals[5].data.d_int8array,
-	      *num_mask_bytes * sizeof (guint8));
+      memcpy (*mask_bytes,
+              return_vals[5].data.d_int8array,
+              *num_mask_bytes * sizeof (guint8));
       *color_bpp = return_vals[6].data.d_int32;
       *num_color_bytes = return_vals[7].data.d_int32;
       *color_bytes = g_new (guint8, *num_color_bytes);
-      memcpy (*color_bytes, return_vals[8].data.d_int8array,
-	      *num_color_bytes * sizeof (guint8));
+      memcpy (*color_bytes,
+              return_vals[8].data.d_int8array,
+              *num_color_bytes * sizeof (guint8));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

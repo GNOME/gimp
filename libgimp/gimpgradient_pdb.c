@@ -238,8 +238,9 @@ gimp_gradient_get_uniform_samples (const gchar  *name,
     {
       *num_color_samples = return_vals[1].data.d_int32;
       *color_samples = g_new (gdouble, *num_color_samples);
-      memcpy (*color_samples, return_vals[2].data.d_floatarray,
-	      *num_color_samples * sizeof (gdouble));
+      memcpy (*color_samples,
+              return_vals[2].data.d_floatarray,
+              *num_color_samples * sizeof (gdouble));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -298,8 +299,9 @@ gimp_gradient_get_custom_samples (const gchar    *name,
     {
       *num_color_samples = return_vals[1].data.d_int32;
       *color_samples = g_new (gdouble, *num_color_samples);
-      memcpy (*color_samples, return_vals[2].data.d_floatarray,
-	      *num_color_samples * sizeof (gdouble));
+      memcpy (*color_samples,
+              return_vals[2].data.d_floatarray,
+              *num_color_samples * sizeof (gdouble));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

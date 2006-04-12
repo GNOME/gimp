@@ -232,8 +232,9 @@ gimp_brushes_get_brush_data (const gchar           *name,
       *height = return_vals[6].data.d_int32;
       *length = return_vals[7].data.d_int32;
       *mask_data = g_new (guint8, *length);
-      memcpy (*mask_data, return_vals[8].data.d_int8array,
-	      *length * sizeof (guint8));
+      memcpy (*mask_data,
+              return_vals[8].data.d_int8array,
+              *length * sizeof (guint8));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

@@ -55,8 +55,9 @@ gimp_image_list (gint *num_images)
     {
       *num_images = return_vals[1].data.d_int32;
       image_ids = g_new (gint32, *num_images);
-      memcpy (image_ids, return_vals[2].data.d_int32array,
-	      *num_images * sizeof (gint32));
+      memcpy (image_ids,
+              return_vals[2].data.d_int32array,
+              *num_images * sizeof (gint32));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -559,8 +560,9 @@ gimp_image_get_layers (gint32  image_ID,
     {
       *num_layers = return_vals[1].data.d_int32;
       layer_ids = g_new (gint32, *num_layers);
-      memcpy (layer_ids, return_vals[2].data.d_int32array,
-	      *num_layers * sizeof (gint32));
+      memcpy (layer_ids,
+              return_vals[2].data.d_int32array,
+              *num_layers * sizeof (gint32));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -600,8 +602,9 @@ gimp_image_get_channels (gint32  image_ID,
     {
       *num_channels = return_vals[1].data.d_int32;
       channel_ids = g_new (gint32, *num_channels);
-      memcpy (channel_ids, return_vals[2].data.d_int32array,
-	      *num_channels * sizeof (gint32));
+      memcpy (channel_ids,
+              return_vals[2].data.d_int32array,
+              *num_channels * sizeof (gint32));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -642,8 +645,9 @@ gimp_image_get_vectors (gint32  image_ID,
     {
       *num_vectors = return_vals[1].data.d_int32;
       vector_ids = g_new (gint32, *num_vectors);
-      memcpy (vector_ids, return_vals[2].data.d_int32array,
-	      *num_vectors * sizeof (gint32));
+      memcpy (vector_ids,
+              return_vals[2].data.d_int32array,
+              *num_vectors * sizeof (gint32));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -1598,8 +1602,9 @@ _gimp_image_get_colormap (gint32  image_ID,
     {
       *num_bytes = return_vals[1].data.d_int32;
       colormap = g_new (guint8, *num_bytes);
-      memcpy (colormap, return_vals[2].data.d_int8array,
-	      *num_bytes * sizeof (guint8));
+      memcpy (colormap,
+              return_vals[2].data.d_int8array,
+              *num_bytes * sizeof (guint8));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -1769,8 +1774,9 @@ _gimp_image_thumbnail (gint32   image_ID,
       *bpp = return_vals[3].data.d_int32;
       *thumbnail_data_count = return_vals[4].data.d_int32;
       *thumbnail_data = g_new (guint8, *thumbnail_data_count);
-      memcpy (*thumbnail_data, return_vals[5].data.d_int8array,
-	      *thumbnail_data_count * sizeof (guint8));
+      memcpy (*thumbnail_data,
+              return_vals[5].data.d_int8array,
+              *thumbnail_data_count * sizeof (guint8));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

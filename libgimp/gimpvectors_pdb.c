@@ -392,8 +392,9 @@ gimp_vectors_get_strokes (gint32  vectors_ID,
     {
       *num_strokes = return_vals[1].data.d_int32;
       stroke_ids = g_new (gint32, *num_strokes);
-      memcpy (stroke_ids, return_vals[2].data.d_int32array,
-	      *num_strokes * sizeof (gint32));
+      memcpy (stroke_ids,
+              return_vals[2].data.d_int32array,
+              *num_strokes * sizeof (gint32));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -685,8 +686,9 @@ gimp_vectors_stroke_interpolate (gint32    vectors_ID,
       closed = return_vals[1].data.d_int32;
       *num_coords = return_vals[2].data.d_int32;
       *coords = g_new (gdouble, *num_coords);
-      memcpy (*coords, return_vals[3].data.d_floatarray,
-	      *num_coords * sizeof (gdouble));
+      memcpy (*coords,
+              return_vals[3].data.d_floatarray,
+              *num_coords * sizeof (gdouble));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

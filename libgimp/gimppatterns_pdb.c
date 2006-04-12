@@ -171,8 +171,9 @@ gimp_patterns_get_pattern_data (const gchar  *name,
       *mask_bpp = return_vals[4].data.d_int32;
       *length = return_vals[5].data.d_int32;
       *mask_data = g_new (guint8, *length);
-      memcpy (*mask_data, return_vals[6].data.d_int8array,
-	      *length * sizeof (guint8));
+      memcpy (*mask_data,
+              return_vals[6].data.d_int8array,
+              *length * sizeof (guint8));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

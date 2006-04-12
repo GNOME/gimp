@@ -127,8 +127,9 @@ gimp_pattern_get_pixels (const gchar  *name,
       *bpp = return_vals[3].data.d_int32;
       *num_color_bytes = return_vals[4].data.d_int32;
       *color_bytes = g_new (guint8, *num_color_bytes);
-      memcpy (*color_bytes, return_vals[5].data.d_int8array,
-	      *num_color_bytes * sizeof (guint8));
+      memcpy (*color_bytes,
+              return_vals[5].data.d_int8array,
+              *num_color_bytes * sizeof (guint8));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

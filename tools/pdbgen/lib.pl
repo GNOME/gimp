@@ -326,8 +326,9 @@ NEW
       for (i = 0; i < $numvar; i++)
 	$dh$_->{name}$df\[i] = ${ch}return_vals[$argc].data.d_$type\[i]${cf};
 CP1
-      memcpy ($var, return_vals[$argc].data.d_$type,
-	      $numvar * sizeof ($datatype));
+      memcpy ($var,
+              return_vals[$argc].data.d_$type,
+              $numvar * sizeof ($datatype));
 CP2
 		    $out->{headers} = "#include <string.h>\n" unless ($ch || $cf);
                 }

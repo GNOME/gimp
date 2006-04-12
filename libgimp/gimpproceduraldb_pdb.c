@@ -378,8 +378,9 @@ _gimp_procedural_db_get_data (const gchar  *identifier,
     {
       *bytes = return_vals[1].data.d_int32;
       *data = g_new (guint8, *bytes);
-      memcpy (*data, return_vals[2].data.d_int8array,
-	      *bytes * sizeof (guint8));
+      memcpy (*data,
+              return_vals[2].data.d_int8array,
+              *bytes * sizeof (guint8));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

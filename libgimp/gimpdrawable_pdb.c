@@ -1012,8 +1012,9 @@ gimp_drawable_get_pixel (gint32  drawable_ID,
     {
       *num_channels = return_vals[1].data.d_int32;
       pixel = g_new (guint8, *num_channels);
-      memcpy (pixel, return_vals[2].data.d_int8array,
-	      *num_channels * sizeof (guint8));
+      memcpy (pixel,
+              return_vals[2].data.d_int8array,
+              *num_channels * sizeof (guint8));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -1210,8 +1211,9 @@ _gimp_drawable_thumbnail (gint32   drawable_ID,
       *bpp = return_vals[3].data.d_int32;
       *thumbnail_data_count = return_vals[4].data.d_int32;
       *thumbnail_data = g_new (guint8, *thumbnail_data_count);
-      memcpy (*thumbnail_data, return_vals[5].data.d_int8array,
-	      *thumbnail_data_count * sizeof (guint8));
+      memcpy (*thumbnail_data,
+              return_vals[5].data.d_int8array,
+              *thumbnail_data_count * sizeof (guint8));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -1289,8 +1291,9 @@ _gimp_drawable_sub_thumbnail (gint32   drawable_ID,
       *bpp = return_vals[3].data.d_int32;
       *thumbnail_data_count = return_vals[4].data.d_int32;
       *thumbnail_data = g_new (guint8, *thumbnail_data_count);
-      memcpy (*thumbnail_data, return_vals[5].data.d_int8array,
-	      *thumbnail_data_count * sizeof (guint8));
+      memcpy (*thumbnail_data,
+              return_vals[5].data.d_int8array,
+              *thumbnail_data_count * sizeof (guint8));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
