@@ -165,18 +165,9 @@ gimp_pdb_init_procs (Gimp *gimp)
     { "gimp-layer-set-preserve-trans",   "gimp-drawable-set-lock-alpha"    }
   };
 
-  GTimer *timer;
-
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  timer = g_timer_new ();
-  g_timer_start (timer);
-
   internal_procs_init (gimp);
-
-  g_printerr ("internal_procs_init took %f secs\n",
-              g_timer_elapsed (timer, NULL));
-  g_timer_destroy (timer);
 
   if (gimp->pdb_compat_mode != GIMP_PDB_COMPAT_OFF)
     {

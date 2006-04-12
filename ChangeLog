@@ -1,3 +1,7 @@
+2006-04-12  Sven Neumann  <sven@gimp.org>
+
+	* app/pdb/gimp-pdb.c (gimp_pdb_init_procs): removed profiling code.
+
 2006-04-11  Carol Spears  <carol@gimp.org>
 
 	* data/images/gimp-splash.png: new splash, nicknamed "Where's
