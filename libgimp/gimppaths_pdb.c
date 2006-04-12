@@ -57,7 +57,7 @@ gimp_path_list (gint32  image_ID,
       *num_paths = return_vals[1].data.d_int32;
       path_list = g_new (gchar *, *num_paths);
       for (i = 0; i < *num_paths; i++)
-	path_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+        path_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

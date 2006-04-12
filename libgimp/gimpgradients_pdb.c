@@ -89,7 +89,7 @@ gimp_gradients_get_list (const gchar *filter,
       *num_gradients = return_vals[1].data.d_int32;
       gradient_list = g_new (gchar *, *num_gradients);
       for (i = 0; i < *num_gradients; i++)
-	gradient_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+        gradient_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

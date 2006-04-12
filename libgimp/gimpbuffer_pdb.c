@@ -60,7 +60,7 @@ gimp_buffers_get_list (const gchar *filter,
       *num_buffers = return_vals[1].data.d_int32;
       buffer_list = g_new (gchar *, *num_buffers);
       for (i = 0; i < *num_buffers; i++)
-	buffer_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+        buffer_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

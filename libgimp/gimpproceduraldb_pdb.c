@@ -157,7 +157,7 @@ gimp_procedural_db_query (const gchar   *name,
       *num_matches = return_vals[1].data.d_int32;
       *procedure_names = g_new (gchar *, *num_matches);
       for (i = 0; i < *num_matches; i++)
-	(*procedure_names)[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+        (*procedure_names)[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

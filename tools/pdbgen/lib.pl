@@ -324,7 +324,7 @@ CODE
       $var = g_new ($datatype, $numvar);
 NEW
       for (i = 0; i < $numvar; i++)
-	$dh$_->{name}$df\[i] = ${ch}return_vals[$argc].data.d_$type\[i]${cf};
+        $dh$_->{name}$df\[i] = ${ch}return_vals[$argc].data.d_$type\[i]${cf};
 CP1
       memcpy ($var,
               return_vals[$argc].data.d_$type,

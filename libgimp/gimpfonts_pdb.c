@@ -86,7 +86,7 @@ gimp_fonts_get_list (const gchar *filter,
       *num_fonts = return_vals[1].data.d_int32;
       font_list = g_new (gchar *, *num_fonts);
       for (i = 0; i < *num_fonts; i++)
-	font_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+        font_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

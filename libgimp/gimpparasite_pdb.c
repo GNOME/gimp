@@ -150,7 +150,7 @@ gimp_parasite_list (gint    *num_parasites,
       *num_parasites = return_vals[1].data.d_int32;
       *parasites = g_new (gchar *, *num_parasites);
       for (i = 0; i < *num_parasites; i++)
-	(*parasites)[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+        (*parasites)[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -295,7 +295,7 @@ gimp_image_parasite_list (gint32    image_ID,
       *num_parasites = return_vals[1].data.d_int32;
       *parasites = g_new (gchar *, *num_parasites);
       for (i = 0; i < *num_parasites; i++)
-	(*parasites)[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+        (*parasites)[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -440,7 +440,7 @@ gimp_drawable_parasite_list (gint32    drawable_ID,
       *num_parasites = return_vals[1].data.d_int32;
       *parasites = g_new (gchar *, *num_parasites);
       for (i = 0; i < *num_parasites; i++)
-	(*parasites)[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+        (*parasites)[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -593,7 +593,7 @@ gimp_vectors_parasite_list (gint32    vectors_ID,
       *num_parasites = return_vals[1].data.d_int32;
       *parasites = g_new (gchar *, *num_parasites);
       for (i = 0; i < *num_parasites; i++)
-	(*parasites)[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+        (*parasites)[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
