@@ -228,12 +228,12 @@ gimp_channel_class_init (GimpChannelClass *klass)
 
   channel_signals[COLOR_CHANGED] =
     g_signal_new ("color-changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpChannelClass, color_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpChannelClass, color_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   object_class->finalize           = gimp_channel_finalize;
 
@@ -826,7 +826,7 @@ gimp_channel_get_opacity_at (GimpPickable *pickable,
   if (channel->bounds_known)
     {
       if (channel->empty)
-	return 0;
+        return 0;
       else if (x < channel->x1 || x >= channel->x2 ||
                y < channel->y1 || y >= channel->y2)
         return 0;
@@ -1323,7 +1323,7 @@ gimp_channel_real_border (GimpChannel *channel,
     gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (channel));
 
   pixel_region_init (&bPR, GIMP_DRAWABLE (channel)->tiles, x1, y1,
-		     (x2-x1), (y2-y1), TRUE);
+                     (x2-x1), (y2-y1), TRUE);
 
   border_region (&bPR, radius_x, radius_y);
 

@@ -107,7 +107,7 @@ GType         gimp_tool_get_type           (void) G_GNUC_CONST;
 
 gboolean      gimp_tool_initialize         (GimpTool            *tool,
                                             GimpDisplay         *display);
-void	      gimp_tool_control            (GimpTool            *tool,
+void              gimp_tool_control            (GimpTool            *tool,
                                             GimpToolAction       action,
                                             GimpDisplay         *display);
 

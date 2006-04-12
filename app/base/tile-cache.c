@@ -95,8 +95,8 @@ tile_cache_init (gulong tile_cache_size)
       preswap_thread = g_thread_create (&tile_idle_thread, NULL, FALSE, NULL);
 #else
       idle_swapper = g_timeout_add (IDLE_SWAPPER_TIMEOUT,
-				    tile_idle_preswap,
-				    NULL);
+                                    tile_idle_preswap,
+                                    NULL);
 #endif
     }
 }
@@ -134,17 +134,17 @@ tile_cache_insert (Tile *tile)
   if (list)
     {
       /* Tile is in the cache.  Remove it from its current list and
-	 put it at the tail of the proper list (clean or dirty) */
+         put it at the tail of the proper list (clean or dirty) */
 
       if (tile->next)
-	tile->next->prev = tile->prev;
+        tile->next->prev = tile->prev;
       else
-	list->last = tile->prev;
+        list->last = tile->prev;
 
       if (tile->prev)
-	tile->prev->next = tile->next;
+        tile->prev->next = tile->next;
       else
-	list->first = tile->next;
+        list->first = tile->next;
 
       tile->listhead = NULL;
 
@@ -160,13 +160,13 @@ tile_cache_insert (Tile *tile)
        *  it won't be possible to put it in the cache.
        */
       while ((cur_cache_size + max_tile_size) > max_cache_size)
-	{
-	  if (! tile_cache_zorch_next ())
-	    {
-	      g_warning ("cache: unable to find room for a tile");
-	      goto out;
-	    }
-	}
+        {
+          if (! tile_cache_zorch_next ())
+            {
+              g_warning ("cache: unable to find room for a tile");
+              goto out;
+            }
+        }
 
       cur_cache_size += tile->size;
     }
@@ -232,14 +232,14 @@ tile_cache_flush_internal (Tile *tile)
         cur_cache_dirty -= tile->size;
 
       if (tile->next)
-	tile->next->prev = tile->prev;
+        tile->next->prev = tile->prev;
       else
-	list->last = tile->prev;
+        list->last = tile->prev;
 
       if (tile->prev)
-	tile->prev->next = tile->next;
+        tile->prev->next = tile->next;
       else
-	list->first = tile->next;
+        list->first = tile->next;
 
       tile->listhead = NULL;
     }
@@ -256,7 +256,7 @@ tile_cache_set_size (gulong cache_size)
   while (cur_cache_size > max_cache_size)
     {
       if (!tile_cache_zorch_next ())
-	break;
+        break;
     }
 
   CACHE_UNLOCK;
@@ -319,67 +319,67 @@ tile_idle_thread (gpointer data)
       CACHE_LOCK;
 
       if (count > 5 || dirty_list.first == NULL)
-	{
-	  CACHE_UNLOCK;
+        {
+          CACHE_UNLOCK;
 
-	  count = 0;
+          count = 0;
 
-	  g_mutex_lock (dirty_mutex);
-	  g_cond_wait (dirty_signal, dirty_mutex);
-	  g_mutex_unlock (dirty_mutex);
+          g_mutex_lock (dirty_mutex);
+          g_cond_wait (dirty_signal, dirty_mutex);
+          g_mutex_unlock (dirty_mutex);
 
-	  CACHE_LOCK;
-	}
+          CACHE_LOCK;
+        }
 
       if ((tile = dirty_list.first))
-	{
-	  CACHE_UNLOCK;
-	  TILE_MUTEX_LOCK (tile);
-	  CACHE_LOCK;
+        {
+          CACHE_UNLOCK;
+          TILE_MUTEX_LOCK (tile);
+          CACHE_LOCK;
 
-	  if (tile->dirty || tile->swap_offset == -1)
-	    {
-	      list = tile->listhead;
+          if (tile->dirty || tile->swap_offset == -1)
+            {
+              list = tile->listhead;
 
-	      if (list == &dirty_list)
+              if (list == &dirty_list)
                 cur_cache_dirty -= tile->size;
 
-	      if (tile->next)
-		tile->next->prev = tile->prev;
-	      else
-		list->last = tile->prev;
+              if (tile->next)
+                tile->next->prev = tile->prev;
+              else
+                list->last = tile->prev;
 
-	      if (tile->prev)
-		tile->prev->next = tile->next;
-	      else
-		list->first = tile->next;
+              if (tile->prev)
+                tile->prev->next = tile->next;
+              else
+                list->first = tile->next;
 
-	      tile->next = NULL;
-	      tile->prev = clean_list.last;
-	      tile->listhead = &clean_list;
+              tile->next = NULL;
+              tile->prev = clean_list.last;
+              tile->listhead = &clean_list;
 
-	      if (clean_list.last)
+              if (clean_list.last)
                 clean_list.last->next = tile;
-	      else
+              else
                 clean_list.first = tile;
 
               clean_list.last = tile;
 
-	      CACHE_UNLOCK;
+              CACHE_UNLOCK;
 
-	      tile_swap_out (tile);
-	    }
-	  else
-	    {
-	      CACHE_UNLOCK;
-	    }
+              tile_swap_out (tile);
+            }
+          else
+            {
+              CACHE_UNLOCK;
+            }
 
-	  TILE_MUTEX_UNLOCK (tile);
-	}
+          TILE_MUTEX_UNLOCK (tile);
+        }
       else
-	{
-	  CACHE_UNLOCK;
-	}
+        {
+          CACHE_UNLOCK;
+        }
 
       count++;
     }
@@ -402,9 +402,9 @@ tile_idle_preswap (gpointer data)
       dirty_list.first = tile->next;
 
       if (tile->next)
-	tile->next->prev = NULL;
+        tile->next->prev = NULL;
       else
-	dirty_list.last = NULL;
+        dirty_list.last = NULL;
 
       tile->next = NULL;
       tile->prev = clean_list.last;

@@ -152,8 +152,8 @@ gimp_menu_dock_init (GimpMenuDock *dock)
   gtk_widget_show (dock->image_combo);
 
   g_signal_connect (dock->image_combo, "destroy",
-		    G_CALLBACK (gtk_widget_destroyed),
-		    &dock->image_combo);
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &dock->image_combo);
 
   gimp_help_set_help_data (dock->image_combo, NULL, GIMP_HELP_DOCK_IMAGE_MENU);
 
@@ -397,10 +397,10 @@ gimp_menu_dock_new (GimpDialogFactory *dialog_factory,
                      GIMP_HELP_DOCK, NULL);
 
   gimp_context_define_properties (context,
-				  GIMP_CONTEXT_ALL_PROPS_MASK &
-				  ~(GIMP_CONTEXT_IMAGE_MASK |
-				    GIMP_CONTEXT_DISPLAY_MASK),
-				  FALSE);
+                                  GIMP_CONTEXT_ALL_PROPS_MASK &
+                                  ~(GIMP_CONTEXT_IMAGE_MASK |
+                                    GIMP_CONTEXT_DISPLAY_MASK),
+                                  FALSE);
   gimp_context_set_parent (context, dialog_factory->context);
 
   if (menu_dock->auto_follow_active)
@@ -414,18 +414,18 @@ gimp_menu_dock_new (GimpDialogFactory *dialog_factory,
     }
 
   g_signal_connect_object (dialog_factory->context, "display-changed",
-			   G_CALLBACK (gimp_menu_dock_factory_display_changed),
-			   menu_dock,
-			   0);
+                           G_CALLBACK (gimp_menu_dock_factory_display_changed),
+                           menu_dock,
+                           0);
   g_signal_connect_object (dialog_factory->context, "image-changed",
-			   G_CALLBACK (gimp_menu_dock_factory_image_changed),
-			   menu_dock,
-			   0);
+                           G_CALLBACK (gimp_menu_dock_factory_image_changed),
+                           menu_dock,
+                           0);
 
   g_signal_connect_object (context, "image-changed",
-			   G_CALLBACK (gimp_menu_dock_image_changed),
-			   menu_dock,
-			   0);
+                           G_CALLBACK (gimp_menu_dock_image_changed),
+                           menu_dock,
+                           0);
 
   settings = gtk_widget_get_settings (GTK_WIDGET (menu_dock));
   gtk_icon_size_lookup_for_settings (settings,
@@ -448,7 +448,7 @@ gimp_menu_dock_set_auto_follow_active (GimpMenuDock *menu_dock,
   g_return_if_fail (GIMP_IS_MENU_DOCK (menu_dock));
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (menu_dock->auto_button),
-				auto_follow_active ? TRUE : FALSE);
+                                auto_follow_active ? TRUE : FALSE);
 }
 
 void
@@ -565,17 +565,17 @@ gimp_menu_dock_image_changed (GimpContext *context,
                                                               0));
 
       if (image)
-	{
-	  /*  this invokes this function recursively but we don't enter
-	   *  the if() branch the second time
-	   */
-	  gimp_context_set_image (context, image);
+        {
+          /*  this invokes this function recursively but we don't enter
+           *  the if() branch the second time
+           */
+          gimp_context_set_image (context, image);
 
-	  /*  stop the emission of the original signal (the emission of
-	   *  the recursive signal is finished)
-	   */
-	  g_signal_stop_emission_by_name (context, "image-changed");
-	}
+          /*  stop the emission of the original signal (the emission of
+           *  the recursive signal is finished)
+           */
+          g_signal_stop_emission_by_name (context, "image-changed");
+        }
     }
   else if (image != NULL && ! gimp_container_is_empty (display_container))
     {

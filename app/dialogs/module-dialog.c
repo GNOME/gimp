@@ -142,10 +142,10 @@ module_dialog_new (Gimp *gimp)
 
   listbox = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (listbox),
-				       GTK_SHADOW_IN);
+                                       GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (listbox),
-				  GTK_POLICY_AUTOMATIC,
-				  GTK_POLICY_AUTOMATIC);
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (vbox), listbox, TRUE, TRUE, 0);
   gtk_widget_set_size_request (listbox, 125, 100);
   gtk_widget_show (listbox);
@@ -340,7 +340,7 @@ dialog_load_unload_callback (GtkWidget    *widget,
 
 static void
 make_list_item (gpointer data,
-		gpointer user_data)
+                gpointer user_data)
 {
   GimpModule   *module  = data;
   ModuleDialog *dialog = user_data;
@@ -351,10 +351,10 @@ make_list_item (gpointer data,
 
   gtk_list_store_append (dialog->list, &iter);
   gtk_list_store_set (dialog->list, &iter,
-		      PATH_COLUMN, module->filename,
+                      PATH_COLUMN, module->filename,
                       AUTO_COLUMN, ! module->load_inhibit,
-		      MODULE_COLUMN, module,
-		      -1);
+                      MODULE_COLUMN, module,
+                      -1);
 }
 
 static void
@@ -381,19 +381,19 @@ dialog_info_remove (GimpModuleDB *db,
   do
     {
       gtk_tree_model_get (GTK_TREE_MODEL (dialog->list), &iter,
-			  MODULE_COLUMN, &module,
-			  -1);
+                          MODULE_COLUMN, &module,
+                          -1);
 
       if (module == mod)
-	{
-	  gtk_list_store_remove (dialog->list, &iter);
-	  return;
-	}
+        {
+          gtk_list_store_remove (dialog->list, &iter);
+          return;
+        }
     }
   while (gtk_tree_model_iter_next (GTK_TREE_MODEL (dialog->list), &iter));
 
   g_warning ("%s: Tried to remove a module not in the dialog's list.",
-	     G_STRFUNC);
+             G_STRFUNC);
 }
 
 static void
@@ -414,7 +414,7 @@ dialog_info_update (GimpModuleDB *db,
   if (! module)
     {
       for (i = 0; i < NUM_INFO_LINES; i++)
-	gtk_label_set_text (GTK_LABEL (dialog->label[i]), "");
+        gtk_label_set_text (GTK_LABEL (dialog->label[i]), "");
       gtk_label_set_text (GTK_LABEL (dialog->button_label), _("<No modules>"));
       gtk_widget_set_sensitive (GTK_WIDGET (dialog->button), FALSE);
       return;
@@ -512,14 +512,14 @@ dialog_info_init (ModuleDialog *dialog,
       label = gtk_label_new (gettext (text[i]));
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, i, i + 1,
-			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
+                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
       gtk_widget_show (label);
 
       dialog->label[i] = gtk_label_new ("");
       gtk_misc_set_alignment (GTK_MISC (dialog->label[i]), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (dialog->table), dialog->label[i],
                         1, 2, i, i + 1,
-			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
+                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
       gtk_widget_show (dialog->label[i]);
     }
 }

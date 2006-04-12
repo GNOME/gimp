@@ -35,9 +35,9 @@
 
 static guchar * temp_buf_allocate (guint    size);
 static void     temp_buf_to_color (TempBuf *src_buf,
-				   TempBuf *dest_buf);
+                                   TempBuf *dest_buf);
 static void     temp_buf_to_gray  (TempBuf *src_buf,
-				   TempBuf *dest_buf);
+                                   TempBuf *dest_buf);
 
 
 /*  Memory management  */
@@ -53,7 +53,7 @@ temp_buf_allocate (guint size)
 
 static void
 temp_buf_to_color (TempBuf *src_buf,
-		   TempBuf *dest_buf)
+                   TempBuf *dest_buf)
 {
   guchar *src;
   guchar *dest;
@@ -98,7 +98,7 @@ temp_buf_to_color (TempBuf *src_buf,
 
 static void
 temp_buf_to_gray (TempBuf *src_buf,
-		  TempBuf *dest_buf)
+                  TempBuf *dest_buf)
 {
   guchar *src;
   guchar *dest;
@@ -144,11 +144,11 @@ temp_buf_to_gray (TempBuf *src_buf,
 
 TempBuf *
 temp_buf_new (gint    width,
-	      gint    height,
-	      gint    bytes,
-	      gint    x,
-	      gint    y,
-	      guchar *col)
+              gint    height,
+              gint    bytes,
+              gint    x,
+              gint    y,
+              guchar *col)
 {
   glong    i;
   guchar  *data;
@@ -214,9 +214,9 @@ temp_buf_new (gint    width,
 
 TempBuf *
 temp_buf_new_check (gint           width,
-		    gint           height,
-		    GimpCheckType  check_type,
-	            GimpCheckSize  check_size)
+                    gint           height,
+                    GimpCheckType  check_type,
+                    GimpCheckSize  check_size)
 {
   TempBuf *newbuf;
   guchar  *data;
@@ -255,7 +255,7 @@ temp_buf_new_check (gint           width,
       guchar color = (check_dark & 0x1) ? check_light : check_dark;
 
       for (x = 0; x < width; x++)
-	{
+        {
           *data++ = color;
           *data++ = color;
           *data++ = color;
@@ -273,7 +273,7 @@ temp_buf_new_check (gint           width,
 
 TempBuf *
 temp_buf_copy (TempBuf *src,
-	       TempBuf *dest)
+               TempBuf *dest)
 {
   glong length;
 
@@ -311,11 +311,11 @@ temp_buf_copy (TempBuf *src,
 
 TempBuf *
 temp_buf_resize (TempBuf *buf,
-		 gint     bytes,
-		 gint     x,
-		 gint     y,
-		 gint     width,
-		 gint     height)
+                 gint     bytes,
+                 gint     x,
+                 gint     y,
+                 gint     width,
+                 gint     height)
 {
   g_return_val_if_fail (width > 0 && height > 0, NULL);
 
@@ -346,8 +346,8 @@ temp_buf_resize (TempBuf *buf,
 
 TempBuf *
 temp_buf_scale (TempBuf *src,
-		gint     new_width,
-		gint     new_height)
+                gint     new_width,
+                gint     new_height)
 {
   gint     loop1;
   gint     loop2;
@@ -361,9 +361,9 @@ temp_buf_scale (TempBuf *src,
   g_return_val_if_fail (new_width > 0 && new_height > 0, NULL);
 
   dest = temp_buf_new (new_width,
-		       new_height,
-		       src->bytes,
-		       0, 0, NULL);
+                       new_height,
+                       src->bytes,
+                       0, 0, NULL);
 
   src_data  = temp_buf_data (src);
   dest_data = temp_buf_data (dest);
@@ -374,21 +374,21 @@ temp_buf_scale (TempBuf *src,
   for (loop1 = 0 ; loop1 < new_height ; loop1++)
     {
       for (loop2 = 0 ; loop2 < new_width ; loop2++)
-	{
-	  gint    i;
-	  guchar *src_pixel;
-	  guchar *dest_pixel;
+        {
+          gint    i;
+          guchar *src_pixel;
+          guchar *dest_pixel;
 
-	  src_pixel = src_data +
-	    (gint) (loop2 * x_ratio) * src->bytes +
-	    (gint) (loop1 * y_ratio) * src->bytes * src->width;
+          src_pixel = src_data +
+            (gint) (loop2 * x_ratio) * src->bytes +
+            (gint) (loop1 * y_ratio) * src->bytes * src->width;
 
-	  dest_pixel = dest_data +
-	    (loop2 + loop1 * new_width) * src->bytes;
+          dest_pixel = dest_data +
+            (loop2 + loop1 * new_width) * src->bytes;
 
-	  for (i = 0 ; i < src->bytes; i++)
-	    *dest_pixel++ = *src_pixel++;
-	}
+          for (i = 0 ; i < src->bytes; i++)
+            *dest_pixel++ = *src_pixel++;
+        }
     }
 
   return dest;
@@ -396,13 +396,13 @@ temp_buf_scale (TempBuf *src,
 
 TempBuf *
 temp_buf_copy_area (TempBuf *src,
-		    TempBuf *dest,
-		    gint     x,
-		    gint     y,
-		    gint     width,
-		    gint     height,
-		    gint     dest_x,
-		    gint     dest_y)
+                    TempBuf *dest,
+                    gint     x,
+                    gint     y,
+                    gint     width,
+                    gint     height,
+                    gint     dest_x,
+                    gint     dest_y)
 {
   TempBuf     *new;
   PixelRegion  srcPR  = { 0, };
@@ -434,10 +434,10 @@ temp_buf_copy_area (TempBuf *src,
   if (! dest)
     {
       new = temp_buf_new (width  + dest_x,
-			  height + dest_y,
-			  src->bytes,
-			  0, 0,
-			  empty);
+                          height + dest_y,
+                          src->bytes,
+                          0, 0,
+                          empty);
     }
   else
     {
@@ -476,7 +476,7 @@ temp_buf_data_clear (TempBuf *temp_buf)
   g_return_val_if_fail (temp_buf != NULL, NULL);
 
   memset (temp_buf->data, 0,
-	  temp_buf->height * temp_buf->width * temp_buf->bytes);
+          temp_buf->height * temp_buf->width * temp_buf->bytes);
 
   return temp_buf->data;
 }
@@ -502,7 +502,7 @@ temp_buf_get_memsize (TempBuf *temp_buf)
 
 MaskBuf *
 mask_buf_new (gint width,
-	      gint height)
+              gint height)
 {
   static guchar empty = 0;
 

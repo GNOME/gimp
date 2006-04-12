@@ -34,10 +34,10 @@
 
 void
 gimp_channel_add_segment (GimpChannel *mask,
-			  gint         x,
-			  gint         y,
-			  gint         width,
-			  gint         value)
+                          gint         x,
+                          gint         y,
+                          gint         width,
+                          gint         value)
 {
   PixelRegion  maskPR;
   guchar      *data;
@@ -59,7 +59,7 @@ gimp_channel_add_segment (GimpChannel *mask,
     return;
 
   pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
-		     x, y, width, 1, TRUE);
+                     x, y, width, 1, TRUE);
 
   for (pr = pixel_regions_register (1, &maskPR);
        pr != NULL;
@@ -68,21 +68,21 @@ gimp_channel_add_segment (GimpChannel *mask,
       data = maskPR.data;
       width = maskPR.w;
       while (width--)
-	{
-	  val = *data + value;
-	  if (val > 255)
-	    val = 255;
-	  *data++ = val;
-	}
+        {
+          val = *data + value;
+          if (val > 255)
+            val = 255;
+          *data++ = val;
+        }
     }
 }
 
 void
 gimp_channel_sub_segment (GimpChannel *mask,
-			  gint         x,
-			  gint         y,
-			  gint         width,
-			  gint         value)
+                          gint         x,
+                          gint         y,
+                          gint         width,
+                          gint         value)
 {
   PixelRegion  maskPR;
   guchar      *data;
@@ -114,22 +114,22 @@ gimp_channel_sub_segment (GimpChannel *mask,
       data = maskPR.data;
       width = maskPR.w;
       while (width--)
-	{
-	  val = *data - value;
-	  if (val < 0)
-	    val = 0;
-	  *data++ = val;
-	}
+        {
+          val = *data - value;
+          if (val < 0)
+            val = 0;
+          *data++ = val;
+        }
     }
 }
 
 void
 gimp_channel_combine_rect (GimpChannel    *mask,
-			   GimpChannelOps  op,
-			   gint            x,
-			   gint            y,
-			   gint            w,
-			   gint            h)
+                           GimpChannelOps  op,
+                           gint            x,
+                           gint            y,
+                           gint            w,
+                           gint            h)
 {
   PixelRegion maskPR;
   guchar      color;
@@ -144,7 +144,7 @@ gimp_channel_combine_rect (GimpChannel    *mask,
     return;
 
   pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
-		     x, y, w, h, TRUE);
+                     x, y, w, h, TRUE);
 
   if (op == GIMP_CHANNEL_OP_ADD || op == GIMP_CHANNEL_OP_REPLACE)
     color = OPAQUE_OPACITY;
@@ -157,13 +157,13 @@ gimp_channel_combine_rect (GimpChannel    *mask,
   if (mask->bounds_known && (op == GIMP_CHANNEL_OP_ADD) && !mask->empty)
     {
       if (x < mask->x1)
-	mask->x1 = x;
+        mask->x1 = x;
       if (y < mask->y1)
-	mask->y1 = y;
+        mask->y1 = y;
       if ((x + w) > mask->x2)
-	mask->x2 = (x + w);
+        mask->x2 = (x + w);
       if ((y + h) > mask->y2)
-	mask->y2 = (y + h);
+        mask->y2 = (y + h);
     }
   else if (op == GIMP_CHANNEL_OP_REPLACE || mask->empty)
     {
@@ -368,20 +368,20 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
                     }
                 }
             }
-	}
+        }
     }
 
   /*  determine new boundary  */
   if (mask->bounds_known && (op == GIMP_CHANNEL_OP_ADD) && !mask->empty)
     {
       if (x < mask->x1)
-	mask->x1 = x;
+        mask->x1 = x;
       if (y < mask->y1)
-	mask->y1 = y;
+        mask->y1 = y;
       if ((x + w) > mask->x2)
-	mask->x2 = (x + w);
+        mask->x2 = (x + w);
       if ((y + h) > mask->y2)
-	mask->y2 = (y + h);
+        mask->y2 = (y + h);
     }
   else if (op == GIMP_CHANNEL_OP_REPLACE || mask->empty)
     {
@@ -406,8 +406,8 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
 
 static void
 gimp_channel_combine_sub_region_add (gpointer     unused,
-				     PixelRegion *srcPR,
-				     PixelRegion *destPR)
+                                     PixelRegion *srcPR,
+                                     PixelRegion *destPR)
 {
   guchar *src, *dest;
   gint    x, y, val;
@@ -418,13 +418,13 @@ gimp_channel_combine_sub_region_add (gpointer     unused,
   for (y = 0; y < srcPR->h; y++)
     {
       for (x = 0; x < srcPR->w; x++)
-	{
-	  val = dest[x] + src[x];
-	  if (val > 255)
-	    dest[x] = 255;
-	  else
-	    dest[x] = val;
-	}
+        {
+          val = dest[x] + src[x];
+          if (val > 255)
+            dest[x] = 255;
+          else
+            dest[x] = val;
+        }
       src  += srcPR->rowstride;
       dest += destPR->rowstride;
     }
@@ -432,8 +432,8 @@ gimp_channel_combine_sub_region_add (gpointer     unused,
 
 static void
 gimp_channel_combine_sub_region_sub (gpointer     unused,
-				     PixelRegion *srcPR,
-				     PixelRegion *destPR)
+                                     PixelRegion *srcPR,
+                                     PixelRegion *destPR)
 {
   guchar *src, *dest;
   gint    x, y;
@@ -444,12 +444,12 @@ gimp_channel_combine_sub_region_sub (gpointer     unused,
   for (y = 0; y < srcPR->h; y++)
     {
       for (x = 0; x < srcPR->w; x++)
-	{
-	  if (src[x] > dest[x])
-	    dest[x] = 0;
-	  else
-	    dest[x]-= src[x];
-	}
+        {
+          if (src[x] > dest[x])
+            dest[x] = 0;
+          else
+            dest[x]-= src[x];
+        }
       src  += srcPR->rowstride;
       dest += destPR->rowstride;
     }
@@ -457,8 +457,8 @@ gimp_channel_combine_sub_region_sub (gpointer     unused,
 
 static void
 gimp_channel_combine_sub_region_intersect (gpointer     unused,
-					   PixelRegion *srcPR,
-					   PixelRegion *destPR)
+                                           PixelRegion *srcPR,
+                                           PixelRegion *destPR)
 {
   guchar *src, *dest;
   gint    x, y;
@@ -469,9 +469,9 @@ gimp_channel_combine_sub_region_intersect (gpointer     unused,
   for (y = 0; y < srcPR->h; y++)
     {
       for (x = 0; x < srcPR->w; x++)
-	{
-	  dest[x] = MIN (dest[x], src[x]);
-	}
+        {
+          dest[x] = MIN (dest[x], src[x]);
+        }
 
       src  += srcPR->rowstride;
       dest += destPR->rowstride;
@@ -480,10 +480,10 @@ gimp_channel_combine_sub_region_intersect (gpointer     unused,
 
 void
 gimp_channel_combine_mask (GimpChannel    *mask,
-			   GimpChannel    *add_on,
-			   GimpChannelOps  op,
-			   gint            off_x,
-			   gint            off_y)
+                           GimpChannel    *add_on,
+                           GimpChannelOps  op,
+                           gint            off_x,
+                           gint            off_y)
 {
   PixelRegion srcPR, destPR;
   gint        x, y, w, h;
@@ -501,7 +501,7 @@ gimp_channel_combine_mask (GimpChannel    *mask,
     return;
 
   pixel_region_init (&srcPR, GIMP_DRAWABLE (add_on)->tiles,
-		     x - off_x, y - off_y, w, h, FALSE);
+                     x - off_x, y - off_y, w, h, FALSE);
   pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles,
                      x, y, w, h, TRUE);
 
@@ -510,20 +510,20 @@ gimp_channel_combine_mask (GimpChannel    *mask,
     case GIMP_CHANNEL_OP_ADD:
     case GIMP_CHANNEL_OP_REPLACE:
       pixel_regions_process_parallel ((PixelProcessorFunc)
-				      gimp_channel_combine_sub_region_add,
-				      NULL, 2, &srcPR, &destPR);
+                                      gimp_channel_combine_sub_region_add,
+                                      NULL, 2, &srcPR, &destPR);
       break;
 
     case GIMP_CHANNEL_OP_SUBTRACT:
       pixel_regions_process_parallel ((PixelProcessorFunc)
-				      gimp_channel_combine_sub_region_sub,
-				      NULL, 2, &srcPR, &destPR);
+                                      gimp_channel_combine_sub_region_sub,
+                                      NULL, 2, &srcPR, &destPR);
       break;
 
     case GIMP_CHANNEL_OP_INTERSECT:
       pixel_regions_process_parallel ((PixelProcessorFunc)
-				      gimp_channel_combine_sub_region_intersect,
-				      NULL, 2, &srcPR, &destPR);
+                                      gimp_channel_combine_sub_region_intersect,
+                                      NULL, 2, &srcPR, &destPR);
       break;
 
     default:

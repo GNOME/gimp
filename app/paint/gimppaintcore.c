@@ -393,7 +393,7 @@ gimp_paint_core_copy_valid_tiles (TileManager *src_tiles,
 
 void
 gimp_paint_core_cancel (GimpPaintCore *core,
-			GimpDrawable  *drawable)
+                        GimpDrawable  *drawable)
 {
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -560,7 +560,7 @@ gimp_paint_core_get_orig_image (GimpPaintCore *core,
           undo_tile = tile_manager_get_tile (core->undo_tiles,
                                              srcPR.x, srcPR.y,
                                              TRUE, FALSE);
-	  s = (guchar *) tile_data_pointer (undo_tile,
+          s = (guchar *) tile_data_pointer (undo_tile,
                                             srcPR.x % TILE_WIDTH,
                                             srcPR.y % TILE_HEIGHT);
         }
@@ -655,7 +655,7 @@ gimp_paint_core_get_orig_proj (GimpPaintCore *core,
           saved_tile = tile_manager_get_tile (core->saved_proj_tiles,
                                               srcPR.x, srcPR.y,
                                               TRUE, FALSE);
-	  s = (guchar *) tile_data_pointer (saved_tile,
+          s = (guchar *) tile_data_pointer (saved_tile,
                                             srcPR.x % TILE_WIDTH,
                                             srcPR.y % TILE_HEIGHT);
         }
@@ -688,12 +688,12 @@ gimp_paint_core_get_orig_proj (GimpPaintCore *core,
 
 void
 gimp_paint_core_paste (GimpPaintCore            *core,
-		       PixelRegion              *paint_maskPR,
-		       GimpDrawable             *drawable,
-		       gdouble                   paint_opacity,
-		       gdouble                   image_opacity,
-		       GimpLayerModeEffects      paint_mode,
-		       GimpPaintApplicationMode  mode)
+                       PixelRegion              *paint_maskPR,
+                       GimpDrawable             *drawable,
+                       gdouble                   paint_opacity,
+                       gdouble                   image_opacity,
+                       GimpLayerModeEffects      paint_mode,
+                       GimpPaintApplicationMode  mode)
 {
   GimpImage   *image;
   PixelRegion  srcPR;

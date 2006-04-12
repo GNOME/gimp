@@ -61,9 +61,9 @@ gimp_image_duplicate (GimpImage *image)
 
   /*  Create a new image  */
   new_image = gimp_create_image (image->gimp,
-				  image->width, image->height,
-				  image->base_type,
-				  FALSE);
+                                  image->width, image->height,
+                                  image->base_type,
+                                  FALSE);
   gimp_image_undo_disable (new_image);
 
   /*  Copy the colormap if necessary  */
@@ -103,7 +103,7 @@ gimp_image_duplicate (GimpImage *image)
 
       /*  Make sure the copied layer doesn't say: "<old layer> copy"  */
       gimp_object_set_name (GIMP_OBJECT (new_layer),
-			    gimp_object_get_name (GIMP_OBJECT (layer)));
+                            gimp_object_get_name (GIMP_OBJECT (layer)));
 
       /*  Make sure that if the layer has a layer mask,
        *  its name isn't screwed up
@@ -113,16 +113,16 @@ gimp_image_duplicate (GimpImage *image)
                               gimp_object_get_name (GIMP_OBJECT (layer->mask)));
 
       if (gimp_image_get_active_layer (image) == layer)
-	active_layer = new_layer;
+        active_layer = new_layer;
 
       if (image->floating_sel == layer)
-	floating_layer = new_layer;
+        floating_layer = new_layer;
 
       if (floating_sel_drawable == GIMP_DRAWABLE (layer))
-	new_floating_sel_drawable = GIMP_DRAWABLE (new_layer);
+        new_floating_sel_drawable = GIMP_DRAWABLE (new_layer);
 
       if (floating_layer != new_layer)
-	gimp_image_add_layer (new_image, new_layer, count++);
+        gimp_image_add_layer (new_image, new_layer, count++);
     }
 
   /*  Copy the channels  */
@@ -141,13 +141,13 @@ gimp_image_duplicate (GimpImage *image)
 
       /*  Make sure the copied channel doesn't say: "<old channel> copy"  */
       gimp_object_set_name (GIMP_OBJECT (new_channel),
-			    gimp_object_get_name (GIMP_OBJECT (channel)));
+                            gimp_object_get_name (GIMP_OBJECT (channel)));
 
       if (gimp_image_get_active_channel (image) == channel)
-	active_channel = (new_channel);
+        active_channel = (new_channel);
 
       if (floating_sel_drawable == GIMP_DRAWABLE (channel))
-	new_floating_sel_drawable = GIMP_DRAWABLE (new_channel);
+        new_floating_sel_drawable = GIMP_DRAWABLE (new_channel);
 
       gimp_image_add_channel (new_image, new_channel, count++);
     }
@@ -168,10 +168,10 @@ gimp_image_duplicate (GimpImage *image)
 
       /*  Make sure the copied vectors doesn't say: "<old vectors> copy"  */
       gimp_object_set_name (GIMP_OBJECT (new_vectors),
-			    gimp_object_get_name (GIMP_OBJECT (vectors)));
+                            gimp_object_get_name (GIMP_OBJECT (vectors)));
 
       if (gimp_image_get_active_vectors (image) == vectors)
-	active_vectors = new_vectors;
+        active_vectors = new_vectors;
 
       gimp_image_add_vectors (new_image, new_vectors, count++);
     }
@@ -224,18 +224,18 @@ gimp_image_duplicate (GimpImage *image)
       GimpGuide *guide = list->data;
 
       switch (guide->orientation)
-	{
-	case GIMP_ORIENTATION_HORIZONTAL:
-	  gimp_image_add_hguide (new_image, guide->position, FALSE);
-	  break;
+        {
+        case GIMP_ORIENTATION_HORIZONTAL:
+          gimp_image_add_hguide (new_image, guide->position, FALSE);
+          break;
 
-	case GIMP_ORIENTATION_VERTICAL:
-	  gimp_image_add_vguide (new_image, guide->position, FALSE);
-	  break;
+        case GIMP_ORIENTATION_VERTICAL:
+          gimp_image_add_vguide (new_image, guide->position, FALSE);
+          break;
 
-	default:
-	  g_error ("Unknown guide orientation.\n");
-	}
+        default:
+          g_error ("Unknown guide orientation.\n");
+        }
     }
 
   /*  Copy any sample points  */

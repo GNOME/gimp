@@ -64,9 +64,9 @@ GType   gimp_move_tool_get_type (void) G_GNUC_CONST;
 
 
 void    gimp_move_tool_start_hguide (GimpTool    *tool,
-				     GimpDisplay *display);
+                                     GimpDisplay *display);
 void    gimp_move_tool_start_vguide (GimpTool    *tool,
-				     GimpDisplay *display);
+                                     GimpDisplay *display);
 
 
 #endif  /*  __GIMP_MOVE_TOOL_H__  */

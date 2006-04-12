@@ -592,7 +592,7 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
 
 gdouble
 gimp_paint_options_get_jitter (GimpPaintOptions *paint_options,
-			       GimpImage        *image)
+                               GimpImage        *image)
 {
   GimpJitterOptions *jitter_options;
 

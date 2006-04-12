@@ -79,9 +79,9 @@ plug_in_handle_message (PlugIn          *plug_in,
 
     case GP_CONFIG:
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
-		 "sent a CONFIG message.  This should not happen.",
+                 "sent a CONFIG message.  This should not happen.",
                  gimp_filename_to_utf8 (plug_in->name),
-		 gimp_filename_to_utf8 (plug_in->prog));
+                 gimp_filename_to_utf8 (plug_in->prog));
       plug_in_close (plug_in, TRUE);
       break;
 
@@ -91,17 +91,17 @@ plug_in_handle_message (PlugIn          *plug_in,
 
     case GP_TILE_ACK:
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
-		 "sent a TILE_ACK message.  This should not happen.",
+                 "sent a TILE_ACK message.  This should not happen.",
                  gimp_filename_to_utf8 (plug_in->name),
-		 gimp_filename_to_utf8 (plug_in->prog));
+                 gimp_filename_to_utf8 (plug_in->prog));
       plug_in_close (plug_in, TRUE);
       break;
 
     case GP_TILE_DATA:
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
-		 "sent a TILE_DATA message.  This should not happen.",
+                 "sent a TILE_DATA message.  This should not happen.",
                  gimp_filename_to_utf8 (plug_in->name),
-		 gimp_filename_to_utf8 (plug_in->prog));
+                 gimp_filename_to_utf8 (plug_in->prog));
       plug_in_close (plug_in, TRUE);
       break;
 
@@ -115,9 +115,9 @@ plug_in_handle_message (PlugIn          *plug_in,
 
     case GP_TEMP_PROC_RUN:
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
-		 "sent a TEMP_PROC_RUN message.  This should not happen.",
+                 "sent a TEMP_PROC_RUN message.  This should not happen.",
                  gimp_filename_to_utf8 (plug_in->name),
-		 gimp_filename_to_utf8 (plug_in->prog));
+                 gimp_filename_to_utf8 (plug_in->prog));
       plug_in_close (plug_in, TRUE);
       break;
 
@@ -180,25 +180,25 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
       tile_data.data        = NULL;
 
       if (! gp_tile_data_write (plug_in->my_write, &tile_data, plug_in))
-	{
-	  g_warning ("plug_in_handle_tile_req: ERROR");
-	  plug_in_close (plug_in, TRUE);
-	  return;
-	}
+        {
+          g_warning ("plug_in_handle_tile_req: ERROR");
+          plug_in_close (plug_in, TRUE);
+          return;
+        }
 
       if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
-	{
-	  g_warning ("plug_in_handle_tile_req: ERROR");
-	  plug_in_close (plug_in, TRUE);
-	  return;
-	}
+        {
+          g_warning ("plug_in_handle_tile_req: ERROR");
+          plug_in_close (plug_in, TRUE);
+          return;
+        }
 
       if (msg.type != GP_TILE_DATA)
-	{
-	  g_warning ("expected tile data and received: %d", msg.type);
-	  plug_in_close (plug_in, TRUE);
-	  return;
-	}
+        {
+          g_warning ("expected tile data and received: %d", msg.type);
+          plug_in_close (plug_in, TRUE);
+          return;
+        }
 
       tile_info = msg.data;
 
@@ -206,38 +206,38 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
                                                        tile_info->drawable_ID);
 
       if (! GIMP_IS_DRAWABLE (drawable))
-	{
+        {
           g_message ("Plug-In \"%s\"\n(%s)\n\n"
                      "requested invalid drawable (killing)",
                      gimp_filename_to_utf8 (plug_in->name),
-		     gimp_filename_to_utf8 (plug_in->prog));
-	  plug_in_close (plug_in, TRUE);
-	  return;
-	}
+                     gimp_filename_to_utf8 (plug_in->prog));
+          plug_in_close (plug_in, TRUE);
+          return;
+        }
 
       if (tile_info->shadow)
-	tm = gimp_drawable_get_shadow_tiles (drawable);
+        tm = gimp_drawable_get_shadow_tiles (drawable);
       else
-	tm = gimp_drawable_get_tiles (drawable);
+        tm = gimp_drawable_get_tiles (drawable);
 
       tile = tile_manager_get (tm, tile_info->tile_num, TRUE, TRUE);
 
       if (! tile)
-	{
+        {
           g_message ("Plug-In \"%s\"\n(%s)\n\n"
                      "requested invalid tile (killing)",
                      gimp_filename_to_utf8 (plug_in->name),
-		     gimp_filename_to_utf8 (plug_in->prog));
-	  plug_in_close (plug_in, TRUE);
-	  return;
-	}
+                     gimp_filename_to_utf8 (plug_in->prog));
+          plug_in_close (plug_in, TRUE);
+          return;
+        }
 
       if (tile_data.use_shm)
-	memcpy (tile_data_pointer (tile, 0, 0),
+        memcpy (tile_data_pointer (tile, 0, 0),
                 plug_in_shm_get_addr (plug_in->gimp),
                 tile_size (tile));
       else
-	memcpy (tile_data_pointer (tile, 0, 0),
+        memcpy (tile_data_pointer (tile, 0, 0),
                 tile_info->data,
                 tile_size (tile));
 
@@ -245,11 +245,11 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
       gimp_wire_destroy (&msg);
 
       if (! gp_tile_ack_write (plug_in->my_write, plug_in))
-	{
-	  g_warning ("plug_in_handle_tile_req: ERROR");
-	  plug_in_close (plug_in, TRUE);
-	  return;
-	}
+        {
+          g_warning ("plug_in_handle_tile_req: ERROR");
+          plug_in_close (plug_in, TRUE);
+          return;
+        }
     }
   else
     {
@@ -259,31 +259,31 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
                                                        tile_req->drawable_ID);
 
       if (! GIMP_IS_DRAWABLE (drawable))
-	{
+        {
           g_message ("Plug-In \"%s\"\n(%s)\n\n"
                      "requested invalid drawable (killing)",
                      gimp_filename_to_utf8 (plug_in->name),
-		     gimp_filename_to_utf8 (plug_in->prog));
-	  plug_in_close (plug_in, TRUE);
-	  return;
-	}
+                     gimp_filename_to_utf8 (plug_in->prog));
+          plug_in_close (plug_in, TRUE);
+          return;
+        }
 
       if (tile_req->shadow)
-	tm = gimp_drawable_get_shadow_tiles (drawable);
+        tm = gimp_drawable_get_shadow_tiles (drawable);
       else
-	tm = gimp_drawable_get_tiles (drawable);
+        tm = gimp_drawable_get_tiles (drawable);
 
       tile = tile_manager_get (tm, tile_req->tile_num, TRUE, FALSE);
 
       if (! tile)
-	{
+        {
           g_message ("Plug-In \"%s\"\n(%s)\n\n"
                      "requested invalid tile (killing)",
                      gimp_filename_to_utf8 (plug_in->name),
-		     gimp_filename_to_utf8 (plug_in->prog));
-	  plug_in_close (plug_in, TRUE);
-	  return;
-	}
+                     gimp_filename_to_utf8 (plug_in->prog));
+          plug_in_close (plug_in, TRUE);
+          return;
+        }
 
       tile_data.drawable_ID = tile_req->drawable_ID;
       tile_data.tile_num    = tile_req->tile_num;
@@ -294,34 +294,34 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
       tile_data.use_shm     = (shm_ID == -1) ? FALSE : TRUE;
 
       if (tile_data.use_shm)
-	memcpy (plug_in_shm_get_addr (plug_in->gimp),
+        memcpy (plug_in_shm_get_addr (plug_in->gimp),
                 tile_data_pointer (tile, 0, 0),
                 tile_size (tile));
       else
-	tile_data.data = tile_data_pointer (tile, 0, 0);
+        tile_data.data = tile_data_pointer (tile, 0, 0);
 
       if (! gp_tile_data_write (plug_in->my_write, &tile_data, plug_in))
-	{
-	  g_message ("plug_in_handle_tile_req: ERROR");
-	  plug_in_close (plug_in, TRUE);
-	  return;
-	}
+        {
+          g_message ("plug_in_handle_tile_req: ERROR");
+          plug_in_close (plug_in, TRUE);
+          return;
+        }
 
       tile_release (tile, FALSE);
 
       if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
-	{
-	  g_message ("plug_in_handle_tile_req: ERROR");
-	  plug_in_close (plug_in, TRUE);
-	  return;
-	}
+        {
+          g_message ("plug_in_handle_tile_req: ERROR");
+          plug_in_close (plug_in, TRUE);
+          return;
+        }
 
       if (msg.type != GP_TILE_ACK)
-	{
-	  g_warning ("expected tile ack and received: %d", msg.type);
-	  plug_in_close (plug_in, TRUE);
-	  return;
-	}
+        {
+          g_warning ("expected tile ack and received: %d", msg.type);
+          plug_in_close (plug_in, TRUE);
+          return;
+        }
 
       gimp_wire_destroy (&msg);
     }
@@ -360,7 +360,7 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
                          "called deprecated procedure '%s'.\n"
                          "It should call '%s' instead!",
                          gimp_filename_to_utf8 (plug_in->name),
-			 gimp_filename_to_utf8 (plug_in->prog),
+                         gimp_filename_to_utf8 (plug_in->prog),
                          canonical, proc_name);
             }
         }
@@ -476,10 +476,10 @@ plug_in_handle_temp_proc_return (PlugIn       *plug_in,
   else
     {
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
-		 "sent a TEMP_PROC_RETURN message while not running "
+                 "sent a TEMP_PROC_RETURN message while not running "
                  "a temporary procedure.  This should not happen.",
                  gimp_filename_to_utf8 (plug_in->name),
-		 gimp_filename_to_utf8 (plug_in->prog));
+                 gimp_filename_to_utf8 (plug_in->prog));
       plug_in_close (plug_in, TRUE);
     }
 }
@@ -501,22 +501,22 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
   for (i = 1; i < proc_install->nparams; i++)
     {
       if ((proc_install->params[i].type == GIMP_PDB_INT32ARRAY ||
-	   proc_install->params[i].type == GIMP_PDB_INT8ARRAY  ||
-	   proc_install->params[i].type == GIMP_PDB_FLOATARRAY ||
-	   proc_install->params[i].type == GIMP_PDB_STRINGARRAY)
+           proc_install->params[i].type == GIMP_PDB_INT8ARRAY  ||
+           proc_install->params[i].type == GIMP_PDB_FLOATARRAY ||
+           proc_install->params[i].type == GIMP_PDB_STRINGARRAY)
           &&
-	  proc_install->params[i - 1].type != GIMP_PDB_INT32)
-	{
-	  g_message ("Plug-In \"%s\"\n(%s)\n\n"
+          proc_install->params[i - 1].type != GIMP_PDB_INT32)
+        {
+          g_message ("Plug-In \"%s\"\n(%s)\n\n"
                      "attempted to install procedure \"%s\" "
                      "which fails to comply with the array parameter "
                      "passing standard.  Argument %d is noncompliant.",
                      gimp_filename_to_utf8 (plug_in->name),
-		     gimp_filename_to_utf8 (plug_in->prog),
+                     gimp_filename_to_utf8 (plug_in->prog),
                      canonical, i);
           g_free (canonical);
-	  return;
-	}
+          return;
+        }
     }
 
   /*  Sanity check strings for UTF-8 validity  */
@@ -559,7 +559,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
                  "attempted to install a procedure with invalid UTF-8 strings.",
                  gimp_filename_to_utf8 (plug_in->name),
-		 gimp_filename_to_utf8 (plug_in->prog));
+                 gimp_filename_to_utf8 (plug_in->prog));
       g_free (canonical);
       return;
     }
@@ -695,10 +695,10 @@ plug_in_handle_extension_ack (PlugIn *plug_in)
   else
     {
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
-		 "sent an EXTENSION_ACK message while not being started "
+                 "sent an EXTENSION_ACK message while not being started "
                  "as an extension.  This should not happen.",
                  gimp_filename_to_utf8 (plug_in->name),
-		 gimp_filename_to_utf8 (plug_in->prog));
+                 gimp_filename_to_utf8 (plug_in->prog));
       plug_in_close (plug_in, TRUE);
     }
 }
@@ -713,10 +713,10 @@ plug_in_handle_has_init (PlugIn *plug_in)
   else
     {
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
-		 "sent an HAS_INIT message while not in query().  "
+                 "sent an HAS_INIT message while not in query().  "
                  "This should not happen.",
                  gimp_filename_to_utf8 (plug_in->name),
-		 gimp_filename_to_utf8 (plug_in->prog));
+                 gimp_filename_to_utf8 (plug_in->prog));
       plug_in_close (plug_in, TRUE);
     }
 }

@@ -24,8 +24,8 @@ void   splash_create    (void);
 void   splash_destroy   (void);
 
 void   splash_update    (const gchar *label1,
-			 const gchar *label2,
-			 gdouble      percentage);
+                         const gchar *label2,
+                         gdouble      percentage);
 
 
 #endif /* __SPLASH_H__ */

@@ -167,53 +167,53 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
   while (i < title_len && *format)
     {
       switch (*format)
-	{
-	case '%':
-	  format++;
-	  switch (*format)
-	    {
-	    case 0:
-	      /* format string ends within %-sequence, print literal '%' */
+        {
+        case '%':
+          format++;
+          switch (*format)
+            {
+            case 0:
+              /* format string ends within %-sequence, print literal '%' */
 
-	    case '%':
-	      title[i++] = '%';
-	      break;
+            case '%':
+              title[i++] = '%';
+              break;
 
-	    case 'f': /* pruned filename */
-	      {
+            case 'f': /* pruned filename */
+              {
                 const gchar *uri = gimp_image_get_uri (image);
-		gchar       *basename;
+                gchar       *basename;
 
-		basename = file_utils_uri_display_basename (uri);
+                basename = file_utils_uri_display_basename (uri);
 
-		i += print (title, title_len, i, "%s", basename);
+                i += print (title, title_len, i, "%s", basename);
 
-		g_free (basename);
-	      }
-	      break;
+                g_free (basename);
+              }
+              break;
 
-	    case 'F': /* full filename */
-	      {
-		gchar *filename;
+            case 'F': /* full filename */
+              {
+                gchar *filename;
                 const gchar *uri = gimp_image_get_uri (image);
 
-		filename = file_utils_uri_display_name (uri);
+                filename = file_utils_uri_display_name (uri);
 
                 i += print (title, title_len, i, "%s", filename);
 
                 g_free (filename);
               }
-	      break;
+              break;
 
-	    case 'p': /* PDB id */
-	      i += print (title, title_len, i, "%d", gimp_image_get_ID (image));
-	      break;
+            case 'p': /* PDB id */
+              i += print (title, title_len, i, "%d", gimp_image_get_ID (image));
+              break;
 
-	    case 'i': /* instance */
-	      i += print (title, title_len, i, "%d", shell->display->instance);
-	      break;
+            case 'i': /* instance */
+              i += print (title, title_len, i, "%d", shell->display->instance);
+              break;
 
-	    case 't': /* type */
+            case 't': /* type */
               {
                 const gchar *image_type_str = NULL;
                 gboolean     empty          = gimp_image_is_empty (image);
@@ -236,58 +236,58 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
                 i += print (title, title_len, i, "%s", image_type_str);
               }
-	      break;
+              break;
 
-	    case 's': /* user source zoom factor */
-	      i += print (title, title_len, i, "%d", denom);
-	      break;
+            case 's': /* user source zoom factor */
+              i += print (title, title_len, i, "%d", denom);
+              break;
 
-	    case 'd': /* user destination zoom factor */
-	      i += print (title, title_len, i, "%d", num);
-	      break;
+            case 'd': /* user destination zoom factor */
+              i += print (title, title_len, i, "%d", num);
+              break;
 
-	    case 'z': /* user zoom factor (percentage) */
+            case 'z': /* user zoom factor (percentage) */
               {
                 gdouble  scale = gimp_zoom_model_get_factor (shell->zoom);
 
                 i += print (title, title_len, i,
                             scale >= 0.15 ? "%.0f" : "%.2f", 100.0 * scale);
               }
-	      break;
+              break;
 
-	    case 'D': /* dirty flag */
-	      if (format[1] == 0)
-		{
-		  /* format string ends within %D-sequence, print literal '%D' */
+            case 'D': /* dirty flag */
+              if (format[1] == 0)
+                {
+                  /* format string ends within %D-sequence, print literal '%D' */
                   i += print (title, title_len, i, "%%D");
-		  break;
-		}
-	      if (image->dirty)
-		title[i++] = format[1];
-	      format++;
-	      break;
+                  break;
+                }
+              if (image->dirty)
+                title[i++] = format[1];
+              format++;
+              break;
 
-	    case 'C': /* clean flag */
-	      if (format[1] == 0)
-		{
-		  /* format string ends within %C-sequence, print literal '%C' */
+            case 'C': /* clean flag */
+              if (format[1] == 0)
+                {
+                  /* format string ends within %C-sequence, print literal '%C' */
                   i += print (title, title_len, i, "%%C");
-		  break;
-		}
-	      if (! image->dirty)
-		title[i++] = format[1];
-	      format++;
-	      break;
+                  break;
+                }
+              if (! image->dirty)
+                title[i++] = format[1];
+              format++;
+              break;
 
-	    case 'B': /* dirty flag (long) */
-	      if (image->dirty)
+            case 'B': /* dirty flag (long) */
+              if (image->dirty)
                 i += print (title, title_len, i, "%s", _("(modified)"));
-	      break;
+              break;
 
-	    case 'A': /* clean flag (long) */
-	      if (! image->dirty)
+            case 'A': /* clean flag (long) */
+              if (! image->dirty)
                 i += print (title, title_len, i, "%s", _("(clean)"));
-	      break;
+              break;
 
             case 'm': /* memory used by image */
               {
@@ -341,7 +341,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               }
               break;
 
-	    case 'W': /* width in real-world units */
+            case 'W': /* width in real-world units */
               if (shell->unit != GIMP_UNIT_PIXEL)
                 {
                   gchar unit_format[8];
@@ -355,11 +355,11 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                   break;
                 }
               /* else fallthru */
-	    case 'w': /* width in pixels */
-	      i += print (title, title_len, i, "%d", image->width);
-	      break;
+            case 'w': /* width in pixels */
+              i += print (title, title_len, i, "%d", image->width);
+              break;
 
-	    case 'H': /* height in real-world units */
+            case 'H': /* height in real-world units */
               if (shell->unit != GIMP_UNIT_PIXEL)
                 {
                   gchar unit_format[8];
@@ -373,38 +373,38 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                   break;
                 }
               /* else fallthru */
-	    case 'h': /* height in pixels */
-	      i += print (title, title_len, i, "%d", image->height);
-	      break;
+            case 'h': /* height in pixels */
+              i += print (title, title_len, i, "%d", image->height);
+              break;
 
-	    case 'u': /* unit symbol */
-	      i += print (title, title_len, i, "%s",
-			  _gimp_unit_get_symbol (gimp, shell->unit));
-	      break;
+            case 'u': /* unit symbol */
+              i += print (title, title_len, i, "%s",
+                          _gimp_unit_get_symbol (gimp, shell->unit));
+              break;
 
-	    case 'U': /* unit abbreviation */
-	      i += print (title, title_len, i, "%s",
-			  _gimp_unit_get_abbreviation (gimp, shell->unit));
-	      break;
+            case 'U': /* unit abbreviation */
+              i += print (title, title_len, i, "%s",
+                          _gimp_unit_get_abbreviation (gimp, shell->unit));
+              break;
 
-	      /* Other cool things to be added:
-	       * %r = xresolution
+              /* Other cool things to be added:
+               * %r = xresolution
                * %R = yresolution
                * %ø = image's fractal dimension
                * %þ = the answer to everything
-	       */
+               */
 
-	    default:
+            default:
               /* format string contains unknown %-sequence, print it literally */
               i += print (title, title_len, i, "%%%c", *format);
               break;
-	    }
-	  break;
+            }
+          break;
 
-	default:
-	  title[i++] = *format;
-	  break;
-	}
+        default:
+          title[i++] = *format;
+          break;
+        }
 
       format++;
     }

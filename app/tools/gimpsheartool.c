@@ -139,7 +139,7 @@ gimp_shear_tool_dialog (GimpTransformTool *tr_tool)
                              0.0, 0.5, button, 1, TRUE);
 
   g_signal_connect (shear->x_adj, "value-changed",
-		    G_CALLBACK (shear_x_mag_changed),
+                    G_CALLBACK (shear_x_mag_changed),
                     tr_tool);
 
   button = gimp_spin_button_new (&shear->y_adj,
@@ -149,7 +149,7 @@ gimp_shear_tool_dialog (GimpTransformTool *tr_tool)
                              0.0, 0.5, button, 1, TRUE);
 
   g_signal_connect (shear->y_adj, "value-changed",
-		    G_CALLBACK (shear_y_mag_changed),
+                    G_CALLBACK (shear_y_mag_changed),
                     tr_tool);
 }
 

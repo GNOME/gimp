@@ -132,8 +132,8 @@ gimp_brush_pipe_finalize (GObject *object)
       gint i;
 
       for (i = 0; i < pipe->nbrushes; i++)
-	if (pipe->brushes[i])
-	  g_object_unref (pipe->brushes[i]);
+        if (pipe->brushes[i])
+          g_object_unref (pipe->brushes[i]);
 
       g_free (pipe->brushes);
       pipe->brushes = NULL;
@@ -387,31 +387,31 @@ gimp_brush_pipe_load (const gchar  *filename,
 
       /* placement is not used at all ?? */
       if (params.free_placement_string)
-	g_free (params.placement);
+        g_free (params.placement);
 
       for (i = 0; i < pipe->dimension; i++)
-	{
-	  pipe->rank[i] = MAX (1, params.rank[i]);
-	  if (strcmp (params.selection[i], "incremental") == 0)
-	    pipe->select[i] = PIPE_SELECT_INCREMENTAL;
-	  else if (strcmp (params.selection[i], "angular") == 0)
-	    pipe->select[i] = PIPE_SELECT_ANGULAR;
-	  else if (strcmp (params.selection[i], "velocity") == 0)
-	    pipe->select[i] = PIPE_SELECT_VELOCITY;
-	  else if (strcmp (params.selection[i], "random") == 0)
-	    pipe->select[i] = PIPE_SELECT_RANDOM;
-	  else if (strcmp (params.selection[i], "pressure") == 0)
-	    pipe->select[i] = PIPE_SELECT_PRESSURE;
-	  else if (strcmp (params.selection[i], "xtilt") == 0)
-	    pipe->select[i] = PIPE_SELECT_TILT_X;
-	  else if (strcmp (params.selection[i], "ytilt") == 0)
-	    pipe->select[i] = PIPE_SELECT_TILT_Y;
-	  else
-	    pipe->select[i] = PIPE_SELECT_CONSTANT;
-	  if (params.free_selection_string)
-	    g_free (params.selection[i]);
-	  pipe->index[i] = 0;
-	}
+        {
+          pipe->rank[i] = MAX (1, params.rank[i]);
+          if (strcmp (params.selection[i], "incremental") == 0)
+            pipe->select[i] = PIPE_SELECT_INCREMENTAL;
+          else if (strcmp (params.selection[i], "angular") == 0)
+            pipe->select[i] = PIPE_SELECT_ANGULAR;
+          else if (strcmp (params.selection[i], "velocity") == 0)
+            pipe->select[i] = PIPE_SELECT_VELOCITY;
+          else if (strcmp (params.selection[i], "random") == 0)
+            pipe->select[i] = PIPE_SELECT_RANDOM;
+          else if (strcmp (params.selection[i], "pressure") == 0)
+            pipe->select[i] = PIPE_SELECT_PRESSURE;
+          else if (strcmp (params.selection[i], "xtilt") == 0)
+            pipe->select[i] = PIPE_SELECT_TILT_X;
+          else if (strcmp (params.selection[i], "ytilt") == 0)
+            pipe->select[i] = PIPE_SELECT_TILT_Y;
+          else
+            pipe->select[i] = PIPE_SELECT_CONSTANT;
+          if (params.free_selection_string)
+            g_free (params.selection[i]);
+          pipe->index[i] = 0;
+        }
     }
   else
     {
@@ -426,16 +426,16 @@ gimp_brush_pipe_load (const gchar  *filename,
 
   g_string_free (buffer, TRUE);
 
-  totalcells = 1;		/* Not all necessarily present, maybe */
+  totalcells = 1;                /* Not all necessarily present, maybe */
   for (i = 0; i < pipe->dimension; i++)
     totalcells *= pipe->rank[i];
   pipe->stride = g_new0 (gint, pipe->dimension);
   for (i = 0; i < pipe->dimension; i++)
     {
       if (i == 0)
-	pipe->stride[i] = totalcells / pipe->rank[i];
+        pipe->stride[i] = totalcells / pipe->rank[i];
       else
-	pipe->stride[i] = pipe->stride[i-1] / pipe->rank[i];
+        pipe->stride[i] = pipe->stride[i-1] / pipe->rank[i];
     }
   g_assert (pipe->stride[pipe->dimension-1] == 1);
 
@@ -446,20 +446,20 @@ gimp_brush_pipe_load (const gchar  *filename,
       pipe->brushes[pipe->nbrushes] = gimp_brush_load_brush (fd, filename, NULL);
 
       if (pipe->brushes[pipe->nbrushes])
-	{
-	  gimp_object_set_name (GIMP_OBJECT (pipe->brushes[pipe->nbrushes]),
-				NULL);
-	}
+        {
+          gimp_object_set_name (GIMP_OBJECT (pipe->brushes[pipe->nbrushes]),
+                                NULL);
+        }
       else
-	{
-	  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+        {
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in brush file '%s': "
                          "File is corrupt."),
                        gimp_filename_to_utf8 (filename));
-	  close (fd);
-	  g_object_unref (pipe);
-	  return NULL;
-	}
+          close (fd);
+          g_object_unref (pipe);
+          return NULL;
+        }
 
       pipe->nbrushes++;
     }

@@ -21,7 +21,7 @@
 
 
 GimpImage * xcf_load_image (Gimp    *gimp,
-			    XcfInfo *info);
+                            XcfInfo *info);
 
 
 #endif  /* __XCF_LOAD_H__ */

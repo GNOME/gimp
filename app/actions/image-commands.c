@@ -176,7 +176,7 @@ image_convert_cmd_callback (GtkAction *action,
 
 void
 image_resize_cmd_callback (GtkAction *action,
-			   gpointer   data)
+                           gpointer   data)
 {
   ImageResizeOptions *options;
   GimpImage          *image;
@@ -211,7 +211,7 @@ image_resize_cmd_callback (GtkAction *action,
                            dialog, G_CONNECT_SWAPPED);
 
   g_object_weak_ref (G_OBJECT (dialog),
-		     (GWeakNotify) g_free, options);
+                     (GWeakNotify) g_free, options);
 
   gtk_widget_show (dialog);
 }
@@ -265,7 +265,7 @@ image_print_size_cmd_callback (GtkAction *action,
 
 void
 image_scale_cmd_callback (GtkAction *action,
-			  gpointer   data)
+                          gpointer   data)
 {
   ImageScaleDialog *dialog;
   GimpDisplay      *display;
@@ -349,7 +349,7 @@ image_crop_cmd_callback (GtkAction *action,
 
 void
 image_duplicate_cmd_callback (GtkAction *action,
-			      gpointer   data)
+                              gpointer   data)
 {
   GimpDisplay      *display;
   GimpDisplayShell *shell;

@@ -158,7 +158,7 @@ gimp_modules_load (Gimp *gimp)
 
 static void
 add_to_inhibit_string (gpointer data,
-		       gpointer user_data)
+                       gpointer user_data)
 {
   GimpModule *module = data;
   GString    *str    = user_data;

@@ -101,20 +101,20 @@ gimp_toolbox_dnd_init (GimpToolbox *toolbox)
                               dock->context);
 
   gimp_dnd_viewable_dest_add (toolbox->tool_wbox, GIMP_TYPE_LAYER,
-			      gimp_toolbox_drop_drawable,
-			      dock->context);
+                              gimp_toolbox_drop_drawable,
+                              dock->context);
   gimp_dnd_viewable_dest_add (toolbox->tool_wbox, GIMP_TYPE_LAYER_MASK,
-			      gimp_toolbox_drop_drawable,
-			      dock->context);
+                              gimp_toolbox_drop_drawable,
+                              dock->context);
   gimp_dnd_viewable_dest_add (toolbox->tool_wbox, GIMP_TYPE_CHANNEL,
-			      gimp_toolbox_drop_drawable,
-			      dock->context);
+                              gimp_toolbox_drop_drawable,
+                              dock->context);
   gimp_dnd_viewable_dest_add (toolbox->tool_wbox, GIMP_TYPE_TOOL_INFO,
-			      gimp_toolbox_drop_tool,
-			      dock->context);
+                              gimp_toolbox_drop_tool,
+                              dock->context);
   gimp_dnd_viewable_dest_add (toolbox->tool_wbox, GIMP_TYPE_BUFFER,
-			      gimp_toolbox_drop_buffer,
-			      dock->context);
+                              gimp_toolbox_drop_buffer,
+                              dock->context);
 
   gimp_dnd_component_dest_add (toolbox->tool_wbox,
                                gimp_toolbox_drop_component,
@@ -205,7 +205,7 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
                              FALSE);
 
   gimp_image_set_resolution (new_image,
-			     image->xresolution, image->yresolution);
+                             image->xresolution, image->yresolution);
   gimp_image_set_unit (new_image,
                        gimp_image_get_unit (image));
 
@@ -218,7 +218,7 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
                                              new_type, FALSE));
 
   gimp_object_set_name (GIMP_OBJECT (new_layer),
-			gimp_object_get_name (GIMP_OBJECT (drawable)));
+                        gimp_object_get_name (GIMP_OBJECT (drawable)));
 
   gimp_item_offsets (GIMP_ITEM (new_layer), &off_x, &off_y);
   gimp_item_translate (GIMP_ITEM (new_layer), -off_x, -off_y, FALSE);
@@ -293,7 +293,7 @@ gimp_toolbox_drop_component (GtkWidget       *widget,
   gimp_image_undo_disable (new_image);
 
   gimp_image_set_resolution (new_image,
-			     image->xresolution, image->yresolution);
+                             image->xresolution, image->yresolution);
   gimp_image_set_unit (new_image, gimp_image_get_unit (image));
 
   channel = gimp_channel_new_from_component (image, component, NULL, NULL);

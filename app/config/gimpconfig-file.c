@@ -72,14 +72,14 @@ gimp_config_file_copy (const gchar  *source,
   while ((nbytes = fread (buffer, 1, sizeof (buffer), sfile)) > 0)
     {
       if (fwrite (buffer, 1, nbytes, dfile) < nbytes)
-	{
-	  g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+        {
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                        _("Error while writing '%s': %s"),
                        gimp_filename_to_utf8 (dest), g_strerror (errno));
-	  fclose (sfile);
-	  fclose (dfile);
-	  return FALSE;
-	}
+          fclose (sfile);
+          fclose (dfile);
+          return FALSE;
+        }
     }
 
   if (ferror (sfile))

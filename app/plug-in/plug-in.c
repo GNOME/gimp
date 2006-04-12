@@ -56,10 +56,10 @@
 #endif
 
 #ifdef G_WITH_CYGWIN
-#define O_TEXT		0x0100	/* text file */
-#define _O_TEXT		0x0100	/* text file */
-#define O_BINARY	0x0200	/* binary file */
-#define _O_BINARY	0x0200	/* binary file */
+#define O_TEXT                0x0100        /* text file */
+#define _O_TEXT                0x0100        /* text file */
+#define O_BINARY        0x0200        /* binary file */
+#define _O_BINARY        0x0200        /* binary file */
 #endif
 
 #endif /* G_OS_WIN32 || G_WITH_CYGWIN */
@@ -178,22 +178,22 @@ plug_in_call_query (Gimp        *gimp,
       plug_in->plug_in_def = plug_in_def;
 
       if (plug_in_open (plug_in))
-	{
-	  while (plug_in->open)
-	    {
+        {
+          while (plug_in->open)
+            {
               GimpWireMessage msg;
 
-	      if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
+              if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
                 {
                   plug_in_close (plug_in, TRUE);
                 }
-	      else
-		{
-		  plug_in_handle_message (plug_in, &msg);
-		  gimp_wire_destroy (&msg);
-		}
-	    }
-	}
+              else
+                {
+                  plug_in_handle_message (plug_in, &msg);
+                  gimp_wire_destroy (&msg);
+                }
+            }
+        }
 
       plug_in_unref (plug_in);
     }
@@ -219,22 +219,22 @@ plug_in_call_init (Gimp        *gimp,
       plug_in->plug_in_def = plug_in_def;
 
       if (plug_in_open (plug_in))
-	{
-	  while (plug_in->open)
-	    {
+        {
+          while (plug_in->open)
+            {
               GimpWireMessage msg;
 
-	      if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
+              if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
                 {
                   plug_in_close (plug_in, TRUE);
                 }
-	      else
-		{
-		  plug_in_handle_message (plug_in, &msg);
-		  gimp_wire_destroy (&msg);
-		}
-	    }
-	}
+              else
+                {
+                  plug_in_handle_message (plug_in, &msg);
+                  gimp_wire_destroy (&msg);
+                }
+            }
+        }
 
       plug_in_unref (plug_in);
     }
@@ -368,7 +368,7 @@ plug_in_open (PlugIn *plug_in)
     {
       g_message ("Unable to run plug-in \"%s\"\n(%s)\n\npipe() failed: %s",
                  gimp_filename_to_utf8 (plug_in->name),
-		 gimp_filename_to_utf8 (plug_in->prog),
+                 gimp_filename_to_utf8 (plug_in->prog),
                  g_strerror (errno));
       return FALSE;
     }
@@ -461,11 +461,11 @@ plug_in_open (PlugIn *plug_in)
       debug_argv = plug_in_debug_argv (gimp, plug_in->name, debug_flag, args);
 
       if (debug_argv)
-	{
-	  debug = TRUE;
-	  argv = debug_argv;
-	  spawn_flags |= G_SPAWN_SEARCH_PATH;
-	}
+        {
+          debug = TRUE;
+          argv = debug_argv;
+          spawn_flags |= G_SPAWN_SEARCH_PATH;
+        }
     }
 
   /* Fork another process. We'll remember the process id so that we
@@ -478,7 +478,7 @@ plug_in_open (PlugIn *plug_in)
     {
       g_message ("Unable to run plug-in \"%s\"\n(%s)\n\n%s",
                  gimp_filename_to_utf8 (plug_in->name),
-		 gimp_filename_to_utf8 (plug_in->prog),
+                 gimp_filename_to_utf8 (plug_in->prog),
                  error->message);
       g_error_free (error);
       goto cleanup;
@@ -527,7 +527,7 @@ cleanup:
 
 void
 plug_in_close (PlugIn   *plug_in,
-	       gboolean  kill_it)
+               gboolean  kill_it)
 {
   Gimp          *gimp;
 #ifndef G_OS_WIN32
@@ -700,8 +700,8 @@ plug_in_close (PlugIn   *plug_in,
 
 static gboolean
 plug_in_recv_message (GIOChannel   *channel,
-		      GIOCondition  cond,
-		      gpointer	    data)
+                      GIOCondition  cond,
+                      gpointer            data)
 {
   PlugIn   *plug_in     = data;
   gboolean  got_message = FALSE;
@@ -724,32 +724,32 @@ plug_in_recv_message (GIOChannel   *channel,
       memset (&msg, 0, sizeof (GimpWireMessage));
 
       if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
-	{
-	  plug_in_close (plug_in, TRUE);
-	}
+        {
+          plug_in_close (plug_in, TRUE);
+        }
       else
-	{
-	  plug_in_handle_message (plug_in, &msg);
-	  gimp_wire_destroy (&msg);
-	  got_message = TRUE;
-	}
+        {
+          plug_in_handle_message (plug_in, &msg);
+          gimp_wire_destroy (&msg);
+          got_message = TRUE;
+        }
     }
 
   if (cond & (G_IO_ERR | G_IO_HUP))
     {
       if (plug_in->open)
-	{
-	  plug_in_close (plug_in, TRUE);
-	}
+        {
+          plug_in_close (plug_in, TRUE);
+        }
     }
 
   if (! got_message)
     g_message (_("Plug-in crashed: \"%s\"\n(%s)\n\n"
-		 "The dying plug-in may have messed up GIMP's internal state. "
-		 "You may want to save your images and restart GIMP "
-		 "to be on the safe side."),
-	       gimp_filename_to_utf8 (plug_in->name),
-	       gimp_filename_to_utf8 (plug_in->prog));
+                 "The dying plug-in may have messed up GIMP's internal state. "
+                 "You may want to save your images and restart GIMP "
+                 "to be on the safe side."),
+               gimp_filename_to_utf8 (plug_in->name),
+               gimp_filename_to_utf8 (plug_in->prog));
 
   if (! plug_in->open)
     plug_in_unref (plug_in);
@@ -759,8 +759,8 @@ plug_in_recv_message (GIOChannel   *channel,
 
 static gboolean
 plug_in_write (GIOChannel   *channel,
-	       const guint8 *buf,
-	       gulong        count,
+               const guint8 *buf,
+               gulong        count,
                gpointer      user_data)
 {
   PlugIn *plug_in = user_data;
@@ -769,21 +769,21 @@ plug_in_write (GIOChannel   *channel,
   while (count > 0)
     {
       if ((plug_in->write_buffer_index + count) >= WRITE_BUFFER_SIZE)
-	{
-	  bytes = WRITE_BUFFER_SIZE - plug_in->write_buffer_index;
-	  memcpy (&plug_in->write_buffer[plug_in->write_buffer_index],
+        {
+          bytes = WRITE_BUFFER_SIZE - plug_in->write_buffer_index;
+          memcpy (&plug_in->write_buffer[plug_in->write_buffer_index],
                   buf, bytes);
-	  plug_in->write_buffer_index += bytes;
-	  if (! gimp_wire_flush (channel, plug_in))
-	    return FALSE;
-	}
+          plug_in->write_buffer_index += bytes;
+          if (! gimp_wire_flush (channel, plug_in))
+            return FALSE;
+        }
       else
-	{
-	  bytes = count;
-	  memcpy (&plug_in->write_buffer[plug_in->write_buffer_index],
+        {
+          bytes = count;
+          memcpy (&plug_in->write_buffer[plug_in->write_buffer_index],
                   buf, bytes);
-	  plug_in->write_buffer_index += bytes;
-	}
+          plug_in->write_buffer_index += bytes;
+        }
 
       buf += bytes;
       count -= bytes;
@@ -808,34 +808,34 @@ plug_in_flush (GIOChannel *channel,
       count = 0;
       while (count != plug_in->write_buffer_index)
         {
-	  do
-	    {
-	      bytes = 0;
-	      status = g_io_channel_write_chars (channel,
-						 &plug_in->write_buffer[count],
-						 (plug_in->write_buffer_index - count),
-						 &bytes,
-						 &error);
-	    }
-	  while (status == G_IO_STATUS_AGAIN);
+          do
+            {
+              bytes = 0;
+              status = g_io_channel_write_chars (channel,
+                                                 &plug_in->write_buffer[count],
+                                                 (plug_in->write_buffer_index - count),
+                                                 &bytes,
+                                                 &error);
+            }
+          while (status == G_IO_STATUS_AGAIN);
 
-	  if (status != G_IO_STATUS_NORMAL)
-	    {
-	      if (error)
-		{
-		  g_warning ("%s: plug_in_flush(): error: %s",
-			     gimp_filename_to_utf8 (g_get_prgname ()),
-			     error->message);
-		  g_error_free (error);
-		}
-	      else
-		{
-		  g_warning ("%s: plug_in_flush(): error",
-			     gimp_filename_to_utf8 (g_get_prgname ()));
-		}
+          if (status != G_IO_STATUS_NORMAL)
+            {
+              if (error)
+                {
+                  g_warning ("%s: plug_in_flush(): error: %s",
+                             gimp_filename_to_utf8 (g_get_prgname ()),
+                             error->message);
+                  g_error_free (error);
+                }
+              else
+                {
+                  g_warning ("%s: plug_in_flush(): error",
+                             gimp_filename_to_utf8 (g_get_prgname ()));
+                }
 
-	      return FALSE;
-	    }
+              return FALSE;
+            }
 
           count += bytes;
         }

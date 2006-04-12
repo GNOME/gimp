@@ -142,10 +142,10 @@ gimp_image_contiguous_region_by_seed (GimpImage    *image,
 
   mask = gimp_channel_new_mask (image, srcPR.w, srcPR.h);
   pixel_region_init (&maskPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-		     0, 0,
-		     gimp_item_width  (GIMP_ITEM (mask)),
-		     gimp_item_height (GIMP_ITEM (mask)),
-		     TRUE);
+                     0, 0,
+                     gimp_item_width  (GIMP_ITEM (mask)),
+                     gimp_item_height (GIMP_ITEM (mask)),
+                     TRUE);
 
   tile = tile_manager_get_tile (srcPR.tiles, x, y, TRUE, FALSE);
   if (tile)
@@ -266,7 +266,7 @@ gimp_image_contiguous_region_by_color (GimpImage     *image,
   mask = gimp_channel_new_mask (image, width, height);
 
   pixel_region_init (&maskPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-		     0, 0, width, height,
+                     0, 0, width, height,
                      TRUE);
 
   pixel_regions_process_parallel ((PixelProcessorFunc)
@@ -356,30 +356,30 @@ pixel_difference (guchar   *col1,
       gfloat aa = 1.5 - ((gfloat) max / threshold);
 
       if (aa <= 0.0)
-	return 0;
+        return 0;
       else if (aa < 0.5)
-	return (guchar) (aa * 512);
+        return (guchar) (aa * 512);
       else
-	return 255;
+        return 255;
     }
   else
     {
       if (max > threshold)
-	return 0;
+        return 0;
       else
-	return 255;
+        return 255;
     }
 }
 
 static void
 ref_tiles (TileManager  *src,
-	   TileManager  *mask,
-	   Tile        **s_tile,
-	   Tile        **m_tile,
-	   gint          x,
-	   gint          y,
-	   guchar      **s,
-	   guchar      **m)
+           TileManager  *mask,
+           Tile        **s_tile,
+           Tile        **m_tile,
+           gint          x,
+           gint          y,
+           guchar      **s,
+           guchar      **m)
 {
   if (*s_tile != NULL)
     tile_release (*s_tile, FALSE);
@@ -396,18 +396,18 @@ ref_tiles (TileManager  *src,
 static int
 find_contiguous_segment (GimpImage     *image,
                          guchar        *col,
-			 PixelRegion   *src,
-			 PixelRegion   *mask,
-			 gint           width,
-			 gint           bytes,
+                         PixelRegion   *src,
+                         PixelRegion   *mask,
+                         gint           width,
+                         gint           bytes,
                          GimpImageType  src_type,
-			 gboolean       has_alpha,
+                         gboolean       has_alpha,
                          gboolean       select_transparent,
-			 gboolean       antialias,
-			 gint           threshold,
-			 gint           initial,
-			 gint          *start,
-			 gint          *end)
+                         gboolean       antialias,
+                         gint           threshold,
+                         gint           initial,
+                         gint          *start,
+                         gint          *end)
 {
   guchar *s;
   guchar *m;
@@ -450,7 +450,7 @@ find_contiguous_segment (GimpImage     *image,
   while (*start >= 0 && diff)
     {
       if (! ((*start + 1) % TILE_WIDTH))
-	ref_tiles (src->tiles, mask->tiles,
+        ref_tiles (src->tiles, mask->tiles,
                    &s_tile, &m_tile, *start, src->y, &s, &m);
 
       if (GIMP_IMAGE_TYPE_IS_INDEXED (src_type))
@@ -467,10 +467,10 @@ find_contiguous_segment (GimpImage     *image,
         }
 
       if ((*m-- = diff))
-	{
-	  s -= bytes;
-	  (*start)--;
-	}
+        {
+          s -= bytes;
+          (*start)--;
+        }
     }
 
   diff = 1;
@@ -483,7 +483,7 @@ find_contiguous_segment (GimpImage     *image,
   while (*end < width && diff)
     {
       if (! (*end % TILE_WIDTH))
-	ref_tiles (src->tiles, mask->tiles,
+        ref_tiles (src->tiles, mask->tiles,
                    &s_tile, &m_tile, *end, src->y, &s, &m);
 
       if (GIMP_IMAGE_TYPE_IS_INDEXED (src_type))
@@ -500,10 +500,10 @@ find_contiguous_segment (GimpImage     *image,
         }
 
       if ((*m++ = diff))
-	{
-	  s += bytes;
-	  (*end)++;
-	}
+        {
+          s += bytes;
+          (*end)++;
+        }
     }
 
   tile_release (s_tile, FALSE);
@@ -515,15 +515,15 @@ find_contiguous_segment (GimpImage     *image,
 static void
 find_contiguous_region_helper (GimpImage     *image,
                                PixelRegion   *mask,
-			       PixelRegion   *src,
+                               PixelRegion   *src,
                                GimpImageType  src_type,
-			       gboolean       has_alpha,
+                               gboolean       has_alpha,
                                gboolean       select_transparent,
-			       gboolean       antialias,
-			       gint           threshold,
-			       gint           x,
-			       gint           y,
-			       guchar        *col)
+                               gboolean       antialias,
+                               gint           threshold,
+                               gint           x,
+                               gint           y,
+                               guchar        *col)
 {
   gint   start, end;
   gint   new_start, new_end;
@@ -550,31 +550,31 @@ find_contiguous_region_helper (GimpImage     *image,
 
       for (x = start + 1; x < end; x++)
         {
-	  tile = tile_manager_get_tile (mask->tiles, x, y, TRUE, FALSE);
-	  val = *(guchar *) (tile_data_pointer (tile,
+          tile = tile_manager_get_tile (mask->tiles, x, y, TRUE, FALSE);
+          val = *(guchar *) (tile_data_pointer (tile,
                                                 x % TILE_WIDTH,
                                                 y % TILE_HEIGHT));
-	  tile_release (tile, FALSE);
-	  if (val != 0)
+          tile_release (tile, FALSE);
+          if (val != 0)
             continue;
 
-	  src->x = x;
-	  src->y = y;
+          src->x = x;
+          src->y = y;
 
-	  if (! find_contiguous_segment (image, col, src, mask, src->w,
+          if (! find_contiguous_segment (image, col, src, mask, src->w,
                                          src->bytes, src_type, has_alpha,
                                          select_transparent, antialias,
-					 threshold, x, &new_start, &new_end))
-	    continue;
+                                         threshold, x, &new_start, &new_end))
+            continue;
 
-	  if (y + 1 < src->h)
+          if (y + 1 < src->h)
             {
               g_queue_push_tail (coord_stack, GINT_TO_POINTER (y + 1));
               g_queue_push_tail (coord_stack, GINT_TO_POINTER (new_start));
               g_queue_push_tail (coord_stack, GINT_TO_POINTER (new_end));
             }
 
-	  if (y - 1 >= 0)
+          if (y - 1 >= 0)
             {
               g_queue_push_tail (coord_stack, GINT_TO_POINTER (y - 1));
               g_queue_push_tail (coord_stack, GINT_TO_POINTER (new_start));

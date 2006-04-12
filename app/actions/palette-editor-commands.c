@@ -64,7 +64,7 @@ palette_editor_edit_color_cmd_callback (GtkAction *action,
   if (! editor->color_dialog)
     {
       editor->color_dialog =
-	gimp_color_dialog_new (GIMP_VIEWABLE (palette),
+        gimp_color_dialog_new (GIMP_VIEWABLE (palette),
                                _("Edit Palette Color"),
                                GIMP_STOCK_PALETTE,
                                _("Edit Color Palette Entry"),
@@ -161,10 +161,10 @@ palette_editor_edit_color_update (GimpColorDialog      *dialog,
 
     case GIMP_COLOR_DIALOG_OK:
       if (editor->color)
-	{
-	  editor->color->color = *color;
-	  gimp_data_dirty (GIMP_DATA (palette));
-	}
+        {
+          editor->color->color = *color;
+          gimp_data_dirty (GIMP_DATA (palette));
+        }
       /* Fallthrough */
 
     case GIMP_COLOR_DIALOG_CANCEL:

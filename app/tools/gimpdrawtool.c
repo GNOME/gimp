@@ -120,8 +120,8 @@ gimp_draw_tool_finalize (GObject *object)
 
 static void
 gimp_draw_tool_control (GimpTool       *tool,
-			GimpToolAction  action,
-			GimpDisplay    *display)
+                        GimpToolAction  action,
+                        GimpDisplay    *display)
 {
   GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
 
@@ -205,7 +205,7 @@ gimp_draw_tool_real_draw (GimpDrawTool *draw_tool)
 
 void
 gimp_draw_tool_start (GimpDrawTool *draw_tool,
-		      GimpDisplay  *display)
+                      GimpDisplay  *display)
 {
   GimpDisplayShell *shell;
 
@@ -939,7 +939,7 @@ gimp_draw_tool_on_vectors_curve (GimpDrawTool      *draw_tool,
   while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
     {
       cur_dist = gimp_stroke_nearest_point_get (stroke, coord, 1.0,
-	                                        &cur_coords,
+                                                &cur_coords,
                                                 &segment_start,
                                                 &segment_end,
                                                 &cur_pos);
@@ -1027,9 +1027,9 @@ gimp_draw_tool_on_vectors (GimpDrawTool      *draw_tool,
 
 void
 gimp_draw_tool_draw_lines (GimpDrawTool  *draw_tool,
-			   const gdouble *points,
-			   gint           n_points,
-			   gboolean       filled,
+                           const gdouble *points,
+                           gint           n_points,
+                           gboolean       filled,
                            gboolean       use_offsets)
 {
   GimpDisplayShell *shell;
@@ -1068,9 +1068,9 @@ gimp_draw_tool_draw_lines (GimpDrawTool  *draw_tool,
 
 void
 gimp_draw_tool_draw_strokes (GimpDrawTool     *draw_tool,
-			     const GimpCoords *points,
-			     gint              n_points,
-			     gboolean          filled,
+                             const GimpCoords *points,
+                             gint              n_points,
+                             gboolean          filled,
                              gboolean          use_offsets)
 {
   GimpDisplayShell *shell;
@@ -1155,31 +1155,31 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
   for (i = 0; i < n_bound_segs; i++)
     {
       if (bound_segs[i].x1 == -1 &&
-	  bound_segs[i].y1 == -1 &&
-	  bound_segs[i].x2 == -1 &&
-	  bound_segs[i].y2 == -1)
-	{
-	  /* Group ends */
-	  gimp_canvas_draw_lines (GIMP_CANVAS (shell->canvas),
-				  GIMP_CANVAS_STYLE_XOR_DOTTED,
-				  gdk_points, n_gdk_points);
-	  n_gdk_points = 0;
-	  continue;
-	}
+          bound_segs[i].y1 == -1 &&
+          bound_segs[i].x2 == -1 &&
+          bound_segs[i].y2 == -1)
+        {
+          /* Group ends */
+          gimp_canvas_draw_lines (GIMP_CANVAS (shell->canvas),
+                                  GIMP_CANVAS_STYLE_XOR_DOTTED,
+                                  gdk_points, n_gdk_points);
+          n_gdk_points = 0;
+          continue;
+        }
 
       if (n_gdk_points == 0)
-	{
-	  gimp_display_shell_transform_xy (shell,
-					   bound_segs[i].x1 + offset_x,
-					   bound_segs[i].y1 + offset_y,
-					   &x, &y,
-					   use_offsets);
+        {
+          gimp_display_shell_transform_xy (shell,
+                                           bound_segs[i].x1 + offset_x,
+                                           bound_segs[i].y1 + offset_y,
+                                           &x, &y,
+                                           use_offsets);
 
-	  gdk_points[0].x = CLAMP (x, -1, xmax);
-	  gdk_points[0].y = CLAMP (y, -1, ymax);
+          gdk_points[0].x = CLAMP (x, -1, xmax);
+          gdk_points[0].y = CLAMP (y, -1, ymax);
 
-	  n_gdk_points++;
-	}
+          n_gdk_points++;
+        }
 
       g_assert (n_gdk_points < n_bound_segs + 1);
 

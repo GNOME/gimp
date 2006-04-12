@@ -36,37 +36,37 @@ struct _GimpLut
  * and do no correction as this will be handled by gimp_lut_setup
  */
 typedef gfloat (*GimpLutFunc) (gpointer user_data,
-			       gint     nchannels,
-			       gint     channel,
-			       gfloat   value);
+                               gint     nchannels,
+                               gint     channel,
+                               gfloat   value);
 
 
 GimpLut * gimp_lut_new            (void);
 void      gimp_lut_free           (GimpLut     *lut);
 
 void      gimp_lut_setup          (GimpLut     *lut,
-				   GimpLutFunc  func,
-				   gpointer     user_data,
-				   gint         nchannels);
+                                   GimpLutFunc  func,
+                                   gpointer     user_data,
+                                   gint         nchannels);
 
 /* gimp_lut_setup_exact is currently identical to gimp_lut_setup.  It
  * however is guaranteed to never perform any interpolation or gamma
  * correction on the lut
  */
 void      gimp_lut_setup_exact    (GimpLut     *lut,
-				   GimpLutFunc  func,
-				   gpointer     user_data,
-				   gint         nchannels);
+                                   GimpLutFunc  func,
+                                   gpointer     user_data,
+                                   gint         nchannels);
 
 void      gimp_lut_process        (GimpLut     *lut,
-				   PixelRegion *srcPR,
-				   PixelRegion *destPR);
+                                   PixelRegion *srcPR,
+                                   PixelRegion *destPR);
 
 /* gimp_lut_process_inline is like gimp_lut_process except it uses a
  * single PixelRegion as both the source and destination
  */
 void      gimp_lut_process_inline (GimpLut     *lut,
-				   PixelRegion *src_destPR);
+                                   PixelRegion *src_destPR);
 
 
 #endif /* __GIMP_LUT_H__ */

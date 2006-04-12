@@ -39,12 +39,12 @@
 
 void
 gimp_text_render_bitmap (PangoFont  *font,
-			 PangoGlyph  glyph,
-			 FT_Int32    flags,
-			 FT_Matrix  *trafo,
-			 gint        x,
-			 gint        y,
-			 FT_Bitmap  *bitmap)
+                         PangoGlyph  glyph,
+                         FT_Int32    flags,
+                         FT_Matrix  *trafo,
+                         gint        x,
+                         gint        y,
+                         FT_Bitmap  *bitmap)
 {
   FT_Face       face;
   gint          y_start, y_limit, x_start, x_limit;
@@ -58,19 +58,19 @@ gimp_text_render_bitmap (PangoFont  *font,
 
   FT_Load_Glyph (face, (FT_UInt) glyph, flags);
   FT_Render_Glyph (face->glyph,
-		   (flags & FT_LOAD_TARGET_MONO ?
-		    ft_render_mode_mono : ft_render_mode_normal));
+                   (flags & FT_LOAD_TARGET_MONO ?
+                    ft_render_mode_mono : ft_render_mode_normal));
 
   x = PANGO_PIXELS (x);
   y = PANGO_PIXELS (y);
 
   x_start = MAX (0, - (x + face->glyph->bitmap_left));
   x_limit = MIN (face->glyph->bitmap.width,
-		 bitmap->width - (x + face->glyph->bitmap_left));
+                 bitmap->width - (x + face->glyph->bitmap_left));
 
   y_start = MAX (0,  - (y - face->glyph->bitmap_top));
   y_limit = MIN (face->glyph->bitmap.rows,
-		 bitmap->rows - (y - face->glyph->bitmap_top));
+                 bitmap->rows - (y - face->glyph->bitmap_top));
 
   src = face->glyph->bitmap.buffer + y_start * face->glyph->bitmap.pitch;
 
@@ -83,52 +83,52 @@ gimp_text_render_bitmap (PangoFont  *font,
     case ft_pixel_mode_grays:
       src += x_start;
       for (iy = y_start; iy < y_limit; iy++)
-	{
-	  const guchar *s = src;
-	  guchar       *d = dest;
+        {
+          const guchar *s = src;
+          guchar       *d = dest;
 
-	  for (ix = x_start; ix < x_limit; ix++)
-	    {
-	      switch (*s)
-		{
-		case 0:
-		  break;
-		case 0xff:
-		  *d = 0xff;
-		default:
-		  *d = MIN ((gushort) *d + (const gushort) *s, 0xff);
-		  break;
-		}
+          for (ix = x_start; ix < x_limit; ix++)
+            {
+              switch (*s)
+                {
+                case 0:
+                  break;
+                case 0xff:
+                  *d = 0xff;
+                default:
+                  *d = MIN ((gushort) *d + (const gushort) *s, 0xff);
+                  break;
+                }
 
-	      s++;
-	      d++;
-	    }
+              s++;
+              d++;
+            }
 
-	  dest += bitmap->pitch;
-	  src  += face->glyph->bitmap.pitch;
-	}
+          dest += bitmap->pitch;
+          src  += face->glyph->bitmap.pitch;
+        }
       break;
 
     case ft_pixel_mode_mono:
       src += x_start / 8;
       for (iy = y_start; iy < y_limit; iy++)
-	{
-	  const guchar *s = src;
-	  guchar       *d = dest;
+        {
+          const guchar *s = src;
+          guchar       *d = dest;
 
-	  for (ix = x_start; ix < x_limit; ix++)
-	    {
-	      if ((*s) & (1 << (7 - (ix % 8))))
-		*d |= 0xff;
+          for (ix = x_start; ix < x_limit; ix++)
+            {
+              if ((*s) & (1 << (7 - (ix % 8))))
+                *d |= 0xff;
 
-	      if ((ix % 8) == 7)
-		s++;
-	      d++;
-	    }
+              if ((ix % 8) == 7)
+                s++;
+              d++;
+            }
 
-	  dest += bitmap->pitch;
-	  src  += face->glyph->bitmap.pitch;
-	}
+          dest += bitmap->pitch;
+          src  += face->glyph->bitmap.pitch;
+        }
       break;
 
     default:

@@ -151,16 +151,16 @@ file_save (GimpImage           *image,
                                   (GDestroyNotify) g_free);
         }
       else
-	{
+        {
           /*  reset the "save-a-copy" filename when the image URI changes  */
           if (strcmp (uri, gimp_image_get_uri (image)))
             g_object_set_data (G_OBJECT (image),
                                "gimp-image-save-a-copy", NULL);
 
-	  gimp_image_set_uri (image, uri);
+          gimp_image_set_uri (image, uri);
           gimp_image_set_save_proc (image, file_proc);
           gimp_image_clean_all (image);
-	}
+        }
 
       documents = GIMP_DOCUMENT_LIST (image->gimp->documents);
       imagefile = gimp_document_list_add_uri (documents,

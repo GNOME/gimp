@@ -383,8 +383,8 @@ gimp_thumb_box_new (Gimp *gimp)
   gtk_label_set_line_wrap (GTK_LABEL (box->filename), TRUE);
   gtk_label_set_justify (GTK_LABEL (box->filename), GTK_JUSTIFY_CENTER);
   gimp_label_set_attributes (GTK_LABEL (box->filename),
-			     PANGO_ATTR_STYLE, PANGO_STYLE_OBLIQUE,
-			     -1);
+                             PANGO_ATTR_STYLE, PANGO_STYLE_OBLIQUE,
+                             -1);
   gtk_box_pack_start (GTK_BOX (vbox2), box->filename, FALSE, FALSE, 0);
   gtk_widget_show (box->filename);
 
@@ -392,8 +392,8 @@ gimp_thumb_box_new (Gimp *gimp)
   gtk_misc_set_alignment (GTK_MISC (box->info), 0.5, 0.0);
   gtk_label_set_justify (GTK_LABEL (box->info), GTK_JUSTIFY_CENTER);
   gimp_label_set_attributes (GTK_LABEL (box->info),
-			     PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
-			     -1);
+                             PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
+                             -1);
   gtk_box_pack_start (GTK_BOX (vbox2), box->info, FALSE, FALSE, 0);
   gtk_widget_show (box->info);
 

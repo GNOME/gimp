@@ -150,24 +150,24 @@ gimp_data_class_init (GimpDataClass *klass)
   klass->duplicate                = NULL;
 
   g_object_class_install_property (object_class, PROP_FILENAME,
-				   g_param_spec_string ("filename", NULL, NULL,
-							NULL,
-							GIMP_PARAM_READWRITE));
+                                   g_param_spec_string ("filename", NULL, NULL,
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_WRITABLE,
-				   g_param_spec_boolean ("writable", NULL, NULL,
+                                   g_param_spec_boolean ("writable", NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_WRITABLE,
-				   g_param_spec_boolean ("deletable", NULL, NULL,
+                                   g_param_spec_boolean ("deletable", NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_MIME_TYPE,
-				   g_param_spec_string ("mime-type", NULL, NULL,
-							NULL,
-							GIMP_PARAM_READWRITE |
+                                   g_param_spec_string ("mime-type", NULL, NULL,
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 

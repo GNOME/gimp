@@ -74,7 +74,7 @@ gimp_plugin_config_class_init (GimpPluginConfigClass *klass)
                                  PROP_FRACTALEXPLORER_PATH,
                                  "fractalexplorer-path",
                                  FRACTALEXPLORER_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_PARAM_STATIC_STRINGS);
   g_free (path);
 
@@ -82,7 +82,7 @@ gimp_plugin_config_class_init (GimpPluginConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
                                  PROP_GFIG_PATH,
                                  "gfig-path", GFIG_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_PARAM_STATIC_STRINGS);
   g_free (path);
 
@@ -90,7 +90,7 @@ gimp_plugin_config_class_init (GimpPluginConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
                                  PROP_GFLARE_PATH,
                                  "gflare-path", GFLARE_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_PARAM_STATIC_STRINGS);
   g_free (path);
 
@@ -99,7 +99,7 @@ gimp_plugin_config_class_init (GimpPluginConfigClass *klass)
                                  PROP_GIMPRESSIONIST_PATH,
                                  "gimpressionist-path",
                                  GIMPRESSIONIST_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_PARAM_STATIC_STRINGS);
   g_free (path);
 
@@ -108,7 +108,7 @@ gimp_plugin_config_class_init (GimpPluginConfigClass *klass)
                                  PROP_SCRIPT_FU_PATH,
                                  "script-fu-path",
                                  SCRIPT_FU_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_PARAM_STATIC_STRINGS);
   g_free (path);
 }

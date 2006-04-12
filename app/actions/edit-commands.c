@@ -421,8 +421,8 @@ cut_named_buffer_callback (GtkWidget   *widget,
 
 static void
 copy_named_buffer_callback (GtkWidget   *widget,
-			    const gchar *name,
-			    gpointer     data)
+                            const gchar *name,
+                            gpointer     data)
 {
   GimpImage    *image = GIMP_IMAGE (data);
   GimpDrawable *drawable;

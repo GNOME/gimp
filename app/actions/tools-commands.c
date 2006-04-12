@@ -55,7 +55,7 @@ static void   tools_activate_enum_action (const gchar *action_desc,
 void
 tools_select_cmd_callback (GtkAction   *action,
                            const gchar *value,
-			   gpointer     data)
+                           gpointer     data)
 {
   Gimp         *gimp;
   GimpToolInfo *tool_info;

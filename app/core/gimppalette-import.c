@@ -61,8 +61,8 @@
 GimpPalette *
 gimp_palette_import_from_gradient (GimpGradient *gradient,
                                    gboolean      reverse,
-				   const gchar  *palette_name,
-				   gint          n_colors)
+                                   const gchar  *palette_name,
+                                   gint          n_colors)
 {
   GimpPalette         *palette;
   GimpGradientSegment *seg = NULL;
@@ -107,9 +107,9 @@ static gint count_color_entries = 0;
 
 static GHashTable *
 gimp_palette_import_store_colors (GHashTable *table,
-				  guchar     *colors,
-				  guchar     *colors_real,
-				  gint        n_colors)
+                                  guchar     *colors,
+                                  guchar     *colors_real,
+                                  gint        n_colors)
 {
   gpointer   found_color = NULL;
   ImgColors *new_color;
@@ -128,10 +128,10 @@ gimp_palette_import_store_colors (GHashTable *table,
   if (found_color == NULL)
     {
       if (count_color_entries > MAX_IMAGE_COLORS)
-	{
-	  /* Don't add any more new ones */
-	  return table;
-	}
+        {
+          /* Don't add any more new ones */
+          return table;
+        }
 
       count_color_entries++;
 
@@ -152,7 +152,7 @@ gimp_palette_import_store_colors (GHashTable *table,
       new_color = found_color;
 
       if (new_color->count < (G_MAXINT - 1))
-	new_color->count++;
+        new_color->count++;
 
       /* Now do the adjustments ...*/
       new_color->r_adj += (colors_real[0] - colors[0]);
@@ -161,13 +161,13 @@ gimp_palette_import_store_colors (GHashTable *table,
 
       /* Boundary conditions */
       if(new_color->r_adj > (G_MAXINT - 255))
-	new_color->r_adj /= new_color->count;
+        new_color->r_adj /= new_color->count;
 
       if(new_color->g_adj > (G_MAXINT - 255))
-	new_color->g_adj /= new_color->count;
+        new_color->g_adj /= new_color->count;
 
       if(new_color->b_adj > (G_MAXINT - 255))
-	new_color->b_adj /= new_color->count;
+        new_color->b_adj /= new_color->count;
     }
 
   return table;
@@ -186,7 +186,7 @@ gimp_palette_import_create_list (gpointer key,
 
 static gint
 gimp_palette_import_sort_colors (gconstpointer a,
-				 gconstpointer b)
+                                 gconstpointer b)
 {
   const ImgColors *s1 = a;
   const ImgColors *s2 = b;
@@ -201,7 +201,7 @@ gimp_palette_import_sort_colors (gconstpointer a,
 
 static void
 gimp_palette_import_create_image_palette (gpointer data,
-					  gpointer user_data)
+                                          gpointer user_data)
 {
   GimpPalette *palette   = user_data;
   ImgColors   *color_tab = data;
@@ -210,7 +210,7 @@ gimp_palette_import_create_image_palette (gpointer data,
   GimpRGB      color;
 
   n_colors = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (palette),
-						 "import-n-colors"));
+                                                 "import-n-colors"));
 
   if (palette->n_colors >= n_colors)
     return;
@@ -245,7 +245,7 @@ gimp_palette_import_make_palette (GHashTable  *table,
   list = g_slist_sort (list, gimp_palette_import_sort_colors);
 
   g_object_set_data (G_OBJECT (palette), "import-n-colors",
-		     GINT_TO_POINTER (n_colors));
+                     GINT_TO_POINTER (n_colors));
 
   g_slist_foreach (list, gimp_palette_import_create_image_palette, palette);
 
@@ -289,14 +289,14 @@ gimp_palette_import_extract (GimpImage     *image,
       gint          i, j;
 
       for (i = 0; i < region.h; i++)
-	{
-	  const guchar *idata = data;
+        {
+          const guchar *idata = data;
 
-	  for (j = 0; j < region.w; j++)
-	    {
+          for (j = 0; j < region.w; j++)
+            {
               guchar  rgba[MAX_CHANNELS];
 
-	      gimp_image_get_color (image, type, idata, rgba);
+              gimp_image_get_color (image, type, idata, rgba);
 
               /*  ignore completely transparent pixels  */
               if (rgba[ALPHA_PIX])
@@ -314,11 +314,11 @@ gimp_palette_import_extract (GimpImage     *image,
                                                              n_colors);
                 }
 
-	      idata += region.bytes;
-	    }
+              idata += region.bytes;
+            }
 
-	  data += region.rowstride;
-	}
+          data += region.rowstride;
+        }
     }
 
   return colors;
@@ -326,9 +326,9 @@ gimp_palette_import_extract (GimpImage     *image,
 
 GimpPalette *
 gimp_palette_import_from_image (GimpImage   *image,
-				const gchar *palette_name,
-				gint         n_colors,
-				gint         threshold)
+                                const gchar *palette_name,
+                                gint         n_colors,
+                                gint         threshold)
 {
   GimpPickable *pickable;
   GHashTable   *colors;
@@ -355,7 +355,7 @@ gimp_palette_import_from_image (GimpImage   *image,
 
 GimpPalette *
 gimp_palette_import_from_indexed_image (GimpImage   *image,
-					const gchar *palette_name)
+                                        const gchar *palette_name)
 {
   GimpPalette *palette;
   gint         count;
@@ -374,10 +374,10 @@ gimp_palette_import_from_indexed_image (GimpImage   *image,
       g_snprintf (name, sizeof (name), _("Index %d"), count);
 
       gimp_rgba_set_uchar (&color,
-			   image->cmap[count * 3 + 0],
-			   image->cmap[count * 3 + 1],
-			   image->cmap[count * 3 + 2],
-			   255);
+                           image->cmap[count * 3 + 0],
+                           image->cmap[count * 3 + 1],
+                           image->cmap[count * 3 + 2],
+                           255);
 
       gimp_palette_add_entry (palette, -1, name, &color);
     }
@@ -440,22 +440,22 @@ gimp_palette_detect_file_format (const gchar *filename)
     {
       if (read (fd, header, sizeof (header)) == sizeof (header))
         {
-	  if (strncmp (header + 0, "RIFF", 4) == 0 &&
+          if (strncmp (header + 0, "RIFF", 4) == 0 &&
               strncmp (header + 8, "PAL data", 8) == 0)
- 	    {
+             {
               format = GIMP_PALETTE_FILE_FORMAT_RIFF_PAL;
-	    }
+            }
 
-	  if (strncmp (header, "GIMP Palette", 12) == 0)
-	    {
+          if (strncmp (header, "GIMP Palette", 12) == 0)
+            {
               format = GIMP_PALETTE_FILE_FORMAT_GPL;
-	    }
+            }
 
           if (strncmp (header, "JASC-PAL", 8) == 0)
             {
               format = GIMP_PALETTE_FILE_FORMAT_PSP_PAL;
             }
-	}
+        }
 
       if (fstat (fd, &file_stat) >= 0)
         {

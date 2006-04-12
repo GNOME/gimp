@@ -43,16 +43,16 @@ struct _BoundSeg
 
 
 BoundSeg * boundary_find      (PixelRegion    *maskPR,
-			       BoundaryType    type,
-			       gint            x1,
-			       gint            y1,
-			       gint            x2,
-			       gint            y2,
+                               BoundaryType    type,
+                               gint            x1,
+                               gint            y1,
+                               gint            x2,
+                               gint            y2,
                                guchar          threshold,
-			       gint           *num_segs);
+                               gint           *num_segs);
 BoundSeg * boundary_sort      (const BoundSeg *segs,
-			       gint            num_segs,
-			       gint           *num_groups);
+                               gint            num_segs,
+                               gint           *num_groups);
 BoundSeg * boundary_simplify  (BoundSeg       *sorted_segs,
                                gint            num_groups,
                                gint           *num_segs);

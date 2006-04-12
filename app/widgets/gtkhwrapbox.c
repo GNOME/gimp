@@ -31,14 +31,14 @@
 static void    gtk_hwrap_box_class_init    (GtkHWrapBoxClass   *klass);
 static void    gtk_hwrap_box_init          (GtkHWrapBox        *hwbox);
 static void    gtk_hwrap_box_size_request  (GtkWidget          *widget,
-					    GtkRequisition     *requisition);
+                                            GtkRequisition     *requisition);
 static void    gtk_hwrap_box_size_allocate (GtkWidget          *widget,
-					    GtkAllocation      *allocation);
+                                            GtkAllocation      *allocation);
 static GSList* reverse_list_row_children   (GtkWrapBox         *wbox,
-					    GtkWrapBoxChild   **child_p,
-					    GtkAllocation      *area,
-					    guint              *max_height,
-					    gboolean           *can_vexpand);
+                                            GtkWrapBoxChild   **child_p,
+                                            GtkAllocation      *area,
+                                            guint              *max_height,
+                                            gboolean           *can_vexpand);
 
 
 /* --- variables --- */
@@ -55,19 +55,19 @@ gtk_hwrap_box_get_type (void)
     {
       static const GTypeInfo hwrap_box_info =
       {
-	sizeof (GtkHWrapBoxClass),
-	NULL,		/* base_init */
-	NULL,		/* base_finalize */
-	(GClassInitFunc) gtk_hwrap_box_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data */
-	sizeof (GtkHWrapBox),
-	0,		/* n_preallocs */
-	(GInstanceInitFunc) gtk_hwrap_box_init,
+        sizeof (GtkHWrapBoxClass),
+        NULL,                /* base_init */
+        NULL,                /* base_finalize */
+        (GClassInitFunc) gtk_hwrap_box_class_init,
+        NULL,                /* class_finalize */
+        NULL,                /* class_data */
+        sizeof (GtkHWrapBox),
+        0,                /* n_preallocs */
+        (GInstanceInitFunc) gtk_hwrap_box_init,
       };
 
       hwrap_box_type = g_type_register_static (GTK_TYPE_WRAP_BOX, "GtkHWrapBox",
-					       &hwrap_box_info, 0);
+                                               &hwrap_box_info, 0);
     }
 
   return hwrap_box_type;
@@ -109,8 +109,8 @@ gtk_hwrap_box_new (gboolean homogeneous)
 
 static inline void
 get_child_requisition (GtkWrapBox     *wbox,
-		       GtkWidget      *child,
-		       GtkRequisition *child_requisition)
+                       GtkWidget      *child,
+                       GtkRequisition *child_requisition)
 {
   if (wbox->homogeneous)
     {
@@ -125,8 +125,8 @@ get_child_requisition (GtkWrapBox     *wbox,
 
 static gfloat
 get_layout_size (GtkHWrapBox *this,
-		 guint        max_width,
-		 guint       *width_inc)
+                 guint        max_width,
+                 guint       *width_inc)
 {
   GtkWrapBox *wbox = GTK_WRAP_BOX (this);
   GtkWrapBoxChild *child;
@@ -143,26 +143,26 @@ get_layout_size (GtkHWrapBox *this,
       guint row_width, row_height, n = 1;
 
       if (!GTK_WIDGET_VISIBLE (child->widget))
-	continue;
+        continue;
 
       get_child_requisition (wbox, child->widget, &child_requisition);
       if (!last_row_filled)
-	*width_inc = MIN (*width_inc, child_requisition.width - left_over);
+        *width_inc = MIN (*width_inc, child_requisition.width - left_over);
       row_width = child_requisition.width;
       row_height = child_requisition.height;
       for (row_child = child->next; row_child && n < wbox->child_limit; row_child = row_child->next)
-	{
-	  if (GTK_WIDGET_VISIBLE (row_child->widget))
-	    {
-	      get_child_requisition (wbox, row_child->widget, &child_requisition);
-	      if (row_width + wbox->hspacing + child_requisition.width > max_width)
-		break;
-	      row_width += wbox->hspacing + child_requisition.width;
-	      row_height = MAX (row_height, child_requisition.height);
-	      n++;
-	    }
-	  child = row_child;
-	}
+        {
+          if (GTK_WIDGET_VISIBLE (row_child->widget))
+            {
+              get_child_requisition (wbox, row_child->widget, &child_requisition);
+              if (row_width + wbox->hspacing + child_requisition.width > max_width)
+                break;
+              row_width += wbox->hspacing + child_requisition.width;
+              row_height = MAX (row_height, child_requisition.height);
+              n++;
+            }
+          child = row_child;
+        }
       last_row_filled = n >= wbox->child_limit;
       left_over = last_row_filled ? 0 : max_width - (row_width + wbox->hspacing);
       total_height += (n_rows ? wbox->vspacing : 0) + row_height;
@@ -177,7 +177,7 @@ get_layout_size (GtkHWrapBox *this,
 
 static void
 gtk_hwrap_box_size_request (GtkWidget      *widget,
-			    GtkRequisition *requisition)
+                            GtkRequisition *requisition)
 {
   GtkHWrapBox *this = GTK_HWRAP_BOX (widget);
   GtkWrapBox *wbox = GTK_WRAP_BOX (widget);
@@ -196,12 +196,12 @@ gtk_hwrap_box_size_request (GtkWidget      *widget,
   for (child = wbox->children; child; child = child->next)
     if (GTK_WIDGET_VISIBLE (child->widget))
       {
-	GtkRequisition child_requisition;
-	
-	gtk_widget_size_request (child->widget, &child_requisition);
+        GtkRequisition child_requisition;
+        
+        gtk_widget_size_request (child->widget, &child_requisition);
 
-	this->max_child_width = MAX (this->max_child_width, child_requisition.width);
-	this->max_child_height = MAX (this->max_child_height, child_requisition.height);
+        this->max_child_width = MAX (this->max_child_width, child_requisition.width);
+        this->max_child_height = MAX (this->max_child_height, child_requisition.height);
       }
 
   /* figure all possible layouts */
@@ -214,19 +214,19 @@ gtk_hwrap_box_size_request (GtkWidget      *widget,
 
       layout_width += row_inc;
       layout_height = get_layout_size (this, layout_width, &row_inc);
-      ratio = layout_width / layout_height;		/*<h2v-skip>*/
+      ratio = layout_width / layout_height;                /*<h2v-skip>*/
       dist = MAX (ratio, wbox->aspect_ratio) - MIN (ratio, wbox->aspect_ratio);
       if (dist < ratio_dist)
-	{
-	  ratio_dist = dist;
-	  requisition->width = layout_width;
-	  requisition->height = layout_height;
-	}
+        {
+          ratio_dist = dist;
+          requisition->width = layout_width;
+          requisition->height = layout_height;
+        }
 
       /* g_print ("ratio for width %d height %d = %f\n",
-	 (gint) layout_width,
-	 (gint) layout_height,
-	 ratio);
+         (gint) layout_width,
+         (gint) layout_height,
+         ratio);
       */
     }
   while (row_inc);
@@ -241,10 +241,10 @@ gtk_hwrap_box_size_request (GtkWidget      *widget,
 
 static GSList*
 reverse_list_row_children (GtkWrapBox       *wbox,
-			   GtkWrapBoxChild **child_p,
-			   GtkAllocation    *area,
-			   guint            *max_child_size,
-			   gboolean         *expand_line)
+                           GtkWrapBoxChild **child_p,
+                           GtkAllocation    *area,
+                           guint            *max_child_size,
+                           gboolean         *expand_line)
 {
   GSList *slist = NULL;
   guint width = 0, row_width = area->width;
@@ -273,22 +273,22 @@ reverse_list_row_children (GtkWrapBox       *wbox,
       child = *child_p;
 
       while (child && n < wbox->child_limit)
-	{
-	  if (GTK_WIDGET_VISIBLE (child->widget))
-	    {
-	      get_child_requisition (wbox, child->widget, &child_requisition);
-	      if (width + wbox->hspacing + child_requisition.width > row_width ||
-		  child->wrapped)
-		break;
-	      width += wbox->hspacing + child_requisition.width;
-	      *max_child_size = MAX (*max_child_size, child_requisition.height);
-	      *expand_line |= child->vexpand;
-	      slist = g_slist_prepend (slist, child);
-	      n++;
-	    }
-	  *child_p = child->next;
-	  child = *child_p;
-	}
+        {
+          if (GTK_WIDGET_VISIBLE (child->widget))
+            {
+              get_child_requisition (wbox, child->widget, &child_requisition);
+              if (width + wbox->hspacing + child_requisition.width > row_width ||
+                  child->wrapped)
+                break;
+              width += wbox->hspacing + child_requisition.width;
+              *max_child_size = MAX (*max_child_size, child_requisition.height);
+              *expand_line |= child->vexpand;
+              slist = g_slist_prepend (slist, child);
+              n++;
+            }
+          *child_p = child->next;
+          child = *child_p;
+        }
     }
 
   return slist;
@@ -296,10 +296,10 @@ reverse_list_row_children (GtkWrapBox       *wbox,
 
 static void
 layout_row (GtkWrapBox    *wbox,
-	    GtkAllocation *area,
-	    GSList        *children,
-	    guint          children_per_line,
-	    gboolean       vexpand)
+            GtkAllocation *area,
+            GSList        *children,
+            guint          children_per_line,
+            gboolean       vexpand)
 {
   GSList *slist;
   guint n_children = 0, n_expand_children = 0, have_expand_children = 0;
@@ -314,7 +314,7 @@ layout_row (GtkWrapBox    *wbox,
 
       n_children++;
       if (child->hexpand)
-	n_expand_children++;
+        n_expand_children++;
 
       get_child_requisition (wbox, child->widget, &child_requisition);
       total_width += child_requisition.width;
@@ -342,29 +342,29 @@ layout_row (GtkWrapBox    *wbox,
   else
     {
       if (wbox->justify == GTK_JUSTIFY_FILL)
-	{
-	  width = extra;
-	  have_expand_children = TRUE;
-	  n_expand_children = n_children;
-	  extra /= ((gdouble) n_expand_children);
-	}
+        {
+          width = extra;
+          have_expand_children = TRUE;
+          n_expand_children = n_children;
+          extra /= ((gdouble) n_expand_children);
+        }
       else if (wbox->justify == GTK_JUSTIFY_CENTER)
-	{
-	  x += extra / 2;
-	  width = 0;
-	  extra = 0;
-	}
+        {
+          x += extra / 2;
+          width = 0;
+          extra = 0;
+        }
       else if (wbox->justify == GTK_JUSTIFY_LEFT)
-	{
-	  width = 0;
-	  extra = 0;
-	}
+        {
+          width = 0;
+          extra = 0;
+        }
       else if (wbox->justify == GTK_JUSTIFY_RIGHT)
-	{
-	  x += extra;
-	  width = 0;
-	  extra = 0;
-	}
+        {
+          x += extra;
+          width = 0;
+          extra = 0;
+        }
     }
 
   n_children = 0;
@@ -375,61 +375,61 @@ layout_row (GtkWrapBox    *wbox,
       child_allocation.x = x;
       child_allocation.y = area->y;
       if (wbox->homogeneous)
-	{
-	  child_allocation.height = area->height;
-	  child_allocation.width = width;
-	  x += child_allocation.width + wbox->hspacing;
-	}
+        {
+          child_allocation.height = area->height;
+          child_allocation.width = width;
+          x += child_allocation.width + wbox->hspacing;
+        }
       else
-	{
-	  GtkRequisition child_requisition;
-	
-	  get_child_requisition (wbox, child->widget, &child_requisition);
-	
-	  if (child_requisition.height >= area->height)
-	    child_allocation.height = area->height;
-	  else
-	    {
-	      child_allocation.height = child_requisition.height;
-	      if (wbox->line_justify == GTK_JUSTIFY_FILL || child->vfill)
-		child_allocation.height = area->height;
-	      else if (child->vexpand || wbox->line_justify == GTK_JUSTIFY_CENTER)
-		child_allocation.y += (area->height - child_requisition.height) / 2;
-	      else if (wbox->line_justify == GTK_JUSTIFY_BOTTOM)
-		child_allocation.y += area->height - child_requisition.height;
-	    }
-	
-	  if (have_expand_children)
-	    {
-	      child_allocation.width = child_requisition.width;
-	      if (child->hexpand || wbox->justify == GTK_JUSTIFY_FILL)
-		{
-		  guint space;
-		
-		  n_expand_children--;
-		  space = extra * n_expand_children;
-		  space = width - space;
-		  width -= space;
-		  if (child->hfill)
-		    child_allocation.width += space;
-		  else
-		    {
-		      child_allocation.x += space / 2;
-		      x += space;
-		    }
-		}
-	    }
-	  else
-	    {
-	      /* g_print ("child_allocation.x %d += %d * %f ",
-		       child_allocation.x, n_children, extra); */
-	      child_allocation.x += n_children * extra;
-	      /* g_print ("= %d\n",
-		       child_allocation.x); */
-	      child_allocation.width = MIN (child_requisition.width,
-					    area->width - child_allocation.x + area->x);
-	    }
-	}
+        {
+          GtkRequisition child_requisition;
+        
+          get_child_requisition (wbox, child->widget, &child_requisition);
+        
+          if (child_requisition.height >= area->height)
+            child_allocation.height = area->height;
+          else
+            {
+              child_allocation.height = child_requisition.height;
+              if (wbox->line_justify == GTK_JUSTIFY_FILL || child->vfill)
+                child_allocation.height = area->height;
+              else if (child->vexpand || wbox->line_justify == GTK_JUSTIFY_CENTER)
+                child_allocation.y += (area->height - child_requisition.height) / 2;
+              else if (wbox->line_justify == GTK_JUSTIFY_BOTTOM)
+                child_allocation.y += area->height - child_requisition.height;
+            }
+        
+          if (have_expand_children)
+            {
+              child_allocation.width = child_requisition.width;
+              if (child->hexpand || wbox->justify == GTK_JUSTIFY_FILL)
+                {
+                  guint space;
+                
+                  n_expand_children--;
+                  space = extra * n_expand_children;
+                  space = width - space;
+                  width -= space;
+                  if (child->hfill)
+                    child_allocation.width += space;
+                  else
+                    {
+                      child_allocation.x += space / 2;
+                      x += space;
+                    }
+                }
+            }
+          else
+            {
+              /* g_print ("child_allocation.x %d += %d * %f ",
+                       child_allocation.x, n_children, extra); */
+              child_allocation.x += n_children * extra;
+              /* g_print ("= %d\n",
+                       child_allocation.x); */
+              child_allocation.width = MIN (child_requisition.width,
+                                            area->width - child_allocation.x + area->x);
+            }
+        }
 
       x += child_allocation.width + wbox->hspacing;
       gtk_widget_size_allocate (child->widget, &child_allocation);
@@ -448,7 +448,7 @@ struct _Line
 
 static void
 layout_rows (GtkWrapBox    *wbox,
-	     GtkAllocation *area)
+             GtkAllocation *area)
 {
   GtkWrapBoxChild *next_child;
   guint min_height;
@@ -461,10 +461,10 @@ layout_rows (GtkWrapBox    *wbox,
 
   next_child = wbox->children;
   slist = GTK_WRAP_BOX_GET_CLASS (wbox)->rlist_line_children (wbox,
-							      &next_child,
-							      area,
-							      &min_height,
-							      &vexpand);
+                                                              &next_child,
+                                                              area,
+                                                              &min_height,
+                                                              &vexpand);
   slist = g_slist_reverse (slist);
 
   children_per_line = g_slist_length (slist);
@@ -477,16 +477,16 @@ layout_rows (GtkWrapBox    *wbox,
       total_height += min_height;
       line->expand = vexpand;
       if (vexpand)
-	n_expand_lines++;
+        n_expand_lines++;
       line->next = line_list;
       line_list = line;
       n_lines++;
 
       slist = GTK_WRAP_BOX_GET_CLASS (wbox)->rlist_line_children (wbox,
-								  &next_child,
-								  area,
-								  &min_height,
-								  &vexpand);
+                                                                  &next_child,
+                                                                  area,
+                                                                  &min_height,
+                                                                  &vexpand);
       slist = g_slist_reverse (slist);
     }
 
@@ -501,32 +501,32 @@ layout_rows (GtkWrapBox    *wbox,
       gfloat n_shrink_lines = n_lines;
 
       while (line_list)
-	{
-	  Line *tmp = line_list->next;
+        {
+          Line *tmp = line_list->next;
 
-	  if (shrink_height)
-	    {
-	      Line *line = line_list;
-	      guint shrink_fract = shrink_height / n_shrink_lines + 0.5;
+          if (shrink_height)
+            {
+              Line *line = line_list;
+              guint shrink_fract = shrink_height / n_shrink_lines + 0.5;
 
-	      if (line->min_size > shrink_fract)
-		{
-		  shrink_height -= shrink_fract;
-		  line->min_size -= shrink_fract;
-		}
-	      else
-		{
-		  shrink_height -= line->min_size - 1;
-		  line->min_size = 1;
-		}
-	    }
-	  n_shrink_lines--;
+              if (line->min_size > shrink_fract)
+                {
+                  shrink_height -= shrink_fract;
+                  line->min_size -= shrink_fract;
+                }
+              else
+                {
+                  shrink_height -= line->min_size - 1;
+                  line->min_size = 1;
+                }
+            }
+          n_shrink_lines--;
 
-	  last = line_list;
-	  line_list->next = prev;
-	  prev = line_list;
-	  line_list = tmp;
-	}
+          last = line_list;
+          line_list->next = prev;
+          prev = line_list;
+          line_list = tmp;
+        }
       line_list = last;
     }
 
@@ -539,53 +539,53 @@ layout_rows (GtkWrapBox    *wbox,
       height = MAX (n_lines, height - (n_lines - 1) * wbox->vspacing);
 
       if (wbox->homogeneous)
-	height /= ((gdouble) n_lines);
+        height /= ((gdouble) n_lines);
       else if (n_expand_lines)
-	{
-	  height = MAX (0, height - total_height);
-	  extra = height / ((gdouble) n_expand_lines);
-	}
+        {
+          height = MAX (0, height - total_height);
+          extra = height / ((gdouble) n_expand_lines);
+        }
       else
-	height = 0;
+        height = 0;
 
       y = area->y;
       line = line_list;
       while (line)
-	{
-	  GtkAllocation row_allocation;
-	  Line *next_line = line->next;
-	
-	  row_allocation.x = area->x;
-	  row_allocation.width = area->width;
-	  if (wbox->homogeneous)
-	    row_allocation.height = height;
-	  else
-	    {
-	      row_allocation.height = line->min_size;
-	
-	      if (line->expand)
-		row_allocation.height += extra;
-	    }
-	
-	  row_allocation.y = y;
-	
-	  y += row_allocation.height + wbox->vspacing;
-	  layout_row (wbox,
-		      &row_allocation,
-		      line->children,
-		      children_per_line,
-		      line->expand);
+        {
+          GtkAllocation row_allocation;
+          Line *next_line = line->next;
+        
+          row_allocation.x = area->x;
+          row_allocation.width = area->width;
+          if (wbox->homogeneous)
+            row_allocation.height = height;
+          else
+            {
+              row_allocation.height = line->min_size;
+        
+              if (line->expand)
+                row_allocation.height += extra;
+            }
+        
+          row_allocation.y = y;
+        
+          y += row_allocation.height + wbox->vspacing;
+          layout_row (wbox,
+                      &row_allocation,
+                      line->children,
+                      children_per_line,
+                      line->expand);
 
-	  g_slist_free (line->children);
-	  g_free (line);
-	  line = next_line;
-	}
+          g_slist_free (line->children);
+          g_free (line);
+          line = next_line;
+        }
     }
 }
 
 static void
 gtk_hwrap_box_size_allocate (GtkWidget     *widget,
-			     GtkAllocation *allocation)
+                             GtkAllocation *allocation)
 {
   GtkWrapBox *wbox = GTK_WRAP_BOX (widget);
   GtkAllocation area;

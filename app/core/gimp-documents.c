@@ -49,9 +49,9 @@ gimp_documents_load (Gimp *gimp)
     g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
 
   if (! gimp_config_deserialize_file (GIMP_CONFIG (gimp->documents),
-				      filename,
-				      GINT_TO_POINTER (gimp->config->thumbnail_size),
-				      &error))
+                                      filename,
+                                      GINT_TO_POINTER (gimp->config->thumbnail_size),
+                                      &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
         g_message (error->message);
@@ -83,9 +83,9 @@ gimp_documents_save (Gimp *gimp)
     g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
 
   if (! gimp_config_serialize_to_file (GIMP_CONFIG (gimp->documents),
-				       filename,
-				       header, footer, NULL,
-				       &error))
+                                       filename,
+                                       header, footer, NULL,
+                                       &error))
     {
       g_message (error->message);
       g_error_free (error);

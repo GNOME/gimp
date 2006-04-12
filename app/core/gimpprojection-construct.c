@@ -134,7 +134,7 @@ gimp_projection_construct (GimpProjection *proj,
 
               return;
             }
-	}
+        }
     }
 #endif
 
@@ -187,10 +187,10 @@ gimp_projection_construct_layers (GimpProjection *proj,
        *  to the list
        */
       if (! gimp_layer_is_floating_sel (layer) &&
-	  gimp_item_get_visible (GIMP_ITEM (layer)))
-	{
-	  reverse_list = g_list_prepend (reverse_list, layer);
-	}
+          gimp_item_get_visible (GIMP_ITEM (layer)))
+        {
+          reverse_list = g_list_prepend (reverse_list, layer);
+        }
     }
 
   for (list = reverse_list; list; list = g_list_next (list))
@@ -210,67 +210,67 @@ gimp_projection_construct_layers (GimpProjection *proj,
 
       /* configure the pixel regions  */
       pixel_region_init (&src1PR, gimp_projection_get_tiles (proj),
-			 x1, y1, (x2 - x1), (y2 - y1),
-			 TRUE);
+                         x1, y1, (x2 - x1), (y2 - y1),
+                         TRUE);
 
       /*  If we're showing the layer mask instead of the layer...  */
       if (layer->mask && layer->mask->show_mask)
-	{
-	  pixel_region_init (&src2PR,
-			     gimp_drawable_get_tiles (GIMP_DRAWABLE (layer->mask)),
-			     (x1 - off_x), (y1 - off_y),
-			     (x2 - x1), (y2 - y1), FALSE);
+        {
+          pixel_region_init (&src2PR,
+                             gimp_drawable_get_tiles (GIMP_DRAWABLE (layer->mask)),
+                             (x1 - off_x), (y1 - off_y),
+                             (x2 - x1), (y2 - y1), FALSE);
 
-	  copy_gray_to_region (&src2PR, &src1PR);
-	}
+          copy_gray_to_region (&src2PR, &src1PR);
+        }
       /*  Otherwise, normal  */
       else
-	{
+        {
           PixelRegion *mask = NULL;
 
-	  pixel_region_init (&src2PR,
-			     gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
-			     (x1 - off_x), (y1 - off_y),
-			     (x2 - x1), (y2 - y1), FALSE);
+          pixel_region_init (&src2PR,
+                             gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
+                             (x1 - off_x), (y1 - off_y),
+                             (x2 - x1), (y2 - y1), FALSE);
 
-	  if (layer->mask && layer->mask->apply_mask)
-	    {
-	      pixel_region_init (&maskPR,
-				 gimp_drawable_get_tiles (GIMP_DRAWABLE (layer->mask)),
-				 (x1 - off_x), (y1 - off_y),
-				 (x2 - x1), (y2 - y1), FALSE);
-	      mask = &maskPR;
-	    }
+          if (layer->mask && layer->mask->apply_mask)
+            {
+              pixel_region_init (&maskPR,
+                                 gimp_drawable_get_tiles (GIMP_DRAWABLE (layer->mask)),
+                                 (x1 - off_x), (y1 - off_y),
+                                 (x2 - x1), (y2 - y1), FALSE);
+              mask = &maskPR;
+            }
 
-	  /*  Based on the type of the layer, project the layer onto the
-	   *  projection image...
-	   */
-	  switch (gimp_drawable_type (GIMP_DRAWABLE (layer)))
-	    {
-	    case GIMP_RGB_IMAGE:
+          /*  Based on the type of the layer, project the layer onto the
+           *  projection image...
+           */
+          switch (gimp_drawable_type (GIMP_DRAWABLE (layer)))
+            {
+            case GIMP_RGB_IMAGE:
             case GIMP_GRAY_IMAGE:
-	      /* no mask possible */
-	      project_intensity (proj, layer, &src2PR, &src1PR, mask);
-	      break;
+              /* no mask possible */
+              project_intensity (proj, layer, &src2PR, &src1PR, mask);
+              break;
 
-	    case GIMP_RGBA_IMAGE:
+            case GIMP_RGBA_IMAGE:
             case GIMP_GRAYA_IMAGE:
-	      project_intensity_alpha (proj, layer, &src2PR, &src1PR, mask);
-	      break;
+              project_intensity_alpha (proj, layer, &src2PR, &src1PR, mask);
+              break;
 
-	    case GIMP_INDEXED_IMAGE:
-	      /* no mask possible */
-	      project_indexed (proj, layer, &src2PR, &src1PR);
-	      break;
+            case GIMP_INDEXED_IMAGE:
+              /* no mask possible */
+              project_indexed (proj, layer, &src2PR, &src1PR);
+              break;
 
-	    case GIMP_INDEXEDA_IMAGE:
-	      project_indexed_alpha (proj, layer, &src2PR, &src1PR, mask);
-	      break;
+            case GIMP_INDEXEDA_IMAGE:
+              project_indexed_alpha (proj, layer, &src2PR, &src1PR, mask);
+              break;
 
-	    default:
-	      break;
-	    }
-	}
+            default:
+              break;
+            }
+        }
 
       proj->construct_flag = TRUE;  /*  something was projected  */
     }
@@ -301,24 +301,24 @@ gimp_projection_construct_channels (GimpProjection *proj,
       GimpChannel *channel = list->data;
 
       if (gimp_item_get_visible (GIMP_ITEM (channel)))
-	{
+        {
           PixelRegion  src1PR;
           PixelRegion  src2PR;
 
-	  /* configure the pixel regions  */
-	  pixel_region_init (&src1PR,
-			     gimp_projection_get_tiles (proj),
-			     x, y, w, h,
-			     TRUE);
-	  pixel_region_init (&src2PR,
-			     gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-			     x, y, w, h,
-			     FALSE);
+          /* configure the pixel regions  */
+          pixel_region_init (&src1PR,
+                             gimp_projection_get_tiles (proj),
+                             x, y, w, h,
+                             TRUE);
+          pixel_region_init (&src2PR,
+                             gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
+                             x, y, w, h,
+                             FALSE);
 
-	  project_channel (proj, channel, &src1PR, &src2PR);
+          project_channel (proj, channel, &src1PR, &src2PR);
 
-	  proj->construct_flag = TRUE;
-	}
+          proj->construct_flag = TRUE;
+        }
     }
 
   g_list_free (reverse_list);
@@ -350,15 +350,15 @@ gimp_projection_initialize (GimpProjection *proj,
       gimp_item_offsets (item, &off_x, &off_y);
 
       if (gimp_item_get_visible (item)                     &&
-	  ! gimp_drawable_has_alpha (GIMP_DRAWABLE (item)) &&
-	  (off_x <= x)                                     &&
-	  (off_y <= y)                                     &&
-	  (off_x + gimp_item_width  (item) >= x + w)       &&
-	  (off_y + gimp_item_height (item) >= y + h))
-	{
-	  coverage = TRUE;
-	  break;
-	}
+          ! gimp_drawable_has_alpha (GIMP_DRAWABLE (item)) &&
+          (off_x <= x)                                     &&
+          (off_y <= y)                                     &&
+          (off_x + gimp_item_width  (item) >= x + w)       &&
+          (off_y + gimp_item_height (item) >= y + h))
+        {
+          coverage = TRUE;
+          break;
+        }
     }
 
   if (!coverage)
@@ -367,17 +367,17 @@ gimp_projection_initialize (GimpProjection *proj,
       guchar      clear[4] = { 0, 0, 0, 0 };
 
       pixel_region_init (&PR, gimp_projection_get_tiles (proj),
-			 x, y, w, h, TRUE);
+                         x, y, w, h, TRUE);
       color_region (&PR, clear);
     }
 }
 
 static void
 project_intensity (GimpProjection *proj,
-		   GimpLayer      *layer,
-		   PixelRegion    *src,
-		   PixelRegion    *dest,
-		   PixelRegion    *mask)
+                   GimpLayer      *layer,
+                   PixelRegion    *src,
+                   PixelRegion    *dest,
+                   PixelRegion    *mask)
 {
   if (! proj->construct_flag)
     initial_region (src, dest, mask, NULL,
@@ -395,10 +395,10 @@ project_intensity (GimpProjection *proj,
 
 static void
 project_intensity_alpha (GimpProjection *proj,
-			 GimpLayer      *layer,
-			 PixelRegion    *src,
-			 PixelRegion    *dest,
-			 PixelRegion    *mask)
+                         GimpLayer      *layer,
+                         PixelRegion    *src,
+                         PixelRegion    *dest,
+                         PixelRegion    *mask)
 {
   if (! proj->construct_flag)
     initial_region (src, dest, mask, NULL,
@@ -416,9 +416,9 @@ project_intensity_alpha (GimpProjection *proj,
 
 static void
 project_indexed (GimpProjection *proj,
-		 GimpLayer      *layer,
-		 PixelRegion    *src,
-		 PixelRegion    *dest)
+                 GimpLayer      *layer,
+                 PixelRegion    *src,
+                 PixelRegion    *dest)
 {
   g_return_if_fail (proj->image->cmap != NULL);
 
@@ -434,10 +434,10 @@ project_indexed (GimpProjection *proj,
 
 static void
 project_indexed_alpha (GimpProjection *proj,
-		       GimpLayer      *layer,
-		       PixelRegion    *src,
-		       PixelRegion    *dest,
-		       PixelRegion    *mask)
+                       GimpLayer      *layer,
+                       PixelRegion    *src,
+                       PixelRegion    *dest,
+                       PixelRegion    *mask)
 {
   g_return_if_fail (proj->image->cmap != NULL);
 
@@ -457,21 +457,21 @@ project_indexed_alpha (GimpProjection *proj,
 
 static void
 project_channel (GimpProjection *proj,
-		 GimpChannel    *channel,
-		 PixelRegion    *src,
-		 PixelRegion    *src2)
+                 GimpChannel    *channel,
+                 PixelRegion    *src,
+                 PixelRegion    *src2)
 {
   guchar  col[3];
   guchar  opacity;
   gint    type;
 
   gimp_rgba_get_uchar (&channel->color,
-		       &col[0], &col[1], &col[2], &opacity);
+                       &col[0], &col[1], &col[2], &opacity);
 
   if (! proj->construct_flag)
     {
       type = (channel->show_masked) ?
-	INITIAL_CHANNEL_MASK : INITIAL_CHANNEL_SELECTION;
+        INITIAL_CHANNEL_MASK : INITIAL_CHANNEL_SELECTION;
 
       initial_region (src2, src, NULL, col,
                       opacity,
@@ -482,7 +482,7 @@ project_channel (GimpProjection *proj,
   else
     {
       type = (channel->show_masked) ?
-	COMBINE_INTEN_A_CHANNEL_MASK : COMBINE_INTEN_A_CHANNEL_SELECTION;
+        COMBINE_INTEN_A_CHANNEL_MASK : COMBINE_INTEN_A_CHANNEL_SELECTION;
 
       combine_regions (src, src2, src, NULL, col,
                        opacity,

@@ -180,15 +180,15 @@ gimp_get_default_language (const gchar *category)
     {
       p = getenv ("LANG");
       if (p != NULL)
-	lang = g_strdup (p);
+        lang = g_strdup (p);
       else
-	{
-	  p = getenv (category);
-	  if (p != NULL)
-	    lang = g_strdup (p);
-	  else
-	    lang = g_win32_getlocale ();
-	}
+        {
+          p = getenv (category);
+          if (p != NULL)
+            lang = g_strdup (p);
+          else
+            lang = g_win32_getlocale ();
+        }
     }
 
 #else

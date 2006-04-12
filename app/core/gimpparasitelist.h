@@ -44,9 +44,9 @@ struct _GimpParasiteListClass
   GimpObjectClass parent_class;
 
   void (* add)    (GimpParasiteList *list,
-		   GimpParasite     *parasite);
+                   GimpParasite     *parasite);
   void (* remove) (GimpParasiteList *list,
-		   GimpParasite     *parasite);
+                   GimpParasite     *parasite);
 };
 
 

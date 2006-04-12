@@ -132,9 +132,9 @@ gimp_image_rotate (GimpImage        *image,
       item->offset_y = 0;
 
       gimp_item_translate (item,
-			   (new_image_width  - image->width)  / 2,
-			   (new_image_height - image->height) / 2,
-			   FALSE);
+                           (new_image_width  - image->width)  / 2,
+                           (new_image_height - image->height) / 2,
+                           FALSE);
 
       if (progress)
         gimp_progress_set_value (progress, progress_current++ / progress_max);
@@ -210,10 +210,10 @@ gimp_image_rotate (GimpImage        *image,
 
 static void
 gimp_image_rotate_item_offset (GimpImage        *image,
-			       GimpRotationType  rotate_type,
-			       GimpItem         *item,
-			       gint              off_x,
-			       gint              off_y)
+                               GimpRotationType  rotate_type,
+                               GimpItem         *item,
+                               gint              off_x,
+                               gint              off_y)
 {
   gint x = 0;
   gint y = 0;
@@ -311,7 +311,7 @@ gimp_image_rotate_guides (GimpImage        *image,
               break;
             }
           break;
-	}
+        }
     }
 }
 
@@ -348,6 +348,6 @@ gimp_image_rotate_sample_points (GimpImage        *image,
           sample_point->x = image->width - old_y;
           sample_point->y = old_x;
           break;
-	}
+        }
     }
 }

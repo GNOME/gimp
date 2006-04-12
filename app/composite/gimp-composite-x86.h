@@ -1,8 +1,5 @@
-/* -*- mode: c tab-width: 2; c-basic-indent: 2; indent-tabs-mode: nil -*-
- *
- * The GIMP -- an image manipulation program
+/* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
- *
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -205,7 +202,7 @@
                                           "psrlq  $32,%%"#dividend              ";" \
                                           "psrlq  $32,%%"#divisor               ";" \
                                           xmm_pdivwX(dividend,divisor,scratch)      \
-																																										  "psllq  $96,%%"#scratch             ";" \
+                                                                                                                                                                                                                                                                                                                                                  "psllq  $96,%%"#scratch             ";" \
                                             "por    %%"#scratch ",%%"#quotient
 
 /* equivalent to the INT_MULT() macro in gimp-composite-generic.c */

@@ -138,25 +138,25 @@ gimp_selection_data_get_uri_list (GtkSelectionData *selection)
 
     while (*buffer && (buffer - (gchar *) selection->data < selection->length))
       {
-	gchar *name = name_buffer;
-	gint   len  = 0;
+        gchar *name = name_buffer;
+        gint   len  = 0;
 
-	while (len < sizeof (name_buffer) && *buffer && *buffer != '\n')
-	  {
-	    *name++ = *buffer++;
-	    len++;
-	  }
-	if (len == 0)
-	  break;
+        while (len < sizeof (name_buffer) && *buffer && *buffer != '\n')
+          {
+            *name++ = *buffer++;
+            len++;
+          }
+        if (len == 0)
+          break;
 
-	if (*(name - 1) == 0xd)   /* gmc uses RETURN+NEWLINE as delimiter */
-	  len--;
+        if (*(name - 1) == 0xd)   /* gmc uses RETURN+NEWLINE as delimiter */
+          len--;
 
-	if (len > 2)
-	  crap_list = g_list_prepend (crap_list, g_strndup (name_buffer, len));
+        if (len > 2)
+          crap_list = g_list_prepend (crap_list, g_strndup (name_buffer, len));
 
-	if (*buffer)
-	  buffer++;
+        if (*buffer)
+          buffer++;
       }
   }
 
@@ -330,10 +330,10 @@ gimp_selection_data_get_color (GtkSelectionData *selection,
   color_vals = (guint16 *) selection->data;
 
   gimp_rgba_set_uchar (color,
-		       (guchar) (color_vals[0] >> 8),
-		       (guchar) (color_vals[1] >> 8),
-		       (guchar) (color_vals[2] >> 8),
-		       (guchar) (color_vals[3] >> 8));
+                       (guchar) (color_vals[0] >> 8),
+                       (guchar) (color_vals[1] >> 8),
+                       (guchar) (color_vals[2] >> 8),
+                       (guchar) (color_vals[3] >> 8));
 
   return TRUE;
 }

@@ -101,12 +101,12 @@ gimp_help_show (Gimp        *gimp,
       idle_help->gimp = gimp;
 
       if (help_domain && strlen (help_domain))
-	idle_help->help_domain = g_strdup (help_domain);
+        idle_help->help_domain = g_strdup (help_domain);
 
       idle_help->help_locales = gimp_help_get_locales (config);
 
       if (help_id && strlen (help_id))
-	idle_help->help_id = g_strdup (help_id);
+        idle_help->help_id = g_strdup (help_id);
 
       g_idle_add (gimp_idle_help, idle_help);
 
@@ -182,7 +182,7 @@ gimp_help_browser (Gimp *gimp)
       procedure = gimp_pdb_lookup (gimp, "extension-gimp-help-browser");
 
       if (! procedure)
-	{
+        {
           gimp_help_browser_error (gimp,
                                    _("Help browser not found"),
                                    _("Could not find GIMP help browser."),
@@ -190,8 +190,8 @@ gimp_help_browser (Gimp *gimp)
                                      "to be missing from your installation."));
           busy = FALSE;
 
-	  return FALSE;
-	}
+          return FALSE;
+        }
 
       args = gimp_procedure_get_arguments (procedure);
       gimp_value_array_truncate (args, 1);
@@ -247,8 +247,8 @@ gimp_help_browser_error (Gimp        *gimp,
 
   if (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK)
     g_object_set (gimp->config,
-		  "help-browser", GIMP_HELP_BROWSER_WEB_BROWSER,
-		  NULL);
+                  "help-browser", GIMP_HELP_BROWSER_WEB_BROWSER,
+                  NULL);
 
   gtk_widget_destroy (dialog);
 }

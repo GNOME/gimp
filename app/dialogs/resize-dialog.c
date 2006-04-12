@@ -382,7 +382,7 @@ size_notify (GimpSizeBox  *box,
 
 static gint
 resize_bound_off_x (ResizeDialog *private,
-		    gint          offset_x)
+                    gint          offset_x)
 {
   GimpSizeBox *box = GIMP_SIZE_BOX (private->box);
 
@@ -394,7 +394,7 @@ resize_bound_off_x (ResizeDialog *private,
 
 static gint
 resize_bound_off_y (ResizeDialog *private,
-		    gint          off_y)
+                    gint          off_y)
 {
   GimpSizeBox *box = GIMP_SIZE_BOX (private->box);
 
@@ -406,7 +406,7 @@ resize_bound_off_y (ResizeDialog *private,
 
 static void
 offset_update (GtkWidget    *widget,
-	       ResizeDialog *private)
+               ResizeDialog *private)
 {
   GimpSizeEntry *entry = GIMP_SIZE_ENTRY (private->offset);
   gint           off_x;

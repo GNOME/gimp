@@ -46,18 +46,18 @@
  */
 
 static void  gimp_text_layout_render_line    (GimpTextLayout     *layout,
-					      PangoLayoutLine    *line,
-					      GimpTextRenderFunc  render_func,
-					      gint                x,
-					      gint                y,
-					      gpointer            render_data);
+                                              PangoLayoutLine    *line,
+                                              GimpTextRenderFunc  render_func,
+                                              gint                x,
+                                              gint                y,
+                                              gpointer            render_data);
 static void  gimp_text_layout_render_glyphs  (GimpTextLayout     *layout,
-					      PangoFont          *font,
-					      PangoGlyphString   *glyphs,
-					      GimpTextRenderFunc  render_func,
-					      gint                x,
-					      gint                y,
-					      gpointer            render_data);
+                                              PangoFont          *font,
+                                              PangoGlyphString   *glyphs,
+                                              GimpTextRenderFunc  render_func,
+                                              gint                x,
+                                              gint                y,
+                                              gpointer            render_data);
 static FT_Int32   gimp_text_layout_render_flags (GimpTextLayout  *layout);
 static void       gimp_text_layout_render_trafo (GimpTextLayout  *layout,
                                                  FT_Matrix       *trafo);
@@ -66,8 +66,8 @@ static void       gimp_text_layout_render_trafo (GimpTextLayout  *layout,
 
 void
 gimp_text_layout_render (GimpTextLayout     *layout,
-			 GimpTextRenderFunc  render_func,
-			 gpointer            render_data)
+                         GimpTextRenderFunc  render_func,
+                         gpointer            render_data)
 {
   PangoLayoutIter *iter;
   gint             x, y;
@@ -94,10 +94,10 @@ gimp_text_layout_render (GimpTextLayout     *layout,
       baseline = pango_layout_iter_get_baseline (iter);
 
       gimp_text_layout_render_line (layout, line,
-				    render_func,
-				    x + rect.x,
-				    y + baseline,
-				    render_data);
+                                    render_func,
+                                    x + rect.x,
+                                    y + baseline,
+                                    render_data);
     }
   while (pango_layout_iter_next_line (iter));
 
@@ -106,11 +106,11 @@ gimp_text_layout_render (GimpTextLayout     *layout,
 
 static void
 gimp_text_layout_render_line (GimpTextLayout     *layout,
-			      PangoLayoutLine    *line,
-			      GimpTextRenderFunc  render_func,
-			      gint                x,
-			      gint                y,
-			      gpointer            render_data)
+                              PangoLayoutLine    *line,
+                              GimpTextRenderFunc  render_func,
+                              gint                x,
+                              gint                y,
+                              gpointer            render_data)
 {
   PangoRectangle  rect;
   GSList         *list;
@@ -121,12 +121,12 @@ gimp_text_layout_render_line (GimpTextLayout     *layout,
       PangoLayoutRun *run = list->data;
 
       pango_glyph_string_extents (run->glyphs, run->item->analysis.font,
-				  NULL, &rect);
+                                  NULL, &rect);
       gimp_text_layout_render_glyphs (layout,
-				      run->item->analysis.font, run->glyphs,
-				      render_func,
-				      x + x_off, y,
-				      render_data);
+                                      run->item->analysis.font, run->glyphs,
+                                      render_func,
+                                      x + x_off, y,
+                                      render_data);
 
       x_off += rect.width;
     }
@@ -134,12 +134,12 @@ gimp_text_layout_render_line (GimpTextLayout     *layout,
 
 static void
 gimp_text_layout_render_glyphs (GimpTextLayout     *layout,
-				PangoFont          *font,
-				PangoGlyphString   *glyphs,
-				GimpTextRenderFunc  render_func,
-				gint                x,
-				gint                y,
-				gpointer            render_data)
+                                PangoFont          *font,
+                                PangoGlyphString   *glyphs,
+                                GimpTextRenderFunc  render_func,
+                                gint                x,
+                                gint                y,
+                                gpointer            render_data)
 {
   PangoGlyphInfo *gi;
   FT_Int32        flags;
@@ -154,16 +154,16 @@ gimp_text_layout_render_glyphs (GimpTextLayout     *layout,
   for (i = 0, gi = glyphs->glyphs; i < glyphs->num_glyphs; i++, gi++)
     {
       if (gi->glyph)
-	{
-	  pos.x = x + x_position + gi->geometry.x_offset;
-	  pos.y = y + gi->geometry.y_offset;
+        {
+          pos.x = x + x_position + gi->geometry.x_offset;
+          pos.y = y + gi->geometry.y_offset;
 
-	  FT_Vector_Transform (&pos, &trafo);
+          FT_Vector_Transform (&pos, &trafo);
 
-	  render_func (font, gi->glyph, flags, &trafo,
-		       pos.x, pos.y,
-		       render_data);
-	}
+          render_func (font, gi->glyph, flags, &trafo,
+                       pos.x, pos.y,
+                       render_data);
+        }
 
       x_position += glyphs->glyphs[i].geometry.width;
     }

@@ -66,7 +66,7 @@ static GObject * gimp_paint_tool_constructor (GType                type,
                                               GObjectConstructParam *params);
 static void   gimp_paint_tool_finalize       (GObject             *object);
 
-static void   gimp_paint_tool_control        (GimpTool	          *tool,
+static void   gimp_paint_tool_control        (GimpTool                  *tool,
                                               GimpToolAction       action,
                                               GimpDisplay         *display);
 static void   gimp_paint_tool_button_press   (GimpTool            *tool,
@@ -259,8 +259,8 @@ gimp_paint_tool_enable_color_picker (GimpPaintTool     *tool,
 
 static void
 gimp_paint_tool_control (GimpTool       *tool,
-			 GimpToolAction  action,
-			 GimpDisplay    *display)
+                         GimpToolAction  action,
+                         GimpDisplay    *display)
 {
   GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
   GimpDrawable  *drawable;
@@ -344,8 +344,8 @@ static void
 gimp_paint_tool_button_press (GimpTool        *tool,
                               GimpCoords      *coords,
                               guint32          time,
-			      GdkModifierType  state,
-			      GimpDisplay     *display)
+                              GdkModifierType  state,
+                              GimpDisplay     *display)
 {
   GimpDrawTool     *draw_tool  = GIMP_DRAW_TOOL (tool);
   GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (tool);
@@ -452,8 +452,8 @@ static void
 gimp_paint_tool_button_release (GimpTool        *tool,
                                 GimpCoords      *coords,
                                 guint32          time,
-				GdkModifierType  state,
-				GimpDisplay     *display)
+                                GdkModifierType  state,
+                                GimpDisplay     *display)
 {
   GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (tool);
   GimpPaintOptions *paint_options;
@@ -493,8 +493,8 @@ static void
 gimp_paint_tool_motion (GimpTool        *tool,
                         GimpCoords      *coords,
                         guint32          time,
-			GdkModifierType  state,
-			GimpDisplay     *display)
+                        GdkModifierType  state,
+                        GimpDisplay     *display)
 {
   GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (tool);
   GimpPaintOptions *paint_options;
@@ -756,8 +756,8 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
             {
               TempBuf     *mask = gimp_brush_get_mask (brush_core->main_brush);
               PixelRegion  PR   = { 0, };
-	      BoundSeg    *boundary;
-	      gint	   num_groups;
+              BoundSeg    *boundary;
+              gint           num_groups;
 
               pixel_region_init_temp_buf (&PR, mask,
                                           0, 0, mask->width, mask->height);
@@ -771,9 +771,9 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                 boundary_sort (boundary, brush_core->n_brush_bound_segs,
                                &num_groups);
 
-	      brush_core->n_brush_bound_segs += num_groups;
+              brush_core->n_brush_bound_segs += num_groups;
 
-	      g_free (boundary);
+              g_free (boundary);
 
               brush_core->brush_bound_width  = mask->width;
               brush_core->brush_bound_height = mask->height;

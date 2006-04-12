@@ -208,8 +208,8 @@ app_run (const gchar         *full_prog_name,
                        gimp_message_log_func, &gimp);
 
   g_log_set_handler (NULL,
-		     G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
-		     gimp_error_log_func, &gimp);
+                     G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
+                     gimp_error_log_func, &gimp);
 
   units_init (gimp);
 
@@ -222,7 +222,7 @@ app_run (const gchar         *full_prog_name,
 #ifndef GIMP_CONSOLE_COMPILATION
       if (no_interface)
 #endif
-	{
+        {
           const gchar *msg;
 
           msg = _("GIMP is not properly installed for the current user.\n"
@@ -230,14 +230,14 @@ app_run (const gchar         *full_prog_name,
                   "To perform user installation, run the GIMP without the '--no-interface' flag.");
 
           g_printerr ("%s\n\n", msg);
-	}
+        }
 #ifndef GIMP_CONSOLE_COMPILATION
       else
-	{
+        {
           user_install_dialog_run (alternate_system_gimprc,
                                    alternate_gimprc,
                                    be_verbose);
-	}
+        }
 #endif
     }
 

@@ -138,11 +138,11 @@ gimp_render_setup_notify (gpointer    config,
   for (i = 0; i < 256; i++)
     for (j = 0; j < 256; j++)
       {
-	gimp_render_blend_dark_check [(i << 8) + j] =
-	  (guchar) ((j * i + dark * (255 - i)) / 255);
-	gimp_render_blend_light_check [(i << 8) + j] =
+        gimp_render_blend_dark_check [(i << 8) + j] =
+          (guchar) ((j * i + dark * (255 - i)) / 255);
+        gimp_render_blend_light_check [(i << 8) + j] =
           (guchar) ((j * i + light * (255 - i)) / 255);
-	gimp_render_blend_white [(i << 8) + j] =
+        gimp_render_blend_white [(i << 8) + j] =
           (guchar) ((j * i + 255 * (255 - i)) / 255);
       }
 

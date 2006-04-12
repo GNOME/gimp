@@ -69,7 +69,7 @@ gimp_paint_core_stroke (GimpPaintCore    *core,
           core->cur_coords = strokes[i];
 
           gimp_paint_core_interpolate (core, drawable, paint_options, 0);
-	}
+        }
 
       gimp_paint_core_paint (core, drawable, paint_options,
                              GIMP_PAINT_STATE_FINISH, 0);
@@ -141,14 +141,14 @@ gimp_paint_core_stroke_boundary (GimpPaintCore    *core,
              stroke_segs[seg].x2 != -1 ||
              stroke_segs[seg].y1 != -1 ||
              stroke_segs[seg].y2 != -1)
-	{
+        {
           coords[n_coords]   = default_coords;
           coords[n_coords].x = (gdouble) (stroke_segs[seg].x1 - off_x + 0.5);
           coords[n_coords].y = (gdouble) (stroke_segs[seg].y1 - off_y + 0.5);
 
           n_coords++;
-	  seg++;
-	}
+          seg++;
+        }
 
       /* Close the stroke points up */
       coords[n_coords] = coords[0];

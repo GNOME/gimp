@@ -111,7 +111,7 @@ gimp_cursor_view_init (GimpCursorView *view)
 
   gtk_widget_style_get (GTK_WIDGET (view),
                         "content-spacing", &content_spacing,
-			NULL);
+                        NULL);
 
 
   /* cursor information */
@@ -321,7 +321,7 @@ gimp_cursor_view_style_set (GtkWidget *widget,
 
   gtk_widget_style_get (GTK_WIDGET (view),
                         "content-spacing", &content_spacing,
-			NULL);
+                        NULL);
 
   gtk_box_set_spacing (GTK_BOX (view->coord_hbox), content_spacing);
   gtk_box_set_spacing (GTK_BOX (view->color_hbox), content_spacing);

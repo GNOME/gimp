@@ -221,18 +221,18 @@ gimp_cell_renderer_viewable_get_size (GtkCellRenderer *cell,
   if (cell_area && view_width > 0 && view_height > 0)
     {
       if (x_offset)
-	{
-	  *x_offset = (((gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL) ?
+        {
+          *x_offset = (((gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL) ?
                         1.0 - cell->xalign : cell->xalign) *
                        (cell_area->width - calc_width - 2 * cell->xpad));
-	  *x_offset = (MAX (*x_offset, 0) + cell->xpad);
-	}
+          *x_offset = (MAX (*x_offset, 0) + cell->xpad);
+        }
       if (y_offset)
-	{
-	  *y_offset = (cell->yalign *
+        {
+          *y_offset = (cell->yalign *
                        (cell_area->height - calc_height - 2 * cell->ypad));
-	  *y_offset = (MAX (*y_offset, 0) + cell->ypad);
-	}
+          *y_offset = (MAX (*y_offset, 0) + cell->ypad);
+        }
     }
 
   if (width)  *width  = calc_width;

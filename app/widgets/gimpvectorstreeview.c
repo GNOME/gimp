@@ -153,10 +153,10 @@ gimp_vectors_tree_view_constructor (GType                  type,
                                    GDK_SHIFT_MASK | GDK_CONTROL_MASK,
                                    NULL);
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (editor),
-				  GTK_BUTTON (view->toselection_button),
-				  GIMP_TYPE_VECTORS);
+                                  GTK_BUTTON (view->toselection_button),
+                                  GIMP_TYPE_VECTORS);
   gtk_box_reorder_child (GTK_BOX (editor->button_box),
-			 view->toselection_button, 5);
+                         view->toselection_button, 5);
 
   view->tovectors_button =
     gimp_editor_add_action_button (editor, "vectors",
@@ -165,7 +165,7 @@ gimp_vectors_tree_view_constructor (GType                  type,
                                    GDK_SHIFT_MASK,
                                    NULL);
   gtk_box_reorder_child (GTK_BOX (editor->button_box),
-			 view->tovectors_button, 6);
+                         view->tovectors_button, 6);
 
   view->stroke_button =
     gimp_editor_add_action_button (editor, "vectors",
@@ -174,10 +174,10 @@ gimp_vectors_tree_view_constructor (GType                  type,
                                    GDK_SHIFT_MASK,
                                    NULL);
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (editor),
-				  GTK_BUTTON (view->stroke_button),
-				  GIMP_TYPE_VECTORS);
+                                  GTK_BUTTON (view->stroke_button),
+                                  GIMP_TYPE_VECTORS);
   gtk_box_reorder_child (GTK_BOX (editor->button_box),
-			 view->stroke_button, 7);
+                         view->stroke_button, 7);
 
   gimp_dnd_svg_dest_add (GTK_WIDGET (tree_view->view), NULL, view);
 

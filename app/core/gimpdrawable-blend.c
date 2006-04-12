@@ -87,16 +87,16 @@ static gdouble  gradient_calc_square_factor       (gdouble   dist,
                                                    gdouble   offset,
                                                    gdouble   x,
                                                    gdouble   y);
-static gdouble  gradient_calc_radial_factor   	  (gdouble   dist,
-						   gdouble   offset,
+static gdouble  gradient_calc_radial_factor             (gdouble   dist,
+                                                   gdouble   offset,
                                                    gdouble   x,
-						   gdouble   y);
-static gdouble  gradient_calc_linear_factor   	  (gdouble   dist,
+                                                   gdouble   y);
+static gdouble  gradient_calc_linear_factor             (gdouble   dist,
                                                    gdouble  *vec,
                                                    gdouble   offset,
                                                    gdouble   x,
                                                    gdouble   y);
-static gdouble  gradient_calc_bilinear_factor 	  (gdouble   dist,
+static gdouble  gradient_calc_bilinear_factor           (gdouble   dist,
                                                    gdouble  *vec,
                                                    gdouble   offset,
                                                    gdouble   x,
@@ -116,7 +116,7 @@ static gdouble  gradient_calc_shapeburst_dimpled_factor   (gdouble x,
                                                            gdouble y);
 
 static void     gradient_precalc_shapeburst (GimpImage        *image,
-					     GimpDrawable     *drawable,
+                                             GimpDrawable     *drawable,
                                              PixelRegion      *PR,
                                              gdouble           dist,
                                              GimpProgress     *progress);
@@ -128,7 +128,7 @@ static void     gradient_render_pixel       (gdouble           x,
 static void     gradient_put_pixel          (gint              x,
                                              gint              y,
                                              GimpRGB          *color,
-					     gpointer          put_pixel_data);
+                                             gpointer          put_pixel_data);
 
 static void     gradient_fill_region        (GimpImage        *image,
                                              GimpDrawable     *drawable,
@@ -228,12 +228,12 @@ gimp_drawable_blend (GimpDrawable         *drawable,
   pixel_region_init (&bufPR, buf_tiles, 0, 0, width, height, TRUE);
 
   gradient_fill_region (image, drawable, context,
-			&bufPR, width, height,
-			blend_mode, gradient_type, offset, repeat, reverse,
-			supersample, max_depth, threshold, dither,
-			(startx - x), (starty - y),
-			(endx - x), (endy - y),
-			progress);
+                        &bufPR, width, height,
+                        blend_mode, gradient_type, offset, repeat, reverse,
+                        supersample, max_depth, threshold, dither,
+                        (startx - x), (starty - y),
+                        (endx - x), (endy - y),
+                        progress);
 
   if (distR.tiles)
     {
@@ -258,10 +258,10 @@ gimp_drawable_blend (GimpDrawable         *drawable,
 
 static gdouble
 gradient_calc_conical_sym_factor (gdouble  dist,
-				  gdouble *axis,
-				  gdouble  offset,
-				  gdouble  x,
-				  gdouble  y)
+                                  gdouble *axis,
+                                  gdouble  offset,
+                                  gdouble  x,
+                                  gdouble  y)
 {
   if (dist == 0.0)
     {
@@ -283,9 +283,9 @@ gradient_calc_conical_sym_factor (gdouble  dist,
       rat = axis[0] * vec[0] + axis[1] * vec[1]; /* Dot product */
 
       if (rat > 1.0)
-	rat = 1.0;
+        rat = 1.0;
       else if (rat < -1.0)
-	rat = -1.0;
+        rat = -1.0;
 
       /* This cool idea is courtesy Josh MacDonald,
        * Ali Rahimi --- two more XCF losers.  */
@@ -303,10 +303,10 @@ gradient_calc_conical_sym_factor (gdouble  dist,
 
 static gdouble
 gradient_calc_conical_asym_factor (gdouble  dist,
-				   gdouble *axis,
-				   gdouble  offset,
-				   gdouble  x,
-				   gdouble  y)
+                                   gdouble *axis,
+                                   gdouble  offset,
+                                   gdouble  x,
+                                   gdouble  y)
 {
   if (dist == 0.0)
     {
@@ -340,9 +340,9 @@ gradient_calc_conical_asym_factor (gdouble  dist,
 
 static gdouble
 gradient_calc_square_factor (gdouble dist,
-			     gdouble offset,
-			     gdouble x,
-			     gdouble y)
+                             gdouble offset,
+                             gdouble x,
+                             gdouble y)
 {
   if (dist == 0.0)
     {
@@ -361,19 +361,19 @@ gradient_calc_square_factor (gdouble dist,
       rat = r / dist;
 
       if (rat < offset)
-	return 0.0;
+        return 0.0;
       else if (offset == 1.0)
-	return (rat >= 1.0) ? 1.0 : 0.0;
+        return (rat >= 1.0) ? 1.0 : 0.0;
       else
-	return (rat - offset) / (1.0 - offset);
+        return (rat - offset) / (1.0 - offset);
     }
 }
 
 static gdouble
 gradient_calc_radial_factor (gdouble dist,
-			     gdouble offset,
-			     gdouble x,
-			     gdouble y)
+                             gdouble offset,
+                             gdouble x,
+                             gdouble y)
 {
   if (dist == 0.0)
     {
@@ -392,20 +392,20 @@ gradient_calc_radial_factor (gdouble dist,
       rat = r / dist;
 
       if (rat < offset)
-	return 0.0;
+        return 0.0;
       else if (offset == 1.0)
-	return (rat >= 1.0) ? 1.0 : 0.0;
+        return (rat >= 1.0) ? 1.0 : 0.0;
       else
-	return (rat - offset) / (1.0 - offset);
+        return (rat - offset) / (1.0 - offset);
     }
 }
 
 static gdouble
 gradient_calc_linear_factor (gdouble  dist,
-			     gdouble *vec,
-			     gdouble  offset,
-			     gdouble  x,
-			     gdouble  y)
+                             gdouble *vec,
+                             gdouble  offset,
+                             gdouble  x,
+                             gdouble  y)
 {
   if (dist == 0.0)
     {
@@ -422,22 +422,22 @@ gradient_calc_linear_factor (gdouble  dist,
       rat = r / dist;
 
       if (rat >= 0.0 && rat < offset)
-	return 0.0;
+        return 0.0;
       else if (offset == 1.0)
-	return (rat >= 1.0) ? 1.0 : 0.0;
+        return (rat >= 1.0) ? 1.0 : 0.0;
       else if (rat < 0.0)
-	return rat / (1.0 - offset);
+        return rat / (1.0 - offset);
       else
-	return (rat - offset) / (1.0 - offset);
+        return (rat - offset) / (1.0 - offset);
     }
 }
 
 static gdouble
 gradient_calc_bilinear_factor (gdouble  dist,
-			       gdouble *vec,
-			       gdouble  offset,
-			       gdouble  x,
-			       gdouble  y)
+                               gdouble *vec,
+                               gdouble  offset,
+                               gdouble  x,
+                               gdouble  y)
 {
   if (dist == 0.0)
     {
@@ -456,21 +456,21 @@ gradient_calc_bilinear_factor (gdouble  dist,
       rat = r / dist;
 
       if (fabs (rat) < offset)
-	return 0.0;
+        return 0.0;
       else if (offset == 1.0)
-	return (rat == 1.0) ? 1.0 : 0.0;
+        return (rat == 1.0) ? 1.0 : 0.0;
       else
-	return (fabs (rat) - offset) / (1.0 - offset);
+        return (fabs (rat) - offset) / (1.0 - offset);
     }
 }
 
 static gdouble
 gradient_calc_spiral_factor (gdouble   dist,
-			     gdouble  *axis,
-			     gdouble   offset,
-			     gdouble   x,
-			     gdouble   y,
-			     gboolean  clockwise)
+                             gdouble  *axis,
+                             gdouble   offset,
+                             gdouble   x,
+                             gdouble   y,
+                             gboolean  clockwise)
 {
   if (dist == 0.0)
     {
@@ -505,7 +505,7 @@ gradient_calc_spiral_factor (gdouble   dist,
 
 static gdouble
 gradient_calc_shapeburst_angular_factor (gdouble x,
-					 gdouble y)
+                                         gdouble y)
 {
   Tile   *tile;
   gfloat  value;
@@ -526,7 +526,7 @@ gradient_calc_shapeburst_angular_factor (gdouble x,
 
 static gdouble
 gradient_calc_shapeburst_spherical_factor (gdouble x,
-					   gdouble y)
+                                           gdouble y)
 {
   Tile   *tile;
   gfloat  value;
@@ -548,7 +548,7 @@ gradient_calc_shapeburst_spherical_factor (gdouble x,
 
 static gdouble
 gradient_calc_shapeburst_dimpled_factor (gdouble x,
-					 gdouble y)
+                                         gdouble y)
 {
   Tile   *tile;
   gfloat  value;
@@ -569,9 +569,9 @@ gradient_calc_shapeburst_dimpled_factor (gdouble x,
 
 static void
 gradient_precalc_shapeburst (GimpImage    *image,
-			     GimpDrawable *drawable,
-			     PixelRegion  *PR,
-			     gdouble       dist,
+                             GimpDrawable *drawable,
+                             PixelRegion  *PR,
+                             gdouble       dist,
                              GimpProgress *progress)
 {
   GimpChannel *mask;
@@ -602,7 +602,7 @@ gradient_precalc_shapeburst (GimpImage    *image,
       gimp_item_offsets (GIMP_ITEM (drawable), &offx, &offy);
 
       pixel_region_init (&maskR, gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-			 x1 + offx, y1 + offy, (x2 - x1), (y2 - y1), FALSE);
+                         x1 + offx, y1 + offy, (x2 - x1), (y2 - y1), FALSE);
 
       /*  copy the mask to the temp mask  */
       copy_region (&maskR, &tempR);
@@ -611,19 +611,19 @@ gradient_precalc_shapeburst (GimpImage    *image,
     {
       /*  If the intended drawable has an alpha channel, use that  */
       if (gimp_drawable_has_alpha (drawable))
-	{
-	  PixelRegion drawableR;
+        {
+          PixelRegion drawableR;
 
-	  pixel_region_init (&drawableR, gimp_drawable_get_tiles (drawable),
-			     PR->x, PR->y, PR->w, PR->h, FALSE);
+          pixel_region_init (&drawableR, gimp_drawable_get_tiles (drawable),
+                             PR->x, PR->y, PR->w, PR->h, FALSE);
 
-	  extract_alpha_region (&drawableR, NULL, &tempR);
-	}
+          extract_alpha_region (&drawableR, NULL, &tempR);
+        }
       else
-	{
-	  /*  Otherwise, just fill the shapeburst to white  */
-	  color_region (&tempR, white);
-	}
+        {
+          /*  Otherwise, just fill the shapeburst to white  */
+          color_region (&tempR, white);
+        }
     }
 
   pixel_region_init (&tempR, tempR.tiles, 0, 0, PR->w, PR->h, TRUE);
@@ -639,15 +639,15 @@ gradient_precalc_shapeburst (GimpImage    *image,
       pixel_region_init (&distR, distR.tiles, 0, 0, PR->w, PR->h, TRUE);
 
       for (pr = pixel_regions_register (1, &distR);
-	   pr != NULL;
-	   pr = pixel_regions_process (pr))
-	{
-	  distp = (gfloat *) distR.data;
-	  size  = distR.w * distR.h;
+           pr != NULL;
+           pr = pixel_regions_process (pr))
+        {
+          distp = (gfloat *) distR.data;
+          size  = distR.w * distR.h;
 
-	  while (size--)
-	    *distp++ /= max_iteration;
-	}
+          while (size--)
+            *distp++ /= max_iteration;
+        }
 
       pixel_region_init (&distR, distR.tiles, 0, 0, PR->w, PR->h, FALSE);
     }
@@ -658,9 +658,9 @@ gradient_precalc_shapeburst (GimpImage    *image,
 
 static void
 gradient_render_pixel (gdouble   x,
-		       gdouble   y,
-		       GimpRGB  *color,
-		       gpointer  render_data)
+                       gdouble   y,
+                       GimpRGB  *color,
+                       gpointer  render_data)
 {
   RenderBlendData *rbd = render_data;
   gdouble          factor;
@@ -672,36 +672,36 @@ gradient_render_pixel (gdouble   x,
     case GIMP_GRADIENT_LINEAR:
       factor = gradient_calc_linear_factor (rbd->dist,
                                             rbd->vec, rbd->offset,
-					    x - rbd->sx, y - rbd->sy);
+                                            x - rbd->sx, y - rbd->sy);
       break;
 
     case GIMP_GRADIENT_BILINEAR:
       factor = gradient_calc_bilinear_factor (rbd->dist,
                                               rbd->vec, rbd->offset,
-					      x - rbd->sx, y - rbd->sy);
+                                              x - rbd->sx, y - rbd->sy);
       break;
 
     case GIMP_GRADIENT_RADIAL:
       factor = gradient_calc_radial_factor (rbd->dist,
                                             rbd->offset,
-					    x - rbd->sx, y - rbd->sy);
+                                            x - rbd->sx, y - rbd->sy);
       break;
 
     case GIMP_GRADIENT_SQUARE:
       factor = gradient_calc_square_factor (rbd->dist, rbd->offset,
-					    x - rbd->sx, y - rbd->sy);
+                                            x - rbd->sx, y - rbd->sy);
       break;
 
     case GIMP_GRADIENT_CONICAL_SYMMETRIC:
       factor = gradient_calc_conical_sym_factor (rbd->dist,
                                                  rbd->vec, rbd->offset,
-						 x - rbd->sx, y - rbd->sy);
+                                                 x - rbd->sx, y - rbd->sy);
       break;
 
     case GIMP_GRADIENT_CONICAL_ASYMMETRIC:
       factor = gradient_calc_conical_asym_factor (rbd->dist,
                                                   rbd->vec, rbd->offset,
-						  x - rbd->sx, y - rbd->sy);
+                                                  x - rbd->sx, y - rbd->sy);
       break;
 
     case GIMP_GRADIENT_SHAPEBURST_ANGULAR:
@@ -719,13 +719,13 @@ gradient_render_pixel (gdouble   x,
     case GIMP_GRADIENT_SPIRAL_CLOCKWISE:
       factor = gradient_calc_spiral_factor (rbd->dist,
                                             rbd->vec, rbd->offset,
-					    x - rbd->sx, y - rbd->sy, TRUE);
+                                            x - rbd->sx, y - rbd->sy, TRUE);
       break;
 
     case GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE:
       factor = gradient_calc_spiral_factor (rbd->dist,
                                             rbd->vec, rbd->offset,
-					    x - rbd->sx, y - rbd->sy, FALSE);
+                                            x - rbd->sx, y - rbd->sy, FALSE);
       break;
 
     default:
@@ -791,9 +791,9 @@ gradient_render_pixel (gdouble   x,
 
 static void
 gradient_put_pixel (gint      x,
-		    gint      y,
-		    GimpRGB  *color,
-		    gpointer  put_pixel_data)
+                    gint      y,
+                    GimpRGB  *color,
+                    gpointer  put_pixel_data)
 {
   PutPixelData  *ppd  = put_pixel_data;
   guchar        *dest = ppd->row_data + ppd->bytes * x;
@@ -844,25 +844,25 @@ gradient_put_pixel (gint      x,
 
 static void
 gradient_fill_region (GimpImage        *image,
-		      GimpDrawable     *drawable,
+                      GimpDrawable     *drawable,
                       GimpContext      *context,
-		      PixelRegion      *PR,
-		      gint              width,
-		      gint              height,
-		      GimpBlendMode     blend_mode,
-		      GimpGradientType  gradient_type,
-		      gdouble           offset,
-		      GimpRepeatMode    repeat,
+                      PixelRegion      *PR,
+                      gint              width,
+                      gint              height,
+                      GimpBlendMode     blend_mode,
+                      GimpGradientType  gradient_type,
+                      gdouble           offset,
+                      GimpRepeatMode    repeat,
                       gboolean          reverse,
-		      gboolean          supersample,
-		      gint              max_depth,
-		      gdouble           threshold,
-		      gboolean          dither,
-		      gdouble           sx,
-		      gdouble           sy,
-		      gdouble           ex,
-		      gdouble           ey,
-		      GimpProgress     *progress)
+                      gboolean          supersample,
+                      gint              max_depth,
+                      gdouble           threshold,
+                      gboolean          dither,
+                      gdouble           sx,
+                      gdouble           sy,
+                      gdouble           ex,
+                      gdouble           ey,
+                      GimpProgress     *progress)
 {
   RenderBlendData  rbd;
 
@@ -927,10 +927,10 @@ gradient_fill_region (GimpImage        *image,
       rbd.dist = sqrt (SQR (ex - sx) + SQR (ey - sy));
 
       if (rbd.dist > 0.0)
-	{
-	  rbd.vec[0] = (ex - sx) / rbd.dist;
-	  rbd.vec[1] = (ey - sy) / rbd.dist;
-	}
+        {
+          rbd.vec[0] = (ex - sx) / rbd.dist;
+          rbd.vec[1] = (ey - sy) / rbd.dist;
+        }
 
       break;
 
@@ -968,10 +968,10 @@ gradient_fill_region (GimpImage        *image,
       ppd.dither_rand = g_rand_new ();
 
       gimp_adaptive_supersample_area (0, 0, (width - 1), (height - 1),
-				      max_depth, threshold,
-				      gradient_render_pixel, &rbd,
-				      gradient_put_pixel, &ppd,
-				      progress ?
+                                      max_depth, threshold,
+                                      gradient_render_pixel, &rbd,
+                                      gradient_put_pixel, &ppd,
+                                      progress ?
                                       gimp_progress_update_and_flush : NULL,
                                       progress);
 

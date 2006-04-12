@@ -50,27 +50,27 @@
 static void   gimp_magnify_tool_button_press    (GimpTool        *tool,
                                                  GimpCoords      *coords,
                                                  guint32          time,
-						 GdkModifierType  state,
-						 GimpDisplay     *display);
+                                                 GdkModifierType  state,
+                                                 GimpDisplay     *display);
 static void   gimp_magnify_tool_button_release  (GimpTool        *tool,
                                                  GimpCoords      *coords,
                                                  guint32          time,
-						 GdkModifierType  state,
-						 GimpDisplay     *display);
+                                                 GdkModifierType  state,
+                                                 GimpDisplay     *display);
 static void   gimp_magnify_tool_motion          (GimpTool        *tool,
                                                  GimpCoords      *coords,
                                                  guint32          time,
-						 GdkModifierType  state,
-						 GimpDisplay     *display);
+                                                 GdkModifierType  state,
+                                                 GimpDisplay     *display);
 static void   gimp_magnify_tool_modifier_key    (GimpTool        *tool,
                                                  GdkModifierType  key,
                                                  gboolean         press,
-						 GdkModifierType  state,
-						 GimpDisplay     *display);
+                                                 GdkModifierType  state,
+                                                 GimpDisplay     *display);
 static void   gimp_magnify_tool_cursor_update   (GimpTool        *tool,
                                                  GimpCoords      *coords,
-						 GdkModifierType  state,
-						 GimpDisplay     *display);
+                                                 GdkModifierType  state,
+                                                 GimpDisplay     *display);
 
 static void   gimp_magnify_tool_draw            (GimpDrawTool    *draw_tool);
 
@@ -140,8 +140,8 @@ static void
 gimp_magnify_tool_button_press (GimpTool        *tool,
                                 GimpCoords      *coords,
                                 guint32          time,
-				GdkModifierType  state,
-				GimpDisplay     *display)
+                                GdkModifierType  state,
+                                GimpDisplay     *display)
 {
   GimpMagnifyTool *magnify = GIMP_MAGNIFY_TOOL (tool);
 
@@ -160,8 +160,8 @@ static void
 gimp_magnify_tool_button_release (GimpTool        *tool,
                                   GimpCoords      *coords,
                                   guint32          time,
-				  GdkModifierType  state,
-				  GimpDisplay     *display)
+                                  GdkModifierType  state,
+                                  GimpDisplay     *display)
 {
   GimpMagnifyTool    *magnify = GIMP_MAGNIFY_TOOL (tool);
   GimpMagnifyOptions *options;
@@ -248,8 +248,8 @@ static void
 gimp_magnify_tool_motion (GimpTool        *tool,
                           GimpCoords      *coords,
                           guint32          time,
-			  GdkModifierType  state,
-			  GimpDisplay     *display)
+                          GdkModifierType  state,
+                          GimpDisplay     *display)
 {
   GimpMagnifyTool *magnify = GIMP_MAGNIFY_TOOL (tool);
 
@@ -265,8 +265,8 @@ static void
 gimp_magnify_tool_modifier_key (GimpTool        *tool,
                                 GdkModifierType  key,
                                 gboolean         press,
-				GdkModifierType  state,
-				GimpDisplay     *display)
+                                GdkModifierType  state,
+                                GimpDisplay     *display)
 {
   GimpMagnifyOptions *options;
 
@@ -293,8 +293,8 @@ gimp_magnify_tool_modifier_key (GimpTool        *tool,
 static void
 gimp_magnify_tool_cursor_update (GimpTool        *tool,
                                  GimpCoords      *coords,
-				 GdkModifierType  state,
-				 GimpDisplay     *display)
+                                 GdkModifierType  state,
+                                 GimpDisplay     *display)
 {
   GimpMagnifyOptions *options;
 

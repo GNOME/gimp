@@ -182,7 +182,7 @@ layers_text_tool_cmd_callback (GtkAction *action,
 
 void
 layers_edit_attributes_cmd_callback (GtkAction *action,
-				     gpointer   data)
+                                     gpointer   data)
 {
   LayerOptionsDialog *dialog;
   GimpImage          *image;
@@ -211,7 +211,7 @@ layers_edit_attributes_cmd_callback (GtkAction *action,
 
 void
 layers_new_cmd_callback (GtkAction *action,
-			 gpointer   data)
+                         gpointer   data)
 {
   LayerOptionsDialog *dialog;
   GimpImage          *image;
@@ -335,7 +335,7 @@ layers_select_cmd_callback (GtkAction *action,
 
 void
 layers_raise_cmd_callback (GtkAction *action,
-			   gpointer   data)
+                           gpointer   data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -347,7 +347,7 @@ layers_raise_cmd_callback (GtkAction *action,
 
 void
 layers_raise_to_top_cmd_callback (GtkAction *action,
-				  gpointer   data)
+                                  gpointer   data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -359,7 +359,7 @@ layers_raise_to_top_cmd_callback (GtkAction *action,
 
 void
 layers_lower_cmd_callback (GtkAction *action,
-			   gpointer   data)
+                           gpointer   data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -371,7 +371,7 @@ layers_lower_cmd_callback (GtkAction *action,
 
 void
 layers_lower_to_bottom_cmd_callback (GtkAction *action,
-				     gpointer   data)
+                                     gpointer   data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -383,7 +383,7 @@ layers_lower_to_bottom_cmd_callback (GtkAction *action,
 
 void
 layers_duplicate_cmd_callback (GtkAction *action,
-			       gpointer   data)
+                               gpointer   data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -401,7 +401,7 @@ layers_duplicate_cmd_callback (GtkAction *action,
 
 void
 layers_anchor_cmd_callback (GtkAction *action,
-			    gpointer   data)
+                            gpointer   data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -416,7 +416,7 @@ layers_anchor_cmd_callback (GtkAction *action,
 
 void
 layers_merge_down_cmd_callback (GtkAction *action,
-				gpointer   data)
+                                gpointer   data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -429,7 +429,7 @@ layers_merge_down_cmd_callback (GtkAction *action,
 
 void
 layers_delete_cmd_callback (GtkAction *action,
-			    gpointer   data)
+                            gpointer   data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -457,7 +457,7 @@ layers_text_discard_cmd_callback (GtkAction *action,
 
 void
 layers_resize_cmd_callback (GtkAction *action,
-			    gpointer   data)
+                            gpointer   data)
 {
   GimpDisplay *display;
   GimpImage   *image;
@@ -488,7 +488,7 @@ layers_resize_cmd_callback (GtkAction *action,
 
 void
 layers_resize_to_image_cmd_callback (GtkAction *action,
-				     gpointer   data)
+                                     gpointer   data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -500,7 +500,7 @@ layers_resize_to_image_cmd_callback (GtkAction *action,
 
 void
 layers_scale_cmd_callback (GtkAction *action,
-			   gpointer   data)
+                           gpointer   data)
 {
   GimpImage   *image;
   GimpLayer   *layer;

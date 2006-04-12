@@ -60,7 +60,7 @@ typedef void (* GimpToolRegisterCallback) (GType                     tool_type,
                                            gpointer                  register_data);
 
 typedef void (* GimpToolRegisterFunc)     (GimpToolRegisterCallback  callback,
-					   gpointer                  register_data);
+                                           gpointer                  register_data);
 
 
 G_END_DECLS

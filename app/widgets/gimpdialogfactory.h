@@ -100,9 +100,9 @@ struct _GimpDialogFactoryClass
 GType               gimp_dialog_factory_get_type  (void) G_GNUC_CONST;
 
 GimpDialogFactory * gimp_dialog_factory_new       (const gchar       *name,
-						   GimpContext       *context,
-						   GimpMenuFactory   *menu_factory,
-						   GimpDialogNewFunc  new_dock_func);
+                                                   GimpContext       *context,
+                                                   GimpMenuFactory   *menu_factory,
+                                                   GimpDialogNewFunc  new_dock_func);
 
 GimpDialogFactory * gimp_dialog_factory_from_name (const gchar       *name);
 
@@ -110,48 +110,48 @@ void        gimp_dialog_factory_set_constructor   (GimpDialogFactory *factory,
                                                    GimpDialogConstructor constructor);
 
 void        gimp_dialog_factory_register_entry    (GimpDialogFactory *factory,
-						   const gchar       *identifier,
+                                                   const gchar       *identifier,
                                                    const gchar       *name,
                                                    const gchar       *blurb,
                                                    const gchar       *stock_id,
                                                    const gchar       *help_id,
-						   GimpDialogNewFunc  new_func,
+                                                   GimpDialogNewFunc  new_func,
                                                    gint               view_size,
-						   gboolean           singleton,
-						   gboolean           session_managed,
-						   gboolean           remember_size,
-						   gboolean           remember_if_open);
+                                                   gboolean           singleton,
+                                                   gboolean           session_managed,
+                                                   gboolean           remember_size,
+                                                   gboolean           remember_if_open);
 GimpDialogFactoryEntry * gimp_dialog_factory_find_entry
                                                   (GimpDialogFactory *factory,
-						   const gchar       *identifier);
+                                                   const gchar       *identifier);
 
 GimpSessionInfo * gimp_dialog_factory_find_session_info
                                                   (GimpDialogFactory *factory,
-						   const gchar       *identifier);
+                                                   const gchar       *identifier);
 
 GtkWidget * gimp_dialog_factory_dialog_new        (GimpDialogFactory *factory,
                                                    GdkScreen         *screen,
-						   const gchar       *identifier,
+                                                   const gchar       *identifier,
                                                    gint               view_size,
                                                    gboolean           present);
 GtkWidget * gimp_dialog_factory_dialog_raise      (GimpDialogFactory *factory,
                                                    GdkScreen         *screen,
-						   const gchar       *identifiers,
+                                                   const gchar       *identifiers,
                                                    gint               view_size);
 GtkWidget * gimp_dialog_factory_dockable_new      (GimpDialogFactory *factory,
-						   GimpDock          *dock,
-						   const gchar       *identifier,
+                                                   GimpDock          *dock,
+                                                   const gchar       *identifier,
                                                    gint               view_size);
 GtkWidget * gimp_dialog_factory_dock_new          (GimpDialogFactory *factory,
                                                    GdkScreen         *screen);
 
 void        gimp_dialog_factory_add_dialog        (GimpDialogFactory *factory,
-						   GtkWidget         *dialog);
+                                                   GtkWidget         *dialog);
 void        gimp_dialog_factory_add_foreign       (GimpDialogFactory *factory,
                                                    const gchar       *identifier,
                                                    GtkWidget         *dialog);
 void        gimp_dialog_factory_remove_dialog     (GimpDialogFactory *factory,
-						   GtkWidget         *dialog);
+                                                   GtkWidget         *dialog);
 
 void        gimp_dialog_factory_show_toolbox      (GimpDialogFactory *toolbox_factory);
 

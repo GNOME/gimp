@@ -49,8 +49,8 @@ static GObject * gimp_drawable_tree_view_constructor (GType             type,
                                                       GObjectConstructParam *params);
 
 static gboolean gimp_drawable_tree_view_select_item (GimpContainerView *view,
-						     GimpViewable      *item,
-						     gpointer           insert_data);
+                                                     GimpViewable      *item,
+                                                     gpointer           insert_data);
 
 static gboolean gimp_drawable_tree_view_drop_possible(GimpContainerTreeView *view,
                                                       GimpDndType          src_type,
@@ -139,7 +139,7 @@ gimp_drawable_tree_view_constructor (GType                  type,
   item_view = GIMP_ITEM_TREE_VIEW (object);
 
   gimp_dnd_viewable_dest_add (item_view->new_button, GIMP_TYPE_PATTERN,
-			      gimp_drawable_tree_view_new_pattern_dropped,
+                              gimp_drawable_tree_view_new_pattern_dropped,
                               item_view);
   gimp_dnd_color_dest_add (item_view->new_button,
                            gimp_drawable_tree_view_new_color_dropped,
@@ -299,7 +299,7 @@ gimp_drawable_tree_view_set_image (GimpItemTreeView *view,
 
 static void
 gimp_drawable_tree_view_floating_selection_changed (GimpImage            *image,
-						    GimpDrawableTreeView *view)
+                                                    GimpDrawableTreeView *view)
 {
   GimpItem *item;
 

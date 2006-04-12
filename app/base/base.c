@@ -32,7 +32,7 @@
 #include <glib/gstdio.h>
 
 #ifdef G_OS_WIN32
-#include <process.h>	/*  for _getpid()  */
+#include <process.h>        /*  for _getpid()  */
 #include "libgimpbase/gimpwin32-io.h"
 #endif
 
@@ -173,20 +173,20 @@ base_toast_old_swap_files (const gchar *swap_path)
          * we'll probably get it the next time around
          */
 
-	gint pid = atoi (entry + 9);
+        gint pid = atoi (entry + 9);
 
         /*  On Windows, you can't remove open files anyhow,
          *  so no harm trying.
          */
 #ifndef G_OS_WIN32
-	if (kill (pid, 0))
+        if (kill (pid, 0))
 #endif
-	  {
+          {
             gchar *filename = g_build_filename (dirname, entry, NULL);
 
-	    g_unlink (filename);
+            g_unlink (filename);
             g_free (filename);
-	  }
+          }
       }
 
   g_dir_close (dir);

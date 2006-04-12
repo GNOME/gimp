@@ -21,17 +21,17 @@
 
 
 guint   xcf_read_int32  (FILE     *fp,
-			 guint32  *data,
-			 gint      count);
+                         guint32  *data,
+                         gint      count);
 guint   xcf_read_float  (FILE     *fp,
-			 gfloat   *data,
-			 gint      count);
+                         gfloat   *data,
+                         gint      count);
 guint   xcf_read_int8   (FILE     *fp,
-			 guint8   *data,
-			 gint      count);
+                         guint8   *data,
+                         gint      count);
 guint   xcf_read_string (FILE     *fp,
-			 gchar   **data,
-			 gint      count);
+                         gchar   **data,
+                         gint      count);
 
 
 #endif  /* __XCF_READ_H__ */

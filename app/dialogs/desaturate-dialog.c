@@ -81,7 +81,7 @@ desaturate_dialog_new (GimpDrawable       *drawable,
   gtk_window_set_resizable (GTK_WINDOW (dialog->dialog), FALSE);
 
   g_object_weak_ref (G_OBJECT (dialog->dialog),
-		     (GWeakNotify) g_free, dialog);
+                     (GWeakNotify) g_free, dialog);
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);

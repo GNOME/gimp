@@ -104,14 +104,14 @@ error_console_save_cmd_callback (GtkAction *action,
   gtk_window_set_role (GTK_WINDOW (chooser), "gimp-save-errors");
 
   g_signal_connect (chooser, "response",
-		    G_CALLBACK (error_console_save_response),
-		    console);
+                    G_CALLBACK (error_console_save_response),
+                    console);
   g_signal_connect (chooser, "delete-event",
-		    G_CALLBACK (gtk_true),
-		    NULL);
+                    G_CALLBACK (gtk_true),
+                    NULL);
 
   gimp_help_connect (GTK_WIDGET (chooser), gimp_standard_help_func,
-		     GIMP_HELP_ERRORS_DIALOG, NULL);
+                     GIMP_HELP_ERRORS_DIALOG, NULL);
 
   gtk_widget_show (GTK_WIDGET (chooser));
 }

@@ -77,12 +77,12 @@ static gint         gimp_image_crop_colors_alpha  (guchar       *col1,
 void
 gimp_image_crop (GimpImage   *image,
                  GimpContext *context,
-		 gint         x1,
-		 gint         y1,
-		 gint         x2,
-		 gint         y2,
-		 gboolean     active_layer_only,
-		 gboolean     crop_layers)
+                 gint         x1,
+                 gint         y1,
+                 gint         x2,
+                 gint         y2,
+                 gboolean     active_layer_only,
+                 gboolean     crop_layers)
 {
   gint width, height;
 
@@ -269,15 +269,15 @@ gimp_image_crop (GimpImage   *image,
 
 gboolean
 gimp_image_crop_auto_shrink (GimpImage *image,
-			     gint       x1,
-			     gint       y1,
-			     gint       x2,
-			     gint       y2,
-			     gboolean   active_drawable_only,
-			     gint      *shrunk_x1,
-			     gint      *shrunk_y1,
-			     gint      *shrunk_x2,
-			     gint      *shrunk_y2)
+                             gint       x1,
+                             gint       y1,
+                             gint       x2,
+                             gint       y2,
+                             gboolean   active_drawable_only,
+                             gint      *shrunk_x1,
+                             gint      *shrunk_y1,
+                             gint      *shrunk_x2,
+                             gint      *shrunk_y2)
 {
   GimpDrawable    *active_drawable = NULL;
   GimpPickable    *pickable;
@@ -311,7 +311,7 @@ gimp_image_crop_auto_shrink (GimpImage *image,
       active_drawable = gimp_image_active_drawable (image);
 
       if (! active_drawable)
-	goto FINISH;
+        goto FINISH;
 
       pickable = GIMP_PICKABLE (active_drawable);
     }
@@ -327,8 +327,8 @@ gimp_image_crop_auto_shrink (GimpImage *image,
   has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
 
   switch (gimp_image_crop_guess_bgcolor (pickable,
-					 bytes, has_alpha, bgcolor,
-					 x1, x2-1, y1, y2-1))
+                                         bytes, has_alpha, bgcolor,
+                                         x1, x2-1, y1, y2-1))
     {
     case AUTO_CROP_ALPHA:
       colors_equal_func = (ColorsEqualFunc) gimp_image_crop_colors_alpha;
@@ -359,7 +359,7 @@ gimp_image_crop_auto_shrink (GimpImage *image,
     {
       pixel_region_get_row (&PR, x1, y, width, buffer, 1);
       for (x = 0; x < width && !abort; x++)
-	abort = !(colors_equal_func) (bgcolor, buffer + x * bytes, bytes);
+        abort = !(colors_equal_func) (bgcolor, buffer + x * bytes, bytes);
     }
   if (y == y2 && !abort)
     goto FINISH;
@@ -371,7 +371,7 @@ gimp_image_crop_auto_shrink (GimpImage *image,
     {
       pixel_region_get_row (&PR, x1, y-1 , width, buffer, 1);
       for (x = 0; x < width && !abort; x++)
-	abort = !(colors_equal_func) (bgcolor, buffer + x * bytes, bytes);
+        abort = !(colors_equal_func) (bgcolor, buffer + x * bytes, bytes);
     }
   y2 = y + 1;
 
@@ -384,7 +384,7 @@ gimp_image_crop_auto_shrink (GimpImage *image,
     {
       pixel_region_get_col (&PR, x, y1, height, buffer, 1);
       for (y = 0; y < height && !abort; y++)
-	abort = !(colors_equal_func) (bgcolor, buffer + y * bytes, bytes);
+        abort = !(colors_equal_func) (bgcolor, buffer + y * bytes, bytes);
     }
   x1 = x - 1;
 
@@ -394,7 +394,7 @@ gimp_image_crop_auto_shrink (GimpImage *image,
     {
       pixel_region_get_col (&PR, x-1, y1, height, buffer, 1);
       for (y = 0; y < height && !abort; y++)
-	abort = !(colors_equal_func) (bgcolor, buffer + y * bytes, bytes);
+        abort = !(colors_equal_func) (bgcolor, buffer + y * bytes, bytes);
     }
   x2 = x + 1;
 
@@ -417,13 +417,13 @@ gimp_image_crop_auto_shrink (GimpImage *image,
 
 static AutoCropType
 gimp_image_crop_guess_bgcolor (GimpPickable *pickable,
-			       gint          bytes,
-			       gboolean      has_alpha,
-			       guchar       *color,
-			       gint          x1,
-			       gint          x2,
-			       gint          y1,
-			       gint          y2)
+                               gint          bytes,
+                               gboolean      has_alpha,
+                               guchar       *color,
+                               gint          x1,
+                               gint          x2,
+                               gint          y1,
+                               gint          y2)
 {
   guchar *tl = NULL;
   guchar *tr = NULL;
@@ -451,16 +451,16 @@ gimp_image_crop_guess_bgcolor (GimpPickable *pickable,
     {
       alpha = bytes - 1;
       if ((tl[alpha] == 0 && tr[alpha] == 0) ||
-	  (tl[alpha] == 0 && bl[alpha] == 0) ||
-	  (tr[alpha] == 0 && br[alpha] == 0) ||
-	  (bl[alpha] == 0 && br[alpha] == 0))
-	{
-	  g_free (tl);
-	  g_free (tr);
-	  g_free (bl);
-	  g_free (br);
-	  return AUTO_CROP_ALPHA;
-	}
+          (tl[alpha] == 0 && bl[alpha] == 0) ||
+          (tr[alpha] == 0 && br[alpha] == 0) ||
+          (bl[alpha] == 0 && br[alpha] == 0))
+        {
+          g_free (tl);
+          g_free (tr);
+          g_free (bl);
+          g_free (br);
+          return AUTO_CROP_ALPHA;
+        }
     }
 
   if (gimp_image_crop_colors_equal (tl, tr, bytes) ||
@@ -469,7 +469,7 @@ gimp_image_crop_guess_bgcolor (GimpPickable *pickable,
       memcpy (color, tl, bytes);
     }
   else if (gimp_image_crop_colors_equal (br, bl, bytes) ||
-	   gimp_image_crop_colors_equal (br, tr, bytes))
+           gimp_image_crop_colors_equal (br, tr, bytes))
     {
       memcpy (color, br, bytes);
     }
@@ -494,8 +494,8 @@ gimp_image_crop_guess_bgcolor (GimpPickable *pickable,
 
 static int
 gimp_image_crop_colors_equal (guchar *col1,
-			      guchar *col2,
-			      gint    bytes)
+                              guchar *col2,
+                              gint    bytes)
 {
   gint b;
 
@@ -510,8 +510,8 @@ gimp_image_crop_colors_equal (guchar *col1,
 
 static gboolean
 gimp_image_crop_colors_alpha (guchar *dummy,
-			      guchar *col,
-			      gint    bytes)
+                              guchar *col,
+                              gint    bytes)
 {
   return (col[bytes - 1] == 0);
 }

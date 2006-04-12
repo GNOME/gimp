@@ -277,8 +277,8 @@ rgbxyzrgb_init(void)
 
 static void
 xyz_to_rgb (double *inx_outr,
-	    double *iny_outg,
-	    double *inz_outb)
+            double *iny_outg,
+            double *inz_outb)
 {
   const double x = *inx_outr;
   const double y = *iny_outg;
@@ -292,8 +292,8 @@ xyz_to_rgb (double *inx_outr,
 
 static void
 rgb_to_xyz (double *inr_outx,
-	    double *ing_outy,
-	    double *inb_outz)
+            double *ing_outy,
+            double *inb_outz)
 {
   const double r = *inr_outx;
   const double g = *ing_outy;
@@ -335,8 +335,8 @@ ffunc_inv(const double t)
 
 static void
 xyz_to_lab (double *inx,
-	    double *iny,
-	    double *inz)
+            double *iny,
+            double *inz)
 {
   double L,a,b;
   double ffuncY;
@@ -347,24 +347,24 @@ xyz_to_lab (double *inx,
   if (Y > 0.0F)
     {
       if (Y > 0.008856F)
-	{
-	  L = (116.0F * cbrt(Y)) - 16.0F;
-	}
+        {
+          L = (116.0F * cbrt(Y)) - 16.0F;
+        }
       else
-	{
-	  L = (Y * 903.3F);
-	}
+        {
+          L = (Y * 903.3F);
+        }
 
 #ifdef SANITY
       if (L < 0.0F)
-	{
-	  g_printerr (" <eek1>%f \007",(float)L);
-	}
+        {
+          g_printerr (" <eek1>%f \007",(float)L);
+        }
 
       if (L > 100.0F)
-	{
-	  g_printerr (" <eek2>%f \007",(float)L);
-	}
+        {
+          g_printerr (" <eek2>%f \007",(float)L);
+        }
 #endif
     }
   else
@@ -384,8 +384,8 @@ xyz_to_lab (double *inx,
 
 static void
 lab_to_xyz (double *inl,
-	    double *ina,
-	    double *inb)
+            double *ina,
+            double *inb)
 {
   double X,Y,Z;
   double P;
@@ -413,19 +413,19 @@ lab_to_xyz (double *inl,
   if (X<-0.00000F)
     {
       if (X<-0.0001F)
-	g_printerr ("{badX %f {%f,%f,%f}}",X,L,a,b);
+        g_printerr ("{badX %f {%f,%f,%f}}",X,L,a,b);
       X = 0.0F;
     }
   if (Y<-0.00000F)
     {
       if (Y<-0.0001F)
-	g_printerr ("{badY %f}",Y);
+        g_printerr ("{badY %f}",Y);
       Y = 0.0F;
     }
   if (Z<-0.00000F)
     {
       if (Z<-0.1F)
-	g_printerr ("{badZ %f}",Z);
+        g_printerr ("{badZ %f}",Z);
       Z = 0.0F;
     }
 #endif
@@ -454,7 +454,7 @@ void
 cpercep_rgb_to_space (double  inr,
                       double  ing,
                       double  inb,
-		      double *outr,
+                      double *outr,
                       double *outg,
                       double *outb)
 {
@@ -519,7 +519,7 @@ cpercep_rgb_to_space (double  inr,
   if (inr < 0.0F || ing < 0.0F || inb < 0.0F)
     {
       g_printerr (" [BAD2 XYZ: %f,%f,%f]\007 ",
-	      inr,ing,inb);
+              inr,ing,inb);
     }
 #endif /* SANITY */
 
@@ -535,7 +535,7 @@ void
 cpercep_space_to_rgb (double  inr,
                       double  ing,
                       double  inb,
-		      double *outr,
+                      double *outr,
                       double *outg,
                       double *outb)
 {
@@ -545,7 +545,7 @@ cpercep_space_to_rgb (double  inr,
   if (inr<-0.0F || ing<-0.0F || inb<-0.0F)
     {
       g_printerr (" [BAD1 XYZ: %f,%f,%f]\007 ",
-	      inr,ing,inb);
+              inr,ing,inb);
     }
 #endif
 
@@ -588,7 +588,7 @@ cpercep_space_to_rgb (double  inr,
 
 const double
 xscaler(const double start, const double end,
-	const double me, const double him)
+        const double me, const double him)
 {
   return start + ((end-start) * him) / (me + him);
 }
@@ -596,9 +596,9 @@ xscaler(const double start, const double end,
 
 void
 mix_colours (const double L1, const double a1, const double b1,
-	     const double L2, const double a2, const double b2,
-	     double *rtnL, double *rtna, double *rtnb,
-	     double mass1, double mass2)
+             const double L2, const double a2, const double b2,
+             double *rtnL, double *rtna, double *rtnb,
+             double mass1, double mass2)
 {
   double w1, w2;
 
@@ -622,7 +622,7 @@ mix_colours (const double L1, const double a1, const double b1,
       w2 <= 0.0)
     {
       *rtna =
-	*rtnb = 0.0;
+        *rtnb = 0.0;
 #ifdef SANITY
       /* g_printerr ("\007OUCH. "); */
 #endif

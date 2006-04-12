@@ -83,7 +83,7 @@ gimp_transform_tool_push_undo (GimpImage   *image,
       tu->tool_type = tool_type;
 
       for (i = 0; i < TRAN_INFO_SIZE; i++)
-	tu->trans_info[i] = trans_info[i];
+        tu->trans_info[i] = trans_info[i];
 
       if (original)
         tu->original = tile_manager_ref (original);

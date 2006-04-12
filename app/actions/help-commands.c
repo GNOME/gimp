@@ -30,14 +30,14 @@
 
 void
 help_help_cmd_callback (GtkAction *action,
-			gpointer   data)
+                        gpointer   data)
 {
   gimp_standard_help_func (NULL, NULL);
 }
 
 void
 help_context_help_cmd_callback (GtkAction *action,
-				gpointer   data)
+                                gpointer   data)
 {
   GtkWidget *widget;
   return_if_no_widget (widget, data);

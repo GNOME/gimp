@@ -172,7 +172,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
                                  -1);
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, x, x + 1, y, y + 1,
-			GTK_FILL | GTK_EXPAND, GTK_FILL, 2, 2);
+                        GTK_FILL | GTK_EXPAND, GTK_FILL, 2, 2);
       gtk_widget_show (label);
 
       editor->labels[i] =

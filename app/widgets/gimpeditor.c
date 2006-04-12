@@ -479,13 +479,13 @@ gimp_editor_add_button (GimpEditor  *editor,
 
   if (callback)
     g_signal_connect (button, "clicked",
-		      callback,
-		      callback_data);
+                      callback,
+                      callback_data);
 
   if (extended_callback)
     g_signal_connect (button, "extended-clicked",
-		      extended_callback,
-		      callback_data);
+                      extended_callback,
+                      callback_data);
 
   image = gtk_image_new_from_stock (stock_id, button_icon_size);
   gtk_container_add (GTK_CONTAINER (button), image);
@@ -739,8 +739,8 @@ gimp_editor_set_box_style (GimpEditor *editor,
 
   gtk_widget_style_get (GTK_WIDGET (editor),
                         "button-icon-size", &button_icon_size,
-			"button-spacing",   &button_spacing,
-			NULL);
+                        "button-spacing",   &button_spacing,
+                        NULL);
 
   gtk_box_set_spacing (box, button_spacing);
 

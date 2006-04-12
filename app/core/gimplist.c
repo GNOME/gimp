@@ -105,14 +105,14 @@ gimp_list_class_init (GimpListClass *klass)
   container_class->get_child_index    = gimp_list_get_child_index;
 
   g_object_class_install_property (object_class, PROP_UNIQUE_NAMES,
-				   g_param_spec_boolean ("unique-names",
+                                   g_param_spec_boolean ("unique-names",
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_SORT_FUNC,
-				   g_param_spec_pointer ("sort-func",
+                                   g_param_spec_pointer ("sort-func",
                                                          NULL, NULL,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
@@ -195,7 +195,7 @@ gimp_list_get_memsize (GimpObject *object,
 
 static void
 gimp_list_add (GimpContainer *container,
-	       GimpObject    *object)
+               GimpObject    *object)
 {
   GimpList *list = GIMP_LIST (container);
 
@@ -215,7 +215,7 @@ gimp_list_add (GimpContainer *container,
 
 static void
 gimp_list_remove (GimpContainer *container,
-		  GimpObject    *object)
+                  GimpObject    *object)
 {
   GimpList *list = GIMP_LIST (container);
 
@@ -229,8 +229,8 @@ gimp_list_remove (GimpContainer *container,
 
 static void
 gimp_list_reorder (GimpContainer *container,
-		   GimpObject    *object,
-		   gint           new_index)
+                   GimpObject    *object,
+                   gint           new_index)
 {
   GimpList *list = GIMP_LIST (container);
 
@@ -253,7 +253,7 @@ gimp_list_clear (GimpContainer *container)
 
 static gboolean
 gimp_list_have (const GimpContainer *container,
-		const GimpObject    *object)
+                const GimpObject    *object)
 {
   GimpList *list = GIMP_LIST (container);
 
@@ -262,8 +262,8 @@ gimp_list_have (const GimpContainer *container,
 
 static void
 gimp_list_foreach (const GimpContainer *container,
-		   GFunc                func,
-		   gpointer             user_data)
+                   GFunc                func,
+                   gpointer             user_data)
 {
   GimpList *list = GIMP_LIST (container);
 
@@ -272,7 +272,7 @@ gimp_list_foreach (const GimpContainer *container,
 
 static GimpObject *
 gimp_list_get_child_by_name (const GimpContainer *container,
-			     const gchar         *name)
+                             const gchar         *name)
 {
   GimpList *list = GIMP_LIST (container);
   GList    *glist;
@@ -282,7 +282,7 @@ gimp_list_get_child_by_name (const GimpContainer *container,
       GimpObject *object = glist->data;
 
       if (! strcmp (object->name, name))
-	return object;
+        return object;
     }
 
   return NULL;
@@ -290,7 +290,7 @@ gimp_list_get_child_by_name (const GimpContainer *container,
 
 static GimpObject *
 gimp_list_get_child_by_index (const GimpContainer *container,
-			      gint                 index)
+                              gint                 index)
 {
   GimpList *list = GIMP_LIST (container);
   GList    *glist;
@@ -305,7 +305,7 @@ gimp_list_get_child_by_index (const GimpContainer *container,
 
 static gint
 gimp_list_get_child_index (const GimpContainer *container,
-			   const GimpObject    *object)
+                           const GimpObject    *object)
 {
   GimpList *list = GIMP_LIST (container);
 
@@ -476,9 +476,9 @@ gimp_list_uniquefy_name (GimpList   *gimp_list,
       GimpObject *object2 = GIMP_OBJECT (list->data);
 
       if (object != object2 &&
-	  strcmp (gimp_object_get_name (GIMP_OBJECT (object)),
-		  gimp_object_get_name (GIMP_OBJECT (object2))) == 0)
-	{
+          strcmp (gimp_object_get_name (GIMP_OBJECT (object)),
+                  gimp_object_get_name (GIMP_OBJECT (object2))) == 0)
+        {
           ext = strrchr (object->name, '#');
 
           if (ext)
@@ -522,14 +522,14 @@ gimp_list_uniquefy_name (GimpList   *gimp_list,
                     continue;
 
                   if (! strcmp (object2->name, new_name))
-		    break;
+                    break;
                 }
             }
           while (list2);
 
           gimp_object_take_name (object, new_name);
-	  break;
-	}
+          break;
+        }
     }
 }
 

@@ -112,13 +112,13 @@ gimp_image_dock_constructor (GType                  type,
                                 dock);
 
   g_signal_connect_object (GIMP_DOCK (dock)->context, "display-changed",
-			   G_CALLBACK (gimp_image_dock_display_changed),
-			   dock, 0);
+                           G_CALLBACK (gimp_image_dock_display_changed),
+                           dock, 0);
 
   g_signal_connect_object (GIMP_DOCK (dock)->context->gimp->config,
                            "notify::transient-docks",
-			   G_CALLBACK (gimp_image_dock_notify_transient),
-			   dock, 0);
+                           G_CALLBACK (gimp_image_dock_notify_transient),
+                           dock, 0);
 
   return object;
 }

@@ -21,9 +21,9 @@
 
 
 void   help_help_cmd_callback         (GtkAction *action,
-				       gpointer   data);
+                                       gpointer   data);
 void   help_context_help_cmd_callback (GtkAction *action,
-				       gpointer   data);
+                                       gpointer   data);
 
 
 #endif /* __HELP_COMMANDS_H__ */

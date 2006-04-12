@@ -62,8 +62,8 @@ gimp_docked_interface_get_type (void)
       static const GTypeInfo docked_iface_info =
       {
         sizeof (GimpDockedInterface),
-	(GBaseInitFunc)     gimp_docked_iface_base_init,
-	(GBaseFinalizeFunc) NULL,
+        (GBaseInitFunc)     gimp_docked_iface_base_init,
+        (GBaseFinalizeFunc) NULL,
       };
 
       docked_iface_type = g_type_register_static (G_TYPE_INTERFACE,

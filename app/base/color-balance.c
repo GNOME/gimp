@@ -149,7 +149,7 @@ color_balance_create_lookup_tables (ColorBalance *cb)
 void
 color_balance (ColorBalance *cb,
                PixelRegion  *srcPR,
-	       PixelRegion  *destPR)
+               PixelRegion  *destPR)
 {
   const guchar *src, *s;
   guchar       *dest, *d;
@@ -170,32 +170,32 @@ color_balance (ColorBalance *cb,
       d = dest;
 
       while (w--)
-	{
-	  r = s[RED_PIX];
-	  g = s[GREEN_PIX];
-	  b = s[BLUE_PIX];
+        {
+          r = s[RED_PIX];
+          g = s[GREEN_PIX];
+          b = s[BLUE_PIX];
 
-	  r_n = cb->r_lookup[r];
-	  g_n = cb->g_lookup[g];
-	  b_n = cb->b_lookup[b];
+          r_n = cb->r_lookup[r];
+          g_n = cb->g_lookup[g];
+          b_n = cb->b_lookup[b];
 
-	  if (cb->preserve_luminosity)
-	    {
-	      gimp_rgb_to_hsl_int (&r_n, &g_n, &b_n);
-	      b_n = gimp_rgb_to_l_int (r, g, b);
-	      gimp_hsl_to_rgb_int (&r_n, &g_n, &b_n);
-	    }
+          if (cb->preserve_luminosity)
+            {
+              gimp_rgb_to_hsl_int (&r_n, &g_n, &b_n);
+              b_n = gimp_rgb_to_l_int (r, g, b);
+              gimp_hsl_to_rgb_int (&r_n, &g_n, &b_n);
+            }
 
-	  d[RED_PIX]   = r_n;
-	  d[GREEN_PIX] = g_n;
- 	  d[BLUE_PIX]  = b_n;
+          d[RED_PIX]   = r_n;
+          d[GREEN_PIX] = g_n;
+           d[BLUE_PIX]  = b_n;
 
-	  if (alpha)
-	    d[ALPHA_PIX] = s[ALPHA_PIX];
+          if (alpha)
+            d[ALPHA_PIX] = s[ALPHA_PIX];
 
-	  s += srcPR->bytes;
-	  d += destPR->bytes;
-	}
+          s += srcPR->bytes;
+          d += destPR->bytes;
+        }
 
       src  += srcPR->rowstride;
       dest += destPR->rowstride;
@@ -213,12 +213,12 @@ color_balance_transfer_init (void)
   for (i = 0; i < 256; i++)
     {
       highlights_add[i] =
-	shadows_sub[255 - i] = (1.075 - 1 / ((gdouble) i / 16.0 + 1));
+        shadows_sub[255 - i] = (1.075 - 1 / ((gdouble) i / 16.0 + 1));
 
       midtones_add[i] =
-	midtones_sub[i] = 0.667 * (1 - SQR (((gdouble) i - 127.0) / 127.0));
+        midtones_sub[i] = 0.667 * (1 - SQR (((gdouble) i - 127.0) / 127.0));
 
       shadows_add[i] =
-	highlights_sub[i] = 0.667 * (1 - SQR (((gdouble) i - 127.0) / 127.0));
+        highlights_sub[i] = 0.667 * (1 - SQR (((gdouble) i - 127.0) / 127.0));
     }
 }

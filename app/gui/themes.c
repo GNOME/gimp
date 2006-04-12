@@ -68,9 +68,9 @@ themes_init (Gimp *gimp)
   config = GIMP_GUI_CONFIG (gimp->config);
 
   themes_hash = g_hash_table_new_full (g_str_hash,
-				       g_str_equal,
-				       g_free,
-				       g_free);
+                                       g_str_equal,
+                                       g_free,
+                                       g_free);
 
   if (config->theme_path)
     {
@@ -79,9 +79,9 @@ themes_init (Gimp *gimp)
       path = gimp_config_path_expand (config->theme_path, TRUE, NULL);
 
       gimp_datafiles_read_directories (path,
-				       G_FILE_TEST_IS_DIR,
-				       themes_directories_foreach,
-				       gimp);
+                                       G_FILE_TEST_IS_DIR,
+                                       themes_directories_foreach,
+                                       gimp);
 
       g_free (path);
     }
@@ -229,7 +229,7 @@ themes_apply_theme (Gimp        *gimp,
 
   if (gimp->be_verbose)
     g_print (_("Writing '%s'\n"),
-	     gimp_filename_to_utf8 (themerc));
+             gimp_filename_to_utf8 (themerc));
 
   file = g_fopen (themerc, "w");
 
@@ -283,11 +283,11 @@ themes_directories_foreach (const GimpDatafileData *file_data,
   if (gimp->be_verbose)
     g_print (_("Adding theme '%s' (%s)\n"),
              gimp_filename_to_utf8 (file_data->basename),
-	     gimp_filename_to_utf8 (file_data->filename));
+             gimp_filename_to_utf8 (file_data->filename));
 
   g_hash_table_insert (themes_hash,
-		       g_strdup (file_data->basename),
-		       g_strdup (file_data->filename));
+                       g_strdup (file_data->basename),
+                       g_strdup (file_data->filename));
 }
 
 static void

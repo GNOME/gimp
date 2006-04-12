@@ -121,9 +121,9 @@ gimp_gradient_load (const gchar  *filename,
       seg->prev = prev;
 
       if (prev)
-	prev->next = seg;
+        prev->next = seg;
       else
-	gradient->segments = seg;
+        gradient->segments = seg;
 
       fgets (line, 1024, file);
 
@@ -154,17 +154,17 @@ gimp_gradient_load (const gchar  *filename,
       if (errno != ERANGE &&
           sscanf (end, "%d %d", &type, &color) == 2)
         {
-	  seg->type  = (GimpGradientSegmentType) type;
-	  seg->color = (GimpGradientSegmentColor) color;
+          seg->type  = (GimpGradientSegmentType) type;
+          seg->color = (GimpGradientSegmentColor) color;
         }
       else
         {
-	  g_message (_("Corrupt segment %d in gradient file '%s'."),
-		     i, gimp_filename_to_utf8 (filename));
+          g_message (_("Corrupt segment %d in gradient file '%s'."),
+                     i, gimp_filename_to_utf8 (filename));
           g_object_unref (gradient);
           fclose (file);
           return NULL;
-	}
+        }
 
       if ( (prev && (prev->right < seg->left))
            || (!prev && (0. < seg->left) ))

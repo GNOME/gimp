@@ -67,7 +67,7 @@ gimp_errors_init (const gchar        *_full_prog_name,
 
 #ifdef GIMP_UNSTABLE
   g_printerr ("This is a development version of GIMP.  "
-	      "Debug messages may appear here.\n\n");
+              "Debug messages may appear here.\n\n");
 
 #ifdef G_OS_WIN32
   g_printerr ("You can minimize this window, but don't close it.\n\n");
@@ -81,9 +81,9 @@ gimp_errors_init (const gchar        *_full_prog_name,
 
 void
 gimp_message_log_func (const gchar    *log_domain,
-		       GLogLevelFlags  flags,
-		       const gchar    *message,
-		       gpointer        data)
+                       GLogLevelFlags  flags,
+                       const gchar    *message,
+                       gpointer        data)
 {
   Gimp **gimp = (Gimp **) data;
 
@@ -98,9 +98,9 @@ gimp_message_log_func (const gchar    *log_domain,
 
 void
 gimp_error_log_func (const gchar    *domain,
-		     GLogLevelFlags  flags,
-		     const gchar    *message,
-		     gpointer        data)
+                     GLogLevelFlags  flags,
+                     const gchar    *message,
+                     gpointer        data)
 {
   gimp_fatal_error (message);
 }
@@ -147,33 +147,33 @@ gimp_eek (const gchar *reason,
   if (use_handler)
     {
       switch (stack_trace_mode)
-	{
-	case GIMP_STACK_TRACE_NEVER:
-	  break;
+        {
+        case GIMP_STACK_TRACE_NEVER:
+          break;
 
-	case GIMP_STACK_TRACE_QUERY:
-	  {
-	    sigset_t sigset;
+        case GIMP_STACK_TRACE_QUERY:
+          {
+            sigset_t sigset;
 
-	    sigemptyset (&sigset);
-	    sigprocmask (SIG_SETMASK, &sigset, NULL);
-	    g_on_error_query (full_prog_name);
-	  }
-	  break;
+            sigemptyset (&sigset);
+            sigprocmask (SIG_SETMASK, &sigset, NULL);
+            g_on_error_query (full_prog_name);
+          }
+          break;
 
-	case GIMP_STACK_TRACE_ALWAYS:
-	  {
-	    sigset_t sigset;
+        case GIMP_STACK_TRACE_ALWAYS:
+          {
+            sigset_t sigset;
 
-	    sigemptyset (&sigset);
-	    sigprocmask (SIG_SETMASK, &sigset, NULL);
-	    g_on_error_stack_trace (full_prog_name);
-	  }
-	  break;
+            sigemptyset (&sigset);
+            sigprocmask (SIG_SETMASK, &sigset, NULL);
+            g_on_error_stack_trace (full_prog_name);
+          }
+          break;
 
-	default:
-	  break;
-	}
+        default:
+          break;
+        }
     }
 
 #else

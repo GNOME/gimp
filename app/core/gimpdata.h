@@ -94,7 +94,7 @@ void          gimp_data_set_filename     (GimpData     *data,
                                           gboolean      writable,
                                           gboolean      deletable);
 void          gimp_data_create_filename  (GimpData     *data,
-					  const gchar  *dest_dir);
+                                          const gchar  *dest_dir);
 
 const gchar * gimp_data_get_mime_type    (GimpData     *data);
 

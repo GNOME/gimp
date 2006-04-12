@@ -400,7 +400,7 @@ file_utils_load_thumbnail (const gchar *filename)
       gint height = gdk_pixbuf_get_height (pixbuf);
 
       if (gdk_pixbuf_get_n_channels (pixbuf) != 3)
-	{
+        {
           GdkPixbuf *tmp = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
                                            width, height);
 
@@ -469,15 +469,15 @@ file_proc_find_by_prefix (GSList      *procs,
       GSList              *prefixes;
 
       if (skip_magic && proc->magics_list)
-	continue;
+        continue;
 
       for (prefixes = proc->prefixes_list;
-	   prefixes;
-	   prefixes = g_slist_next (prefixes))
-	{
-	  if (strncmp (uri, prefixes->data, strlen (prefixes->data)) == 0)
-	    return proc;
-	}
+           prefixes;
+           prefixes = g_slist_next (prefixes))
+        {
+          if (strncmp (uri, prefixes->data, strlen (prefixes->data)) == 0)
+            return proc;
+        }
      }
 
   return NULL;
@@ -502,27 +502,27 @@ file_proc_find_by_extension (GSList      *procs,
       GSList              *extensions;
 
       for (extensions = proc->extensions_list;
-	   ext && extensions;
-	   extensions = g_slist_next (extensions))
-	{
-	  const gchar *p1 = ext;
-	  const gchar *p2 = extensions->data;
+           ext && extensions;
+           extensions = g_slist_next (extensions))
+        {
+          const gchar *p1 = ext;
+          const gchar *p2 = extensions->data;
 
           if (skip_magic && proc->magics_list)
-	    continue;
+            continue;
 
-	  while (*p1 && *p2)
-	    {
-	      if (g_ascii_tolower (*p1) != g_ascii_tolower (*p2))
-		break;
+          while (*p1 && *p2)
+            {
+              if (g_ascii_tolower (*p1) != g_ascii_tolower (*p2))
+                break;
 
-	      p1++;
-	      p2++;
-	    }
+              p1++;
+              p2++;
+            }
 
-	  if (!(*p1) && !(*p2))
-	    return proc;
-	}
+          if (!(*p1) && !(*p2))
+            return proc;
+        }
     }
 
   return NULL;
@@ -530,8 +530,8 @@ file_proc_find_by_extension (GSList      *procs,
 
 static GimpPlugInProcedure *
 file_proc_find_by_name (GSList      *procs,
-		        const gchar *uri,
-		        gboolean     skip_magic)
+                        const gchar *uri,
+                        gboolean     skip_magic)
 {
   GimpPlugInProcedure *proc;
 
@@ -545,9 +545,9 @@ file_proc_find_by_name (GSList      *procs,
 
 static void
 file_convert_string (const gchar *instr,
-		     gchar       *outmem,
-		     gint         maxmem,
-		     gint        *nmem)
+                     gchar       *outmem,
+                     gint         maxmem,
+                     gint        *nmem)
 {
   /* Convert a string in C-notation to array of char */
   const guchar *uin  = (const guchar *) instr;
@@ -695,7 +695,7 @@ file_check_single_magic (const gchar  *offset,
       fileval = 0;
       if (numbytes == 5)    /* Check for file size ? */
         {
-	  struct stat buf;
+          struct stat buf;
 
           if (fstat (fileno (ifp), &buf) < 0) return (0);
           fileval = buf.st_size;
@@ -756,9 +756,9 @@ file_check_single_magic (const gchar  *offset,
  */
 static gint
 file_check_magic_list (GSList       *magics_list,
-		       const guchar *head,
-		       gint          headsize,
-		       FILE         *ifp)
+                       const guchar *head,
+                       gint          headsize,
+                       FILE         *ifp)
 
 {
   const gchar *offset;
@@ -782,14 +782,14 @@ file_check_magic_list (GSList       *magics_list,
                                            head, headsize,
                                            ifp);
       if (and)
-	found = found && match_val;
+        found = found && match_val;
       else
-	found = match_val;
+        found = match_val;
 
       and = (strchr (offset, '&') != NULL);
 
       if ((!and) && found)
-	return match_val;
+        return match_val;
     }
 
   return 0;

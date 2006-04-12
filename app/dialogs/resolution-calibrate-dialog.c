@@ -68,15 +68,15 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
     return;
 
   dialog = gimp_dialog_new (_("Calibrate Monitor Resolution"),
-			    "calibrate_resolution",
+                            "calibrate_resolution",
                             gtk_widget_get_toplevel (resolution_entry),
                             GTK_DIALOG_DESTROY_WITH_PARENT,
-			    NULL, NULL,
+                            NULL, NULL,
 
-			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			    NULL);
+                            NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
@@ -109,14 +109,14 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
   gtk_widget_set_size_request (ruler, ruler_width, 32);
   gtk_ruler_set_range (GTK_RULER (ruler), 0, ruler_width, 0, ruler_width);
   gtk_table_attach (GTK_TABLE (table), ruler, 1, 3, 0, 1,
-		    GTK_SHRINK, GTK_SHRINK, 0, 0);
+                    GTK_SHRINK, GTK_SHRINK, 0, 0);
   gtk_widget_show (ruler);
 
   ruler = gtk_vruler_new ();
   gtk_widget_set_size_request (ruler, 32, ruler_height);
   gtk_ruler_set_range (GTK_RULER (ruler), 0, ruler_height, 0, ruler_height);
   gtk_table_attach (GTK_TABLE (table), ruler, 0, 1, 1, 3,
-		    GTK_SHRINK, GTK_SHRINK, 0, 0);
+                    GTK_SHRINK, GTK_SHRINK, 0, 0);
   gtk_widget_show (ruler);
 
   vbox = gtk_vbox_new (FALSE, 12);
@@ -146,20 +146,20 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
 
   calibrate_entry =
     gimp_coordinates_new  (GIMP_UNIT_INCH, "%p",
-			   FALSE, FALSE, 10,
-			   GIMP_SIZE_ENTRY_UPDATE_SIZE,
-			   FALSE,
-			   FALSE,
-			   _("_Horizontal:"),
-			   ruler_width,
-			   calibrate_xres,
-			   1, GIMP_MAX_IMAGE_SIZE,
-			   0, 0,
-			   _("_Vertical:"),
-			   ruler_height,
-			   calibrate_yres,
-			   1, GIMP_MAX_IMAGE_SIZE,
-			   0, 0);
+                           FALSE, FALSE, 10,
+                           GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                           FALSE,
+                           FALSE,
+                           _("_Horizontal:"),
+                           ruler_width,
+                           calibrate_xres,
+                           1, GIMP_MAX_IMAGE_SIZE,
+                           0, 0,
+                           _("_Vertical:"),
+                           ruler_height,
+                           calibrate_yres,
+                           1, GIMP_MAX_IMAGE_SIZE,
+                           0, 0);
   gtk_widget_hide (GTK_WIDGET (GIMP_COORDINATES_CHAINBUTTON (calibrate_entry)));
   g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),

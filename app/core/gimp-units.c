@@ -189,15 +189,15 @@ gimp_unitrc_save (Gimp *gimp)
 
   writer =
     gimp_config_writer_new_file (filename,
-				 TRUE,
-				 "GIMP units\n\n"
-				 "This file contains the user unit database. "
-				 "You can edit this list with the unit "
-				 "editor. You are not supposed to edit it "
-				 "manually, but of course you can do.\n"
-				 "This file will be entirely rewritten every "
-				 "time you quit the gimp.",
-				 NULL);
+                                 TRUE,
+                                 "GIMP units\n\n"
+                                 "This file contains the user unit database. "
+                                 "You can edit this list with the unit "
+                                 "editor. You are not supposed to edit it "
+                                 "manually, but of course you can do.\n"
+                                 "This file will be entirely rewritten every "
+                                 "time you quit the gimp.",
+                                 NULL);
 
   g_free (filename);
 

@@ -146,9 +146,9 @@ gimp_color_editor_init (GimpColorEditor *editor)
 
   gtk_widget_style_get (GTK_WIDGET (editor),
                         "content-spacing",  &content_spacing,
-			"button-spacing",   &button_spacing,
+                        "button-spacing",   &button_spacing,
                         "button-icon-size", &button_icon_size,
-			NULL);
+                        NULL);
 
   editor->hbox = gtk_hbox_new (TRUE, button_spacing);
   gtk_box_pack_start (GTK_BOX (editor), editor->hbox, FALSE, FALSE, 0);
@@ -201,7 +201,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
       gtk_widget_show (image);
 
       gimp_help_set_help_data (button,
-			       selector_class->name, selector_class->help_id);
+                               selector_class->name, selector_class->help_id);
 
       g_object_set_data (G_OBJECT (button),   "selector", selector);
       g_object_set_data (G_OBJECT (selector), "button",   button);
@@ -407,11 +407,11 @@ gimp_color_editor_set_context (GimpDocked  *docked,
   if (editor->context)
     {
       g_signal_handlers_disconnect_by_func (editor->context,
-					    gimp_color_editor_fg_changed,
-					    editor);
+                                            gimp_color_editor_fg_changed,
+                                            editor);
       g_signal_handlers_disconnect_by_func (editor->context,
-					    gimp_color_editor_bg_changed,
-					    editor);
+                                            gimp_color_editor_bg_changed,
+                                            editor);
 
       g_object_unref (editor->context);
       editor->context = NULL;
@@ -424,11 +424,11 @@ gimp_color_editor_set_context (GimpDocked  *docked,
       editor->context = g_object_ref (context);
 
       g_signal_connect (editor->context, "foreground-changed",
-			G_CALLBACK (gimp_color_editor_fg_changed),
-			editor);
+                        G_CALLBACK (gimp_color_editor_fg_changed),
+                        editor);
       g_signal_connect (editor->context, "background-changed",
-			G_CALLBACK (gimp_color_editor_bg_changed),
-			editor);
+                        G_CALLBACK (gimp_color_editor_bg_changed),
+                        editor);
 
       if (editor->edit_bg)
         {

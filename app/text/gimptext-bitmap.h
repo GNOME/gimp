@@ -24,12 +24,12 @@
 
 
 void  gimp_text_render_bitmap (PangoFont  *font,
-			       PangoGlyph  glyph,
-			       FT_Int32    flags,
-			       FT_Matrix  *trafo,
-			       gint        x,
-			       gint        y,
-			       FT_Bitmap  *bitmap);
+                               PangoGlyph  glyph,
+                               FT_Int32    flags,
+                               FT_Matrix  *trafo,
+                               gint        x,
+                               gint        y,
+                               FT_Bitmap  *bitmap);
 
 
 #endif /* __GIMP_TEXT_BITMAP_H__ */

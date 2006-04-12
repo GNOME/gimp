@@ -102,7 +102,7 @@ gimp_font_view_new (GimpViewType     view_type,
 
 static void
 gimp_font_view_activate_item (GimpContainerEditor *editor,
-				GimpViewable        *viewable)
+                                GimpViewable        *viewable)
 {
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item (editor, viewable);

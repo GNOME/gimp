@@ -83,9 +83,9 @@ main (int   argc,
            g_type_name (G_TYPE_FROM_INSTANCE (grid)), filename);
 
   if (! gimp_config_serialize_to_file (grid,
-				       filename,
-				       "foorc", "end of foorc",
-				       NULL, &error))
+                                       filename,
+                                       "foorc", "end of foorc",
+                                       NULL, &error))
     {
       g_print ("%s\n", error->message);
       return EXIT_FAILURE;

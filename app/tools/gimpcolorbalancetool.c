@@ -141,7 +141,7 @@ gimp_color_balance_tool_finalize (GObject *object)
 
 static gboolean
 gimp_color_balance_tool_initialize (GimpTool    *tool,
-				    GimpDisplay *display)
+                                    GimpDisplay *display)
 {
   GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (tool);
   GimpDrawable         *drawable;
@@ -198,7 +198,7 @@ create_levels_scale (const gchar   *left,
   label = gtk_label_new (left);
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, col, col + 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   spinbutton = gimp_spin_button_new (&adj,
@@ -214,7 +214,7 @@ create_levels_scale (const gchar   *left,
   label = gtk_label_new (right);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, col, col + 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   gtk_table_attach (GTK_TABLE (table), spinbutton, 3, 4, col, col + 1,
@@ -294,7 +294,7 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *im_tool)
   cb_tool->preserve_toggle =
     gtk_check_button_new_with_mnemonic (_("Preserve _luminosity"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cb_tool->preserve_toggle),
-				cb_tool->color_balance->preserve_luminosity);
+                                cb_tool->color_balance->preserve_luminosity);
   gtk_box_pack_end (GTK_BOX (im_tool->main_vbox), cb_tool->preserve_toggle,
                     FALSE, FALSE, 0);
   gtk_widget_show (cb_tool->preserve_toggle);
@@ -319,7 +319,7 @@ gimp_color_balance_tool_reset (GimpImageMapTool *im_tool)
 
 static void
 color_balance_update (GimpColorBalanceTool *cb_tool,
-		      gint                  update)
+                      gint                  update)
 {
   GimpTransferMode tm;
 

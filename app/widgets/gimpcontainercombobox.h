@@ -52,7 +52,7 @@ struct _GimpContainerComboBoxClass
 GType       gimp_container_combo_box_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_container_combo_box_new      (GimpContainer *container,
-					       GimpContext   *context,
+                                               GimpContext   *context,
                                                gint           view_size,
                                                gint           view_border_width);
 

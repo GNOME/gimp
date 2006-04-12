@@ -42,7 +42,7 @@ typedef guchar TileRowHint;
 /* Initializes the fields of a tile to "good" values.
  */
 void          tile_init              (Tile        *tile,
-				      gint         bpp);
+                                      gint         bpp);
 
 
 /*
@@ -56,7 +56,7 @@ void          tile_init              (Tile        *tile,
 
 void          tile_lock              (Tile        *tile);
 void          tile_release           (Tile        *tile,
-				      gboolean     dirty);
+                                      gboolean     dirty);
 
 /* Allocate the data for the tile.
  */
@@ -75,15 +75,15 @@ gboolean      tile_is_valid          (Tile        *tile);
 void          tile_mark_valid        (Tile        *tile);
 
 TileRowHint   tile_get_rowhint       (Tile        *tile,
-				      gint         yoff);
+                                      gint         yoff);
 void          tile_set_rowhint       (Tile        *tile,
-				      gint         yoff,
-				      TileRowHint  rowhint);
+                                      gint         yoff,
+                                      TileRowHint  rowhint);
 void          tile_sanitize_rowhints (Tile        *tile);
 
 void        * tile_data_pointer      (Tile        *tile,
-				      gint         xoff,
-				      gint         yoff);
+                                      gint         xoff,
+                                      gint         yoff);
 
 /* tile_attach attaches a tile to a tile manager: this function
  * increments the tile's share count and inserts a tilelink into the
@@ -93,11 +93,11 @@ void        * tile_data_pointer      (Tile        *tile,
  */
 
 void          tile_attach            (Tile        *tile,
-				      void        *tm,
-				      gint         tile_num);
+                                      void        *tm,
+                                      gint         tile_num);
 void          tile_detach            (Tile        *tile,
-				      void        *tm,
-				      gint         tile_num);
+                                      void        *tm,
+                                      gint         tile_num);
 
 
 #endif /* __TILE_H__ */

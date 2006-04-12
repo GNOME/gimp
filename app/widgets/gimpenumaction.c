@@ -91,7 +91,7 @@ gimp_enum_action_class_init (GimpEnumActionClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpEnumActionClass, selected),
-		  NULL, NULL,
+                  NULL, NULL,
                   gimp_marshal_VOID__INT,
                   G_TYPE_NONE, 1,
                   G_TYPE_INT);

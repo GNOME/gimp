@@ -61,7 +61,7 @@ channel_options_dialog_new (GimpImage     *image,
                             const gchar   *help_id,
                             const gchar   *color_label,
                             const gchar   *opacity_label,
-			    gboolean       show_from_sel)
+                            gboolean       show_from_sel)
 {
   ChannelOptionsDialog *options;
   GimpViewable         *viewable;
@@ -90,9 +90,9 @@ channel_options_dialog_new (GimpImage     *image,
   options->channel = channel;
 
   options->color_panel = gimp_color_panel_new (color_label,
-					       channel_color,
-					       GIMP_COLOR_AREA_LARGE_CHECKS,
-					       48, 64);
+                                               channel_color,
+                                               GIMP_COLOR_AREA_LARGE_CHECKS,
+                                               48, 64);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (options->color_panel),
                                 context);
 
@@ -113,8 +113,8 @@ channel_options_dialog_new (GimpImage     *image,
                               NULL);
 
   g_object_weak_ref (G_OBJECT (options->dialog),
-		     (GWeakNotify) g_free,
-		     options);
+                     (GWeakNotify) g_free,
+                     options);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (options->dialog),
                                            GTK_RESPONSE_OK,
@@ -156,16 +156,16 @@ channel_options_dialog_new (GimpImage     *image,
                                       NULL, NULL);
 
   g_signal_connect (opacity_adj, "value-changed",
-		    G_CALLBACK (channel_options_opacity_update),
-		    options->color_panel);
+                    G_CALLBACK (channel_options_opacity_update),
+                    options->color_panel);
 
   gtk_box_pack_start (GTK_BOX (hbox), options->color_panel,
-		      TRUE, TRUE, 0);
+                      TRUE, TRUE, 0);
   gtk_widget_show (options->color_panel);
 
   g_signal_connect (options->color_panel, "color-changed",
-		    G_CALLBACK (channel_options_color_changed),
-		    opacity_adj);
+                    G_CALLBACK (channel_options_color_changed),
+                    opacity_adj);
 
   if (show_from_sel)
     {
@@ -173,7 +173,7 @@ channel_options_dialog_new (GimpImage     *image,
         gtk_check_button_new_with_mnemonic (_("Initialize from _selection"));
 
       gtk_box_pack_start (GTK_BOX (vbox), options->save_sel_checkbutton,
-		          FALSE, FALSE, 0);
+                          FALSE, FALSE, 0);
       gtk_widget_show (options->save_sel_checkbutton);
     }
 

@@ -237,9 +237,9 @@ gimp_histogram_view_get_maximum (GimpHistogramView    *view,
 
     case GIMP_HISTOGRAM_SCALE_LOGARITHMIC:
       if (max > 0.0)
-	max = log (max);
+        max = log (max);
       else
-	max = 1.0;
+        max = 1.0;
       break;
     }
 
@@ -432,8 +432,8 @@ gimp_histogram_view_button_press (GtkWidget      *widget,
       gint width;
 
       gdk_pointer_grab (widget->window, FALSE,
-			GDK_BUTTON_RELEASE_MASK | GDK_BUTTON1_MOTION_MASK,
-			NULL, NULL, bevent->time);
+                        GDK_BUTTON_RELEASE_MASK | GDK_BUTTON1_MOTION_MASK,
+                        NULL, NULL, bevent->time);
 
       width = widget->allocation.width - 2 * view->border_width;
 
@@ -548,7 +548,7 @@ gimp_histogram_view_get_channel (GimpHistogramView *view)
 
 void
 gimp_histogram_view_set_scale (GimpHistogramView  *view,
-			       GimpHistogramScale  scale)
+                               GimpHistogramScale  scale)
 {
   g_return_if_fail (GIMP_IS_HISTOGRAM_VIEW (view));
 

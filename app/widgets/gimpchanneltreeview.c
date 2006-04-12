@@ -179,10 +179,10 @@ gimp_channel_tree_view_constructor (GType                  type,
                                    GDK_SHIFT_MASK | GDK_CONTROL_MASK,
                                    NULL);
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (view),
-				  GTK_BUTTON (view->toselection_button),
-				  GIMP_TYPE_CHANNEL);
+                                  GTK_BUTTON (view->toselection_button),
+                                  GIMP_TYPE_CHANNEL);
   gtk_box_reorder_child (GTK_BOX (GIMP_EDITOR (view)->button_box),
-			 view->toselection_button, 5);
+                         view->toselection_button, 5);
 
   return object;
 }
@@ -280,7 +280,7 @@ gimp_channel_tree_view_drop_component (GimpContainerTreeView   *tree_view,
 
 static void
 gimp_channel_tree_view_set_image (GimpItemTreeView *item_view,
-				  GimpImage        *image)
+                                  GimpImage        *image)
 {
   GimpChannelTreeView *channel_view = GIMP_CHANNEL_TREE_VIEW (item_view);
 

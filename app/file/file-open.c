@@ -75,11 +75,11 @@ GimpImage *
 file_open_image (Gimp                *gimp,
                  GimpContext         *context,
                  GimpProgress        *progress,
-		 const gchar         *uri,
-		 const gchar         *entered_filename,
-		 GimpPlugInProcedure *file_proc,
-		 GimpRunMode          run_mode,
-		 GimpPDBStatusType   *status,
+                 const gchar         *uri,
+                 const gchar         *entered_filename,
+                 GimpPlugInProcedure *file_proc,
+                 GimpRunMode          run_mode,
+                 GimpPDBStatusType   *status,
                  const gchar        **mime_type,
                  GError             **error)
 {

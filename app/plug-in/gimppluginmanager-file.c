@@ -61,7 +61,7 @@ plug_in_file_register_load_handler (Gimp        *gimp,
   if (! file_proc)
     {
       g_message ("attempt to register nonexistent load handler \"%s\"",
-		 name);
+                 name);
       return FALSE;
     }
 
@@ -111,7 +111,7 @@ plug_in_file_register_save_handler (Gimp        *gimp,
   if (! file_proc)
     {
       g_message ("attempt to register nonexistent save handler \"%s\"",
-		 name);
+                 name);
       return FALSE;
     }
 

@@ -162,14 +162,14 @@ gimp_template_editor_constructor (GType                  type,
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), width);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   label = gtk_label_new_with_mnemonic (_("H_eight:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), height);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   /*  create the sizeentry which keeps it all together  */
@@ -188,12 +188,12 @@ gimp_template_editor_constructor (GType                  type,
   gtk_widget_show (editor->size_se);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (editor->size_se),
-			     GTK_SPIN_BUTTON (height), NULL);
+                             GTK_SPIN_BUTTON (height), NULL);
   gtk_table_attach_defaults (GTK_TABLE (editor->size_se), height, 0, 1, 1, 2);
   gtk_widget_show (height);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (editor->size_se),
-			     GTK_SPIN_BUTTON (width), NULL);
+                             GTK_SPIN_BUTTON (width), NULL);
   gtk_table_attach_defaults (GTK_TABLE (editor->size_se), width, 0, 1, 0, 1);
   gtk_widget_show (width);
 
@@ -289,14 +289,14 @@ gimp_template_editor_constructor (GType                  type,
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), xres);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   label = gtk_label_new_with_mnemonic (_("_Y resolution:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), yres);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   /*  the resolution sizeentry  */
@@ -317,15 +317,15 @@ gimp_template_editor_constructor (GType                  type,
   gtk_widget_show (editor->resolution_se);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (editor->resolution_se),
-			     GTK_SPIN_BUTTON (yres), NULL);
+                             GTK_SPIN_BUTTON (yres), NULL);
   gtk_table_attach_defaults (GTK_TABLE (editor->resolution_se), yres,
                              0, 1, 1, 2);
   gtk_widget_show (yres);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (editor->resolution_se),
-			     GTK_SPIN_BUTTON (xres), NULL);
+                             GTK_SPIN_BUTTON (xres), NULL);
   gtk_table_attach_defaults (GTK_TABLE (editor->resolution_se), xres,
-			     0, 1, 0, 1);
+                             0, 1, 0, 1);
   gtk_widget_show (xres);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (editor->size_se), 0,
@@ -374,8 +374,8 @@ gimp_template_editor_constructor (GType                  type,
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
                                        GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-				  GTK_POLICY_AUTOMATIC,
-				  GTK_POLICY_AUTOMATIC);
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
                              _("Comme_nt:"), 0.0, 0.0,
                              scrolled_window, 1, FALSE);

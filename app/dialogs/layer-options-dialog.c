@@ -93,7 +93,7 @@ layer_options_dialog_new (GimpImage    *image,
                               NULL);
 
   g_object_weak_ref (G_OBJECT (options->dialog),
-		     (GWeakNotify) g_free, options);
+                     (GWeakNotify) g_free, options);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (options->dialog),
                                            GTK_RESPONSE_OK,
@@ -103,7 +103,7 @@ layer_options_dialog_new (GimpImage    *image,
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->dialog)->vbox),
-		     vbox);
+                     vbox);
   gtk_widget_show (vbox);
 
   table = gtk_table_new (layer ? 1 : 3, 2, FALSE);

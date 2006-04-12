@@ -385,7 +385,7 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
   /* FIXME: popup a menu for selecting "Paste Into" */
 
   gimp_edit_paste (image, gimp_image_active_drawable (image),
-		   buffer, FALSE,
+                   buffer, FALSE,
                    x, y, width, height);
 
   gimp_image_flush (image);

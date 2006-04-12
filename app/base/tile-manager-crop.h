@@ -21,7 +21,7 @@
 
 
 TileManager * tile_manager_crop (TileManager  *tiles,
-				 gint          border);
+                                 gint          border);
 
 
 #endif  /* __TILE_MANAGER_CROP_H__ */

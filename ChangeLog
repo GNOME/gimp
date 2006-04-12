@@ -1,5 +1,10 @@
 2006-04-12  Sven Neumann  <sven@gimp.org>
 
+	* app/*.[ch]
+	* app/*/*.[ch]: converted tabs to spaces.
+
+2006-04-12  Sven Neumann  <sven@gimp.org>
+
 	* libgimp*/gimp*.[ch]: converted tabs to spaces.
 
 2006-04-12  Sven Neumann  <sven@gimp.org>
@@ -19,8 +24,7 @@
 
 2006-04-11  Carol Spears  <carol@gimp.org>
 
-	* data/images/gimp-splash.png: new splash, nicknamed "Where's
-        bolsh?".
+	* data/images/gimp-splash.png: new splash, nicknamed "Where's bolsh?".
 
 2006-04-11  Manish Singh  <yosh@gimp.org>
 
@@ -19865,7 +19869,7 @@
 	as described on dev mailing list.
 
 	* plug-ins/common/decompose.c: add "decompose-data" parasite
-	when decoposing, to support Recompose.  Also add missing 
+	when decomposing, to support Recompose.  Also add missing 
 	alpha channels to newly produced layers
 	
 2004-12-28  Sven Neumann  <sven@gimp.org>
@@ -19892,7 +19896,7 @@
 
 	* app/paint/gimpbrushcore.c (gimp_brush_core_subsample_mask):
 	don't set array outside its bounds.  Should fix bug #161323.
-	Credit to Robert Ãgren for figuring out what was wrong.
+	Credit to Robert Ögren for figuring out what was wrong.
 	
 2004-12-27  Sven Neumann  <sven@gimp.org>
 

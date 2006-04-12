@@ -172,8 +172,8 @@ boundary_find (PixelRegion  *maskPR,
  **/
 BoundSeg *
 boundary_sort (const BoundSeg *segs,
-	       gint            num_segs,
-	       gint           *num_groups)
+               gint            num_segs,
+               gint           *num_groups)
 {
   Boundary *boundary;
   gint      i;
@@ -207,59 +207,59 @@ boundary_sort (const BoundSeg *segs,
 
       /*  find the index of a non-visited segment to start a group  */
       for (i = 0; i < num_segs; i++)
-	if (segs[i].visited == FALSE)
-	  {
-	    index = i;
-	    empty = FALSE;
-	    i = num_segs;
-	  }
+        if (segs[i].visited == FALSE)
+          {
+            index = i;
+            empty = FALSE;
+            i = num_segs;
+          }
 
       if (! empty)
-	{
-	  boundary_add_seg (boundary,
+        {
+          boundary_add_seg (boundary,
                             segs[index].x1, segs[index].y1,
                             segs[index].x2, segs[index].y2,
                             segs[index].open);
 
-	  ((BoundSeg *) segs)[index].visited = TRUE;
+          ((BoundSeg *) segs)[index].visited = TRUE;
 
-	  startx = segs[index].x1;
-	  starty = segs[index].y1;
-	  x = segs[index].x2;
-	  y = segs[index].y2;
+          startx = segs[index].x1;
+          starty = segs[index].y1;
+          x = segs[index].x2;
+          y = segs[index].y2;
 
-	  while ((index = find_segment (segs, num_segs, x, y)) != -1)
-	    {
-	      /*  make sure ordering is correct  */
-	      if (x == segs[index].x1 && y == segs[index].y1)
-		{
-		  boundary_add_seg (boundary,
+          while ((index = find_segment (segs, num_segs, x, y)) != -1)
+            {
+              /*  make sure ordering is correct  */
+              if (x == segs[index].x1 && y == segs[index].y1)
+                {
+                  boundary_add_seg (boundary,
                                     segs[index].x1, segs[index].y1,
                                     segs[index].x2, segs[index].y2,
                                     segs[index].open);
-		  x = segs[index].x2;
-		  y = segs[index].y2;
-		}
-	      else
-		{
-		  boundary_add_seg (boundary,
+                  x = segs[index].x2;
+                  y = segs[index].y2;
+                }
+              else
+                {
+                  boundary_add_seg (boundary,
                                     segs[index].x2, segs[index].y2,
                                     segs[index].x1, segs[index].y1,
                                     segs[index].open);
-		  x = segs[index].x1;
-		  y = segs[index].y1;
-		}
+                  x = segs[index].x1;
+                  y = segs[index].y1;
+                }
 
-	      ((BoundSeg *) segs)[index].visited = TRUE;
-	    }
+              ((BoundSeg *) segs)[index].visited = TRUE;
+            }
 
-	  if (x != startx || y != starty)
-	    g_warning ("sort_boundary(): Unconnected boundary group!");
+          if (x != startx || y != starty)
+            g_warning ("sort_boundary(): Unconnected boundary group!");
 
-	  /*  Mark the end of a group  */
-	  *num_groups = *num_groups + 1;
-	  boundary_add_seg (boundary, -1, -1, -1, -1, 0);
-	}
+          /*  Mark the end of a group  */
+          *num_groups = *num_groups + 1;
+          boundary_add_seg (boundary, -1, -1, -1, -1, 0);
+        }
     }
 
   return boundary_free (boundary, FALSE);
@@ -419,15 +419,15 @@ boundary_add_seg (Boundary *boundary,
 
 static void
 find_empty_segs (PixelRegion  *maskPR,
-		 gint          scanline,
-		 gint          empty_segs[],
-		 gint          max_empty,
-		 gint         *num_empty,
-		 BoundaryType  type,
-		 gint          x1,
-		 gint          y1,
-		 gint          x2,
-		 gint          y2,
+                 gint          scanline,
+                 gint          empty_segs[],
+                 gint          max_empty,
+                 gint         *num_empty,
+                 BoundaryType  type,
+                 gint          x1,
+                 gint          y1,
+                 gint          x2,
+                 gint          y2,
                  guchar        threshold)
 {
   guchar *data;
@@ -457,11 +457,11 @@ find_empty_segs (PixelRegion  *maskPR,
   if (type == BOUNDARY_WITHIN_BOUNDS)
     {
       if (scanline < y1 || scanline >= y2)
-	{
-	  empty_segs[(*num_empty)++] = 0;
-	  empty_segs[(*num_empty)++] = G_MAXINT;
-	  return;
-	}
+        {
+          empty_segs[(*num_empty)++] = 0;
+          empty_segs[(*num_empty)++] = G_MAXINT;
+          return;
+        }
 
       start = x1;
       end   = x2;
@@ -471,7 +471,7 @@ find_empty_segs (PixelRegion  *maskPR,
       start = maskPR->x;
       end   = maskPR->x + maskPR->w;
       if (scanline < y1 || scanline >= y2)
-	x2 = -1;
+        x2 = -1;
     }
 
   tilex = -1;
@@ -498,12 +498,12 @@ find_empty_segs (PixelRegion  *maskPR,
               if (tile)
                 tile_release (tile, FALSE);
               tile = tile_manager_get_tile (maskPR->tiles,
-					    x, scanline, TRUE, FALSE);
+                                            x, scanline, TRUE, FALSE);
               data =
-		(guchar *) tile_data_pointer (tile,
-					      x % TILE_WIDTH,
-					      scanline % TILE_HEIGHT) +
-		(tile_bpp(tile) - 1);
+                (guchar *) tile_data_pointer (tile,
+                                              x % TILE_WIDTH,
+                                              scanline % TILE_HEIGHT) +
+                (tile_bpp(tile) - 1);
 
               tilex = x / TILE_WIDTH;
               dstep = tile_bpp (tile);
@@ -514,42 +514,42 @@ find_empty_segs (PixelRegion  *maskPR,
         }
 
       if (type == BOUNDARY_IGNORE_BOUNDS && (endx > x1 || x < x2))
-	{
-	  for (; x < endx; x++)
-	    {
-	      if (*data > threshold)
-		if (x >= x1 && x < x2)
-		  val = -1;
-		else
-		  val = 1;
-	      else
-		val = -1;
+        {
+          for (; x < endx; x++)
+            {
+              if (*data > threshold)
+                if (x >= x1 && x < x2)
+                  val = -1;
+                else
+                  val = 1;
+              else
+                val = -1;
 
-	      data += dstep;
+              data += dstep;
 
-	      if (last != val)
-		empty_segs[l_num_empty++] = x;
+              if (last != val)
+                empty_segs[l_num_empty++] = x;
 
-	      last = val;
-	    }
-	}
+              last = val;
+            }
+        }
       else
-	{
-	  for (; x < endx; x++)
-	    {
-	      if (*data > threshold)
-		val = 1;
-	      else
-		val = -1;
+        {
+          for (; x < endx; x++)
+            {
+              if (*data > threshold)
+                val = 1;
+              else
+                val = -1;
 
-	      data += dstep;
+              data += dstep;
 
-	      if (last != val)
-		empty_segs[l_num_empty++] = x;
+              if (last != val)
+                empty_segs[l_num_empty++] = x;
 
-	      last = val;
-	    }
-	}
+              last = val;
+            }
+        }
     }
 
   *num_empty = l_num_empty;
@@ -566,10 +566,10 @@ find_empty_segs (PixelRegion  *maskPR,
 static void
 process_horiz_seg (Boundary *boundary,
                    gint      x1,
-		   gint      y1,
-		   gint      x2,
-		   gint      y2,
-		   gboolean  open)
+                   gint      y1,
+                   gint      x2,
+                   gint      y2,
+                   gboolean  open)
 {
   /*  This procedure accounts for any vertical segments that must be
       drawn to close in the horizontal segments.                     */
@@ -596,11 +596,11 @@ process_horiz_seg (Boundary *boundary,
 static void
 make_horiz_segs (Boundary *boundary,
                  gint      start,
-		 gint      end,
-		 gint      scanline,
-		 gint      empty[],
-		 gint      num_empty,
-		 gint      top)
+                 gint      end,
+                 gint      scanline,
+                 gint      empty[],
+                 gint      num_empty,
+                 gint      top)
 {
   gint empty_index;
   gint e_s, e_e;    /* empty segment start and end values */
@@ -611,23 +611,23 @@ make_horiz_segs (Boundary *boundary,
       e_e = *empty++;
 
       if (e_s <= start && e_e >= end)
-	process_horiz_seg (boundary,
+        process_horiz_seg (boundary,
                            start, scanline, end, scanline, top);
       else if ((e_s > start && e_s < end) ||
-	       (e_e < end && e_e > start))
-	process_horiz_seg (boundary,
+               (e_e < end && e_e > start))
+        process_horiz_seg (boundary,
                            MAX (e_s, start), scanline,
-			   MIN (e_e, end), scanline, top);
+                           MIN (e_e, end), scanline, top);
     }
 }
 
 static Boundary *
 generate_boundary (PixelRegion  *PR,
-		   BoundaryType  type,
-		   gint          x1,
-		   gint          y1,
-		   gint          x2,
-		   gint          y2,
+                   BoundaryType  type,
+                   gint          x1,
+                   gint          y1,
+                   gint          x2,
+                   gint          y2,
                    guchar        threshold)
 {
   Boundary *boundary;
@@ -658,34 +658,34 @@ generate_boundary (PixelRegion  *PR,
 
   /*  Find the empty segments for the previous and current scanlines  */
   find_empty_segs (PR, start - 1, boundary->empty_segs_l,
-		   boundary->max_empty_segs, &num_empty_l,
-		   type, x1, y1, x2, y2,
+                   boundary->max_empty_segs, &num_empty_l,
+                   type, x1, y1, x2, y2,
                    threshold);
   find_empty_segs (PR, start, boundary->empty_segs_c,
-		   boundary->max_empty_segs, &num_empty_c,
-		   type, x1, y1, x2, y2,
+                   boundary->max_empty_segs, &num_empty_c,
+                   type, x1, y1, x2, y2,
                    threshold);
 
   for (scanline = start; scanline < end; scanline++)
     {
       /*  find the empty segment list for the next scanline  */
       find_empty_segs (PR, scanline + 1, boundary->empty_segs_n,
-		       boundary->max_empty_segs, &num_empty_n,
-		       type, x1, y1, x2, y2,
+                       boundary->max_empty_segs, &num_empty_n,
+                       type, x1, y1, x2, y2,
                        threshold);
 
       /*  process the segments on the current scanline  */
       for (i = 1; i < num_empty_c - 1; i += 2)
-	{
-	  make_horiz_segs (boundary,
+        {
+          make_horiz_segs (boundary,
                            boundary->empty_segs_c [i],
                            boundary->empty_segs_c [i+1],
-			   scanline, boundary->empty_segs_l, num_empty_l, 1);
-	  make_horiz_segs (boundary,
+                           scanline, boundary->empty_segs_l, num_empty_l, 1);
+          make_horiz_segs (boundary,
                            boundary->empty_segs_c [i],
                            boundary->empty_segs_c [i+1],
-			   scanline + 1, boundary->empty_segs_n, num_empty_n, 0);
-	}
+                           scanline + 1, boundary->empty_segs_n, num_empty_n, 0);
+        }
 
       /*  get the next scanline of empty segments, swap others  */
       tmp_segs               = boundary->empty_segs_l;
@@ -703,16 +703,16 @@ generate_boundary (PixelRegion  *PR,
 
 static gint
 find_segment (const BoundSeg *segs,
-	      gint            num_segs,
-	      gint            x,
-	      gint            y)
+              gint            num_segs,
+              gint            x,
+              gint            y)
 {
   gint index;
 
   for (index = 0; index < num_segs; index++)
     if (((segs[index].x1 == x && segs[index].y1 == y) ||
          (segs[index].x2 == x && segs[index].y2 == y)) &&
-	segs[index].visited == FALSE)
+        segs[index].visited == FALSE)
       return index;
 
   return -1;

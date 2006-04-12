@@ -73,7 +73,7 @@ static gboolean     gimp_edit_fill_internal   (GimpImage            *image,
 
 const GimpBuffer *
 gimp_edit_cut (GimpImage    *image,
-	       GimpDrawable *drawable,
+               GimpDrawable *drawable,
                GimpContext  *context)
 {
   GimpBuffer *buffer;
@@ -98,7 +98,7 @@ gimp_edit_cut (GimpImage    *image,
 
 const GimpBuffer *
 gimp_edit_copy (GimpImage    *image,
-		GimpDrawable *drawable,
+                GimpDrawable *drawable,
                 GimpContext  *context)
 {
   GimpBuffer *buffer;
@@ -145,9 +145,9 @@ gimp_edit_copy_visible (GimpImage   *image,
 
 GimpLayer *
 gimp_edit_paste (GimpImage    *image,
-		 GimpDrawable *drawable,
-		 GimpBuffer   *paste,
-		 gboolean      paste_into,
+                 GimpDrawable *drawable,
+                 GimpBuffer   *paste,
+                 gboolean      paste_into,
                  gint          viewport_x,
                  gint          viewport_y,
                  gint          viewport_width,
@@ -273,8 +273,8 @@ gimp_edit_paste (GimpImage    *image,
 
 GimpImage *
 gimp_edit_paste_as_new (Gimp       *gimp,
-			GimpImage  *invoke,
-			GimpBuffer *paste)
+                        GimpImage  *invoke,
+                        GimpBuffer *paste)
 {
   GimpImage     *image;
   GimpLayer     *layer;
@@ -297,23 +297,23 @@ gimp_edit_paste_as_new (Gimp       *gimp,
 
   /*  create a new image  (always of type GIMP_RGB)  */
   image = gimp_create_image (gimp,
-			      gimp_buffer_get_width (paste),
+                              gimp_buffer_get_width (paste),
                               gimp_buffer_get_height (paste),
-			      GIMP_IMAGE_TYPE_BASE_TYPE (type),
-			      TRUE);
+                              GIMP_IMAGE_TYPE_BASE_TYPE (type),
+                              TRUE);
   gimp_image_undo_disable (image);
 
   if (invoke)
     {
       gimp_image_set_resolution (image,
-				 invoke->xresolution, invoke->yresolution);
+                                 invoke->xresolution, invoke->yresolution);
       gimp_image_set_unit (image,
                            gimp_image_get_unit (invoke));
     }
 
   layer = gimp_layer_new_from_tiles (paste->tiles, image, type,
-				     _("Pasted Layer"),
-				     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+                                     _("Pasted Layer"),
+                                     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
   if (! layer)
     {
@@ -411,7 +411,7 @@ gimp_edit_named_copy_visible (GimpImage   *image,
 
 gboolean
 gimp_edit_clear (GimpImage    *image,
-		 GimpDrawable *drawable,
+                 GimpDrawable *drawable,
                  GimpContext  *context)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
@@ -427,9 +427,9 @@ gimp_edit_clear (GimpImage    *image,
 
 gboolean
 gimp_edit_fill (GimpImage    *image,
-		GimpDrawable *drawable,
+                GimpDrawable *drawable,
                 GimpContext  *context,
-		GimpFillType  fill_type)
+                GimpFillType  fill_type)
 {
   const gchar *undo_desc;
 
@@ -517,7 +517,7 @@ gimp_edit_extract_visible (GimpImage   *image,
   if ((x1 == x2) || (y1 == y2))
     {
       g_message (_("Unable to cut or copy because the "
-		   "selected region is empty."));
+                   "selected region is empty."));
       return NULL;
     }
 
@@ -530,7 +530,7 @@ gimp_edit_extract_visible (GimpImage   *image,
   tile_manager_set_offsets (tiles, x1, y1);
 
   pixel_region_init (&srcPR, gimp_pickable_get_tiles (pickable),
-		     x1, y1,
+                     x1, y1,
                      x2 - x1, y2 - y1,
                      FALSE);
   pixel_region_init (&destPR, tiles,

@@ -96,7 +96,7 @@ gimp_cell_renderer_accel_class_init (GimpCellRendererAccelClass *klass)
 
   accel_cell_signals[ACCEL_EDITED] =
     g_signal_new ("accel-edited",
-		  G_OBJECT_CLASS_TYPE (object_class),
+                  G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpCellRendererAccelClass, accel_edited),
                   NULL, NULL,

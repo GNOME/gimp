@@ -171,10 +171,10 @@ gimp_dock_separator_drag_motion (GtkWidget      *widget,
 
 static gboolean
 gimp_dock_separator_drag_drop (GtkWidget      *widget,
-			       GdkDragContext *context,
-			       gint            x,
-			       gint            y,
-			       guint           time)
+                               GdkDragContext *context,
+                               gint            x,
+                               gint            y,
+                               guint           time)
 {
   GimpDockSeparator *separator = GIMP_DOCK_SEPARATOR (widget);
   GtkWidget         *source;
@@ -195,16 +195,16 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
         dockable = g_object_get_data (G_OBJECT (source), "gimp-dockable");
 
       if (dockable)
-	{
-	  GtkWidget *dockbook;
-	  GList     *children;
-	  gint       index;
+        {
+          GtkWidget *dockbook;
+          GList     *children;
+          gint       index;
 
-	  g_object_set_data (G_OBJECT (dockable),
+          g_object_set_data (G_OBJECT (dockable),
                              "gimp-dock-drag-widget", NULL);
 
-	  children = gtk_container_get_children (GTK_CONTAINER (widget->parent));
-	  index = g_list_index (children, widget);
+          children = gtk_container_get_children (GTK_CONTAINER (widget->parent));
+          index = g_list_index (children, widget);
           g_list_free (children);
 
           if (index == 0)
@@ -231,19 +231,19 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
                 return TRUE; /* successfully do nothing */
             }
 
-	  g_object_ref (dockable);
+          g_object_ref (dockable);
 
-	  gimp_dockbook_remove (dockable->dockbook, dockable);
+          gimp_dockbook_remove (dockable->dockbook, dockable);
 
-	  dockbook = gimp_dockbook_new (dock->dialog_factory->menu_factory);
-	  gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), index);
+          dockbook = gimp_dockbook_new (dock->dialog_factory->menu_factory);
+          gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), index);
 
-	  gimp_dockbook_add (GIMP_DOCKBOOK (dockbook), dockable, -1);
+          gimp_dockbook_add (GIMP_DOCKBOOK (dockbook), dockable, -1);
 
-	  g_object_unref (dockable);
+          g_object_unref (dockable);
 
-	  return TRUE;
-	}
+          return TRUE;
+        }
     }
 
   return FALSE;

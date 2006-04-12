@@ -58,11 +58,11 @@ struct _GimpDataFactoryViewClass
 GType       gimp_data_factory_view_get_type  (void) G_GNUC_CONST;
 
 GtkWidget * gimp_data_factory_view_new       (GimpViewType      view_type,
-					      GimpDataFactory  *factory,
-					      GimpContext      *context,
-					      gint              view_size,
+                                              GimpDataFactory  *factory,
+                                              GimpContext      *context,
+                                              gint              view_size,
                                               gint              view_border_width,
-					      GimpMenuFactory  *menu_factory,
+                                              GimpMenuFactory  *menu_factory,
                                               const gchar      *menu_identifier,
                                               const gchar      *ui_identifier,
                                               const gchar      *action_group);
@@ -71,12 +71,12 @@ GtkWidget * gimp_data_factory_view_new       (GimpViewType      view_type,
 /*  protected  */
 
 gboolean    gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
-					      GimpViewType         view_type,
-					      GimpDataFactory     *factory,
-					      GimpContext         *context,
-					      gint                 view_size,
+                                              GimpViewType         view_type,
+                                              GimpDataFactory     *factory,
+                                              GimpContext         *context,
+                                              gint                 view_size,
                                               gint                 view_border_width,
-					      GimpMenuFactory     *menu_factory,
+                                              GimpMenuFactory     *menu_factory,
                                               const gchar         *menu_identifier,
                                               const gchar         *ui_identifier,
                                               const gchar         *action_group);

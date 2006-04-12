@@ -375,9 +375,9 @@ create_signature (lab                *input,
                   gint               *returnlength,
                   const gfloat       *limits,
                   const gint          dims,
-		  SioxProgressFunc    progress_callback,
+                  SioxProgressFunc    progress_callback,
                   gpointer            progress_data,
-		  gdouble             progress_value)
+                  gdouble             progress_value)
 {
   gint size1 = 0;
   gint size2 = 0;
@@ -909,12 +909,12 @@ siox_foreground_extract (SioxState          *state,
               map += mapPR.rowstride;
             }
 
-	    pixels += mapPR.w * mapPR.h;
+            pixels += mapPR.w * mapPR.h;
 
-	    if (n % 16 == 0)
-	      siox_progress_update (progress_callback, progress_data,
-				    0.1 * ((gdouble) pixels / (gdouble) total));
-	}
+            if (n % 16 == 0)
+              siox_progress_update (progress_callback, progress_data,
+                                    0.1 * ((gdouble) pixels / (gdouble) total));
+        }
 
 #ifdef SIOX_DEBUG
       g_printerr ("siox.c: usermask #surebg=%d #surefg=%d\n",
@@ -1062,9 +1062,9 @@ siox_foreground_extract (SioxState          *state,
                                            &state->bgsiglen, limits,
                                            state->bpp == 1 ?
                                            SIOX_GRAY_DIMS : SIOX_COLOR_DIMS,
-					   progress_callback,
-				           progress_data,
-					   0.3);
+                                           progress_callback,
+                                           progress_data,
+                                           0.3);
           g_free (surebg);
 
           if (state->bgsiglen < 1)
@@ -1083,8 +1083,8 @@ siox_foreground_extract (SioxState          *state,
                                            &state->fgsiglen, limits,
                                            state->bpp == 1 ?
                                            SIOX_GRAY_DIMS : SIOX_COLOR_DIMS,
-					   progress_callback,
-					   progress_data,
+                                           progress_callback,
+                                           progress_data,
                                            0.45);
           g_free (surefg);
         }

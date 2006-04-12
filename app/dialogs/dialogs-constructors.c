@@ -129,7 +129,7 @@ dialogs_file_save_new (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_preferences_get (GimpDialogFactory *factory,
-			 GimpContext       *context,
+                         GimpContext       *context,
                          gint               view_size)
 {
   return preferences_dialog_create (context->gimp);
@@ -153,7 +153,7 @@ dialogs_module_get (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_tips_get (GimpDialogFactory *factory,
-		  GimpContext       *context,
+                  GimpContext       *context,
                   gint               view_size)
 {
   return tips_dialog_create (context->gimp);
@@ -161,7 +161,7 @@ dialogs_tips_get (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_about_get (GimpDialogFactory *factory,
-		   GimpContext       *context,
+                   GimpContext       *context,
                    gint               view_size)
 {
   return about_dialog_create (context);
@@ -198,7 +198,7 @@ dialogs_quit_get (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_toolbox_get (GimpDialogFactory *factory,
-		     GimpContext       *context,
+                     GimpContext       *context,
                      gint               view_size)
 {
   /*  we pass "global_dock_factory", _not_ "global_toolbox_factory" to
@@ -210,7 +210,7 @@ dialogs_toolbox_get (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_dock_new (GimpDialogFactory *factory,
-		  GimpContext       *context,
+                  GimpContext       *context,
                   gint               view_size)
 {
   return gimp_menu_dock_new (factory,
@@ -256,7 +256,7 @@ dialogs_dockable_constructor (GimpDialogFactory      *factory,
 
 GtkWidget *
 dialogs_tool_options_new (GimpDialogFactory *factory,
-			  GimpContext       *context,
+                          GimpContext       *context,
                           gint               view_size)
 {
   return gimp_tool_options_editor_new (context->gimp,
@@ -273,7 +273,7 @@ dialogs_device_status_new (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_error_console_new (GimpDialogFactory *factory,
-			   GimpContext       *context,
+                           GimpContext       *context,
                            gint               view_size)
 {
   return gimp_error_console_new (context->gimp,
@@ -293,7 +293,7 @@ dialogs_cursor_view_new (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_image_list_view_new (GimpDialogFactory *factory,
-			     GimpContext       *context,
+                             GimpContext       *context,
                              gint               view_size)
 {
   return gimp_image_view_new (GIMP_VIEW_TYPE_LIST,
@@ -305,20 +305,20 @@ dialogs_image_list_view_new (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_brush_list_view_new (GimpDialogFactory *factory,
-			     GimpContext       *context,
+                             GimpContext       *context,
                              gint               view_size)
 {
   return gimp_brush_factory_view_new (GIMP_VIEW_TYPE_LIST,
-				      context->gimp->brush_factory,
-				      context,
-				      TRUE,
-				      view_size, 1,
+                                      context->gimp->brush_factory,
+                                      context,
+                                      TRUE,
+                                      view_size, 1,
                                       factory->menu_factory);
 }
 
 GtkWidget *
 dialogs_pattern_list_view_new (GimpDialogFactory *factory,
-			       GimpContext       *context,
+                               GimpContext       *context,
                                gint               view_size)
 {
   return gimp_pattern_factory_view_new (GIMP_VIEW_TYPE_LIST,
@@ -330,7 +330,7 @@ dialogs_pattern_list_view_new (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_gradient_list_view_new (GimpDialogFactory *factory,
-				GimpContext       *context,
+                                GimpContext       *context,
                                 gint               view_size)
 {
   return gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
@@ -344,7 +344,7 @@ dialogs_gradient_list_view_new (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_palette_list_view_new (GimpDialogFactory *factory,
-			       GimpContext       *context,
+                               GimpContext       *context,
                                gint               view_size)
 {
   return gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
@@ -370,7 +370,7 @@ dialogs_font_list_view_new (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_tool_list_view_new (GimpDialogFactory *factory,
-			    GimpContext       *context,
+                            GimpContext       *context,
                             gint               view_size)
 {
   return gimp_tool_view_new (GIMP_VIEW_TYPE_LIST,
@@ -382,13 +382,13 @@ dialogs_tool_list_view_new (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_buffer_list_view_new (GimpDialogFactory *factory,
-			      GimpContext       *context,
+                              GimpContext       *context,
                               gint               view_size)
 {
   return gimp_buffer_view_new (GIMP_VIEW_TYPE_LIST,
-			       context->gimp->named_buffers,
-			       context,
-			       view_size, 1,
+                               context->gimp->named_buffers,
+                               context,
+                               view_size, 1,
                                factory->menu_factory);
 }
 
@@ -421,7 +421,7 @@ dialogs_template_list_view_new (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_image_grid_view_new (GimpDialogFactory *factory,
-			     GimpContext       *context,
+                             GimpContext       *context,
                              gint               view_size)
 {
   return gimp_image_view_new (GIMP_VIEW_TYPE_GRID,
@@ -433,20 +433,20 @@ dialogs_image_grid_view_new (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_brush_grid_view_new (GimpDialogFactory *factory,
-			     GimpContext       *context,
+                             GimpContext       *context,
                              gint               view_size)
 {
   return gimp_brush_factory_view_new (GIMP_VIEW_TYPE_GRID,
-				      context->gimp->brush_factory,
-				      context,
-				      TRUE,
-				      view_size, 1,
+                                      context->gimp->brush_factory,
+                                      context,
+                                      TRUE,
+                                      view_size, 1,
                                       factory->menu_factory);
 }
 
 GtkWidget *
 dialogs_pattern_grid_view_new (GimpDialogFactory *factory,
-			       GimpContext       *context,
+                               GimpContext       *context,
                                gint               view_size)
 {
   return gimp_pattern_factory_view_new (GIMP_VIEW_TYPE_GRID,
@@ -458,7 +458,7 @@ dialogs_pattern_grid_view_new (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_gradient_grid_view_new (GimpDialogFactory *factory,
-				GimpContext       *context,
+                                GimpContext       *context,
                                 gint               view_size)
 {
   return gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
@@ -472,7 +472,7 @@ dialogs_gradient_grid_view_new (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_palette_grid_view_new (GimpDialogFactory *factory,
-			       GimpContext       *context,
+                               GimpContext       *context,
                                gint               view_size)
 {
   return gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
@@ -498,7 +498,7 @@ dialogs_font_grid_view_new (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_tool_grid_view_new (GimpDialogFactory *factory,
-			    GimpContext       *context,
+                            GimpContext       *context,
                             gint               view_size)
 {
   return gimp_tool_view_new (GIMP_VIEW_TYPE_GRID,
@@ -510,13 +510,13 @@ dialogs_tool_grid_view_new (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_buffer_grid_view_new (GimpDialogFactory *factory,
-			      GimpContext       *context,
+                              GimpContext       *context,
                               gint               view_size)
 {
   return gimp_buffer_view_new (GIMP_VIEW_TYPE_GRID,
-			       context->gimp->named_buffers,
-			       context,
-			       view_size, 1,
+                               context->gimp->named_buffers,
+                               context,
+                               view_size, 1,
                                factory->menu_factory);
 }
 
@@ -549,7 +549,7 @@ dialogs_template_grid_view_new (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_layer_list_view_new (GimpDialogFactory *factory,
-			     GimpContext       *context,
+                             GimpContext       *context,
                              gint               view_size)
 {
   if (view_size < 1)
@@ -564,7 +564,7 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_channel_list_view_new (GimpDialogFactory *factory,
-			       GimpContext       *context,
+                               GimpContext       *context,
                                gint               view_size)
 {
   if (view_size < 1)
@@ -579,7 +579,7 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_vectors_list_view_new (GimpDialogFactory *factory,
-			       GimpContext       *context,
+                               GimpContext       *context,
                                gint               view_size)
 {
   if (view_size < 1)
@@ -594,7 +594,7 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_colormap_editor_new (GimpDialogFactory *factory,
-			     GimpContext       *context,
+                             GimpContext       *context,
                              gint               view_size)
 {
   GtkWidget *view;
@@ -602,8 +602,8 @@ dialogs_colormap_editor_new (GimpDialogFactory *factory,
   view = gimp_colormap_editor_new (factory->menu_factory);
 
   g_signal_connect (view, "selected",
-		    G_CALLBACK (dialogs_indexed_palette_selected),
-		    NULL);
+                    G_CALLBACK (dialogs_indexed_palette_selected),
+                    NULL);
 
   return view;
 }
@@ -670,7 +670,7 @@ dialogs_color_editor_new (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_brush_editor_get (GimpDialogFactory *factory,
-			  GimpContext       *context,
+                          GimpContext       *context,
                           gint               view_size)
 {
   return gimp_brush_editor_new (context->gimp,
@@ -679,7 +679,7 @@ dialogs_brush_editor_get (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_gradient_editor_get (GimpDialogFactory *factory,
-			     GimpContext       *context,
+                             GimpContext       *context,
                              gint               view_size)
 {
   return gimp_gradient_editor_new (context->gimp,
@@ -688,7 +688,7 @@ dialogs_gradient_editor_get (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_palette_editor_get (GimpDialogFactory *factory,
-			    GimpContext       *context,
+                            GimpContext       *context,
                             gint               view_size)
 {
   return gimp_palette_editor_new (context->gimp,
@@ -701,7 +701,7 @@ dialogs_palette_editor_get (GimpDialogFactory *factory,
 static void
 dialogs_indexed_palette_selected (GimpColormapEditor *editor,
                                   GdkModifierType     state,
-				  gpointer            data)
+                                  gpointer            data)
 {
   GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
 

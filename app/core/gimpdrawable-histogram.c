@@ -33,7 +33,7 @@
 
 void
 gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
-				   GimpHistogram *histogram)
+                                   GimpHistogram *histogram)
 {
   PixelRegion region;
   PixelRegion mask;
@@ -64,7 +64,7 @@ gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
       gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
       pixel_region_init (&mask,
                          gimp_drawable_get_tiles (GIMP_DRAWABLE (sel_mask)),
-			 x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
+                         x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
       gimp_histogram_calculate (histogram, &region, &mask);
     }
   else

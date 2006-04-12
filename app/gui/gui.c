@@ -360,8 +360,8 @@ gui_restore_callback (Gimp               *gimp,
 
   image_disconnect_handler_id =
     gimp_container_add_handler (gimp->images, "disconnect",
-				G_CALLBACK (gui_image_disconnect),
-				gimp);
+                                G_CALLBACK (gui_image_disconnect),
+                                gimp);
 
   if (! gui_config->show_tooltips)
     gimp_help_disable_tooltips ();
@@ -381,8 +381,8 @@ gui_restore_callback (Gimp               *gimp,
                     gimp);
 
   g_signal_connect (gimp_get_user_context (gimp), "display-changed",
-		    G_CALLBACK (gui_display_changed),
-		    gimp);
+                    G_CALLBACK (gui_display_changed),
+                    gimp);
 
   /* make sure the monitor resolution is valid */
   if (display_config->monitor_res_from_gdk               ||
@@ -394,10 +394,10 @@ gui_restore_callback (Gimp               *gimp,
       gimp_get_screen_resolution (NULL, &xres, &yres);
 
       g_object_set (gimp->config,
-		    "monitor-xresolution",                      xres,
-		    "monitor-yresolution",                      yres,
-		    "monitor-resolution-from-windowing-system", TRUE,
-		    NULL);
+                    "monitor-xresolution",                      xres,
+                    "monitor-yresolution",                      yres,
+                    "monitor-resolution-from-windowing-system", TRUE,
+                    NULL);
     }
 
   actions_init (gimp);
@@ -636,8 +636,8 @@ gui_menu_hide_tooltip (GimpUIManager *manager,
 
 static void
 gui_display_changed (GimpContext *context,
-		     GimpDisplay *display,
-		     Gimp        *gimp)
+                     GimpDisplay *display,
+                     Gimp        *gimp)
 {
   if (! display)
     {
@@ -674,7 +674,7 @@ gui_display_changed (GimpContext *context,
 
 static void
 gui_image_disconnect (GimpImage *image,
-		      Gimp      *gimp)
+                      Gimp      *gimp)
 {
   /*  check if this is the last image and if it had a display  */
   if (gimp_container_num_children (gimp->images) == 1 &&

@@ -50,7 +50,7 @@ tile_sanitize_rowhints (Tile *tile)
 
 TileRowHint
 tile_get_rowhint (Tile *tile,
-		  gint  yoff)
+                  gint  yoff)
 {
 #ifdef HINTS_SANITY
   if (yoff < tile_eheight(tile) && yoff>=0)
@@ -67,8 +67,8 @@ tile_get_rowhint (Tile *tile,
 
 void
 tile_set_rowhint (Tile        *tile,
-		  gint         yoff,
-		  TileRowHint  rowhint)
+                  gint         yoff,
+                  TileRowHint  rowhint)
 {
 #ifdef HINTS_SANITY
   if (yoff < tile_eheight(tile) && yoff>=0)
@@ -84,7 +84,7 @@ tile_set_rowhint (Tile        *tile,
 
 void
 tile_init (Tile *tile,
-	   gint  bpp)
+           gint  bpp)
 {
   tile->ref_count   = 0;
   tile->write_count = 0;
@@ -135,10 +135,10 @@ tile_lock (Tile *tile)
   if (tile->ref_count == 1)
     {
       if (tile->listhead)
-	{
-	  /* remove from cache, move to main store */
-	  tile_cache_flush (tile);
-	}
+        {
+          /* remove from cache, move to main store */
+          tile_cache_flush (tile);
+        }
       tile_active_count++;
     }
   if (tile->data == NULL)
@@ -160,7 +160,7 @@ tile_lock (Tile *tile)
 
 void
 tile_release (Tile     *tile,
-	      gboolean  dirty)
+              gboolean  dirty)
 {
   /* Decrement the global reference count.
    */
@@ -181,12 +181,12 @@ tile_release (Tile     *tile,
       tile->write_count--;
 
       if (tile->rowhint)
-	{
-	  for (y = 0; y < tile->eheight; y++)
-	    {
-	      tile->rowhint[y] = TILEROWHINT_UNKNOWN;
-	    }
-	}
+        {
+          for (y = 0; y < tile->eheight; y++)
+            {
+              tile->rowhint[y] = TILEROWHINT_UNKNOWN;
+            }
+        }
     }
 
   if (tile->ref_count == 0)
@@ -194,17 +194,17 @@ tile_release (Tile     *tile,
       tile_active_count--;
 
       if (tile->share_count == 0)
-	{
-	  /* tile is truly dead */
-	  tile_destroy (tile);
-	  return;			/* skip terminal unlock */
-	}
+        {
+          /* tile is truly dead */
+          tile_destroy (tile);
+          return;                        /* skip terminal unlock */
+        }
       else
-	{
-	  /* last reference was just released, so move the tile to the
-	     tile cache */
-	  tile_cache_insert (tile);
-	}
+        {
+          /* last reference was just released, so move the tile to the
+             tile cache */
+          tile_cache_insert (tile);
+        }
     }
 
   TILE_MUTEX_UNLOCK (tile);
@@ -320,8 +320,8 @@ tile_mark_valid (Tile *tile)
 
 void
 tile_attach (Tile *tile,
-	     void *tm,
-	     gint  tile_num)
+             void *tm,
+             gint  tile_num)
 {
   TileLink *tmp;
 
@@ -350,8 +350,8 @@ tile_attach (Tile *tile,
 
 void
 tile_detach (Tile *tile,
-	     void *tm,
-	     gint  tile_num)
+             void *tm,
+             gint  tile_num)
 {
   TileLink **link;
   TileLink  *tmp;
@@ -366,7 +366,7 @@ tile_detach (Tile *tile,
        link = &(*link)->next)
     {
       if (((*link)->tm == tm) && ((*link)->tile_num == tile_num))
-	break;
+        break;
     }
 
   if (*link == NULL)
@@ -392,8 +392,8 @@ tile_detach (Tile *tile,
 
 gpointer
 tile_data_pointer (Tile *tile,
-		   gint  xoff,
-		   gint  yoff)
+                   gint  xoff,
+                   gint  yoff)
 {
   gint offset = yoff * tile->ewidth + xoff;
 

@@ -269,13 +269,13 @@ main (int    argc,
         continue;
 
       if ((strcmp (arg, "--no-interface") == 0) || (strcmp (arg, "-i") == 0))
-	{
-	  no_interface = TRUE;
-	}
+        {
+          no_interface = TRUE;
+        }
       else if ((strcmp (arg, "--version") == 0) || (strcmp (arg, "-v") == 0))
-	{
-	  gimp_show_version_and_exit ();
-	}
+        {
+          gimp_show_version_and_exit ();
+        }
     }
 
 #ifdef GIMP_CONSOLE_COMPILATION
@@ -349,9 +349,9 @@ main (int    argc,
 
 int _stdcall
 WinMain (struct HINSTANCE__ *hInstance,
-	 struct HINSTANCE__ *hPrevInstance,
-	 char               *lpszCmdLine,
-	 int                 nCmdShow)
+         struct HINSTANCE__ *hPrevInstance,
+         char               *lpszCmdLine,
+         int                 nCmdShow)
 {
   return main (__argc, __argv);
 }

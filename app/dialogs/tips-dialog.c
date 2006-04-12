@@ -125,7 +125,7 @@ tips_dialog_create (Gimp *gimp)
 
   tips_dialog = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_type_hint (GTK_WINDOW (tips_dialog),
-			    GDK_WINDOW_TYPE_HINT_DIALOG);
+                            GDK_WINDOW_TYPE_HINT_DIALOG);
   gtk_window_set_role (GTK_WINDOW (tips_dialog), "gimp-tip-of-the-day");
   gtk_window_set_title (GTK_WINDOW (tips_dialog), _("GIMP Tip of the Day"));
   gtk_window_set_position (GTK_WINDOW (tips_dialog), GTK_WIN_POS_CENTER);
@@ -136,8 +136,8 @@ tips_dialog_create (Gimp *gimp)
                     NULL);
 
   g_signal_connect (tips_dialog, "destroy",
-		    G_CALLBACK (tips_dialog_destroy),
-		    config);
+                    G_CALLBACK (tips_dialog_destroy),
+                    config);
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (tips_dialog), vbox);
@@ -206,8 +206,8 @@ tips_dialog_create (Gimp *gimp)
   gtk_widget_show (button);
 
   g_signal_connect_swapped (button, "clicked",
-			    G_CALLBACK (gtk_widget_destroy),
-			    tips_dialog);
+                            G_CALLBACK (gtk_widget_destroy),
+                            tips_dialog);
 
   bbox = gtk_hbutton_box_new ();
   gtk_button_box_set_layout (GTK_BUTTON_BOX (bbox), GTK_BUTTONBOX_END);
@@ -221,8 +221,8 @@ tips_dialog_create (Gimp *gimp)
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
-		    G_CALLBACK (tips_show_previous),
-		    NULL);
+                    G_CALLBACK (tips_show_previous),
+                    NULL);
 
   button = tips_button_new (_("_Next Tip"), FALSE);
   gtk_widget_set_sensitive (button, (tips_count > 1));
@@ -230,11 +230,11 @@ tips_dialog_create (Gimp *gimp)
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
-		    G_CALLBACK (tips_show_next),
-		    NULL);
+                    G_CALLBACK (tips_show_next),
+                    NULL);
 
   gimp_help_connect (tips_dialog, gimp_standard_help_func,
-		     GIMP_HELP_TIPS_DIALOG, NULL);
+                     GIMP_HELP_TIPS_DIALOG, NULL);
 
   tips_set_labels (current_tip->data);
 
@@ -243,7 +243,7 @@ tips_dialog_create (Gimp *gimp)
 
 static void
 tips_dialog_destroy (GtkWidget *widget,
-		     gpointer   data)
+                     gpointer   data)
 {
   GimpGuiConfig *config = GIMP_GUI_CONFIG (data);
 
@@ -315,7 +315,7 @@ tips_set_labels (GimpTip *tip)
 
 static void
 tips_show_previous (GtkWidget *widget,
-		    gpointer  data)
+                    gpointer  data)
 {
   current_tip = current_tip->prev ? current_tip->prev : g_list_last (tips);
 
@@ -324,7 +324,7 @@ tips_show_previous (GtkWidget *widget,
 
 static void
 tips_show_next (GtkWidget *widget,
-		gpointer   data)
+                gpointer   data)
 {
   current_tip = current_tip->next ? current_tip->next : tips;
 

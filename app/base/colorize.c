@@ -97,7 +97,7 @@ colorize (Colorize    *colorize,
       d = dest;
 
       while (w--)
-	{
+        {
           lum = (colorize->lum_red_lookup[s[RED_PIX]] +
                  colorize->lum_green_lookup[s[GREEN_PIX]] +
                  colorize->lum_blue_lookup[s[BLUE_PIX]]); /* luminosity */
@@ -117,12 +117,12 @@ colorize (Colorize    *colorize,
           d[GREEN_PIX] = colorize->final_green_lookup[lum];
           d[BLUE_PIX]  = colorize->final_blue_lookup[lum];
 
-	  if (alpha)
-	    d[ALPHA_PIX] = s[ALPHA_PIX];
+          if (alpha)
+            d[ALPHA_PIX] = s[ALPHA_PIX];
 
-	  s += srcPR->bytes;
-	  d += destPR->bytes;
-	}
+          s += srcPR->bytes;
+          d += destPR->bytes;
+        }
 
       src  += srcPR->rowstride;
       dest += destPR->rowstride;

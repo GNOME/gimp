@@ -24,8 +24,8 @@
 
 
 void  gimp_text_layout_render  (GimpTextLayout     *layout,
-				GimpTextRenderFunc  render_func,
-				gpointer            render_data);
+                                GimpTextRenderFunc  render_func,
+                                gpointer            render_data);
 
 
 #endif /* __GIMP_TEXT_LAYOUT_RENDER_H__ */

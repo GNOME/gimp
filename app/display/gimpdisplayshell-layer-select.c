@@ -186,7 +186,7 @@ layer_select_destroy (LayerSelect *layer_select,
 
 static void
 layer_select_advance (LayerSelect *layer_select,
-		      gint         move)
+                      gint         move)
 {
   GimpLayer *current_layer;
   GimpLayer *next_layer;
@@ -231,7 +231,7 @@ layer_select_advance (LayerSelect *layer_select,
 
 static gboolean
 layer_select_events (GtkWidget   *widget,
-		     GdkEvent    *event,
+                     GdkEvent    *event,
                      LayerSelect *layer_select)
 {
   GdkEventKey    *kevent;
@@ -249,14 +249,14 @@ layer_select_events (GtkWidget   *widget,
       kevent = (GdkEventKey *) event;
 
       switch (kevent->keyval)
-	{
-	case GDK_Tab:
+        {
+        case GDK_Tab:
           layer_select_advance (layer_select, 1);
           break;
-	case GDK_ISO_Left_Tab:
+        case GDK_ISO_Left_Tab:
           layer_select_advance (layer_select, -1);
-	  break;
-	}
+          break;
+        }
       return TRUE;
       break;
 
@@ -264,20 +264,20 @@ layer_select_events (GtkWidget   *widget,
       kevent = (GdkEventKey *) event;
 
       switch (kevent->keyval)
-	{
-	case GDK_Alt_L: case GDK_Alt_R:
-	  kevent->state &= ~GDK_MOD1_MASK;
-	  break;
-	case GDK_Control_L: case GDK_Control_R:
-	  kevent->state &= ~GDK_CONTROL_MASK;
-	  break;
-	case GDK_Shift_L: case GDK_Shift_R:
-	  kevent->state &= ~GDK_SHIFT_MASK;
-	  break;
-	}
+        {
+        case GDK_Alt_L: case GDK_Alt_R:
+          kevent->state &= ~GDK_MOD1_MASK;
+          break;
+        case GDK_Control_L: case GDK_Control_R:
+          kevent->state &= ~GDK_CONTROL_MASK;
+          break;
+        case GDK_Shift_L: case GDK_Shift_R:
+          kevent->state &= ~GDK_SHIFT_MASK;
+          break;
+        }
 
       if (! (kevent->state & GDK_CONTROL_MASK))
-	layer_select_destroy (layer_select, kevent->time);
+        layer_select_destroy (layer_select, kevent->time);
 
       return TRUE;
       break;

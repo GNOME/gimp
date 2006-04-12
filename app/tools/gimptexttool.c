@@ -234,8 +234,8 @@ gimp_text_tool_finalize (GObject *object)
 
 static void
 gimp_text_tool_control (GimpTool       *tool,
-			GimpToolAction  action,
-			GimpDisplay    *display)
+                        GimpToolAction  action,
+                        GimpDisplay    *display)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
 
@@ -255,10 +255,10 @@ gimp_text_tool_control (GimpTool       *tool,
 
 static void
 gimp_text_tool_button_press (GimpTool        *tool,
-			     GimpCoords      *coords,
-			     guint32          time,
-			     GdkModifierType  state,
-			     GimpDisplay     *display)
+                             GimpCoords      *coords,
+                             guint32          time,
+                             GdkModifierType  state,
+                             GimpDisplay     *display)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
   GimpText     *text      = text_tool->text;
@@ -303,9 +303,9 @@ gimp_text_tool_button_press (GimpTool        *tool,
 
 static void
 gimp_text_tool_cursor_update (GimpTool        *tool,
-			      GimpCoords      *coords,
-			      GdkModifierType  state,
-			      GimpDisplay     *display)
+                              GimpCoords      *coords,
+                              GdkModifierType  state,
+                              GimpDisplay     *display)
 {
   /* FIXME: should do something fancy here... */
 
@@ -757,7 +757,7 @@ gimp_text_tool_editor (GimpTextTool *text_tool)
                                                     _("GIMP Text Editor"));
 
   g_object_add_weak_pointer (G_OBJECT (text_tool->editor),
-			     (gpointer *) &text_tool->editor);
+                             (gpointer *) &text_tool->editor);
 
   gimp_dialog_factory_add_foreign (dialog_factory,
                                    "gimp-text-tool-dialog",

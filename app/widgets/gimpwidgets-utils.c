@@ -78,8 +78,8 @@
  **/
 void
 gimp_menu_position (GtkMenu *menu,
-		    gint    *x,
-		    gint    *y)
+                    gint    *x,
+                    gint    *y)
 {
   GtkWidget      *widget;
   GdkScreen      *screen;
@@ -205,9 +205,9 @@ gimp_button_menu_position (GtkWidget       *button,
 void
 gimp_table_attach_stock (GtkTable    *table,
                          gint         row,
-			 const gchar *stock_id,
+                         const gchar *stock_id,
                          GtkWidget   *widget,
-			 gint         colspan,
+                         gint         colspan,
                          gboolean     left_align)
 {
   GtkWidget *image;
@@ -219,7 +219,7 @@ gimp_table_attach_stock (GtkTable    *table,
   image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
   gtk_misc_set_alignment (GTK_MISC (image), 1.0, 0.5);
   gtk_table_attach (table, image, 0, 1, row, row + 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
+                    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (image);
 
   if (left_align)
@@ -816,7 +816,7 @@ gimp_text_buffer_load (GtkTextBuffer  *buffer,
 
   if (remaining)
     g_message (_("Invalid UTF-8 data in file '%s'."),
-	       gimp_filename_to_utf8 (filename));
+               gimp_filename_to_utf8 (filename));
 
   return TRUE;
 }
@@ -830,7 +830,7 @@ gimp_text_buffer_save (GtkTextBuffer  *buffer,
   GtkTextIter  start_iter;
   GtkTextIter  end_iter;
   gint         fd;
-  gchar	      *text_contents;
+  gchar              *text_contents;
 
   g_return_val_if_fail (GTK_IS_TEXT_BUFFER (buffer), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
@@ -851,7 +851,7 @@ gimp_text_buffer_save (GtkTextBuffer  *buffer,
     gtk_text_buffer_get_bounds (buffer, &start_iter, &end_iter);
 
   text_contents = gtk_text_buffer_get_text (buffer,
-					    &start_iter, &end_iter, TRUE);
+                                            &start_iter, &end_iter, TRUE);
 
   if (text_contents)
     {

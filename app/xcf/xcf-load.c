@@ -326,8 +326,8 @@ xcf_load_image_props (XcfInfo   *info,
             }
 
           /* discard color map, if image is not indexed, this is just
-	   * sanity checking to make sure gimp doesn't end up with an
-	   * image state that is impossible.
+           * sanity checking to make sure gimp doesn't end up with an
+           * image state that is impossible.
            */
           if (gimp_image_base_type (image) != GIMP_INDEXED)
             {

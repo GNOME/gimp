@@ -29,7 +29,7 @@
 void
 threshold (Threshold   *tr,
            PixelRegion *srcPR,
-	   PixelRegion *destPR)
+           PixelRegion *destPR)
 {
   const guchar *src, *s;
   guchar       *dest, *d;
@@ -51,30 +51,30 @@ threshold (Threshold   *tr,
       d = dest;
 
       while (w--)
-	{
-	  if (tr->color)
-	    {
-	      value = MAX (s[RED_PIX], s[GREEN_PIX]);
-	      value = MAX (value, s[BLUE_PIX]);
+        {
+          if (tr->color)
+            {
+              value = MAX (s[RED_PIX], s[GREEN_PIX]);
+              value = MAX (value, s[BLUE_PIX]);
 
-	      value = (value >= tr->low_threshold &&
+              value = (value >= tr->low_threshold &&
                        value <= tr->high_threshold ) ? 255 : 0;
-	    }
-	  else
+            }
+          else
             {
               value = (s[GRAY_PIX] >= tr->low_threshold &&
                        s[GRAY_PIX] <= tr->high_threshold) ? 255 : 0;
             }
 
-	  for (b = 0; b < alpha; b++)
-	    d[b] = value;
+          for (b = 0; b < alpha; b++)
+            d[b] = value;
 
-	  if (has_alpha)
-	    d[alpha] = s[alpha];
+          if (has_alpha)
+            d[alpha] = s[alpha];
 
-	  s += srcPR->bytes;
-	  d += destPR->bytes;
-	}
+          s += srcPR->bytes;
+          d += destPR->bytes;
+        }
 
       src  += srcPR->rowstride;
       dest += destPR->rowstride;

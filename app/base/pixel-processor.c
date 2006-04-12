@@ -103,45 +103,45 @@ do_parallel_regions (PixelProcessor *processor)
                       processor->PRI->portion_height);
 
       for (i = 0; i < processor->num_regions; i++)
-	if (processor->regions[i])
-	  {
-	    memcpy (&tr[i], processor->regions[i], sizeof (PixelRegion));
-	    if (tr[i].tiles)
-	      tile_lock (tr[i].curtile);
-	  }
+        if (processor->regions[i])
+          {
+            memcpy (&tr[i], processor->regions[i], sizeof (PixelRegion));
+            if (tr[i].tiles)
+              tile_lock (tr[i].curtile);
+          }
 
       g_mutex_unlock (processor->mutex);
 
       switch(processor->num_regions)
-	{
-	case 1:
-	  ((p1_func) processor->func) (processor->data,
+        {
+        case 1:
+          ((p1_func) processor->func) (processor->data,
                                        processor->regions[0] ? &tr[0] : NULL);
-	  break;
+          break;
 
-	case 2:
-	  ((p2_func) processor->func) (processor->data,
+        case 2:
+          ((p2_func) processor->func) (processor->data,
                                        processor->regions[0] ? &tr[0] : NULL,
                                        processor->regions[1] ? &tr[1] : NULL);
-	  break;
+          break;
 
-	case 3:
-	  ((p3_func) processor->func) (processor->data,
+        case 3:
+          ((p3_func) processor->func) (processor->data,
                                        processor->regions[0] ? &tr[0] : NULL,
                                        processor->regions[1] ? &tr[1] : NULL,
                                        processor->regions[2] ? &tr[2] : NULL);
-	  break;
+          break;
 
-	case 4:
-	  ((p4_func) processor->func) (processor->data,
+        case 4:
+          ((p4_func) processor->func) (processor->data,
                                        processor->regions[0] ? &tr[0] : NULL,
                                        processor->regions[1] ? &tr[1] : NULL,
                                        processor->regions[2] ? &tr[2] : NULL,
                                        processor->regions[3] ? &tr[3] : NULL);
-	  break;
+          break;
 
-	default:
-	  g_warning ("do_parallel_regions: Bad number of regions %d\n",
+        default:
+          g_warning ("do_parallel_regions: Bad number of regions %d\n",
                      processor->num_regions);
           break;
         }
@@ -158,7 +158,7 @@ do_parallel_regions (PixelProcessor *processor)
       processor->progress += pixels;
 
       if (processor->PRI)
-	processor->PRI = pixel_regions_process (processor->PRI);
+        processor->PRI = pixel_regions_process (processor->PRI);
     }
 
   processor->threads--;
@@ -252,7 +252,7 @@ do_parallel_regions_single (PixelProcessor             *processor,
         }
     }
   while (processor->PRI &&
-	 (processor->PRI = pixel_regions_process (processor->PRI)));
+         (processor->PRI = pixel_regions_process (processor->PRI)));
 
   return NULL;
 }
@@ -292,7 +292,7 @@ pixel_regions_do_parallel (PixelProcessor             *processor,
             {
               g_warning ("thread creation failed: %s", error->message);
               g_clear_error (&error);
-	      processor->threads--;
+              processor->threads--;
             }
         }
 
@@ -300,13 +300,13 @@ pixel_regions_do_parallel (PixelProcessor             *processor,
         {
           while (processor->threads != 0)
             {
-	      GTimeVal timeout;
+              GTimeVal timeout;
               gulong   progress;
 
-	      g_get_current_time (&timeout);
-	      g_time_val_add (&timeout, PROGRESS_TIMEOUT * 1024);
+              g_get_current_time (&timeout);
+              g_time_val_add (&timeout, PROGRESS_TIMEOUT * 1024);
 
-	      g_cond_timed_wait (pool_cond, pool_mutex, &timeout);
+              g_cond_timed_wait (pool_cond, pool_mutex, &timeout);
 
               g_mutex_lock (processor->mutex);
               progress = processor->progress;
@@ -462,9 +462,9 @@ pixel_processor_exit (void)
 
 void
 pixel_regions_process_parallel (PixelProcessorFunc  func,
-				gpointer            data,
-				gint                num_regions,
-				...)
+                                gpointer            data,
+                                gint                num_regions,
+                                ...)
 {
   va_list va;
 

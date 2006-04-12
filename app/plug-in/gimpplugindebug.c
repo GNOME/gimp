@@ -117,7 +117,7 @@ plug_in_debug_exit (Gimp *gimp)
 
 gchar **
 plug_in_debug_argv (Gimp               *gimp,
-		    const gchar        *name,
+                    const gchar        *name,
                     GimpDebugWrapFlag   flag,
                     gchar             **args)
 {

@@ -118,31 +118,31 @@ curves_calculate_curve (Curves               *curves,
       /*  cycle through the curves  */
       num_pts = 0;
       for (i = 0; i < CURVES_NUM_POINTS; i++)
-	if (curves->points[channel][i][0] != -1)
-	  points[num_pts++] = i;
+        if (curves->points[channel][i][0] != -1)
+          points[num_pts++] = i;
 
       /*  Initialize boundary curve points */
       if (num_pts != 0)
-	{
-	  for (i = 0; i < curves->points[channel][points[0]][0]; i++)
-	    curves->curve[channel][i] = curves->points[channel][points[0]][1];
+        {
+          for (i = 0; i < curves->points[channel][points[0]][0]; i++)
+            curves->curve[channel][i] = curves->points[channel][points[0]][1];
 
-	  for (i = curves->points[channel][points[num_pts - 1]][0];
+          for (i = curves->points[channel][points[num_pts - 1]][0];
                i < 256;
                i++)
-	    curves->curve[channel][i] =
+            curves->curve[channel][i] =
               curves->points[channel][points[num_pts - 1]][1];
-	}
+        }
 
       for (i = 0; i < num_pts - 1; i++)
-	{
-	  p1 = (i == 0) ? points[i] : points[(i - 1)];
-	  p2 = points[i];
-	  p3 = points[i + 1];
-	  p4 = (i == (num_pts - 2)) ? points[num_pts - 1] : points[i + 2];
+        {
+          p1 = (i == 0) ? points[i] : points[(i - 1)];
+          p2 = points[i];
+          p3 = points[i + 1];
+          p4 = (i == (num_pts - 2)) ? points[num_pts - 1] : points[i + 2];
 
-	  curves_plot_curve (curves, channel, p1, p2, p3, p4);
-	}
+          curves_plot_curve (curves, channel, p1, p2, p3, p4);
+        }
 
       /* ensure that the control points are used exactly */
       for (i = 0; i < num_pts; i++)
@@ -159,9 +159,9 @@ curves_calculate_curve (Curves               *curves,
 
 gfloat
 curves_lut_func (Curves *curves,
-		 gint    n_channels,
-		 gint    channel,
-		 gfloat  value)
+                 gint    n_channels,
+                 gint    channel,
+                 gfloat  value)
 {
   gfloat  f;
   gint    index;
@@ -217,10 +217,10 @@ curves_lut_func (Curves *curves,
 static void
 curves_plot_curve (Curves *curves,
                    gint    channel,
-		   gint    p1,
-		   gint    p2,
-		   gint    p3,
-		   gint    p4)
+                   gint    p1,
+                   gint    p2,
+                   gint    p3,
+                   gint    p4)
 {
   CRMatrix geometry;
   CRMatrix tmp1, tmp2;
@@ -301,7 +301,7 @@ curves_plot_curve (Curves *curves,
 
       /* if this point is different than the last one...then draw it */
       if ((lastx != newx) || (lasty != newy))
-	curves->curve[channel][newx] = newy;
+        curves->curve[channel][newx] = newy;
 
       lastx = newx;
       lasty = newy;
@@ -310,8 +310,8 @@ curves_plot_curve (Curves *curves,
 
 static void
 curves_CR_compose (CRMatrix a,
-		   CRMatrix b,
-		   CRMatrix ab)
+                   CRMatrix b,
+                   CRMatrix ab)
 {
   gint i, j;
 

@@ -1378,8 +1378,8 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Document History"), GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (object, "save-document-history",
-		          _("Save document _history on exit"),
-			  GTK_BOX (vbox2));
+                          _("Save document _history on exit"),
+                          GTK_BOX (vbox2));
 
 
   /***************/
@@ -2190,7 +2190,7 @@ prefs_dialog_new (Gimp       *gimp,
     for (i = 0, row = 3; i < G_N_ELEMENTS (profiles); i++, row++)
       {
 #if 0
-	button = gimp_prop_file_entry_new (color_config,
+        button = gimp_prop_file_entry_new (color_config,
                                            profiles[i].property_name,
                                            gettext (profiles[i].fs_label),
                                            FALSE, TRUE);

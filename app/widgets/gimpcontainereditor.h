@@ -48,11 +48,11 @@ struct _GimpContainerEditorClass
   GtkVBoxClass  parent_class;
 
   void (* select_item)   (GimpContainerEditor *editor,
-			  GimpViewable        *object);
+                          GimpViewable        *object);
   void (* activate_item) (GimpContainerEditor *editor,
-			  GimpViewable        *object);
+                          GimpViewable        *object);
   void (* context_item)  (GimpContainerEditor *editor,
-			  GimpViewable        *object);
+                          GimpViewable        *object);
 };
 
 

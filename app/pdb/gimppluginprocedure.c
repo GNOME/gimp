@@ -555,77 +555,77 @@ image_types_parse (const gchar *image_types)
   while (*image_types)
     {
       while (*image_types &&
-	     ((*image_types == ' ') ||
-	      (*image_types == '\t') ||
-	      (*image_types == ',')))
-	image_types++;
+             ((*image_types == ' ') ||
+              (*image_types == '\t') ||
+              (*image_types == ',')))
+        image_types++;
 
       if (*image_types)
-	{
-	  if (strncmp (image_types, "RGBA", 4) == 0)
-	    {
-	      types |= PLUG_IN_RGBA_IMAGE;
-	      image_types += 4;
-	    }
-	  else if (strncmp (image_types, "RGB*", 4) == 0)
-	    {
-	      types |= PLUG_IN_RGB_IMAGE | PLUG_IN_RGBA_IMAGE;
-	      image_types += 4;
-	    }
-	  else if (strncmp (image_types, "RGB", 3) == 0)
-	    {
-	      types |= PLUG_IN_RGB_IMAGE;
-	      image_types += 3;
-	    }
-	  else if (strncmp (image_types, "GRAYA", 5) == 0)
-	    {
-	      types |= PLUG_IN_GRAYA_IMAGE;
-	      image_types += 5;
-	    }
-	  else if (strncmp (image_types, "GRAY*", 5) == 0)
-	    {
-	      types |= PLUG_IN_GRAY_IMAGE | PLUG_IN_GRAYA_IMAGE;
-	      image_types += 5;
-	    }
-	  else if (strncmp (image_types, "GRAY", 4) == 0)
-	    {
-	      types |= PLUG_IN_GRAY_IMAGE;
-	      image_types += 4;
-	    }
-	  else if (strncmp (image_types, "INDEXEDA", 8) == 0)
-	    {
-	      types |= PLUG_IN_INDEXEDA_IMAGE;
-	      image_types += 8;
-	    }
-	  else if (strncmp (image_types, "INDEXED*", 8) == 0)
-	    {
-	      types |= PLUG_IN_INDEXED_IMAGE | PLUG_IN_INDEXEDA_IMAGE;
-	      image_types += 8;
-	    }
-	  else if (strncmp (image_types, "INDEXED", 7) == 0)
-	    {
-	      types |= PLUG_IN_INDEXED_IMAGE;
-	      image_types += 7;
-	    }
-	  else if (strncmp (image_types, "*", 1) == 0)
-	    {
-	      types |= PLUG_IN_RGB_IMAGE | PLUG_IN_RGBA_IMAGE
-	             | PLUG_IN_GRAY_IMAGE | PLUG_IN_GRAYA_IMAGE
-	             | PLUG_IN_INDEXED_IMAGE | PLUG_IN_INDEXEDA_IMAGE;
-	      image_types += 1;
-	    }
-	  else
-	    {
+        {
+          if (strncmp (image_types, "RGBA", 4) == 0)
+            {
+              types |= PLUG_IN_RGBA_IMAGE;
+              image_types += 4;
+            }
+          else if (strncmp (image_types, "RGB*", 4) == 0)
+            {
+              types |= PLUG_IN_RGB_IMAGE | PLUG_IN_RGBA_IMAGE;
+              image_types += 4;
+            }
+          else if (strncmp (image_types, "RGB", 3) == 0)
+            {
+              types |= PLUG_IN_RGB_IMAGE;
+              image_types += 3;
+            }
+          else if (strncmp (image_types, "GRAYA", 5) == 0)
+            {
+              types |= PLUG_IN_GRAYA_IMAGE;
+              image_types += 5;
+            }
+          else if (strncmp (image_types, "GRAY*", 5) == 0)
+            {
+              types |= PLUG_IN_GRAY_IMAGE | PLUG_IN_GRAYA_IMAGE;
+              image_types += 5;
+            }
+          else if (strncmp (image_types, "GRAY", 4) == 0)
+            {
+              types |= PLUG_IN_GRAY_IMAGE;
+              image_types += 4;
+            }
+          else if (strncmp (image_types, "INDEXEDA", 8) == 0)
+            {
+              types |= PLUG_IN_INDEXEDA_IMAGE;
+              image_types += 8;
+            }
+          else if (strncmp (image_types, "INDEXED*", 8) == 0)
+            {
+              types |= PLUG_IN_INDEXED_IMAGE | PLUG_IN_INDEXEDA_IMAGE;
+              image_types += 8;
+            }
+          else if (strncmp (image_types, "INDEXED", 7) == 0)
+            {
+              types |= PLUG_IN_INDEXED_IMAGE;
+              image_types += 7;
+            }
+          else if (strncmp (image_types, "*", 1) == 0)
+            {
+              types |= PLUG_IN_RGB_IMAGE | PLUG_IN_RGBA_IMAGE
+                     | PLUG_IN_GRAY_IMAGE | PLUG_IN_GRAYA_IMAGE
+                     | PLUG_IN_INDEXED_IMAGE | PLUG_IN_INDEXEDA_IMAGE;
+              image_types += 1;
+            }
+          else
+            {
               g_printerr ("image_type contains unrecognizable parts: '%s'\n",
                           type_spec);
 
-	      while (*image_types &&
+              while (*image_types &&
                      ((*image_types != ' ') ||
                       (*image_types != '\t') ||
                       (*image_types != ',')))
-		image_types++;
-	    }
-	}
+                image_types++;
+            }
+        }
     }
 
   return types;
@@ -662,10 +662,10 @@ extensions_parse (gchar *extensions)
       extension = strtok (next_token, " \t,");
 
       while (extension)
-	{
-	  list = g_slist_prepend (list, g_strdup (extension));
-	  extension = strtok (NULL, " \t,");
-	}
+        {
+          list = g_slist_prepend (list, g_strdup (extension));
+          extension = strtok (NULL, " \t,");
+        }
 
       g_free (extensions);
     }

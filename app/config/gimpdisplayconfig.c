@@ -261,9 +261,9 @@ gimp_display_config_finalize (GObject *object)
 
 static void
 gimp_display_config_set_property (GObject      *object,
-				  guint         property_id,
-				  const GValue *value,
-				  GParamSpec   *pspec)
+                                  guint         property_id,
+                                  const GValue *value,
+                                  GParamSpec   *pspec)
 {
   GimpDisplayConfig *display_config = GIMP_DISPLAY_CONFIG (object);
 
@@ -354,9 +354,9 @@ gimp_display_config_set_property (GObject      *object,
 
 static void
 gimp_display_config_get_property (GObject    *object,
-				  guint       property_id,
-				  GValue     *value,
-				  GParamSpec *pspec)
+                                  guint       property_id,
+                                  GValue     *value,
+                                  GParamSpec *pspec)
 {
   GimpDisplayConfig *display_config = GIMP_DISPLAY_CONFIG (object);
 

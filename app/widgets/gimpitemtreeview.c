@@ -172,13 +172,13 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
 
   view_signals[SET_IMAGE] =
     g_signal_new ("set-image",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (GimpItemTreeViewClass, set_image),
-		  NULL, NULL,
-		  gimp_marshal_VOID__OBJECT,
-		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_OBJECT);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpItemTreeViewClass, set_image),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_OBJECT);
 
   object_class->constructor      = gimp_item_tree_view_constructor;
 
@@ -369,8 +369,8 @@ gimp_item_tree_view_constructor (GType                  type,
     gimp_editor_add_action_button (editor, item_view_class->action_group,
                                    item_view_class->edit_action, NULL);
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (item_view),
-				  GTK_BUTTON (item_view->edit_button),
-				  item_view_class->item_type);
+                                  GTK_BUTTON (item_view->edit_button),
+                                  item_view_class->item_type);
 
   item_view->new_button =
     gimp_editor_add_action_button (editor, item_view_class->action_group,
@@ -382,9 +382,9 @@ gimp_item_tree_view_constructor (GType                  type,
    *  it was clicked or dropped
    */
   gimp_dnd_viewable_dest_add (item_view->new_button,
-			      item_view_class->item_type,
-			      gimp_item_tree_view_new_dropped,
-			      item_view);
+                              item_view_class->item_type,
+                              gimp_item_tree_view_new_dropped,
+                              item_view);
 
   item_view->raise_button =
     gimp_editor_add_action_button (editor, item_view_class->action_group,
@@ -404,15 +404,15 @@ gimp_item_tree_view_constructor (GType                  type,
     gimp_editor_add_action_button (editor, item_view_class->action_group,
                                    item_view_class->duplicate_action, NULL);
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (item_view),
-				  GTK_BUTTON (item_view->duplicate_button),
-				  item_view_class->item_type);
+                                  GTK_BUTTON (item_view->duplicate_button),
+                                  item_view_class->item_type);
 
   item_view->delete_button =
     gimp_editor_add_action_button (editor, item_view_class->action_group,
                                    item_view_class->delete_action, NULL);
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (item_view),
-				  GTK_BUTTON (item_view->delete_button),
-				  item_view_class->item_type);
+                                  GTK_BUTTON (item_view->delete_button),
+                                  item_view_class->item_type);
 
   return object;
 }
@@ -441,7 +441,7 @@ gimp_item_tree_view_new (GType            view_type,
 
   g_return_val_if_fail (g_type_is_a (view_type, GIMP_TYPE_ITEM_TREE_VIEW), NULL);
   g_return_val_if_fail (view_size >  0 &&
-			view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
+                        view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (view_border_width >= 0 &&
                         view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         NULL);
@@ -487,11 +487,11 @@ gimp_item_tree_view_real_set_image (GimpItemTreeView *view,
   if (view->image)
     {
       g_signal_handlers_disconnect_by_func (view->image,
-					    gimp_item_tree_view_item_changed,
-					    view);
+                                            gimp_item_tree_view_item_changed,
+                                            view);
       g_signal_handlers_disconnect_by_func (view->image,
-					    gimp_item_tree_view_size_changed,
-					    view);
+                                            gimp_item_tree_view_size_changed,
+                                            view);
 
       gimp_container_view_set_container (GIMP_CONTAINER_VIEW (view), NULL);
 
@@ -513,11 +513,11 @@ gimp_item_tree_view_real_set_image (GimpItemTreeView *view,
 
       g_signal_connect (view->image,
                         GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->signal_name,
-			G_CALLBACK (gimp_item_tree_view_item_changed),
-			view);
+                        G_CALLBACK (gimp_item_tree_view_item_changed),
+                        view);
       g_signal_connect (view->image, "size-changed",
-			G_CALLBACK (gimp_item_tree_view_size_changed),
-			view);
+                        G_CALLBACK (gimp_item_tree_view_size_changed),
+                        view);
 
       g_signal_connect (view->image, "flush",
                         G_CALLBACK (gimp_item_tree_view_image_flush),
@@ -549,9 +549,9 @@ gimp_item_tree_view_set_container (GimpContainerView *view,
   if (old_container)
     {
       gimp_container_remove_handler (old_container,
-				     item_view->visible_changed_handler_id);
+                                     item_view->visible_changed_handler_id);
       gimp_container_remove_handler (old_container,
-				     item_view->linked_changed_handler_id);
+                                     item_view->linked_changed_handler_id);
 
       item_view->visible_changed_handler_id = 0;
       item_view->linked_changed_handler_id  = 0;
@@ -562,13 +562,13 @@ gimp_item_tree_view_set_container (GimpContainerView *view,
   if (container)
     {
       item_view->visible_changed_handler_id =
-	gimp_container_add_handler (container, "visibility-changed",
-				    G_CALLBACK (gimp_item_tree_view_visible_changed),
-				    view);
+        gimp_container_add_handler (container, "visibility-changed",
+                                    G_CALLBACK (gimp_item_tree_view_visible_changed),
+                                    view);
       item_view->linked_changed_handler_id =
-	gimp_container_add_handler (container, "linked-changed",
-				    G_CALLBACK (gimp_item_tree_view_linked_changed),
-				    view);
+        gimp_container_add_handler (container, "linked-changed",
+                                    G_CALLBACK (gimp_item_tree_view_linked_changed),
+                                    view);
     }
 }
 
@@ -614,12 +614,12 @@ gimp_item_tree_view_select_item (GimpContainerView *view,
       active_item = item_view_class->get_active_item (tree_view->image);
 
       if (active_item != (GimpItem *) item)
-	{
-	  item_view_class->set_active_item (tree_view->image,
+        {
+          item_view_class->set_active_item (tree_view->image,
                                             GIMP_ITEM (item));
 
-	  gimp_image_flush (tree_view->image);
-	}
+          gimp_image_flush (tree_view->image);
+        }
     }
 
   gimp_ui_manager_update (GIMP_EDITOR (tree_view)->ui_manager, tree_view);

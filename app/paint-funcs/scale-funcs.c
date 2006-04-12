@@ -971,7 +971,7 @@ scale_region_lanczos (PixelRegion *srcPR,
   gdouble      du ,dv;                  /* Pos in source image (double)      */
   gint         u, v;                    /* Pos in source image (integer part)*/
   gint         x, y;                    /* Position in destination image     */
-  gint	       i, j, byte;              /* loop vars to fill source window   */
+  gint         i, j, byte;              /* loop vars to fill source window   */
 
   gdouble      sx,  sy;                 /* Scalefactor                       */
   gdouble      trans[6], itrans[6];     /* Scale transformations             */
@@ -1079,69 +1079,69 @@ scale_region_lanczos (PixelRegion *srcPR,
                  }
              }
 
-	   /* get weight for fractional error */
-	   su = (gint) ((du-u) * LANCZOS_SPP);
-	   sv = (gint) ((dv-v) * LANCZOS_SPP);
+           /* get weight for fractional error */
+           su = (gint) ((du-u) * LANCZOS_SPP);
+           sv = (gint) ((dv-v) * LANCZOS_SPP);
 
-	   for (lusum = lvsum = i = 0, j = LANCZOS_WIDTH - 1;
-		j >= -LANCZOS_WIDTH;
-		j--, i++)
-	     {
-	       lusum += lu[i] = kernel[ABS (j * LANCZOS_SPP + su)];
-	       lvsum += lv[i] = kernel[ABS (j * LANCZOS_SPP + sv)];
-	     }
+           for (lusum = lvsum = i = 0, j = LANCZOS_WIDTH - 1;
+                j >= -LANCZOS_WIDTH;
+                j--, i++)
+             {
+               lusum += lu[i] = kernel[ABS (j * LANCZOS_SPP + su)];
+               lvsum += lv[i] = kernel[ABS (j * LANCZOS_SPP + sv)];
+             }
 
-	   weight = (lusum * lvsum);
+           weight = (lusum * lvsum);
 
-	   if (pixel_region_has_alpha (srcPR))
-	     {
-	       alpha = bytes - 1;
+           if (pixel_region_has_alpha (srcPR))
+             {
+               alpha = bytes - 1;
 
-	       for (aval = 0, row = 0; row < LANCZOS_WIDTH2; row++)
-		 aval += lv[row] * lanczos_sum (src, lu, row, u, bytes, alpha);
+               for (aval = 0, row = 0; row < LANCZOS_WIDTH2; row++)
+                 aval += lv[row] * lanczos_sum (src, lu, row, u, bytes, alpha);
 
-	       /* calculate alpha of result */
-	       aval /= weight;
+               /* calculate alpha of result */
+               aval /= weight;
 
-	       if (aval <= 0.0)
-		 {
-		   arecip = 0.0;
-		   dst_buf[x * bytes + alpha] = 0;
-		 }
-	       else if (aval > 255.0)
-		 {
-		   arecip = 1.0 / aval;
-		   dst_buf[x * bytes + alpha] = 255;
-		 }
-	       else
-		 {
-		   arecip = 1.0 / aval;
-		   dst_buf[x * bytes + alpha] = RINT (aval);
-		 }
+               if (aval <= 0.0)
+                 {
+                   arecip = 0.0;
+                   dst_buf[x * bytes + alpha] = 0;
+                 }
+               else if (aval > 255.0)
+                 {
+                   arecip = 1.0 / aval;
+                   dst_buf[x * bytes + alpha] = 255;
+                 }
+               else
+                 {
+                   arecip = 1.0 / aval;
+                   dst_buf[x * bytes + alpha] = RINT (aval);
+                 }
 
-	       for (byte = 0; byte < alpha; byte++)
-		 {
-		   for (newval = 0, row = 0; row < LANCZOS_WIDTH2; row ++)
-		     newval += lv[row] * lanczos_sum_mul (src, lu,
-							  row, u, bytes,
-							  byte, alpha);
+               for (byte = 0; byte < alpha; byte++)
+                 {
+                   for (newval = 0, row = 0; row < LANCZOS_WIDTH2; row ++)
+                     newval += lv[row] * lanczos_sum_mul (src, lu,
+                                                          row, u, bytes,
+                                                          byte, alpha);
 
-		   newval *= arecip;
-		   dst_buf[x * bytes + byte] = CLAMP (newval, 0, 255);
-		 }
-	     }
-	   else
-	     {
-	       for (byte = 0; byte < bytes; byte++)
-		 {
-		   for (newval = 0, row = 0 ; row < LANCZOS_WIDTH2 ; row++ )
-		     newval += lv[row] * lanczos_sum (src, lu,
-						      row, u, bytes, byte);
-		   newval /= weight;
-		   dst_buf[x * bytes + byte] = CLAMP ((gint) newval, 0, 255);
-		 }
-	     }
-	}
+                   newval *= arecip;
+                   dst_buf[x * bytes + byte] = CLAMP (newval, 0, 255);
+                 }
+             }
+           else
+             {
+               for (byte = 0; byte < bytes; byte++)
+                 {
+                   for (newval = 0, row = 0 ; row < LANCZOS_WIDTH2 ; row++ )
+                     newval += lv[row] * lanczos_sum (src, lu,
+                                                      row, u, bytes, byte);
+                   newval /= weight;
+                   dst_buf[x * bytes + byte] = CLAMP ((gint) newval, 0, 255);
+                 }
+             }
+        }
 
       pixel_region_set_row (dstPR, 0, y , dst_width, dst_buf);
     }

@@ -74,7 +74,7 @@ typedef struct _PixelDataHandle     PixelDataHandle;
 /*  functions  */
 
 typedef void   (* TileValidateProc)  (TileManager *tm,
-				      Tile        *tile);
+                                      Tile        *tile);
 
 
 #endif /* __BASE_TYPES_H__ */

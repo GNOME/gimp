@@ -1,5 +1,4 @@
-/* -*- mode: c tab-width: 2; c-basic-indent: 2; indent-tabs-mode: nil -*-
- * The GIMP -- an image manipulation program
+/* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify

@@ -59,7 +59,7 @@ dialogs_show_toolbox_cmd_callback (GtkAction *action,
 void
 dialogs_create_toplevel_cmd_callback (GtkAction   *action,
                                       const gchar *value,
-				      gpointer     data)
+                                      gpointer     data)
 {
   GtkWidget *widget;
   return_if_no_widget (widget, data);
@@ -73,7 +73,7 @@ dialogs_create_toplevel_cmd_callback (GtkAction   *action,
 void
 dialogs_create_dockable_cmd_callback (GtkAction   *action,
                                       const gchar *value,
-				      gpointer     data)
+                                      gpointer     data)
 {
   GtkWidget *widget;
   return_if_no_widget (widget, data);

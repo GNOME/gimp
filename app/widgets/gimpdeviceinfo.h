@@ -32,8 +32,8 @@ G_BEGIN_DECLS
                                        GIMP_CONTEXT_PAINT_INFO_MASK | \
                                        GIMP_CONTEXT_FOREGROUND_MASK | \
                                        GIMP_CONTEXT_BACKGROUND_MASK | \
-			               GIMP_CONTEXT_BRUSH_MASK      | \
-			               GIMP_CONTEXT_PATTERN_MASK    | \
+                                       GIMP_CONTEXT_BRUSH_MASK      | \
+                                       GIMP_CONTEXT_PATTERN_MASK    | \
                                        GIMP_CONTEXT_GRADIENT_MASK)
 
 

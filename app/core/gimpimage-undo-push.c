@@ -806,7 +806,7 @@ struct _DrawableModUndo
   TileManager   *tiles;
   GimpImageType  type;
   gint           offset_x;
-  gint		 offset_y;
+  gint                 offset_y;
 };
 
 static gboolean undo_pop_drawable_mod  (GimpUndo            *undo,
@@ -997,12 +997,12 @@ undo_pop_mask (GimpUndo            *undo,
       pixel_region_init (&srcPR, GIMP_DRAWABLE (channel)->tiles,
                          x1, y1, (x2 - x1), (y2 - y1), FALSE);
       pixel_region_init (&destPR, new_tiles,
-			 0, 0, (x2 - x1), (y2 - y1), TRUE);
+                         0, 0, (x2 - x1), (y2 - y1), TRUE);
 
       copy_region (&srcPR, &destPR);
 
       pixel_region_init (&srcPR, GIMP_DRAWABLE (channel)->tiles,
-			 x1, y1, (x2 - x1), (y2 - y1), TRUE);
+                         x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
       color_region (&srcPR, &empty);
     }
@@ -1017,9 +1017,9 @@ undo_pop_mask (GimpUndo            *undo,
       height = tile_manager_height (mu->tiles);
 
       pixel_region_init (&srcPR, mu->tiles,
-			 0, 0, width, height, FALSE);
+                         0, 0, width, height, FALSE);
       pixel_region_init (&destPR, GIMP_DRAWABLE (channel)->tiles,
-			 mu->x, mu->y, width, height, TRUE);
+                         mu->x, mu->y, width, height, TRUE);
 
       copy_region (&srcPR, &destPR);
 
@@ -1449,7 +1449,7 @@ gimp_image_undo_push_layer_remove (GimpImage   *image,
 static gboolean
 undo_push_layer (GimpImage    *image,
                  const gchar  *undo_desc,
-		 GimpUndoType  type,
+                 GimpUndoType  type,
                  GimpLayer    *layer,
                  gint          prev_position,
                  GimpLayer    *prev_layer)
@@ -1510,7 +1510,7 @@ undo_pop_layer (GimpUndo            *undo,
                                                   layer);
 
       if (gimp_layer_is_floating_sel (layer))
-	{
+        {
           /*  invalidate the boundary *before* setting the
            *  floating_sel pointer to NULL because the selection's
            *  outline is affected by the floating_sel and won't be
@@ -1518,13 +1518,13 @@ undo_pop_layer (GimpUndo            *undo,
            */
           gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 
-	  undo->image->floating_sel = NULL;
+          undo->image->floating_sel = NULL;
 
-	  /*  activate the underlying drawable  */
-	  floating_sel_activate_drawable (layer);
+          /*  activate the underlying drawable  */
+          floating_sel_activate_drawable (layer);
 
           gimp_image_floating_selection_changed (undo->image);
-	}
+        }
       else if (layer == gimp_image_get_active_layer (undo->image))
         {
           if (lu->prev_layer)
@@ -1555,14 +1555,14 @@ undo_pop_layer (GimpUndo            *undo,
 
       /*  if this is a floating selection, set the fs pointer  */
       if (gimp_layer_is_floating_sel (layer))
-	undo->image->floating_sel = layer;
+        undo->image->floating_sel = layer;
 
       gimp_container_insert (undo->image->layers,
-			     GIMP_OBJECT (layer), lu->prev_position);
+                             GIMP_OBJECT (layer), lu->prev_position);
       gimp_image_set_active_layer (undo->image, layer);
 
       if (gimp_layer_is_floating_sel (layer))
-	gimp_image_floating_selection_changed (undo->image);
+        gimp_image_floating_selection_changed (undo->image);
 
       GIMP_ITEM (layer)->removed = FALSE;
 
@@ -1973,7 +1973,7 @@ gimp_image_undo_push_layer_mask_remove (GimpImage     *image,
 static gboolean
 undo_push_layer_mask (GimpImage     *image,
                       const gchar   *undo_desc,
-		      GimpUndoType   type,
+                      GimpUndoType   type,
                       GimpLayer     *layer,
                       GimpLayerMask *mask)
 {
@@ -2225,7 +2225,7 @@ gimp_image_undo_push_channel_remove (GimpImage   *image,
 static gboolean
 undo_push_channel (GimpImage    *image,
                    const gchar  *undo_desc,
-		   GimpUndoType  type,
+                   GimpUndoType  type,
                    GimpChannel  *channel,
                    gint          prev_position,
                    GimpChannel  *prev_channel)
@@ -2300,7 +2300,7 @@ undo_pop_channel (GimpUndo            *undo,
       cu->prev_channel = gimp_image_get_active_channel (undo->image);
 
       gimp_container_insert (undo->image->channels,
-			     GIMP_OBJECT (channel), cu->prev_position);
+                             GIMP_OBJECT (channel), cu->prev_position);
       gimp_image_set_active_channel (undo->image, channel);
 
       GIMP_ITEM (channel)->removed = FALSE;
@@ -2523,7 +2523,7 @@ gimp_image_undo_push_vectors_remove (GimpImage   *image,
 static gboolean
 undo_push_vectors (GimpImage    *image,
                    const gchar  *undo_desc,
-		   GimpUndoType  type,
+                   GimpUndoType  type,
                    GimpVectors  *vectors,
                    gint          prev_position,
                    GimpVectors  *prev_vectors)
@@ -2593,7 +2593,7 @@ undo_pop_vectors (GimpUndo            *undo,
       vu->prev_vectors = gimp_image_get_active_vectors (undo->image);
 
       gimp_container_insert (undo->image->vectors,
-			     GIMP_OBJECT (vectors), vu->prev_position);
+                             GIMP_OBJECT (vectors), vu->prev_position);
       gimp_image_set_active_vectors (undo->image, vectors);
 
       GIMP_ITEM (vectors)->removed = FALSE;
@@ -2895,9 +2895,9 @@ undo_pop_fs_to_layer (GimpUndo            *undo,
   gimp_object_name_changed (GIMP_OBJECT (fsu->floating_layer));
 
   gimp_drawable_update (GIMP_DRAWABLE (fsu->floating_layer),
-			0, 0,
-			GIMP_ITEM (fsu->floating_layer)->width,
-			GIMP_ITEM (fsu->floating_layer)->height);
+                        0, 0,
+                        GIMP_ITEM (fsu->floating_layer)->width,
+                        GIMP_ITEM (fsu->floating_layer)->height);
 
   gimp_image_floating_selection_changed (undo->image);
 
@@ -3207,27 +3207,27 @@ undo_pop_parasite (GimpUndo            *undo,
       pu->parasite = gimp_parasite_copy (gimp_image_parasite_find (undo->image,
                                                                    pu->name));
       if (tmp)
-	gimp_parasite_list_add (pu->image->parasites, tmp);
+        gimp_parasite_list_add (pu->image->parasites, tmp);
       else
-	gimp_parasite_list_remove (pu->image->parasites, pu->name);
+        gimp_parasite_list_remove (pu->image->parasites, pu->name);
     }
   else if (pu->item)
     {
       pu->parasite = gimp_parasite_copy (gimp_item_parasite_find (pu->item,
                                                                   pu->name));
       if (tmp)
-	gimp_parasite_list_add (pu->item->parasites, tmp);
+        gimp_parasite_list_add (pu->item->parasites, tmp);
       else
-	gimp_parasite_list_remove (pu->item->parasites, pu->name);
+        gimp_parasite_list_remove (pu->item->parasites, pu->name);
     }
   else
     {
       pu->parasite = gimp_parasite_copy (gimp_parasite_find (undo->image->gimp,
                                                              pu->name));
       if (tmp)
-	gimp_parasite_attach (undo->image->gimp, tmp);
+        gimp_parasite_attach (undo->image->gimp, tmp);
       else
-	gimp_parasite_detach (undo->image->gimp, pu->name);
+        gimp_parasite_detach (undo->image->gimp, pu->name);
     }
 
   if (tmp)

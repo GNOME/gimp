@@ -75,14 +75,14 @@ gimp_area_list_process (GSList   *list,
           new_list = g_slist_prepend (new_list, ga2);
         }
       else
-	{
-	  area->x1 = MIN (area->x1, ga2->x1);
-	  area->y1 = MIN (area->y1, ga2->y1);
-	  area->x2 = MAX (area->x2, ga2->x2);
-	  area->y2 = MAX (area->y2, ga2->y2);
+        {
+          area->x1 = MIN (area->x1, ga2->x1);
+          area->y1 = MIN (area->y1, ga2->y1);
+          area->x2 = MAX (area->x2, ga2->x2);
+          area->y2 = MAX (area->y2, ga2->y2);
 
-	  g_free (ga2);
-	}
+          g_free (ga2);
+        }
     }
 
   if (list)

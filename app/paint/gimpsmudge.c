@@ -128,11 +128,11 @@ gimp_smudge_paint (GimpPaintCore    *paint_core,
     case GIMP_PAINT_STATE_MOTION:
       /* initialization fails if the user starts outside the drawable */
       if (! smudge->initialized)
-	smudge->initialized = gimp_smudge_start (paint_core, drawable,
+        smudge->initialized = gimp_smudge_start (paint_core, drawable,
                                                  paint_options);
 
       if (smudge->initialized)
-	gimp_smudge_motion (paint_core, drawable, paint_options);
+        gimp_smudge_motion (paint_core, drawable, paint_options);
       break;
 
     case GIMP_PAINT_STATE_FINISH:
@@ -202,7 +202,7 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
     }
 
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-		     area->x, area->y, area->width, area->height, FALSE);
+                     area->x, area->y, area->width, area->height, FALSE);
 
   pixel_region_init_data (&smudge->accumPR, smudge->accum_data,
                           bytes, bytes * w,
@@ -259,7 +259,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
 
   /* srcPR will be the pixels under the current painthit from the drawable */
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-		     area->x, area->y, area->width, area->height, FALSE);
+                     area->x, area->y, area->width, area->height, FALSE);
 
   /* Enable pressure sensitive rate */
   if (pressure_options->rate)
@@ -309,9 +309,9 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
     opacity *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
 
   gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
-				  MIN (opacity, GIMP_OPACITY_OPAQUE),
-				  gimp_context_get_opacity (context),
-				  gimp_paint_options_get_brush_mode (paint_options),
+                                  MIN (opacity, GIMP_OPACITY_OPAQUE),
+                                  gimp_context_get_opacity (context),
+                                  gimp_paint_options_get_brush_mode (paint_options),
                                   GIMP_PAINT_INCREMENTAL);
 }
 

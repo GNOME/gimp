@@ -48,7 +48,7 @@ ChannelOptionsDialog * channel_options_dialog_new (GimpImage     *image,
                                                    const gchar   *help_id,
                                                    const gchar   *color_label,
                                                    const gchar   *opacity_label,
-						   gboolean       show_from_sel);
+                                                   gboolean       show_from_sel);
 
 
 #endif /* __CHANNEL_OPTIONS_DIALOG_H__ */

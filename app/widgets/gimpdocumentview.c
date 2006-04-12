@@ -105,15 +105,15 @@ gimp_document_view_new (GimpViewType     view_type,
                                    GDK_CONTROL_MASK,
                                    NULL);
   gimp_container_view_enable_dnd (editor->view,
-				  GTK_BUTTON (document_view->open_button),
-				  GIMP_TYPE_IMAGEFILE);
+                                  GTK_BUTTON (document_view->open_button),
+                                  GIMP_TYPE_IMAGEFILE);
 
   document_view->remove_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "documents",
                                    "documents-remove", NULL);
   gimp_container_view_enable_dnd (editor->view,
-				  GTK_BUTTON (document_view->remove_button),
-				  GIMP_TYPE_IMAGEFILE);
+                                  GTK_BUTTON (document_view->remove_button),
+                                  GIMP_TYPE_IMAGEFILE);
 
   gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "documents",
                                  "documents-clear", NULL);

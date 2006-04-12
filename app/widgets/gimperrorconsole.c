@@ -75,16 +75,16 @@ gimp_error_console_init (GimpErrorConsole *console)
   console->text_buffer = gtk_text_buffer_new (NULL);
 
   gtk_text_buffer_create_tag (console->text_buffer, "title",
-			      "weight", PANGO_WEIGHT_BOLD,
+                              "weight", PANGO_WEIGHT_BOLD,
                               "scale",  PANGO_SCALE_LARGE,
-			      NULL);
+                              NULL);
   gtk_text_buffer_create_tag (console->text_buffer, "message",
-			      NULL);
+                              NULL);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-				  GTK_POLICY_AUTOMATIC,
-				  GTK_POLICY_AUTOMATIC);
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
   gtk_container_add (GTK_CONTAINER (console), scrolled_window);
   gtk_widget_show (scrolled_window);
 
@@ -98,8 +98,8 @@ gimp_error_console_init (GimpErrorConsole *console)
   gtk_widget_show (console->text_view);
 
   g_signal_connect (console->text_view, "button-press-event",
-		    G_CALLBACK (gimp_error_console_button_press),
-		    console);
+                    G_CALLBACK (gimp_error_console_button_press),
+                    console);
 
   console->file_dialog = NULL;
 }

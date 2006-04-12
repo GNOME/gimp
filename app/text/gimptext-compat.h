@@ -26,14 +26,14 @@
 /* convenience functions that provide the 1.2 API, only used by the PDB */
 
 GimpLayer * text_render      (GimpImage    *image,
-			      GimpDrawable *drawable,
+                              GimpDrawable *drawable,
                               GimpContext  *context,
-			      gint          text_x,
-			      gint          text_y,
-			      const gchar  *fontname,
-			      const gchar  *text,
-			      gint          border,
-			      gboolean      antialias);
+                              gint          text_x,
+                              gint          text_y,
+                              const gchar  *fontname,
+                              const gchar  *text,
+                              gint          border,
+                              gboolean      antialias);
 gboolean    text_get_extents (const gchar  *fontname,
                               const gchar  *text,
                               gint         *width,

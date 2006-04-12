@@ -341,7 +341,7 @@ gimp_pdb_dialog_get_by_callback (GimpPdbDialogClass *klass,
 
       if (dialog->callback_name &&
           ! strcmp (callback_name, dialog->callback_name))
-	return dialog;
+        return dialog;
     }
 
   return NULL;

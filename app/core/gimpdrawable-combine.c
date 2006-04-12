@@ -105,15 +105,15 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
    */
   if (src1_tiles)
     pixel_region_init (&src1PR, src1_tiles,
-		       x1, y1, (x2 - x1), (y2 - y1), FALSE);
+                       x1, y1, (x2 - x1), (y2 - y1), FALSE);
   else
     pixel_region_init (&src1PR, gimp_drawable_get_tiles (drawable),
-		       x1, y1, (x2 - x1), (y2 - y1), FALSE);
+                       x1, y1, (x2 - x1), (y2 - y1), FALSE);
   pixel_region_init (&destPR, gimp_drawable_get_tiles (drawable),
-		     x1, y1, (x2 - x1), (y2 - y1), TRUE);
+                     x1, y1, (x2 - x1), (y2 - y1), TRUE);
   pixel_region_resize (src2PR,
-		       src2PR->x + (x1 - x), src2PR->y + (y1 - y),
-		       (x2 - x1), (y2 - y1));
+                       src2PR->x + (x1 - x), src2PR->y + (y1 - y),
+                       (x2 - x1), (y2 - y1));
 
   if (mask)
     {
@@ -127,13 +127,13 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
       my = y1 + offset_y;
 
       pixel_region_init (&maskPR,
-			 gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-			 mx, my,
-			 (x2 - x1), (y2 - y1),
-			 FALSE);
+                         gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
+                         mx, my,
+                         (x2 - x1), (y2 - y1),
+                         FALSE);
 
       combine_regions (&src1PR, src2PR, &destPR, &maskPR, NULL,
-		       opacity * 255.999,
+                       opacity * 255.999,
                        mode,
                        active_components,
                        operation);
@@ -141,7 +141,7 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
   else
     {
       combine_regions (&src1PR, src2PR, &destPR, NULL, NULL,
-		       opacity * 255.999,
+                       opacity * 255.999,
                        mode,
                        active_components,
                        operation);
@@ -226,12 +226,12 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
    *  If an alternative to using the drawable's data as src1 was provided...
    */
   pixel_region_init (&src1PR, gimp_drawable_get_tiles (drawable),
-		     x1, y1, (x2 - x1), (y2 - y1), FALSE);
+                     x1, y1, (x2 - x1), (y2 - y1), FALSE);
   pixel_region_init (&destPR, gimp_drawable_get_tiles (drawable),
-		     x1, y1, (x2 - x1), (y2 - y1), TRUE);
+                     x1, y1, (x2 - x1), (y2 - y1), TRUE);
   pixel_region_resize (src2PR,
-		       src2PR->x + (x1 - x), src2PR->y + (y1 - y),
-		       (x2 - x1), (y2 - y1));
+                       src2PR->x + (x1 - x), src2PR->y + (y1 - y),
+                       (x2 - x1), (y2 - y1));
 
   if (mask)
     {
@@ -247,10 +247,10 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
       my = y1 + offset_y;
 
       pixel_region_init (&mask2PR,
-			 gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-			 mx, my,
-			 (x2 - x1), (y2 - y1),
-			 FALSE);
+                         gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
+                         mx, my,
+                         (x2 - x1), (y2 - y1),
+                         FALSE);
 
       temp_data = g_malloc ((y2 - y1) * (x2 - x1));
 
@@ -277,7 +277,7 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
   else
     {
       combine_regions_replace (&src1PR, src2PR, &destPR, maskPR, NULL,
-			       opacity * 255.999,
+                               opacity * 255.999,
                                active_components,
                                operation);
     }

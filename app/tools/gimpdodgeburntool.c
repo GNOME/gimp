@@ -76,7 +76,7 @@ gimp_dodge_burn_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_dodge_burn_tool_class_init (GimpDodgeBurnToolClass *klass)
 {
-  GimpToolClass	*tool_class = GIMP_TOOL_CLASS (klass);
+  GimpToolClass        *tool_class = GIMP_TOOL_CLASS (klass);
 
   tool_class->modifier_key  = gimp_dodge_burn_tool_modifier_key;
   tool_class->cursor_update = gimp_dodge_burn_tool_cursor_update;

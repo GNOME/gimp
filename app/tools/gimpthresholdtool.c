@@ -142,7 +142,7 @@ gimp_threshold_tool_finalize (GObject *object)
 
 static gboolean
 gimp_threshold_tool_initialize (GimpTool    *tool,
-				GimpDisplay *display)
+                                GimpDisplay *display)
 {
   GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (tool);
   GimpDrawable      *drawable;

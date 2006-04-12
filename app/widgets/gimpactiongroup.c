@@ -399,7 +399,7 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
         label = gimp_strip_uline (label);
 
       action = gtk_toggle_action_new (entries[i].name, label, tooltip,
-				      entries[i].stock_id);
+                                      entries[i].stock_id);
 
       if (! group->mnemonics)
         g_free (label);
@@ -450,20 +450,20 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
         label = gimp_strip_uline (label);
 
       action = gtk_radio_action_new (entries[i].name, label, tooltip,
-				     entries[i].stock_id,
-				     entries[i].value);
+                                     entries[i].stock_id,
+                                     entries[i].value);
 
       if (! group->mnemonics)
         g_free (label);
 
       if (i == 0)
-	first_action = action;
+        first_action = action;
 
       gtk_radio_action_set_group (action, radio_group);
       radio_group = gtk_radio_action_get_group (action);
 
       if (value == entries[i].value)
-	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), TRUE);
+        gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), TRUE);
 
       gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
                                               GTK_ACTION (action),
@@ -508,8 +508,8 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
         label = gimp_strip_uline (label);
 
       action = gimp_enum_action_new (entries[i].name, label, tooltip,
-				     entries[i].stock_id,
-				     entries[i].value,
+                                     entries[i].stock_id,
+                                     entries[i].value,
                                      entries[i].value_variable);
 
       if (! group->mnemonics)

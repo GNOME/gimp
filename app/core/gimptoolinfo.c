@@ -204,18 +204,18 @@ gimp_tool_info_get_description (GimpViewable  *viewable,
 
 GimpToolInfo *
 gimp_tool_info_new (Gimp                *gimp,
-		    GType                tool_type,
+                    GType                tool_type,
                     GType                tool_options_type,
                     GimpContextPropMask  context_props,
-		    const gchar         *identifier,
-		    const gchar         *blurb,
-		    const gchar         *help,
-		    const gchar         *menu_path,
-		    const gchar         *menu_accel,
-		    const gchar         *help_domain,
-		    const gchar         *help_id,
+                    const gchar         *identifier,
+                    const gchar         *blurb,
+                    const gchar         *help,
+                    const gchar         *menu_path,
+                    const gchar         *menu_accel,
+                    const gchar         *help_domain,
+                    const gchar         *help_id,
                     const gchar         *paint_core_name,
-		    const gchar         *stock_id)
+                    const gchar         *stock_id)
 {
   GimpPaintInfo *paint_info;
   GimpToolInfo  *tool_info;
@@ -288,7 +288,7 @@ gimp_tool_info_new (Gimp                *gimp,
 
 void
 gimp_tool_info_set_standard (Gimp         *gimp,
-			     GimpToolInfo *tool_info)
+                             GimpToolInfo *tool_info)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (! tool_info || GIMP_IS_TOOL_INFO (tool_info));

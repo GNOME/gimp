@@ -394,11 +394,11 @@ palette_import_dialog_new (Gimp *gimp)
                     dialog);
 
   g_signal_connect (dialog->context, "gradient-changed",
-		    G_CALLBACK (palette_import_gradient_changed),
-		    dialog);
+                    G_CALLBACK (palette_import_gradient_changed),
+                    dialog);
   g_signal_connect (dialog->context, "image-changed",
-		    G_CALLBACK (palette_import_image_changed),
-		    dialog);
+                    G_CALLBACK (palette_import_image_changed),
+                    dialog);
   g_signal_connect (dialog->filename_entry, "filename-changed",
                     G_CALLBACK (palette_import_filename_changed),
                     dialog);
@@ -460,7 +460,7 @@ palette_import_gradient_changed (GimpContext  *context,
   if (gradient && dialog->import_type == GRADIENT_IMPORT)
     {
       gtk_entry_set_text (GTK_ENTRY (dialog->entry),
-			  GIMP_OBJECT (gradient)->name);
+                          GIMP_OBJECT (gradient)->name);
 
       palette_import_make_palette (dialog);
     }
@@ -551,7 +551,7 @@ import_dialog_drop_callback (GtkWidget    *widget,
 
 static void
 palette_import_grad_callback (GtkWidget    *widget,
-			      ImportDialog *dialog)
+                              ImportDialog *dialog)
 {
   GimpGradient *gradient;
 
@@ -578,7 +578,7 @@ palette_import_grad_callback (GtkWidget    *widget,
 
 static void
 palette_import_image_callback (GtkWidget    *widget,
-			       ImportDialog *dialog)
+                               ImportDialog *dialog)
 {
   GimpImage *image;
 
@@ -654,8 +654,8 @@ palette_import_columns_changed (GtkAdjustment *adj,
 
 static void
 palette_import_image_add (GimpContainer *container,
-			  GimpImage     *image,
-			  ImportDialog  *dialog)
+                          GimpImage     *image,
+                          ImportDialog  *dialog)
 {
   if (! GTK_WIDGET_IS_SENSITIVE (dialog->image_radio))
     {

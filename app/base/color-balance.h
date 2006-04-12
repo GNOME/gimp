@@ -40,7 +40,7 @@ void   color_balance_range_reset          (ColorBalance     *cb,
 void   color_balance_create_lookup_tables (ColorBalance     *cb);
 void   color_balance                      (ColorBalance     *cb,
                                            PixelRegion      *srcPR,
-					   PixelRegion      *destPR);
+                                           PixelRegion      *destPR);
 
 
 #endif  /*  __COLOR_BALANCE_H__  */

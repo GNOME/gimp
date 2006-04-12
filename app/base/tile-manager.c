@@ -34,8 +34,8 @@
 
 static inline gint
 tile_manager_get_tile_num (TileManager *tm,
-		           gint         xpixel,
-		           gint         ypixel)
+                           gint         xpixel,
+                           gint         ypixel)
 {
   if ((xpixel < 0) || (xpixel >= tm->width) ||
       (ypixel < 0) || (ypixel >= tm->height))
@@ -47,8 +47,8 @@ tile_manager_get_tile_num (TileManager *tm,
 
 TileManager *
 tile_manager_new (gint toplevel_width,
-		  gint toplevel_height,
-		  gint bpp)
+                  gint toplevel_height,
+                  gint bpp)
 {
   TileManager *tm;
   gint         width;
@@ -126,7 +126,7 @@ tile_manager_unref (TileManager *tm)
 
 void
 tile_manager_set_validate_proc (TileManager      *tm,
-				TileValidateProc  proc)
+                                TileValidateProc  proc)
 {
   g_return_if_fail (tm != NULL);
 
@@ -136,10 +136,10 @@ tile_manager_set_validate_proc (TileManager      *tm,
 
 Tile *
 tile_manager_get_tile (TileManager *tm,
-		       gint         xpixel,
-		       gint         ypixel,
-		       gint         wantread,
-		       gint         wantwrite)
+                       gint         xpixel,
+                       gint         ypixel,
+                       gint         wantread,
+                       gint         wantwrite)
 {
   g_return_val_if_fail (tm != NULL, NULL);
 
@@ -150,9 +150,9 @@ tile_manager_get_tile (TileManager *tm,
 
 Tile *
 tile_manager_get (TileManager *tm,
-		  gint         tile_num,
-		  gint         wantread,
-		  gint         wantwrite)
+                  gint         tile_num,
+                  gint         wantread,
+                  gint         wantwrite)
 {
   Tile **tiles;
   Tile **tile_ptr;
@@ -181,25 +181,25 @@ tile_manager_get (TileManager *tm,
       bottom_tile = tm->height - ((nrows - 1) * TILE_HEIGHT);
 
       for (i = 0, k = 0; i < nrows; i++)
-	{
-	  for (j = 0; j < ncols; j++, k++)
-	    {
+        {
+          for (j = 0; j < ncols; j++, k++)
+            {
               Tile *new = g_new (Tile, 1);
 
-	      tile_init (new, tm->bpp);
-	      tile_attach (new, tm, k);
+              tile_init (new, tm->bpp);
+              tile_attach (new, tm, k);
 
-	      if (j == (ncols - 1))
-		new->ewidth = right_tile;
+              if (j == (ncols - 1))
+                new->ewidth = right_tile;
 
-	      if (i == (nrows - 1))
-		new->eheight = bottom_tile;
+              if (i == (nrows - 1))
+                new->eheight = bottom_tile;
 
               new->size = new->ewidth * new->eheight * new->bpp;
 
-	      tiles[k] = new;
-	    }
-	}
+              tiles[k] = new;
+            }
+        }
     }
 
   tile_ptr = &tm->tiles[tile_num];
@@ -219,23 +219,23 @@ tile_manager_get (TileManager *tm,
     {
       TILE_MUTEX_LOCK (*tile_ptr);
       if (wantwrite)
-	{
-	  if ((*tile_ptr)->share_count > 1)
-	    {
-	      /* Copy-on-write required */
-	      Tile *new = g_new (Tile, 1);
+        {
+          if ((*tile_ptr)->share_count > 1)
+            {
+              /* Copy-on-write required */
+              Tile *new = g_new (Tile, 1);
 
-	      tile_init (new, (*tile_ptr)->bpp);
+              tile_init (new, (*tile_ptr)->bpp);
 
-	      new->ewidth  = (*tile_ptr)->ewidth;
-	      new->eheight = (*tile_ptr)->eheight;
-	      new->valid   = (*tile_ptr)->valid;
+              new->ewidth  = (*tile_ptr)->ewidth;
+              new->eheight = (*tile_ptr)->eheight;
+              new->valid   = (*tile_ptr)->valid;
 
               new->size    = new->ewidth * new->eheight * new->bpp;
-	      new->data    = g_new (guchar, new->size);
+              new->data    = g_new (guchar, new->size);
 
-	      if (!new->valid)
-		g_warning ("Oh boy, r/w tile is invalid... we suck. "
+              if (!new->valid)
+                g_warning ("Oh boy, r/w tile is invalid... we suck. "
                            "Please report.");
 
               if ((*tile_ptr)->rowhint)
@@ -243,33 +243,33 @@ tile_manager_get (TileManager *tm,
                                              new->eheight *
                                              sizeof (TileRowHint));
 
-	      if ((*tile_ptr)->data)
-		{
-		  memcpy (new->data, (*tile_ptr)->data, new->size);
-		}
-	      else
-		{
-		  tile_lock (*tile_ptr);
-		  memcpy (new->data, (*tile_ptr)->data, new->size);
-		  tile_release (*tile_ptr, FALSE);
-		}
+              if ((*tile_ptr)->data)
+                {
+                  memcpy (new->data, (*tile_ptr)->data, new->size);
+                }
+              else
+                {
+                  tile_lock (*tile_ptr);
+                  memcpy (new->data, (*tile_ptr)->data, new->size);
+                  tile_release (*tile_ptr, FALSE);
+                }
 
-	      tile_detach (*tile_ptr, tm, tile_num);
-	      TILE_MUTEX_LOCK (new);
-	      tile_attach (new, tm, tile_num);
-	      *tile_ptr = new;
-	    }
+              tile_detach (*tile_ptr, tm, tile_num);
+              TILE_MUTEX_LOCK (new);
+              tile_attach (new, tm, tile_num);
+              *tile_ptr = new;
+            }
 
-	  (*tile_ptr)->write_count++;
-	  (*tile_ptr)->dirty = TRUE;
-	}
+          (*tile_ptr)->write_count++;
+          (*tile_ptr)->dirty = TRUE;
+        }
 #ifdef DEBUG_TILE_MANAGER
       else
-	{
-	  if ((*tile_ptr)->write_count)
-	    g_printerr ("STINK! r/o on r/w tile (%d)\n",
+        {
+          if ((*tile_ptr)->write_count)
+            g_printerr ("STINK! r/o on r/w tile (%d)\n",
                         (*tile_ptr)->write_count);
-	}
+        }
 #endif
 
       TILE_MUTEX_UNLOCK (*tile_ptr);
@@ -300,7 +300,7 @@ tile_manager_get_async (TileManager *tm,
 
 void
 tile_manager_validate (TileManager *tm,
-		       Tile        *tile)
+                       Tile        *tile)
 {
   g_return_if_fail (tm != NULL);
   g_return_if_fail (tile != NULL);
@@ -317,7 +317,7 @@ tile_manager_validate (TileManager *tm,
 
 void
 tile_manager_invalidate_tiles (TileManager *tm,
-			       Tile        *toplevel_tile)
+                               Tile        *toplevel_tile)
 {
   gdouble x, y;
   gint    row, col;
@@ -344,9 +344,9 @@ tile_manager_invalidate_tiles (TileManager *tm,
 
 void
 tile_invalidate_tile (Tile        **tile_ptr,
-		      TileManager  *tm,
-		      gint          xpixel,
-		      gint          ypixel)
+                      TileManager  *tm,
+                      gint          xpixel,
+                      gint          ypixel)
 {
   gint tile_num;
 
@@ -362,8 +362,8 @@ tile_invalidate_tile (Tile        **tile_ptr,
 
 void
 tile_invalidate (Tile        **tile_ptr,
-		 TileManager  *tm,
-		 gint          tile_num)
+                 TileManager  *tm,
+                 gint          tile_num)
 {
   Tile *tile = *tile_ptr;
 
@@ -416,9 +416,9 @@ leave:
 
 void
 tile_manager_map_tile (TileManager *tm,
-		       gint         xpixel,
-		       gint         ypixel,
-		       Tile        *srctile)
+                       gint         xpixel,
+                       gint         ypixel,
+                       Tile        *srctile)
 {
   gint tile_num;
 
@@ -437,8 +437,8 @@ tile_manager_map_tile (TileManager *tm,
 
 void
 tile_manager_map (TileManager *tm,
-		  gint         tile_num,
-		  Tile        *srctile)
+                  gint         tile_num,
+                  Tile        *srctile)
 {
   Tile **tiles;
   Tile **tile_ptr;
@@ -473,28 +473,28 @@ tile_manager_map (TileManager *tm,
       bottom_tile = tm->height - ((nrows - 1) * TILE_HEIGHT);
 
       for (i = 0, k = 0; i < nrows; i++)
-	{
-	  for (j = 0; j < ncols; j++, k++)
-	    {
+        {
+          for (j = 0; j < ncols; j++, k++)
+            {
               Tile *new = g_new (Tile, 1);
 
 #ifdef DEBUG_TILE_MANAGER
-	      g_printerr (",");
+              g_printerr (",");
 #endif
-	      tile_init (new, tm->bpp);
-	      tile_attach (new, tm, k);
+              tile_init (new, tm->bpp);
+              tile_attach (new, tm, k);
 
-	      if (j == (ncols - 1))
-		new->ewidth = right_tile;
+              if (j == (ncols - 1))
+                new->ewidth = right_tile;
 
-	      if (i == (nrows - 1))
-		new->eheight = bottom_tile;
+              if (i == (nrows - 1))
+                new->eheight = bottom_tile;
 
               new->size = new->ewidth * new->eheight * new->bpp;
 
-	      tiles[k] = new;
-	    }
-	}
+              tiles[k] = new;
+            }
+        }
     }
 
   tile_ptr = &tm->tiles[tile_num];
@@ -512,7 +512,7 @@ tile_manager_map (TileManager *tm,
       (*tile_ptr)->bpp     != srctile->bpp)
     {
       g_warning ("tile_manager_map: nonconformant map (%p -> %p)",
-		 srctile, *tile_ptr);
+                 srctile, *tile_ptr);
     }
   tile_detach (*tile_ptr, tm, tile_num);
 
@@ -538,7 +538,7 @@ tile_manager_map (TileManager *tm,
 
 void
 tile_manager_set_user_data (TileManager *tm,
-			    gpointer     user_data)
+                            gpointer     user_data)
 {
   g_return_if_fail (tm != NULL);
 
@@ -579,8 +579,8 @@ tile_manager_bpp (const TileManager *tm)
 
 void
 tile_manager_get_offsets (const TileManager *tm,
-			  gint              *x,
-			  gint              *y)
+                          gint              *x,
+                          gint              *y)
 {
   g_return_if_fail (tm != NULL);
   g_return_if_fail (x != NULL && y != NULL);
@@ -591,8 +591,8 @@ tile_manager_get_offsets (const TileManager *tm,
 
 void
 tile_manager_set_offsets (TileManager *tm,
-			  gint         x,
-			  gint         y)
+                          gint         x,
+                          gint         y)
 {
   g_return_if_fail (tm != NULL);
 
@@ -642,9 +642,9 @@ tile_manager_get_memsize (const TileManager *tm,
 
 void
 tile_manager_get_tile_coordinates (TileManager *tm,
-				   Tile        *tile,
-				   gint        *x,
-				   gint        *y)
+                                   Tile        *tile,
+                                   gint        *x,
+                                   gint        *y)
 {
   TileLink *tl;
 
@@ -669,8 +669,8 @@ tile_manager_get_tile_coordinates (TileManager *tm,
 
 void
 tile_manager_map_over_tile (TileManager *tm,
-			    Tile        *tile,
-			    Tile        *srctile)
+                            Tile        *tile,
+                            Tile        *srctile)
 {
   TileLink *tl;
 
@@ -695,12 +695,12 @@ tile_manager_map_over_tile (TileManager *tm,
 
 PixelDataHandle *
 request_pixel_data (TileManager *tm,
-		    gint         x1,
-		    gint	 y1,
-		    gint	 x2,
-		    gint	 y2,
-		    gboolean	 wantread,
-		    gboolean     wantwrite)
+                    gint         x1,
+                    gint         y1,
+                    gint         x2,
+                    gint         y2,
+                    gboolean         wantread,
+                    gboolean     wantwrite)
 {
   PixelDataHandlePrivate *pdh;
   guint tile_num_1, tile_num_2;
@@ -738,8 +738,8 @@ request_pixel_data (TileManager *tm,
       pdh->tile = NULL;
 
       if (wantread)
-	read_pixel_data (tm, x1, y1, x2, y2,
-			 pdh->public.data, pdh->public.stride);
+        read_pixel_data (tm, x1, y1, x2, y2,
+                         pdh->public.data, pdh->public.stride);
     }
   return (PixelDataHandle *) pdh;
 }
@@ -752,8 +752,8 @@ release_pixel_data (PixelDataHandle *xpdh)
   if (pdh->local_buffer)
     {
       if (pdh->writeable)
-	write_pixel_data (pdh->tm, pdh->x1, pdh->y1, pdh->x2, pdh->y2,
-			  pdh->public.data, pdh->public.stride);
+        write_pixel_data (pdh->tm, pdh->x1, pdh->y1, pdh->x2, pdh->y2,
+                          pdh->public.data, pdh->public.stride);
       g_free (pdh->public.data);
     }
   else
@@ -766,12 +766,12 @@ release_pixel_data (PixelDataHandle *xpdh)
 
 void
 read_pixel_data (TileManager *tm,
-		 gint         x1,
-		 gint         y1,
-		 gint         x2,
-		 gint         y2,
-		 guchar      *buffer,
-		 guint        stride)
+                 gint         x1,
+                 gint         y1,
+                 gint         x2,
+                 gint         y2,
+                 guchar      *buffer,
+                 guint        stride)
 {
   Tile   *t;
   guchar *s, *d;
@@ -782,39 +782,39 @@ read_pixel_data (TileManager *tm,
   for (y = y1; y <= y2; y += TILE_HEIGHT - (y % TILE_HEIGHT))
     for (x = x1; x <= x2; x += TILE_WIDTH - (x % TILE_WIDTH))
       {
-	t = tile_manager_get_tile (tm, x, y, TRUE, FALSE);
-	s = tile_data_pointer (t, x % TILE_WIDTH, y % TILE_HEIGHT);
-	d = buffer + stride * (y - y1) + tm->bpp * (x - x1);
+        t = tile_manager_get_tile (tm, x, y, TRUE, FALSE);
+        s = tile_data_pointer (t, x % TILE_WIDTH, y % TILE_HEIGHT);
+        d = buffer + stride * (y - y1) + tm->bpp * (x - x1);
 
-	rows = tile_eheight (t) - y % TILE_HEIGHT;
-	if (rows > (y2 - y + 1))
-	  rows = y2 - y + 1;
+        rows = tile_eheight (t) - y % TILE_HEIGHT;
+        if (rows > (y2 - y + 1))
+          rows = y2 - y + 1;
 
-	cols = tile_ewidth (t) - x % TILE_WIDTH;
-	if (cols > (x2 - x + 1))
-	  cols = x2 - x + 1;
+        cols = tile_ewidth (t) - x % TILE_WIDTH;
+        if (cols > (x2 - x + 1))
+          cols = x2 - x + 1;
 
-	srcstride = tile_ewidth (t) * tile_bpp (t);
+        srcstride = tile_ewidth (t) * tile_bpp (t);
 
-	while (rows --)
-	  {
-	    memcpy (d, s, cols * tm->bpp);
-	    s += srcstride;
-	    d += stride;
-	  }
+        while (rows --)
+          {
+            memcpy (d, s, cols * tm->bpp);
+            s += srcstride;
+            d += stride;
+          }
 
-	tile_release (t, FALSE);
+        tile_release (t, FALSE);
       }
 }
 
 void
 write_pixel_data (TileManager  *tm,
-		  gint          x1,
-		  gint          y1,
-		  gint          x2,
-		  gint          y2,
-		  const guchar *buffer,
-		  guint         stride)
+                  gint          x1,
+                  gint          y1,
+                  gint          x2,
+                  gint          y2,
+                  const guchar *buffer,
+                  guint         stride)
 {
   Tile         *t;
   const guchar *s;
@@ -826,35 +826,35 @@ write_pixel_data (TileManager  *tm,
   for (y = y1; y <= y2; y += TILE_HEIGHT - (y % TILE_HEIGHT))
     for (x = x1; x <= x2; x += TILE_WIDTH - (x % TILE_WIDTH))
       {
-	t = tile_manager_get_tile (tm, x, y, TRUE, TRUE);
-	s = buffer + stride * (y - y1) + tm->bpp * (x - x1);
-	d = tile_data_pointer (t, x % TILE_WIDTH, y % TILE_HEIGHT);
-	rows = tile_eheight (t) - y % TILE_HEIGHT;
-	if (rows > (y2 - y + 1))
-	  rows = y2 - y + 1;
+        t = tile_manager_get_tile (tm, x, y, TRUE, TRUE);
+        s = buffer + stride * (y - y1) + tm->bpp * (x - x1);
+        d = tile_data_pointer (t, x % TILE_WIDTH, y % TILE_HEIGHT);
+        rows = tile_eheight (t) - y % TILE_HEIGHT;
+        if (rows > (y2 - y + 1))
+          rows = y2 - y + 1;
 
-	cols = tile_ewidth (t) - x % TILE_WIDTH;
-	if (cols > (x2 - x + 1))
-	  cols = x2 - x + 1;
+        cols = tile_ewidth (t) - x % TILE_WIDTH;
+        if (cols > (x2 - x + 1))
+          cols = x2 - x + 1;
 
-	dststride = tile_ewidth (t) * tile_bpp (t);
+        dststride = tile_ewidth (t) * tile_bpp (t);
 
-	while (rows --)
-	  {
-	    memcpy (d, s, cols * tm->bpp);
-	    s += stride;
-	    d += dststride;
-	  }
+        while (rows --)
+          {
+            memcpy (d, s, cols * tm->bpp);
+            s += stride;
+            d += dststride;
+          }
 
-	tile_release (t, TRUE);
+        tile_release (t, TRUE);
       }
 }
 
 void
 read_pixel_data_1 (TileManager *tm,
-		   gint	         x,
-		   gint          y,
-		   guchar       *buffer)
+                   gint                 x,
+                   gint          y,
+                   guchar       *buffer)
 {
   if (x >= 0 && y >= 0 && x < tm->width && y < tm->height)
     {
@@ -894,9 +894,9 @@ read_pixel_data_1 (TileManager *tm,
 
 void
 write_pixel_data_1 (TileManager  *tm,
-		    gint          x,
-		    gint          y,
-		    const guchar *buffer)
+                    gint          x,
+                    gint          y,
+                    const guchar *buffer)
 {
   Tile   *tile;
   guchar *dest;

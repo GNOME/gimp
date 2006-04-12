@@ -171,8 +171,8 @@ gimp_undo_editor_set_image (GimpImageEditor *image_editor,
       gimp_undo_editor_clear (editor);
 
       g_signal_handlers_disconnect_by_func (image_editor->image,
-					    gimp_undo_editor_undo_event,
-					    editor);
+                                            gimp_undo_editor_undo_event,
+                                            editor);
     }
 
   GIMP_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, image);
@@ -183,8 +183,8 @@ gimp_undo_editor_set_image (GimpImageEditor *image_editor,
         gimp_undo_editor_fill (editor);
 
       g_signal_connect (image_editor->image, "undo-event",
-			G_CALLBACK (gimp_undo_editor_undo_event),
-			editor);
+                        G_CALLBACK (gimp_undo_editor_undo_event),
+                        editor);
     }
 }
 

@@ -142,13 +142,13 @@ gimp_brush_core_class_init (GimpBrushCoreClass *klass)
 
   core_signals[SET_BRUSH] =
     g_signal_new ("set-brush",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (GimpBrushCoreClass, set_brush),
-		  NULL, NULL,
-		  gimp_marshal_VOID__OBJECT,
-		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_BRUSH);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpBrushCoreClass, set_brush),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_BRUSH);
 
   object_class->finalize  = gimp_brush_core_finalize;
 
@@ -285,8 +285,8 @@ gimp_brush_core_pre_paint (GimpPaintCore    *paint_core,
        * pixmap to select.)
        */
       if (paint_core->last_coords.x == paint_core->cur_coords.x &&
-	  paint_core->last_coords.y == paint_core->cur_coords.y &&
-	  ! gimp_brush_want_null_motion (core->main_brush,
+          paint_core->last_coords.y == paint_core->cur_coords.y &&
+          ! gimp_brush_want_null_motion (core->main_brush,
                                          &paint_core->last_coords,
                                          &paint_core->cur_coords))
         {
@@ -321,7 +321,7 @@ gimp_brush_core_post_paint (GimpPaintCore    *paint_core,
 
 static gboolean
 gimp_brush_core_start (GimpPaintCore    *paint_core,
-		       GimpDrawable     *drawable,
+                       GimpDrawable     *drawable,
                        GimpPaintOptions *paint_options,
                        GimpCoords       *coords)
 {
@@ -374,7 +374,7 @@ gimp_avoid_exact_integer (gdouble *x)
 
 static void
 gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
-			     GimpDrawable     *drawable,
+                             GimpDrawable     *drawable,
                              GimpPaintOptions *paint_options,
                              guint32           time)
 {
@@ -418,11 +418,11 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
   /* calculate the distance traveled in the coordinate space of the brush */
   mag = gimp_vector2_length (&(core->brush->x_axis));
   xd  = gimp_vector2_inner_product (&delta_vec,
-				    &(core->brush->x_axis)) / (mag * mag);
+                                    &(core->brush->x_axis)) / (mag * mag);
 
   mag = gimp_vector2_length (&(core->brush->y_axis));
   yd  = gimp_vector2_inner_product (&delta_vec,
-				    &(core->brush->y_axis)) / (mag * mag);
+                                    &(core->brush->y_axis)) / (mag * mag);
 
   dist    = 0.5 * sqrt (xd * xd + yd * yd);
   total   = dist + paint_core->distance;
@@ -487,7 +487,7 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
        */
 
       if (num_points == 0 && (delta_vec.x == 0 || delta_vec.y == 0))
-	return;
+        return;
     }
   else if (fabs (st_factor) < EPSILON)
     {
@@ -602,12 +602,12 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
                                          p * delta_wheel);
 
       if (core->jitter > 0.0)
-	{
+        {
           gdouble jitter_x;
           gdouble jitter_y;
 
-	  jitter_x = g_random_double_range (-core->jitter, core->jitter);
-	  jitter_y = g_random_double_range (-core->jitter, core->jitter);
+          jitter_x = g_random_double_range (-core->jitter, core->jitter);
+          jitter_y = g_random_double_range (-core->jitter, core->jitter);
 
           paint_core->cur_coords.x += jitter_x * core->brush->x_axis.x;
           paint_core->cur_coords.y += jitter_y * core->brush->y_axis.y;
@@ -727,9 +727,9 @@ gimp_brush_core_set_brush (GimpBrushCore *core,
 
 void
 gimp_brush_core_paste_canvas (GimpBrushCore            *core,
-                              GimpDrawable	       *drawable,
-                              gdouble		        brush_opacity,
-                              gdouble		        image_opacity,
+                              GimpDrawable               *drawable,
+                              gdouble                        brush_opacity,
+                              gdouble                        image_opacity,
                               GimpLayerModeEffects      paint_mode,
                               GimpBrushApplicationMode  brush_hardness,
                               GimpPaintApplicationMode  mode)
@@ -771,11 +771,11 @@ gimp_brush_core_paste_canvas (GimpBrushCore            *core,
  */
 void
 gimp_brush_core_replace_canvas (GimpBrushCore            *core,
-				GimpDrawable	         *drawable,
-				gdouble                   brush_opacity,
-				gdouble                   image_opacity,
-				GimpBrushApplicationMode  brush_hardness,
-				GimpPaintApplicationMode  mode)
+                                GimpDrawable                 *drawable,
+                                gdouble                   brush_opacity,
+                                gdouble                   image_opacity,
+                                GimpBrushApplicationMode  brush_hardness,
+                                GimpPaintApplicationMode  mode)
 {
   MaskBuf *brush_mask = gimp_brush_core_get_brush_mask (core,
                                                         brush_hardness,
@@ -811,7 +811,7 @@ gimp_brush_core_replace_canvas (GimpBrushCore            *core,
 
 static void
 gimp_brush_core_invalidate_cache (GimpBrush     *brush,
-				  GimpBrushCore *core)
+                                  GimpBrushCore *core)
 {
   /* Make sure we don't cache data for a brush that has changed */
 
@@ -846,9 +846,9 @@ gimp_brush_core_calc_brush_size (GimpBrushCore *core,
       gdouble ratio;
 
       if (scale < 1 / 256)
-	ratio = 1 / 16;
+        ratio = 1 / 16;
       else
-	ratio = sqrt (scale);
+        ratio = sqrt (scale);
 
       *width  = MAX ((gint) (mask->width  * ratio + 0.5), 1);
       *height = MAX ((gint) (mask->height * ratio + 0.5), 1);
@@ -857,7 +857,7 @@ gimp_brush_core_calc_brush_size (GimpBrushCore *core,
 
 static inline void
 rotate_pointers (gulong  **p,
-		 guint32   n)
+                 guint32   n)
 {
   guint32  i;
   gulong  *tmp;
@@ -873,8 +873,8 @@ rotate_pointers (gulong  **p,
 static MaskBuf *
 gimp_brush_core_subsample_mask (GimpBrushCore *core,
                                 MaskBuf       *mask,
-				gdouble        x,
-				gdouble        y)
+                                gdouble        x,
+                                gdouble        y)
 {
   MaskBuf    *dest;
   gdouble     left;
@@ -932,7 +932,7 @@ gimp_brush_core_subsample_mask (GimpBrushCore *core,
   if (mask == core->last_brush_mask && ! core->cache_invalid)
     {
       if (core->kernel_brushes[index2][index1])
-	return core->kernel_brushes[index2][index1];
+        return core->kernel_brushes[index2][index1];
     }
   else
     {
@@ -1041,9 +1041,9 @@ gimp_brush_core_pressurize_mask (GimpBrushCore *core,
    *    low pressure      medium pressure     high pressure
    *
    *         |                   /                 --
-   *         |    		/                 /
-   *        /     	       /                 |
-   *      --                  /	                 |
+   *         |                    /                 /
+   *        /                    /                 |
+   *      --                  /                         |
    */
   {
     static gdouble  map[256];
@@ -1074,7 +1074,7 @@ gimp_brush_core_pressurize_mask (GimpBrushCore *core,
             map[i] = s / c;
             s += c * ds;
             c += s * ds;
-	}
+        }
 
         for (i = 0; i < 256; i++)
           mapi[i] = (gint) (255 * (1 - map[i] / map[0]));

@@ -45,14 +45,14 @@
 
 
 static void    dump_gimprc_system   (GimpConfig       *rc,
-				     GimpConfigWriter *writer,
+                                     GimpConfigWriter *writer,
                                      gint              fd);
 static void    dump_gimprc_manpage  (GimpConfig       *rc,
-				     GimpConfigWriter *writer,
+                                     GimpConfigWriter *writer,
                                      gint              fd);
 static gchar * dump_describe_param  (GParamSpec       *param_spec);
 static void    dump_with_linebreaks (gint              fd,
-				     const gchar      *text);
+                                     const gchar      *text);
 
 
 gboolean
@@ -71,7 +71,7 @@ gimp_config_dump (GimpConfigDumpFormat  format)
 
     case GIMP_CONFIG_DUMP_GIMPRC:
       gimp_config_writer_comment (writer,
-				  "Dump of the GIMP default configuration");
+                                  "Dump of the GIMP default configuration");
       gimp_config_writer_linefeed (writer);
       gimp_config_serialize_properties (rc, writer);
       gimp_config_writer_linefeed (writer);
@@ -110,7 +110,7 @@ static const gchar *system_gimprc_header =
 
 static void
 dump_gimprc_system (GimpConfig       *rc,
-		    GimpConfigWriter *writer,
+                    GimpConfigWriter *writer,
                     gint              fd)
 {
   GObjectClass  *klass;
@@ -137,10 +137,10 @@ dump_gimprc_system (GimpConfig       *rc,
 
       comment = dump_describe_param (prop_spec);
       if (comment)
-	{
-	  gimp_config_writer_comment (writer, comment);
-	  g_free (comment);
-	}
+        {
+          gimp_config_writer_comment (writer, comment);
+          g_free (comment);
+        }
 
       gimp_config_writer_comment_mode (writer, TRUE);
       gimp_config_writer_linefeed (writer);
@@ -243,7 +243,7 @@ static const gchar *man_page_footer =
 
 static void
 dump_gimprc_manpage (GimpConfig       *rc,
-		     GimpConfigWriter *writer,
+                     GimpConfigWriter *writer,
                      gint              fd)
 {
   GObjectClass  *klass;
@@ -270,15 +270,15 @@ dump_gimprc_manpage (GimpConfig       *rc,
       write (fd, ".TP\n", strlen (".TP\n"));
 
       if (gimp_config_serialize_property (rc, prop_spec, writer))
-	{
-	  write (fd, "\n", 1);
+        {
+          write (fd, "\n", 1);
 
-	  desc = dump_describe_param (prop_spec);
+          desc = dump_describe_param (prop_spec);
 
-	  dump_with_linebreaks (fd, desc);
-	  write (fd, "\n", 1);
+          dump_with_linebreaks (fd, desc);
+          write (fd, "\n", 1);
 
-	  g_free (desc);
+          g_free (desc);
         }
     }
 
@@ -333,7 +333,7 @@ dump_describe_param (GParamSpec *param_spec)
       g_warning ("FIXME: Property '%s' has no blurb.", param_spec->name);
 
       blurb = g_strdup_printf ("The %s property has no description.",
-			       param_spec->name);
+                               param_spec->name);
     }
 
   type = param_spec->value_type;
@@ -341,65 +341,65 @@ dump_describe_param (GParamSpec *param_spec)
   if (g_type_is_a (type, GIMP_TYPE_RGB))
     {
       values =
-	"The color is specified in the form (color-rgba red green blue alpha) "
-	"with channel values as floats between 0.0 and 1.0.";
+        "The color is specified in the form (color-rgba red green blue alpha) "
+        "with channel values as floats between 0.0 and 1.0.";
     }
   else if (g_type_is_a (type, GIMP_TYPE_MEMSIZE))
     {
       values =
-	"The integer size can contain a suffix of 'B', 'K', 'M' or 'G' which "
-	"makes GIMP interpret the size as being specified in bytes, kilobytes, "
-	"megabytes or gigabytes. If no suffix is specified the size defaults "
-	"to being specified in kilobytes.";
+        "The integer size can contain a suffix of 'B', 'K', 'M' or 'G' which "
+        "makes GIMP interpret the size as being specified in bytes, kilobytes, "
+        "megabytes or gigabytes. If no suffix is specified the size defaults "
+        "to being specified in kilobytes.";
     }
   else if (g_type_is_a (type, GIMP_TYPE_CONFIG_PATH))
     {
       switch (gimp_param_spec_config_path_type (param_spec))
-	{
-	case GIMP_CONFIG_PATH_FILE:
-	  values = "This is a single filename.";
-	  break;
+        {
+        case GIMP_CONFIG_PATH_FILE:
+          values = "This is a single filename.";
+          break;
 
-	case GIMP_CONFIG_PATH_FILE_LIST:
-	  switch (G_SEARCHPATH_SEPARATOR)
-	    {
-	    case ':':
-	      values = "This is a colon-separated list of files.";
-	      break;
-	    case ';':
-	      values = "This is a semicolon-separated list of files.";
-	      break;
-	    default:
-	      g_warning ("unhandled G_SEARCHPATH_SEPARATOR value");
-	      break;
-	    }
-	  break;
+        case GIMP_CONFIG_PATH_FILE_LIST:
+          switch (G_SEARCHPATH_SEPARATOR)
+            {
+            case ':':
+              values = "This is a colon-separated list of files.";
+              break;
+            case ';':
+              values = "This is a semicolon-separated list of files.";
+              break;
+            default:
+              g_warning ("unhandled G_SEARCHPATH_SEPARATOR value");
+              break;
+            }
+          break;
 
-	case GIMP_CONFIG_PATH_DIR:
-	  values = "This is a single folder.";
-	  break;
+        case GIMP_CONFIG_PATH_DIR:
+          values = "This is a single folder.";
+          break;
 
-	case GIMP_CONFIG_PATH_DIR_LIST:
-	  switch (G_SEARCHPATH_SEPARATOR)
-	    {
-	    case ':':
-	      values = "This is a colon-separated list of folders to search.";
-	      break;
-	    case ';':
-	      values = "This is a semicolon-separated list of folders to search.";
-	      break;
-	    default:
-	      g_warning ("unhandled G_SEARCHPATH_SEPARATOR value");
-	      break;
-	    }
-	  break;
-	}
+        case GIMP_CONFIG_PATH_DIR_LIST:
+          switch (G_SEARCHPATH_SEPARATOR)
+            {
+            case ':':
+              values = "This is a colon-separated list of folders to search.";
+              break;
+            case ';':
+              values = "This is a semicolon-separated list of folders to search.";
+              break;
+            default:
+              g_warning ("unhandled G_SEARCHPATH_SEPARATOR value");
+              break;
+            }
+          break;
+        }
     }
   else if (g_type_is_a (type, GIMP_TYPE_UNIT))
     {
       values =
-	"The unit can be one inches, millimeters, points or picas plus "
-	"those in your user units database.";
+        "The unit can be one inches, millimeters, points or picas plus "
+        "those in your user units database.";
     }
   else if (g_type_is_a (type, GIMP_TYPE_CONFIG))
     {
@@ -408,72 +408,72 @@ dump_describe_param (GParamSpec *param_spec)
   else
     {
       switch (G_TYPE_FUNDAMENTAL (type))
-	{
-	case G_TYPE_BOOLEAN:
-	  values = "Possible values are yes and no.";
-	  break;
-	case G_TYPE_INT:
-	case G_TYPE_UINT:
-	case G_TYPE_LONG:
-	case G_TYPE_ULONG:
-	  values = "This is an integer value.";
-	  break;
-	case G_TYPE_FLOAT:
-	case G_TYPE_DOUBLE:
-	  values = "This is a float value.";
-	  break;
-	case G_TYPE_STRING:
-	  /* eek */
-	  if (strcmp (g_param_spec_get_name (param_spec), "image-title-format")
-	      &&
-	      strcmp (g_param_spec_get_name (param_spec), "image-status-format"))
-	    {
-	      values = "This is a string value.";
-	    }
-	  else
-	    {
-	      values = display_format_description;
-	    }
-	  break;
-	case G_TYPE_ENUM:
-	  {
-	    GEnumClass *enum_class;
-	    GEnumValue *enum_value;
-	    GString    *str;
-	    gint        i;
+        {
+        case G_TYPE_BOOLEAN:
+          values = "Possible values are yes and no.";
+          break;
+        case G_TYPE_INT:
+        case G_TYPE_UINT:
+        case G_TYPE_LONG:
+        case G_TYPE_ULONG:
+          values = "This is an integer value.";
+          break;
+        case G_TYPE_FLOAT:
+        case G_TYPE_DOUBLE:
+          values = "This is a float value.";
+          break;
+        case G_TYPE_STRING:
+          /* eek */
+          if (strcmp (g_param_spec_get_name (param_spec), "image-title-format")
+              &&
+              strcmp (g_param_spec_get_name (param_spec), "image-status-format"))
+            {
+              values = "This is a string value.";
+            }
+          else
+            {
+              values = display_format_description;
+            }
+          break;
+        case G_TYPE_ENUM:
+          {
+            GEnumClass *enum_class;
+            GEnumValue *enum_value;
+            GString    *str;
+            gint        i;
 
-	    enum_class = g_type_class_peek (type);
+            enum_class = g_type_class_peek (type);
 
-	    str = g_string_new (blurb);
+            str = g_string_new (blurb);
 
-	    g_string_append (str, "  Possible values are ");
+            g_string_append (str, "  Possible values are ");
 
-	    for (i = 0, enum_value = enum_class->values;
-		 i < enum_class->n_values;
-		 i++, enum_value++)
-	      {
-		g_string_append (str, enum_value->value_nick);
+            for (i = 0, enum_value = enum_class->values;
+                 i < enum_class->n_values;
+                 i++, enum_value++)
+              {
+                g_string_append (str, enum_value->value_nick);
 
-		switch (enum_class->n_values - i)
-		  {
-		  case 1:
-		    g_string_append_c (str, '.');
-		    break;
-		  case 2:
-		    g_string_append (str, " and ");
-		    break;
-		  default:
-		    g_string_append (str, ", ");
-		    break;
-		  }
-	      }
+                switch (enum_class->n_values - i)
+                  {
+                  case 1:
+                    g_string_append_c (str, '.');
+                    break;
+                  case 2:
+                    g_string_append (str, " and ");
+                    break;
+                  default:
+                    g_string_append (str, ", ");
+                    break;
+                  }
+              }
 
-	    return g_string_free (str, FALSE);
-	  }
-	  break;
-	default:
-	  break;
-	}
+            return g_string_free (str, FALSE);
+          }
+          break;
+        default:
+          break;
+        }
     }
 
   if (!values)
@@ -487,7 +487,7 @@ dump_describe_param (GParamSpec *param_spec)
 
 static void
 dump_with_linebreaks (gint         fd,
-		      const gchar *text)
+                      const gchar *text)
 {
   gint len = strlen (text);
 
@@ -515,7 +515,7 @@ dump_with_linebreaks (gint         fd,
       write (fd, "\n", 1);
 
       if (*t == '\n')
-	write (fd, ".br\n", 4);
+        write (fd, ".br\n", 4);
 
       i++;
 

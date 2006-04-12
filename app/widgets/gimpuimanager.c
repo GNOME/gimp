@@ -139,32 +139,32 @@ gimp_ui_manager_class_init (GimpUIManagerClass *klass)
 
   manager_signals[UPDATE] =
     g_signal_new ("update",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (GimpUIManagerClass, update),
-		  NULL, NULL,
-		  gimp_marshal_VOID__POINTER,
-		  G_TYPE_NONE, 1,
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpUIManagerClass, update),
+                  NULL, NULL,
+                  gimp_marshal_VOID__POINTER,
+                  G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 
   manager_signals[SHOW_TOOLTIP] =
     g_signal_new ("show-tooltip",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (GimpUIManagerClass, show_tooltip),
-		  NULL, NULL,
-		  gimp_marshal_VOID__STRING,
-		  G_TYPE_NONE, 1,
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpUIManagerClass, show_tooltip),
+                  NULL, NULL,
+                  gimp_marshal_VOID__STRING,
+                  G_TYPE_NONE, 1,
                   G_TYPE_STRING);
 
   manager_signals[HIDE_TOOLTIP] =
     g_signal_new ("hide-tooltip",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (GimpUIManagerClass, hide_tooltip),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0,
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpUIManagerClass, hide_tooltip),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0,
                   G_TYPE_NONE);
 
   g_object_class_install_property (object_class, PROP_NAME,

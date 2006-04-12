@@ -88,19 +88,19 @@ tool_manager_init (Gimp *gimp)
 
   tool_manager->image_clean_handler_id =
     gimp_container_add_handler (gimp->images, "clean",
-				G_CALLBACK (tool_manager_image_clean_dirty),
-				tool_manager);
+                                G_CALLBACK (tool_manager_image_clean_dirty),
+                                tool_manager);
 
   tool_manager->image_dirty_handler_id =
     gimp_container_add_handler (gimp->images, "dirty",
-				G_CALLBACK (tool_manager_image_clean_dirty),
-				tool_manager);
+                                G_CALLBACK (tool_manager_image_clean_dirty),
+                                tool_manager);
 
   user_context = gimp_get_user_context (gimp);
 
   g_signal_connect (user_context, "tool-changed",
-		    G_CALLBACK (tool_manager_tool_changed),
-		    tool_manager);
+                    G_CALLBACK (tool_manager_tool_changed),
+                    tool_manager);
 }
 
 void
@@ -114,9 +114,9 @@ tool_manager_exit (Gimp *gimp)
   tool_manager_set (gimp, NULL);
 
   gimp_container_remove_handler (gimp->images,
-				 tool_manager->image_clean_handler_id);
+                                 tool_manager->image_clean_handler_id);
   gimp_container_remove_handler (gimp->images,
-				 tool_manager->image_dirty_handler_id);
+                                 tool_manager->image_dirty_handler_id);
 
   if (tool_manager->active_tool)
     g_object_unref (tool_manager->active_tool);
@@ -138,7 +138,7 @@ tool_manager_get_active (Gimp *gimp)
 
 void
 tool_manager_select_tool (Gimp     *gimp,
-			  GimpTool *tool)
+                          GimpTool *tool)
 {
   GimpToolManager *tool_manager;
 
@@ -167,7 +167,7 @@ tool_manager_select_tool (Gimp     *gimp,
 
 void
 tool_manager_push_tool (Gimp     *gimp,
-			GimpTool *tool)
+                        GimpTool *tool)
 {
   GimpToolManager *tool_manager;
 
@@ -179,7 +179,7 @@ tool_manager_push_tool (Gimp     *gimp,
   if (tool_manager->active_tool)
     {
       tool_manager->tool_stack = g_slist_prepend (tool_manager->tool_stack,
-						  tool_manager->active_tool);
+                                                  tool_manager->active_tool);
 
       g_object_ref (tool_manager->tool_stack->data);
     }
@@ -199,12 +199,12 @@ tool_manager_pop_tool (Gimp *gimp)
   if (tool_manager->tool_stack)
     {
       tool_manager_select_tool (gimp,
-				GIMP_TOOL (tool_manager->tool_stack->data));
+                                GIMP_TOOL (tool_manager->tool_stack->data));
 
       g_object_unref (tool_manager->tool_stack->data);
 
       tool_manager->tool_stack = g_slist_remove (tool_manager->tool_stack,
-						 tool_manager->active_tool);
+                                                 tool_manager->active_tool);
     }
 }
 
@@ -237,8 +237,8 @@ tool_manager_initialize_active (Gimp        *gimp,
 
 void
 tool_manager_control_active (Gimp           *gimp,
-			     GimpToolAction  action,
-			     GimpDisplay    *display)
+                             GimpToolAction  action,
+                             GimpDisplay    *display)
 {
   GimpToolManager *tool_manager;
 
@@ -439,7 +439,7 @@ tool_manager_get (Gimp *gimp)
 
 static void
 tool_manager_set (Gimp            *gimp,
-		  GimpToolManager *tool_manager)
+                  GimpToolManager *tool_manager)
 {
   if (! tool_manager_quark)
     tool_manager_quark = g_quark_from_static_string ("gimp-tool-manager");
@@ -449,8 +449,8 @@ tool_manager_set (Gimp            *gimp,
 
 static void
 tool_manager_tool_changed (GimpContext  *user_context,
-			   GimpToolInfo *tool_info,
-			   gpointer      data)
+                           GimpToolInfo *tool_info,
+                           gpointer      data)
 {
   GimpToolManager *tool_manager = data;
   GimpTool        *new_tool     = NULL;
@@ -467,20 +467,20 @@ tool_manager_tool_changed (GimpContext  *user_context,
       g_signal_stop_emission_by_name (user_context, "tool-changed");
 
       if (G_TYPE_FROM_INSTANCE (tool_manager->active_tool) !=
-	  tool_info->tool_type)
-	{
-	  g_signal_handlers_block_by_func (user_context,
-					   tool_manager_tool_changed,
-					   data);
+          tool_info->tool_type)
+        {
+          g_signal_handlers_block_by_func (user_context,
+                                           tool_manager_tool_changed,
+                                           data);
 
-	  /*  explicitly set the current tool  */
-	  gimp_context_set_tool (user_context,
+          /*  explicitly set the current tool  */
+          gimp_context_set_tool (user_context,
                                  tool_manager->active_tool->tool_info);
 
-	  g_signal_handlers_unblock_by_func (user_context,
-					     tool_manager_tool_changed,
-					     data);
-	}
+          g_signal_handlers_unblock_by_func (user_context,
+                                             tool_manager_tool_changed,
+                                             data);
+        }
 
       return;
     }
@@ -494,7 +494,7 @@ tool_manager_tool_changed (GimpContext  *user_context,
   else
     {
       g_warning ("%s: tool_info->tool_type is no GimpTool subclass",
-		 G_STRFUNC);
+                 G_STRFUNC);
       return;
     }
 

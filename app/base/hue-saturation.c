@@ -65,43 +65,43 @@ hue_saturation_calculate_transfers (HueSaturation *hs)
   for (hue = 0; hue < 6; hue++)
     for (i = 0; i < 256; i++)
       {
-	value = (hs->hue[0] + hs->hue[hue + 1]) * 255.0 / 360.0;
-	if ((i + value) < 0)
-	  hs->hue_transfer[hue][i] = 255 + (i + value);
-	else if ((i + value) > 255)
-	  hs->hue_transfer[hue][i] = i + value - 255;
-	else
-	  hs->hue_transfer[hue][i] = i + value;
+        value = (hs->hue[0] + hs->hue[hue + 1]) * 255.0 / 360.0;
+        if ((i + value) < 0)
+          hs->hue_transfer[hue][i] = 255 + (i + value);
+        else if ((i + value) > 255)
+          hs->hue_transfer[hue][i] = i + value - 255;
+        else
+          hs->hue_transfer[hue][i] = i + value;
 
-	/*  Lightness  */
-	value = (hs->lightness[0] + hs->lightness[hue + 1]) * 127.0 / 100.0;
-	value = CLAMP (value, -255, 255);
+        /*  Lightness  */
+        value = (hs->lightness[0] + hs->lightness[hue + 1]) * 127.0 / 100.0;
+        value = CLAMP (value, -255, 255);
 
-	if (value < 0)
-	  hs->lightness_transfer[hue][i] = (guchar) ((i * (255 + value)) / 255);
-	else
-	  hs->lightness_transfer[hue][i] = (guchar) (i + ((255 - i) * value) / 255);
+        if (value < 0)
+          hs->lightness_transfer[hue][i] = (guchar) ((i * (255 + value)) / 255);
+        else
+          hs->lightness_transfer[hue][i] = (guchar) (i + ((255 - i) * value) / 255);
 
-	/*  Saturation  */
-	value = (hs->saturation[0] + hs->saturation[hue + 1]) * 255.0 / 100.0;
-	value = CLAMP (value, -255, 255);
+        /*  Saturation  */
+        value = (hs->saturation[0] + hs->saturation[hue + 1]) * 255.0 / 100.0;
+        value = CLAMP (value, -255, 255);
 
-	/* This change affects the way saturation is computed. With the
-	   old code (different code for value < 0), increasing the
-	   saturation affected muted colors very much, and bright colors
-	   less. With the new code, it affects muted colors and bright
-	   colors more or less evenly. For enhancing the color in photos,
-	   the new behavior is exactly what you want. It's hard for me
-	   to imagine a case in which the old behavior is better.
-	 */
-	hs->saturation_transfer[hue][i] = CLAMP ((i * (255 + value)) / 255, 0, 255);
+        /* This change affects the way saturation is computed. With the
+           old code (different code for value < 0), increasing the
+           saturation affected muted colors very much, and bright colors
+           less. With the new code, it affects muted colors and bright
+           colors more or less evenly. For enhancing the color in photos,
+           the new behavior is exactly what you want. It's hard for me
+           to imagine a case in which the old behavior is better.
+         */
+        hs->saturation_transfer[hue][i] = CLAMP ((i * (255 + value)) / 255, 0, 255);
       }
 }
 
 void
 hue_saturation (HueSaturation *hs,
                 PixelRegion   *srcPR,
-		PixelRegion   *destPR)
+                PixelRegion   *destPR)
 {
   const guchar *src, *s;
   guchar       *dest, *d;
@@ -130,12 +130,12 @@ hue_saturation (HueSaturation *hs,
       d = dest;
 
       while (w--)
-	{
+        {
           r = s[RED_PIX];
           g = s[GREEN_PIX];
           b = s[BLUE_PIX];
 
-	  gimp_rgb_to_hsl_int (&r, &g, &b);
+          gimp_rgb_to_hsl_int (&r, &g, &b);
 
           hue = (r + (128 / 6)) / 6;
 
@@ -186,18 +186,18 @@ hue_saturation (HueSaturation *hs,
               b = hs->lightness_transfer[hue][b];
             }
 
-	  gimp_hsl_to_rgb_int (&r, &g, &b);
+          gimp_hsl_to_rgb_int (&r, &g, &b);
 
-	  d[RED_PIX]   = r;
-	  d[GREEN_PIX] = g;
-	  d[BLUE_PIX]  = b;
+          d[RED_PIX]   = r;
+          d[GREEN_PIX] = g;
+          d[BLUE_PIX]  = b;
 
-	  if (alpha)
-	    d[ALPHA_PIX] = s[ALPHA_PIX];
+          if (alpha)
+            d[ALPHA_PIX] = s[ALPHA_PIX];
 
-	  s += srcPR->bytes;
-	  d += destPR->bytes;
-	}
+          s += srcPR->bytes;
+          d += destPR->bytes;
+        }
 
       src  += srcPR->rowstride;
       dest += destPR->rowstride;

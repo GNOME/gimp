@@ -209,29 +209,29 @@ color_history_add (const GimpRGB *rgb)
   for (i = 0; i < COLOR_HISTORY_SIZE; i++)
     {
       if (gimp_rgba_distance (&color_history[i], rgb) < 0.0001)
-	{
-	  shift_begin = i;
+        {
+          shift_begin = i;
 
-	  goto doit;
-	}
+          goto doit;
+        }
     }
 
   /*  if not, are there two equal colors?  */
   if (shift_begin == -1)
     {
       for (i = 0; i < COLOR_HISTORY_SIZE; i++)
-	{
-	  for (j = i + 1; j < COLOR_HISTORY_SIZE; j++)
-	    {
-	      if (gimp_rgba_distance (&color_history[i],
-				      &color_history[j]) < 0.0001)
-		{
-		  shift_begin = i;
+        {
+          for (j = i + 1; j < COLOR_HISTORY_SIZE; j++)
+            {
+              if (gimp_rgba_distance (&color_history[i],
+                                      &color_history[j]) < 0.0001)
+                {
+                  shift_begin = i;
 
-		  goto doit;
-		}
-	    }
-	}
+                  goto doit;
+                }
+            }
+        }
     }
 
   /*  if not, shift them all  */

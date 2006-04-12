@@ -239,14 +239,14 @@ gimp_toolbox_constructor (GType                  type,
   for (list = gdk_display_list_devices (display); list; list = list->next)
     {
       if (! ((GdkDevice *) (list->data))->has_cursor)
-	break;
+        break;
     }
 
   if (! list)  /* all devices have cursor */
     {
       g_signal_connect (toolbox, "motion-notify-event",
-			G_CALLBACK (toolbox_check_device),
-			context->gimp);
+                        G_CALLBACK (toolbox_check_device),
+                        context->gimp);
 
       gtk_widget_add_events (GTK_WIDGET (toolbox), GDK_POINTER_MOTION_MASK);
       gtk_widget_set_extension_events (GTK_WIDGET (toolbox),
@@ -287,9 +287,9 @@ gimp_toolbox_constructor (GType                  type,
                            toolbox->image_area, 0);
 
   g_signal_connect_object (context, "tool-changed",
-			   G_CALLBACK (toolbox_tool_changed),
-			   toolbox->tool_wbox,
-			   0);
+                           G_CALLBACK (toolbox_tool_changed),
+                           toolbox->tool_wbox,
+                           0);
 
   gimp_toolbox_dnd_init (GIMP_TOOLBOX (toolbox));
 
@@ -638,11 +638,11 @@ toolbox_create_tools (GimpToolbox *toolbox,
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
       g_signal_connect (button, "toggled",
-			G_CALLBACK (toolbox_tool_button_toggled),
-			tool_info);
+                        G_CALLBACK (toolbox_tool_button_toggled),
+                        tool_info);
 
       g_signal_connect (button, "button-press-event",
-			G_CALLBACK (toolbox_tool_button_press),
+                        G_CALLBACK (toolbox_tool_button_press),
                         toolbox);
 
       if (GIMP_IMAGE_DOCK (toolbox)->ui_manager)
@@ -789,8 +789,8 @@ toolbox_area_notify (GimpGuiConfig *config,
 
 static void
 toolbox_tool_changed (GimpContext  *context,
-		      GimpToolInfo *tool_info,
-		      gpointer      data)
+                      GimpToolInfo *tool_info,
+                      gpointer      data)
 {
   if (tool_info)
     {
@@ -798,18 +798,18 @@ toolbox_tool_changed (GimpContext  *context,
                                                      TOOL_BUTTON_DATA_KEY);
 
       if (toolbox_button && ! GTK_TOGGLE_BUTTON (toolbox_button)->active)
-	{
-	  g_signal_handlers_block_by_func (toolbox_button,
-					   toolbox_tool_button_toggled,
-					   tool_info);
+        {
+          g_signal_handlers_block_by_func (toolbox_button,
+                                           toolbox_tool_button_toggled,
+                                           tool_info);
 
-	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toolbox_button),
+          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toolbox_button),
                                         TRUE);
 
-	  g_signal_handlers_unblock_by_func (toolbox_button,
-					     toolbox_tool_button_toggled,
-					     tool_info);
-	}
+          g_signal_handlers_unblock_by_func (toolbox_button,
+                                             toolbox_tool_button_toggled,
+                                             tool_info);
+        }
     }
 }
 
@@ -841,7 +841,7 @@ toolbox_tool_visible_notify (GimpToolInfo *tool_info,
 
 static void
 toolbox_tool_button_toggled (GtkWidget    *widget,
-			     GimpToolInfo *tool_info)
+                             GimpToolInfo *tool_info)
 {
   if (GTK_TOGGLE_BUTTON (widget)->active)
     gimp_context_set_tool (gimp_get_user_context (tool_info->gimp), tool_info);
@@ -849,8 +849,8 @@ toolbox_tool_button_toggled (GtkWidget    *widget,
 
 static gboolean
 toolbox_tool_button_press (GtkWidget      *widget,
-			   GdkEventButton *event,
-			   GimpToolbox    *toolbox)
+                           GdkEventButton *event,
+                           GimpToolbox    *toolbox)
 {
   if (event->type == GDK_2BUTTON_PRESS && event->button == 1)
     {
@@ -875,8 +875,8 @@ toolbox_tool_button_press (GtkWidget      *widget,
 
 static gboolean
 toolbox_check_device (GtkWidget *widget,
-		      GdkEvent  *event,
-		      Gimp      *gimp)
+                      GdkEvent  *event,
+                      Gimp      *gimp)
 {
   gimp_devices_check_change (gimp, event);
 

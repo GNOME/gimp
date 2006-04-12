@@ -182,8 +182,8 @@ gimp_brightness_contrast_tool_map (GimpImageMapTool *im_tool)
 
   brightness_contrast_lut_setup (bc_tool->lut,
                                  bc_tool->brightness / 255.0,
-				 bc_tool->contrast / 127.0,
-				 gimp_drawable_bytes (im_tool->drawable));
+                                 bc_tool->contrast / 127.0,
+                                 gimp_drawable_bytes (im_tool->drawable));
   gimp_image_map_apply (im_tool->image_map,
                         (GimpImageMapApplyFunc) gimp_lut_process,
                         bc_tool->lut);

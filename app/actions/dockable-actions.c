@@ -189,7 +189,7 @@ dockable_actions_update (GimpActionGroup *group,
       page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
 
       dockable = (GimpDockable *)
-	gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
+        gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
     }
   else if (GIMP_IS_DOCKABLE (data))
     {

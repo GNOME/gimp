@@ -115,14 +115,14 @@ gimp_image_view_new (GimpViewType     view_type,
     }
 
   gimp_container_view_enable_dnd (editor->view,
-				  GTK_BUTTON (image_view->raise_button),
-				  GIMP_TYPE_IMAGE);
+                                  GTK_BUTTON (image_view->raise_button),
+                                  GIMP_TYPE_IMAGE);
   gimp_container_view_enable_dnd (editor->view,
-				  GTK_BUTTON (image_view->new_button),
-				  GIMP_TYPE_IMAGE);
+                                  GTK_BUTTON (image_view->new_button),
+                                  GIMP_TYPE_IMAGE);
   gimp_container_view_enable_dnd (editor->view,
-				  GTK_BUTTON (image_view->delete_button),
-				  GIMP_TYPE_IMAGE);
+                                  GTK_BUTTON (image_view->delete_button),
+                                  GIMP_TYPE_IMAGE);
 
   gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager,
                           editor);

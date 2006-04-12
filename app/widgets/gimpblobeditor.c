@@ -108,9 +108,9 @@ gimp_blob_editor_init (GimpBlobEditor *editor)
   editor->active = FALSE;
 
   gtk_widget_add_events (GTK_WIDGET (editor),
-			 GDK_BUTTON_PRESS_MASK   |
+                         GDK_BUTTON_PRESS_MASK   |
                          GDK_BUTTON_RELEASE_MASK |
-			 GDK_POINTER_MOTION_MASK |
+                         GDK_POINTER_MOTION_MASK |
                          GDK_EXPOSURE_MASK);
 }
 
@@ -202,9 +202,9 @@ gimp_blob_editor_expose (GtkWidget      *widget,
 
   gdk_draw_rectangle (widget->window,
                       widget->style->bg_gc[widget->state],
-		      TRUE,	/* filled */
-		      rect.x,     rect.y,
-		      rect.width, rect.height);
+                      TRUE,        /* filled */
+                      rect.x,     rect.y,
+                      rect.width, rect.height);
   gtk_paint_shadow (widget->style, widget->window, widget->state,
                     GTK_SHADOW_OUT,
                     NULL, widget, NULL,
@@ -261,12 +261,12 @@ gimp_blob_editor_motion_notify (GtkWidget      *widget,
       rsquare = SQR (x) + SQR (y);
 
       if (rsquare > 0)
-	{
+        {
           gint     r0;
           gdouble  angle;
           gdouble  aspect;
 
-	  r0 = MIN (widget->allocation.width, widget->allocation.height) / 2;
+          r0 = MIN (widget->allocation.width, widget->allocation.height) / 2;
 
           angle  = atan2 (y, x);
           aspect = 10.0 * sqrt ((gdouble) rsquare / (r0 * r0)) / 0.85;
@@ -277,7 +277,7 @@ gimp_blob_editor_motion_notify (GtkWidget      *widget,
                         "blob-angle",  angle,
                         "blob-aspect", aspect,
                         NULL);
-	}
+        }
     }
 
   return TRUE;

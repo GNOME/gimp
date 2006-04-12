@@ -122,7 +122,7 @@ gimp_posterize_tool_finalize (GObject *object)
 
 static gboolean
 gimp_posterize_tool_initialize (GimpTool    *tool,
-				GimpDisplay *display)
+                                GimpDisplay *display)
 {
   GimpPosterizeTool *posterize_tool = GIMP_POSTERIZE_TOOL (tool);
   GimpDrawable      *drawable;
@@ -211,7 +211,7 @@ gimp_posterize_tool_reset (GimpImageMapTool *image_map_tool)
 
 static void
 posterize_levels_adjustment_update (GtkAdjustment     *adjustment,
-				    GimpPosterizeTool *posterize_tool)
+                                    GimpPosterizeTool *posterize_tool)
 {
   if (posterize_tool->levels != adjustment->value)
     {

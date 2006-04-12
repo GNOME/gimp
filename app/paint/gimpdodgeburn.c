@@ -149,10 +149,10 @@ gimp_dodge_burn_paint (GimpPaintCore    *paint_core,
 
     case GIMP_PAINT_STATE_FINISH:
       if (dodgeburn->lut)
-	{
-	  gimp_lut_free (dodgeburn->lut);
-	  dodgeburn->lut = NULL;
-	}
+        {
+          gimp_lut_free (dodgeburn->lut);
+          dodgeburn->lut = NULL;
+        }
       break;
     }
 }
@@ -239,9 +239,9 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
 
   /* Replace the newly dodgedburned area (canvas_buf) to the image */
   gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
-			          MIN (opacity, GIMP_OPACITY_OPAQUE),
-		                  gimp_context_get_opacity (context),
-			          gimp_paint_options_get_brush_mode (paint_options),
+                                  MIN (opacity, GIMP_OPACITY_OPAQUE),
+                                  gimp_context_get_opacity (context),
+                                  gimp_paint_options_get_brush_mode (paint_options),
                                   GIMP_PAINT_CONSTANT);
 
   g_free (temp_data);
@@ -281,8 +281,8 @@ gimp_dodge_burn_make_luts (GimpDodgeBurn     *dodgeburn,
     }
 
   gimp_lut_setup_exact (dodgeburn->lut,
-			lut_func, (gpointer) &exposure,
-			nchannels);
+                        lut_func, (gpointer) &exposure,
+                        nchannels);
 }
 
 static gfloat
@@ -348,9 +348,9 @@ gimp_dodge_burn_shadows_lut_func (gpointer  user_data,
     {
       factor = -0.333333 * exposure;
       if (value < factor)
-	new_value = 0;
+        new_value = 0;
       else /*factor <= value <=1*/
-	new_value = (value - factor)/(1 - factor);
+        new_value = (value - factor)/(1 - factor);
     }
 
   return new_value;

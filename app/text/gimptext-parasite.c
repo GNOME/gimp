@@ -108,14 +108,14 @@ gimp_text_gdyntext_parasite_name (void)
 
 enum
 {
-  TEXT	          = 0,
+  TEXT                  = 0,
   ANTIALIAS       = 1,
-  ALIGNMENT	  = 2,
-  ROTATION	  = 3,
-  LINE_SPACING	  = 4,
-  COLOR		  = 5,
+  ALIGNMENT          = 2,
+  ROTATION          = 3,
+  LINE_SPACING          = 4,
+  COLOR                  = 5,
   LAYER_ALIGNMENT = 6,
-  XLFD		  = 7,
+  XLFD                  = 7,
   NUM_PARAMS
 };
 
@@ -179,7 +179,7 @@ gimp_text_from_gdyntext_parasite (const GimpParasite *parasite)
 
   spacing = atof (params[LINE_SPACING]);
 
-  color	= strtol (params[COLOR], NULL, 16);
+  color        = strtol (params[COLOR], NULL, 16);
   gimp_rgba_set_uchar (&rgb, color >> 16, color >> 8, color, 255);
 
   retval = g_object_new (GIMP_TYPE_TEXT,

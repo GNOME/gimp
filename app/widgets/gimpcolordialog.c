@@ -142,13 +142,13 @@ gimp_color_dialog_init (GimpColorDialog *dialog)
   button = gtk_button_new ();
   gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 1, 0, 1);
   gimp_help_set_help_data (button,
-			   _("Add the current color to the color history"),
-			   NULL);
+                           _("Add the current color to the color history"),
+                           NULL);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
-		    G_CALLBACK (gimp_color_history_add_clicked),
-		    dialog);
+                    G_CALLBACK (gimp_color_history_add_clicked),
+                    dialog);
 
   arrow = gtk_arrow_new (GTK_ARROW_RIGHT, GTK_SHADOW_OUT);
   gtk_container_add (GTK_CONTAINER (button), arrow);
@@ -177,12 +177,12 @@ gimp_color_dialog_init (GimpColorDialog *dialog)
       gtk_widget_show (dialog->history[i]);
 
       g_signal_connect (button, "clicked",
-			G_CALLBACK (gimp_color_history_color_clicked),
-			dialog);
+                        G_CALLBACK (gimp_color_history_color_clicked),
+                        dialog);
 
       g_signal_connect (dialog->history[i], "color-changed",
-			G_CALLBACK (gimp_color_history_color_changed),
-			GINT_TO_POINTER (i));
+                        G_CALLBACK (gimp_color_history_color_changed),
+                        GINT_TO_POINTER (i));
     }
 }
 

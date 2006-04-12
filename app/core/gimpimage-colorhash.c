@@ -77,7 +77,7 @@ gimp_image_color_hash_exit (void)
 
 void
 gimp_image_color_hash_invalidate (GimpImage *image,
-				  gint       index)
+                                  gint       index)
 {
   gint i;
 
@@ -86,7 +86,7 @@ gimp_image_color_hash_invalidate (GimpImage *image,
   if (index == -1) /* invalidate all entries */
     {
       for (i = 0; i < HASH_TABLE_SIZE; i++)
-	if (color_hash_table[i].image == image)
+        if (color_hash_table[i].image == image)
           {
             color_hash_table[i].pixel  = 0;
             color_hash_table[i].index  = 0;
@@ -96,8 +96,8 @@ gimp_image_color_hash_invalidate (GimpImage *image,
   else
     {
       for (i = 0; i < HASH_TABLE_SIZE; i++)
-	if (color_hash_table[i].image == image &&
-	    color_hash_table[i].index  == index)
+        if (color_hash_table[i].image == image &&
+            color_hash_table[i].index  == index)
           {
             color_hash_table[i].pixel  = 0;
             color_hash_table[i].index  = 0;
@@ -108,9 +108,9 @@ gimp_image_color_hash_invalidate (GimpImage *image,
 
 gint
 gimp_image_color_hash_rgb_to_indexed (const GimpImage *image,
-				      gint             r,
-				      gint             g,
-				      gint             b)
+                                      gint             r,
+                                      gint             g,
+                                      gint             b)
 {
   guchar *cmap;
   gint    num_cols;
@@ -144,22 +144,22 @@ gimp_image_color_hash_rgb_to_indexed (const GimpImage *image,
       col        = cmap;
 
       for (i = 0; i < num_cols; i++)
-	{
-	  diff = r - *col++;
-	  sum  = diff * diff;
+        {
+          diff = r - *col++;
+          sum  = diff * diff;
 
-	  diff = g - *col++;
-	  sum += diff * diff;
+          diff = g - *col++;
+          sum += diff * diff;
 
-	  diff = b - *col++;
-	  sum += diff * diff;
+          diff = b - *col++;
+          sum += diff * diff;
 
-	  if (sum < max)
-	    {
-	      cmap_index = i;
-	      max = sum;
-	    }
-	}
+          if (sum < max)
+            {
+              cmap_index = i;
+              max = sum;
+            }
+        }
 
       /*  update the hash table  */
       color_hash_table[hash_index].pixel  = pixel;

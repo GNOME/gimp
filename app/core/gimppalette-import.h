@@ -22,14 +22,14 @@
 
 GimpPalette * gimp_palette_import_from_gradient      (GimpGradient *gradient,
                                                       gboolean      reverse,
-						      const gchar  *palette_name,
-						      gint          n_colors);
+                                                      const gchar  *palette_name,
+                                                      gint          n_colors);
 GimpPalette * gimp_palette_import_from_image         (GimpImage    *image,
-						      const gchar  *palette_name,
-						      gint          n_colors,
-						      gint          treshold);
+                                                      const gchar  *palette_name,
+                                                      gint          n_colors,
+                                                      gint          treshold);
 GimpPalette * gimp_palette_import_from_indexed_image (GimpImage    *image,
-						      const gchar  *palette_name);
+                                                      const gchar  *palette_name);
 GimpPalette * gimp_palette_import_from_drawable      (GimpDrawable *drawable,
                                                       const gchar  *palette_name,
                                                       gint          n_colors,

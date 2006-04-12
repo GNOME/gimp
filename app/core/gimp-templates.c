@@ -50,7 +50,7 @@ gimp_templates_load (Gimp *gimp)
     g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
 
   if (!gimp_config_deserialize_file (GIMP_CONFIG (gimp->templates),
-				     filename, NULL, &error))
+                                     filename, NULL, &error))
     {
       if (error->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
         {
@@ -101,9 +101,9 @@ gimp_templates_save (Gimp *gimp)
     g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
 
   if (! gimp_config_serialize_to_file (GIMP_CONFIG (gimp->templates),
-				       filename,
-				       header, footer, NULL,
-				       &error))
+                                       filename,
+                                       header, footer, NULL,
+                                       &error))
     {
       g_message (error->message);
       g_error_free (error);

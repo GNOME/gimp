@@ -128,16 +128,16 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
 
   /*  color the pixels  */
   color_pixels (temp_buf_data (area), col,
-		area->width * area->height, area->bytes);
+                area->width * area->height, area->bytes);
 
   if (pressure_options->opacity)
     opacity *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
 
   gimp_brush_core_paste_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
-				MIN (opacity, GIMP_OPACITY_OPAQUE),
-				gimp_context_get_opacity (context),
-				(options->anti_erase ?
+                                MIN (opacity, GIMP_OPACITY_OPAQUE),
+                                gimp_context_get_opacity (context),
+                                (options->anti_erase ?
                                  GIMP_ANTI_ERASE_MODE : GIMP_ERASE_MODE),
-				gimp_paint_options_get_brush_mode (paint_options),
-				paint_options->application_mode);
+                                gimp_paint_options_get_brush_mode (paint_options),
+                                paint_options->application_mode);
 }

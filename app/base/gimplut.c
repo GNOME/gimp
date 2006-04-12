@@ -55,9 +55,9 @@ gimp_lut_free (GimpLut *lut)
 
 void
 gimp_lut_setup (GimpLut     *lut,
-		GimpLutFunc  func,
-		void        *user_data,
-		gint         nchannels)
+                GimpLutFunc  func,
+                void        *user_data,
+                gint         nchannels)
 {
   guint   i, v;
   gdouble val;
@@ -65,7 +65,7 @@ gimp_lut_setup (GimpLut     *lut,
   if (lut->luts)
     {
       for (i = 0; i < lut->nchannels; i++)
-	g_free (lut->luts[i]);
+        g_free (lut->luts[i]);
 
       g_free (lut->luts);
     }
@@ -78,29 +78,29 @@ gimp_lut_setup (GimpLut     *lut,
       lut->luts[i] = g_new (guchar, 256);
 
       for (v = 0; v < 256; v++)
-	{
-	  /* to add gamma correction use func(v ^ g) ^ 1/g instead. */
-	  val = 255.0 * func (user_data, lut->nchannels, i, v/255.0) + 0.5;
+        {
+          /* to add gamma correction use func(v ^ g) ^ 1/g instead. */
+          val = 255.0 * func (user_data, lut->nchannels, i, v/255.0) + 0.5;
 
-	  lut->luts[i][v] = CLAMP (val, 0, 255);
-	}
+          lut->luts[i][v] = CLAMP (val, 0, 255);
+        }
     }
 }
 
 /*  see comment in gimplut.h  */
 void
 gimp_lut_setup_exact (GimpLut     *lut,
-		      GimpLutFunc  func,
-		      void        *user_data,
-		      gint         nchannels)
+                      GimpLutFunc  func,
+                      void        *user_data,
+                      gint         nchannels)
 {
   gimp_lut_setup (lut, func, user_data, nchannels);
 }
 
 void
 gimp_lut_process (GimpLut     *lut,
-		  PixelRegion *srcPR,
-		  PixelRegion *destPR)
+                  PixelRegion *srcPR,
+                  PixelRegion *destPR)
 {
   const guchar *src;
   guchar       *dest;
@@ -132,48 +132,48 @@ gimp_lut_process (GimpLut     *lut,
   while (h--)
     {
       switch (lut->nchannels)
-	{
-	case 1:
-	  while (width--)
-	    {
-	      *dest = lut0[*src];
-	      src++;
-	      dest++;
-	    }
-	  break;
-	case 2:
-	  while (width--)
-	    {
-	      dest[0] = lut0[src[0]];
-	      dest[1] = lut1[src[1]];
-	      src  += 2;
-	      dest += 2;
-	    }
-	  break;
-	case 3:
-	  while (width--)
-	    {
-	      dest[0] = lut0[src[0]];
-	      dest[1] = lut1[src[1]];
-	      dest[2] = lut2[src[2]];
-	      src  += 3;
-	      dest += 3;
-	    }
-	  break;
-	case 4:
-	  while (width--)
-	    {
-	      dest[0] = lut0[src[0]];
-	      dest[1] = lut1[src[1]];
-	      dest[2] = lut2[src[2]];
-	      dest[3] = lut3[src[3]];
-	      src  += 4;
-	      dest += 4;
-	    }
-	  break;
-	default:
-	  g_warning ("gimplut: Error: nchannels = %d\n", lut->nchannels);
-	}
+        {
+        case 1:
+          while (width--)
+            {
+              *dest = lut0[*src];
+              src++;
+              dest++;
+            }
+          break;
+        case 2:
+          while (width--)
+            {
+              dest[0] = lut0[src[0]];
+              dest[1] = lut1[src[1]];
+              src  += 2;
+              dest += 2;
+            }
+          break;
+        case 3:
+          while (width--)
+            {
+              dest[0] = lut0[src[0]];
+              dest[1] = lut1[src[1]];
+              dest[2] = lut2[src[2]];
+              src  += 3;
+              dest += 3;
+            }
+          break;
+        case 4:
+          while (width--)
+            {
+              dest[0] = lut0[src[0]];
+              dest[1] = lut1[src[1]];
+              dest[2] = lut2[src[2]];
+              dest[3] = lut3[src[3]];
+              src  += 4;
+              dest += 4;
+            }
+          break;
+        default:
+          g_warning ("gimplut: Error: nchannels = %d\n", lut->nchannels);
+        }
 
       width = srcPR->w;
       src  += src_r_i;
@@ -183,7 +183,7 @@ gimp_lut_process (GimpLut     *lut,
 
 void
 gimp_lut_process_inline (GimpLut     *lut,
-			 PixelRegion *srcPR)
+                         PixelRegion *srcPR)
 {
   guint   h, width, src_r_i;
   guchar *src;
@@ -212,44 +212,44 @@ gimp_lut_process_inline (GimpLut     *lut,
   while (h--)
     {
       switch (lut->nchannels)
-	{
-	case 1:
-	  while (width--)
-	    {
-	      *src = lut0[*src];
-	      src++;
-	    }
-	  break;
-	case 2:
-	  while (width--)
-	    {
-	      src[0] = lut0[src[0]];
-	      src[1] = lut1[src[1]];
-	      src  += 2;
-	    }
-	  break;
-	case 3:
-	  while (width--)
-	    {
-	      src[0] = lut0[src[0]];
-	      src[1] = lut1[src[1]];
-	      src[2] = lut2[src[2]];
-	      src  += 3;
-	    }
-	  break;
-	case 4:
-	  while (width--)
-	    {
-	      src[0] = lut0[src[0]];
-	      src[1] = lut1[src[1]];
-	      src[2] = lut2[src[2]];
-	      src[3] = lut3[src[3]];
-	      src  += 4;
-	    }
-	  break;
-	default:
-	  g_warning ("gimplut: Error: nchannels = %d\n", lut->nchannels);
-	}
+        {
+        case 1:
+          while (width--)
+            {
+              *src = lut0[*src];
+              src++;
+            }
+          break;
+        case 2:
+          while (width--)
+            {
+              src[0] = lut0[src[0]];
+              src[1] = lut1[src[1]];
+              src  += 2;
+            }
+          break;
+        case 3:
+          while (width--)
+            {
+              src[0] = lut0[src[0]];
+              src[1] = lut1[src[1]];
+              src[2] = lut2[src[2]];
+              src  += 3;
+            }
+          break;
+        case 4:
+          while (width--)
+            {
+              src[0] = lut0[src[0]];
+              src[1] = lut1[src[1]];
+              src[2] = lut2[src[2]];
+              src[3] = lut3[src[3]];
+              src  += 4;
+            }
+          break;
+        default:
+          g_warning ("gimplut: Error: nchannels = %d\n", lut->nchannels);
+        }
       width = srcPR->w;
       src  += src_r_i;
     }

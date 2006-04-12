@@ -30,10 +30,10 @@
 
 void
 pixel_surround_init (PixelSurround *ps,
-		     TileManager   *tm,
-		     gint           w,
-		     gint           h,
-		     const guchar   bg[MAX_CHANNELS])
+                     TileManager   *tm,
+                     gint           w,
+                     gint           h,
+                     const guchar   bg[MAX_CHANNELS])
 {
   gint i;
 
@@ -53,8 +53,8 @@ pixel_surround_init (PixelSurround *ps,
 
 guchar *
 pixel_surround_lock (PixelSurround *ps,
-		     gint           x,
-		     gint           y)
+                     gint           x,
+                     gint           y)
 {
   gint    i, j;
   guchar *k;
@@ -89,26 +89,26 @@ pixel_surround_lock (PixelSurround *ps,
   for (j = y; j < y + ps->h; ++j)
     {
       for (i = x; i < x + ps->w; ++i)
-	{
-	  Tile *tile = tile_manager_get_tile (ps->mgr, i, j, TRUE, FALSE);
+        {
+          Tile *tile = tile_manager_get_tile (ps->mgr, i, j, TRUE, FALSE);
 
-	  if (tile)
-	    {
-	      guchar *buff = tile_data_pointer (tile,
-						i % TILE_WIDTH,
-						j % TILE_HEIGHT);
+          if (tile)
+            {
+              guchar *buff = tile_data_pointer (tile,
+                                                i % TILE_WIDTH,
+                                                j % TILE_HEIGHT);
 
-	      for (k = buff; k < buff+ps->bpp; ++k, ++ptr)
+              for (k = buff; k < buff+ps->bpp; ++k, ++ptr)
                 *ptr = *k;
 
-	      tile_release (tile, FALSE);
-	    }
-	  else
-	    {
-	      for (k = ps->bg; k < ps->bg + ps->bpp; ++k, ++ptr)
+              tile_release (tile, FALSE);
+            }
+          else
+            {
+              for (k = ps->bg; k < ps->bg + ps->bpp; ++k, ++ptr)
                 *ptr = *k;
-	    }
-	}
+            }
+        }
     }
 
   ps->rowstride = ps->w * ps->bpp;

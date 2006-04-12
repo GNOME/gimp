@@ -31,8 +31,8 @@
 
 guint
 xcf_read_int32 (FILE    *fp,
-		guint32 *data,
-		gint     count)
+                guint32 *data,
+                gint     count)
 {
   guint total;
 
@@ -53,16 +53,16 @@ xcf_read_int32 (FILE    *fp,
 
 guint
 xcf_read_float (FILE   *fp,
-		gfloat *data,
-		gint    count)
+                gfloat *data,
+                gint    count)
 {
   return xcf_read_int32 (fp, (guint32 *) ((void *) data), count);
 }
 
 guint
 xcf_read_int8 (FILE   *fp,
-	       guint8 *data,
-	       gint    count)
+               guint8 *data,
+               gint    count)
 {
   guint total;
   gint  bytes;
@@ -82,8 +82,8 @@ xcf_read_int8 (FILE   *fp,
 
 guint
 xcf_read_string (FILE   *fp,
-		 gchar **data,
-		 gint    count)
+                 gchar **data,
+                 gint    count)
 {
   guint32 tmp;
   guint   total;

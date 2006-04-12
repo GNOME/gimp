@@ -79,23 +79,23 @@ GType             gimp_data_factory_get_type (void) G_GNUC_CONST;
 
 GimpDataFactory * gimp_data_factory_new      (Gimp                             *gimp,
                                               GType                             data_type,
-					      const gchar                      *path_property_name,
+                                              const gchar                      *path_property_name,
                                               const gchar                      *writable_property_name,
-					      const GimpDataFactoryLoaderEntry *loader_entries,
-					      gint                              n_loader_entries,
-					      GimpDataNewFunc                   new_func,
-					      GimpDataGetStandardFunc           standard_func);
+                                              const GimpDataFactoryLoaderEntry *loader_entries,
+                                              gint                              n_loader_entries,
+                                              GimpDataNewFunc                   new_func,
+                                              GimpDataGetStandardFunc           standard_func);
 
 void       gimp_data_factory_data_init         (GimpDataFactory  *factory,
-						gboolean          no_data);
+                                                gboolean          no_data);
 void       gimp_data_factory_data_refresh      (GimpDataFactory  *factory);
 void       gimp_data_factory_data_save         (GimpDataFactory  *factory);
 void       gimp_data_factory_data_free         (GimpDataFactory  *factory);
 
 GimpData * gimp_data_factory_data_new          (GimpDataFactory  *factory,
-						const gchar      *name);
+                                                const gchar      *name);
 GimpData * gimp_data_factory_data_duplicate    (GimpDataFactory  *factory,
-						GimpData         *data);
+                                                GimpData         *data);
 gboolean   gimp_data_factory_data_delete       (GimpDataFactory  *factory,
                                                 GimpData         *data,
                                                 gboolean          delete_from_disk,

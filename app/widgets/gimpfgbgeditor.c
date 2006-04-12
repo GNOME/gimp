@@ -108,12 +108,12 @@ gimp_fg_bg_editor_class_init (GimpFgBgEditorClass *klass)
 
   editor_signals[COLOR_CLICKED] =
     g_signal_new ("color-clicked",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpFgBgEditorClass, color_clicked),
-		  NULL, NULL,
-		  gimp_marshal_VOID__ENUM,
-		  G_TYPE_NONE, 1,
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpFgBgEditorClass, color_clicked),
+                  NULL, NULL,
+                  gimp_marshal_VOID__ENUM,
+                  G_TYPE_NONE, 1,
                   GIMP_TYPE_ACTIVE_COLOR);
 
   object_class->set_property         = gimp_fg_bg_editor_set_property;
@@ -400,13 +400,13 @@ gimp_fg_bg_editor_target (GimpFgBgEditor *editor,
   if (x > 0 && x < rect_w && y > 0 && y < rect_h)
     return FOREGROUND_AREA;
   else if (x > (width - rect_w)  && x < width  &&
-	   y > (height - rect_h) && y < height)
+           y > (height - rect_h) && y < height)
     return BACKGROUND_AREA;
   else if (x > 0      && x < (width - rect_w) &&
-	   y > rect_h && y < height)
+           y > rect_h && y < height)
     return DEFAULT_AREA;
   else if (x > rect_w && x < width &&
-	   y > 0      && y < (height - rect_h))
+           y > 0      && y < (height - rect_h))
     return SWAP_AREA;
 
   return INVALID_AREA;

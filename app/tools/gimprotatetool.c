@@ -142,7 +142,7 @@ gimp_rotate_tool_dialog (GimpTransformTool *tr_tool)
                              0.0, 0.5, button, 1, TRUE);
 
   g_signal_connect (rotate->angle_adj, "value-changed",
-		    G_CALLBACK (rotate_angle_changed),
+                    G_CALLBACK (rotate_angle_changed),
                     tr_tool);
 
   scale = gtk_hscale_new (GTK_ADJUSTMENT (rotate->angle_adj));

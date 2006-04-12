@@ -88,7 +88,7 @@ gimp_plug_in_action_class_init (GimpPlugInActionClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpPlugInActionClass, selected),
-		  NULL, NULL,
+                  NULL, NULL,
                   gimp_marshal_VOID__POINTER,
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);

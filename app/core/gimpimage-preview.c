@@ -108,8 +108,8 @@ gimp_image_get_popup_size (GimpViewable *viewable,
 
 TempBuf *
 gimp_image_get_preview (GimpViewable *viewable,
-			gint          width,
-			gint          height)
+                        gint          width,
+                        gint          height)
 {
   GimpImage *image = GIMP_IMAGE (viewable);
 
@@ -127,14 +127,14 @@ gimp_image_get_preview (GimpViewable *viewable,
     {
       /*  The hard way  */
       if (image->comp_preview)
-	temp_buf_free (image->comp_preview);
+        temp_buf_free (image->comp_preview);
 
       /*  Actually construct the composite preview from the layer previews!
        *  This might seem ridiculous, but it's actually the best way, given
        *  a number of unsavory alternatives.
        */
       image->comp_preview = gimp_image_get_new_preview (viewable,
-							 width, height);
+                                                         width, height);
 
       image->comp_preview_valid = TRUE;
 
@@ -144,8 +144,8 @@ gimp_image_get_preview (GimpViewable *viewable,
 
 TempBuf *
 gimp_image_get_new_preview (GimpViewable *viewable,
-			    gint          width,
-			    gint          height)
+                            gint          width,
+                            gint          height)
 {
   GimpImage   *image;
   GimpLayer   *layer;
@@ -201,25 +201,25 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 
       /*  only add layers that are visible to the list  */
       if (gimp_item_get_visible (GIMP_ITEM (layer)))
-	{
-	  /*  floating selections are added right above the layer
-	   *  they are attached to
-	   */
-	  if (gimp_layer_is_floating_sel (layer))
-	    {
-	      floating_sel = layer;
-	    }
-	  else
-	    {
-	      if (floating_sel &&
-		  floating_sel->fs.drawable == GIMP_DRAWABLE (layer))
-		{
-		  reverse_list = g_slist_prepend (reverse_list, floating_sel);
-		}
+        {
+          /*  floating selections are added right above the layer
+           *  they are attached to
+           */
+          if (gimp_layer_is_floating_sel (layer))
+            {
+              floating_sel = layer;
+            }
+          else
+            {
+              if (floating_sel &&
+                  floating_sel->fs.drawable == GIMP_DRAWABLE (layer))
+                {
+                  reverse_list = g_slist_prepend (reverse_list, floating_sel);
+                }
 
-	      reverse_list = g_slist_prepend (reverse_list, layer);
-	    }
-	}
+              reverse_list = g_slist_prepend (reverse_list, layer);
+            }
+        }
     }
 
   construct_flag = FALSE;
@@ -251,7 +251,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
       h = (gint) RINT (ratio * gimp_item_height (GIMP_ITEM (layer)));
 
       if (w < 1 || h < 1)
-	continue;
+        continue;
 
       if ((w * h) > (width * height * 4))
         use_sub_preview = TRUE;
@@ -262,7 +262,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
       y2 = CLAMP (y + h, 0, height);
 
       if (x2 == x1 || y2 == y1)
-	continue;
+        continue;
 
       pixel_region_init_temp_buf (&src1PR, comp,
                                   x1, y1, x2 - x1, y2 - y1);
@@ -293,7 +293,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
         }
 
       if (layer->mask && layer->mask->apply_mask)
-	{
+        {
           if (use_sub_preview)
             {
               mask_buf =
@@ -316,12 +316,12 @@ gimp_image_get_new_preview (GimpViewable *viewable,
             }
 
           mask = &maskPR;
-	}
+        }
       else
-	{
+        {
           mask_buf = NULL;
-	  mask     = NULL;
-	}
+          mask     = NULL;
+        }
 
       /*  Based on the type of the layer, project the layer onto the
        *   composite preview...
@@ -331,36 +331,36 @@ gimp_image_get_new_preview (GimpViewable *viewable,
        *   for previews
        */
       if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-	{
-	  if (! construct_flag)
-	    initial_region (&src2PR, &src1PR,
-			    mask, NULL,
+        {
+          if (! construct_flag)
+            initial_region (&src2PR, &src1PR,
+                            mask, NULL,
                             layer->opacity * 255.999,
-			    layer->mode,
+                            layer->mode,
                             visible_components,
                             INITIAL_INTENSITY_ALPHA);
-	  else
-	    combine_regions (&src1PR, &src2PR, &src1PR,
-			     mask, NULL,
+          else
+            combine_regions (&src1PR, &src2PR, &src1PR,
+                             mask, NULL,
                              layer->opacity * 255.999,
-			     layer->mode,
+                             layer->mode,
                              visible_components,
                              COMBINE_INTEN_A_INTEN_A);
         }
       else
         {
-	  if (! construct_flag)
-	    initial_region (&src2PR, &src1PR,
-			    mask, NULL,
+          if (! construct_flag)
+            initial_region (&src2PR, &src1PR,
+                            mask, NULL,
                             layer->opacity * 255.999,
-			    layer->mode,
+                            layer->mode,
                             visible_components,
                             INITIAL_INTENSITY);
-	  else
-	    combine_regions (&src1PR, &src2PR, &src1PR,
-			     mask, NULL,
+          else
+            combine_regions (&src1PR, &src2PR, &src1PR,
+                             mask, NULL,
                              layer->opacity * 255.999,
-			     layer->mode,
+                             layer->mode,
                              visible_components,
                              COMBINE_INTEN_A_INTEN);
         }

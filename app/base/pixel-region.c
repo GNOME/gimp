@@ -46,12 +46,12 @@ static void                  pixel_region_configure  (PixelRegionHolder   *PRH,
 
 void
 pixel_region_init (PixelRegion *PR,
-		   TileManager *tiles,
-		   gint         x,
-		   gint         y,
-		   gint         w,
-		   gint         h,
-		   gboolean     dirty)
+                   TileManager *tiles,
+                   gint         x,
+                   gint         y,
+                   gint         w,
+                   gint         h,
+                   gboolean     dirty)
 {
   PR->data          = NULL;
   PR->tiles         = tiles;
@@ -118,10 +118,10 @@ pixel_region_init_data (PixelRegion *PR,
 
 void
 pixel_region_resize (PixelRegion *PR,
-		     gint         x,
-		     gint         y,
-		     gint         w,
-		     gint         h)
+                     gint         x,
+                     gint         y,
+                     gint         w,
+                     gint         h)
 {
   /*  If the data is non-null, data is contiguous--need to advance  */
   if (PR->data != NULL)
@@ -139,10 +139,10 @@ pixel_region_resize (PixelRegion *PR,
 /* request that tiles within a region be fetched asynchronously */
 void
 pixel_region_get_async (PixelRegion *PR,
-			gint         ulx,
-			gint         uly,
-			gint         lrx,
-			gint         lry)
+                        gint         ulx,
+                        gint         uly,
+                        gint         lrx,
+                        gint         lry)
 {
   gint x;
   gint y;
@@ -155,11 +155,11 @@ pixel_region_get_async (PixelRegion *PR,
 
 void
 pixel_region_get_row (PixelRegion *PR,
-		      gint         x,
-		      gint         y,
-		      gint         w,
-		      guchar      *data,
-		      gint         subsample)
+                      gint         x,
+                      gint         y,
+                      gint         w,
+                      guchar      *data,
+                      gint         subsample)
 {
   Tile   *tile;
   guchar *tile_data;
@@ -184,33 +184,33 @@ pixel_region_get_row (PixelRegion *PR,
   else
     {
       while (x < end)
-	{
-	  tile = tile_manager_get_tile (PR->tiles, x, y, TRUE, FALSE);
-	  tile_data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
-	  npixels = tile_ewidth (tile) - (x % TILE_WIDTH);
+        {
+          tile = tile_manager_get_tile (PR->tiles, x, y, TRUE, FALSE);
+          tile_data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+          npixels = tile_ewidth (tile) - (x % TILE_WIDTH);
 
-	  if ((x + npixels) > end) /* make sure we don't write past the end */
-	    npixels = end - x;
+          if ((x + npixels) > end) /* make sure we don't write past the end */
+            npixels = end - x;
 
-	  boundary = x + npixels;
-	  for ( ; x < boundary; x += subsample)
-	    {
-	      for (b = 0; b < tilebpp; b++)
-		*data++ = tile_data[b];
+          boundary = x + npixels;
+          for ( ; x < boundary; x += subsample)
+            {
+              for (b = 0; b < tilebpp; b++)
+                *data++ = tile_data[b];
 
-	      tile_data += inc;
-	    }
-	  tile_release (tile, FALSE);
-	}
+              tile_data += inc;
+            }
+          tile_release (tile, FALSE);
+        }
     }
 }
 
 void
 pixel_region_set_row (PixelRegion *PR,
-		      gint         x,
-		      gint         y,
-		      gint         w,
-		      guchar      *data)
+                      gint         x,
+                      gint         y,
+                      gint         w,
+                      guchar      *data)
 {
   gint    end;
   gint    bpp;
@@ -226,11 +226,11 @@ pixel_region_set_row (PixelRegion *PR,
 
 void
 pixel_region_get_col (PixelRegion *PR,
-		      gint         x,
-		      gint         y,
-		      gint         h,
-		      guchar      *data,
-		      gint         subsample)
+                      gint         x,
+                      gint         y,
+                      gint         h,
+                      guchar      *data,
+                      gint         subsample)
 {
   Tile   *tile;
   guchar *tile_data;
@@ -253,17 +253,17 @@ pixel_region_get_col (PixelRegion *PR,
       boundary = y + (tile_eheight(tile) - (y % TILE_HEIGHT));
 
       if (boundary > end) /* make sure we don't write past the end */
-	boundary = end;
+        boundary = end;
 
       inc = subsample * tilebpp * tile_ewidth (tile);
 
       for ( ; y < boundary; y += subsample)
-	{
-	  for (b = 0; b < tilebpp; b++)
-	    *data++ = tile_data[b];
+        {
+          for (b = 0; b < tilebpp; b++)
+            *data++ = tile_data[b];
 
-	  tile_data += inc;
-	}
+          tile_data += inc;
+        }
 
       tile_release (tile, FALSE);
     }
@@ -272,10 +272,10 @@ pixel_region_get_col (PixelRegion *PR,
 
 void
 pixel_region_set_col (PixelRegion *PR,
-		      gint         x,
-		      gint         y,
-		      gint         h,
-		      guchar      *data)
+                      gint         x,
+                      gint         y,
+                      gint         h,
+                      guchar      *data)
 {
   gint    tilebpp;
   gint    end;
@@ -300,7 +300,7 @@ pixel_region_has_alpha (PixelRegion *PR)
 
 PixelRegionIterator *
 pixel_regions_register (gint num_regions,
-			...)
+                        ...)
 {
   PixelRegionIterator *PRI;
   gboolean             found;
@@ -326,23 +326,23 @@ pixel_regions_register (gint num_regions,
       PRH->PR = PR;
 
       if (PR != NULL)
-	{
-	  /*  If there is a defined value for data, make sure tiles is NULL  */
-	  if (PR->data)
-	    PR->tiles = NULL;
+        {
+          /*  If there is a defined value for data, make sure tiles is NULL  */
+          if (PR->data)
+            PR->tiles = NULL;
 
-	  PRH->original_data     = PR->data;
-	  PRH->startx            = PR->x;
-	  PRH->starty            = PR->y;
-	  PRH->PR->process_count = 0;
+          PRH->original_data     = PR->data;
+          PRH->startx            = PR->x;
+          PRH->starty            = PR->y;
+          PRH->PR->process_count = 0;
 
-	  if (!found)
-	    {
-	      found = TRUE;
-	      PRI->region_width = PR->w;
-	      PRI->region_height = PR->h;
-	    }
-	}
+          if (!found)
+            {
+              found = TRUE;
+              PRI->region_width = PR->w;
+              PRI->region_height = PR->h;
+            }
+        }
 
       /*  Add the pixel region holder to the list  */
       PRI->pixel_regions = g_slist_prepend (PRI->pixel_regions, PRH);
@@ -368,30 +368,30 @@ pixel_regions_process (PixelRegionIterator *PRI)
       PixelRegionHolder *PRH = list->data;
 
       if ((PRH->PR != NULL) && (PRH->PR->process_count != PRI->process_count))
-	{
-	  /*  This eliminates the possibility of incrementing the
-	   *  same region twice
-	   */
-	  PRH->PR->process_count++;
+        {
+          /*  This eliminates the possibility of incrementing the
+           *  same region twice
+           */
+          PRH->PR->process_count++;
 
-	  /*  Unref the last referenced tile if the underlying region
-	      is a tile manager  */
-	  if (PRH->PR->tiles)
-	    {
-	      /* only set the dirty flag if PRH->dirty_tiles == TRUE */
-	      tile_release (PRH->PR->curtile,
-			    PRH->PR->dirty && PRI->dirty_tiles);
-	      PRH->PR->curtile = NULL;
-	    }
+          /*  Unref the last referenced tile if the underlying region
+              is a tile manager  */
+          if (PRH->PR->tiles)
+            {
+              /* only set the dirty flag if PRH->dirty_tiles == TRUE */
+              tile_release (PRH->PR->curtile,
+                            PRH->PR->dirty && PRI->dirty_tiles);
+              PRH->PR->curtile = NULL;
+            }
 
-	  PRH->PR->x += PRI->portion_width;
+          PRH->PR->x += PRI->portion_width;
 
-	  if ((PRH->PR->x - PRH->startx) >= PRI->region_width)
-	    {
-	      PRH->PR->x  = PRH->startx;
-	      PRH->PR->y += PRI->portion_height;
-	    }
-	}
+          if ((PRH->PR->x - PRH->startx) >= PRI->region_width)
+            {
+              PRH->PR->x  = PRH->startx;
+              PRH->PR->y += PRI->portion_height;
+            }
+        }
     }
 
   return pixel_regions_configure (PRI);
@@ -411,26 +411,26 @@ pixel_regions_process_stop (PixelRegionIterator *PRI)
       PixelRegionHolder *PRH = list->data;
 
       if ((PRH->PR != NULL) && (PRH->PR->process_count != PRI->process_count))
-	{
-	  /*  This eliminates the possibility of incrementing the
-	   *  same region twice
-	   */
-	  PRH->PR->process_count++;
+        {
+          /*  This eliminates the possibility of incrementing the
+           *  same region twice
+           */
+          PRH->PR->process_count++;
 
-	  /*  Unref the last referenced tile if the underlying region
-	      is a tile manager  */
-	  if (PRH->PR->tiles)
-	    {
-	      tile_release (PRH->PR->curtile, PRH->PR->dirty);
-	      PRH->PR->curtile = NULL;
-	    }
-	}
+          /*  Unref the last referenced tile if the underlying region
+              is a tile manager  */
+          if (PRH->PR->tiles)
+            {
+              tile_release (PRH->PR->curtile, PRH->PR->dirty);
+              PRH->PR->curtile = NULL;
+            }
+        }
     }
 
   if (PRI->pixel_regions)
     {
       for (list = PRI->pixel_regions; list; list = g_slist_next (list))
-	g_free (list->data);
+        g_free (list->data);
 
       g_slist_free (PRI->pixel_regions);
       g_free (PRI);
@@ -458,26 +458,26 @@ get_portion_height (PixelRegionIterator *PRI)
       PixelRegionHolder *PRH = list->data;
 
       if (PRH->PR)
-	{
-	  /*  Check if we're past the point of no return  */
-	  if ((PRH->PR->y - PRH->starty) >= PRI->region_height)
-	    return 0;
+        {
+          /*  Check if we're past the point of no return  */
+          if ((PRH->PR->y - PRH->starty) >= PRI->region_height)
+            return 0;
 
-	  if (PRH->PR->tiles)
-	    {
-	      height = TILE_HEIGHT - (PRH->PR->y % TILE_HEIGHT);
-	      height = CLAMP (height,
-			      0,
-			      (PRI->region_height - (PRH->PR->y - PRH->starty)));
-	    }
-	  else
+          if (PRH->PR->tiles)
+            {
+              height = TILE_HEIGHT - (PRH->PR->y % TILE_HEIGHT);
+              height = CLAMP (height,
+                              0,
+                              (PRI->region_height - (PRH->PR->y - PRH->starty)));
+            }
+          else
             {
               height = (PRI->region_height - (PRH->PR->y - PRH->starty));
             }
 
-	  if (height < min_height)
-	    min_height = height;
-	}
+          if (height < min_height)
+            min_height = height;
+        }
     }
 
   return min_height;
@@ -501,26 +501,26 @@ get_portion_width (PixelRegionIterator *PRI)
       PixelRegionHolder *PRH = list->data;
 
       if (PRH->PR)
-	{
-	  /*  Check if we're past the point of no return  */
-	  if ((PRH->PR->x - PRH->startx) >= PRI->region_width)
-	    return 0;
+        {
+          /*  Check if we're past the point of no return  */
+          if ((PRH->PR->x - PRH->startx) >= PRI->region_width)
+            return 0;
 
-	  if (PRH->PR->tiles)
-	    {
-	      width = TILE_WIDTH - (PRH->PR->x % TILE_WIDTH);
-	      width = CLAMP (width,
-			     0,
-			     (PRI->region_width - (PRH->PR->x - PRH->startx)));
-	    }
-	  else
+          if (PRH->PR->tiles)
+            {
+              width = TILE_WIDTH - (PRH->PR->x % TILE_WIDTH);
+              width = CLAMP (width,
+                             0,
+                             (PRI->region_width - (PRH->PR->x - PRH->startx)));
+            }
+          else
             {
               width = (PRI->region_width - (PRH->PR->x - PRH->startx));
             }
 
-	  if (width < min_width)
-	    min_width = width;
-	}
+          if (width < min_width)
+            min_width = width;
+        }
     }
 
   return min_width;
@@ -541,13 +541,13 @@ pixel_regions_configure (PixelRegionIterator *PRI)
     {
       /*  free the pixel regions list  */
       if (PRI->pixel_regions)
-	{
-	  for (list = PRI->pixel_regions; list; list = g_slist_next (list))
-	    g_free (list->data);
+        {
+          for (list = PRI->pixel_regions; list; list = g_slist_next (list))
+            g_free (list->data);
 
-	  g_slist_free (PRI->pixel_regions);
-	  g_free (PRI);
-	}
+          g_slist_free (PRI->pixel_regions);
+          g_free (PRI);
+        }
 
       return NULL;
     }
@@ -559,10 +559,10 @@ pixel_regions_configure (PixelRegionIterator *PRI)
       PixelRegionHolder *PRH = list->data;
 
       if ((PRH->PR != NULL) && (PRH->PR->process_count != PRI->process_count))
-	{
-	  PRH->PR->process_count++;
-	  pixel_region_configure (PRH, PRI);
-	}
+        {
+          PRH->PR->process_count++;
+          pixel_region_configure (PRH, PRI);
+        }
     }
 
   return PRI;
@@ -571,7 +571,7 @@ pixel_regions_configure (PixelRegionIterator *PRI)
 
 static void
 pixel_region_configure (PixelRegionHolder   *PRH,
-			PixelRegionIterator *PRI)
+                        PixelRegionIterator *PRI)
 {
   /*  Configure the rowstride and data pointer for the pixel region
    *  based on the current offsets into the region and whether the
@@ -580,18 +580,18 @@ pixel_region_configure (PixelRegionHolder   *PRH,
   if (PRH->PR->tiles)
     {
       PRH->PR->curtile = tile_manager_get_tile (PRH->PR->tiles,
-						PRH->PR->x,
-						PRH->PR->y,
-						TRUE,
-						PRH->PR->dirty);
+                                                PRH->PR->x,
+                                                PRH->PR->y,
+                                                TRUE,
+                                                PRH->PR->dirty);
 
       PRH->PR->offx = PRH->PR->x % TILE_WIDTH;
       PRH->PR->offy = PRH->PR->y % TILE_HEIGHT;
 
       PRH->PR->rowstride = tile_ewidth (PRH->PR->curtile) * PRH->PR->bytes;
       PRH->PR->data = tile_data_pointer (PRH->PR->curtile,
-					 PRH->PR->offx,
-					 PRH->PR->offy);
+                                         PRH->PR->offx,
+                                         PRH->PR->offy);
     }
   else
     {

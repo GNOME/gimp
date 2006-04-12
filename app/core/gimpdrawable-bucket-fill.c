@@ -81,10 +81,10 @@ gimp_drawable_bucket_fill (GimpDrawable       *drawable,
       pattern = gimp_context_get_pattern (context);
 
       if (! pattern)
-	{
-	  g_message (_("No patterns available for this operation."));
-	  return;
-	}
+        {
+          g_message (_("No patterns available for this operation."));
+          return;
+        }
     }
   else
     {
@@ -199,30 +199,30 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
 
       /*  make sure we handle the mask correctly if it was sample-merged  */
       if (sample_merged)
-	{
+        {
           GimpItem *item;
-	  gint      off_x, off_y;
+          gint      off_x, off_y;
 
           item = GIMP_ITEM (drawable);
 
-	  /*  Limit the channel bounds to the drawable's extents  */
-	  gimp_item_offsets (item, &off_x, &off_y);
+          /*  Limit the channel bounds to the drawable's extents  */
+          gimp_item_offsets (item, &off_x, &off_y);
 
-	  x1 = CLAMP (x1, off_x, (off_x + gimp_item_width (item)));
-	  y1 = CLAMP (y1, off_y, (off_y + gimp_item_height (item)));
-	  x2 = CLAMP (x2, off_x, (off_x + gimp_item_width (item)));
-	  y2 = CLAMP (y2, off_y, (off_y + gimp_item_height (item)));
+          x1 = CLAMP (x1, off_x, (off_x + gimp_item_width (item)));
+          y1 = CLAMP (y1, off_y, (off_y + gimp_item_height (item)));
+          x2 = CLAMP (x2, off_x, (off_x + gimp_item_width (item)));
+          y2 = CLAMP (y2, off_y, (off_y + gimp_item_height (item)));
 
-	  pixel_region_init (&maskPR,
+          pixel_region_init (&maskPR,
                              gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-			     x1, y1, (x2 - x1), (y2 - y1), TRUE);
+                             x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
-	  /*  translate mask bounds to drawable coords  */
-	  x1 -= off_x;
-	  y1 -= off_y;
-	  x2 -= off_x;
-	  y2 -= off_y;
-	}
+          /*  translate mask bounds to drawable coords  */
+          x1 -= off_x;
+          y1 -= off_y;
+          x2 -= off_x;
+          y2 -= off_y;
+        }
       else
         {
           pixel_region_init (&maskPR,

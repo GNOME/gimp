@@ -97,8 +97,8 @@ static void
 gimp_convolve_tool_modifier_key (GimpTool        *tool,
                                  GdkModifierType  key,
                                  gboolean         press,
-				 GdkModifierType  state,
-				 GimpDisplay     *display)
+                                 GdkModifierType  state,
+                                 GimpDisplay     *display)
 {
   GimpConvolveOptions *options;
 
@@ -126,8 +126,8 @@ gimp_convolve_tool_modifier_key (GimpTool        *tool,
 static void
 gimp_convolve_tool_cursor_update (GimpTool        *tool,
                                   GimpCoords      *coords,
-				  GdkModifierType  state,
-				  GimpDisplay     *display)
+                                  GdkModifierType  state,
+                                  GimpDisplay     *display)
 {
   GimpConvolveOptions *options;
 

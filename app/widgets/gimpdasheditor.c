@@ -329,8 +329,8 @@ gimp_dash_editor_button_press (GtkWidget      *widget,
   if (bevent->button == 1 && bevent->type == GDK_BUTTON_PRESS)
     {
       gdk_pointer_grab (widget->window, FALSE,
-			GDK_BUTTON_RELEASE_MASK | GDK_BUTTON1_MOTION_MASK,
-			NULL, NULL, bevent->time);
+                        GDK_BUTTON_RELEASE_MASK | GDK_BUTTON1_MOTION_MASK,
+                        NULL, NULL, bevent->time);
       index = dash_x_to_index (editor, bevent->x);
 
       editor->edit_mode = ! editor->segments [index];

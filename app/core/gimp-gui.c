@@ -124,8 +124,8 @@ gimp_set_busy_until_idle (Gimp *gimp)
       gimp_set_busy (gimp);
 
       gimp->busy_idle_id = g_idle_add_full (G_PRIORITY_HIGH,
-					    gimp_idle_unset_busy, gimp,
-					    NULL);
+                                            gimp_idle_unset_busy, gimp,
+                                            NULL);
     }
 }
 

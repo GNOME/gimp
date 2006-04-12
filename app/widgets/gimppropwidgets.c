@@ -220,8 +220,8 @@ gimp_prop_color_button_new (GObject           *config,
   set_param_spec (G_OBJECT (button), button, param_spec);
 
   g_signal_connect (button, "color-changed",
-		    G_CALLBACK (gimp_prop_color_button_callback),
-		    config);
+                    G_CALLBACK (gimp_prop_color_button_callback),
+                    config);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_color_button_notify),

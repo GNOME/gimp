@@ -127,22 +127,22 @@ gimp_image_flip (GimpImage           *image,
       GimpGuide *guide = list->data;
 
       switch (guide->orientation)
-	{
-	case GIMP_ORIENTATION_HORIZONTAL:
+        {
+        case GIMP_ORIENTATION_HORIZONTAL:
           if (flip_type == GIMP_ORIENTATION_VERTICAL)
             gimp_image_move_guide (image, guide,
                                    image->height - guide->position, TRUE);
-	  break;
+          break;
 
-	case GIMP_ORIENTATION_VERTICAL:
+        case GIMP_ORIENTATION_VERTICAL:
           if (flip_type == GIMP_ORIENTATION_HORIZONTAL)
             gimp_image_move_guide (image, guide,
                                    image->width - guide->position, TRUE);
-	  break;
-
-	default:
           break;
-	}
+
+        default:
+          break;
+        }
     }
 
   /*  Flip all sample points  */

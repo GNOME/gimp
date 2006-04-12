@@ -83,8 +83,8 @@ static void   palette_editor_viewport_size_allocate(GtkWidget         *widget,
                                                     GimpPaletteEditor *editor);
 
 static gint   palette_editor_eventbox_button_press (GtkWidget         *widget,
-						    GdkEventButton    *bevent,
-						    GimpPaletteEditor *editor);
+                                                    GdkEventButton    *bevent,
+                                                    GimpPaletteEditor *editor);
 static void   palette_editor_drop_color            (GtkWidget         *widget,
                                                     gint               x,
                                                     gint               y,
@@ -171,26 +171,26 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   editor->scrolled_window = scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_widget_set_size_request (scrolled_win, -1, PREVIEW_HEIGHT);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
-				  GTK_POLICY_AUTOMATIC,
-				  GTK_POLICY_AUTOMATIC);
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (editor), scrolled_win, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_win);
 
   eventbox = gtk_event_box_new ();
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
-					 eventbox);
+                                         eventbox);
   gtk_widget_show (eventbox);
 
   g_signal_connect (eventbox, "button-press-event",
-		    G_CALLBACK (palette_editor_eventbox_button_press),
-		    editor);
+                    G_CALLBACK (palette_editor_eventbox_button_press),
+                    editor);
   g_signal_connect (eventbox->parent, "size-allocate",
                     G_CALLBACK (palette_editor_viewport_size_allocate),
                     editor);
 
   gimp_dnd_color_dest_add (eventbox, palette_editor_drop_color, editor);
   gimp_dnd_viewable_dest_add (eventbox, GIMP_TYPE_PALETTE,
-			      palette_editor_drop_palette,
+                              palette_editor_drop_palette,
                               editor);
 
   alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
@@ -209,23 +209,23 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   gtk_widget_show (editor->view);
 
   g_signal_connect (editor->view, "entry-clicked",
-		    G_CALLBACK (palette_editor_entry_clicked),
-		    editor);
+                    G_CALLBACK (palette_editor_entry_clicked),
+                    editor);
   g_signal_connect (editor->view, "entry-selected",
-		    G_CALLBACK (palette_editor_entry_selected),
-		    editor);
+                    G_CALLBACK (palette_editor_entry_selected),
+                    editor);
   g_signal_connect (editor->view, "entry-activated",
-		    G_CALLBACK (palette_editor_entry_activated),
-		    editor);
+                    G_CALLBACK (palette_editor_entry_activated),
+                    editor);
   g_signal_connect (editor->view, "entry-context",
-		    G_CALLBACK (palette_editor_entry_context),
-		    editor);
+                    G_CALLBACK (palette_editor_entry_context),
+                    editor);
   g_signal_connect (editor->view, "color-dropped",
-		    G_CALLBACK (palette_editor_color_dropped),
-		    editor);
+                    G_CALLBACK (palette_editor_color_dropped),
+                    editor);
 
   gimp_dnd_viewable_dest_add (editor->view, GIMP_TYPE_PALETTE,
-			      palette_editor_drop_palette,
+                              palette_editor_drop_palette,
                               editor);
 
   hbox = gtk_hbox_new (FALSE, 2);
@@ -549,7 +549,7 @@ gimp_palette_editor_zoom (GimpPaletteEditor  *editor,
 
 static void
 palette_editor_invalidate_preview (GimpPalette       *palette,
-				   GimpPaletteEditor *editor)
+                                   GimpPaletteEditor *editor)
 {
   if (palette->n_columns)
     editor->columns = palette->n_columns;
@@ -573,8 +573,8 @@ palette_editor_viewport_size_allocate (GtkWidget         *widget,
 
 static gboolean
 palette_editor_eventbox_button_press (GtkWidget         *widget,
-				      GdkEventButton    *bevent,
-				      GimpPaletteEditor *editor)
+                                      GdkEventButton    *bevent,
+                                      GimpPaletteEditor *editor)
 {
   if (bevent->button == 3 && bevent->type == GDK_BUTTON_PRESS)
     {
@@ -607,8 +607,8 @@ static void
 palette_editor_drop_palette (GtkWidget    *widget,
                              gint          x,
                              gint          y,
-			     GimpViewable *viewable,
-			     gpointer      data)
+                             GimpViewable *viewable,
+                             gpointer      data)
 {
   gimp_data_editor_set_data (GIMP_DATA_EDITOR (data), GIMP_DATA (viewable));
 }
@@ -720,7 +720,7 @@ palette_editor_color_dropped (GimpPaletteView   *view,
 
 static void
 palette_editor_color_name_changed (GtkWidget         *widget,
-				   GimpPaletteEditor *editor)
+                                   GimpPaletteEditor *editor)
 {
   if (GIMP_DATA_EDITOR (editor)->data)
     {

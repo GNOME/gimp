@@ -103,9 +103,9 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
                                    0.0, 2000.0, 6.0,
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT,
-				 "unit", NULL,
-				 TRUE, FALSE, GIMP_UNIT_PIXEL,
-				 GIMP_PARAM_STATIC_STRINGS);
+                                 "unit", NULL,
+                                 TRUE, FALSE, GIMP_UNIT_PIXEL,
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CAP_STYLE,
                                  "cap-style", NULL,
                                  GIMP_TYPE_CAP_STYLE, GIMP_CAP_BUTT,

@@ -169,7 +169,7 @@ plug_in_proc_frame_get_return_vals (PlugInProcFrame *proc_frame)
 
       /* Copy all of the arguments we can. */
       memcpy (return_vals->values, proc_frame->return_vals->values,
-	      sizeof (GValue) * MIN (proc_frame->return_vals->n_values,
+              sizeof (GValue) * MIN (proc_frame->return_vals->n_values,
                                      proc_frame->procedure->num_values + 1));
 
       /* Free the old argument pointer.  This will cause a memory leak

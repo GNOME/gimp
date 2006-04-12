@@ -79,7 +79,7 @@ levels_stretch (Levels        *levels,
       for (channel = GIMP_HISTOGRAM_RED;
            channel <= GIMP_HISTOGRAM_BLUE;
            channel++)
-	levels_channel_stretch (levels, hist, channel);
+        levels_channel_stretch (levels, hist, channel);
     }
   else
     {
@@ -115,41 +115,41 @@ levels_channel_stretch (Levels               *levels,
       new_count = 0.0;
 
       for (i = 0; i < 255; i++)
-	{
-	  new_count += gimp_histogram_get_value (hist, channel, i);
-	  percentage = new_count / count;
-	  next_percentage =
-	    (new_count + gimp_histogram_get_value (hist,
-						   channel,
-						   i + 1)) / count;
-	  if (fabs (percentage - 0.006) < fabs (next_percentage - 0.006))
-	    {
-	      levels->low_input[channel] = i + 1;
-	      break;
-	    }
-	}
+        {
+          new_count += gimp_histogram_get_value (hist, channel, i);
+          percentage = new_count / count;
+          next_percentage =
+            (new_count + gimp_histogram_get_value (hist,
+                                                   channel,
+                                                   i + 1)) / count;
+          if (fabs (percentage - 0.006) < fabs (next_percentage - 0.006))
+            {
+              levels->low_input[channel] = i + 1;
+              break;
+            }
+        }
       /*  Set the high input  */
       new_count = 0.0;
       for (i = 255; i > 0; i--)
-	{
-	  new_count += gimp_histogram_get_value (hist, channel, i);
-	  percentage = new_count / count;
-	  next_percentage =
-	    (new_count + gimp_histogram_get_value (hist,
-						   channel,
-						   i - 1)) / count;
-	  if (fabs (percentage - 0.006) < fabs (next_percentage - 0.006))
-	    {
-	      levels->high_input[channel] = i - 1;
-	      break;
-	    }
-	}
+        {
+          new_count += gimp_histogram_get_value (hist, channel, i);
+          percentage = new_count / count;
+          next_percentage =
+            (new_count + gimp_histogram_get_value (hist,
+                                                   channel,
+                                                   i - 1)) / count;
+          if (fabs (percentage - 0.006) < fabs (next_percentage - 0.006))
+            {
+              levels->high_input[channel] = i - 1;
+              break;
+            }
+        }
     }
 }
 
 static gint
 levels_input_from_color (GimpHistogramChannel  channel,
-			 guchar               *color)
+                         guchar               *color)
 {
   switch (channel)
     {
@@ -200,11 +200,11 @@ levels_adjust_by_colors (Levels               *levels,
 
       range = levels->high_input[channel] - levels->low_input[channel];
       if (range <= 0)
-	return;
+        return;
 
       input -= levels->low_input[channel];
       if (input < 0)
-	return;
+        return;
 
       /* Normalize input and lightness */
       inten = (gdouble) input / (gdouble) range;
@@ -230,33 +230,33 @@ levels_calculate_transfers (Levels *levels)
   for (j = 0; j < 5; j++)
     {
       for (i = 0; i < 256; i++)
-	{
-	  /*  determine input intensity  */
-	  if (levels->high_input[j] != levels->low_input[j])
+        {
+          /*  determine input intensity  */
+          if (levels->high_input[j] != levels->low_input[j])
             {
               inten = ((gdouble) (i - levels->low_input[j]) /
                        (double) (levels->high_input[j] - levels->low_input[j]));
             }
-	  else
+          else
             {
               inten = (gdouble) (i - levels->low_input[j]);
             }
 
-	  inten = CLAMP (inten, 0.0, 1.0);
+          inten = CLAMP (inten, 0.0, 1.0);
 
-	  if (levels->gamma[j] != 0.0)
-	    inten = pow (inten, (1.0 / levels->gamma[j]));
+          if (levels->gamma[j] != 0.0)
+            inten = pow (inten, (1.0 / levels->gamma[j]));
 
-	  levels->input[j][i] = (guchar) (inten * 255.0 + 0.5);
-	}
+          levels->input[j][i] = (guchar) (inten * 255.0 + 0.5);
+        }
     }
 }
 
 gfloat
 levels_lut_func (Levels *levels,
-		 gint    n_channels,
-		 gint    channel,
-		 gfloat  value)
+                 gint    n_channels,
+                 gint    channel,
+                 gfloat  value)
 {
   gdouble inten;
   gint    j;
@@ -278,8 +278,8 @@ levels_lut_func (Levels *levels,
     {
       /* don't apply the overall curve to the alpha channel */
       if (j == 0 && (n_channels == 2 || n_channels == 4) &&
-	  channel == n_channels - 1)
-	return inten;
+          channel == n_channels - 1)
+        return inten;
 
       /*  determine input intensity  */
       if (levels->high_input[j] != levels->low_input[j])
@@ -293,21 +293,21 @@ levels_lut_func (Levels *levels,
         }
 
       if (levels->gamma[j] != 0.0)
-	{
-	  if (inten >= 0.0)
-	    inten =  pow ( inten, (1.0 / levels->gamma[j]));
-	  else
-	    inten = -pow (-inten, (1.0 / levels->gamma[j]));
-	}
+        {
+          if (inten >= 0.0)
+            inten =  pow ( inten, (1.0 / levels->gamma[j]));
+          else
+            inten = -pow (-inten, (1.0 / levels->gamma[j]));
+        }
 
       /*  determine the output intensity  */
       if (levels->high_output[j] >= levels->low_output[j])
-	inten = (gdouble) (inten * (levels->high_output[j] -
+        inten = (gdouble) (inten * (levels->high_output[j] -
                                     levels->low_output[j]) +
-			   levels->low_output[j]);
+                           levels->low_output[j]);
       else if (levels->high_output[j] < levels->low_output[j])
-	inten = (gdouble) (levels->low_output[j] - inten *
-			   (levels->low_output[j] - levels->high_output[j]));
+        inten = (gdouble) (levels->low_output[j] - inten *
+                           (levels->low_output[j] - levels->high_output[j]));
 
       inten /= 255.0;
     }

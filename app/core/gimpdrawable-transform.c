@@ -908,7 +908,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
 
   /* Start a transform undo group */
   gimp_image_undo_group_start (image,
-			       GIMP_UNDO_GROUP_TRANSFORM, _("Transform"));
+                               GIMP_UNDO_GROUP_TRANSFORM, _("Transform"));
 
   /* Cut/Copy from the specified drawable */
   orig_tiles = gimp_drawable_transform_cut (drawable, context, &new_layer);
@@ -1763,7 +1763,7 @@ sample_lanczos (PixelSurround *surround,
   gdouble  lu[LANCZOS_WIDTH2];      /* Lanczos sample value              */
   gdouble  lv[LANCZOS_WIDTH2];      /* Lanczos sample value              */
   gdouble  lusum, lvsum, weight;    /* Lanczos weighting vars            */
-  gint	   i,j,row, byte;           /* loop vars to fill source window   */
+  gint           i,j,row, byte;           /* loop vars to fill source window   */
   gint     du,dv;
   guchar  *data;
 

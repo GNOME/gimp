@@ -126,9 +126,9 @@ gradient_editor_load_left_cmd_callback (GtkAction *action,
     {
     case GRADIENT_EDITOR_COLOR_NEIGHBOR_ENDPOINT:
       if (editor->control_sel_l->prev != NULL)
-	seg = editor->control_sel_l->prev;
+        seg = editor->control_sel_l->prev;
       else
-	seg = gimp_gradient_segment_get_last (editor->control_sel_l);
+        seg = gimp_gradient_segment_get_last (editor->control_sel_l);
 
       color = seg->right_color;
       break;
@@ -230,9 +230,9 @@ gradient_editor_load_right_cmd_callback (GtkAction *action,
     {
     case GRADIENT_EDITOR_COLOR_NEIGHBOR_ENDPOINT:
       if (editor->control_sel_r->next != NULL)
-	seg = editor->control_sel_r->next;
+        seg = editor->control_sel_r->next;
       else
-	seg = gimp_gradient_segment_get_first (editor->control_sel_r);
+        seg = gimp_gradient_segment_get_first (editor->control_sel_r);
 
       color = seg->left_color;
       break;
@@ -413,8 +413,8 @@ gradient_editor_replicate_cmd_callback (GtkAction *action,
   gtk_widget_show (scale);
 
   g_signal_connect (scale_data, "value-changed",
-		    G_CALLBACK (gimp_int_adjustment_update),
-		    &editor->replicate_times);
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &editor->replicate_times);
 
   gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
   gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
@@ -513,8 +513,8 @@ gradient_editor_split_uniformly_cmd_callback (GtkAction *action,
   gtk_widget_show (scale);
 
   g_signal_connect (scale_data, "value-changed",
-		    G_CALLBACK (gimp_int_adjustment_update),
-		    &editor->split_parts);
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &editor->split_parts);
 
   gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
   gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
@@ -725,9 +725,9 @@ gradient_editor_save_selection (GimpGradientEditor *editor)
       *seg = *oseg; /* Copy everything */
 
       if (prev == NULL)
-	tmp = seg; /* Remember first segment */
+        tmp = seg; /* Remember first segment */
       else
-	prev->next = seg;
+        prev->next = seg;
 
       seg->prev = prev;
       seg->next = NULL;

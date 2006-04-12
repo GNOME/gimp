@@ -115,10 +115,10 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
     {
     case GIMP_PAINT_STATE_INIT:
       if (airbrush->timeout_id)
-	{
-	  g_source_remove (airbrush->timeout_id);
-	  airbrush->timeout_id = 0;
-	}
+        {
+          g_source_remove (airbrush->timeout_id);
+          airbrush->timeout_id = 0;
+        }
 
       GIMP_PAINT_CORE_CLASS (parent_class)->paint (paint_core, drawable,
                                                    paint_options,
@@ -127,36 +127,36 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
 
     case GIMP_PAINT_STATE_MOTION:
       if (airbrush->timeout_id)
-	{
-	  g_source_remove (airbrush->timeout_id);
-	  airbrush->timeout_id = 0;
-	}
+        {
+          g_source_remove (airbrush->timeout_id);
+          airbrush->timeout_id = 0;
+        }
 
       gimp_airbrush_motion (paint_core, drawable, paint_options);
 
       if (options->rate != 0.0)
-	{
-	  gdouble timeout;
+        {
+          gdouble timeout;
 
-	  airbrush->drawable      = drawable;
+          airbrush->drawable      = drawable;
           airbrush->paint_options = paint_options;
 
-	  timeout = (paint_options->pressure_options->rate ?
-		  (10000 / (options->rate * PRESSURE_SCALE * paint_core->cur_coords.pressure)) :
-	    (10000 / options->rate));
+          timeout = (paint_options->pressure_options->rate ?
+                  (10000 / (options->rate * PRESSURE_SCALE * paint_core->cur_coords.pressure)) :
+            (10000 / options->rate));
 
-	  airbrush->timeout_id = g_timeout_add (timeout,
+          airbrush->timeout_id = g_timeout_add (timeout,
                                                 gimp_airbrush_timeout,
                                                 airbrush);
-	}
+        }
       break;
 
     case GIMP_PAINT_STATE_FINISH:
       if (airbrush->timeout_id)
-	{
-	  g_source_remove (airbrush->timeout_id);
-	  airbrush->timeout_id = 0;
-	}
+        {
+          g_source_remove (airbrush->timeout_id);
+          airbrush->timeout_id = 0;
+        }
 
       GIMP_PAINT_CORE_CLASS (parent_class)->paint (paint_core, drawable,
                                                    paint_options,

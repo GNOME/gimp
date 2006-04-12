@@ -108,25 +108,25 @@ gimp_text_class_init (GimpTextClass *klass)
   language = gimp_get_default_language (NULL);
 
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_TEXT,
-				   "text", NULL,
-				   NULL,
-				   GIMP_PARAM_STATIC_STRINGS);
+                                   "text", NULL,
+                                   NULL,
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_FONT,
-				   "font", NULL,
-				   "Sans",
-				   GIMP_PARAM_STATIC_STRINGS);
+                                   "font", NULL,
+                                   "Sans",
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FONT_SIZE,
-				   "font-size", NULL,
-				   0.0, 8192.0, 18.0,
-				   GIMP_PARAM_STATIC_STRINGS);
+                                   "font-size", NULL,
+                                   0.0, 8192.0, 18.0,
+                                   GIMP_PARAM_STATIC_STRINGS);
   /*
    *  We use the name "font-size-unit" for backward compatibility.
    *  The unit is also used for other sizes in the text object.
    */
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT,
-				 "font-size-unit", NULL,
-				 TRUE, FALSE, GIMP_UNIT_PIXEL,
-				 GIMP_PARAM_STATIC_STRINGS);
+                                 "font-size-unit", NULL,
+                                 TRUE, FALSE, GIMP_UNIT_PIXEL,
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HINTING,
                                     "hinting", NULL,
                                     TRUE,
@@ -146,9 +146,9 @@ gimp_text_class_init (GimpTextClass *klass)
                                     GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_LANGUAGE,
-				   "language", NULL,
-				   language,
-				   GIMP_PARAM_STATIC_STRINGS);
+                                   "language", NULL,
+                                   language,
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BASE_DIR,
                                 "base-direction", NULL,
                                  GIMP_TYPE_TEXT_DIRECTION,
@@ -170,19 +170,19 @@ gimp_text_class_init (GimpTextClass *klass)
                                  GIMP_TEXT_JUSTIFY_LEFT,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_INDENTATION,
-				   "indent", NULL,
-				   -8192.0, 8192.0, 0.0,
-				   GIMP_PARAM_STATIC_STRINGS |
+                                   "indent", NULL,
+                                   -8192.0, 8192.0, 0.0,
+                                   GIMP_PARAM_STATIC_STRINGS |
                                    GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LINE_SPACING,
-				   "line-spacing", NULL,
-				   -8192.0, 8192.0, 0.0,
-				   GIMP_PARAM_STATIC_STRINGS |
+                                   "line-spacing", NULL,
+                                   -8192.0, 8192.0, 0.0,
+                                   GIMP_PARAM_STATIC_STRINGS |
                                    GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LETTER_SPACING,
-				   "letter-spacing", NULL,
-				   -8192.0, 8192.0, 0.0,
-				   GIMP_PARAM_STATIC_STRINGS |
+                                   "letter-spacing", NULL,
+                                   -8192.0, 8192.0, 0.0,
+                                   GIMP_PARAM_STATIC_STRINGS |
                                    GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BOX_MODE,
                                 "box-mode",
@@ -201,9 +201,9 @@ gimp_text_class_init (GimpTextClass *klass)
                                    GIMP_PARAM_STATIC_STRINGS |
                                    GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_BOX_UNIT,
-				 "box-unit", NULL,
-				 TRUE, FALSE, GIMP_UNIT_PIXEL,
-				 GIMP_PARAM_STATIC_STRINGS);
+                                 "box-unit", NULL,
+                                 TRUE, FALSE, GIMP_UNIT_PIXEL,
+                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_MATRIX2 (object_class, PROP_TRANSFORMATION,
                                     "transformation", NULL,
                                     &identity,

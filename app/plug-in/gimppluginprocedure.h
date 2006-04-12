@@ -52,7 +52,7 @@ struct _GimpPlugInProcedure
   gchar           *image_types;
   PlugInImageType  image_types_val;
   time_t           mtime;
-  gboolean	   installed_during_init;
+  gboolean           installed_during_init;
 
   /*  file proc specific members  */
   gboolean         file_proc;

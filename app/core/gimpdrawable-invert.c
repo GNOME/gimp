@@ -49,9 +49,9 @@ gimp_drawable_invert (GimpDrawable *drawable)
   lut = invert_lut_new (gimp_drawable_bytes (drawable));
 
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-		     x, y, width, height, FALSE);
+                     x, y, width, height, FALSE);
   pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
-		     x, y, width, height, TRUE);
+                     x, y, width, height, TRUE);
 
   pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process,
                                   lut, 2, &srcPR, &destPR);

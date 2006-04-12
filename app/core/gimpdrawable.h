@@ -110,19 +110,19 @@ struct _GimpDrawableClass
 GType           gimp_drawable_get_type           (void) G_GNUC_CONST;
 
 void            gimp_drawable_configure          (GimpDrawable       *drawable,
-						  GimpImage          *image,
+                                                  GimpImage          *image,
                                                   gint                offset_x,
                                                   gint                offset_y,
-						  gint                width,
-						  gint                height,
-						  GimpImageType       type,
-						  const gchar        *name);
+                                                  gint                width,
+                                                  gint                height,
+                                                  GimpImageType       type,
+                                                  const gchar        *name);
 
 void            gimp_drawable_update             (GimpDrawable       *drawable,
-						  gint                x,
-						  gint                y,
-						  gint                width,
-						  gint                height);
+                                                  gint                x,
+                                                  gint                y,
+                                                  gint                width,
+                                                  gint                height);
 void            gimp_drawable_alpha_changed      (GimpDrawable       *drawable);
 
 void           gimp_drawable_invalidate_boundary (GimpDrawable       *drawable);
@@ -170,24 +170,24 @@ void            gimp_drawable_swap_pixels        (GimpDrawable       *drawable,
 
 void            gimp_drawable_push_undo          (GimpDrawable       *drawable,
                                                   const gchar        *undo_desc,
-						  gint                x1,
-						  gint                y1,
-						  gint                x2,
-						  gint                y2,
-						  TileManager        *tiles,
-						  gboolean            sparse);
+                                                  gint                x1,
+                                                  gint                y1,
+                                                  gint                x2,
+                                                  gint                y2,
+                                                  TileManager        *tiles,
+                                                  gboolean            sparse);
 
 TileManager   * gimp_drawable_get_shadow_tiles   (GimpDrawable       *drawable);
 void            gimp_drawable_merge_shadow       (GimpDrawable       *drawable,
-						  gboolean            push_undo,
+                                                  gboolean            push_undo,
                                                   const gchar        *undo_desc);
 
 void            gimp_drawable_fill               (GimpDrawable       *drawable,
-						  const GimpRGB      *color,
+                                                  const GimpRGB      *color,
                                                   const GimpPattern  *pattern);
 void            gimp_drawable_fill_by_type       (GimpDrawable       *drawable,
-						  GimpContext        *context,
-						  GimpFillType        fill_type);
+                                                  GimpContext        *context,
+                                                  GimpFillType        fill_type);
 
 gboolean        gimp_drawable_mask_bounds        (GimpDrawable       *drawable,
                                                   gint               *x1,

@@ -86,7 +86,7 @@ gimp_string_action_class_init (GimpStringActionClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpStringActionClass, selected),
-		  NULL, NULL,
+                  NULL, NULL,
                   gimp_marshal_VOID__STRING,
                   G_TYPE_NONE, 1,
                   G_TYPE_STRING);

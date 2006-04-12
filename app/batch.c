@@ -128,7 +128,7 @@ batch_run_cmd (Gimp          *gimp,
                const gchar   *proc_name,
                GimpProcedure *procedure,
                GimpRunMode    run_mode,
-	       const gchar   *cmd)
+               const gchar   *cmd)
 {
   GValueArray *args;
   GValueArray *return_vals;

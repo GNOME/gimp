@@ -187,13 +187,13 @@ gimp_brush_select_constructor (GType                  type,
   /*  Create the paint mode option menu  */
   select->paint_mode_menu = gimp_paint_mode_menu_new (TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Mode:"), 0.0, 0.5,
-			     select->paint_mode_menu, 2, FALSE);
+                             _("Mode:"), 0.0, 0.5,
+                             select->paint_mode_menu, 2, FALSE);
 
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (select->paint_mode_menu),
                               gimp_context_get_paint_mode (dialog->context),
                               G_CALLBACK (gimp_brush_select_mode_update),
-			      select);
+                              select);
 
   spacing_adj = GIMP_BRUSH_FACTORY_VIEW (dialog->view)->spacing_adjustment;
 
@@ -294,14 +294,14 @@ gimp_brush_select_opacity_changed (GimpContext     *context,
 {
   g_signal_handlers_block_by_func (select->opacity_data,
                                    gimp_brush_select_opacity_update,
-				   select);
+                                   select);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (select->opacity_data),
-			    opacity * 100.0);
+                            opacity * 100.0);
 
   g_signal_handlers_unblock_by_func (select->opacity_data,
-				     gimp_brush_select_opacity_update,
-				     select);
+                                     gimp_brush_select_opacity_update,
+                                     select);
 
   gimp_pdb_dialog_run_callback (GIMP_PDB_DIALOG (select), FALSE);
 }
@@ -313,7 +313,7 @@ gimp_brush_select_mode_changed (GimpContext          *context,
 {
   g_signal_handlers_block_by_func (select->paint_mode_menu,
                                    gimp_brush_select_mode_update,
-				   select);
+                                   select);
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (select->paint_mode_menu),
                                  paint_mode);

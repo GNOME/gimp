@@ -173,8 +173,8 @@ gimp_gradient_get_popup_size (GimpViewable *viewable,
 
 static TempBuf *
 gimp_gradient_get_new_preview (GimpViewable *viewable,
-			       gint          width,
-			       gint          height)
+                               gint          width,
+                               gint          height)
 {
   GimpGradient        *gradient = GIMP_GRADIENT (viewable);
   GimpGradientSegment *seg      = NULL;
@@ -238,9 +238,9 @@ gimp_gradient_duplicate (GimpData *data)
       cur->next = NULL;
 
       if (prev)
-	prev->next = cur;
+        prev->next = cur;
       else
-	head = cur;  /* Remember head */
+        head = cur;  /* Remember head */
 
       prev = cur;
       orig = orig->next;
@@ -367,7 +367,7 @@ gimp_gradient_get_color_at (GimpGradient        *gradient,
 
     default:
       g_warning ("%s: Unknown gradient type %d.",
-		 G_STRFUNC, seg->type);
+                 G_STRFUNC, seg->type);
       break;
     }
 
@@ -379,10 +379,10 @@ gimp_gradient_get_color_at (GimpGradient        *gradient,
         seg->left_color.r + (seg->right_color.r - seg->left_color.r) * factor;
 
       rgb.g =
-	seg->left_color.g + (seg->right_color.g - seg->left_color.g) * factor;
+        seg->left_color.g + (seg->right_color.g - seg->left_color.g) * factor;
 
       rgb.b =
-	seg->left_color.b + (seg->right_color.b - seg->left_color.b) * factor;
+        seg->left_color.b + (seg->right_color.b - seg->left_color.b) * factor;
     }
   else
     {
@@ -396,40 +396,40 @@ gimp_gradient_get_color_at (GimpGradient        *gradient,
       left_hsv.v = left_hsv.v + (right_hsv.v - left_hsv.v) * factor;
 
       switch (seg->color)
-	{
-	case GIMP_GRADIENT_SEGMENT_HSV_CCW:
-	  if (left_hsv.h < right_hsv.h)
-	    {
-	      left_hsv.h += (right_hsv.h - left_hsv.h) * factor;
-	    }
-	  else
-	    {
-	      left_hsv.h += (1.0 - (left_hsv.h - right_hsv.h)) * factor;
+        {
+        case GIMP_GRADIENT_SEGMENT_HSV_CCW:
+          if (left_hsv.h < right_hsv.h)
+            {
+              left_hsv.h += (right_hsv.h - left_hsv.h) * factor;
+            }
+          else
+            {
+              left_hsv.h += (1.0 - (left_hsv.h - right_hsv.h)) * factor;
 
-	      if (left_hsv.h > 1.0)
-		left_hsv.h -= 1.0;
-	    }
-	  break;
+              if (left_hsv.h > 1.0)
+                left_hsv.h -= 1.0;
+            }
+          break;
 
-	case GIMP_GRADIENT_SEGMENT_HSV_CW:
-	  if (right_hsv.h < left_hsv.h)
-	    {
-	      left_hsv.h -= (left_hsv.h - right_hsv.h) * factor;
-	    }
-	  else
-	    {
-	      left_hsv.h -= (1.0 - (right_hsv.h - left_hsv.h)) * factor;
+        case GIMP_GRADIENT_SEGMENT_HSV_CW:
+          if (right_hsv.h < left_hsv.h)
+            {
+              left_hsv.h -= (left_hsv.h - right_hsv.h) * factor;
+            }
+          else
+            {
+              left_hsv.h -= (1.0 - (right_hsv.h - left_hsv.h)) * factor;
 
-	      if (left_hsv.h < 0.0)
-		left_hsv.h += 1.0;
-	    }
-	  break;
+              if (left_hsv.h < 0.0)
+                left_hsv.h += 1.0;
+            }
+          break;
 
-	default:
-	  g_warning ("%s: Unknown coloring mode %d",
-		     G_STRFUNC, (gint) seg->color);
-	  break;
-	}
+        default:
+          g_warning ("%s: Unknown coloring mode %d",
+                     G_STRFUNC, (gint) seg->color);
+          break;
+        }
 
       gimp_hsv_to_rgb (&left_hsv, &rgb);
     }
@@ -641,7 +641,7 @@ gimp_gradient_segment_split_uniform (GimpGradient         *gradient,
       seg = gimp_gradient_segment_new ();
 
       if (i == 0)
-	tmp = seg; /* Remember first segment */
+        tmp = seg; /* Remember first segment */
 
       seg->left   = lseg->left + i * seg_len;
       seg->right  = lseg->left + (i + 1) * seg_len;
@@ -659,7 +659,7 @@ gimp_gradient_segment_split_uniform (GimpGradient         *gradient,
       seg->next = NULL;
 
       if (prev)
-	prev->next = seg;
+        prev->next = seg;
 
       prev = seg;
     }
@@ -963,21 +963,21 @@ gimp_gradient_segment_range_blend (GimpGradient        *gradient,
   do
     {
       if (blend_colors)
-	{
-	  seg->left_color.r  = rgb1->r + (seg->left - left) / len * d.r;
-	  seg->left_color.g  = rgb1->g + (seg->left - left) / len * d.g;
-	  seg->left_color.b  = rgb1->b + (seg->left - left) / len * d.b;
+        {
+          seg->left_color.r  = rgb1->r + (seg->left - left) / len * d.r;
+          seg->left_color.g  = rgb1->g + (seg->left - left) / len * d.g;
+          seg->left_color.b  = rgb1->b + (seg->left - left) / len * d.b;
 
-	  seg->right_color.r = rgb1->r + (seg->right - left) / len * d.r;
-	  seg->right_color.g = rgb1->g + (seg->right - left) / len * d.g;
-	  seg->right_color.b = rgb1->b + (seg->right - left) / len * d.b;
-	}
+          seg->right_color.r = rgb1->r + (seg->right - left) / len * d.r;
+          seg->right_color.g = rgb1->g + (seg->right - left) / len * d.g;
+          seg->right_color.b = rgb1->b + (seg->right - left) / len * d.b;
+        }
 
       if (blend_opacity)
-	{
-	  seg->left_color.a  = rgb1->a + (seg->left - left) / len * d.a;
-	  seg->right_color.a = rgb1->a + (seg->right - left) / len * d.a;
-	}
+        {
+          seg->left_color.a  = rgb1->a + (seg->left - left) / len * d.a;
+          seg->right_color.a = rgb1->a + (seg->right - left) / len * d.a;
+        }
 
       aseg = seg;
       seg = seg->next;
@@ -1072,12 +1072,12 @@ gimp_gradient_segment_range_flip (GimpGradient         *gradient,
       seg = gimp_gradient_segment_new ();
 
       if (prev == NULL)
-	{
-	  seg->left = left;
-	  tmp = seg; /* Remember first segment */
-	}
+        {
+          seg->left = left;
+          tmp = seg; /* Remember first segment */
+        }
       else
-	seg->left = left + right - oseg->right;
+        seg->left = left + right - oseg->right;
 
       seg->middle = left + right - oseg->middle;
       seg->right  = left + right - oseg->left;
@@ -1087,38 +1087,38 @@ gimp_gradient_segment_range_flip (GimpGradient         *gradient,
       seg->right_color = oseg->left_color;
 
       switch (oseg->type)
-	{
-	case GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING:
-	  seg->type = GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING;
-	  break;
+        {
+        case GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING:
+          seg->type = GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING;
+          break;
 
-	case GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING:
-	  seg->type = GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING;
-	  break;
+        case GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING:
+          seg->type = GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING;
+          break;
 
-	default:
-	  seg->type = oseg->type;
-	}
+        default:
+          seg->type = oseg->type;
+        }
 
       switch (oseg->color)
-	{
-	case GIMP_GRADIENT_SEGMENT_HSV_CCW:
-	  seg->color = GIMP_GRADIENT_SEGMENT_HSV_CW;
-	  break;
+        {
+        case GIMP_GRADIENT_SEGMENT_HSV_CCW:
+          seg->color = GIMP_GRADIENT_SEGMENT_HSV_CW;
+          break;
 
-	case GIMP_GRADIENT_SEGMENT_HSV_CW:
-	  seg->color = GIMP_GRADIENT_SEGMENT_HSV_CCW;
-	  break;
+        case GIMP_GRADIENT_SEGMENT_HSV_CW:
+          seg->color = GIMP_GRADIENT_SEGMENT_HSV_CCW;
+          break;
 
-	default:
-	  seg->color = oseg->color;
-	}
+        default:
+          seg->color = oseg->color;
+        }
 
       seg->prev = prev;
       seg->next = NULL;
 
       if (prev)
-	prev->next = seg;
+        prev->next = seg;
 
       prev = seg;
 
@@ -1418,7 +1418,7 @@ gimp_gradient_segment_range_delete (GimpGradient         *gradient,
   /* Calculate join point */
 
   join = (start_seg->left +
-	  end_seg->right) / 2.0;
+          end_seg->right) / 2.0;
 
   if (lseg == NULL)
     join = 0.0;
@@ -1714,20 +1714,20 @@ gimp_gradient_get_segment_at_internal (GimpGradient        *gradient,
   while (seg)
     {
       if (pos >= seg->left)
-	{
-	  if (pos <= seg->right)
-	    {
-	      return seg;
-	    }
-	  else
-	    {
-	      seg = seg->next;
-	    }
-	}
+        {
+          if (pos <= seg->right)
+            {
+              return seg;
+            }
+          else
+            {
+              seg = seg->next;
+            }
+        }
       else
-	{
-	  seg = seg->prev;
-	}
+        {
+          seg = seg->prev;
+        }
     }
 
   /* Oops: we should have found a segment, but we didn't */
@@ -1738,14 +1738,14 @@ gimp_gradient_get_segment_at_internal (GimpGradient        *gradient,
 
 static inline gdouble
 gimp_gradient_calc_linear_factor (gdouble middle,
-				  gdouble pos)
+                                  gdouble pos)
 {
   if (pos <= middle)
     {
       if (middle < EPSILON)
-	return 0.0;
+        return 0.0;
       else
-	return 0.5 * pos / middle;
+        return 0.5 * pos / middle;
     }
   else
     {
@@ -1753,15 +1753,15 @@ gimp_gradient_calc_linear_factor (gdouble middle,
       middle = 1.0 - middle;
 
       if (middle < EPSILON)
-	return 1.0;
+        return 1.0;
       else
-	return 0.5 + 0.5 * pos / middle;
+        return 0.5 + 0.5 * pos / middle;
     }
 }
 
 static inline gdouble
 gimp_gradient_calc_curved_factor (gdouble middle,
-				  gdouble pos)
+                                  gdouble pos)
 {
   if (middle < EPSILON)
     middle = EPSILON;
@@ -1771,7 +1771,7 @@ gimp_gradient_calc_curved_factor (gdouble middle,
 
 static inline gdouble
 gimp_gradient_calc_sine_factor (gdouble middle,
-				gdouble pos)
+                                gdouble pos)
 {
   pos = gimp_gradient_calc_linear_factor (middle, pos);
 
@@ -1780,7 +1780,7 @@ gimp_gradient_calc_sine_factor (gdouble middle,
 
 static inline gdouble
 gimp_gradient_calc_sphere_increasing_factor (gdouble middle,
-					     gdouble pos)
+                                             gdouble pos)
 {
   pos = gimp_gradient_calc_linear_factor (middle, pos) - 1.0;
 
@@ -1790,7 +1790,7 @@ gimp_gradient_calc_sphere_increasing_factor (gdouble middle,
 
 static inline gdouble
 gimp_gradient_calc_sphere_decreasing_factor (gdouble middle,
-					     gdouble pos)
+                                             gdouble pos)
 {
   pos = gimp_gradient_calc_linear_factor (middle, pos);
 

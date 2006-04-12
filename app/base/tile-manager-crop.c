@@ -32,7 +32,7 @@
 
 TileManager *
 tile_manager_crop (TileManager *tiles,
-		   gint         border)
+                   gint         border)
 {
   PixelRegion  PR;
   TileManager *new_tiles;
@@ -68,35 +68,35 @@ tile_manager_crop (TileManager *tiles,
       ey = PR.y + PR.h;
 
       for (y = PR.y; y < ey; y++)
-	{
-	  found = FALSE;
+        {
+          found = FALSE;
 
-	  for (x = PR.x; x < ex; x++, data += bytes)
-	    if (*data)
-	      {
-		if (x < x1)
-		  x1 = x;
-		if (x > x2)
-		  x2 = x;
+          for (x = PR.x; x < ex; x++, data += bytes)
+            if (*data)
+              {
+                if (x < x1)
+                  x1 = x;
+                if (x > x2)
+                  x2 = x;
 
-		found = TRUE;
-	      }
+                found = TRUE;
+              }
 
-	  if (found)
-	    {
-	      if (y < y1)
-		y1 = y;
-	      if (y > y2)
-		y2 = y;
-	    }
-	}
+          if (found)
+            {
+              if (y < y1)
+                y1 = y;
+              if (y > y2)
+                y2 = y;
+            }
+        }
     }
 
   x2 = CLAMP (x2 + 1, 0, tile_manager_width (tiles));
   y2 = CLAMP (y2 + 1, 0, tile_manager_height (tiles));
 
   empty = (x1 == tile_manager_width (tiles) &&
-	   y1 == tile_manager_height (tiles));
+           y1 == tile_manager_height (tiles));
 
   if (empty)
     {
@@ -105,9 +105,9 @@ tile_manager_crop (TileManager *tiles,
       new_tiles = NULL;
     }
   else if (x1 == 0 && y1 == 0 &&
-	   x2 == tile_manager_width (tiles)  &&
-	   y2 == tile_manager_height (tiles) &&
-	   border == 0)
+           x2 == tile_manager_width (tiles)  &&
+           y2 == tile_manager_height (tiles) &&
+           border == 0)
     {
       /*  If no cropping, return original buffer  */
 
@@ -126,32 +126,32 @@ tile_manager_crop (TileManager *tiles,
 
       /*  If there is a border, make sure to clear the new tiles first  */
       if (border)
-	{
-	  pixel_region_init (&destPR, new_tiles,
-			     0, 0, new_width, border,
-			     TRUE);
-	  color_region (&destPR, black);
+        {
+          pixel_region_init (&destPR, new_tiles,
+                             0, 0, new_width, border,
+                             TRUE);
+          color_region (&destPR, black);
 
-	  pixel_region_init (&destPR, new_tiles,
-			     0, border, border, (y2 - y1),
-			     TRUE);
-	  color_region (&destPR, black);
+          pixel_region_init (&destPR, new_tiles,
+                             0, border, border, (y2 - y1),
+                             TRUE);
+          color_region (&destPR, black);
 
-	  pixel_region_init (&destPR, new_tiles,
-			     new_width - border, border, border, (y2 - y1),
-			     TRUE);
-	  color_region (&destPR, black);
+          pixel_region_init (&destPR, new_tiles,
+                             new_width - border, border, border, (y2 - y1),
+                             TRUE);
+          color_region (&destPR, black);
 
-	  pixel_region_init (&destPR, new_tiles,
-			     0, new_height - border, new_width, border,
-			     TRUE);
-	  color_region (&destPR, black);
-	}
+          pixel_region_init (&destPR, new_tiles,
+                             0, new_height - border, new_width, border,
+                             TRUE);
+          color_region (&destPR, black);
+        }
 
       pixel_region_init (&srcPR, tiles,
-			 x1, y1, (x2 - x1), (y2 - y1), FALSE);
+                         x1, y1, (x2 - x1), (y2 - y1), FALSE);
       pixel_region_init (&destPR, new_tiles,
-			 border, border, (x2 - x1), (y2 - y1), TRUE);
+                         border, border, (x2 - x1), (y2 - y1), TRUE);
 
       copy_region (&srcPR, &destPR);
 

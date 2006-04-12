@@ -113,7 +113,7 @@ plug_in_run_cmd_callback (GtkAction           *action,
                     }
                 }
             }
-	}
+        }
       break;
 
     default:

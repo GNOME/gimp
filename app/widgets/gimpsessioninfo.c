@@ -870,15 +870,15 @@ gimp_session_info_get_geometry (GimpSessionInfo *info)
       gdk_window_get_root_origin (info->widget->window, &info->x, &info->y);
 
       if (! info->toplevel_entry || info->toplevel_entry->remember_size)
-	{
-	  info->width  = info->widget->allocation.width;
-	  info->height = info->widget->allocation.height;
-	}
+        {
+          info->width  = info->widget->allocation.width;
+          info->height = info->widget->allocation.height;
+        }
       else
-	{
-	  info->width  = 0;
-	  info->height = 0;
-	}
+        {
+          info->width  = 0;
+          info->height = 0;
+        }
     }
 
   info->open = FALSE;

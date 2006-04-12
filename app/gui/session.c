@@ -134,7 +134,7 @@ session_init (Gimp *gimp)
             }
           else if (scanner->value.v_symbol == GINT_TO_POINTER (LAST_TIP_SHOWN))
             {
-	      GimpGuiConfig *config = GIMP_GUI_CONFIG (gimp->config);
+              GimpGuiConfig *config = GIMP_GUI_CONFIG (gimp->config);
 
               token = G_TOKEN_INT;
 
@@ -205,17 +205,17 @@ session_save (Gimp     *gimp,
 
   writer =
     gimp_config_writer_new_file (filename,
-				 TRUE,
-				 "GIMP sessionrc\n\n"
-				 "This file takes session-specific info "
-				 "(that is info, you want to keep between "
-				 "two GIMP sessions).  You are not supposed "
-				 "to edit it manually, but of course you "
-				 "can do.  The sessionrc will be entirely "
+                                 TRUE,
+                                 "GIMP sessionrc\n\n"
+                                 "This file takes session-specific info "
+                                 "(that is info, you want to keep between "
+                                 "two GIMP sessions).  You are not supposed "
+                                 "to edit it manually, but of course you "
+                                 "can do.  The sessionrc will be entirely "
                                  "rewritten every time you quit GIMP.  "
                                  "If this file isn't found, defaults are "
                                  "used.",
-				 NULL);
+                                 NULL);
   g_free (filename);
 
   if (!writer)

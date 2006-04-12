@@ -369,9 +369,9 @@ gimp_template_create_image (Gimp         *gimp,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   image = gimp_create_image (gimp,
-			      template->width, template->height,
-			      template->image_type,
-			      FALSE);
+                              template->width, template->height,
+                              template->image_type,
+                              FALSE);
 
   gimp_image_undo_disable (image);
 
@@ -409,7 +409,7 @@ gimp_template_create_image (Gimp         *gimp,
 
   layer = gimp_layer_new (image, width, height, type,
                           _("Background"),
-			  GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+                          GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
   gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer),
                               context, template->fill_type);

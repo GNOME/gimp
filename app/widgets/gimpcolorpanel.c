@@ -157,7 +157,7 @@ gimp_color_panel_clicked (GtkButton *button)
   if (! panel->color_dialog)
     {
       panel->color_dialog =
-	gimp_color_dialog_new (NULL,
+        gimp_color_dialog_new (NULL,
                                GIMP_COLOR_BUTTON (button)->title,
                                NULL, NULL,
                                GTK_WIDGET (button),
@@ -189,10 +189,10 @@ gimp_color_panel_get_action_type (GimpColorButton *button)
 
 GtkWidget *
 gimp_color_panel_new (const gchar       *title,
-		      const GimpRGB     *color,
-		      GimpColorAreaType  type,
-		      gint               width,
-		      gint               height)
+                      const GimpRGB     *color,
+                      GimpColorAreaType  type,
+                      gint               width,
+                      gint               height)
 {
   GimpColorPanel *panel;
 

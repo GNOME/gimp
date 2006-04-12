@@ -151,21 +151,21 @@ gimp_cell_renderer_dashes_get_size (GtkCellRenderer *cell,
   if (cell_area)
     {
       if (x_offset)
-	{
+        {
           gdouble align;
 
           align = ((gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL) ?
                    1.0 - cell->xalign : cell->xalign);
 
-	  *x_offset = align * (cell_area->width - DASHES_WIDTH);
-	  *x_offset = MAX (*x_offset, 0) + cell->xpad;
-	}
+          *x_offset = align * (cell_area->width - DASHES_WIDTH);
+          *x_offset = MAX (*x_offset, 0) + cell->xpad;
+        }
 
       if (y_offset)
-	{
-	  *y_offset = cell->yalign * (cell_area->height - DASHES_HEIGHT);
-	  *y_offset = MAX (*y_offset, 0) + cell->ypad;
-	}
+        {
+          *y_offset = cell->yalign * (cell_area->height - DASHES_HEIGHT);
+          *y_offset = MAX (*y_offset, 0) + cell->ypad;
+        }
     }
   else
     {
@@ -201,21 +201,21 @@ gimp_cell_renderer_dashes_render (GtkCellRenderer      *cell,
   else if ((flags & GTK_CELL_RENDERER_SELECTED) == GTK_CELL_RENDERER_SELECTED)
     {
       if (GTK_WIDGET_HAS_FOCUS (widget))
-	state = GTK_STATE_SELECTED;
+        state = GTK_STATE_SELECTED;
       else
-	state = GTK_STATE_ACTIVE;
+        state = GTK_STATE_ACTIVE;
     }
   else if ((flags & GTK_CELL_RENDERER_PRELIT) == GTK_CELL_RENDERER_PRELIT &&
-	   GTK_WIDGET_STATE (widget) == GTK_STATE_PRELIGHT)
+           GTK_WIDGET_STATE (widget) == GTK_STATE_PRELIGHT)
     {
       state = GTK_STATE_PRELIGHT;
     }
   else
     {
       if (GTK_WIDGET_STATE (widget) == GTK_STATE_INSENSITIVE)
-	state = GTK_STATE_INSENSITIVE;
+        state = GTK_STATE_INSENSITIVE;
       else
-	state = GTK_STATE_NORMAL;
+        state = GTK_STATE_NORMAL;
     }
 
   y = cell_area->y + (cell_area->height - DASHES_HEIGHT) / 2;

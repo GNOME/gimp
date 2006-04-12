@@ -92,35 +92,35 @@ struct _AsyncSwapArgs
 
 static guint   tile_swap_hash             (gint        *key);
 static gint    tile_swap_compare          (gint        *a,
-					   gint        *b);
+                                           gint        *b);
 static void    tile_swap_command          (Tile        *tile,
-					   gint         command);
+                                           gint         command);
 static void    tile_swap_open             (SwapFile    *swap_file);
 
 static gint    tile_swap_default          (gint         fd,
-					   Tile        *tile,
-					   gint         cmd,
-					   gpointer     user_data);
+                                           Tile        *tile,
+                                           gint         cmd,
+                                           gpointer     user_data);
 static void    tile_swap_default_in       (DefSwapFile *def_swap_file,
-					   gint         fd,
-					   Tile        *tile);
+                                           gint         fd,
+                                           Tile        *tile);
 static void    tile_swap_default_in_async (DefSwapFile *def_swap_file,
-					   gint         fd,
-					   Tile        *tile);
+                                           gint         fd,
+                                           Tile        *tile);
 static void    tile_swap_default_out      (DefSwapFile *def_swap_file,
-					   gint         fd,
-					   Tile        *tile);
+                                           gint         fd,
+                                           Tile        *tile);
 static void    tile_swap_default_delete   (DefSwapFile *def_swap_file,
-					   gint         fd,
-					   Tile        *tile);
+                                           gint         fd,
+                                           Tile        *tile);
 static off_t   tile_swap_find_offset      (DefSwapFile *def_swap_file,
-					   gint         fd,
-					   off_t        bytes);
+                                           gint         fd,
+                                           off_t        bytes);
 static void    tile_swap_resize           (DefSwapFile *def_swap_file,
-					   gint         fd,
-					   off_t        new_size);
+                                           gint         fd,
+                                           off_t        new_size);
 static Gap   * tile_swap_gap_new          (off_t        start,
-					   off_t        end);
+                                           off_t        end);
 static void    tile_swap_gap_destroy      (Gap         *gap);
 #ifdef ENABLE_THREADED_TILE_SWAPPER
 static gpointer tile_swap_in_thread       (gpointer);
@@ -171,8 +171,8 @@ tile_swap_print_gaps (DefSwapFile *def_swap_file)
 
 static void
 tile_swap_exit1 (gpointer key,
-		 gpointer value,
-		 gpointer data)
+                 gpointer value,
+                 gpointer data)
 {
   extern gint  tile_ref_count;
   SwapFile    *swap_file;
@@ -188,20 +188,20 @@ tile_swap_exit1 (gpointer key,
 
 #ifdef GIMP_UNSTABLE
       if (def_swap_file->swap_file_end != 0)
-	{
-	  g_warning ("swap file not empty: \"%s\"\n",
-		     gimp_filename_to_utf8 (swap_file->filename));
-	  tile_swap_print_gaps (def_swap_file);
-	}
+        {
+          g_warning ("swap file not empty: \"%s\"\n",
+                     gimp_filename_to_utf8 (swap_file->filename));
+          tile_swap_print_gaps (def_swap_file);
+        }
 #endif
 
 #ifdef G_OS_WIN32
       /* should close before unlink */
       if (swap_file->fd > 0)
-	{
-	  close (swap_file->fd);
-	  swap_file->fd = -1;
-	}
+        {
+          close (swap_file->fd);
+          swap_file->fd = -1;
+        }
 #endif
       g_unlink (swap_file->filename);
     }
@@ -259,7 +259,7 @@ tile_swap_exit (void)
   extern int tile_exist_peak;
 
   g_printerr ("Tile exist peak was %d Tile structs (%d bytes)",
-	      tile_exist_peak, tile_exist_peak * sizeof(Tile));
+              tile_exist_peak, tile_exist_peak * sizeof(Tile));
 #endif
 
   if (swap_files)
@@ -268,8 +268,8 @@ tile_swap_exit (void)
 
 gint
 tile_swap_add (gchar    *filename,
-	       SwapFunc  swap_func,
-	       gpointer  user_data)
+               SwapFunc  swap_func,
+               gpointer  user_data)
 {
   SwapFile    *swap_file;
   DefSwapFile *def_swap_file;
@@ -415,14 +415,14 @@ tile_swap_hash (gint *key)
 
 static gint
 tile_swap_compare (gint *a,
-		   gint *b)
+                   gint *b)
 {
   return (*a == *b);
 }
 
 static void
 tile_swap_command (Tile *tile,
-		   gint  command)
+                   gint  command)
 {
   SwapFile *swap_file;
 
@@ -436,20 +436,20 @@ tile_swap_command (Tile *tile,
     swap_file = g_hash_table_lookup (swap_files, &tile->swap_num);
     if (!swap_file)
       {
-	g_warning ("could not find swap file for tile");
-	goto out;
+        g_warning ("could not find swap file for tile");
+        goto out;
       }
 
     if (swap_file->fd == -1)
       {
-	tile_swap_open (swap_file);
+        tile_swap_open (swap_file);
 
-	if (swap_file->fd == -1)
-	  goto out;
+        if (swap_file->fd == -1)
+          goto out;
       }
   }
   while ((* swap_file->swap_func) (swap_file->fd,
-				   tile, command, swap_file->user_data));
+                                   tile, command, swap_file->user_data));
 
 out:
 #ifdef ENABLE_THREADED_TILE_SWAPPER
@@ -508,9 +508,9 @@ tile_swap_open (SwapFile *swap_file)
 
 static int
 tile_swap_default (gint      fd,
-		   Tile     *tile,
-		   gint      cmd,
-		   gpointer  user_data)
+                   Tile     *tile,
+                   gint      cmd,
+                   gpointer  user_data)
 {
   DefSwapFile *def_swap_file;
 
@@ -540,8 +540,8 @@ tile_swap_default (gint      fd,
 
 static void
 tile_swap_default_in_async (DefSwapFile *def_swap_file,
-		            gint         fd,
-		            Tile        *tile)
+                            gint         fd,
+                            Tile        *tile)
 {
 #ifdef ENABLE_THREADED_TILE_SWAPPER
   AsyncSwapArgs *args = g_new (AsyncSwapArgs, 1);
@@ -585,8 +585,8 @@ tile_swap_default_in_async (DefSwapFile *def_swap_file,
  */
 static void
 tile_swap_default_in (DefSwapFile *def_swap_file,
-		      gint         fd,
-		      Tile        *tile)
+                      gint         fd,
+                      Tile        *tile)
 {
   gint  err;
   gint  nleft;
@@ -605,12 +605,12 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
 
       offset = lseek (fd, tile->swap_offset, SEEK_SET);
       if (offset == -1)
-	{
-	  if (seek_err_msg)
-	    g_message ("unable to seek to tile location on disk: %d", err);
-	  seek_err_msg = FALSE;
-	  return;
-	}
+        {
+          if (seek_err_msg)
+            g_message ("unable to seek to tile location on disk: %d", err);
+          seek_err_msg = FALSE;
+          return;
+        }
     }
 
   tile_alloc (tile);
@@ -619,19 +619,19 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
   while (nleft > 0)
     {
       do
-	{
-	  err = read (fd, tile->data + tile->size - nleft, nleft);
-	}
+        {
+          err = read (fd, tile->data + tile->size - nleft, nleft);
+        }
       while ((err == -1) && ((errno == EAGAIN) || (errno == EINTR)));
 
       if (err <= 0)
-	{
-	  if (read_err_msg)
-	    g_message ("unable to read tile data from disk: %s (%d/%d bytes read)",
-		       g_strerror (errno), err, nleft);
-	  read_err_msg = FALSE;
-	  return;
-	}
+        {
+          if (read_err_msg)
+            g_message ("unable to read tile data from disk: %s (%d/%d bytes read)",
+                       g_strerror (errno), err, nleft);
+          read_err_msg = FALSE;
+          return;
+        }
 
       nleft -= err;
     }
@@ -646,8 +646,8 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
 
 static void
 tile_swap_default_out (DefSwapFile *def_swap_file,
-		       int          fd,
-		       Tile        *tile)
+                       int          fd,
+                       Tile        *tile)
 {
   gint  bytes;
   gint  err;
@@ -667,13 +667,13 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
     {
       offset = lseek (fd, newpos, SEEK_SET);
       if (offset == -1)
-	{
-	  if (seek_err_msg)
-	    g_message ("unable to seek to tile location on disk: %s",
-		       g_strerror (errno));
-	  seek_err_msg = FALSE;
-	  return;
-	}
+        {
+          if (seek_err_msg)
+            g_message ("unable to seek to tile location on disk: %s",
+                       g_strerror (errno));
+          seek_err_msg = FALSE;
+          return;
+        }
       def_swap_file->cur_position = newpos;
     }
 
@@ -682,13 +682,13 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
     {
       err = write (fd, tile->data + tile->size - nleft, nleft);
       if (err <= 0)
-	{
-	  if (write_err_msg)
-	    g_message ("unable to write tile data to disk: %s (%d/%d bytes written)",
-		       g_strerror (errno), err, nleft);
-	  write_err_msg = FALSE;
-	  return;
-	}
+        {
+          if (write_err_msg)
+            g_message ("unable to write tile data to disk: %s (%d/%d bytes written)",
+                       g_strerror (errno), err, nleft);
+          write_err_msg = FALSE;
+          return;
+        }
 
       nleft -= err;
     }
@@ -706,8 +706,8 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
 
 static void
 tile_swap_default_delete (DefSwapFile *def_swap_file,
-			  gint         fd,
-			  Tile        *tile)
+                          gint         fd,
+                          Tile        *tile)
 {
   GList *tmp;
   GList *tmp2;
@@ -729,65 +729,65 @@ tile_swap_default_delete (DefSwapFile *def_swap_file,
       gap = tmp->data;
 
       if (end == gap->start)
-	{
-	  gap->start = start;
+        {
+          gap->start = start;
 
-	  if (tmp->prev)
-	    {
-	      gap2 = tmp->prev->data;
-	      if (gap->start == gap2->end)
-		{
-		  gap2->end = gap->end;
-		  tile_swap_gap_destroy (gap);
-		  def_swap_file->gaps =
-		    g_list_remove_link (def_swap_file->gaps, tmp);
-		  g_list_free (tmp);
-		}
-	    }
-	  break;
-	}
+          if (tmp->prev)
+            {
+              gap2 = tmp->prev->data;
+              if (gap->start == gap2->end)
+                {
+                  gap2->end = gap->end;
+                  tile_swap_gap_destroy (gap);
+                  def_swap_file->gaps =
+                    g_list_remove_link (def_swap_file->gaps, tmp);
+                  g_list_free (tmp);
+                }
+            }
+          break;
+        }
       else if (start == gap->end)
-	{
-	  gap->end = end;
+        {
+          gap->end = end;
 
-	  if (tmp->next)
-	    {
-	      gap2 = tmp->next->data;
-	      if (gap->end == gap2->start)
-		{
-		  gap2->start = gap->start;
-		  tile_swap_gap_destroy (gap);
-		  def_swap_file->gaps =
-		    g_list_remove_link (def_swap_file->gaps, tmp);
-		  g_list_free (tmp);
-		}
-	    }
-	  break;
-	}
+          if (tmp->next)
+            {
+              gap2 = tmp->next->data;
+              if (gap->end == gap2->start)
+                {
+                  gap2->start = gap->start;
+                  tile_swap_gap_destroy (gap);
+                  def_swap_file->gaps =
+                    g_list_remove_link (def_swap_file->gaps, tmp);
+                  g_list_free (tmp);
+                }
+            }
+          break;
+        }
       else if (end < gap->start)
-	{
-	  gap = tile_swap_gap_new (start, end);
+        {
+          gap = tile_swap_gap_new (start, end);
 
-	  tmp2 = g_list_alloc ();
-	  tmp2->data = gap;
-	  tmp2->next = tmp;
-	  tmp2->prev = tmp->prev;
-	  if (tmp->prev)
-	    tmp->prev->next = tmp2;
-	  tmp->prev = tmp2;
+          tmp2 = g_list_alloc ();
+          tmp2->data = gap;
+          tmp2->next = tmp;
+          tmp2->prev = tmp->prev;
+          if (tmp->prev)
+            tmp->prev->next = tmp2;
+          tmp->prev = tmp2;
 
-	  if (tmp == def_swap_file->gaps)
-	    def_swap_file->gaps = tmp2;
-	  break;
-	}
+          if (tmp == def_swap_file->gaps)
+            def_swap_file->gaps = tmp2;
+          break;
+        }
       else if (!tmp->next)
-	{
-	  gap = tile_swap_gap_new (start, end);
-	  tmp->next = g_list_alloc ();
-	  tmp->next->data = gap;
-	  tmp->next->prev = tmp;
-	  break;
-	}
+        {
+          gap = tile_swap_gap_new (start, end);
+          tmp->next = g_list_alloc ();
+          tmp->next->data = gap;
+          tmp->next->prev = tmp;
+          break;
+        }
 
       tmp = tmp->next;
     }
@@ -812,8 +812,8 @@ tile_swap_default_delete (DefSwapFile *def_swap_file,
 
 static void
 tile_swap_resize (DefSwapFile *def_swap_file,
-		  gint         fd,
-		  off_t        new_size)
+                  gint         fd,
+                  off_t        new_size)
 {
   if (def_swap_file->swap_file_end > new_size)
     {
@@ -829,8 +829,8 @@ tile_swap_resize (DefSwapFile *def_swap_file,
 
 static off_t
 tile_swap_find_offset (DefSwapFile *def_swap_file,
-		       gint         fd,
-		       off_t        bytes)
+                       gint         fd,
+                       off_t        bytes)
 {
   GList *tmp;
   Gap   *gap;
@@ -842,20 +842,20 @@ tile_swap_find_offset (DefSwapFile *def_swap_file,
       gap = tmp->data;
 
       if ((gap->end - gap->start) >= bytes)
-	{
-	  offset = gap->start;
-	  gap->start += bytes;
+        {
+          offset = gap->start;
+          gap->start += bytes;
 
-	  if (gap->start == gap->end)
-	    {
-	      tile_swap_gap_destroy (gap);
-	      def_swap_file->gaps =
-		g_list_remove_link (def_swap_file->gaps, tmp);
-	      g_list_free (tmp);
-	    }
+          if (gap->start == gap->end)
+            {
+              tile_swap_gap_destroy (gap);
+              def_swap_file->gaps =
+                g_list_remove_link (def_swap_file->gaps, tmp);
+              g_list_free (tmp);
+            }
 
-	  return offset;
-	}
+          return offset;
+        }
 
       tmp = tmp->next;
     }
@@ -863,7 +863,7 @@ tile_swap_find_offset (DefSwapFile *def_swap_file,
   offset = def_swap_file->swap_file_end;
 
   tile_swap_resize (def_swap_file, fd,
-		    def_swap_file->swap_file_end + swap_file_grow);
+                    def_swap_file->swap_file_end + swap_file_grow);
 
   if ((offset + bytes) < (def_swap_file->swap_file_end))
     {
@@ -876,7 +876,7 @@ tile_swap_find_offset (DefSwapFile *def_swap_file,
 
 static Gap *
 tile_swap_gap_new (off_t start,
-		   off_t end)
+                   off_t end)
 {
   Gap *gap;
 
@@ -908,8 +908,8 @@ tile_swap_gap_destroy (Gap *gap)
 
 static void
 tile_swap_in_attempt (DefSwapFile *def_swap_file,
-		      gint         fd,
-		      Tile        *tile)
+                      gint         fd,
+                      Tile        *tile)
 {
   gint  err = -1;
   gint  nleft;
@@ -926,7 +926,7 @@ tile_swap_in_attempt (DefSwapFile *def_swap_file,
       def_swap_file->cur_position = tile->swap_offset;
 
       if (lseek (fd, tile->swap_offset, SEEK_SET) == -1)
-	return;
+        return;
     }
 
   tile_alloc (tile);
@@ -935,15 +935,15 @@ tile_swap_in_attempt (DefSwapFile *def_swap_file,
   while (nleft > 0)
     {
       do
-	{
-	  err = read (fd, tile->data + tile->size - nleft, nleft);
-	}
+        {
+          err = read (fd, tile->data + tile->size - nleft, nleft);
+        }
       while ((err == -1) && ((errno == EAGAIN) || (errno == EINTR)));
 
       if (err <= 0)
         {
-	  g_free (tile->data);
-	  return;
+          g_free (tile->data);
+          return;
         }
 
       nleft -= err;

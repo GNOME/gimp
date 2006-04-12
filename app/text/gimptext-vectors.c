@@ -63,17 +63,17 @@ struct _RenderContext
 
 
 static void  gimp_text_render_vectors (PangoFont     *font,
-				       PangoGlyph     glyph,
-				       FT_Int32       flags,
-				       FT_Matrix     *matrix,
-				       gint           x,
-				       gint           y,
-				       RenderContext *context);
+                                       PangoGlyph     glyph,
+                                       FT_Int32       flags,
+                                       FT_Matrix     *matrix,
+                                       gint           x,
+                                       gint           y,
+                                       RenderContext *context);
 
 
 GimpVectors *
 gimp_text_vectors_new (GimpImage *image,
-		       GimpText  *text)
+                       GimpText  *text)
 {
   GimpVectors    *vectors;
   GimpTextLayout *layout;
@@ -93,8 +93,8 @@ gimp_text_vectors_new (GimpImage *image,
       context.vectors = vectors;
 
       gimp_text_layout_render (layout,
-			       (GimpTextRenderFunc) gimp_text_render_vectors,
-			       &context);
+                               (GimpTextRenderFunc) gimp_text_render_vectors,
+                               &context);
 
       g_object_unref (layout);
 
@@ -121,7 +121,7 @@ gimp_text_vector_coords (RenderContext   *context,
 
 static gint
 moveto (FT_Vector *to,
-	gpointer   data)
+        gpointer   data)
 {
   RenderContext *context = (RenderContext *) data;
   GimpCoords     start;
@@ -145,7 +145,7 @@ moveto (FT_Vector *to,
 
 static gint
 lineto (FT_Vector *to,
-	gpointer   data)
+        gpointer   data)
 {
   RenderContext *context = (RenderContext *) data;
   GimpCoords     end;
@@ -166,8 +166,8 @@ lineto (FT_Vector *to,
 
 static gint
 conicto (FT_Vector *ftcontrol,
-	 FT_Vector *to,
-	 gpointer   data)
+         FT_Vector *to,
+         gpointer   data)
 {
   RenderContext *context = (RenderContext *) data;
   GimpCoords     control;
@@ -190,9 +190,9 @@ conicto (FT_Vector *ftcontrol,
 
 static gint
 cubicto (FT_Vector *ftcontrol1,
-	 FT_Vector *ftcontrol2,
-	 FT_Vector *to,
-	 gpointer   data)
+         FT_Vector *ftcontrol2,
+         FT_Vector *to,
+         gpointer   data)
 {
   RenderContext *context = (RenderContext *) data;
   GimpCoords     control1;
@@ -218,12 +218,12 @@ cubicto (FT_Vector *ftcontrol1,
 
 static void
 gimp_text_render_vectors (PangoFont     *font,
-			  PangoGlyph     pango_glyph,
-			  FT_Int32       flags,
-			  FT_Matrix     *trafo,
-			  gint           x,
-			  gint           y,
-			  RenderContext *context)
+                          PangoGlyph     pango_glyph,
+                          FT_Int32       flags,
+                          FT_Matrix     *trafo,
+                          gint           x,
+                          gint           y,
+                          RenderContext *context)
 {
   const FT_Outline_Funcs  outline_funcs =
   {

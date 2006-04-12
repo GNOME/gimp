@@ -129,7 +129,7 @@ gimp_sample_point_editor_init (GimpSamplePointEditor *editor)
 
   gtk_widget_style_get (GTK_WIDGET (editor),
                         "content-spacing", &content_spacing,
-			NULL);
+                        NULL);
 
   editor->table = gtk_table_new (2, 2, TRUE);
   gtk_table_set_row_spacing (GTK_TABLE (editor->table), 0, content_spacing);
@@ -246,7 +246,7 @@ gimp_sample_point_editor_style_set (GtkWidget *widget,
 
   gtk_widget_style_get (widget,
                         "content-spacing", &content_spacing,
-			NULL);
+                        NULL);
 
   gtk_table_set_row_spacing (GTK_TABLE (editor->table), 0, content_spacing);
   gtk_table_set_col_spacing (GTK_TABLE (editor->table), 0, content_spacing);

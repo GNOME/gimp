@@ -37,9 +37,9 @@ GValueArray *
 plug_in_params_to_args (GParamSpec **pspecs,
                         gint         n_pspecs,
                         GPParam     *params,
-			gint         n_params,
+                        gint         n_params,
                         gboolean     return_values,
-			gboolean     full_copy)
+                        gboolean     full_copy)
 {
   GValueArray *args;
   gint         i;
@@ -79,8 +79,8 @@ plug_in_params_to_args (GParamSpec **pspecs,
       g_value_init (&value, type);
 
       switch (gimp_pdb_compat_arg_type_from_gtype (type))
-	{
-	case GIMP_PDB_INT32:
+        {
+        case GIMP_PDB_INT32:
           if (G_VALUE_HOLDS_INT (&value))
             g_value_set_int (&value, params[i].data.d_int32);
           else if (G_VALUE_HOLDS_UINT (&value))
@@ -95,28 +95,28 @@ plug_in_params_to_args (GParamSpec **pspecs,
                           G_STRFUNC, g_type_name (G_VALUE_TYPE (&value)));
               g_return_val_if_reached (args);
             }
-	  break;
+          break;
 
-	case GIMP_PDB_INT16:
-	  g_value_set_int (&value, params[i].data.d_int16);
-	  break;
+        case GIMP_PDB_INT16:
+          g_value_set_int (&value, params[i].data.d_int16);
+          break;
 
-	case GIMP_PDB_INT8:
-	  g_value_set_uint (&value, params[i].data.d_int8);
-	  break;
+        case GIMP_PDB_INT8:
+          g_value_set_uint (&value, params[i].data.d_int8);
+          break;
 
-	case GIMP_PDB_FLOAT:
-	  g_value_set_double (&value, params[i].data.d_float);
-	  break;
+        case GIMP_PDB_FLOAT:
+          g_value_set_double (&value, params[i].data.d_float);
+          break;
 
-	case GIMP_PDB_STRING:
-	  if (full_copy)
-	    g_value_set_string (&value, params[i].data.d_string);
-	  else
-	    g_value_set_static_string (&value, params[i].data.d_string);
-	  break;
+        case GIMP_PDB_STRING:
+          if (full_copy)
+            g_value_set_string (&value, params[i].data.d_string);
+          else
+            g_value_set_static_string (&value, params[i].data.d_string);
+          break;
 
-	case GIMP_PDB_INT32ARRAY:
+        case GIMP_PDB_INT32ARRAY:
           count = g_value_get_int (&args->values[i - 1]);
           if (full_copy)
             gimp_value_set_int32array (&value,
@@ -126,9 +126,9 @@ plug_in_params_to_args (GParamSpec **pspecs,
             gimp_value_set_static_int32array (&value,
                                               params[i].data.d_int32array,
                                               count);
-	  break;
+          break;
 
-	case GIMP_PDB_INT16ARRAY:
+        case GIMP_PDB_INT16ARRAY:
           count = g_value_get_int (&args->values[i - 1]);
           if (full_copy)
             gimp_value_set_int16array (&value,
@@ -138,9 +138,9 @@ plug_in_params_to_args (GParamSpec **pspecs,
             gimp_value_set_static_int16array (&value,
                                               params[i].data.d_int16array,
                                               count);
-	  break;
+          break;
 
-	case GIMP_PDB_INT8ARRAY:
+        case GIMP_PDB_INT8ARRAY:
           count = g_value_get_int (&args->values[i - 1]);
           if (full_copy)
             gimp_value_set_int8array (&value,
@@ -150,9 +150,9 @@ plug_in_params_to_args (GParamSpec **pspecs,
             gimp_value_set_static_int8array (&value,
                                              (guint8 *) params[i].data.d_int8array,
                                              count);
-	  break;
+          break;
 
-	case GIMP_PDB_FLOATARRAY:
+        case GIMP_PDB_FLOATARRAY:
           count = g_value_get_int (&args->values[i - 1]);
           if (full_copy)
             gimp_value_set_floatarray (&value,
@@ -162,9 +162,9 @@ plug_in_params_to_args (GParamSpec **pspecs,
             gimp_value_set_static_floatarray (&value,
                                               params[i].data.d_floatarray,
                                               count);
-	  break;
+          break;
 
-	case GIMP_PDB_STRINGARRAY:
+        case GIMP_PDB_STRINGARRAY:
           count = g_value_get_int (&args->values[i - 1]);
           if (full_copy)
             gimp_value_set_stringarray (&value,
@@ -174,62 +174,62 @@ plug_in_params_to_args (GParamSpec **pspecs,
             gimp_value_set_static_stringarray (&value,
                                                (const gchar **) params[i].data.d_stringarray,
                                                count);
-	  break;
+          break;
 
-	case GIMP_PDB_COLOR:
-	  gimp_value_set_rgb (&value, &params[i].data.d_color);
-	  break;
+        case GIMP_PDB_COLOR:
+          gimp_value_set_rgb (&value, &params[i].data.d_color);
+          break;
 
-	case GIMP_PDB_REGION:
-	  g_message ("the \"region\" argument type is not supported");
-	  break;
+        case GIMP_PDB_REGION:
+          g_message ("the \"region\" argument type is not supported");
+          break;
 
-	case GIMP_PDB_DISPLAY:
-	  g_value_set_int (&value, params[i].data.d_display);
-	  break;
+        case GIMP_PDB_DISPLAY:
+          g_value_set_int (&value, params[i].data.d_display);
+          break;
 
-	case GIMP_PDB_IMAGE:
-	  g_value_set_int (&value, params[i].data.d_image);
-	  break;
+        case GIMP_PDB_IMAGE:
+          g_value_set_int (&value, params[i].data.d_image);
+          break;
 
-	case GIMP_PDB_LAYER:
-	  g_value_set_int (&value, params[i].data.d_layer);
-	  break;
+        case GIMP_PDB_LAYER:
+          g_value_set_int (&value, params[i].data.d_layer);
+          break;
 
-	case GIMP_PDB_CHANNEL:
-	  g_value_set_int (&value, params[i].data.d_channel);
-	  break;
+        case GIMP_PDB_CHANNEL:
+          g_value_set_int (&value, params[i].data.d_channel);
+          break;
 
-	case GIMP_PDB_DRAWABLE:
-	  g_value_set_int (&value, params[i].data.d_drawable);
-	  break;
+        case GIMP_PDB_DRAWABLE:
+          g_value_set_int (&value, params[i].data.d_drawable);
+          break;
 
-	case GIMP_PDB_SELECTION:
-	  g_value_set_int (&value, params[i].data.d_selection);
-	  break;
+        case GIMP_PDB_SELECTION:
+          g_value_set_int (&value, params[i].data.d_selection);
+          break;
 
-	case GIMP_PDB_BOUNDARY:
-	  g_message ("the \"boundary\" arg type is not currently supported");
-	  break;
+        case GIMP_PDB_BOUNDARY:
+          g_message ("the \"boundary\" arg type is not currently supported");
+          break;
 
-	case GIMP_PDB_VECTORS:
-	  g_value_set_int (&value, params[i].data.d_vectors);
-	  break;
+        case GIMP_PDB_VECTORS:
+          g_value_set_int (&value, params[i].data.d_vectors);
+          break;
 
-	case GIMP_PDB_PARASITE:
-	  if (full_copy)
-	    g_value_set_boxed (&value, &params[i].data.d_parasite);
-	  else
-	    g_value_set_static_boxed (&value, &params[i].data.d_parasite);
-	  break;
+        case GIMP_PDB_PARASITE:
+          if (full_copy)
+            g_value_set_boxed (&value, &params[i].data.d_parasite);
+          else
+            g_value_set_static_boxed (&value, &params[i].data.d_parasite);
+          break;
 
-	case GIMP_PDB_STATUS:
-	  g_value_set_enum (&value, params[i].data.d_status);
-	  break;
+        case GIMP_PDB_STATUS:
+          g_value_set_enum (&value, params[i].data.d_status);
+          break;
 
-	case GIMP_PDB_END:
-	  break;
-	}
+        case GIMP_PDB_END:
+          break;
+        }
 
       g_value_array_append (args, &value);
       g_value_unset (&value);
@@ -240,7 +240,7 @@ plug_in_params_to_args (GParamSpec **pspecs,
 
 GPParam *
 plug_in_args_to_params (GValueArray *args,
-			gboolean     full_copy)
+                        gboolean     full_copy)
 {
   GPParam *params;
   gint     i;
@@ -257,8 +257,8 @@ plug_in_args_to_params (GValueArray *args,
         gimp_pdb_compat_arg_type_from_gtype (G_VALUE_TYPE (value));
 
       switch (params[i].type)
-	{
-	case GIMP_PDB_INT32:
+        {
+        case GIMP_PDB_INT32:
           if (G_VALUE_HOLDS_INT (value))
             params[i].data.d_int32 = g_value_get_int (value);
           else if (G_VALUE_HOLDS_UINT (value))
@@ -273,103 +273,103 @@ plug_in_args_to_params (GValueArray *args,
                           G_STRFUNC, g_type_name (G_VALUE_TYPE (value)));
               g_return_val_if_reached (params);
             }
-	  break;
+          break;
 
-	case GIMP_PDB_INT16:
-	  params[i].data.d_int16 = g_value_get_int (value);
-	  break;
+        case GIMP_PDB_INT16:
+          params[i].data.d_int16 = g_value_get_int (value);
+          break;
 
-	case GIMP_PDB_INT8:
-	  params[i].data.d_int8 = g_value_get_uint (value);
-	  break;
+        case GIMP_PDB_INT8:
+          params[i].data.d_int8 = g_value_get_uint (value);
+          break;
 
-	case GIMP_PDB_FLOAT:
-	  params[i].data.d_float = g_value_get_double (value);
-	  break;
+        case GIMP_PDB_FLOAT:
+          params[i].data.d_float = g_value_get_double (value);
+          break;
 
-	case GIMP_PDB_STRING:
-	  if (full_copy)
-	    params[i].data.d_string = g_value_dup_string (value);
-	  else
-	    params[i].data.d_string = (gchar *) g_value_get_string (value);
-	  break;
+        case GIMP_PDB_STRING:
+          if (full_copy)
+            params[i].data.d_string = g_value_dup_string (value);
+          else
+            params[i].data.d_string = (gchar *) g_value_get_string (value);
+          break;
 
-	case GIMP_PDB_INT32ARRAY:
-	  if (full_copy)
+        case GIMP_PDB_INT32ARRAY:
+          if (full_copy)
             params[i].data.d_int32array = gimp_value_dup_int32array (value);
           else
             params[i].data.d_int32array = (gint32 *) gimp_value_get_int32array (value);
-	  break;
+          break;
 
-	case GIMP_PDB_INT16ARRAY:
-	  if (full_copy)
+        case GIMP_PDB_INT16ARRAY:
+          if (full_copy)
             params[i].data.d_int16array = gimp_value_dup_int16array (value);
           else
             params[i].data.d_int16array = (gint16 *) gimp_value_get_int16array (value);
-	  break;
+          break;
 
-	case GIMP_PDB_INT8ARRAY:
-	  if (full_copy)
+        case GIMP_PDB_INT8ARRAY:
+          if (full_copy)
             params[i].data.d_int8array = (gint8 *) gimp_value_dup_int8array (value);
           else
             params[i].data.d_int8array = (gint8 *) gimp_value_get_int8array (value);
-	  break;
+          break;
 
-	case GIMP_PDB_FLOATARRAY:
-	  if (full_copy)
+        case GIMP_PDB_FLOATARRAY:
+          if (full_copy)
             params[i].data.d_floatarray = gimp_value_dup_floatarray (value);
           else
             params[i].data.d_floatarray = (gdouble *) gimp_value_get_floatarray (value);
-	  break;
+          break;
 
-	case GIMP_PDB_STRINGARRAY:
-	  if (full_copy)
+        case GIMP_PDB_STRINGARRAY:
+          if (full_copy)
             params[i].data.d_stringarray = gimp_value_dup_stringarray (value);
           else
             params[i].data.d_stringarray = (gchar **) gimp_value_get_stringarray (value);
-	  break;
+          break;
 
-	case GIMP_PDB_COLOR:
-	  gimp_value_get_rgb (value, &params[i].data.d_color);
-	  break;
+        case GIMP_PDB_COLOR:
+          gimp_value_get_rgb (value, &params[i].data.d_color);
+          break;
 
-	case GIMP_PDB_REGION:
-	  g_message ("the \"region\" argument type is not supported");
-	  break;
+        case GIMP_PDB_REGION:
+          g_message ("the \"region\" argument type is not supported");
+          break;
 
-	case GIMP_PDB_DISPLAY:
-	  params[i].data.d_display = g_value_get_int (value);
-	  break;
+        case GIMP_PDB_DISPLAY:
+          params[i].data.d_display = g_value_get_int (value);
+          break;
 
-	case GIMP_PDB_IMAGE:
-	  params[i].data.d_image = g_value_get_int (value);
-	  break;
+        case GIMP_PDB_IMAGE:
+          params[i].data.d_image = g_value_get_int (value);
+          break;
 
-	case GIMP_PDB_LAYER:
-	  params[i].data.d_layer = g_value_get_int (value);
-	  break;
+        case GIMP_PDB_LAYER:
+          params[i].data.d_layer = g_value_get_int (value);
+          break;
 
-	case GIMP_PDB_CHANNEL:
-	  params[i].data.d_channel = g_value_get_int (value);
-	  break;
+        case GIMP_PDB_CHANNEL:
+          params[i].data.d_channel = g_value_get_int (value);
+          break;
 
-	case GIMP_PDB_DRAWABLE:
-	  params[i].data.d_drawable = g_value_get_int (value);
-	  break;
+        case GIMP_PDB_DRAWABLE:
+          params[i].data.d_drawable = g_value_get_int (value);
+          break;
 
-	case GIMP_PDB_SELECTION:
-	  params[i].data.d_selection = g_value_get_int (value);
-	  break;
+        case GIMP_PDB_SELECTION:
+          params[i].data.d_selection = g_value_get_int (value);
+          break;
 
-	case GIMP_PDB_BOUNDARY:
-	  g_message ("the \"boundary\" arg type is not currently supported");
-	  break;
+        case GIMP_PDB_BOUNDARY:
+          g_message ("the \"boundary\" arg type is not currently supported");
+          break;
 
-	case GIMP_PDB_VECTORS:
-	  params[i].data.d_vectors = g_value_get_int (value);
-	  break;
+        case GIMP_PDB_VECTORS:
+          params[i].data.d_vectors = g_value_get_int (value);
+          break;
 
-	case GIMP_PDB_PARASITE:
+        case GIMP_PDB_PARASITE:
           {
             GimpParasite *parasite = (full_copy ?
                                       g_value_dup_boxed (value) :
@@ -393,15 +393,15 @@ plug_in_args_to_params (GValueArray *args,
                 params[i].data.d_parasite.data  = NULL;
               }
           }
-	  break;
+          break;
 
-	case GIMP_PDB_STATUS:
-	  params[i].data.d_status = g_value_get_enum (value);
-	  break;
+        case GIMP_PDB_STATUS:
+          params[i].data.d_status = g_value_get_enum (value);
+          break;
 
-	case GIMP_PDB_END:
-	  break;
-	}
+        case GIMP_PDB_END:
+          break;
+        }
     }
 
   return params;

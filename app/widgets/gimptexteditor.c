@@ -72,21 +72,21 @@ gimp_text_editor_class_init (GimpTextEditorClass *klass)
 
   text_editor_signals[TEXT_CHANGED] =
     g_signal_new ("text-changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpTextEditorClass, text_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpTextEditorClass, text_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   text_editor_signals[DIR_CHANGED] =
     g_signal_new ("dir-changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpTextEditorClass, dir_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpTextEditorClass, dir_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 }
 
 static void
@@ -167,8 +167,8 @@ gimp_text_editor_new (const gchar     *title,
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-				  GTK_POLICY_AUTOMATIC,
-				  GTK_POLICY_AUTOMATIC);
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
   gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 2);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (editor)->vbox),
                       scrolled_window, TRUE, TRUE, 0);
@@ -181,8 +181,8 @@ gimp_text_editor_new (const gchar     *title,
   buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (editor->view));
 
   g_signal_connect (buffer, "changed",
-		    G_CALLBACK (gimp_text_editor_text_changed),
-		    editor);
+                    G_CALLBACK (gimp_text_editor_text_changed),
+                    editor);
 
   switch (editor->base_dir)
     {

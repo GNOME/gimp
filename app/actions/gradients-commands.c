@@ -47,7 +47,7 @@ static void   gradients_save_as_pov_ray_response (GtkWidget    *dialog,
 
 void
 gradients_save_as_pov_ray_cmd_callback (GtkAction *action,
-					gpointer   data)
+                                        gpointer   data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContext         *context;
@@ -63,7 +63,7 @@ gradients_save_as_pov_ray_cmd_callback (GtkAction *action,
     return;
 
   title = g_strdup_printf (_("Save '%s' as POV-Ray"),
-			   GIMP_OBJECT (gradient)->name);
+                           GIMP_OBJECT (gradient)->name);
 
   chooser = GTK_FILE_CHOOSER
     (gtk_file_chooser_dialog_new (title, NULL,
@@ -102,7 +102,7 @@ gradients_save_as_pov_ray_cmd_callback (GtkAction *action,
                            G_CONNECT_SWAPPED);
 
   gimp_help_connect (GTK_WIDGET (chooser), gimp_standard_help_func,
-		     GIMP_HELP_GRADIENT_SAVE_AS_POV, NULL);
+                     GIMP_HELP_GRADIENT_SAVE_AS_POV, NULL);
 
   gtk_widget_show (GTK_WIDGET (chooser));
 }

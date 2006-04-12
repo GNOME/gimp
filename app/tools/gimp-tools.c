@@ -528,18 +528,18 @@ gimp_tools_register (GType                   tool_type,
     }
 
   tool_info = gimp_tool_info_new (gimp,
-				  tool_type,
+                                  tool_type,
                                   tool_options_type,
-				  context_props,
-				  identifier,
-				  blurb,
-				  help,
-				  menu_path,
-				  menu_accel,
-				  help_domain,
-				  help_data,
+                                  context_props,
+                                  identifier,
+                                  blurb,
+                                  help,
+                                  menu_path,
+                                  menu_accel,
+                                  help_domain,
+                                  help_data,
                                   paint_core_name,
-				  stock_id);
+                                  stock_id);
 
   if (g_type_is_a (tool_type, GIMP_TYPE_IMAGE_MAP_TOOL))
     g_object_set (tool_info, "visible", FALSE, NULL);

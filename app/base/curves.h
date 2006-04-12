@@ -35,9 +35,9 @@ void    curves_channel_reset   (Curves               *curves,
 void    curves_calculate_curve (Curves               *curves,
                                 GimpHistogramChannel  channel);
 gfloat  curves_lut_func        (Curves               *curves,
-				gint                  nchannels,
-				gint                  channel,
-				gfloat                value);
+                                gint                  nchannels,
+                                gint                  channel,
+                                gfloat                value);
 
 
 #endif  /*  __CURVES_H__  */

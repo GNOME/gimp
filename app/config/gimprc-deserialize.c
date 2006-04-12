@@ -51,8 +51,8 @@ gimp_rc_deserialize (GimpConfig *config,
   guint          i;
   guint          scope_id;
   guint          old_scope_id;
-  GTokenType	 token;
-  GTokenType	 next;
+  GTokenType         token;
+  GTokenType         next;
 
   g_return_val_if_fail (GIMP_IS_CONFIG (config), FALSE);
 
@@ -132,7 +132,7 @@ gimp_rc_deserialize (GimpConfig *config,
   if (token == G_TOKEN_STRING && next == G_TOKEN_IDENTIFIER)
     {
       g_scanner_unexp_token (scanner, G_TOKEN_SYMBOL, NULL, NULL, NULL,
-			     _("fatal parse error"), TRUE);
+                             _("fatal parse error"), TRUE);
       return FALSE;
     }
 

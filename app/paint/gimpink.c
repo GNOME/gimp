@@ -375,11 +375,11 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
 static Blob *
 ink_pen_ellipse (GimpInkOptions *options,
                  gdouble         x_center,
-		 gdouble         y_center,
-		 gdouble         pressure,
-		 gdouble         xtilt,
-		 gdouble         ytilt,
-		 gdouble         velocity)
+                 gdouble         y_center,
+                 gdouble         pressure,
+                 gdouble         xtilt,
+                 gdouble         ytilt,
+                 gdouble         velocity)
 {
   BlobFunc blob_function;
   gdouble  size;
@@ -589,7 +589,7 @@ enum { ROW_START, ROW_STOP };
  */
 static void
 insert_sort (gint *data,
-	     gint  n)
+             gint  n)
 {
   gint i, j, k;
   gint tmp1, tmp2;
@@ -600,13 +600,13 @@ insert_sort (gint *data,
       tmp2 = data[i + 1];
       j = 0;
       while (data[j] < tmp1)
-	j += 2;
+        j += 2;
 
       for (k = i; k > j; k -= 2)
-	{
-	  data[k]     = data[k - 2];
-	  data[k + 1] = data[k - 1];
-	}
+        {
+          data[k]     = data[k - 2];
+          data[k + 1] = data[k - 1];
+        }
 
       data[j]     = tmp1;
       data[j + 1] = tmp2;
@@ -615,8 +615,8 @@ insert_sort (gint *data,
 
 static void
 fill_run (guchar *dest,
-	  guchar  alpha,
-	  gint    w)
+          guchar  alpha,
+          gint    w)
 {
   if (alpha == 255)
     {
@@ -634,18 +634,18 @@ fill_run (guchar *dest,
 
 static void
 render_blob_line (Blob   *blob,
-		  guchar *dest,
-		  gint    x,
-		  gint    y,
-		  gint    width)
+                  guchar *dest,
+                  gint    x,
+                  gint    y,
+                  gint    width)
 {
   gint  buf[4 * SUBSAMPLE];
   gint *data    = buf;
   gint  n       = 0;
   gint  i, j;
   gint  current = 0;  /* number of filled rows at this point
-		       * in the scan line
-		       */
+                       * in the scan line
+                       */
   gint last_x;
 
   /* Sort start and ends for all lines */
@@ -654,16 +654,16 @@ render_blob_line (Blob   *blob,
   for (i = 0; i < SUBSAMPLE; i++)
     {
       if (j >= blob->height)
-	break;
+        break;
 
       if ((j > 0) && (blob->data[j].left <= blob->data[j].right))
-	{
-	  data[2 * n]                     = blob->data[j].left;
-	  data[2 * n + 1]                 = ROW_START;
-	  data[2 * SUBSAMPLE + 2 * n]     = blob->data[j].right;
-	  data[2 * SUBSAMPLE + 2 * n + 1] = ROW_STOP;
-	  n++;
-	}
+        {
+          data[2 * n]                     = blob->data[j].left;
+          data[2 * n + 1]                 = ROW_START;
+          data[2 * SUBSAMPLE + 2 * n]     = blob->data[j].right;
+          data[2 * SUBSAMPLE + 2 * n + 1] = ROW_STOP;
+          n++;
+        }
       j++;
     }
 
@@ -671,7 +671,7 @@ render_blob_line (Blob   *blob,
   if (n < SUBSAMPLE)
     {
       for (i = 0; i < 2 * n; i++)
-	data[2 * n + i] = data[2 * SUBSAMPLE + i];
+        data[2 * n + i] = data[2 * SUBSAMPLE + i];
     }
 
   /*   Now count start and end separately */
@@ -684,9 +684,9 @@ render_blob_line (Blob   *blob,
   while ((n > 0) && (data[0] < SUBSAMPLE*x))
     {
       if (data[1] == ROW_START)
-	current++;
+        current++;
       else
-	current--;
+        current--;
       data += 2;
       n--;
     }
@@ -704,31 +704,31 @@ render_blob_line (Blob   *blob,
 
       /* Fill in portion leading up to this pixel */
       if (current && cur_x != last_x)
-	fill_run (dest + last_x, (255 * current) / SUBSAMPLE, cur_x - last_x);
+        fill_run (dest + last_x, (255 * current) / SUBSAMPLE, cur_x - last_x);
 
       /* Compute the value for this pixel */
       pixel = current * SUBSAMPLE;
 
       while (i<n)
-	{
-	  gint tmp_x = data[2 * i] / SUBSAMPLE;
+        {
+          gint tmp_x = data[2 * i] / SUBSAMPLE;
 
-	  if (tmp_x - x != cur_x)
-	    break;
+          if (tmp_x - x != cur_x)
+            break;
 
-	  if (data[2 * i + 1] == ROW_START)
-	    {
-	      current++;
-	      pixel += ((tmp_x + 1) * SUBSAMPLE) - data[2 * i];
-	    }
-	  else
-	    {
-	      current--;
-	      pixel -= ((tmp_x + 1) * SUBSAMPLE) - data[2 * i];
-	    }
+          if (data[2 * i + 1] == ROW_START)
+            {
+              current++;
+              pixel += ((tmp_x + 1) * SUBSAMPLE) - data[2 * i];
+            }
+          else
+            {
+              current--;
+              pixel -= ((tmp_x + 1) * SUBSAMPLE) - data[2 * i];
+            }
 
-	  i++;
-	}
+          i++;
+        }
 
       dest[cur_x] = MAX (dest[cur_x], (pixel * 255) / (SUBSAMPLE * SUBSAMPLE));
 
@@ -756,10 +756,10 @@ render_blob (Blob        *blob,
       s = dest->data;
 
       for (i=0; i<h; i++)
-	{
-	  render_blob_line (blob, s,
-			    dest->x, dest->y + i, dest->w);
-	  s += dest->rowstride;
-	}
+        {
+          render_blob_line (blob, s,
+                            dest->x, dest->y + i, dest->w);
+          s += dest->rowstride;
+        }
     }
 }

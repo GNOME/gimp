@@ -54,10 +54,10 @@ plug_in_run (Gimp                *gimp,
              GimpContext         *context,
              GimpProgress        *progress,
              GimpPlugInProcedure *procedure,
-	     GValueArray         *args,
-	     gboolean             synchronous,
-	     gboolean             destroy_return_vals,
-	     gint                 display_ID)
+             GValueArray         *args,
+             gboolean             synchronous,
+             gboolean             destroy_return_vals,
+             gint                 display_ID)
 {
   GValueArray *return_vals = NULL;
   PlugIn      *plug_in;
@@ -80,7 +80,7 @@ plug_in_run (Gimp                *gimp,
       gint               monitor;
 
       if (! plug_in_open (plug_in))
-	{
+        {
           plug_in_unref (plug_in);
           goto done;
         }
@@ -186,7 +186,7 @@ plug_in_run_temp (Gimp                   *gimp,
                   GimpContext            *context,
                   GimpProgress           *progress,
                   GimpTemporaryProcedure *procedure,
-		  GValueArray            *args)
+                  GValueArray            *args)
 {
   GValueArray *return_vals = NULL;
   PlugIn      *plug_in;
@@ -212,16 +212,16 @@ plug_in_run_temp (Gimp                   *gimp,
       proc_run.params  = plug_in_args_to_params (args, FALSE);
 
       if (! gp_temp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
-	  ! gimp_wire_flush (plug_in->my_write, plug_in))
-	{
+          ! gimp_wire_flush (plug_in->my_write, plug_in))
+        {
           g_free (proc_run.params);
           plug_in_proc_frame_pop (plug_in);
 
-	  return_vals =
+          return_vals =
             gimp_procedure_get_return_values (GIMP_PROCEDURE (procedure), FALSE);
 
-	  goto done;
-	}
+          goto done;
+        }
 
       g_free (proc_run.params);
 

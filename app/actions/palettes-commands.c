@@ -121,21 +121,21 @@ palettes_merge_callback (GtkWidget   *widget,
       palette = (GimpPalette *) GIMP_VIEW (list_item->preview)->viewable;
 
       if (palette)
-	{
-	  for (cols = palette->colors; cols; cols = g_list_next (cols))
-	    {
-	      entry = (GimpPaletteEntry *) cols->data;
+        {
+          for (cols = palette->colors; cols; cols = g_list_next (cols))
+            {
+              entry = (GimpPaletteEntry *) cols->data;
 
-	      gimp_palette_add_entry (new_palette,
-				      entry->name,
-				      &entry->color);
-	    }
-	}
+              gimp_palette_add_entry (new_palette,
+                                      entry->name,
+                                      &entry->color);
+            }
+        }
 
       sel_list = sel_list->next;
     }
 
   gimp_container_add (editor->view->container,
-		      GIMP_OBJECT (new_palette));
+                      GIMP_OBJECT (new_palette));
 #endif
 }

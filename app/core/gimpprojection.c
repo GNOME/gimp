@@ -114,17 +114,17 @@ gimp_projection_class_init (GimpProjectionClass *klass)
 
   projection_signals[UPDATE] =
     g_signal_new ("update",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpProjectionClass, update),
-		  NULL, NULL,
-		  gimp_marshal_VOID__BOOLEAN_INT_INT_INT_INT,
-		  G_TYPE_NONE, 5,
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpProjectionClass, update),
+                  NULL, NULL,
+                  gimp_marshal_VOID__BOOLEAN_INT_INT_INT_INT,
+                  G_TYPE_NONE, 5,
                   G_TYPE_BOOLEAN,
-		  G_TYPE_INT,
-		  G_TYPE_INT,
-		  G_TYPE_INT,
-		  G_TYPE_INT);
+                  G_TYPE_INT,
+                  G_TYPE_INT,
+                  G_TYPE_INT,
+                  G_TYPE_INT);
 
   object_class->finalize         = gimp_projection_finalize;
 
@@ -645,7 +645,7 @@ gimp_projection_invalidate (GimpProjection *proj,
   for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
     for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
       {
-	tile = tile_manager_get_tile (tm, j, i, FALSE, FALSE);
+        tile = tile_manager_get_tile (tm, j, i, FALSE, FALSE);
 
         tile_invalidate_tile (&tile, tm, j, i);
       }

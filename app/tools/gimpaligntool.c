@@ -355,26 +355,26 @@ gimp_align_tool_cursor_update (GimpTool        *tool,
 
       if ((layer = gimp_image_pick_correlate_layer (display->image,
                                                     coords->x, coords->y)))
-	{
-	  /*  if there is a floating selection, and this aint it...  */
-	  if (gimp_image_floating_sel (display->image) &&
-	      ! gimp_layer_is_floating_sel (layer))
-	    {
+        {
+          /*  if there is a floating selection, and this aint it...  */
+          if (gimp_image_floating_sel (display->image) &&
+              ! gimp_layer_is_floating_sel (layer))
+            {
               cursor      = GIMP_CURSOR_MOUSE;
               tool_cursor = GIMP_TOOL_CURSOR_MOVE;
               modifier    = GIMP_CURSOR_MODIFIER_ANCHOR;
-	    }
-	  else if (layer == gimp_image_get_active_layer (display->image))
-	    {
+            }
+          else if (layer == gimp_image_get_active_layer (display->image))
+            {
               cursor = GIMP_CURSOR_MOUSE;
-	    }
-	  else
-	    {
+            }
+          else
+            {
               cursor      = GIMP_CURSOR_MOUSE;
               tool_cursor = GIMP_TOOL_CURSOR_HAND;
               modifier    = GIMP_CURSOR_MODIFIER_MOVE;
-	    }
-	}
+            }
+        }
     }
 
   gimp_tool_control_set_cursor          (tool->control, cursor);

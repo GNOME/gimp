@@ -143,7 +143,7 @@ buffers_paste (GimpBufferView *view,
       gint         height  = -1;
 
       if (display)
-	{
+        {
           GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
 
           gimp_display_shell_untransform_viewport (shell,
@@ -158,10 +158,10 @@ buffers_paste (GimpBufferView *view,
 
       if (image)
         {
-	  gimp_edit_paste (image, gimp_image_active_drawable (image),
-			   buffer, paste_into, x, y, width, height);
+          gimp_edit_paste (image, gimp_image_active_drawable (image),
+                           buffer, paste_into, x, y, width, height);
 
-	  gimp_image_flush (image);
-	}
+          gimp_image_flush (image);
+        }
     }
 }

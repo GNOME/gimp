@@ -55,8 +55,8 @@ struct _GimpHistogramViewClass
   GtkDrawingAreaClass  parent_class;
 
   void (* range_changed) (GimpHistogramView *view,
-			  gint               start,
-			  gint               end);
+                          gint               start,
+                          gint               end);
 };
 
 

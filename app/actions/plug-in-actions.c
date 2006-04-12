@@ -222,7 +222,7 @@ plug_in_actions_update (GimpActionGroup *group,
           gimp_action_group_set_action_sensitive (group,
                                                   GIMP_OBJECT (proc)->name,
                                                   sensitive);
-	}
+        }
     }
 
   if (group->gimp->last_plug_ins &&

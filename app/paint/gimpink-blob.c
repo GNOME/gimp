@@ -82,9 +82,9 @@ blob_polygon (BlobPoint *points,
   for (i = 1; i < npoints; i++)
     {
       if (points[i].y > ymax)
-	ymax = points[i].y;
+        ymax = points[i].y;
       if (points[i].y < ymin)
-	ymin = points[i].y;
+        ymin = points[i].y;
     }
 
   result = blob_new (ymin, ymax - ymin + 1);
@@ -100,45 +100,45 @@ blob_polygon (BlobPoint *points,
       gint j     = points[i].y - ymin;
 
       if (points[i].y < points[im1].y)
-	sides |= EDGE_RIGHT;
+        sides |= EDGE_RIGHT;
       else if (points[i].y > points[im1].y)
-	sides |= EDGE_LEFT;
+        sides |= EDGE_LEFT;
 
       if (points[ip1].y < points[i].y)
-	sides |= EDGE_RIGHT;
+        sides |= EDGE_RIGHT;
       else if (points[ip1].y > points[i].y)
-	sides |= EDGE_LEFT;
+        sides |= EDGE_LEFT;
 
       if (sides & EDGE_RIGHT)
-	{
-	  if (present[j] & EDGE_RIGHT)
-	    {
-	      result->data[j].right = MAX (result->data[j].right, points[i].x);
-	    }
-	  else
-	    {
-	      present[j] |= EDGE_RIGHT;
-	      result->data[j].right = points[i].x;
-	    }
-	}
+        {
+          if (present[j] & EDGE_RIGHT)
+            {
+              result->data[j].right = MAX (result->data[j].right, points[i].x);
+            }
+          else
+            {
+              present[j] |= EDGE_RIGHT;
+              result->data[j].right = points[i].x;
+            }
+        }
 
       if (sides & EDGE_LEFT)
-	{
-	  if (present[j] & EDGE_LEFT)
-	    {
-	      result->data[j].left = MIN (result->data[j].left, points[i].x);
-	    }
-	  else
-	    {
-	      present[j] |= EDGE_LEFT;
-	      result->data[j].left = points[i].x;
-	    }
-	}
+        {
+          if (present[j] & EDGE_LEFT)
+            {
+              result->data[j].left = MIN (result->data[j].left, points[i].x);
+            }
+          else
+            {
+              present[j] |= EDGE_LEFT;
+              result->data[j].left = points[i].x;
+            }
+        }
 
       im1 = i;
       ip1++;
       if (ip1 == npoints)
-	ip1 = 0;
+        ip1 = 0;
     }
 
   blob_fill (result, present);
@@ -267,7 +267,7 @@ blob_ellipse (gdouble xc,
       trig_initialized = TRUE;
 
       for (i = 0; i < 256; i++)
-	trig_table[i] = 0.5 + sin (i * (G_PI / 128.0)) * (1 << TABLE_SHIFT);
+        trig_table[i] = 0.5 + sin (i * (G_PI / 128.0)) * (1 << TABLE_SHIFT);
     }
 
   /* Make sure we traverse ellipse in ccw direction */
@@ -311,37 +311,37 @@ blob_ellipse (gdouble xc,
       gint c = trig_table[(TABLE_SIZE + TABLE_SIZE / 4 - i) % TABLE_SIZE];
 
       gint x = (xc_shift + c * xp_shift + s * xq_shift +
-		(1 << (TOTAL_SHIFT - 1))) >> TOTAL_SHIFT;
+                (1 << (TOTAL_SHIFT - 1))) >> TOTAL_SHIFT;
       gint y = ((yc_shift + c * yp_shift + s * yq_shift +
-		(1 << (TOTAL_SHIFT - 1))) >> TOTAL_SHIFT) - result->y;
+                (1 << (TOTAL_SHIFT - 1))) >> TOTAL_SHIFT) - result->y;
 
       gint dydi = c * yq_shift  - s * yp_shift;
 
       if (dydi <= 0) /* left edge */
-	{
-	  if (present[y] & EDGE_LEFT)
-	    {
-	      result->data[y].left = MIN (result->data[y].left, x);
-	    }
-	  else
-	    {
-	      present[y] |= EDGE_LEFT;
-	      result->data[y].left = x;
-	    }
-	}
+        {
+          if (present[y] & EDGE_LEFT)
+            {
+              result->data[y].left = MIN (result->data[y].left, x);
+            }
+          else
+            {
+              present[y] |= EDGE_LEFT;
+              result->data[y].left = x;
+            }
+        }
 
       if (dydi >= 0) /* right edge */
-	{
-	  if (present[y] & EDGE_RIGHT)
-	    {
-	      result->data[y].right = MAX (result->data[y].right, x);
-	    }
-	  else
-	    {
-	      present[y] |= EDGE_RIGHT;
-	      result->data[y].right = x;
-	    }
-	}
+        {
+          if (present[y] & EDGE_RIGHT)
+            {
+              result->data[y].right = MAX (result->data[y].right, x);
+            }
+          else
+            {
+              present[y] |= EDGE_RIGHT;
+              result->data[y].right = x;
+            }
+        }
     }
 
   /* Now fill in missing points */
@@ -373,11 +373,11 @@ blob_bounds (Blob *b,
       x1 = b->data[i].right + 1;
 
       while (i < b->height && b->data[i].left <= b->data[i].right)
-	{
-	  x0 = MIN (b->data[i].left,      x0);
-	  x1 = MAX (b->data[i].right + 1, x1);
-	  i++;
-	}
+        {
+          x0 = MIN (b->data[i].left,      x0);
+          x1 = MAX (b->data[i].right + 1, x1);
+          i++;
+        }
 
       y1 = b->y + i;
     }
@@ -417,31 +417,31 @@ blob_convex_union (Blob *b1,
   for (i = 0, j = b1->y-y; i < b1->height; i++, j++)
     {
       if (b1->data[i].right >= b1->data[i].left)
-	{
-	  present[j] = EDGE_LEFT | EDGE_RIGHT;
-	  result->data[j].left  = b1->data[i].left;
-	  result->data[j].right = b1->data[i].right;
-	}
+        {
+          present[j] = EDGE_LEFT | EDGE_RIGHT;
+          result->data[j].left  = b1->data[i].left;
+          result->data[j].right = b1->data[i].right;
+        }
     }
 
   for (i = 0, j = b2->y - y; i < b2->height; i++, j++)
     {
       if (b2->data[i].right >= b2->data[i].left)
-	{
-	  if (present[j])
-	    {
-	      if (result->data[j].left > b2->data[i].left)
-		result->data[j].left = b2->data[i].left;
-	      if (result->data[j].right < b2->data[i].right)
-		result->data[j].right = b2->data[i].right;
-	    }
-	  else
-	    {
-	      present[j] = EDGE_LEFT | EDGE_RIGHT;
-	      result->data[j].left = b2->data[i].left;
-	      result->data[j].right = b2->data[i].right;
-	    }
-	}
+        {
+          if (present[j])
+            {
+              if (result->data[j].left > b2->data[i].left)
+                result->data[j].left = b2->data[i].left;
+              if (result->data[j].right < b2->data[i].right)
+                result->data[j].right = b2->data[i].right;
+            }
+          else
+            {
+              present[j] = EDGE_LEFT | EDGE_RIGHT;
+              result->data[j].left = b2->data[i].left;
+              result->data[j].right = b2->data[i].right;
+            }
+        }
     }
 
   blob_make_convex (result, present);
@@ -468,10 +468,10 @@ blob_dump (Blob *b)
   for (i = 0; i < b->height; i++)
     {
       for (j = 0; j < b->data[i].left; j++)
-	putchar (' ');
+        putchar (' ');
 
       for (j = b->data[i].left; j <= b->data[i].right; j++)
-	putchar ('*');
+        putchar ('*');
 
       putchar ('\n');
     }
@@ -483,7 +483,7 @@ blob_dump (Blob *b)
 
 static Blob *
 blob_new (gint y,
-	  gint height)
+          gint height)
 {
   Blob *result;
 
@@ -497,7 +497,7 @@ blob_new (gint y,
 
 static void
 blob_fill (Blob     *b,
-	   EdgeType *present)
+           EdgeType *present)
 {
   gint start;
   gint x1, x2, i1, i2;
@@ -516,9 +516,9 @@ blob_fill (Blob     *b,
   if (present[start] != (EDGE_RIGHT | EDGE_LEFT))
     {
       if (present[start] == EDGE_RIGHT)
-	b->data[start].left = b->data[start].right;
+        b->data[start].left = b->data[start].right;
       else
-	b->data[start].right = b->data[start].left;
+        b->data[start].right = b->data[start].left;
 
       present[start] = EDGE_RIGHT | EDGE_LEFT;
     }
@@ -532,9 +532,9 @@ blob_fill (Blob     *b,
   if (present[i] != (EDGE_RIGHT | EDGE_LEFT))
     {
       if (present[i] == EDGE_RIGHT)
-	b->data[i].left = b->data[i].right;
+        b->data[i].left = b->data[i].right;
       else
-	b->data[i].right = b->data[i].left;
+        b->data[i].right = b->data[i].left;
 
       present[i] = EDGE_RIGHT | EDGE_LEFT;
     }
@@ -553,52 +553,52 @@ blob_fill (Blob     *b,
     {
       /* Find empty gaps */
       if (! (present[i1 + 1] & EDGE_LEFT))
-	{
-	  gint increment; /* fractional part */
-	  gint denom;     /* denominator of fraction */
-	  gint step;      /* integral step */
-	  gint frac;      /* fractional step */
-	  gint reverse;
+        {
+          gint increment; /* fractional part */
+          gint denom;     /* denominator of fraction */
+          gint step;      /* integral step */
+          gint frac;      /* fractional step */
+          gint reverse;
 
-	  /* find bottom of gap */
-	  i2 = i1 + 2;
-	  while (i2 < b->height && ! (present[i2] & EDGE_LEFT))
+          /* find bottom of gap */
+          i2 = i1 + 2;
+          while (i2 < b->height && ! (present[i2] & EDGE_LEFT))
             i2++;
 
-	  if (i2 < b->height)
-	    {
-	      denom = i2 - i1;
-	      x1 = b->data[i1].left;
-	      x2 = b->data[i2].left;
-	      step = (x2 - x1) / denom;
-	      frac = x2 - x1 - step * denom;
-	      if (frac < 0)
-		{
-		  frac = -frac;
-		  reverse = 1;
-		}
-	      else
-		reverse = 0;
+          if (i2 < b->height)
+            {
+              denom = i2 - i1;
+              x1 = b->data[i1].left;
+              x2 = b->data[i2].left;
+              step = (x2 - x1) / denom;
+              frac = x2 - x1 - step * denom;
+              if (frac < 0)
+                {
+                  frac = -frac;
+                  reverse = 1;
+                }
+              else
+                reverse = 0;
 
-	      increment = 0;
-	      for (i = i1 + 1; i < i2; i++)
-		{
-		  x1 += step;
-		  increment += frac;
-		  if (increment >= denom)
-		    {
-		      increment -= denom;
-		      x1 += reverse ? -1 : 1;
-		    }
-		  if (increment == 0 || reverse)
-		    b->data[i].left = x1;
-		  else
-		    b->data[i].left = x1 + 1;
-		}
-	    }
+              increment = 0;
+              for (i = i1 + 1; i < i2; i++)
+                {
+                  x1 += step;
+                  increment += frac;
+                  if (increment >= denom)
+                    {
+                      increment -= denom;
+                      x1 += reverse ? -1 : 1;
+                    }
+                  if (increment == 0 || reverse)
+                    b->data[i].left = x1;
+                  else
+                    b->data[i].left = x1 + 1;
+                }
+            }
 
-	  i1 = i2 - 1;	/* advance to next possibility */
-	}
+          i1 = i2 - 1;        /* advance to next possibility */
+        }
     }
 
   /* right edge */
@@ -606,52 +606,52 @@ blob_fill (Blob     *b,
     {
       /* Find empty gaps */
       if (! (present[i1 + 1] & EDGE_RIGHT))
-	{
-	  gint increment; /* fractional part */
-	  gint denom;     /* denominator of fraction */
-	  gint step;      /* integral step */
-	  gint frac;      /* fractional step */
-	  gint reverse;
+        {
+          gint increment; /* fractional part */
+          gint denom;     /* denominator of fraction */
+          gint step;      /* integral step */
+          gint frac;      /* fractional step */
+          gint reverse;
 
-	  /* find bottom of gap */
-	  i2 = i1 + 2;
-	  while (i2 < b->height && ! (present[i2] & EDGE_RIGHT))
+          /* find bottom of gap */
+          i2 = i1 + 2;
+          while (i2 < b->height && ! (present[i2] & EDGE_RIGHT))
             i2++;
 
-	  if (i2 < b->height)
-	    {
-	      denom = i2 - i1;
-	      x1 = b->data[i1].right;
-	      x2 = b->data[i2].right;
-	      step = (x2 - x1) / denom;
-	      frac = x2 - x1 - step * denom;
-	      if (frac < 0)
-		{
-		  frac = -frac;
-		  reverse = 1;
-		}
-	      else
-		reverse = 0;
+          if (i2 < b->height)
+            {
+              denom = i2 - i1;
+              x1 = b->data[i1].right;
+              x2 = b->data[i2].right;
+              step = (x2 - x1) / denom;
+              frac = x2 - x1 - step * denom;
+              if (frac < 0)
+                {
+                  frac = -frac;
+                  reverse = 1;
+                }
+              else
+                reverse = 0;
 
-	      increment = 0;
-	      for (i = i1 + 1; i<i2; i++)
-		{
-		  x1 += step;
-		  increment += frac;
-		  if (increment >= denom)
-		    {
-		      increment -= denom;
-		      x1 += reverse ? -1 : 1;
-		    }
-		  if (reverse && increment != 0)
-		    b->data[i].right = x1 - 1;
-		  else
-		    b->data[i].right = x1;
-		}
-	    }
+              increment = 0;
+              for (i = i1 + 1; i<i2; i++)
+                {
+                  x1 += step;
+                  increment += frac;
+                  if (increment >= denom)
+                    {
+                      increment -= denom;
+                      x1 += reverse ? -1 : 1;
+                    }
+                  if (reverse && increment != 0)
+                    b->data[i].right = x1 - 1;
+                  else
+                    b->data[i].right = x1;
+                }
+            }
 
-	  i1 = i2 - 1;	/* advance to next possibility */
-	}
+          i1 = i2 - 1;        /* advance to next possibility */
+        }
     }
 
 }
@@ -680,30 +680,30 @@ blob_make_convex (Blob     *b,
   for (i = start + 1; i < b->height; i++)
     {
       if (! (present[i] & EDGE_LEFT))
-	continue;
+        continue;
 
       x2 = b->data[i].left - b->data[i2].left;
       y2 = i - i2;
 
       while (x2 * y1 - x1 * y2 < 0) /* clockwise rotation */
-	{
-	  present[i2] &= ~EDGE_LEFT;
-	  i2 = i1;
-	  while ((--i1) >= start && (! (present[i1] & EDGE_LEFT)));
+        {
+          present[i2] &= ~EDGE_LEFT;
+          i2 = i1;
+          while ((--i1) >= start && (! (present[i1] & EDGE_LEFT)));
 
-	  if (i1 < start)
-	    {
-	      x1 = b->data[start].left - b->data[start].right;
-	      y1 = 0;
-	    }
-	  else
-	    {
-	      x1 = b->data[i2].left - b->data[i1].left;
-	      y1 = i2 - i1;
-	    }
-	  x2 = b->data[i].left - b->data[i2].left;
-	  y2 = i - i2;
-	}
+          if (i1 < start)
+            {
+              x1 = b->data[start].left - b->data[start].right;
+              y1 = 0;
+            }
+          else
+            {
+              x1 = b->data[i2].left - b->data[i1].left;
+              y1 = i2 - i1;
+            }
+          x2 = b->data[i].left - b->data[i2].left;
+          y2 = i - i2;
+        }
 
       x1 = x2;
       y1 = y2;
@@ -721,31 +721,31 @@ blob_make_convex (Blob     *b,
   for (i = start + 1; i < b->height; i++)
     {
       if (! (present[i] & EDGE_RIGHT))
-	continue;
+        continue;
 
       x2 = b->data[i].right - b->data[i2].right;
       y2 = i - i2;
 
       while (x2 * y1 - x1 * y2 > 0) /* counter-clockwise rotation */
-	{
-	  present[i2] &= ~EDGE_RIGHT;
-	  i2 = i1;
-	  while ((--i1) >= start && (! (present[i1] & EDGE_RIGHT)));
+        {
+          present[i2] &= ~EDGE_RIGHT;
+          i2 = i1;
+          while ((--i1) >= start && (! (present[i1] & EDGE_RIGHT)));
 
-	  if (i1 < start)
-	    {
-	      x1 = b->data[start].right - b->data[start].left;
-	      y1 = 0;
-	    }
-	  else
-	    {
-	      x1 = b->data[i2].right - b->data[i1].right;
-	      y1 = i2 - i1;
-	    }
+          if (i1 < start)
+            {
+              x1 = b->data[start].right - b->data[start].left;
+              y1 = 0;
+            }
+          else
+            {
+              x1 = b->data[i2].right - b->data[i1].right;
+              y1 = i2 - i1;
+            }
 
-	  x2 = b->data[i].right - b->data[i2].right;
-	  y2 = i - i2;
-	}
+          x2 = b->data[i].right - b->data[i2].right;
+          y2 = i - i2;
+        }
 
       x1 = x2;
       y1 = y2;
@@ -822,21 +822,21 @@ blob_line (Blob *b,
       blob_line_add_pixel (b, x, y);
 
       while (x != x1)
-	{
-	  if (d <= 0)
-	    {
-	      d += incrE;
-	      x += xstep;
-	    }
-	  else
-	    {
-	      d += incrNE;
-	      x += xstep;
-	      y += ystep;
-	    }
+        {
+          if (d <= 0)
+            {
+              d += incrE;
+              x += xstep;
+            }
+          else
+            {
+              d += incrNE;
+              x += xstep;
+              y += ystep;
+            }
 
-	  blob_line_add_pixel (b, x, y);
-	}
+          blob_line_add_pixel (b, x, y);
+        }
     }
   else
     {
@@ -847,21 +847,21 @@ blob_line (Blob *b,
       blob_line_add_pixel (b, x, y);
 
       while (y != y1)
-	{
-	  if (d <= 0)
-	    {
-	      d += incrE;
-	      y += ystep;
-	    }
-	  else
-	    {
-	      d += incrNE;
-	      x += xstep;
-	      y += ystep;
-	    }
+        {
+          if (d <= 0)
+            {
+              d += incrE;
+              y += ystep;
+            }
+          else
+            {
+              d += incrNE;
+              x += xstep;
+              y += ystep;
+            }
 
-	  blob_line_add_pixel (b, x, y);
-	}
+          blob_line_add_pixel (b, x, y);
+        }
     }
 }
 

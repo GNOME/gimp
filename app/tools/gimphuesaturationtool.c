@@ -160,7 +160,7 @@ gimp_hue_saturation_tool_finalize (GObject *object)
 
 static gboolean
 gimp_hue_saturation_tool_initialize (GimpTool    *tool,
-				     GimpDisplay *display)
+                                     GimpDisplay *display)
 {
   GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (tool);
   GimpDrawable          *drawable;
@@ -291,7 +291,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
                             hue_partition_table[i].frame_row,
                             hue_partition_table[i].frame_row + 1,
                             GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-	  gtk_widget_show (frame);
+          gtk_widget_show (frame);
 
           hs_tool->hue_partition_da[i - 1] = gimp_color_area_new (&color,
                                                                   GIMP_COLOR_AREA_FLAT,
@@ -435,7 +435,7 @@ gimp_hue_saturation_tool_reset (GimpImageMapTool *image_map_tool)
 
 static void
 hue_saturation_update (GimpHueSaturationTool *hs_tool,
-		       gint                   update)
+                       gint                   update)
 {
   gint    rgb[3];
   GimpRGB color;
@@ -486,7 +486,7 @@ hue_saturation_update (GimpHueSaturationTool *hs_tool,
 
 static void
 hue_saturation_partition_callback (GtkWidget *widget,
-				   gpointer   data)
+                                   gpointer   data)
 {
   GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (data);
   GimpHueRange           partition;
@@ -516,7 +516,7 @@ hue_saturation_partition_reset_callback (GtkWidget *widget,
 
 static void
 hue_saturation_hue_adjustment_update (GtkAdjustment *adjustment,
-				      gpointer       data)
+                                      gpointer       data)
 {
   GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (data);
   GimpHueRange           part    = hs_tool->hue_partition;
@@ -532,7 +532,7 @@ hue_saturation_hue_adjustment_update (GtkAdjustment *adjustment,
 
 static void
 hue_saturation_lightness_adjustment_update (GtkAdjustment *adjustment,
-					    gpointer       data)
+                                            gpointer       data)
 {
   GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (data);
   GimpHueRange           part    = hs_tool->hue_partition;
@@ -548,7 +548,7 @@ hue_saturation_lightness_adjustment_update (GtkAdjustment *adjustment,
 
 static void
 hue_saturation_saturation_adjustment_update (GtkAdjustment *adjustment,
-					     gpointer       data)
+                                             gpointer       data)
 {
   GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (data);
   GimpHueRange           part    = hs_tool->hue_partition;

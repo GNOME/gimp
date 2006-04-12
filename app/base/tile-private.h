@@ -29,20 +29,20 @@ struct _TileLink
   TileLink    *next;
   gint         tile_num; /* the number of this tile within the drawable */
   TileManager *tm;       /* A pointer to the tile manager for this tile.
-			  *  We need this in order to call the tile managers
-			  *  validate proc whenever the tile is referenced
-			  *  yet invalid.
-			  */
+                          *  We need this in order to call the tile managers
+                          *  validate proc whenever the tile is referenced
+                          *  yet invalid.
+                          */
 };
 
 struct _Tile
 {
   gshort  ref_count;    /* reference count. when the reference count is
- 		         *  non-zero then the "data" for this tile must
-		         *  be valid. when the reference count for a tile
-		         *  is 0 then the "data" for this tile must be
-		         *  NULL.
-		         */
+                          *  non-zero then the "data" for this tile must
+                         *  be valid. when the reference count for a tile
+                         *  is 0 then the "data" for this tile must be
+                         *  NULL.
+                         */
   gshort  write_count;  /* write count: number of references that are
                            for write access */
   gshort  share_count;  /* share count: number of tile managers that
@@ -53,10 +53,10 @@ struct _Tile
   guchar  bpp;          /* the bytes per pixel (1, 2, 3 or 4) */
   gushort ewidth;       /* the effective width of the tile */
   gushort eheight;      /* the effective height of the tile
-		         *  a tile's effective width and height may be smaller
-		         *  (but not larger) than TILE_WIDTH and TILE_HEIGHT.
-		         *  this is to handle edge tiles of a drawable.
-		         */
+                         *  a tile's effective width and height may be smaller
+                         *  (but not larger) than TILE_WIDTH and TILE_HEIGHT.
+                         *  this is to handle edge tiles of a drawable.
+                         */
   gint    size;         /* size of the tile data (ewidth * eheight * bpp) */
 
   TileRowHint *rowhint; /* An array of hints for rendering purposes */
@@ -70,7 +70,7 @@ struct _Tile
                          * swap file.
                          */
   off_t   swap_offset;  /* the offset within the swap file of the tile data.
-		         * if the tile data is in memory this will be set
+                         * if the tile data is in memory this will be set
                          * to -1.
                          */
 

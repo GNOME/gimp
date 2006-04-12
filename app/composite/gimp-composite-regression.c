@@ -1,7 +1,5 @@
-/* -*- mode: c tab-width: 2; c-basic-indent: 2; indent-tabs-mode: nil -*-
- * The GIMP -- an image manipulation program
+/* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
- *
  *
  * Gimp image compositing
  * Copyright (C) 2003  Helvetix Victorinox, a pseudonym, <helvetix@gimp.org>
@@ -68,29 +66,29 @@
 void
 gimp_composite_regression_print_vector (guchar vector[], GimpPixelFormat format, gulong n_pixels)
 {
-		switch (format)
-				{
-				case GIMP_PIXELFORMAT_V8:
-						gimp_composite_regression_print_vector_v8 ((gimp_v8_t *) vector, n_pixels);
-						break;
+                switch (format)
+                                {
+                                case GIMP_PIXELFORMAT_V8:
+                                                gimp_composite_regression_print_vector_v8 ((gimp_v8_t *) vector, n_pixels);
+                                                break;
 
-				case GIMP_PIXELFORMAT_VA8:
-						gimp_composite_regression_print_vector_va8 ((gimp_va8_t *) vector, n_pixels);
-						break;
+                                case GIMP_PIXELFORMAT_VA8:
+                                                gimp_composite_regression_print_vector_va8 ((gimp_va8_t *) vector, n_pixels);
+                                                break;
 
-				case GIMP_PIXELFORMAT_RGB8:
-						gimp_composite_regression_print_vector_rgb8 ((gimp_rgb8_t *) vector, n_pixels);
-						break;
+                                case GIMP_PIXELFORMAT_RGB8:
+                                                gimp_composite_regression_print_vector_rgb8 ((gimp_rgb8_t *) vector, n_pixels);
+                                                break;
 
-				case GIMP_PIXELFORMAT_RGBA8:
-						gimp_composite_regression_print_vector_rgba8 ((gimp_rgba8_t *) vector, n_pixels);
-						break;
+                                case GIMP_PIXELFORMAT_RGBA8:
+                                                gimp_composite_regression_print_vector_rgba8 ((gimp_rgba8_t *) vector, n_pixels);
+                                                break;
 
-				case GIMP_PIXELFORMAT_ANY:
-				case GIMP_PIXELFORMAT_N:
-				default:
-						break;
-				}
+                                case GIMP_PIXELFORMAT_ANY:
+                                case GIMP_PIXELFORMAT_N:
+                                default:
+                                                break;
+                                }
 }
 
 
@@ -104,12 +102,12 @@ gimp_composite_regression_print_vector (guchar vector[], GimpPixelFormat format,
 void
 gimp_composite_regression_print_vector_v8 (gimp_v8_t v[], unsigned int n_pixels)
 {
-		unsigned int i;
+                unsigned int i;
 
-		for (i = 0; i < n_pixels; i++)
-				{
-						printf ("#%02x\n", v[i].v);
-				}
+                for (i = 0; i < n_pixels; i++)
+                                {
+                                                printf ("#%02x\n", v[i].v);
+                                }
 }
 
 /**
@@ -122,12 +120,12 @@ gimp_composite_regression_print_vector_v8 (gimp_v8_t v[], unsigned int n_pixels)
 void
 gimp_composite_regression_print_vector_va8 (gimp_va8_t v[], unsigned int n_pixels)
 {
-		unsigned int i;
+                unsigned int i;
 
-		for (i = 0; i < n_pixels; i++)
-				{
-						printf ("#%02x,%02X\n", v[i].v, v[i].a);
-				}
+                for (i = 0; i < n_pixels; i++)
+                                {
+                                                printf ("#%02x,%02X\n", v[i].v, v[i].a);
+                                }
 }
 
 /**
@@ -140,12 +138,12 @@ gimp_composite_regression_print_vector_va8 (gimp_va8_t v[], unsigned int n_pixel
 void
 gimp_composite_regression_print_vector_rgb8 (gimp_rgb8_t v[], unsigned int n_pixels)
 {
-		unsigned int i;
+                unsigned int i;
 
-		for (i = 0; i < n_pixels; i++)
-				{
-						printf ("#%02x%02x%02x\n", v[i].r, v[i].g, v[i].b);
-				}
+                for (i = 0; i < n_pixels; i++)
+                                {
+                                                printf ("#%02x%02x%02x\n", v[i].r, v[i].g, v[i].b);
+                                }
 }
 
 /**
@@ -158,12 +156,12 @@ gimp_composite_regression_print_vector_rgb8 (gimp_rgb8_t v[], unsigned int n_pix
 void
 gimp_composite_regression_print_vector_rgba8 (gimp_rgba8_t v[], unsigned int n_pixels)
 {
-		unsigned int i;
+                unsigned int i;
 
-		for (i = 0; i < n_pixels; i++)
-				{
-						printf ("#%02x%02x%02x,%02X\n", v[i].r, v[i].g, v[i].b, v[i].a);
-				}
+                for (i = 0; i < n_pixels; i++)
+                                {
+                                                printf ("#%02x%02x%02x,%02X\n", v[i].r, v[i].g, v[i].b, v[i].a);
+                                }
 }
 
 /**
@@ -536,30 +534,30 @@ gimp_composite_regression_fixed_rgba8 (u_long n_pixels)
  **/
 GimpCompositeContext *
 gimp_composite_context_init (GimpCompositeContext *ctx,
-																													GimpCompositeOperation op,
-																													GimpPixelFormat a_format,
-																													GimpPixelFormat b_format,
-																													GimpPixelFormat d_format,
-																													GimpPixelFormat m_format,
-																													unsigned long n_pixels,
-																													unsigned char *A,
-																													unsigned char *B,
-																													unsigned char *M,
-																													unsigned char *D)
+                                                                                                                                                                                                                                        GimpCompositeOperation op,
+                                                                                                                                                                                                                                        GimpPixelFormat a_format,
+                                                                                                                                                                                                                                        GimpPixelFormat b_format,
+                                                                                                                                                                                                                                        GimpPixelFormat d_format,
+                                                                                                                                                                                                                                        GimpPixelFormat m_format,
+                                                                                                                                                                                                                                        unsigned long n_pixels,
+                                                                                                                                                                                                                                        unsigned char *A,
+                                                                                                                                                                                                                                        unsigned char *B,
+                                                                                                                                                                                                                                        unsigned char *M,
+                                                                                                                                                                                                                                        unsigned char *D)
 {
-		memset ((void *) ctx, 0, sizeof(*ctx));
-		ctx->op = op;
-		ctx->n_pixels = n_pixels;
-		ctx->scale.scale = 2;
-		ctx->pixelformat_A = a_format;
-		ctx->pixelformat_B = b_format;
-		ctx->pixelformat_D = d_format;
-		ctx->pixelformat_M = m_format;
-		ctx->A = (unsigned char *) A;
-		ctx->B = (unsigned char *) B;
-		ctx->M = (unsigned char *) B;
-		ctx->D = (unsigned char *) D;
-		memset (ctx->D, 0, ctx->n_pixels * gimp_composite_pixel_bpp[ctx->pixelformat_D]);
+                memset ((void *) ctx, 0, sizeof(*ctx));
+                ctx->op = op;
+                ctx->n_pixels = n_pixels;
+                ctx->scale.scale = 2;
+                ctx->pixelformat_A = a_format;
+                ctx->pixelformat_B = b_format;
+                ctx->pixelformat_D = d_format;
+                ctx->pixelformat_M = m_format;
+                ctx->A = (unsigned char *) A;
+                ctx->B = (unsigned char *) B;
+                ctx->M = (unsigned char *) B;
+                ctx->D = (unsigned char *) D;
+                memset (ctx->D, 0, ctx->n_pixels * gimp_composite_pixel_bpp[ctx->pixelformat_D]);
 
-		return (ctx);
+                return (ctx);
 }

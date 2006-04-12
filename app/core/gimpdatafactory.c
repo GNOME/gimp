@@ -129,12 +129,12 @@ gimp_data_factory_get_memsize (GimpObject *object,
 GimpDataFactory *
 gimp_data_factory_new (Gimp                             *gimp,
                        GType                             data_type,
-		       const gchar                      *path_property_name,
+                       const gchar                      *path_property_name,
                        const gchar                      *writable_property_name,
-		       const GimpDataFactoryLoaderEntry *loader_entries,
-		       gint                              n_loader_entries,
-		       GimpDataNewFunc                   new_func,
-		       GimpDataGetStandardFunc           standard_func)
+                       const GimpDataFactoryLoaderEntry *loader_entries,
+                       gint                              n_loader_entries,
+                       GimpDataNewFunc                   new_func,
+                       GimpDataGetStandardFunc           standard_func)
 {
   GimpDataFactory *factory;
 
@@ -166,7 +166,7 @@ gimp_data_factory_new (Gimp                             *gimp,
 
 void
 gimp_data_factory_data_init (GimpDataFactory *factory,
-			     gboolean         no_data)
+                             gboolean         no_data)
 {
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
 
@@ -433,7 +433,7 @@ gimp_data_factory_data_free (GimpDataFactory *factory)
 
 GimpData *
 gimp_data_factory_data_new (GimpDataFactory *factory,
-			    const gchar     *name)
+                            const gchar     *name)
 {
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
   g_return_val_if_fail (name != NULL, NULL);

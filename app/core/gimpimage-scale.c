@@ -40,8 +40,8 @@
 
 void
 gimp_image_scale (GimpImage             *image,
-		  gint                   new_width,
-		  gint                   new_height,
+                  gint                   new_width,
+                  gint                   new_height,
                   GimpInterpolationType  interpolation_type,
                   GimpProgress          *progress)
 {
@@ -133,12 +133,12 @@ gimp_image_scale (GimpImage             *image,
       if (! gimp_item_scale_by_factors (item,
                                         img_scale_w, img_scale_h,
                                         interpolation_type, NULL))
-	{
-	  /* Since 0 < img_scale_w, img_scale_h, failure due to one or more
-	   * vanishing scaled layer dimensions. Implicit delete implemented
-	   * here. Upstream warning implemented in resize_check_layer_scaling(),
-	   * which offers the user the chance to bail out.
-	   */
+        {
+          /* Since 0 < img_scale_w, img_scale_h, failure due to one or more
+           * vanishing scaled layer dimensions. Implicit delete implemented
+           * here. Upstream warning implemented in resize_check_layer_scaling(),
+           * which offers the user the chance to bail out.
+           */
           remove = g_list_prepend (remove, item);
         }
 
@@ -166,20 +166,20 @@ gimp_image_scale (GimpImage             *image,
       GimpGuide *guide = list->data;
 
       switch (guide->orientation)
-	{
-	case GIMP_ORIENTATION_HORIZONTAL:
-	  gimp_image_undo_push_image_guide (image, NULL, guide);
-	  guide->position = (guide->position * new_height) / old_height;
-	  break;
-
-	case GIMP_ORIENTATION_VERTICAL:
-	  gimp_image_undo_push_image_guide (image, NULL, guide);
-	  guide->position = (guide->position * new_width) / old_width;
-	  break;
-
-	default:
+        {
+        case GIMP_ORIENTATION_HORIZONTAL:
+          gimp_image_undo_push_image_guide (image, NULL, guide);
+          guide->position = (guide->position * new_height) / old_height;
           break;
-	}
+
+        case GIMP_ORIENTATION_VERTICAL:
+          gimp_image_undo_push_image_guide (image, NULL, guide);
+          guide->position = (guide->position * new_width) / old_width;
+          break;
+
+        default:
+          break;
+        }
     }
 
   /*  Scale all sample points  */
@@ -270,7 +270,7 @@ gimp_image_scale_check (const GimpImage *image,
       GimpItem *item = list->data;
 
       if (! gimp_item_check_scaling (item, new_width, new_height))
-	return GIMP_IMAGE_SCALE_TOO_SMALL;
+        return GIMP_IMAGE_SCALE_TOO_SMALL;
     }
 
   return GIMP_IMAGE_SCALE_OK;

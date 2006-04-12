@@ -86,8 +86,8 @@ gimp_histogram_free (GimpHistogram *histogram)
 
 void
 gimp_histogram_calculate (GimpHistogram *histogram,
-			  PixelRegion   *region,
-			  PixelRegion   *mask)
+                          PixelRegion   *region,
+                          PixelRegion   *mask)
 {
   gint i;
 
@@ -129,7 +129,7 @@ gimp_histogram_calculate (GimpHistogram *histogram,
 
 gdouble
 gimp_histogram_get_maximum (GimpHistogram        *histogram,
-			    GimpHistogramChannel  channel)
+                            GimpHistogramChannel  channel)
 {
   gdouble max = 0.0;
   gint    x;
@@ -147,9 +147,9 @@ gimp_histogram_get_maximum (GimpHistogram        *histogram,
   if (channel == GIMP_HISTOGRAM_RGB)
     for (x = 0; x < 256; x++)
       {
-	max = MAX (max, HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED,   x));
-	max = MAX (max, HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, x));
-	max = MAX (max, HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE,  x));
+        max = MAX (max, HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED,   x));
+        max = MAX (max, HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, x));
+        max = MAX (max, HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE,  x));
       }
   else
     for (x = 0; x < 256; x++)
@@ -162,8 +162,8 @@ gimp_histogram_get_maximum (GimpHistogram        *histogram,
 
 gdouble
 gimp_histogram_get_value (GimpHistogram        *histogram,
-			  GimpHistogramChannel  channel,
-			  gint                  bin)
+                          GimpHistogramChannel  channel,
+                          gint                  bin)
 {
   g_return_val_if_fail (histogram != NULL, 0.0);
 
@@ -193,8 +193,8 @@ gimp_histogram_get_value (GimpHistogram        *histogram,
 
 gdouble
 gimp_histogram_get_channel (GimpHistogram        *histogram,
-			    GimpHistogramChannel  channel,
-			    gint                  bin)
+                            GimpHistogramChannel  channel,
+                            gint                  bin)
 {
   g_return_val_if_fail (histogram != NULL, 0.0);
 
@@ -215,8 +215,8 @@ gimp_histogram_n_channels (GimpHistogram *histogram)
 gdouble
 gimp_histogram_get_count (GimpHistogram        *histogram,
                           GimpHistogramChannel  channel,
-			  gint                  start,
-			  gint                  end)
+                          gint                  start,
+                          gint                  end)
 {
   gint    i;
   gdouble count = 0.0;
@@ -230,9 +230,9 @@ gimp_histogram_get_count (GimpHistogram        *histogram,
   if (channel == GIMP_HISTOGRAM_RGB)
     return (gimp_histogram_get_count (histogram,
                                       GIMP_HISTOGRAM_RED, start, end)   +
-	    gimp_histogram_get_count (histogram,
+            gimp_histogram_get_count (histogram,
                                       GIMP_HISTOGRAM_GREEN, start, end) +
-	    gimp_histogram_get_count (histogram,
+            gimp_histogram_get_count (histogram,
                                       GIMP_HISTOGRAM_BLUE, start, end));
 
   if (! histogram->values[0] ||
@@ -251,9 +251,9 @@ gimp_histogram_get_count (GimpHistogram        *histogram,
 
 gdouble
 gimp_histogram_get_mean (GimpHistogram        *histogram,
-			 GimpHistogramChannel  channel,
-			 gint                  start,
-			 gint                  end)
+                         GimpHistogramChannel  channel,
+                         gint                  start,
+                         gint                  end)
 {
   gint    i;
   gdouble mean = 0.0;
@@ -277,14 +277,14 @@ gimp_histogram_get_mean (GimpHistogram        *histogram,
   if (channel == GIMP_HISTOGRAM_RGB)
     {
       for (i = start; i <= end; i++)
-	mean += (i * HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED,   i) +
-		 i * HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, i) +
-		 i * HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE,  i));
+        mean += (i * HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED,   i) +
+                 i * HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, i) +
+                 i * HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE,  i));
     }
   else
     {
       for (i = start; i <= end; i++)
-	mean += i * HISTOGRAM_VALUE (channel, i);
+        mean += i * HISTOGRAM_VALUE (channel, i);
     }
 
   count = gimp_histogram_get_count (histogram, channel, start, end);
@@ -297,9 +297,9 @@ gimp_histogram_get_mean (GimpHistogram        *histogram,
 
 gint
 gimp_histogram_get_median (GimpHistogram         *histogram,
-			   GimpHistogramChannel   channel,
-			   gint                   start,
-			   gint                   end)
+                           GimpHistogramChannel   channel,
+                           gint                   start,
+                           gint                   end)
 {
   gint    i;
   gdouble sum = 0.0;
@@ -325,20 +325,20 @@ gimp_histogram_get_median (GimpHistogram         *histogram,
   if (channel == GIMP_HISTOGRAM_RGB)
     for (i = start; i <= end; i++)
       {
-	sum += (HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED,   i) +
-		HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, i) +
-		HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE,  i));
+        sum += (HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED,   i) +
+                HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, i) +
+                HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE,  i));
 
-	if (sum * 2 > count)
-	  return i;
+        if (sum * 2 > count)
+          return i;
       }
   else
     for (i = start; i <= end; i++)
       {
-	sum += HISTOGRAM_VALUE (channel, i);
+        sum += HISTOGRAM_VALUE (channel, i);
 
-	if (sum * 2 > count)
-	  return i;
+        if (sum * 2 > count)
+          return i;
       }
 
   return -1;
@@ -346,9 +346,9 @@ gimp_histogram_get_median (GimpHistogram         *histogram,
 
 gdouble
 gimp_histogram_get_std_dev (GimpHistogram        *histogram,
-			    GimpHistogramChannel  channel,
-			    gint                  start,
-			    gint                  end)
+                            GimpHistogramChannel  channel,
+                            gint                  start,
+                            gint                  end)
 {
   gint    i;
   gdouble dev = 0.0;
@@ -413,8 +413,8 @@ gimp_histogram_free_values (GimpHistogram *histogram)
 
 static void
 gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
-				     PixelRegion   *region,
-				     PixelRegion   *mask)
+                                     PixelRegion   *region,
+                                     PixelRegion   *mask)
 {
   const guchar *src, *msrc;
   const guchar *m, *s;
@@ -466,15 +466,15 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
               m = msrc;
               w = region->w;
 
-	      while (w--)
-		{
-		  masked = m[0] / 255.0;
+              while (w--)
+                {
+                  masked = m[0] / 255.0;
 
-		  VALUE (0, s[0]) += masked;
+                  VALUE (0, s[0]) += masked;
 
-		  s += 1;
-		  m += 1;
-		}
+                  s += 1;
+                  m += 1;
+                }
 
               src  += region->rowstride;
               msrc += mask->rowstride;
@@ -488,16 +488,16 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
               m = msrc;
               w = region->w;
 
-	      while (w--)
-		{
-		  masked = m[0] / 255.0;
+              while (w--)
+                {
+                  masked = m[0] / 255.0;
 
-		  VALUE (0, s[0]) += masked;
-		  VALUE (1, s[1]) += masked;
+                  VALUE (0, s[0]) += masked;
+                  VALUE (1, s[1]) += masked;
 
-		  s += 2;
-		  m += 1;
-		}
+                  s += 2;
+                  m += 1;
+                }
 
               src  += region->rowstride;
               msrc += mask->rowstride;
@@ -511,24 +511,24 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
               m = msrc;
               w = region->w;
 
-	      while (w--)
-		{
-		  masked = m[0] / 255.0;
+              while (w--)
+                {
+                  masked = m[0] / 255.0;
 
-		  VALUE (1, s[0]) += masked;
-		  VALUE (2, s[1]) += masked;
-		  VALUE (3, s[2]) += masked;
+                  VALUE (1, s[0]) += masked;
+                  VALUE (2, s[1]) += masked;
+                  VALUE (3, s[2]) += masked;
 
-		  max = (s[0] > s[1]) ? s[0] : s[1];
+                  max = (s[0] > s[1]) ? s[0] : s[1];
 
-		  if (s[2] > max)
-		    VALUE (0, s[2]) += masked;
-		  else
-		    VALUE (0, max) += masked;
+                  if (s[2] > max)
+                    VALUE (0, s[2]) += masked;
+                  else
+                    VALUE (0, max) += masked;
 
-		  s += 3;
-		  m += 1;
-		}
+                  s += 3;
+                  m += 1;
+                }
 
               src  += region->rowstride;
               msrc += mask->rowstride;
@@ -542,31 +542,31 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
               m = msrc;
               w = region->w;
 
-	      while (w--)
-		{
-		  masked = m[0] / 255.0;
+              while (w--)
+                {
+                  masked = m[0] / 255.0;
 
-		  VALUE (1, s[0]) += masked;
-		  VALUE (2, s[1]) += masked;
-		  VALUE (3, s[2]) += masked;
-		  VALUE (4, s[3]) += masked;
+                  VALUE (1, s[0]) += masked;
+                  VALUE (2, s[1]) += masked;
+                  VALUE (3, s[2]) += masked;
+                  VALUE (4, s[3]) += masked;
 
-		  max = (s[0] > s[1]) ? s[0] : s[1];
+                  max = (s[0] > s[1]) ? s[0] : s[1];
 
-		  if (s[2] > max)
-		   VALUE (0, s[2]) += masked;
-		  else
-		    VALUE (0, max) += masked;
+                  if (s[2] > max)
+                   VALUE (0, s[2]) += masked;
+                  else
+                    VALUE (0, max) += masked;
 
-		  s += 4;
-		  m += 1;
-		}
+                  s += 4;
+                  m += 1;
+                }
 
               src  += region->rowstride;
               msrc += mask->rowstride;
             }
           break;
-	}
+        }
     }
   else /* no mask */
     {
@@ -580,12 +580,12 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
               s = src;
               w = region->w;
 
-	      while (w--)
-		{
+              while (w--)
+                {
                   VALUE (0, s[0]) += 1.0;
 
-		  s += 1;
-		}
+                  s += 1;
+                }
 
               src += region->rowstride;
             }
@@ -597,13 +597,13 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
               s = src;
               w = region->w;
 
-	      while (w--)
-		{
+              while (w--)
+                {
                   VALUE (0, s[0]) += 1.0;
                   VALUE (1, s[1]) += 1.0;
 
-		  s += 2;
-		}
+                  s += 2;
+                }
 
               src += region->rowstride;
             }
@@ -615,21 +615,21 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
               s = src;
               w = region->w;
 
-	      while (w--)
-		{
+              while (w--)
+                {
                   VALUE (1, s[0]) += 1.0;
                   VALUE (2, s[1]) += 1.0;
                   VALUE (3, s[2]) += 1.0;
 
-		  max = (s[0] > s[1]) ? s[0] : s[1];
+                  max = (s[0] > s[1]) ? s[0] : s[1];
 
-		  if (s[2] > max)
-		    VALUE (0, s[2]) += 1.0;
-		  else
-		    VALUE (0, max) += 1.0;
+                  if (s[2] > max)
+                    VALUE (0, s[2]) += 1.0;
+                  else
+                    VALUE (0, max) += 1.0;
 
-		  s += 3;
-		}
+                  s += 3;
+                }
 
               src += region->rowstride;
             }
@@ -641,27 +641,27 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
               s = src;
               w = region->w;
 
-	      while (w--)
-		{
+              while (w--)
+                {
                   VALUE (1, s[0]) += 1.0;
                   VALUE (2, s[1]) += 1.0;
                   VALUE (3, s[2]) += 1.0;
                   VALUE (4, s[3]) += 1.0;
 
-		  max = (s[0] > s[1]) ? s[0] : s[1];
+                  max = (s[0] > s[1]) ? s[0] : s[1];
 
-		  if (s[2] > max)
-		    VALUE (0, s[2]) += 1.0;
-		  else
-		    VALUE (0, max) += 1.0;
+                  if (s[2] > max)
+                    VALUE (0, s[2]) += 1.0;
+                  else
+                    VALUE (0, max) += 1.0;
 
-		  s += 4;
-		}
+                  s += 4;
+                }
 
               src += region->rowstride;
             }
           break;
-	}
+        }
     }
 
 #ifdef ENABLE_MP

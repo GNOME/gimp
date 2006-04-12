@@ -310,44 +310,44 @@ xcf_load_invoker (GimpProcedure     *procedure,
       info.cp += xcf_read_int8 (info.fp, (guint8*) id, 14);
 
       if (strncmp (id, "gimp xcf ", 9) != 0)
-	{
-	  success = FALSE;
-	}
+        {
+          success = FALSE;
+        }
       else if (strcmp (id+9, "file") == 0)
-	{
-	  info.file_version = 0;
-	}
+        {
+          info.file_version = 0;
+        }
       else if (id[9] == 'v')
-	{
-	  info.file_version = atoi (id + 10);
-	}
+        {
+          info.file_version = atoi (id + 10);
+        }
       else
-	{
-	  success = FALSE;
-	}
+        {
+          success = FALSE;
+        }
 
       if (success)
-	{
-	  if (info.file_version < G_N_ELEMENTS (xcf_loaders))
-	    {
-	      image = (*(xcf_loaders[info.file_version])) (gimp, &info);
+        {
+          if (info.file_version < G_N_ELEMENTS (xcf_loaders))
+            {
+              image = (*(xcf_loaders[info.file_version])) (gimp, &info);
 
-	      if (! image)
-		success = FALSE;
-	    }
-	  else
-	    {
-	      g_message (_("XCF error: unsupported XCF file version %d "
-			   "encountered"), info.file_version);
-	      success = FALSE;
-	    }
-	}
+              if (! image)
+                success = FALSE;
+            }
+          else
+            {
+              g_message (_("XCF error: unsupported XCF file version %d "
+                           "encountered"), info.file_version);
+              success = FALSE;
+            }
+        }
 
       fclose (info.fp);
     }
   else
     g_message (_("Could not open '%s' for reading: %s"),
-	       gimp_filename_to_utf8 (filename), g_strerror (errno));
+               gimp_filename_to_utf8 (filename), g_strerror (errno));
 
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
@@ -404,7 +404,7 @@ xcf_save_invoker (GimpProcedure     *procedure,
     }
   else
     g_message (_("Could not open '%s' for writing: %s"),
-	       gimp_filename_to_utf8 (filename), g_strerror (errno));
+               gimp_filename_to_utf8 (filename), g_strerror (errno));
 
   return_vals = gimp_procedure_get_return_values (procedure, success);
 

@@ -40,7 +40,7 @@ TempBuf * temp_buf_new         (gint           width,
                                 gint           y,
                                 guchar        *col);
 TempBuf * temp_buf_new_check   (gint           width,
-                                gint	      height,
+                                gint              height,
                                 GimpCheckType  check_type,
                                 GimpCheckSize  check_size);
 TempBuf * temp_buf_copy        (TempBuf       *src,

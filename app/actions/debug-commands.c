@@ -150,26 +150,26 @@ debug_dump_menus_recurse_menu (GtkWidget *menu,
       menu_item = GTK_WIDGET (list->data);
 
       if (GTK_IS_LABEL (GTK_BIN (menu_item)->child))
-	{
-	  label = gtk_label_get_text (GTK_LABEL (GTK_BIN (menu_item)->child));
-	  full_path = g_strconcat (path, "/", label, NULL);
+        {
+          label = gtk_label_get_text (GTK_LABEL (GTK_BIN (menu_item)->child));
+          full_path = g_strconcat (path, "/", label, NULL);
 
           help_page = g_object_get_data (G_OBJECT (menu_item), "gimp-help-id");
           help_page = g_strdup (help_page);
 
-	  format_str = g_strdup_printf ("%%%ds%%%ds %%-20s %%s\n",
-					depth * 2, depth * 2 - 40);
-	  g_print (format_str,
-		   "", label, "", help_page ? help_page : "");
-	  g_free (format_str);
-	  g_free (help_page);
+          format_str = g_strdup_printf ("%%%ds%%%ds %%-20s %%s\n",
+                                        depth * 2, depth * 2 - 40);
+          g_print (format_str,
+                   "", label, "", help_page ? help_page : "");
+          g_free (format_str);
+          g_free (help_page);
 
-	  if (GTK_MENU_ITEM (menu_item)->submenu)
-	    debug_dump_menus_recurse_menu (GTK_MENU_ITEM (menu_item)->submenu,
+          if (GTK_MENU_ITEM (menu_item)->submenu)
+            debug_dump_menus_recurse_menu (GTK_MENU_ITEM (menu_item)->submenu,
                                            depth + 1, full_path);
 
-	  g_free (full_path);
-	}
+          g_free (full_path);
+        }
     }
 }
 

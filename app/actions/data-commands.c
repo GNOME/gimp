@@ -79,7 +79,7 @@ data_open_as_image_cmd_callback (GtkAction *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-			      view->factory->container->children_type);
+                              view->factory->container->children_type);
 
   if (data && data->filename)
     {
@@ -128,13 +128,13 @@ data_new_cmd_callback (GtkAction *action,
       data = gimp_data_factory_data_new (view->factory, _("Untitled"));
 
       if (data)
-	{
-	  gimp_context_set_by_type (context,
-				    view->factory->container->children_type,
-				    GIMP_OBJECT (data));
+        {
+          gimp_context_set_by_type (context,
+                                    view->factory->container->children_type,
+                                    GIMP_OBJECT (data));
 
-	  gtk_button_clicked (GTK_BUTTON (view->edit_button));
-	}
+          gtk_button_clicked (GTK_BUTTON (view->edit_button));
+        }
     }
 }
 
@@ -150,23 +150,23 @@ data_duplicate_cmd_callback (GtkAction *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-			      view->factory->container->children_type);
+                              view->factory->container->children_type);
 
   if (data && gimp_container_have (view->factory->container,
-				   GIMP_OBJECT (data)))
+                                   GIMP_OBJECT (data)))
     {
       GimpData *new_data;
 
       new_data = gimp_data_factory_data_duplicate (view->factory, data);
 
       if (new_data)
-	{
-	  gimp_context_set_by_type (context,
-				    view->factory->container->children_type,
-				    GIMP_OBJECT (new_data));
+        {
+          gimp_context_set_by_type (context,
+                                    view->factory->container->children_type,
+                                    GIMP_OBJECT (new_data));
 
-	  gtk_button_clicked (GTK_BUTTON (view->edit_button));
-	}
+          gtk_button_clicked (GTK_BUTTON (view->edit_button));
+        }
     }
 }
 
@@ -208,7 +208,7 @@ data_delete_cmd_callback (GtkAction *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-			      view->factory->container->children_type);
+                              view->factory->container->children_type);
 
   if (data && data->deletable && gimp_container_have (view->factory->container,
                                                       GIMP_OBJECT (data)))
@@ -277,7 +277,7 @@ data_edit_cmd_callback (GtkAction   *action,
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
-			      view->factory->container->children_type);
+                              view->factory->container->children_type);
 
   if (data && gimp_container_have (view->factory->container,
                                    GIMP_OBJECT (data)))

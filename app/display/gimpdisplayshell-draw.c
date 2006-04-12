@@ -121,11 +121,11 @@ gimp_display_shell_draw_guides (GimpDisplayShell *shell)
       for (list = shell->display->image->guides;
            list;
            list = g_list_next (list))
-	{
-	  gimp_display_shell_draw_guide (shell,
+        {
+          gimp_display_shell_draw_guide (shell,
                                          (GimpGuide *) list->data,
                                          FALSE);
-	}
+        }
     }
 }
 
@@ -423,9 +423,9 @@ gimp_display_shell_draw_sample_points (GimpDisplayShell *shell)
       for (list = shell->display->image->sample_points;
            list;
            list = g_list_next (list))
-	{
-	  gimp_display_shell_draw_sample_point (shell, list->data, FALSE);
-	}
+        {
+          gimp_display_shell_draw_sample_point (shell, list->data, FALSE);
+        }
     }
 }
 
@@ -490,12 +490,12 @@ gimp_display_shell_draw_vectors (GimpDisplayShell *shell)
       for (list = GIMP_LIST (shell->display->image->vectors)->list;
            list;
            list = list->next)
-	{
+        {
           GimpVectors *vectors = list->data;
 
           if (gimp_item_get_visible (GIMP_ITEM (vectors)))
             gimp_display_shell_draw_vector (shell, vectors);
-	}
+        }
     }
 }
 

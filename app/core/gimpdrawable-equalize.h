@@ -21,7 +21,7 @@
 
 
 void   gimp_drawable_equalize (GimpDrawable *drawable,
-			       gboolean      mask_only);
+                               gboolean      mask_only);
 
 
 #endif  /*  __GIMP_DRAWABLE_EQUALIZE_H__  */

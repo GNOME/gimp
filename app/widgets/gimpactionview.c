@@ -138,8 +138,8 @@ gimp_action_view_button_press (GtkWidget      *widget,
 
   if (gtk_tree_view_get_path_at_pos (tree_view,
                                      (gint) event->x,
-				     (gint) event->y,
-				     &path, NULL,
+                                     (gint) event->y,
+                                     &path, NULL,
                                      NULL, NULL))
     {
       GClosure *closure;
@@ -147,9 +147,9 @@ gimp_action_view_button_press (GtkWidget      *widget,
 
       if (gtk_tree_path_get_depth (path) == 1)
         {
-	  gtk_tree_path_free (path);
-	  return FALSE;
-	}
+          gtk_tree_path_free (path);
+          return FALSE;
+        }
 
       g_object_set_data_full (G_OBJECT (tree_view), "start_editing_path",
                               path, (GDestroyNotify) gtk_tree_path_free);

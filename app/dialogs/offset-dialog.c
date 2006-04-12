@@ -64,9 +64,9 @@ struct _OffsetDialog
 
 static void  offset_response            (GtkWidget    *widget,
                                          gint          response_id,
-					 OffsetDialog *dialog);
+                                         OffsetDialog *dialog);
 static void  offset_halfheight_callback (GtkWidget    *widget,
-					 OffsetDialog *dialog);
+                                         OffsetDialog *dialog);
 
 
 /*  public functions  */
@@ -187,10 +187,10 @@ offset_dialog_new (GimpDrawable *drawable,
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (dialog->off_se), 0,
                                          -dialog->image->width,
-					 dialog->image->width);
+                                         dialog->image->width);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (dialog->off_se), 1,
-					 -dialog->image->height,
-					 dialog->image->height);
+                                         -dialog->image->height,
+                                         dialog->image->height);
 
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (dialog->off_se), 0,
                             0, dialog->image->width);
@@ -205,8 +205,8 @@ offset_dialog_new (GimpDrawable *drawable,
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
-		    G_CALLBACK (offset_halfheight_callback),
-		    dialog);
+                    G_CALLBACK (offset_halfheight_callback),
+                    dialog);
 
   /*  The edge behavior frame  */
   frame = gimp_int_radio_group_new (TRUE, _("Edge Behavior"),
@@ -277,7 +277,7 @@ offset_halfheight_callback (GtkWidget    *widget,
   GimpImage *image = dialog->image;
 
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se),
-			      0, image->width / 2);
+                              0, image->width / 2);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se),
-			      1, image->height / 2);
+                              1, image->height / 2);
 }

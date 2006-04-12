@@ -170,7 +170,7 @@ gimp_layer_mask_new (GimpImage     *image,
   layer_mask = g_object_new (GIMP_TYPE_LAYER_MASK, NULL);
 
   gimp_drawable_configure (GIMP_DRAWABLE (layer_mask),
-			   image,
+                           image,
                            0, 0, width, height,
                            GIMP_GRAY_IMAGE, name);
 
@@ -187,7 +187,7 @@ gimp_layer_mask_new (GimpImage     *image,
 
 void
 gimp_layer_mask_set_layer (GimpLayerMask *layer_mask,
-			   GimpLayer     *layer)
+                           GimpLayer     *layer)
 {
   g_return_if_fail (GIMP_IS_LAYER_MASK (layer_mask));
   g_return_if_fail (layer == NULL || GIMP_IS_LAYER (layer));
@@ -238,9 +238,9 @@ gimp_layer_mask_set_apply (GimpLayerMask *layer_mask,
           GimpDrawable *drawable = GIMP_DRAWABLE (layer_mask->layer);
 
           gimp_drawable_update (drawable,
-				0, 0,
-				gimp_item_width  (GIMP_ITEM (drawable)),
-				gimp_item_height (GIMP_ITEM (drawable)));
+                                0, 0,
+                                gimp_item_width  (GIMP_ITEM (drawable)),
+                                gimp_item_height (GIMP_ITEM (drawable)));
         }
 
       g_signal_emit (layer_mask, layer_mask_signals[APPLY_CHANGED], 0);
@@ -299,9 +299,9 @@ gimp_layer_mask_set_show (GimpLayerMask *layer_mask,
           GimpDrawable *drawable = GIMP_DRAWABLE (layer_mask->layer);
 
           gimp_drawable_update (drawable,
-				0, 0,
-				gimp_item_width  (GIMP_ITEM (drawable)),
-				gimp_item_height (GIMP_ITEM (drawable)));
+                                0, 0,
+                                gimp_item_width  (GIMP_ITEM (drawable)),
+                                gimp_item_height (GIMP_ITEM (drawable)));
         }
 
       g_signal_emit (layer_mask, layer_mask_signals[SHOW_CHANGED], 0);

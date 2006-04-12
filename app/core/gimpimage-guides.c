@@ -109,7 +109,7 @@ gimp_image_guide_unref (GimpGuide *guide)
 
 void
 gimp_image_add_guide (GimpImage *image,
-		      GimpGuide *guide,
+                      GimpGuide *guide,
                       gint       position)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
@@ -131,7 +131,7 @@ gimp_image_add_guide (GimpImage *image,
 
 void
 gimp_image_remove_guide (GimpImage *image,
-			 GimpGuide *guide,
+                         GimpGuide *guide,
                          gboolean   push_undo)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));

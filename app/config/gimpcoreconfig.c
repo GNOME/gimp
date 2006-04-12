@@ -136,35 +136,35 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   path = gimp_config_build_plug_in_path ("plug-ins");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PLUG_IN_PATH,
                                  "plug-in-path", PLUG_IN_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
   path = gimp_config_build_plug_in_path ("modules");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_MODULE_PATH,
                                  "module-path", MODULE_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
   path = gimp_config_build_plug_in_path ("interpreters");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_INTERPRETER_PATH,
                                  "interpreter-path", INTERPRETER_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
   path = gimp_config_build_plug_in_path ("environ");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_ENVIRON_PATH,
                                  "environ-path", ENVIRON_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
   path = gimp_config_build_data_path ("brushes");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_BRUSH_PATH,
                                  "brush-path", BRUSH_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
@@ -172,14 +172,14 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_BRUSH_PATH_WRITABLE,
                                  "brush-path-writable",
                                  BRUSH_PATH_WRITABLE_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
   path = gimp_config_build_data_path ("patterns");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PATTERN_PATH,
                                  "pattern-path", PATTERN_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
@@ -187,7 +187,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PATTERN_PATH_WRITABLE,
                                  "pattern-path-writable",
                                  PATTERN_PATH_WRITABLE_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
@@ -202,14 +202,14 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PALETTE_PATH_WRITABLE,
                                  "palette-path-writable",
                                  PALETTE_PATH_WRITABLE_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
   path = gimp_config_build_data_path ("gradients");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_GRADIENT_PATH,
                                  "gradient-path", GRADIENT_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
@@ -217,20 +217,20 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_GRADIENT_PATH_WRITABLE,
                                  "gradient-path-writable",
                                  GRADIENT_PATH_WRITABLE_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
   path = gimp_config_build_data_path ("fonts");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_FONT_PATH,
                                  "font-path", FONT_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_CONFIRM);
   g_free (path);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_FONT_PATH_WRITABLE,
                                  "font-path-writable", NULL,
-				 GIMP_CONFIG_PATH_DIR_LIST, NULL,
+                                 GIMP_CONFIG_PATH_DIR_LIST, NULL,
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_IGNORE);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_BRUSH,
@@ -308,7 +308,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
                                  PROP_PLUGINRC_PATH,
                                  "pluginrc-path", PLUGINRC_PATH_BLURB,
-				 GIMP_CONFIG_PATH_FILE,
+                                 GIMP_CONFIG_PATH_FILE,
                                  "${gimp_dir}" G_DIR_SEPARATOR_S "pluginrc",
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
@@ -347,9 +347,9 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                    GIMP_PARAM_STATIC_STRINGS |
                                    GIMP_CONFIG_PARAM_AGGREGATE);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAVE_DOCUMENT_HISTORY,
-		                    "save-document-history",
+                                    "save-document-history",
                                     SAVE_DOCUMENT_HISTORY_BLURB,
-				    TRUE,
+                                    TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
 }
 

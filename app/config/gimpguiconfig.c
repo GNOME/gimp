@@ -200,7 +200,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   path = gimp_config_build_data_path ("themes");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_THEME_PATH,
                                  "theme-path", THEME_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);

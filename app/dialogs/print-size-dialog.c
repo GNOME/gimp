@@ -163,14 +163,14 @@ print_size_dialog_new (GimpImage              *image,
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), width);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   label = gtk_label_new_with_mnemonic (_("H_eight:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), height);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   hbox = gtk_hbox_new (FALSE, 0);
@@ -184,12 +184,12 @@ print_size_dialog_new (GimpImage              *image,
   gtk_widget_show (entry);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
-			     GTK_SPIN_BUTTON (height), NULL);
+                             GTK_SPIN_BUTTON (height), NULL);
   gtk_table_attach_defaults (GTK_TABLE (entry), height, 0, 1, 1, 2);
   gtk_widget_show (height);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
-			     GTK_SPIN_BUTTON (width), NULL);
+                             GTK_SPIN_BUTTON (width), NULL);
   gtk_table_attach_defaults (GTK_TABLE (entry), width, 0, 1, 0, 1);
   gtk_widget_show (width);
 
@@ -280,11 +280,11 @@ print_size_dialog_new (GimpImage              *image,
   g_list_free (focus_chain);
 
   g_signal_connect (private->size_entry, "value-changed",
-		    G_CALLBACK (print_size_dialog_size_changed),
-		    private);
+                    G_CALLBACK (print_size_dialog_size_changed),
+                    private);
   g_signal_connect (private->resolution_entry, "value-changed",
-		    G_CALLBACK (print_size_dialog_resolution_changed),
-		    private);
+                    G_CALLBACK (print_size_dialog_resolution_changed),
+                    private);
 
   return dialog;
 }
@@ -391,13 +391,13 @@ print_size_dialog_set_resolution (PrintSizeDialog *private,
   if (private->chain && gimp_chain_button_get_active (private->chain))
     {
       if (xres != private->xres)
-	{
-	  yres = xres;
-	}
+        {
+          yres = xres;
+        }
       else
-	{
-	  xres = yres;
-	}
+        {
+          xres = yres;
+        }
     }
 
   private->xres = xres;

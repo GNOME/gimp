@@ -774,7 +774,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       {
         GdkEventButton *bevent = (GdkEventButton *) event;
 
-	gimp_display_shell_autoscroll_stop (shell);
+        gimp_display_shell_autoscroll_stop (shell);
 
         if (gimp->busy)
           return TRUE;

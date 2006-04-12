@@ -44,10 +44,10 @@
 void
 gimp_drawable_offset (GimpDrawable   *drawable,
                       GimpContext    *context,
-		      gboolean        wrap_around,
-		      GimpOffsetType  fill_type,
-		      gint            offset_x,
-		      gint            offset_y)
+                      gboolean        wrap_around,
+                      GimpOffsetType  fill_type,
+                      gint            offset_x,
+                      gint            offset_y)
 {
   GimpItem    *item;
   PixelRegion  srcPR, destPR;
@@ -69,9 +69,9 @@ gimp_drawable_offset (GimpDrawable   *drawable,
     {
       /*  avoid modulo operation on negative values  */
       while (offset_x < 0)
-	offset_x += width;
+        offset_x += width;
       while (offset_y < 0)
-	offset_y += height;
+        offset_y += height;
 
       offset_x %= width;
       offset_y %= height;
@@ -116,9 +116,9 @@ gimp_drawable_offset (GimpDrawable   *drawable,
   if (width && height)
     {
       pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-			 src_x, src_y, width, height, FALSE);
+                         src_x, src_y, width, height, FALSE);
       pixel_region_init (&destPR, new_tiles,
-			 dest_x, dest_y, width, height, TRUE);
+                         dest_x, dest_y, width, height, TRUE);
 
       copy_region (&srcPR, &destPR);
     }
@@ -127,189 +127,189 @@ gimp_drawable_offset (GimpDrawable   *drawable,
   if (wrap_around == TRUE)
     {
       if (offset_x >= 0 && offset_y >= 0)
-	{
-	  src_x = gimp_item_width  (item) - offset_x;
-	  src_y = gimp_item_height (item) - offset_y;
-	}
+        {
+          src_x = gimp_item_width  (item) - offset_x;
+          src_y = gimp_item_height (item) - offset_y;
+        }
       else if (offset_x >= 0 && offset_y < 0)
-	{
-	  src_x = gimp_item_width (item) - offset_x;
-	  src_y = 0;
-	}
+        {
+          src_x = gimp_item_width (item) - offset_x;
+          src_y = 0;
+        }
       else if (offset_x < 0 && offset_y >= 0)
-	{
-	  src_x = 0;
-	  src_y = gimp_item_height (item) - offset_y;
-	}
+        {
+          src_x = 0;
+          src_y = gimp_item_height (item) - offset_y;
+        }
       else if (offset_x < 0 && offset_y < 0)
-	{
-	  src_x = 0;
-	  src_y = 0;
-	}
+        {
+          src_x = 0;
+          src_y = 0;
+        }
 
       dest_x = (src_x + offset_x) % gimp_item_width (item);
       if (dest_x < 0)
-	dest_x = gimp_item_width (item) + dest_x;
+        dest_x = gimp_item_width (item) + dest_x;
 
       dest_y = (src_y + offset_y) % gimp_item_height (item);
       if (dest_y < 0)
-	dest_y = gimp_item_height (item) + dest_y;
+        dest_y = gimp_item_height (item) + dest_y;
 
       /*  intersecting region  */
       if (offset_x != 0 && offset_y != 0)
-	{
-	  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-			     src_x, src_y,
+        {
+          pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
+                             src_x, src_y,
                              ABS (offset_x), ABS (offset_y),
-			     FALSE);
-	  pixel_region_init (&destPR, new_tiles,
-			     dest_x, dest_y,
+                             FALSE);
+          pixel_region_init (&destPR, new_tiles,
+                             dest_x, dest_y,
                              ABS (offset_x), ABS (offset_y),
-			     TRUE);
-	  copy_region (&srcPR, &destPR);
-	}
+                             TRUE);
+          copy_region (&srcPR, &destPR);
+        }
 
       /*  X offset  */
       if (offset_x != 0)
-	{
-	  if (offset_y >= 0)
-	    {
-	      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-				 src_x, 0, ABS (offset_x),
-				 gimp_item_height (item) - ABS (offset_y),
-				 FALSE);
-	      pixel_region_init (&destPR, new_tiles,
-				 dest_x, dest_y + offset_y,
-				 ABS (offset_x),
-				 gimp_item_height (item) - ABS (offset_y),
-				 TRUE);
-	    }
-	  else if (offset_y < 0)
-	    {
-	      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-				 src_x, src_y - offset_y,
-				 ABS (offset_x),
-				 gimp_item_height (item) - ABS (offset_y),
-				 FALSE);
-	      pixel_region_init (&destPR, new_tiles,
-				 dest_x, 0,
-				 ABS (offset_x),
-				 gimp_item_height (item) - ABS (offset_y),
-				 TRUE);
-	    }
+        {
+          if (offset_y >= 0)
+            {
+              pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
+                                 src_x, 0, ABS (offset_x),
+                                 gimp_item_height (item) - ABS (offset_y),
+                                 FALSE);
+              pixel_region_init (&destPR, new_tiles,
+                                 dest_x, dest_y + offset_y,
+                                 ABS (offset_x),
+                                 gimp_item_height (item) - ABS (offset_y),
+                                 TRUE);
+            }
+          else if (offset_y < 0)
+            {
+              pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
+                                 src_x, src_y - offset_y,
+                                 ABS (offset_x),
+                                 gimp_item_height (item) - ABS (offset_y),
+                                 FALSE);
+              pixel_region_init (&destPR, new_tiles,
+                                 dest_x, 0,
+                                 ABS (offset_x),
+                                 gimp_item_height (item) - ABS (offset_y),
+                                 TRUE);
+            }
 
-	  copy_region (&srcPR, &destPR);
-	}
+          copy_region (&srcPR, &destPR);
+        }
 
       /*  X offset  */
       if (offset_y != 0)
-	{
-	  if (offset_x >= 0)
-	    {
-	      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-				 0, src_y,
-				 gimp_item_width (item) - ABS (offset_x),
-				 ABS (offset_y), FALSE);
-	      pixel_region_init (&destPR, new_tiles, dest_x + offset_x, dest_y,
-				 gimp_item_width (item) - ABS (offset_x),
-				 ABS (offset_y), TRUE);
-	    }
-	  else if (offset_x < 0)
-	    {
-	      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-				 src_x - offset_x, src_y,
-				 gimp_item_width (item) - ABS (offset_x),
-				 ABS (offset_y), FALSE);
-	      pixel_region_init (&destPR, new_tiles, 0, dest_y,
-				 gimp_item_width (item) - ABS (offset_x),
-				 ABS (offset_y), TRUE);
-	    }
+        {
+          if (offset_x >= 0)
+            {
+              pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
+                                 0, src_y,
+                                 gimp_item_width (item) - ABS (offset_x),
+                                 ABS (offset_y), FALSE);
+              pixel_region_init (&destPR, new_tiles, dest_x + offset_x, dest_y,
+                                 gimp_item_width (item) - ABS (offset_x),
+                                 ABS (offset_y), TRUE);
+            }
+          else if (offset_x < 0)
+            {
+              pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
+                                 src_x - offset_x, src_y,
+                                 gimp_item_width (item) - ABS (offset_x),
+                                 ABS (offset_y), FALSE);
+              pixel_region_init (&destPR, new_tiles, 0, dest_y,
+                                 gimp_item_width (item) - ABS (offset_x),
+                                 ABS (offset_y), TRUE);
+            }
 
-	  copy_region (&srcPR, &destPR);
-	}
+          copy_region (&srcPR, &destPR);
+        }
     }
   /*  Otherwise, fill the vacated regions  */
   else
     {
       if (fill_type == GIMP_OFFSET_BACKGROUND)
-	{
-	  GimpRGB color;
+        {
+          GimpRGB color;
 
-	  gimp_context_get_background (context, &color);
+          gimp_context_get_background (context, &color);
 
-	  gimp_rgb_get_uchar (&color, &fill[0], &fill[1], &fill[2]);
+          gimp_rgb_get_uchar (&color, &fill[0], &fill[1], &fill[2]);
 
-	  if (gimp_drawable_has_alpha (drawable))
-	    fill[gimp_drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
-	}
+          if (gimp_drawable_has_alpha (drawable))
+            fill[gimp_drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
+        }
 
       if (offset_x >= 0 && offset_y >= 0)
-	{
-	  dest_x = 0;
-	  dest_y = 0;
-	}
+        {
+          dest_x = 0;
+          dest_y = 0;
+        }
       else if (offset_x >= 0 && offset_y < 0)
-	{
-	  dest_x = 0;
-	  dest_y = gimp_item_height (item) + offset_y;
-	}
+        {
+          dest_x = 0;
+          dest_y = gimp_item_height (item) + offset_y;
+        }
       else if (offset_x < 0 && offset_y >= 0)
-	{
-	  dest_x = gimp_item_width (item) + offset_x;
-	  dest_y = 0;
-	}
+        {
+          dest_x = gimp_item_width (item) + offset_x;
+          dest_y = 0;
+        }
       else if (offset_x < 0 && offset_y < 0)
-	{
-	  dest_x = gimp_item_width (item) + offset_x;
-	  dest_y = gimp_item_height (item) + offset_y;
-	}
+        {
+          dest_x = gimp_item_width (item) + offset_x;
+          dest_y = gimp_item_height (item) + offset_y;
+        }
 
       /*  intersecting region  */
       if (offset_x != 0 && offset_y != 0)
-	{
-	  pixel_region_init (&destPR, new_tiles, dest_x, dest_y,
-			     ABS (offset_x), ABS (offset_y), TRUE);
-	  color_region (&destPR, fill);
-	}
+        {
+          pixel_region_init (&destPR, new_tiles, dest_x, dest_y,
+                             ABS (offset_x), ABS (offset_y), TRUE);
+          color_region (&destPR, fill);
+        }
 
       /*  X offset  */
       if (offset_x != 0)
-	{
-	  if (offset_y >= 0)
-	    pixel_region_init (&destPR, new_tiles,
-			       dest_x, dest_y + offset_y,
-			       ABS (offset_x),
-			       gimp_item_height (item) - ABS (offset_y),
-			       TRUE);
-	  else if (offset_y < 0)
-	    pixel_region_init (&destPR, new_tiles,
-			       dest_x, 0,
-			       ABS (offset_x),
-			       gimp_item_height (item) - ABS (offset_y),
-			       TRUE);
+        {
+          if (offset_y >= 0)
+            pixel_region_init (&destPR, new_tiles,
+                               dest_x, dest_y + offset_y,
+                               ABS (offset_x),
+                               gimp_item_height (item) - ABS (offset_y),
+                               TRUE);
+          else if (offset_y < 0)
+            pixel_region_init (&destPR, new_tiles,
+                               dest_x, 0,
+                               ABS (offset_x),
+                               gimp_item_height (item) - ABS (offset_y),
+                               TRUE);
 
-	  color_region (&destPR, fill);
-	}
+          color_region (&destPR, fill);
+        }
 
       /*  X offset  */
       if (offset_y != 0)
-	{
-	  if (offset_x >= 0)
-	    pixel_region_init (&destPR, new_tiles,
-			       dest_x + offset_x,
-			       dest_y,
-			       gimp_item_width (item) - ABS (offset_x),
-			       ABS (offset_y),
-			       TRUE);
-	  else if (offset_x < 0)
-	    pixel_region_init (&destPR, new_tiles,
-			       0, dest_y,
-			       gimp_item_width (item) - ABS (offset_x),
-			       ABS (offset_y),
-			       TRUE);
+        {
+          if (offset_x >= 0)
+            pixel_region_init (&destPR, new_tiles,
+                               dest_x + offset_x,
+                               dest_y,
+                               gimp_item_width (item) - ABS (offset_x),
+                               ABS (offset_y),
+                               TRUE);
+          else if (offset_x < 0)
+            pixel_region_init (&destPR, new_tiles,
+                               0, dest_y,
+                               gimp_item_width (item) - ABS (offset_x),
+                               ABS (offset_y),
+                               TRUE);
 
-	  color_region (&destPR, fill);
-	}
+          color_region (&destPR, fill);
+        }
     }
 
   gimp_drawable_set_tiles (drawable, gimp_item_is_attached (item),

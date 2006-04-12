@@ -94,7 +94,7 @@ plug_ins_init (Gimp               *gimp,
 
   gimp_datafiles_read_directories (path,
                                    G_FILE_TEST_IS_EXECUTABLE,
-				   plug_ins_add_from_file,
+                                   plug_ins_add_from_file,
                                    &gimp->plug_in_defs);
 
   g_free (path);
@@ -225,7 +225,7 @@ plug_ins_init (Gimp               *gimp,
 
       for (list2 = plug_in_def->procedures; list2; list2 = list2->next)
         {
-	  plug_ins_procedure_add (gimp, list2->data);
+          plug_ins_procedure_add (gimp, list2->data);
         }
     }
 
@@ -233,7 +233,7 @@ plug_ins_init (Gimp               *gimp,
   if (gimp->write_pluginrc)
     {
       if (gimp->be_verbose)
-	g_print (_("Writing '%s'\n"), gimp_filename_to_utf8 (pluginrc));
+        g_print (_("Writing '%s'\n"), gimp_filename_to_utf8 (pluginrc));
 
       if (! plug_in_rc_write (gimp->plug_in_defs, pluginrc, &error))
         {
@@ -289,9 +289,9 @@ plug_ins_init (Gimp               *gimp,
       GimpPlugInProcedure *proc = list->data;
 
       if (proc->prog                                         &&
-	  GIMP_PROCEDURE (proc)->proc_type == GIMP_EXTENSION &&
-	  GIMP_PROCEDURE (proc)->num_args  == 0)
-	{
+          GIMP_PROCEDURE (proc)->proc_type == GIMP_EXTENSION &&
+          GIMP_PROCEDURE (proc)->num_args  == 0)
+        {
           extensions = g_list_prepend (extensions, proc);
         }
     }
@@ -311,20 +311,20 @@ plug_ins_init (Gimp               *gimp,
           GimpPlugInProcedure *proc = list->data;
           GValueArray         *args;
 
-	  if (gimp->be_verbose)
-	    g_print (_("Starting extension: '%s'\n"),
+          if (gimp->be_verbose)
+            g_print (_("Starting extension: '%s'\n"),
                      GIMP_OBJECT (proc)->name);
 
-	  status_callback (NULL, GIMP_OBJECT (proc)->name,
+          status_callback (NULL, GIMP_OBJECT (proc)->name,
                            (gdouble) nth / (gdouble) n_extensions);
 
           args = g_value_array_new (0);
 
-	  gimp_procedure_execute_async (GIMP_PROCEDURE (proc),
+          gimp_procedure_execute_async (GIMP_PROCEDURE (proc),
                                         gimp, context, NULL, args, -1);
 
           g_value_array_free (args);
-	}
+        }
 
       g_list_free (extensions);
     }
@@ -470,14 +470,14 @@ plug_ins_add_from_file (const GimpDatafileData *file_data,
       plug_in_name = g_path_get_basename (plug_in_def->prog);
 
       if (g_ascii_strcasecmp (file_data->basename, plug_in_name) == 0)
-	{
-	  g_printerr ("skipping duplicate plug-in: '%s'\n",
+        {
+          g_printerr ("skipping duplicate plug-in: '%s'\n",
                       gimp_filename_to_utf8 (file_data->filename));
 
           g_free (plug_in_name);
 
-	  return;
-	}
+          return;
+        }
 
       g_free (plug_in_name);
     }
@@ -524,12 +524,12 @@ plug_ins_add_from_rc (Gimp      *gimp,
       if (! proc->extensions &&
           ! proc->prefixes   &&
           ! proc->magics     &&
-	  proc->menu_paths   &&
-	  (! strncmp (proc->menu_paths->data, "<Load>", 6) ||
-	   ! strncmp (proc->menu_paths->data, "<Save>", 6)))
-	{
-	  proc->extensions = g_strdup ("");
-	}
+          proc->menu_paths   &&
+          (! strncmp (proc->menu_paths->data, "<Load>", 6) ||
+           ! strncmp (proc->menu_paths->data, "<Save>", 6)))
+        {
+          proc->extensions = g_strdup ("");
+        }
     }
 
   /*  Check if the entry mentioned in pluginrc matches an executable
@@ -543,26 +543,26 @@ plug_ins_add_from_rc (Gimp      *gimp,
       basename2 = g_path_get_basename (ondisk_plug_in_def->prog);
 
       if (! strcmp (basename1, basename2))
-	{
-	  if (! g_ascii_strcasecmp (plug_in_def->prog,
+        {
+          if (! g_ascii_strcasecmp (plug_in_def->prog,
                                     ondisk_plug_in_def->prog) &&
-	      (plug_in_def->mtime == ondisk_plug_in_def->mtime))
-	    {
-	      /* Use pluginrc entry, deleting ondisk entry */
-	      list->data = plug_in_def;
-	      plug_in_def_free (ondisk_plug_in_def);
-	    }
-	  else
-	    {
+              (plug_in_def->mtime == ondisk_plug_in_def->mtime))
+            {
+              /* Use pluginrc entry, deleting ondisk entry */
+              list->data = plug_in_def;
+              plug_in_def_free (ondisk_plug_in_def);
+            }
+          else
+            {
               /* Use ondisk entry, deleting pluginrc entry */
-	      plug_in_def_free (plug_in_def);
-	    }
+              plug_in_def_free (plug_in_def);
+            }
 
-	  g_free (basename2);
-	  g_free (basename1);
+          g_free (basename2);
+          g_free (basename1);
 
-	  return;
-	}
+          return;
+        }
 
       g_free (basename2);
     }

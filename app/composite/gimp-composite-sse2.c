@@ -1,9 +1,5 @@
-/* -*- mode: c tab-width: 2; c-basic-indent: 2; indent-tabs-mode: nil -*-
- *
- * The GIMP -- an image manipulation program
+/* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
- *
- * -*- mode: c tab-width: 2; c-basic-indent: 2; indent-tabs-mode: nil -*-
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -328,7 +324,7 @@ gimp_composite_grain_extract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
   asm volatile ("  movq       %0,%%mm0\n"
                 "\tpxor    %%mm6,%%mm6\n"
                 "\tmovq       %1,%%mm7\n"
-								"\tmovdqu     %2,%%xmm0\n"
+                "\tmovdqu     %2,%%xmm0\n"
                 "\tpxor   %%xmm6,%%xmm6\n"
                 "\tmovdqu     %3,%%xmm7\n"
                 : /* empty */

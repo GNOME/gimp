@@ -193,7 +193,7 @@ gimp_color_tool_control (GimpTool       *tool,
     case RESUME:
       if (color_tool->sample_point &&
           gimp_display_shell_get_show_sample_points (GIMP_DISPLAY_SHELL (shell)))
-	gimp_display_shell_draw_sample_point (GIMP_DISPLAY_SHELL (shell),
+        gimp_display_shell_draw_sample_point (GIMP_DISPLAY_SHELL (shell),
                                               color_tool->sample_point, TRUE);
       break;
 
@@ -309,7 +309,7 @@ gimp_color_tool_button_release (GimpTool        *tool,
                                               color_tool->sample_point, TRUE);
               color_tool->sample_point = NULL;
             }
-	}
+        }
       else
         {
           if (color_tool->sample_point)
@@ -334,7 +334,7 @@ gimp_color_tool_button_release (GimpTool        *tool,
       gimp_image_flush (display->image);
 
       if (color_tool->sample_point)
-	gimp_display_shell_draw_sample_point (shell, color_tool->sample_point,
+        gimp_display_shell_draw_sample_point (shell, color_tool->sample_point,
                                               TRUE);
 
       color_tool->moving_sample_point = FALSE;
@@ -374,12 +374,12 @@ gimp_color_tool_motion (GimpTool        *tool,
 
       if (tx < 0 || tx > shell->disp_width ||
           ty < 0 || ty > shell->disp_height)
-	{
-	  color_tool->sample_point_x = -1;
+        {
+          color_tool->sample_point_x = -1;
           color_tool->sample_point_y = -1;
 
           delete_point = TRUE;
-	}
+        }
       else
         {
           gint x, y, width, height;

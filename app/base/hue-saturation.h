@@ -39,7 +39,7 @@ void   hue_saturation_partition_reset     (HueSaturation *hs,
 void   hue_saturation_calculate_transfers (HueSaturation *hs);
 void   hue_saturation                     (HueSaturation *hs,
                                            PixelRegion   *srcPR,
-					   PixelRegion   *destPR);
+                                           PixelRegion   *destPR);
 
 
 #endif  /*  __HUE_SATURATION_H__  */

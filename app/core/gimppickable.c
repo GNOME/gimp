@@ -188,18 +188,18 @@ gimp_pickable_pick_color (GimpPickable *pickable,
       gint    radius       = (gint) average_radius;
 
       for (i = x - radius; i <= x + radius; i++)
-	for (j = y - radius; j <= y + radius; j++)
-	  if ((tmp_col = gimp_pickable_get_color_at (pickable, i, j)))
-	    {
-	      count++;
+        for (j = y - radius; j <= y + radius; j++)
+          if ((tmp_col = gimp_pickable_get_color_at (pickable, i, j)))
+            {
+              count++;
 
-	      color_avg[RED_PIX]   += tmp_col[RED_PIX];
-	      color_avg[GREEN_PIX] += tmp_col[GREEN_PIX];
-	      color_avg[BLUE_PIX]  += tmp_col[BLUE_PIX];
+              color_avg[RED_PIX]   += tmp_col[RED_PIX];
+              color_avg[GREEN_PIX] += tmp_col[GREEN_PIX];
+              color_avg[BLUE_PIX]  += tmp_col[BLUE_PIX];
               color_avg[ALPHA_PIX] += tmp_col[ALPHA_PIX];
 
-	      g_free (tmp_col);
-	    }
+              g_free (tmp_col);
+            }
 
       col[RED_PIX]   = (guchar) (color_avg[RED_PIX]   / count);
       col[GREEN_PIX] = (guchar) (color_avg[GREEN_PIX] / count);

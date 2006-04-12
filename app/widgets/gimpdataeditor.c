@@ -144,13 +144,13 @@ gimp_data_editor_init (GimpDataEditor *editor)
   gtk_widget_set_sensitive (editor->name_entry, FALSE);
 
   g_signal_connect (editor->name_entry, "key-press-event",
-		    G_CALLBACK (gimp_data_editor_name_key_press),
+                    G_CALLBACK (gimp_data_editor_name_key_press),
                     editor);
   g_signal_connect (editor->name_entry, "activate",
-		    G_CALLBACK (gimp_data_editor_name_activate),
+                    G_CALLBACK (gimp_data_editor_name_activate),
                     editor);
   g_signal_connect (editor->name_entry, "focus-out-event",
-		    G_CALLBACK (gimp_data_editor_name_focus_out),
+                    G_CALLBACK (gimp_data_editor_name_focus_out),
                     editor);
 }
 
@@ -507,7 +507,7 @@ gimp_data_editor_data_name_changed (GimpObject     *object,
                                     GimpDataEditor *editor)
 {
   gtk_entry_set_text (GTK_ENTRY (editor->name_entry),
-		      gimp_object_get_name (object));
+                      gimp_object_get_name (object));
 }
 
 static void

@@ -78,7 +78,7 @@ static void      gimp_dock_get_property      (GObject               *object,
 static void      gimp_dock_destroy           (GtkObject             *object);
 
 static gboolean  gimp_dock_delete_event      (GtkWidget             *widget,
-                                              GdkEventAny	      *event);
+                                              GdkEventAny              *event);
 static gboolean  gimp_dock_key_press_event   (GtkWidget             *widget,
                                               GdkEventKey           *kevent);
 
@@ -107,23 +107,23 @@ gimp_dock_class_init (GimpDockClass *klass)
 
   dock_signals[BOOK_ADDED] =
     g_signal_new ("book-added",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpDockClass, book_added),
-		  NULL, NULL,
-		  gimp_marshal_VOID__OBJECT,
-		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_DOCKBOOK);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpDockClass, book_added),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_DOCKBOOK);
 
   dock_signals[BOOK_REMOVED] =
     g_signal_new ("book-removed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpDockClass, book_removed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__OBJECT,
-		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_DOCKBOOK);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpDockClass, book_removed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_DOCKBOOK);
 
   object_class->constructor     = gimp_dock_constructor;
   object_class->set_property    = gimp_dock_set_property;
@@ -409,9 +409,9 @@ gimp_dock_get_aux_info (GimpDock *dock)
 
 void
 gimp_dock_add (GimpDock     *dock,
-	       GimpDockable *dockable,
-	       gint          section,
-	       gint          position)
+               GimpDockable *dockable,
+               gint          section,
+               gint          position)
 {
   GimpDockbook *dockbook;
 
@@ -426,7 +426,7 @@ gimp_dock_add (GimpDock     *dock,
 
 void
 gimp_dock_remove (GimpDock     *dock,
-		  GimpDockable *dockable)
+                  GimpDockable *dockable)
 {
   g_return_if_fail (GIMP_IS_DOCK (dock));
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
@@ -438,8 +438,8 @@ gimp_dock_remove (GimpDock     *dock,
 
 void
 gimp_dock_add_book (GimpDock     *dock,
-		    GimpDockbook *dockbook,
-		    gint          index)
+                    GimpDockbook *dockbook,
+                    gint          index)
 {
   gint old_length;
 
@@ -527,7 +527,7 @@ gimp_dock_add_book (GimpDock     *dock,
 
 void
 gimp_dock_remove_book (GimpDock     *dock,
-		       GimpDockbook *dockbook)
+                       GimpDockbook *dockbook)
 {
   gint old_length;
   gint index;

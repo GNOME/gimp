@@ -182,17 +182,17 @@ void          gimp_set_last_plug_in     (Gimp                *gimp,
                                          GimpPlugInProcedure *procedure);
 
 GimpImage   * gimp_create_image         (Gimp                *gimp,
-					 gint                 width,
-					 gint                 height,
-					 GimpImageBaseType    type,
-					 gboolean             attach_comment);
+                                         gint                 width,
+                                         gint                 height,
+                                         GimpImageBaseType    type,
+                                         gboolean             attach_comment);
 
 void          gimp_set_default_context  (Gimp                *gimp,
-					 GimpContext         *context);
+                                         GimpContext         *context);
 GimpContext * gimp_get_default_context  (Gimp                *gimp);
 
 void          gimp_set_user_context     (Gimp                *gimp,
-					 GimpContext         *context);
+                                         GimpContext         *context);
 GimpContext * gimp_get_user_context     (Gimp                *gimp);
 
 

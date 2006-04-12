@@ -62,8 +62,8 @@
 
 
 #define GIMP_RECENT_ITEM_LIST_UNREF(list) \
-	g_list_foreach (list, (GFunc) gimp_recent_item_unref, NULL); \
-	g_list_free (list);
+  g_list_foreach (list, (GFunc) gimp_recent_item_unref, NULL);  \
+  g_list_free (list);
 
 
 typedef struct
@@ -124,7 +124,7 @@ static const GMarkupParser markup_parser =
 
 static void
 gimp_recent_list_add_new_groups (GimpRecentItem *item,
-				 GimpRecentItem *upd_item)
+                                 GimpRecentItem *upd_item)
 {
   const GList *tmp;
 
@@ -425,10 +425,10 @@ gimp_recent_list_write (gint   fd,
 
       if (mime_type)
         g_string_append_printf (string,
-				"    <" TAG_MIME_TYPE ">%s</" TAG_MIME_TYPE ">\n", mime_type);
+                                "    <" TAG_MIME_TYPE ">%s</" TAG_MIME_TYPE ">\n", mime_type);
       else
         g_string_append_printf (string,
-				"    <" TAG_MIME_TYPE "></" TAG_MIME_TYPE ">\n");
+                                "    <" TAG_MIME_TYPE "></" TAG_MIME_TYPE ">\n");
 
       g_string_append_printf (string,
                               "    <" TAG_TIMESTAMP ">%d</" TAG_TIMESTAMP ">\n", (gint) timestamp);
@@ -469,7 +469,7 @@ gimp_recent_list_write (gint   fd,
         }
 
       string = g_string_append (string,
-				"  </" TAG_RECENT_ITEM ">\n");
+                                "  </" TAG_RECENT_ITEM ">\n");
 
       g_free (escaped_uri);
 
@@ -488,7 +488,7 @@ gimp_recent_list_write (gint   fd,
 static gboolean
 gimp_recent_list_lock_file (gint fd)
 {
-  gint	i;
+  gint        i;
 
   /* Attempt to lock the file 5 times,
    * waiting a random interval (< 1 second)

@@ -48,14 +48,14 @@
 
 GimpLayer *
 text_render (GimpImage    *image,
-	     GimpDrawable *drawable,
+             GimpDrawable *drawable,
              GimpContext  *context,
-	     gint          text_x,
-	     gint          text_y,
-	     const gchar  *fontname,
-	     const gchar  *text,
-	     gint          border,
-	     gboolean      antialias)
+             gint          text_x,
+             gint          text_y,
+             const gchar  *fontname,
+             const gchar  *text,
+             gint          border,
+             gboolean      antialias)
 {
   PangoFontDescription *desc;
   GimpText             *gtext;
@@ -89,7 +89,7 @@ text_render (GimpImage    *image,
                         "text",      text,
                         "font",      font,
                         "font-size", size,
-			"antialias", antialias,
+                        "antialias", antialias,
                         "border",    border,
                         "color",     &color,
                         NULL);
@@ -133,11 +133,11 @@ text_render (GimpImage    *image,
 
 gboolean
 text_get_extents (const gchar *fontname,
-		  const gchar *text,
-		  gint        *width,
-		  gint        *height,
-		  gint        *ascent,
-		  gint        *descent)
+                  const gchar *text,
+                  gint        *width,
+                  gint        *height,
+                  gint        *ascent,
+                  gint        *descent)
 {
   PangoFontDescription *font_desc;
   PangoContext         *context;

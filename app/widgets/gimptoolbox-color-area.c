@@ -74,11 +74,11 @@ gimp_toolbox_color_area_create (GimpToolbox *toolbox,
   gtk_widget_set_size_request (color_area, width, height);
   gtk_widget_add_events (color_area,
                          GDK_ENTER_NOTIFY_MASK |
-			 GDK_LEAVE_NOTIFY_MASK);
+                         GDK_LEAVE_NOTIFY_MASK);
 
   g_signal_connect (color_area, "color-clicked",
-		    G_CALLBACK (color_area_color_clicked),
-		    context);
+                    G_CALLBACK (color_area_color_clicked),
+                    context);
 
   return color_area;
 }

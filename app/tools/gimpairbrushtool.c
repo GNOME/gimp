@@ -45,7 +45,7 @@ G_DEFINE_TYPE (GimpAirbrushTool, gimp_airbrush_tool, GIMP_TYPE_PAINTBRUSH_TOOL);
 
 void
 gimp_airbrush_tool_register (GimpToolRegisterCallback  callback,
-			     gpointer                  data)
+                             gpointer                  data)
 {
   (* callback) (GIMP_TYPE_AIRBRUSH_TOOL,
                 GIMP_TYPE_AIRBRUSH_OPTIONS,

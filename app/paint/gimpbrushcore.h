@@ -106,7 +106,7 @@ void    gimp_brush_core_paste_canvas   (GimpBrushCore            *core,
                                         GimpBrushApplicationMode  brush_hardness,
                                         GimpPaintApplicationMode  mode);
 void    gimp_brush_core_replace_canvas (GimpBrushCore            *core,
-                                        GimpDrawable	         *drawable,
+                                        GimpDrawable                 *drawable,
                                         gdouble                   brush_opacity,
                                         gdouble                   image_opacity,
                                         GimpBrushApplicationMode  brush_hardness,
