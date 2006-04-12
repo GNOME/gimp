@@ -38,7 +38,7 @@
 
 static void
 create_kernel (double x,
-	       double y)
+               double y)
 {
   double value[KERNEL_WIDTH][KERNEL_HEIGHT];
   double dist_x;
@@ -58,25 +58,25 @@ create_kernel (double x,
       dist_y = y - (((double)j + 0.5) / (double)STEPS);
 
       for (i = 0; i < STEPS * KERNEL_WIDTH; i++)
-	{
-	  dist_x = x - (((double) i + 0.5) / (double) STEPS);
+        {
+          dist_x = x - (((double) i + 0.5) / (double) STEPS);
 
-	  /*  I've tried to use a gauss function here instead of a
-	      threshold, but the result was not that impressive.    */
-	  w = (SQR (dist_x) + SQR (dist_y)) < THRESHOLD ? 1.0 : 0.0;
+          /*  I've tried to use a gauss function here instead of a
+              threshold, but the result was not that impressive.    */
+          w = (SQR (dist_x) + SQR (dist_y)) < THRESHOLD ? 1.0 : 0.0;
 
-	  value[i / STEPS][j / STEPS] += w;
-	  sum += w;
-	}
+          value[i / STEPS][j / STEPS] += w;
+          sum += w;
+        }
     }
 
   for (j = 0; j < KERNEL_HEIGHT; j++)
     {
       for (i = 0; i < KERNEL_WIDTH; i++)
-	{
-	  w = (double) KERNEL_SUM * value[i][j] / sum;
-	  printf (" %3d,", (int) (w + 0.5));
-	}
+        {
+          w = (double) KERNEL_SUM * value[i][j] / sum;
+          printf (" %3d,", (int) (w + 0.5));
+        }
     }
 }
 
@@ -88,8 +88,8 @@ main (int    argc,
   double x, y;
 
   printf ("/* gimpbrushcore-kernels.h\n"
-	  " *\n"
-	  " *   This file was generated using kernelgen as found in the tools dir.\n");
+          " *\n"
+          " *   This file was generated using kernelgen as found in the tools dir.\n");
   printf (" *   (threshold = %g)\n", THRESHOLD);
   printf (" */\n\n");
   printf ("#ifndef __GIMP_BRUSH_CORE_KERNELS_H__\n");
@@ -101,7 +101,7 @@ main (int    argc,
   printf ("\n\n");
   printf ("/*  Brush pixel subsampling kernels  */\n");
   printf ("static const int subsample[%d][%d][%d] =\n{\n",
-	  SUBSAMPLE + 1, SUBSAMPLE + 1, KERNEL_WIDTH * KERNEL_HEIGHT);
+          SUBSAMPLE + 1, SUBSAMPLE + 1, KERNEL_WIDTH * KERNEL_HEIGHT);
 
   for (j = 0; j <= SUBSAMPLE; j++)
     {
@@ -110,13 +110,13 @@ main (int    argc,
       printf ("  {\n");
 
       for (i = 0; i <= SUBSAMPLE; i++)
-	{
-	  x = (double) i / (double) SUBSAMPLE;
+        {
+          x = (double) i / (double) SUBSAMPLE;
 
-	  printf ("    {");
-	  create_kernel (x, y);
-	  printf (" }%s", i < SUBSAMPLE ? ",\n" : "\n");
-	}
+          printf ("    {");
+          create_kernel (x, y);
+          printf (" }%s", i < SUBSAMPLE ? ",\n" : "\n");
+        }
 
       printf ("  }%s", j < SUBSAMPLE ? ",\n" : "\n");
     }

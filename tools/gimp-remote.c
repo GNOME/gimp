@@ -179,10 +179,10 @@ gimp_remote_find_window (GdkDisplay *display,
 
 static void
 source_selection_get (GtkWidget        *widget,
-		      GtkSelectionData *selection_data,
-		      guint             info,
-		      guint             time,
-		      const gchar      *uri)
+                      GtkSelectionData *selection_data,
+                      guint             info,
+                      guint             time,
+                      const gchar      *uri)
 {
   gtk_selection_data_set (selection_data,
                           selection_data->target,
