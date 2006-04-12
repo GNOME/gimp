@@ -14,7 +14,7 @@ static double
 gaussian (double x, double y, double r)
 {
     return ((1 / (2 * M_PI * r)) *
-	    exp ((- (x * x + y * y)) / (2 * r * r)));
+            exp ((- (x * x + y * y)) / (2 * r * r)));
 }
 
 static ConvFilter *
@@ -33,19 +33,19 @@ create_blur_filter (int radius)
   for (y = 0 ; y < filter->size; y++)
     {
       for (x = 0 ; x < filter->size; x++)
-	{
-	  sum += filter->data[y * filter->size + x] = gaussian (x - (filter->size >> 1),
-								y - (filter->size >> 1),
-								radius);
-	}
+        {
+          sum += filter->data[y * filter->size + x] = gaussian (x - (filter->size >> 1),
+                                                                y - (filter->size >> 1),
+                                                                radius);
+        }
     }
 
   for (y = 0; y < filter->size; y++)
     {
       for (x = 0; x < filter->size; x++)
-	{
-	  filter->data[y * filter->size + x] /= sum;
-	}
+        {
+          filter->data[y * filter->size + x] /= sum;
+        }
     }
 
   return filter;
@@ -71,9 +71,9 @@ create_shadow (GdkPixbuf *src)
   height = gdk_pixbuf_get_height (src) + BLUR_RADIUS * 2 + SHADOW_OFFSET;
 
   dest = gdk_pixbuf_new (gdk_pixbuf_get_colorspace (src),
-			 gdk_pixbuf_get_has_alpha (src),
-			 gdk_pixbuf_get_bits_per_sample (src),
-			 width, height);
+                         gdk_pixbuf_get_has_alpha (src),
+                         gdk_pixbuf_get_bits_per_sample (src),
+                         width, height);
   gdk_pixbuf_fill (dest, 0);
   src_pixels = gdk_pixbuf_get_pixels (src);
   src_rowstride = gdk_pixbuf_get_rowstride (src);
@@ -86,47 +86,47 @@ create_shadow (GdkPixbuf *src)
   for (y = 0; y < height; y++)
     {
       for (x = 0; x < width; x++)
-	{
-	  int sumr = 0, sumg = 0, sumb = 0, suma = 0;
+        {
+          int sumr = 0, sumg = 0, sumb = 0, suma = 0;
 
-	  for (i = 0; i < filter->size; i++)
-	    {
-	      for (j = 0; j < filter->size; j++)
-		{
-		  int src_x, src_y;
+          for (i = 0; i < filter->size; i++)
+            {
+              for (j = 0; j < filter->size; j++)
+                {
+                  int src_x, src_y;
 
-		  src_y = -(BLUR_RADIUS + SHADOW_OFFSET) + y - (filter->size >> 1) + i;
-		  src_x = -(BLUR_RADIUS + SHADOW_OFFSET) + x - (filter->size >> 1) + j;
+                  src_y = -(BLUR_RADIUS + SHADOW_OFFSET) + y - (filter->size >> 1) + i;
+                  src_x = -(BLUR_RADIUS + SHADOW_OFFSET) + x - (filter->size >> 1) + j;
 
-		  if (src_y < 0 || src_y > gdk_pixbuf_get_height (src) ||
-		      src_x < 0 || src_x > gdk_pixbuf_get_width (src))
-		    continue;
+                  if (src_y < 0 || src_y > gdk_pixbuf_get_height (src) ||
+                      src_x < 0 || src_x > gdk_pixbuf_get_width (src))
+                    continue;
 
-		  sumr += src_pixels [src_y * src_rowstride +
-				      src_x * src_bpp + 0] *
-		    filter->data [i * filter->size + j];
-		  sumg += src_pixels [src_y * src_rowstride +
-				      src_x * src_bpp + 1] *
-		    filter->data [i * filter->size + j];
+                  sumr += src_pixels [src_y * src_rowstride +
+                                      src_x * src_bpp + 0] *
+                    filter->data [i * filter->size + j];
+                  sumg += src_pixels [src_y * src_rowstride +
+                                      src_x * src_bpp + 1] *
+                    filter->data [i * filter->size + j];
 
-		  sumb += src_pixels [src_y * src_rowstride +
-				      src_x * src_bpp + 2] *
-		    filter->data [i * filter->size + j];
-		
-		  if (src_bpp == 4)
-		    suma += src_pixels [src_y * src_rowstride +
-					src_x * src_bpp + 3] *
-		    filter->data [i * filter->size + j];
+                  sumb += src_pixels [src_y * src_rowstride +
+                                      src_x * src_bpp + 2] *
+                    filter->data [i * filter->size + j];
+                
+                  if (src_bpp == 4)
+                    suma += src_pixels [src_y * src_rowstride +
+                                        src_x * src_bpp + 3] *
+                    filter->data [i * filter->size + j];
 
-		
-		}
-	    }
+                
+                }
+            }
 
-	  if (dest_bpp == 4)
-	    dest_pixels [y * dest_rowstride +
-			 x * dest_bpp + 3] = suma * SHADOW_OPACITY;
+          if (dest_bpp == 4)
+            dest_pixels [y * dest_rowstride +
+                         x * dest_bpp + 3] = suma * SHADOW_OPACITY;
 
-	}
+        }
     }
 
   return dest;
@@ -140,10 +140,10 @@ create_shadowed_pixbuf (GdkPixbuf *src)
   dest = create_shadow (src);
 
   gdk_pixbuf_composite (src, dest,
-			BLUR_RADIUS, BLUR_RADIUS,
-			gdk_pixbuf_get_width (src),
-			gdk_pixbuf_get_height (src),
-			BLUR_RADIUS, BLUR_RADIUS, 1.0, 1.0,
-			GDK_INTERP_NEAREST, 255);
+                        BLUR_RADIUS, BLUR_RADIUS,
+                        gdk_pixbuf_get_width (src),
+                        gdk_pixbuf_get_height (src),
+                        BLUR_RADIUS, BLUR_RADIUS, 1.0, 1.0,
+                        GDK_INTERP_NEAREST, 255);
   return dest;
 }
