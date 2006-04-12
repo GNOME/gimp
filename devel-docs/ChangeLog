@@ -1,5 +1,9 @@
 2006-04-12  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/libgimpwidgets-sections.txt: added GIMP_STOCK_DETACH.
+
+	* libgimpwidgets/tmpl/gimpstock.sgml: regenerated.
+
 	* tools/shadow.c: converted tabs to spaces.
 
 2006-04-06  Sven Neumann  <sven@gimp.org>

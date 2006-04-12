@@ -1374,6 +1374,20 @@ RTL variant
 
 
 
+<!-- ##### MACRO GIMP_STOCK_QMASK_ON ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_QMASK_OFF ##### -->
+<para>
+
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_BRUSH ##### -->
 <para>
 
@@ -1382,6 +1396,13 @@ RTL variant
 
 
 <!-- ##### MACRO GIMP_STOCK_BUFFER ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_DETACH ##### -->
 <para>
 
 </para>
@@ -1410,20 +1431,6 @@ RTL variant
 
 
 <!-- ##### MACRO GIMP_STOCK_PATTERN ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_QMASK_ON ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_QMASK_OFF ##### -->
 <para>
 
 </para>
