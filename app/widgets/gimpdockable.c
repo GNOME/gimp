@@ -240,9 +240,11 @@ gimp_dockable_destroy (GtkObject *object)
   if (dockable->context)
     gimp_dockable_set_context (dockable, NULL);
 
-  if (dockable->blurb && dockable->blurb != dockable->name)
+  if (dockable->blurb)
     {
-      g_free (dockable->blurb);
+      if (dockable->blurb != dockable->name)
+        g_free (dockable->blurb);
+
       dockable->blurb = NULL;
     }
 

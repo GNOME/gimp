@@ -1,3 +1,11 @@
+2006-04-13  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/widgets/gimpdockable.c (gimp_dockable_destroy): always set
+	dockable->blurb to NULL, also if its memory is shared with
+	dockable->name. Fixes bug #338286.
+
 2006-04-11  Sven Neumann  <sven@gimp.org>
 
 	* app/composite/gimp-composite-mmx-installer.c
