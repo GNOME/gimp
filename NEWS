@@ -23,6 +23,12 @@ Bugs fixed in GIMP 2.2.11
 - corrected tile cache size in Unsharp Mask plug-in (bug #331344)
 - fixed the import of SVG circles
 - fixed rounding of resolution in BMP plug-in (bug #332501)
+- fixed resolution handling in PSD load plug-in
+- store resolution when saving in the PSD file format (bug #310426)
+- fixed crash in Revert function (bug #333568)
+- flush the projection before reading from it (bug #332933)
+- fixed MMX instructions on Pentium II machines (bug #162778)
+- fixed possible crash on closing a dockable (bug #338286)
 
 
 Bugs fixed in GIMP 2.2.10
