@@ -5,7 +5,7 @@ to have the following packages (or newer versions) installed:
 
     * GNU autoconf 2.54
         - ftp://ftp.gnu.org/gnu/autoconf/
-    * GNU automake 1.7  (1.9, 1.8 and 1.6 will also work)
+    * GNU automake 1.8 or newer
         - ftp://ftp.gnu.org/gnu/automake/
     * GNU libtool 1.4  (1.5 if you are compiling on Win32)
         - ftp://ftp.gnu.org/gnu/libtool/
@@ -39,7 +39,7 @@ by running:
 
 Basically this does the following for you:
 
-    cvsroot/gimp$ aclocal-1.7; libtoolize; automake-1.7 -a;
+    cvsroot/gimp$ aclocal-1.9; libtoolize; automake-1.9 -a;
     cvsroot/gimp$ autoconf; glib-gettextize; intltoolize
 
 The above commands create the "configure" script.  Now you can run the
