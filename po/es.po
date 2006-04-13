@@ -1,7 +1,4 @@
-# translation of es.po to Spanish
-# translation of gimp-po.HEAD.po to Spanish
-# translation of gimp-po.HEAD.po to
-# Spanish translation file for Gimp 2.x.
+# Spanish translation file for Gimp 2.2.X
 # Copyright © 1998-2005, 2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 # Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>
@@ -14,7 +11,7 @@ msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-03-28 17:31+0200\n"
-"PO-Revision-Date: 2006-04-03 18:31+0200\n"
+"PO-Revision-Date: 2006-04-13 12:39+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -694,18 +691,16 @@ msgid "_Add Color from FG"
 msgstr "_Añadir color desde el frente"
 
 #: ../app/actions/colormap-editor-actions.c:57
-#, fuzzy
 msgid "Add current foreground color"
-msgstr "Definir el color de frente"
+msgstr "Añade el color de frente actual"
 
 #: ../app/actions/colormap-editor-actions.c:62
 msgid "_Add Color from BG"
 msgstr "_Añadir color desde el fondo"
 
 #: ../app/actions/colormap-editor-actions.c:63
-#, fuzzy
 msgid "Add current background color"
-msgstr "Definir el color de fondo"
+msgstr "Añade el color de fondo actual"
 
 #: ../app/actions/colormap-editor-commands.c:70
 #, c-format
@@ -790,18 +785,16 @@ msgid "_Default Colors"
 msgstr "Colores pre_definidos"
 
 #: ../app/actions/context-actions.c:66
-#, fuzzy
 msgid "Set foreground color to black, background color to white"
-msgstr "Mostrar color de _fondo y frente"
+msgstr "Pone el color de frente a negro, el color de fondo a blanco"
 
 #: ../app/actions/context-actions.c:71
 msgid "S_wap Colors"
 msgstr "In_tercambiar los colores"
 
 #: ../app/actions/context-actions.c:72
-#, fuzzy
 msgid "Exchange foreground and background colors"
-msgstr "Mostrar color de _fondo y frente"
+msgstr "Intercambia los colores de frente y fondo"
 
 #: ../app/actions/cursor-info-actions.c:40
 msgid "Pointer Information Menu"
@@ -1786,15 +1779,13 @@ msgstr "Color del punto final _derecho"
 
 #: ../app/actions/gradient-editor-actions.c:162
 #: ../app/actions/gradient-editor-actions.c:210
-#, fuzzy
 msgid "_Foreground Color"
-msgstr "Color de _frente:"
+msgstr "Color del _frente"
 
 #: ../app/actions/gradient-editor-actions.c:167
 #: ../app/actions/gradient-editor-actions.c:215
-#, fuzzy
 msgid "_Background Color"
-msgstr "Color del _fondo:"
+msgstr "Color del _fondo"
 
 #: ../app/actions/gradient-editor-actions.c:200
 msgid "_Right Neighbor's Left Endpoint"
@@ -2724,18 +2715,16 @@ msgid "New Color from _FG"
 msgstr "Color nuevo desde el _frente"
 
 #: ../app/actions/palette-editor-actions.c:73
-#, fuzzy
 msgid "New color from foreground color"
-msgstr "Definir el color de frente"
+msgstr "Color nuevo desde el color del frente"
 
 #: ../app/actions/palette-editor-actions.c:78
 msgid "New Color from _BG"
 msgstr "Color nuevo desde el f_ondo"
 
 #: ../app/actions/palette-editor-actions.c:79
-#, fuzzy
 msgid "New color from background color"
-msgstr "Definir el color de fondo"
+msgstr "Color nuevo desde el color del fondo"
 
 #: ../app/actions/palette-editor-actions.c:87
 #: ../app/actions/view-actions.c:242
@@ -2968,9 +2957,8 @@ msgid "Reset all _Filters"
 msgstr "Restablecer todos los _filtros"
 
 #: ../app/actions/plug-in-actions.c:85
-#, fuzzy
 msgid "Set all plug-in to their default settings"
-msgstr "Sacar un archivo gimprc con la configuración predeterminada"
+msgstr "Poner todos los complementos a su configuración predeterminada"
 
 #: ../app/actions/plug-in-actions.c:93
 msgid "Re_peat Last"
@@ -2978,7 +2966,7 @@ msgstr "Re_petir el último"
 
 #: ../app/actions/plug-in-actions.c:94
 msgid "Rerun the last used plug-in using the same settings"
-msgstr ""
+msgstr "Ejecutar el último complemento usado con los mismos ajustes"
 
 #: ../app/actions/plug-in-actions.c:99
 msgid "R_e-Show Last"
@@ -2986,7 +2974,7 @@ msgstr "_Volver a mostrar el último"
 
 #: ../app/actions/plug-in-actions.c:100
 msgid "Show the last used plug-in dialog again"
-msgstr ""
+msgstr "Muestra el diálogo del último complemento usado otra vez"
 
 #: ../app/actions/plug-in-actions.c:448
 #, c-format
@@ -3080,9 +3068,8 @@ msgid "_None"
 msgstr "_Ninguno"
 
 #: ../app/actions/select-actions.c:57
-#, fuzzy
 msgid "Dismiss the selection"
-msgstr "Rellenar la selección completamente"
+msgstr "Descartar la selección"
 
 #: ../app/actions/select-actions.c:62
 msgid "_Invert"
@@ -3122,9 +3109,8 @@ msgid "S_hrink..."
 msgstr "_Encoger [Shrink]..."
 
 #: ../app/actions/select-actions.c:87
-#, fuzzy
 msgid "Contract the selection"
-msgstr "_Intersectar con selección"
+msgstr "Contraer la selección"
 
 #: ../app/actions/select-actions.c:92
 msgid "_Grow..."
@@ -3139,9 +3125,8 @@ msgid "Bo_rder..."
 msgstr "Bor_de..."
 
 #: ../app/actions/select-actions.c:99
-#, fuzzy
 msgid "Replace the selection by its border"
-msgstr "Sustituir la selección con este canal"
+msgstr "Reemplazar la selección por su borde"
 
 #: ../app/actions/select-actions.c:104
 msgid "Save to _Channel"
@@ -3164,9 +3149,8 @@ msgid "_Stroke Selection"
 msgstr "_Trazar selección [Stroke selection]"
 
 #: ../app/actions/select-actions.c:117
-#, fuzzy
 msgid "Stroke the selection with last used values"
-msgstr "Trazar selección con los últimos valores"
+msgstr "Trazar selección con los últimos valores usados"
 
 #: ../app/actions/select-commands.c:136 ../app/core/gimpselection.c:165
 msgid "Feather Selection"
@@ -3196,11 +3180,15 @@ msgstr "Agrandar selección"
 msgid "Grow selection by"
 msgstr "Agrandar selección en"
 
+#, ¿Bordear selección? (serrador)
 #: ../app/actions/select-commands.c:228 ../app/core/gimpselection.c:170
+#, fuzzy
 msgid "Border Selection"
 msgstr "Selección de borde"
 
+#¿Bordear selección por (serrador)
 #: ../app/actions/select-commands.c:232
+#, fuzzy
 msgid "Border selection by"
 msgstr "Selección de borde en"
 
@@ -3677,9 +3665,8 @@ msgid "Move to Screen"
 msgstr "Mover a la pantalla"
 
 #: ../app/actions/view-actions.c:74
-#, fuzzy
 msgid "Create another view on this image"
-msgstr "Crea un duplicado de esta imagen"
+msgstr "Crea otra vista en esta imagen"
 
 #: ../app/actions/view-actions.c:79
 msgid "_Close"
@@ -3695,7 +3682,7 @@ msgstr "_Ajustar imagen a la ventana"
 
 #: ../app/actions/view-actions.c:86
 msgid "Adjust the zoom ratio so that the image becomes fully visible"
-msgstr ""
+msgstr "Ajusta la ampliación para que la imagen se vea completamente"
 
 #: ../app/actions/view-actions.c:91
 msgid "Fit Image _to Window"
@@ -3703,25 +3690,23 @@ msgstr "Ajustar a la _ventana"
 
 #: ../app/actions/view-actions.c:92
 msgid "Adjust the zoom ratio so that the window is used optimally"
-msgstr ""
+msgstr "Ajusta la ampliación para que la ventana se use optimamente"
 
 #: ../app/actions/view-actions.c:97
 msgid "Na_vigation Window"
 msgstr "Ventana de na_vegación"
 
 #: ../app/actions/view-actions.c:98
-#, fuzzy
 msgid "Show an overview window for this image"
-msgstr "Configura la rejilla para esta imagen"
+msgstr "Muestra una venta de vista general para esta imagen"
 
 #: ../app/actions/view-actions.c:103
 msgid "Display _Filters..."
 msgstr "Mostrar _filtros..."
 
 #: ../app/actions/view-actions.c:104
-#, fuzzy
 msgid "Configure filters applied to this view"
-msgstr "Configura la rejilla para esta imagen"
+msgstr "Configurar filtros aplicados a esta vista"
 
 # //R Creo que hace esto
 #: ../app/actions/view-actions.c:109
@@ -3741,7 +3726,6 @@ msgid "_Dot for Dot"
 msgstr "P_unto por punto"
 
 #: ../app/actions/view-actions.c:125
-#, fuzzy
 msgid "A pixel on the screen represents an image pixel"
 msgstr "Un píxel en la pantalla representa un píxel de la imagen"
 
@@ -3751,7 +3735,7 @@ msgstr "Mostrar la s_elección"
 
 #: ../app/actions/view-actions.c:132
 msgid "Display the selection outline"
-msgstr "Mostrar el contorno de la selección"
+msgstr "Muestra el contorno de la selección"
 
 #: ../app/actions/view-actions.c:138
 msgid "Show _Layer Boundary"
@@ -3759,15 +3743,15 @@ msgstr "Mostrar el _límite de la capa"
 
 #: ../app/actions/view-actions.c:139
 msgid "Draw a border around the active layer"
-msgstr "Trazar un borde alrededor de la capa activa"
+msgstr "Dibuja un borde alrededor de la capa activa"
 
 #: ../app/actions/view-actions.c:145
 msgid "Show _Guides"
-msgstr "Mostrar las _guías"
+msgstr "Mostrar _guías"
 
 #: ../app/actions/view-actions.c:151
 msgid "S_how Grid"
-msgstr "M_ostrar la rejilla"
+msgstr "Mostrar _rejilla"
 
 #: ../app/actions/view-actions.c:157
 msgid "Show Sample Points"
@@ -5145,14 +5129,12 @@ msgid "Pasted Layer"
 msgstr "Capa pegada"
 
 #: ../app/core/gimp-edit.c:444
-#, fuzzy
 msgid "Fill with Foreground Color"
-msgstr "Rellenar con el color del _fondo"
+msgstr "Rellenar con el color del frente"
 
 #: ../app/core/gimp-edit.c:448
-#, fuzzy
 msgid "Fill with Background Color"
-msgstr "Rellenar con el color del _fondo"
+msgstr "Rellenar con el color del fondo"
 
 #: ../app/core/gimp-edit.c:452
 msgid "Fill with White"
@@ -9162,17 +9144,17 @@ msgstr "Contigua"
 
 #. foreground / background
 #: ../app/tools/gimpforegroundselectoptions.c:238
-#, fuzzy, c-format
+#, c-format
 msgid "Interactive refinement  (%s)"
-msgstr "Retoque interactivo"
+msgstr "Retoque interactivo (%s)"
 
 #: ../app/tools/gimpforegroundselectoptions.c:242
 msgid "Mark background"
-msgstr "Marque el fondo"
+msgstr "Marcar el fondo"
 
 #: ../app/tools/gimpforegroundselectoptions.c:243
 msgid "Mark foreground"
-msgstr "Marque el frente"
+msgstr "Marcar el frente"
 
 #: ../app/tools/gimpforegroundselectoptions.c:259
 msgid "Small brush"
