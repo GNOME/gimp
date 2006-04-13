@@ -1,5 +1,7 @@
 2006-04-13  Sven Neumann  <sven@gimp.org>
 
+	* Made 2.2.11 release.
+
 	* autogen.sh: replaced with the version from the HEAD branch.
 
 2006-04-13  Sven Neumann  <sven@gimp.org>

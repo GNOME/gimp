@@ -734,7 +734,7 @@ empty, the language is taken from the user's locale setting.  This is a string
 value.
 
 .TP
-(help-browser gimp)
+(help-browser web-browser)
 
 Sets the browser used by the help system.  Possible values are gimp and
 web-browser.

@@ -8,3 +8,4 @@ POTFILES
 messages
 missing
 po2tbl.sed.in
+stamp-it

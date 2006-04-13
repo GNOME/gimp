@@ -577,7 +577,7 @@
 # Sets the browser used by the help system.  Possible values are gimp and
 # web-browser.
 # 
-# (help-browser gimp)
+# (help-browser web-browser)
 
 # Sets the external web browser to be used.  This can be an absolute path or
 # the name of an executable to search for in the user's PATH. If the command
