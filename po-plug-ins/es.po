@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-28 17:31+0200\n"
-"PO-Revision-Date: 2006-04-03 19:21+0200\n"
+"POT-Creation-Date: 2006-04-13 12:43+0200\n"
+"PO-Revision-Date: 2006-04-13 13:11+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2083,7 +2083,7 @@ msgstr "Optimizando la animación"
 
 #: ../plug-ins/common/apply_lens.c:109
 msgid "Simulate an elliptical lens over the image"
-msgstr ""
+msgstr "Simular lentes elípticas sobre la imagen"
 
 #: ../plug-ins/common/apply_lens.c:115
 msgid "Apply _Lens..."
@@ -2119,19 +2119,17 @@ msgstr "Índice de refracción de los _lentes:"
 
 #: ../plug-ins/common/autocrop.c:84
 msgid "Remove empty borders from the image"
-msgstr ""
+msgstr "Quitar bordes vacíos de la imagen"
 
 #: ../plug-ins/common/autocrop.c:89
-#, fuzzy
 msgid "_Autocrop Image"
 msgstr "_Autorecortar imagen"
 
 #: ../plug-ins/common/autocrop.c:98
 msgid "Remove empty borders from the layer"
-msgstr ""
+msgstr "Quitar bordes vacíos de la capa"
 
 #: ../plug-ins/common/autocrop.c:103
-#, fuzzy
 msgid "_Autocrop Layer"
 msgstr "_Autorecortar capa"
 
@@ -2157,7 +2155,7 @@ msgstr "autostretch_hsv: cmap es NULL!  Saliendo...\n"
 
 #: ../plug-ins/common/blinds.c:116
 msgid "Simulate an image painted on window blinds"
-msgstr ""
+msgstr "Simular una imagen pintada en una persiana"
 
 #: ../plug-ins/common/blinds.c:121
 msgid "_Blinds..."
@@ -2329,7 +2327,7 @@ msgstr "c_astretch: cmap es NULL!  Saliendo...\n"
 
 #: ../plug-ins/common/cartoon.c:144
 msgid "Simulate a cartoon by enhancing edges"
-msgstr ""
+msgstr "Simular una caricatura resaltando los bordes"
 
 #: ../plug-ins/common/cartoon.c:149
 msgid "Ca_rtoon..."
@@ -2356,9 +2354,8 @@ msgid "_Percent black:"
 msgstr "_Porcentaje de negro:"
 
 #: ../plug-ins/common/ccanalyze.c:107
-#, fuzzy
 msgid "Analyze the set of colors in the image"
-msgstr "Cambia el número de colores en el mapeo"
+msgstr "Analizar el conjunto de colores en la imagen"
 
 #: ../plug-ins/common/ccanalyze.c:113
 msgid "Colorcube A_nalysis..."
@@ -2410,7 +2407,7 @@ msgstr "Razón de compresión (aprox.): %d a 1"
 
 #: ../plug-ins/common/channel_mixer.c:178
 msgid "Alter colors by mixing RGB Channels"
-msgstr ""
+msgstr "Alterar colores mezclando canales RGB"
 
 #: ../plug-ins/common/channel_mixer.c:183
 msgid "Channel Mi_xer..."
@@ -2513,7 +2510,7 @@ msgstr "Realzar color"
 
 #: ../plug-ins/common/colorify.c:102
 msgid "Replace all colors with shades of a specified color"
-msgstr ""
+msgstr "Reemplazar todos los colores por sombras de un color especificado"
 
 #: ../plug-ins/common/colorify.c:108
 msgid "_Colorify..."
@@ -2675,7 +2672,7 @@ msgstr "_Redness cr709f:"
 
 #: ../plug-ins/common/compose.c:380
 msgid "Create an image using multiple gray images as color channels"
-msgstr ""
+msgstr "Crear una imagen usando múltiples imágenes grises como canales de color"
 
 #: ../plug-ins/common/compose.c:386
 msgid "C_ompose..."
@@ -2683,7 +2680,7 @@ msgstr "C_omponer..."
 
 #: ../plug-ins/common/compose.c:410
 msgid "Recompose an image that was previously decomposed"
-msgstr ""
+msgstr "Recomponer una imagen previamente descompuesta"
 
 #: ../plug-ins/common/compose.c:418
 msgid "R_ecompose"
@@ -2942,7 +2939,7 @@ msgstr "Transformación cubista"
 
 #: ../plug-ins/common/curve_bend.c:523
 msgid "Bend the image using two control curves"
-msgstr ""
+msgstr "Doblar la imagen usando dos curvas de control"
 
 #: ../plug-ins/common/curve_bend.c:544
 msgid "_Curve Bend..."
@@ -3224,7 +3221,7 @@ msgstr "redness-cr709f"
 
 #: ../plug-ins/common/decompose.c:247
 msgid "Decompose an image into separate colorspace components"
-msgstr ""
+msgstr "Descomponer una imagen en componentes separados del espacio de color"
 
 #: ../plug-ins/common/decompose.c:253
 msgid "_Decompose..."
@@ -3268,7 +3265,7 @@ msgstr "Mant_ener los campos pares"
 
 #: ../plug-ins/common/depthmerge.c:184
 msgid "Combine two images using depth maps (z-buffers)"
-msgstr ""
+msgstr "Combinar dos imágenes usando mapas de profundidad (z-búfers)"
 
 #: ../plug-ins/common/depthmerge.c:193
 msgid "_Depth Merge..."
@@ -3308,9 +3305,8 @@ msgid "Sca_le 2:"
 msgstr "E_scala 2:"
 
 #: ../plug-ins/common/despeckle.c:146
-#, fuzzy
 msgid "Remove speckle noise from the image"
-msgstr "Definir la escala (tamaño) de la imagen"
+msgstr "Quitar el ruido de granulado de la imagen"
 
 #: ../plug-ins/common/despeckle.c:152
 msgid "Des_peckle..."
@@ -3349,7 +3345,7 @@ msgstr "Nivel de _blanco:"
 
 #: ../plug-ins/common/destripe.c:102
 msgid "Remove vertical stripe artifacts from the image"
-msgstr ""
+msgstr "Quitar bandas verticales de la imagen"
 
 #: ../plug-ins/common/destripe.c:108
 msgid "Des_tripe..."
@@ -3399,9 +3395,8 @@ msgid "Cannot operate on unknown image types."
 msgstr "No puede operar sobre tipos de imagen desconocidos."
 
 #: ../plug-ins/common/diffraction.c:167
-#, fuzzy
 msgid "Generate diffraction patterns"
-msgstr "Creando patrón de difracción"
+msgstr "Generar patrones de difracción"
 
 #: ../plug-ins/common/diffraction.c:172
 msgid "_Diffraction Patterns..."
@@ -3462,7 +3457,7 @@ msgstr "_Remolino"
 
 #: ../plug-ins/common/displace.c:172
 msgid "Displace pixels as indicated by displacment maps"
-msgstr ""
+msgstr "Desplazar píxeles tal como se indica en los mapas de desplazamiento"
 
 #: ../plug-ins/common/displace.c:182
 msgid "_Displace..."
@@ -3623,7 +3618,7 @@ msgstr "E_levación:"
 
 #: ../plug-ins/common/engrave.c:103
 msgid "Simulate an antique engraving"
-msgstr ""
+msgstr "Simular un grabado antiguo"
 
 #: ../plug-ins/common/engrave.c:108
 msgid "En_grave..."
@@ -3824,9 +3819,8 @@ msgid "_Number height:"
 msgstr "Altura del _número:"
 
 #: ../plug-ins/common/flarefx.c:188
-#, fuzzy
 msgid "Add a lens flare effect"
-msgstr "Centro del destello FX"
+msgstr "Añadir un efecto de destello de lentes"
 
 #: ../plug-ins/common/flarefx.c:195
 msgid "Lens _Flare..."
@@ -4067,9 +4061,8 @@ msgstr "Desenfoque gaussiano... [Blur]"
 
 #: ../plug-ins/common/gauss.c:179 ../plug-ins/common/gauss.c:199
 #: ../plug-ins/common/gauss.c:219 ../plug-ins/common/gauss.c:239
-#, fuzzy
 msgid "Apply a gaussian blur"
-msgstr "Desenfoque gaussiano [Blur]"
+msgstr "Aplicar un desenfoque gaussiano [Blur]"
 
 #: ../plug-ins/common/gauss.c:428 ../plug-ins/common/gauss.c:476
 msgid "Gaussian Blur"
@@ -4193,9 +4186,8 @@ msgstr ""
 "primero."
 
 #: ../plug-ins/common/gif.c:1153
-#, fuzzy
 msgid "Delay inserted to prevent evil CPU-sucking animation."
-msgstr "Retardo insertado para evitar la maldita animación de chupadora de CPU."
+msgstr "Retardo insertado para evitar la maldita animación chupadora de CPU."
 
 #: ../plug-ins/common/gif.c:1195
 msgid "GIF Warning"
@@ -4474,9 +4466,8 @@ msgid "Palette Map"
 msgstr "Mapa de paleta"
 
 #: ../plug-ins/common/grid.c:142
-#, fuzzy
 msgid "Draw a grid on the image"
-msgstr "Dibujar un borde de puntas alrededor de la imagen"
+msgstr "Dibujar una rejilla en la imagen"
 
 #: ../plug-ins/common/grid.c:148
 msgid "_Grid..."
@@ -4705,9 +4696,8 @@ msgid "_Blacken"
 msgstr "Enne_grecer"
 
 #: ../plug-ins/common/illusion.c:91
-#, fuzzy
 msgid "Superimpose many altered copies of the image"
-msgstr "Usar el color de la imagen"
+msgstr "Superimponer muchas copias alteradas de la imagen"
 
 #: ../plug-ins/common/illusion.c:96
 msgid "_Illusion..."
@@ -4909,9 +4899,8 @@ msgid "Each piece has curved sides"
 msgstr "Cada pieza tiene lados curvos"
 
 #: ../plug-ins/common/laplace.c:75
-#, fuzzy
 msgid "High-resolution edge detection"
-msgstr "Detección de bordes Sobel"
+msgstr "Detección de bordes de alta resolución"
 
 #: ../plug-ins/common/laplace.c:85
 msgid "_Laplace"
@@ -4990,9 +4979,8 @@ msgid "_Van Gogh (LIC)..."
 msgstr "_Van Gogh (LIC)…"
 
 #: ../plug-ins/common/mail.c:253
-#, fuzzy
 msgid "Email the image"
-msgstr "Imagen c_ompleta"
+msgstr "Mandar imagen por correo-e"
 
 #: ../plug-ins/common/mail.c:259
 msgid "_Mail Image..."
@@ -5069,9 +5057,8 @@ msgid "Map colors sending foreground to black, background to white"
 msgstr ""
 
 #: ../plug-ins/common/mapcolor.c:151
-#, fuzzy
 msgid "Adjust _Foreground & Background"
-msgstr "_Frente y fondo"
+msgstr "Ajustar _frente y fondo"
 
 #: ../plug-ins/common/mapcolor.c:168
 msgid "Color Range _Mapping..."
@@ -5082,9 +5069,8 @@ msgid "Cannot operate on gray or indexed color images."
 msgstr "No funciona sobre imágenes de color indexado o grises."
 
 #: ../plug-ins/common/mapcolor.c:235
-#, fuzzy
 msgid "Adjusting foreground and background colors"
-msgstr "Colores de frente y fondo"
+msgstr "Ajustar colores de frente y fondo"
 
 #: ../plug-ins/common/mapcolor.c:277
 msgid "Mapping colors"
@@ -6393,11 +6379,11 @@ msgstr "Derretir al azar 1.7"
 
 #: ../plug-ins/common/randomize.c:200
 msgid "Completely randomize a fraction of pixels"
-msgstr ""
+msgstr "Aleatorizar completamente una fracción de píxeles"
 
 #: ../plug-ins/common/randomize.c:202
 msgid "Randomly interchange some pixels with neighbors"
-msgstr ""
+msgstr "Intercambiar aleatoriamente algunos píxeles por sus vecinos"
 
 #: ../plug-ins/common/randomize.c:204
 msgid "Randomly slide some pixels downward (similar to melting)"
@@ -6509,7 +6495,7 @@ msgstr "Tipo de paleta indexada"
 
 #: ../plug-ins/common/retinex.c:156
 msgid "Enhance contrast using the Retinex method"
-msgstr ""
+msgstr "Mejorar el contraste usando el método Retinex"
 
 #: ../plug-ins/common/retinex.c:166
 msgid "_Retinex..."
@@ -6557,7 +6543,7 @@ msgstr "Retinex: filtrado"
 
 #: ../plug-ins/common/ripple.c:129
 msgid "Displace pixels in a ripple pattern"
-msgstr ""
+msgstr "Desplazar píxeles en un patrón de onda"
 
 #: ../plug-ins/common/ripple.c:136
 msgid "_Ripple..."
@@ -6623,11 +6609,11 @@ msgstr "Rotación"
 
 #: ../plug-ins/common/sample_colorize.c:298
 msgid "Colorize image using a sample image as a guide"
-msgstr ""
+msgstr "Colorear imagen usando una imagen de muestra como guía"
 
 #: ../plug-ins/common/sample_colorize.c:303
 msgid "_Sample Colorize..."
-msgstr "_Colorizar desde muestra..."
+msgstr "_Colorear desde muestra..."
 
 #: ../plug-ins/common/sample_colorize.c:1314
 msgid "Sample Colorize"
@@ -6729,7 +6715,7 @@ msgstr "T_ono:"
 
 #: ../plug-ins/common/screenshot.c:227
 msgid "Create an image from an area of the screen"
-msgstr ""
+msgstr "Crear una imagen de un área de la pantalla"
 
 #: ../plug-ins/common/screenshot.c:240
 msgid "_Screenshot..."
@@ -6891,7 +6877,7 @@ msgstr "C_antidad de desplazamiento:"
 
 #: ../plug-ins/common/sinus.c:186
 msgid "Generate complex sinusoidal textures"
-msgstr ""
+msgstr "Generar texturas complejas sinusoidales"
 
 #: ../plug-ins/common/sinus.c:191
 msgid "_Sinus..."
@@ -7014,9 +7000,8 @@ msgid "Do _preview"
 msgstr "_Previsualizar"
 
 #: ../plug-ins/common/smooth_palette.c:83
-#, fuzzy
 msgid "Derive a smooth color palette from the image"
-msgstr "Usar el color de la imagen"
+msgstr "Derivar una paleta de colores suaves desde la imagen"
 
 #: ../plug-ins/common/smooth_palette.c:88
 msgid "Smoo_th Palette..."
@@ -7036,7 +7021,7 @@ msgstr "Profundidad de la bú_squeda:"
 
 #: ../plug-ins/common/snoise.c:178
 msgid "Create a random cloud-like texture"
-msgstr ""
+msgstr "Crear una textura aleatoria semejante a una nube"
 
 #: ../plug-ins/common/snoise.c:184
 msgid "_Solid Noise..."
@@ -7222,18 +7207,16 @@ msgid "In_verse"
 msgstr "In_verso"
 
 #: ../plug-ins/common/sparkle.c:523
-#, fuzzy
 msgid "Should the effect be inversed?"
-msgstr "¿Debería aplicarse el efecto de inversión?"
+msgstr "¿Debería invertirse el efecto?"
 
 #: ../plug-ins/common/sparkle.c:532
 msgid "A_dd border"
 msgstr "Aña_dir borde"
 
 #: ../plug-ins/common/sparkle.c:538
-#, fuzzy
 msgid "Draw a border of spikes around the image"
-msgstr "Dibujar un borde de puntas alrededor de la imagen"
+msgstr "Dibuja un borde de puntas alrededor de la imagen"
 
 #: ../plug-ins/common/sparkle.c:552
 msgid "_Natural color"
@@ -7408,9 +7391,8 @@ msgid "Rendering sphere"
 msgstr "Renderizando esfera"
 
 #: ../plug-ins/common/spheredesigner.c:2991
-#, fuzzy
 msgid "Create an image of a textured sphere"
-msgstr "Centrar la imagen en el papel"
+msgstr "Crea una imagen de una esfera texturizada"
 
 #: ../plug-ins/common/spheredesigner.c:2998
 msgid "Sphere _Designer..."
@@ -7422,7 +7404,7 @@ msgstr "La región seleccionada para el complemento está vacía"
 
 #: ../plug-ins/common/spread.c:91
 msgid "Move pixels around randomly"
-msgstr ""
+msgstr "Mover píxeles alrededor aleatoriamente"
 
 #: ../plug-ins/common/spread.c:100
 msgid "Sp_read..."
@@ -7442,7 +7424,7 @@ msgstr "Cantidad de esparcimiento"
 
 #: ../plug-ins/common/struc.c:1142
 msgid "Add a canvas texture to the image"
-msgstr ""
+msgstr "Añadir una textura de lienzo a la imagen"
 
 #: ../plug-ins/common/struc.c:1147
 msgid "_Apply Canvas..."
@@ -7528,9 +7510,8 @@ msgid "RunLength Encoded"
 msgstr "Codificación RunLenght"
 
 #: ../plug-ins/common/svg.c:138
-#, fuzzy
 msgid "SVG image"
-msgstr "Imagen GIF"
+msgstr "Imagen SVG"
 
 #: ../plug-ins/common/svg.c:315 ../plug-ins/common/svg.c:717
 msgid "Unknown reason"
@@ -7553,7 +7534,7 @@ msgstr ""
 "un tamaño!"
 
 #: ../plug-ins/common/svg.c:519 ../plug-ins/common/wmf.c:338
-#, fuzzy, c-format
+#, c-format
 msgid "%d × %d"
 msgstr "%d x %d"
 
@@ -7630,7 +7611,7 @@ msgstr "Or_igen en abajo a la izquierda"
 
 #: ../plug-ins/common/threshold_alpha.c:85
 msgid "Make transparency all-or-nothing"
-msgstr ""
+msgstr "Hacer transparencia todo o nada"
 
 #: ../plug-ins/common/threshold_alpha.c:90
 msgid "_Threshold Alpha..."
@@ -7638,7 +7619,7 @@ msgstr "_Umbral alfa..."
 
 #: ../plug-ins/common/threshold_alpha.c:131
 msgid "The layer has its alpha channel locked."
-msgstr "La capa tiene su canal alfa bloqueada."
+msgstr "La capa tiene su canal alfa bloqueado."
 
 #: ../plug-ins/common/threshold_alpha.c:137
 msgid "RGBA/GRAYA drawable is not selected."
@@ -7723,9 +7704,8 @@ msgid "Comment:"
 msgstr "Comentario:"
 
 #: ../plug-ins/common/tile.c:101
-#, fuzzy
 msgid "Create an array of copies of the image"
-msgstr "Dibujar un borde de puntas alrededor de la imagen"
+msgstr "Crea una formación de copias de la imagen"
 
 #: ../plug-ins/common/tile.c:111
 msgid "_Tile..."
@@ -7801,9 +7781,8 @@ msgid "Number of Segments"
 msgstr "Número de segmentos"
 
 #: ../plug-ins/common/tiler.c:67
-#, fuzzy
 msgid "Alters edges to make the image seamlessly tileable"
-msgstr "Selecciona si la imagen resultante debería ser enlosable «sin costuras»"
+msgstr "Altera los bordes para hacer la imagen enlosable «sin costuras»"
 
 #: ../plug-ins/common/tiler.c:73
 msgid "_Make Seamless"
@@ -7895,20 +7874,18 @@ msgid "The unit's plural form."
 msgstr "La forma plural de la unidad."
 
 #: ../plug-ins/common/uniteditor.c:121
-#, fuzzy
 msgid "Create a new unit from scratch"
-msgstr "Crea una nueva unidad partiendo de la nada."
+msgstr "Crea una nueva unidad desde cero."
 
 #: ../plug-ins/common/uniteditor.c:127
-#, fuzzy
 msgid "Create a new unit using the currently selected unit as template"
 msgstr ""
 "Crea una unidad nueva usando como plantilla la unidad actualmente "
-"seleccionada."
+"seleccionada"
 
 #: ../plug-ins/common/uniteditor.c:145
 msgid "Create or alter units used in GIMP"
-msgstr ""
+msgstr "Crear o alterar unidades usadas en GIMP"
 
 #: ../plug-ins/common/uniteditor.c:150
 msgid "_Unit Editor"
@@ -7960,7 +7937,7 @@ msgstr "Editor de unidades"
 
 #: ../plug-ins/common/unsharp.c:131
 msgid "The most widely useful method for sharpening an image"
-msgstr ""
+msgstr "El método más usado para enfocar una imagen"
 
 #: ../plug-ins/common/unsharp.c:141
 msgid "_Unsharp Mask..."
@@ -8037,9 +8014,8 @@ msgid "_Rotated"
 msgstr "_Rotado"
 
 #: ../plug-ins/common/vinvert.c:72
-#, fuzzy
 msgid "Invert the brightness of each pixel"
-msgstr "Definir la altura de la impresión"
+msgstr "Invertir el brillo de cada píxel"
 
 #: ../plug-ins/common/vinvert.c:83
 msgid "_Value Invert"
@@ -8083,25 +8059,23 @@ msgstr "Más t_ransparente"
 
 #: ../plug-ins/common/vpropagate.c:232
 msgid "Propagate certain colors to neighboring pixels"
-msgstr ""
+msgstr "Propagar ciertos colores a los píxeles vecinos"
 
 #: ../plug-ins/common/vpropagate.c:237
 msgid "_Value Propagate..."
 msgstr "Propagar _valor..."
 
 #: ../plug-ins/common/vpropagate.c:244
-#, fuzzy
 msgid "Shrink darker areas of the image"
-msgstr "La primera fila de la imagen"
+msgstr "Encoger las áreas más oscuras de la imagen"
 
 #: ../plug-ins/common/vpropagate.c:249
 msgid "E_rode"
 msgstr "E_rosionar"
 
 #: ../plug-ins/common/vpropagate.c:256
-#, fuzzy
 msgid "Grow darker areas of the image"
-msgstr "Dibujar un borde de puntas alrededor de la imagen"
+msgstr "Agrandar las áreas más oscuras de la imagen"
 
 #: ../plug-ins/common/vpropagate.c:261
 msgid "_Dilate"
@@ -8205,9 +8179,8 @@ msgid "Black"
 msgstr "Negro"
 
 #: ../plug-ins/common/warp.c:531
-#, fuzzy
 msgid "Foreground color"
-msgstr "Color de f_rente"
+msgstr "Color de frente"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary table         --------------------------
@@ -8288,9 +8261,8 @@ msgid "Flow step %d"
 msgstr "Paso del flujo %d"
 
 #: ../plug-ins/common/waves.c:118
-#, fuzzy
 msgid "Distort the image with waves"
-msgstr "Centrar la imagen en el papel"
+msgstr "Distorsionar la imagen con ondas"
 
 #: ../plug-ins/common/waves.c:123
 msgid "_Waves..."
@@ -8451,16 +8423,15 @@ msgstr "Valores mayores incrementan la magnitud del efecto"
 
 #: ../plug-ins/common/winprint.c:219
 msgid "Print image to any recognized printer"
-msgstr ""
+msgstr "Imprimir imagen en cualquier impresora reconocida"
 
 #: ../plug-ins/common/winprint.c:223
 msgid "_Print"
 msgstr "Im_primir"
 
 #: ../plug-ins/common/winprint.c:230
-#, fuzzy
 msgid "Set up  page layout for printing"
-msgstr "Seleccione la unidad base de medición para la impresión"
+msgstr "Seleccione la distribución de la página para la impresión"
 
 #: ../plug-ins/common/winprint.c:234
 msgid "Page Setup"
@@ -9215,7 +9186,7 @@ msgstr "Crear una curva bezier"
 
 #: ../plug-ins/gfig/gfig.c:117
 msgid "Create geometric shapes"
-msgstr ""
+msgstr "Crea formas geométricas"
 
 #: ../plug-ins/gfig/gfig.c:128
 msgid "_Gfig..."
@@ -9691,11 +9662,11 @@ msgstr "Un valor de fianza para selecciones adaptativas"
 
 #: ../plug-ins/gimpressionist/gimp.c:74
 msgid "Performs various artistic operations"
-msgstr ""
+msgstr "Realiza varias operaciones artísticas"
 
 #: ../plug-ins/gimpressionist/gimp.c:79
 msgid "_GIMPressionist..."
-msgstr "GIMPresionista"
+msgstr "_GIMPresionista..."
 
 #: ../plug-ins/gimpressionist/gimp.c:350
 msgid "Painting"
@@ -10741,9 +10712,8 @@ msgid "_Preview"
 msgstr "Vista _previa"
 
 #: ../plug-ins/imagemap/imap_main.c:119
-#, fuzzy
 msgid "Create a clickable imagemap"
-msgstr "Crear imagen nueva"
+msgstr "Crea un mapa de imágenes pulsables"
 
 #: ../plug-ins/imagemap/imap_main.c:124
 msgid "_Image Map..."
@@ -11260,7 +11230,7 @@ msgstr "_Exportar XMP..."
 
 #: ../plug-ins/metadata/metadata.c:183
 msgid "View and edit metadata (EXIF, IPTC, XMP)"
-msgstr ""
+msgstr "Ver y editar metadatos (EXIF, IPTC, XMP)"
 
 #: ../plug-ins/metadata/metadata.c:192
 msgid "Propert_ies"
@@ -11329,19 +11299,19 @@ msgstr "XMP no puede contener comentarios XML o instrucciones de proceso"
 
 #: ../plug-ins/pagecurl/pagecurl.c:216
 msgid "Curl up one of the image corners"
-msgstr ""
+msgstr "Doblar hacia arriba una de las esquinas de la imagen"
 
 #: ../plug-ins/pagecurl/pagecurl.c:221
 msgid "_Pagecurl..."
-msgstr "_Página enrollada..."
+msgstr "_Página doblada..."
 
 #: ../plug-ins/pagecurl/pagecurl.c:440
 msgid "Pagecurl Effect"
-msgstr "Efecto de enrollar página"
+msgstr "Efecto de doblar página"
 
 #: ../plug-ins/pagecurl/pagecurl.c:462
 msgid "Curl Location"
-msgstr "Localización del enrollamiento"
+msgstr "Localización del doblado"
 
 #: ../plug-ins/pagecurl/pagecurl.c:481
 msgid "Lower right"
@@ -11361,11 +11331,11 @@ msgstr "Superior derecha"
 
 #: ../plug-ins/pagecurl/pagecurl.c:524
 msgid "Curl Orientation"
-msgstr "Orientación del enrollamiento"
+msgstr "Orientación del doblado"
 
 #: ../plug-ins/pagecurl/pagecurl.c:568
 msgid "_Shade under curl"
-msgstr "_Sombra bajo el enrollamiento"
+msgstr "_Sombra bajo el doblez"
 
 #: ../plug-ins/pagecurl/pagecurl.c:581
 msgid "Current gradient (reversed)"
@@ -12027,7 +11997,7 @@ msgstr "Archivo"
 
 #: ../plug-ins/rcm/rcm.c:96
 msgid "Replace a range of colors with another"
-msgstr ""
+msgstr "Reemplazar un rango de colores por otro"
 
 #: ../plug-ins/rcm/rcm.c:103
 msgid "Colormap _Rotation..."
@@ -12322,7 +12292,7 @@ msgstr "Incluir decoraciones"
 
 #: ../plug-ins/winsnap/winsnap.c:988
 msgid "Capture a window or desktop image"
-msgstr ""
+msgstr "Capturar una ventana o imagen del escritorio"
 
 #: ../plug-ins/winsnap/winsnap.c:993
 msgid "_Screen Shot..."
