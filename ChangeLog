@@ -1,3 +1,8 @@
+2006-04-13  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/file-actions.c: resolved conflicting mnemonic for
+	the "Acquire" submenu.
+
 2006-04-12  Karine Delvare  <edhel@gimp.org>
 
 	* app/tools/gimpnewrectselecttool.c: auto-convert rectangle to

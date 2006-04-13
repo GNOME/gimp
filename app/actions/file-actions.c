@@ -63,7 +63,7 @@ static const GimpActionEntry file_actions[] =
 {
   { "file-menu",             NULL, N_("_File")        },
   { "file-open-recent-menu", NULL, N_("Open _Recent") },
-  { "file-acquire-menu",     NULL, N_("_Acquire")     },
+  { "file-acquire-menu",     NULL, N_("Acq_uire")     },
 
   { "file-open", GTK_STOCK_OPEN,
     N_("_Open..."), NULL, NULL,
