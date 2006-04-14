@@ -22,7 +22,7 @@
 #define __PLUG_IN_RUN_H__
 
 #ifndef __YES_I_NEED_PLUG_IN_RUN__
-#error Don't use plug_in_run*(), use gimp_procedure_execute*() instead.
+#error Do not use plug_in_run*(), use gimp_procedure_execute*() instead.
 #endif
 
 
