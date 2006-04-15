@@ -32,6 +32,7 @@
     <xi:include href="xml/errors.xml" />
     <xi:include href="xml/sanity.xml" />
     <xi:include href="xml/units.xml" />
+    <xi:include href="xml/about.xml" />
   </part>
 
   <part id="app-paint-funcs-part">
@@ -263,6 +264,7 @@
       <xi:include href="xml/gimpimagefile.xml" />
       <xi:include href="xml/gimpimagemap.xml" />
       <xi:include href="xml/gimpparasitelist.xml" />
+      <xi:include href="xml/gimppdbprogress.xml" />
       <xi:include href="xml/gimpprojection.xml" />
       <xi:include href="xml/gimpprojection-construct.xml" />
       <xi:include href="xml/gimptemplate.xml" />
@@ -283,6 +285,7 @@
       <xi:include href="xml/gimpdashpattern.xml" />
       <xi:include href="xml/gimpinterpreterdb.xml" />
       <xi:include href="xml/gimpmarshal.xml" />
+      <xi:include href="xml/gimpparamspecs.xml" />
       <xi:include href="xml/gimppreviewcache.xml" />
       <xi:include href="xml/gimpscanconvert.xml" />
     </chapter>
@@ -346,9 +349,13 @@
 
   <part id="app-pdb-part">
     <title>Procedural Database</title>
-    <xi:include href="xml/procedural_db.xml" />
+    <xi:include href="xml/gimp-pdb.xml" />
+    <xi:include href="xml/gimp-pdb-compat.xml" />
+    <xi:include href="xml/gimp-pdb-query.xml" />
+    <xi:include href="xml/gimpprocedure.xml" />
+    <xi:include href="xml/gimppluginprocedure.xml" />
+    <xi:include href="xml/gimptemporaryprocedure.xml" />
     <xi:include href="xml/internal_procs.xml" />
-    <xi:include href="xml/pdb_glue.xml" />
   </part>
 
   <part id="app-plug-in-part">
@@ -360,9 +367,12 @@
       <xi:include href="xml/plug-ins.xml" />
       <xi:include href="xml/plug-ins-query.xml" />
       <xi:include href="xml/plug-in-def.xml" />
-      <xi:include href="xml/plug-in-proc-def.xml" />
       <xi:include href="xml/plug-in-proc-frame.xml" />
       <xi:include href="xml/plug-in-rc.xml" />
+      <xi:include href="xml/plug-in-data.xml" />
+      <xi:include href="xml/plug-in-menu-branch.xml" />
+      <xi:include href="xml/plug-in-help-domain.xml" />
+      <xi:include href="xml/plug-in-locale-domain.xml" />
     </chapter>
 
     <chapter id="app-plug-in-execution">
@@ -743,6 +753,7 @@
       <title>Misc. Dialogs</title>
       <xi:include href="xml/gimperrordialog.xml" />
       <xi:include href="xml/gimpfiledialog.xml" />
+      <xi:include href="xml/gimpmessagedialog.xml" />
       <xi:include href="xml/gimpprogressdialog.xml" />
       <xi:include href="xml/gimptexteditor.xml" />
       <xi:include href="xml/gimptooldialog.xml" />
@@ -918,6 +929,8 @@
 
     <chapter id="app-actions-data-editor-actions">
       <title>Data Editor Actions &amp; Callbacks</title>
+      <xi:include href="xml/data-editor-commands.xml" />
+      <xi:include href="xml/brush-editor-actions.xml" />
       <xi:include href="xml/colormap-editor-actions.xml" />
       <xi:include href="xml/colormap-editor-commands.xml" />
       <xi:include href="xml/gradient-editor-actions.xml" />
@@ -942,6 +955,7 @@
       <xi:include href="xml/text-editor-commands.xml" />
       <xi:include href="xml/tool-options-actions.xml" />
       <xi:include href="xml/tool-options-commands.xml" />
+      <xi:include href="xml/window-commands.xml" />
       <xi:include href="xml/window-actions.xml" />
     </chapter>
   </part>
@@ -990,7 +1004,6 @@
       <xi:include href="xml/image-new-dialog.xml" />
       <xi:include href="xml/image-properties-dialog.xml" />
       <xi:include href="xml/image-scale-dialog.xml" />
-      <xi:include href="xml/info-dialog.xml" />
       <xi:include href="xml/layer-add-mask-dialog.xml" />
       <xi:include href="xml/layer-options-dialog.xml" />
       <xi:include href="xml/module-dialog.xml" />

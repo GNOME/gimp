@@ -190,8 +190,10 @@ gimp_pencil_tool_get_type
 gimp_perspective_tool_get_type
 gimp_pickable_interface_get_type
 gimp_plug_in_action_get_type
+gimp_plug_in_procedure_get_type
 gimp_plugin_config_get_type
 gimp_posterize_tool_get_type
+gimp_procedure_get_type
 gimp_progress_box_get_type
 gimp_progress_dialog_get_type
 gimp_progress_interface_get_type
@@ -222,6 +224,7 @@ gimp_stroke_options_get_type
 gimp_template_editor_get_type
 gimp_template_get_type
 gimp_template_view_get_type
+gimp_temporary_procedure_get_type
 gimp_text_editor_get_type
 gimp_text_get_type
 gimp_text_layer_get_type
