@@ -1,5 +1,10 @@
 2006-04-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpclipboard.c (gimp_clipboard_set_buffer): fix
+	parameter name in API docs.
+
+2006-04-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimp-utils.[ch]: added
 	gimp_g_type_instance_get_memsize() and
 	gimp_g_param_spec_get_memsize().

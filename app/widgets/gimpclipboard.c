@@ -375,8 +375,8 @@ gimp_clipboard_get_svg (Gimp  *gimp,
 
 /**
  * gimp_clipboard_set_buffer:
- * @gimp: pointer to #Gimp
- * @svg:  a #GimpBuffer, or %NULL.
+ * @gimp:   pointer to #Gimp
+ * @buffer: a #GimpBuffer, or %NULL.
  *
  * Offers the buffer in %GDK_SELECTION_CLIPBOARD.
  **/
