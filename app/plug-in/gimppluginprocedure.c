@@ -42,19 +42,22 @@
 #include "gimp-intl.h"
 
 
-static void          gimp_plug_in_procedure_finalize   (GObject       *object);
+static void          gimp_plug_in_procedure_finalize    (GObject       *object);
 
-static GValueArray * gimp_plug_in_procedure_execute    (GimpProcedure *procedure,
-                                                        Gimp          *gimp,
-                                                        GimpContext   *context,
-                                                        GimpProgress  *progress,
-                                                        GValueArray   *args);
-static void       gimp_plug_in_procedure_execute_async (GimpProcedure *procedure,
-                                                        Gimp          *gimp,
-                                                        GimpContext   *context,
-                                                        GimpProgress  *progress,
-                                                        GValueArray   *args,
-                                                        gint32         display_ID);
+static gint64        gimp_plug_in_procedure_get_memsize (GimpObject    *object,
+                                                         gint64        *gui_size);
+
+static GValueArray * gimp_plug_in_procedure_execute     (GimpProcedure *procedure,
+                                                         Gimp          *gimp,
+                                                         GimpContext   *context,
+                                                         GimpProgress  *progress,
+                                                         GValueArray   *args);
+static void       gimp_plug_in_procedure_execute_async  (GimpProcedure *procedure,
+                                                         Gimp          *gimp,
+                                                         GimpContext   *context,
+                                                         GimpProgress  *progress,
+                                                         GValueArray   *args,
+                                                         gint32         display_ID);
 
 const gchar * gimp_plug_in_procedure_real_get_progname (const GimpPlugInProcedure *procedure);
 
@@ -68,15 +71,18 @@ G_DEFINE_TYPE (GimpPlugInProcedure, gimp_plug_in_procedure,
 static void
 gimp_plug_in_procedure_class_init (GimpPlugInProcedureClass *klass)
 {
-  GObjectClass       *object_class = G_OBJECT_CLASS (klass);
-  GimpProcedureClass *proc_class   = GIMP_PROCEDURE_CLASS (klass);
+  GObjectClass       *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass    *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpProcedureClass *proc_class        = GIMP_PROCEDURE_CLASS (klass);
 
-  object_class->finalize = gimp_plug_in_procedure_finalize;
+  object_class->finalize         = gimp_plug_in_procedure_finalize;
 
-  proc_class->execute       = gimp_plug_in_procedure_execute;
-  proc_class->execute_async = gimp_plug_in_procedure_execute_async;
+  gimp_object_class->get_memsize = gimp_plug_in_procedure_get_memsize;
 
-  klass->get_progname       = gimp_plug_in_procedure_real_get_progname;
+  proc_class->execute            = gimp_plug_in_procedure_execute;
+  proc_class->execute_async      = gimp_plug_in_procedure_execute_async;
+
+  klass->get_progname            = gimp_plug_in_procedure_real_get_progname;
 }
 
 static void
@@ -118,6 +124,65 @@ gimp_plug_in_procedure_finalize (GObject *object)
   g_free (proc->thumb_loader);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static gint64
+gimp_plug_in_procedure_get_memsize (GimpObject *object,
+                                    gint64     *gui_size)
+{
+  GimpPlugInProcedure *proc    = GIMP_PLUG_IN_PROCEDURE (object);
+  gint64               memsize = 0;
+  GList               *list;
+  GSList              *slist;
+
+  if (proc->prog)
+    memsize += strlen (proc->prog) + 1;
+
+  if (proc->menu_label)
+    memsize += strlen (proc->menu_label) + 1;
+
+  for (list = proc->menu_paths; list; list = g_list_next (list))
+    memsize += sizeof (GList) + strlen (list->data) + 1;
+
+  switch (proc->icon_type)
+    {
+    case GIMP_ICON_TYPE_STOCK_ID:
+    case GIMP_ICON_TYPE_IMAGE_FILE:
+      if (proc->icon_data)
+        memsize += strlen ((gchar *) proc->icon_data) + 1;
+      break;
+
+    case GIMP_ICON_TYPE_INLINE_PIXBUF:
+      memsize += proc->icon_data_length;
+      break;
+    }
+
+  if (proc->extensions)
+    memsize += strlen (proc->extensions) + 1;
+
+  if (proc->prefixes)
+    memsize += strlen (proc->prefixes) + 1;
+
+  if (proc->magics)
+    memsize += strlen (proc->magics) + 1;
+
+  if (proc->mime_type)
+    memsize += strlen (proc->mime_type) + 1;
+
+  if (proc->thumb_loader)
+    memsize += strlen (proc->thumb_loader) + 1;
+
+  for (slist = proc->extensions_list; slist; slist = g_slist_next (slist))
+    memsize += sizeof (GSList) + strlen (slist->data) + 1;
+
+  for (slist = proc->prefixes_list; slist; slist = g_slist_next (slist))
+    memsize += sizeof (GSList) + strlen (slist->data) + 1;
+
+  for (slist = proc->magics_list; slist; slist = g_slist_next (slist))
+    memsize += sizeof (GSList) + strlen (slist->data) + 1;
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
 }
 
 static GValueArray *

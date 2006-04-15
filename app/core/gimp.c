@@ -459,8 +459,21 @@ gimp_get_memsize (GimpObject *object,
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->parasites),
                                       gui_size);
 
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->paint_info_list),
+                                      gui_size);
+
   memsize += gimp_g_object_get_memsize (G_OBJECT (gimp->module_db));
 
+  memsize += gimp_g_slist_get_memsize (gimp->plug_in_menu_branches,
+                                       0 /* FIXME */);
+  memsize += gimp_g_slist_get_memsize (gimp->plug_in_locale_domains,
+                                       0 /* FIXME */);
+  memsize += gimp_g_slist_get_memsize (gimp->plug_in_help_domains,
+                                       0 /* FIXME */);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->interpreter_db),
+                                      gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->environ_table),
+                                      gui_size);
   memsize += gimp_g_list_get_memsize (gimp->plug_in_data_list,
                                       0 /* FIXME */);
 

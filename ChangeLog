@@ -1,3 +1,18 @@
+2006-04-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp-utils.[ch]: added
+	gimp_g_type_instance_get_memsize() and
+	gimp_g_param_spec_get_memsize().
+	Changed gimp_g_object_get_memsize() to use
+	gimp_g_type_instance_get_memsize().
+	Handle more boxed types in gimp_g_value_get_memsize().
+
+	* app/core/gimp.c (gimp_get_memsize): add the memsize of some
+	members that are new or were forgotten.
+
+	* app/pdb/gimpprocedure.c
+	* app/pdb/gimppluginprocedure.c: implement GimpObject::get_memsize().
+
 2006-04-14  Manish Singh  <yosh@gimp.org>
 
 	* app/plug-in/plug-in.h: Some compilers don't handle "'" in #error

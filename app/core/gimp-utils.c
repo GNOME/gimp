@@ -50,6 +50,7 @@
 
 #include "gimp.h"
 #include "gimp-utils.h"
+#include "gimpparamspecs.h"
 
 
 gboolean
@@ -83,18 +84,28 @@ gimp_rectangle_intersect (gint  x1,
 }
 
 gint64
-gimp_g_object_get_memsize (GObject *object)
+gimp_g_type_instance_get_memsize (GTypeInstance *instance)
 {
   GTypeQuery type_query;
   gint64     memsize = 0;
 
-  g_return_val_if_fail (G_IS_OBJECT (object), 0);
+  g_return_val_if_fail (instance != NULL, 0);
 
-  g_type_query (G_TYPE_FROM_INSTANCE (object), &type_query);
+  g_type_query (G_TYPE_FROM_INSTANCE (instance), &type_query);
 
   memsize += type_query.instance_size;
 
   return memsize;
+}
+
+gint64
+gimp_g_object_get_memsize (GObject *object)
+{
+  gint64 memsize = 0;
+
+  g_return_val_if_fail (G_IS_OBJECT (object), 0);
+
+  return memsize + gimp_g_type_instance_get_memsize ((GTypeInstance *) object);
 }
 
 gint64
@@ -124,7 +135,7 @@ gimp_g_list_get_memsize (GList  *list,
 gint64
 gimp_g_value_get_memsize (GValue *value)
 {
-  gint64  memsize = sizeof (GValue);
+  gint64 memsize = sizeof (GValue);
 
   if (G_VALUE_HOLDS_STRING (value))
     {
@@ -143,6 +154,46 @@ gimp_g_value_get_memsize (GValue *value)
         {
           memsize += sizeof (GimpMatrix2);
         }
+      else if (GIMP_VALUE_HOLDS_PARASITE (value))
+        {
+          GimpParasite *parasite = g_value_get_boxed (value);
+
+          if (parasite)
+            memsize += (sizeof (GimpParasite) + parasite->size +
+                        parasite->name ? (strlen (parasite->name) + 1) : 0);
+        }
+      else if (GIMP_VALUE_HOLDS_ARRAY (value)       ||
+               GIMP_VALUE_HOLDS_INT8_ARRAY (value)  ||
+               GIMP_VALUE_HOLDS_INT16_ARRAY (value) ||
+               GIMP_VALUE_HOLDS_INT32_ARRAY (value) ||
+               GIMP_VALUE_HOLDS_FLOAT_ARRAY (value))
+        {
+          GimpArray *array = g_value_get_boxed (value);
+
+          if (array)
+            memsize += (sizeof (GimpArray) +
+                        array->static_data ? 0 : array->length);
+        }
+      else if (GIMP_VALUE_HOLDS_STRING_ARRAY (value))
+        {
+          GimpArray *array = g_value_get_boxed (value);
+
+          if (array)
+            {
+              memsize += sizeof (GimpArray);
+
+              if (! array->static_data)
+                {
+                  gchar **tmp = (gchar **) array->data;
+                  gint    i;
+
+                  memsize += array->length * sizeof (gchar *);
+
+                  for (i = 0; i < array->length; i++)
+                    memsize += strlen (tmp[i]) + 1;
+                }
+            }
+        }
       else
         {
           g_printerr ("%s: unhandled boxed value type: %s\n",
@@ -157,6 +208,37 @@ gimp_g_value_get_memsize (GValue *value)
 
   return memsize;
 }
+
+gint64
+gimp_g_param_spec_get_memsize (GParamSpec *pspec)
+{
+  const gchar *str;
+  gint64       memsize = 0;
+
+  if (! (pspec->flags & G_PARAM_STATIC_NAME))
+    {
+      str = g_param_spec_get_name (pspec);
+      if (str)
+        memsize += strlen (str) + 1;
+    }
+
+  if (! (pspec->flags & G_PARAM_STATIC_NICK))
+    {
+      str = g_param_spec_get_nick (pspec);
+      if (str)
+        memsize += strlen (str) + 1;
+    }
+
+  if (! (pspec->flags & G_PARAM_STATIC_BLURB))
+    {
+      str = g_param_spec_get_blurb (pspec);
+      if (str)
+        memsize += strlen (str) + 1;
+    }
+
+  return memsize + gimp_g_type_instance_get_memsize ((GTypeInstance *) pspec);
+}
+
 
 /*
  *  basically copied from gtk_get_default_language()
