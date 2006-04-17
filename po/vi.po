@@ -7,8 +7,8 @@ msgid ""
 ""
 msgstr "Project-Id-Version: gimp Gnome HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-11 02:48+0200\n"
-"PO-Revision-Date: 2006-04-11 20:54+0930\n"
+"POT-Creation-Date: 2006-04-17 02:48+0200\n"
+"PO-Revision-Date: 2006-04-17 13:48+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -47,11 +47,17 @@ msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "GIMP; if not, write to the Free Software Foundation, Inc., 59 Temple Place - "
 "Suite 330, Boston, MA 02111-1307, USA."
-msgstr "GIMP là phần mềm tự do; bạn có thể phát hành lại nó và/hay sửa đổi nó với điều kiện của Quyền Công Chung GNU (GPL) như xuất bản bởi Tổ chức Phần mềm Tự do, hoặc phiên bản 2 của Quyền này, hoặc (tùy chọn) bất kỳ phiên bản sau.\n"
+msgstr "GIMP là phần mềm tự do; bạn có thể phát hành lại nó và/hay sửa đổi nó với "
+"điều kiện của Quyền Công Chung GNU (GPL) như xuất bản bởi Tổ chức Phần mềm "
+"Tự do, hoặc phiên bản 2 của Quyền này, hoặc (tùy chọn) bất kỳ phiên bản "
+"sau.\n"
 "\n"
-"GIMP được phát hành vì tác giả mong muốn nó hữu ích, nhưng mà nó không có bảo đảm gì cả, thậm chí không có tính thương mại hay cho một mục đích đặc biệt nào cả. Hãy xem Quyền Công Chung GNU để tìm chi tiết.\n"
+"GIMP được phát hành vì tác giả mong muốn nó hữu ích, nhưng mà nó không có "
+"bảo đảm gì cả, thậm chí không có tính thương mại hay cho một mục đích đặc "
+"biệt nào cả. Hãy xem Quyền Công Chung GNU để tìm chi tiết.\n"
 "\n"
-"Bạn nên đã nhận một bản sao của Quyền Công Chung GNU có sẵn với GIMP; nếu không, hãy viết một lá thư cho Tổ chức Phần mềm Tự do :\n"
+"Bạn nên đã nhận một bản sao của Quyền Công Chung GNU có sẵn với GIMP; nếu "
+"không, hãy viết một lá thư cho Tổ chức Phần mềm Tự do :\n"
 "Free Software Foundation, Inc.,\n"
 "59 Temple Place - Suite 330,\n"
 "Boston, MA 02111-1307, USA (Mỹ)."
@@ -228,7 +234,7 @@ msgstr "Bộ sửa bút vẽ"
 
 #.initialize the list of gimp brushes
 #:../app/actions/actions.c:101 ../app/actions/dialogs-actions.c:130
-#:../app/core/gimp.c:845 ../app/dialogs/dialogs.c:146
+#:../app/core/gimp.c:858 ../app/dialogs/dialogs.c:146
 #:../app/dialogs/preferences-dialog.c:2417
 msgid "Brushes"
 msgstr "Bút vẽ"
@@ -297,7 +303,7 @@ msgstr "Tập tin"
 
 #.initialize the list of gimp fonts
 #:../app/actions/actions.c:146 ../app/actions/dialogs-actions.c:150
-#:../app/core/gimp.c:861 ../app/dialogs/dialogs.c:154
+#:../app/core/gimp.c:874 ../app/dialogs/dialogs.c:154
 #:../app/dialogs/preferences-dialog.c:2433
 msgid "Fonts"
 msgstr "Phông chữ"
@@ -309,7 +315,7 @@ msgstr "Bộ sửa độ dốc"
 
 #.initialize the list of gimp gradients
 #:../app/actions/actions.c:152 ../app/actions/dialogs-actions.c:140
-#:../app/core/gimp.c:857 ../app/dialogs/dialogs.c:150
+#:../app/core/gimp.c:870 ../app/dialogs/dialogs.c:150
 #:../app/dialogs/preferences-dialog.c:2429
 msgid "Gradients"
 msgstr "Độ dốc"
@@ -340,14 +346,14 @@ msgstr "Bộ sửa bảng chọn"
 
 #.initialize the list of gimp palettes
 #:../app/actions/actions.c:170 ../app/actions/dialogs-actions.c:145
-#:../app/core/gimp.c:853 ../app/dialogs/dialogs.c:152
+#:../app/core/gimp.c:866 ../app/dialogs/dialogs.c:152
 #:../app/dialogs/preferences-dialog.c:2425
 msgid "Palettes"
 msgstr "Bảng chọn"
 
 #.initialize the list of gimp patterns
 #:../app/actions/actions.c:173 ../app/actions/dialogs-actions.c:135
-#:../app/core/gimp.c:849 ../app/dialogs/dialogs.c:148
+#:../app/core/gimp.c:862 ../app/dialogs/dialogs.c:148
 #:../app/dialogs/preferences-dialog.c:2421
 msgid "Patterns"
 msgstr "Mẫu"
@@ -371,7 +377,7 @@ msgid "Select"
 msgstr "Chọn"
 
 #.initialize the template list
-#:../app/actions/actions.c:188 ../app/core/gimp.c:870
+#:../app/actions/actions.c:188 ../app/core/gimp.c:883
 #:../app/dialogs/dialogs.c:162
 msgid "Templates"
 msgstr "Biểu mẫu"
@@ -1570,7 +1576,7 @@ msgid "Open _Recent"
 msgstr "Mở _gần đây"
 
 #:../app/actions/file-actions.c:66
-msgid "_Acquire"
+msgid "Acq_uire"
 msgstr "_Lấy"
 
 #:../app/actions/file-actions.c:69 ../app/actions/file-actions.c:74
@@ -5050,41 +5056,41 @@ msgstr "Cảnh gần tới nền (HSV chiều thường)"
 msgid "FG to Transparent"
 msgstr "Cảnh gần tới trong suốt"
 
-#:../app/core/gimp.c:555
+#:../app/core/gimp.c:568
 msgid "Initialization"
 msgstr "Cách khởi động"
 
 #.register all internal procedures
-#:../app/core/gimp.c:616
+#:../app/core/gimp.c:629
 msgid "Internal Procedures"
 msgstr "Thủ tục Nội bộ"
 
-#:../app/core/gimp.c:619
+#:../app/core/gimp.c:632
 msgid "Plug-In Interpreters"
 msgstr "Bộ thông dịch cầm phít"
 
-#:../app/core/gimp.c:625
+#:../app/core/gimp.c:638
 msgid "Plug-In Environment"
 msgstr "Môi trường cầm phít"
 
 #.initialize  the global parasite table
-#:../app/core/gimp.c:841
+#:../app/core/gimp.c:854
 msgid "Looking for data files"
 msgstr "Đang tìm tập tin dữ liệu"
 
-#:../app/core/gimp.c:841
+#:../app/core/gimp.c:854
 msgid "Parasites"
 msgstr "Bộ bám"
 
 # 48x48/emblems/emblem-documents.icon.in.h:1
 # 48x48/emblems/emblem-documents.icon.in.h:1
 #.initialize the document history
-#:../app/core/gimp.c:866
+#:../app/core/gimp.c:879
 msgid "Documents"
 msgstr "Tài liệu"
 
 #.initialize the module list
-#:../app/core/gimp.c:874 ../app/dialogs/preferences-dialog.c:2445
+#:../app/core/gimp.c:887 ../app/dialogs/preferences-dialog.c:2445
 msgid "Modules"
 msgstr "Mô-đun"
 
@@ -7872,7 +7878,8 @@ msgstr "Lưu các thay đổi vào ảnh « %s » trước khi đóng không?"
 #,c-format
 msgid ""
 "If you don't save the image, changes from the last %s and %s will be lost."
-msgstr "Nếu bạn không lưu ảnh này, các thay đổi của bạn trong vòng %s và %s trước sẽ bị mất hoàn toàn."
+msgstr "Nếu bạn không lưu ảnh này, các thay đổi của bạn trong vòng %s và %s trước sẽ "
+"bị mất hoàn toàn."
 
 #:../app/display/gimpdisplayshell-close.c:237
 #,c-format
@@ -8140,7 +8147,7 @@ msgstr "Đang chuyển dạng 2 chiều..."
 msgid "Blending"
 msgstr "Đang hợp nhau..."
 
-#:../app/pdb/gimp-pdb.c:273 ../app/pdb/gimp-pdb.c:337
+#:../app/pdb/gimp-pdb.c:264 ../app/pdb/gimp-pdb.c:328
 #,c-format
 msgid ""
 "PDB calling error:\n"
@@ -8148,7 +8155,7 @@ msgid ""
 msgstr "Gặp lỗi gọi PDB:\n"
 "không tìm thấy thủ tục « %s »."
 
-#:../app/pdb/gimp-pdb.c:370
+#:../app/pdb/gimp-pdb.c:361
 #,c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -8156,7 +8163,7 @@ msgid ""
 msgstr "Gặp lỗi gọi PDB cho thủ tục « %s »:\n"
 "đối số #%d kiểu sai (ngờ %s mà nhận %s)."
 
-#:../app/pdb/gimpprocedure.c:444
+#:../app/pdb/gimpprocedure.c:497
 #,c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -8164,8 +8171,8 @@ msgid ""
 msgstr "Gặp lỗi gọi PDB cho thủ tục « %s »:\n"
 "đối số « %s » (#%d, kiểu %s) kiểu sai (nhận %s)."
 
-#:../app/pdb/gimpprocedure.c:482
-#,-format
+#:../app/pdb/gimpprocedure.c:535
+#,c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
 "Argument '%s' (#%d, type %s) out of bounds (validation changed '%s' to '%s')"
@@ -10193,7 +10200,7 @@ msgid "Remove the action assigned to '%s'"
 msgstr "Gỡ bỏ hành động được gán cho « %s »"
 
 #:../app/widgets/gimpcontrollereditor.c:541
-#, c-format
+#,c-format
 msgid "Assign an action to '%s'"
 msgstr "Gán một hành động cho « %s »"
 
