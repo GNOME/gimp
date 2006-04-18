@@ -217,7 +217,8 @@ plug_in_actions_update (GimpActionGroup *group,
           ! proc->prefixes      &&
           ! proc->magics)
         {
-          gboolean sensitive = gimp_plug_in_procedure_get_sensitive (proc, type);
+          gboolean sensitive = gimp_plug_in_procedure_get_sensitive (proc,
+                                                                     type);
 
           gimp_action_group_set_action_sensitive (group,
                                                   GIMP_OBJECT (proc)->name,
@@ -226,7 +227,8 @@ plug_in_actions_update (GimpActionGroup *group,
     }
 
   if (group->gimp->last_plug_ins &&
-      gimp_plug_in_procedure_get_sensitive (group->gimp->last_plug_ins->data, type))
+      gimp_plug_in_procedure_get_sensitive (group->gimp->last_plug_ins->data,
+                                            type))
     {
       gimp_action_group_set_action_sensitive (group, "plug-in-repeat", TRUE);
       gimp_action_group_set_action_sensitive (group, "plug-in-reshow", TRUE);
@@ -240,8 +242,8 @@ plug_in_actions_update (GimpActionGroup *group,
   for (list = group->gimp->last_plug_ins, i = 0; list; list = list->next, i++)
     {
       GimpPlugInProcedure *proc = list->data;
-      gchar               *name     = g_strdup_printf ("plug-in-recent-%02d",
-                                                       i + 1);
+      gchar               *name = g_strdup_printf ("plug-in-recent-%02d",
+                                                   i + 1);
       gboolean             sensitive;
 
       sensitive = gimp_plug_in_procedure_get_sensitive (proc, type);

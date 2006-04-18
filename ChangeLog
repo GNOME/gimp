@@ -1,5 +1,9 @@
 2006-04-18  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/plug-in-actions.c: indentation.
+
+2006-04-18  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/dialogs-commands.c
 	* app/config/gimpconfig-dump.c
 	* app/core/gimpcontext.c
