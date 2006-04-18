@@ -2165,8 +2165,8 @@ gimp_value_set_int16array (GValue       *value,
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_INT16_ARRAY (value));
 
-  return gimp_value_set_array (value, (const guint8 *) data,
-                               length * sizeof (gint16));
+  gimp_value_set_array (value, (const guint8 *) data,
+                        length * sizeof (gint16));
 }
 
 void
@@ -2176,8 +2176,8 @@ gimp_value_set_static_int16array (GValue       *value,
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_INT16_ARRAY (value));
 
-  return gimp_value_set_static_array (value, (const guint8 *) data,
-                                      length * sizeof (gint16));
+  gimp_value_set_static_array (value, (const guint8 *) data,
+                               length * sizeof (gint16));
 }
 
 void
@@ -2187,8 +2187,8 @@ gimp_value_take_int16array (GValue *value,
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_INT16_ARRAY (value));
 
-  return gimp_value_take_array (value, (guint8 *) data,
-                                length * sizeof (gint16));
+  gimp_value_take_array (value, (guint8 *) data,
+                         length * sizeof (gint16));
 }
 
 
@@ -2290,8 +2290,8 @@ gimp_value_set_int32array (GValue       *value,
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_INT32_ARRAY (value));
 
-  return gimp_value_set_array (value, (const guint8 *) data,
-                               length * sizeof (gint32));
+  gimp_value_set_array (value, (const guint8 *) data,
+                        length * sizeof (gint32));
 }
 
 void
@@ -2301,8 +2301,8 @@ gimp_value_set_static_int32array (GValue       *value,
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_INT32_ARRAY (value));
 
-  return gimp_value_set_static_array (value, (const guint8 *) data,
-                                      length * sizeof (gint32));
+  gimp_value_set_static_array (value, (const guint8 *) data,
+                               length * sizeof (gint32));
 }
 
 void
@@ -2312,8 +2312,8 @@ gimp_value_take_int32array (GValue *value,
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_INT32_ARRAY (value));
 
-  return gimp_value_take_array (value, (guint8 *) data,
-                                length * sizeof (gint32));
+  gimp_value_take_array (value, (guint8 *) data,
+                         length * sizeof (gint32));
 }
 
 
@@ -2415,8 +2415,8 @@ gimp_value_set_floatarray (GValue        *value,
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value));
 
-  return gimp_value_set_array (value, (const guint8 *) data,
-                               length * sizeof (gdouble));
+  gimp_value_set_array (value, (const guint8 *) data,
+                        length * sizeof (gdouble));
 }
 
 void
@@ -2426,8 +2426,8 @@ gimp_value_set_static_floatarray (GValue        *value,
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value));
 
-  return gimp_value_set_static_array (value, (const guint8 *) data,
-                                      length * sizeof (gdouble));
+  gimp_value_set_static_array (value, (const guint8 *) data,
+                               length * sizeof (gdouble));
 }
 
 void
@@ -2437,8 +2437,8 @@ gimp_value_take_floatarray (GValue  *value,
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value));
 
-  return gimp_value_take_array (value, (guint8 *) data,
-                                length * sizeof (gdouble));
+  gimp_value_take_array (value, (guint8 *) data,
+                         length * sizeof (gdouble));
 }
 
 
