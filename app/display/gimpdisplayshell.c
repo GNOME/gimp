@@ -127,7 +127,7 @@ G_DEFINE_TYPE (GimpDisplayShell, gimp_display_shell, GTK_TYPE_WINDOW);
 static guint display_shell_signals[LAST_SIGNAL] = { 0 };
 
 
-static const gchar *display_rc_style =
+static const gchar display_rc_style[] =
   "style \"fullscreen-menubar-style\"\n"
   "{\n"
   "  GtkMenuBar::shadow-type      = none\n"

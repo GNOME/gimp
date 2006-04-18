@@ -88,7 +88,7 @@ void
 dialogs_create_lc_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
-  static const gchar *tabs[] =
+  static const gchar * const tabs[] =
   {
     "gimp-layer-list",
     "gimp-channel-list",
@@ -107,7 +107,7 @@ void
 dialogs_create_data_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
-  static const gchar *tabs[] =
+  static const gchar * const tabs[] =
   {
     "gimp-brush-grid",
     "gimp-pattern-grid",
@@ -127,7 +127,7 @@ void
 dialogs_create_stuff_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
-  static const gchar *tabs[] =
+  static const gchar * const tabs[] =
   {
     "gimp-buffer-list",
     "gimp-image-list",

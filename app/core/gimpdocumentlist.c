@@ -43,7 +43,7 @@ G_DEFINE_TYPE_WITH_CODE (GimpDocumentList, gimp_document_list, GIMP_TYPE_LIST,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_document_list_config_iface_init));
 
-static const gchar *document_symbol = "document";
+static const gchar document_symbol[] = "document";
 
 
 static void

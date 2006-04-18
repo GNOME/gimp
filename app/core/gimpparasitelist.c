@@ -81,7 +81,7 @@ G_DEFINE_TYPE_WITH_CODE (GimpParasiteList, gimp_parasite_list, GIMP_TYPE_OBJECT,
 #define parent_class gimp_parasite_list_parent_class
 
 static guint        parasite_list_signals[LAST_SIGNAL] = { 0 };
-static const gchar *parasite_symbol                    = "parasite";
+static const gchar  parasite_symbol[]                  = "parasite";
 
 
 static void

@@ -1,10 +1,15 @@
+2006-04-18  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/dialogs-commands.c
+	* app/config/gimpconfig-dump.c
+	* app/core/gimpcontext.c
+	* app/core/gimpdocumentlist.c
+	* app/core/gimpparasitelist.c
+	* app/display/gimpdisplayshell.c: avoid unnecessary relocations.
+
 2006-04-18  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* configure.in: Remove obsolete entry for no_NO
-	* po-plug-ins/no.po: And the translation
-	* po-script-fu/no.po: Same
-	* po-tips/no.po: Same
-	* po/no.po: Same
 
 2006-04-18  Sven Neumann  <sven@gimp.org>
 
