@@ -1253,8 +1253,11 @@ siox_foreground_extract (SioxState          *state,
 /**
  * siox_drb:
  * @state:        current state struct as constructed by siox_init
- * @brushradius:  the radius of the brush
- * @brushmode:    at this time either SIOX_DRB_ADD or SIOX_DRB_SUBTRACT
+ * @mask:
+ * @x:
+ * @y:
+ * @brush_radius: the radius of the brush
+ * @brush_mode:   at this time either SIOX_DRB_ADD or SIOX_DRB_SUBTRACT
  * @threshold:    a threshold to be defined by the user.
  *                Range for SIOX_DRB_ADD: ]0..1] default: 1.0,
  *                range for for SIOX_DRB_SUBTRACT: [0..1[, default: 0.0
@@ -1271,8 +1274,8 @@ siox_drb (SioxState   *state,
           TileManager *mask,
           gint         x,
           gint         y,
-          gint         brushradius,
-          gint         brushmode,
+          gint         brush_radius,
+          gint         brush_mode,
           gfloat       threshold)
 {
   PixelRegion  srcPR;
@@ -1284,10 +1287,10 @@ siox_drb (SioxState   *state,
   g_return_if_fail (mask != NULL && tile_manager_bpp (mask) == 1);
 
   pixel_region_init (&srcPR, state->pixels,
-                     x - brushradius, y - brushradius, brushradius * 2,
-                     brushradius * 2, FALSE);
-  pixel_region_init (&mapPR, mask, x - brushradius, y - brushradius,
-                     brushradius * 2, brushradius * 2, TRUE);
+                     x - brush_radius, y - brush_radius, brush_radius * 2,
+                     brush_radius * 2, FALSE);
+  pixel_region_init (&mapPR, mask, x - brush_radius, y - brush_radius,
+                     brush_radius * 2, brush_radius * 2, TRUE);
 
   for (pr = pixel_regions_register (2, &srcPR, &mapPR);
        pr != NULL;
@@ -1319,7 +1322,7 @@ siox_drb (SioxState   *state,
               mindistbg = (gfloat) sqrt (cr->bgdist);
               mindistfg = (gfloat) sqrt (cr->fgdist);
 
-              if (brushmode == SIOX_DRB_ADD)
+              if (brush_mode == SIOX_DRB_ADD)
                 {
                   if (*m > SIOX_HIGH)
                     continue;
@@ -1329,7 +1332,7 @@ siox_drb (SioxState   *state,
                   else
                     alpha = MIN (mindistbg / mindistfg, 1.0);
                 }
-              else /*if (brushmode == SIOX_DRB_SUBTRACT)*/
+              else /*if (brush_mode == SIOX_DRB_SUBTRACT)*/
                 {
                   if (*m < SIOX_HIGH)
                     continue;

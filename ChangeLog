@@ -1,3 +1,8 @@
+2006-04-18  Sven Neumann  <sven@gimp.org>
+
+	* app/base/siox.c (siox_drb): sync parameter names with the
+	declaration in the header file.
+
 2006-04-18  Manish Singh  <yosh@gimp.org>
 
 	* app/core/gimpparamspecs.c: void functions should not try to return
