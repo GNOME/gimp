@@ -1,3 +1,11 @@
+2006-04-18  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* configure.in: Remove obsolete entry for no_NO
+	* po-plug-ins/no.po: And the translation
+	* po-script-fu/no.po: Same
+	* po-tips/no.po: Same
+	* po/no.po: Same
+
 2006-04-18  Sven Neumann  <sven@gimp.org>
 
 	* app/base/siox.c (siox_drb): sync parameter names with the
