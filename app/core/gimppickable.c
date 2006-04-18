@@ -66,7 +66,7 @@ gimp_pickable_flush (GimpPickable *pickable)
   pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
 
   if (pickable_iface->flush)
-    return pickable_iface->flush (pickable);
+    pickable_iface->flush (pickable);
 }
 
 GimpImage *
