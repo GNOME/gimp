@@ -10,7 +10,7 @@
 
 #include "gimp-composite-mmx.h"
 
-static struct install_table {
+static const struct install_table {
   GimpCompositeOperation mode;
   GimpPixelFormat A;
   GimpPixelFormat B;
@@ -38,7 +38,7 @@ static struct install_table {
 gboolean
 gimp_composite_mmx_install (void)
 {
-  static struct install_table *t = _gimp_composite_mmx;
+  static const struct install_table *t = _gimp_composite_mmx;
 
   if (gimp_composite_mmx_init ())
     {

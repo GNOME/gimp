@@ -1,5 +1,15 @@
 2006-04-19  Sven Neumann  <sven@gimp.org>
 
+	* app/composite/make-installer.py: generate const arrays.
+
+	* app/composite/gimp-composite-altivec-installer.c
+	* app/composite/gimp-composite-generic-installer.c
+	* app/composite/gimp-composite-mmx-installer.c
+	* app/composite/gimp-composite-sse-installer.c
+	* app/composite/gimp-composite-sse2-installer.c: regenerated.
+
+2006-04-19  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/user-install-dialog.c: removed an unneeded call to
 	gtk_widget_realize() (bug #324254). Sprinkled const qualifiers to
 	avoid relocations.

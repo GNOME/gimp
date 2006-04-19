@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- mode: python py-indent-offset: 2; indent-tabs-mode: nil -*-
 #
 # Gimp image compositing
 # Copyright (C) 2003  Helvetix Victorinox, <helvetix@gimp.org>
@@ -137,7 +136,7 @@ def print_function_table(fpout, name, function_table, requirements=[]):
   if len(function_table) < 1:
     return;
  
-  print >>fpout, 'static struct install_table {'
+  print >>fpout, 'static const struct install_table {'
   print >>fpout, '  GimpCompositeOperation mode;'
   print >>fpout, '  GimpPixelFormat A;'
   print >>fpout, '  GimpPixelFormat B;'
@@ -422,7 +421,7 @@ def gimp_composite_installer_install2(fpout, name, function_table, requirements=
   print >>fpout, '{'
 
   if len(function_table) >= 1:
-    print >>fpout, '  static struct install_table *t = _%s;' % (functionnameify(name))
+    print >>fpout, '  static const struct install_table *t = _%s;' % (functionnameify(name))
     print >>fpout, ''
     print >>fpout, '  if (%s_init ())' % functionnameify(name)
     print >>fpout, '    {'

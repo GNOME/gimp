@@ -10,7 +10,7 @@
 
 #include "gimp-composite-sse2.h"
 
-static struct install_table {
+static const struct install_table {
   GimpCompositeOperation mode;
   GimpPixelFormat A;
   GimpPixelFormat B;
@@ -32,7 +32,7 @@ static struct install_table {
 gboolean
 gimp_composite_sse2_install (void)
 {
-  static struct install_table *t = _gimp_composite_sse2;
+  static const struct install_table *t = _gimp_composite_sse2;
 
   if (gimp_composite_sse2_init ())
     {
