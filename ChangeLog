@@ -1,6 +1,8 @@
 2006-04-19  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/imagemap/imap_main.c: removed unused code
+	Fixes bug #339046
+
 	* tools/pdbgen/pdb/paths.pdb: removed deprecated docs
 	* app/pdb/paths_cmds.c: regenerated
 
