@@ -781,14 +781,14 @@ gimp_param_item_id_init (GParamSpec *pspec)
 
 static void
 gimp_param_item_id_set_default (GParamSpec *pspec,
-                                 GValue     *value)
+                                GValue     *value)
 {
   value->data[0].v_int = -1;
 }
 
 static gboolean
 gimp_param_item_id_validate (GParamSpec *pspec,
-                              GValue     *value)
+                             GValue     *value)
 {
   GimpParamSpecItemID *ispec   = GIMP_PARAM_SPEC_ITEM_ID (pspec);
   gint                 item_id = value->data[0].v_int;

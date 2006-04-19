@@ -191,6 +191,9 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
+  image_ID_global = -1;
+  layer_ID_global = -1;
+
   if (strcmp (name, LOAD_PROC) == 0)
     {
       switch (run_mode)
