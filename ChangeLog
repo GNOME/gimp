@@ -1,5 +1,10 @@
 2006-04-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/animationplay.c: fixed bug in range calculation
+	that caused display errors in the last row (bug #338378).
+
+2006-04-19  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/jpeg/jpeg.c (run): initialize global variables. Fixes
 	bug #338373.
 
