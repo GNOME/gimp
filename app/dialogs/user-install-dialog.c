@@ -119,11 +119,11 @@ typedef enum
   TREE_ITEM_FROM_SYSCONF_DIR   /* Copy from sysconf directory */
 } TreeItemType;
 
-static struct
+static const struct
 {
   gboolean      directory;
-  gchar        *name;
-  gchar        *description;
+  const gchar  *name;
+  const gchar  *description;
   TreeItemType  type;
 }
 tree_items[] =
@@ -322,9 +322,9 @@ static void
 user_install_notebook_set_page (GtkNotebook *notebook,
                                 gint         index)
 {
-  GtkWidget *page;
-  gchar     *title;
-  gchar     *footer;
+  GtkWidget   *page;
+  const gchar *title;
+  const gchar *footer;
 
   page = gtk_notebook_get_nth_page (notebook, index);
 
@@ -510,15 +510,15 @@ user_install_corner_expose (GtkWidget      *widget,
 
 static GtkWidget *
 user_install_notebook_append_page (GtkNotebook *notebook,
-                                   gchar       *title,
-                                   gchar       *footer,
+                                   const gchar *title,
+                                   const gchar *footer,
                                    gint         vbox_spacing)
 {
   GtkWidget *page;
 
   page = gtk_vbox_new (FALSE, vbox_spacing);
-  g_object_set_data (G_OBJECT (page), "title", title);
-  g_object_set_data (G_OBJECT (page), "footer", footer);
+  g_object_set_data (G_OBJECT (page), "title",  (gpointer) title);
+  g_object_set_data (G_OBJECT (page), "footer", (gpointer) footer);
   gtk_notebook_append_page (notebook, page, NULL);
   gtk_widget_show (page);
 
@@ -526,8 +526,8 @@ user_install_notebook_append_page (GtkNotebook *notebook,
 }
 
 static void
-add_label (GtkBox   *box,
-           gchar    *text)
+add_label (GtkBox      *box,
+           const gchar *text)
 {
   GtkWidget *label;
 
@@ -660,8 +660,6 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   gdk_color_parse ("black",       &black_color);
   gdk_color_parse ("white",       &white_color);
   gdk_color_parse ("dark orange", &title_color);
-
-  gtk_widget_realize (dialog);
 
   /*  B/W Style for the page contents  */
   page_style = gtk_widget_get_modifier_style (dialog);

@@ -1,5 +1,11 @@
 2006-04-19  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/user-install-dialog.c: removed an unneeded call to
+	gtk_widget_realize() (bug #324254). Sprinkled const qualifiers to
+	avoid relocations.
+
+2006-04-19  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/animationplay.c: fixed bug in range calculation
 	that caused display errors in the last row (bug #338378).
 
