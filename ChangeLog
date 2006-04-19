@@ -1,3 +1,10 @@
+2006-04-19  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* plug-ins/common/animationplay.c: fixed bug in range calculation
+	that caused display errors in the last row (bug #338378).
+
 2006-04-13  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.2.12, interface_age 12.

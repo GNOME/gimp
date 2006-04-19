@@ -834,11 +834,8 @@ render_frame (gint32 whichframe)
             {
               if ((dispose!=DISPOSE_REPLACE)&&(whichframe!=0))
                 {
-                  int top, bottom;
-
-                  top = (rawy < 0) ? 0 : rawy;
-                  bottom = (rawy+rawheight) < height ?
-                    (rawy+rawheight) : height-1;
+                  gint top    = MAX (rawy, 0);
+                  gint bottom = MIN (rawy + rawheight, height);
 
                   reshape_from_bitmap (shape_preview_mask);
                   gdk_draw_rgb_image (shape_drawing_area->window,
@@ -863,11 +860,8 @@ render_frame (gint32 whichframe)
             {
               if ((dispose!=DISPOSE_REPLACE)&&(whichframe!=0))
                 {
-                  int top, bottom;
-
-                  top = (rawy < 0) ? 0 : rawy;
-                  bottom = (rawy+rawheight) < height ?
-                    (rawy+rawheight) : height-1;
+                  gint top    = MAX (rawy, 0);
+                  gint bottom = MIN (rawy + rawheight, height);
 
                   gdk_draw_rgb_image (drawing_area->window,
                                       drawing_area->style->white_gc,
@@ -1063,11 +1057,8 @@ render_frame (gint32 whichframe)
             {
               if ((dispose!=DISPOSE_REPLACE)&&(whichframe!=0))
                 {
-                  int top, bottom;
-
-                  top = (rawy < 0) ? 0 : rawy;
-                  bottom = (rawy+rawheight) < height ?
-                    (rawy+rawheight) : height-1;
+                  gint top    = MAX (rawy, 0);
+                  gint bottom = MIN (rawy + rawheight, height);
 
                   reshape_from_bitmap (shape_preview_mask);
                   gdk_draw_rgb_image (shape_drawing_area->window,
@@ -1092,11 +1083,8 @@ render_frame (gint32 whichframe)
             {
               if ((dispose!=DISPOSE_REPLACE)&&(whichframe!=0))
                 {
-                  int top, bottom;
-
-                  top = (rawy < 0) ? 0 : rawy;
-                  bottom = (rawy+rawheight) < height ?
-                    (rawy+rawheight) : height-1;
+                  gint top    = MAX (rawy, 0);
+                  gint bottom = MIN (rawy + rawheight, height);
 
                   gdk_draw_rgb_image (drawing_area->window,
                                       drawing_area->style->white_gc,
