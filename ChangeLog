@@ -1,3 +1,9 @@
+2006-04-19  Tor Lillqvist  <tml@novell.com>
+
+	* app/dialogs/user-install-dialog.c (user_install_dialog_run):
+	Remove unnecessary call to gtk_widget_realize() which exposed
+	obscure misbehaviour in gdk/win32. Merge from HEAD. (#324254)
+
 2006-04-19  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:

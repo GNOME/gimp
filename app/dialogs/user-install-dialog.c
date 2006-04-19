@@ -637,8 +637,6 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   gdk_color_parse ("white",       &white_color);
   gdk_color_parse ("dark orange", &title_color);
 
-  gtk_widget_realize (dialog);
-
   /*  B/W Style for the page contents  */
   page_style = gtk_widget_get_modifier_style (dialog);
   g_object_ref (page_style);
