@@ -1,3 +1,9 @@
+2006-04-19  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/imagemap/imap_main.c: removed unused code
+	* tools/pdbgen/pdb/paths.pdb: removed deprecated docs
+	* app/pdb/paths_cmds.c: regenerated
+
 2006-04-19  Sven Neumann  <sven@gimp.org>
 
 	* app/composite/make-installer.py: generate const arrays.

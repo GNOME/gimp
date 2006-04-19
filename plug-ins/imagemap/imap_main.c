@@ -70,34 +70,34 @@ static MRU_t *_mru;
 
 static GimpDrawable *_drawable;
 static GdkCursorType _cursor;
-static gboolean	    _show_url = TRUE;
-static gchar	   *_filename = NULL;
-static char	   *_image_name;
-static gint	   _image_width;
-static gint	   _image_height;
+static gboolean     _show_url = TRUE;
+static gchar       *_filename = NULL;
+static char        *_image_name;
+static gint        _image_width;
+static gint        _image_height;
 static GtkWidget   *_dlg;
 static Preview_t   *_preview;
 static Selection_t *_selection;
 static StatusBar_t *_statusbar;
 static ObjectList_t *_shapes;
-static gint	    _zoom_factor = 1;
+static gint         _zoom_factor = 1;
 static gboolean (*_button_press_func)(GtkWidget*, GdkEventButton*, gpointer);
 static gpointer _button_press_param;
 
 /* Declare local functions. */
 static void  query  (void);
 static void  run    (const gchar      *name,
-		     gint              nparams,
-		     const GimpParam  *param,
-		     gint             *nreturn_vals,
-		     GimpParam       **return_vals);
+                     gint              nparams,
+                     const GimpParam  *param,
+                     gint             *nreturn_vals,
+                     GimpParam       **return_vals);
 static gint  dialog (GimpDrawable     *drawable);
 
 GimpPlugInInfo PLUG_IN_INFO = {
-   NULL,			/* init_proc */
-   NULL,			/* quit_proc */
-   query,			/* query_proc */
-   run,				/* run_proc */
+   NULL,                        /* init_proc */
+   NULL,                        /* quit_proc */
+   query,                       /* query_proc */
+   run,                         /* run_proc */
 };
 
 static int run_flag = 0;
@@ -116,16 +116,16 @@ static void query(void)
    static int nreturn_vals = 0;
 
    gimp_install_procedure("plug_in_imagemap",
-			  N_("Create a clickable imagemap"),
-			  "",
-			  "Maurits Rijk",
-			  "Maurits Rijk",
-			  "1998-2005",
-			  N_("_Image Map..."),
-			  "RGB*, GRAY*, INDEXED*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), nreturn_vals,
-			  args, return_vals);
+                          N_("Create a clickable imagemap"),
+                          "",
+                          "Maurits Rijk",
+                          "Maurits Rijk",
+                          "1998-2005",
+                          N_("_Image Map..."),
+                          "RGB*, GRAY*, INDEXED*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), nreturn_vals,
+                          args, return_vals);
 
    gimp_plugin_menu_register ("plug_in_imagemap", "<Image>/Filters/Web");
 }
@@ -160,8 +160,8 @@ run (const gchar      *name,
 
    if (run_mode == GIMP_RUN_INTERACTIVE) {
       if (!dialog(drawable)) {
-	 /* The dialog was closed, or something similarly evil happened. */
-	 status = GIMP_PDB_EXECUTION_ERROR;
+         /* The dialog was closed, or something similarly evil happened. */
+         status = GIMP_PDB_EXECUTION_ERROR;
       }
    }
 
@@ -232,10 +232,10 @@ init_preferences(void)
    _preferences.selected_gc = gdk_gc_new(_preview->preview->window);
 
    gdk_gc_set_line_attributes(_preferences.normal_gc, 1, GDK_LINE_DOUBLE_DASH,
-			      GDK_CAP_BUTT, GDK_JOIN_BEVEL);
+                              GDK_CAP_BUTT, GDK_JOIN_BEVEL);
    gdk_gc_set_line_attributes(_preferences.selected_gc, 1,
-			      GDK_LINE_DOUBLE_DASH, GDK_CAP_BUTT,
-			      GDK_JOIN_BEVEL);
+                              GDK_LINE_DOUBLE_DASH, GDK_CAP_BUTT,
+                              GDK_JOIN_BEVEL);
 
    gdk_gc_set_foreground(_preferences.normal_gc, &colors->normal_fg);
    gdk_gc_set_background(_preferences.normal_gc, &colors->normal_bg);
@@ -313,19 +313,19 @@ draw_line(GdkWindow *window, GdkGC *gc, gint x1, gint y1, gint x2, gint y2)
 }
 
 void
-draw_rectangle(GdkWindow *window, GdkGC	*gc, gint filled, gint x, gint y,
-	       gint width, gint	height)
+draw_rectangle(GdkWindow *window, GdkGC *gc, gint filled, gint x, gint y,
+               gint width, gint height)
 {
    gdk_draw_rectangle(window, gc, filled, ZOOMED(x), ZOOMED(y),
-		      ZOOMED(width), ZOOMED(height));
+                      ZOOMED(width), ZOOMED(height));
 }
 
 void
 draw_arc(GdkWindow *window, GdkGC *gc, gint filled, gint x, gint y,
-	 gint width, gint height, gint angle1, gint angle2)
+         gint width, gint height, gint angle1, gint angle2)
 {
    gdk_draw_arc(window, gc, filled, ZOOMED(x), ZOOMED(y),
-		ZOOMED(width), ZOOMED(height), angle1, angle2);
+                ZOOMED(width), ZOOMED(height), angle1, angle2);
 }
 
 void
@@ -412,9 +412,9 @@ arrow_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
    if (event->button == 1) {
       if (event->type == GDK_2BUTTON_PRESS)
-	 edit_shape((gint) event->x, (gint) event->y);
+         edit_shape((gint) event->x, (gint) event->y);
       else
-	 select_shape(widget, event);
+         select_shape(widget, event);
    } else {
       do_popup_menu(event);
    }
@@ -428,98 +428,9 @@ set_arrow_func(void)
    _cursor = GDK_TOP_LEFT_ARROW;
 }
 
-static gboolean
-fuzzy_select_on_button_press (GtkWidget      *widget,
-                              GdkEventButton *event,
-                              gpointer        data)
-{
-   if (event->button == 1) {
-      gdouble rx = get_real_coord((gint) event->x);
-      gdouble ry = get_real_coord((gint) event->y);
-      gint32 image_ID = gimp_drawable_get_image (_drawable->drawable_id);
-      gint32 channel_ID;
-
-      /* Save the old selection first */
-      channel_ID = gimp_selection_save(image_ID);
-
-      if (gimp_fuzzy_select(_drawable->drawable_id, rx, ry,
-			    10, /* Treshold */
-			    GIMP_CHANNEL_OP_REPLACE,
-			    FALSE, FALSE, 0, FALSE)) {
-	 GimpParam *return_vals;
-	 gint       nreturn_vals;
-
-	 return_vals = gimp_run_procedure ("plug-in-sel2path",
-                                           &nreturn_vals,
-                                           GIMP_PDB_INT32,    TRUE,
-                                           GIMP_PDB_IMAGE,    image_ID,
-                                           GIMP_PDB_DRAWABLE, -1,
-                                           GIMP_PDB_END);
-
-	 if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-           {
-	    gdouble distance;
-	    gchar *path_name = gimp_path_get_current(image_ID);
-	    Object_t *object = create_polygon(NULL);
-	    Polygon_t *polygon = ObjectToPolygon(object);
-	    gint x0, y0;
-	    gdouble grad0;
-
-	    add_shape(object);
-	    x0 = gimp_path_get_point_at_dist(image_ID, 0.0, &y0, &grad0);
-	    polygon_append_point(polygon, x0, y0);
-
-	    for (distance = 1.0;; distance += 1.0) {
-	       gint x1, y1 = -1;
-	       gdouble grad1;
-
-	       x1 = gimp_path_get_point_at_dist(image_ID, distance, &y1,
-						&grad1);
-
-	       if (y1 == -1)
-		  break;
-
-	       if (abs(x1 - x0) <= 1 || abs(y1 - y0) <= 1) {
-		  gdouble diff;
-
-		  if (grad0 != 0.0)
-		     diff = (grad1 - grad0) / grad0;
-		  else
-		     diff = grad1;
-
-		  if (fabs(diff) > 0.1) {
-		     polygon_append_point(polygon, x1, y1);
-		     grad0 = grad1;
-		  }
-		  x0 = x1;
-		  y0 = y1;
-	       }
-	    }
-	    gimp_path_delete(image_ID, path_name);
-	    g_free(path_name);
-	 } else {
-	    printf("Damn %d\n", return_vals[0].data.d_status);
-	 }
-	 gimp_destroy_params(return_vals, nreturn_vals);
-      }
-
-      /* Restore old selection */
-      (void) gimp_selection_load(channel_ID);
-      (void) gimp_image_remove_channel(image_ID, channel_ID);
-   }
-   return FALSE;
-}
-
-void
-set_fuzzy_select_func(void)
-{
-   _button_press_func = fuzzy_select_on_button_press;
-   _cursor = GDK_TOP_LEFT_ARROW; /* Fix me! */
-}
-
 static void
 set_object_func(gboolean (*func)(GtkWidget*, GdkEventButton*,
-				 gpointer), gpointer param)
+                                 gpointer), gpointer param)
 {
    _button_press_func = func;
    _button_press_param = param;
@@ -528,7 +439,7 @@ set_object_func(gboolean (*func)(GtkWidget*, GdkEventButton*,
 
 void
 set_func(GtkRadioAction *action, GtkRadioAction *current,
-	 gpointer user_data)
+         gpointer user_data)
 {
   gint value = gtk_radio_action_get_current_value (current);
   switch (value)
@@ -643,7 +554,7 @@ select_shape(GtkWidget *widget, GdkEventButton *event)
    MoveSashFunc_t sash_func;
 
    obj = object_list_near_sash(_shapes, x, y, &sash_func);
-   if (obj) {			/* Start resizing */
+   if (obj) {                   /* Start resizing */
       Command_t *command = move_sash_command_new(widget, obj, x, y, sash_func);
       command_execute(command);
    } else {
@@ -651,33 +562,33 @@ select_shape(GtkWidget *widget, GdkEventButton *event)
 
       obj = object_list_find(_shapes, x, y);
       if (obj) {
-	 if (event->state & GDK_SHIFT_MASK) {
-	    if (obj->selected)
-	       command = unselect_command_new(obj);
-	    else
-	       command = select_command_new(obj);
-	 } else {		/* No Shift key pressed */
-	    if (obj->selected) {
-	       command = unselect_all_command_new(_shapes, obj);
-	    } else {
-	       Command_t *sub_command;
+         if (event->state & GDK_SHIFT_MASK) {
+            if (obj->selected)
+               command = unselect_command_new(obj);
+            else
+               command = select_command_new(obj);
+         } else {               /* No Shift key pressed */
+            if (obj->selected) {
+               command = unselect_all_command_new(_shapes, obj);
+            } else {
+               Command_t *sub_command;
 
-	       command = subcommand_start(NULL);
-	       sub_command = unselect_all_command_new(_shapes, NULL);
-	       command_add_subcommand(command, sub_command);
-	       sub_command = select_command_new(obj);
-	       command_add_subcommand(command, sub_command);
-	       command_set_name(command, sub_command->name);
-	       subcommand_end();
-	    }
-	 }
-	 command_execute(command);
+               command = subcommand_start(NULL);
+               sub_command = unselect_all_command_new(_shapes, NULL);
+               command_add_subcommand(command, sub_command);
+               sub_command = select_command_new(obj);
+               command_add_subcommand(command, sub_command);
+               command_set_name(command, sub_command->name);
+               subcommand_end();
+            }
+         }
+         command_execute(command);
 
-	 command = move_command_new(_preview, obj, x, y);
-	 command_execute(command);
+         command = move_command_new(_preview, obj, x, y);
+         command_execute(command);
       } else { /* Start selection rectangle */
-	 command = select_region_command_new(widget, _shapes, x, y);
-	 command_execute(command);
+         command = select_region_command_new(widget, _shapes, x, y);
+         command_execute(command);
       }
    }
 }
@@ -881,14 +792,14 @@ save_as_csim(gpointer param, OutputFunc_t output)
    gchar *description;
 
    output(param, "<img src=\"%s\" width=\"%d\" height=\"%d\" border=\"0\" "
-	  "usemap=\"#%s\" />\n\n", _map_info.image_name,
-	  _image_width, _image_height, _map_info.title);
+          "usemap=\"#%s\" />\n\n", _map_info.image_name,
+          _image_width, _image_height, _map_info.title);
    output(param, "<map name=\"%s\">\n", _map_info.title);
    output(param,
-	  "<!-- #$-:Image map file created by GIMP Image Map plug-in -->\n");
+          "<!-- #$-:Image map file created by GIMP Image Map plug-in -->\n");
    output(param, "<!-- #$-:GIMP Image Map plug-in by Maurits Rijk -->\n");
    output(param,
-	  "<!-- #$-:Please do not edit lines starting with \"#$\" -->\n");
+          "<!-- #$-:Please do not edit lines starting with \"#$\" -->\n");
    output(param, "<!-- #$VERSION:2.3 -->\n");
    output(param, "<!-- #$AUTHOR:%s -->\n", _map_info.author);
 
@@ -900,7 +811,7 @@ save_as_csim(gpointer param, OutputFunc_t output)
    object_list_write_csim(_shapes, param, output);
    if (*_map_info.default_url)
       output(param, "<area shape=\"default\" href=\"%s\" />\n",
-	     _map_info.default_url);
+             _map_info.default_url);
    output(param, "</map>\n");
 }
 
@@ -1000,9 +911,9 @@ really_load(gpointer data)
    if (load_csim(filename)) {
       _map_info.map_format = CSIM;
       if (_image_width != _map_info.old_image_width ||
-	  _image_height != _map_info.old_image_height) {
-	 preview_freeze();
-	 do_image_size_changed_dialog();
+          _image_height != _map_info.old_image_height) {
+         preview_freeze();
+         do_image_size_changed_dialog();
       }
    } else if (load_ncsa(filename)) {
       _map_info.map_format = NCSA;
@@ -1058,19 +969,19 @@ preview_move(GtkWidget *widget, GdkEventMotion *event)
    if (obj != prev_obj) {
       prev_obj = obj;
       if (obj && _show_url) {
-	 statusbar_set_status(_statusbar, _("URL: %s"), obj->url);
+         statusbar_set_status(_statusbar, _("URL: %s"), obj->url);
       } else {
-	 statusbar_clear_status(_statusbar);
+         statusbar_clear_status(_statusbar);
       }
    }
 #ifdef _NOT_READY_YET_
    if (!obj) {
       if (grid_near_x(x)) {
-	 preview_set_cursor(_preview, GDK_SB_H_DOUBLE_ARROW);
+         preview_set_cursor(_preview, GDK_SB_H_DOUBLE_ARROW);
       } else if (grid_near_y(y)) {
-	 preview_set_cursor(_preview, GDK_SB_V_DOUBLE_ARROW);
+         preview_set_cursor(_preview, GDK_SB_V_DOUBLE_ARROW);
       } else {
-	 preview_set_cursor(_preview, _cursor);
+         preview_set_cursor(_preview, _cursor);
       }
    }
 #endif
@@ -1170,9 +1081,9 @@ key_press_cb(GtkWidget *widget, GdkEventKey *event)
       break;
    case GDK_Tab:
       if (shift)
-	 command = select_prev_command_new(_shapes);
+         command = select_prev_command_new(_shapes);
       else
-	 command = select_next_command_new(_shapes);
+         command = select_next_command_new(_shapes);
       command_execute(command);
       handled = TRUE;
       break;
@@ -1257,7 +1168,7 @@ do_move_up(void)
 {
   /* Fix me!
    Command_t *command = object_up_command_new(_current_obj->list,
-					      _current_obj);
+                                              _current_obj);
    command_execute(command);
   */
 }
@@ -1267,7 +1178,7 @@ do_move_down(void)
 {
   /* Fix me!
    Command_t *command = object_down_command_new(_current_obj->list,
-						_current_obj);
+                                                _current_obj);
    command_execute(command);
   */
 }
@@ -1334,11 +1245,11 @@ factory_move_down(void)
 static gint
 dialog(GimpDrawable *drawable)
 {
-   GtkWidget 	*dlg;
-   GtkWidget 	*hbox;
-   GtkWidget 	*main_vbox;
-   GtkWidget	*tools;
-   Menu_t	*menu;
+   GtkWidget    *dlg;
+   GtkWidget    *hbox;
+   GtkWidget    *main_vbox;
+   GtkWidget    *tools;
+   Menu_t       *menu;
 
    gimp_ui_init ("imagemap", TRUE);
 
@@ -1352,14 +1263,14 @@ dialog(GimpDrawable *drawable)
 
    gtk_window_set_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
    g_signal_connect(dlg, "delete-event",
-		    G_CALLBACK(close_callback), NULL);
+                    G_CALLBACK(close_callback), NULL);
    g_signal_connect(dlg, "key-press-event",
-		    G_CALLBACK(key_press_cb), NULL);
+                    G_CALLBACK(key_press_cb), NULL);
    g_signal_connect(dlg, "key_release_event",
-		    G_CALLBACK(key_release_cb), NULL);
+                    G_CALLBACK(key_release_cb), NULL);
 
    g_signal_connect (dlg, "destroy",
-		     G_CALLBACK (gtk_main_quit),
+                     G_CALLBACK (gtk_main_quit),
                      NULL);
 
    main_vbox = gtk_vbox_new(FALSE, 0);

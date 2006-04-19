@@ -934,10 +934,10 @@ register_paths_procs (Gimp *gimp)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-get-point-at-dist",
                                      "This procedure is deprecated! Use 'gimp-vectors-stroke-get-point-at-dist' instead.",
-                                     "This will return the x,y position of a point at a given distance along the bezier curve. The distance will be obtained by first digitizing the curve internally and then walking along the curve. For a closed curve the start of the path is the first point on the path that was created. This might not be obvious. Note the current path is used.",
-                                     "Andy Thomas",
-                                     "Andy Thomas",
-                                     "1999",
+                                     "This procedure is deprecated! Use 'gimp-vectors-stroke-get-point-at-dist' instead.",
+                                     "",
+                                     "",
+                                     "",
                                      "gimp-vectors-stroke-get-point-at-dist");
 
   gimp_procedure_add_argument (procedure,
