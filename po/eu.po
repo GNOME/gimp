@@ -9,10 +9,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: eu3\n"
+"Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-04-20 12:53+0000\n"
-"PO-Revision-Date: 2006-04-20 16:15+0000\n"
+"PO-Revision-Date: 2006-04-20 16:24+0000\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1105,7 +1105,7 @@ msgstr "Biratu 90 gradu E_KN"
 
 #: ../app/actions/drawable-commands.c:58
 msgid "Desaturate operates only on RGB color layers."
-msgstr "Desasetuk RGB koloreko marrazgaietan bakarrik funtzionatzen du."
+msgstr "Desasetuk GBU koloreko marrazgaietan bakarrik funtzionatzen du."
 
 #: ../app/actions/drawable-commands.c:76
 msgid "Equalize does not operate on indexed layers."
@@ -1117,7 +1117,7 @@ msgstr "Alderantzikatzeak ez du marrazgai indexatuetan funtzionatzen."
 
 #: ../app/actions/drawable-commands.c:114
 msgid "White Balance operates only on RGB color layers."
-msgstr "Zuri-balantzeak RGB koloreko geruzetan bakarrik funtzionatzen du."
+msgstr "Zuri-balantzeak GBU koloreko geruzetan bakarrik funtzionatzen du."
 
 #: ../app/actions/edit-actions.c:61
 msgid "_Edit"
@@ -1513,15 +1513,15 @@ msgstr "(aldatu egiten da)"
 #: ../app/actions/gradient-editor-actions.c:278
 #: ../app/actions/image-actions.c:123
 msgid "_RGB"
-msgstr "_RGB"
+msgstr "_GBU"
 
 #: ../app/actions/gradient-editor-actions.c:283
 msgid "HSV (_counter-clockwise hue)"
-msgstr "HSV (ñabardura _EKN)"
+msgstr "ÑSB (ñabardura _EKN)"
 
 #: ../app/actions/gradient-editor-actions.c:288
 msgid "HSV (clockwise _hue)"
-msgstr "HSV (_ñabardura EN)"
+msgstr "ÑSB (_ñabardura EN)"
 
 #: ../app/actions/gradient-editor-actions.c:301
 msgid "Zoom In"
@@ -3231,7 +3231,7 @@ msgstr "Alfa"
 #: ../app/base/base-enums.c:60 ../app/display/gimpdisplayshell-title.c:234
 #: ../app/widgets/widgets-enums.c:114
 msgid "RGB"
-msgstr "RGB"
+msgstr "GBU"
 
 #: ../app/base/base-enums.c:88
 msgid "None (Fastest)"
@@ -3942,7 +3942,7 @@ msgstr "_Geruzaren gris-eskalako kopia"
 
 #: ../app/core/core-enums.c:61 ../app/core/gimp-gradients.c:70
 msgid "FG to BG (RGB)"
-msgstr "AurPlanoa AtzPlanora (RGB)"
+msgstr "AurPlanoa AtzPlanora (GBU)"
 
 #: ../app/core/core-enums.c:62
 msgid "FG to BG (HSV)"
@@ -4548,11 +4548,11 @@ msgstr "Bete ereduarekin"
 
 #: ../app/core/gimp-gradients.c:75
 msgid "FG to BG (HSV counter-clockwise)"
-msgstr "AurPlanoa AtzPlanora (HSV EKN)"
+msgstr "AurPlanoa AtzPlanora (ÑSB EKN)"
 
 #: ../app/core/gimp-gradients.c:80
 msgid "FG to BG (HSV clockwise hue)"
-msgstr "AurPlanoa AtzPlanora (HSV ENko ñabardura)"
+msgstr "AurPlanoa AtzPlanora (ÑSB ENko ñabardura)"
 
 #: ../app/core/gimp-gradients.c:85
 msgid "FG to Transparent"
@@ -4648,7 +4648,7 @@ msgid ""
 msgstr ""
 "Analisi-errore larria '%s' brotxa-fitxategian: %d brotxa-sakonera ez da "
 "onartzen\n"
-"GIMPen brotxak grisak edo RGBA izan behar dute."
+"GIMPen brotxak grisak edo GBUA izan behar dute."
 
 #: ../app/core/gimpbrushgenerated.c:614
 #, c-format
@@ -4986,7 +4986,7 @@ msgstr "Gehitu kolorea kolore-mapari"
 
 #: ../app/core/gimpimage-convert.c:789
 msgid "Convert Image to RGB"
-msgstr "Bihurtu irudia RGBra"
+msgstr "Bihurtu irudia GBUra"
 
 #: ../app/core/gimpimage-convert.c:793
 msgid "Convert Image to Grayscale"
@@ -5442,7 +5442,7 @@ msgstr "'%s' paleta kargatzen: osagai URDINA falta da %d lerroan."
 #: ../app/core/gimppalette.c:510
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
-msgstr "'%s' paleta kargatzen: RGB balioa barrutitik kanpo dago %d lerroan."
+msgstr "'%s' paleta kargatzen: GBU balioa barrutitik kanpo dago %d lerroan."
 
 #: ../app/core/gimppattern.c:337 ../app/core/gimppattern.c:384
 #: ../app/core/gimppattern.c:415
@@ -5467,7 +5467,7 @@ msgid ""
 msgstr ""
 "Analisi-errore larria '%s' eredu-fitxategian:%d eredu-sakonera ez da "
 "onartzen.\n"
-"GIMPen ereduek GRISAK edo RGB izan behar dute."
+"GIMPen ereduek GRISAK edo GBU izan behar dute."
 
 #: ../app/core/gimppattern.c:393
 #, c-format
@@ -7514,7 +7514,7 @@ msgstr "Zooma:"
 
 #: ../app/display/gimpdisplayshell-title.c:234
 msgid "RGB-empty"
-msgstr "RGB hutsik"
+msgstr "GBU hutsik"
 
 #: ../app/display/gimpdisplayshell-title.c:237
 msgid "grayscale-empty"
@@ -8339,7 +8339,7 @@ msgstr "Doitu kolore-balantzea"
 
 #: ../app/tools/gimpcolorbalancetool.c:193
 msgid "Color balance operates only on RGB color layers."
-msgstr "Kolore-balantzeak RGB koloreko geruzetan bakarrik funtzionatzen du."
+msgstr "Kolore-balantzeak GBU koloreko geruzetan bakarrik funtzionatzen du."
 
 #: ../app/tools/gimpcolorbalancetool.c:276
 msgid "Select Range to Modify"
@@ -8383,7 +8383,7 @@ msgstr "Koloreztatu irudia"
 
 #: ../app/tools/gimpcolorizetool.c:195
 msgid "Colorize operates only on RGB color layers."
-msgstr "Koloreztatuk RGB koloreko geruzetan bakarrik funtzionatzen du."
+msgstr "Koloreztatuk GBU koloreko geruzetan bakarrik funtzionatzen du."
 
 #: ../app/tools/gimpcolorizetool.c:235
 msgid "Select Color"
@@ -8678,7 +8678,7 @@ msgstr "Doitu ñabardura / argitasuna/ saturazioa"
 
 #: ../app/tools/gimphuesaturationtool.c:210
 msgid "Hue-Saturation operates only on RGB color layers."
-msgstr "Ñabardurak/Saturazioak RGB koloreko geruzetan bakarrik funtzionatzen du."
+msgstr "Ñabardurak/Saturazioak GBU koloreko geruzetan bakarrik funtzionatzen du."
 
 #: ../app/tools/gimphuesaturationtool.c:263
 msgid "M_aster"
@@ -9586,7 +9586,7 @@ msgstr "Ezin izan da '%s'(e)tik bidea inportatu: %s"
 #: ../app/widgets/gimpactiongroup.c:803
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
-msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
+msgstr "GBUA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: ../app/widgets/gimpactionview.c:354
 #: ../app/widgets/gimpcontrollereditor.c:374
@@ -10193,12 +10193,12 @@ msgstr "Kokalekua: %0.6f"
 #: ../app/widgets/gimpgradienteditor.c:816
 #, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)"
-msgstr "RGB (%0.3f, %0.3f, %0.3f)"
+msgstr "GBU (%0.3f, %0.3f, %0.3f)"
 
 #: ../app/widgets/gimpgradienteditor.c:819
 #, c-format
 msgid "HSV (%0.3f, %0.3f, %0.3f)"
-msgstr "HSV (%0.3f, %0.3f, %0.3f)"
+msgstr "ÑSB (%0.3f, %0.3f, %0.3f)"
 
 #: ../app/widgets/gimpgradienteditor.c:821
 #, c-format
@@ -10209,7 +10209,7 @@ msgstr "Intentsitatea: %0.3f    Opakotasuna: %0.3f"
 #: ../app/widgets/gimpgradienteditor.c:889
 #, c-format
 msgid "RGB (%d, %d, %d)"
-msgstr "RGB (%d, %d, %d)"
+msgstr "GBU (%d, %d, %d)"
 
 #: ../app/widgets/gimpgradienteditor.c:862
 msgid "Foreground color set to:"
@@ -10739,7 +10739,7 @@ msgstr "Pixel-balioak"
 
 #: ../app/widgets/widgets-enums.c:115
 msgid "HSV"
-msgstr "HSV"
+msgstr "ÑSB"
 
 #: ../app/widgets/widgets-enums.c:116
 msgid "CMYK"

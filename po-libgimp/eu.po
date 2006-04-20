@@ -9,10 +9,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: eu3\n"
+"Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-04-20 16:17+0000\n"
-"PO-Revision-Date: 2006-04-20 16:18+0000\n"
+"PO-Revision-Date: 2006-04-20 16:25+0000\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -76,12 +76,12 @@ msgstr "Aplikatu geruza-maskarak"
 #: ../libgimp/gimpexport.c:278
 #, c-format
 msgid "%s can only handle RGB images"
-msgstr "%s(e)k RGB irudiak bakarrik kudea ditzake"
+msgstr "%s(e)k GBU irudiak bakarrik kudea ditzake"
 
 #: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:317
 #: ../libgimp/gimpexport.c:326
 msgid "Convert to RGB"
-msgstr "Bihurtu RGB"
+msgstr "Bihurtu GBU"
 
 #: ../libgimp/gimpexport.c:287
 #, c-format
@@ -123,12 +123,12 @@ msgstr ""
 #: ../libgimp/gimpexport.c:316
 #, c-format
 msgid "%s can only handle RGB or grayscale images"
-msgstr "%s(e)k RGB edo gris-eskalako irudiak bakarrik kudea ditzake"
+msgstr "%s(e)k GBU edo gris-eskalako irudiak bakarrik kudea ditzake"
 
 #: ../libgimp/gimpexport.c:325
 #, c-format
 msgid "%s can only handle RGB or indexed images"
-msgstr "%s(e)k RGB edo indexatutako irudiak bakarrik kudea ditzake"
+msgstr "%s(e)k GBU edo indexatutako irudiak bakarrik kudea ditzake"
 
 #: ../libgimp/gimpexport.c:335
 #, c-format
@@ -259,7 +259,7 @@ msgstr "Beltza soilik"
 
 #: ../libgimpbase/gimpbaseenums.c:91
 msgid "RGB color"
-msgstr "RGB kolorea"
+msgstr "GBU kolorea"
 
 #: ../libgimpbase/gimpbaseenums.c:92 ../libgimpbase/gimpbaseenums.c:127
 msgid "Grayscale"
@@ -271,11 +271,11 @@ msgstr "Kolore indexatua"
 
 #: ../libgimpbase/gimpbaseenums.c:125
 msgid "RGB"
-msgstr "RGB"
+msgstr "GBU"
 
 #: ../libgimpbase/gimpbaseenums.c:126
 msgid "RGB-alpha"
-msgstr "RGB alfa"
+msgstr "GBU alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:128
 msgid "Grayscale-alpha"
