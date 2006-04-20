@@ -1,3 +1,8 @@
+2006-04-20  Simon Budig  <simon@gimp.org>
+
+        * debug-plug-ins.txt: Added hint how to run a plugin in the gdb
+	when GIMP_PLUGIN_DEBUG is active.
+
 2006-04-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/app-docs.sgml
