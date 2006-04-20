@@ -1,3 +1,13 @@
+2006-04-20  Simon Budig  <simon@gimp.org>
+
+	* app/base/curves.c: implemented a new interpolation for the
+	"smooth" curve type. This fixes the artefacts as described in
+	bug #169078 although there definitely is room for improvement.
+
+	This has an impact on the API as now the curves used by the
+	gimp-curves-spline PDB call change. I do however believe, that
+	the change is for good and the old behaviour was simply buggy.
+
 2006-04-20  Tor Lillqvist  <tml@novell.com>
 
 	* app/widgets/gimpsessioninfo.c (get_appropriate_monitor): New

@@ -29,8 +29,6 @@
 #include "gimplut.h"
 
 
-typedef gdouble CRMatrix[4][4];
-
 
 /*  local function prototypes  */
 
@@ -40,20 +38,6 @@ static void   curves_plot_curve (Curves   *curves,
                                  gint      p2,
                                  gint      p3,
                                  gint      p4);
-static void   curves_CR_compose (CRMatrix  a,
-                                 CRMatrix  b,
-                                 CRMatrix  ab);
-
-
-/*  private variables  */
-
-static CRMatrix CR_basis =
-{
-  { -0.5,  1.5, -1.5,  0.5 },
-  {  1.0, -2.5,  2.0, -0.5 },
-  { -0.5,  0.0,  0.5,  0.0 },
-  {  0.0,  1.0,  0.0,  0.0 },
-};
 
 
 /*  public functions  */
@@ -136,10 +120,10 @@ curves_calculate_curve (Curves               *curves,
 
       for (i = 0; i < num_pts - 1; i++)
         {
-          p1 = (i == 0) ? points[i] : points[(i - 1)];
+          p1 = points[MAX (i - 1, 0)];
           p2 = points[i];
           p3 = points[i + 1];
-          p4 = (i == (num_pts - 2)) ? points[num_pts - 1] : points[i + 2];
+          p4 = points[MIN (i + 2, num_pts - 1)];
 
           curves_plot_curve (curves, channel, p1, p2, p3, p4);
         }
@@ -211,8 +195,15 @@ curves_lut_func (Curves *curves,
 
 /*  private functions  */
 
-/*  this can be adjusted to give a finer or coarser curve  */
-#define CURVES_SUBDIVIDE  1000
+/*
+ * This function calculates the curve values between the control points
+ * p2 and p3, taking the potentially existing neighbors p1 and p4 into
+ * account.
+ *
+ * This function uses a cubic bezier curve for the individual segments and
+ * calculates the necessary intermediate control points depending on the
+ * neighbor curve control points.
+ */
 
 static void
 curves_plot_curve (Curves *curves,
@@ -222,103 +213,92 @@ curves_plot_curve (Curves *curves,
                    gint    p3,
                    gint    p4)
 {
-  CRMatrix geometry;
-  CRMatrix tmp1, tmp2;
-  CRMatrix deltas;
-  gdouble  x, dx, dx2, dx3;
-  gdouble  y, dy, dy2, dy3;
-  gdouble  d, d2, d3;
-  gint     lastx, lasty;
-  gint32   newx, newy;
-  gint     i;
+  gint    i;
+  gdouble x0, x3;
+  gdouble y0, y1, y2, y3;
+  gdouble dx, dy;
+  gdouble y, t;
+  gdouble slope;
 
-  /* construct the geometry matrix from the segment */
-  for (i = 0; i < 4; i++)
-    {
-      geometry[i][2] = 0;
-      geometry[i][3] = 0;
-    }
+  /* the outer control points for the bezier curve. */
+  x0 = curves->points[channel][p2][0];
+  y0 = curves->points[channel][p2][1];
+  x3 = curves->points[channel][p3][0];
+  y3 = curves->points[channel][p3][1];
 
-  for (i = 0; i < 2; i++)
-    {
-      geometry[0][i] = curves->points[channel][p1][i];
-      geometry[1][i] = curves->points[channel][p2][i];
-      geometry[2][i] = curves->points[channel][p3][i];
-      geometry[3][i] = curves->points[channel][p4][i];
-    }
-
-  /* subdivide the curve */
-  d = 1.0 / CURVES_SUBDIVIDE;
-  d2 = d * d;
-  d3 = d * d * d;
-
-  /* construct a temporary matrix for determining the forward
-   * differencing deltas
+  /*
+   * the x values of the inner control points are fixed at
+   * x1 = 1/3*x0 + 2/3*x3   and  x2 = 2/3*x0 + 1/3*x3
+   * this ensures that the x values increase linearily with the
+   * parameter t and enables us to skip the calculation of the x
+   * values altogehter - just calculate y(t) evenly spaced.
    */
-  tmp2[0][0] = 0;       tmp2[0][1] = 0;       tmp2[0][2] = 0;  tmp2[0][3] = 1;
-  tmp2[1][0] = d3;      tmp2[1][1] = d2;      tmp2[1][2] = d;  tmp2[1][3] = 0;
-  tmp2[2][0] = 6 * d3;  tmp2[2][1] = 2 * d2;  tmp2[2][2] = 0;  tmp2[2][3] = 0;
-  tmp2[3][0] = 6 * d3;  tmp2[3][1] = 0;       tmp2[3][2] = 0;  tmp2[3][3] = 0;
 
-  /* compose the basis and geometry matrices */
-  curves_CR_compose (CR_basis, geometry, tmp1);
+  dx = x3 - x0;
+  dy = y3 - y0;
 
-  /* compose the above results to get the deltas matrix */
-  curves_CR_compose (tmp2, tmp1, deltas);
+  g_return_if_fail (dx > 0);
 
-  /* extract the x deltas */
-  x   = deltas[0][0];
-  dx  = deltas[1][0];
-  dx2 = deltas[2][0];
-  dx3 = deltas[3][0];
-
-  /* extract the y deltas */
-  y   = deltas[0][1];
-  dy  = deltas[1][1];
-  dy2 = deltas[2][1];
-  dy3 = deltas[3][1];
-
-  lastx = CLAMP (x, 0, 255);
-  lasty = CLAMP (y, 0, 255);
-
-  curves->curve[channel][lastx] = lasty;
-
-  /* loop over the curve */
-  for (i = 0; i < CURVES_SUBDIVIDE; i++)
+  if (p1 == p2 && p3 == p4)
     {
-      /* increment the x values */
-      x += dx;
-      dx += dx2;
-      dx2 += dx3;
+      /* No information about the neighbors,
+       * calculate y1 and y2 to get a straight line
+       */
+      y1 = y0 + dy / 3.0;
+      y2 = y0 + dy * 2.0 / 3.0;
+    }
 
-      /* increment the y values */
-      y += dy;
-      dy += dy2;
-      dy2 += dy3;
+  else if (p1 == p2 && p3 != p4)
+    {
+      /* only the right neighbor is available. Make the tangent at the
+       * right endpoint parallel to the line between the left endpoint
+       * and the right neighbor. Then point the tangent at the left towards
+       * the control handle of the right tangent, to ensure that the curve
+       * does not have an inflection point.
+       */
+      slope = (curves->points[channel][p4][1] - y0) /
+              (curves->points[channel][p4][0] - x0);
+      y2 = y3 - slope * dx / 3.0;
+      y1 = y0 + (y2 - y0) / 2.0;
+    }
 
-      newx = CLAMP0255 (ROUND (x));
-      newy = CLAMP0255 (ROUND (y));
+  else if (p1 != p2 && p3 == p4)
+    {
+      /* see previous case */
+      slope = (y3 - curves->points[channel][p1][1]) /
+              (x3 - curves->points[channel][p1][0]);
+      y1 = y0 + slope * dx / 3.0;
+      y2 = y3 + (y1 - y3) / 2.0;
+    }
 
-      /* if this point is different than the last one...then draw it */
-      if ((lastx != newx) || (lasty != newy))
-        curves->curve[channel][newx] = newy;
+  else if (p1 != p2 && p3 != p4)
+    {
+      /* Both neighbors are available. Make the tangents at the endpoints
+       * parallel to the line between the opposite endpoint and the adjacent
+       * neighbor.
+       */
+      slope = (y3 - curves->points[channel][p1][1]) /
+              (x3 - curves->points[channel][p1][0]);
+      y1 = y0 + slope * dx / 3.0;
 
-      lastx = newx;
-      lasty = newy;
+      slope = (curves->points[channel][p4][1] - y0) /
+              (curves->points[channel][p4][0] - x0);
+      y2 = y3 - slope * dx / 3.0;
+    }
+
+  /*
+   * finally calculate the y(t) values for the given bezier values. We can
+   * use homogenously distributed values for t, since x(t) increases linearily.
+   */
+  for (i = 0; i <= dx; i++)
+    {
+      t = i / dx;
+      y =   y0*(1-t)*(1-t)*(1-t) +
+          3*y1*(1-t)*(1-t)*t +
+          3*y2*(1-t)*t*t +
+            y3*t*t*t;
+
+      curves->curve[channel][ROUND(x0) + i] = CLAMP0255 (ROUND (y));
     }
 }
 
-static void
-curves_CR_compose (CRMatrix a,
-                   CRMatrix b,
-                   CRMatrix ab)
-{
-  gint i, j;
-
-  for (i = 0; i < 4; i++)
-    for (j = 0; j < 4; j++)
-      ab[i][j] = (a[i][0] * b[0][j] +
-                  a[i][1] * b[1][j] +
-                  a[i][2] * b[2][j] +
-                  a[i][3] * b[3][j]);
-}
