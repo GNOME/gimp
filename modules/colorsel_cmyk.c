@@ -142,7 +142,7 @@ colorsel_cmyk_init (ColorselCmyk *module)
   GtkObject *adj;
   gint       i;
 
-  static const gchar *cmyk_labels[] =
+  static const gchar * const cmyk_labels[] =
   {
     /* Cyan        */
     N_("_C"),
@@ -153,7 +153,7 @@ colorsel_cmyk_init (ColorselCmyk *module)
     /* Key (Black) */
     N_("_K")
   };
-  static const gchar *cmyk_tips[] =
+  static const gchar * const cmyk_tips[] =
   {
     N_("Cyan"),
     N_("Magenta"),

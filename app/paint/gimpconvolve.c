@@ -74,8 +74,10 @@ static gdouble gimp_convolve_sum_matrix       (const gfloat      *matrix,
                                                gint               size);
 
 
-static gint    matrix_size;
-static gdouble matrix_divisor;
+/* FIXME: this code is not MT-safe */
+
+static const gint  matrix_size = 5;
+static gdouble     matrix_divisor;
 
 static gfloat matrix[25] =
 {
@@ -86,7 +88,7 @@ static gfloat matrix[25] =
   0, 0, 0, 0, 0,
 };
 
-static gfloat blur_matrix[25] =
+static const gfloat blur_matrix[25] =
 {
   0, 0, 0, 0, 0,
   0, 1, 1, 1, 0,
@@ -95,7 +97,7 @@ static gfloat blur_matrix[25] =
   0, 0 ,0, 0, 0,
 };
 
-static gfloat sharpen_matrix[25] =
+static const gfloat sharpen_matrix[25] =
 {
   0, 0, 0, 0, 0,
   0, 1, 1, 1, 0,
@@ -388,34 +390,29 @@ static void
 gimp_convolve_calculate_matrix (GimpConvolveType type,
                                 gdouble          rate)
 {
-  gdouble percent;
-
   /*  find percent of tool pressure  */
-  percent = MIN (rate / 100.0, 1.0);
+  gdouble percent = MIN (rate / 100.0, 1.0);
 
   /*  get the appropriate convolution matrix and size and divisor  */
   switch (type)
     {
     case GIMP_BLUR_CONVOLVE:
-      matrix_size = 5;
-      blur_matrix[12] = MIN_BLUR + percent * (MAX_BLUR - MIN_BLUR);
       gimp_convolve_copy_matrix (blur_matrix, matrix, matrix_size);
+      matrix[12] = MIN_BLUR + percent * (MAX_BLUR - MIN_BLUR);
       break;
 
     case GIMP_SHARPEN_CONVOLVE:
-      matrix_size = 5;
-      sharpen_matrix[12] = MIN_SHARPEN + percent * (MAX_SHARPEN - MIN_SHARPEN);
       gimp_convolve_copy_matrix (sharpen_matrix, matrix, matrix_size);
+      matrix[12] = MIN_SHARPEN + percent * (MAX_SHARPEN - MIN_SHARPEN);
       break;
 
     case GIMP_CUSTOM_CONVOLVE:
-      matrix_size = 5;
       break;
     }
 
   matrix_divisor = gimp_convolve_sum_matrix (matrix, matrix_size);
 
-  if (!matrix_divisor)
+  if (G_UNLIKELY (matrix_divisor == 0.0))
     matrix_divisor = 1.0;
 }
 
@@ -425,7 +422,8 @@ gimp_convolve_copy_matrix (const gfloat *src,
                            gint          size)
 {
   size *= size;
-  while (size --)
+
+  while (size--)
     *dest++ = *src++;
 }
 
@@ -436,7 +434,8 @@ gimp_convolve_sum_matrix (const gfloat *matrix,
   gdouble sum = 0.0;
 
   size *= size;
-  while (size --)
+
+  while (size--)
     sum += *matrix++;
 
   return sum;

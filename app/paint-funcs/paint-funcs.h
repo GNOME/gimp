@@ -360,7 +360,7 @@ void  extract_from_region                 (PixelRegion       *src,
 
 void  convolve_region                     (PixelRegion         *srcR,
                                            PixelRegion         *destR,
-                                           gfloat              *matrix,
+                                           const gfloat        *matrix,
                                            gint                 size,
                                            gdouble              divisor,
                                            GimpConvolutionType  mode,

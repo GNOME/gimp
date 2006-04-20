@@ -958,7 +958,7 @@ re_set_syntax (syntax)
    POSIX doesn't require that we do anything for REG_NOERROR,
    but why not be nice?  */
 
-static const char *re_error_msgid[] =
+static const char * const re_error_msgid[] =
   {
     "Success",	/* REG_NOERROR */
     "No match",	/* REG_NOMATCH */

@@ -1,3 +1,17 @@
+2006-04-20  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/paint-funcs.[ch]: convolve_region() takes a
+	const matrix parameter.
+
+	* app/paint/gimpconvolve.c
+	* app/tools/gimpiscissorstool.c: use const convolution matrices.
+
+	* libgimpbase/gimputils.c (gimp_utf8_strtrim): avoid another small
+	relocation.
+
+	* modules/colorsel_cmyk.c
+	* regexrepl/regex.c: use const arrays of const strings.
+
 2006-04-19  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/imagemap/imap_main.c: removed unused code

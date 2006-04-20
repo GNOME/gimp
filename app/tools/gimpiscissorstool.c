@@ -237,25 +237,25 @@ static guchar  maxgrad_conv1[TILE_WIDTH * TILE_HEIGHT * 4] = "";
 static guchar  maxgrad_conv2[TILE_WIDTH * TILE_HEIGHT * 4] = "";
 
 
-static gfloat horz_deriv[9] =
+static const gfloat horz_deriv[9] =
 {
-  1, 0, -1,
-  2, 0, -2,
-  1, 0, -1,
+   1,  0, -1,
+   2,  0, -2,
+   1,  0, -1,
 };
 
-static gfloat vert_deriv[9] =
+static const gfloat vert_deriv[9] =
 {
-  1, 2, 1,
-  0, 0, 0,
+   1,  2,  1,
+   0,  0,  0,
   -1, -2, -1,
 };
 
-static gfloat blur_32[9] =
+static const gfloat blur_32[9] =
 {
-  1, 1, 1,
-  1, 24, 1,
-  1, 1, 1,
+   1,  1,  1,
+   1, 24,  1,
+   1,  1,  1,
 };
 
 static gfloat    distance_weights[GRADIENT_SEARCH * GRADIENT_SEARCH];
@@ -1677,6 +1677,10 @@ gradmap_tile_validate (TileManager *tm,
 {
   static gboolean first_gradient = TRUE;
 
+  GimpImage    *image = tile_manager_get_user_data (tm);
+  GimpPickable *pickable;
+  Tile         *srctile;
+  PixelRegion   srcPR, destPR;
   gint          x, y;
   gint          dw, dh;
   gint          sw, sh;
@@ -1687,12 +1691,6 @@ gradmap_tile_validate (TileManager *tm,
   guint8       *tiledata;
   guint8       *datah, *datav;
   gint8         hmax, vmax;
-  GimpPickable *pickable;
-  Tile         *srctile;
-  PixelRegion   srcPR, destPR;
-  GimpImage    *image;
-
-  image = (GimpImage *) tile_manager_get_user_data (tm);
 
   if (first_gradient)
     {

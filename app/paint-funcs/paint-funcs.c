@@ -2386,7 +2386,7 @@ extract_from_region (PixelRegion       *src,
 void
 convolve_region (PixelRegion         *srcR,
                  PixelRegion         *destR,
-                 gfloat              *matrix,
+                 const gfloat        *matrix,
                  gint                 size,
                  gdouble              divisor,
                  GimpConvolutionType  mode,
@@ -2394,20 +2394,20 @@ convolve_region (PixelRegion         *srcR,
 {
   /*  Convolve the src image using the convolution matrix, writing to dest  */
   /*  Convolve is not tile-enabled--use accordingly  */
-  guchar  *src, *s_row, *s;
-  guchar  *dest, *d;
-  gfloat  *m;
-  gdouble  total [4];
-  gint     b, bytes;
-  gint     alpha, a_byte;
-  gint     length;
-  gint     wraparound;
-  gint     margin;      /*  margin imposed by size of conv. matrix  */
-  gint     i, j;
-  gint     x, y;
-  gint     offset;
-  gdouble  matrixsum = 0.0;
-  gdouble  weighted_divisor, mult_alpha;
+  guchar       *src, *s_row, *s;
+  guchar       *dest, *d;
+  const gfloat *m;
+  gdouble       total [4];
+  gint          b, bytes;
+  gint          alpha, a_byte;
+  gint          length;
+  gint          wraparound;
+  gint          margin;      /*  margin imposed by size of conv. matrix  */
+  gint          i, j;
+  gint          x, y;
+  gint          offset;
+  gdouble       matrixsum = 0.0;
+  gdouble       weighted_divisor, mult_alpha;
 
   /*  If the mode is NEGATIVE_CONVOL, the offset should be 128  */
   if (mode == GIMP_NEGATIVE_CONVOL)
