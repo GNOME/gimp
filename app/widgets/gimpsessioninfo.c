@@ -828,24 +828,79 @@ gimp_session_info_restore (GimpSessionInfo   *info,
   info->aux_info = NULL;
 }
 
+/* This function mostly lifted from
+ * gtk+/gdk/gdkscreen.c:gdk_screen_get_monitor_at_window()
+ */
+static gint 
+get_appropriate_monitor (GdkScreen      *screen,
+                         gint            x,
+                         gint            y,
+                         gint            w,
+                         gint            h)
+{
+  gint num_monitors, i, area = 0, monitor = -1;
+  GdkRectangle rect;
+  
+  rect.x = x;
+  rect.y = y;
+  rect.width = w;
+  rect.height = h;
+
+  num_monitors = gdk_screen_get_n_monitors (screen);
+  
+  for (i = 0; i < num_monitors; i++)
+    {
+      GdkRectangle tmp_monitor, intersect;
+      
+      gdk_screen_get_monitor_geometry (screen, i, &tmp_monitor);
+      gdk_rectangle_intersect (&rect, &tmp_monitor, &intersect);
+      
+      if (intersect.width * intersect.height > area)
+        { 
+          area = intersect.width * intersect.height;
+          monitor = i;
+        }
+    }
+  if (monitor >= 0)
+    return monitor;
+  else
+    return gdk_screen_get_monitor_at_point (screen,
+                                            rect.x + rect.width / 2,
+                                            rect.y + rect.height / 2);
+}
+
 void
 gimp_session_info_set_geometry (GimpSessionInfo *info)
 {
-  GdkScreen *screen;
-  gint       screen_width;
-  gint       screen_height;
-  gchar      geom[32];
+  GdkScreen   *screen;
+  GdkRectangle monitor;
+  gchar        geom[32];
 
   g_return_if_fail (info != NULL);
   g_return_if_fail (GTK_IS_WINDOW (info->widget));
 
   screen = gtk_widget_get_screen (info->widget);
 
-  screen_width  = gdk_screen_get_width (screen);
-  screen_height = gdk_screen_get_height (screen);
+  if ((!info->toplevel_entry || info->toplevel_entry->remember_size) &&
+      info->width > 0 && info->height > 0)
+    {
+      gdk_screen_get_monitor_geometry (screen,
+                                       get_appropriate_monitor (screen,
+                                                                info->x, info->y,
+                                                                info->width, info->height),
+                                       &monitor);
+      info->x = CLAMP (info->x, monitor.x, monitor.x + monitor.width  - info->width);
+      info->y = CLAMP (info->y, monitor.y, monitor.y + monitor.height - info->height);
+    }
+  else
+    {
+      gdk_screen_get_monitor_geometry (screen,
+                                     gdk_screen_get_monitor_at_point (screen, info->x, info->y),
+                                     &monitor);
 
-  info->x = CLAMP (info->x, 0, screen_width  - 128);
-  info->y = CLAMP (info->y, 0, screen_height - 128);
+      info->x = CLAMP (info->x, monitor.x, monitor.x + monitor.width  - 128);
+      info->y = CLAMP (info->y, monitor.y, monitor.y + monitor.height - 128);
+    }
 
   g_snprintf (geom, sizeof (geom), "+%d+%d", info->x, info->y);
 

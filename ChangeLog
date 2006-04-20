@@ -1,3 +1,14 @@
+2006-04-20  Tor Lillqvist  <tml@novell.com>
+
+	Merge from HEAD:
+
+	* app/widgets/gimpsessioninfo.c (get_appropriate_monitor): New
+	helper function. Same functionality as
+	gdk_screen_get_monitor_at_window(), except that it takes a window
+	geometry as parameter and not the window itself.
+	(gimp_session_info_set_geometry): Make sure the window is
+	completely inside a monitor. (#339099, #324254)
+
 2006-04-19  Tor Lillqvist  <tml@novell.com>
 
 	* app/dialogs/user-install-dialog.c (user_install_dialog_run):
