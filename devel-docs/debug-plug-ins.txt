@@ -38,6 +38,7 @@ GIMP_PLUGIN_DEBUG=blur
 
     9000 is the pid of the new plug-in process. You can start your debugger,
     attach to it, set breakpoints/watches/etc. and continue from there.
+    In case of the gdb typing "continue" will start the plugin.
 
 GIMP_PLUGIN_DEBUG=blur,on
 

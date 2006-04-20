@@ -1,3 +1,11 @@
+2006-04-20  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/common/convmatrix.c: only access existing toggle buttons.
+	Fixes bug #339124
+
+	* devel-docs/debug-plug-ins.txt: Added hint how to run a plugin
+	in the gdb when GIMP_PLUGIN_DEBUG is active.
+
 2006-04-20  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/paint-funcs.[ch]: convolve_region() takes a

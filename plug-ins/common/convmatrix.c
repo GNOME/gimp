@@ -21,19 +21,19 @@
  *
  *
  * CHANGELOG:
- * v0.13	15.12.2000
- * 	Made the PDB interface actually work.   (Simon Budig <simon@gimp.org>)
+ * v0.13        15.12.2000
+ *      Made the PDB interface actually work.   (Simon Budig <simon@gimp.org>)
  *
- * v0.12	15.9.1997
- *	Got rid of the unportable snprintf. Also made some _tiny_ GUI fixes.
+ * v0.12        15.9.1997
+ *      Got rid of the unportable snprintf. Also made some _tiny_ GUI fixes.
  *
- * v0.11	20.7.1997
- *	Negative values in the matrix are now abs'ed when used to weight
+ * v0.11        20.7.1997
+ *      Negative values in the matrix are now abs'ed when used to weight
  *      alpha. Embossing effects should work properly now. Also fixed a
  *      totally idiotic bug with embossing.
  *
- * v0.1 	2.7.1997
- *	Initial release. Works... kinda.
+ * v0.1         2.7.1997
+ *      Initial release. Works... kinda.
  *
  *
  * TODO:
@@ -676,8 +676,9 @@ redraw_channels (void)
   gint i;
 
   for (i = 0; i < 5; i++)
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (my_widgets.channels[i]),
-                                  my_config.channels[i]);
+    if (my_widgets.channels[i])
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (my_widgets.channels[i]),
+                                    my_config.channels[i]);
 }
 
 static void
@@ -1078,6 +1079,10 @@ convmatrix_dialog (GimpDrawable *drawable)
           g_signal_connect_swapped (button, "toggled",
                                     G_CALLBACK (gimp_preview_invalidate),
                                     preview);
+        }
+      else
+        {
+          my_widgets.channels[i] = NULL;
         }
     }
 
