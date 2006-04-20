@@ -1,23 +1,26 @@
+# translation of eu3.po to Basque
 # translation of eu.po to Basque
 # translation of gimp-libgimp.HEAD.po to basque
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 # Hizkuntza Politikarako Sailburuordetza <hizpol@ej-gv.es>, 2004.
-# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2004.
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2004, 2006.
+# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2006.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: eu\n"
+"Project-Id-Version: eu3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-08 12:28+0200\n"
-"PO-Revision-Date: 2004-04-06 17:16+0200\n"
-"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
+"POT-Creation-Date: 2006-04-20 16:17+0000\n"
+"PO-Revision-Date: 2006-04-20 16:18+0000\n"
+"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.0.2\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"X-Generator: KBabel 1.10.2\n"
+"Plural-Forms: Plural-Forms: Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"\n"
 
 #: ../libgimp/gimpbrushmenu.c:129
 msgid "Brush Selection"
@@ -40,8 +43,7 @@ msgstr "Batu ikusgai dauden geruzak"
 #: ../libgimp/gimpexport.c:224
 #, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr ""
-"%s(e)k ezin ditu geruzen desplazamenduak, tamaina edo opakutasuna kudeatu"
+msgstr "%s(e)k ezin ditu geruzen desplazamenduak, tamaina edo opakutasuna kudeatu"
 
 #: ../libgimp/gimpexport.c:233 ../libgimp/gimpexport.c:242
 #, c-format
@@ -205,12 +207,11 @@ msgstr "Gradientearen hautapena"
 
 #: ../libgimp/gimpmenu.c:406 ../libgimpwidgets/gimpintstore.c:167
 msgid "(Empty)"
-msgstr ""
+msgstr "(Hutsa)"
 
 #: ../libgimp/gimppalettemenu.c:91
-#, fuzzy
 msgid "Palette Selection"
-msgstr "Ereduaren hautapena"
+msgstr "Paletaren hautapena"
 
 #: ../libgimp/gimppatternmenu.c:113
 msgid "Pattern Selection"
@@ -222,73 +223,71 @@ msgstr "ehunekoa"
 
 #: ../libgimpbase/gimpbaseenums.c:23
 msgid "Small"
-msgstr ""
+msgstr "Txikia"
 
 #: ../libgimpbase/gimpbaseenums.c:24
 msgid "Medium"
-msgstr ""
+msgstr "Tartekoa"
 
 #: ../libgimpbase/gimpbaseenums.c:25
 msgid "Large"
-msgstr ""
+msgstr "Handia"
 
 #: ../libgimpbase/gimpbaseenums.c:57
 msgid "Light Checks"
-msgstr ""
+msgstr "Koadrikula argiak"
 
 #: ../libgimpbase/gimpbaseenums.c:58
 msgid "Mid-Tone Checks"
-msgstr ""
+msgstr "Tarteko tonodun koadrikulak"
 
 #: ../libgimpbase/gimpbaseenums.c:59
 msgid "Dark Checks"
-msgstr ""
+msgstr "Koadrikula ilunak"
 
 #: ../libgimpbase/gimpbaseenums.c:60
 msgid "White Only"
-msgstr ""
+msgstr "Zuria soilik"
 
 #: ../libgimpbase/gimpbaseenums.c:61
 msgid "Gray Only"
-msgstr ""
+msgstr "Grisa soilik"
 
 #: ../libgimpbase/gimpbaseenums.c:62
-#, fuzzy
 msgid "Black Only"
-msgstr "Beltza"
+msgstr "Beltza soilik"
 
 #: ../libgimpbase/gimpbaseenums.c:91
 msgid "RGB color"
-msgstr ""
+msgstr "RGB kolorea"
 
 #: ../libgimpbase/gimpbaseenums.c:92 ../libgimpbase/gimpbaseenums.c:127
-#, fuzzy
 msgid "Grayscale"
-msgstr "Bihurtu gris-eskalara "
+msgstr "Gris-eskala"
 
 #: ../libgimpbase/gimpbaseenums.c:93
 msgid "Indexed color"
-msgstr ""
+msgstr "Kolore indexatua"
 
 #: ../libgimpbase/gimpbaseenums.c:125
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: ../libgimpbase/gimpbaseenums.c:126
 msgid "RGB-alpha"
-msgstr ""
+msgstr "RGB alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:128
 msgid "Grayscale-alpha"
-msgstr ""
+msgstr "Gris-eskala alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:129
 msgid "Indexed"
-msgstr ""
+msgstr "Indexatua"
 
 #: ../libgimpbase/gimpbaseenums.c:130
 msgid "Indexed-alpha"
-msgstr ""
+msgstr "Indexatua alfa"
 
 #: ../libgimpbase/gimpmemsize.c:177
 #, c-format
@@ -383,6 +382,8 @@ msgid ""
 "Cannot determine a valid home directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
+"Ezin da baliozko etxeko direktorioa zehaztu.\n"
+"Koadro txikiak aldi baterako fitxategian (%s) gordeko dira."
 
 #: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
 #, c-format
@@ -390,29 +391,25 @@ msgid "Failed to create thumbnail folder '%s'."
 msgstr "Huts egin du koadro txikien '%s' karpeta sortzean."
 
 #: ../libgimpthumb/gimpthumbnail.c:919
-#, fuzzy, c-format
+#, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr "Huts egin du koadro txikien '%s' karpeta sortzean."
+msgstr "Ezin izan da '%s'(r)en koadro txikia sortu: %s"
 
 #: ../libgimpwidgets/gimpcolorbutton.c:99
-#, fuzzy
 msgid "_Foreground Color"
-msgstr "/_Aurreko planoaren kolorea"
+msgstr "_Aurreko planoaren kolorea"
 
 #: ../libgimpwidgets/gimpcolorbutton.c:103
-#, fuzzy
 msgid "_Background Color"
-msgstr "/_Atzeko planoaren kolorea"
+msgstr "_Atzeko planoaren kolorea"
 
 #: ../libgimpwidgets/gimpcolorbutton.c:107
-#, fuzzy
 msgid "Blac_k"
-msgstr "/_Beltza"
+msgstr "_Beltza"
 
 #: ../libgimpwidgets/gimpcolorbutton.c:111
-#, fuzzy
 msgid "_White"
-msgstr "/_Zuria"
+msgstr "_Zuria"
 
 #: ../libgimpwidgets/gimpcolorscales.c:133
 msgid "Scales"
@@ -489,13 +486,12 @@ msgid "Alpha"
 msgstr "Alfa"
 
 #: ../libgimpwidgets/gimpcolorscales.c:243
-#, fuzzy
 msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "Kolore hamaseitarraren notazioa HTMLn bezala"
+msgstr "Kolore hamaseitarraren notazioa HTMLn eta CCSn bezala"
 
 #: ../libgimpwidgets/gimpcolorscales.c:248
 msgid "HTML _Notation:"
-msgstr ""
+msgstr "HTML _notazioa:"
 
 #: ../libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
@@ -514,17 +510,14 @@ msgid "Select File"
 msgstr "Hautatu fitxategia"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:232
-#, fuzzy
 msgid "Kilobytes"
 msgstr "KiloByte"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:233
-#, fuzzy
 msgid "Megabytes"
 msgstr "MegaByte"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:234
-#, fuzzy
 msgid "Gigabytes"
 msgstr "GigaByte"
 
@@ -546,17 +539,16 @@ msgstr ""
 
 #: ../libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
-msgstr ""
+msgstr "Egiaztatu tamaina"
 
 #: ../libgimpwidgets/gimppreviewarea.c:133
 msgid "Check Style"
-msgstr ""
+msgstr "Egiaztatu estiloa"
 
 #. toggle button to (des)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:240
-#, fuzzy
 msgid "_Preview"
-msgstr "Aurrebista"
+msgstr "_Aurrebista"
 
 #: ../libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -564,7 +556,7 @@ msgstr "Ainguratu"
 
 #: ../libgimpwidgets/gimpstock.c:114
 msgid "C_enter"
-msgstr ""
+msgstr "_Erdia"
 
 #: ../libgimpwidgets/gimpstock.c:115
 msgid "_Duplicate"
@@ -596,7 +588,7 @@ msgstr "Ikusgai"
 
 #: ../libgimpwidgets/gimpstock.c:154 ../libgimpwidgets/gimpstock.c:158
 msgid "_Stroke"
-msgstr ""
+msgstr "_Trazua"
 
 #: ../libgimpwidgets/gimpstock.c:170
 msgid "L_etter Spacing"
@@ -680,8 +672,7 @@ msgstr "Tritanopia (urdinarekiko sentikortasunik ez)"
 
 #: ../modules/cdisplay_colorblind.c:153
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr ""
-"Kolorearen defizita simulatzeko iragazkia (Brettel-Vienot-Mollon algoritmoa)"
+msgstr "Kolorearen defizita simulatzeko iragazkia (Brettel-Vienot-Mollon algoritmoa)"
 
 #: ../modules/cdisplay_colorblind.c:242
 msgid "Color Deficient Vision"
@@ -792,13 +783,12 @@ msgid "Black"
 msgstr "Beltza"
 
 #: ../modules/colorsel_cmyk.c:191
-#, fuzzy
 msgid "Black _Pullout:"
-msgstr "Beltza (%):"
+msgstr "Beltz-ge_higarria:"
 
 #: ../modules/colorsel_cmyk.c:208
 msgid "The percentage of black to pull out of the colored inks."
-msgstr ""
+msgstr "Beltzaren ehunekoa koloredun tintetatik ateratzeko."
 
 #: ../modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
@@ -820,25 +810,3 @@ msgstr "Akuarela"
 msgid "Pressure"
 msgstr "Presioa"
 
-#~ msgid "He_x Triplet:"
-#~ msgstr "Hirukote ha_maseitarra:"
-
-#~ msgid "None"
-#~ msgstr "Bat ere ez"
-
-#~ msgid ""
-#~ "No %s in gimprc:\n"
-#~ "You need to add an entry like\n"
-#~ "(%s \"%s\")\n"
-#~ "to your %s file."
-#~ msgstr ""
-#~ "Ez dago %s gimprc-en:\n"
-#~ "(%s \"%s\") bezalako elementu bat\n"
-#~ "gehitu behar duzu\n"
-#~ "%s fitxategian."
-
-#~ msgid "Parameter Settings"
-#~ msgstr "Parametroaren ezarpenak"
-
-#~ msgid "None (normal vision)"
-#~ msgstr "Bat ere ez (ikusmen normala)"
