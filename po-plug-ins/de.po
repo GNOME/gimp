@@ -3251,9 +3251,7 @@ msgstr "DICOM-Bild"
 
 #: ../plug-ins/common/dicom.c:165
 msgid "Digital Imaging and Communications in Medicine image"
-msgstr ""
-"Bild des Standards »Digitale Bilderzeugung und Kommunikation in der "
-"Medizin« (DICOM)"
+msgstr "»Digitale Bilderzeugung und Kommunikation in der Medizin«"
 
 #: ../plug-ins/common/dicom.c:321
 #, c-format
