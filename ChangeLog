@@ -1,5 +1,9 @@
 2006-04-21  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimputils.c (gimp_utf8_strtrim): strlen != sizeof
+
+2006-04-21  Sven Neumann  <sven@gimp.org>
+
 	* app/base/curves.c
 	* app/widgets/gimpsessioninfo.c: minor code cleanup, removed
 	trailing whitespace.

@@ -51,7 +51,7 @@ gimp_utf8_strtrim (const gchar *str,
 {
   /* FIXME: should we make this translatable? */
   const gchar ellipsis[] = "...";
-  const gint  e_len      = sizeof (ellipsis);
+  const gint  e_len      = strlen (ellipsis);
 
   if (str)
     {
