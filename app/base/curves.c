@@ -32,12 +32,12 @@
 
 /*  local function prototypes  */
 
-static void   curves_plot_curve (Curves   *curves,
-                                 gint      channel,
-                                 gint      p1,
-                                 gint      p2,
-                                 gint      p3,
-                                 gint      p4);
+static void  curves_plot_curve (Curves *curves,
+                                gint    channel,
+                                gint    p1,
+                                gint    p2,
+                                gint    p3,
+                                gint    p4);
 
 
 /*  public functions  */
@@ -293,10 +293,10 @@ curves_plot_curve (Curves *curves,
   for (i = 0; i <= dx; i++)
     {
       t = i / dx;
-      y =   y0*(1-t)*(1-t)*(1-t) +
-          3*y1*(1-t)*(1-t)*t +
-          3*y2*(1-t)*t*t +
-            y3*t*t*t;
+      y =     y0 * (1-t) * (1-t) * (1-t) +
+          3 * y1 * (1-t) * (1-t) * t     +
+          3 * y2 * (1-t) * t     * t     +
+              y3 * t     * t     * t;
 
       curves->curve[channel][ROUND(x0) + i] = CLAMP0255 (ROUND (y));
     }

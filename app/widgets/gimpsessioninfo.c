@@ -831,36 +831,40 @@ gimp_session_info_restore (GimpSessionInfo   *info,
 /* This function mostly lifted from
  * gtk+/gdk/gdkscreen.c:gdk_screen_get_monitor_at_window()
  */
-static gint 
-get_appropriate_monitor (GdkScreen      *screen,
-                         gint            x,
-                         gint            y,
-                         gint            w,
-                         gint            h)
+static gint
+get_appropriate_monitor (GdkScreen *screen,
+                         gint       x,
+                         gint       y,
+                         gint       w,
+                         gint       h)
 {
-  gint num_monitors, i, area = 0, monitor = -1;
   GdkRectangle rect;
-  
-  rect.x = x;
-  rect.y = y;
-  rect.width = w;
+  gint         area    = 0;
+  gint         monitor = -1;
+  gint         num_monitors;
+  gint         i;
+
+  rect.x      = x;
+  rect.y      = y;
+  rect.width  = w;
   rect.height = h;
 
   num_monitors = gdk_screen_get_n_monitors (screen);
-  
+
   for (i = 0; i < num_monitors; i++)
     {
-      GdkRectangle tmp_monitor, intersect;
-      
-      gdk_screen_get_monitor_geometry (screen, i, &tmp_monitor);
-      gdk_rectangle_intersect (&rect, &tmp_monitor, &intersect);
-      
-      if (intersect.width * intersect.height > area)
-        { 
-          area = intersect.width * intersect.height;
+      GdkRectangle geometry;
+
+      gdk_screen_get_monitor_geometry (screen, i, &geometry);
+
+      if (gdk_rectangle_intersect (&rect, &geometry, &geometry) &&
+          geometry.width * geometry.height > area)
+        {
+          area = geometry.width * geometry.height;
           monitor = i;
         }
     }
+
   if (monitor >= 0)
     return monitor;
   else
@@ -881,22 +885,29 @@ gimp_session_info_set_geometry (GimpSessionInfo *info)
 
   screen = gtk_widget_get_screen (info->widget);
 
-  if ((!info->toplevel_entry || info->toplevel_entry->remember_size) &&
-      info->width > 0 && info->height > 0)
+  if ((! info->toplevel_entry || info->toplevel_entry->remember_size) &&
+      (info->width > 0 && info->height > 0))
     {
       gdk_screen_get_monitor_geometry (screen,
                                        get_appropriate_monitor (screen,
-                                                                info->x, info->y,
-                                                                info->width, info->height),
+                                                                info->x,
+                                                                info->y,
+                                                                info->width,
+                                                                info->height),
                                        &monitor);
-      info->x = CLAMP (info->x, monitor.x, monitor.x + monitor.width  - info->width);
-      info->y = CLAMP (info->y, monitor.y, monitor.y + monitor.height - info->height);
+
+      info->x = CLAMP (info->x,
+                       monitor.x, monitor.x + monitor.width  - info->width);
+      info->y = CLAMP (info->y,
+                       monitor.y, monitor.y + monitor.height - info->height);
     }
   else
     {
       gdk_screen_get_monitor_geometry (screen,
-                                     gdk_screen_get_monitor_at_point (screen, info->x, info->y),
-                                     &monitor);
+                                       gdk_screen_get_monitor_at_point (screen,
+                                                                        info->x,
+                                                                        info->y),
+                                       &monitor);
 
       info->x = CLAMP (info->x, monitor.x, monitor.x + monitor.width  - 128);
       info->y = CLAMP (info->y, monitor.y, monitor.y + monitor.height - 128);
