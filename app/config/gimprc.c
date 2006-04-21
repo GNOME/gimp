@@ -429,7 +429,7 @@ gimp_rc_query (GimpRc      *rc,
 
   if (!retval)
     {
-      const gchar *path_tokens[] =
+      const gchar * const path_tokens[] =
       {
         "gimp_dir",
         "gimp_data_dir",

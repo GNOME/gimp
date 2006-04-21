@@ -51,12 +51,10 @@ N_("When enabled, this will ensure that each pixel of an image gets " \
    "mapped to a pixel on the screen.")
 
 #define DEFAULT_FONT_BLURB \
-"Specify a default font.  The font is searched for in the " \
-"fontconfig font path."
+"Specify a default font."
 
 #define DEFAULT_GRADIENT_BLURB \
-"Specify a default gradient.  The gradient is searched for in the " \
-"specified gradient path."
+"Specify a default gradient."
 
 #define DEFAULT_GRID_BLURB \
 "Specify a default image grid."
@@ -65,12 +63,10 @@ N_("When enabled, this will ensure that each pixel of an image gets " \
 "Sets the default image in the \"File/New\" dialog."
 
 #define DEFAULT_PATTERN_BLURB \
-"Specify a default pattern. The pattern is searched for in the " \
-"specified pattern path."
+"Specify a default pattern."
 
 #define DEFAULT_PALETTE_BLURB \
-"Specify a default palette.  The palette is searched for in the " \
-"specified palette path."
+"Specify a default palette."
 
 #define DEFAULT_SNAP_DISTANCE_BLURB \
 N_("This is the distance in pixels where Guide and Grid snapping " \
@@ -141,7 +137,7 @@ N_("When enabled, the selected pattern will be used for all tools.")
 #define GRADIENT_PATH_WRITABLE_BLURB ""
 
 #define FONT_PATH_BLURB \
-"Where to look for fonts."
+"Where to look for fonts in addition to the system-wide installed fonts."
 
 #define HELP_BROWSER_BLURB \
 N_("Sets the browser used by the help system.")

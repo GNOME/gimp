@@ -53,9 +53,8 @@
 
 enum
 {
-  MIGRATION_PAGE,
-  TREE_PAGE,
-  LOG_PAGE,
+  WELCOME_PAGE,
+  INSTALLATION_PAGE,
   NUM_PAGES
 };
 
@@ -91,207 +90,45 @@ static gboolean    migrate       = FALSE;
 
 typedef enum
 {
-  TREE_ITEM_DO_NOTHING,        /* Don't pre-create            */
-  TREE_ITEM_MKDIR,             /* Create the directory        */
-  TREE_ITEM_FROM_SYSCONF_DIR   /* Copy from sysconf directory */
-} TreeItemType;
+  USER_INSTALL_DO_NOTHING,        /* Don't pre-create            */
+  USER_INSTALL_MKDIR,             /* Create the directory        */
+  USER_INSTALL_FROM_SYSCONF_DIR   /* Copy from sysconf directory */
+} UserInstallAction;
 
 static const struct
 {
-  gboolean      directory;
-  const gchar  *name;
-  const gchar  *description;
-  TreeItemType  type;
+  const gchar       *name;
+  UserInstallAction  action;
 }
-tree_items[] =
+user_install_items[] =
 {
-  {
-    FALSE, "gimprc",
-    N_("The gimprc is used to store personal preferences "
-       "that affect GIMP's default behavior.  "
-       "Paths to search for brushes, palettes, gradients, "
-       "patterns, plug-ins and modules can also configured "
-       "here."),
-    TREE_ITEM_DO_NOTHING
-  },
-  {
-    FALSE, "gtkrc",
-    N_("GIMP uses an additional gtkrc file so you can "
-       "configure it to look differently than other GTK apps."),
-    TREE_ITEM_FROM_SYSCONF_DIR
-  },
-  {
-    FALSE, "pluginrc",
-    N_("Plug-ins and extensions are external programs which "
-       "provide additional functionality to GIMP.  These "
-       "programs are searched for at run-time and information "
-       "about their functionality is cached in this file.  "
-       "This file is intended to be written to by GIMP only, "
-       "and should not be edited."),
-    TREE_ITEM_DO_NOTHING
-  },
-  {
-    FALSE, "menurc",
-    N_("Key shortcuts can be dynamically redefined. "
-       "The menurc is a dump of your configuration so it can "
-       "be remembered for the next session.  You may edit this "
-       "file if you wish, but it is much easier to define the "
-       "keys from within GIMP.  Deleting this file will "
-       "restore the default shortcuts."),
-    TREE_ITEM_DO_NOTHING
-  },
-  {
-    FALSE, "sessionrc",
-    N_("The sessionrc is used to store what dialog windows were "
-       "open the last time you quit GIMP.  You can configure "
-       "GIMP to reopen these dialogs at the saved position."),
-    TREE_ITEM_DO_NOTHING
-  },
-  {
-    FALSE, "templaterc",
-    N_("This file holds a collection of standard media sizes that "
-       "serve as image templates."),
-    TREE_ITEM_DO_NOTHING
-  },
-  {
-    FALSE, "unitrc",
-    N_("The unitrc is used to store your user units database.  "
-       "You can define additional units and use them just "
-       "like you use the built-in units inches, millimeters, "
-       "points and picas.  This file is overwritten each time "
-       "you quit the GIMP."),
-    TREE_ITEM_DO_NOTHING
-  },
-  {
-    TRUE, "brushes",
-    N_("This folder is used to store user defined brushes. "
-       "GIMP checks this folder in addition to the system-wide "
-       "brushes installation."),
-    TREE_ITEM_MKDIR
-  },
-  {
-    TRUE, "fonts",
-    N_("This folder is used to store fonts you only want to be "
-       "visible in GIMP. GIMP checks this folder in addition to "
-       "the system-wide fonts installation. Use this only if you really "
-       "want to have fonts available in GIMP only, otherwise put them "
-       "in your global font directory."),
-    TREE_ITEM_MKDIR
-  },
-  {
-    TRUE, "gradients",
-    N_("This folder is used to store user defined gradients.  "
-       "GIMP checks this folder in addition to the system-wide "
-       "gradients installation."),
-    TREE_ITEM_MKDIR
-  },
-  {
-    TRUE, "palettes",
-    N_("This folder is used to store user defined palettes.  "
-       "GIMP checks this folder in addition to the system-wide "
-       "palettes installation."),
-    TREE_ITEM_MKDIR
-  },
-  {
-    TRUE, "patterns",
-    N_("This folder is used to store user defined patterns.  "
-       "GIMP checks this folder in addition to the system-wide "
-       "patterns installation when searching for patterns."),
-    TREE_ITEM_MKDIR
-  },
-  {
-    TRUE, "plug-ins",
-    N_("This folder is used to store user created, temporary, "
-       "or otherwise non-system-supported plug-ins.  GIMP "
-       "checks this folder in addition to the system-wide "
-       "plug-in folder."),
-    TREE_ITEM_MKDIR
-  },
-  {
-    TRUE, "modules",
-    N_("This folder is used to store user created, temporary, "
-       "or otherwise non-system-supported DLL modules.  GIMP "
-       "checks this folder in addition to the system-wide "
-       "module folder."),
-    TREE_ITEM_MKDIR
-  },
-  {
-    TRUE, "interpreters",
-    N_("This folder is used to store configuration for user "
-       "created, temporary, or otherwise non-system-supported "
-       "plug-in interpreters.  GIMP checks this folder in "
-       "addition to the system-wide GIMP interpreters folder "
-       "when searching for plug-in interpreter configuration "
-       "files."),
-    TREE_ITEM_MKDIR
-  },
-  {
-    TRUE, "environ",
-    N_("This folder is used to store user created, temporary, "
-       "or otherwise non-system-supported additions to the "
-       "plug-in environment.  GIMP checks this folder in "
-       "addition to the system-wide GIMP environment folder "
-       "when searching for plug-in environment modification "
-       "files."),
-    TREE_ITEM_MKDIR
-  },
-  {
-    TRUE, "scripts",
-    N_("This folder is used to store user created and installed "
-       "scripts.  GIMP checks this folder in addition to "
-       "the systemwide scripts folder."),
-    TREE_ITEM_MKDIR
-  },
-  {
-    TRUE, "templates",
-    N_("This folder is searched for image templates."),
-    TREE_ITEM_MKDIR
-  },
-  {
-    TRUE, "themes",
-    N_("This folder is searched for user-installed themes."),
-    TREE_ITEM_MKDIR
-  },
-  {
-    TRUE, "tmp",
-    N_("This folder is used for temporary files."),
-    TREE_ITEM_MKDIR
-  },
-  {
-    TRUE, "tool-options",
-    N_("This folder is used to store tool options."),
-    TREE_ITEM_MKDIR
-  },
-  {
-    TRUE, "curves",
-    N_("This folder is used to store parameter files for the Curves tool."),
-    TREE_ITEM_MKDIR
-  },
-  {
-    TRUE, "levels",
-    N_("This folder is used to store parameter files for the Levels tool."),
-    TREE_ITEM_MKDIR
-  },
-  {
-    TRUE, "fractalexplorer",
-    NULL,
-    TREE_ITEM_MKDIR
-  },
-  {
-    TRUE, "gfig",
-    NULL,
-    TREE_ITEM_MKDIR
-  },
-  {
-    TRUE, "gflare",
-    NULL,
-    TREE_ITEM_MKDIR
-  },
-  {
-    TRUE, "gimpressionist",
-    NULL,
-    TREE_ITEM_MKDIR
-  }
+  { "gimprc",          USER_INSTALL_DO_NOTHING       },
+  { "gtkrc",           USER_INSTALL_FROM_SYSCONF_DIR },
+  { "pluginrc",        USER_INSTALL_DO_NOTHING       },
+  { "menurc",          USER_INSTALL_DO_NOTHING       },
+  { "sessionrc",       USER_INSTALL_DO_NOTHING       },
+  { "templaterc",      USER_INSTALL_DO_NOTHING       },
+  { "unitrc",          USER_INSTALL_DO_NOTHING       },
+  { "brushes",         USER_INSTALL_MKDIR            },
+  { "fonts",           USER_INSTALL_MKDIR            },
+  { "gradients",       USER_INSTALL_MKDIR            },
+  { "palettes",        USER_INSTALL_MKDIR            },
+  { "patterns",        USER_INSTALL_MKDIR            },
+  { "plug-ins",        USER_INSTALL_MKDIR            },
+  { "modules",         USER_INSTALL_MKDIR            },
+  { "interpreters",    USER_INSTALL_MKDIR            },
+  { "environ",         USER_INSTALL_MKDIR            },
+  { "scripts",         USER_INSTALL_MKDIR            },
+  { "templates",       USER_INSTALL_MKDIR            },
+  { "themes",          USER_INSTALL_MKDIR            },
+  { "tmp",             USER_INSTALL_MKDIR            },
+  { "tool-options",    USER_INSTALL_MKDIR            },
+  { "curves",          USER_INSTALL_MKDIR            },
+  { "levels",          USER_INSTALL_MKDIR            },
+  { "fractalexplorer", USER_INSTALL_MKDIR            },
+  { "gfig",            USER_INSTALL_MKDIR            },
+  { "gflare",          USER_INSTALL_MKDIR            },
+  { "gimpressionist",  USER_INSTALL_MKDIR            }
 };
 
 
@@ -328,19 +165,7 @@ user_install_response (GtkWidget *dialog,
 
   switch (index)
     {
-    case MIGRATION_PAGE:
-      if (migrate)
-        {
-          index = TREE_PAGE;
-          /* fallthrough */
-        }
-      else
-        {
-          user_install_notebook_set_page (GTK_NOTEBOOK (notebook), ++index);
-          break;
-        }
-
-    case TREE_PAGE:
+    case WELCOME_PAGE:
       {
         GtkWidget *page;
 
@@ -367,7 +192,7 @@ user_install_response (GtkWidget *dialog,
         else
           {
             gtk_label_set_text (GTK_LABEL (footer_label),
-                                _("Installation failed.  "
+                                _("Installation failed!  "
                                   "Contact system administrator."));
           }
 
@@ -376,7 +201,7 @@ user_install_response (GtkWidget *dialog,
       }
       break;
 
-    case LOG_PAGE:
+    case INSTALLATION_PAGE:
       if (! migrate)
         gimp_rc_save (gimprc);
 
@@ -408,47 +233,6 @@ user_install_notebook_append_page (GtkNotebook *notebook,
   return page;
 }
 
-static void
-add_label (GtkBox      *box,
-           const gchar *text)
-{
-  GtkWidget *label = gtk_label_new (NULL);
-
-  gtk_label_set_markup (GTK_LABEL (label), text);
-  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-  gtk_box_pack_start (box, label, FALSE, FALSE, 0);
-
-  gtk_widget_show (label);
-}
-
-static void
-user_install_sel_changed (GtkTreeSelection *sel,
-                          gpointer          data)
-{
-  GtkNotebook  *notebook = GTK_NOTEBOOK (data);
-  GtkTreeModel *model;
-  GtkTreeIter   iter;
-  gint          index = 0;
-
-  if (gtk_tree_selection_get_selected (sel, &model, &iter))
-    gtk_tree_model_get (model, &iter, DESC_COLUMN, &index, -1);
-
-  gtk_notebook_set_current_page (notebook, index);
-}
-
-static void
-user_install_tv_fix_size_request (GtkWidget     *widget,
-                                  GtkAllocation *allocation)
-{
-  gtk_widget_set_size_request (widget, allocation->width, allocation->height);
-  g_signal_handlers_disconnect_by_func (widget,
-                                        user_install_tv_fix_size_request,
-                                        NULL);
-}
-
 void
 user_install_dialog_run (const gchar *alternate_system_gimprc,
                          const gchar *alternate_gimprc,
@@ -459,7 +243,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *page;
-  GtkWidget *eek_box;
+  GtkWidget *widget;
   GdkPixbuf *wilber;
   gchar     *filename;
   gchar     *version;
@@ -521,24 +305,6 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
 
   g_object_weak_ref (G_OBJECT (dialog), (GWeakNotify) g_object_unref, gimprc);
 
-  eek_box = gtk_hbox_new (FALSE, 12);
-  g_object_ref (GTK_DIALOG (dialog)->action_area);
-  gtk_container_remove (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area->parent),
-                        GTK_DIALOG (dialog)->action_area);
-  gtk_box_pack_end (GTK_BOX (eek_box), GTK_DIALOG (dialog)->action_area,
-                    FALSE, FALSE, 0);
-  g_object_unref (GTK_DIALOG (dialog)->action_area);
-
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->vbox), eek_box,
-                    FALSE, FALSE, 0);
-  gtk_widget_show (eek_box);
-
-  footer_label = gtk_label_new (NULL);
-  gtk_label_set_justify (GTK_LABEL (footer_label), GTK_JUSTIFY_RIGHT);
-  gtk_label_set_line_wrap (GTK_LABEL (footer_label), TRUE);
-  gtk_box_pack_end (GTK_BOX (eek_box), footer_label, FALSE, FALSE,0 );
-  gtk_widget_show (footer_label);
-
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -559,7 +325,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
 
       g_object_unref (wilber);
 
-      gtk_box_pack_start (GTK_BOX (hbox),image, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
       gtk_widget_show (image);
     }
 
@@ -567,7 +333,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   gtk_label_set_justify (GTK_LABEL (title_label), GTK_JUSTIFY_LEFT);
   gtk_label_set_line_wrap (GTK_LABEL (title_label), TRUE);
   gimp_label_set_attributes (GTK_LABEL (title_label),
-                             PANGO_ATTR_SCALE, PANGO_SCALE_XX_LARGE,
+                             PANGO_ATTR_SCALE, PANGO_SCALE_X_LARGE,
                              -1);
   gtk_box_pack_start (GTK_BOX (hbox), title_label, FALSE, FALSE, 0);
   gtk_widget_show (title_label);
@@ -578,197 +344,67 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);
   gtk_widget_show (notebook);
 
-  /*  MIGRATION_PAGE  */
+  footer_label = gtk_label_new (NULL);
+  gtk_misc_set_alignment (GTK_MISC (footer_label), 1.0, 1.0);
+  gimp_label_set_attributes (GTK_LABEL (footer_label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_OBLIQUE,
+                             -1);
+  gtk_box_pack_start (GTK_BOX (vbox), footer_label, FALSE, FALSE, 0);
+  gtk_widget_show (footer_label);
+
+  /*  WELCOME_PAGE  */
+  page = user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
+                                            _("Welcome to the GNU Image "
+                                              "Manipulation Program"),
+                                            NULL,
+                                            12);
+
   if (migrate)
-  {
-    GtkWidget *box;
-    gchar     *title;
-    gchar     *label;
+    {
+      gchar     *title;
+      gchar     *label;
 
-    page = user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
-                                              _("Migrate User Settings"),
-                                              _("Click \"Continue\" to proceed "
-                                                "with the user installation."),
-                                              12);
+      title = g_strdup_printf (_("It seems you have used GIMP %s before."),
+                               version);
+      label = g_strdup_printf (_("_Migrate GIMP %s user settings"), version);
 
-    title = g_strdup_printf (_("It seems you have used GIMP %s before."),
-                             version);
-    label = g_strdup_printf (_("_Migrate GIMP %s user settings"), version);
+      widget = gimp_int_radio_group_new (TRUE, title,
+                                         G_CALLBACK (gimp_radio_button_update),
+                                         &migrate, migrate,
 
-    box = gimp_int_radio_group_new (TRUE, title,
-                                    G_CALLBACK (gimp_radio_button_update),
-                                    &migrate, migrate,
+                                         label,
+                                         TRUE,  NULL,
 
-                                    label,
-                                    TRUE,  NULL,
+                                         _("Do a _fresh user installation"),
+                                         FALSE, NULL,
 
-                                    _("Do a _fresh user installation"),
-                                    FALSE, NULL,
-                                    NULL);
-
-    g_free (label);
-    g_free (title);
-
-    gtk_box_pack_start (GTK_BOX (page), box, FALSE, FALSE, 0);
-    gtk_widget_show (box);
-  }
-
-  /*  TREE_PAGE  */
-  {
-    GtkWidget         *hbox;
-    GtkWidget         *vbox;
-    GtkWidget         *scr;
-    GtkWidget         *tv;
-    GdkPixbuf         *file_pixbuf;
-    GdkPixbuf         *folder_pixbuf;
-    GtkWidget         *notebook2;
-    GtkWidget         *page2;
-    GtkWidget         *label;
-    gchar             *str;
-    GtkTreeStore      *tree;
-    GtkTreeViewColumn *column;
-    GtkCellRenderer   *cell;
-    GtkTreeSelection  *sel;
-    GtkTreeIter        iter, child;
-    gint               i;
-
-    page = user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
-                                              _("Personal GIMP Folder"),
-                                              _("Click \"Continue\" to create "
-                                                "your personal GIMP folder."),
-                                              0);
-
-    hbox = gtk_hbox_new (FALSE, 12);
-    gtk_box_pack_start (GTK_BOX (page), hbox, FALSE, FALSE, 0);
-    gtk_widget_show (hbox);
-
-    tree = gtk_tree_store_new (NUM_COLUMNS, G_TYPE_STRING, GDK_TYPE_PIXBUF,
-                                            G_TYPE_INT);
-    tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (tree));
-    g_object_unref (tree);
-
-    column = gtk_tree_view_column_new ();
-
-    cell = gtk_cell_renderer_pixbuf_new ();
-    gtk_tree_view_column_pack_start (column, cell, FALSE);
-    gtk_tree_view_column_set_attributes (column, cell,
-                                         "pixbuf", PIXBUF_COLUMN,
                                          NULL);
 
-    cell = gtk_cell_renderer_text_new ();
-    gtk_tree_view_column_pack_start (column, cell, TRUE);
-    gtk_tree_view_column_set_attributes (column, cell,
-                                         "text", DIRENT_COLUMN,
-                                         NULL);
+      g_free (label);
+      g_free (title);
+    }
+  else
+    {
+      gchar *text;
 
-    gtk_tree_view_append_column (GTK_TREE_VIEW (tv), column);
+      text = g_strdup_printf (_("It appears that you are using GIMP for the "
+                                "first time.  GIMP will now create a folder "
+                                "named '<b>%s</b>' and copy some files to it."),
+                                gimp_filename_to_utf8 (gimp_directory ()));
 
-    gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tv), FALSE);
-    scr = gtk_scrolled_window_new (NULL, NULL);
-    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scr),
-                                    GTK_POLICY_NEVER,
-                                    GTK_POLICY_AUTOMATIC);
-    gtk_box_pack_start (GTK_BOX (hbox), scr, FALSE, FALSE, 0);
-    gtk_widget_show (scr);
-    gtk_container_add (GTK_CONTAINER (scr), tv);
-    gtk_widget_show (tv);
+      widget = g_object_new (GTK_TYPE_LABEL,
+                             "use-markup", TRUE,
+                             "label",      text,
+                             "wrap",       TRUE,
+                             "xalign",     0.0,
+                             NULL);
+      g_free (text);
+    }
 
-    vbox = gtk_vbox_new (FALSE, 6);
-    gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-    gtk_widget_show (vbox);
+  gtk_box_pack_start (GTK_BOX (page), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
 
-    str = g_strdup_printf (_("For a proper GIMP installation, a folder named "
-                             "'<b>%s</b>' needs to be created."),
-                           gimp_filename_to_utf8 (gimp_directory ()));
-    add_label (GTK_BOX (vbox), str);
-    g_free (str);
-
-    add_label (GTK_BOX (vbox),
-               _("This folder will contain a number of important files.  "
-                 "Click on one of the files or folders in the tree "
-                 "to get more information about the selected item."));
-
-    notebook2 = gtk_notebook_new ();
-    gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook2), FALSE);
-    gtk_notebook_set_show_border (GTK_NOTEBOOK (notebook2), FALSE);
-    gtk_box_pack_start (GTK_BOX (vbox), notebook2, FALSE, FALSE, 32);
-    gtk_widget_show (notebook2);
-
-    /*  empty page  */
-    page2 = gtk_vbox_new (FALSE, 0);
-    gtk_widget_show (page2);
-    gtk_notebook_append_page (GTK_NOTEBOOK (notebook2), page2, NULL);
-
-    sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (tv));
-    g_signal_connect (sel, "changed",
-                      G_CALLBACK (user_install_sel_changed),
-                      notebook2);
-
-    file_pixbuf = gtk_widget_render_icon (tv,
-                                          GTK_STOCK_NEW, GTK_ICON_SIZE_MENU,
-                                          NULL);
-    folder_pixbuf = gtk_widget_render_icon (tv,
-                                            GTK_STOCK_OPEN, GTK_ICON_SIZE_MENU,
-                                            NULL);
-
-    gtk_tree_store_append (tree, &iter, NULL);
-    gtk_tree_store_set (tree, &iter,
-                        DIRENT_COLUMN, gimp_filename_to_utf8 (gimp_directory ()),
-                        PIXBUF_COLUMN, folder_pixbuf,
-                        DESC_COLUMN, 0,
-                        -1);
-
-    for (i = 0; i < G_N_ELEMENTS (tree_items); i++)
-      {
-        gchar *foo;
-
-        if (!tree_items[i].description)
-          continue;
-
-        gtk_tree_store_append (tree, &child, &iter);
-        gtk_tree_store_set (tree, &child,
-                            DIRENT_COLUMN, tree_items[i].name,
-                            PIXBUF_COLUMN,
-                            tree_items[i].directory ? folder_pixbuf
-                                                    : file_pixbuf,
-                            DESC_COLUMN, i + 1,
-                            -1);
-
-        page2 = gtk_vbox_new (FALSE, 6);
-
-        foo = g_strdup_printf ("<b>%s</b>", tree_items[i].name);
-        label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), foo);
-        g_free (foo);
-
-        gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-        gtk_box_pack_start (GTK_BOX (page2), label, FALSE, FALSE, 0);
-        gtk_widget_show (label);
-
-        label = gtk_label_new (gettext (tree_items[i].description));
-        gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-        gtk_box_pack_start (GTK_BOX (page2), label, FALSE, FALSE, 0);
-        gtk_widget_show (label);
-        gtk_widget_show (page2);
-
-        gtk_notebook_append_page (GTK_NOTEBOOK (notebook2), page2, NULL);
-      }
-
-    gtk_tree_view_expand_all (GTK_TREE_VIEW (tv));
-
-    g_signal_connect (tv, "size-allocate",
-                      G_CALLBACK (user_install_tv_fix_size_request),
-                      NULL);
-
-    g_object_unref (file_pixbuf);
-    g_object_unref (folder_pixbuf);
-  }
-
-  /*  LOG_PAGE  */
+  /*  INSTALLATION_PAGE  */
   page = user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
                                             _("User Installation Log"),
                                             _("Please wait while your "
@@ -776,8 +412,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
                                               "being created..."),
                                             0);
 
-  user_install_notebook_set_page (GTK_NOTEBOOK (notebook),
-                                  oldgimp ? MIGRATION_PAGE : TREE_PAGE);
+  user_install_notebook_set_page (GTK_NOTEBOOK (notebook), WELCOME_PAGE);
 
   gtk_widget_show (dialog);
 
@@ -951,27 +586,27 @@ user_install_create_files (GtkWidget     *log_view,
   gint    i;
   GError *error = NULL;
 
-  for (i = 0; i < G_N_ELEMENTS (tree_items); i++)
+  for (i = 0; i < G_N_ELEMENTS (user_install_items); i++)
     {
       g_snprintf (dest, sizeof (dest), "%s%c%s",
-                  gimp_directory (), G_DIR_SEPARATOR, tree_items[i].name);
+                  gimp_directory (),
+                  G_DIR_SEPARATOR,
+                  user_install_items[i].name);
 
-      switch (tree_items[i].type)
+      switch (user_install_items[i].action)
         {
-        case TREE_ITEM_DO_NOTHING:
+        case USER_INSTALL_DO_NOTHING:
           break;
 
-        case TREE_ITEM_MKDIR:
+        case USER_INSTALL_MKDIR:
           if (! user_install_mkdir (log_buffer, dest, &error))
               goto break_out_of_loop;
           break;
 
-        case TREE_ITEM_FROM_SYSCONF_DIR:
+        case USER_INSTALL_FROM_SYSCONF_DIR:
           g_snprintf (source, sizeof (source), "%s%c%s",
                       gimp_sysconf_directory (), G_DIR_SEPARATOR,
-                      tree_items[i].name);
-
-          g_assert (! tree_items[i].directory);
+                      user_install_items[i].name);
 
           if (! user_install_file_copy (log_buffer, source, dest, &error))
             goto break_out_of_loop;
@@ -982,7 +617,7 @@ user_install_create_files (GtkWidget     *log_view,
           break;
         }
 
-      if (tree_items[i].type != TREE_ITEM_DO_NOTHING)
+      if (user_install_items[i].action != USER_INSTALL_DO_NOTHING)
         print_log (log_view, log_buffer, NULL);
     }
 

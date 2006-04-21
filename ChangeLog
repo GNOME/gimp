@@ -1,5 +1,14 @@
 2006-04-21  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimprc-blurbs.h: minor string changes.
+
+	* app/config/gimprc.c: declared an array as const.
+
+	* app/dialogs/user-install-dialog.c: further streamlining of the
+	user installation.
+
+2006-04-21  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/user-install-dialog.c: in an effort to basically
 	get rid of the user installation dialog, removed the license and
 	tuning pages as well as the code that was responsible for the
