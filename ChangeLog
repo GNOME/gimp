@@ -1,5 +1,12 @@
 2006-04-21  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/user-install-dialog.c: in an effort to basically
+	get rid of the user installation dialog, removed the license and
+	tuning pages as well as the code that was responsible for the
+	nifty orange style. More to come ...
+
+2006-04-21  Sven Neumann  <sven@gimp.org>
+
 	Applied a slightly modified version of a patch from Lode Leroy
 	(bug #336183):
 

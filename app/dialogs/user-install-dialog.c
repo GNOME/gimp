@@ -46,25 +46,16 @@
 
 #include "core/gimp-templates.h"
 
-#include "widgets/gimpwidgets-utils.h"
-
-#include "about.h"
-
 #include "user-install-dialog.h"
 
 #include "gimp-intl.h"
 
 
-#define PAGE_STYLE(widget)  gtk_widget_modify_style (widget, page_style)
-#define TITLE_STYLE(widget) gtk_widget_modify_style (widget, title_style)
-
 enum
 {
-  GPL_PAGE,
   MIGRATION_PAGE,
   TREE_PAGE,
   LOG_PAGE,
-  TUNING_PAGE,
   NUM_PAGES
 };
 
@@ -77,39 +68,25 @@ enum
 };
 
 
-static void      user_install_response (GtkWidget   *widget,
+static void      user_install_response (GtkWidget   *dialog,
                                         gint         response_id,
                                         GimpRc      *gimprc);
 
-static gboolean  user_install_run      (const gchar *oldgimp);
-static void      user_install_tuning   (GimpRc      *gimprc);
+static gboolean  user_install_run      (GtkWidget   *page,
+                                        const gchar *oldgimp);
 
 
 /*  private stuff  */
 
-static GtkWidget  *user_install_dialog = NULL;
+static GtkWidget  *notebook      = NULL;
 
-static GtkWidget  *notebook        = NULL;
+static GtkWidget  *title_label   = NULL;
+static GtkWidget  *footer_label  = NULL;
 
-static GtkWidget  *title_image     = NULL;
-
-static GtkWidget  *title_label     = NULL;
-static GtkWidget  *footer_label    = NULL;
-
-static GtkWidget  *log_page        = NULL;
-static GtkWidget  *tuning_page     = NULL;
-
-static GtkRcStyle *title_style     = NULL;
-static GtkRcStyle *page_style      = NULL;
-
-static GdkColor    black_color;
-static GdkColor    white_color;
-static GdkColor    title_color;
-
-static gchar      *oldgimp         = NULL;
-static gint        oldgimp_major   = 0;
-static gint        oldgimp_minor   = 0;
-static gboolean    migrate         = FALSE;
+static gchar      *oldgimp       = NULL;
+static gint        oldgimp_major = 0;
+static gint        oldgimp_minor = 0;
+static gboolean    migrate       = FALSE;
 
 
 typedef enum
@@ -318,7 +295,7 @@ tree_items[] =
 };
 
 
-static void
+static GtkWidget *
 user_install_notebook_set_page (GtkNotebook *notebook,
                                 gint         index)
 {
@@ -335,31 +312,22 @@ user_install_notebook_set_page (GtkNotebook *notebook,
   gtk_label_set_text (GTK_LABEL (footer_label), footer);
 
   gtk_notebook_set_current_page (notebook, index);
+
+  return page;
 }
 
 static void
-user_install_response (GtkWidget *widget,
+user_install_response (GtkWidget *dialog,
                        gint       response_id,
                        GimpRc    *gimprc)
 {
-  static gint index = GPL_PAGE;
+  gint index = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
 
   if (response_id != GTK_RESPONSE_OK)
-    {
-      exit (EXIT_SUCCESS);
-    }
+    exit (EXIT_SUCCESS);
 
   switch (index)
     {
-    case GPL_PAGE:
-      if (oldgimp)
-        index = MIGRATION_PAGE;
-      else
-        index = TREE_PAGE;
-
-      user_install_notebook_set_page (GTK_NOTEBOOK (notebook), index);
-      break;
-
     case MIGRATION_PAGE:
       if (migrate)
         {
@@ -373,54 +341,46 @@ user_install_response (GtkWidget *widget,
         }
 
     case TREE_PAGE:
-      user_install_notebook_set_page (GTK_NOTEBOOK (notebook), ++index);
+      {
+        GtkWidget *page;
 
-      /*  Creating the directories can take some time on NFS, so inform
-       *  the user and set the buttons insensitive
-       */
-      gtk_dialog_set_response_sensitive (GTK_DIALOG (widget),
-                                         GTK_RESPONSE_CANCEL, FALSE);
-      gtk_dialog_set_response_sensitive (GTK_DIALOG (widget),
-                                         GTK_RESPONSE_OK, TRUE);
+        page = user_install_notebook_set_page (GTK_NOTEBOOK (notebook),
+                                               ++index);
 
-      if (user_install_run (migrate ? oldgimp : NULL))
-        {
-          gtk_dialog_set_response_sensitive (GTK_DIALOG (widget),
-                                             GTK_RESPONSE_OK, TRUE);
-          gtk_label_set_text (GTK_LABEL (footer_label),
-                              _("Installation successful.  "
-                                "Click \"Continue\" to proceed."));
-        }
-      else
-        {
-          gtk_label_set_text (GTK_LABEL (footer_label),
-                              _("Installation failed.  "
-                                "Contact system administrator."));
+        /*  Creating the directories can take some time on NFS, so inform
+         *  the user and set the buttons insensitive
+         */
+        gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_CANCEL, FALSE);
+        gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK, TRUE);
 
-          index = TUNING_PAGE; /* skip to last page */
-        }
+        if (user_install_run (page, migrate ? oldgimp : NULL))
+          {
+            gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
+                                               GTK_RESPONSE_OK, TRUE);
 
-      gtk_dialog_set_response_sensitive (GTK_DIALOG (widget),
-                                         GTK_RESPONSE_CANCEL, TRUE);
+            gtk_label_set_text (GTK_LABEL (footer_label),
+                                _("Installation successful.  "
+                                  "Click \"Continue\" to proceed."));
+          }
+        else
+          {
+            gtk_label_set_text (GTK_LABEL (footer_label),
+                                _("Installation failed.  "
+                                  "Contact system administrator."));
+          }
+
+        gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_CANCEL, TRUE);
+      }
       break;
 
     case LOG_PAGE:
       if (! migrate)
-        {
-          user_install_notebook_set_page (GTK_NOTEBOOK (notebook), ++index);
-          user_install_tuning (gimprc);
-          break;
-        }
-      /* else fallthrough */
-
-    case TUNING_PAGE:
-      if (! migrate)
         gimp_rc_save (gimprc);
 
-      g_object_unref (title_style);
-      g_object_unref (page_style);
-
-      gtk_widget_destroy (user_install_dialog);
+      gtk_widget_destroy (dialog);
 
       gtk_main_quit ();
       break;
@@ -431,94 +391,17 @@ user_install_response (GtkWidget *widget,
     }
 }
 
-static gboolean
-user_install_corner_expose (GtkWidget      *widget,
-                            GdkEventExpose *eevent,
-                            gpointer        data)
-{
-  GtkCornerType corner;
-
-  /* call default handler explicitly, then draw the corners */
-  if (GTK_WIDGET_GET_CLASS (widget)->expose_event)
-    GTK_WIDGET_GET_CLASS (widget)->expose_event (widget, eevent);
-
-  corner = GPOINTER_TO_INT (data);
-
-  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
-    {
-      switch (corner)
-        {
-        case GTK_CORNER_TOP_LEFT:     corner = GTK_CORNER_TOP_RIGHT;    break;
-        case GTK_CORNER_BOTTOM_LEFT:  corner = GTK_CORNER_BOTTOM_RIGHT; break;
-        case GTK_CORNER_TOP_RIGHT:    corner = GTK_CORNER_TOP_LEFT;     break;
-        case GTK_CORNER_BOTTOM_RIGHT: corner = GTK_CORNER_BOTTOM_LEFT;  break;
-        }
-    }
-
-  switch (corner)
-    {
-    case GTK_CORNER_TOP_LEFT:
-      gdk_draw_arc (widget->window,
-                    widget->style->white_gc,
-                    TRUE,
-                    0, 0,
-                    widget->allocation.width * 2,
-                    widget->allocation.height * 2,
-                    90 * 64,
-                    180 * 64);
-      break;
-
-    case GTK_CORNER_BOTTOM_LEFT:
-      gdk_draw_arc (widget->window,
-                    widget->style->white_gc,
-                    TRUE,
-                    0, -widget->allocation.height,
-                    widget->allocation.width * 2,
-                    widget->allocation.height * 2,
-                    180 * 64,
-                    270 * 64);
-      break;
-
-    case GTK_CORNER_TOP_RIGHT:
-      gdk_draw_arc (widget->window,
-                    widget->style->white_gc,
-                    TRUE,
-                    -widget->allocation.width, 0,
-                    widget->allocation.width * 2,
-                    widget->allocation.height * 2,
-                    0 * 64,
-                    90 * 64);
-      break;
-
-    case GTK_CORNER_BOTTOM_RIGHT:
-      gdk_draw_arc (widget->window,
-                    widget->style->white_gc,
-                    TRUE,
-                    -widget->allocation.width, -widget->allocation.height,
-                    widget->allocation.width * 2,
-                    widget->allocation.height * 2,
-                    270 * 64,
-                    360 * 64);
-      break;
-
-    default:
-      break;
-    }
-
-  return TRUE;
-}
-
 static GtkWidget *
 user_install_notebook_append_page (GtkNotebook *notebook,
                                    const gchar *title,
                                    const gchar *footer,
                                    gint         vbox_spacing)
 {
-  GtkWidget *page;
+  GtkWidget *page = gtk_vbox_new (FALSE, vbox_spacing);
 
-  page = gtk_vbox_new (FALSE, vbox_spacing);
   g_object_set_data (G_OBJECT (page), "title",  (gpointer) title);
   g_object_set_data (G_OBJECT (page), "footer", (gpointer) footer);
+
   gtk_notebook_append_page (notebook, page, NULL);
   gtk_widget_show (page);
 
@@ -529,11 +412,9 @@ static void
 add_label (GtkBox      *box,
            const gchar *text)
 {
-  GtkWidget *label;
+  GtkWidget *label = gtk_label_new (NULL);
 
-  label = gtk_label_new (NULL);
   gtk_label_set_markup (GTK_LABEL (label), text);
-  PAGE_STYLE (label);
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 
@@ -577,18 +458,11 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   GtkWidget *dialog;
   GtkWidget *vbox;
   GtkWidget *hbox;
-  GtkWidget *ebox;
-  GtkWidget *table;
-  GtkWidget *darea;
   GtkWidget *page;
-  GtkWidget *sep;
   GtkWidget *eek_box;
   GdkPixbuf *wilber;
   gchar     *filename;
   gchar     *version;
-  gchar     *title;
-  gchar     *tmp;
-  gint       i;
 
   oldgimp = g_strdup (gimp_directory ());
 
@@ -601,6 +475,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
       oldgimp_major = 2;
       oldgimp_minor = 2;
     }
+
   migrate = (version && g_file_test (oldgimp, G_FILE_TEST_IS_DIR));
 
   if (! migrate)
@@ -611,6 +486,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
           oldgimp_major = 2;
           oldgimp_minor = 0;
         }
+
       migrate = (version && g_file_test (oldgimp, G_FILE_TEST_IS_DIR));
     }
 
@@ -622,30 +498,30 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
       oldgimp_minor = 0;
     }
 
-  gimprc = gimp_rc_new (alternate_system_gimprc, alternate_gimprc, verbose);
+  dialog = gimp_dialog_new (_("GIMP User Installation"),
+                            "gimp-user-installation",
+                            NULL, 0,
+                            NULL, NULL,
 
-  dialog = user_install_dialog =
-    gimp_dialog_new (_("GIMP User Installation"), "gimp-user-installation",
-                     NULL, 0,
-                     NULL, NULL,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            _("Continue"),    GTK_RESPONSE_OK,
 
-                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                     _("Continue"),    GTK_RESPONSE_OK,
-
-                     NULL);
+                            NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
+  gimprc = gimp_rc_new (alternate_system_gimprc, alternate_gimprc, verbose);
+
   g_signal_connect (dialog, "response",
                     G_CALLBACK (user_install_response),
                     gimprc);
 
   g_object_weak_ref (G_OBJECT (dialog), (GWeakNotify) g_object_unref, gimprc);
-  eek_box = gtk_hbox_new (FALSE, 8);
 
+  eek_box = gtk_hbox_new (FALSE, 12);
   g_object_ref (GTK_DIALOG (dialog)->action_area);
   gtk_container_remove (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area->parent),
                         GTK_DIALOG (dialog)->action_area);
@@ -657,59 +533,19 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
                     FALSE, FALSE, 0);
   gtk_widget_show (eek_box);
 
-  gdk_color_parse ("black",       &black_color);
-  gdk_color_parse ("white",       &white_color);
-  gdk_color_parse ("dark orange", &title_color);
-
-  /*  B/W Style for the page contents  */
-  page_style = gtk_widget_get_modifier_style (dialog);
-  g_object_ref (page_style);
-
-  for (i = 0; i < 5; i++)
-    {
-      page_style->fg[i] = black_color;
-      page_style->bg[i] = white_color;
-
-      page_style->color_flags[i] = (GTK_RC_FG | GTK_RC_BG);
-    }
-
-  page_style->text[GTK_STATE_NORMAL] = black_color;
-  page_style->base[GTK_STATE_NORMAL] = white_color;
-
-  page_style->color_flags[GTK_STATE_NORMAL] |= (GTK_RC_TEXT | GTK_RC_BASE);
-
-  g_free (page_style->bg_pixmap_name[GTK_STATE_NORMAL]);
-  page_style->bg_pixmap_name[GTK_STATE_NORMAL] = g_strdup ("<none>");
-
-  /*  B/Colored Style for the page title  */
-  title_style = gtk_rc_style_copy (page_style);
-
-  title_style->bg[GTK_STATE_NORMAL] = title_color;
-
-  pango_font_description_free (title_style->font_desc);
-  title_style->font_desc = pango_font_description_from_string ("sans 20");
-
-  TITLE_STYLE (dialog);
-
   footer_label = gtk_label_new (NULL);
-  PAGE_STYLE (footer_label);
   gtk_label_set_justify (GTK_LABEL (footer_label), GTK_JUSTIFY_RIGHT);
   gtk_label_set_line_wrap (GTK_LABEL (footer_label), TRUE);
   gtk_box_pack_end (GTK_BOX (eek_box), footer_label, FALSE, FALSE,0 );
   gtk_widget_show (footer_label);
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_widget_show (vbox);
 
-  ebox = gtk_event_box_new ();
-  TITLE_STYLE (ebox);
-  gtk_widget_set_events (ebox, GDK_EXPOSURE_MASK);
-  gtk_box_pack_start (GTK_BOX (vbox), ebox, FALSE, FALSE, 0);
-  gtk_widget_show (ebox);
-
-  hbox = gtk_hbox_new (FALSE, 8);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 8);
-  gtk_container_add (GTK_CONTAINER (ebox), hbox);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   filename = g_build_filename (gimp_data_directory(),
@@ -719,94 +555,31 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
 
   if (wilber)
     {
-      title_image = gtk_image_new_from_pixbuf (wilber);
+      GtkWidget *image = gtk_image_new_from_pixbuf (wilber);
+
       g_object_unref (wilber);
 
-      gtk_box_pack_start (GTK_BOX (hbox), title_image, FALSE, FALSE, 8);
-      gtk_widget_show (title_image);
+      gtk_box_pack_start (GTK_BOX (hbox),image, FALSE, FALSE, 0);
+      gtk_widget_show (image);
     }
 
   title_label = gtk_label_new (NULL);
-  TITLE_STYLE (title_label);
   gtk_label_set_justify (GTK_LABEL (title_label), GTK_JUSTIFY_LEFT);
   gtk_label_set_line_wrap (GTK_LABEL (title_label), TRUE);
+  gimp_label_set_attributes (GTK_LABEL (title_label),
+                             PANGO_ATTR_SCALE, PANGO_SCALE_XX_LARGE,
+                             -1);
   gtk_box_pack_start (GTK_BOX (hbox), title_label, FALSE, FALSE, 0);
   gtk_widget_show (title_label);
-
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
-  gtk_widget_show (hbox);
-
-  ebox = gtk_event_box_new ();
-  TITLE_STYLE (ebox);
-  gtk_widget_set_size_request (ebox, 16, -1);
-  gtk_box_pack_start (GTK_BOX (hbox), ebox, FALSE, FALSE, 0);
-  gtk_widget_show (ebox);
-
-  ebox = gtk_event_box_new ();
-  PAGE_STYLE (ebox);
-  gtk_box_pack_start (GTK_BOX (hbox), ebox, TRUE, TRUE, 0);
-  gtk_widget_show (ebox);
-
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 8);
-  gtk_container_add (GTK_CONTAINER (ebox), table);
-  gtk_widget_show (table);
-
-  darea = gtk_drawing_area_new ();
-  TITLE_STYLE (darea);
-  gtk_widget_set_size_request (darea, 16, 16);
-  g_signal_connect (darea, "expose-event",
-                    G_CALLBACK (user_install_corner_expose),
-                    GINT_TO_POINTER (GTK_CORNER_TOP_LEFT));
-  gtk_table_attach (GTK_TABLE (table), darea, 0, 1, 0, 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
-  gtk_widget_show (darea);
-
-  darea = gtk_drawing_area_new ();
-  TITLE_STYLE (darea);
-  gtk_widget_set_size_request (darea, 16, 16);
-  g_signal_connect (darea, "expose-event",
-                    G_CALLBACK (user_install_corner_expose),
-                    GINT_TO_POINTER (GTK_CORNER_BOTTOM_LEFT));
-  gtk_table_attach (GTK_TABLE (table), darea, 0, 1, 2, 3,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
-  gtk_widget_show (darea);
 
   notebook = gtk_notebook_new ();
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook), FALSE);
   gtk_notebook_set_show_border (GTK_NOTEBOOK (notebook), FALSE);
-  gtk_table_attach_defaults (GTK_TABLE (table), notebook, 1, 2, 1, 2);
+  gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);
   gtk_widget_show (notebook);
 
-  gtk_widget_show (vbox);
-
-  /*  GPL_PAGE  */
-
-  /*  version number  */
-  title = g_strdup_printf (_("Welcome to GIMP %d.%d"),
-                           GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION);
-
-  page = user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
-                                            title,
-                                            _("Click \"Continue\" to enter "
-                                              "the GIMP user installation."),
-                                            12);
-
-  /*  do not free title yet!  */
-
-  tmp = g_strconcat ("<b>", GIMP_NAME, "</b>", "\n", GIMP_COPYRIGHT, NULL);
-  add_label (GTK_BOX (page), tmp);
-  g_free (tmp);
-
-  sep = gtk_hseparator_new ();
-  gtk_box_pack_start (GTK_BOX (page), sep, FALSE, FALSE, 2);
-  gtk_widget_show (sep);
-
-  add_label (GTK_BOX (page), GIMP_LICENSE);
-
   /*  MIGRATION_PAGE  */
-  if (version && migrate)
+  if (migrate)
   {
     GtkWidget *box;
     gchar     *title;
@@ -890,7 +663,6 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
 
     gtk_tree_view_append_column (GTK_TREE_VIEW (tv), column);
 
-    PAGE_STYLE (tv);
     gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tv), FALSE);
     scr = gtk_scrolled_window_new (NULL, NULL);
     gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scr),
@@ -968,7 +740,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
         label = gtk_label_new (NULL);
         gtk_label_set_markup (GTK_LABEL (label), foo);
         g_free (foo);
-        PAGE_STYLE (label);
+
         gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
         gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
@@ -976,7 +748,6 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
         gtk_widget_show (label);
 
         label = gtk_label_new (gettext (tree_items[i].description));
-        PAGE_STYLE (label);
         gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
         gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
@@ -998,32 +769,20 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   }
 
   /*  LOG_PAGE  */
-  page = log_page =
-    user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
-                                       _("User Installation Log"),
-                                       _("Please wait while your personal "
-                                         "GIMP folder is being created..."),
-                                       0);
+  page = user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
+                                            _("User Installation Log"),
+                                            _("Please wait while your "
+                                              "personal GIMP folder is "
+                                              "being created..."),
+                                            0);
 
-  /*  TUNING_PAGE  */
-  page = tuning_page =
-    user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
-                                       _("GIMP Performance Tuning"),
-                                       _("Click \"Continue\" to accept the "
-                                         "settings above."),
-                                       24);
-
-  add_label (GTK_BOX (page),
-             _("<b>For optimal GIMP performance, some settings may have to "
-               "be adjusted.</b>"));
-
-  user_install_notebook_set_page (GTK_NOTEBOOK (notebook), 0);
+  user_install_notebook_set_page (GTK_NOTEBOOK (notebook),
+                                  oldgimp ? MIGRATION_PAGE : TREE_PAGE);
 
   gtk_widget_show (dialog);
 
   gtk_main ();
 
-  g_free (title);
   g_free (oldgimp);
 }
 
@@ -1327,7 +1086,8 @@ user_install_migrate_files (const gchar   *oldgimp,
 }
 
 static gboolean
-user_install_run (const gchar *oldgimp)
+user_install_run (GtkWidget   *page,
+                  const gchar *oldgimp)
 {
   GtkWidget     *scrolled_window;
   GtkTextBuffer *log_buffer;
@@ -1338,7 +1098,7 @@ user_install_run (const gchar *oldgimp)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-  gtk_box_pack_start (GTK_BOX (log_page), scrolled_window, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (page), scrolled_window, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_window);
 
   log_buffer = gtk_text_buffer_new (NULL);
@@ -1350,7 +1110,6 @@ user_install_run (const gchar *oldgimp)
   log_view = gtk_text_view_new_with_buffer (log_buffer);
   g_object_unref (log_buffer);
 
-  PAGE_STYLE (log_view);
   gtk_text_view_set_editable (GTK_TEXT_VIEW (log_view), FALSE);
 
   gtk_container_add (GTK_CONTAINER (scrolled_window), log_view);
@@ -1371,65 +1130,4 @@ user_install_run (const gchar *oldgimp)
                                        log_view, log_buffer);
   else
     return user_install_create_files (log_view, log_buffer);
-}
-
-static void
-user_install_tuning (GimpRc *gimprc)
-{
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *entry;
-
-  /*  tile cache size  */
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (tuning_page), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
-
-  add_label (GTK_BOX (vbox),
-             _("GIMP uses a limited amount of memory to store image data, "
-               "the so-called \"Tile Cache\".  You should adjust its size "
-               "to fit into memory.  Consider the amount of memory used by "
-               "other running processes."));
-
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  entry = gimp_prop_memsize_entry_new (G_OBJECT (gimprc), "tile-cache-size");
-  gtk_box_pack_end (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
-  gtk_widget_show (entry);
-
-  label = gtk_label_new (_("Tile cache size:"));
-  PAGE_STYLE (label);
-  gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-
-  /*  swap file location  */
-  vbox = gtk_vbox_new (FALSE, 8);
-  gtk_box_pack_start (GTK_BOX (tuning_page), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
-
-  add_label (GTK_BOX (vbox),
-             _("All image and undo data which doesn't fit into the Tile Cache "
-               "will be written to a swap file.  This file should be located "
-               "on a local filesystem with enough free space (several hundred "
-               "MB). On a UNIX system, you may want to use the system-wide "
-               "temp-dir (\"/tmp\" or \"/var/tmp\")."));
-
-  hbox = gtk_hbox_new (FALSE, 8);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  entry = gimp_prop_file_entry_new (G_OBJECT (gimprc), "swap-path",
-                                    _("Select Swap Dir"),
-                                    TRUE, TRUE);
-  gtk_box_pack_end (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
-  gtk_widget_show (entry);
-
-  label = gtk_label_new (_("Swap folder:"));
-  PAGE_STYLE (label);
-  gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
 }
