@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-01 15:01+0200\n"
-"PO-Revision-Date: 2006-02-24 08:27+0100\n"
+"POT-Creation-Date: 2006-04-19 16:26+0200\n"
+"PO-Revision-Date: 2006-04-19 16:27+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -620,47 +620,59 @@ msgstr "Onda a dente di sega"
 msgid "Triangular wave"
 msgstr "Onda triangolare"
 
-#: ../libgimpbase/gimpbaseenums.c:651
+#: ../libgimpbase/gimpbaseenums.c:652
+msgid "Run interactively"
+msgstr "Esegui interattivamente"
+
+#: ../libgimpbase/gimpbaseenums.c:653
+msgid "Run non-interactively"
+msgstr "Esegui non-interattivamente"
+
+#: ../libgimpbase/gimpbaseenums.c:654
+msgid "Run with last used values"
+msgstr "Esegui con gli ultimi parametri usati"
+
+#: ../libgimpbase/gimpbaseenums.c:682
 msgid "Pixels"
 msgstr "Pixel"
 
-#: ../libgimpbase/gimpbaseenums.c:652
+#: ../libgimpbase/gimpbaseenums.c:683
 msgid "Points"
 msgstr "Punti"
 
-#: ../libgimpbase/gimpbaseenums.c:681
+#: ../libgimpbase/gimpbaseenums.c:712
 msgid "Shadows"
 msgstr "Scuri"
 
-#: ../libgimpbase/gimpbaseenums.c:682
+#: ../libgimpbase/gimpbaseenums.c:713
 msgid "Midtones"
 msgstr "Mezzi toni"
 
-#: ../libgimpbase/gimpbaseenums.c:683
+#: ../libgimpbase/gimpbaseenums.c:714
 msgid "Highlights"
 msgstr "Luminosi"
 
-#: ../libgimpbase/gimpbaseenums.c:711
+#: ../libgimpbase/gimpbaseenums.c:742
 msgid "Forward"
 msgstr "Avanti"
 
-#: ../libgimpbase/gimpbaseenums.c:712
+#: ../libgimpbase/gimpbaseenums.c:743
 msgid "Backward"
 msgstr "Indietro"
 
-#: ../libgimpbase/gimpbaseenums.c:815
+#: ../libgimpbase/gimpbaseenums.c:846
 msgid "Internal GIMP procedure"
 msgstr "Procedura interna di GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:816
+#: ../libgimpbase/gimpbaseenums.c:847
 msgid "GIMP Plug-In"
 msgstr "Plug-in di GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:817
+#: ../libgimpbase/gimpbaseenums.c:848
 msgid "GIMP Extension"
 msgstr "Estensione di GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:818
+#: ../libgimpbase/gimpbaseenums.c:849
 msgid "Temporary Procedure"
 msgstr "Procedura temporanea"
 
