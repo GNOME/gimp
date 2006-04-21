@@ -169,6 +169,12 @@ gimp_threshold_tool_initialize (GimpTool    *tool,
 
   gimp_drawable_calculate_histogram (drawable, t_tool->hist);
 
+  t_tool->threshold->low_threshold =
+    gimp_histogram_get_threshold (t_tool->hist,
+                                  (t_tool->threshold->color ?
+                                   GIMP_HISTOGRAM_RGB : GIMP_HISTOGRAM_VALUE),
+                                  0, 255);
+
   g_signal_handlers_block_by_func (t_tool->histogram_box->view,
                                    gimp_threshold_tool_histogram_range,
                                    t_tool);

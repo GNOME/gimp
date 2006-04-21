@@ -344,6 +344,101 @@ gimp_histogram_get_median (GimpHistogram         *histogram,
   return -1;
 }
 
+/*
+ * adapted from GNU ocrad 0.14 : page_image_io.cc : otsu_th
+ *
+ *  N. Otsu, "A threshold selection method from gray-level histograms,"
+ *  IEEE Trans. Systems, Man, and Cybernetics, vol. 9, no. 1, pp. 62-66, 1979.
+ */
+gdouble
+gimp_histogram_get_threshold (GimpHistogram        *histogram,
+                              GimpHistogramChannel  channel,
+                              gint                  start,
+                              gint                  end)
+{
+  gint     i;
+  gint     maxval;
+  gdouble *hist      = NULL;
+  gdouble *chist     = NULL;
+  gdouble *cmom      = NULL;
+  gdouble  hist_max  = 0.0;
+  gdouble  chist_max = 0.0;
+  gdouble  cmom_max  = 0.0;
+  gdouble  bvar_max  = 0.0;
+  gint     threshold = 127;
+
+  g_return_val_if_fail (histogram != NULL, -1);
+
+  /*  the gray alpha channel is in slot 1  */
+  if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
+    channel = 1;
+
+  if (! histogram->values[0] ||
+      start > end ||
+      (channel == GIMP_HISTOGRAM_RGB && histogram->n_channels < 4) ||
+      (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
+    return 0;
+
+  start = CLAMP (start, 0, 255);
+  end = CLAMP (end, 0, 255);
+
+  maxval = end - start;
+
+  hist  = g_newa (gdouble, maxval + 1);
+  chist = g_newa (gdouble, maxval + 1);
+  cmom  = g_newa (gdouble, maxval + 1);
+
+  if (channel == GIMP_HISTOGRAM_RGB)
+    {
+      for (i = start; i <= end; i++)
+        hist[i - start] = (HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED,   i) +
+                           HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, i) +
+                           HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE,  i));
+    }
+  else
+    {
+      for (i = start; i <= end; i++)
+        hist[i - start] = HISTOGRAM_VALUE (channel, i);
+    }
+
+  hist_max = hist[0];
+  chist[0] = hist[0];
+  cmom[0] = 0;
+
+  for (i = 1; i <= maxval; i++)
+    {
+      if (hist[i] > hist_max)
+	hist_max = hist[i];
+
+      chist[i] = chist[i-1] + hist[i];
+      cmom[i] = cmom[i-1] + i * hist[i];
+    }
+
+  chist_max = chist[maxval];
+  cmom_max = cmom[maxval];
+  bvar_max = 0;
+
+  for (i = 0; i < maxval; ++i)
+    if (chist[i] > 0 && chist[i] < chist_max)
+      {
+	gdouble bvar;
+
+	bvar = (gdouble) cmom[i] / chist[i];
+	bvar -= (cmom_max - cmom[i]) / (chist_max - chist[i]);
+	bvar *= bvar;
+	bvar *= chist[i];
+	bvar *= chist_max - chist[i];
+
+	if (bvar > bvar_max)
+	  {
+	    bvar_max = bvar;
+	    threshold = start + i;
+	  }
+      }
+
+  return threshold;
+}
+
 gdouble
 gimp_histogram_get_std_dev (GimpHistogram        *histogram,
                             GimpHistogramChannel  channel,

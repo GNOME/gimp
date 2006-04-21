@@ -1,5 +1,17 @@
 2006-04-21  Sven Neumann  <sven@gimp.org>
 
+	Applied a slightly modified version of a patch from Lode Leroy
+	(bug #336183):
+
+	* app/base/gimphistogram.[ch]: added new function
+	gimp_histogram_get_threshold() that returns an optimal
+	binarization threshold.
+	
+	* app/tools/gimpthresholdtool.c: use the new function to
+	initialize the Threshold tool.
+
+2006-04-21  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimputils.c (gimp_utf8_strtrim): strlen != sizeof
 
 2006-04-21  Sven Neumann  <sven@gimp.org>
