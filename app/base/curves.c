@@ -247,7 +247,6 @@ curves_plot_curve (Curves *curves,
       y1 = y0 + dy / 3.0;
       y2 = y0 + dy * 2.0 / 3.0;
     }
-
   else if (p1 == p2 && p3 != p4)
     {
       /* only the right neighbor is available. Make the tangent at the
@@ -258,20 +257,20 @@ curves_plot_curve (Curves *curves,
        */
       slope = (curves->points[channel][p4][1] - y0) /
               (curves->points[channel][p4][0] - x0);
+
       y2 = y3 - slope * dx / 3.0;
       y1 = y0 + (y2 - y0) / 2.0;
     }
-
   else if (p1 != p2 && p3 == p4)
     {
       /* see previous case */
       slope = (y3 - curves->points[channel][p1][1]) /
               (x3 - curves->points[channel][p1][0]);
+
       y1 = y0 + slope * dx / 3.0;
       y2 = y3 + (y1 - y3) / 2.0;
     }
-
-  else if (p1 != p2 && p3 != p4)
+  else /* (p1 != p2 && p3 != p4) */
     {
       /* Both neighbors are available. Make the tangents at the endpoints
        * parallel to the line between the opposite endpoint and the adjacent
@@ -279,10 +278,12 @@ curves_plot_curve (Curves *curves,
        */
       slope = (y3 - curves->points[channel][p1][1]) /
               (x3 - curves->points[channel][p1][0]);
+
       y1 = y0 + slope * dx / 3.0;
 
       slope = (curves->points[channel][p4][1] - y0) /
               (curves->points[channel][p4][0] - x0);
+
       y2 = y3 - slope * dx / 3.0;
     }
 
