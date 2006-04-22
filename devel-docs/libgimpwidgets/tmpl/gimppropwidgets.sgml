@@ -188,14 +188,10 @@ GimpPropWidgets
 @step_increment: 
 @page_increment: 
 @digits: 
-@_scale: 
-@ed_lower: 
-@ed_upper: 
+@limit_scale: 
+@lower_limit: 
+@upper_limit: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@restrict_scale: 
-@restricted_lower: 
-@restricted_upper: 
 
 
 <!-- ##### FUNCTION gimp_prop_opacity_entry_new ##### -->

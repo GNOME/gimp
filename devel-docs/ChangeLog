@@ -1,3 +1,12 @@
+2006-04-22  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/tmpl/gimpproceduraldb.sgml
+	* libgimp/tmpl/gimpprogress.sgml
+	* libgimpbase/tmpl/gimpenv.sgml
+	* libgimpwidgets/tmpl/gimppropwidgets.sgml
+	* libgimpwidgets/tmpl/gimpzoommodel.sgml: regenerated (removed
+	unused parameters).
+
 2006-04-20  Simon Budig  <simon@gimp.org>
 
         * debug-plug-ins.txt: Added hint how to run a plugin in the gdb

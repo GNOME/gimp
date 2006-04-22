@@ -24,8 +24,6 @@ configuration files.
 </para>
 
 @plug_in: 
-<!-- # Unused Parameters # -->
-@library: 
 
 
 <!-- ##### FUNCTION gimp_directory ##### -->
