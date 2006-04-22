@@ -1156,23 +1156,20 @@ gimp_prop_hscale_new (GObject     *config,
 
 /**
  * gimp_prop_scale_entry_new:
- * @config:            Object to which property is attached.
- * @property_name:     Name of double property controlled by the spin button.
- * @table:             The #GtkTable the widgets will be attached to.
- * @column:            The column to start with.
- * @row:               The row to attach the widgets.
- * @label:             The text for the #GtkLabel which will appear left of
- *                     the #GtkHScale.
- * @step_increment:    Step size.
- * @page_increment:    Page size.
- * @digits:            Number of digits after decimal point to display.
- * @restrict_scale:    %TRUE if the range of possible values of the
- *                     GtkSpinButton should be
- *                     the same as of the GtkHScale.
- * @restricted_lower:  The spinbutton's lower boundary if @restrict_scale
- *                     is %FALSE.
- * @restricted_upper:  The spinbutton's upper boundary if @restrict_scale
- *                     is %FALSE.
+ * @config:         Object to which property is attached.
+ * @property_name:  Name of double property controlled by the spin button.
+ * @table:          The #GtkTable the widgets will be attached to.
+ * @column:         The column to start with.
+ * @row:            The row to attach the widgets.
+ * @label:          The text for the #GtkLabel which will appear left of
+ *                  the #GtkHScale.
+ * @step_increment: Step size.
+ * @page_increment: Page size.
+ * @digits:         Number of digits after decimal point to display.
+ * @limit_scale:    %TRUE if the range of possible values of the
+ *                  GtkSpinButton should be the same as of the GtkHScale.
+ * @lower_limit:    The spinbutton's lower boundary if @limit_scale is %FALSE.
+ * @upper_limit:    The spinbutton's upper boundary if @limit_scale is %FALSE.
  *
  * Creates a #GimpScaleEntry (slider and spin button) to set and
  * display the value of the specified double property.  See
@@ -1192,9 +1189,9 @@ gimp_prop_scale_entry_new (GObject     *config,
                            gdouble      step_increment,
                            gdouble      page_increment,
                            gint         digits,
-                           gboolean     restrict_scale,
-                           gdouble      restricted_lower,
-                           gdouble      restricted_upper)
+                           gboolean     limit_scale,
+                           gdouble      lower_limit,
+                           gdouble      upper_limit)
 {
   GParamSpec  *param_spec;
   GtkObject   *adjustment;
@@ -1214,12 +1211,13 @@ gimp_prop_scale_entry_new (GObject     *config,
   tooltip = dgettext (gimp_type_get_translation_domain (G_OBJECT_TYPE (config)),
                       g_param_spec_get_blurb (param_spec));
 
-  if (! restrict_scale)
+  if (! limit_scale)
     {
       adjustment = gimp_scale_entry_new (table, column, row,
                                          label, -1, -1,
                                          value, lower, upper,
-                                         step_increment, page_increment, digits,
+                                         step_increment, page_increment,
+                                         digits,
                                          TRUE, 0.0, 0.0,
                                          tooltip,
                                          NULL);
@@ -1228,10 +1226,9 @@ gimp_prop_scale_entry_new (GObject     *config,
     {
       adjustment = gimp_scale_entry_new (table, column, row,
                                          label, -1, -1,
-                                         value,
-                                         restricted_lower,
-                                         restricted_upper,
-                                         step_increment, page_increment, digits,
+                                         value, lower_limit, upper_limit,
+                                         step_increment, page_increment,
+                                         digits,
                                          FALSE, lower, upper,
                                          tooltip,
                                          NULL);

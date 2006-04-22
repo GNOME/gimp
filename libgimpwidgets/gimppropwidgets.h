@@ -106,9 +106,9 @@ GtkObject     * gimp_prop_scale_entry_new         (GObject      *config,
                                                    gdouble       step_increment,
                                                    gdouble       page_increment,
                                                    gint          digits,
-                                                   gboolean      restrict_scale,
-                                                   gdouble       restricted_lower,
-                                                   gdouble       restricted_upper);
+                                                   gboolean      limit_scale,
+                                                   gdouble       lower_limit,
+                                                   gdouble       upper_limit);
 
 /*  special form of gimp_prop_scale_entry_new() for GParamDouble  */
 
