@@ -1,5 +1,9 @@
 2006-04-23  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpviewabledialog.c: added "viewable" as a property.
+
+2006-04-23  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/module-dialog.c
 	* app/dialogs/palette-import-dialog.c: use GimpDialog instead of a
 	GimpViewableDialog with a NULL viewable.

@@ -39,6 +39,7 @@
 enum
 {
   PROP_0,
+  PROP_VIEWABLE,
   PROP_STOCK_ID,
   PROP_DESC,
   PROP_PARENT
@@ -48,6 +49,10 @@ enum
 static void   gimp_viewable_dialog_set_property (GObject            *object,
                                                  guint               property_id,
                                                  const GValue       *value,
+                                                 GParamSpec         *pspec);
+static void   gimp_viewable_dialog_get_property (GObject            *object,
+                                                 guint               property_id,
+                                                 GValue             *value,
                                                  GParamSpec         *pspec);
 
 static void   gimp_viewable_dialog_destroy      (GtkObject          *object);
@@ -70,8 +75,13 @@ gimp_viewable_dialog_class_init (GimpViewableDialogClass *klass)
 
   gtk_object_class->destroy  = gimp_viewable_dialog_destroy;
 
+  object_class->get_property = gimp_viewable_dialog_get_property;
   object_class->set_property = gimp_viewable_dialog_set_property;
 
+  g_object_class_install_property (object_class, PROP_VIEWABLE,
+                                   g_param_spec_object ("viewable", NULL, NULL,
+                                                        GIMP_TYPE_VIEWABLE,
+                                                        GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_STOCK_ID,
                                    g_param_spec_string ("stock-id", NULL, NULL,
                                                         NULL,
@@ -147,6 +157,9 @@ gimp_viewable_dialog_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_VIEWABLE:
+      gimp_viewable_dialog_set_viewable (dialog, g_value_get_object (value));
+      break;
     case PROP_STOCK_ID:
       gtk_image_set_from_stock (GTK_IMAGE (dialog->icon),
                                 g_value_get_string (value),
@@ -170,6 +183,27 @@ gimp_viewable_dialog_set_property (GObject      *object,
                                      gtk_widget_get_screen (parent));
           }
       }
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_viewable_dialog_get_property (GObject    *object,
+                                   guint       property_id,
+                                   GValue     *value,
+                                   GParamSpec *pspec)
+{
+  GimpViewableDialog *dialog = GIMP_VIEWABLE_DIALOG (object);
+
+  switch (property_id)
+    {
+    case PROP_VIEWABLE:
+      g_value_set_object (value,
+                          dialog->view ?
+                          GIMP_VIEW (dialog->view)->viewable : NULL);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -207,7 +241,11 @@ gimp_viewable_dialog_new (GimpViewable *viewable,
   g_return_val_if_fail (role != NULL, NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
+  if (! viewable)
+    g_warning ("Use of GimpViewableDialog with a NULL viewable is depecrated!");
+
   dialog = g_object_new (GIMP_TYPE_VIEWABLE_DIALOG,
+                         "viewable",    viewable,
                          "title",       title,
                          "role",        role,
                          "help-func",   help_func,
@@ -221,8 +259,6 @@ gimp_viewable_dialog_new (GimpViewable *viewable,
   gimp_dialog_add_buttons_valist (GIMP_DIALOG (dialog), args);
   va_end (args);
 
-  gimp_viewable_dialog_set_viewable (dialog, viewable);
-
   return GTK_WIDGET (dialog);
 }
 
@@ -232,9 +268,6 @@ gimp_viewable_dialog_set_viewable (GimpViewableDialog *dialog,
 {
   g_return_if_fail (GIMP_IS_VIEWABLE_DIALOG (dialog));
   g_return_if_fail (! viewable || GIMP_IS_VIEWABLE (viewable));
-
-  if (! viewable)
-    g_warning ("Use of GimpViewableDialog with a NULL viewable is depecrated!");
 
   if (dialog->view)
     {
