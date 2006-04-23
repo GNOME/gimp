@@ -1012,7 +1012,11 @@ load_image (const gchar *filename,
    * Done with the file...
    */
 
+#if PNG_LIBPNG_VER > 99
+  png_destroy_read_struct (&pp, &info, NULL);
+#else
   png_read_destroy (pp, info, NULL);
+#endif
 
   g_free (pixel);
   g_free (pixels);
@@ -1441,7 +1445,12 @@ save_image (const gchar *filename,
     };
 
   png_write_end (pp, info);
+
+#if PNG_LIBPNG_VER > 99
+  png_destroy_write_struct (&pp, &info);
+#else
   png_write_destroy (pp);
+#endif
 
   g_free (pixel);
   g_free (pixels);

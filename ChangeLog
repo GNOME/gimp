@@ -1,3 +1,8 @@
+2006-04-23  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/png.c: don't use long deprecated libpng API.
+	Fixes bug #339402.
+
 2006-04-20  Tor Lillqvist  <tml@novell.com>
 
 	Merge from HEAD:
