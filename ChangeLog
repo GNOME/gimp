@@ -1,3 +1,10 @@
+2006-04-23  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/redeye.c: added Redeye Removal plug-in, written
+	by Robert Merkel and Andreas Røsdal. Fixes bug #91795.
+
 2006-04-23  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/plugin-defs.pl: use PNG_CFLAGS for the png plugin.

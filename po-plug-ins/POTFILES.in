@@ -113,6 +113,7 @@ plug-ins/common/psd_save.c
 plug-ins/common/psp.c
 plug-ins/common/randomize.c
 plug-ins/common/raw.c
+plug-ins/common/redeye.c
 plug-ins/common/retinex.c
 plug-ins/common/ripple.c
 plug-ins/common/rotate.c
