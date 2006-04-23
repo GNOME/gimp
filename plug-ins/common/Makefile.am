@@ -1499,6 +1499,8 @@ plugin_browser_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
+png_CFLAGS = $(PNG_CFLAGS)
+
 png_SOURCES = \
 	png.c
 

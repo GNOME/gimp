@@ -1,5 +1,11 @@
 2006-04-23  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/common/plugin-defs.pl: use PNG_CFLAGS for the png plugin.
+
+	* plug-ins/common/Makefile.am: regenerated.
+
+2006-04-23  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/common/png.c: don't use long deprecated libpng API, and
 	drop support for ancient libpng versions. Fixes bug #339402.
 
