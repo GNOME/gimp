@@ -1031,35 +1031,16 @@ AC_SUBST(PSP)
 
 have_libpng=no
 AC_ARG_WITH(libpng,  [  --without-libpng        build without PNG support])
+if test x$with_libpng != xno; then
   have_libpng=yes
-  if test x$with_libpng != xno && test -z "$LIBPNG" && test -n "$LIBZ"; then
-    AC_CHECK_LIB(png, png_read_info,
-      [AC_CHECK_HEADER(png.h,
-	png_ok=yes,
-	png_ok=no)],
-      [have_libpng="no (PNG library not found)"], -lz -lm)
-    if test "$png_ok" = yes; then
-      AC_MSG_CHECKING([for png_structp in png.h])
-      AC_TRY_COMPILE([#include <png.h>],
-        [png_structp pp; png_infop info; png_colorp cmap; png_create_read_struct;],
-        png_ok=yes,
-        png_ok=no)
-      AC_MSG_RESULT($png_ok)
-      if test "$png_ok" = yes; then
-        PNG='png$(EXEEXT)'; LIBPNG="-lpng $LIBZ"
-      else
-        have_libpng="no (PNG library is too old)"
-      fi
-    else
-      have_libpng="no (PNG header file not found)"
-    fi
-  fi
-
-  if test x$with_libpng != xno && test -z "$LIBPNG"; then
+  PKG_CHECK_MODULES(PNG, libpng,
+    PNG='png$(EXEEXT)'
+    LIBPNG="$PNG_LIBS",
+    [have_libpng="no (libpng not found)"
      AC_MSG_ERROR([
-*** Checks for PNG library failed. You can build without it by passing 
-*** --without-libpng to configure but you won't be able to use PNGs then.])
-  fi
+*** Checks for PNG library failed. You can build without it by passing
+*** --without-libpng to configure but you won't be able to use PNGs then.])])
+fi
 
 AC_SUBST(PNG)
 AC_SUBST(LIBPNG)

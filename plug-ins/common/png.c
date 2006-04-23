@@ -683,20 +683,8 @@ load_image (const gchar *filename,
   png_textp  text;
   gint       num_texts;
 
-  /*
-   * PNG 0.89 and newer have a sane, forwards compatible constructor.
-   * Some SGI IRIX users will not have a new enough version though
-   */
-
-#if PNG_LIBPNG_VER > 88
   pp = png_create_read_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
   info = png_create_info_struct (pp);
-#else
-  pp = (png_structp) calloc (sizeof (png_struct), 1);
-  png_read_init (pp);
-
-  info = (png_infop) calloc (sizeof (png_info), 1);
-#endif /* PNG_LIBPNG_VER > 88 */
 
   if (setjmp (pp->jmpbuf))
     {
@@ -773,7 +761,6 @@ load_image (const gchar *filename,
    * Special handling for INDEXED + tRNS (transparency palette)
    */
 
-#if PNG_LIBPNG_VER > 99
   if (png_get_valid (pp, info, PNG_INFO_tRNS) &&
       info->color_type == PNG_COLOR_TYPE_PALETTE)
     {
@@ -790,9 +777,6 @@ load_image (const gchar *filename,
     {
       trns = 0;
     }
-#else
-  trns = 0;
-#endif /* PNG_LIBPNG_VER > 99 */
 
   /*
    * Update the info structures after the transformations take effect
@@ -859,7 +843,6 @@ load_image (const gchar *filename,
    * due to a bug in libpng-1.0.6, see png-implement for details
    */
 
-#if PNG_LIBPNG_VER > 99
   if (png_get_valid (pp, info, PNG_INFO_gAMA))
     {
       GimpParasite *parasite;
@@ -929,7 +912,6 @@ load_image (const gchar *filename,
         }
 
     }
-#endif /* PNG_LIBPNG_VER > 99 */
 
   gimp_image_set_filename (image, filename);
 
@@ -942,7 +924,6 @@ load_image (const gchar *filename,
   if (info->color_type & PNG_COLOR_MASK_PALETTE)
     {
 
-#if PNG_LIBPNG_VER > 99
       if (png_get_valid (pp, info, PNG_INFO_tRNS))
         {
           for (empty = 0; empty < 256 && alpha[empty] == 0; ++empty)
@@ -959,11 +940,6 @@ load_image (const gchar *filename,
           gimp_image_set_colormap (image, (guchar *) info->palette,
                                    info->num_palette);
         }
-#else
-      gimp_image_set_colormap (image, (guchar *) info->palette,
-                               info->num_palette);
-#endif /* PNG_LIBPNG_VER > 99 */
-
     }
 
   /*
@@ -1095,7 +1071,7 @@ load_image (const gchar *filename,
    * Done with the file...
    */
 
-  png_read_destroy (pp, info, NULL);
+  png_destroy_read_struct (&pp, &info, NULL);
 
   g_free (pixel);
   g_free (pixels);
@@ -1225,20 +1201,8 @@ save_image (const gchar *filename,
         }
     }
 
-  /*
-   * PNG 0.89 and newer have a sane, forwards compatible constructor.
-   * Some SGI IRIX users will not have a new enough version though
-   */
-
-#if PNG_LIBPNG_VER > 88
   pp = png_create_write_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
   info = png_create_info_struct (pp);
-#else
-  pp = (png_structp) calloc (sizeof (png_struct), 1);
-  png_write_init (pp);
-
-  info = (png_infop) calloc (sizeof (png_info), 1);
-#endif /* PNG_LIBPNG_VER > 88 */
 
   if (setjmp (pp->jmpbuf))
     {
@@ -1356,7 +1320,6 @@ save_image (const gchar *filename,
   /* All this stuff is optional extras, if the user is aiming for smallest
      possible file size she can turn them all off */
 
-#if PNG_LIBPNG_VER > 99
   if (pngvals.bkgd)
     {
       GimpRGB color;
@@ -1421,8 +1384,6 @@ save_image (const gchar *filename,
       mod_time.second = gmt->tm_sec;
       png_set_tIME (pp, info, &mod_time);
     }
-
-#endif /* PNG_LIBPNG_VER > 99 */
 
 #if defined(PNG_iCCP_SUPPORTED)
   {
@@ -1553,7 +1514,7 @@ save_image (const gchar *filename,
     }
 
   png_write_end (pp, info);
-  png_write_destroy (pp);
+  png_destroy_write_struct (&pp, &info);
 
   g_free (pixel);
   g_free (pixels);
@@ -1617,8 +1578,6 @@ respin_cmap (png_structp   pp,
       before = g_new0 (guchar, 3);
       colors = 1;
     }
-
-#if PNG_LIBPNG_VER > 99
 
   cols      = drawable->width;
   rows      = drawable->height;
@@ -1684,12 +1643,6 @@ respin_cmap (png_structp   pp,
     }
 
   g_free (pixels);
-
-#else
-  info->valid |= PNG_INFO_PLTE;
-  info->palette = (png_colorp) before;
-  info->num_palette = colors;
-#endif /* PNG_LIBPNG_VER > 99 */
 }
 
 static gboolean
