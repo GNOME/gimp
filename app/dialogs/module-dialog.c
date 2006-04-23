@@ -33,14 +33,13 @@
 #include "core/gimp-modules.h"
 
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpviewabledialog.h"
 
 #include "module-dialog.h"
 
 #include "gimp-intl.h"
 
 
-#define MODULES_RESPONSE_REFRESH 1
+#define RESPONSE_REFRESH 1
 #define NUM_INFO_LINES           9
 
 enum
@@ -118,18 +117,19 @@ module_dialog_new (Gimp *gimp)
 
   dialog->gimp = gimp;
 
-  shell = gimp_viewable_dialog_new (NULL,
-                                    _("Module Manager"), "gimp-modules",
-                                    GTK_STOCK_EXECUTE,
-                                    _("Manage Loadable Modules"),
-                                    NULL,
-                                    gimp_standard_help_func,
-                                    GIMP_HELP_MODULE_DIALOG,
+  shell = gimp_dialog_new (_("Manage Loadable Modules"),
+                           "gimp-modules", NULL, 0,
+                           gimp_standard_help_func, GIMP_HELP_MODULE_DIALOG,
 
-                                    GTK_STOCK_REFRESH, MODULES_RESPONSE_REFRESH,
-                                    GTK_STOCK_CLOSE,   GTK_STOCK_CLOSE,
+                           GTK_STOCK_REFRESH, RESPONSE_REFRESH,
+                           GTK_STOCK_CLOSE,   GTK_STOCK_CLOSE,
 
-                                    NULL);
+                           NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (shell),
+                                           GTK_RESPONSE_CLOSE,
+                                           RESPONSE_REFRESH,
+                                           -1);
 
   g_signal_connect (shell, "response",
                     G_CALLBACK (dialog_response),
@@ -186,14 +186,13 @@ module_dialog_new (Gimp *gimp)
   gtk_widget_show (dialog->table);
 
   hbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_layout (GTK_BUTTON_BOX (hbox), GTK_BUTTONBOX_SPREAD);
+  gtk_button_box_set_layout (GTK_BUTTON_BOX (hbox), GTK_BUTTONBOX_END);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-
   dialog->button = gtk_button_new_with_label ("");
   dialog->button_label = gtk_bin_get_child (GTK_BIN (dialog->button));
-  gtk_box_pack_start (GTK_BOX (hbox), dialog->button, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (hbox), dialog->button);
   gtk_widget_show (dialog->button);
 
   g_signal_connect (dialog->button, "clicked",
@@ -241,7 +240,7 @@ dialog_response (GtkWidget    *widget,
                  gint          response_id,
                  ModuleDialog *dialog)
 {
-  if (response_id == MODULES_RESPONSE_REFRESH)
+  if (response_id == RESPONSE_REFRESH)
     gimp_modules_refresh (dialog->gimp);
   else
     gtk_widget_destroy (widget);

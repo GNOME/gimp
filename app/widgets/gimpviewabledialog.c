@@ -221,8 +221,7 @@ gimp_viewable_dialog_new (GimpViewable *viewable,
   gimp_dialog_add_buttons_valist (GIMP_DIALOG (dialog), args);
   va_end (args);
 
-  if (viewable)
-    gimp_viewable_dialog_set_viewable (dialog, viewable);
+  gimp_viewable_dialog_set_viewable (dialog, viewable);
 
   return GTK_WIDGET (dialog);
 }
@@ -234,11 +233,12 @@ gimp_viewable_dialog_set_viewable (GimpViewableDialog *dialog,
   g_return_if_fail (GIMP_IS_VIEWABLE_DIALOG (dialog));
   g_return_if_fail (! viewable || GIMP_IS_VIEWABLE (viewable));
 
+  if (! viewable)
+    g_warning ("Use of GimpViewableDialog with a NULL viewable is depecrated!");
+
   if (dialog->view)
     {
-      GimpViewable *old_viewable;
-
-      old_viewable = GIMP_VIEW (dialog->view)->viewable;
+      GimpViewable *old_viewable = GIMP_VIEW (dialog->view)->viewable;
 
       if (viewable == old_viewable)
         return;

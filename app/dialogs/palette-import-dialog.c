@@ -41,7 +41,6 @@
 #include "widgets/gimpdnd.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpview.h"
-#include "widgets/gimpviewabledialog.h"
 
 #include "palette-import-dialog.h"
 
@@ -170,17 +169,14 @@ palette_import_dialog_new (Gimp *gimp)
   dialog->context     = gimp_context_new (gimp, "Palette Import",
                                           gimp_get_user_context (gimp));
 
-  dialog->dialog =
-    gimp_viewable_dialog_new (NULL, _("Import Palette"), "gimp-palette-import",
-                              GTK_STOCK_CONVERT,
-                              _("Import a New Palette"),
-                              NULL,
-                              gimp_standard_help_func,
-                              GIMP_HELP_PALETTE_IMPORT,
+  dialog->dialog = gimp_dialog_new (_("Import a New Palette"),
+                                    "gimp-palette-import", NULL, 0,
+                                    gimp_standard_help_func,
+                                    GIMP_HELP_PALETTE_IMPORT,
 
-                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 
-                              NULL);
+                                    NULL);
 
   button = gtk_dialog_add_button (GTK_DIALOG (dialog->dialog),
                                   _("_Import"), GTK_RESPONSE_OK);

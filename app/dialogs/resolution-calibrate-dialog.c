@@ -46,8 +46,8 @@ static gint       ruler_height    = 1;
  * is connected to a #GimpSizeEntry handling the resolution to be set.
  **/
 void
-resolution_calibrate_dialog (GtkWidget  *resolution_entry,
-                             GdkPixbuf  *pixbuf)
+resolution_calibrate_dialog (GtkWidget *resolution_entry,
+                             GdkPixbuf *pixbuf)
 {
   GtkWidget    *dialog;
   GtkWidget    *table;
@@ -68,7 +68,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
     return;
 
   dialog = gimp_dialog_new (_("Calibrate Monitor Resolution"),
-                            "calibrate_resolution",
+                            "gimp-resolution-calibration",
                             gtk_widget_get_toplevel (resolution_entry),
                             GTK_DIALOG_DESTROY_WITH_PARENT,
                             NULL, NULL,
