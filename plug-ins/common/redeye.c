@@ -49,15 +49,23 @@
 
 /* Declare local functions.
  */
-static void     query         (void);
-static void     run           (const gchar      *name,
-                               gint              nparams,
-                               const GimpParam  *param,
-                               gint             *nreturn_vals,
-                               GimpParam       **return_vals);
+static void     query                 (void);
+static void     run                   (const gchar      *name,
+                                       gint              nparams,
+                                       const GimpParam  *param,
+                                       gint             *nreturn_vals,
+                                       GimpParam       **return_vals);
 
-static void     remove_redeye (GimpDrawable     *drawable,
-                               GimpPreview      *preview);
+static void     remove_redeye         (GimpDrawable     *drawable);
+static void     remove_redeye_preview (GimpDrawable     *drawable,
+                                       GimpPreview      *preview);
+static void      redeye_inner_loop    (const guchar     *src,
+                                       guchar           *dest,
+                                       gint              width,
+                                       gint              height,
+                                       gint              bpp,
+                                       gboolean          has_alpha,
+                                       int               rowstride);
 
 
 #define RED_FACTOR    0.5133333
@@ -65,7 +73,6 @@ static void     remove_redeye (GimpDrawable     *drawable,
 #define BLUE_FACTOR   0.1933333
 
 #define SCALE_WIDTH   100
-#define PREVIEW_SIZE  290
 
 #define PLUG_IN_PROC    "plug-in-red-eye-removal"
 #define PLUG_IN_BINARY  "redeye"
@@ -123,8 +130,8 @@ query (void)
  */
 static gboolean
 dialog (gint32        image_id,
-	GimpDrawable *drawable,
-	gint         *current_threshold)
+        GimpDrawable *drawable,
+        gint         *current_threshold)
 {
   GtkWidget *dialog;
   GtkWidget *preview;
@@ -137,11 +144,11 @@ dialog (gint32        image_id,
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
   dialog = gimp_dialog_new (_("Red Eye Removal"), PLUG_IN_BINARY,
-			    NULL, 0,
-			    gimp_standard_help_func, PLUG_IN_PROC,
-			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
-			    NULL);
+                            NULL, 0,
+                            gimp_standard_help_func, PLUG_IN_PROC,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
@@ -155,25 +162,23 @@ dialog (gint32        image_id,
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable, &preview_toggle);
+  preview = gimp_zoom_preview_new (drawable);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (GTK_WIDGET (preview),
-                               PREVIEW_SIZE, PREVIEW_SIZE);
   gtk_widget_show (preview);
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 1, 0,
-			     _("_Threshold:"),
-			     SCALE_WIDTH, 0,
-			     threshold,
-			     0, 100, 1, 5, 0,
-			     TRUE,
-			     0, 100,
-			     _("Threshold for the red eye color to remove."),
-			     NULL);
+                             _("_Threshold:"),
+                             SCALE_WIDTH, 0,
+                             threshold,
+                             0, 100, 1, 5, 0,
+                             TRUE,
+                             0, 100,
+                             _("Threshold for the red eye color to remove."),
+                             NULL);
   label = g_object_new (GTK_TYPE_LABEL,
                         "label",  _("Manually selecting the eyes may "
                                     "improve the results."),
@@ -189,26 +194,23 @@ dialog (gint32        image_id,
     gtk_widget_show (label);
 
   g_signal_connect_swapped (preview, "invalidated",
-                            G_CALLBACK (remove_redeye),
+                            G_CALLBACK (remove_redeye_preview),
                             drawable);
 
   g_signal_connect (adj, "value-changed",
-		    G_CALLBACK (gimp_int_adjustment_update),
-		    &threshold);
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &threshold);
   g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
   gtk_widget_show (dialog);
 
-  remove_redeye (drawable, GIMP_PREVIEW (preview));
-
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dialog);
 
   return run;
-
 }
 
 static void
@@ -271,16 +273,16 @@ run (const gchar      *name,
     {
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 
-      remove_redeye (drawable, NULL);
+      remove_redeye (drawable);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
 
       /* if we ran in auto mode don't reset the threshold */
       if (run_mode == GIMP_RUN_INTERACTIVE
-	  && strncmp (name, PLUG_IN_PROC, strlen (PLUG_IN_PROC)) == 0)
+          && strncmp (name, PLUG_IN_PROC, strlen (PLUG_IN_PROC)) == 0)
       {
-	gimp_set_data (PLUG_IN_PROC, &threshold, sizeof (threshold));
+        gimp_set_data (PLUG_IN_PROC, &threshold, sizeof (threshold));
       }
     }
   else
@@ -304,37 +306,20 @@ run (const gchar      *name,
  * prevent incorrect pixels from being selected.
  */
 static void
-remove_redeye (GimpDrawable *drawable,
-               GimpPreview  *preview)
+remove_redeye (GimpDrawable *drawable)
 {
   GimpPixelRgn  src_rgn;
   GimpPixelRgn  dest_rgn;
-  const guchar *src;
-  guchar       *dest;
   gint          progress, max_progress;
   gboolean      has_alpha;
-  const gint    red   = 0;
-  const gint    green = 1;
-  const gint    blue  = 2;
-  const gint    alpha = 3;
   gint          x1, y1, x2, y2;
-  gint          x, y, width, height;
+  gint          width, height;
   gpointer      pr;
 
-  if (! preview)
-    {
-      gimp_progress_init (_("Removing red eye"));
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-      width = x2 - x1;
-      height = y2 - y1;
-    }
-  else
-    {
-      gimp_preview_get_position (preview, &x1, &y1);
-      gimp_preview_get_size (preview, &width, &height);
-      x2 = x1 + width;
-      y2 = y1 + height;
-    }
+  gimp_progress_init (_("Removing red eye"));
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  width = x2 - x1;
+  height = y2 - y1;
 
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
@@ -352,64 +337,94 @@ remove_redeye (GimpDrawable *drawable,
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
     {
-      src = src_rgn.data;
-      dest = dest_rgn.data;
-
-      for (y = 0; y < src_rgn.h; y++)
-        {
-          const guchar *s = src;
-          guchar       *d = dest;
-
-          for (x = 0; x < src_rgn.w; x++)
-            {
-	      gint adjusted_red       = s[red] * RED_FACTOR;
-	      gint adjusted_green     = s[green] * GREEN_FACTOR;
-	      gint adjusted_blue      = s[blue] * BLUE_FACTOR;
-              gint adjusted_threshold = (threshold - 50) * 2;
-
-	      if (adjusted_red >= adjusted_green - adjusted_threshold &&
-                  adjusted_red >= adjusted_blue - adjusted_threshold)
-	        {
-                  d[red] = ((gdouble) (adjusted_green + adjusted_blue)
-                            / (2.0  * RED_FACTOR));
-                }
-	      else
-	        {
-                  d[red] = s[red];
-	        }
-
-	      d[green] = s[green];
-	      d[blue] = s[blue];
-
-              if (has_alpha)
-                d[alpha] = s[alpha];
-
-              s += src_rgn.bpp;
-              d += dest_rgn.bpp;
-            }
-
-          src += src_rgn.rowstride;
-          dest += dest_rgn.rowstride;
-        }
+      redeye_inner_loop (src_rgn.data, dest_rgn.data, src_rgn.w, src_rgn.h,
+                         src_rgn.bpp, has_alpha, src_rgn.rowstride);
 
       /* Update progress */
       progress += src_rgn.w * src_rgn.h;
-      if (! preview)
-        gimp_progress_update ((double) progress / (double) max_progress);
+      gimp_progress_update ((double) progress / (double) max_progress);
     }
 
-  if (preview)
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id,
+                        x1, y1, (x2 - x1), (y2 - y1));
+}
+
+static void
+remove_redeye_preview (GimpDrawable *drawable,
+                       GimpPreview  *preview)
+{
+  guchar   *src;
+  guchar   *dest;
+  gboolean  has_alpha;
+  gint      width, height;
+  gint      bpp;
+  gint      rowstride;
+
+  src  = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
+                                       &width, &height, &bpp);
+  dest = g_new (guchar, height * width * bpp);
+
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+  rowstride = bpp * width;
+
+  redeye_inner_loop (src, dest, width, height, bpp, has_alpha, rowstride);
+
+  gimp_preview_draw_buffer (preview, dest, rowstride);
+  g_free (src);
+  g_free (dest);
+}
+
+static void
+redeye_inner_loop (const guchar *src,
+                   guchar       *dest,
+                   gint          width,
+                   gint          height,
+                   gint          bpp,
+                   gboolean      has_alpha,
+                   int           rowstride)
+{
+  const gint    red   = 0;
+  const gint    green = 1;
+  const gint    blue  = 2;
+  const gint    alpha = 3;
+  gint          x, y;
+
+  for (y = 0; y < height; y++)
     {
-      gimp_pixel_rgn_init (&dest_rgn, drawable,
-                           x1, y1, width, height, TRUE, TRUE);
-      gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview),
-                                         &dest_rgn);
-    }
-  else
-    {
-      gimp_drawable_flush (drawable);
-      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id,
-                            x1, y1, (x2 - x1), (y2 - y1));
+      const guchar *s = src;
+      guchar       *d = dest;
+
+      for (x = 0; x < width; x++)
+        {
+          gint adjusted_red       = s[red] * RED_FACTOR;
+          gint adjusted_green     = s[green] * GREEN_FACTOR;
+          gint adjusted_blue      = s[blue] * BLUE_FACTOR;
+          gint adjusted_threshold = (threshold - 50) * 2;
+
+          if (adjusted_red >= adjusted_green - adjusted_threshold &&
+              adjusted_red >= adjusted_blue - adjusted_threshold)
+            {
+              d[red] = ((gdouble) (adjusted_green + adjusted_blue)
+                        / (2.0  * RED_FACTOR));
+            }
+          else
+            {
+              d[red] = s[red];
+            }
+
+          d[green] = s[green];
+          d[blue] = s[blue];
+
+          if (has_alpha)
+            d[alpha] = s[alpha];
+
+          s += bpp;
+          d += bpp;
+        }
+
+      src += rowstride;
+      dest += rowstride;
     }
 }
