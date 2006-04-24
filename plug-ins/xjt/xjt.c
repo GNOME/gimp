@@ -67,6 +67,11 @@
 
 #include <glib/gstdio.h>
 
+#ifdef __GNUC__
+#warning GIMP_DISABLE_DEPRECATED
+#endif
+#undef GIMP_DISABLE_DEPRECATED
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 

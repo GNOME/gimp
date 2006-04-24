@@ -1,5 +1,10 @@
 2006-04-24  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/xjt/xjt.c: undef GIMP_DISABLE_DEPRECATED to fix the
+	build on IRIX MIPSpro (bug #339336).
+
+2006-04-24  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/gifload.c: implement a thumbnail load procedure
 	that loads only the first frame of a GIF animation.
 
