@@ -7,6 +7,18 @@ This is the development branch of GIMP. Here's where all the shiny
 new stuff is being done that will one day be released as GIMP 2.4.
 
 
+Changes in GIMP 2.3.9
+=====================
+
+- better interpolation for "smooth" curves in the Curve tool
+- pick a suitable initial value for the Threshold tool
+- simplified user installation
+- added Red Eye Removal plug-in
+- added thumbnail loader to GIF load plug-in
+- declared even more data as const
+- bug fixes and code cleanup
+
+
 Changes in GIMP 2.3.8
 =====================
 
