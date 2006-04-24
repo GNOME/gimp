@@ -75,18 +75,12 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define LOAD_PROC "file-gif-load"
+#define LOAD_PROC        "file-gif-load"
+#define LOAD_THUMB_PROC  "file-gif-load-thumb"
 
 
 /* uncomment the line below for a little debugging info */
 /* #define GIFDEBUG yesplease */
-
-
-/* Does the version of GIMP we're compiling for support
-   data attachments to images?  ('Parasites') */
-#define FACEHUGGERS aieee
-/* PS: I know that technically facehuggers aren't parasites,
-   the pupal-forms are.  But facehuggers are ky00te. */
 
 
 /* Declare some local functions.
@@ -97,17 +91,15 @@ static void   run        (const gchar      *name,
                           const GimpParam  *param,
                           gint             *nreturn_vals,
                           GimpParam       **return_vals);
-static gint32 load_image (const gchar      *filename);
+static gint32 load_image (const gchar      *filename,
+                          gboolean          thumbnail);
 
 
-static guchar      used_cmap[3][256];
-static GimpRunMode run_mode;
-static guchar      highest_used_index;
-static gboolean    promote_to_rgb   = FALSE;
-static guchar      gimp_cmap[768];
-#ifdef FACEHUGGERS
-GimpParasite*      comment_parasite = NULL;
-#endif
+static guchar        used_cmap[3][256];
+static guchar        highest_used_index;
+static gboolean      promote_to_rgb   = FALSE;
+static guchar        gimp_cmap[768];
+static GimpParasite *comment_parasite = NULL;
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -132,15 +124,20 @@ query (void)
   };
   static GimpParamDef load_return_vals[] =
   {
-    { GIMP_PDB_IMAGE, "image", "Output image" }
+    { GIMP_PDB_IMAGE,  "image",        "Output image"                 }
+  };
+  static GimpParamDef thumb_args[] =
+  {
+    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
+    { GIMP_PDB_INT32,  "thumb-size",   "Preferred thumbnail size"     }
   };
 
   gimp_install_procedure (LOAD_PROC,
-                          "loads files of Compuserve GIF file format",
+                          "Loads files of Compuserve GIF file format",
                           "FIXME: write help for gif_load",
                           "Spencer Kimball, Peter Mattis, Adam Moss, David Koblas",
                           "Spencer Kimball, Peter Mattis, Adam Moss, David Koblas",
-                          "1995-1997",
+                          "1995-2006",
                           N_("GIF image"),
 			  NULL,
                           GIMP_PLUGIN,
@@ -153,8 +150,23 @@ query (void)
 				    "gif",
 				    "",
 				    "0,string,GIF8");
-}
 
+  gimp_install_procedure (LOAD_THUMB_PROC,
+                          "Loads only the first frame of a GIF image, to be "
+                          "used as a thumbnail",
+                          "",
+                          "Sven Neumann",
+                          "Sven Neumann",
+                          "2006",
+			  NULL,
+			  NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (thumb_args),
+                          G_N_ELEMENTS (load_return_vals),
+                          thumb_args, load_return_vals);
+
+  gimp_register_thumbnail_loader (LOAD_PROC, LOAD_THUMB_PROC);
+}
 
 static void
 run (const gchar      *name,
@@ -167,8 +179,6 @@ run (const gchar      *name,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint32             image_ID;
 
-  run_mode = param[0].data.d_int32;
-
   INIT_I18N ();
 
   *nreturn_vals = 1;
@@ -179,28 +189,38 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      image_ID = load_image (param[1].data.d_string);
+      image_ID = load_image (param[1].data.d_string, FALSE);
+    }
+  else if (strcmp (name, LOAD_THUMB_PROC) == 0)
+    {
+      image_ID = load_image (param[0].data.d_string, TRUE);
+    }
+  else
+    {
+      status = GIMP_PDB_CALLING_ERROR;
+    }
 
-      /* The GIF format only tells you how many bits per pixel
-       *  are in the image, not the actual number of used indices (D'OH!)
-       *
-       * So if we're not careful, repeated load/save of a transparent GIF
-       *  without intermediate indexed->RGB->indexed pumps up the number of
-       *  bits used, as we add an index each time for the transparent
-       *  colour.  Ouch.  We either do some heavier analysis at save-time,
-       *  or trim down the number of GIMP colours at load-time.  We do the
-       *  latter for now.
-       */
-#ifdef GIFDEBUG
-      g_print ("GIF: Highest used index is %d\n", highest_used_index);
-#endif
-      if (!promote_to_rgb)
-	{
-	  gimp_image_set_colormap (image_ID, gimp_cmap, highest_used_index+1);
-	}
-
+  if (status == GIMP_PDB_SUCCESS)
+    {
       if (image_ID != -1)
         {
+          /* The GIF format only tells you how many bits per pixel
+           *  are in the image, not the actual number of used indices (D'OH!)
+           *
+           * So if we're not careful, repeated load/save of a transparent GIF
+           *  without intermediate indexed->RGB->indexed pumps up the number of
+           *  bits used, as we add an index each time for the transparent
+           *  colour.  Ouch.  We either do some heavier analysis at save-time,
+           *  or trim down the number of GIMP colours at load-time.  We do the
+           *  latter for now.
+           */
+#ifdef GIFDEBUG
+          g_print ("GIF: Highest used index is %d\n", highest_used_index);
+#endif
+          if (! promote_to_rgb)
+            gimp_image_set_colormap (image_ID,
+                                     gimp_cmap, highest_used_index + 1);
+
 	  *nreturn_vals = 2;
           values[1].type         = GIMP_PDB_IMAGE;
           values[1].data.d_image = image_ID;
@@ -209,10 +229,6 @@ run (const gchar      *name,
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
-    }
-  else
-    {
-      status = GIMP_PDB_CALLING_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -243,7 +259,7 @@ static struct
 {
   unsigned int Width;
   unsigned int Height;
-  CMap ColorMap;
+  CMap         ColorMap;
   unsigned int BitPixel;
   unsigned int ColorResolution;
   unsigned int Background;
@@ -251,7 +267,7 @@ static struct
   /*
    **
    */
-  int GrayScale;
+  int          GrayScale;
 } GifScreen;
 
 static struct
@@ -261,11 +277,6 @@ static struct
   int inputFlag;
   int disposal;
 } Gif89 = { -1, -1, -1, 0 };
-
-int verbose = FALSE;
-int showComment = TRUE;
-char *globalcomment = NULL;
-gint globalusecomment = TRUE;
 
 static int ReadColorMap (FILE *, int, CMap, int *);
 static int DoExtension  (FILE *, int);
@@ -278,18 +289,19 @@ static gint32 ReadImage (FILE *, const gchar *,
 
 
 static gint32
-load_image (const gchar *filename)
+load_image (const gchar *filename,
+            gboolean     thumbnail)
 {
-  FILE   *fd;
-  guchar  buf[16];
-  guchar  c;
-  CMap    localColorMap;
-  gint    grayScale;
-  gint    useGlobalColormap;
-  gint    bitPixel;
-  gint    imageCount = 0;
-  gchar   version[4];
-  gint32  image_ID = -1;
+  FILE     *fd;
+  guchar    buf[16];
+  guchar    c;
+  CMap      localColorMap;
+  gint      grayScale;
+  gboolean  useGlobalColormap;
+  gint      bitPixel;
+  gint      imageCount = 0;
+  gchar     version[4];
+  gint32    image_ID = -1;
 
   fd = g_fopen (filename, "rb");
   if (!fd)
@@ -308,13 +320,13 @@ load_image (const gchar *filename)
       return -1;
     }
 
-  if (strncmp ((char *) buf, "GIF", 3) != 0)
+  if (strncmp ((gchar *) buf, "GIF", 3) != 0)
     {
       g_message (_("This is not a GIF file"));
       return -1;
     }
 
-  strncpy (version, (char *) buf + 3, 3);
+  strncpy (version, (gchar *) buf + 3, 3);
   version[3] = '\0';
 
   if ((strcmp (version, "87a") != 0) && (strcmp (version, "89a") != 0))
@@ -339,7 +351,8 @@ load_image (const gchar *filename)
   if (BitSet (buf[4], LOCALCOLORMAP))
     {
       /* Global Colormap */
-      if (ReadColorMap (fd, GifScreen.BitPixel, GifScreen.ColorMap, &GifScreen.GrayScale))
+      if (ReadColorMap (fd, GifScreen.BitPixel, GifScreen.ColorMap,
+                        &GifScreen.GrayScale))
 	{
 	  g_message ("Error reading global colormap");
 	  return -1;
@@ -353,7 +366,6 @@ load_image (const gchar *filename)
 
 
   highest_used_index = 0;
-
 
   for (;;)
     {
@@ -400,7 +412,7 @@ load_image (const gchar *filename)
 
       bitPixel = 1 << ((buf[8] & 0x07) + 1);
 
-      if (!useGlobalColormap)
+      if (! useGlobalColormap)
 	{
 	  if (ReadColorMap (fd, bitPixel, localColorMap, &grayScale))
 	    {
@@ -431,15 +443,18 @@ load_image (const gchar *filename)
 				GifScreen.Height);
 	}
 
-#ifdef FACEHUGGERS
       if (comment_parasite != NULL)
 	{
-	  gimp_image_parasite_attach (image_ID, comment_parasite);
+          if (! thumbnail)
+            gimp_image_parasite_attach (image_ID, comment_parasite);
+
 	  gimp_parasite_free (comment_parasite);
 	  comment_parasite = NULL;
 	}
-#endif
 
+      /* If we are loading a thumbnail, we stop after the first frame. */
+      if (thumbnail)
+        break;
     }
 
   return image_ID;
@@ -521,7 +536,6 @@ DoExtension (FILE *fd,
       str = "Comment Extension";
       while (GetDataBlock (fd, (unsigned char *) buf) > 0)
 	{
-#ifdef FACEHUGGERS
           if (!g_utf8_validate (buf, -1, NULL))
             continue;
 
@@ -531,10 +545,6 @@ DoExtension (FILE *fd,
 	  comment_parasite = gimp_parasite_new ("gimp-comment",
                                                 GIMP_PARASITE_PERSISTENT,
                                                 strlen (buf) + 1, buf);
-#else
-	  if (showComment)
-	    g_print ("GIF: gif comment: %s\n", buf);
-#endif
 	}
       return TRUE;
       break;
@@ -974,7 +984,7 @@ ReadImage (FILE        *fd,
   frame_number++;
 
   gimp_image_add_layer (image_ID, layer_ID, 0);
-  gimp_layer_translate (layer_ID, (gint)leftpos, (gint)toppos);
+  gimp_layer_translate (layer_ID, (gint) leftpos, (gint) toppos);
 
   drawable = gimp_drawable_get (layer_ID);
 
@@ -987,9 +997,10 @@ ReadImage (FILE        *fd,
   else
     dest = (guchar *) g_malloc (len * height);
 
-  if (verbose)
+#ifdef GIFDEBUG
     g_print ("GIF: reading %d by %d%s GIF image, ncols=%d\n",
 	     len, height, interlace ? " interlaced" : "", ncols);
+#endif
 
   if (!alpha_frame && promote_to_rgb)
     {
@@ -1004,8 +1015,8 @@ ReadImage (FILE        *fd,
     {
       if (alpha_frame)
 	{
-	  if (((guchar)v > highest_used_index) && !(v == Gif89.transparent))
-	    highest_used_index = (guchar)v;
+	  if (((guchar) v > highest_used_index) && !(v == Gif89.transparent))
+	    highest_used_index = (guchar) v;
 
 	  if (promote_to_rgb)
 	    {
@@ -1024,8 +1035,8 @@ ReadImage (FILE        *fd,
 	}
       else
 	{
-	  if ((guchar)v > highest_used_index)
-	    highest_used_index = (guchar)v;
+	  if ((guchar) v > highest_used_index)
+	    highest_used_index = (guchar) v;
 
 	  temp = dest + (ypos * len) + xpos;
 	  *temp = (guchar) v;
