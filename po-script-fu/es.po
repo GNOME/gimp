@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-09 21:56+0200\n"
-"PO-Revision-Date: 2004-12-31 02:16+0100\n"
+"POT-Creation-Date: 2006-04-24 17:36+0200\n"
+"PO-Revision-Date: 2006-04-24 17:36+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -122,22 +122,22 @@ msgstr "Progreso del script"
 msgid "(none)"
 msgstr "(ninguno)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1058
+#: ../plug-ins/script-fu/script-fu-interface.c:1061
 #: ../plug-ins/dbbrowser/gimpprocview.c:198
 msgid "Author:"
 msgstr "Autor:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1065
+#: ../plug-ins/script-fu/script-fu-interface.c:1068
 #: ../plug-ins/dbbrowser/gimpprocview.c:220
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1072
+#: ../plug-ins/script-fu/script-fu-interface.c:1075
 #: ../plug-ins/dbbrowser/gimpprocview.c:209
 msgid "Date:"
 msgstr "Fecha:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1081
+#: ../plug-ins/script-fu/script-fu-interface.c:1084
 msgid "Image Types:"
 msgstr "Tipos de imagen:"
 
@@ -152,15 +152,15 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:642
+#: ../plug-ins/script-fu/script-fu-server.c:648
 msgid "Script-Fu Server Options"
 msgstr "Opciones de servidor de Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:670
+#: ../plug-ins/script-fu/script-fu-server.c:676
 msgid "Server Port:"
 msgstr "Puerto del servidor:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:676
+#: ../plug-ins/script-fu/script-fu-server.c:682
 msgid "Server Logfile:"
 msgstr "Archivo de registro del servidor: "
 
@@ -307,7 +307,6 @@ msgstr "<Image>/Script-Fu/Alfa a logo"
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:1
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos"
@@ -356,7 +355,7 @@ msgstr "Ajustes predeterminados del mapa de relieve"
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:4
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:2
 msgid "Font"
@@ -395,7 +394,7 @@ msgstr "Tipografía"
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:5
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:4
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:3
 msgid "Font size (pixels)"
@@ -466,7 +465,7 @@ msgstr "Radio de desenfoque de la sombra"
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:9
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:7
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:14
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:5
 msgid "Text"
@@ -680,7 +679,7 @@ msgid "_Hrule..."
 msgstr "_Regla horizontal..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:5
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:6
 msgid "Radius"
 msgstr "Radio"
@@ -2257,7 +2256,7 @@ msgid "Square"
 msgstr "Cuadrado"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:29
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:7
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
 msgid "Start angle"
 msgstr "Ángulo inicial"
 
@@ -2344,17 +2343,17 @@ msgstr "Tasa de choques"
 msgid "_Particle Trace..."
 msgstr "_Trazado de partículas..."
 
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:1
 msgid "Antialias"
 msgstr "Alisado"
 
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
 msgid "Fill angle"
 msgstr "Ángulo de relleno"
 
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:9
-msgid "Text Circle..."
-msgstr "Texto circular..."
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
+msgid "Text C_ircle..."
+msgstr "Texto _circular..."
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:5
 msgid "Ending blend"
