@@ -41,10 +41,10 @@
 
 /*  local function prototypes  */
 
-static void   dialogs_create_dock (GdkScreen   *screen,
-                                   gboolean     show_image_menu,
-                                   const gchar *tabs[],
-                                   gint         n_tabs);
+static void   dialogs_create_dock (GdkScreen           *screen,
+                                   gboolean             show_image_menu,
+                                   const gchar * const  tabs[],
+                                   gint                 n_tabs);
 
 
 /*  public functions  */
@@ -164,10 +164,10 @@ dialogs_show_toolbox (void)
 /*  private functions  */
 
 static void
-dialogs_create_dock (GdkScreen   *screen,
-                     gboolean     show_image_menu,
-                     const gchar *tabs[],
-                     gint         n_tabs)
+dialogs_create_dock (GdkScreen          *screen,
+                     gboolean            show_image_menu,
+                     const gchar * const tabs[],
+                     gint                n_tabs)
 {
   GtkWidget *dock;
   GtkWidget *dockbook;

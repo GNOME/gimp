@@ -1,5 +1,13 @@
 2006-04-24  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/user-install-dialog.c: moved the installtion log
+	into a GtkExpander.
+
+	* app/actions/dialogs-commands.c (dialogs_create_dock): added
+	const qualifiers to fix compiler warnings.
+
+2006-04-24  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/xjt/xjt.c: undef GIMP_DISABLE_DEPRECATED to fix the
 	build on IRIX MIPSpro (bug #339336).
 
