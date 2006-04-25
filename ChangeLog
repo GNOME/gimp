@@ -1,5 +1,11 @@
 2006-04-25  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/paint-funcs-generic.h
+	* app/paint-funcs/paint-funcs.c: code cleanup, moved variables into
+	local scopes, added const qualifiers.
+
+2006-04-25  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpchannel.c (gimp_channel_real_border)
 	* app/paint-funcs/paint-funcs.c (border_region): added some empty
 	lines to improve readability.
