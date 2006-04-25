@@ -1302,6 +1302,7 @@ gimp_channel_real_border (GimpChannel *channel,
     x1 = 0;
   else
     x1 -= radius_x;
+
   if (x2 + radius_x > GIMP_ITEM (channel)->width)
     x2 = GIMP_ITEM (channel)->width;
   else
@@ -1311,6 +1312,7 @@ gimp_channel_real_border (GimpChannel *channel,
     y1 = 0;
   else
     y1 -= radius_y;
+
   if (y2 + radius_y > GIMP_ITEM (channel)->height)
     y2 = GIMP_ITEM (channel)->height;
   else
@@ -1322,8 +1324,8 @@ gimp_channel_real_border (GimpChannel *channel,
   else
     gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (channel));
 
-  pixel_region_init (&bPR, GIMP_DRAWABLE (channel)->tiles, x1, y1,
-                     (x2-x1), (y2-y1), TRUE);
+  pixel_region_init (&bPR, GIMP_DRAWABLE (channel)->tiles,
+                     x1, y1, x2 - x1, y2 - y1, TRUE);
 
   border_region (&bPR, radius_x, radius_y);
 

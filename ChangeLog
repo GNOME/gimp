@@ -1,3 +1,9 @@
+2006-04-25  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpchannel.c (gimp_channel_real_border)
+	* app/paint-funcs/paint-funcs.c (border_region): added some empty
+	lines to improve readability.
+
 2006-04-24  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/user-install-dialog.c: moved the installtion log

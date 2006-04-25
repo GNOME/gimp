@@ -3514,7 +3514,10 @@ compute_transition (guchar  *transition,
         transition[x] = 0;
     }
   else
-    transition[x] = 0;
+    {
+      transition[x] = 0;
+    }
+
   for (x = 1; x < width - 1; x++)
     {
       if (buf[1][x] >= 128)
@@ -3527,8 +3530,11 @@ compute_transition (guchar  *transition,
             transition[x] = 0;
         }
       else
-        transition[x] = 0;
+        {
+          transition[x] = 0;
+        }
     }
+
   if (buf[1][x] >= 128)
     {
       if ( buf[0][x - 1] < 128 || buf[0][x] < 128 ||
@@ -3539,7 +3545,9 @@ compute_transition (guchar  *transition,
         transition[x] = 0;
     }
   else
-    transition[x] = 0;
+    {
+      transition[x] = 0;
+    }
 }
 
 void
@@ -3586,6 +3594,7 @@ border_region (PixelRegion *src,
 
       pixel_region_get_row (src, src->x, src->y + 0, src->w, source[0], 1);
       memcpy (source[1], source[0], src->w);
+
       if (src->h > 1)
         pixel_region_get_row (src, src->x, src->y + 1, src->w, source[2], 1);
       else
@@ -3597,37 +3606,46 @@ border_region (PixelRegion *src,
       for (y = 1; y < src->h; y++)
         {
           rotate_pointers (source, 3);
+
           if (y + 1 < src->h)
             pixel_region_get_row (src, src->x, src->y + y + 1, src->w,
                                   source[2], 1);
           else
             memcpy(source[2], source[1], src->w);
+
           compute_transition (transition, source, src->w);
           pixel_region_set_row (src, src->x, src->y + y, src->w, transition);
         }
 
       for (i = 0; i < 3; i++)
         g_free (source[i]);
+
       g_free (transition);
+
       return;
     }
 
   max = g_new (gint16, src->w + 2 * xradius);
+
   for (i = 0; i < (src->w + 2 * xradius); i++)
     max[i] = yradius + 2;
+
   max += xradius;
 
   for (i = 0; i < 3; i++)
     buf[i] = g_new (guchar, src->w);
 
   transition = g_new (guchar *, yradius + 1);
+
   for (i = 0; i < yradius + 1; i++)
     {
       transition[i] = g_new (guchar, src->w + 2 * xradius);
       memset(transition[i], 0, src->w + 2 * xradius);
       transition[i] += xradius;
     }
+
   out = g_new (guchar, src->w);
+
   density = g_new (guchar *, 2 * xradius + 1);
   density += xradius;
 
@@ -3637,6 +3655,7 @@ border_region (PixelRegion *src,
       density[ x] += yradius;
       density[-x]  = density[x];
     }
+
   for (x = 0; x < (xradius + 1); x++) /* compute density[][] */
     {
       register gdouble tmpx, tmpy, dist;
@@ -3657,24 +3676,30 @@ border_region (PixelRegion *src,
             tmpy = y + 0.5;
           else
             tmpy = 0.0;
+
           dist = ((tmpy * tmpy) / (yradius * yradius) +
                   (tmpx * tmpx) / (xradius * xradius));
+
           if (dist < 1.0)
             a = 255 * (1.0 - sqrt (dist));
           else
             a = 0;
+
           density[ x][ y] = a;
           density[ x][-y] = a;
           density[-x][ y] = a;
           density[-x][-y] = a;
         }
     }
+
   pixel_region_get_row (src, src->x, src->y + 0, src->w, buf[0], 1);
   memcpy (buf[1], buf[0], src->w);
+
   if (src->h > 1)
     pixel_region_get_row (src, src->x, src->y + 1, src->w, buf[2], 1);
   else
     memcpy (buf[2], buf[1], src->w);
+
   compute_transition (transition[1], buf, src->w);
 
   for (y = 1; y < yradius && y + 1 < src->h; y++) /* set up top of image */
@@ -3683,9 +3708,11 @@ border_region (PixelRegion *src,
       pixel_region_get_row (src, src->x, src->y + y + 1, src->w, buf[2], 1);
       compute_transition (transition[y + 1], buf, src->w);
     }
+
   for (x = 0; x < src->w; x++) /* set up max[] for top of image */
     {
       max[x] = -(yradius + 7);
+
       for (j = 1; j < yradius + 1; j++)
         if (transition[j][x])
           {
@@ -3693,10 +3720,12 @@ border_region (PixelRegion *src,
             break;
           }
     }
+
   for (y = 0; y < src->h; y++) /* main calculation loop */
     {
       rotate_pointers (buf, 3);
       rotate_pointers (transition, yradius + 1);
+
       if (y < src->h - (yradius + 1))
         {
           pixel_region_get_row (src, src->x, src->y + y + yradius + 1, src->w,
@@ -3704,7 +3733,9 @@ border_region (PixelRegion *src,
           compute_transition (transition[yradius], buf, src->w);
         }
       else
-        memcpy (transition[yradius], transition[yradius - 1], src->w);
+        {
+          memcpy (transition[yradius], transition[yradius - 1], src->w);
+        }
 
       for (x = 0; x < src->w; x++) /* update max array */
         {
@@ -3718,26 +3749,35 @@ border_region (PixelRegion *src,
                     max[x]--;
                 }
               else
-                if (transition[-max[x]][x])
-                  max[x] = -max[x];
-                else if (transition[-max[x] + 1][x])
-                  max[x] = -max[x] + 1;
-                else
-                  max[x]--;
+                {
+                  if (transition[-max[x]][x])
+                    max[x] = -max[x];
+                  else if (transition[-max[x] + 1][x])
+                    max[x] = -max[x] + 1;
+                  else
+                    max[x]--;
+                }
             }
           else
-            max[x]--;
+            {
+              max[x]--;
+            }
+
           if (max[x] < -yradius - 1)
             max[x] = -yradius - 1;
         }
+
       last_max =  max[0][density[-1]];
       last_index = 1;
+
       for (x = 0 ; x < src->w; x++) /* render scan line */
         {
           last_index--;
+
           if (last_index >= 0)
             {
               last_max = 0;
+
               for (i = xradius; i >= 0; i--)
                 if (max[x + i] <= yradius && max[x + i] >= -yradius &&
                     density[i][max[x+i]] > last_max)
@@ -3745,11 +3785,13 @@ border_region (PixelRegion *src,
                     last_max = density[i][max[x + i]];
                     last_index = i;
                   }
+
               out[x] = last_max;
             }
           else
             {
               last_max = 0;
+
               for (i = xradius; i >= -xradius; i--)
                 if (max[x + i] <= yradius && max[x + i] >= -yradius &&
                     density[i][max[x + i]] > last_max)
@@ -3757,8 +3799,10 @@ border_region (PixelRegion *src,
                     last_max = density[i][max[x + i]];
                     last_index = i;
                   }
+
               out[x] = last_max;
             }
+
           if (last_max == 0)
             {
               for (i = x + 1; i < src->w; i++)
@@ -3766,17 +3810,22 @@ border_region (PixelRegion *src,
                   if (max[i] >= -yradius)
                     break;
                 }
+
               if (i - x > xradius)
                 {
                   for (; x < i - xradius; x++)
                     out[x] = 0;
+
                   x--;
                 }
+
               last_index = xradius;
             }
         }
+
       pixel_region_set_row (src, src->x, src->y + y, src->w, out);
     }
+
   g_free (out);
 
   for (i = 0; i < 3; i++)
@@ -3790,6 +3839,7 @@ border_region (PixelRegion *src,
       transition[i] -= xradius;
       g_free (transition[i]);
     }
+
   g_free (transition);
 
   for (i = 0; i < xradius + 1 ; i++)
@@ -3797,6 +3847,7 @@ border_region (PixelRegion *src,
       density[i] -= yradius;
       g_free (density[i]);
     }
+
   density -= xradius;
   g_free (density);
 }
