@@ -1,3 +1,9 @@
+2006-04-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpthresholdtool.c: added an "Auto" button and
+	initialize the tool with a default threshold of 127 again.
+	Removed some cruft and did some cleanup.
+
 2006-04-25  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/paint-funcs-generic.h

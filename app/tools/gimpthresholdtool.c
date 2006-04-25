@@ -46,12 +46,6 @@
 #include "gimp-intl.h"
 
 
-#define LOW        0x1
-#define HIGH       0x2
-#define HISTOGRAM  0x4
-#define ALL       (LOW | HIGH | HISTOGRAM)
-
-
 /*  local function prototypes  */
 
 static void     gimp_threshold_tool_finalize        (GObject           *object);
@@ -66,6 +60,8 @@ static void     gimp_threshold_tool_reset           (GimpImageMapTool  *im_tool)
 static void     gimp_threshold_tool_histogram_range (GimpHistogramView *view,
                                                      gint               start,
                                                      gint               end,
+                                                     GimpThresholdTool *t_tool);
+static void     gimp_threshold_tool_auto_clicked    (GtkWidget         *button,
                                                      GimpThresholdTool *t_tool);
 
 
@@ -169,12 +165,6 @@ gimp_threshold_tool_initialize (GimpTool    *tool,
 
   gimp_drawable_calculate_histogram (drawable, t_tool->hist);
 
-  t_tool->threshold->low_threshold =
-    gimp_histogram_get_threshold (t_tool->hist,
-                                  (t_tool->threshold->color ?
-                                   GIMP_HISTOGRAM_RGB : GIMP_HISTOGRAM_VALUE),
-                                  0, 255);
-
   g_signal_handlers_block_by_func (t_tool->histogram_box->view,
                                    gimp_threshold_tool_histogram_range,
                                    t_tool);
@@ -216,6 +206,7 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget         *hbox;
   GtkWidget         *menu;
   GtkWidget         *box;
+  GtkWidget         *button;
 
   tool_options = GIMP_TOOL (t_tool)->tool_info->tool_options;
 
@@ -243,6 +234,20 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
 
   gimp_histogram_options_connect_view (GIMP_HISTOGRAM_OPTIONS (tool_options),
                                        t_tool->histogram_box->view);
+
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  button = gtk_button_new_with_mnemonic (_("_Auto"));
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gimp_help_set_help_data (button, _("Automatically adjust to optimal "
+                                     "binarization threshold"), NULL);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (gimp_threshold_tool_auto_clicked),
+                    t_tool);
 }
 
 static void
@@ -250,12 +255,7 @@ gimp_threshold_tool_reset (GimpImageMapTool *image_map_tool)
 {
   GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (image_map_tool);
 
-  t_tool->threshold->low_threshold  = 127.0;
-  t_tool->threshold->high_threshold = 255.0;
-
-  gimp_histogram_view_set_range (t_tool->histogram_box->view,
-                                 t_tool->threshold->low_threshold,
-                                 t_tool->threshold->high_threshold);
+  gimp_histogram_view_set_range (t_tool->histogram_box->view, 127.0, 255.0);
 }
 
 static void
@@ -272,4 +272,20 @@ gimp_threshold_tool_histogram_range (GimpHistogramView *widget,
 
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (t_tool));
     }
+}
+
+static void
+gimp_threshold_tool_auto_clicked (GtkWidget         *button,
+                                  GimpThresholdTool *t_tool)
+{
+  gdouble low_threshold;
+
+  low_threshold =
+    gimp_histogram_get_threshold (t_tool->hist,
+                                  (t_tool->threshold->color ?
+                                   GIMP_HISTOGRAM_RGB : GIMP_HISTOGRAM_VALUE),
+                                  0, 255);
+
+  gimp_histogram_view_set_range (t_tool->histogram_box->view,
+                                 low_threshold, 255.0);
 }
