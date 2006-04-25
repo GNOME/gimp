@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-19 16:25+0200\n"
-"PO-Revision-Date: 2006-04-19 16:25+0200\n"
+"POT-Creation-Date: 2006-04-25 15:30+0200\n"
+"PO-Revision-Date: 2006-04-25 15:33+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -758,7 +758,7 @@ msgid "_Palette"
 msgstr "_Tavolozza"
 
 #: ../app/actions/context-actions.c:54
-#: ../app/dialogs/palette-import-dialog.c:231
+#: ../app/dialogs/palette-import-dialog.c:227
 #: ../app/dialogs/preferences-dialog.c:1683
 msgid "_Gradient"
 msgstr "_Gradiente"
@@ -841,7 +841,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:128 ../app/core/gimpimage.c:1316
 #: ../app/core/gimppalette-import.c:218 ../app/core/gimppalette.c:477
-#: ../app/core/gimppalette.c:587 ../app/dialogs/palette-import-dialog.c:694
+#: ../app/core/gimppalette.c:587 ../app/dialogs/palette-import-dialog.c:690
 #: ../app/pdb/image_cmds.c:1880 ../app/widgets/gimpdnd-xds.c:95
 msgid "Untitled"
 msgstr "Immagine"
@@ -4116,13 +4116,13 @@ msgstr ""
 "Se abilitata, assicura che ogni punto di un'immagine sia mappato su di un "
 "punto sullo schermo."
 
-#: ../app/config/gimprc-blurbs.h:76
+#: ../app/config/gimprc-blurbs.h:72
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
 msgstr ""
 "Questa è la distanza in punti entro la quale si attiva il magnetismo delle "
 "guide e della griglia."
 
-#: ../app/config/gimprc-blurbs.h:80
+#: ../app/config/gimprc-blurbs.h:76
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
 "algorithm.  The seed fill starts at the initially selected pixel and "
@@ -4136,7 +4136,7 @@ msgstr ""
 "intensità del punto dall'origine è maggiore di una soglia specificata. "
 "Questo valore rappresenta la soglia predefinita."
 
-#: ../app/config/gimprc-blurbs.h:93
+#: ../app/config/gimprc-blurbs.h:89
 msgid ""
 "The window type hint that is set on dock windows. This may affect the way "
 "your window manager decorates and handles dock windows."
@@ -4145,35 +4145,35 @@ msgstr ""
 "pannello. Può modificare il modo con cui il gestore delle finestre decora e "
 "gestisce le finestre in pannello."
 
-#: ../app/config/gimprc-blurbs.h:124
+#: ../app/config/gimprc-blurbs.h:120
 msgid "When enabled, the selected brush will be used for all tools."
 msgstr ""
 "Se abilitata, il pennello selezionato verrà usato per tutti gli strumenti."
 
-#: ../app/config/gimprc-blurbs.h:130
+#: ../app/config/gimprc-blurbs.h:126
 msgid "When enabled, the selected gradient will be used for all tools."
 msgstr ""
 "Se abilitata, il gradiente selezionato verrà usato per tutti gli strumenti."
 
-#: ../app/config/gimprc-blurbs.h:133
+#: ../app/config/gimprc-blurbs.h:129
 msgid "When enabled, the selected pattern will be used for all tools."
 msgstr ""
 "Se abilitata, il gradiente selezionato verrà usato per tutti gli strumenti."
 
-#: ../app/config/gimprc-blurbs.h:147
+#: ../app/config/gimprc-blurbs.h:143
 msgid "Sets the browser used by the help system."
 msgstr "Imposta il visualizzatore predefinito dell'aiuto in linea."
 
-#: ../app/config/gimprc-blurbs.h:155
+#: ../app/config/gimprc-blurbs.h:151
 msgid "Sets the text to appear in image window status bars."
 msgstr ""
 "Imposta il testo che appare nella barra di stato della finestra immagine"
 
-#: ../app/config/gimprc-blurbs.h:158
+#: ../app/config/gimprc-blurbs.h:154
 msgid "Sets the text to appear in image window titles."
 msgstr "Imposta il testo che appare nei titoli della finestra immagine"
 
-#: ../app/config/gimprc-blurbs.h:161
+#: ../app/config/gimprc-blurbs.h:157
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
@@ -4181,26 +4181,26 @@ msgstr ""
 "Se abilitata, garantirà che l'intera immagine sia visibile dopo che il file "
 "è stato aperto, altrimenti sarà visualizzato con scala 1:1."
 
-#: ../app/config/gimprc-blurbs.h:165
+#: ../app/config/gimprc-blurbs.h:161
 msgid ""
 "Install a private colormap; might be useful on 8-bit (256 colors) displays."
 msgstr ""
 "Installa una mappa colori privata; è utile per visualizzare su schermi a 8 "
 "bit (256 colori)."
 
-#: ../app/config/gimprc-blurbs.h:168
+#: ../app/config/gimprc-blurbs.h:164
 msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "Imposta il livello di interpolazione usato per scalare e altre "
 "trasformazioni."
 
-#: ../app/config/gimprc-blurbs.h:175
+#: ../app/config/gimprc-blurbs.h:171
 msgid "How many recently opened image filenames to keep on the File menu."
 msgstr ""
 "Quanti nomi di file immagine aperti recentemente mantenere nel menu file."
 
-#: ../app/config/gimprc-blurbs.h:178
+#: ../app/config/gimprc-blurbs.h:174
 msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
@@ -4208,7 +4208,7 @@ msgstr ""
 "Velocità dell'animazione del tratteggio di selezione. Il valore è in "
 "millisecondi (un tempo inferiore indica una velocità superiore)."
 
-#: ../app/config/gimprc-blurbs.h:182
+#: ../app/config/gimprc-blurbs.h:178
 msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
@@ -4216,11 +4216,11 @@ msgstr ""
 "Gimp avvertirà l'utente se si è tentato di creare un immagine che occupa più "
 "memoria di quella specificata qui."
 
-#: ../app/config/gimprc-blurbs.h:186
+#: ../app/config/gimprc-blurbs.h:182
 msgid "When enabled, GIMP will show mnemonics in menus."
 msgstr "Se abilitata, GIMP mostrerà gli mnemonici nei menu."
 
-#: ../app/config/gimprc-blurbs.h:189
+#: ../app/config/gimprc-blurbs.h:185
 msgid ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colors allocated for the GIMP."
@@ -4228,7 +4228,7 @@ msgstr ""
 "Riguarda solitamente solo schermi a 8 bit; imposta il numero minimo di "
 "colori allocati per GIMP."
 
-#: ../app/config/gimprc-blurbs.h:200
+#: ../app/config/gimprc-blurbs.h:196
 msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -4238,7 +4238,7 @@ msgstr ""
 "impostato a 0, forza il server X ad essere interrogato sia per le "
 "informazioni di risoluzione orizzontale che verticale."
 
-#: ../app/config/gimprc-blurbs.h:205
+#: ../app/config/gimprc-blurbs.h:201
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -4248,7 +4248,7 @@ msgstr ""
 "impostato a 0, forza il server X ad essere interrogato sia per le "
 "informazioni di risoluzione orizzontale che verticale."
 
-#: ../app/config/gimprc-blurbs.h:210
+#: ../app/config/gimprc-blurbs.h:206
 msgid ""
 "If enabled, the move tool changes the active layer or path when a layer or "
 "path is being picked. This used to be the default behaviour in older "
@@ -4258,7 +4258,7 @@ msgstr ""
 "tracciato quando un livello o un tracciato viene preso. Era il comportamento "
 "predefinito nelle vecchie versioni."
 
-#: ../app/config/gimprc-blurbs.h:215
+#: ../app/config/gimprc-blurbs.h:211
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
@@ -4266,7 +4266,7 @@ msgstr ""
 "Imposta la dimensione dell'anteprima di navigazione, accessibile nella parte "
 "in basso a destra della finestra immagine."
 
-#: ../app/config/gimprc-blurbs.h:219
+#: ../app/config/gimprc-blurbs.h:215
 msgid ""
 "On multiprocessor machines, if GIMP has been compiled with --enable-mp this "
 "sets how many processors GIMP should use simultaneously."
@@ -4274,7 +4274,7 @@ msgstr ""
 "Se GIMP è stato compilato con --enable-mp, su macchine multiprocessore, "
 "imposta quanti processori GIMP può usare contemporaneamente."
 
-#: ../app/config/gimprc-blurbs.h:233
+#: ../app/config/gimprc-blurbs.h:229
 msgid ""
 "When enabled, the X server is queried for the mouse's current position on "
 "each motion event, rather than relying on the position hint.  This means "
@@ -4288,7 +4288,7 @@ msgstr ""
 "accurato ma più lento. Per assurdo, su alcuni server X è possibile che il "
 "disegno venga accelerato."
 
-#: ../app/config/gimprc-blurbs.h:249
+#: ../app/config/gimprc-blurbs.h:245
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
@@ -4298,7 +4298,7 @@ msgstr ""
 "anteprime nelle finestre dei livelli e canali sono utili ma possono "
 "rallentare se si lavora con immagini molto grandi."
 
-#: ../app/config/gimprc-blurbs.h:254
+#: ../app/config/gimprc-blurbs.h:250
 msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
@@ -4306,7 +4306,7 @@ msgstr ""
 "Imposta la dimensione dell'anteprima per livelli e canali nelle nuove "
 "finestre di dialogo."
 
-#: ../app/config/gimprc-blurbs.h:258
+#: ../app/config/gimprc-blurbs.h:254
 msgid ""
 "When enabled, the image window will automatically resize itself whenever the "
 "physical image size changes."
@@ -4314,7 +4314,7 @@ msgstr ""
 "Se abilitata, la finestra immagine verrà automaticamente ridimensionata se "
 "viene modificata l'ampiezza fisica dell'immagine."
 
-#: ../app/config/gimprc-blurbs.h:262
+#: ../app/config/gimprc-blurbs.h:258
 msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images."
@@ -4322,35 +4322,35 @@ msgstr ""
 "Se abilitata, la finestra immagine verrà automaticamente ridimensionata se "
 "si esegue uno zoom sull'immagine."
 
-#: ../app/config/gimprc-blurbs.h:266
+#: ../app/config/gimprc-blurbs.h:262
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr ""
 "Lascia che GIMP tenti di ripristinare l'ultima sessione salvata ad ogni "
 "avvio."
 
-#: ../app/config/gimprc-blurbs.h:269
+#: ../app/config/gimprc-blurbs.h:265
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 "Ricorda strumento, motivo, colore e pennello nelle sessioni successive."
 
-#: ../app/config/gimprc-blurbs.h:273
+#: ../app/config/gimprc-blurbs.h:269
 msgid "Add all opened and saved files to the document history on disk."
 msgstr ""
 "Aggiungere tutti i file aperti e salvati nella cronologia dei documenti su "
 "disco."
 
-#: ../app/config/gimprc-blurbs.h:276
+#: ../app/config/gimprc-blurbs.h:272
 msgid "Save the positions and sizes of the main dialogs when the GIMP exits."
 msgstr ""
 "Salva la posizione e l'ampiezza delle finestre di dialogo principali "
 "all'uscita di GIMP."
 
-#: ../app/config/gimprc-blurbs.h:279
+#: ../app/config/gimprc-blurbs.h:275
 msgid "Save the tool options when the GIMP exits."
 msgstr "Salva le opzioni degli strumenti all'uscita da GIMP."
 
-#: ../app/config/gimprc-blurbs.h:285
+#: ../app/config/gimprc-blurbs.h:281
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
@@ -4358,7 +4358,7 @@ msgstr ""
 "Se abilitata, tutti gli strumenti di disegno mostreranno un'anteprima del "
 "contorno del pennello corrente."
 
-#: ../app/config/gimprc-blurbs.h:289
+#: ../app/config/gimprc-blurbs.h:285
 msgid ""
 "When enabled, dialogs will show a help button that gives access to the "
 "related help page.  Without this button, the help page can still be reached "
@@ -4368,7 +4368,7 @@ msgstr ""
 "alla pagina di aiuto relativa. Senza questo tasto, la pagina di aiuto sarà "
 "ancora disponibile ma tramite il tasto F1."
 
-#: ../app/config/gimprc-blurbs.h:294
+#: ../app/config/gimprc-blurbs.h:290
 msgid ""
 "When enabled, the mouse pointer will be shown over the image while using a "
 "paint tool."
@@ -4376,7 +4376,7 @@ msgstr ""
 "Se abilitata, il puntatore del mouse verrà mostrato sopra l'immagine mentre "
 "si usa lo strumento di disegno."
 
-#: ../app/config/gimprc-blurbs.h:298
+#: ../app/config/gimprc-blurbs.h:294
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
@@ -4384,7 +4384,7 @@ msgstr ""
 "Se abilitata, la barra dei menu è visibile. Questo può essere modificato "
 "anche con il comando \"Visualizza->Mostra barra dei menu\"."
 
-#: ../app/config/gimprc-blurbs.h:302
+#: ../app/config/gimprc-blurbs.h:298
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
@@ -4392,7 +4392,7 @@ msgstr ""
 "Se abilitata, i righelli sono visibili. Questo comportamento può essere "
 "modificato anche con il comando \"Visualizza->Mostra i righelli\""
 
-#: ../app/config/gimprc-blurbs.h:306
+#: ../app/config/gimprc-blurbs.h:302
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
@@ -4401,7 +4401,7 @@ msgstr ""
 "può essere modificato con il comando \"Visualizza->Mostra le barre di "
 "scorrimento\"."
 
-#: ../app/config/gimprc-blurbs.h:310
+#: ../app/config/gimprc-blurbs.h:306
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
@@ -4409,7 +4409,7 @@ msgstr ""
 "Se abilitata, la barra di stato è visibile. Questo comportamento può essere "
 "modificato anche con il comando \"Visualizza->Mostra barra di stato\"."
 
-#: ../app/config/gimprc-blurbs.h:314
+#: ../app/config/gimprc-blurbs.h:310
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
@@ -4417,7 +4417,7 @@ msgstr ""
 "Se abilitata, la selezione è visibile. Questo comportamento può essere "
 "modificato anche con il comando \"Visualizza->Mostra selezione\"."
 
-#: ../app/config/gimprc-blurbs.h:318
+#: ../app/config/gimprc-blurbs.h:314
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
@@ -4425,7 +4425,7 @@ msgstr ""
 "Se abilitata, il contorno del livello è visibile. Questo comportamento può "
 "essere modificato anche con il comando \"Visualizza->Mostra barra dei menu\"."
 
-#: ../app/config/gimprc-blurbs.h:322
+#: ../app/config/gimprc-blurbs.h:318
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
@@ -4433,7 +4433,7 @@ msgstr ""
 "Se abilitata, le guide sono visibili. Questo comportamento può essere "
 "modificato anche con il comando \"Visualizza->Mostra le guide\"."
 
-#: ../app/config/gimprc-blurbs.h:326
+#: ../app/config/gimprc-blurbs.h:322
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
@@ -4441,7 +4441,7 @@ msgstr ""
 "Se abilitata, la griglia è visibile. Questo comportamento può essere "
 "modificato anche con il comando \"Visualizza->Mostra la griglia\"."
 
-#: ../app/config/gimprc-blurbs.h:330
+#: ../app/config/gimprc-blurbs.h:326
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
@@ -4450,16 +4450,16 @@ msgstr ""
 "può essere modificato anche con il comando \"Visualizza->Mostra i punti di "
 "campionamento\""
 
-#: ../app/config/gimprc-blurbs.h:334
+#: ../app/config/gimprc-blurbs.h:330
 msgid "Enable displaying a handy GIMP tip on startup."
 msgstr ""
 "Abilita all'avvio la visualizzazione di un pratico suggerimento su GIMP."
 
-#: ../app/config/gimprc-blurbs.h:337
+#: ../app/config/gimprc-blurbs.h:333
 msgid "Show a tooltip when the pointer hovers over an item."
 msgstr "Mostra un suggerimento quando il puntatore passa sopra un'elemento."
 
-#: ../app/config/gimprc-blurbs.h:340
+#: ../app/config/gimprc-blurbs.h:336
 msgid ""
 "Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
@@ -4476,11 +4476,11 @@ msgstr ""
 "viene creato in una cartella montata su NFS. Per queste ragioni è "
 "preferibile mettere il file di scambio in \"/tmp\"."
 
-#: ../app/config/gimprc-blurbs.h:349
+#: ../app/config/gimprc-blurbs.h:345
 msgid "When enabled, menus can be torn off."
 msgstr "Se abilitata, i menu possono essere staccati."
 
-#: ../app/config/gimprc-blurbs.h:352
+#: ../app/config/gimprc-blurbs.h:348
 msgid ""
 "When enabled, dock windows (the toolbox and palettes) are set to be "
 "transient to the active image window. Most window managers will keep the "
@@ -4491,7 +4491,7 @@ msgstr ""
 "gestori di finestre manterranno le finestre agganciate sopra l'immagine "
 "attiva ma potrebbero avere anche altri comportamenti."
 
-#: ../app/config/gimprc-blurbs.h:358
+#: ../app/config/gimprc-blurbs.h:354
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
@@ -4499,15 +4499,15 @@ msgstr ""
 "Se abilitata, mentre la voce del menu è selezionata, è possibile modificare "
 "i tasti scorciatoia per le voci di menu premendo una combinazione di tasti."
 
-#: ../app/config/gimprc-blurbs.h:362
+#: ../app/config/gimprc-blurbs.h:358
 msgid "Save changed keyboard shortcuts when the GIMP exits."
 msgstr "All'uscita da GIMP, salva i tasti scorciatoia modificati."
 
-#: ../app/config/gimprc-blurbs.h:365
+#: ../app/config/gimprc-blurbs.h:361
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr "Ripristina i tasti scorciatoia salvati ad ogni avvio di GIMP."
 
-#: ../app/config/gimprc-blurbs.h:368
+#: ../app/config/gimprc-blurbs.h:364
 msgid ""
 "Sets the temporary storage directory. Files will appear here during the "
 "course of running the GIMP.  Most files will disappear when the GIMP exits, "
@@ -4519,7 +4519,7 @@ msgstr ""
 "GIMP ma altri resteranno, perciò è meglio che questa cartella non venga "
 "condivisa con altri utenti. "
 
-#: ../app/config/gimprc-blurbs.h:380
+#: ../app/config/gimprc-blurbs.h:376
 msgid ""
 "Sets the size of the thumbnail shown in the Open dialog. Note that GIMP can "
 "not create thumbnails if layer previews are disabled."
@@ -4528,7 +4528,7 @@ msgstr ""
 "file. Notare che GIMP non salva le miniature se le anteprime dei livelli "
 "sono disabilitate."
 
-#: ../app/config/gimprc-blurbs.h:384
+#: ../app/config/gimprc-blurbs.h:380
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
@@ -4536,7 +4536,7 @@ msgstr ""
 "La miniatura nella finestra di dialogo di apertura file sarà aggiornata "
 "automaticamente se il file è più piccolo della dimensione qui impostata."
 
-#: ../app/config/gimprc-blurbs.h:388
+#: ../app/config/gimprc-blurbs.h:384
 msgid ""
 "The tile cache is used to make sure the GIMP doesn't thrash tiles between "
 "memory and disk. Setting this value higher will cause the GIMP to use less "
@@ -4549,7 +4549,7 @@ msgstr ""
 "Viceversa, una cache piccola provocherà un uso più frequente del file di "
 "scambio e una minore quantità di memoria da parte di GIMP."
 
-#: ../app/config/gimprc-blurbs.h:399
+#: ../app/config/gimprc-blurbs.h:395
 msgid ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
@@ -4557,17 +4557,17 @@ msgstr ""
 "Il suggerimento tipo finestra impostato sugli strumenti. Può condizionare "
 "come il gestore delle finestre decora e gestisce la finestra strumenti."
 
-#: ../app/config/gimprc-blurbs.h:403
+#: ../app/config/gimprc-blurbs.h:399
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr ""
 "Imposta la maniera in cui viene visualizzata la trasparenza nelle immagini."
 
-#: ../app/config/gimprc-blurbs.h:406
+#: ../app/config/gimprc-blurbs.h:402
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr ""
 "Imposta la grandezza della scacchiera usata per mostrare la trasparenza."
 
-#: ../app/config/gimprc-blurbs.h:409
+#: ../app/config/gimprc-blurbs.h:405
 msgid ""
 "When enabled, the GIMP will not save an image if it has not been changed "
 "since it was opened."
@@ -4575,7 +4575,7 @@ msgstr ""
 "Se abilitata, GIMP non salverà l'immagine se questa non è stata modificata "
 "dalla sua apertura."
 
-#: ../app/config/gimprc-blurbs.h:413
+#: ../app/config/gimprc-blurbs.h:409
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
@@ -4584,7 +4584,7 @@ msgstr ""
 "viene raggiunta la dimensione massima, vengono mantenuti disponibili più "
 "livelli di annullamento."
 
-#: ../app/config/gimprc-blurbs.h:417
+#: ../app/config/gimprc-blurbs.h:413
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
@@ -4595,15 +4595,15 @@ msgstr ""
 "potranno essere effettuati al massimo tanti livelli di annullamento quanti "
 "sono stati configurati."
 
-#: ../app/config/gimprc-blurbs.h:422
+#: ../app/config/gimprc-blurbs.h:418
 msgid "Sets the size of the previews in the Undo History."
 msgstr "Imposta la dimensione delle anteprime nella cronologia annullamenti."
 
-#: ../app/config/gimprc-blurbs.h:425
+#: ../app/config/gimprc-blurbs.h:421
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Se abilitata, premendo F1 si aprirà il visualizzatore dell'aiuto."
 
-#: ../app/config/gimprc-blurbs.h:428
+#: ../app/config/gimprc-blurbs.h:424
 #, c-format
 msgid ""
 "Sets the external web browser to be used.  This can be an absolute path or "
@@ -5388,15 +5388,15 @@ msgstr "Riduci canale"
 msgid "Cannot stroke empty channel."
 msgstr "Impossibile delineare un canale vuoto."
 
-#: ../app/core/gimpchannel.c:1583
+#: ../app/core/gimpchannel.c:1585
 msgid "Set Channel Color"
 msgstr "Imposta il colore del canale"
 
-#: ../app/core/gimpchannel.c:1631
+#: ../app/core/gimpchannel.c:1633
 msgid "Set Channel Opacity"
 msgstr "Imposta opacità canale"
 
-#: ../app/core/gimpchannel.c:1699 ../app/core/gimpselection.c:517
+#: ../app/core/gimpchannel.c:1701 ../app/core/gimpselection.c:517
 msgid "Selection Mask"
 msgstr "Maschera di selezione"
 
@@ -6572,11 +6572,7 @@ msgstr "Tipo di riempimento livello"
 msgid "Set name from _text"
 msgstr "Imposta il nome dal _testo"
 
-#: ../app/dialogs/module-dialog.c:122
-msgid "Module Manager"
-msgstr "Manager dei moduli"
-
-#: ../app/dialogs/module-dialog.c:124
+#: ../app/dialogs/module-dialog.c:120
 msgid "Manage Loadable Modules"
 msgstr "Gestione moduli caricabili"
 
@@ -6588,68 +6584,68 @@ msgstr "Autocaricamento"
 msgid "Module Path"
 msgstr "Percorso moduli"
 
-#: ../app/dialogs/module-dialog.c:418
+#: ../app/dialogs/module-dialog.c:417
 msgid "<No modules>"
 msgstr "<Nessun modulo>"
 
-#: ../app/dialogs/module-dialog.c:430 ../app/dialogs/module-dialog.c:439
+#: ../app/dialogs/module-dialog.c:429 ../app/dialogs/module-dialog.c:438
 msgid "On disk"
 msgstr "Sul disco"
 
-#: ../app/dialogs/module-dialog.c:430
+#: ../app/dialogs/module-dialog.c:429
 msgid "Only in memory"
 msgstr "Solo in memoria"
 
-#: ../app/dialogs/module-dialog.c:439
+#: ../app/dialogs/module-dialog.c:438
 msgid "No longer available"
 msgstr "Non più disponibile"
 
-#: ../app/dialogs/module-dialog.c:475
+#: ../app/dialogs/module-dialog.c:474
 msgid "Load"
 msgstr "Carica"
 
-#: ../app/dialogs/module-dialog.c:477
+#: ../app/dialogs/module-dialog.c:476
 msgid "Query"
 msgstr "Interrogazione"
 
-#: ../app/dialogs/module-dialog.c:484
+#: ../app/dialogs/module-dialog.c:483
 msgid "Unload"
 msgstr "Scarica"
 
-#: ../app/dialogs/module-dialog.c:499
+#: ../app/dialogs/module-dialog.c:498
 msgid "Purpose:"
 msgstr "Scopo:"
 
-#: ../app/dialogs/module-dialog.c:500
+#: ../app/dialogs/module-dialog.c:499
 msgid "Author:"
 msgstr "Autore:"
 
-#: ../app/dialogs/module-dialog.c:501
+#: ../app/dialogs/module-dialog.c:500
 msgid "Version:"
 msgstr "Versione:"
 
-#: ../app/dialogs/module-dialog.c:502
+#: ../app/dialogs/module-dialog.c:501
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: ../app/dialogs/module-dialog.c:503
+#: ../app/dialogs/module-dialog.c:502
 msgid "Date:"
 msgstr "Data:"
 
-#: ../app/dialogs/module-dialog.c:504
+#: ../app/dialogs/module-dialog.c:503
 msgid "Location:"
 msgstr "Disposizione:"
 
-#: ../app/dialogs/module-dialog.c:505
+#: ../app/dialogs/module-dialog.c:504
 #: ../app/widgets/gimpcontrollereditor.c:219
 msgid "State:"
 msgstr "Stato:"
 
-#: ../app/dialogs/module-dialog.c:506
+#: ../app/dialogs/module-dialog.c:505
 msgid "Last error:"
 msgstr "Ultimo errore:"
 
-#: ../app/dialogs/module-dialog.c:507
+#: ../app/dialogs/module-dialog.c:506
 msgid "Available types:"
 msgstr "Tipi disponibili:"
 
@@ -6705,62 +6701,58 @@ msgstr "Riempi con il colore dello _sfondo"
 msgid "Make _transparent"
 msgstr "Rendi _trasparente"
 
-#: ../app/dialogs/palette-import-dialog.c:174
-msgid "Import Palette"
-msgstr "Importa tavolozza"
-
-#: ../app/dialogs/palette-import-dialog.c:176
+#: ../app/dialogs/palette-import-dialog.c:172
 msgid "Import a New Palette"
 msgstr "Importa una nuova tavolozza"
 
-#: ../app/dialogs/palette-import-dialog.c:186
+#: ../app/dialogs/palette-import-dialog.c:182
 msgid "_Import"
 msgstr "_Importa"
 
 #. The "Source" frame
-#: ../app/dialogs/palette-import-dialog.c:220
+#: ../app/dialogs/palette-import-dialog.c:216
 msgid "Select Source"
 msgstr "Seleziona sorgente"
 
-#: ../app/dialogs/palette-import-dialog.c:244
+#: ../app/dialogs/palette-import-dialog.c:240
 msgid "I_mage"
 msgstr "I_mmagine"
 
-#: ../app/dialogs/palette-import-dialog.c:259
+#: ../app/dialogs/palette-import-dialog.c:255
 msgid "Palette _file"
 msgstr "_File della tavolozza"
 
-#: ../app/dialogs/palette-import-dialog.c:283
+#: ../app/dialogs/palette-import-dialog.c:279
 msgid "Select Palette File"
 msgstr "Seleziona il file tavolozza"
 
 #. The "Import" frame
-#: ../app/dialogs/palette-import-dialog.c:313
+#: ../app/dialogs/palette-import-dialog.c:309
 msgid "Import Options"
 msgstr "Opzioni di importazione"
 
-#: ../app/dialogs/palette-import-dialog.c:327
+#: ../app/dialogs/palette-import-dialog.c:323
 msgid "New import"
 msgstr "Nuova importazione"
 
-#: ../app/dialogs/palette-import-dialog.c:329
+#: ../app/dialogs/palette-import-dialog.c:325
 msgid "Palette _name:"
 msgstr "_Nome tavolozza:"
 
-#: ../app/dialogs/palette-import-dialog.c:335
+#: ../app/dialogs/palette-import-dialog.c:331
 msgid "N_umber of colors:"
 msgstr "N_umero di colori:"
 
-#: ../app/dialogs/palette-import-dialog.c:348
+#: ../app/dialogs/palette-import-dialog.c:344
 msgid "C_olumns:"
 msgstr "C_olonne:"
 
-#: ../app/dialogs/palette-import-dialog.c:360
+#: ../app/dialogs/palette-import-dialog.c:356
 msgid "I_nterval:"
 msgstr "I_ntervallo:"
 
 #. The "Preview" frame
-#: ../app/dialogs/palette-import-dialog.c:372
+#: ../app/dialogs/palette-import-dialog.c:368
 msgid "Preview"
 msgstr "Anteprima"
 
@@ -7381,7 +7373,6 @@ msgid "Select Temp Folder"
 msgstr "Seleziona cartella file temporanei"
 
 #: ../app/dialogs/preferences-dialog.c:2384
-#: ../app/dialogs/user-install-dialog.c:1433
 msgid "Swap folder:"
 msgstr "Cartella di scambio:"
 
@@ -7643,349 +7634,79 @@ msgstr "_Successivo"
 msgid "tips-locale:C"
 msgstr "tips-locale:it"
 
-#: ../app/dialogs/user-install-dialog.c:133
-msgid ""
-"The gimprc is used to store personal preferences that affect GIMP's default "
-"behavior.  Paths to search for brushes, palettes, gradients, patterns, plug-"
-"ins and modules can also configured here."
-msgstr ""
-"Il file gimprc è utile per memorizzare le preferenze personali come le "
-"caratteristiche di GIMP e le scorciatoie da tastiera dei plug-in. Qui "
-"possono essere configurati anche i percorsi per cercare pennelli, tavolozze, "
-"gradienti, motivi, plug-in e moduli."
+#: ../app/dialogs/user-install-dialog.c:189
+msgid "Installation successful."
+msgstr "Installazione completata."
 
-#: ../app/dialogs/user-install-dialog.c:142
-msgid ""
-"GIMP uses an additional gtkrc file so you can configure it to look "
-"differently than other GTK apps."
-msgstr ""
-"GIMP utilizza un file gtkrc aggiuntivo. Perciò è possibile dargli un aspetto "
-"diverso dalle altre applicazioni GTK."
+#: ../app/dialogs/user-install-dialog.c:194
+msgid "Installation failed!"
+msgstr "Installazione fallita!"
 
-#: ../app/dialogs/user-install-dialog.c:148
-msgid ""
-"Plug-ins and extensions are external programs which provide additional "
-"functionality to GIMP.  These programs are searched for at run-time and "
-"information about their functionality is cached in this file.  This file is "
-"intended to be written to by GIMP only, and should not be edited."
-msgstr ""
-"I plugin e le estensioni sono programmi esterni che aggiungono funzionalità "
-"a Gimp. Questi programmi vengono cercati all'avvio del programma e le "
-"relative informazioni sulle funzionalità sono memorizzate in questo file. Il "
-"file è destinato alla scrittura da parte di Gimp e non dovrebbe essere "
-"modificato."
+#: ../app/dialogs/user-install-dialog.c:239
+msgid "Hide _details"
+msgstr "Nascondi i _dettagli"
 
-#: ../app/dialogs/user-install-dialog.c:158
-msgid ""
-"Key shortcuts can be dynamically redefined. The menurc is a dump of your "
-"configuration so it can be remembered for the next session.  You may edit "
-"this file if you wish, but it is much easier to define the keys from within "
-"GIMP.  Deleting this file will restore the default shortcuts."
-msgstr ""
-"I tasti scorciatoia possono essere ridefiniti dinamicamente. Il file menurc "
-"è una copia delle vostre configurazioni perciò può essere utilizzato la "
-"volta successiva. Potete modificare questo file come volete ma è molto più "
-"semplice definire i tasti da GIMP. Cancellando questo file verranno "
-"ripristinate le scorciatoie predefinite."
+#: ../app/dialogs/user-install-dialog.c:239
+msgid "Show _details"
+msgstr "Mostra i _dettagli"
 
-#: ../app/dialogs/user-install-dialog.c:168
-msgid ""
-"The sessionrc is used to store what dialog windows were open the last time "
-"you quit GIMP.  You can configure GIMP to reopen these dialogs at the saved "
-"position."
-msgstr ""
-"Il file sessionrc viene utilizzato per memorizzare quali finestre erano "
-"aperte all'ultima uscita da GIMP. Potete configurare GIMP per riaprire "
-"queste finestre nella stessa posizione."
-
-#: ../app/dialogs/user-install-dialog.c:175
-msgid ""
-"This file holds a collection of standard media sizes that serve as image "
-"templates."
-msgstr ""
-"Questo file contiene un gruppo di media di grandezza standard da utilizzare "
-"come modelli di immagine."
-
-#: ../app/dialogs/user-install-dialog.c:181
-msgid ""
-"The unitrc is used to store your user units database.  You can define "
-"additional units and use them just like you use the built-in units inches, "
-"millimeters, points and picas.  This file is overwritten each time you quit "
-"the GIMP."
-msgstr ""
-"Il file unitrc serve a memorizzare il database delle unità di misura "
-"dell'utente. È possibile definire ulteriori unità da utilizzare come le "
-"unità predefinite. Questo file viene sovrascritto ogni volta che si esce da "
-"GIMP."
-
-#: ../app/dialogs/user-install-dialog.c:190
-msgid ""
-"This folder is used to store user defined brushes. GIMP checks this folder "
-"in addition to the system-wide brushes installation."
-msgstr ""
-"Questa cartella serve per contenere i pennelli definiti dall'utente. Gimp "
-"legge questa cartella, oltre a quella dei pennelli di sistema."
-
-#: ../app/dialogs/user-install-dialog.c:197
-msgid ""
-"This folder is used to store fonts you only want to be visible in GIMP. GIMP "
-"checks this folder in addition to the system-wide fonts installation. Use "
-"this only if you really want to have fonts available in GIMP only, otherwise "
-"put them in your global font directory."
-msgstr ""
-"Questa cartella serve per immagazzinare i caratteri che si vuole siano resi "
-"visibili solamente a GIMP. GIMP controlla questa cartella, oltre a quella di "
-"sistema dei caratteri di GIMP. Usare questa cartella solamente se si è "
-"assolutamente certi di voler avere dei caratteri solo per GIMP, altrimenti "
-"posizionateli nella cartella dei caratteri globale."
-
-#: ../app/dialogs/user-install-dialog.c:206
-msgid ""
-"This folder is used to store user defined gradients.  GIMP checks this "
-"folder in addition to the system-wide gradients installation."
-msgstr ""
-"Questa cartella serve per contenere i gradienti definiti dall'utente. GIMP "
-"controlla questa cartella, oltre a quella dei gradienti di sistema."
-
-#: ../app/dialogs/user-install-dialog.c:213
-msgid ""
-"This folder is used to store user defined palettes.  GIMP checks this folder "
-"in addition to the system-wide palettes installation."
-msgstr ""
-"Questa cartella serve a contenere le tavolozze definite dall'utente. GIMP "
-"controlla questa cartella, oltre a quella di sistema delle tavolozze."
-
-#: ../app/dialogs/user-install-dialog.c:220
-msgid ""
-"This folder is used to store user defined patterns.  GIMP checks this folder "
-"in addition to the system-wide patterns installation when searching for "
-"patterns."
-msgstr ""
-"Questa cartella serve a contenere i motivi definiti dall'utente. GIMP "
-"controlla questa cartella, oltre a quella dei motivi di sistema."
-
-#: ../app/dialogs/user-install-dialog.c:227
-msgid ""
-"This folder is used to store user created, temporary, or otherwise non-"
-"system-supported plug-ins.  GIMP checks this folder in addition to the "
-"system-wide plug-in folder."
-msgstr ""
-"Questa cartella serve a contenere i plug-in definiti dall'utente. GIMP "
-"controlla questa cartella, oltre a quella per i plug-in di sistema."
-
-#: ../app/dialogs/user-install-dialog.c:235
-msgid ""
-"This folder is used to store user created, temporary, or otherwise non-"
-"system-supported DLL modules.  GIMP checks this folder in addition to the "
-"system-wide module folder."
-msgstr ""
-"Questa cartella serve per contenere moduli DLL dell'utente o comunque non di "
-"sistema. GIMP controlla questa cartella, oltre a quella di sistema."
-
-#: ../app/dialogs/user-install-dialog.c:243
-msgid ""
-"This folder is used to store configuration for user created, temporary, or "
-"otherwise non-system-supported plug-in interpreters.  GIMP checks this "
-"folder in addition to the system-wide GIMP interpreters folder when "
-"searching for plug-in interpreter configuration files."
-msgstr ""
-"Questa cartella serve a contenere la configurazione per gli interpreti plug-"
-"in definiti dall'utente, temporanei o comunque non di sistema. GIMP "
-"controlla questa cartella, oltre a quella di ambiente di sistema."
-
-#: ../app/dialogs/user-install-dialog.c:253
-msgid ""
-"This folder is used to store user created, temporary, or otherwise non-"
-"system-supported additions to the plug-in environment.  GIMP checks this "
-"folder in addition to the system-wide GIMP environment folder when searching "
-"for plug-in environment modification files."
-msgstr ""
-"Questa cartella serve a contenere aggiunte utente o comunque non di sistema, "
-"all'ambiente dei plug-in. GIMP controlla questa cartella, oltre a quella di "
-"ambiente di sistema dei plug-in."
-
-#: ../app/dialogs/user-install-dialog.c:263
-msgid ""
-"This folder is used to store user created and installed scripts.  GIMP "
-"checks this folder in addition to the systemwide scripts folder."
-msgstr ""
-"Questa cartella serve a contenere gli script creati ed installati "
-"dall'utente. GIMP controlla questa cartella, oltre a quella per gli script "
-"di sistema."
-
-#: ../app/dialogs/user-install-dialog.c:270
-msgid "This folder is searched for image templates."
-msgstr ""
-"Questa cartella viene letta alla ricerca di\n"
-"modelli di immagini."
-
-#: ../app/dialogs/user-install-dialog.c:275
-msgid "This folder is searched for user-installed themes."
-msgstr "In questa cartella vengono cercati i temi installati dall'utente."
-
-#: ../app/dialogs/user-install-dialog.c:280
-msgid "This folder is used for temporary files."
-msgstr "Questa cartella viene usata per i file temporanei."
-
-#: ../app/dialogs/user-install-dialog.c:285
-msgid "This folder is used to store tool options."
-msgstr "Questa cartella serve per memorizzare le opzioni degli strumenti."
-
-#: ../app/dialogs/user-install-dialog.c:290
-msgid "This folder is used to store parameter files for the Curves tool."
-msgstr ""
-"Questa cartella serve per memorizzare i file con i parametri relativi allo "
-"strumento curve."
-
-#: ../app/dialogs/user-install-dialog.c:295
-msgid "This folder is used to store parameter files for the Levels tool."
-msgstr ""
-"Questa cartella serve a memorizzare i file con i parametri relativi allo "
-"strumento livelli."
-
-#: ../app/dialogs/user-install-dialog.c:391
-msgid "Installation successful.  Click \"Continue\" to proceed."
-msgstr "Installazione completata.  Fare clic su \"Continua\" per procedere."
-
-#: ../app/dialogs/user-install-dialog.c:397
-msgid "Installation failed.  Contact system administrator."
-msgstr "Installazione fallita.  Contattare l'amministratore di sistema."
-
-#: ../app/dialogs/user-install-dialog.c:628
+#: ../app/dialogs/user-install-dialog.c:292
 msgid "GIMP User Installation"
 msgstr "GIMP Installazione Utente"
 
-#: ../app/dialogs/user-install-dialog.c:633
+#: ../app/dialogs/user-install-dialog.c:298
 msgid "Continue"
 msgstr "Continua"
 
-#. GPL_PAGE
-#. version number
-#: ../app/dialogs/user-install-dialog.c:789
-#, c-format
-msgid "Welcome to GIMP %d.%d"
-msgstr "Benvenuto a GIMP %d.%d"
+#: ../app/dialogs/user-install-dialog.c:367
+msgid "Welcome to the GNU Image Manipulation Program"
+msgstr "Benvenuti nel programma di elaborazione immagini GNU GIMP"
 
-#: ../app/dialogs/user-install-dialog.c:794
-msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr "Fare clic su \"Continua\" per avviare l'installazione utente."
-
-#: ../app/dialogs/user-install-dialog.c:818
-msgid "Migrate User Settings"
-msgstr "Migrazione delle impostazioni utente"
-
-#: ../app/dialogs/user-install-dialog.c:819
-msgid "Click \"Continue\" to proceed with the user installation."
-msgstr "Fare clic su \"Continua\" per procedere con l'installazione utente."
-
-#: ../app/dialogs/user-install-dialog.c:823
+#: ../app/dialogs/user-install-dialog.c:377
 #, c-format
 msgid "It seems you have used GIMP %s before."
 msgstr "Sembra che sia stato utilizzato GIMP %s in passato."
 
-#: ../app/dialogs/user-install-dialog.c:825
+#: ../app/dialogs/user-install-dialog.c:379
 #, c-format
 msgid "_Migrate GIMP %s user settings"
 msgstr "_Migrazione delle impostazioni utente GIMP %s"
 
-#: ../app/dialogs/user-install-dialog.c:834
+#: ../app/dialogs/user-install-dialog.c:388
 msgid "Do a _fresh user installation"
 msgstr "Crea una _nuova installazione utente GIMP"
 
-#: ../app/dialogs/user-install-dialog.c:865
-msgid "Personal GIMP Folder"
-msgstr "Cartella personale di GIMP"
-
-#: ../app/dialogs/user-install-dialog.c:866
-msgid "Click \"Continue\" to create your personal GIMP folder."
-msgstr ""
-"Fare clic su \"Continua\" per creare la tua cartella personale di GIMP."
-
-#: ../app/dialogs/user-install-dialog.c:910
+#: ../app/dialogs/user-install-dialog.c:400
 #, c-format
 msgid ""
-"For a proper GIMP installation, a folder named '<b>%s</b>' needs to be "
-"created."
+"It appears that you are using GIMP for the first time.  GIMP will now create "
+"a folder named '<b>%s</b>' and copy some files to it."
 msgstr ""
-"Per una corretta installazione di GIMP, è necessaria la creazione di una "
-"cartella con nome '<b>%s</b>'."
+"Sembra che tu stia usando GIMP per la prima volta. GIMP ora creerà una "
+"cartella di nome \"<b>%s</b>\" e vi copiarà alcuni file al suo interno."
 
-#: ../app/dialogs/user-install-dialog.c:917
-msgid ""
-"This folder will contain a number of important files.  Click on one of the "
-"files or folders in the tree to get more information about the selected item."
-msgstr ""
-"Questa cartella conterrà alcuni file importanti.  Per ottenere ulteriori "
-"informazioni sul file o cartelle selezionati fare clic su di uno essi."
+#: ../app/dialogs/user-install-dialog.c:419
+msgid "User Installation"
+msgstr "Installazione utente"
 
-#: ../app/dialogs/user-install-dialog.c:1005
-msgid "User Installation Log"
-msgstr "Log installazione utente"
+#: ../app/dialogs/user-install-dialog.c:420
+msgid "Your personal GIMP folder is being created..."
+msgstr "La cartella personale di GIMP è stata creata..."
 
-#: ../app/dialogs/user-install-dialog.c:1006
-msgid "Please wait while your personal GIMP folder is being created..."
-msgstr "Creazione della Vostra cartella personale di GIMP. Attendere..."
-
-#: ../app/dialogs/user-install-dialog.c:1013
-msgid "GIMP Performance Tuning"
-msgstr "Impostazione prestazioni di GIMP"
-
-#: ../app/dialogs/user-install-dialog.c:1014
-msgid "Click \"Continue\" to accept the settings above."
-msgstr "Fare clic su \"Continua\" per accettare le impostazioni."
-
-#: ../app/dialogs/user-install-dialog.c:1019
-msgid ""
-"<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
-msgstr ""
-"<b>Per una prestazione ottimale di GIMP, è necessario regolare alcuni "
-"parametri.</b>"
-
-#: ../app/dialogs/user-install-dialog.c:1079
+#: ../app/dialogs/user-install-dialog.c:521
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "Copia del file '%s' da '%s'..."
 
-#: ../app/dialogs/user-install-dialog.c:1098
+#: ../app/dialogs/user-install-dialog.c:540
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "Creazione cartella '%s'..."
 
-#: ../app/dialogs/user-install-dialog.c:1112
+#: ../app/dialogs/user-install-dialog.c:554
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Impossibile creare la cartella '%s': %s"
-
-#: ../app/dialogs/user-install-dialog.c:1392
-msgid ""
-"GIMP uses a limited amount of memory to store image data, the so-called "
-"\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
-"the amount of memory used by other running processes."
-msgstr ""
-"GIMP utilizza un ammontare di memoria limitata per gestire le immagini, "
-"chiamata \"cache immagine\". Dovreste modificarne la dimensione considerando "
-"l'ammontare di memoria per gli altri processi attivi."
-
-#: ../app/dialogs/user-install-dialog.c:1405
-msgid "Tile cache size:"
-msgstr "Dimensione cache immagine:"
-
-#: ../app/dialogs/user-install-dialog.c:1417
-msgid ""
-"All image and undo data which doesn't fit into the Tile Cache will be "
-"written to a swap file.  This file should be located on a local filesystem "
-"with enough free space (several hundred MB). On a UNIX system, you may want "
-"to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
-msgstr ""
-"Tutte le immagini e le informazioni di annullamento che non rientrano nella "
-"Cache Immagine verranno scritte in un file temporaneo. Questo file dovrebbe "
-"essere disposto in un filesystem con abbastanza spazio libero (diverse "
-"centinaia di Mbyte). Su un sistema UNIX, potete utilizzare la cartella dei "
-"file temporanei di sistema (\"/tmp\" o \"/var/tmp\")."
-
-#: ../app/dialogs/user-install-dialog.c:1428
-msgid "Select Swap Dir"
-msgstr "Seleziona la cartella di scambio"
 
 #: ../app/dialogs/vectors-export-dialog.c:53
 msgid "Export Path to SVG"
@@ -8246,7 +7967,7 @@ msgstr "Nessun pennello disponibile da usare con questo strumento."
 msgid "Clone"
 msgstr "Duplica"
 
-#: ../app/paint/gimpconvolve.c:119 ../app/tools/gimpconvolvetool.c:68
+#: ../app/paint/gimpconvolve.c:121 ../app/tools/gimpconvolvetool.c:68
 msgid "Convolve"
 msgstr "Arrotolamento"
 
@@ -8665,7 +8386,7 @@ msgstr "Pressione:"
 
 #: ../app/tools/gimpblendoptions.c:216
 msgid "Offset:"
-msgstr "Compensato:"
+msgstr "Variazione:"
 
 #: ../app/tools/gimpblendoptions.c:225 ../app/widgets/gimpbrusheditor.c:115
 msgid "Shape:"
@@ -8677,7 +8398,7 @@ msgstr "Ripeti"
 
 #: ../app/tools/gimpblendoptions.c:249
 msgid "Adaptive supersampling"
-msgstr "Adattivo con supersampling"
+msgstr "Supercampionamento adattivo"
 
 #: ../app/tools/gimpblendoptions.c:267
 msgid "Max depth:"
@@ -11270,7 +10991,7 @@ msgstr "Apri la finestra di selezione gradiente"
 
 #: ../app/widgets/gimpviewablebox.c:219
 msgid "Reverse"
-msgstr "Invertire"
+msgstr "Inverso"
 
 #: ../app/widgets/gimpviewablebox.c:298
 msgid "Open the palette selection dialog"
