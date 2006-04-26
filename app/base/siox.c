@@ -525,10 +525,10 @@ depth_first_search (TileManager *mask,
                     struct blob *b,
                     guchar       mark)
 {
+  GSList *stack = NULL;
   gint    xx    = b->seedx;
   gint    yy    = b->seedy;
   gint    oldx  = -1;
-  GSList *stack = NULL;
 
   while (TRUE)
     {
@@ -541,6 +541,7 @@ depth_first_search (TileManager *mask,
 
           xx    = GPOINTER_TO_INT (stack->data);
           stack = g_slist_delete_link (stack, stack);
+
           yy    = GPOINTER_TO_INT (stack->data);
           stack = g_slist_delete_link (stack, stack);
         }
