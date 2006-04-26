@@ -511,10 +511,10 @@ struct blob
 };
 
 /* This method checks out the neighbourhood of the pixel at position
- * (x,y) in the TileManager mask, it adds the sourrounding
- * pixels to the queue to allow further processing it uses maskVal to
- * determine if the sourounding pixels have already been visited x,y
- * are passed from above.
+ * (x,y) in the TileManager mask, it adds the surrounding pixels to
+ * the queue to allow further processing it uses maskVal to determine
+ * if the surrounding pixels have already been visited x,y are passed
+ * from above.
  */
 static void
 depth_first_search (TileManager *mask,
@@ -525,15 +525,15 @@ depth_first_search (TileManager *mask,
                     struct blob *b,
                     guchar       mark)
 {
-  gint   oldx = -1;
-  gint   xx = b->seedx;
-  gint   yy = b->seedy;
-  guchar val;
-
+  gint    xx    = b->seedx;
+  gint    yy    = b->seedy;
+  gint    oldx  = -1;
   GSList *stack = NULL;
 
   while (TRUE)
     {
+      guchar val;
+
       if (oldx == xx)
         {
           if (stack == NULL)
@@ -544,9 +544,11 @@ depth_first_search (TileManager *mask,
           yy    = GPOINTER_TO_INT (stack->data);
           stack = g_slist_delete_link (stack, stack);
         }
+
       oldx = xx;
 
       read_pixel_data_1 (mask, xx, yy, &val);
+
       if (val && (val != mark))
         {
           if (mark == FIND_BLOB_VISITED)
@@ -559,22 +561,21 @@ depth_first_search (TileManager *mask,
           write_pixel_data_1 (mask, xx, yy, &mark);
 
           if (yy > y)
-            stack =
-              g_slist_prepend (g_slist_prepend
-                               (stack, GINT_TO_POINTER (yy - 1)),
-                               GINT_TO_POINTER (xx));
+            stack = g_slist_prepend (g_slist_prepend
+                                     (stack, GINT_TO_POINTER (yy - 1)),
+                                     GINT_TO_POINTER (xx));
+
           if (yy + 1 < yheight)
-            stack =
-              g_slist_prepend (g_slist_prepend
-                               (stack, GINT_TO_POINTER (yy + 1)),
-                               GINT_TO_POINTER (xx));
+            stack = g_slist_prepend (g_slist_prepend
+                                     (stack, GINT_TO_POINTER (yy + 1)),
+                                     GINT_TO_POINTER (xx));
+
           if (xx + 1 < xwidth)
             {
               if (xx > x)
-                stack =
-                  g_slist_prepend (g_slist_prepend (stack,
-                                                    GINT_TO_POINTER (yy)),
-                                   GINT_TO_POINTER (xx - 1));
+                stack = g_slist_prepend (g_slist_prepend (stack,
+                                                          GINT_TO_POINTER (yy)),
+                                         GINT_TO_POINTER (xx - 1));
               ++xx;
             }
           else if (xx > x)
