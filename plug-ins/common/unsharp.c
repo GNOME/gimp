@@ -247,23 +247,19 @@ run (const gchar      *name,
 static void
 blur_line (const gdouble *ctable,
            const gdouble *cmatrix,
-           gint           cmatrix_length,
+           const gint     cmatrix_length,
            const guchar  *src,
            guchar        *dest,
-           gint           len,
-           glong          bytes)
+           const gint     len,
+           const glong    bytes)
 {
-  gdouble scale;
-  gdouble sum;
-  gint    i = 0;
-  gint    j = 0;
-  gint    row;
-  gint    cmatrix_middle = cmatrix_length / 2;
-
   const gdouble *cmatrix_p;
   const gdouble *ctable_p;
   const guchar  *src_p;
   const guchar  *src_p1;
+  const gint     cmatrix_middle = cmatrix_length / 2;
+  gint           row;
+  gint           i, j;
 
   /* This first block is the same as the optimized version --
    * it is only used for very small pictures, so speed isn't a
@@ -274,7 +270,8 @@ blur_line (const gdouble *ctable,
       for (row = 0; row < len; row++)
         {
           /* find the scale factor */
-          scale = 0;
+          gdouble scale = 0;
+
           for (j = 0; j < len; j++)
             {
               /* if the index is in bounds, add it to the scale counter */
@@ -284,10 +281,13 @@ blur_line (const gdouble *ctable,
             }
 
           src_p = src;
+
           for (i = 0; i < bytes; i++)
             {
+              gdouble sum = 0;
+
               src_p1 = src_p++;
-              sum = 0;
+
               for (j = 0; j < len; j++)
                 {
                   if (j + cmatrix_middle - row >= 0 &&
@@ -307,22 +307,26 @@ blur_line (const gdouble *ctable,
       for (row = 0; row < cmatrix_middle; row++)
         {
           /* find scale factor */
-          scale = 0;
+          gdouble scale = 0;
+
           for (j = cmatrix_middle - row; j < cmatrix_length; j++)
             scale += cmatrix[j];
 
           src_p = src;
+
           for (i = 0; i < bytes; i++)
             {
+              gdouble sum = 0;
+
               src_p1 = src_p++;
-              sum = 0;
+
               for (j = cmatrix_middle - row; j < cmatrix_length; j++)
                 {
                   sum += *src_p1 * cmatrix[j];
                   src_p1 += bytes;
                 }
 
-              *dest++ = ROUND (sum / scale);
+              *dest++ = (guchar) ROUND (sum / scale);
             }
         }
 
@@ -330,12 +334,15 @@ blur_line (const gdouble *ctable,
       for (; row < len - cmatrix_middle; row++)
         {
           src_p = src + (row - cmatrix_middle) * bytes;
+
           for (i = 0; i < bytes; i++)
             {
+              gdouble sum = 0;
+
               cmatrix_p = cmatrix;
               src_p1 = src_p;
               ctable_p = ctable;
-              sum = 0;
+
               for (j = 0; j < cmatrix_length; j++)
                 {
                   sum += cmatrix[j] * *src_p1;
@@ -344,7 +351,7 @@ blur_line (const gdouble *ctable,
                 }
 
               src_p++;
-              *dest++ = ROUND (sum);
+              *dest++ = (guchar) ROUND (sum);
             }
         }
 
@@ -352,22 +359,26 @@ blur_line (const gdouble *ctable,
       for (; row < len; row++)
         {
           /* find scale factor */
-          scale = 0;
+          gdouble scale = 0;
+
           for (j = 0; j < len - row + cmatrix_middle; j++)
             scale += cmatrix[j];
 
           src_p = src + (row - cmatrix_middle) * bytes;
+
           for (i = 0; i < bytes; i++)
             {
-              sum = 0;
+              gdouble sum = 0;
+
               src_p1 = src_p++;
+
               for (j = 0; j < len - row + cmatrix_middle; j++)
                 {
                   sum += *src_p1 * cmatrix[j];
                   src_p1 += bytes;
                 }
 
-              *dest++ = ROUND (sum / scale);
+              *dest++ = (guchar) ROUND (sum / scale);
             }
         }
     }
@@ -463,7 +474,7 @@ unsharp_region (GimpPixelRgn *srcPR,
     }
 
   if (show_progress)
-    gimp_progress_init (_("Merging"));
+    gimp_progress_set_text (_("Merging"));
 
   /* merge the source and destination (which currently contains
      the blurred version) images */
@@ -471,7 +482,6 @@ unsharp_region (GimpPixelRgn *srcPR,
     {
       const guchar *s = src;
       guchar       *d = dest;
-      gint          value = 0;
       gint          u, v;
 
       /* get source row */
@@ -485,6 +495,7 @@ unsharp_region (GimpPixelRgn *srcPR,
         {
           for (v = 0; v < bytes; v++)
             {
+              gint value;
               gint diff = *s - *d;
 
               /* do tresholding */
@@ -503,7 +514,7 @@ unsharp_region (GimpPixelRgn *srcPR,
     }
 
   if (show_progress)
-    gimp_progress_update (0.0);
+    gimp_progress_update (1.0);
 
   g_free (dest);
   g_free (src);

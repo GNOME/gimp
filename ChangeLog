@@ -1,5 +1,10 @@
 2006-04-26  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/unsharp.c: use gimp_progress_set_text() instead
+	of gimp_progress_init() to change the progress text.
+
+2006-04-26  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/vectors-commands.c
 	(vectors_selection_to_vectors_cmd_callback): do not pass an
 	invalid drawable to the plug-in, just omit the argument.
