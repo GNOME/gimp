@@ -1,5 +1,12 @@
 2006-04-26  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/vectors-commands.c
+	(vectors_selection_to_vectors_cmd_callback): do not pass an
+	invalid drawable to the plug-in, just omit the argument.
+	Fixes bug #339759.
+
+2006-04-26  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/scale-funcs.c: code cleanup, moved variables into
 	local scopes, added const qualifiers.
 
