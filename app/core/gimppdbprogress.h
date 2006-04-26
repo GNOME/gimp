@@ -42,6 +42,7 @@ struct _GimpPdbProgress
   gboolean     active;
   gdouble      value;
 
+  GimpPDB     *pdb;
   GimpContext *context;
   gchar       *callback_name;
   gboolean     callback_busy;

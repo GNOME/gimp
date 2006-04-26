@@ -24,7 +24,7 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimp-pdb.h"
+#include "gimppdb.h"
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
@@ -50,7 +50,7 @@ fonts_popup_invoker (GimpProcedure     *procedure,
   if (success)
     {
       if (gimp->no_interface ||
-          ! gimp_pdb_lookup (gimp, font_callback) ||
+          ! gimp_pdb_lookup_procedure (gimp->pdb, font_callback) ||
           ! gimp_pdb_dialog_new (gimp, context, gimp->fonts,
                                  popup_title, font_callback, initial_font,
                                  NULL))
@@ -75,7 +75,7 @@ fonts_close_popup_invoker (GimpProcedure     *procedure,
   if (success)
     {
       if (gimp->no_interface ||
-          ! gimp_pdb_lookup (gimp, font_callback) ||
+          ! gimp_pdb_lookup_procedure (gimp->pdb, font_callback) ||
           ! gimp_pdb_dialog_close (gimp, gimp->fonts, font_callback))
         success = FALSE;
     }
@@ -100,7 +100,7 @@ fonts_set_popup_invoker (GimpProcedure     *procedure,
   if (success)
     {
       if (gimp->no_interface ||
-          ! gimp_pdb_lookup (gimp, font_callback) ||
+          ! gimp_pdb_lookup_procedure (gimp->pdb, font_callback) ||
           ! gimp_pdb_dialog_set (gimp, gimp->fonts, font_callback, font_name,
                                  NULL))
         success = FALSE;
@@ -110,7 +110,7 @@ fonts_set_popup_invoker (GimpProcedure     *procedure,
 }
 
 void
-register_font_select_procs (Gimp *gimp)
+register_font_select_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
@@ -127,7 +127,6 @@ register_font_select_procs (Gimp *gimp)
                                      "Sven Neumann",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("font-callback",
                                                        "font callback",
@@ -149,7 +148,7 @@ register_font_select_procs (Gimp *gimp)
                                                        FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -165,7 +164,6 @@ register_font_select_procs (Gimp *gimp)
                                      "Sven Neumann",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("font-callback",
                                                        "font callback",
@@ -173,7 +171,7 @@ register_font_select_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -189,7 +187,6 @@ register_font_select_procs (Gimp *gimp)
                                      "Sven Neumann",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("font-callback",
                                                        "font callback",
@@ -204,7 +201,6 @@ register_font_select_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 }

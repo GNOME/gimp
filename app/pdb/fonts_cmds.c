@@ -24,7 +24,7 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimp-pdb.h"
+#include "gimppdb.h"
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
@@ -78,7 +78,7 @@ fonts_get_list_invoker (GimpProcedure     *procedure,
 }
 
 void
-register_fonts_procs (Gimp *gimp)
+register_fonts_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
@@ -95,8 +95,7 @@ register_fonts_procs (Gimp *gimp)
                                      "Sven Neumann",
                                      "2003",
                                      NULL);
-
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -112,7 +111,6 @@ register_fonts_procs (Gimp *gimp)
                                      "Sven Neumann",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filter",
                                                        "filter",
@@ -131,7 +129,6 @@ register_fonts_procs (Gimp *gimp)
                                                                  "font list",
                                                                  "The list of font names",
                                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 }

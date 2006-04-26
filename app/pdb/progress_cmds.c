@@ -24,7 +24,7 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimp-pdb.h"
+#include "gimppdb.h"
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
@@ -231,7 +231,7 @@ progress_cancel_invoker (GimpProcedure     *procedure,
 }
 
 void
-register_progress_procs (Gimp *gimp)
+register_progress_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
@@ -248,7 +248,6 @@ register_progress_procs (Gimp *gimp)
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("message",
                                                        "message",
@@ -260,9 +259,9 @@ register_progress_procs (Gimp *gimp)
                                gimp_param_spec_display_id ("gdisplay",
                                                            "gdisplay",
                                                            "GimpDisplay to update progressbar in, or -1 for a seperate window",
-                                                           gimp,
+                                                           pdb->gimp,
                                                            GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -278,14 +277,13 @@ register_progress_procs (Gimp *gimp)
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("percentage",
                                                     "percentage",
                                                     "Percentage of progress completed which must be between 0.0 and 1.0",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -301,8 +299,7 @@ register_progress_procs (Gimp *gimp)
                                      "Sven Neumann",
                                      "2005",
                                      NULL);
-
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -318,7 +315,6 @@ register_progress_procs (Gimp *gimp)
                                      "Sven Neumann",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("message",
                                                        "message",
@@ -326,7 +322,7 @@ register_progress_procs (Gimp *gimp)
                                                        FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -342,14 +338,13 @@ register_progress_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("window",
                                                           "window",
                                                           "The progress bar's toplevel window",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -365,7 +360,6 @@ register_progress_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("progress-callback",
                                                        "progress callback",
@@ -373,7 +367,7 @@ register_progress_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -389,7 +383,6 @@ register_progress_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("progress-callback",
                                                        "progress callback",
@@ -397,7 +390,7 @@ register_progress_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -413,7 +406,6 @@ register_progress_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("progress-callback",
                                                        "progress callback",
@@ -421,7 +413,6 @@ register_progress_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 }

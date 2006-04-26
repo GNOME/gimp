@@ -25,7 +25,7 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimp-pdb.h"
+#include "gimppdb.h"
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
@@ -132,7 +132,7 @@ pattern_get_pixels_invoker (GimpProcedure     *procedure,
 }
 
 void
-register_pattern_procs (Gimp *gimp)
+register_pattern_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
@@ -149,7 +149,6 @@ register_pattern_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -175,7 +174,7 @@ register_pattern_procs (Gimp *gimp)
                                                           "The pattern bpp",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -191,7 +190,6 @@ register_pattern_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -228,7 +226,6 @@ register_pattern_procs (Gimp *gimp)
                                                                "color bytes",
                                                                "The pattern data.",
                                                                GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 }

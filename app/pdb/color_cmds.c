@@ -24,7 +24,7 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimp-pdb.h"
+#include "gimppdb.h"
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
@@ -832,7 +832,7 @@ threshold_invoker (GimpProcedure     *procedure,
 }
 
 void
-register_color_procs (Gimp *gimp)
+register_color_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
@@ -849,12 +849,11 @@ register_color_procs (Gimp *gimp)
                                      "Spencer Kimball & Peter Mattis",
                                      "1997",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("brightness",
@@ -868,7 +867,7 @@ register_color_procs (Gimp *gimp)
                                                       "Contrast adjustment (-127 <= contrast <= 127)",
                                                       -127, 127, -127,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -884,12 +883,11 @@ register_color_procs (Gimp *gimp)
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("channel",
@@ -928,7 +926,7 @@ register_color_procs (Gimp *gimp)
                                                       "Intensity of highest output (0 <= high_output <= 255)",
                                                       0, 255, 0,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -944,14 +942,13 @@ register_color_procs (Gimp *gimp)
                                      "",
                                      "",
                                      "gimp_levels_stretch");
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -967,14 +964,13 @@ register_color_procs (Gimp *gimp)
                                      "Joao S.O. Bueno, Shawn Willden",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -990,12 +986,11 @@ register_color_procs (Gimp *gimp)
                                      "Spencer Kimball & Peter Mattis",
                                      "1997",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("levels",
@@ -1003,7 +998,7 @@ register_color_procs (Gimp *gimp)
                                                       "Levels of posterization (2 <= levels <= 255)",
                                                       2, 255, 2,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1019,14 +1014,13 @@ register_color_procs (Gimp *gimp)
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1042,12 +1036,11 @@ register_color_procs (Gimp *gimp)
                                      "Karine Delvare",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("desaturate-mode",
@@ -1056,7 +1049,7 @@ register_color_procs (Gimp *gimp)
                                                   GIMP_TYPE_DESATURATE_MODE,
                                                   GIMP_DESATURATE_LIGHTNESS,
                                                   GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1072,12 +1065,11 @@ register_color_procs (Gimp *gimp)
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("mask-only",
@@ -1085,7 +1077,7 @@ register_color_procs (Gimp *gimp)
                                                      "Equalization option",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1101,14 +1093,13 @@ register_color_procs (Gimp *gimp)
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1124,12 +1115,11 @@ register_color_procs (Gimp *gimp)
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("channel",
@@ -1149,7 +1139,7 @@ register_color_procs (Gimp *gimp)
                                                            "control pts",
                                                            "The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }",
                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1165,12 +1155,11 @@ register_color_procs (Gimp *gimp)
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("channel",
@@ -1190,7 +1179,7 @@ register_color_procs (Gimp *gimp)
                                                            "curve",
                                                            "The explicit curve",
                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1206,12 +1195,11 @@ register_color_procs (Gimp *gimp)
                                      "Spencer Kimball & Peter Mattis",
                                      "1997",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("transfer-mode",
@@ -1244,7 +1232,7 @@ register_color_procs (Gimp *gimp)
                                                     "Yellow-Blue color balance (-100 <= yellow_blue <= 100)",
                                                     -100, 100, -100,
                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1260,12 +1248,11 @@ register_color_procs (Gimp *gimp)
                                      "Sven Neumann",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("hue",
@@ -1285,7 +1272,7 @@ register_color_procs (Gimp *gimp)
                                                     "Lightness in percent (-100 <= lightness <= 100)",
                                                     -100, 100, -100,
                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1301,12 +1288,11 @@ register_color_procs (Gimp *gimp)
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("channel",
@@ -1363,7 +1349,7 @@ register_color_procs (Gimp *gimp)
                                                         "Percentile that range falls under",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1379,12 +1365,11 @@ register_color_procs (Gimp *gimp)
                                      "Spencer Kimball & Peter Mattis",
                                      "1997",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("hue-range",
@@ -1411,7 +1396,7 @@ register_color_procs (Gimp *gimp)
                                                     "Saturation modification (-100 <= saturation <= 100)",
                                                     -100, 100, -100,
                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1427,12 +1412,11 @@ register_color_procs (Gimp *gimp)
                                      "Spencer Kimball & Peter Mattis",
                                      "1997",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("low-threshold",
@@ -1446,7 +1430,6 @@ register_color_procs (Gimp *gimp)
                                                       "The high threshold value (0 <= high_threshold <= 255)",
                                                       0, 255, 0,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 }

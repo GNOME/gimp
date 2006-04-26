@@ -29,7 +29,7 @@
 #include "core/gimppdbprogress.h"
 #include "core/gimpprogress.h"
 
-#include "pdb/gimp-pdb.h"
+#include "pdb/gimppdb.h"
 #include "pdb/gimptemporaryprocedure.h"
 
 #include "plug-in.h"
@@ -203,7 +203,8 @@ plug_in_progress_install (PlugIn      *plug_in,
   g_return_val_if_fail (plug_in != NULL, FALSE);
   g_return_val_if_fail (progress_callback != NULL, FALSE);
 
-  procedure = gimp_pdb_lookup (plug_in->gimp, progress_callback);
+  procedure = gimp_pdb_lookup_procedure (plug_in->gimp->pdb,
+                                         progress_callback);
 
   if (! GIMP_IS_TEMPORARY_PROCEDURE (procedure)                ||
       GIMP_TEMPORARY_PROCEDURE (procedure)->plug_in != plug_in ||
@@ -229,6 +230,7 @@ plug_in_progress_install (PlugIn      *plug_in,
     }
 
   proc_frame->progress = g_object_new (GIMP_TYPE_PDB_PROGRESS,
+                                       "pdb",           plug_in->gimp->pdb,
                                        "context",       proc_frame->main_context,
                                        "callback-name", progress_callback,
                                        NULL);

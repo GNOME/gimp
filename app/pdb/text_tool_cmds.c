@@ -26,7 +26,7 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "pdb-types.h"
-#include "gimp-pdb.h"
+#include "gimppdb.h"
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
@@ -273,7 +273,7 @@ text_get_extents_invoker (GimpProcedure     *procedure,
 }
 
 void
-register_text_tool_procs (Gimp *gimp)
+register_text_tool_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
@@ -290,18 +290,17 @@ register_text_tool_procs (Gimp *gimp)
                                      "Spencer Kimball & Peter Mattis",
                                      "1998- 2001",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
-                                                         gimp,
+                                                         pdb->gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable: (-1 for a new text layer)",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x",
@@ -358,9 +357,9 @@ register_text_tool_procs (Gimp *gimp)
                                    gimp_param_spec_layer_id ("text-layer",
                                                              "text layer",
                                                              "The new text layer or -1 if no layer was created.",
-                                                             gimp,
+                                                             pdb->gimp,
                                                              GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -376,7 +375,6 @@ register_text_tool_procs (Gimp *gimp)
                                      "Spencer Kimball & Peter Mattis",
                                      "1998- 2001",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("text",
                                                        "text",
@@ -428,7 +426,7 @@ register_text_tool_procs (Gimp *gimp)
                                                           "The descent of the specified font",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -444,18 +442,17 @@ register_text_tool_procs (Gimp *gimp)
                                      "",
                                      "",
                                      "gimp-text-fontname");
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
-                                                         gimp,
+                                                         pdb->gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable: (-1 for a new text layer)",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x",
@@ -561,9 +558,9 @@ register_text_tool_procs (Gimp *gimp)
                                    gimp_param_spec_layer_id ("text-layer",
                                                              "text layer",
                                                              "The new text layer or -1 if no layer was created.",
-                                                             gimp,
+                                                             pdb->gimp,
                                                              GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -579,7 +576,6 @@ register_text_tool_procs (Gimp *gimp)
                                      "",
                                      "",
                                      "gimp-text-get-extents-fontname");
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("text",
                                                        "text",
@@ -680,7 +676,6 @@ register_text_tool_procs (Gimp *gimp)
                                                           "The descent of the specified font",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 }

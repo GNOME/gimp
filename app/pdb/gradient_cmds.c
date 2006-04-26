@@ -27,7 +27,7 @@
 #include "libgimpcolor/gimpcolor.h"
 
 #include "pdb-types.h"
-#include "gimp-pdb.h"
+#include "gimppdb.h"
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
@@ -1330,7 +1330,7 @@ gradient_segment_range_move_invoker (GimpProcedure     *procedure,
 }
 
 void
-register_gradient_procs (Gimp *gimp)
+register_gradient_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
@@ -1347,7 +1347,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1362,7 +1361,7 @@ register_gradient_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1378,7 +1377,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1393,7 +1391,7 @@ register_gradient_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1409,7 +1407,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Bill Skaggs",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1423,7 +1420,7 @@ register_gradient_procs (Gimp *gimp)
                                                          "TRUE if the gradient can be edited",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1439,7 +1436,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1461,7 +1457,7 @@ register_gradient_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1477,7 +1473,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1485,7 +1480,7 @@ register_gradient_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1501,7 +1496,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Federico Mena Quintero",
                                      "1997",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1532,7 +1526,7 @@ register_gradient_procs (Gimp *gimp)
                                                                 "color samples",
                                                                 "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1548,7 +1542,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Federico Mena Quintero",
                                      "1997",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1584,7 +1577,7 @@ register_gradient_procs (Gimp *gimp)
                                                                 "color samples",
                                                                 "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1600,7 +1593,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1626,7 +1618,7 @@ register_gradient_procs (Gimp *gimp)
                                                         "The opacity of the endpoint",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1642,7 +1634,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1668,7 +1659,7 @@ register_gradient_procs (Gimp *gimp)
                                                     "The opacity to set for the endpoint",
                                                     0, 100.0, 0,
                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1684,7 +1675,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1710,7 +1700,7 @@ register_gradient_procs (Gimp *gimp)
                                                         "The opacity of the endpoint",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1726,7 +1716,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1752,7 +1741,7 @@ register_gradient_procs (Gimp *gimp)
                                                     "The opacity to set for the endpoint",
                                                     0, 100.0, 0,
                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1768,7 +1757,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1788,7 +1776,7 @@ register_gradient_procs (Gimp *gimp)
                                                         "The return position",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1804,7 +1792,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1830,7 +1817,7 @@ register_gradient_procs (Gimp *gimp)
                                                         "The return position",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1846,7 +1833,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1866,7 +1852,7 @@ register_gradient_procs (Gimp *gimp)
                                                         "The return position",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1882,7 +1868,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1908,7 +1893,7 @@ register_gradient_procs (Gimp *gimp)
                                                         "The return position",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1924,7 +1909,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1944,7 +1928,7 @@ register_gradient_procs (Gimp *gimp)
                                                         "The return position",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1960,7 +1944,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -1986,7 +1969,7 @@ register_gradient_procs (Gimp *gimp)
                                                         "The return position",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -2002,7 +1985,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2023,7 +2005,7 @@ register_gradient_procs (Gimp *gimp)
                                                       GIMP_TYPE_GRADIENT_SEGMENT_TYPE,
                                                       GIMP_GRADIENT_SEGMENT_LINEAR,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -2039,7 +2021,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2060,7 +2041,7 @@ register_gradient_procs (Gimp *gimp)
                                                       GIMP_TYPE_GRADIENT_SEGMENT_COLOR,
                                                       GIMP_GRADIENT_SEGMENT_RGB,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -2076,7 +2057,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2103,7 +2083,7 @@ register_gradient_procs (Gimp *gimp)
                                                   GIMP_TYPE_GRADIENT_SEGMENT_TYPE,
                                                   GIMP_GRADIENT_SEGMENT_LINEAR,
                                                   GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -2119,7 +2099,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2146,7 +2125,7 @@ register_gradient_procs (Gimp *gimp)
                                                   GIMP_TYPE_GRADIENT_SEGMENT_COLOR,
                                                   GIMP_GRADIENT_SEGMENT_RGB,
                                                   GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -2162,7 +2141,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2182,7 +2160,7 @@ register_gradient_procs (Gimp *gimp)
                                                       "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -2198,7 +2176,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2224,7 +2201,7 @@ register_gradient_procs (Gimp *gimp)
                                                       "The number of times to replicate",
                                                       2, 20, 2,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -2240,7 +2217,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2260,7 +2236,7 @@ register_gradient_procs (Gimp *gimp)
                                                       "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -2276,7 +2252,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2302,7 +2277,7 @@ register_gradient_procs (Gimp *gimp)
                                                       "The number of uniform divisions to split each segment to",
                                                       2, 20, 2,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -2318,7 +2293,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2338,7 +2312,7 @@ register_gradient_procs (Gimp *gimp)
                                                       "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -2354,7 +2328,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2374,7 +2347,7 @@ register_gradient_procs (Gimp *gimp)
                                                       "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -2390,7 +2363,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2410,7 +2382,7 @@ register_gradient_procs (Gimp *gimp)
                                                       "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -2426,7 +2398,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2446,7 +2417,7 @@ register_gradient_procs (Gimp *gimp)
                                                       "The index of the last segment to operate on. If negative, the selection will extend to the end of the string.",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -2462,7 +2433,6 @@ register_gradient_procs (Gimp *gimp)
                                      "Shlomi Fish",
                                      "2003",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -2500,7 +2470,6 @@ register_gradient_procs (Gimp *gimp)
                                                         "The final delta by which the range moved",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 }

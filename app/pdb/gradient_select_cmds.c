@@ -24,7 +24,7 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimp-pdb.h"
+#include "gimppdb.h"
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
@@ -57,7 +57,7 @@ gradients_popup_invoker (GimpProcedure     *procedure,
         sample_size = GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE;
 
       if (gimp->no_interface ||
-          ! gimp_pdb_lookup (gimp, gradient_callback) ||
+          ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
           ! gimp_pdb_dialog_new (gimp, context, gimp->gradient_factory->container,
                                  popup_title, gradient_callback, initial_gradient,
                                  "sample-size", sample_size,
@@ -83,7 +83,7 @@ gradients_close_popup_invoker (GimpProcedure     *procedure,
   if (success)
     {
       if (gimp->no_interface ||
-          ! gimp_pdb_lookup (gimp, gradient_callback) ||
+          ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
           ! gimp_pdb_dialog_close (gimp, gimp->gradient_factory->container,
                                    gradient_callback))
         success = FALSE;
@@ -109,7 +109,7 @@ gradients_set_popup_invoker (GimpProcedure     *procedure,
   if (success)
     {
       if (gimp->no_interface ||
-          ! gimp_pdb_lookup (gimp, gradient_callback) ||
+          ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
           ! gimp_pdb_dialog_set (gimp, gimp->gradient_factory->container,
                                  gradient_callback, gradient_name,
                                  NULL))
@@ -120,7 +120,7 @@ gradients_set_popup_invoker (GimpProcedure     *procedure,
 }
 
 void
-register_gradient_select_procs (Gimp *gimp)
+register_gradient_select_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
@@ -137,7 +137,6 @@ register_gradient_select_procs (Gimp *gimp)
                                      "Andy Thomas",
                                      "1998",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("gradient-callback",
                                                        "gradient callback",
@@ -165,7 +164,7 @@ register_gradient_select_procs (Gimp *gimp)
                                                       "Size of the sample to return when the gradient is changed: (1 <= sample_size <= 10000)",
                                                       1, 10000, 1,
                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -181,7 +180,6 @@ register_gradient_select_procs (Gimp *gimp)
                                      "Andy Thomas",
                                      "1998",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("gradient-callback",
                                                        "gradient callback",
@@ -189,7 +187,7 @@ register_gradient_select_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -205,7 +203,6 @@ register_gradient_select_procs (Gimp *gimp)
                                      "Andy Thomas",
                                      "1998",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("gradient-callback",
                                                        "gradient callback",
@@ -220,7 +217,6 @@ register_gradient_select_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 }

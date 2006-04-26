@@ -38,7 +38,7 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "pdb-types.h"
-#include "gimp-pdb.h"
+#include "gimppdb.h"
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
@@ -102,7 +102,7 @@ quit_invoker (GimpProcedure     *procedure,
 }
 
 void
-register_misc_procs (Gimp *gimp)
+register_misc_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
@@ -119,7 +119,6 @@ register_misc_procs (Gimp *gimp)
                                      "Manish Singh",
                                      "1999",
                                      NULL);
-
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("version",
                                                            "version",
@@ -127,7 +126,7 @@ register_misc_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -143,14 +142,13 @@ register_misc_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("pid",
                                                           "pid",
                                                           "The PID",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -166,14 +164,12 @@ register_misc_procs (Gimp *gimp)
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("force",
                                                      "force",
                                                      "Flag specifying whether to force the gimp to or exit normally",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 }

@@ -24,7 +24,7 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimp-pdb.h"
+#include "gimppdb.h"
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
@@ -235,7 +235,7 @@ image_get_guide_position_invoker (GimpProcedure     *procedure,
 }
 
 void
-register_guides_procs (Gimp *gimp)
+register_guides_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
@@ -252,12 +252,11 @@ register_guides_procs (Gimp *gimp)
                                      "Adam D. Moss",
                                      "1998",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
-                                                         gimp,
+                                                         pdb->gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("yposition",
@@ -271,7 +270,7 @@ register_guides_procs (Gimp *gimp)
                                                       "The new guide",
                                                       1, G_MAXUINT32, 1,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -287,12 +286,11 @@ register_guides_procs (Gimp *gimp)
                                      "Adam D. Moss",
                                      "1998",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
-                                                         gimp,
+                                                         pdb->gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("xposition",
@@ -306,7 +304,7 @@ register_guides_procs (Gimp *gimp)
                                                       "The new guide",
                                                       1, G_MAXUINT32, 1,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -322,12 +320,11 @@ register_guides_procs (Gimp *gimp)
                                      "Adam D. Moss",
                                      "1998",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
-                                                         gimp,
+                                                         pdb->gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_uint ("guide",
@@ -335,7 +332,7 @@ register_guides_procs (Gimp *gimp)
                                                   "The ID of the guide to be removed",
                                                   1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -351,12 +348,11 @@ register_guides_procs (Gimp *gimp)
                                      "Adam D. Moss",
                                      "1998",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
-                                                         gimp,
+                                                         pdb->gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_uint ("guide",
@@ -370,7 +366,7 @@ register_guides_procs (Gimp *gimp)
                                                       "The next guide's ID",
                                                       1, G_MAXUINT32, 1,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -386,12 +382,11 @@ register_guides_procs (Gimp *gimp)
                                      "Adam D. Moss",
                                      "1998",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
-                                                         gimp,
+                                                         pdb->gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_uint ("guide",
@@ -408,7 +403,7 @@ register_guides_procs (Gimp *gimp)
                                                          GIMP_PARAM_READWRITE));
   gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->values[0]),
                                       GIMP_ORIENTATION_UNKNOWN);
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -424,12 +419,11 @@ register_guides_procs (Gimp *gimp)
                                      "Adam D. Moss",
                                      "1998",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
-                                                         gimp,
+                                                         pdb->gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_uint ("guide",
@@ -443,7 +437,6 @@ register_guides_procs (Gimp *gimp)
                                                           "The guide's position relative to top or left of image",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 }

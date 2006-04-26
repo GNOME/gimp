@@ -41,6 +41,8 @@ struct _GimpPdbDialog
 {
   GimpDialog       parent_instance;
 
+  GimpPDB         *pdb;
+
   /*  The context we were created with. This is the context the plug-in
    *  exists in and must be used when calling the plug-in.
    */

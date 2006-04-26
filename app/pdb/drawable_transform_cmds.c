@@ -26,7 +26,7 @@
 #include "libgimpmath/gimpmath.h"
 
 #include "pdb-types.h"
-#include "gimp-pdb.h"
+#include "gimppdb.h"
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
@@ -1177,7 +1177,7 @@ drawable_transform_matrix_default_invoker (GimpProcedure     *procedure,
 }
 
 void
-register_drawable_transform_procs (Gimp *gimp)
+register_drawable_transform_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
@@ -1194,12 +1194,11 @@ register_drawable_transform_procs (Gimp *gimp)
                                      "Jo\xc3\xa3o S. O. Bueno Calligaris",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("flip-type",
@@ -1232,9 +1231,9 @@ register_drawable_transform_procs (Gimp *gimp)
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
                                                                 "The flipped drawable",
-                                                                gimp,
+                                                                pdb->gimp,
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1250,12 +1249,11 @@ register_drawable_transform_procs (Gimp *gimp)
                                      "Jo\xc3\xa3o S. O. Bueno Calligaris",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x0",
@@ -1317,9 +1315,9 @@ register_drawable_transform_procs (Gimp *gimp)
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
                                                                 "The flipped drawable",
-                                                                gimp,
+                                                                pdb->gimp,
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1335,12 +1333,11 @@ register_drawable_transform_procs (Gimp *gimp)
                                      "Jo\xc3\xa3o S. O. Bueno Calligaris",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x0",
@@ -1382,9 +1379,9 @@ register_drawable_transform_procs (Gimp *gimp)
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
                                                                 "The flipped drawable",
-                                                                gimp,
+                                                                pdb->gimp,
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1400,12 +1397,11 @@ register_drawable_transform_procs (Gimp *gimp)
                                      "Jo\xc3\xa3o S. O. Bueno Calligaris",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x0",
@@ -1491,9 +1487,9 @@ register_drawable_transform_procs (Gimp *gimp)
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
                                                                 "The newly mapped drawable",
-                                                                gimp,
+                                                                pdb->gimp,
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1509,12 +1505,11 @@ register_drawable_transform_procs (Gimp *gimp)
                                      "Jo\xc3\xa3o S. O. Bueno Calligaris",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x0",
@@ -1580,9 +1575,9 @@ register_drawable_transform_procs (Gimp *gimp)
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
                                                                 "The newly mapped drawable",
-                                                                gimp,
+                                                                pdb->gimp,
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1598,12 +1593,11 @@ register_drawable_transform_procs (Gimp *gimp)
                                      "Jo\xc3\xa3o S. O. Bueno Calligaris",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("rotate-type",
@@ -1640,9 +1634,9 @@ register_drawable_transform_procs (Gimp *gimp)
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
                                                                 "The rotated drawable",
-                                                                gimp,
+                                                                pdb->gimp,
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1658,12 +1652,11 @@ register_drawable_transform_procs (Gimp *gimp)
                                      "Jo\xc3\xa3o S. O. Bueno Calligaris",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("angle",
@@ -1725,9 +1718,9 @@ register_drawable_transform_procs (Gimp *gimp)
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
                                                                 "The rotated drawable",
-                                                                gimp,
+                                                                pdb->gimp,
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1743,12 +1736,11 @@ register_drawable_transform_procs (Gimp *gimp)
                                      "Jo\xc3\xa3o S. O. Bueno Calligaris",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("angle",
@@ -1790,9 +1782,9 @@ register_drawable_transform_procs (Gimp *gimp)
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
                                                                 "The rotated drawable",
-                                                                gimp,
+                                                                pdb->gimp,
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1808,12 +1800,11 @@ register_drawable_transform_procs (Gimp *gimp)
                                      "Jo\xc3\xa3o S. O. Bueno Calligaris",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x0",
@@ -1875,9 +1866,9 @@ register_drawable_transform_procs (Gimp *gimp)
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
                                                                 "The scaled drawable",
-                                                                gimp,
+                                                                pdb->gimp,
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1893,12 +1884,11 @@ register_drawable_transform_procs (Gimp *gimp)
                                      "Jo\xc3\xa3o S. O. Bueno Calligaris",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x0",
@@ -1940,9 +1930,9 @@ register_drawable_transform_procs (Gimp *gimp)
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
                                                                 "The scaled drawable",
-                                                                gimp,
+                                                                pdb->gimp,
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1958,12 +1948,11 @@ register_drawable_transform_procs (Gimp *gimp)
                                      "Jo\xc3\xa3o S. O. Bueno Calligaris",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("shear-type",
@@ -2016,9 +2005,9 @@ register_drawable_transform_procs (Gimp *gimp)
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
                                                                 "The sheared drawable",
-                                                                gimp,
+                                                                pdb->gimp,
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -2034,12 +2023,11 @@ register_drawable_transform_procs (Gimp *gimp)
                                      "Jo\xc3\xa3o S. O. Bueno Calligaris",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("shear-type",
@@ -2072,9 +2060,9 @@ register_drawable_transform_procs (Gimp *gimp)
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
                                                                 "The sheared drawable",
-                                                                gimp,
+                                                                pdb->gimp,
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -2090,12 +2078,11 @@ register_drawable_transform_procs (Gimp *gimp)
                                      "Jo\xc3\xa3o S. O. Bueno Calligaris",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("source-x",
@@ -2175,9 +2162,9 @@ register_drawable_transform_procs (Gimp *gimp)
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
                                                                 "The transformed drawable",
-                                                                gimp,
+                                                                pdb->gimp,
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -2193,12 +2180,11 @@ register_drawable_transform_procs (Gimp *gimp)
                                      "Jo\xc3\xa3o S. O. Bueno Calligaris",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("source-x",
@@ -2258,9 +2244,9 @@ register_drawable_transform_procs (Gimp *gimp)
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
                                                                 "The transformed drawable",
-                                                                gimp,
+                                                                pdb->gimp,
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -2276,12 +2262,11 @@ register_drawable_transform_procs (Gimp *gimp)
                                      "Jo\xc3\xa3o S. O. Bueno Calligaris",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("coeff-0-0",
@@ -2373,9 +2358,9 @@ register_drawable_transform_procs (Gimp *gimp)
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
                                                                 "The transformed drawable",
-                                                                gimp,
+                                                                pdb->gimp,
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -2391,12 +2376,11 @@ register_drawable_transform_procs (Gimp *gimp)
                                      "Jo\xc3\xa3o S. O. Bueno Calligaris",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            gimp,
+                                                            pdb->gimp,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("coeff-0-0",
@@ -2468,9 +2452,8 @@ register_drawable_transform_procs (Gimp *gimp)
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
                                                                 "The transformed drawable",
-                                                                gimp,
+                                                                pdb->gimp,
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 }

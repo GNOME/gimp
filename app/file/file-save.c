@@ -54,7 +54,7 @@
 #include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
 
-#include "pdb/gimp-pdb.h"
+#include "pdb/gimppdb.h"
 #include "pdb/gimppluginprocedure.h"
 
 #include "file-save.h"
@@ -76,9 +76,12 @@ file_save (GimpImage           *image,
            gboolean             save_a_copy,
            GError             **error)
 {
+  GimpDrawable      *drawable;
   GValueArray       *return_vals;
   GimpPDBStatusType  status;
   gchar             *filename;
+  gint32             image_ID;
+  gint32             drawable_ID;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), GIMP_PDB_CALLING_ERROR);
@@ -90,7 +93,9 @@ file_save (GimpImage           *image,
   g_return_val_if_fail (error == NULL || *error == NULL,
                         GIMP_PDB_CALLING_ERROR);
 
-  if (! gimp_image_active_drawable (image))
+  drawable = gimp_image_active_drawable (image);
+
+  if (! drawable)
     return GIMP_PDB_EXECUTION_ERROR;
 
   filename = file_utils_filename_from_uri (uri);
@@ -125,14 +130,19 @@ file_save (GimpImage           *image,
   /* ref the image, so it can't get deleted during save */
   g_object_ref (image);
 
-  return_vals = gimp_pdb_run_proc (image->gimp, context, progress,
-                                   GIMP_OBJECT (file_proc)->name,
-                                   GIMP_TYPE_INT32,       run_mode,
-                                   GIMP_TYPE_IMAGE_ID,    gimp_image_get_ID (image),
-                                   GIMP_TYPE_DRAWABLE_ID, gimp_item_get_ID (GIMP_ITEM (gimp_image_active_drawable (image))),
-                                   G_TYPE_STRING,         filename,
-                                   G_TYPE_STRING,         uri,
-                                   G_TYPE_NONE);
+  image_ID    = gimp_image_get_ID (image);
+  drawable_ID = gimp_item_get_ID (GIMP_ITEM (drawable));
+
+  return_vals =
+    gimp_pdb_execute_procedure_by_name (image->gimp->pdb,
+                                        context, progress,
+                                        GIMP_OBJECT (file_proc)->name,
+                                        GIMP_TYPE_INT32,       run_mode,
+                                        GIMP_TYPE_IMAGE_ID,    image_ID,
+                                        GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                        G_TYPE_STRING,         filename,
+                                        G_TYPE_STRING,         uri,
+                                        G_TYPE_NONE);
 
   status = g_value_get_enum (&return_vals->values[0]);
 

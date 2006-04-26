@@ -36,7 +36,7 @@
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
 
-#include "pdb/gimp-pdb.h"
+#include "pdb/gimppdb.h"
 #include "pdb/gimpprocedure.h"
 
 #include "plug-in/plug-in-help-domain.h"
@@ -173,13 +173,15 @@ gimp_help_browser (Gimp *gimp)
   busy = TRUE;
 
   /*  Check if a help browser is already running  */
-  procedure = gimp_pdb_lookup (gimp, "extension-gimp-help-browser-temp");
+  procedure = gimp_pdb_lookup_procedure (gimp->pdb,
+                                         "extension-gimp-help-browser-temp");
 
   if (! procedure)
     {
       GValueArray *args = NULL;
 
-      procedure = gimp_pdb_lookup (gimp, "extension-gimp-help-browser");
+      procedure = gimp_pdb_lookup_procedure (gimp->pdb,
+                                             "extension-gimp-help-browser");
 
       if (! procedure)
         {
@@ -206,7 +208,8 @@ gimp_help_browser (Gimp *gimp)
     }
 
   /*  Check if the help browser started properly  */
-  procedure = gimp_pdb_lookup (gimp, "extension-gimp-help-browser-temp");
+  procedure = gimp_pdb_lookup_procedure (gimp->pdb,
+                                         "extension-gimp-help-browser-temp");
 
   if (! procedure)
     {
@@ -263,7 +266,7 @@ gimp_help_call (Gimp        *gimp,
   GimpProcedure *procedure;
 
   /*  Check if a help parser is already running  */
-  procedure = gimp_pdb_lookup (gimp, "extension-gimp-help-temp");
+  procedure = gimp_pdb_lookup_procedure (gimp->pdb, "extension-gimp-help-temp");
 
   if (! procedure)
     {
@@ -272,7 +275,7 @@ gimp_help_call (Gimp        *gimp,
       gchar       **help_domains = NULL;
       gchar       **help_uris    = NULL;
 
-      procedure = gimp_pdb_lookup (gimp, "extension-gimp-help");
+      procedure = gimp_pdb_lookup_procedure (gimp->pdb, "extension-gimp-help");
 
       if (! procedure)
         /*  FIXME: error msg  */
@@ -296,7 +299,7 @@ gimp_help_call (Gimp        *gimp,
     }
 
   /*  Check if the help parser started properly  */
-  procedure = gimp_pdb_lookup (gimp, "extension-gimp-help-temp");
+  procedure = gimp_pdb_lookup_procedure (gimp->pdb, "extension-gimp-help-temp");
 
   if (procedure)
     {
@@ -310,15 +313,15 @@ gimp_help_call (Gimp        *gimp,
                   help_id      ? help_id      : "(null)");
 #endif
 
-      return_vals = gimp_pdb_run_proc (gimp,
-                                       gimp_get_user_context (gimp),
-                                       NULL,
-                                       "extension-gimp-help-temp",
-                                       G_TYPE_STRING, procedure_name,
-                                       G_TYPE_STRING, help_domain,
-                                       G_TYPE_STRING, help_locales,
-                                       G_TYPE_STRING, help_id,
-                                       G_TYPE_NONE);
+      return_vals = gimp_pdb_execute_procedure_by_name (gimp->pdb,
+                                                        gimp_get_user_context (gimp),
+                                                        NULL,
+                                                        "extension-gimp-help-temp",
+                                                        G_TYPE_STRING, procedure_name,
+                                                        G_TYPE_STRING, help_domain,
+                                                        G_TYPE_STRING, help_locales,
+                                                        G_TYPE_STRING, help_id,
+                                                        G_TYPE_NONE);
 
       g_value_array_free (return_vals);
     }

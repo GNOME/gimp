@@ -25,7 +25,7 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimp-pdb.h"
+#include "gimppdb.h"
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
@@ -828,7 +828,7 @@ vectors_bezier_stroke_new_ellipse_invoker (GimpProcedure     *procedure,
 }
 
 void
-register_vectors_procs (Gimp *gimp)
+register_vectors_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
@@ -845,12 +845,11 @@ register_vectors_procs (Gimp *gimp)
                                      "Simon Budig",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
-                                                         gimp,
+                                                         pdb->gimp,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
@@ -863,9 +862,9 @@ register_vectors_procs (Gimp *gimp)
                                    gimp_param_spec_vectors_id ("vectors",
                                                                "vectors",
                                                                "the current vector object, 0 if no vector exists in the image.",
-                                                               gimp,
+                                                               pdb->gimp,
                                                                GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -881,20 +880,19 @@ register_vectors_procs (Gimp *gimp)
                                      "Simon Budig",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           gimp,
+                                                           pdb->gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_image_id ("image",
                                                              "image",
                                                              "The vectors image",
-                                                             gimp,
+                                                             pdb->gimp,
                                                              GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -910,12 +908,11 @@ register_vectors_procs (Gimp *gimp)
                                      "Simon Budig",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           gimp,
+                                                           pdb->gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
@@ -924,7 +921,7 @@ register_vectors_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -940,12 +937,11 @@ register_vectors_procs (Gimp *gimp)
                                      "Simon Budig",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           gimp,
+                                                           pdb->gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
@@ -954,7 +950,7 @@ register_vectors_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -970,12 +966,11 @@ register_vectors_procs (Gimp *gimp)
                                      "Simon Budig",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           gimp,
+                                                           pdb->gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("visible",
@@ -983,7 +978,7 @@ register_vectors_procs (Gimp *gimp)
                                                          "TRUE if the path is visible, FALSE otherwise",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -999,12 +994,11 @@ register_vectors_procs (Gimp *gimp)
                                      "Simon Budig",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           gimp,
+                                                           pdb->gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("visible",
@@ -1012,7 +1006,7 @@ register_vectors_procs (Gimp *gimp)
                                                      "Whether the path is visible",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1028,12 +1022,11 @@ register_vectors_procs (Gimp *gimp)
                                      "Simon Budig",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           gimp,
+                                                           pdb->gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("linked",
@@ -1041,7 +1034,7 @@ register_vectors_procs (Gimp *gimp)
                                                          "TRUE if the path is linked, FALSE otherwise",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1057,12 +1050,11 @@ register_vectors_procs (Gimp *gimp)
                                      "Simon Budig",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           gimp,
+                                                           pdb->gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("linked",
@@ -1070,7 +1062,7 @@ register_vectors_procs (Gimp *gimp)
                                                      "Whether the path is linked",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1086,12 +1078,11 @@ register_vectors_procs (Gimp *gimp)
                                      "Simon Budig",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           gimp,
+                                                           pdb->gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("tattoo",
@@ -1099,7 +1090,7 @@ register_vectors_procs (Gimp *gimp)
                                                           "The vectors tattoo",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1115,12 +1106,11 @@ register_vectors_procs (Gimp *gimp)
                                      "Simon Budig",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           gimp,
+                                                           pdb->gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("tattoo",
@@ -1128,7 +1118,7 @@ register_vectors_procs (Gimp *gimp)
                                                       "the new tattoo",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1144,12 +1134,11 @@ register_vectors_procs (Gimp *gimp)
                                      "Simon Budig",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           gimp,
+                                                           pdb->gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("num-strokes",
@@ -1162,7 +1151,7 @@ register_vectors_procs (Gimp *gimp)
                                                                 "stroke ids",
                                                                 "List of the strokes belonging to the path.",
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1178,12 +1167,11 @@ register_vectors_procs (Gimp *gimp)
                                      "Simon Budig",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           gimp,
+                                                           pdb->gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("stroke-id",
@@ -1203,7 +1191,7 @@ register_vectors_procs (Gimp *gimp)
                                                         "The length (in pixels) of the given stroke.",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1219,12 +1207,11 @@ register_vectors_procs (Gimp *gimp)
                                      "Simon Budig",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           gimp,
+                                                           pdb->gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("stroke-id",
@@ -1268,7 +1255,7 @@ register_vectors_procs (Gimp *gimp)
                                                          "Indicator for the validity of the returned data.",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1284,12 +1271,11 @@ register_vectors_procs (Gimp *gimp)
                                      "Simon Budig",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           gimp,
+                                                           pdb->gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("stroke-id",
@@ -1297,7 +1283,7 @@ register_vectors_procs (Gimp *gimp)
                                                       "The stroke ID",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1313,12 +1299,11 @@ register_vectors_procs (Gimp *gimp)
                                      "Simon Budig",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           gimp,
+                                                           pdb->gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("stroke-id",
@@ -1326,7 +1311,7 @@ register_vectors_procs (Gimp *gimp)
                                                       "The stroke ID",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1342,12 +1327,11 @@ register_vectors_procs (Gimp *gimp)
                                      "Simon Budig",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           gimp,
+                                                           pdb->gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("stroke-id",
@@ -1367,7 +1351,7 @@ register_vectors_procs (Gimp *gimp)
                                                       "Offset in y direction",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1383,12 +1367,11 @@ register_vectors_procs (Gimp *gimp)
                                      "Simon Budig",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           gimp,
+                                                           pdb->gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("stroke-id",
@@ -1408,7 +1391,7 @@ register_vectors_procs (Gimp *gimp)
                                                     "Scale factor in y direction",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1424,12 +1407,11 @@ register_vectors_procs (Gimp *gimp)
                                      "Simon Budig",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           gimp,
+                                                           pdb->gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("stroke-id",
@@ -1460,7 +1442,7 @@ register_vectors_procs (Gimp *gimp)
                                                                 "coords",
                                                                 "List of the coords along the path (x0, y0, x1, y1, ...).",
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1476,12 +1458,11 @@ register_vectors_procs (Gimp *gimp)
                                      "Simon Budig",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           gimp,
+                                                           pdb->gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x0",
@@ -1501,7 +1482,7 @@ register_vectors_procs (Gimp *gimp)
                                                           "The resulting stroke",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1517,12 +1498,11 @@ register_vectors_procs (Gimp *gimp)
                                      "Simon Budig",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           gimp,
+                                                           pdb->gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("stroke-id",
@@ -1542,7 +1522,7 @@ register_vectors_procs (Gimp *gimp)
                                                     "The y-coordinate of the lineto",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1558,12 +1538,11 @@ register_vectors_procs (Gimp *gimp)
                                      "Simon Budig",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           gimp,
+                                                           pdb->gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("stroke-id",
@@ -1595,7 +1574,7 @@ register_vectors_procs (Gimp *gimp)
                                                     "The y-coordinate of the end point",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1611,12 +1590,11 @@ register_vectors_procs (Gimp *gimp)
                                      "Simon Budig",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           gimp,
+                                                           pdb->gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("stroke-id",
@@ -1660,7 +1638,7 @@ register_vectors_procs (Gimp *gimp)
                                                     "The y-coordinate of the end point",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -1676,12 +1654,11 @@ register_vectors_procs (Gimp *gimp)
                                      "Simon Budig",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           gimp,
+                                                           pdb->gimp,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x0",
@@ -1719,7 +1696,6 @@ register_vectors_procs (Gimp *gimp)
                                                           "The resulting stroke",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 }

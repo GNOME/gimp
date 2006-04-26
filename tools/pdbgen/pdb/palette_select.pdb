@@ -37,7 +37,7 @@ sub palettes_popup {
 	code => <<'CODE'
 {
   if (gimp->no_interface ||
-      ! gimp_pdb_lookup (gimp, palette_callback) ||
+      ! gimp_pdb_lookup_procedure (gimp->pdb, palette_callback) ||
       ! gimp_pdb_dialog_new (gimp, context, gimp->palette_factory->container,
                              popup_title, palette_callback, initial_palette,
                              NULL))
@@ -62,7 +62,7 @@ sub palettes_close_popup {
 	code => <<'CODE'
 {
   if (gimp->no_interface ||
-      ! gimp_pdb_lookup (gimp, palette_callback) ||
+      ! gimp_pdb_lookup_procedure (gimp->pdb, palette_callback) ||
       ! gimp_pdb_dialog_close (gimp, gimp->palette_factory->container,
                                palette_callback))
     success = FALSE;
@@ -88,7 +88,7 @@ sub palettes_set_popup {
 	code => <<'CODE'
 {
   if (gimp->no_interface ||
-      ! gimp_pdb_lookup (gimp, palette_callback) ||
+      ! gimp_pdb_lookup_procedure (gimp->pdb, palette_callback) ||
       ! gimp_pdb_dialog_set (gimp, gimp->palette_factory->container,
                              palette_callback, palette_name,
                              NULL))

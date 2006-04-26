@@ -31,210 +31,174 @@
 #include "pdb-types.h"
 
 #include "core/gimp.h"
+#include "core/gimp-utils.h"
 #include "core/gimpcontext.h"
-#include "core/gimpchannel.h"
-#include "core/gimplayer.h"
-#include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
 
-#include "vectors/gimpvectors.h"
-
-#include "gimp-pdb.h"
+#include "gimppdb.h"
 #include "gimpprocedure.h"
+
 #include "gimptemporaryprocedure.h" /* eek */
-#include "internal_procs.h"
+#include "gimp-pdb.h" /* eek */
 
 #include "gimp-intl.h"
 
 
-/*  local function prototypes  */
+void
+gimp_pdb_eek (void)
+{
+  volatile GType eek;
 
-static void   gimp_pdb_free_entry (gpointer key,
-                                   gpointer value,
-                                   gpointer user_data);
+  eek = gimp_temporary_procedure_get_type ();
+  gimp_pdb_exit (NULL);
+}
+
+
+static void     gimp_pdb_finalize      (GObject    *object);
+static gint64   gimp_pdb_get_memsize   (GimpObject *object,
+                                        gint64     *gui_size);
+static void     gimp_pdb_entry_free    (gpointer    key,
+                                        gpointer    value,
+                                        gpointer    user_data);
+static void     gimp_pdb_entry_memsize (gpointer    key,
+                                        gpointer    value,
+                                        gpointer    user_data);
+
+
+G_DEFINE_TYPE (GimpPDB, gimp_pdb, GIMP_TYPE_OBJECT);
+
+#define parent_class gimp_pdb_parent_class
+
+
+static void
+gimp_pdb_class_init (GimpPDBClass *klass)
+{
+  GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+
+  object_class->finalize         = gimp_pdb_finalize;
+
+  gimp_object_class->get_memsize = gimp_pdb_get_memsize;
+}
+
+static void
+gimp_pdb_init (GimpPDB *pdb)
+{
+  pdb->procedures        = g_hash_table_new (g_str_hash, g_str_equal);
+  pdb->compat_proc_names = g_hash_table_new (g_str_hash, g_str_equal);
+}
+
+static void
+gimp_pdb_finalize (GObject *object)
+{
+  GimpPDB *pdb = GIMP_PDB (object);
+
+  if (pdb->procedures)
+    {
+      g_hash_table_foreach (pdb->procedures, gimp_pdb_entry_free, NULL);
+      g_hash_table_destroy (pdb->procedures);
+      pdb->procedures = NULL;
+    }
+
+  if (pdb->compat_proc_names)
+    {
+      g_hash_table_destroy (pdb->compat_proc_names);
+      pdb->compat_proc_names = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static gint64
+gimp_pdb_get_memsize (GimpObject *object,
+                      gint64     *gui_size)
+{
+  GimpPDB *pdb     = GIMP_PDB (object);
+  gint64   memsize = 0;
+
+  memsize += gimp_g_hash_table_get_memsize (pdb->procedures);
+  memsize += gimp_g_hash_table_get_memsize (pdb->compat_proc_names);
+
+  g_hash_table_foreach (pdb->procedures, gimp_pdb_entry_memsize, &memsize);
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
+}
 
 
 /*  public functions  */
 
-void
-gimp_pdb_init (Gimp *gimp)
+GimpPDB *
+gimp_pdb_new (Gimp *gimp)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  GimpPDB *pdb;
 
-  gimp->procedural_ht        = g_hash_table_new (g_str_hash, g_str_equal);
-  gimp->procedural_compat_ht = g_hash_table_new (g_str_hash, g_str_equal);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  {
-    volatile GType eek;
+  pdb = g_object_new (GIMP_TYPE_PDB,
+                      "name", "pdb",
+                      NULL);
 
-    eek = GIMP_TYPE_TEMPORARY_PROCEDURE;
-  }
+  pdb->gimp = gimp;
+
+  return pdb;
 }
 
 void
-gimp_pdb_exit (Gimp *gimp)
-{
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  if (gimp->procedural_ht)
-    {
-      g_hash_table_foreach (gimp->procedural_ht,
-                            gimp_pdb_free_entry, NULL);
-      g_hash_table_destroy (gimp->procedural_ht);
-      gimp->procedural_ht = NULL;
-    }
-
-  if (gimp->procedural_compat_ht)
-    {
-      g_hash_table_destroy (gimp->procedural_compat_ht);
-      gimp->procedural_compat_ht = NULL;
-    }
-}
-
-void
-gimp_pdb_init_procs (Gimp *gimp)
-{
-  static const struct
-  {
-    const gchar *old_name;
-    const gchar *new_name;
-  }
-  compat_procs[] =
-  {
-    { "gimp-blend",                      "gimp-edit-blend"                 },
-    { "gimp-brushes-list",               "gimp-brushes-get-list"           },
-    { "gimp-bucket-fill",                "gimp-edit-bucket-fill"           },
-    { "gimp-channel-delete",             "gimp-drawable-delete"            },
-    { "gimp-channel-get-name",           "gimp-drawable-get-name"          },
-    { "gimp-channel-get-tattoo",         "gimp-drawable-get-tattoo"        },
-    { "gimp-channel-get-visible",        "gimp-drawable-get-visible"       },
-    { "gimp-channel-set-name",           "gimp-drawable-set-name"          },
-    { "gimp-channel-set-tattoo",         "gimp-drawable-set-tattoo"        },
-    { "gimp-channel-set-visible",        "gimp-drawable-set-visible"       },
-    { "gimp-color-picker",               "gimp-image-pick-color"           },
-    { "gimp-convert-grayscale",          "gimp-image-convert-grayscale"    },
-    { "gimp-convert-indexed",            "gimp-image-convert-indexed"      },
-    { "gimp-convert-rgb",                "gimp-image-convert-rgb"          },
-    { "gimp-crop",                       "gimp-image-crop"                 },
-    { "gimp-drawable-bytes",             "gimp-drawable-bpp"               },
-    { "gimp-drawable-image",             "gimp-drawable-get-image"         },
-    { "gimp-image-active-drawable",      "gimp-image-get-active-drawable"  },
-    { "gimp-image-floating-selection",   "gimp-image-get-floating-sel"     },
-    { "gimp-layer-delete",               "gimp-drawable-delete"            },
-    { "gimp-layer-get-linked",           "gimp-drawable-get-linked"        },
-    { "gimp-layer-get-name",             "gimp-drawable-get-name"          },
-    { "gimp-layer-get-tattoo",           "gimp-drawable-get-tattoo"        },
-    { "gimp-layer-get-visible",          "gimp-drawable-get-visible"       },
-    { "gimp-layer-mask",                 "gimp-layer-get-mask"             },
-    { "gimp-layer-set-linked",           "gimp-drawable-set-linked"        },
-    { "gimp-layer-set-name",             "gimp-drawable-set-name"          },
-    { "gimp-layer-set-tattoo",           "gimp-drawable-set-tattoo"        },
-    { "gimp-layer-set-visible",          "gimp-drawable-set-visible"       },
-    { "gimp-palette-refresh",            "gimp-palettes-refresh"           },
-    { "gimp-patterns-list",              "gimp-patterns-get-list"          },
-    { "gimp-temp-PDB-name",              "gimp-procedural-db-temp-name"    },
-    { "gimp-undo-push-group-end",        "gimp-image-undo-group-end"       },
-    { "gimp-undo-push-group-start",      "gimp-image-undo-group-start"     },
-
-    /*  deprecations since 2.0  */
-    { "gimp-brushes-get-opacity",        "gimp-context-get-opacity"        },
-    { "gimp-brushes-get-paint-mode",     "gimp-context-get-paint-mode"     },
-    { "gimp-brushes-set-brush",          "gimp-context-set-brush"          },
-    { "gimp-brushes-set-opacity",        "gimp-context-set-opacity"        },
-    { "gimp-brushes-set-paint-mode",     "gimp-context-set-paint-mode"     },
-    { "gimp-channel-ops-duplicate",      "gimp-image-duplicate"            },
-    { "gimp-channel-ops-offset",         "gimp-drawable-offset"            },
-    { "gimp-gradients-get-active",       "gimp-context-get-gradient"       },
-    { "gimp-gradients-get-gradient",     "gimp-context-get-gradient"       },
-    { "gimp-gradients-set-active",       "gimp-context-set-gradient"       },
-    { "gimp-gradients-set-gradient",     "gimp-context-set-gradient"       },
-    { "gimp-image-get-cmap",             "gimp-image-get-colormap"         },
-    { "gimp-image-set-cmap",             "gimp-image-set-colormap"         },
-    { "gimp-palette-get-background",     "gimp-context-get-background"     },
-    { "gimp-palette-get-foreground",     "gimp-context-get-foreground"     },
-    { "gimp-palette-set-background",     "gimp-context-set-background"     },
-    { "gimp-palette-set-default-colors", "gimp-context-set-default-colors" },
-    { "gimp-palette-set-foreground",     "gimp-context-set-foreground"     },
-    { "gimp-palette-swap-colors",        "gimp-context-swap-colors"        },
-    { "gimp-palettes-set-palette",       "gimp-context-set-palette"        },
-    { "gimp-patterns-set-pattern",       "gimp-context-set-pattern"        },
-    { "gimp-selection-clear",            "gimp-selection-none"             },
-
-    /*  deprecations since 2.2  */
-    { "gimp-layer-get-preserve-trans",   "gimp-drawable-get-lock-alpha"    },
-    { "gimp-layer-set-preserve-trans",   "gimp-drawable-set-lock-alpha"    }
-  };
-
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  internal_procs_init (gimp);
-
-  if (gimp->pdb_compat_mode != GIMP_PDB_COMPAT_OFF)
-    {
-      gint i;
-
-      for (i = 0; i < G_N_ELEMENTS (compat_procs); i++)
-        g_hash_table_insert (gimp->procedural_compat_ht,
-                             (gpointer) compat_procs[i].old_name,
-                             (gpointer) compat_procs[i].new_name);
-    }
-}
-
-void
-gimp_pdb_register (Gimp          *gimp,
-                   GimpProcedure *procedure)
+gimp_pdb_register_procedure (GimpPDB       *pdb,
+                             GimpProcedure *procedure)
 {
   const gchar *name;
   GList       *list;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_PDB (pdb));
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
   name = gimp_object_get_name (GIMP_OBJECT (procedure));
 
-  list = g_hash_table_lookup (gimp->procedural_ht, name);
+  list = g_hash_table_lookup (pdb->procedures, name);
 
-  g_hash_table_insert (gimp->procedural_ht, (gpointer) name,
+  g_hash_table_insert (pdb->procedures, (gpointer) name,
                        g_list_prepend (list, g_object_ref (procedure)));
 }
 
 void
-gimp_pdb_unregister (Gimp        *gimp,
-                     const gchar *procedure_name)
+gimp_pdb_unregister_procedure (GimpPDB       *pdb,
+                               GimpProcedure *procedure)
 {
-  GList *list;
+  const gchar *name;
+  GList       *list;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (procedure_name != NULL);
+  g_return_if_fail (GIMP_IS_PDB (pdb));
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
-  list = g_hash_table_lookup (gimp->procedural_ht, procedure_name);
+  name = gimp_object_get_name (GIMP_OBJECT (procedure));
+
+  list = g_hash_table_lookup (pdb->procedures, name);
 
   if (list)
     {
-      GimpProcedure *procedure = list->data;
-
       list = g_list_remove (list, procedure);
 
       if (list)
-        g_hash_table_insert (gimp->procedural_ht, (gpointer) procedure_name,
-                             list);
+        g_hash_table_insert (pdb->procedures, (gpointer) name, list);
       else
-        g_hash_table_remove (gimp->procedural_ht, procedure_name);
+        g_hash_table_remove (pdb->procedures, name);
 
       g_object_unref (procedure);
     }
 }
 
 GimpProcedure *
-gimp_pdb_lookup (Gimp        *gimp,
-                 const gchar *procedure_name)
+gimp_pdb_lookup_procedure (GimpPDB     *pdb,
+                           const gchar *name)
 {
   GList *list;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (procedure_name != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
 
-  list = g_hash_table_lookup (gimp->procedural_ht, procedure_name);
+  list = g_hash_table_lookup (pdb->procedures, name);
 
   if (list)
     return list->data;
@@ -242,27 +206,51 @@ gimp_pdb_lookup (Gimp        *gimp,
   return NULL;
 }
 
+void
+gimp_pdb_register_compat_proc_name (GimpPDB     *pdb,
+                                    const gchar *old_name,
+                                    const gchar *new_name)
+{
+  g_return_if_fail (GIMP_IS_PDB (pdb));
+  g_return_if_fail (old_name != NULL);
+  g_return_if_fail (new_name != NULL);
+
+  g_hash_table_insert (pdb->compat_proc_names,
+                       (gpointer) old_name,
+                       (gpointer) new_name);
+}
+
+const gchar *
+gimp_pdb_lookup_compat_proc_name (GimpPDB     *pdb,
+                                  const gchar *old_name)
+{
+  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
+  g_return_val_if_fail (old_name != NULL, NULL);
+
+  return g_hash_table_lookup (pdb->compat_proc_names, old_name);
+}
+
 GValueArray *
-gimp_pdb_execute (Gimp         *gimp,
-                  GimpContext  *context,
-                  GimpProgress *progress,
-                  const gchar  *procedure_name,
-                  GValueArray  *args)
+gimp_pdb_execute_procedure_by_name_args (GimpPDB      *pdb,
+                                         GimpContext  *context,
+                                         GimpProgress *progress,
+                                         const gchar  *name,
+                                         GValueArray  *args)
 {
   GValueArray *return_vals = NULL;
   GList       *list;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
-  g_return_val_if_fail (procedure_name != NULL, NULL);
+  g_return_val_if_fail (name != NULL, NULL);
 
-  list = g_hash_table_lookup (gimp->procedural_ht, procedure_name);
+  list = g_hash_table_lookup (pdb->procedures, name);
 
   if (list == NULL)
     {
       g_message (_("PDB calling error:\n"
-                   "Procedure '%s' not found"), procedure_name);
+                   "Procedure '%s' not found"), name);
 
       return_vals = gimp_procedure_get_return_values (NULL, FALSE);
       g_value_set_enum (return_vals->values, GIMP_PDB_CALLING_ERROR);
@@ -279,7 +267,7 @@ gimp_pdb_execute (Gimp         *gimp,
       g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
       return_vals = gimp_procedure_execute (procedure,
-                                            gimp, context, progress,
+                                            pdb->gimp, context, progress,
                                             args);
 
       if (g_value_get_enum (&return_vals->values[0]) == GIMP_PDB_PASS_THROUGH)
@@ -304,11 +292,11 @@ gimp_pdb_execute (Gimp         *gimp,
 }
 
 GValueArray *
-gimp_pdb_run_proc (Gimp         *gimp,
-                   GimpContext  *context,
-                   GimpProgress *progress,
-                   const gchar  *procedure_name,
-                   ...)
+gimp_pdb_execute_procedure_by_name (GimpPDB      *pdb,
+                                    GimpContext  *context,
+                                    GimpProgress *progress,
+                                    const gchar  *name,
+                                    ...)
 {
   GimpProcedure *procedure;
   GValueArray   *args;
@@ -316,17 +304,17 @@ gimp_pdb_run_proc (Gimp         *gimp,
   va_list        va_args;
   gint           i;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
-  g_return_val_if_fail (procedure_name != NULL, NULL);
+  g_return_val_if_fail (name != NULL, NULL);
 
-  procedure = gimp_pdb_lookup (gimp, procedure_name);
+  procedure = gimp_pdb_lookup_procedure (pdb, name);
 
   if (procedure == NULL)
     {
       g_message (_("PDB calling error:\n"
-                   "Procedure '%s' not found"), procedure_name);
+                   "Procedure '%s' not found"), name);
 
       return_vals = gimp_procedure_get_return_values (NULL, FALSE);
       g_value_set_enum (return_vals->values, GIMP_PDB_CALLING_ERROR);
@@ -336,7 +324,7 @@ gimp_pdb_run_proc (Gimp         *gimp,
 
   args = gimp_procedure_get_arguments (procedure);
 
-  va_start (va_args, procedure_name);
+  va_start (va_args, name);
 
   for (i = 0; i < procedure->num_args; i++)
     {
@@ -387,8 +375,9 @@ gimp_pdb_run_proc (Gimp         *gimp,
 
   va_end (va_args);
 
-  return_vals = gimp_pdb_execute (gimp, context, progress,
-                                  procedure_name, args);
+  return_vals = gimp_pdb_execute_procedure_by_name_args (pdb, context,
+                                                         progress,
+                                                         name, args);
 
   g_value_array_free (args);
 
@@ -399,7 +388,7 @@ gimp_pdb_run_proc (Gimp         *gimp,
 /*  private functions  */
 
 static void
-gimp_pdb_free_entry (gpointer key,
+gimp_pdb_entry_free (gpointer key,
                      gpointer value,
                      gpointer user_data)
 {
@@ -407,5 +396,20 @@ gimp_pdb_free_entry (gpointer key,
     {
       g_list_foreach (value, (GFunc) g_object_unref, NULL);
       g_list_free (value);
+    }
+}
+
+static void
+gimp_pdb_entry_memsize (gpointer key,
+                        gpointer value,
+                        gpointer user_data)
+{
+  if (value)
+    {
+      gint64 *memsize = user_data;
+      GList  *list;
+
+      for (list = value; list; list = g_list_next (list))
+        *memsize += sizeof (GList) + gimp_object_get_memsize (list->data, NULL);
     }
 }

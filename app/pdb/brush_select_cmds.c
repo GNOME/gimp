@@ -24,7 +24,7 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimp-pdb.h"
+#include "gimppdb.h"
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
@@ -57,7 +57,7 @@ brushes_popup_invoker (GimpProcedure     *procedure,
   if (success)
     {
       if (gimp->no_interface ||
-          ! gimp_pdb_lookup (gimp, brush_callback) ||
+          ! gimp_pdb_lookup_procedure (gimp->pdb, brush_callback) ||
           ! gimp_pdb_dialog_new (gimp, context, gimp->brush_factory->container,
                                  popup_title, brush_callback, initial_brush,
                                  "opacity",    opacity / 100.0,
@@ -85,7 +85,7 @@ brushes_close_popup_invoker (GimpProcedure     *procedure,
   if (success)
     {
       if (gimp->no_interface ||
-          ! gimp_pdb_lookup (gimp, brush_callback) ||
+          ! gimp_pdb_lookup_procedure (gimp->pdb, brush_callback) ||
           ! gimp_pdb_dialog_close (gimp, gimp->brush_factory->container,
                                    brush_callback))
         success = FALSE;
@@ -117,7 +117,7 @@ brushes_set_popup_invoker (GimpProcedure     *procedure,
   if (success)
     {
       if (gimp->no_interface ||
-          ! gimp_pdb_lookup (gimp, brush_callback) ||
+          ! gimp_pdb_lookup_procedure (gimp->pdb, brush_callback) ||
           ! gimp_pdb_dialog_set (gimp, gimp->brush_factory->container,
                                  brush_callback, brush_name,
                                  "opacity",    opacity / 100.0,
@@ -131,7 +131,7 @@ brushes_set_popup_invoker (GimpProcedure     *procedure,
 }
 
 void
-register_brush_select_procs (Gimp *gimp)
+register_brush_select_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
@@ -148,7 +148,6 @@ register_brush_select_procs (Gimp *gimp)
                                      "Andy Thomas",
                                      "1998",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("brush-callback",
                                                        "brush callback",
@@ -189,7 +188,7 @@ register_brush_select_procs (Gimp *gimp)
                                                   GIMP_TYPE_LAYER_MODE_EFFECTS,
                                                   GIMP_NORMAL_MODE,
                                                   GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -205,7 +204,6 @@ register_brush_select_procs (Gimp *gimp)
                                      "Andy Thomas",
                                      "1998",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("brush-callback",
                                                        "brush callback",
@@ -213,7 +211,7 @@ register_brush_select_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -229,7 +227,6 @@ register_brush_select_procs (Gimp *gimp)
                                      "Andy Thomas",
                                      "1998",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("brush-callback",
                                                        "brush callback",
@@ -263,7 +260,6 @@ register_brush_select_procs (Gimp *gimp)
                                                   GIMP_TYPE_LAYER_MODE_EFFECTS,
                                                   GIMP_NORMAL_MODE,
                                                   GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 }

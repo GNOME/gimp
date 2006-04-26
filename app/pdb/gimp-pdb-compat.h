@@ -30,4 +30,4 @@ GimpPDBArgType   gimp_pdb_compat_arg_type_from_gtype (GType           type);
 gchar          * gimp_pdb_compat_arg_type_to_string  (GimpPDBArgType  type);
 
 
-#endif  /*  __GIMP_ARGUMENT_H__  */
+#endif  /*  __GIMP_PDB_COMPAT_H__  */

@@ -26,7 +26,7 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "pdb-types.h"
-#include "gimp-pdb.h"
+#include "gimppdb.h"
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
@@ -348,7 +348,7 @@ unit_get_plural_invoker (GimpProcedure     *procedure,
 }
 
 void
-register_unit_procs (Gimp *gimp)
+register_unit_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
@@ -365,14 +365,13 @@ register_unit_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "1999",
                                      NULL);
-
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("num-units",
                                                           "num units",
                                                           "The number of units",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -388,14 +387,13 @@ register_unit_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "1999",
                                      NULL);
-
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("num-units",
                                                           "num units",
                                                           "The number of built-in units",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -411,7 +409,6 @@ register_unit_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "1999",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("identifier",
                                                        "identifier",
@@ -467,7 +464,7 @@ register_unit_procs (Gimp *gimp)
                                                          FALSE,
                                                          GIMP_UNIT_PIXEL,
                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -483,7 +480,6 @@ register_unit_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "1999",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -498,7 +494,7 @@ register_unit_procs (Gimp *gimp)
                                                          "The unit's deletion flag",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -514,7 +510,6 @@ register_unit_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "1999",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -529,7 +524,7 @@ register_unit_procs (Gimp *gimp)
                                                      "The new deletion flag of the unit",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -545,7 +540,6 @@ register_unit_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "1999",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -561,7 +555,7 @@ register_unit_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -577,7 +571,6 @@ register_unit_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "1999",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -592,7 +585,7 @@ register_unit_procs (Gimp *gimp)
                                                         "The unit's factor",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -608,7 +601,6 @@ register_unit_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "1999",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -623,7 +615,7 @@ register_unit_procs (Gimp *gimp)
                                                           "The unit's number of digits",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -639,7 +631,6 @@ register_unit_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "1999",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -655,7 +646,7 @@ register_unit_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -671,7 +662,6 @@ register_unit_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "1999",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -687,7 +677,7 @@ register_unit_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -703,7 +693,6 @@ register_unit_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "1999",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -719,7 +708,7 @@ register_unit_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -735,7 +724,6 @@ register_unit_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "1999",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_unit ("unit-id",
                                                      "unit id",
@@ -751,7 +739,6 @@ register_unit_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 }

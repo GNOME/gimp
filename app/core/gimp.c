@@ -235,7 +235,7 @@ gimp_init (Gimp *gimp)
   gimp->gradient_factory    = NULL;
   gimp->palette_factory     = NULL;
 
-  gimp_pdb_init (gimp);
+  gimp_pdb_initialize (gimp);
 
   gimp->load_procs          = NULL;
   gimp->save_procs          = NULL;
@@ -499,8 +499,7 @@ gimp_get_memsize (GimpObject *object,
               gimp_object_get_memsize (GIMP_OBJECT (gimp->palette_factory),
                                        gui_size));
 
-  memsize += gimp_g_hash_table_get_memsize (gimp->procedural_ht);
-  memsize += gimp_g_hash_table_get_memsize (gimp->procedural_compat_ht);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->pdb), gui_size);
 
   memsize += gimp_g_slist_get_memsize (gimp->load_procs, 0 /* FIXME */);
   memsize += gimp_g_slist_get_memsize (gimp->save_procs, 0 /* FIXME */);

@@ -36,7 +36,7 @@
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 
-#include "pdb/gimp-pdb.h"
+#include "pdb/gimppdb.h"
 #include "pdb/gimp-pdb-compat.h"
 #include "pdb/gimptemporaryprocedure.h"
 
@@ -343,16 +343,16 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
 
   proc_frame = plug_in_get_proc_frame (plug_in);
 
-  procedure = gimp_pdb_lookup (plug_in->gimp, canonical);
+  procedure = gimp_pdb_lookup_procedure (plug_in->gimp->pdb, canonical);
 
   if (! procedure)
     {
-      proc_name = g_hash_table_lookup (plug_in->gimp->procedural_compat_ht,
-                                       canonical);
+      proc_name = gimp_pdb_lookup_compat_proc_name (plug_in->gimp->pdb,
+                                                    canonical);
 
       if (proc_name)
         {
-          procedure = gimp_pdb_lookup (plug_in->gimp, proc_name);
+          procedure = gimp_pdb_lookup_procedure (plug_in->gimp->pdb, proc_name);
 
           if (plug_in->gimp->pdb_compat_mode == GIMP_PDB_COMPAT_WARN)
             {
@@ -401,17 +401,18 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
                                    proc_run->params, proc_run->nparams,
                                    FALSE, FALSE);
 
-  /*  Execute the procedure even if gimp_pdb_lookup() returned NULL,
-   *  gimp_pdb_execute() will return appropriate error return_vals.
+  /*  Execute the procedure even if gimp_pdb_lookup_procedure()
+   *  returned NULL, gimp_pdb_execute_procedure_by_name_args() will
+   *  return appropriate error return_vals.
    */
   plug_in_push (plug_in->gimp, plug_in);
-  return_vals = gimp_pdb_execute (plug_in->gimp,
-                                  proc_frame->context_stack ?
-                                  proc_frame->context_stack->data :
-                                  proc_frame->main_context,
-                                  proc_frame->progress,
-                                  proc_name,
-                                  args);
+  return_vals = gimp_pdb_execute_procedure_by_name_args (plug_in->gimp->pdb,
+                                                         proc_frame->context_stack ?
+                                                         proc_frame->context_stack->data :
+                                                         proc_frame->main_context,
+                                                         proc_frame->progress,
+                                                         proc_name,
+                                                         args);
   plug_in_pop (plug_in->gimp);
 
   g_free (canonical);

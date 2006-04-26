@@ -27,7 +27,7 @@
 #include "libgimpcolor/gimpcolor.h"
 
 #include "pdb-types.h"
-#include "gimp-pdb.h"
+#include "gimppdb.h"
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
@@ -178,7 +178,7 @@ palettes_get_palette_entry_invoker (GimpProcedure     *procedure,
 }
 
 void
-register_palettes_procs (Gimp *gimp)
+register_palettes_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
@@ -195,8 +195,7 @@ register_palettes_procs (Gimp *gimp)
                                      "Adrian Likins",
                                      "1998",
                                      NULL);
-
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -212,7 +211,6 @@ register_palettes_procs (Gimp *gimp)
                                      "Nathan Summers",
                                      "2001",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filter",
                                                        "filter",
@@ -231,7 +229,7 @@ register_palettes_procs (Gimp *gimp)
                                                                  "palette list",
                                                                  "The list of palette names",
                                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -247,7 +245,6 @@ register_palettes_procs (Gimp *gimp)
                                      "",
                                      "",
                                      "gimp-context-get-palette");
-
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
                                                            "name",
@@ -261,7 +258,7 @@ register_palettes_procs (Gimp *gimp)
                                                           "The palette num_colors",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -277,7 +274,6 @@ register_palettes_procs (Gimp *gimp)
                                      "",
                                      "",
                                      "gimp-palette-entry-get-color");
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -310,7 +306,6 @@ register_palettes_procs (Gimp *gimp)
                                                         "The color requested",
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 }

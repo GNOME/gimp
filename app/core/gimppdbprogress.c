@@ -29,7 +29,7 @@
 
 #include "core/gimpcontext.h"
 
-#include "pdb/gimp-pdb.h"
+#include "pdb/gimppdb.h"
 
 #include "gimpparamspecs.h"
 #include "gimppdbprogress.h"
@@ -41,6 +41,7 @@
 enum
 {
   PROP_0,
+  PROP_PDB,
   PROP_CONTEXT,
   PROP_CALLBACK_NAME
 };
@@ -128,6 +129,12 @@ gimp_pdb_progress_class_init (GimpPdbProgressClass *klass)
   object_class->finalize     = gimp_pdb_progress_finalize;
   object_class->set_property = gimp_pdb_progress_set_property;
 
+  g_object_class_install_property (object_class, PROP_PDB,
+                                   g_param_spec_object ("pdb", NULL, NULL,
+                                                        GIMP_TYPE_PDB,
+                                                        GIMP_PARAM_WRITABLE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context", NULL, NULL,
                                                         GIMP_TYPE_CONTEXT,
@@ -174,6 +181,7 @@ gimp_pdb_progress_constructor (GType                  type,
 
   progress = GIMP_PDB_PROGRESS (object);
 
+  g_assert (GIMP_IS_PDB (progress->pdb));
   g_assert (GIMP_IS_CONTEXT (progress->context));
 
   return object;
@@ -193,6 +201,12 @@ static void
 gimp_pdb_progress_finalize (GObject *object)
 {
   GimpPdbProgress *progress = GIMP_PDB_PROGRESS (object);
+
+  if (progress->pdb)
+    {
+      g_object_unref (progress->pdb);
+      progress->pdb = NULL;
+    }
 
   if (progress->context)
     {
@@ -219,16 +233,24 @@ gimp_pdb_progress_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_PDB:
+      if (progress->pdb)
+        g_object_unref (progress->pdb);
+      progress->pdb = GIMP_PDB (g_value_dup_object (value));
+      break;
+
     case PROP_CONTEXT:
       if (progress->context)
         g_object_unref (progress->context);
-      progress->context = (GimpContext *) g_value_dup_object (value);
+      progress->context = GIMP_CONTEXT (g_value_dup_object (value));
       break;
+
     case PROP_CALLBACK_NAME:
       if (progress->callback_name)
         g_free (progress->callback_name);
       progress->callback_name = g_value_dup_string (value);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -249,14 +271,15 @@ gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
 
       progress->callback_busy = TRUE;
 
-      return_vals = gimp_pdb_run_proc (progress->context->gimp,
-                                       progress->context,
-                                       NULL,
-                                       progress->callback_name,
-                                       GIMP_TYPE_INT32, command,
-                                       G_TYPE_STRING,   text,
-                                       G_TYPE_DOUBLE,   value,
-                                       G_TYPE_NONE);
+      return_vals =
+        gimp_pdb_execute_procedure_by_name (progress->pdb,
+                                            progress->context,
+                                            NULL,
+                                            progress->callback_name,
+                                            GIMP_TYPE_INT32, command,
+                                            G_TYPE_STRING,   text,
+                                            G_TYPE_DOUBLE,   value,
+                                            G_TYPE_NONE);
 
       if (g_value_get_enum (&return_vals->values[0]) != GIMP_PDB_SUCCESS)
         {

@@ -36,7 +36,7 @@ sub fonts_popup {
 	code => <<'CODE'
 {
   if (gimp->no_interface ||
-      ! gimp_pdb_lookup (gimp, font_callback) ||
+      ! gimp_pdb_lookup_procedure (gimp->pdb, font_callback) ||
       ! gimp_pdb_dialog_new (gimp, context, gimp->fonts,
                              popup_title, font_callback, initial_font,
                              NULL))
@@ -61,7 +61,7 @@ sub fonts_close_popup {
 	code => <<'CODE'
 {
   if (gimp->no_interface ||
-      ! gimp_pdb_lookup (gimp, font_callback) ||
+      ! gimp_pdb_lookup_procedure (gimp->pdb, font_callback) ||
       ! gimp_pdb_dialog_close (gimp, gimp->fonts, font_callback))
     success = FALSE;
 }
@@ -86,7 +86,7 @@ sub fonts_set_popup {
 	code => <<'CODE'
 {
   if (gimp->no_interface ||
-      ! gimp_pdb_lookup (gimp, font_callback) ||
+      ! gimp_pdb_lookup_procedure (gimp->pdb, font_callback) ||
       ! gimp_pdb_dialog_set (gimp, gimp->fonts, font_callback, font_name,
                              NULL))
     success = FALSE;

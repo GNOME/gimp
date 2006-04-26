@@ -33,7 +33,7 @@
 
 #include "text/gimpfont.h"
 
-#include "pdb/gimp-pdb.h"
+#include "pdb/gimppdb.h"
 
 #include "gimpcontainerbox.h"
 #include "gimpfontselect.h"
@@ -104,11 +104,11 @@ gimp_font_select_run_callback (GimpPdbDialog *dialog,
                                GimpObject    *object,
                                gboolean       closing)
 {
-  return gimp_pdb_run_proc (dialog->caller_context->gimp,
-                            dialog->caller_context,
-                            NULL,
-                            dialog->callback_name,
-                            G_TYPE_STRING,   object->name,
-                            GIMP_TYPE_INT32, closing,
-                            G_TYPE_NONE);
+  return gimp_pdb_execute_procedure_by_name (dialog->pdb,
+                                             dialog->caller_context,
+                                             NULL,
+                                             dialog->callback_name,
+                                             G_TYPE_STRING,   object->name,
+                                             GIMP_TYPE_INT32, closing,
+                                             G_TYPE_NONE);
 }

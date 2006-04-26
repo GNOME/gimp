@@ -231,7 +231,7 @@ sub generate_pspec {
 gimp_param_spec_image_id ("$name",
                           "$nick",
                           "$blurb",
-                          gimp,
+                          pdb->gimp,
                           GIMP_PARAM_READWRITE)
 CODE
     }
@@ -240,7 +240,7 @@ CODE
 gimp_param_spec_drawable_id ("$name",
                              "$nick",
                              "$blurb",
-                             gimp,
+                             pdb->gimp,
                              $flags)
 CODE
     }
@@ -249,7 +249,7 @@ CODE
 gimp_param_spec_layer_id ("$name",
                           "$nick",
                           "$blurb",
-                          gimp,
+                          pdb->gimp,
                           $flags)
 CODE
     }
@@ -258,7 +258,7 @@ CODE
 gimp_param_spec_channel_id ("$name",
                             "$nick",
                             "$blurb",
-                            gimp,
+                            pdb->gimp,
                             $flags)
 CODE
     }
@@ -267,7 +267,7 @@ CODE
 gimp_param_spec_layer_mask_id ("$name",
                                "$nick",
                                "$blurb",
-                               gimp,
+                               pdb->gimp,
                                $flags)
 CODE
     }
@@ -276,7 +276,7 @@ CODE
 gimp_param_spec_selection_id ("$name",
                               "$nick",
                               "$blurb",
-                              gimp,
+                              pdb->gimp,
                               $flags)
 CODE
     }
@@ -285,7 +285,7 @@ CODE
 gimp_param_spec_vectors_id ("$name",
                             "$nick",
                             "$blurb",
-                            gimp,
+                            pdb->gimp,
                             $flags)
 CODE
     }
@@ -294,7 +294,7 @@ CODE
 gimp_param_spec_display_id ("$name",
                             "$nick",
                             "$blurb",
-                            gimp,
+                            pdb->gimp,
                             $flags)
 CODE
     }
@@ -524,6 +524,7 @@ sub generate {
 	$out->{pcount}++; $total++;
 
 	$out->{register} .= <<CODE;
+
   /*
    * gimp-$proc->{canonical_name}
    */
@@ -537,7 +538,6 @@ sub generate {
                                      "$proc->{copyright}",
                                      "$proc->{date}",
                                      @{[$proc->{deprecated} ? "\"$proc->{deprecated}\"" : 'NULL']});
-
 CODE
 
         $argc = 0;
@@ -584,9 +584,8 @@ CODE
 	}
 
 	$out->{register} .= <<CODE;
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 CODE
 
 	if (exists $proc->{invoke}->{headers}) {
@@ -727,7 +726,7 @@ GPL
 
 		    $headers .= '#include "pdb-types.h"';
 		    $headers .= "\n";
-		    $headers .= '#include "gimp-pdb.h"';
+		    $headers .= '#include "gimppdb.h"';
 		    $headers .= "\n";
 		    $headers .= '#include "gimpprocedure.h"';
 		    $headers .= "\n";
@@ -778,8 +777,8 @@ GPL
 	print CFILE $extra->{decls}, "\n" if exists $extra->{decls};
 	print CFILE "\n", $extra->{code} if exists $extra->{code};
 	print CFILE $out->{code};
-	print CFILE "\nvoid\nregister_${group}_procs (Gimp *gimp)\n";
-	print CFILE "{\n  GimpProcedure *procedure;\n\n$out->{register}}\n";
+	print CFILE "\nvoid\nregister_${group}_procs (GimpPDB *pdb)\n";
+	print CFILE "{\n  GimpProcedure *procedure;\n$out->{register}}\n";
 	close CFILE;
 	&write_file($cfile);
 
@@ -787,7 +786,7 @@ GPL
 	push @group_decls, $decl;
 	$longest = length $decl if $longest < length $decl;
 
-	$group_procs .=  ' ' x 2 . "register_${group}_procs (gimp);\n";
+	$group_procs .=  ' ' x 2 . "register_${group}_procs (pdb);\n";
 	$pcount += $out->{pcount};
     }
 
@@ -800,7 +799,7 @@ GPL
 #ifndef $guard
 #define $guard
 
-void internal_procs_init (Gimp *gimp);
+void internal_procs_init (GimpPDB *pdb);
 
 #endif /* $guard */
 HEADER
@@ -813,18 +812,18 @@ HEADER
 	print IFILE qq@#include "config.h"\n\n@;
 	print IFILE qq@#include <glib-object.h>\n\n@;
 	print IFILE qq@#include "pdb-types.h"\n\n@;
-	print IFILE qq@#include "core/gimp.h"\n\n@;
+	print IFILE qq@#include "gimppdb.h"\n\n@;
 	print IFILE "/* Forward declarations for registering PDB procs */\n\n";
 	foreach (@group_decls) {
-	    print IFILE "void $_" . ' ' x ($longest - length $_) . " (Gimp *gimp);\n";
+	    print IFILE "void $_" . ' ' x ($longest - length $_) . " (GimpPDB *pdb);\n";
 	}
 	chop $group_procs;
 	print IFILE "\n/* $total procedures registered total */\n\n";
 	print IFILE <<BODY;
 void
-internal_procs_init (Gimp *gimp)
+internal_procs_init (GimpPDB *pdb)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_PDB (pdb));
 
 $group_procs
 }

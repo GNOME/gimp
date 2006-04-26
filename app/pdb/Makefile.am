@@ -9,8 +9,10 @@ libapppdb_a_SOURCES = \
 	gimp-pdb.h			\
 	gimp-pdb-compat.c		\
 	gimp-pdb-compat.h		\
-	gimp-pdb-query.c		\
-	gimp-pdb-query.h		\
+	gimppdb.c			\
+	gimppdb.h			\
+	gimppdb-query.c			\
+	gimppdb-query.h			\
 	gimpprocedure.c			\
 	gimpprocedure.h			\
 	gimppluginprocedure.c		\

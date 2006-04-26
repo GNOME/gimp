@@ -25,7 +25,7 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimp-pdb.h"
+#include "gimppdb.h"
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
@@ -234,7 +234,7 @@ brushes_get_brush_data_invoker (GimpProcedure     *procedure,
 }
 
 void
-register_brushes_procs (Gimp *gimp)
+register_brushes_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
@@ -251,8 +251,7 @@ register_brushes_procs (Gimp *gimp)
                                      "Seth Burgess",
                                      "1997",
                                      NULL);
-
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -268,7 +267,6 @@ register_brushes_procs (Gimp *gimp)
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filter",
                                                        "filter",
@@ -287,7 +285,7 @@ register_brushes_procs (Gimp *gimp)
                                                                  "brush list",
                                                                  "The list of brush names",
                                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -303,7 +301,6 @@ register_brushes_procs (Gimp *gimp)
                                      "",
                                      "",
                                      "gimp-context-get-brush");
-
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
                                                            "name",
@@ -329,7 +326,7 @@ register_brushes_procs (Gimp *gimp)
                                                           "The brush spacing (0 <= spacing <= 1000)",
                                                           0, 1000, 0,
                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -345,14 +342,13 @@ register_brushes_procs (Gimp *gimp)
                                      "",
                                      "",
                                      "gimp-brush-get-spacing");
-
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("spacing",
                                                           "spacing",
                                                           "The brush spacing (0 <= spacing <= 1000)",
                                                           0, 1000, 0,
                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -368,14 +364,13 @@ register_brushes_procs (Gimp *gimp)
                                      "",
                                      "",
                                      "gimp-brush-set-spacing");
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("spacing",
                                                       "spacing",
                                                       "The brush spacing (0 <= spacing <= 1000)",
                                                       0, 1000, 0,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -391,7 +386,6 @@ register_brushes_procs (Gimp *gimp)
                                      "",
                                      "",
                                      "gimp-brush-get-pixels");
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -448,7 +442,6 @@ register_brushes_procs (Gimp *gimp)
                                                                "mask data",
                                                                "The brush mask data",
                                                                GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 }

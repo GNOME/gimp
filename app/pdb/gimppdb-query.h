@@ -20,9 +20,9 @@
 #define __GIMP_PDB_QUERY_H__
 
 
-gboolean   gimp_pdb_dump      (Gimp             *gimp,
+gboolean   gimp_pdb_dump      (GimpPDB          *pdb,
                                const gchar      *filename);
-gboolean   gimp_pdb_query     (Gimp             *gimp,
+gboolean   gimp_pdb_query     (GimpPDB          *pdb,
                                const gchar      *name,
                                const gchar      *blurb,
                                const gchar      *help,
@@ -32,7 +32,7 @@ gboolean   gimp_pdb_query     (Gimp             *gimp,
                                const gchar      *proc_type,
                                gint             *num_procs,
                                gchar          ***procs);
-gboolean   gimp_pdb_proc_info (Gimp             *gimp,
+gboolean   gimp_pdb_proc_info (GimpPDB          *pdb,
                                const gchar      *proc_name,
                                gchar           **blurb,
                                gchar           **help,

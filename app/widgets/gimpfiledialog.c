@@ -39,7 +39,7 @@
 
 #include "plug-in/plug-in-locale-domain.h"
 
-#include "pdb/gimp-pdb.h"
+#include "pdb/gimppdb.h"
 #include "pdb/gimppluginprocedure.h"
 
 #include "gimpfiledialog.h"
@@ -268,7 +268,8 @@ gimp_file_dialog_new (Gimp                 *gimp,
       automatic_help_id = GIMP_HELP_FILE_OPEN_BY_EXTENSION;
 
       /* FIXME */
-      local_only = (gimp_pdb_lookup (gimp, "file-uri-load") == NULL);
+      local_only = (gimp_pdb_lookup_procedure (gimp->pdb,
+                                               "file-uri-load") == NULL);
       break;
 
     case GTK_FILE_CHOOSER_ACTION_SAVE:
@@ -277,7 +278,8 @@ gimp_file_dialog_new (Gimp                 *gimp,
       automatic_help_id = GIMP_HELP_FILE_SAVE_BY_EXTENSION;
 
       /* FIXME */
-      local_only = (gimp_pdb_lookup (gimp, "file-uri-save") == NULL);
+      local_only = (gimp_pdb_lookup_procedure (gimp->pdb,
+                                               "file-uri-save") == NULL);
       break;
 
     default:

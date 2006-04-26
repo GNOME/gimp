@@ -110,8 +110,7 @@ struct _Gimp
   GimpDataFactory        *gradient_factory;
   GimpDataFactory        *palette_factory;
 
-  GHashTable             *procedural_ht;
-  GHashTable             *procedural_compat_ht;
+  GimpPDB                *pdb;
 
   GSList                 *load_procs;
   GSList                 *save_procs;

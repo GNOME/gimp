@@ -25,7 +25,7 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimp-pdb.h"
+#include "gimppdb.h"
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
@@ -265,7 +265,7 @@ buffer_get_image_type_invoker (GimpProcedure     *procedure,
 }
 
 void
-register_buffer_procs (Gimp *gimp)
+register_buffer_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
@@ -282,7 +282,6 @@ register_buffer_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filter",
                                                        "filter",
@@ -301,7 +300,7 @@ register_buffer_procs (Gimp *gimp)
                                                                  "buffer list",
                                                                  "The list of buffer names",
                                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -317,7 +316,6 @@ register_buffer_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
@@ -339,7 +337,7 @@ register_buffer_procs (Gimp *gimp)
                                                            FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -355,7 +353,6 @@ register_buffer_procs (Gimp *gimp)
                                      "David Gowers <neota@softhome.net>",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
@@ -363,7 +360,7 @@ register_buffer_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -379,7 +376,6 @@ register_buffer_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
@@ -393,7 +389,7 @@ register_buffer_procs (Gimp *gimp)
                                                           "The buffer width",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -409,7 +405,6 @@ register_buffer_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
@@ -423,7 +418,7 @@ register_buffer_procs (Gimp *gimp)
                                                           "The buffer height",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -439,7 +434,6 @@ register_buffer_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
@@ -453,7 +447,7 @@ register_buffer_procs (Gimp *gimp)
                                                           "The buffer bpp",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -469,7 +463,6 @@ register_buffer_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
@@ -484,7 +477,6 @@ register_buffer_procs (Gimp *gimp)
                                                       GIMP_TYPE_IMAGE_BASE_TYPE,
                                                       GIMP_RGB,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 }

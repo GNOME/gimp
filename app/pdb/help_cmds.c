@@ -24,7 +24,7 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimp-pdb.h"
+#include "gimppdb.h"
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
@@ -60,7 +60,7 @@ help_invoker (GimpProcedure     *procedure,
 }
 
 void
-register_help_procs (Gimp *gimp)
+register_help_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
@@ -77,7 +77,6 @@ register_help_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "2000",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("help-domain",
                                                        "help domain",
@@ -92,7 +91,6 @@ register_help_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 }

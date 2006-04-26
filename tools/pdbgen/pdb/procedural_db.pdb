@@ -66,7 +66,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_pdb_dump (gimp, filename);
+  success = gimp_pdb_dump (gimp->pdb, filename);
 }
 CODE
     );
@@ -122,7 +122,7 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  success = gimp_pdb_query (gimp,
+  success = gimp_pdb_query (gimp->pdb,
                             name, blurb, help, author,
                             copyright, date, proc_type,
                             &num_matches, &procedure_names);
@@ -180,7 +180,7 @@ HELP
 
   canonical = gimp_canonicalize_identifier (procedure_name);
 
-  success = gimp_pdb_proc_info (gimp, canonical,
+  success = gimp_pdb_proc_info (gimp->pdb, canonical,
                                 &blurb, &help, &author,
                                 &copyright, &date, &ptype,
                                 &num_args, &num_values);
@@ -230,16 +230,16 @@ HELP
 
   canonical = gimp_canonicalize_identifier (procedure_name);
 
-  proc = gimp_pdb_lookup (gimp, canonical);
+  proc = gimp_pdb_lookup_procedure (gimp->pdb, canonical);
 
   if (! proc)
     {
       const gchar *compat_name;
 
-      compat_name = g_hash_table_lookup (gimp->procedural_compat_ht, canonical);
+      compat_name = gimp_pdb_lookup_compat_proc_name (gimp->pdb, canonical);
 
       if (compat_name)
-        proc = gimp_pdb_lookup (gimp, compat_name);
+        proc = gimp_pdb_lookup_procedure (gimp->pdb, compat_name);
     }
 
   g_free (canonical);
@@ -297,16 +297,16 @@ HELP
 
   canonical = gimp_canonicalize_identifier (procedure_name);
 
-  proc = gimp_pdb_lookup (gimp, canonical);
+  proc = gimp_pdb_lookup_procedure (gimp->pdb, canonical);
 
   if (! proc)
     {
       const gchar *compat_name;
 
-      compat_name = g_hash_table_lookup (gimp->procedural_compat_ht, canonical);
+      compat_name = gimp_pdb_lookup_compat_proc_name (gimp->pdb, canonical);
 
       if (compat_name)
-        proc = gimp_pdb_lookup (gimp, compat_name);
+        proc = gimp_pdb_lookup_procedure (gimp->pdb, compat_name);
     }
 
   g_free (canonical);
@@ -440,7 +440,7 @@ CODE
 
 
 @headers = qw("libgimpbase/gimpbase.h" "core/gimp.h" "plug-in/plug-in-data.h"
-              "gimp-pdb-compat.h" "gimp-pdb-query.h");
+              "gimp-pdb-compat.h" "gimppdb-query.h");
 
 @procs = qw(procedural_db_temp_name procedural_db_dump
             procedural_db_query procedural_db_proc_info

@@ -34,11 +34,9 @@
 
 #include "pdb-types.h"
 
-#include "core/gimp.h"
-
-#include "gimp-pdb.h"
+#include "gimppdb.h"
+#include "gimppdb-query.h"
 #include "gimp-pdb-compat.h"
-#include "gimp-pdb-query.h"
 #include "gimpprocedure.h"
 
 #include "gimp-intl.h"
@@ -53,7 +51,7 @@ typedef struct _PDBQuery PDBQuery;
 
 struct _PDBQuery
 {
-  Gimp     *gimp;
+  GimpPDB  *pdb;
 
   regex_t   name_regex;
   regex_t   blurb_regex;
@@ -98,12 +96,12 @@ static void   gimp_pdb_get_strings (PDBStrings    *strings,
 /*  public functions  */
 
 gboolean
-gimp_pdb_dump (Gimp        *gimp,
+gimp_pdb_dump (GimpPDB     *pdb,
                const gchar *filename)
 {
   FILE *file;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (GIMP_IS_PDB (pdb), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
 
   file = g_fopen (filename, "w");
@@ -111,7 +109,7 @@ gimp_pdb_dump (Gimp        *gimp,
   if (! file)
     return FALSE;
 
-  g_hash_table_foreach (gimp->procedural_ht,
+  g_hash_table_foreach (pdb->procedures,
                         gimp_pdb_print_entry,
                         file);
   fclose (file);
@@ -120,7 +118,7 @@ gimp_pdb_dump (Gimp        *gimp,
 }
 
 gboolean
-gimp_pdb_query (Gimp          *gimp,
+gimp_pdb_query (GimpPDB       *pdb,
                 const gchar   *name,
                 const gchar   *blurb,
                 const gchar   *help,
@@ -134,7 +132,7 @@ gimp_pdb_query (Gimp          *gimp,
   PDBQuery pdb_query;
   gboolean success = FALSE;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (GIMP_IS_PDB (pdb), FALSE);
   g_return_val_if_fail (name != NULL, FALSE);
   g_return_val_if_fail (blurb != NULL, FALSE);
   g_return_val_if_fail (help != NULL, FALSE);
@@ -165,17 +163,17 @@ gimp_pdb_query (Gimp          *gimp,
 
   success = TRUE;
 
-  pdb_query.gimp            = gimp;
+  pdb_query.pdb             = pdb;
   pdb_query.list_of_procs   = NULL;
   pdb_query.num_procs       = 0;
   pdb_query.querying_compat = FALSE;
 
-  g_hash_table_foreach (gimp->procedural_ht,
+  g_hash_table_foreach (pdb->procedures,
                         gimp_pdb_query_entry, &pdb_query);
 
   pdb_query.querying_compat = TRUE;
 
-  g_hash_table_foreach (gimp->procedural_compat_ht,
+  g_hash_table_foreach (pdb->compat_proc_names,
                         gimp_pdb_query_entry, &pdb_query);
 
  free_proc_type:
@@ -203,7 +201,7 @@ gimp_pdb_query (Gimp          *gimp,
 }
 
 gboolean
-gimp_pdb_proc_info (Gimp             *gimp,
+gimp_pdb_proc_info (GimpPDB          *pdb,
                     const gchar      *proc_name,
                     gchar           **blurb,
                     gchar           **help,
@@ -217,32 +215,25 @@ gimp_pdb_proc_info (Gimp             *gimp,
   GimpProcedure *procedure;
   PDBStrings     strings;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (GIMP_IS_PDB (pdb), FALSE);
   g_return_val_if_fail (proc_name != NULL, FALSE);
 
-  procedure = gimp_pdb_lookup (gimp, proc_name);
+  procedure = gimp_pdb_lookup_procedure (pdb, proc_name);
 
-  if (procedure)
-    {
-      gimp_pdb_get_strings (&strings, procedure, FALSE);
-    }
-  else
+  if (! procedure)
     {
       const gchar *compat_name;
 
-      compat_name = g_hash_table_lookup (gimp->procedural_compat_ht, proc_name);
+      compat_name = gimp_pdb_lookup_compat_proc_name (pdb, proc_name);
 
       if (compat_name)
-        {
-          procedure = gimp_pdb_lookup (gimp, compat_name);
-
-          if (procedure)
-            gimp_pdb_get_strings (&strings, procedure, TRUE);
-        }
+        procedure = gimp_pdb_lookup_procedure (pdb, compat_name);
     }
 
   if (procedure)
     {
+      gimp_pdb_get_strings (&strings, procedure, TRUE);
+
       *blurb      = strings.compat ? strings.blurb : g_strdup (strings.blurb);
       *help       = strings.compat ? strings.help : g_strdup (strings.help);
       *author     = strings.compat ? strings.author : g_strdup (strings.author);
@@ -287,7 +278,7 @@ gimp_pdb_query_entry (gpointer key,
   proc_name = key;
 
   if (pdb_query->querying_compat)
-    list = g_hash_table_lookup (pdb_query->gimp->procedural_ht, value);
+    list = g_hash_table_lookup (pdb_query->pdb->procedures, value);
   else
     list = value;
 

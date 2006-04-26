@@ -28,7 +28,7 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "pdb-types.h"
-#include "gimp-pdb.h"
+#include "gimppdb.h"
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
@@ -253,7 +253,7 @@ plugin_icon_register_invoker (GimpProcedure     *procedure,
 }
 
 void
-register_plug_in_procs (Gimp *gimp)
+register_plug_in_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
@@ -270,7 +270,6 @@ register_plug_in_procs (Gimp *gimp)
                                      "Andy Thomas",
                                      "1998",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("search-string",
                                                        "search string",
@@ -344,7 +343,7 @@ register_plug_in_procs (Gimp *gimp)
                                                                  "plugin real name",
                                                                  "The internal name of the plugin",
                                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -360,7 +359,6 @@ register_plug_in_procs (Gimp *gimp)
                                      "Sven Neumann",
                                      "2000",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("domain-name",
                                                        "domain name",
@@ -375,7 +373,7 @@ register_plug_in_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -391,7 +389,6 @@ register_plug_in_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "2000",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("domain-name",
                                                        "domain name",
@@ -406,7 +403,7 @@ register_plug_in_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -422,7 +419,6 @@ register_plug_in_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -437,7 +433,7 @@ register_plug_in_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -453,7 +449,6 @@ register_plug_in_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "2005",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("menu-path",
                                                        "menu path",
@@ -468,7 +463,7 @@ register_plug_in_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -484,7 +479,6 @@ register_plug_in_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "2004",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
@@ -510,7 +504,6 @@ register_plug_in_procs (Gimp *gimp)
                                                            "icon data",
                                                            "The procedure's icon. The format depends on the 'icon_type' parameter",
                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 }

@@ -25,7 +25,7 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimp-pdb.h"
+#include "gimppdb.h"
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
@@ -278,7 +278,7 @@ gradients_get_gradient_data_invoker (GimpProcedure     *procedure,
 }
 
 void
-register_gradients_procs (Gimp *gimp)
+register_gradients_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
@@ -295,8 +295,7 @@ register_gradients_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "2002",
                                      NULL);
-
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -312,7 +311,6 @@ register_gradients_procs (Gimp *gimp)
                                      "Federico Mena Quintero",
                                      "1997",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filter",
                                                        "filter",
@@ -331,7 +329,7 @@ register_gradients_procs (Gimp *gimp)
                                                                  "gradient list",
                                                                  "The list of gradient names",
                                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -347,7 +345,6 @@ register_gradients_procs (Gimp *gimp)
                                      "",
                                      "",
                                      "gimp-gradient-get-uniform-samples");
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("num-samples",
                                                       "num samples",
@@ -371,7 +368,7 @@ register_gradients_procs (Gimp *gimp)
                                                                 "color samples",
                                                                 "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -387,7 +384,6 @@ register_gradients_procs (Gimp *gimp)
                                      "",
                                      "",
                                      "gimp-gradient-get-custom-samples");
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("num-samples",
                                                       "num samples",
@@ -416,7 +412,7 @@ register_gradients_procs (Gimp *gimp)
                                                                 "color samples",
                                                                 "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -432,7 +428,6 @@ register_gradients_procs (Gimp *gimp)
                                      "",
                                      "",
                                      "gimp-gradient-get-uniform-samples");
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -470,7 +465,6 @@ register_gradients_procs (Gimp *gimp)
                                                                 "grad data",
                                                                 "The gradient sample data",
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 }

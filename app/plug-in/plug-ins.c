@@ -35,7 +35,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 
-#include "pdb/gimp-pdb.h"
+#include "pdb/gimppdb.h"
 #include "pdb/gimptemporaryprocedure.h"
 
 #include "plug-in.h"
@@ -420,7 +420,7 @@ plug_ins_temp_procedure_add (Gimp                   *gimp,
     }
 
   /*  Register the procedural database entry  */
-  gimp_pdb_register (gimp, GIMP_PROCEDURE (proc));
+  gimp_pdb_register_procedure (gimp->pdb, GIMP_PROCEDURE (proc));
 
   /*  Add the definition to the global list  */
   gimp->plug_in_procedures = g_slist_prepend (gimp->plug_in_procedures,
@@ -446,7 +446,7 @@ plug_ins_temp_procedure_remove (Gimp                   *gimp,
   gimp->plug_in_procedures = g_slist_remove (gimp->plug_in_procedures, proc);
 
   /*  Unregister the procedural database entry  */
-  gimp_pdb_unregister (gimp, GIMP_OBJECT (proc)->name);
+  gimp_pdb_unregister_procedure (gimp->pdb, GIMP_PROCEDURE (proc));
 
   g_object_unref (proc);
 }
@@ -580,7 +580,7 @@ plug_ins_add_to_db (Gimp                *gimp,
                     GimpContext         *context,
                     GimpPlugInProcedure *proc)
 {
-  gimp_pdb_register (gimp, GIMP_PROCEDURE (proc));
+  gimp_pdb_register_procedure (gimp->pdb, GIMP_PROCEDURE (proc));
 
   if (proc->file_proc)
     {
@@ -589,23 +589,23 @@ plug_ins_add_to_db (Gimp                *gimp,
       if (proc->image_types)
         {
           return_vals =
-            gimp_pdb_run_proc (gimp, context, NULL,
-                               "gimp-register-save-handler",
-                               G_TYPE_STRING, GIMP_OBJECT (proc)->name,
-                               G_TYPE_STRING, proc->extensions,
-                               G_TYPE_STRING, proc->prefixes,
-                               G_TYPE_NONE);
+            gimp_pdb_execute_procedure_by_name (gimp->pdb, context, NULL,
+                                                "gimp-register-save-handler",
+                                                G_TYPE_STRING, GIMP_OBJECT (proc)->name,
+                                                G_TYPE_STRING, proc->extensions,
+                                                G_TYPE_STRING, proc->prefixes,
+                                                G_TYPE_NONE);
         }
       else
         {
           return_vals =
-            gimp_pdb_run_proc (gimp, context, NULL,
-                               "gimp-register-magic-load-handler",
-                               G_TYPE_STRING, GIMP_OBJECT (proc)->name,
-                               G_TYPE_STRING, proc->extensions,
-                               G_TYPE_STRING, proc->prefixes,
-                               G_TYPE_STRING, proc->magics,
-                               G_TYPE_NONE);
+            gimp_pdb_execute_procedure_by_name (gimp->pdb, context, NULL,
+                                                "gimp-register-magic-load-handler",
+                                                G_TYPE_STRING, GIMP_OBJECT (proc)->name,
+                                                G_TYPE_STRING, proc->extensions,
+                                                G_TYPE_STRING, proc->prefixes,
+                                                G_TYPE_STRING, proc->magics,
+                                                G_TYPE_NONE);
         }
 
       g_value_array_free (return_vals);

@@ -34,7 +34,7 @@
 #include "core/gimpbrush.h"
 #include "core/gimpparamspecs.h"
 
-#include "pdb/gimp-pdb.h"
+#include "pdb/gimppdb.h"
 
 #include "gimpbrushfactoryview.h"
 #include "gimpbrushselect.h"
@@ -267,20 +267,20 @@ gimp_brush_select_run_callback (GimpPdbDialog *dialog,
                           TRUE);
 
   return_vals =
-    gimp_pdb_run_proc (dialog->caller_context->gimp,
-                       dialog->caller_context,
-                       NULL,
-                       dialog->callback_name,
-                       G_TYPE_STRING,        object->name,
-                       G_TYPE_DOUBLE,        gimp_context_get_opacity (dialog->context) * 100.0,
-                       GIMP_TYPE_INT32,      GIMP_BRUSH_SELECT (dialog)->spacing,
-                       GIMP_TYPE_INT32,      gimp_context_get_paint_mode (dialog->context),
-                       GIMP_TYPE_INT32,      brush->mask->width,
-                       GIMP_TYPE_INT32,      brush->mask->height,
-                       GIMP_TYPE_INT32,      array->length,
-                       GIMP_TYPE_INT8_ARRAY, array,
-                       GIMP_TYPE_INT32,      closing,
-                       G_TYPE_NONE);
+    gimp_pdb_execute_procedure_by_name (dialog->pdb,
+                                        dialog->caller_context,
+                                        NULL,
+                                        dialog->callback_name,
+                                        G_TYPE_STRING,        object->name,
+                                        G_TYPE_DOUBLE,        gimp_context_get_opacity (dialog->context) * 100.0,
+                                        GIMP_TYPE_INT32,      GIMP_BRUSH_SELECT (dialog)->spacing,
+                                        GIMP_TYPE_INT32,      gimp_context_get_paint_mode (dialog->context),
+                                        GIMP_TYPE_INT32,      brush->mask->width,
+                                        GIMP_TYPE_INT32,      brush->mask->height,
+                                        GIMP_TYPE_INT32,      array->length,
+                                        GIMP_TYPE_INT8_ARRAY, array,
+                                        GIMP_TYPE_INT32,      closing,
+                                        G_TYPE_NONE);
 
   gimp_array_free (array);
 

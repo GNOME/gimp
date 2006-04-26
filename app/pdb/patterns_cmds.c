@@ -25,7 +25,7 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimp-pdb.h"
+#include "gimppdb.h"
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
@@ -181,7 +181,7 @@ patterns_get_pattern_data_invoker (GimpProcedure     *procedure,
 }
 
 void
-register_patterns_procs (Gimp *gimp)
+register_patterns_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
@@ -198,8 +198,7 @@ register_patterns_procs (Gimp *gimp)
                                      "Michael Natterer",
                                      "2002",
                                      NULL);
-
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -215,7 +214,6 @@ register_patterns_procs (Gimp *gimp)
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filter",
                                                        "filter",
@@ -234,7 +232,7 @@ register_patterns_procs (Gimp *gimp)
                                                                  "pattern list",
                                                                  "The list of pattern names",
                                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -250,7 +248,6 @@ register_patterns_procs (Gimp *gimp)
                                      "",
                                      "",
                                      "gimp-context-get-pattern");
-
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
                                                            "name",
@@ -270,7 +267,7 @@ register_patterns_procs (Gimp *gimp)
                                                           "The pattern height",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -286,7 +283,6 @@ register_patterns_procs (Gimp *gimp)
                                      "",
                                      "",
                                      "gimp-pattern-get-pixels");
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -330,7 +326,6 @@ register_patterns_procs (Gimp *gimp)
                                                                "mask data",
                                                                "The pattern mask data",
                                                                GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 }

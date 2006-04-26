@@ -20,29 +20,63 @@
 #define __GIMP_PDB_H__
 
 
-void            gimp_pdb_init       (Gimp          *gimp);
-void            gimp_pdb_exit       (Gimp          *gimp);
+#include "core/gimpobject.h"
 
-void            gimp_pdb_init_procs (Gimp          *gimp);
 
-void            gimp_pdb_register   (Gimp          *gimp,
-                                     GimpProcedure *procedure);
-void            gimp_pdb_unregister (Gimp          *gimp,
-                                     const gchar   *procedure_name);
+#define GIMP_TYPE_PDB            (gimp_pdb_get_type ())
+#define GIMP_PDB(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PDB, GimpPDB))
+#define GIMP_PDB_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PDB, GimpPDBClass))
+#define GIMP_IS_PDB(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PDB))
+#define GIMP_IS_PDB_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PDB))
+#define GIMP_PDB_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PDB, GimpPDBClass))
 
-GimpProcedure * gimp_pdb_lookup     (Gimp          *gimp,
-                                     const gchar   *procedure_name);
 
-GValueArray   * gimp_pdb_execute    (Gimp          *gimp,
-                                     GimpContext   *context,
-                                     GimpProgress  *progress,
-                                     const gchar   *procedure_name,
-                                     GValueArray   *args);
-GValueArray   * gimp_pdb_run_proc   (Gimp          *gimp,
-                                     GimpContext   *context,
-                                     GimpProgress  *progress,
-                                     const gchar   *procedure_name,
-                                     ...);
+typedef struct _GimpPDBClass GimpPDBClass;
+
+struct _GimpPDB
+{
+  GimpObject  parent_instance;
+
+  Gimp       *gimp;
+
+  GHashTable *procedures;
+  GHashTable *compat_proc_names;
+};
+
+struct _GimpPDBClass
+{
+  GimpObjectClass parent_class;
+};
+
+
+GType           gimp_pdb_get_type                       (void) G_GNUC_CONST;
+
+GimpPDB       * gimp_pdb_new                            (Gimp          *gimp);
+
+void            gimp_pdb_register_procedure             (GimpPDB       *pdb,
+                                                         GimpProcedure *procedure);
+void            gimp_pdb_unregister_procedure           (GimpPDB       *pdb,
+                                                         GimpProcedure *procedure);
+
+GimpProcedure * gimp_pdb_lookup_procedure               (GimpPDB       *pdb,
+                                                         const gchar   *name);
+
+void            gimp_pdb_register_compat_proc_name      (GimpPDB       *pdb,
+                                                         const gchar   *old_name,
+                                                         const gchar   *new_name);
+const gchar   * gimp_pdb_lookup_compat_proc_name        (GimpPDB       *pdb,
+                                                         const gchar   *old_name);
+
+GValueArray   * gimp_pdb_execute_procedure_by_name_args (GimpPDB       *pdb,
+                                                         GimpContext   *context,
+                                                         GimpProgress  *progress,
+                                                         const gchar   *name,
+                                                         GValueArray   *args);
+GValueArray   * gimp_pdb_execute_procedure_by_name      (GimpPDB       *pdb,
+                                                         GimpContext   *context,
+                                                         GimpProgress  *progress,
+                                                         const gchar   *name,
+                                                         ...);
 
 
 #endif  /*  __GIMP_PDB_H__  */

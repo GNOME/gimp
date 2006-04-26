@@ -31,7 +31,7 @@
 
 #include "core/gimpcontext.h"
 
-#include "pdb/gimp-pdb.h"
+#include "pdb/gimppdb.h"
 
 #include "gimpmenufactory.h"
 #include "gimppdbdialog.h"
@@ -42,6 +42,7 @@
 enum
 {
   PROP_0,
+  PROP_PDB,
   PROP_CONTEXT,
   PROP_SELECT_TYPE,
   PROP_INITIAL_OBJECT,
@@ -131,6 +132,12 @@ gimp_pdb_dialog_class_init (GimpPdbDialogClass *klass)
                                                         GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
+  g_object_class_install_property (object_class, PROP_PDB,
+                                   g_param_spec_object ("pdb", NULL, NULL,
+                                                        GIMP_TYPE_PDB,
+                                                        GIMP_PARAM_WRITABLE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_SELECT_TYPE,
                                    g_param_spec_pointer ("select-type",
                                                          NULL, NULL,
@@ -182,6 +189,7 @@ gimp_pdb_dialog_constructor (GType                  type,
 
   dialog = GIMP_PDB_DIALOG (object);
 
+  g_assert (GIMP_IS_PDB (dialog->pdb));
   g_assert (GIMP_IS_CONTEXT (dialog->caller_context));
   g_assert (g_type_is_a (dialog->select_type, GIMP_TYPE_OBJECT));
 
@@ -223,6 +231,9 @@ gimp_pdb_dialog_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_PDB:
+      dialog->pdb = GIMP_PDB (g_value_dup_object (value));
+      break;
     case PROP_CONTEXT:
       dialog->caller_context = GIMP_CONTEXT (g_value_dup_object (value));
       break;
@@ -251,6 +262,12 @@ static void
 gimp_pdb_dialog_destroy (GtkObject *object)
 {
   GimpPdbDialog *dialog = GIMP_PDB_DIALOG (object);
+
+  if (dialog->pdb)
+    {
+      g_object_unref (dialog->pdb);
+      dialog->pdb = NULL;
+    }
 
   if (dialog->caller_context)
     {
@@ -305,8 +322,7 @@ gimp_pdb_dialog_run_callback (GimpPdbDialog *dialog,
     {
       dialog->callback_busy = TRUE;
 
-      if (gimp_pdb_lookup (dialog->caller_context->gimp,
-                           dialog->callback_name))
+      if (gimp_pdb_lookup_procedure (dialog->pdb, dialog->callback_name))
         {
           GValueArray *return_vals;
 
@@ -364,8 +380,7 @@ gimp_pdb_dialogs_check_callback (GimpPdbDialogClass *klass)
 
       if (dialog->caller_context && dialog->callback_name)
         {
-          if (! gimp_pdb_lookup (dialog->caller_context->gimp,
-                                 dialog->callback_name))
+          if (! gimp_pdb_lookup_procedure (dialog->pdb, dialog->callback_name))
             {
               gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
             }

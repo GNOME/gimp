@@ -56,7 +56,7 @@
 #include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
 
-#include "pdb/gimp-pdb.h"
+#include "pdb/gimppdb.h"
 #include "pdb/gimppluginprocedure.h"
 
 #include "file-open.h"
@@ -134,12 +134,14 @@ file_open_image (Gimp                *gimp,
       filename = g_strdup (uri);
     }
 
-  return_vals = gimp_pdb_run_proc (gimp, context, progress,
-                                   GIMP_OBJECT (file_proc)->name,
-                                   GIMP_TYPE_INT32, run_mode,
-                                   G_TYPE_STRING,   filename,
-                                   G_TYPE_STRING,   entered_filename,
-                                   G_TYPE_NONE);
+  return_vals =
+    gimp_pdb_execute_procedure_by_name (gimp->pdb,
+                                        context, progress,
+                                        GIMP_OBJECT (file_proc)->name,
+                                        GIMP_TYPE_INT32, run_mode,
+                                        G_TYPE_STRING,   filename,
+                                        G_TYPE_STRING,   entered_filename,
+                                        G_TYPE_NONE);
 
   g_free (filename);
 
@@ -204,7 +206,7 @@ file_open_thumbnail (Gimp          *gimp,
   if (! file_proc || ! file_proc->thumb_loader)
     return NULL;
 
-  procedure = gimp_pdb_lookup (gimp, file_proc->thumb_loader);
+  procedure = gimp_pdb_lookup_procedure (gimp->pdb, file_proc->thumb_loader);
 
   if (procedure && procedure->num_args >= 2 && procedure->num_values >= 1)
     {
@@ -218,11 +220,13 @@ file_open_thumbnail (Gimp          *gimp,
       if (! filename)
         filename = g_strdup (uri);
 
-      return_vals = gimp_pdb_run_proc (gimp, context, progress,
-                                       GIMP_OBJECT (procedure)->name,
-                                       G_TYPE_STRING,   filename,
-                                       GIMP_TYPE_INT32, size,
-                                       G_TYPE_NONE);
+      return_vals =
+        gimp_pdb_execute_procedure_by_name (gimp->pdb,
+                                            context, progress,
+                                            GIMP_OBJECT (procedure)->name,
+                                            G_TYPE_STRING,   filename,
+                                            GIMP_TYPE_INT32, size,
+                                            G_TYPE_NONE);
 
       g_free (filename);
 

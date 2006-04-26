@@ -1,3 +1,60 @@
+2006-04-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/pdb/Makefile.am
+	* app/pdb/pdb-types.h
+	* app/pdb/gimppdb.[ch]: new object GimpPDB which keeps all
+	procedures and functions to register and run them. Renamed all
+	functions and did some cleanups.
+
+	* app/pdb/gimp-pdb.[ch]
+	* app/core/gimp.[ch]: removed the same stuff here.
+
+	* app/pdb/gimp-pdb-query.[ch]: removed these files...
+
+	* app/pdb/gimppdb-query.[ch]: ...added here as members of GimpPDB.
+
+	* app/pdb/gimp-pdb-compat.h: fix include guard.
+
+	* app/batch.c
+	* app/actions/vectors-commands.c
+	* app/dialogs/about-dialog.c
+	* app/file/file-open.c
+	* app/file/file-save.c
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-ins.c
+	* app/widgets/gimpfiledialog.c
+	* app/widgets/gimphelp.c
+	* app/xcf/xcf.c
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/font_select.pdb
+	* tools/pdbgen/pdb/gradient_select.pdb
+	* tools/pdbgen/pdb/palette_select.pdb
+	* tools/pdbgen/pdb/pattern_select.pdb
+	* tools/pdbgen/pdb/procedural_db.pdb: changed includes and function
+	calls accordingly.
+
+	* tools/pdbgen/app.pl: pass around GimpPDB instead of Gimp
+	pointers to register the internal procedures with. Changed some
+	newlines in the generated code.
+
+	* app/pdb/*_cmds.c
+	* app/pdb/internal_procs.[ch]: regenerated.
+
+	* app/core/gimppdbprogress.[ch]
+	* app/widgets/gimppdbdialog.[ch]: added "pdb" CONSTRUCT_ONLY
+	properties.
+
+	* app/plug-in/plug-in-progress.c
+	* app/gui/gui-vtable.c: pass gimp->pdb when creating them.
+
+	* app/widgets/gimpbrushselect.c
+	* app/widgets/gimpfontselect.c
+	* app/widgets/gimpgradientselect.c
+	* app/widgets/gimppaletteselect.c
+	* app/widgets/gimppatternselect.c: use the new local pdb pointers
+	instead of some foo->bar->gimp->pdb overkill.
+
 2006-04-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpthresholdtool.c: added an "Auto" button and

@@ -25,7 +25,7 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimp-pdb.h"
+#include "gimppdb.h"
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
@@ -97,7 +97,7 @@ message_set_handler_invoker (GimpProcedure     *procedure,
 }
 
 void
-register_message_procs (Gimp *gimp)
+register_message_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
@@ -114,7 +114,6 @@ register_message_procs (Gimp *gimp)
                                      "Manish Singh",
                                      "1998",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("message",
                                                        "message",
@@ -122,7 +121,7 @@ register_message_procs (Gimp *gimp)
                                                        FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -138,7 +137,6 @@ register_message_procs (Gimp *gimp)
                                      "Manish Singh",
                                      "1998",
                                      NULL);
-
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("handler",
                                                       "handler",
@@ -146,7 +144,7 @@ register_message_procs (Gimp *gimp)
                                                       GIMP_TYPE_MESSAGE_HANDLER_TYPE,
                                                       GIMP_MESSAGE_BOX,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
@@ -162,7 +160,6 @@ register_message_procs (Gimp *gimp)
                                      "Manish Singh",
                                      "1998",
                                      NULL);
-
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("handler",
                                                   "handler",
@@ -170,7 +167,6 @@ register_message_procs (Gimp *gimp)
                                                   GIMP_TYPE_MESSAGE_HANDLER_TYPE,
                                                   GIMP_MESSAGE_BOX,
                                                   GIMP_PARAM_READWRITE));
-  gimp_pdb_register (gimp, procedure);
+  gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 }

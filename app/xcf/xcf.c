@@ -33,7 +33,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpparamspecs.h"
 
-#include "pdb/gimp-pdb.h"
 #include "pdb/gimppluginprocedure.h"
 
 #include "plug-in/plug-ins.h"
