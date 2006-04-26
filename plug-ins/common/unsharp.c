@@ -65,11 +65,11 @@ static void      run   (const gchar      *name,
 
 static void      blur_line           (const gdouble  *ctable,
                                       const gdouble  *cmatrix,
-                                      gint            cmatrix_length,
+                                      const gint      cmatrix_length,
                                       const guchar   *src,
                                       guchar         *dest,
-                                      gint            len,
-                                      glong           bytes);
+                                      const gint      len,
+                                      const gint      bytes);
 static gint      gen_convolve_matrix (gdouble         std_dev,
                                       gdouble       **cmatrix);
 static gdouble * gen_lookup_table    (const gdouble  *cmatrix,
@@ -251,7 +251,7 @@ blur_line (const gdouble *ctable,
            const guchar  *src,
            guchar        *dest,
            const gint     len,
-           const glong    bytes)
+           const gint     bytes)
 {
   const gdouble *cmatrix_p;
   const gdouble *ctable_p;
@@ -621,7 +621,7 @@ gen_lookup_table (const gdouble *cmatrix,
   for (i = 0; i < cmatrix_length; i++)
     {
       for (j = 0; j < 256; j++)
-        *(lookup_table_p++) = *cmatrix_p * (gdouble)j;
+        *(lookup_table_p++) = *cmatrix_p * (gdouble) j;
 
       cmatrix_p++;
     }
