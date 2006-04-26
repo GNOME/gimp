@@ -1,3 +1,8 @@
+2006-04-26  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/scale-funcs.c: code cleanup, moved variables into
+	local scopes, added const qualifiers.
+
 2006-04-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/Makefile.am
@@ -75,7 +80,7 @@
 
 2006-04-24  Sven Neumann  <sven@gimp.org>
 
-	* app/dialogs/user-install-dialog.c: moved the installtion log
+	* app/dialogs/user-install-dialog.c: moved the installation log
 	into a GtkExpander.
 
 	* app/actions/dialogs-commands.c (dialogs_create_dock): added

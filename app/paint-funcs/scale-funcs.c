@@ -72,23 +72,19 @@ static void
 scale_region_no_resample (PixelRegion *srcPR,
                           PixelRegion *destPR)
 {
-  gint   *x_src_offsets;
-  gint   *y_src_offsets;
-  guchar *src;
-  guchar *dest;
-  gint    width, height, orig_width, orig_height;
-  gint    last_src_y;
-  gint    row_bytes;
-  gint    x, y, b;
-  gchar   bytes;
-
-  orig_width = srcPR->w;
-  orig_height = srcPR->h;
-
-  width = destPR->w;
-  height = destPR->h;
-
-  bytes = srcPR->bytes;
+  const gint    width       = destPR->w;
+  const gint    height      = destPR->h;
+  const gint    orig_width  = srcPR->w;
+  const gint    orig_height = srcPR->h;
+  const gint    bytes       = srcPR->bytes;
+  gint         *x_src_offsets;
+  gint         *y_src_offsets;
+  guchar       *src;
+  guchar       *dest;
+  gint          last_src_y;
+  gint          row_bytes;
+  gint          x, y;
+  gint          b;
 
   /*  the data pointers...  */
   x_src_offsets = g_new (gint, width * bytes);
@@ -143,21 +139,20 @@ get_premultiplied_double_row (PixelRegion *srcPR,
                               guchar      *tmp_src,
                               gint         n)
 {
-  gint b;
-  gint bytes = srcPR->bytes;
+  const gint bytes = srcPR->bytes;
+  gint       b;
 
   pixel_region_get_row (srcPR, x, y, w, tmp_src, n);
 
   if (pixel_region_has_alpha (srcPR))
     {
       /* premultiply the alpha into the double array */
-      gdouble *irow  = row;
-      gint     alpha = bytes - 1;
-      gdouble  mod_alpha;
+      const gint  alpha = bytes - 1;
+      gdouble    *irow  = row;
 
       for (x = 0; x < w; x++)
         {
-          mod_alpha = tmp_src[alpha] / 255.0;
+          gdouble  mod_alpha = tmp_src[alpha] / 255.0;
 
           for (b = 0; b < alpha; b++)
             irow[b] = mod_alpha * tmp_src[b];
@@ -177,7 +172,7 @@ get_premultiplied_double_row (PixelRegion *srcPR,
   for (b = 0; b < 2 * bytes; b++)
     row[b - 2 * bytes] = row[b % bytes];
 
-  for (b = 0; b < bytes * 2; b++)
+  for (b = 0; b < 2 * bytes; b++)
     row[b + w * bytes] = row[(w - 1) * bytes + b % bytes];
 }
 
@@ -191,12 +186,10 @@ expand_line (gdouble               *dest,
              GimpInterpolationType  interp)
 {
   const gdouble *s;
-  gdouble        ratio;
+  const gdouble  ratio = (gdouble) old_width / (gdouble) width;
   gint           x, b;
   gint           src_col;
   gdouble        frac;
-
-  ratio = old_width / (gdouble) width;
 
   /* we can overflow src's boundaries, so we expect our caller to have
      allocated extra space for us to do so safely (see scale_region ()) */
@@ -208,7 +201,7 @@ expand_line (gdouble               *dest,
     case GIMP_INTERPOLATION_CUBIC:
       for (x = 0; x < width; x++)
         {
-          src_col = ((int) (x * ratio + 2.0 - 0.5)) - 2;
+          src_col = ((gint) (x * ratio + 2.0 - 0.5)) - 2;
           /* +2, -2 is there because (int) rounds towards 0 and we need
              to round down */
           frac = (x * ratio - 0.5) - src_col;
@@ -226,7 +219,7 @@ expand_line (gdouble               *dest,
     case GIMP_INTERPOLATION_LINEAR:
       for (x = 0; x < width; x++)
         {
-          src_col = ((int) (x * ratio + 2.0 - 0.5)) - 2;
+          src_col = ((gint) (x * ratio + 2.0 - 0.5)) - 2;
           /* +2, -2 is there because (int) rounds towards 0 and we need
              to round down */
           frac = (x * ratio - 0.5) - src_col;
@@ -350,14 +343,12 @@ static inline void
 rotate_pointers (guchar  **p,
                  guint32   n)
 {
+  guchar  *tmp = p[0];
   guint32  i;
-  guchar  *tmp;
 
-  tmp = p[0];
   for (i = 0; i < n-1; i++)
-    {
-      p[i] = p[i+1];
-    }
+    p[i] = p[i+1];
+
   p[i] = tmp;
 }
 
@@ -468,9 +459,9 @@ scale_region (PixelRegion           *srcPR,
 
       if (height < orig_height)
         {
+          const gdouble inv_ratio = 1.0 / y_rat;
           gint          max;
           gdouble       frac;
-          const gdouble inv_ratio = 1.0 / y_rat;
 
           if (y == 0) /* load the first row if this is the first time through */
             get_scaled_row (&src[0], 0, width, srcPR, row,
@@ -544,7 +535,7 @@ scale_region (PixelRegion           *srcPR,
             case GIMP_INTERPOLATION_LINEAR:
               {
                 gdouble idy = (y * y_rat - 0.5) - new_y;
-                gdouble dy = 1.0 - idy;
+                gdouble dy  = 1.0 - idy;
 
                 for (x = 0; x < width * bytes; x++)
                   accum[x] = dy * src[1][x] + idy * src[2][x];
@@ -649,43 +640,34 @@ subsample_region (PixelRegion *srcPR,
                   PixelRegion *destPR,
                   gint         subsample)
 {
-  guchar  *src,  *s;
-  guchar  *dest, *d;
-  gdouble *row,  *r;
-  gint     destwidth;
-  gint     src_row, src_col;
-  gint     bytes, b;
-  gint     width, height;
-  gint     orig_width, orig_height;
-  gdouble  x_rat, y_rat;
-  gdouble  x_cum, y_cum;
-  gdouble  x_last, y_last;
-  gdouble *x_frac, y_frac, tot_frac;
-  gint     i, j;
-  gint     frac;
-  gint     advance_dest;
-
-  orig_width = srcPR->w / subsample;
-  orig_height = srcPR->h / subsample;
-  width = destPR->w;
-  height = destPR->h;
+  const gint     width       = destPR->w;
+  const gint     height      = destPR->h;
+  const gint     orig_width  = srcPR->w / subsample;
+  const gint     orig_height = srcPR->h / subsample;
+  const gdouble  x_rat       = (gdouble) orig_width / (gdouble) width;
+  const gdouble  y_rat       = (gdouble) orig_height / (gdouble) height;
+  const gint     bytes       = destPR->bytes;
+  const gint     destwidth   = destPR->rowstride;
+  guchar        *src,  *s;
+  guchar        *dest, *d;
+  gdouble       *row,  *r;
+  gint           src_row, src_col;
+  gdouble        x_cum, y_cum;
+  gdouble        x_last, y_last;
+  gdouble       *x_frac, y_frac, tot_frac;
+  gint           i, j;
+  gint           b;
+  gint           frac;
+  gint           advance_dest;
 
 #if 0
   g_printerr ("subsample_region: (%d x %d) -> (%d x %d)\n",
               orig_width, orig_height, width, height);
 #endif
 
-  /*  Some calculations...  */
-  bytes = destPR->bytes;
-  destwidth = destPR->rowstride;
-
   /*  the data pointers...  */
   src  = g_new (guchar, orig_width * bytes);
   dest = destPR->data;
-
-  /*  find the ratios of old x to new x and old y to new y  */
-  x_rat = (gdouble) orig_width / (gdouble) width;
-  y_rat = (gdouble) orig_height / (gdouble) height;
 
   /*  allocate an array to help with the calculations  */
   row    = g_new (gdouble, width * bytes);
@@ -708,6 +690,7 @@ subsample_region (PixelRegion *srcPR,
           src_col ++;
           x_frac[i] = src_col - x_last;
         }
+
       x_last += x_frac[i];
     }
 
@@ -893,11 +876,9 @@ lanczos_sum_mul (guchar        **src,
                  gint            byte,
                  gint            alpha)
 {
+  guchar *ptr = src[row] - LANCZOS_WIDTH * bytes;
   gdouble sum = 0;
   gint    k;
-  guchar *ptr;
-
-  ptr = src[row] - LANCZOS_WIDTH * bytes;
 
   for (k = 0 ; k < LANCZOS_WIDTH2; k++)
     sum += l[k] * ptr[(k+col) * bytes + byte] * ptr[(k+col) * bytes + alpha];
@@ -909,9 +890,7 @@ static gboolean
 inv_lin_trans (const gdouble *t,
                gdouble       *it)
 {
-  gdouble d;  /* Determinant */
-
-  d = (t[0] * t[4]) - (t[1] * t[3]);
+  gdouble d = (t[0] * t[4]) - (t[1] * t[3]);  /* determinant */
 
   if (fabs(d) < EPSILON )
     return FALSE;
@@ -929,12 +908,11 @@ inv_lin_trans (const gdouble *t,
 static gdouble *
 kernel_lanczos (void)
 {
-  gdouble *kernel ;
-  gdouble  x  = 0.0;
-  gdouble  dx = (gdouble) LANCZOS_WIDTH / (gdouble) (LANCZOS_SAMPLES - 1);
-  gint     i;
+  const gdouble dx = (gdouble) LANCZOS_WIDTH / (gdouble) (LANCZOS_SAMPLES - 1);
 
-  kernel = g_new (gdouble, LANCZOS_SAMPLES);
+  gdouble *kernel = g_new (gdouble, LANCZOS_SAMPLES);
+  gdouble  x      = 0.0;
+  gint     i;
 
   for (i = 0; i < LANCZOS_SAMPLES; i++)
     {
@@ -950,45 +928,33 @@ static void
 scale_region_lanczos (PixelRegion *srcPR,
                       PixelRegion *dstPR)
 {
-  gdouble     *kernel=NULL;             /* Lanczos kernel                    */
-  gdouble      lu[LANCZOS_WIDTH2],      /* Lanczos sample value              */
-               lv[LANCZOS_WIDTH2];      /* Lanczos sample value              */
-  gint         su, sv;                  /* Lanczos kernel position           */
-  gdouble      lusum, lvsum, weight;    /* Lanczos weighting vars            */
+  gdouble       *kernel  = NULL;        /* Lanczos kernel                    */
+  gdouble        lu[LANCZOS_WIDTH2],    /* Lanczos sample value              */
+                 lv[LANCZOS_WIDTH2];    /* Lanczos sample value              */
+  gdouble        lusum, lvsum, weight;  /* Lanczos weighting vars            */
 
-  gint         bytes, alpha, row;       /* Image properties                  */
+  gint           srcrow;                /* counter for read src rows         */
+  guchar        *src_buf = NULL;        /* Holds sliding window buffer       */
+  guchar        *src[LANCZOS_WIDTH2];   /* Array for sliding window pointers */
 
-  gint         src_width, src_height;   /* Source width height               */
-  gint         src_rowstride;           /* Source rowstride (= dest)         */
-  gint         srcrow;                  /* counter for read src rows         */
-  guchar      *src_buf=NULL;            /* Holds sliding window buffer       */
-  guchar      *src[LANCZOS_WIDTH2];     /* Array for sliding window pointers */
+  guchar        *dst_buf = NULL;        /* Pointers to image data            */
 
-  gint         dst_width, dst_height;   /* Destination width height          */
-  gint         dst_rowstride;           /* Destination rowstride             */
-  guchar      *dst_buf=NULL;            /* Pointers to image data            */
+  gint           x, y;                  /* Position in destination image     */
+  gint           i, j, byte;            /* loop vars to fill source window   */
 
-  gdouble      du ,dv;                  /* Pos in source image (double)      */
-  gint         u, v;                    /* Pos in source image (integer part)*/
-  gint         x, y;                    /* Position in destination image     */
-  gint         i, j, byte;              /* loop vars to fill source window   */
+  gdouble        trans[6], itrans[6];   /* Scale transformations             */
 
-  gdouble      sx,  sy;                 /* Scalefactor                       */
-  gdouble      trans[6], itrans[6];     /* Scale transformations             */
-  gdouble      aval, arecip;            /* Handle alpha values               */
-  gdouble      newval;                  /* New interpolated RGB value        */
+  const gint     dst_width     = dstPR->w;
+  const gint     dst_height    = dstPR->h;
+  const gint     bytes         = dstPR->bytes;
+  const gint     src_width     = srcPR->w;
+  const gint     src_height    = srcPR->h;
 
+  const gint     src_rowstride = (src_width + LANCZOS_WIDTH2) * bytes;
+  const gint     dst_rowstride = dst_width * bytes;
 
-  /* Initialize variables */
-  dst_width  = dstPR->w;
-  dst_height = dstPR->h;
-  bytes      = dstPR->bytes;
-  src_width  = srcPR->w;
-  src_height = srcPR->h;
-
-  /* Pure scaling */
-  sx = (gdouble) dst_width / (gdouble) src_width;
-  sy = (gdouble) dst_height / (gdouble) src_height;
+  const gdouble  sx            = (gdouble) dst_width / (gdouble) src_width;
+  const gdouble  sy            = (gdouble) dst_height / (gdouble) src_height;
 
   for (i = 0; i < 6; i++)
     trans[i] = 0.0;
@@ -1007,21 +973,19 @@ scale_region_lanczos (PixelRegion *srcPR,
 
   /*
      allocate buffer for width + 2 * LANCZOS_WIDTH
-     We need 2* LANCZOS_WIDTH lines for sliding window
+     We need 2 * LANCZOS_WIDTH lines for sliding window
      buffer with edge mirror
    */
-  src_rowstride = (src_width + LANCZOS_WIDTH2) * bytes;
   src_buf = g_new0 (guchar, LANCZOS_WIDTH2 * src_rowstride);
 
   /*
      fill src pointers with correct offset
      offset is needed for pixel_region_get_row
-  */
+   */
   for (i = 0; i < LANCZOS_WIDTH2; i++)
-    src[i]=src_buf + i * src_rowstride + LANCZOS_WIDTH * bytes;
+    src[i] = src_buf + i * src_rowstride + LANCZOS_WIDTH * bytes;
 
   /* allocate buffer for 1 destination row */
-  dst_rowstride = dst_width * bytes;
   dst_buf = g_new0 (guchar, dst_rowstride);
 
   /* fill buffer with first lines */
@@ -1039,8 +1003,13 @@ scale_region_lanczos (PixelRegion *srcPR,
 
       for (x = 0; x < dst_width; x++)
         {
+          gdouble  du ,dv;   /* position in source image */
+          gint     u, v;     /* position in source image */
+          gint     su, sv;   /* Lanczos kernel position  */
+
           du = itrans[0] * (gdouble) x + itrans[1] * (gdouble) y + itrans[2];
           dv = itrans[3] * (gdouble) x + itrans[4] * (gdouble) y + itrans[5];
+
           u = (gint) du;
           v = (gint) dv;
 
@@ -1051,6 +1020,8 @@ scale_region_lanczos (PixelRegion *srcPR,
                  {
                    for ( ; srcrow < v; )
                      {
+                       gint row;
+
                        srcrow++;
 
                        row = srcrow + LANCZOS_WIDTH;
@@ -1080,8 +1051,8 @@ scale_region_lanczos (PixelRegion *srcPR,
              }
 
            /* get weight for fractional error */
-           su = (gint) ((du-u) * LANCZOS_SPP);
-           sv = (gint) ((dv-v) * LANCZOS_SPP);
+           su = (gint) ((du - u) * LANCZOS_SPP);
+           sv = (gint) ((dv - v) * LANCZOS_SPP);
 
            for (lusum = lvsum = i = 0, j = LANCZOS_WIDTH - 1;
                 j >= -LANCZOS_WIDTH;
@@ -1095,7 +1066,11 @@ scale_region_lanczos (PixelRegion *srcPR,
 
            if (pixel_region_has_alpha (srcPR))
              {
-               alpha = bytes - 1;
+               const gint alpha = bytes - 1;
+               gint       byte;
+               gint       aval;
+               gint       arecip;
+               gint       row;
 
                for (aval = 0, row = 0; row < LANCZOS_WIDTH2; row++)
                  aval += lv[row] * lanczos_sum (src, lu, row, u, bytes, alpha);
@@ -1121,6 +1096,8 @@ scale_region_lanczos (PixelRegion *srcPR,
 
                for (byte = 0; byte < alpha; byte++)
                  {
+                   gdouble newval;  /* new interpolated RGB value */
+
                    for (newval = 0, row = 0; row < LANCZOS_WIDTH2; row ++)
                      newval += lv[row] * lanczos_sum_mul (src, lu,
                                                           row, u, bytes,
@@ -1134,6 +1111,9 @@ scale_region_lanczos (PixelRegion *srcPR,
              {
                for (byte = 0; byte < bytes; byte++)
                  {
+                   gdouble newval;  /* new interpolated RGB value */
+                   gint    row;
+
                    for (newval = 0, row = 0 ; row < LANCZOS_WIDTH2 ; row++ )
                      newval += lv[row] * lanczos_sum (src, lu,
                                                       row, u, bytes, byte);
