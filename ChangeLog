@@ -1,5 +1,10 @@
 2006-04-27  Michael Natterer  <mitch@gimp.org>
 
+	* configure.in: use G_DISABLE_DEPRECATED also when building
+	against glib 2.10
+
+2006-04-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/menus/menus.c: namespace cleanup: renamed
 	menu_can_change_accels() to menus_can_change_accels().
 
