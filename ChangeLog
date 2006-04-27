@@ -1,5 +1,54 @@
 2006-04-27  Sven Neumann  <sven@gimp.org>
 
+	* libgimpcolor/gimprgb.[ch]: added "has_alpha" to GimpParamSpecRGB.
+	Made the GimpParamSpecRGB struct public. When validating a color,
+	only look at the alpha channel if has_alpha is set.
+
+	* libgimpconfig/gimpconfig-params.h: added "has_alpha" to
+	GIMP_CONFIG_INSTALL_PROP_RGB macro definition.
+
+	* libgimpconfig/gimpconfig-serialize.c: serialize color values as
+	"(rgb r g b)" if the param-spec indicates that the alpha channel
+	is meaningless.
+
+	* app/config/gimpconfig-dump.c: take "has_alpha" into account when
+	documenting color properties.
+
+	* app/core/gimpcontext.c
+	* app/core/gimpgrid.c
+	* app/display/gimpdisplayoptions.c
+	* app/text/gimptext.c
+	* app/widgets/gimpaction.c
+	* app/widgets/gimpcolorbar.c
+	* libgimpwidgets/gimpcolorarea.c
+	* libgimpwidgets/gimpcolorbutton.c: specify whether color properties
+	have an alpha channel.
+
+	* tools/pdbgen/app.pl: handle "has_alpha" for color paramaters.
+
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/context.pdb
+	* tools/pdbgen/pdb/grid.pdb
+	* tools/pdbgen/pdb/image.pdb: set the "has_alpha" flag where
+	appropriate.
+
+	* app/pdb/gimp-pdb-compat.c (gimp_pdb_compat_param_spec): set
+	"has_alpha" to TRUE for GIMP_PDB_COLOR.
+
+	* app/pdb/channel_cmds.c
+	* app/pdb/context_cmds.c
+	* app/pdb/gradient_cmds.c
+	* app/pdb/grid_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/palette_cmds.c
+	* app/pdb/palettes_cmds.c
+	* app/pdb/selection_tools_cmds.c: regenerated.
+
+	* app/config/gimpdisplayconfig.c (gimp_display_config_class_init):
+	removed unused code.
+
+2006-04-27  Sven Neumann  <sven@gimp.org>
+
 	* libgimpcolor/gimprgb.h: indentation.
 
 2006-04-27  Michael Natterer  <mitch@gimp.org>

@@ -331,8 +331,6 @@ gimp_rgb_composite (GimpRGB              *color1,
                     const GimpRGB        *color2,
                     GimpRGBCompositeMode  mode)
 {
-  gdouble factor;
-
   g_return_if_fail (color1 != NULL);
   g_return_if_fail (color2 != NULL);
 
@@ -349,7 +347,8 @@ gimp_rgb_composite (GimpRGB              *color1,
         }
       else
         {
-          factor = color1->a * (1.0 - color2->a);
+          gdouble factor = color1->a * (1.0 - color2->a);
+
           color1->r = color1->r * factor + color2->r * color2->a;
           color1->g = color1->g * factor + color2->g * color2->a;
           color1->b = color1->b * factor + color2->b * color2->a;
@@ -361,7 +360,8 @@ gimp_rgb_composite (GimpRGB              *color1,
       /*  put color2 below color1  */
       if (color1->a < 1.0)
         {
-          factor = color2->a * (1.0 - color1->a);
+          gdouble factor = color2->a * (1.0 - color1->a);
+
           color1->r = color2->r * factor + color1->r * color1->a;
           color1->g = color2->g * factor + color1->g * color1->a;
           color1->b = color2->b * factor + color1->b * color1->a;
@@ -497,8 +497,6 @@ gimp_rgba_distance (const GimpRGB *rgba1,
  * GIMP_TYPE_PARAM_RGB
  */
 
-#define GIMP_PARAM_SPEC_RGB(pspec) (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_RGB, GimpParamSpecRGB))
-
 static void       gimp_param_rgb_class_init  (GParamSpecClass *class);
 static void       gimp_param_rgb_init        (GParamSpec      *pspec);
 static void       gimp_param_rgb_set_default (GParamSpec      *pspec,
@@ -508,15 +506,6 @@ static gboolean   gimp_param_rgb_validate    (GParamSpec      *pspec,
 static gint       gimp_param_rgb_values_cmp  (GParamSpec      *pspec,
                                               const GValue    *value1,
                                               const GValue    *value2);
-
-typedef struct _GimpParamSpecRGB GimpParamSpecRGB;
-
-struct _GimpParamSpecRGB
-{
-  GParamSpecBoxed  parent_instance;
-
-  GimpRGB          default_value;
-};
 
 /**
  * gimp_param_rgb_get_type:
@@ -583,22 +572,18 @@ static gboolean
 gimp_param_rgb_validate (GParamSpec *pspec,
                          GValue     *value)
 {
-  GimpRGB *rgb;
-
-  rgb = value->data[0].v_pointer;
+  GimpRGB *rgb = value->data[0].v_pointer;
 
   if (rgb)
     {
-      GimpRGB oval;
-
-      oval = *rgb;
+      GimpRGB oval = *rgb;
 
       gimp_rgb_clamp (rgb);
 
       return (oval.r != rgb->r ||
               oval.g != rgb->g ||
               oval.b != rgb->b ||
-              oval.a != rgb->a);
+              (GIMP_PARAM_SPEC_RGB (pspec)->has_alpha && oval.a != rgb->a));
     }
 
   return FALSE;
@@ -609,32 +594,47 @@ gimp_param_rgb_values_cmp (GParamSpec   *pspec,
                            const GValue *value1,
                            const GValue *value2)
 {
-  GimpRGB *rgb1;
-  GimpRGB *rgb2;
-
-  rgb1 = value1->data[0].v_pointer;
-  rgb2 = value2->data[0].v_pointer;
+  GimpRGB *rgb1 = value1->data[0].v_pointer;
+  GimpRGB *rgb2 = value2->data[0].v_pointer;
 
   /*  try to return at least *something*, it's useless anyway...  */
 
   if (! rgb1)
-    return rgb2 != NULL ? -1 : 0;
+    {
+      return rgb2 != NULL ? -1 : 0;
+    }
   else if (! rgb2)
-    return rgb1 != NULL;
+    {
+      return rgb1 != NULL;
+    }
   else
     {
       guint32 int1, int2;
 
-      gimp_rgba_get_uchar (rgb1,
-                           ((guchar *) &int1) + 0,
-                           ((guchar *) &int1) + 1,
-                           ((guchar *) &int1) + 2,
-                           ((guchar *) &int1) + 3);
-      gimp_rgba_get_uchar (rgb2,
-                           ((guchar *) &int2) + 0,
-                           ((guchar *) &int2) + 1,
-                           ((guchar *) &int2) + 2,
-                           ((guchar *) &int2) + 3);
+      if (GIMP_PARAM_SPEC_RGB (pspec)->has_alpha)
+        {
+          gimp_rgba_get_uchar (rgb1,
+                               ((guchar *) &int1) + 0,
+                               ((guchar *) &int1) + 1,
+                               ((guchar *) &int1) + 2,
+                               ((guchar *) &int1) + 3);
+          gimp_rgba_get_uchar (rgb2,
+                               ((guchar *) &int2) + 0,
+                               ((guchar *) &int2) + 1,
+                               ((guchar *) &int2) + 2,
+                               ((guchar *) &int2) + 3);
+        }
+      else
+        {
+          gimp_rgb_get_uchar (rgb1,
+                              ((guchar *) &int1) + 0,
+                              ((guchar *) &int1) + 1,
+                              ((guchar *) &int1) + 2);
+          gimp_rgb_get_uchar (rgb2,
+                              ((guchar *) &int2) + 0,
+                              ((guchar *) &int2) + 1,
+                              ((guchar *) &int2) + 2);
+        }
 
       return int1 - int2;
     }
@@ -645,6 +645,7 @@ gimp_param_rgb_values_cmp (GParamSpec   *pspec,
  * @name:          Canonical name of the param
  * @nick:          Nickname of the param
  * @blurb:         Brief desciption of param.
+ * @has_alpha:     %TRUE if the alpha channel has relevance.
  * @default_value: Value to use if none is assigned.
  * @flags:         a combination of #GParamFlags
  *
@@ -659,6 +660,7 @@ GParamSpec *
 gimp_param_spec_rgb (const gchar   *name,
                      const gchar   *nick,
                      const gchar   *blurb,
+                     gboolean       has_alpha,
                      const GimpRGB *default_value,
                      GParamFlags    flags)
 {
@@ -666,6 +668,8 @@ gimp_param_spec_rgb (const gchar   *name,
 
   cspec = g_param_spec_internal (GIMP_TYPE_PARAM_RGB,
                                  name, nick, blurb, flags);
+
+  cspec->has_alpha = has_alpha;
 
   if (default_value)
     cspec->default_value = *default_value;

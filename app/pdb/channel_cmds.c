@@ -290,6 +290,7 @@ channel_get_color_invoker (GimpProcedure     *procedure,
   if (success)
     {
       gimp_channel_get_color (channel, &color);
+      gimp_rgb_set_alpha (&color, 1.0);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);
@@ -378,6 +379,7 @@ register_channel_procs (GimpPDB *pdb)
                                gimp_param_spec_rgb ("color",
                                                     "color",
                                                     "The channel compositing color",
+                                                    FALSE,
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -641,6 +643,7 @@ register_channel_procs (GimpPDB *pdb)
                                    gimp_param_spec_rgb ("color",
                                                         "color",
                                                         "The channel compositing color",
+                                                        FALSE,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -669,6 +672,7 @@ register_channel_procs (GimpPDB *pdb)
                                gimp_param_spec_rgb ("color",
                                                     "color",
                                                     "The new channel compositing color",
+                                                    FALSE,
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

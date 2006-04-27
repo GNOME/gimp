@@ -36,6 +36,11 @@
 #include "gimpconfig-utils.h"
 
 
+static gboolean  gimp_config_serialize_rgb (const GValue *value,
+                                            GString      *str,
+                                            gboolean      has_alpha);
+
+
 /**
  * gimp_config_serialize_properties:
  * @config: a #GimpConfig.
@@ -251,11 +256,20 @@ gimp_config_serialize_property (GimpConfig       *config,
                 gimp_config_writer_revert (writer);
             }
         }
-      else if (! G_VALUE_HOLDS_OBJECT (&value))
+      else
         {
           GString *str = g_string_new (NULL);
 
-          success = gimp_config_serialize_value (&value, str, TRUE);
+          if (GIMP_VALUE_HOLDS_RGB (&value))
+            {
+              gboolean has_alpha = GIMP_PARAM_SPEC_RGB (param_spec)->has_alpha;
+
+              success = gimp_config_serialize_rgb (&value, str, has_alpha);
+            }
+          else
+            {
+              success = gimp_config_serialize_value (&value, str, TRUE);
+            }
 
           if (success)
             {
@@ -366,19 +380,7 @@ gimp_config_serialize_value (const GValue *value,
 
   if (GIMP_VALUE_HOLDS_RGB (value))
     {
-      GimpRGB *rgb;
-      gchar    buf[4][G_ASCII_DTOSTR_BUF_SIZE];
-
-      rgb = g_value_get_boxed (value);
-
-      g_ascii_formatd (buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->r);
-      g_ascii_formatd (buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->g);
-      g_ascii_formatd (buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->b);
-      g_ascii_formatd (buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->a);
-
-      g_string_append_printf (str, "(color-rgba %s %s %s %s)",
-                              buf[0], buf[1], buf[2], buf[3]);
-      return TRUE;
+      return gimp_config_serialize_rgb (value, str, TRUE);
     }
 
   if (GIMP_VALUE_HOLDS_MATRIX2 (value))
@@ -443,4 +445,34 @@ gimp_config_serialize_value (const GValue *value,
     }
 
   return FALSE;
+}
+
+static gboolean
+gimp_config_serialize_rgb (const GValue *value,
+                           GString      *str,
+                           gboolean      has_alpha)
+{
+  GimpRGB *rgb;
+  gchar    buf[4][G_ASCII_DTOSTR_BUF_SIZE];
+
+  rgb = g_value_get_boxed (value);
+
+  g_ascii_formatd (buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->r);
+  g_ascii_formatd (buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->g);
+  g_ascii_formatd (buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->b);
+
+  if (has_alpha)
+    {
+      g_ascii_formatd (buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->a);
+
+      g_string_append_printf (str, "(color-rgba %s %s %s %s)",
+                              buf[0], buf[1], buf[2], buf[3]);
+    }
+  else
+    {
+      g_string_append_printf (str, "(color-rgb %s %s %s)",
+                              buf[0], buf[1], buf[2]);
+    }
+
+  return TRUE;
 }

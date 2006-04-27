@@ -439,11 +439,13 @@ gimp_param_spec_unit ("$name",
 CODE
     }
     elsif ($pdbtype eq 'color') {
+	$has_alpha = exists $arg->{has_alpha} ? TRUE : FALSE;
 	$default = exists $arg->{default} ? $arg->{default} : NULL;
 	$pspec = <<CODE;
 gimp_param_spec_rgb ("$name",
                      "$nick",
                      "$blurb",
+                     $has_alpha,
                      $default,
                      $flags)
 CODE

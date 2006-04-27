@@ -1610,6 +1610,7 @@ register_gradient_procs (GimpPDB *pdb)
                                    gimp_param_spec_rgb ("color",
                                                         "color",
                                                         "The return color",
+                                                        FALSE,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -1651,6 +1652,7 @@ register_gradient_procs (GimpPDB *pdb)
                                gimp_param_spec_rgb ("color",
                                                     "color",
                                                     "The color to set",
+                                                    FALSE,
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1692,6 +1694,7 @@ register_gradient_procs (GimpPDB *pdb)
                                    gimp_param_spec_rgb ("color",
                                                         "color",
                                                         "The return color",
+                                                        FALSE,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -1733,6 +1736,7 @@ register_gradient_procs (GimpPDB *pdb)
                                gimp_param_spec_rgb ("color",
                                                     "color",
                                                     "The color to set",
+                                                    FALSE,
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,

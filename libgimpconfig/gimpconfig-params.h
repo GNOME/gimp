@@ -65,10 +65,10 @@ G_BEGIN_DECLS
                                    default,\
                                    flags | GIMP_CONFIG_PARAM_FLAGS))
 
-#define GIMP_CONFIG_INSTALL_PROP_RGB(class, id, name, blurb, default, flags)\
+#define GIMP_CONFIG_INSTALL_PROP_RGB(class, id, name, blurb, has_alpha, default, flags) \
   g_object_class_install_property (class, id,\
                                    gimp_param_spec_rgb (name, NULL, blurb,\
-                                   default,\
+                                   has_alpha, default, \
                                    flags | GIMP_CONFIG_PARAM_FLAGS))
 
 #define GIMP_CONFIG_INSTALL_PROP_DOUBLE(class, id, name, blurb, min, max, default, flags)\

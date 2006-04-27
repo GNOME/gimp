@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * GimpConfig object property dumper.
- * Copyright (C) 2001-2003  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2001-2006  Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -322,11 +322,8 @@ static const gchar display_format_description[] =
 static gchar *
 dump_describe_param (GParamSpec *param_spec)
 {
-  GType        type;
-  const gchar *blurb;
+  const gchar *blurb  = g_param_spec_get_blurb (param_spec);
   const gchar *values = NULL;
-
-  blurb = g_param_spec_get_blurb (param_spec);
 
   if (!blurb)
     {
@@ -336,15 +333,18 @@ dump_describe_param (GParamSpec *param_spec)
                                param_spec->name);
     }
 
-  type = param_spec->value_type;
-
-  if (g_type_is_a (type, GIMP_TYPE_RGB))
+  if (GIMP_IS_PARAM_SPEC_RGB (param_spec))
     {
-      values =
-        "The color is specified in the form (color-rgba red green blue alpha) "
-        "with channel values as floats between 0.0 and 1.0.";
+      if (GIMP_PARAM_SPEC_RGB (param_spec)->has_alpha)
+        values =
+          "The color is specified in the form (color-rgba red green blue "
+          "alpha) with channel values as floats between 0.0 and 1.0.";
+      else
+        values =
+          "The color is specified in the form (color-rgb red green blue) "
+          "with channel values as floats between 0.0 and 1.0.";
     }
-  else if (g_type_is_a (type, GIMP_TYPE_MEMSIZE))
+  else if (GIMP_IS_PARAM_SPEC_MEMSIZE (param_spec))
     {
       values =
         "The integer size can contain a suffix of 'B', 'K', 'M' or 'G' which "
@@ -352,7 +352,7 @@ dump_describe_param (GParamSpec *param_spec)
         "megabytes or gigabytes. If no suffix is specified the size defaults "
         "to being specified in kilobytes.";
     }
-  else if (g_type_is_a (type, GIMP_TYPE_CONFIG_PATH))
+  else if (GIMP_IS_PARAM_SPEC_CONFIG_PATH (param_spec))
     {
       switch (gimp_param_spec_config_path_type (param_spec))
         {
@@ -395,19 +395,19 @@ dump_describe_param (GParamSpec *param_spec)
           break;
         }
     }
-  else if (g_type_is_a (type, GIMP_TYPE_UNIT))
+  else if (GIMP_IS_PARAM_SPEC_UNIT (param_spec))
     {
       values =
         "The unit can be one inches, millimeters, points or picas plus "
         "those in your user units database.";
     }
-  else if (g_type_is_a (type, GIMP_TYPE_CONFIG))
+  else if (g_type_is_a (param_spec->value_type, GIMP_TYPE_CONFIG))
     {
       values = "This is a parameter list.";
     }
   else
     {
-      switch (G_TYPE_FUNDAMENTAL (type))
+      switch (G_TYPE_FUNDAMENTAL (param_spec->value_type))
         {
         case G_TYPE_BOOLEAN:
           values = "Possible values are yes and no.";
@@ -442,7 +442,7 @@ dump_describe_param (GParamSpec *param_spec)
             GString    *str;
             gint        i;
 
-            enum_class = g_type_class_peek (type);
+            enum_class = g_type_class_peek (param_spec->value_type);
 
             str = g_string_new (blurb);
 
@@ -477,7 +477,8 @@ dump_describe_param (GParamSpec *param_spec)
     }
 
   if (!values)
-    g_warning ("FIXME: Can't tell anything about a %s.", g_type_name (type));
+    g_warning ("FIXME: Can't tell anything about a %s.",
+               g_type_name (param_spec->value_type));
 
   return g_strdup_printf ("%s  %s", blurb, values);
 }

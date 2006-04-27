@@ -306,6 +306,7 @@ HELP
 	code => <<'CODE'
 {
   gimp_channel_get_color (channel, &color);
+  gimp_rgb_set_alpha (&color, 1.0);
 }
 CODE
     );

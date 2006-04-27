@@ -304,6 +304,7 @@ register_palettes_procs (GimpPDB *pdb)
                                    gimp_param_spec_rgb ("color",
                                                         "color",
                                                         "The color requested",
+                                                        FALSE,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

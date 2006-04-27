@@ -178,7 +178,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'fgcolor', type => 'color', void_ret => 1,
+        { name => 'fgcolor', type => 'color', has_alpha => 1, void_ret => 1,
           desc => "The image's grid foreground color" }
     );
 
@@ -208,7 +208,7 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
-        { name => 'fgcolor', type => 'color',
+        { name => 'fgcolor', type => 'color', has_alpha => 1,
           desc => "The new foreground color" }
     );
 
@@ -241,7 +241,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'bgcolor', type => 'color', void_ret => 1,
+        { name => 'bgcolor', type => 'color', has_alpha => 1, void_ret => 1,
           desc => "The image's grid background color" }
     );
 
@@ -271,7 +271,7 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
-        { name => 'bgcolor', type => 'color',
+        { name => 'bgcolor', type => 'color', has_alpha => 1,
           desc => "The new background color" }
     );
 

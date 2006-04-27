@@ -46,12 +46,25 @@ void    gimp_value_set_rgb            (GValue        *value,
 
 #define GIMP_TYPE_PARAM_RGB           (gimp_param_rgb_get_type ())
 #define GIMP_IS_PARAM_SPEC_RGB(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_RGB))
+#define GIMP_PARAM_SPEC_RGB(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_RGB, GimpParamSpecRGB))
+
+typedef struct _GimpParamSpecRGB GimpParamSpecRGB;
+
+struct _GimpParamSpecRGB
+{
+  GParamSpecBoxed  parent_instance;
+
+  gboolean         has_alpha;
+  GimpRGB          default_value;
+};
+
 
 GType        gimp_param_rgb_get_type  (void) G_GNUC_CONST;
 
 GParamSpec * gimp_param_spec_rgb      (const gchar    *name,
                                        const gchar    *nick,
                                        const gchar    *blurb,
+                                       gboolean        has_alpha,
                                        const GimpRGB  *default_value,
                                        GParamFlags     flags);
 

@@ -135,7 +135,7 @@ gimp_display_options_class_init (GimpDisplayOptionsClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_PADDING_COLOR,
                                 "padding-color", CANVAS_PADDING_COLOR_BLURB,
-                                &white,
+                                FALSE, &white,
                                 GIMP_PARAM_STATIC_STRINGS);
 }
 
@@ -193,7 +193,7 @@ gimp_display_options_fullscreen_class_init (GimpDisplayOptionsFullscreenClass *k
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_PADDING_COLOR,
                                 "padding-color", CANVAS_PADDING_COLOR_BLURB,
-                                &black,
+                                FALSE, &black,
                                 GIMP_PARAM_STATIC_STRINGS);
 }
 

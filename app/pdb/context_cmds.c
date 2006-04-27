@@ -131,6 +131,7 @@ context_get_foreground_invoker (GimpProcedure     *procedure,
   GimpRGB foreground = { 0.0, 0.0, 0.0, 1.0 };
 
   gimp_context_get_foreground (context, &foreground);
+  gimp_rgb_set_alpha (&foreground, 1.0);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE);
   gimp_value_set_rgb (&return_vals->values[1], &foreground);
@@ -170,6 +171,7 @@ context_get_background_invoker (GimpProcedure     *procedure,
   GimpRGB background = { 0.0, 0.0, 0.0, 1.0 };
 
   gimp_context_get_background (context, &background);
+  gimp_rgb_set_alpha (&background, 1.0);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE);
   gimp_value_set_rgb (&return_vals->values[1], &background);
@@ -656,6 +658,7 @@ register_context_procs (GimpPDB *pdb)
                                    gimp_param_spec_rgb ("foreground",
                                                         "foreground",
                                                         "The foreground color",
+                                                        FALSE,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -678,6 +681,7 @@ register_context_procs (GimpPDB *pdb)
                                gimp_param_spec_rgb ("foreground",
                                                     "foreground",
                                                     "The foreground color",
+                                                    FALSE,
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -700,6 +704,7 @@ register_context_procs (GimpPDB *pdb)
                                    gimp_param_spec_rgb ("background",
                                                         "background",
                                                         "The background color",
+                                                        FALSE,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -722,6 +727,7 @@ register_context_procs (GimpPDB *pdb)
                                gimp_param_spec_rgb ("background",
                                                     "background",
                                                     "The background color",
+                                                    FALSE,
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

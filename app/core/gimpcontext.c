@@ -580,13 +580,13 @@ gimp_context_class_init (GimpContextClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_RGB (object_class, GIMP_CONTEXT_PROP_FOREGROUND,
                                 gimp_context_prop_names[GIMP_CONTEXT_PROP_FOREGROUND],
-                                NULL,
+                                FALSE, NULL,
                                 &black,
                                 GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_RGB (object_class, GIMP_CONTEXT_PROP_BACKGROUND,
                                 gimp_context_prop_names[GIMP_CONTEXT_PROP_BACKGROUND],
-                                NULL,
+                                FALSE, NULL,
                                 &white,
                                 GIMP_PARAM_STATIC_STRINGS);
 

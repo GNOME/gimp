@@ -89,13 +89,13 @@ gimp_grid_class_init (GimpGridClass *klass)
   GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_FGCOLOR,
                                 "fgcolor",
                                 N_("The foreground color of the grid."),
-                                &black,
+                                TRUE, &black,
                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_BGCOLOR,
                                 "bgcolor",
                                 N_("The background color of the grid; "
                                    "only used in double dashed line style."),
-                                &white,
+                                TRUE, &white,
                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_XSPACING,
                                    "xspacing",

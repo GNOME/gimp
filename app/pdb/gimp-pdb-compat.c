@@ -104,7 +104,7 @@ gimp_pdb_compat_param_spec (Gimp           *gimp,
 
     case GIMP_PDB_COLOR:
       pspec = gimp_param_spec_rgb (name, name, desc,
-                                   NULL,
+                                   TRUE, NULL,
                                    G_PARAM_READWRITE);
       break;
 

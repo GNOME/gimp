@@ -574,7 +574,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'color', type => 'color', void_ret => 1,
+	{ name => 'color', type => 'color', has_alpha => 1, void_ret => 1,
 	  desc => 'The return color' }
     );
 

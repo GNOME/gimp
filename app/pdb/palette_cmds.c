@@ -842,6 +842,7 @@ register_palette_procs (GimpPDB *pdb)
                                gimp_param_spec_rgb ("color",
                                                     "color",
                                                     "The new entry's color color",
+                                                    FALSE,
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -912,6 +913,7 @@ register_palette_procs (GimpPDB *pdb)
                                    gimp_param_spec_rgb ("color",
                                                         "color",
                                                         "The color requested",
+                                                        FALSE,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -947,6 +949,7 @@ register_palette_procs (GimpPDB *pdb)
                                gimp_param_spec_rgb ("color",
                                                     "color",
                                                     "The new color",
+                                                    FALSE,
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

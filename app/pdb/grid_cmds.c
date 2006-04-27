@@ -519,6 +519,7 @@ register_grid_procs (GimpPDB *pdb)
                                    gimp_param_spec_rgb ("fgcolor",
                                                         "fgcolor",
                                                         "The image's grid foreground color",
+                                                        TRUE,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -547,6 +548,7 @@ register_grid_procs (GimpPDB *pdb)
                                gimp_param_spec_rgb ("fgcolor",
                                                     "fgcolor",
                                                     "The new foreground color",
+                                                    TRUE,
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -575,6 +577,7 @@ register_grid_procs (GimpPDB *pdb)
                                    gimp_param_spec_rgb ("bgcolor",
                                                         "bgcolor",
                                                         "The image's grid background color",
+                                                        TRUE,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -603,6 +606,7 @@ register_grid_procs (GimpPDB *pdb)
                                gimp_param_spec_rgb ("bgcolor",
                                                     "bgcolor",
                                                     "The new background color",
+                                                    TRUE,
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

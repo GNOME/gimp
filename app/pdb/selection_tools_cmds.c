@@ -280,6 +280,7 @@ register_selection_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_rgb ("color",
                                                     "color",
                                                     "The color to select",
+                                                    FALSE,
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,

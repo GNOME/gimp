@@ -139,7 +139,7 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
    */
   g_object_class_install_property (object_class, PROP_COLOR,
                                    gimp_param_spec_rgb ("color", NULL, NULL,
-                                                        &color,
+                                                        TRUE, &color,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
   /**

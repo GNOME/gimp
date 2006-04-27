@@ -152,6 +152,7 @@ HELP
 	code => <<'CODE'
 {
   gimp_context_get_foreground (context, &foreground);
+  gimp_rgb_set_alpha (&foreground, 1.0);
 }
 CODE
     );
@@ -203,6 +204,7 @@ HELP
 	code => <<'CODE'
 {
   gimp_context_get_background (context, &background);
+  gimp_rgb_set_alpha (&background, 1.0);
 }
 CODE
     );

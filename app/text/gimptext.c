@@ -156,7 +156,7 @@ gimp_text_class_init (GimpTextClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_COLOR,
                                 "color", NULL,
-                                &black,
+                                FALSE, &black,
                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_OUTLINE,
                                 "outline", NULL,
