@@ -1,5 +1,17 @@
 2006-04-27  Sven Neumann  <sven@gimp.org>
 
+	* libgimpcolor/gimprgb.[ch]: hide the GimpParamSpecRGB struct
+	again.  Added getter for the has_alpha field.
+
+	* libgimpcolor/gimpcolor.def: updated.
+
+	* app/config/gimpconfig-dump.c
+	* libgimpconfig/gimpconfig-serialize.c: use
+	gimp_param_spec_rgb_has_alpha() instead of accessing the
+	GimpParamSpecRGB struct directly.
+
+2006-04-27  Sven Neumann  <sven@gimp.org>
+
 	* libgimpcolor/gimprgb.[ch]: added "has_alpha" to GimpParamSpecRGB.
 	Made the GimpParamSpecRGB struct public. When validating a color,
 	only look at the alpha channel if has_alpha is set.

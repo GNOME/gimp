@@ -262,7 +262,7 @@ gimp_config_serialize_property (GimpConfig       *config,
 
           if (GIMP_VALUE_HOLDS_RGB (&value))
             {
-              gboolean has_alpha = GIMP_PARAM_SPEC_RGB (param_spec)->has_alpha;
+              gboolean has_alpha = gimp_param_spec_rgb_has_alpha (param_spec);
 
               success = gimp_config_serialize_rgb (&value, str, has_alpha);
             }

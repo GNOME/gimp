@@ -497,6 +497,18 @@ gimp_rgba_distance (const GimpRGB *rgba1,
  * GIMP_TYPE_PARAM_RGB
  */
 
+#define GIMP_PARAM_SPEC_RGB(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_RGB, GimpParamSpecRGB))
+
+typedef struct _GimpParamSpecRGB GimpParamSpecRGB;
+
+struct _GimpParamSpecRGB
+{
+  GParamSpecBoxed  parent_instance;
+
+  gboolean         has_alpha;
+  GimpRGB          default_value;
+};
+
 static void       gimp_param_rgb_class_init  (GParamSpecClass *class);
 static void       gimp_param_rgb_init        (GParamSpec      *pspec);
 static void       gimp_param_rgb_set_default (GParamSpec      *pspec,
@@ -675,4 +687,20 @@ gimp_param_spec_rgb (const gchar   *name,
     cspec->default_value = *default_value;
 
   return G_PARAM_SPEC (cspec);
+}
+
+/**
+ * gimp_param_spec_rgb:
+ * @pspec: a #GParamSpec to hold an #GimpRGB value.
+ *
+ * Returns: %TRUE if the alpha channel is relevant.
+ *
+ * Since: GIMP 2.4
+ **/
+gboolean
+gimp_param_spec_rgb_has_alpha (GParamSpec *pspec)
+{
+  g_return_val_if_fail (GIMP_IS_PARAM_SPEC_RGB (pspec), FALSE);
+
+  return GIMP_PARAM_SPEC_RGB (pspec)->has_alpha;
 }

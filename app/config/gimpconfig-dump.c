@@ -21,8 +21,9 @@
 
 #include "config.h"
 
-#include "stdlib.h"
-#include "string.h"
+#include <stdlib.h>
+#include <string.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -335,14 +336,14 @@ dump_describe_param (GParamSpec *param_spec)
 
   if (GIMP_IS_PARAM_SPEC_RGB (param_spec))
     {
-      if (GIMP_PARAM_SPEC_RGB (param_spec)->has_alpha)
+      if (gimp_param_spec_rgb_has_alpha (param_spec))
         values =
           "The color is specified in the form (color-rgba red green blue "
-          "alpha) with channel values as floats between 0.0 and 1.0.";
+          "alpha) with channel values as floats in the range of 0.0 to 1.0.";
       else
         values =
           "The color is specified in the form (color-rgb red green blue) "
-          "with channel values as floats between 0.0 and 1.0.";
+          "with channel values as floats in the range of 0.0 to 1.0.";
     }
   else if (GIMP_IS_PARAM_SPEC_MEMSIZE (param_spec))
     {
