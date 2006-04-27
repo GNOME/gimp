@@ -33,6 +33,9 @@
 #include "plug-in-locale-domain.h"
 
 
+#define STD_PLUG_INS_LOCALE_DOMAIN GETTEXT_PACKAGE "-std-plug-ins"
+
+
 typedef struct _PlugInLocaleDomain PlugInLocaleDomain;
 
 struct _PlugInLocaleDomain
@@ -123,11 +126,57 @@ plug_in_locale_domain (Gimp         *gimp,
         }
     }
 
-  return plug_in_standard_locale_domain ();
+  return STD_PLUG_INS_LOCALE_DOMAIN;
 }
 
-const gchar *
-plug_in_standard_locale_domain (void)
+gint
+plug_in_locale_domains (Gimp    *gimp,
+                        gchar ***locale_domains,
+                        gchar ***locale_paths)
 {
-  return GETTEXT_PACKAGE "-std-plug-ins";
+  GSList *list;
+  GSList *unique = NULL;
+  gint    n_domains;
+  gint    i;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), 0);
+  g_return_val_if_fail (locale_domains != NULL, 0);
+  g_return_val_if_fail (locale_paths != NULL, 0);
+
+  for (list = gimp->plug_in_locale_domains; list; list = list->next)
+    {
+      PlugInLocaleDomain *domain = list->data;
+      GSList             *tmp;
+
+      for (tmp = unique; tmp; tmp = tmp->next)
+        if (! strcmp (domain->domain_name, (const gchar *) tmp->data))
+          break;
+
+      if (! tmp)
+        unique = g_slist_prepend (unique, domain);
+    }
+
+  unique = g_slist_reverse (unique);
+
+  n_domains = g_slist_length (unique) + 1;
+
+  *locale_domains = g_new0 (gchar *, n_domains);
+  *locale_paths   = g_new0 (gchar *, n_domains);
+
+  (*locale_domains)[0] = g_strdup (STD_PLUG_INS_LOCALE_DOMAIN);
+  (*locale_paths)[0]   = g_strdup (gimp_locale_directory ());
+
+  for (list = unique, i = 1; list; list = list->next, i++)
+    {
+      PlugInLocaleDomain *domain = list->data;
+
+      (*locale_domains)[i] = g_strdup (domain->domain_name);
+      (*locale_paths)[i]   = (domain->domain_path ?
+                              g_strdup (domain->domain_path) :
+                              g_strdup (gimp_locale_directory ()));
+    }
+
+  g_slist_free (unique);
+
+  return n_domains;
 }

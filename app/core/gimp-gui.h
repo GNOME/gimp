@@ -55,9 +55,6 @@ struct _GimpGui
                                           GimpImage           *old_image,
                                           GimpImage           *new_image);
 
-  void           (* menus_init)          (Gimp                *gimp,
-                                          GSList              *plug_in_defs,
-                                          const gchar         *std_domain);
   void           (* menus_create_branch) (Gimp                *gimp,
                                           const gchar         *progname,
                                           const gchar         *menu_path,
@@ -119,9 +116,6 @@ void           gimp_help                 (Gimp                *gimp,
                                           const gchar         *help_domain,
                                           const gchar         *help_id);
 
-void           gimp_menus_init           (Gimp                *gimp,
-                                          GSList              *plug_in_defs,
-                                          const gchar         *std_plugins_domain);
 void           gimp_menus_create_branch  (Gimp                *gimp,
                                           const gchar         *progname,
                                           const gchar         *menu_path,

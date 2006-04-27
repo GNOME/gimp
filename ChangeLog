@@ -1,5 +1,25 @@
 2006-04-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/plug-in-locale-domain.[ch] (plug_in_locale_domains):
+	new function which returns string arrays of all registered locale
+	domains and paths.
+
+	(plug_in_standard_locale_domain): removed this function. The
+	standard plug-in domain is included in the domains returned by
+	plug_in_locale_domains().
+
+	* app/plug-in/plug-ins.c (plug_ins_init): simply bind the text
+	domains here instead of calling gimp_menus_init(). Destroy
+	gimp->plug_in_defs much earlier.
+
+	* app/core/gimp-gui.[ch]
+	* app/gui/gui-vtable.c: removed gimp_menus_init().
+
+	* app/menus/plug-in-menus.[ch]: removed plug_in_menus_init(),
+	binding text domains is completely done in the core now.
+
+2006-04-27  Michael Natterer  <mitch@gimp.org>
+
 	Added some signals inspired by Rockwalrus' libpdb:
 
 	* app/pdb/gimppdb.[ch]: added signals "register-procedure" and

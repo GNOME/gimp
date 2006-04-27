@@ -20,10 +20,6 @@
 #define __PLUG_IN_MENUS_H__
 
 
-void   plug_in_menus_init  (Gimp          *gimp,
-                            GSList        *plug_in_defs,
-                            const gchar   *std_plugins_domain);
-
 void   plug_in_menus_setup (GimpUIManager *manager,
                             const gchar   *ui_path);
 

@@ -68,7 +68,6 @@
 #include "actions/plug-in-actions.h"
 
 #include "menus/menus.h"
-#include "menus/plug-in-menus.h"
 
 #include "dialogs/dialogs.h"
 
@@ -103,9 +102,6 @@ static void           gui_display_delete       (GimpObject          *display);
 static void           gui_displays_reconnect   (Gimp                *gimp,
                                                 GimpImage           *old_image,
                                                 GimpImage           *new_image);
-static void           gui_menus_init           (Gimp                *gimp,
-                                                GSList              *plug_in_defs,
-                                                const gchar         *plugins_domain);
 static void           gui_menus_create_branch  (Gimp                *gimp,
                                                 const gchar         *progname,
                                                 const gchar         *menu_path,
@@ -154,7 +150,6 @@ gui_vtable_init (Gimp *gimp)
   gimp->gui.display_create      = gui_display_create;
   gimp->gui.display_delete      = gui_display_delete;
   gimp->gui.displays_reconnect  = gui_displays_reconnect;
-  gimp->gui.menus_init          = gui_menus_init;
   gimp->gui.menus_create_branch = gui_menus_create_branch;
   gimp->gui.progress_new        = gui_new_progress;
   gimp->gui.progress_free       = gui_free_progress;
@@ -370,14 +365,6 @@ gui_displays_reconnect (Gimp      *gimp,
                         GimpImage *new_image)
 {
   gimp_displays_reconnect (gimp, old_image, new_image);
-}
-
-static void
-gui_menus_init (Gimp        *gimp,
-                GSList      *plug_in_defs,
-                const gchar *std_plugins_domain)
-{
-  plug_in_menus_init (gimp, plug_in_defs, std_plugins_domain);
 }
 
 static void

@@ -22,21 +22,23 @@
 #define __PLUG_IN_LOCALE_DOMAIN_H__
 
 
-void          plug_in_locale_domain_exit     (Gimp         *gimp);
+void          plug_in_locale_domain_exit (Gimp         *gimp);
 
 /* Add a locale domain */
-void          plug_in_locale_domain_add      (Gimp         *gimp,
-                                              const gchar  *prog_name,
-                                              const gchar  *domain_name,
-                                              const gchar  *domain_path);
+void          plug_in_locale_domain_add  (Gimp         *gimp,
+                                          const gchar  *prog_name,
+                                          const gchar  *domain_name,
+                                          const gchar  *domain_path);
 
 /* Retrieve a plug-ins locale domain */
-const gchar * plug_in_locale_domain          (Gimp         *gimp,
-                                              const gchar  *prog_name,
-                                              const gchar **locale_path);
+const gchar * plug_in_locale_domain      (Gimp         *gimp,
+                                          const gchar  *prog_name,
+                                          const gchar **locale_path);
 
-/* Retrieve the locale domain of the standard plug-ins */
-const gchar * plug_in_standard_locale_domain (void) G_GNUC_CONST;
+/* Retrieve all help domains */
+gint          plug_in_locale_domains     (Gimp         *gimp,
+                                          gchar      ***locale_domains,
+                                          gchar      ***locale_paths);
 
 
 #endif /* __PLUG_IN_LOCALE_DOMAIN_H__ */

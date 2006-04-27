@@ -56,7 +56,6 @@ gimp_gui_init (Gimp *gimp)
   gimp->gui.display_create      = NULL;
   gimp->gui.display_delete      = NULL;
   gimp->gui.displays_reconnect  = NULL;
-  gimp->gui.menus_init          = NULL;
   gimp->gui.menus_create_branch = NULL;
   gimp->gui.progress_new        = NULL;
   gimp->gui.progress_free       = NULL;
@@ -292,18 +291,6 @@ gimp_reconnect_displays (Gimp      *gimp,
 
   if (gimp->gui.displays_reconnect)
     gimp->gui.displays_reconnect (gimp, old_image, new_image);
-}
-
-void
-gimp_menus_init (Gimp        *gimp,
-                 GSList      *plug_in_defs,
-                 const gchar *std_plugins_domain)
-{
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (std_plugins_domain != NULL);
-
-  if (gimp->gui.menus_init)
-    gimp->gui.menus_init (gimp, plug_in_defs, std_plugins_domain);
 }
 
 void

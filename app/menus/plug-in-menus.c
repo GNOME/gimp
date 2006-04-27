@@ -32,7 +32,6 @@
 
 #include "pdb/gimppluginprocedure.h"
 
-#include "plug-in/plug-in-def.h"
 #include "plug-in/plug-in-locale-domain.h"
 
 #include "widgets/gimpuimanager.h"
@@ -77,56 +76,6 @@ static gchar * plug_in_menus_build_path           (GimpUIManager       *manager,
 
 
 /*  public functions  */
-
-void
-plug_in_menus_init (Gimp        *gimp,
-                    GSList      *plug_in_defs,
-                    const gchar *std_plugins_domain)
-{
-  GSList *domains = NULL;
-  GSList *tmp;
-
-  g_return_if_fail (std_plugins_domain != NULL);
-
-  domains = g_slist_append (domains, (gpointer) std_plugins_domain);
-
-  bindtextdomain (std_plugins_domain, gimp_locale_directory ());
-#ifdef HAVE_BIND_TEXTDOMAIN_CODESET
-  bind_textdomain_codeset (std_plugins_domain, "UTF-8");
-#endif
-
-  for (tmp = plug_in_defs; tmp; tmp = g_slist_next (tmp))
-    {
-      PlugInDef *plug_in_def = tmp->data;
-
-      if (plug_in_def->procedures)
-        {
-          const gchar *locale_domain;
-          const gchar *locale_path;
-          GSList      *list;
-
-          locale_domain = plug_in_locale_domain (gimp,
-                                                 plug_in_def->prog,
-                                                 &locale_path);
-
-          for (list = domains; list; list = list->next)
-            if (! strcmp (locale_domain, (const gchar *) list->data))
-              break;
-
-          if (! list)
-            {
-              domains = g_slist_append (domains, (gpointer) locale_domain);
-
-              bindtextdomain (locale_domain, locale_path);
-#ifdef HAVE_BIND_TEXTDOMAIN_CODESET
-              bind_textdomain_codeset (locale_domain, "UTF-8");
-#endif
-            }
-        }
-    }
-
-  g_slist_free (domains);
-}
 
 void
 plug_in_menus_setup (GimpUIManager *manager,
