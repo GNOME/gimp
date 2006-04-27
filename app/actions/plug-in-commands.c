@@ -173,6 +173,8 @@ plug_in_repeat_cmd_callback (GtkAction *action,
       gimp_value_set_image    (&args->values[1], display->image);
       gimp_value_set_drawable (&args->values[2], drawable);
 
+      gimp_value_array_truncate (args, 3);
+
       /* run the plug-in procedure */
       gimp_procedure_execute_async (procedure, gimp,
                                     gimp_get_user_context (gimp),
