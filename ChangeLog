@@ -1,5 +1,10 @@
 2006-04-27  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpcontext.c: fixed argument order for using
+	GIMP_CONFIG_INSTALL_PROP_RGB().
+
+2006-04-27  Sven Neumann  <sven@gimp.org>
+
 	* libgimpcolor/gimprgb.[ch]: hide the GimpParamSpecRGB struct
 	again.  Added getter for the has_alpha field.
 
@@ -16,7 +21,7 @@
 	Made the GimpParamSpecRGB struct public. When validating a color,
 	only look at the alpha channel if has_alpha is set.
 
-	* libgimpconfig/gimpconfig-params.h: added "has_alpha" to
+	* libgimpconfig/gimpconfig-params.h: added "has_alpha" to the
 	GIMP_CONFIG_INSTALL_PROP_RGB macro definition.
 
 	* libgimpconfig/gimpconfig-serialize.c: serialize color values as
