@@ -1,5 +1,10 @@
 2006-04-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am (SUBDIRS): changed order of subdirs to match the
+	bottom-up module dependency order more closely.
+
+2006-04-27  Michael Natterer  <mitch@gimp.org>
+
 	* configure.in: use G_DISABLE_DEPRECATED also when building
 	against glib 2.10
 

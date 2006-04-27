@@ -18,17 +18,17 @@ SUBDIRS = \
 	paint		\
 	text		\
 	vectors		\
-	xcf		\
 	file		\
 	plug-in		\
-	tools		\
+	xcf		\
+	pdb		\
 	widgets		\
 	display		\
+	tools		\
 	dialogs		\
 	actions		\
 	menus		\
-	gui		\
-	pdb
+	gui
 
 
 if ENABLE_GIMP_CONSOLE
