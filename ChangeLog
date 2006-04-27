@@ -1,3 +1,7 @@
+2006-04-27  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/gimprgb.h: indentation.
+
 2006-04-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimppluginaction.[ch]: use a GParamSpecObject instead
