@@ -1,3 +1,9 @@
+2006-04-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimppluginaction.[ch]: use a GParamSpecObject instead
+	of GParamSpecPointer for the "procedure" property. Keep a reference
+	on the action's procedure. Did a global s/proc/procedure/.
+
 2006-04-27  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/warp.c: some cleanup, still a mess.

@@ -45,6 +45,7 @@ enum
 };
 
 
+static void   gimp_plug_in_action_finalize      (GObject      *object);
 static void   gimp_plug_in_action_set_property  (GObject      *object,
                                                  guint         prop_id,
                                                  const GValue *value,
@@ -72,6 +73,7 @@ gimp_plug_in_action_class_init (GimpPlugInActionClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkActionClass *action_class = GTK_ACTION_CLASS (klass);
 
+  object_class->finalize      = gimp_plug_in_action_finalize;
   object_class->set_property  = gimp_plug_in_action_set_property;
   object_class->get_property  = gimp_plug_in_action_get_property;
 
@@ -79,9 +81,10 @@ gimp_plug_in_action_class_init (GimpPlugInActionClass *klass)
   action_class->connect_proxy = gimp_plug_in_action_connect_proxy;
 
   g_object_class_install_property (object_class, PROP_PROCEDURE,
-                                   g_param_spec_pointer ("procedure",
-                                                         NULL, NULL,
-                                                         GIMP_PARAM_READWRITE));
+                                   g_param_spec_object ("procedure",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_PLUG_IN_PROCEDURE,
+                                                        GIMP_PARAM_READWRITE));
 
   action_signals[SELECTED] =
     g_signal_new ("selected",
@@ -97,7 +100,21 @@ gimp_plug_in_action_class_init (GimpPlugInActionClass *klass)
 static void
 gimp_plug_in_action_init (GimpPlugInAction *action)
 {
-  action->proc = NULL;
+  action->procedure = NULL;
+}
+
+static void
+gimp_plug_in_action_finalize (GObject *object)
+{
+  GimpPlugInAction *action = GIMP_PLUG_IN_ACTION (object);
+
+  if (action->procedure)
+    {
+      g_object_unref (action->procedure);
+      action->procedure = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -111,8 +128,9 @@ gimp_plug_in_action_get_property (GObject    *object,
   switch (prop_id)
     {
     case PROP_PROCEDURE:
-      g_value_set_pointer (value, action->proc);
+      g_value_set_object (value, action->procedure);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -130,8 +148,11 @@ gimp_plug_in_action_set_property (GObject      *object,
   switch (prop_id)
     {
     case PROP_PROCEDURE:
-      action->proc = g_value_get_pointer (value);
+      if (action->procedure)
+        g_object_unref (action->procedure);
+      action->procedure = GIMP_PLUG_IN_PROCEDURE (g_value_dup_object (value));
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -143,7 +164,7 @@ gimp_plug_in_action_activate (GtkAction *action)
 {
   GimpPlugInAction *plug_in_action = GIMP_PLUG_IN_ACTION (action);
 
-  gimp_plug_in_action_selected (plug_in_action, plug_in_action->proc);
+  gimp_plug_in_action_selected (plug_in_action, plug_in_action->procedure);
 }
 
 static void
@@ -154,11 +175,11 @@ gimp_plug_in_action_connect_proxy (GtkAction *action,
 
   GTK_ACTION_CLASS (parent_class)->connect_proxy (action, proxy);
 
-  if (GTK_IS_IMAGE_MENU_ITEM (proxy) && plug_in_action->proc)
+  if (GTK_IS_IMAGE_MENU_ITEM (proxy) && plug_in_action->procedure)
     {
       GdkPixbuf *pixbuf;
 
-      pixbuf = gimp_plug_in_procedure_get_pixbuf (plug_in_action->proc);
+      pixbuf = gimp_plug_in_procedure_get_pixbuf (plug_in_action->procedure);
 
       if (pixbuf)
         {
@@ -196,22 +217,22 @@ gimp_plug_in_action_new (const gchar         *name,
                          const gchar         *label,
                          const gchar         *tooltip,
                          const gchar         *stock_id,
-                         GimpPlugInProcedure *proc)
+                         GimpPlugInProcedure *procedure)
 {
   return g_object_new (GIMP_TYPE_PLUG_IN_ACTION,
                        "name",      name,
                        "label",     label,
                        "tooltip",   tooltip,
                        "stock-id",  stock_id,
-                       "procedure", proc,
+                       "procedure", procedure,
                        NULL);
 }
 
 void
 gimp_plug_in_action_selected (GimpPlugInAction    *action,
-                              GimpPlugInProcedure *proc)
+                              GimpPlugInProcedure *procedure)
 {
   g_return_if_fail (GIMP_IS_PLUG_IN_ACTION (action));
 
-  g_signal_emit (action, action_signals[SELECTED], 0, proc);
+  g_signal_emit (action, action_signals[SELECTED], 0, procedure);
 }

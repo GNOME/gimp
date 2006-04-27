@@ -40,7 +40,7 @@ struct _GimpPlugInAction
 {
   GimpAction           parent_instance;
 
-  GimpPlugInProcedure *proc;
+  GimpPlugInProcedure *procedure;
 };
 
 struct _GimpPlugInActionClass
@@ -58,9 +58,9 @@ GimpPlugInAction * gimp_plug_in_action_new      (const gchar         *name,
                                                  const gchar         *label,
                                                  const gchar         *tooltip,
                                                  const gchar         *stock_id,
-                                                 GimpPlugInProcedure *proc);
+                                                 GimpPlugInProcedure *procedure);
 void               gimp_plug_in_action_selected (GimpPlugInAction    *action,
-                                                 GimpPlugInProcedure *proc);
+                                                 GimpPlugInProcedure *procedure);
 
 
 #endif  /* __GIMP_PLUG_IN_ACTION_H__ */
