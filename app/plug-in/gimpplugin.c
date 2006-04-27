@@ -1059,11 +1059,6 @@ plug_in_menu_register (PlugIn      *plug_in,
       return FALSE;
     }
 
-  if (GIMP_IS_TEMPORARY_PROCEDURE (proc) && ! plug_in->gimp->no_interface)
-    {
-      gimp_menus_create_item (plug_in->gimp, proc, menu_path);
-    }
-
   return TRUE;
 }
 

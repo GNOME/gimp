@@ -106,11 +106,6 @@ static void           gui_displays_reconnect   (Gimp                *gimp,
 static void           gui_menus_init           (Gimp                *gimp,
                                                 GSList              *plug_in_defs,
                                                 const gchar         *plugins_domain);
-static void           gui_menus_create_item    (Gimp                *gimp,
-                                                GimpPlugInProcedure *proc,
-                                                const gchar         *menu_path);
-static void           gui_menus_delete_item    (Gimp                *gimp,
-                                                GimpPlugInProcedure *proc);
 static void           gui_menus_create_branch  (Gimp                *gimp,
                                                 const gchar         *progname,
                                                 const gchar         *menu_path,
@@ -160,8 +155,6 @@ gui_vtable_init (Gimp *gimp)
   gimp->gui.display_delete      = gui_display_delete;
   gimp->gui.displays_reconnect  = gui_displays_reconnect;
   gimp->gui.menus_init          = gui_menus_init;
-  gimp->gui.menus_create_item   = gui_menus_create_item;
-  gimp->gui.menus_delete_item   = gui_menus_delete_item;
   gimp->gui.menus_create_branch = gui_menus_create_branch;
   gimp->gui.progress_new        = gui_new_progress;
   gimp->gui.progress_free       = gui_free_progress;
@@ -385,152 +378,6 @@ gui_menus_init (Gimp        *gimp,
                 const gchar *std_plugins_domain)
 {
   plug_in_menus_init (gimp, plug_in_defs, std_plugins_domain);
-}
-
-static void
-gui_menus_add_proc (Gimp                *gimp,
-                    GimpPlugInProcedure *proc,
-                    const gchar         *menu_path)
-{
-  gchar *prefix;
-  gchar *p;
-  GList *list;
-
-  prefix = g_strdup (menu_path);
-
-  p = strchr (prefix, '>');
-
-  if (p)
-    {
-      p[1] = '\0';
-
-      for (list = gimp_ui_managers_from_name (prefix);
-           list;
-           list = g_list_next (list))
-        {
-          if (! strcmp (prefix, "<Image>"))
-            {
-              plug_in_menus_add_proc (list->data, "/image-menubar",
-                                      proc, menu_path);
-              plug_in_menus_add_proc (list->data, "/dummy-menubar/image-popup",
-                                      proc, menu_path);
-            }
-          else if (! strcmp (prefix, "<Toolbox>"))
-            {
-              plug_in_menus_add_proc (list->data, "/toolbox-menubar",
-                                      proc, menu_path);
-            }
-          else if (! strcmp (prefix, "<Brushes>"))
-            {
-              plug_in_menus_add_proc (list->data, "/brushes-popup",
-                                      proc, menu_path);
-            }
-          else if (! strcmp (prefix, "<Gradients>"))
-            {
-              plug_in_menus_add_proc (list->data, "/gradients-popup",
-                                      proc, menu_path);
-            }
-          else if (! strcmp (prefix, "<Palettes>"))
-            {
-              plug_in_menus_add_proc (list->data, "/palettes-popup",
-                                      proc, menu_path);
-            }
-          else if (! strcmp (prefix, "<Patterns>"))
-            {
-              plug_in_menus_add_proc (list->data, "/patterns-popup",
-                                      proc, menu_path);
-            }
-          else if (! strcmp (prefix, "<Fonts>"))
-            {
-              plug_in_menus_add_proc (list->data, "/fonts-popup",
-                                      proc, menu_path);
-            }
-          else if (! strcmp (prefix, "<Buffers>"))
-            {
-              plug_in_menus_add_proc (list->data, "/buffers-popup",
-                                      proc, menu_path);
-            }
-        }
-    }
-
-  g_free (prefix);
-}
-
-static void
-gui_menus_delete_proc (Gimp                *gimp,
-                       GimpPlugInProcedure *proc,
-                       const gchar         *menu_path)
-{
-  gchar *prefix;
-  gchar *p;
-  GList *list;
-
-  prefix = g_strdup (menu_path);
-
-  p = strchr (prefix, '>');
-
-  if (p)
-    {
-      p[1] = '\0';
-
-      for (list = gimp_ui_managers_from_name (prefix);
-           list;
-           list = g_list_next (list))
-        {
-          plug_in_menus_remove_proc (list->data, proc);
-        }
-    }
-
-  g_free (prefix);
-}
-
-static void
-gui_menus_create_item (Gimp                *gimp,
-                       GimpPlugInProcedure *proc,
-                       const gchar         *menu_path)
-{
-  GList *list;
-
-  for (list = gimp_action_groups_from_name ("plug-in");
-       list;
-       list = g_list_next (list))
-    {
-      if (menu_path == NULL)
-        {
-          plug_in_actions_add_proc (list->data, proc);
-        }
-      else
-        {
-          plug_in_actions_add_path (list->data, proc, menu_path);
-        }
-    }
-
-  if (menu_path == NULL)
-    {
-      for (list = proc->menu_paths; list; list = g_list_next (list))
-        gui_menus_add_proc (gimp, proc, list->data);
-    }
-  else
-    {
-      gui_menus_add_proc (gimp, proc, menu_path);
-    }
-}
-
-static void
-gui_menus_delete_item (Gimp                *gimp,
-                       GimpPlugInProcedure *proc)
-{
-  GList *list;
-
-  for (list = proc->menu_paths; list; list = g_list_next (list))
-    gui_menus_delete_proc (gimp, proc, list->data);
-
-  for (list = gimp_action_groups_from_name ("plug-in");
-       list;
-       list = g_list_next (list))
-    {
-      plug_in_actions_remove_proc (list->data, proc);
-    }
 }
 
 static void

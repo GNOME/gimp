@@ -1,3 +1,30 @@
+2006-04-27  Michael Natterer  <mitch@gimp.org>
+
+	Added some signals inspired by Rockwalrus' libpdb:
+
+	* app/pdb/gimppdb.[ch]: added signals "register-procedure" and
+	"unregister-procedure".
+
+	* app/pdb/gimppluginprocedure.[ch]: added signal "menu-path-added".
+
+	* app/actions/plug-in-actions.[ch]
+	* app/menus/plug-in-menus.[ch]: connect to the new signals and
+	create/destroy plug-in actions and menus accordingly. Made all
+	needed functions private and merged some of them with the newly
+	added signal callbacks.
+
+	* app/core/gimp-gui.[ch]
+	* app/gui/gui-vtable.c: removed gimp_menus_create_item() and
+	gimp_menus_delete_item() and all related stuff.
+
+	* app/plug-in/plug-in.c
+	* app/plug-in/plug-ins.c: removed calls to the removed functions.
+
+	* app/plug-in/plug-ins.c (plug_ins_init): add the plug-in
+	procedures to the PDB *after* calling gimp_menus_init() so their
+	locale domains are properly initialized when the menus are
+	created.
+
 2006-04-27  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpcontext.c: fixed argument order for using

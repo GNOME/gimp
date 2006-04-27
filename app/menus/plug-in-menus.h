@@ -20,18 +20,12 @@
 #define __PLUG_IN_MENUS_H__
 
 
-void   plug_in_menus_init         (Gimp                *gimp,
-                                   GSList              *plug_in_defs,
-                                   const gchar         *std_plugins_domain);
+void   plug_in_menus_init  (Gimp          *gimp,
+                            GSList        *plug_in_defs,
+                            const gchar   *std_plugins_domain);
 
-void   plug_in_menus_setup        (GimpUIManager       *manager,
-                                   const gchar         *ui_path);
-void   plug_in_menus_add_proc     (GimpUIManager       *manager,
-                                   const gchar         *ui_path,
-                                   GimpPlugInProcedure *proc,
-                                   const gchar         *menu_path);
-void   plug_in_menus_remove_proc  (GimpUIManager       *manager,
-                                   GimpPlugInProcedure *proc);
+void   plug_in_menus_setup (GimpUIManager *manager,
+                            const gchar   *ui_path);
 
 
 #endif /* __PLUG_IN_MENUS_H__ */

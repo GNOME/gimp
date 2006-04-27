@@ -33,6 +33,7 @@
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
 #include "core/gimpcontext.h"
+#include "core/gimpmarshal.h"
 #include "core/gimpprogress.h"
 
 #include "gimppdb.h"
@@ -54,20 +55,34 @@ gimp_pdb_eek (void)
 }
 
 
-static void     gimp_pdb_finalize      (GObject    *object);
-static gint64   gimp_pdb_get_memsize   (GimpObject *object,
-                                        gint64     *gui_size);
-static void     gimp_pdb_entry_free    (gpointer    key,
-                                        gpointer    value,
-                                        gpointer    user_data);
-static void     gimp_pdb_entry_memsize (gpointer    key,
-                                        gpointer    value,
-                                        gpointer    user_data);
+enum
+{
+  REGISTER_PROCEDURE,
+  UNREGISTER_PROCEDURE,
+  LAST_SIGNAL
+};
+
+
+static void     gimp_pdb_finalize                  (GObject       *object);
+static gint64   gimp_pdb_get_memsize               (GimpObject    *object,
+                                                    gint64        *gui_size);
+static void     gimp_pdb_real_register_procedure   (GimpPDB       *pdb,
+                                                    GimpProcedure *procedure);
+static void     gimp_pdb_real_unregister_procedure (GimpPDB       *pdb,
+                                                    GimpProcedure *procedure);
+static void     gimp_pdb_entry_free                (gpointer       key,
+                                                    gpointer       value,
+                                                    gpointer       user_data);
+static void     gimp_pdb_entry_memsize             (gpointer       key,
+                                                    gpointer       value,
+                                                    gpointer       user_data);
 
 
 G_DEFINE_TYPE (GimpPDB, gimp_pdb, GIMP_TYPE_OBJECT);
 
 #define parent_class gimp_pdb_parent_class
+
+static guint gimp_pdb_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
@@ -76,9 +91,32 @@ gimp_pdb_class_init (GimpPDBClass *klass)
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
+  gimp_pdb_signals[REGISTER_PROCEDURE] =
+    g_signal_new ("register-procedure",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpPDBClass, register_procedure),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_PROCEDURE);
+
+  gimp_pdb_signals[UNREGISTER_PROCEDURE] =
+    g_signal_new ("unregister-procedure",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpPDBClass, unregister_procedure),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_PROCEDURE);
+
   object_class->finalize         = gimp_pdb_finalize;
 
   gimp_object_class->get_memsize = gimp_pdb_get_memsize;
+
+  klass->register_procedure      = gimp_pdb_real_register_procedure;
+  klass->unregister_procedure    = gimp_pdb_real_unregister_procedure;
 }
 
 static void
@@ -125,6 +163,45 @@ gimp_pdb_get_memsize (GimpObject *object,
                                                                   gui_size);
 }
 
+static void
+gimp_pdb_real_register_procedure (GimpPDB       *pdb,
+                                  GimpProcedure *procedure)
+{
+  const gchar *name;
+  GList       *list;
+
+  name = gimp_object_get_name (GIMP_OBJECT (procedure));
+
+  list = g_hash_table_lookup (pdb->procedures, name);
+
+  g_hash_table_insert (pdb->procedures, (gpointer) name,
+                       g_list_prepend (list, g_object_ref (procedure)));
+}
+
+static void
+gimp_pdb_real_unregister_procedure (GimpPDB       *pdb,
+                                    GimpProcedure *procedure)
+{
+  const gchar *name;
+  GList       *list;
+
+  name = gimp_object_get_name (GIMP_OBJECT (procedure));
+
+  list = g_hash_table_lookup (pdb->procedures, name);
+
+  if (list)
+    {
+      list = g_list_remove (list, procedure);
+
+      if (list)
+        g_hash_table_insert (pdb->procedures, (gpointer) name, list);
+      else
+        g_hash_table_remove (pdb->procedures, name);
+
+      g_object_unref (procedure);
+    }
+}
+
 
 /*  public functions  */
 
@@ -148,45 +225,22 @@ void
 gimp_pdb_register_procedure (GimpPDB       *pdb,
                              GimpProcedure *procedure)
 {
-  const gchar *name;
-  GList       *list;
-
   g_return_if_fail (GIMP_IS_PDB (pdb));
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
-  name = gimp_object_get_name (GIMP_OBJECT (procedure));
-
-  list = g_hash_table_lookup (pdb->procedures, name);
-
-  g_hash_table_insert (pdb->procedures, (gpointer) name,
-                       g_list_prepend (list, g_object_ref (procedure)));
+  g_signal_emit (pdb, gimp_pdb_signals[REGISTER_PROCEDURE], 0,
+                 procedure);
 }
 
 void
 gimp_pdb_unregister_procedure (GimpPDB       *pdb,
                                GimpProcedure *procedure)
 {
-  const gchar *name;
-  GList       *list;
-
   g_return_if_fail (GIMP_IS_PDB (pdb));
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
-  name = gimp_object_get_name (GIMP_OBJECT (procedure));
-
-  list = g_hash_table_lookup (pdb->procedures, name);
-
-  if (list)
-    {
-      list = g_list_remove (list, procedure);
-
-      if (list)
-        g_hash_table_insert (pdb->procedures, (gpointer) name, list);
-      else
-        g_hash_table_remove (pdb->procedures, name);
-
-      g_object_unref (procedure);
-    }
+  g_signal_emit (pdb, gimp_pdb_signals[UNREGISTER_PROCEDURE], 0,
+                 procedure);
 }
 
 GimpProcedure *

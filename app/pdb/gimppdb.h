@@ -46,6 +46,11 @@ struct _GimpPDB
 struct _GimpPDBClass
 {
   GimpObjectClass parent_class;
+
+  void (* register_procedure)   (GimpPDB       *pdb,
+                                 GimpProcedure *procedure);
+  void (* unregister_procedure) (GimpPDB       *pdb,
+                                 GimpProcedure *procedure);
 };
 
 

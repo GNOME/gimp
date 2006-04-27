@@ -246,12 +246,6 @@ plug_ins_init (Gimp               *gimp,
 
   g_free (pluginrc);
 
-  /* add the plug-in procs to the procedure database */
-  for (list = gimp->plug_in_procedures; list; list = list->next)
-    {
-      plug_ins_add_to_db (gimp, context, list->data);
-    }
-
   /* create help_path and locale_domain lists */
   for (list = gimp->plug_in_defs; list; list = list->next)
     {
@@ -281,6 +275,12 @@ plug_ins_init (Gimp               *gimp,
 
       gimp_menus_init (gimp, gimp->plug_in_defs,
                        plug_in_standard_locale_domain ());
+    }
+
+  /* add the plug-in procs to the procedure database */
+  for (list = gimp->plug_in_procedures; list; list = list->next)
+    {
+      plug_ins_add_to_db (gimp, context, list->data);
     }
 
   /* build list of automatically started extensions */
@@ -411,14 +411,6 @@ plug_ins_temp_procedure_add (Gimp                   *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_TEMPORARY_PROCEDURE (proc));
 
-  if (! gimp->no_interface)
-    {
-      GimpPlugInProcedure *plug_in_proc = GIMP_PLUG_IN_PROCEDURE (proc);
-
-      if (plug_in_proc->menu_label || plug_in_proc->menu_paths)
-        gimp_menus_create_item (gimp, plug_in_proc, NULL);
-    }
-
   /*  Register the procedural database entry  */
   gimp_pdb_register_procedure (gimp->pdb, GIMP_PROCEDURE (proc));
 
@@ -433,14 +425,6 @@ plug_ins_temp_procedure_remove (Gimp                   *gimp,
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_TEMPORARY_PROCEDURE (proc));
-
-  if (! gimp->no_interface)
-    {
-      GimpPlugInProcedure *plug_in_proc = GIMP_PLUG_IN_PROCEDURE (proc);
-
-      if (plug_in_proc->menu_label || plug_in_proc->menu_paths)
-        gimp_menus_delete_item (gimp, plug_in_proc);
-    }
 
   /*  Remove the definition from the global list  */
   gimp->plug_in_procedures = g_slist_remove (gimp->plug_in_procedures, proc);

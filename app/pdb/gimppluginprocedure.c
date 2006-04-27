@@ -30,6 +30,7 @@
 #include "pdb-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpmarshal.h"
 #include "core/gimpparamspecs.h"
 
 #include "plug-in/plug-in.h"
@@ -40,6 +41,13 @@
 #include "gimppluginprocedure.h"
 
 #include "gimp-intl.h"
+
+
+enum
+{
+  MENU_PATH_ADDED,
+  LAST_SIGNAL
+};
 
 
 static void          gimp_plug_in_procedure_finalize    (GObject       *object);
@@ -67,6 +75,8 @@ G_DEFINE_TYPE (GimpPlugInProcedure, gimp_plug_in_procedure,
 
 #define parent_class gimp_plug_in_procedure_parent_class
 
+static guint gimp_plug_in_procedure_signals[LAST_SIGNAL] = { 0 };
+
 
 static void
 gimp_plug_in_procedure_class_init (GimpPlugInProcedureClass *klass)
@@ -74,6 +84,16 @@ gimp_plug_in_procedure_class_init (GimpPlugInProcedureClass *klass)
   GObjectClass       *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass    *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpProcedureClass *proc_class        = GIMP_PROCEDURE_CLASS (klass);
+
+  gimp_plug_in_procedure_signals[MENU_PATH_ADDED] =
+    g_signal_new ("menu-path-added",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpPlugInProcedureClass, menu_path_added),
+                  NULL, NULL,
+                  gimp_marshal_VOID__STRING,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_STRING);
 
   object_class->finalize         = gimp_plug_in_procedure_finalize;
 
@@ -83,6 +103,7 @@ gimp_plug_in_procedure_class_init (GimpPlugInProcedureClass *klass)
   proc_class->execute_async      = gimp_plug_in_procedure_execute_async;
 
   klass->get_progname            = gimp_plug_in_procedure_real_get_progname;
+  klass->menu_path_added         = NULL;
 }
 
 static void
@@ -430,6 +451,9 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
   g_free (basename);
 
   proc->menu_paths = g_list_append (proc->menu_paths, g_strdup (menu_path));
+
+  g_signal_emit (proc, gimp_plug_in_procedure_signals[MENU_PATH_ADDED], 0,
+                 menu_path);
 
   return TRUE;
 

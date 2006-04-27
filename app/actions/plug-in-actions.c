@@ -51,13 +51,25 @@
 
 /*  local function prototypes  */
 
-static void     plug_in_actions_last_changed      (Gimp            *gimp,
-                                                   GimpActionGroup *group);
-static gboolean plug_in_actions_check_translation (const gchar     *original,
-                                                   const gchar     *translated);
-static void     plug_in_actions_build_path        (GimpActionGroup *group,
-                                                   const gchar     *original,
-                                                   const gchar     *translated);
+static void     plug_in_actions_register_procedure   (GimpPDB             *pdb,
+                                                      GimpProcedure       *procedure,
+                                                      GimpActionGroup     *group);
+static void     plug_in_actions_unregister_procedure (GimpPDB             *pdb,
+                                                      GimpProcedure       *procedure,
+                                                      GimpActionGroup     *group);
+static void     plug_in_actions_menu_path_added      (GimpPlugInProcedure *proc,
+                                                      const gchar         *menu_path,
+                                                      GimpActionGroup     *group);
+static void     plug_in_actions_add_proc             (GimpActionGroup     *group,
+                                                      GimpPlugInProcedure *proc);
+
+static void     plug_in_actions_last_changed         (Gimp                *gimp,
+                                                      GimpActionGroup     *group);
+static gboolean plug_in_actions_check_translation    (const gchar         *original,
+                                                      const gchar         *translated);
+static void     plug_in_actions_build_path           (GimpActionGroup     *group,
+                                                      const gchar         *original,
+                                                      const gchar         *translated);
 
 
 /*  private variables  */
@@ -141,17 +153,33 @@ plug_in_actions_setup (GimpActionGroup *group)
        list;
        list = g_slist_next (list))
     {
-      GimpPlugInProcedure *proc = list->data;
+      GimpPlugInProcedure *plug_in_proc = list->data;
 
-      if (proc->prog         &&
-          proc->menu_paths   &&
-          ! proc->extensions &&
-          ! proc->prefixes   &&
-          ! proc->magics)
+      if (! plug_in_proc->prog)
+        continue;
+
+      g_signal_connect_object (plug_in_proc, "menu-path-added",
+                               G_CALLBACK (plug_in_actions_menu_path_added),
+                               group, 0);
+
+      if (plug_in_proc->prog         &&
+          plug_in_proc->menu_paths   &&
+          ! plug_in_proc->extensions &&
+          ! plug_in_proc->prefixes   &&
+          ! plug_in_proc->magics)
         {
-          plug_in_actions_add_proc (group, proc);
+          plug_in_actions_register_procedure (group->gimp->pdb,
+                                              GIMP_PROCEDURE (plug_in_proc),
+                                              group);
         }
     }
+
+  g_signal_connect_object (group->gimp->pdb, "register-procedure",
+                           G_CALLBACK (plug_in_actions_register_procedure),
+                           group, 0);
+  g_signal_connect_object (group->gimp->pdb, "unregister-procedure",
+                           G_CALLBACK (plug_in_actions_unregister_procedure),
+                           group, 0);
 
   n_entries = group->gimp->config->plug_in_history_size;
 
@@ -255,6 +283,124 @@ plug_in_actions_update (GimpActionGroup *group,
 }
 
 void
+plug_in_actions_add_branch (GimpActionGroup *group,
+                            const gchar     *progname,
+                            const gchar     *menu_path,
+                            const gchar     *menu_label)
+{
+  const gchar *locale_domain;
+  const gchar *path_translated;
+  const gchar *label_translated;
+  gchar       *full;
+  gchar       *full_translated;
+
+  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (menu_path != NULL);
+  g_return_if_fail (menu_label != NULL);
+
+  locale_domain = plug_in_locale_domain (group->gimp, progname, NULL);
+
+  path_translated  = dgettext (locale_domain, menu_path);
+  label_translated = dgettext (locale_domain, menu_label);
+
+  full            = g_strconcat (menu_path,       "/", menu_label,       NULL);
+  full_translated = g_strconcat (path_translated, "/", label_translated, NULL);
+
+  if (plug_in_actions_check_translation (full, full_translated))
+    plug_in_actions_build_path (group, full, full_translated);
+  else
+    plug_in_actions_build_path (group, full, full);
+
+  g_free (full_translated);
+  g_free (full);
+}
+
+
+/*  private functions  */
+
+static void
+plug_in_actions_register_procedure (GimpPDB         *pdb,
+                                    GimpProcedure   *procedure,
+                                    GimpActionGroup *group)
+{
+  if (GIMP_IS_PLUG_IN_PROCEDURE (procedure))
+    {
+      GimpPlugInProcedure *plug_in_proc = GIMP_PLUG_IN_PROCEDURE (procedure);
+
+      g_signal_connect_object (plug_in_proc, "menu-path-added",
+                               G_CALLBACK (plug_in_actions_menu_path_added),
+                               group, 0);
+
+      if (plug_in_proc->menu_label || plug_in_proc->menu_paths)
+        {
+#if 0
+          g_print ("%s: %s\n", G_STRFUNC,
+                   gimp_object_get_name (GIMP_OBJECT (procedure)));
+#endif
+
+          plug_in_actions_add_proc (group, plug_in_proc);
+        }
+    }
+}
+
+static void
+plug_in_actions_unregister_procedure (GimpPDB         *pdb,
+                                      GimpProcedure   *procedure,
+                                      GimpActionGroup *group)
+{
+  if (GIMP_IS_PLUG_IN_PROCEDURE (procedure))
+    {
+      GimpPlugInProcedure *plug_in_proc = GIMP_PLUG_IN_PROCEDURE (procedure);
+
+      g_signal_handlers_disconnect_by_func (plug_in_proc,
+                                            plug_in_actions_menu_path_added,
+                                            group);
+
+      if (plug_in_proc->menu_label || plug_in_proc->menu_paths)
+        {
+          GtkAction *action;
+
+#if 0
+          g_print ("%s: %s\n", G_STRFUNC,
+                   gimp_object_get_name (GIMP_OBJECT (procedure)));
+#endif
+
+          action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                                GIMP_OBJECT (procedure)->name);
+
+          if (action)
+            gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);
+        }
+    }
+}
+
+static void
+plug_in_actions_menu_path_added (GimpPlugInProcedure *plug_in_proc,
+                                 const gchar         *menu_path,
+                                 GimpActionGroup     *group)
+{
+  const gchar *progname;
+  const gchar *locale_domain;
+  const gchar *path_translated;
+
+#if 0
+  g_print ("%s: %s (%s)\n", G_STRFUNC,
+           gimp_object_get_name (GIMP_OBJECT (plug_in_proc)), menu_path);
+#endif
+
+  progname = gimp_plug_in_procedure_get_progname (plug_in_proc);
+
+  locale_domain = plug_in_locale_domain (group->gimp, progname, NULL);
+
+  path_translated = dgettext (locale_domain, menu_path);
+
+  if (plug_in_actions_check_translation (menu_path, path_translated))
+    plug_in_actions_build_path (group, menu_path, path_translated);
+  else
+    plug_in_actions_build_path (group, menu_path, menu_path);
+}
+
+static void
 plug_in_actions_add_proc (GimpActionGroup     *group,
                           GimpPlugInProcedure *proc)
 {
@@ -346,90 +492,6 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
       g_free (path_translated);
     }
 }
-
-void
-plug_in_actions_add_path (GimpActionGroup     *group,
-                          GimpPlugInProcedure *proc,
-                          const gchar         *menu_path)
-{
-  const gchar *progname;
-  const gchar *locale_domain;
-  const gchar *path_translated;
-
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
-  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
-  g_return_if_fail (menu_path != NULL);
-
-  progname = gimp_plug_in_procedure_get_progname (proc);
-
-  locale_domain = plug_in_locale_domain (group->gimp, progname, NULL);
-
-  path_translated = dgettext (locale_domain, menu_path);
-
-  if (plug_in_actions_check_translation (menu_path, path_translated))
-    plug_in_actions_build_path (group, menu_path, path_translated);
-  else
-    plug_in_actions_build_path (group, menu_path, menu_path);
-}
-
-void
-plug_in_actions_remove_proc (GimpActionGroup     *group,
-                             GimpPlugInProcedure *proc)
-{
-  GtkAction *action;
-
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
-  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
-
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                        GIMP_OBJECT (proc)->name);
-
-  if (action)
-    {
-#if 0
-      g_print ("removing plug-in action '%s'\n",
-               GIMP_OBJECT (proc)->name);
-#endif
-
-      gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);
-    }
-}
-
-void
-plug_in_actions_add_branch (GimpActionGroup *group,
-                            const gchar     *progname,
-                            const gchar     *menu_path,
-                            const gchar     *menu_label)
-{
-  const gchar *locale_domain;
-  const gchar *path_translated;
-  const gchar *label_translated;
-  gchar       *full;
-  gchar       *full_translated;
-
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
-  g_return_if_fail (menu_path != NULL);
-  g_return_if_fail (menu_label != NULL);
-
-  locale_domain = plug_in_locale_domain (group->gimp, progname, NULL);
-
-  path_translated  = dgettext (locale_domain, menu_path);
-  label_translated = dgettext (locale_domain, menu_label);
-
-  full            = g_strconcat (menu_path,       "/", menu_label,       NULL);
-  full_translated = g_strconcat (path_translated, "/", label_translated, NULL);
-
-  if (plug_in_actions_check_translation (full, full_translated))
-    plug_in_actions_build_path (group, full, full_translated);
-  else
-    plug_in_actions_build_path (group, full, full);
-
-  g_free (full_translated);
-  g_free (full);
-}
-
-
-/*  private functions  */
 
 static void
 plug_in_actions_last_changed (Gimp            *gimp,

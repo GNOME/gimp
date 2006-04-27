@@ -58,11 +58,6 @@ struct _GimpGui
   void           (* menus_init)          (Gimp                *gimp,
                                           GSList              *plug_in_defs,
                                           const gchar         *std_domain);
-  void           (* menus_create_item)   (Gimp                *gimp,
-                                          GimpPlugInProcedure *proc,
-                                          const gchar         *menu_path);
-  void           (* menus_delete_item)   (Gimp                *gimp,
-                                          GimpPlugInProcedure *proc);
   void           (* menus_create_branch) (Gimp                *gimp,
                                           const gchar         *progname,
                                           const gchar         *menu_path,
@@ -127,11 +122,6 @@ void           gimp_help                 (Gimp                *gimp,
 void           gimp_menus_init           (Gimp                *gimp,
                                           GSList              *plug_in_defs,
                                           const gchar         *std_plugins_domain);
-void           gimp_menus_create_item    (Gimp                *gimp,
-                                          GimpPlugInProcedure *proc,
-                                          const gchar         *menu_path);
-void           gimp_menus_delete_item    (Gimp                *gimp,
-                                          GimpPlugInProcedure *proc);
 void           gimp_menus_create_branch  (Gimp                *gimp,
                                           const gchar         *progname,
                                           const gchar         *menu_path,

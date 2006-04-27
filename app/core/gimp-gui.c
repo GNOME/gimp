@@ -24,8 +24,6 @@
 
 #include "core-types.h"
 
-#include "pdb/gimppluginprocedure.h"
-
 #include "gimp.h"
 #include "gimp-gui.h"
 #include "gimpcontainer.h"
@@ -59,8 +57,6 @@ gimp_gui_init (Gimp *gimp)
   gimp->gui.display_delete      = NULL;
   gimp->gui.displays_reconnect  = NULL;
   gimp->gui.menus_init          = NULL;
-  gimp->gui.menus_create_item   = NULL;
-  gimp->gui.menus_delete_item   = NULL;
   gimp->gui.menus_create_branch = NULL;
   gimp->gui.progress_new        = NULL;
   gimp->gui.progress_free       = NULL;
@@ -308,29 +304,6 @@ gimp_menus_init (Gimp        *gimp,
 
   if (gimp->gui.menus_init)
     gimp->gui.menus_init (gimp, plug_in_defs, std_plugins_domain);
-}
-
-void
-gimp_menus_create_item (Gimp                *gimp,
-                        GimpPlugInProcedure *proc,
-                        const gchar         *menu_path)
-{
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
-
-  if (gimp->gui.menus_create_item)
-    gimp->gui.menus_create_item (gimp, proc, menu_path);
-}
-
-void
-gimp_menus_delete_item (Gimp                *gimp,
-                        GimpPlugInProcedure *proc)
-{
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
-
-  if (gimp->gui.menus_delete_item)
-    gimp->gui.menus_delete_item (gimp, proc);
 }
 
 void
