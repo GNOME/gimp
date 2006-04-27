@@ -408,8 +408,18 @@ coefficients taken from the NTSC analog television standard.
 @name: 
 @nick: 
 @blurb: 
+@has_alpha: 
 @default_value: 
 @flags: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_param_spec_rgb_has_alpha ##### -->
+<para>
+
+</para>
+
+@pspec: 
 @Returns: 
 
 

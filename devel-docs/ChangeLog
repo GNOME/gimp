@@ -1,3 +1,11 @@
+2006-04-28  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/libgimpcolor-sections.txt: add
+	gimp_param_spec_rgb_has_alpha().
+
+	* libgimpcolor/tmpl/gimprgb.sgml
+	* libgimpconfig/tmpl/gimpconfig-params.sgml: regenerated.
+
 2006-04-22  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/tmpl/gimpproceduraldb.sgml
