@@ -126,9 +126,9 @@ static void      diff             (GimpDrawable *drawable,
 
 static void      diff_prepare_row (GimpPixelRgn *pixel_rgn,
 				   guchar       *data,
-				   int           x,
-				   int           y,
-				   int           w);
+				   gint          x,
+				   gint          y,
+				   gint          w);
 
 static void      warp_one         (GimpDrawable *draw,
 				   GimpDrawable *new,
@@ -196,10 +196,9 @@ static WarpVals dvals =
 
 /* -------------------------------------------------------------------------- */
 
-/* static gint         display_diff_map = TRUE;   show 16-bit diff. vectormap */
 static gint         progress = 0;              /* progress indicator bar      */
 static guint        tile_width, tile_height;   /* size of an image tile       */
-static GimpRunMode run_mode;                  /* interactive, non-, etc.     */
+static GimpRunMode  run_mode;                  /* interactive, non-, etc.     */
 static guchar       color_pixel[4] = {0, 0, 0, 255};  /* current fg color     */
 
 /* -------------------------------------------------------------------------- */
@@ -800,19 +799,19 @@ blur16 (GimpDrawable *drawable)
 	  offb = col*src_bytes;    /* base of byte pointer offset */
 	  off1 = offb+1;                 /* offset into row arrays */
 
-	  pval = (256.0*pr[offb - src_bytes] + pr[off1 - src_bytes] +
-		  256.0*pr[offb] + pr[off1] +
-		  256.0*pr[offb + src_bytes] + pr[off1 + src_bytes] +
-		  256.0*cr[offb - src_bytes] + cr[off1 - src_bytes] +
-		  256.0*cr[offb]  + cr[off1] +
-		  256.0*cr[offb + src_bytes] + cr[off1 + src_bytes] +
-		  256.0*nr[offb - src_bytes] + nr[off1 - src_bytes] +
-		  256.0*nr[offb] + nr[off1] +
-		  256.0*nr[offb + src_bytes]) + nr[off1 + src_bytes];
+	  pval = (256.0 * pr[offb - src_bytes] + pr[off1 - src_bytes] +
+		  256.0 * pr[offb] + pr[off1] +
+		  256.0 * pr[offb + src_bytes] + pr[off1 + src_bytes] +
+		  256.0 * cr[offb - src_bytes] + cr[off1 - src_bytes] +
+		  256.0 * cr[offb]  + cr[off1] +
+		  256.0 * cr[offb + src_bytes] + cr[off1 + src_bytes] +
+		  256.0 * nr[offb - src_bytes] + nr[off1 - src_bytes] +
+		  256.0 * nr[offb] + nr[off1] +
+		  256.0 * nr[offb + src_bytes]) + nr[off1 + src_bytes];
 
 	  pval /= 9.0;  /* take the average */
-	  *d++ = (guchar) (((gint)pval)>>8);   /* high-order byte */
-	  *d++ = (guchar) (((gint)pval)%256);  /* low-order byte */
+	  *d++ = (guchar) (((gint) pval) >> 8);   /* high-order byte */
+	  *d++ = (guchar) (((gint) pval) % 256);  /* low-order byte  */
 	  d += dest_bytes_inc;       /* move data pointer on to next destination pixel */
 
 	}
@@ -825,7 +824,7 @@ blur16 (GimpDrawable *drawable)
       cr = nr;
       nr = tmp;
 
-      if ((row % 5) == 0)
+      if ((row % 8) == 0)
 	gimp_progress_update ((double) row / (double) (y2 - y1));
     }
 
@@ -847,19 +846,16 @@ blur16 (GimpDrawable *drawable)
 
 static void
 diff_prepare_row (GimpPixelRgn *pixel_rgn,
-		  guchar    *data,
-		  int        x,
-		  int        y,
-		  int        w)
+		  guchar       *data,
+		  gint          x,
+		  gint          y,
+		  gint          w)
 {
-  int b;
+  gint b;
 
-  if (y == 0)    /* wrap around */
-    gimp_pixel_rgn_get_row (pixel_rgn, data, x, (pixel_rgn->h - 1), w);
-  else if (y == pixel_rgn->h)
-    gimp_pixel_rgn_get_row (pixel_rgn, data, x, 1, w);
-  else
-    gimp_pixel_rgn_get_row (pixel_rgn, data, x, y, w);
+  y = CLAMP (y, 0, pixel_rgn->h - 1);
+
+  gimp_pixel_rgn_get_row (pixel_rgn, data, x, y, w);
 
   /*  Fill in edge pixels  */
   for (b = 0; b < pixel_rgn->bpp; b++)
@@ -876,8 +872,8 @@ diff_prepare_row (GimpPixelRgn *pixel_rgn,
 
 static void
 diff (GimpDrawable *drawable,
-      gint32    *xl_id,
-      gint32    *yl_id)
+      gint32       *xl_id,
+      gint32       *yl_id)
 {
   GimpDrawable *draw_xd, *draw_yd;  /* vector disp. drawables */
   GimpDrawable *mdraw, *vdraw, *gdraw;
@@ -922,9 +918,11 @@ diff (GimpDrawable *drawable,
   /* ----------------------------------------------------------------------- */
 
   if (dvals.grad_scale != 0.0)
-      do_gradmap = TRUE;    /* add in gradient of gradmap if scale != 0.000 */
+    do_gradmap = TRUE;    /* add in gradient of gradmap if scale != 0.000 */
+
   if (dvals.vector_scale != 0.0)   /* add in gradient of vectormap if scale != 0.000 */
-      do_vecmap = TRUE;
+    do_vecmap = TRUE;
+
   do_magmap = (dvals.mag_use == TRUE);   /* multiply by magnitude map if so requested */
 
   /* Get the input area. This is the bounding box of the selection in
@@ -993,9 +991,15 @@ diff (GimpDrawable *drawable,
   desty = g_new (guchar, (x2 - x1) * dest_bytes);
 
   /*  initialize the source and destination pixel regions  */
-  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);  /* 'curl' vector-rotation input */
-  gimp_pixel_rgn_init (&destxPR, draw_xd, 0, 0, width, height, TRUE, FALSE);  /* destination: X diff output */
-  gimp_pixel_rgn_init (&destyPR, draw_yd, 0, 0, width, height, TRUE, FALSE);  /* Y diff output */
+
+  /* 'curl' vector-rotation input */
+  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
+
+  /* destination: X diff output */
+  gimp_pixel_rgn_init (&destxPR, draw_xd, 0, 0, width, height, TRUE, FALSE);
+
+  /* Y diff output */
+  gimp_pixel_rgn_init (&destyPR, draw_yd, 0, 0, width, height, TRUE, FALSE);
 
   pr = prev_row + src_bytes;
   cr = cur_row + src_bytes;
@@ -1005,39 +1009,49 @@ diff (GimpDrawable *drawable,
   diff_prepare_row (&srcPR, cr, x1, y1+1, (x2 - x1));
 
  /* fixed-vector (x,y) component scale factors */
-  scale_vec_x = dvals.vector_scale*cos((90-dvals.vector_angle)*G_PI/180.0)*256.0/10;
-  scale_vec_y = dvals.vector_scale*sin((90-dvals.vector_angle)*G_PI/180.0)*256.0/10;
+  scale_vec_x = (dvals.vector_scale *
+                 cos ((90 - dvals.vector_angle) * G_PI / 180.0) * 256.0 / 10);
+  scale_vec_y = (dvals.vector_scale *
+                 sin ((90 - dvals.vector_angle) * G_PI / 180.0) * 256.0 / 10);
 
-  if (do_vecmap) {
-    /*    fprintf(stderr,"%f %f  x,y vector components.\n",scale_vec_x,scale_vec_y); */
+  if (do_vecmap)
+    {
+      vdraw = gimp_drawable_get(dvals.vector_map);
+      vbytes = vdraw->bpp;   /* bytes per pixel in SOURCE drawable */
+      /* fixed-vector scale-map */
+      gimp_pixel_rgn_init (&vecPR, vdraw, 0, 0, width, height, FALSE, FALSE);
+      crv = cur_row_v + vbytes;
+      diff_prepare_row (&vecPR, crv, x1, y1, (x2 - x1));
+    }
 
-    vdraw = gimp_drawable_get(dvals.vector_map);
-    vbytes = vdraw->bpp;                /* bytes per pixel in SOURCE drawable */
-    gimp_pixel_rgn_init (&vecPR, vdraw, 0, 0, width, height, FALSE, FALSE);          /* fixed-vector scale-map */
-    crv = cur_row_v + vbytes;
-    diff_prepare_row (&vecPR, crv, x1, y1, (x2 - x1));
-  }
-  if (do_gradmap) {
-    gdraw = gimp_drawable_get(dvals.grad_map);
-    gbytes = gdraw->bpp;
-    gimp_pixel_rgn_init (&gradPR, gdraw, 0, 0, width, height, FALSE, FALSE);          /* fixed-vector scale-map */
-    prg = prev_row_g + gbytes;
-    crg = cur_row_g + gbytes;
-    nrg = next_row_g + gbytes;
-    diff_prepare_row (&gradPR, prg, x1, y1 - 1, (x2 - x1));
-    diff_prepare_row (&gradPR, crg, x1, y1, (x2 - x1));
-  }
-  if (do_magmap) {
-    mdraw = gimp_drawable_get(dvals.mag_map);
-    mbytes = mdraw->bpp;
-    gimp_pixel_rgn_init (&magPR, mdraw, 0, 0, width, height, FALSE, FALSE);          /* fixed-vector scale-map */
-    crm = cur_row_m + mbytes;
-    diff_prepare_row (&magPR, crm, x1, y1, (x2 - x1));
-  }
+  if (do_gradmap)
+    {
+      gdraw = gimp_drawable_get(dvals.grad_map);
+      gbytes = gdraw->bpp;
+      /* fixed-vector scale-map */
+      gimp_pixel_rgn_init (&gradPR, gdraw, 0, 0, width, height, FALSE, FALSE);
+      prg = prev_row_g + gbytes;
+      crg = cur_row_g + gbytes;
+      nrg = next_row_g + gbytes;
+      diff_prepare_row (&gradPR, prg, x1, y1 - 1, (x2 - x1));
+      diff_prepare_row (&gradPR, crg, x1, y1, (x2 - x1));
+    }
+
+  if (do_magmap)
+    {
+      mdraw = gimp_drawable_get(dvals.mag_map);
+      mbytes = mdraw->bpp;
+      /* fixed-vector scale-map */
+      gimp_pixel_rgn_init (&magPR, mdraw, 0, 0, width, height, FALSE, FALSE);
+      crm = cur_row_m + mbytes;
+      diff_prepare_row (&magPR, crm, x1, y1, (x2 - x1));
+    }
 
   dtheta = dvals.angle * G_PI / 180.0;
-  rscalefac = 256.0 / (3*src_bytes);         /* note that '3' is rather arbitrary here. */
-  gscalefac = dvals.grad_scale* 256.0 / (3*gbytes);            /* scale factor for gradient map components */
+  /* note that '3' is rather arbitrary here. */
+  rscalefac = 256.0 / (3 * src_bytes);
+  /* scale factor for gradient map components */
+  gscalefac = dvals.grad_scale * 256.0 / (3 * gbytes);
 
   /*  loop through the rows, applying the differential convolution  */
   for (row = y1; row < y2; row++)
@@ -1057,86 +1071,92 @@ diff (GimpDrawable *drawable,
       ind = 0;
 
       for (col = 0; col < (x2 - x1); col++) /* over columns of pixels */
-	  {
-	     rdx = 0.0;
-	     rdy = 0.0;
-	     ty = 0.0;
-	     tx = 0.0;
+        {
+          rdx = 0.0;
+          rdy = 0.0;
+          ty = 0.0;
+          tx = 0.0;
 
-	     offb = col*src_bytes;    /* base of byte pointer offset */
-	     for (bytes=0; bytes < src_bytes; bytes++) /* add all channels together */
-	       {
- 		  off = offb+bytes;                 /* offset into row arrays */
-		  rdx += ((gint) -pr[off - src_bytes]   + (gint) pr[off + src_bytes] +
-			  (gint) -2*cr[off - src_bytes] + (gint) 2*cr[off + src_bytes] +
-			  (gint) -nr[off - src_bytes]   + (gint) nr[off + src_bytes]);
+          offb = col * src_bytes;    /* base of byte pointer offset */
+          for (bytes=0; bytes < src_bytes; bytes++) /* add all channels together */
+            {
+              off = offb+bytes;                 /* offset into row arrays */
+              rdx += ((gint) -pr[off - src_bytes]   + (gint) pr[off + src_bytes] +
+                      (gint) -2*cr[off - src_bytes] + (gint) 2*cr[off + src_bytes] +
+                      (gint) -nr[off - src_bytes]   + (gint) nr[off + src_bytes]);
 
- 		  rdy += ((gint) -pr[off - src_bytes] - (gint)2*pr[off] - (gint) pr[off + src_bytes] +
-			  (gint) nr[off - src_bytes] + (gint)2*nr[off] + (gint) nr[off + src_bytes]);
-	       }
+              rdy += ((gint) -pr[off - src_bytes] - (gint)2*pr[off] - (gint) pr[off + src_bytes] +
+                      (gint) nr[off - src_bytes] + (gint)2*nr[off] + (gint) nr[off + src_bytes]);
+            }
 
-	     rdx *= rscalefac;   /* take average, then reduce. Assume max. rdx now 65535 */
-	     rdy *= rscalefac;   /* take average, then reduce */
+          rdx *= rscalefac;   /* take average, then reduce. Assume max. rdx now 65535 */
+          rdy *= rscalefac;   /* take average, then reduce */
 
-	     theta = atan2(rdy,rdx);          /* convert to polar, then back to rectang. coords */
-	     r = sqrt(rdy*rdy + rdx*rdx);
-	     theta += dtheta;              /* rotate gradient vector by this angle (radians) */
-	     rdx = r * cos(theta);
-	     rdy = r * sin(theta);
+          theta = atan2(rdy,rdx);          /* convert to polar, then back to rectang. coords */
+          r = sqrt(rdy*rdy + rdx*rdx);
+          theta += dtheta;              /* rotate gradient vector by this angle (radians) */
+          rdx = r * cos(theta);
+          rdy = r * sin(theta);
 
-             if (do_gradmap) {
-
-	       offb = col*gbytes;     /* base of byte pointer offset into pixel values (R,G,B,Alpha, etc.) */
-  	       for (bytes=0; bytes < src_bytes; bytes++) /* add all channels together */
-	        {
+          if (do_gradmap)
+            {
+              offb = col*gbytes;     /* base of byte pointer offset into pixel values (R,G,B,Alpha, etc.) */
+              for (bytes=0; bytes < src_bytes; bytes++) /* add all channels together */
+                {
  		  off = offb+bytes;                 /* offset into row arrays */
 		  tx += ((gint) -prg[off - gbytes]   + (gint) prg[off + gbytes] +
-			  (gint) -2*crg[off - gbytes] + (gint) 2*crg[off + gbytes] +
-			  (gint) -nrg[off - gbytes]   + (gint) nrg[off + gbytes]);
+                         (gint) -2*crg[off - gbytes] + (gint) 2*crg[off + gbytes] +
+                         (gint) -nrg[off - gbytes]   + (gint) nrg[off + gbytes]);
 
  		  ty += ((gint) -prg[off - gbytes] - (gint)2*prg[off] - (gint) prg[off + gbytes] +
-			  (gint) nrg[off - gbytes] + (gint)2*nrg[off] + (gint) nrg[off + gbytes]);
+                         (gint) nrg[off - gbytes] + (gint)2*nrg[off] + (gint) nrg[off + gbytes]);
 	        }
-	       tx *= gscalefac;
-	       ty *= gscalefac;
+              tx *= gscalefac;
+              ty *= gscalefac;
 
-	       rdx += tx;         /* add gradient component in to the other one */
-	       rdy += ty;
+              rdx += tx;         /* add gradient component in to the other one */
+              rdy += ty;
 
-             } /* if (do_gradmap) */
+            } /* if (do_gradmap) */
 
+          if (do_vecmap)
+            {  /* add in fixed vector scaled by  vec. map data */
+              tx = (gdouble) crv[col*vbytes];       /* use first byte only */
+              rdx += scale_vec_x * tx;
+              rdy += scale_vec_y * tx;
+            } /* if (do_vecmap) */
 
-	     if (do_vecmap) {  /* add in fixed vector scaled by  vec. map data */
-	       tx = (gdouble) crv[col*vbytes];       /* use first byte only */
-	       rdx += scale_vec_x * tx;
-	       rdy += scale_vec_y * tx;
+          if (do_magmap)
+            {  /* multiply result by mag. map data */
+              tx = (gdouble) crm[col*mbytes];
+              rdx = (rdx * tx)/(255.0);
+              rdy = (rdy * tx)/(255.0);
+            } /* if do_magmap */
 
-	     } /* if (do_vecmap) */
+          dvalx = rdx + (2<<14);         /* take zero point to be 2^15, since this is two bytes */
+          dvaly = rdy + (2<<14);
 
-	     if (do_magmap) {  /* multiply result by mag. map data */
-	       tx = (gdouble) crm[col*mbytes];
-	       rdx = (rdx * tx)/(255.0);
-	       rdy = (rdy * tx)/(255.0);
+          if (dvalx < 0)
+            dvalx = 0;
 
-	     } /* if do_magmap */
+          if (dvalx > 65535)
+            dvalx = 65535;
 
+          *dx++ = (guchar) (dvalx >> 8);    /* store high order byte in value channel */
+          *dx++ = (guchar) (dvalx % 256);   /* store low order byte in alpha channel */
+          dx += dest_bytes_inc;       /* move data pointer on to next destination pixel */
 
-	     dvalx = rdx + (2<<14);         /* take zero point to be 2^15, since this is two bytes */
-	     dvaly = rdy + (2<<14);
+          if (dvaly < 0)
+            dvaly = 0;
 
-             if (dvalx<0) dvalx=0;
-	     if (dvalx>65535) dvalx=65535;
-	     *dx++ = (guchar) (dvalx >> 8);    /* store high order byte in value channel */
-             *dx++ = (guchar) (dvalx % 256);   /* store low order byte in alpha channel */
-	     dx += dest_bytes_inc;       /* move data pointer on to next destination pixel */
+          if (dvaly > 65535)
+            dvaly = 65535;
 
-	     if (dvaly<0) dvaly=0;
-	     if (dvaly>65535) dvaly=65535;
-	     *dy++ = (guchar) (dvaly >> 8);
-             *dy++ = (guchar) (dvaly % 256);
-	     dy += dest_bytes_inc;
+          *dy++ = (guchar) (dvaly >> 8);
+          *dy++ = (guchar) (dvaly % 256);
+          dy += dest_bytes_inc;
 
-	  } /* ------------------------------- for (col...) ----------------  */
+        } /* ------------------------------- for (col...) ----------------  */
 
       /*  store the dest  */
       gimp_pixel_rgn_set_row (&destxPR, destx, x1, row, (x2 - x1));
@@ -1148,15 +1168,16 @@ diff (GimpDrawable *drawable,
       cr = nr;
       nr = tmp;
 
-      if (do_gradmap) {
-        tmp = prg;
-        prg = crg;
-        crg = nrg;
-        nrg = tmp;
-      }
+      if (do_gradmap)
+        {
+          tmp = prg;
+          prg = crg;
+          crg = nrg;
+          nrg = tmp;
+        }
 
-      if ((row % 5) == 0)
-	gimp_progress_update ((double) row / (double) (y2 - y1));
+      if ((row % 8) == 0)
+	gimp_progress_update ((gdouble) row / (gdouble) (y2 - y1));
 
     } /* for (row..) */
 
@@ -1167,16 +1188,11 @@ diff (GimpDrawable *drawable,
   gimp_drawable_update (draw_xd->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
   gimp_drawable_update (draw_yd->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 
-  /*
-  if (display_diff_map) {
-    gimp_display_new(new_image_id);
-  }
-  */
-
   gimp_displays_flush();  /* make sure layer is visible */
 
   gimp_progress_init (_("Smoothing X gradient"));
   blur16(draw_xd);
+
   gimp_progress_init (_("Smoothing Y gradient"));
   blur16(draw_yd);
 
@@ -1225,14 +1241,15 @@ warp (GimpDrawable  *orig_draw,
   gint warp_iter;      /* index var. over all "warp" Displacement iterations */
 
 
-  disp_map = gimp_drawable_get(dvals.warp_map);
-  mag_draw = gimp_drawable_get(dvals.mag_map);
+  disp_map = gimp_drawable_get (dvals.warp_map);
+  mag_draw = gimp_drawable_get (dvals.mag_map);
 
   /* calculate new X,Y Displacement image maps */
 
   gimp_progress_init (_("Finding XY gradient"));
 
-  diff (disp_map, &xdlayer, &ydlayer);    /* generate x,y differential images (arrays) */
+  /* generate x,y differential images (arrays) */
+  diff (disp_map, &xdlayer, &ydlayer);
 
   /* Get selection area */
   if (! gimp_drawable_mask_intersect (orig_draw->drawable_id,
@@ -1367,120 +1384,147 @@ warp_one (GimpDrawable *draw,
                         x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
 
    /* only push undo-stack the first time through. Thanks Spencer! */
-   if (first_time==TRUE)
-     gimp_pixel_rgn_init (&dest_rgn, new, x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+   if (first_time)
+     gimp_pixel_rgn_init (&dest_rgn,
+                          new, x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
    else
-     /*     gimp_pixel_rgn_init (&dest_rgn, new, x1, y1, (x2 - x1), (y2 - y1), TRUE, FALSE); */
-     gimp_pixel_rgn_init (&dest_rgn, new, x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+     gimp_pixel_rgn_init (&dest_rgn,
+                          new, x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
 
 
-   gimp_pixel_rgn_init (&map_x_rgn, map_x, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
+   gimp_pixel_rgn_init (&map_x_rgn,
+                        map_x, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
+
    if (gimp_drawable_has_alpha(map_x->drawable_id))
-	xm_alpha = 1;
+     xm_alpha = 1;
+
    xm_bytes = gimp_drawable_bpp(map_x->drawable_id);
 
-   gimp_pixel_rgn_init (&map_y_rgn, map_y, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
+   gimp_pixel_rgn_init (&map_y_rgn,
+                        map_y, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
+
    if (gimp_drawable_has_alpha(map_y->drawable_id))
-	ym_alpha = 1;
+     ym_alpha = 1;
+
    ym_bytes = gimp_drawable_bpp(map_y->drawable_id);
 
 
-   if (dvals.mag_use == TRUE) {
-     gimp_pixel_rgn_init (&mag_rgn, mag_draw, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-     if (gimp_drawable_has_alpha(mag_draw->drawable_id))
-       mmag_alpha = 1;
-     mmag_bytes = gimp_drawable_bpp(mag_draw->drawable_id);
+   if (dvals.mag_use)
+     {
+       gimp_pixel_rgn_init (&mag_rgn,
+                            mag_draw, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
+       if (gimp_drawable_has_alpha(mag_draw->drawable_id))
+         mmag_alpha = 1;
 
-     pr = gimp_pixel_rgns_register (5, &src_rgn, &dest_rgn, &map_x_rgn, &map_y_rgn, &mag_rgn);
-   } else {
-     pr = gimp_pixel_rgns_register (4, &src_rgn, &dest_rgn, &map_x_rgn, &map_y_rgn);
-   }
+       mmag_bytes = gimp_drawable_bpp(mag_draw->drawable_id);
 
-   dscalefac = (dvals.amount) / (256* 127.5 * dvals.substeps);  /* substep displacement vector scale factor */
+       pr = gimp_pixel_rgns_register (5,
+                                      &src_rgn, &dest_rgn,
+                                      &map_x_rgn, &map_y_rgn, &mag_rgn);
+     }
+   else
+     {
+       pr = gimp_pixel_rgns_register (4,
+                                      &src_rgn, &dest_rgn,
+                                      &map_x_rgn, &map_y_rgn);
+     }
 
+   /* substep displacement vector scale factor */
+   dscalefac = dvals.amount / (256 * 127.5 * dvals.substeps);
 
    for (pr = pr; pr != NULL; pr = gimp_pixel_rgns_process (pr))
-    {
+     {
+       srcrow = src_rgn.data;
+       destrow = dest_rgn.data;
+       mxrow = map_x_rgn.data;
+       myrow = map_y_rgn.data;
 
-      srcrow = src_rgn.data;
-      destrow = dest_rgn.data;
-      mxrow = map_x_rgn.data;
-      myrow = map_y_rgn.data;
-      if (dvals.mag_use == TRUE)
-	mmagrow = mag_rgn.data;
+       if (dvals.mag_use)
+         mmagrow = mag_rgn.data;
 
-      /* loop over destination pixels */
-      for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
-	{
-	  src = srcrow;
-	  dest = destrow;
-	  mx = mxrow;
-	  my = myrow;
+       /* loop over destination pixels */
+       for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
+         {
+           src = srcrow;
+           dest = destrow;
+           mx = mxrow;
+           my = myrow;
 
-          if (dvals.mag_use == TRUE)
-	    mmag = mmagrow;
+           if (dvals.mag_use == TRUE)
+             mmag = mmagrow;
 
-	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
-	    {
-	      /* ----- Find displacement vector (amnt_x, amnt_y) ------------ */
+           for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
+             {
+               /* ----- Find displacement vector (amnt_x, amnt_y) ------------ */
 
-              dx = dscalefac * ((256.0*mx[0])+mx[1] -32768);  /* 16-bit values */
-	      dy = dscalefac * ((256.0*my[0])+my[1] -32768);
+               dx = dscalefac * ((256.0 * mx[0]) + mx[1] -32768);  /* 16-bit values */
+               dy = dscalefac * ((256.0 * my[0]) + my[1] -32768);
 
-	      if (dvals.mag_use == TRUE) {
-		scalefac = warp_map_mag_give_value(mmag, mmag_alpha, mmag_bytes)/255.0;
-		dx *= scalefac;
-		dy *= scalefac;
-	      }
+               if (dvals.mag_use)
+                 {
+                   scalefac = warp_map_mag_give_value (mmag,
+                                                       mmag_alpha,
+                                                       mmag_bytes) / 255.0;
+                   dx *= scalefac;
+                   dy *= scalefac;
+                 }
 
-	      if (dvals.dither != 0.0) {       /* random dither is +/- dvals.dither pixels */
-		dx += g_rand_double_range (gr, -dvals.dither, dvals.dither);
-		dy += g_rand_double_range (gr, -dvals.dither, dvals.dither);
-	      }
+               if (dvals.dither != 0.0)
+                 {       /* random dither is +/- dvals.dither pixels */
+                   dx += g_rand_double_range (gr, -dvals.dither, dvals.dither);
+                   dy += g_rand_double_range (gr, -dvals.dither, dvals.dither);
+                 }
 
-	      if (dvals.substeps != 1) {   /* trace (substeps) iterations of displacement vector */
+	      if (dvals.substeps != 1)
+                {   /* trace (substeps) iterations of displacement vector */
+                  for (substep = 1; substep < dvals.substeps; substep++)
+                    {
+                      /* In this (substep) loop, (x,y) remain fixed. (dx,dy) vary each step. */
+                      needx = x + dx;
+                      needy = y + dy;
 
-		for (substep = 1; substep < dvals.substeps; substep++) {
+                      if (needx >= 0.0)
+                        xi = (gint) needx;
+                      else
+                        xi = -((gint) -needx + 1);
 
-  	          needx = x + dx;   /* In this (substep) loop, (x,y) remain fixed. (dx,dy) vary each step. */
-	          needy = y + dy;
+                      if (needy >= 0.0)
+                        yi = (gint) needy;
+                      else
+                        yi = -((gint) -needy + 1);
 
-	          if (needx >= 0.0)    xi = (int) needx;
-		    else	       xi = -((int) -needx + 1);
+                      /* get 4 neighboring DX values from DiffX drawable for linear interpolation */
+                      xtile = warp_pixel (map_x, xtile, width, height, x1, y1, x2, y2, xi, yi, &xrow, &xcol, pixel[0]);
+                      xtile = warp_pixel (map_x, xtile, width, height, x1, y1, x2, y2, xi + 1, yi, &xrow, &xcol, pixel[1]);
+                      xtile = warp_pixel (map_x, xtile, width, height, x1, y1, x2, y2, xi, yi + 1, &xrow, &xcol, pixel[2]);
+                      xtile = warp_pixel (map_x, xtile, width, height, x1, y1, x2, y2, xi + 1, yi + 1, &xrow, &xcol, pixel[3]);
 
-		  if (needy >= 0.0)    yi = (int) needy;
-		    else               yi = -((int) -needy + 1);
+                      ivalues[0] = 256 * pixel[0][0] + pixel[0][1];
+                      ivalues[1] = 256 * pixel[1][0] + pixel[1][1];
+                      ivalues[2] = 256 * pixel[2][0] + pixel[2][1];
+                      ivalues[3] = 256 * pixel[3][0] + pixel[3][1];
 
-		     /* get 4 neighboring DX values from DiffX drawable for linear interpolation */
-	          xtile = warp_pixel (map_x, xtile, width, height, x1, y1, x2, y2, xi, yi, &xrow, &xcol, pixel[0]);
-	          xtile = warp_pixel (map_x, xtile, width, height, x1, y1, x2, y2, xi + 1, yi, &xrow, &xcol, pixel[1]);
-	          xtile = warp_pixel (map_x, xtile, width, height, x1, y1, x2, y2, xi, yi + 1, &xrow, &xcol, pixel[2]);
-	          xtile = warp_pixel (map_x, xtile, width, height, x1, y1, x2, y2, xi + 1, yi + 1, &xrow, &xcol, pixel[3]);
+                      xval = gimp_bilinear_32 (needx, needy, ivalues);
 
-	          ivalues[0] = 256*pixel[0][0] + pixel[0][1];
-		  ivalues[1] = 256*pixel[1][0] + pixel[1][1];
-		  ivalues[2] = 256*pixel[2][0] + pixel[2][1];
-		  ivalues[3] = 256*pixel[3][0] + pixel[3][1];
-		  xval = gimp_bilinear_32(needx, needy, ivalues);
+                      /* get 4 neighboring DY values from DiffY drawable for linear interpolation */
+                      ytile = warp_pixel (map_y, ytile, width, height, x1, y1, x2, y2, xi, yi, &yrow, &ycol, pixel[0]);
+                      ytile = warp_pixel (map_y, ytile, width, height, x1, y1, x2, y2, xi + 1, yi, &yrow, &ycol, pixel[1]);
+                      ytile = warp_pixel (map_y, ytile, width, height, x1, y1, x2, y2, xi, yi + 1, &yrow, &ycol, pixel[2]);
+                      ytile = warp_pixel (map_y, ytile, width, height, x1, y1, x2, y2, xi + 1, yi + 1, &yrow, &ycol, pixel[3]);
 
-		     /* get 4 neighboring DY values from DiffY drawable for linear interpolation */
-	          ytile = warp_pixel (map_y, ytile, width, height, x1, y1, x2, y2, xi, yi, &yrow, &ycol, pixel[0]);
-	          ytile = warp_pixel (map_y, ytile, width, height, x1, y1, x2, y2, xi + 1, yi, &yrow, &ycol, pixel[1]);
-	          ytile = warp_pixel (map_y, ytile, width, height, x1, y1, x2, y2, xi, yi + 1, &yrow, &ycol, pixel[2]);
-	          ytile = warp_pixel (map_y, ytile, width, height, x1, y1, x2, y2, xi + 1, yi + 1, &yrow, &ycol, pixel[3]);
+                      ivalues[0] = 256 * pixel[0][0] + pixel[0][1];
+                      ivalues[1] = 256 * pixel[1][0] + pixel[1][1];
+                      ivalues[2] = 256 * pixel[2][0] + pixel[2][1];
+                      ivalues[3] = 256 * pixel[3][0] + pixel[3][1];
 
-	          ivalues[0] = 256*pixel[0][0] + pixel[0][1];
-		  ivalues[1] = 256*pixel[1][0] + pixel[1][1];
-		  ivalues[2] = 256*pixel[2][0] + pixel[2][1];
-		  ivalues[3] = 256*pixel[3][0] + pixel[3][1];
-		  yval = gimp_bilinear_32(needx, needy, ivalues);
+                      yval = gimp_bilinear_32 (needx, needy, ivalues);
 
-		  dx += dscalefac * (xval-32768);      /* move displacement vector to this new value */
-		  dy += dscalefac * (yval-32768);
+                      /* move displacement vector to this new value */
+                      dx += dscalefac * (xval - 32768);
+                      dy += dscalefac * (yval - 32768);
 
-		} /* for (substep) */
-	      } /* if (substeps != 0) */
-
+                    } /* for (substep) */
+                } /* if (substeps != 0) */
 
 	      /* --------------------------------------------------------- */
 
@@ -1496,14 +1540,14 @@ warp_one (GimpDrawable *draw,
 	      /* Calculations complete; now copy the proper pixel */
 
 	      if (needx >= 0.0)
-		      xi = (int) needx;
+                xi = (gint) needx;
 	      else
-		      xi = -((int) -needx + 1);
+                xi = -((gint) -needx + 1);
 
 	      if (needy >= 0.0)
-		      yi = (int) needy;
+                yi = (gint) needy;
 	      else
-		      yi = -((int) -needy + 1);
+                yi = -((gint) -needy + 1);
 
 	      /* get 4 neighboring pixel values from source drawable for linear interpolation */
 	      tile = warp_pixel (draw, tile, width, height, x1, y1, x2, y2, xi, yi, &row, &col, pixel[0]);
@@ -1517,7 +1561,8 @@ warp_one (GimpDrawable *draw,
 		  values[1] = pixel[1][k];
 		  values[2] = pixel[2][k];
 		  values[3] = pixel[3][k];
-		  val = gimp_bilinear_8(needx, needy, values);
+
+                  val = gimp_bilinear_8 (needx, needy, values);
 
 		  *dest++ = val;
 		} /* for k */
@@ -1529,6 +1574,7 @@ warp_one (GimpDrawable *draw,
 	  destrow += dest_rgn.rowstride;
 	  mxrow += map_x_rgn.rowstride;
 	  myrow += map_y_rgn.rowstride;
+
           if (dvals.mag_use == TRUE)
 	    mmagrow += mag_rgn.rowstride;
 
@@ -1536,7 +1582,6 @@ warp_one (GimpDrawable *draw,
 
       progress += (dest_rgn.w * dest_rgn.h);
       gimp_progress_update ((double) progress / (double) max_progress);
-
 
     } /* for pr */
 
@@ -1599,7 +1644,7 @@ warp_pixel (GimpDrawable *drawable,
 {
   static guchar empty_pixel[4] = {0, 0, 0, 0};
   guchar *data;
-  gint b;
+  gint    b;
 
   /* Tile the image. */
   if (dvals.wrap_type == WRAP)
@@ -1630,17 +1675,21 @@ warp_pixel (GimpDrawable *drawable,
 
   if (x >= x1 && y >= y1 && x < x2 && y < y2)
     {
-      if ((( (guint) (x / tile_width)) != *col) || (( (guint) (y / tile_height)) != *row))
+      if ((((guint) (x / tile_width)) != *col) ||
+          (((guint) (y / tile_height)) != *row))
 	{
 	  *col = x / tile_width;
 	  *row = y / tile_height;
+
 	  if (tile)
 	    gimp_tile_unref (tile, FALSE);
+
 	  tile = gimp_drawable_get_tile (drawable, FALSE, *row, *col);
 	  gimp_tile_ref (tile);
 	}
 
-      data = tile->data + tile->bpp * (tile->ewidth * (y % tile_height) + (x % tile_width));
+      data = (tile->data +
+              tile->bpp * (tile->ewidth * (y % tile_height) + (x % tile_width)));
     }
   else
     {
