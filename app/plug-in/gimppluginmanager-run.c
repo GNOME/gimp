@@ -39,10 +39,10 @@
 #include "pdb/gimptemporaryprocedure.h"
 
 #include "gimppluginmanager.h"
+#define __YES_I_NEED_GIMP_PLUG_IN_MANAGER_RUN__
+#include "gimppluginmanager-run.h"
 #include "plug-in.h"
 #include "plug-in-params.h"
-#define __YES_I_NEED_PLUG_IN_RUN__
-#include "plug-in-run.h"
 
 #include "gimp-intl.h"
 
@@ -50,14 +50,14 @@
 /*  public functions  */
 
 GValueArray *
-plug_in_run (GimpPlugInManager   *manager,
-             GimpContext         *context,
-             GimpProgress        *progress,
-             GimpPlugInProcedure *procedure,
-             GValueArray         *args,
-             gboolean             synchronous,
-             gboolean             destroy_return_vals,
-             gint                 display_ID)
+gimp_plug_in_manager_run (GimpPlugInManager   *manager,
+                          GimpContext         *context,
+                          GimpProgress        *progress,
+                          GimpPlugInProcedure *procedure,
+                          GValueArray         *args,
+                          gboolean             synchronous,
+                          gboolean             destroy_return_vals,
+                          gint                 display_ID)
 {
   GValueArray *return_vals = NULL;
   PlugIn      *plug_in;
@@ -184,11 +184,11 @@ plug_in_run (GimpPlugInManager   *manager,
 }
 
 GValueArray *
-plug_in_run_temp (GimpPlugInManager      *manager,
-                  GimpContext            *context,
-                  GimpProgress           *progress,
-                  GimpTemporaryProcedure *procedure,
-                  GValueArray            *args)
+gimp_plug_in_manager_run_temp (GimpPlugInManager      *manager,
+                               GimpContext            *context,
+                               GimpProgress           *progress,
+                               GimpTemporaryProcedure *procedure,
+                               GValueArray            *args)
 {
   GValueArray *return_vals = NULL;
   PlugIn      *plug_in;

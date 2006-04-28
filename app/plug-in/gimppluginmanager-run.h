@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * plug-in-run.h
+ * gimppluginmanager-run.h
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,32 +18,32 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PLUG_IN_RUN_H__
-#define __PLUG_IN_RUN_H__
+#ifndef __GIMP_PLUG_IN_MANAGER_RUN_H__
+#define __GIMP_PLUG_IN_MANAGER_RUN_H__
 
-#ifndef __YES_I_NEED_PLUG_IN_RUN__
-#error Do not use plug_in_run*(), use gimp_procedure_execute*() instead.
+#ifndef __YES_I_NEED_GIMP_PLUG_IN_MANAGER_RUN__
+#error Do not use gimp_plug_in_manager_run*(), use gimp_procedure_execute*() instead.
 #endif
 
 
 /*  Run a plug-in as if it were a procedure database procedure
  */
-GValueArray * plug_in_run      (GimpPlugInManager      *manager,
-                                GimpContext            *context,
-                                GimpProgress           *progress,
-                                GimpPlugInProcedure    *procedure,
-                                GValueArray            *args,
-                                gboolean                synchronous,
-                                gboolean                destroy_return_vals,
-                                gint                    display_ID);
+GValueArray * gimp_plug_in_manager_run      (GimpPlugInManager      *manager,
+                                             GimpContext            *context,
+                                             GimpProgress           *progress,
+                                             GimpPlugInProcedure    *procedure,
+                                             GValueArray            *args,
+                                             gboolean                synchronous,
+                                             gboolean                destroy_return_vals,
+                                             gint                    display_ID);
 
 /*  Run a temp plug-in proc as if it were a procedure database procedure
  */
-GValueArray * plug_in_run_temp (GimpPlugInManager      *manager,
-                                GimpContext            *context,
-                                GimpProgress           *progress,
-                                GimpTemporaryProcedure *procedure,
-                                GValueArray            *args);
+GValueArray * gimp_plug_in_manager_run_temp (GimpPlugInManager      *manager,
+                                             GimpContext            *context,
+                                             GimpProgress           *progress,
+                                             GimpTemporaryProcedure *procedure,
+                                             GValueArray            *args);
 
 
-#endif /* __PLUG_IN_RUN_H__ */
+#endif /* __GIMP_PLUG_IN_MANAGER_RUN_H__ */

@@ -37,6 +37,8 @@ libappplug_in_a_SOURCES = \
 	gimppluginmanager-locale-domain.h	\
 	gimppluginmanager-menu-branch.c		\
 	gimppluginmanager-menu-branch.h		\
+	gimppluginmanager-run.c			\
+	gimppluginmanager-run.h			\
 	gimppluginmanager-query.c		\
 	gimppluginmanager-query.h		\
 	gimppluginshm.c				\
@@ -57,9 +59,7 @@ libappplug_in_a_SOURCES = \
 	plug-in-progress.c			\
 	plug-in-progress.h			\
 	plug-in-rc.c				\
-	plug-in-rc.h				\
-	plug-in-run.c				\
-	plug-in-run.h
+	plug-in-rc.h
 
 EXTRA_DIST = makefile.msc
 
