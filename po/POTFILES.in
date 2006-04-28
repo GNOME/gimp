@@ -8,6 +8,7 @@ app/app_procs.c
 app/batch.c
 app/main.c
 app/sanity.c
+
 app/actions/actions.c
 app/actions/brush-editor-actions.c
 app/actions/brushes-actions.c
@@ -216,6 +217,7 @@ app/pdb/drawable_cmds.c
 app/pdb/drawable_transform_cmds.c
 app/pdb/edit_cmds.c
 app/pdb/gimp-pdb.c
+app/pdb/gimppdb.c
 app/pdb/gimpprocedure.c
 app/pdb/guides_cmds.c
 app/pdb/image_cmds.c

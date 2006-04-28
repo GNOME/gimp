@@ -1,3 +1,7 @@
+2006-04-28  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added app/pdb/gimppdb.c.
+
 2006-04-28  Žygimantas Beručka  <zygis@gnome.org>
 
 	* lt.po: Updated Lithuanian translation.
