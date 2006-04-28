@@ -536,13 +536,7 @@ plug_in_close (PlugIn   *plug_in,
           gp_quit_write (plug_in->my_write, plug_in);
 
           /*  give the plug-in some time (10 ms)  */
-#ifndef G_OS_WIN32
-          tv.tv_sec  = 0;
-          tv.tv_usec = 10 * 1000;
-          select (0, NULL, NULL, NULL, &tv);
-#else
-          Sleep (10);
-#endif
+          g_usleep (10000);
         }
 
       /* If necessary, kill the filter. */
@@ -583,7 +577,7 @@ plug_in_close (PlugIn   *plug_in,
 
           if (dwExitCode == STILL_ACTIVE)
             {
-              if (gimp->be_verbose)
+              if (plug_in->manager->gimp->be_verbose)
                 g_print (_("Terminating plug-in: '%s'\n"),
                          gimp_filename_to_utf8 (plug_in->prog));
 

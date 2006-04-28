@@ -1,3 +1,9 @@
+2006-04-29  Tor Lillqvist  <tml@novell.com>
+
+	* app/plug-in/plug-in.c (plug_in_close): Make it compile again on
+	Win32. Use g_usleep() instead of select()/Sleep() Unix/Windows
+	ifdef.
+
 2006-04-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/Makefile.am
