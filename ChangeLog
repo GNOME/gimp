@@ -1,5 +1,10 @@
 2006-04-29  Tor Lillqvist  <tml@novell.com>
 
+	* app/plug-in/gimppluginmanager-locale-domain.c
+	(gimp_plug_in_manager_get_locale_domains): NULL-terminate the
+	locale_domains and locale_paths string vector, as they are freed
+	with g_strfreev() in gimp_plug_in_manager_restore().
+
 	* app/plug-in/plug-in.c (plug_in_close): Make it compile again on
 	Win32. Use g_usleep() instead of select()/Sleep() Unix/Windows
 	ifdef.

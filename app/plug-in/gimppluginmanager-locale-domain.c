@@ -158,8 +158,8 @@ gimp_plug_in_manager_get_locale_domains (GimpPlugInManager   *manager,
 
   n_domains = g_slist_length (unique) + 1;
 
-  *locale_domains = g_new0 (gchar *, n_domains);
-  *locale_paths   = g_new0 (gchar *, n_domains);
+  *locale_domains = g_new0 (gchar *, n_domains + 1);
+  *locale_paths   = g_new0 (gchar *, n_domains + 1);
 
   (*locale_domains)[0] = g_strdup (STD_PLUG_INS_LOCALE_DOMAIN);
   (*locale_paths)[0]   = g_strdup (gimp_locale_directory ());
