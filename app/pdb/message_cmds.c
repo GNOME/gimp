@@ -31,6 +31,7 @@
 
 #include "core/gimp.h"
 #include "gimp-intl.h"
+#include "plug-in/gimppluginmanager.h"
 #include "plug-in/plug-in-progress.h"
 #include "plug-in/plug-in.h"
 
@@ -49,8 +50,8 @@ message_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      if (gimp->current_plug_in)
-        plug_in_progress_message (gimp->current_plug_in, message);
+      if (gimp->plug_in_manager->current_plug_in)
+        plug_in_progress_message (gimp->plug_in_manager->current_plug_in, message);
       else
         gimp_message (gimp, NULL, message);
     }

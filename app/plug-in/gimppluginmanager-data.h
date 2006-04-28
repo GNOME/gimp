@@ -1,6 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * gimppluginmanager-data.h
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -16,19 +18,19 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PLUG_IN_DATA_H__
-#define __PLUG_IN_DATA_H__
+#ifndef __GIMP_PLUG_IN_MANAGER_DATA_H__
+#define __GIMP_PLUG_IN_MANAGER_DATA_H__
 
 
-void           plug_in_data_free (Gimp         *gimp);
+void           gimp_plug_in_manager_data_free (GimpPlugInManager *manager);
 
-void           plug_in_data_set  (Gimp         *gimp,
-                                  const gchar  *identifier,
-                                  gint32        bytes,
-                                  const guint8 *data);
-const guint8 * plug_in_data_get  (Gimp         *gimp,
-                                  const gchar  *identifier,
-                                  gint32       *bytes);
+void           gimp_plug_in_manager_set_data  (GimpPlugInManager *manager,
+                                               const gchar       *identifier,
+                                               gint32             bytes,
+                                               const guint8      *data);
+const guint8 * gimp_plug_in_manager_get_data  (GimpPlugInManager *manager,
+                                               const gchar       *identifier,
+                                               gint32            *bytes);
 
 
-#endif  /*  __PLUG_IN_DATA_H__  */
+#endif  /*  __GIMP_PLUG_IN_MANAGER_DATA_H__  */

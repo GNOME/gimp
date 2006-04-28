@@ -59,6 +59,8 @@
 #include "pdb/gimppdb.h"
 #include "pdb/gimppluginprocedure.h"
 
+#include "plug-in/gimppluginmanager.h"
+
 #include "file-open.h"
 #include "file-utils.h"
 #include "gimprecentlist.h"
@@ -96,7 +98,7 @@ file_open_image (Gimp                *gimp,
   *status = GIMP_PDB_EXECUTION_ERROR;
 
   if (! file_proc)
-    file_proc = file_utils_find_proc (gimp->load_procs, uri);
+    file_proc = file_utils_find_proc (gimp->plug_in_manager->load_procs, uri);
 
   if (! file_proc)
     {
@@ -201,7 +203,7 @@ file_open_thumbnail (Gimp          *gimp,
   *image_width  = 0;
   *image_height = 0;
 
-  file_proc = file_utils_find_proc (gimp->load_procs, uri);
+  file_proc = file_utils_find_proc (gimp->plug_in_manager->load_procs, uri);
 
   if (! file_proc || ! file_proc->thumb_loader)
     return NULL;

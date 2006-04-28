@@ -58,7 +58,7 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "core-types.h"
+#include "plug-in-types.h"
 
 #include "gimpinterpreterdb.h"
 

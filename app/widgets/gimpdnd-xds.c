@@ -38,6 +38,8 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 
+#include "plug-in/gimppluginmanager.h"
+
 #include "file/file-save.h"
 #include "file/file-utils.h"
 
@@ -139,7 +141,7 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
   uri = g_strndup ((const gchar *) data, length);
   g_free (data);
 
-  proc = file_utils_find_proc (image->gimp->save_procs, uri);
+  proc = file_utils_find_proc (image->gimp->plug_in_manager->save_procs, uri);
 
   if (proc)
     {

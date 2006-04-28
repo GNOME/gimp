@@ -33,7 +33,7 @@
 #include "core/gimp.h"
 #include "gimp-pdb-compat.h"
 #include "gimppdb-query.h"
-#include "plug-in/plug-in-data.h"
+#include "plug-in/gimppluginmanager-data.h"
 
 
 static GValueArray *
@@ -322,7 +322,8 @@ procedural_db_get_data_invoker (GimpProcedure     *procedure,
       gchar        *canonical = gimp_canonicalize_identifier (identifier);
       const guint8 *orig_data;
 
-      orig_data = plug_in_data_get (gimp, canonical, &bytes);
+      orig_data = gimp_plug_in_manager_get_data (gimp->plug_in_manager,
+                                                 canonical, &bytes);
 
       g_free (canonical);
 
@@ -361,7 +362,8 @@ procedural_db_get_data_size_invoker (GimpProcedure     *procedure,
     {
       gchar *canonical = gimp_canonicalize_identifier (identifier);
 
-      if (! plug_in_data_get (gimp, canonical, &bytes))
+      if (! gimp_plug_in_manager_get_data (gimp->plug_in_manager,
+                                           canonical, &bytes))
         success = FALSE;
 
       g_free (canonical);
@@ -395,7 +397,8 @@ procedural_db_set_data_invoker (GimpProcedure     *procedure,
     {
       gchar *canonical = gimp_canonicalize_identifier (identifier);
 
-      plug_in_data_set (gimp, canonical, bytes, data);
+      gimp_plug_in_manager_set_data (gimp->plug_in_manager,
+                                     canonical, bytes, data);
 
       g_free (canonical);
     }

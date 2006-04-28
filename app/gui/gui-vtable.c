@@ -43,8 +43,6 @@
 
 #include "pdb/gimppluginprocedure.h"
 
-#include "plug-in/plug-ins.h"
-
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpbrushselect.h"
 #include "widgets/gimpdialogfactory.h"
@@ -102,10 +100,6 @@ static void           gui_display_delete       (GimpObject          *display);
 static void           gui_displays_reconnect   (Gimp                *gimp,
                                                 GimpImage           *old_image,
                                                 GimpImage           *new_image);
-static void           gui_menus_create_branch  (Gimp                *gimp,
-                                                const gchar         *progname,
-                                                const gchar         *menu_path,
-                                                const gchar         *menu_label);
 static GimpProgress * gui_new_progress         (Gimp                *gimp,
                                                 GimpObject          *display);
 static void           gui_free_progress        (Gimp                *gimp,
@@ -150,7 +144,6 @@ gui_vtable_init (Gimp *gimp)
   gimp->gui.display_create      = gui_display_create;
   gimp->gui.display_delete      = gui_display_delete;
   gimp->gui.displays_reconnect  = gui_displays_reconnect;
-  gimp->gui.menus_create_branch = gui_menus_create_branch;
   gimp->gui.progress_new        = gui_new_progress;
   gimp->gui.progress_free       = gui_free_progress;
   gimp->gui.pdb_dialog_new      = gui_pdb_dialog_new;
@@ -365,22 +358,6 @@ gui_displays_reconnect (Gimp      *gimp,
                         GimpImage *new_image)
 {
   gimp_displays_reconnect (gimp, old_image, new_image);
-}
-
-static void
-gui_menus_create_branch (Gimp        *gimp,
-                         const gchar *progname,
-                         const gchar *menu_path,
-                         const gchar *menu_label)
-{
-  GList *list;
-
-  for (list = gimp_action_groups_from_name ("plug-in");
-       list;
-       list = g_list_next (list))
-    {
-      plug_in_actions_add_branch (list->data, progname, menu_path, menu_label);
-    }
 }
 
 static GimpProgress *

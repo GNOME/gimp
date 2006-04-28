@@ -33,6 +33,8 @@
 
 #include "pdb/gimppluginprocedure.h"
 
+#include "plug-in/gimppluginmanager.h"
+
 #include "file/file-save.h"
 #include "file/file-utils.h"
 
@@ -178,8 +180,10 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
   basename = g_path_get_basename (uri);
 
   save_proc     = dialog->file_proc;
-  uri_proc      = file_utils_find_proc (gimp->save_procs, uri);
-  basename_proc = file_utils_find_proc (gimp->save_procs, basename);
+  uri_proc      = file_utils_find_proc (gimp->plug_in_manager->save_procs,
+                                        uri);
+  basename_proc = file_utils_find_proc (gimp->plug_in_manager->save_procs,
+                                        basename);
 
   g_print ("\n\n%s: URI = %s\n",
            G_STRFUNC, uri);
@@ -230,8 +234,10 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
               uri      = ext_uri;
               basename = ext_basename;
 
-              uri_proc      = file_utils_find_proc (gimp->save_procs, uri);
-              basename_proc = file_utils_find_proc (gimp->save_procs, basename);
+              uri_proc      = file_utils_find_proc (gimp->plug_in_manager->save_procs,
+                                                    uri);
+              basename_proc = file_utils_find_proc (gimp->plug_in_manager->save_procs,
+                                                    basename);
 
               utf8 = g_filename_to_utf8 (basename, -1, NULL, NULL, NULL);
               gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (save_dialog),

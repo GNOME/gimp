@@ -42,6 +42,8 @@
 
 #include "core/gimp.h"
 
+#include "plug-in/gimppluginmanager.h"
+
 #include "file/file-open.h"
 #include "file/file-utils.h"
 
@@ -306,7 +308,7 @@ app_run (const gchar         *full_prog_name,
             }
           else
             {
-              uri = file_utils_filename_to_uri (gimp->load_procs,
+              uri = file_utils_filename_to_uri (gimp->plug_in_manager->load_procs,
                                                 filenames[i], &error);
             }
 

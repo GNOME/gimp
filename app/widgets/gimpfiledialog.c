@@ -37,7 +37,8 @@
 
 #include "file/file-utils.h"
 
-#include "plug-in/plug-in-locale-domain.h"
+#include "plug-in/gimppluginmanager.h"
+#include "plug-in/gimppluginmanager-locale-domain.h"
 
 #include "pdb/gimppdb.h"
 #include "pdb/gimppluginprocedure.h"
@@ -263,7 +264,7 @@ gimp_file_dialog_new (Gimp                 *gimp,
   switch (action)
     {
     case GTK_FILE_CHOOSER_ACTION_OPEN:
-      file_procs = gimp->load_procs;
+      file_procs = gimp->plug_in_manager->load_procs;
       automatic  = _("Automatically Detected");
       automatic_help_id = GIMP_HELP_FILE_OPEN_BY_EXTENSION;
 
@@ -273,7 +274,7 @@ gimp_file_dialog_new (Gimp                 *gimp,
       break;
 
     case GTK_FILE_CHOOSER_ACTION_SAVE:
-      file_procs = gimp->save_procs;
+      file_procs = gimp->plug_in_manager->save_procs;
       automatic  = _("By Extension");
       automatic_help_id = GIMP_HELP_FILE_SAVE_BY_EXTENSION;
 
@@ -462,7 +463,9 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
           GSList        *ext;
           gint           i;
 
-          domain = plug_in_locale_domain (gimp, file_proc->prog, NULL);
+          domain = gimp_plug_in_manager_get_locale_domain (gimp->plug_in_manager,
+                                                           file_proc->prog,
+                                                           NULL);
 
           label = gimp_plug_in_procedure_get_label (file_proc, domain);
 

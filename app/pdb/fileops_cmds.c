@@ -38,7 +38,8 @@
 #include "core/gimplayer.h"
 #include "file/file-open.h"
 #include "file/file-utils.h"
-#include "plug-in/plug-in-file.h"
+#include "plug-in/gimppluginmanager-file.h"
+#include "plug-in/gimppluginmanager.h"
 
 
 static GValueArray *
@@ -55,14 +56,14 @@ file_load_invoker (GimpProcedure     *procedure,
   gchar               *uri;
   gint                 i;
 
-  uri = file_utils_filename_to_uri (gimp->load_procs,
+  uri = file_utils_filename_to_uri (gimp->plug_in_manager->load_procs,
                                     g_value_get_string (&args->values[1]),
                                     NULL);
 
   if (! uri)
     return gimp_procedure_get_return_values (procedure, FALSE);
 
-  file_proc = file_utils_find_proc (gimp->load_procs, uri);
+  file_proc = file_utils_find_proc (gimp->plug_in_manager->load_procs, uri);
 
   g_free (uri);
 
@@ -110,7 +111,7 @@ file_load_layer_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      gchar *uri = file_utils_filename_to_uri (gimp->load_procs,
+      gchar *uri = file_utils_filename_to_uri (gimp->plug_in_manager->load_procs,
                                                filename, NULL);
 
       if (uri)
@@ -149,14 +150,14 @@ file_save_invoker (GimpProcedure     *procedure,
   gchar               *uri;
   gint                 i;
 
-  uri = file_utils_filename_to_uri (gimp->load_procs,
+  uri = file_utils_filename_to_uri (gimp->plug_in_manager->load_procs,
                                     g_value_get_string (&args->values[3]),
                                     NULL);
 
   if (! uri)
     return gimp_procedure_get_return_values (procedure, FALSE);
 
-  file_proc = file_utils_find_proc (gimp->save_procs, uri);
+  file_proc = file_utils_find_proc (gimp->plug_in_manager->save_procs, uri);
 
   g_free (uri);
 
@@ -303,8 +304,9 @@ register_magic_load_handler_invoker (GimpProcedure     *procedure,
     {
       gchar *canonical = gimp_canonicalize_identifier (procedure_name);
 
-      success = plug_in_file_register_load_handler (gimp, canonical,
-                                                    extensions, prefixes, magics);
+      success = gimp_plug_in_manager_register_load_handler (gimp->plug_in_manager,
+                                                            canonical,
+                                                            extensions, prefixes, magics);
 
       g_free (canonical);
     }
@@ -332,8 +334,9 @@ register_load_handler_invoker (GimpProcedure     *procedure,
     {
       gchar *canonical = gimp_canonicalize_identifier (procedure_name);
 
-      success = plug_in_file_register_load_handler (gimp, canonical,
-                                                    extensions, prefixes, NULL);
+      success = gimp_plug_in_manager_register_load_handler (gimp->plug_in_manager,
+                                                            canonical,
+                                                            extensions, prefixes, NULL);
 
       g_free (canonical);
     }
@@ -361,8 +364,9 @@ register_save_handler_invoker (GimpProcedure     *procedure,
     {
       gchar *canonical = gimp_canonicalize_identifier (procedure_name);
 
-      success = plug_in_file_register_save_handler (gimp, canonical,
-                                                    extensions, prefixes);
+      success = gimp_plug_in_manager_register_save_handler (gimp->plug_in_manager,
+                                                            canonical,
+                                                            extensions, prefixes);
 
       g_free (canonical);
     }
@@ -388,7 +392,8 @@ register_file_handler_mime_invoker (GimpProcedure     *procedure,
     {
       gchar *canonical = gimp_canonicalize_identifier (procedure_name);
 
-      success = plug_in_file_register_mime_type (gimp, canonical, mime_type);
+      success = gimp_plug_in_manager_register_mime_type (gimp->plug_in_manager,
+                                                         canonical, mime_type);
 
       g_free (canonical);
     }
@@ -414,7 +419,8 @@ register_thumbnail_loader_invoker (GimpProcedure     *procedure,
     {
       gchar *canonical = gimp_canonicalize_identifier (load_proc);
 
-      success = plug_in_file_register_thumb_loader (gimp, canonical, thumb_proc);
+      success = gimp_plug_in_manager_register_thumb_loader (gimp->plug_in_manager,
+                                                            canonical, thumb_proc);
 
       g_free (canonical);
     }

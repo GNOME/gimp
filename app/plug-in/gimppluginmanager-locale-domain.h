@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * plug-in-locale-domain.h
+ * gimppluginmanager-locale-domain.h
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,27 +18,27 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PLUG_IN_LOCALE_DOMAIN_H__
-#define __PLUG_IN_LOCALE_DOMAIN_H__
+#ifndef __GIMP_PLUG_IN_MANAGER_LOCALE_DOMAIN_H__
+#define __GIMP_PLUG_IN_MANAGER_LOCALE_DOMAIN_H__
 
 
-void          plug_in_locale_domain_exit (Gimp         *gimp);
+void          gimp_plug_in_manager_locale_domain_exit (GimpPlugInManager   *manager);
 
 /* Add a locale domain */
-void          plug_in_locale_domain_add  (Gimp         *gimp,
-                                          const gchar  *prog_name,
-                                          const gchar  *domain_name,
-                                          const gchar  *domain_path);
+void          gimp_plug_in_manager_add_locale_domain  (GimpPlugInManager   *manager,
+                                                       const gchar         *prog_name,
+                                                       const gchar         *domain_name,
+                                                       const gchar         *domain_path);
 
 /* Retrieve a plug-ins locale domain */
-const gchar * plug_in_locale_domain      (Gimp         *gimp,
-                                          const gchar  *prog_name,
-                                          const gchar **locale_path);
+const gchar * gimp_plug_in_manager_get_locale_domain  (GimpPlugInManager   *manager,
+                                                       const gchar         *prog_name,
+                                                       const gchar        **locale_path);
 
 /* Retrieve all help domains */
-gint          plug_in_locale_domains     (Gimp         *gimp,
-                                          gchar      ***locale_domains,
-                                          gchar      ***locale_paths);
+gint          gimp_plug_in_manager_get_locale_domains (GimpPlugInManager   *manager,
+                                                       gchar             ***locale_domains,
+                                                       gchar             ***locale_paths);
 
 
-#endif /* __PLUG_IN_LOCALE_DOMAIN_H__ */
+#endif /* __GIMP_PLUG_IN_MANAGER_LOCALE_DOMAIN_H__ */

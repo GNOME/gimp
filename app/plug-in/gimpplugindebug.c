@@ -1,6 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * gimpplugindebug.c
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -22,11 +24,9 @@
 
 #include <glib-object.h>
 
-#include "core/core-types.h"
+#include "plug-in-types.h"
 
-#include "core/gimp.h"
-
-#include "plug-in-debug.h"
+#include "gimpplugindebug.h"
 
 
 struct _GimpPlugInDebug
@@ -37,106 +37,92 @@ struct _GimpPlugInDebug
 };
 
 
-static const GDebugKey gimp_debug_wrap_keys[] = {
-  {"query", GIMP_DEBUG_WRAP_QUERY},
-  {"init",  GIMP_DEBUG_WRAP_INIT},
-  {"run",   GIMP_DEBUG_WRAP_RUN},
-  {"on",    GIMP_DEBUG_WRAP_DEFAULT}
+static const GDebugKey gimp_debug_wrap_keys[] =
+{
+  { "query", GIMP_DEBUG_WRAP_QUERY   },
+  { "init",  GIMP_DEBUG_WRAP_INIT    },
+  { "run",   GIMP_DEBUG_WRAP_RUN     },
+  { "on",    GIMP_DEBUG_WRAP_DEFAULT }
 };
 
 
-void
-plug_in_debug_init (Gimp *gimp)
+GimpPlugInDebug *
+gimp_plug_in_debug_new (void)
 {
-  GimpPlugInDebug  *dbg;
+  GimpPlugInDebug  *debug;
   const gchar      *wrap, *wrapper;
   gchar            *debug_string;
   gchar           **args;
   GError           *error = NULL;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
   wrap = g_getenv ("GIMP_PLUGIN_DEBUG_WRAP");
   wrapper = g_getenv ("GIMP_PLUGIN_DEBUG_WRAPPER");
 
   if (!(wrap && wrapper))
-    return;
+    return NULL;
 
   if (!g_shell_parse_argv (wrapper, NULL, &args, &error))
     {
       g_warning ("Unable to parse debug wrapper: \"%s\"\n%s",
                  wrapper, error->message);
       g_error_free (error);
-      return;
+      return NULL;
     }
 
-  dbg = g_new (GimpPlugInDebug, 1);
+  debug = g_new (GimpPlugInDebug, 1);
 
-  dbg->args  = args;
+  debug->args  = args;
 
   debug_string = strchr (wrap, ',');
 
   if (debug_string)
     {
-      dbg->name = g_strndup (wrap, debug_string - wrap);
-      dbg->flags = g_parse_debug_string (debug_string + 1,
-                                         gimp_debug_wrap_keys,
-                                         G_N_ELEMENTS (gimp_debug_wrap_keys));
+      debug->name = g_strndup (wrap, debug_string - wrap);
+      debug->flags = g_parse_debug_string (debug_string + 1,
+                                           gimp_debug_wrap_keys,
+                                           G_N_ELEMENTS (gimp_debug_wrap_keys));
     }
   else
     {
-      dbg->name = g_strdup (wrap);
-      dbg->flags = GIMP_DEBUG_WRAP_DEFAULT;
+      debug->name = g_strdup (wrap);
+      debug->flags = GIMP_DEBUG_WRAP_DEFAULT;
     }
 
-  gimp->plug_in_debug = dbg;
+  return debug;
 }
 
 void
-plug_in_debug_exit (Gimp *gimp)
+gimp_plug_in_debug_free (GimpPlugInDebug *debug)
 {
-  GimpPlugInDebug *dbg;
+  g_return_if_fail (debug != NULL);
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  if (debug->name)
+    g_free (debug->name);
 
-  dbg = gimp->plug_in_debug;
+  if (debug->args)
+    g_strfreev (debug->args);
 
-  if (dbg == NULL)
-    return;
-
-  if (dbg->name)
-    g_free (dbg->name);
-
-  if (dbg->args)
-    g_strfreev (dbg->args);
-
-  g_free (dbg);
-
-  gimp->plug_in_debug = NULL;
+  g_free (debug);
 }
 
 gchar **
-plug_in_debug_argv (Gimp               *gimp,
-                    const gchar        *name,
-                    GimpDebugWrapFlag   flag,
-                    gchar             **args)
+gimp_plug_in_debug_argv (GimpPlugInDebug    *debug,
+                         const gchar        *name,
+                         GimpDebugWrapFlag   flag,
+                         gchar             **args)
 {
-  GimpPlugInDebug  *dbg;
-  GPtrArray        *argv;
-  gchar           **arg;
+  GPtrArray  *argv;
+  gchar     **arg;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (gimp->plug_in_debug != NULL, NULL);
+  g_return_val_if_fail (debug != NULL, NULL);
   g_return_val_if_fail (args != NULL, NULL);
 
-  dbg = gimp->plug_in_debug;
-
-  if (!(dbg->flags & flag) || (strcmp (dbg->name, name) != 0))
+  if (!(debug->flags & flag) || (strcmp (debug->name, name) != 0))
     return NULL;
 
   argv = g_ptr_array_sized_new (8);
 
-  for (arg = gimp->plug_in_debug->args; *arg != NULL; arg++)
+  for (arg = debug->args; *arg != NULL; arg++)
     g_ptr_array_add (argv, *arg);
 
   for (arg = args; *arg != NULL; arg++)

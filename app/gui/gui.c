@@ -33,10 +33,12 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
-#include "core/gimpenvirontable.h"
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
+
+#include "plug-in/gimpenvirontable.h"
+#include "plug-in/gimppluginmanager.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -336,7 +338,8 @@ gui_initialize_after_callback (Gimp               *gimp,
       gchar *display;
 
       display = gdk_get_display ();
-      gimp_environ_table_add (gimp->environ_table, name, display, NULL);
+      gimp_environ_table_add (gimp->plug_in_manager->environ_table,
+                              name, display, NULL);
       g_free (display);
     }
 

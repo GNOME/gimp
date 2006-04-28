@@ -30,7 +30,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 
-#include "core-types.h"
+#include "plug-in-types.h"
 
 #include "gimpenvirontable.h"
 

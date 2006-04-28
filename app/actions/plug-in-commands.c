@@ -34,7 +34,8 @@
 #include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
 
-#include "plug-in/plug-in-data.h"
+#include "plug-in/gimppluginmanager.h"
+#include "plug-in/gimppluginmanager-data.h"
 
 #include "pdb/gimpprocedure.h"
 
@@ -134,7 +135,7 @@ plug_in_run_cmd_callback (GtkAction           *action,
       GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1]) &&
       GIMP_IS_PARAM_SPEC_DRAWABLE_ID (procedure->args[2]))
     {
-      gimp_set_last_plug_in (gimp, proc);
+      gimp_plug_in_manager_set_last_plug_in (gimp->plug_in_manager, proc);
     }
 
  error:
@@ -161,7 +162,7 @@ plug_in_repeat_cmd_callback (GtkAction *action,
   if (strcmp (gtk_action_get_name (action), "plug-in-repeat") == 0)
     interactive = FALSE;
 
-  procedure = g_slist_nth_data (gimp->last_plug_ins, value);
+  procedure = g_slist_nth_data (gimp->plug_in_manager->last_plug_ins, value);
 
   if (procedure)
     {
@@ -229,5 +230,5 @@ plug_in_reset_all_response (GtkWidget *dialog,
   gtk_widget_destroy (dialog);
 
   if (response_id == GTK_RESPONSE_OK)
-    plug_in_data_free (gimp);
+    gimp_plug_in_manager_data_free (gimp->plug_in_manager);
 }

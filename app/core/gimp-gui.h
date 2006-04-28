@@ -55,11 +55,6 @@ struct _GimpGui
                                           GimpImage           *old_image,
                                           GimpImage           *new_image);
 
-  void           (* menus_create_branch) (Gimp                *gimp,
-                                          const gchar         *progname,
-                                          const gchar         *menu_path,
-                                          const gchar         *menu_label);
-
   GimpProgress * (* progress_new)        (Gimp                *gimp,
                                           GimpObject          *display);
   void           (* progress_free)       (Gimp                *gimp,
@@ -115,11 +110,6 @@ void           gimp_message              (Gimp                *gimp,
 void           gimp_help                 (Gimp                *gimp,
                                           const gchar         *help_domain,
                                           const gchar         *help_id);
-
-void           gimp_menus_create_branch  (Gimp                *gimp,
-                                          const gchar         *progname,
-                                          const gchar         *menu_path,
-                                          const gchar         *menu_label);
 
 GimpProgress * gimp_new_progress         (Gimp                *gimp,
                                           GimpObject          *display);

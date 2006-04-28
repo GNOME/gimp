@@ -29,7 +29,8 @@
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
-#include "plug-in/plug-in-help-domain.h"
+#include "plug-in/gimppluginmanager-help-domain.h"
+#include "plug-in/gimppluginmanager.h"
 #include "plug-in/plug-in.h"
 
 
@@ -49,9 +50,13 @@ help_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      if (! help_domain && gimp->current_plug_in)
+      GimpPlugInManager *manager = gimp->plug_in_manager;
+
+      if (! help_domain && manager->current_plug_in)
         help_domain = (gchar *)
-          plug_in_help_domain (gimp, gimp->current_plug_in->prog, NULL);
+          gimp_plug_in_manager_get_help_domain (manager,
+                                                manager->current_plug_in->prog,
+                                                NULL);
 
       gimp_help (gimp, help_domain, help_id);
     }

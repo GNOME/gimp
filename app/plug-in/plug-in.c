@@ -72,21 +72,20 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
-#include "core/gimpenvirontable.h"
-#include "core/gimpinterpreterdb.h"
 #include "core/gimpprogress.h"
 
 #include "pdb/gimptemporaryprocedure.h"
 
+#include "gimpenvirontable.h"
+#include "gimpinterpreterdb.h"
+#include "gimpplugindebug.h"
+#include "gimppluginmanager.h"
+#include "gimppluginmanager-locale-domain.h"
 #include "plug-in.h"
-#include "plug-in-debug.h"
 #include "plug-in-def.h"
-#include "plug-in-locale-domain.h"
 #include "plug-in-message.h"
 #include "plug-in-params.h"
 #include "plug-in-progress.h"
-#include "plug-in-shm.h"
-#include "plug-ins.h"
 
 #include "gimp-intl.h"
 
@@ -110,9 +109,9 @@ static void       plug_in_prep_for_exec (gpointer      data);
 
 
 void
-plug_in_init (Gimp *gimp)
+plug_in_init (GimpPlugInManager *manager)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
 
   /* initialize the gimp protocol library and set the read and
    *  write handlers.
@@ -121,30 +120,16 @@ plug_in_init (Gimp *gimp)
 
   gimp_wire_set_writer (plug_in_write);
   gimp_wire_set_flusher (plug_in_flush);
-
-  /* allocate a piece of shared memory for use in transporting tiles
-   *  to plug-ins. if we can't allocate a piece of shared memory then
-   *  we'll fall back on sending the data over the pipe.
-   */
-  if (gimp->use_shm)
-    plug_in_shm_init (gimp);
-
-  plug_in_debug_init (gimp);
 }
 
 void
-plug_in_exit (Gimp *gimp)
+plug_in_exit (GimpPlugInManager *manager)
 {
   GSList *list;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
 
-  plug_in_debug_exit (gimp);
-
-  if (gimp->use_shm)
-    plug_in_shm_exit (gimp);
-
-  list = gimp->open_plug_ins;
+  list = manager->open_plug_ins;
   while (list)
     {
       PlugIn *plug_in = list->data;
@@ -159,17 +144,17 @@ plug_in_exit (Gimp *gimp)
 }
 
 void
-plug_in_call_query (Gimp        *gimp,
-                    GimpContext *context,
-                    PlugInDef   *plug_in_def)
+plug_in_call_query (GimpPlugInManager *manager,
+                    GimpContext       *context,
+                    PlugInDef         *plug_in_def)
 {
   PlugIn *plug_in;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (plug_in_def != NULL);
 
-  plug_in = plug_in_new (gimp, context, NULL, NULL, plug_in_def->prog);
+  plug_in = plug_in_new (manager, context, NULL, NULL, plug_in_def->prog);
 
   if (plug_in)
     {
@@ -200,17 +185,17 @@ plug_in_call_query (Gimp        *gimp,
 }
 
 void
-plug_in_call_init (Gimp        *gimp,
-                   GimpContext *context,
-                   PlugInDef   *plug_in_def)
+plug_in_call_init (GimpPlugInManager *manager,
+                   GimpContext       *context,
+                   PlugInDef         *plug_in_def)
 {
   PlugIn *plug_in;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (plug_in_def != NULL);
 
-  plug_in = plug_in_new (gimp, context, NULL, NULL, plug_in_def->prog);
+  plug_in = plug_in_new (manager, context, NULL, NULL, plug_in_def->prog);
 
   if (plug_in)
     {
@@ -241,15 +226,15 @@ plug_in_call_init (Gimp        *gimp,
 }
 
 PlugIn *
-plug_in_new (Gimp          *gimp,
-             GimpContext   *context,
-             GimpProgress  *progress,
-             GimpProcedure *procedure,
-             const gchar   *prog)
+plug_in_new (GimpPlugInManager *manager,
+             GimpContext       *context,
+             GimpProgress      *progress,
+             GimpProcedure     *procedure,
+             const gchar       *prog)
 {
   PlugIn *plug_in;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (prog != NULL, NULL);
@@ -257,7 +242,7 @@ plug_in_new (Gimp          *gimp,
 
   plug_in = g_new0 (PlugIn, 1);
 
-  plug_in->gimp               = gimp;
+  plug_in->manager            = manager;
 
   plug_in->ref_count          = 1;
 
@@ -347,20 +332,17 @@ plug_in_open (PlugIn *plug_in)
   gint       my_read[2];
   gint       my_write[2];
   gchar    **envp;
-  gchar     *args[9], **argv, **debug_argv;
+  gchar     *args[9], **argv;
   gint       argc;
   gchar     *interp, *interp_arg;
   gchar     *read_fd, *write_fd;
   gchar     *mode, *stm;
   GError    *error = NULL;
-  Gimp      *gimp;
   gboolean   debug;
   guint      debug_flag;
   guint      spawn_flags;
 
   g_return_val_if_fail (plug_in != NULL, FALSE);
-
-  gimp = plug_in->gimp;
 
   /* Open two pipes. (Bidirectional communication).
    */
@@ -427,9 +409,9 @@ plug_in_open (PlugIn *plug_in)
       debug_flag = GIMP_DEBUG_WRAP_RUN;
     }
 
-  stm = g_strdup_printf ("%d", plug_in->gimp->stack_trace_mode);
+  stm = g_strdup_printf ("%d", plug_in->manager->gimp->stack_trace_mode);
 
-  interp = gimp_interpreter_db_resolve (plug_in->gimp->interpreter_db,
+  interp = gimp_interpreter_db_resolve (plug_in->manager->interpreter_db,
                                         plug_in->prog, &interp_arg);
 
   argc = 0;
@@ -449,16 +431,18 @@ plug_in_open (PlugIn *plug_in)
   args[argc++] = NULL;
 
   argv = args;
-  envp = gimp_environ_table_get_envp (plug_in->gimp->environ_table);
+  envp = gimp_environ_table_get_envp (plug_in->manager->environ_table);
   spawn_flags = (G_SPAWN_LEAVE_DESCRIPTORS_OPEN |
                  G_SPAWN_DO_NOT_REAP_CHILD      |
                  G_SPAWN_CHILD_INHERITS_STDIN);
 
   debug = FALSE;
 
-  if (gimp->plug_in_debug)
+  if (plug_in->manager->debug)
     {
-      debug_argv = plug_in_debug_argv (gimp, plug_in->name, debug_flag, args);
+      gchar **debug_argv = gimp_plug_in_debug_argv (plug_in->manager->debug,
+                                                    plug_in->name,
+                                                    debug_flag, args);
 
       if (debug_argv)
         {
@@ -506,7 +490,8 @@ plug_in_open (PlugIn *plug_in)
       plug_in->input_id = g_source_attach (source, NULL);
       g_source_unref (source);
 
-      gimp->open_plug_ins = g_slist_prepend (gimp->open_plug_ins, plug_in);
+      plug_in->manager->open_plug_ins =
+        g_slist_prepend (plug_in->manager->open_plug_ins, plug_in);
     }
 
   plug_in->open = TRUE;
@@ -529,7 +514,6 @@ void
 plug_in_close (PlugIn   *plug_in,
                gboolean  kill_it)
 {
-  Gimp          *gimp;
 #ifndef G_OS_WIN32
   gint           status;
   struct timeval tv;
@@ -538,8 +522,6 @@ plug_in_close (PlugIn   *plug_in,
 
   g_return_if_fail (plug_in != NULL);
   g_return_if_fail (plug_in->open == TRUE);
-
-  gimp = plug_in->gimp;
 
   if (! plug_in->open)
     return;
@@ -568,7 +550,7 @@ plug_in_close (PlugIn   *plug_in,
 
       if (kill_it)
         {
-          if (gimp->be_verbose)
+          if (plug_in->manager->gimp->be_verbose)
             g_print (_("Terminating plug-in: '%s'\n"),
                      gimp_filename_to_utf8 (plug_in->prog));
 
@@ -693,9 +675,10 @@ plug_in_close (PlugIn   *plug_in,
     plug_in_remove_temp_proc (plug_in, plug_in->temp_procedures->data);
 
   /* Close any dialogs that this plugin might have opened */
-  gimp_pdb_dialogs_check (plug_in->gimp);
+  gimp_pdb_dialogs_check (plug_in->manager->gimp);
 
-  gimp->open_plug_ins = g_slist_remove (gimp->open_plug_ins, plug_in);
+  plug_in->manager->open_plug_ins =
+    g_slist_remove (plug_in->manager->open_plug_ins, plug_in);
 }
 
 static gboolean
@@ -847,31 +830,31 @@ plug_in_flush (GIOChannel *channel,
 }
 
 void
-plug_in_push (Gimp   *gimp,
-              PlugIn *plug_in)
+plug_in_push (GimpPlugInManager *manager,
+              PlugIn            *plug_in)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
   g_return_if_fail (plug_in != NULL);
 
-  gimp->current_plug_in = plug_in;
+  manager->current_plug_in = plug_in;
 
-  gimp->plug_in_stack = g_slist_prepend (gimp->plug_in_stack,
-                                         gimp->current_plug_in);
+  manager->plug_in_stack = g_slist_prepend (manager->plug_in_stack,
+                                            manager->current_plug_in);
 }
 
 void
-plug_in_pop (Gimp *gimp)
+plug_in_pop (GimpPlugInManager *manager)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
 
-  if (gimp->current_plug_in)
-    gimp->plug_in_stack = g_slist_remove (gimp->plug_in_stack,
-                                          gimp->plug_in_stack->data);
+  if (manager->current_plug_in)
+    manager->plug_in_stack = g_slist_remove (manager->plug_in_stack,
+                                             manager->plug_in_stack->data);
 
-  if (gimp->plug_in_stack)
-    gimp->current_plug_in = gimp->plug_in_stack->data;
+  if (manager->plug_in_stack)
+    manager->current_plug_in = manager->plug_in_stack->data;
   else
-    gimp->current_plug_in = NULL;
+    manager->current_plug_in = NULL;
 }
 
 PlugInProcFrame *
@@ -936,9 +919,9 @@ plug_in_main_loop (PlugIn *plug_in)
 
   proc_frame->main_loop = g_main_loop_new (NULL, FALSE);
 
-  gimp_threads_leave (plug_in->gimp);
+  gimp_threads_leave (plug_in->manager->gimp);
   g_main_loop_run (proc_frame->main_loop);
-  gimp_threads_enter (plug_in->gimp);
+  gimp_threads_enter (plug_in->manager->gimp);
 
   g_main_loop_unref (proc_frame->main_loop);
   proc_frame->main_loop = NULL;
@@ -975,8 +958,10 @@ plug_in_get_undo_desc (PlugIn *plug_in)
 
   if (proc)
     {
-      const gchar *domain = plug_in_locale_domain (plug_in->gimp,
-                                                   plug_in->prog, NULL);
+      const gchar *domain;
+
+      domain = gimp_plug_in_manager_get_locale_domain (plug_in->manager,
+                                                       plug_in->prog, NULL);
 
       undo_desc = gimp_plug_in_procedure_get_label (proc, domain);
     }
@@ -1071,7 +1056,7 @@ plug_in_add_temp_proc (PlugIn                 *plug_in,
 
   plug_in->temp_procedures = g_slist_prepend (plug_in->temp_procedures,
                                               g_object_ref (proc));
-  plug_ins_temp_procedure_add (plug_in->gimp, proc);
+  gimp_plug_in_manager_add_temp_proc (plug_in->manager, proc);
 }
 
 void
@@ -1083,6 +1068,6 @@ plug_in_remove_temp_proc (PlugIn                 *plug_in,
 
   plug_in->temp_procedures = g_slist_remove (plug_in->temp_procedures,
                                              proc);
-  plug_ins_temp_procedure_remove (plug_in->gimp, proc);
+  gimp_plug_in_manager_remove_temp_proc (plug_in->manager, proc);
   g_object_unref (proc);
 }

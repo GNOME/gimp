@@ -34,6 +34,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
+#include "plug-in/gimppluginmanager.h"
 #include "plug-in/plug-in-context.h"
 #include "plug-in/plug-in.h"
 
@@ -46,8 +47,9 @@ context_push_invoker (GimpProcedure     *procedure,
                       const GValueArray *args)
 {
   gboolean success = TRUE;
-  if (gimp->current_plug_in && gimp->current_plug_in->open)
-    success = plug_in_context_push (gimp->current_plug_in);
+  if (gimp->plug_in_manager->current_plug_in &&
+      gimp->plug_in_manager->current_plug_in->open)
+    success = plug_in_context_push (gimp->plug_in_manager->current_plug_in);
   else
     success = FALSE;
   return gimp_procedure_get_return_values (procedure, success);
@@ -61,8 +63,9 @@ context_pop_invoker (GimpProcedure     *procedure,
                      const GValueArray *args)
 {
   gboolean success = TRUE;
-  if (gimp->current_plug_in && gimp->current_plug_in->open)
-    success = plug_in_context_pop (gimp->current_plug_in);
+  if (gimp->plug_in_manager->current_plug_in &&
+      gimp->plug_in_manager->current_plug_in->open)
+    success = plug_in_context_pop (gimp->plug_in_manager->current_plug_in);
   else
     success = FALSE;
   return gimp_procedure_get_return_values (procedure, success);

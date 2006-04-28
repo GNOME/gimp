@@ -32,7 +32,7 @@
 
 struct _PlugIn
 {
-  Gimp         *gimp;
+  GimpPlugInManager *manager;
 
   gint          ref_count;
 
@@ -68,17 +68,17 @@ struct _PlugIn
 };
 
 
-void              plug_in_init             (Gimp          *gimp);
-void              plug_in_exit             (Gimp          *gimp);
+void              plug_in_init             (GimpPlugInManager *manager);
+void              plug_in_exit             (GimpPlugInManager *manager);
 
-void              plug_in_call_query       (Gimp          *gimp,
+void              plug_in_call_query       (GimpPlugInManager *manager,
                                             GimpContext   *context,
                                             PlugInDef     *plug_in_def);
-void              plug_in_call_init        (Gimp          *gimp,
+void              plug_in_call_init        (GimpPlugInManager *manager,
                                             GimpContext   *context,
                                             PlugInDef     *plug_in_def);
 
-PlugIn          * plug_in_new              (Gimp          *gimp,
+PlugIn          * plug_in_new              (GimpPlugInManager *manager,
                                             GimpContext   *context,
                                             GimpProgress  *progress,
                                             GimpProcedure *procedure,
@@ -91,9 +91,9 @@ gboolean          plug_in_open             (PlugIn        *plug_in);
 void              plug_in_close            (PlugIn        *plug_in,
                                             gboolean       kill_it);
 
-void              plug_in_push             (Gimp          *gimp,
-                                            PlugIn        *plug_in);
-void              plug_in_pop              (Gimp          *gimp);
+void              plug_in_push             (GimpPlugInManager *manager,
+                                            PlugIn            *plug_in);
+void              plug_in_pop              (GimpPlugInManager *manager);
 
 PlugInProcFrame * plug_in_get_proc_frame   (PlugIn        *plug_in);
 

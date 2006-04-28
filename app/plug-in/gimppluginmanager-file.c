@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * plug-in-file.c
+ * gimppluginmanager-file.c
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,31 +30,32 @@
 #include "pdb/gimp-pdb.h"
 #include "pdb/gimppluginprocedure.h"
 
+#include "gimppluginmanager.h"
+#include "gimppluginmanager-file.h"
 #include "plug-in.h"
 #include "plug-in-def.h"
-#include "plug-in-file.h"
 
 
 /*  public functions  */
 
 gboolean
-plug_in_file_register_load_handler (Gimp        *gimp,
-                                    const gchar *name,
-                                    const gchar *extensions,
-                                    const gchar *prefixes,
-                                    const gchar *magics)
+gimp_plug_in_manager_register_load_handler (GimpPlugInManager *manager,
+                                            const gchar       *name,
+                                            const gchar       *extensions,
+                                            const gchar       *prefixes,
+                                            const gchar       *magics)
 {
   GimpPlugInProcedure *file_proc;
   GimpProcedure       *procedure;
   GSList              *list;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), FALSE);
   g_return_val_if_fail (name != NULL, FALSE);
 
-  if (gimp->current_plug_in && gimp->current_plug_in->plug_in_def)
-    list = gimp->current_plug_in->plug_in_def->procedures;
+  if (manager->current_plug_in && manager->current_plug_in->plug_in_def)
+    list = manager->current_plug_in->plug_in_def->procedures;
   else
-    list = gimp->plug_in_procedures;
+    list = manager->plug_in_procedures;
 
   file_proc = gimp_plug_in_procedure_find (list, name);
 
@@ -82,29 +83,29 @@ plug_in_file_register_load_handler (Gimp        *gimp,
   gimp_plug_in_procedure_set_file_proc (file_proc,
                                         extensions, prefixes, magics);
 
-  if (! g_slist_find (gimp->load_procs, file_proc))
-    gimp->load_procs = g_slist_prepend (gimp->load_procs, file_proc);
+  if (! g_slist_find (manager->load_procs, file_proc))
+    manager->load_procs = g_slist_prepend (manager->load_procs, file_proc);
 
   return TRUE;
 }
 
 gboolean
-plug_in_file_register_save_handler (Gimp        *gimp,
-                                    const gchar *name,
-                                    const gchar *extensions,
-                                    const gchar *prefixes)
+gimp_plug_in_manager_register_save_handler (GimpPlugInManager *manager,
+                                            const gchar       *name,
+                                            const gchar       *extensions,
+                                            const gchar       *prefixes)
 {
   GimpPlugInProcedure *file_proc;
   GimpProcedure       *procedure;
   GSList              *list;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), FALSE);
   g_return_val_if_fail (name != NULL, FALSE);
 
-  if (gimp->current_plug_in && gimp->current_plug_in->plug_in_def)
-    list = gimp->current_plug_in->plug_in_def->procedures;
+  if (manager->current_plug_in && manager->current_plug_in->plug_in_def)
+    list = manager->current_plug_in->plug_in_def->procedures;
   else
-    list = gimp->plug_in_procedures;
+    list = manager->plug_in_procedures;
 
   file_proc = gimp_plug_in_procedure_find (list, name);
 
@@ -132,28 +133,28 @@ plug_in_file_register_save_handler (Gimp        *gimp,
   gimp_plug_in_procedure_set_file_proc (file_proc,
                                         extensions, prefixes, NULL);
 
-  if (! g_slist_find (gimp->save_procs, file_proc))
-    gimp->save_procs = g_slist_prepend (gimp->save_procs, file_proc);
+  if (! g_slist_find (manager->save_procs, file_proc))
+    manager->save_procs = g_slist_prepend (manager->save_procs, file_proc);
 
   return TRUE;
 }
 
 gboolean
-plug_in_file_register_mime_type (Gimp        *gimp,
-                                 const gchar *name,
-                                 const gchar *mime_type)
+gimp_plug_in_manager_register_mime_type (GimpPlugInManager *manager,
+                                         const gchar       *name,
+                                         const gchar       *mime_type)
 {
   GimpPlugInProcedure *file_proc;
   GSList              *list;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), FALSE);
   g_return_val_if_fail (name != NULL, FALSE);
   g_return_val_if_fail (mime_type != NULL, FALSE);
 
-  if (gimp->current_plug_in && gimp->current_plug_in->plug_in_def)
-    list = gimp->current_plug_in->plug_in_def->procedures;
+  if (manager->current_plug_in && manager->current_plug_in->plug_in_def)
+    list = manager->current_plug_in->plug_in_def->procedures;
   else
-    list = gimp->plug_in_procedures;
+    list = manager->plug_in_procedures;
 
   file_proc = gimp_plug_in_procedure_find (list, name);
 
@@ -166,21 +167,21 @@ plug_in_file_register_mime_type (Gimp        *gimp,
 }
 
 gboolean
-plug_in_file_register_thumb_loader (Gimp        *gimp,
-                                    const gchar *load_proc,
-                                    const gchar *thumb_proc)
+gimp_plug_in_manager_register_thumb_loader (GimpPlugInManager *manager,
+                                            const gchar       *load_proc,
+                                            const gchar       *thumb_proc)
 {
   GimpPlugInProcedure *file_proc;
   GSList              *list;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), FALSE);
   g_return_val_if_fail (load_proc, FALSE);
   g_return_val_if_fail (thumb_proc, FALSE);
 
-  if (gimp->current_plug_in && gimp->current_plug_in->plug_in_def)
-    list = gimp->current_plug_in->plug_in_def->procedures;
+  if (manager->current_plug_in && manager->current_plug_in->plug_in_def)
+    list = manager->current_plug_in->plug_in_def->procedures;
   else
-    list = gimp->plug_in_procedures;
+    list = manager->plug_in_procedures;
 
   file_proc = gimp_plug_in_procedure_find (list, load_proc);
 

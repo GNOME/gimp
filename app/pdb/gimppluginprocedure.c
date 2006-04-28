@@ -34,7 +34,6 @@
 #include "core/gimpparamspecs.h"
 
 #include "plug-in/plug-in.h"
-#include "plug-in/plug-ins.h"
 #define __YES_I_NEED_PLUG_IN_RUN__
 #include "plug-in/plug-in-run.h"
 
@@ -218,7 +217,7 @@ gimp_plug_in_procedure_execute (GimpProcedure *procedure,
                                                          context, progress,
                                                          args);
 
-  return plug_in_run (gimp, context, progress,
+  return plug_in_run (gimp->plug_in_manager, context, progress,
                       GIMP_PLUG_IN_PROCEDURE (procedure),
                       args, TRUE, FALSE, -1);
 }
@@ -231,7 +230,7 @@ gimp_plug_in_procedure_execute_async (GimpProcedure *procedure,
                                       GValueArray   *args,
                                       gint32         display_ID)
 {
-  plug_in_run (gimp, context, progress,
+  plug_in_run (gimp->plug_in_manager, context, progress,
                GIMP_PLUG_IN_PROCEDURE (procedure),
                args, FALSE, TRUE, display_ID);
 }

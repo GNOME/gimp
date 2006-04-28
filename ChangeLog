@@ -1,3 +1,98 @@
+2006-04-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/Makefile.am
+	* app/plug-in/plug-in-types.h
+	* app/plug-in/gimppluginmanager.[ch]: new object which keeps all
+	plug-in related stuff that was kept in the Gimp instance. Has
+	"menu-branch-added" and "last-plug-in-changed" signals.
+
+	* app/plug-in/plug-ins.[ch]: removed, all its functions are in
+	GimpPlugInManager now.
+
+	* app/core/gimpmarshal.list: new marshaller for the new object.
+
+	* app/core/gimp.[ch]: removed all plug-in related stuff and keep a
+	GimpPlugInManager around.
+
+	* app/plug-in/plug-in-data.[ch]
+	* app/plug-in/plug-in-file.[ch]
+	* app/plug-in/plug-in-help-domain.[ch]
+	* app/plug-in/plug-in-locale-domain.[ch]
+	* app/plug-in/plug-in-menu-branch.[ch]
+	* app/plug-in/plug-ins-query.[ch]: removed...
+
+	* app/plug-in/gimppluginmanager-data.[ch]
+	* app/plug-in/gimppluginmanager-file.[ch]
+	* app/plug-in/gimppluginmanager-help-domain.[ch]
+	* app/plug-in/gimppluginmanager-locale-domain.[ch]
+	* app/plug-in/gimppluginmanager-menu-branch.[ch]
+	* app/plug-in/gimppluginmanager-query.[ch]: ...and added as
+	methods of GimpPlugInManager.
+
+	* app/plug-in/plug-in-debug.[ch]
+	* app/plug-in/plug-in-shm.[ch]: removed...
+
+	* app/plug-in/gimpplugindebug.[ch]
+	* app/plug-in/gimppluginshm.[ch]: ...and added as properly
+	namespeced structs with constructors and destructors.
+
+	* app/core/Makefile.am
+	* app/core/gimpenvirontable.[ch]
+	* app/core/gimpinterpreterdb.[ch]: removed...
+
+	* app/plug-in/gimpenvirontable.[ch]
+	* app/plug-in/gimpinterpreterdb.[ch]: ...and added here unchanged.
+
+	* app/core/gimp-gui.[ch]
+	* app/gui/gui-vtable.c: remove gimp_menus_create_branch() and all
+	related stuff.
+
+	* app/actions/plug-in-actions.[ch]: connect to the
+	plug-in-manager's "menu-path-added" signal and create menu branch
+	actions accordingly.
+
+	* app/plug-in/plug-in-context.c
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-progress.c
+	* app/plug-in/plug-in-run.[ch]
+	* app/plug-in/plug-in.[ch]
+	* app/app_procs.c
+	* app/actions/file-commands.c
+	* app/actions/plug-in-commands.c
+	* app/core/gimpimage.c
+	* app/dialogs/file-open-location-dialog.c
+	* app/dialogs/file-save-dialog.c
+	* app/file/file-open.c
+	* app/gui/gui.c
+	* app/menus/plug-in-menus.c
+	* app/pdb/gimppluginprocedure.c
+	* app/pdb/gimptemporaryprocedure.c
+	* app/widgets/gimpdnd-xds.c
+	* app/widgets/gimpfiledialog.c
+	* app/widgets/gimpfileprocview.c
+	* app/widgets/gimphelp.c
+	* app/widgets/gimpthumbbox.c
+	* app/xcf/xcf.c
+	* tools/pdbgen/pdb/context.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/help.pdb
+	* tools/pdbgen/pdb/message.pdb
+	* tools/pdbgen/pdb/plug_in.pdb
+	* tools/pdbgen/pdb/procedural_db.pdb
+	* tools/pdbgen/pdb/progress.pdb
+	* tools/pdbgen/pdb/undo.pdb: follow above refactoring.
+
+	* app/pdb/context_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/fileops_cmds.c
+	* app/pdb/help_cmds.c
+	* app/pdb/message_cmds.c
+	* app/pdb/plug_in_cmds.c
+	* app/pdb/procedural_db_cmds.c
+	* app/pdb/progress_cmds.c
+	* app/pdb/undo_cmds.c: regenerated.
+
 2006-04-28  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/user-install-dialog.c: code and user interface cleanup.

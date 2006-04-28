@@ -1,6 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * gimppluginmanager-data.c
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -24,14 +26,13 @@
 
 #include "plug-in-types.h"
 
-#include "core/gimp.h"
+#include "gimppluginmanager.h"
+#include "gimppluginmanager-data.h"
 
-#include "plug-in-data.h"
 
+typedef struct _GimpPlugInData GimpPlugInData;
 
-typedef struct _PlugInData PlugInData;
-
-struct _PlugInData
+struct _GimpPlugInData
 {
   gchar  *identifier;
   gint32  bytes;
@@ -42,45 +43,45 @@ struct _PlugInData
 /*  public functions  */
 
 void
-plug_in_data_free (Gimp *gimp)
+gimp_plug_in_manager_data_free (GimpPlugInManager *manager)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
 
-  if (gimp->plug_in_data_list)
+  if (manager->data_list)
     {
       GList *list;
 
-      for (list = gimp->plug_in_data_list;
+      for (list = manager->data_list;
            list;
            list = g_list_next (list))
         {
-          PlugInData *data = list->data;
+          GimpPlugInData *data = list->data;
 
           g_free (data->identifier);
           g_free (data->data);
           g_free (data);
         }
 
-      g_list_free (gimp->plug_in_data_list);
-      gimp->plug_in_data_list = NULL;
+      g_list_free (manager->data_list);
+      manager->data_list = NULL;
     }
 }
 
 void
-plug_in_data_set (Gimp         *gimp,
-                  const gchar  *identifier,
-                  gint32        bytes,
-                  const guint8 *data)
+gimp_plug_in_manager_set_data (GimpPlugInManager *manager,
+                               const gchar  *identifier,
+                               gint32        bytes,
+                               const guint8 *data)
 {
-  GList      *list;
-  PlugInData *plug_in_data;
+  GimpPlugInData *plug_in_data;
+  GList          *list;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
   g_return_if_fail (identifier != NULL);
   g_return_if_fail (bytes > 0);
   g_return_if_fail (data != NULL);
 
-  for (list = gimp->plug_in_data_list; list; list = g_list_next (list))
+  for (list = manager->data_list; list; list = g_list_next (list))
     {
       plug_in_data = list->data;
 
@@ -91,11 +92,10 @@ plug_in_data_set (Gimp         *gimp,
   /* If there isn't already data with the specified identifier, create one */
   if (list == NULL)
     {
-      plug_in_data = g_new0 (PlugInData, 1);
+      plug_in_data = g_new0 (GimpPlugInData, 1);
       plug_in_data->identifier = g_strdup (identifier);
 
-      gimp->plug_in_data_list = g_list_prepend (gimp->plug_in_data_list,
-                                                plug_in_data);
+      manager->data_list = g_list_prepend (manager->data_list, plug_in_data);
     }
   else
     {
@@ -107,21 +107,21 @@ plug_in_data_set (Gimp         *gimp,
 }
 
 const guint8 *
-plug_in_data_get (Gimp        *gimp,
-                  const gchar *identifier,
-                  gint32      *bytes)
+gimp_plug_in_manager_get_data (GimpPlugInManager *manager,
+                               const gchar       *identifier,
+                               gint32            *bytes)
 {
   GList *list;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
   g_return_val_if_fail (bytes != NULL, NULL);
 
   *bytes = 0;
 
-  for (list = gimp->plug_in_data_list; list; list = g_list_next (list))
+  for (list = manager->data_list; list; list = g_list_next (list))
     {
-      PlugInData *plug_in_data = list->data;
+      GimpPlugInData *plug_in_data = list->data;
 
       if (! strcmp (plug_in_data->identifier, identifier))
         {

@@ -41,9 +41,13 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (! help_domain && gimp->current_plug_in)
+  GimpPlugInManager *manager = gimp->plug_in_manager;
+
+  if (! help_domain && manager->current_plug_in)
     help_domain = (gchar *)
-      plug_in_help_domain (gimp, gimp->current_plug_in->prog, NULL);
+      gimp_plug_in_manager_get_help_domain (manager,
+                                            manager->current_plug_in->prog,
+                                            NULL);
 
   gimp_help (gimp, help_domain, help_id);
 }
@@ -52,7 +56,10 @@ CODE
 }
 
 
-@headers = qw("core/gimp.h" "plug-in/plug-in.h" "plug-in/plug-in-help-domain.h");
+@headers = qw("core/gimp.h"
+              "plug-in/gimppluginmanager.h"
+              "plug-in/gimppluginmanager-help-domain.h"
+              "plug-in/plug-in.h");
 
 @procs = qw(help);
 

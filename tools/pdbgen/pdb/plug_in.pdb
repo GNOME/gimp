@@ -59,13 +59,14 @@ sub plugins_query {
     %invoke = (
 	code => <<'CODE'
 {
-  num_plugins = plug_ins_query (gimp, search_string,
-                                &menu_path,
-                                &plugin_accelerator,
-                                &plugin_location,
-                                &plugin_image_type,
-                                &plugin_real_name,
-                                &plugin_install_time);
+  num_plugins = gimp_plug_in_manager_query (gimp->plug_in_manager,
+                                            search_string,
+                                            &menu_path,
+                                            &plugin_accelerator,
+                                            &plugin_location,
+                                            &plugin_image_type,
+                                            &plugin_real_name,
+                                            &plugin_install_time);
 }
 CODE
     );
@@ -98,12 +99,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp->current_plug_in && gimp->current_plug_in->query)
+  PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->query)
     {
-      plug_in_def_set_locale_domain_name (gimp->current_plug_in->plug_in_def,
-                                          domain_name);
-      plug_in_def_set_locale_domain_path (gimp->current_plug_in->plug_in_def,
-	                                  domain_path);
+      plug_in_def_set_locale_domain_name (plug_in->plug_in_def, domain_name);
+      plug_in_def_set_locale_domain_path (plug_in->plug_in_def, domain_path);
     }
   else
     success = FALSE;
@@ -133,12 +134,12 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp->current_plug_in && gimp->current_plug_in->query)
+  PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->query)
     {
-      plug_in_def_set_help_domain_name (gimp->current_plug_in->plug_in_def,
-                                        domain_name);
-      plug_in_def_set_help_domain_uri (gimp->current_plug_in->plug_in_def,
-                                       domain_uri);
+      plug_in_def_set_help_domain_name (plug_in->plug_in_def, domain_name);
+      plug_in_def_set_help_domain_uri  (plug_in->plug_in_def, domain_uri);
     }
   else
     success = FALSE;
@@ -166,12 +167,12 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp->current_plug_in)
+  PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in)
     {
       gchar *canonical = gimp_canonicalize_identifier (procedure_name);
-
-      success = plug_in_menu_register (gimp->current_plug_in,
-				       canonical, menu_path);
+      success = plug_in_menu_register (plug_in, canonical, menu_path);
       g_free (canonical);
     }
   else
@@ -202,10 +203,12 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp->current_plug_in)
+  PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in)
     {
-      plug_in_menu_branch_add (gimp, gimp->current_plug_in->prog,
-                               menu_path, menu_name);
+      gimp_plug_in_manager_add_menu_branch (gimp->plug_in_manager,
+                                            plug_in->prog, menu_path, menu_name);
     }
   else
     success = FALSE;
@@ -238,14 +241,16 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp->current_plug_in && gimp->current_plug_in->query)
+  PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->query)
     {
       GimpPlugInProcedure *proc;
       gchar               *canonical;
 
       canonical = gimp_canonicalize_identifier (procedure_name);
 
-      proc = gimp_plug_in_procedure_find (gimp->current_plug_in->plug_in_def->procedures,
+      proc = gimp_plug_in_procedure_find (plug_in->plug_in_def->procedures,
                                           canonical);
 
       g_free (canonical);
@@ -266,9 +271,10 @@ CODE
 
 @headers = qw(<string.h> <stdlib.h>
               "libgimpbase/gimpbase.h" "core/gimp.h"
-              "plug-in/plug-in.h" "plug-in/plug-ins.h"
-              "plug-in/plug-in-menu-branch.h"
-              "plug-in/plug-ins-query.h"
+              "plug-in/gimppluginmanager.h"
+              "plug-in/gimppluginmanager-menu-branch.h"
+              "plug-in/gimppluginmanager-query.h"
+              "plug-in/plug-in.h"
               "plug-in/plug-in-def.h"
               "gimppluginprocedure.h");
 

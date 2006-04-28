@@ -107,8 +107,6 @@ libappcore_a_sources = \
 	gimpdrawable-stroke.h		\
 	gimpdrawable-transform.c	\
 	gimpdrawable-transform.h	\
-	gimpenvirontable.h		\
-	gimpenvirontable.c		\
 	gimpgradient.c			\
 	gimpgradient.h			\
 	gimpgradient-load.c		\
@@ -167,8 +165,6 @@ libappcore_a_sources = \
 	gimpimagefile.h			\
 	gimpimagemap.c			\
 	gimpimagemap.h			\
-	gimpinterpreterdb.c		\
-	gimpinterpreterdb.h		\
 	gimpitem.c			\
 	gimpitem.h			\
 	gimpitem-align.c		\

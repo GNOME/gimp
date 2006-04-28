@@ -38,11 +38,11 @@
 
 #include "pdb/gimptemporaryprocedure.h"
 
+#include "gimppluginmanager.h"
 #include "plug-in.h"
 #include "plug-in-params.h"
 #define __YES_I_NEED_PLUG_IN_RUN__
 #include "plug-in-run.h"
-#include "plug-in-shm.h"
 
 #include "gimp-intl.h"
 
@@ -50,7 +50,7 @@
 /*  public functions  */
 
 GValueArray *
-plug_in_run (Gimp                *gimp,
+plug_in_run (GimpPlugInManager   *manager,
              GimpContext         *context,
              GimpProgress        *progress,
              GimpPlugInProcedure *procedure,
@@ -62,19 +62,21 @@ plug_in_run (Gimp                *gimp,
   GValueArray *return_vals = NULL;
   PlugIn      *plug_in;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (args != NULL, NULL);
 
-  plug_in = plug_in_new (gimp, context, progress, GIMP_PROCEDURE (procedure),
+  plug_in = plug_in_new (manager, context, progress,
+                         GIMP_PROCEDURE (procedure),
                          procedure->prog);
 
   if (plug_in)
     {
-      GimpDisplayConfig *display_config = GIMP_DISPLAY_CONFIG (gimp->config);
-      GimpGuiConfig     *gui_config     = GIMP_GUI_CONFIG (gimp->config);
+      GimpCoreConfig    *core_config    = manager->gimp->config;
+      GimpDisplayConfig *display_config = GIMP_DISPLAY_CONFIG (core_config);
+      GimpGuiConfig     *gui_config     = GIMP_GUI_CONFIG (core_config);
       GPConfig           config;
       GPProcRun          proc_run;
       gint               monitor;
@@ -88,7 +90,7 @@ plug_in_run (Gimp                *gimp,
       config.version          = GIMP_PROTOCOL_VERSION;
       config.tile_width       = TILE_WIDTH;
       config.tile_height      = TILE_HEIGHT;
-      config.shm_ID           = plug_in_shm_get_ID (gimp);
+      config.shm_ID           = gimp_plug_in_manager_get_shm_ID (manager);
       config.check_size       = display_config->transparency_size;
       config.check_type       = display_config->transparency_type;
       config.show_help_button = (gui_config->use_help &&
@@ -98,13 +100,13 @@ plug_in_run (Gimp                *gimp,
       config.gimp_reserved_6  = 0;
       config.gimp_reserved_7  = 0;
       config.gimp_reserved_8  = 0;
-      config.install_cmap     = gimp->config->install_cmap;
+      config.install_cmap     = core_config->install_cmap;
       config.show_tooltips    = gui_config->show_tooltips;
-      config.min_colors       = CLAMP (gimp->config->min_colors, 27, 256);
+      config.min_colors       = CLAMP (core_config->min_colors, 27, 256);
       config.gdisp_ID         = display_ID;
       config.app_name         = (gchar *) g_get_application_name ();
-      config.wm_class         = (gchar *) gimp_get_program_class (gimp);
-      config.display_name     = gimp_get_display_name (gimp,
+      config.wm_class         = (gchar *) gimp_get_program_class (manager->gimp);
+      config.display_name     = gimp_get_display_name (manager->gimp,
                                                        display_ID, &monitor);
       config.monitor_number   = monitor;
 
@@ -137,9 +139,9 @@ plug_in_run (Gimp                *gimp,
         {
           plug_in->ext_main_loop = g_main_loop_new (NULL, FALSE);
 
-          gimp_threads_leave (gimp);
+          gimp_threads_leave (manager->gimp);
           g_main_loop_run (plug_in->ext_main_loop);
-          gimp_threads_enter (gimp);
+          gimp_threads_enter (manager->gimp);
 
           /*  main_loop is quit in plug_in_handle_extension_ack()  */
 
@@ -156,9 +158,9 @@ plug_in_run (Gimp                *gimp,
 
           proc_frame->main_loop = g_main_loop_new (NULL, FALSE);
 
-          gimp_threads_leave (gimp);
+          gimp_threads_leave (manager->gimp);
           g_main_loop_run (proc_frame->main_loop);
-          gimp_threads_enter (gimp);
+          gimp_threads_enter (manager->gimp);
 
           /*  main_loop is quit in plug_in_handle_proc_return()  */
 
@@ -182,7 +184,7 @@ plug_in_run (Gimp                *gimp,
 }
 
 GValueArray *
-plug_in_run_temp (Gimp                   *gimp,
+plug_in_run_temp (GimpPlugInManager      *manager,
                   GimpContext            *context,
                   GimpProgress           *progress,
                   GimpTemporaryProcedure *procedure,
@@ -191,7 +193,7 @@ plug_in_run_temp (Gimp                   *gimp,
   GValueArray *return_vals = NULL;
   PlugIn      *plug_in;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (GIMP_IS_TEMPORARY_PROCEDURE (procedure), NULL);

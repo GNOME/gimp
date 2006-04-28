@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * plug-in-menu-branch.h
+ * gimppluginmanager-menu-branch.h
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,11 +18,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PLUG_IN_MENU_BRANCH_H__
-#define __PLUG_IN_MENU_BRANCH_H__
+#ifndef __GIMP_PLUG_IN_MANAGER_MENU_BRANCH_H__
+#define __GIMP_PLUG_IN_MANAGER_MENU_BRANCH_H__
 
 
-struct _PlugInMenuBranch
+struct _GimpPlugInMenuBranch
 {
   gchar *prog_name;
   gchar *menu_path;
@@ -30,13 +30,13 @@ struct _PlugInMenuBranch
 };
 
 
-void   plug_in_menu_branch_exit (Gimp        *gimp);
+void   gimp_plug_in_manager_menu_branch_exit (GimpPlugInManager *manager);
 
 /* Add a menu branch */
-void   plug_in_menu_branch_add  (Gimp        *gimp,
-                                 const gchar *prog_name,
-                                 const gchar *menu_path,
-                                 const gchar *menu_label);
+void   gimp_plug_in_manager_add_menu_branch  (GimpPlugInManager *manager,
+                                              const gchar       *prog_name,
+                                              const gchar       *menu_path,
+                                              const gchar       *menu_label);
 
 
-#endif /* __PLUG_IN_MENU_BRANCH_H__ */
+#endif /* __GIMP_PLUG_IN_MANAGER_MENU_BRANCH_H__ */

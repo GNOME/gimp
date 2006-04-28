@@ -34,6 +34,8 @@
 #include "core/gimpprogress.h"
 #include "core/gimptemplate.h"
 
+#include "plug-in/gimppluginmanager.h"
+
 #include "file/file-open.h"
 #include "file/file-save.h"
 #include "file/file-utils.h"
@@ -204,7 +206,8 @@ file_save_cmd_callback (GtkAction *action,
       save_proc = gimp_image_get_save_proc (image);
 
       if (uri && ! save_proc)
-        save_proc = file_utils_find_proc (image->gimp->save_procs, uri);
+        save_proc = file_utils_find_proc (image->gimp->plug_in_manager->save_procs,
+                                          uri);
 
       if (! (uri && save_proc))
         {

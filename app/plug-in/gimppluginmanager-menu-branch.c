@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * plug-in-menu-branch.c
+ * gimppluginmanager-menu-branch.c
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,23 +24,22 @@
 
 #include "plug-in-types.h"
 
-#include "core/gimp.h"
-
-#include "plug-in-menu-branch.h"
+#include "gimppluginmanager.h"
+#include "gimppluginmanager-menu-branch.h"
 
 
 /*  public functions  */
 
 void
-plug_in_menu_branch_exit (Gimp *gimp)
+gimp_plug_in_manager_menu_branch_exit (GimpPlugInManager *manager)
 {
   GSList *list;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
 
-  for (list = gimp->plug_in_menu_branches; list; list = list->next)
+  for (list = manager->menu_branches; list; list = list->next)
     {
-      PlugInMenuBranch *branch = list->data;
+      GimpPlugInMenuBranch *branch = list->data;
 
       g_free (branch->prog_name);
       g_free (branch->menu_path);
@@ -48,34 +47,33 @@ plug_in_menu_branch_exit (Gimp *gimp)
       g_free (branch);
     }
 
-  g_slist_free (gimp->plug_in_menu_branches);
-  gimp->plug_in_menu_branches = NULL;
+  g_slist_free (manager->menu_branches);
+  manager->menu_branches = NULL;
 }
 
 void
-plug_in_menu_branch_add (Gimp        *gimp,
-                         const gchar *prog_name,
-                         const gchar *menu_path,
-                         const gchar *menu_label)
+gimp_plug_in_manager_add_menu_branch (GimpPlugInManager *manager,
+                                      const gchar       *prog_name,
+                                      const gchar       *menu_path,
+                                      const gchar       *menu_label)
 {
-  PlugInMenuBranch *branch;
+  GimpPlugInMenuBranch *branch;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
   g_return_if_fail (prog_name != NULL);
   g_return_if_fail (menu_path != NULL);
   g_return_if_fail (menu_label != NULL);
 
-  if (! gimp->no_interface)
-    gimp_menus_create_branch (gimp, prog_name, menu_path, menu_label);
-
-  branch = g_new (PlugInMenuBranch, 1);
+  branch = g_new (GimpPlugInMenuBranch, 1);
 
   branch->prog_name  = g_strdup (prog_name);
   branch->menu_path  = g_strdup (menu_path);
   branch->menu_label = g_strdup (menu_label);
 
-  gimp->plug_in_menu_branches = g_slist_append (gimp->plug_in_menu_branches,
-                                                branch);
+  manager->menu_branches = g_slist_append (manager->menu_branches, branch);
+
+  g_signal_emit_by_name (manager, "menu-branch-added",
+                         prog_name, menu_path, menu_label);
 
 #ifdef VERBOSE
   g_print ("added menu branch \"%s\" at path \"%s\"\n",

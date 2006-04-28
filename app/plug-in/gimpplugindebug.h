@@ -1,6 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * gimpplugindebug.h
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -16,8 +18,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PLUG_IN_DEBUG_H__
-#define __PLUG_IN_DEBUG_H__
+#ifndef __GIMP_PLUG_IN_DEBUG_H__
+#define __GIMP_PLUG_IN_DEBUG_H__
 
 
 typedef enum
@@ -30,13 +32,13 @@ typedef enum
 } GimpDebugWrapFlag;
 
 
-void       plug_in_debug_init  (Gimp               *gimp);
-void       plug_in_debug_exit  (Gimp               *gimp);
+GimpPlugInDebug  * gimp_plug_in_debug_new  (void);
+void               gimp_plug_in_debug_free (GimpPlugInDebug    *debug);
 
-gchar    **plug_in_debug_argv  (Gimp               *gimp,
-                                const gchar        *name,
-                                GimpDebugWrapFlag   flag,
-                                gchar             **args);
+gchar           ** gimp_plug_in_debug_argv (GimpPlugInDebug    *debug,
+                                            const gchar        *name,
+                                            GimpDebugWrapFlag   flag,
+                                            gchar             **args);
 
 
-#endif /* __PLUG_IN_DEBUG_H__ */
+#endif /* __GIMP_PLUG_IN_DEBUG_H__ */

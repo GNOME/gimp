@@ -357,7 +357,8 @@ HELP
   gchar        *canonical = gimp_canonicalize_identifier (identifier);
   const guint8 *orig_data;
 
-  orig_data = plug_in_data_get (gimp, canonical, &bytes);
+  orig_data = gimp_plug_in_manager_get_data (gimp->plug_in_manager,
+                                             canonical, &bytes);
 
   g_free (canonical);
 
@@ -396,7 +397,8 @@ HELP
 {
   gchar *canonical = gimp_canonicalize_identifier (identifier);
 
-  if (! plug_in_data_get (gimp, canonical, &bytes))
+  if (! gimp_plug_in_manager_get_data (gimp->plug_in_manager,
+                                       canonical, &bytes))
     success = FALSE;
 
   g_free (canonical);
@@ -430,7 +432,8 @@ HELP
 {
   gchar *canonical = gimp_canonicalize_identifier (identifier);
 
-  plug_in_data_set (gimp, canonical, bytes, data);
+  gimp_plug_in_manager_set_data (gimp->plug_in_manager,
+                                 canonical, bytes, data);
 
   g_free (canonical);
 }
@@ -439,8 +442,11 @@ CODE
 }
 
 
-@headers = qw("libgimpbase/gimpbase.h" "core/gimp.h" "plug-in/plug-in-data.h"
-              "gimp-pdb-compat.h" "gimppdb-query.h");
+@headers = qw("libgimpbase/gimpbase.h"
+              "core/gimp.h"
+              "gimppdb-query.h"
+              "gimp-pdb-compat.h"
+              "plug-in/gimppluginmanager-data.h");
 
 @procs = qw(procedural_db_temp_name procedural_db_dump
             procedural_db_query procedural_db_proc_info

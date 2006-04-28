@@ -1,6 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * gimppluginshm.h
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -16,15 +18,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PLUG_IN_SHM_H__
-#define __PLUG_IN_SHM_H__
+#ifndef __GIMP_PLUG_IN_SHM_H__
+#define __GIMP_PLUG_IN_SHM_H__
 
 
-void     plug_in_shm_init     (Gimp *gimp);
-void     plug_in_shm_exit     (Gimp *gimp);
+GimpPlugInShm * gimp_plug_in_shm_new      (void);
+void            gimp_plug_in_shm_free     (GimpPlugInShm *shm);
 
-gint     plug_in_shm_get_ID   (Gimp *gimp);
-guchar * plug_in_shm_get_addr (Gimp *gimp);
+gint            gimp_plug_in_shm_get_ID   (GimpPlugInShm *shm);
+guchar        * gimp_plug_in_shm_get_addr (GimpPlugInShm *shm);
 
 
-#endif /* __PLUG_IN_SHM_H__ */
+#endif /* __GIMP_PLUG_IN_SHM_H__ */

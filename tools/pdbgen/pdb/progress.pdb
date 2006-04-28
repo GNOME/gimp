@@ -38,10 +38,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp->current_plug_in && gimp->current_plug_in->open)
+  PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
     {
       if (! gimp->no_interface)
-        plug_in_progress_start (gimp->current_plug_in, message, gdisplay);
+        plug_in_progress_start (plug_in, message, gdisplay);
     }
   else
     success = FALSE;
@@ -69,10 +71,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp->current_plug_in && gimp->current_plug_in->open)
+  PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
     {
       if (! gimp->no_interface)
-	plug_in_progress_set_value (gimp->current_plug_in, percentage);
+	plug_in_progress_set_value (plug_in, percentage);
     }
   else
     success = FALSE;
@@ -97,10 +101,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp->current_plug_in && gimp->current_plug_in->open)
+  PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
     {
       if (! gimp->no_interface)
-	plug_in_progress_pulse (gimp->current_plug_in);
+	plug_in_progress_pulse (plug_in);
     }
   else
     success = FALSE;
@@ -128,10 +134,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp->current_plug_in && gimp->current_plug_in->open)
+  PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
     {
       if (! gimp->no_interface)
-	plug_in_progress_set_text (gimp->current_plug_in, message);
+	plug_in_progress_set_text (plug_in, message);
     }
   else
     success = FALSE;
@@ -157,10 +165,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp->current_plug_in && gimp->current_plug_in->open)
+  PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
     {
       if (! gimp->no_interface)
-	window = plug_in_progress_get_window (gimp->current_plug_in);
+	window = plug_in_progress_get_window (plug_in);
     }
   else
     success = FALSE;
@@ -189,9 +199,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp->current_plug_in && gimp->current_plug_in->open)
-    success = plug_in_progress_install (gimp->current_plug_in,
-                                        progress_callback);
+  PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
+    success = plug_in_progress_install (plug_in, progress_callback);
   else
     success = FALSE;
 }
@@ -218,9 +229,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp->current_plug_in && gimp->current_plug_in->open)
-    success = plug_in_progress_uninstall (gimp->current_plug_in,
-                                          progress_callback);
+  PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
+    success = plug_in_progress_uninstall (plug_in, progress_callback);
   else
     success = FALSE;
 }
@@ -245,9 +257,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp->current_plug_in && gimp->current_plug_in->open)
-    success = plug_in_progress_cancel (gimp->current_plug_in,
-                                       progress_callback);
+  PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
+    success = plug_in_progress_cancel (plug_in, progress_callback);
   else
     success = FALSE;
 }
@@ -256,7 +269,8 @@ CODE
 }
 
 
-@headers = qw("core/gimp.h" "plug-in/plug-in.h" "plug-in/plug-in-progress.h");
+@headers = qw("core/gimp.h" "plug-in/gimppluginmanager.h"
+              "plug-in/plug-in.h" "plug-in/plug-in-progress.h");
 
 @procs = qw(progress_init progress_update progress_pulse progress_set_text
             progress_get_window_handle

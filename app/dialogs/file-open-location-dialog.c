@@ -30,6 +30,8 @@
 #include "core/gimp.h"
 #include "core/gimpprogress.h"
 
+#include "plug-in/gimppluginmanager.h"
+
 #include "file/file-open.h"
 #include "file/file-utils.h"
 
@@ -178,7 +180,8 @@ file_open_location_response (GtkDialog *dialog,
         }
       else
         {
-          uri = file_utils_filename_to_uri (gimp->load_procs, text, NULL);
+          uri = file_utils_filename_to_uri (gimp->plug_in_manager->load_procs,
+                                            text, NULL);
         }
 
       box = gimp_progress_box_new ();

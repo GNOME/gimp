@@ -38,15 +38,15 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("plug-in/plug-in.h") ],
+	headers => [ qw("plug-in/gimppluginmanager.h" "plug-in/plug-in.h") ],
 	code    => <<'CODE'
 {
   if (gimp_item_is_attached (GIMP_ITEM (drawable)))
     {
       gchar *undo_desc = NULL;
 
-      if (gimp->current_plug_in)
-        undo_desc = plug_in_get_undo_desc (gimp->current_plug_in);
+      if (gimp->plug_in_manager->current_plug_in)
+        undo_desc = plug_in_get_undo_desc (gimp->plug_in_manager->current_plug_in);
 
       if (! undo_desc)
         undo_desc = g_strdup (_("Plug-In"));

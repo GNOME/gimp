@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * plug-ins-query.h
+ * gimppluginmanager-query.h
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,18 +18,18 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PLUG_INS_QUERY_H__
-#define __PLUG_INS_QUERY_H__
+#ifndef __GIMP_PLUG_IN_MANAGER_QUERY_H__
+#define __GIMP_PLUG_IN_MANAGER_QUERY_H__
 
 
-gint   plug_ins_query (Gimp          *gimp,
-                       const gchar   *search_str,
-                       gchar       ***menu_strs,
-                       gchar       ***accel_strs,
-                       gchar       ***prog_strs,
-                       gchar       ***types_strs,
-                       gchar       ***realname_strs,
-                       gint32       **time_ints);
+gint   gimp_plug_in_manager_query (GimpPlugInManager   *manager,
+                                   const gchar         *search_str,
+                                   gchar             ***menu_strs,
+                                   gchar             ***accel_strs,
+                                   gchar             ***prog_strs,
+                                   gchar             ***types_strs,
+                                   gchar             ***realname_strs,
+                                   gint32             **time_ints);
 
 
-#endif /* __PLUG_INS_QUERY_H__ */
+#endif /* __GIMP_PLUG_IN_MANAGER_QUERY_H__ */

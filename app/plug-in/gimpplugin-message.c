@@ -40,10 +40,10 @@
 #include "pdb/gimp-pdb-compat.h"
 #include "pdb/gimptemporaryprocedure.h"
 
+#include "gimppluginmanager.h"
 #include "plug-in.h"
 #include "plug-in-def.h"
 #include "plug-in-params.h"
-#include "plug-in-shm.h"
 
 
 /*  local function prototypes  */
@@ -164,7 +164,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
   Tile            *tile;
   gint             shm_ID;
 
-  shm_ID = plug_in_shm_get_ID (plug_in->gimp);
+  shm_ID = gimp_plug_in_manager_get_shm_ID (plug_in->manager);
 
   if (tile_req->drawable_ID == -1)
     {
@@ -202,7 +202,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
 
       tile_info = msg.data;
 
-      drawable = (GimpDrawable *) gimp_item_get_by_ID (plug_in->gimp,
+      drawable = (GimpDrawable *) gimp_item_get_by_ID (plug_in->manager->gimp,
                                                        tile_info->drawable_ID);
 
       if (! GIMP_IS_DRAWABLE (drawable))
@@ -234,7 +234,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
 
       if (tile_data.use_shm)
         memcpy (tile_data_pointer (tile, 0, 0),
-                plug_in_shm_get_addr (plug_in->gimp),
+                gimp_plug_in_manager_get_shm_addr (plug_in->manager),
                 tile_size (tile));
       else
         memcpy (tile_data_pointer (tile, 0, 0),
@@ -255,7 +255,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
     {
       /*  this branch communicates with libgimp/gimptile.c:gimp_tile_get()  */
 
-      drawable = (GimpDrawable *) gimp_item_get_by_ID (plug_in->gimp,
+      drawable = (GimpDrawable *) gimp_item_get_by_ID (plug_in->manager->gimp,
                                                        tile_req->drawable_ID);
 
       if (! GIMP_IS_DRAWABLE (drawable))
@@ -294,7 +294,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
       tile_data.use_shm     = (shm_ID == -1) ? FALSE : TRUE;
 
       if (tile_data.use_shm)
-        memcpy (plug_in_shm_get_addr (plug_in->gimp),
+        memcpy (gimp_plug_in_manager_get_shm_addr (plug_in->manager),
                 tile_data_pointer (tile, 0, 0),
                 tile_size (tile));
       else
@@ -343,18 +343,20 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
 
   proc_frame = plug_in_get_proc_frame (plug_in);
 
-  procedure = gimp_pdb_lookup_procedure (plug_in->gimp->pdb, canonical);
+  procedure = gimp_pdb_lookup_procedure (plug_in->manager->gimp->pdb,
+                                         canonical);
 
   if (! procedure)
     {
-      proc_name = gimp_pdb_lookup_compat_proc_name (plug_in->gimp->pdb,
+      proc_name = gimp_pdb_lookup_compat_proc_name (plug_in->manager->gimp->pdb,
                                                     canonical);
 
       if (proc_name)
         {
-          procedure = gimp_pdb_lookup_procedure (plug_in->gimp->pdb, proc_name);
+          procedure = gimp_pdb_lookup_procedure (plug_in->manager->gimp->pdb,
+                                                 proc_name);
 
-          if (plug_in->gimp->pdb_compat_mode == GIMP_PDB_COMPAT_WARN)
+          if (plug_in->manager->gimp->pdb_compat_mode == GIMP_PDB_COMPAT_WARN)
             {
               g_message ("WARNING: Plug-In \"%s\"\n(%s)\n"
                          "called deprecated procedure '%s'.\n"
@@ -367,7 +369,7 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
     }
   else if (procedure->deprecated)
     {
-      if (plug_in->gimp->pdb_compat_mode == GIMP_PDB_COMPAT_WARN)
+      if (plug_in->manager->gimp->pdb_compat_mode == GIMP_PDB_COMPAT_WARN)
         {
           if (! strcmp (procedure->deprecated, "NONE"))
             {
@@ -387,7 +389,7 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
                          canonical, procedure->deprecated);
             }
         }
-      else if (plug_in->gimp->pdb_compat_mode == GIMP_PDB_COMPAT_OFF)
+      else if (plug_in->manager->gimp->pdb_compat_mode == GIMP_PDB_COMPAT_OFF)
         {
           procedure = NULL;
         }
@@ -405,15 +407,15 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
    *  returned NULL, gimp_pdb_execute_procedure_by_name_args() will
    *  return appropriate error return_vals.
    */
-  plug_in_push (plug_in->gimp, plug_in);
-  return_vals = gimp_pdb_execute_procedure_by_name_args (plug_in->gimp->pdb,
+  plug_in_push (plug_in->manager, plug_in);
+  return_vals = gimp_pdb_execute_procedure_by_name_args (plug_in->manager->gimp->pdb,
                                                          proc_frame->context_stack ?
                                                          proc_frame->context_stack->data :
                                                          proc_frame->main_context,
                                                          proc_frame->progress,
                                                          proc_name,
                                                          args);
-  plug_in_pop (plug_in->gimp);
+  plug_in_pop (plug_in->manager);
 
   g_free (canonical);
 
@@ -611,7 +613,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
   for (i = 0; i < proc_install->nparams; i++)
     {
       GParamSpec *pspec =
-        gimp_pdb_compat_param_spec (plug_in->gimp,
+        gimp_pdb_compat_param_spec (plug_in->manager->gimp,
                                     proc_install->params[i].type,
                                     proc_install->params[i].name,
                                     proc_install->params[i].description);
@@ -622,7 +624,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
   for (i = 0; i < proc_install->nreturn_vals; i++)
     {
       GParamSpec *pspec =
-        gimp_pdb_compat_param_spec (plug_in->gimp,
+        gimp_pdb_compat_param_spec (plug_in->manager->gimp,
                                     proc_install->return_vals[i].type,
                                     proc_install->return_vals[i].name,
                                     proc_install->return_vals[i].description);

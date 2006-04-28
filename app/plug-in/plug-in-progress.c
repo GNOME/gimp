@@ -32,6 +32,7 @@
 #include "pdb/gimppdb.h"
 #include "pdb/gimptemporaryprocedure.h"
 
+#include "gimppluginmanager.h"
 #include "plug-in.h"
 #include "plug-in-progress.h"
 
@@ -58,7 +59,8 @@ plug_in_progress_start (PlugIn      *plug_in,
 
   if (! proc_frame->progress)
     {
-      proc_frame->progress = gimp_new_progress (plug_in->gimp, display);
+      proc_frame->progress = gimp_new_progress (plug_in->manager->gimp,
+                                                display);
 
       if (proc_frame->progress)
         {
@@ -116,7 +118,7 @@ plug_in_progress_end (PlugIn *plug_in)
 
       if (proc_frame->progress_created)
         {
-          gimp_free_progress (plug_in->gimp, proc_frame->progress);
+          gimp_free_progress (plug_in->manager->gimp, proc_frame->progress);
           g_object_unref (proc_frame->progress);
           proc_frame->progress = NULL;
         }
@@ -203,7 +205,7 @@ plug_in_progress_install (PlugIn      *plug_in,
   g_return_val_if_fail (plug_in != NULL, FALSE);
   g_return_val_if_fail (progress_callback != NULL, FALSE);
 
-  procedure = gimp_pdb_lookup_procedure (plug_in->gimp->pdb,
+  procedure = gimp_pdb_lookup_procedure (plug_in->manager->gimp->pdb,
                                          progress_callback);
 
   if (! GIMP_IS_TEMPORARY_PROCEDURE (procedure)                ||
@@ -230,7 +232,7 @@ plug_in_progress_install (PlugIn      *plug_in,
     }
 
   proc_frame->progress = g_object_new (GIMP_TYPE_PDB_PROGRESS,
-                                       "pdb",           plug_in->gimp->pdb,
+                                       "pdb",           plug_in->manager->gimp->pdb,
                                        "context",       proc_frame->main_context,
                                        "callback-name", progress_callback,
                                        NULL);
@@ -288,11 +290,11 @@ plug_in_progress_message (PlugIn      *plug_in,
   if (proc_frame->progress)
     {
       gimp_progress_message (proc_frame->progress,
-                             plug_in->gimp, domain, message);
+                             plug_in->manager->gimp, domain, message);
     }
   else
     {
-      gimp_message (plug_in->gimp, domain, message);
+      gimp_message (plug_in->manager->gimp, domain, message);
     }
 
   g_free (domain);

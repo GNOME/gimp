@@ -35,13 +35,15 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("core/gimp.h" "plug-in/plug-in.h") ],
+	headers => [ qw("core/gimp.h" "plug-in/gimppluginmanager.h"
+                        "plug-in/plug-in.h") ],
 	code    => <<'CODE'
 {
-  gchar *undo_desc = NULL;
+  PlugIn *plug_in  = gimp->plug_in_manager->current_plug_in;
+  gchar  *undo_desc = NULL;
 
-  if (gimp->current_plug_in)
-    undo_desc = plug_in_get_undo_desc (gimp->current_plug_in);
+  if (plug_in)
+    undo_desc = plug_in_get_undo_desc (plug_in);
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_MISC, undo_desc);
 

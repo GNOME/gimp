@@ -35,7 +35,7 @@
 
 #include "pdb/gimppluginprocedure.h"
 
-#include "plug-in/plug-ins.h"
+#include "plug-in/gimppluginmanager.h"
 
 #include "xcf.h"
 #include "xcf-private.h"
@@ -199,7 +199,7 @@ xcf_init (Gimp *gimp)
                                                        "file, in UTF-8",
                                                        FALSE, FALSE, NULL,
                                                        GIMP_PARAM_READWRITE));
-  plug_ins_procedure_add (gimp, proc);
+  gimp_plug_in_manager_add_procedure (gimp->plug_in_manager, proc);
   g_object_unref (procedure);
 
   /*  gimp-xcf-load  */
@@ -260,7 +260,7 @@ xcf_init (Gimp *gimp)
                                                              "Output image",
                                                              gimp,
                                                              GIMP_PARAM_READWRITE));
-  plug_ins_procedure_add (gimp, proc);
+  gimp_plug_in_manager_add_procedure (gimp->plug_in_manager, proc);
   g_object_unref (procedure);
 }
 

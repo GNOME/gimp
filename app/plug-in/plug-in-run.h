@@ -28,7 +28,7 @@
 
 /*  Run a plug-in as if it were a procedure database procedure
  */
-GValueArray * plug_in_run      (Gimp                   *gimp,
+GValueArray * plug_in_run      (GimpPlugInManager      *manager,
                                 GimpContext            *context,
                                 GimpProgress           *progress,
                                 GimpPlugInProcedure    *procedure,
@@ -39,7 +39,7 @@ GValueArray * plug_in_run      (Gimp                   *gimp,
 
 /*  Run a temp plug-in proc as if it were a procedure database procedure
  */
-GValueArray * plug_in_run_temp (Gimp                   *gimp,
+GValueArray * plug_in_run_temp (GimpPlugInManager      *manager,
                                 GimpContext            *context,
                                 GimpProgress           *progress,
                                 GimpTemporaryProcedure *procedure,

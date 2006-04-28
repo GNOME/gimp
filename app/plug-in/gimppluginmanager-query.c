@@ -34,9 +34,10 @@
 
 #include "plug-in-types.h"
 
-#include "core/gimp.h"
-
 #include "pdb/gimppluginprocedure.h"
+
+#include "gimppluginmanager.h"
+#include "gimppluginmanager-query.h"
 
 
 static int
@@ -47,14 +48,14 @@ match_strings (regex_t *preg,
 }
 
 gint
-plug_ins_query (Gimp          *gimp,
-                const gchar   *search_str,
-                gchar       ***menu_strs,
-                gchar       ***accel_strs,
-                gchar       ***prog_strs,
-                gchar       ***types_strs,
-                gchar       ***realname_strs,
-                gint32       **time_ints)
+gimp_plug_in_manager_query (GimpPlugInManager   *manager,
+                            const gchar         *search_str,
+                            gchar             ***menu_strs,
+                            gchar             ***accel_strs,
+                            gchar             ***prog_strs,
+                            gchar             ***types_strs,
+                            gchar             ***realname_strs,
+                            gint32             **time_ints)
 {
   gint32   num_plugins = 0;
   GSList  *list;
@@ -62,7 +63,7 @@ plug_ins_query (Gimp          *gimp,
   gint     i           = 0;
   regex_t  sregex;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), 0);
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), 0);
   g_return_val_if_fail (menu_strs != NULL, 0);
   g_return_val_if_fail (accel_strs != NULL, 0);
   g_return_val_if_fail (prog_strs != NULL, 0);
@@ -87,7 +88,7 @@ plug_ins_query (Gimp          *gimp,
    * where we can store the strings.
    */
 
-  for (list = gimp->plug_in_procedures; list; list = g_slist_next (list))
+  for (list = manager->plug_in_procedures; list; list = g_slist_next (list))
     {
       GimpPlugInProcedure *proc = list->data;
 

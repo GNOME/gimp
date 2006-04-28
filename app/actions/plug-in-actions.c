@@ -35,9 +35,10 @@
 
 #include "pdb/gimppluginprocedure.h"
 
-#include "plug-in/plug-in-help-domain.h"
-#include "plug-in/plug-in-locale-domain.h"
-#include "plug-in/plug-in-menu-branch.h"
+#include "plug-in/gimppluginmanager.h"
+#include "plug-in/gimppluginmanager-help-domain.h"
+#include "plug-in/gimppluginmanager-locale-domain.h"
+#include "plug-in/gimppluginmanager-menu-branch.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
@@ -51,6 +52,11 @@
 
 /*  local function prototypes  */
 
+static void     plug_in_actions_menu_branch_added    (GimpPlugInManager   *manager,
+                                                      const gchar         *progname,
+                                                      const gchar         *menu_path,
+                                                      const gchar         *menu_label,
+                                                      GimpActionGroup     *group);
 static void     plug_in_actions_register_procedure   (GimpPDB             *pdb,
                                                       GimpProcedure       *procedure,
                                                       GimpActionGroup     *group);
@@ -63,7 +69,7 @@ static void     plug_in_actions_menu_path_added      (GimpPlugInProcedure *proc,
 static void     plug_in_actions_add_proc             (GimpActionGroup     *group,
                                                       GimpPlugInProcedure *proc);
 
-static void     plug_in_actions_last_changed         (Gimp                *gimp,
+static void     plug_in_actions_last_changed         (GimpPlugInManager   *manager,
                                                       GimpActionGroup     *group);
 static gboolean plug_in_actions_check_translation    (const gchar         *original,
                                                       const gchar         *translated);
@@ -137,19 +143,25 @@ plug_in_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (plug_in_repeat_actions),
                                       G_CALLBACK (plug_in_repeat_cmd_callback));
 
-  for (list = group->gimp->plug_in_menu_branches;
+  for (list = group->gimp->plug_in_manager->menu_branches;
        list;
        list = g_slist_next (list))
     {
-      PlugInMenuBranch *branch = list->data;
+      GimpPlugInMenuBranch *branch = list->data;
 
-      plug_in_actions_add_branch (group,
-                                  branch->prog_name,
-                                  branch->menu_path,
-                                  branch->menu_label);
+      plug_in_actions_menu_branch_added (group->gimp->plug_in_manager,
+                                         branch->prog_name,
+                                         branch->menu_path,
+                                         branch->menu_label,
+                                         group);
     }
 
-  for (list = group->gimp->plug_in_procedures;
+  g_signal_connect_object (group->gimp->plug_in_manager,
+                           "menu-branch-added",
+                           G_CALLBACK (plug_in_actions_menu_branch_added),
+                           group, 0);
+
+  for (list = group->gimp->plug_in_manager->plug_in_procedures;
        list;
        list = g_slist_next (list))
     {
@@ -209,21 +221,25 @@ plug_in_actions_setup (GimpActionGroup *group)
 
   g_free (entries);
 
-  g_signal_connect_object (group->gimp, "last-plug-ins-changed",
+  g_signal_connect_object (group->gimp->plug_in_manager,
+                           "last-plug-ins-changed",
                            G_CALLBACK (plug_in_actions_last_changed),
                            group, 0);
 
-  plug_in_actions_last_changed (group->gimp, group);
+  plug_in_actions_last_changed (group->gimp->plug_in_manager, group);
 }
 
 void
 plug_in_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
-  GimpImage     *image = action_data_get_image (data);
-  GimpImageType  type   = -1;
-  GSList        *list;
-  gint           i;
+  GimpImage         *image = action_data_get_image (data);
+  GimpPlugInManager *manager;
+  GimpImageType      type   = -1;
+  GSList            *list;
+  gint               i;
+
+  manager = group->gimp->plug_in_manager;
 
   if (image)
     {
@@ -233,9 +249,7 @@ plug_in_actions_update (GimpActionGroup *group,
         type = gimp_drawable_type (drawable);
     }
 
-  for (list = group->gimp->plug_in_procedures;
-       list;
-       list = g_slist_next (list))
+  for (list = manager->plug_in_procedures; list; list = g_slist_next (list))
     {
       GimpPlugInProcedure *proc = list->data;
 
@@ -254,8 +268,8 @@ plug_in_actions_update (GimpActionGroup *group,
         }
     }
 
-  if (group->gimp->last_plug_ins &&
-      gimp_plug_in_procedure_get_sensitive (group->gimp->last_plug_ins->data,
+  if (manager->last_plug_ins &&
+      gimp_plug_in_procedure_get_sensitive (manager->last_plug_ins->data,
                                             type))
     {
       gimp_action_group_set_action_sensitive (group, "plug-in-repeat", TRUE);
@@ -267,7 +281,7 @@ plug_in_actions_update (GimpActionGroup *group,
       gimp_action_group_set_action_sensitive (group, "plug-in-reshow", FALSE);
     }
 
-  for (list = group->gimp->last_plug_ins, i = 0; list; list = list->next, i++)
+  for (list = manager->last_plug_ins, i = 0; list; list = list->next, i++)
     {
       GimpPlugInProcedure *proc = list->data;
       gchar               *name = g_strdup_printf ("plug-in-recent-%02d",
@@ -282,11 +296,15 @@ plug_in_actions_update (GimpActionGroup *group,
     }
 }
 
-void
-plug_in_actions_add_branch (GimpActionGroup *group,
-                            const gchar     *progname,
-                            const gchar     *menu_path,
-                            const gchar     *menu_label)
+
+/*  private functions  */
+
+static void
+plug_in_actions_menu_branch_added (GimpPlugInManager *manager,
+                                   const gchar       *progname,
+                                   const gchar       *menu_path,
+                                   const gchar       *menu_label,
+                                   GimpActionGroup   *group)
 {
   const gchar *locale_domain;
   const gchar *path_translated;
@@ -294,11 +312,9 @@ plug_in_actions_add_branch (GimpActionGroup *group,
   gchar       *full;
   gchar       *full_translated;
 
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
-  g_return_if_fail (menu_path != NULL);
-  g_return_if_fail (menu_label != NULL);
-
-  locale_domain = plug_in_locale_domain (group->gimp, progname, NULL);
+  locale_domain =
+    gimp_plug_in_manager_get_locale_domain (group->gimp->plug_in_manager,
+                                            progname, NULL);
 
   path_translated  = dgettext (locale_domain, menu_path);
   label_translated = dgettext (locale_domain, menu_label);
@@ -314,9 +330,6 @@ plug_in_actions_add_branch (GimpActionGroup *group,
   g_free (full_translated);
   g_free (full);
 }
-
-
-/*  private functions  */
 
 static void
 plug_in_actions_register_procedure (GimpPDB         *pdb,
@@ -390,7 +403,8 @@ plug_in_actions_menu_path_added (GimpPlugInProcedure *plug_in_proc,
 
   progname = gimp_plug_in_procedure_get_progname (plug_in_proc);
 
-  locale_domain = plug_in_locale_domain (group->gimp, progname, NULL);
+  locale_domain = gimp_plug_in_manager_get_locale_domain (group->gimp->plug_in_manager,
+                                                          progname, NULL);
 
   path_translated = dgettext (locale_domain, menu_path);
 
@@ -413,13 +427,12 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
   gchar                 *path_original    = NULL;
   gchar                 *path_translated  = NULL;
 
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
-  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
-
   progname = gimp_plug_in_procedure_get_progname (proc);
 
-  locale_domain = plug_in_locale_domain (group->gimp, progname, NULL);
-  help_domain   = plug_in_help_domain (group->gimp, progname, NULL);
+  locale_domain = gimp_plug_in_manager_get_locale_domain (group->gimp->plug_in_manager,
+                                                          progname, NULL);
+  help_domain   = gimp_plug_in_manager_get_help_domain (group->gimp->plug_in_manager,
+                                                        progname, NULL);
 
   if (proc->menu_label)
     {
@@ -494,23 +507,24 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
 }
 
 static void
-plug_in_actions_last_changed (Gimp            *gimp,
-                              GimpActionGroup *group)
+plug_in_actions_last_changed (GimpPlugInManager *manager,
+                              GimpActionGroup   *group)
 {
   GSList      *list;
   const gchar *progname;
   const gchar *domain;
   gint         i;
 
-  if (gimp->last_plug_ins)
+  if (manager->last_plug_ins)
     {
-      GimpPlugInProcedure *proc = gimp->last_plug_ins->data;
+      GimpPlugInProcedure *proc = manager->last_plug_ins->data;
       gchar               *label;
       gchar               *repeat;
       gchar               *reshow;
 
       progname = gimp_plug_in_procedure_get_progname (proc);
-      domain   = plug_in_locale_domain (gimp, progname, NULL);
+      domain   = gimp_plug_in_manager_get_locale_domain (manager,
+                                                         progname, NULL);
 
       label = gimp_plug_in_procedure_get_label (proc, domain);
 
@@ -533,7 +547,7 @@ plug_in_actions_last_changed (Gimp            *gimp,
                                           _("Re-Show Last"));
     }
 
-  for (list = gimp->last_plug_ins, i = 0; list; list = list->next, i++)
+  for (list = manager->last_plug_ins, i = 0; list; list = list->next, i++)
     {
       GtkAction           *action;
       GimpPlugInProcedure *proc = list->data;
@@ -545,7 +559,8 @@ plug_in_actions_last_changed (Gimp            *gimp,
       g_free (name);
 
       progname = gimp_plug_in_procedure_get_progname (proc);
-      domain   = plug_in_locale_domain (gimp, progname, NULL);
+      domain   = gimp_plug_in_manager_get_locale_domain (manager,
+                                                         progname, NULL);
 
       label = gimp_plug_in_procedure_get_label (proc, domain);
 
@@ -558,7 +573,7 @@ plug_in_actions_last_changed (Gimp            *gimp,
       g_free (label);
     }
 
-  for (; i < gimp->config->plug_in_history_size; i++)
+  for (; i < manager->gimp->config->plug_in_history_size; i++)
     {
       GtkAction *action;
       gchar     *name = g_strdup_printf ("plug-in-recent-%02d", i + 1);
@@ -572,7 +587,7 @@ plug_in_actions_last_changed (Gimp            *gimp,
     }
 
   /* update sensitivity of the actions */
-  plug_in_actions_update (group, gimp);
+  plug_in_actions_update (group, manager->gimp);
 }
 
 static gboolean

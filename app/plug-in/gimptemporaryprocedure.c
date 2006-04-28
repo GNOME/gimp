@@ -24,6 +24,8 @@
 
 #include "pdb-types.h"
 
+#include "core/gimp.h"
+
 #include "plug-in/plug-in.h"
 #define __YES_I_NEED_PLUG_IN_RUN__
 #include "plug-in/plug-in-run.h"
@@ -92,7 +94,7 @@ gimp_temporary_procedure_execute (GimpProcedure *procedure,
                                   GimpProgress  *progress,
                                   GValueArray   *args)
 {
-  return plug_in_run_temp (gimp, context, progress,
+  return plug_in_run_temp (gimp->plug_in_manager, context, progress,
                            GIMP_TEMPORARY_PROCEDURE (procedure),
                            args);
 }
@@ -107,7 +109,7 @@ gimp_temporary_procedure_execute_async (GimpProcedure *procedure,
 {
   GValueArray *return_vals;
 
-  return_vals = plug_in_run_temp (gimp, context, progress,
+  return_vals = plug_in_run_temp (gimp->plug_in_manager, context, progress,
                                   GIMP_TEMPORARY_PROCEDURE (procedure),
                                   args);
 
