@@ -1,3 +1,7 @@
+2006-04-28  Tor Lillqvist  <tml@novell.com>
+
+	* HACKING: Clarify the wording about TABs. s/bracket/brace/ .
+
 2006-04-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in-locale-domain.[ch] (plug_in_locale_domains):

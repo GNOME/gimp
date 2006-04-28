@@ -121,7 +121,7 @@ project.  For the core components (application and libs) this coding
 style is enforced.  The GIMP coding style is defined as follows:
 
     * There's a single space between the function name and the opening
-      bracket.
+      paren.
 
     * Function names are lowercase, words separated by underscores.
 
@@ -134,9 +134,14 @@ style is enforced.  The GIMP coding style is defined as follows:
 
     * Indentation rules are GNU coding style, in particular:
         - 2 characters indentation level
-        - Do not use tabs (of course your editor can use tabs, but it 
-          should write them to file as 8 spaces each).
-        - Opening brackets are on a new line and indented one level.
+        - Do not use tabs (of course your editor can accept the TAB key
+          as a command, typically to indent the current line properly
+          or to add spaces at the cursor until the next multiple of 8
+          columns, but it should not put TAB characters in the file).
+        - When editing files that still have TABs in them, make sure your
+          editor interprets the TABs correctly, that is, has tab stops
+          at 8 column intervals.
+        - Opening braces are on a new line and indented one level.
         - Function header have the return type on one line, the name
           starting in the first column of the following line. All
           parameters are prototyped and there's a new line for each.
