@@ -20,9 +20,7 @@
 #define __USER_INSTALL_DIALOG_H__
 
 
-void  user_install_dialog_run (const gchar *alternate_system_gimprc,
-                               const gchar *alernate_gimprc,
-                               gboolean     verbose);
+void  user_install_dialog_run (gboolean  verbose);
 
 
 #endif /* __USER_INSTALL_DIALOG_H__ */
