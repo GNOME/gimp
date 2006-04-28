@@ -38,13 +38,11 @@
 #endif
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "dialogs-types.h"
 
 #include "config/gimpconfig-file.h"
-#include "config/gimprc.h"
 
 #include "core/gimp-templates.h"
 
@@ -60,18 +58,10 @@ enum
   NUM_PAGES
 };
 
-enum
-{
-  DIRENT_COLUMN,
-  PIXBUF_COLUMN,
-  DESC_COLUMN,
-  NUM_COLUMNS
-};
-
 
 static void      user_install_dialog_response (GtkWidget   *dialog,
                                                gint         response_id,
-                                               GimpRc      *gimprc);
+                                               GtkWidget   *notebook);
 
 static gboolean  user_install_detect_old      (const gchar **version);
 
@@ -80,8 +70,6 @@ static gboolean  user_install_run             (GtkWidget    *dialog,
 
 
 /*  private stuff  */
-
-static GtkWidget  *notebook      = NULL;
 
 static GtkWidget  *title_label   = NULL;
 
@@ -146,7 +134,7 @@ user_install_notebook_set_page (GtkNotebook *notebook,
 static void
 user_install_dialog_response (GtkWidget *dialog,
                               gint       response_id,
-                              GimpRc    *gimprc)
+                              GtkWidget *notebook)
 {
   gint index = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
 
@@ -190,12 +178,7 @@ user_install_dialog_response (GtkWidget *dialog,
       break;
 
     case INSTALLATION_PAGE:
-      if (! migrate)
-        gimp_rc_save (gimprc);
-
       gtk_widget_destroy (dialog);
-
-      gtk_main_quit ();
       break;
 
     default:
@@ -333,14 +316,12 @@ user_install_dialog_add_install_page (GtkWidget *dialog,
 }
 
 void
-user_install_dialog_run (const gchar *alternate_system_gimprc,
-                         const gchar *alternate_gimprc,
-                         gboolean     verbose)
+user_install_dialog_run (gboolean  verbose)
 {
-  GimpRc      *gimprc;
   GtkWidget   *dialog;
   GtkWidget   *vbox;
   GtkWidget   *hbox;
+  GtkWidget   *notebook;
   GdkPixbuf   *wilber;
   gchar       *filename;
   const gchar *version = NULL;
@@ -362,13 +343,9 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimprc = gimp_rc_new (alternate_system_gimprc, alternate_gimprc, verbose);
-
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (user_install_dialog_response),
-                    gimprc);
-
-  g_object_weak_ref (G_OBJECT (dialog), (GWeakNotify) g_object_unref, gimprc);
+  g_signal_connect (dialog, "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
@@ -410,6 +387,10 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);
   gtk_widget_show (notebook);
 
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (user_install_dialog_response),
+                    notebook);
+
   user_install_dialog_add_welcome_page (dialog, notebook,
                                         migrate ? version : NULL);
 
@@ -425,7 +406,6 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
 }
 
 
-/*********************/
 /*  Local functions  */
 
 static gboolean

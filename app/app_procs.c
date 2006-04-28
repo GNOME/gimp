@@ -236,9 +236,7 @@ app_run (const gchar         *full_prog_name,
 #ifndef GIMP_CONSOLE_COMPILATION
       else
         {
-          user_install_dialog_run (alternate_system_gimprc,
-                                   alternate_gimprc,
-                                   be_verbose);
+          user_install_dialog_run (be_verbose);
         }
 #endif
     }

@@ -1,3 +1,10 @@
+2006-04-29  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/user-install-dialog.[ch]: removed unused code and
+	unused parameters passed to user_install_dialog_run().
+
+	* app/app_procs.c (app_run): changed accordingly.
+
 2006-04-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/Makefile.am
