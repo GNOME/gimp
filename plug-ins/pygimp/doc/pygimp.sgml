@@ -4,7 +4,7 @@
 
   <ArtHeader>
 
-    <Title>Gimp Python Documentation</Title>
+    <Title>GIMP Python Documentation</Title>
     <AUTHOR>
       <FirstName>James</FirstName>
       <surname>Henstridge</surname>
@@ -22,7 +22,7 @@
       <Para>This document outlines the interfaces to Gimp-Python,
       which is a set of Python modules that act as a wrapper to
       <filename>libgimp</filename> allowing the writing of
-      plug-ins for Gimp.  In this way, Gimp-Python is similar to
+      plug-ins for GIMP.  In this way, Gimp-Python is similar to
       Script-Fu, except that you can use the full set of Python
       extension modules from the plug-in.</Para>
 
@@ -36,7 +36,7 @@
     <Sect2 id=what-is-it>
       <Title>What is it?</Title>
 
-      <Para>Gimp-Python is a scripting extension for Gimp, similar to
+      <Para>Gimp-Python is a scripting extension for GIMP, similar to
       Script-Fu.  The main difference is in what is called first.  In
       Script-Fu, the script-fu plugin executes the script, while in
       Gimp-Python the script is in control.</Para>
@@ -484,7 +484,7 @@ pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])
   </Sect1>
   
   <Sect1 id=gimp-module-procedures>
-    <Title>Gimp Module Procedures</Title>
+    <Title>GIMP Module Procedures</Title>
 
     <Para>The <filename>gimp</filename> module contains a number of
     procedures and functions, as well as the definitions of many gimp
@@ -496,7 +496,7 @@ pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])
 
       <Para>There are a number of functions in the
       <filename>gimp</filename> module that are used to create the objects
-      used to make up an image in Gimp.  Here is a set of descriptions
+      used to make up an image in GIMP.  Here is a set of descriptions
       of these constructors:</para>
 
       <VariableList>
@@ -604,7 +604,7 @@ pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])
 	<VarListEntry>
 	  <Term><function>gimp.use_xshm</function>()</Term>
 	  <ListItem>
-	    <Para>Returns non-zero if Gimp is using X shared
+	    <Para>Returns non-zero if GIMP is using X shared
 	    memory.</Para>
 	  </listitem>
 	</VarListEntry>
@@ -769,7 +769,7 @@ pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])
 	  <parameter>prefixes</parameter>,
 	  <parameter>magics</parameter>)</Term>
 	  <ListItem>
-	    <Para>This procedure tells Gimp that the PDB procedure
+	    <Para>This procedure tells GIMP that the PDB procedure
             <parameter>name</parameter> can load files with
             <parameter>extensions</parameter> and
             <parameter>prefixes</parameter> (eg http:) with magic
@@ -781,7 +781,7 @@ pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])
 	  <parameter>extensions</parameter>,
 	  <parameter>prefixes</parameter>)</Term>
 	  <ListItem>
-	    <Para>This procedure tells Gimp that the PDB procedure
+	    <Para>This procedure tells GIMP that the PDB procedure
             <parameter>name</parameter> can load files with
             <parameter>extensions</parameter> and
             <parameter>prefixes</parameter> (eg http:).</Para>
@@ -792,7 +792,7 @@ pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])
 	  <parameter>extensions</parameter>,
 	  <parameter>prefixes</parameter>)</Term>
 	  <ListItem>
-	    <Para>This procedure tells Gimp that the PDB procedure
+	    <Para>This procedure tells GIMP that the PDB procedure
             <parameter>name</parameter> can save files with
             <parameter>extensions</parameter> and
             <parameter>prefixes</parameter> (eg http:).</Para>
@@ -1008,7 +1008,7 @@ pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])
   </Sect1>
 
   <Sect1 id=gimp-objects>
-    <Title>Gimp Objects</Title>
+    <Title>GIMP Objects</Title>
 
     <Para>Gimp-Python implements a number of special object types that
     represent the different types of parameters you can pass to a PDB
@@ -1292,7 +1292,7 @@ pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])
     <Sect2 id=channel-object>
       <Title>Channel Objects</Title>
 
-      <Para>These objects represent a Gimp Image's colour channels.
+      <Para>These objects represent a GIMP Image's colour channels.
       In this section, <replaceable>channel</replaceable> will refer
       to a generic channel object.</Para>
 
@@ -1392,7 +1392,7 @@ pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])
     <Sect2 id=layer-object>
       <Title>Layer Objects</Title>
 
-      <Para>Layer objects represent the layers of a Gimp image.  In
+      <Para>Layer objects represent the layers of a GIMP image.  In
       this section I will refer to a generic layer called
       <replaceable>layer</replaceable>.</Para>
 
@@ -1734,9 +1734,9 @@ pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])
     <Sect2 id=tile-object>
       <Title>Tile Objects</Title>
 
-      <Para>Tile objects represent the way Gimp stores information.  A
+      <Para>Tile objects represent the way GIMP stores information.  A
       tile is basically just a 64x64 pixel region of the drawable.
-      The reason Gimp breaks the image into small pieces like this is
+      The reason GIMP breaks the image into small pieces like this is
       so that the whole image doesn't have to be loaded into memory in
       order to alter one part of it.  This becomes important with
       larger images.</Para>
@@ -2030,7 +2030,7 @@ pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])
     <Sect2 id=gimpplugin-module>
       <Title>The gimpplugin Module</Title>
 
-      <Para>This module provides the framework for writing Gimp
+      <Para>This module provides the framework for writing GIMP
       plugins in Python.  It gives more flexibility for writing
       plugins than the gimpfu module, but does not offer as many
       features (such as automatic GUI building).</Para>
@@ -2062,7 +2062,7 @@ class myplugin(gimpplugin.plugin):
       <Title>The gimpshelf Module</Title>
 
       <Para>This module gives a nicer interface to the persistent
-      storage interface for Gimp plugins.  Due to the complicated
+      storage interface for GIMP plugins.  Due to the complicated
       nature of Python objects (there is often a lot of connections
       between them), it can be dificult to work out what to store in
       gimp's persistent storage.  The python interface only allows
@@ -2081,7 +2081,7 @@ class myplugin(gimpplugin.plugin):
 </Screen>
 
       <Para>Anything you store with
-      <function>gimpshelf.shelf</function> will exist until Gimp
+      <function>gimpshelf.shelf</function> will exist until GIMP
       exits.  This makes this interface perfect for when a plugin is
       executed with the run mode
       <literal>RUN_WITH_LAST_VALS</literal>.</Para>
@@ -2090,11 +2090,113 @@ class myplugin(gimpplugin.plugin):
 
   </Sect1>
 
+  <Sect1 id=script-fu-interface>
+    <Title>Script-Fu Invocation</Title> 
+
+    <Sect2>
+    <Title>The Script-Fu to GIMP Python Interface</Title>
+
+        <Para>As all other plug-ins, the ones written with GIMP Python are
+	registered in the procedural database (See <XRef
+	LinkEnd="procedural-database">).  As such, they can be easily interfaced
+	using Script-Fu; let's consider this GIMP Python plug-in:</Para>
+
+<ProgramListing role="python">
+#! /usr/bin/env python
+from gimpfu import *
+
+def echo(*args):
+  """Print the arguments on standard output"""
+  print "echo:", args
+
+register(
+  "console_echo", "", "", "", "", "",
+  "&lt;Toolbox&gt;/Xtns/Languages/Python-Fu/Test/_Console Echo", "",
+  [
+  (PF_STRING, "arg0", "argument 0", "test string"),
+  (PF_INT,    "arg1", "argument 1", 100          ),
+  (PF_FLOAT,  "arg2", "argument 2", 1.2          ),
+  (PF_COLOR,  "arg3", "argument 3", (0, 0, 0)    ),
+  ],
+  [],
+  echo
+  )
+
+main()
+</ProgramListing> 
+
+     	<Para>Using Script-Fu, one could easily invoke the correct Scheme
+	function call: <Literal>(python-fu-console-echo RUN-NONINTERACTIVE
+	"another string" 777 3.1416 '(1 0 0))</Literal>. There are a couple of
+	details worth mentioning:</Para>
+
+     	<ItemizedList>
+	  <ListItem>
+	    <Para>The registered procedure name (first parameter of the
+	    <Literal>register()</Literal> function) is mangled: all underscores
+	    are converted to hypens, to better match the usual Scheme syntatic
+	    style (here, <Literal>console_echo</Literal> becomes
+	    <Literal>console-echo</Literal>). Moreover, a
+	    <Literal>python-fu-</Literal> prefix is automatically added; it is
+	    better not to explicitely add it ourselves, as it will makes the
+	    often useful <Literal>(plug-in-script-fu-eval ...)</Literal>
+	    evaluation fail.</Para>
+	  </ListItem>
+	  <ListItem>
+	    <Para>The mandatory first parameter to any pdb call (Script-Fu
+	    constant <Literal>RUN-INTERACTIVE</Literal>, or
+	    <Literal>RUN-NONINTERACTIVE</Literal>) discriminates between
+	    user-driven or scripted calls. In the case of gimpfu-based plug-ins,
+	    it is automatically taken care of internally -- interactive calls
+	    will dismiss all the remaning arguments, and an interface will be
+	    presented (when possible) to the user. The plug-in core Python
+	    function (<Literal>echo()</Literal> in this case), never has to deal
+	    with it.</Para>
+	  </ListItem>
+	  <ListItem>
+	    <Para>Script-Fu is able to process strings, integer and floats
+	    literals, and pass them as corresponding first-class objects to
+	    Python. It can also pass compound arguments such as colors as tuples
+	    in Python by expressing them as Scheme lists (in the
+	    <Literal>(python-fu-console-echo ...)</Literal> call above, fourth
+	    argument to the pythonic <Literal>echo()</Literal> function will be
+	    a 3-tuple of integers representing a pure red color).</Para>
+	  </ListItem>
+	  <ListItem>
+	    <Para>All other special purposes gimpfu parameter types
+	    (<Literal>PF_FILE</Literal>, etc.) can be constructed using those
+	    simple literals and list constructs, and received as appropriate
+	    objects in Python. If you need booleans, pass them as
+	    integers.</Para>
+	  </ListItem>
+       </ItemizedList>
+     </Sect2>
+
+     <Sect2>
+     <Title>GIMP Python Invocation from the Shell</Title>
+
+       <Para>All this means that you could easily invoke a GIMP Python plug-in
+       such as the one above directly from your shell using the
+       <Literal>(plug-in-script-fu-eval ...)</Literal> evaluator:</Para>
+
+<programlisting>
+gimp --no-interface --batch='(python-fu-console-echo RUN-NONINTERACTIVE "another string" 777 3.1416 (list 1 0 0))' --batch='(gimp-quit 1)'
+</programlisting>
+
+       <Para>The invocation here was done without an interface since this specific
+       procedure didn't need any.</Para>
+
+       <Para>See the GIMP Script-Fu Documentation to learn more about it.</Para>
+
+    </Sect2>
+
+    </Sect1>
+
   <Sect1 id=end-note>
     <Title>End Note</Title>
 
     <Para>This package is not yet complete, but it has enough in it to
-    be useful for writing plugins for Gimp.  If you write any plugins
+    be useful for writing plugins for GIMP.  If you write any plugins
     that might be useful as examples, please mail me at <ULink
     URL="mailto:james@daa.com.au" >james@daa.com.au</ULink>.</Para>
 
