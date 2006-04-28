@@ -1,6 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
- * Copyright (C) 2000 Michael Natterer and Sven Neumann
+ *
+ * user-install-dialog.c
+ * Copyright (C) 2000-2006 Michael Natterer and Sven Neumann
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,12 +69,14 @@ enum
 };
 
 
-static void      user_install_response (GtkWidget   *dialog,
-                                        gint         response_id,
-                                        GimpRc      *gimprc);
+static void      user_install_dialog_response (GtkWidget   *dialog,
+                                               gint         response_id,
+                                               GimpRc      *gimprc);
 
-static gboolean  user_install_run      (GtkWidget   *dialog,
-                                        const gchar *oldgimp);
+static gboolean  user_install_detect_old      (const gchar **version);
+
+static gboolean  user_install_run             (GtkWidget    *dialog,
+                                               const gchar  *oldgimp);
 
 
 /*  private stuff  */
@@ -80,19 +84,18 @@ static gboolean  user_install_run      (GtkWidget   *dialog,
 static GtkWidget  *notebook      = NULL;
 
 static GtkWidget  *title_label   = NULL;
-static GtkWidget  *footer_label  = NULL;
 
 static gchar      *oldgimp       = NULL;
 static gint        oldgimp_major = 0;
 static gint        oldgimp_minor = 0;
+
 static gboolean    migrate       = FALSE;
 
 
 typedef enum
 {
-  USER_INSTALL_DO_NOTHING,        /* Don't pre-create            */
-  USER_INSTALL_MKDIR,             /* Create the directory        */
-  USER_INSTALL_FROM_SYSCONF_DIR   /* Copy from sysconf directory */
+  USER_INSTALL_MKDIR, /* Create the directory        */
+  USER_INSTALL_COPY   /* Copy from sysconf directory */
 } UserInstallAction;
 
 static const struct
@@ -102,33 +105,27 @@ static const struct
 }
 user_install_items[] =
 {
-  { "gimprc",          USER_INSTALL_DO_NOTHING       },
-  { "gtkrc",           USER_INSTALL_FROM_SYSCONF_DIR },
-  { "pluginrc",        USER_INSTALL_DO_NOTHING       },
-  { "menurc",          USER_INSTALL_DO_NOTHING       },
-  { "sessionrc",       USER_INSTALL_DO_NOTHING       },
-  { "templaterc",      USER_INSTALL_DO_NOTHING       },
-  { "unitrc",          USER_INSTALL_DO_NOTHING       },
-  { "brushes",         USER_INSTALL_MKDIR            },
-  { "fonts",           USER_INSTALL_MKDIR            },
-  { "gradients",       USER_INSTALL_MKDIR            },
-  { "palettes",        USER_INSTALL_MKDIR            },
-  { "patterns",        USER_INSTALL_MKDIR            },
-  { "plug-ins",        USER_INSTALL_MKDIR            },
-  { "modules",         USER_INSTALL_MKDIR            },
-  { "interpreters",    USER_INSTALL_MKDIR            },
-  { "environ",         USER_INSTALL_MKDIR            },
-  { "scripts",         USER_INSTALL_MKDIR            },
-  { "templates",       USER_INSTALL_MKDIR            },
-  { "themes",          USER_INSTALL_MKDIR            },
-  { "tmp",             USER_INSTALL_MKDIR            },
-  { "tool-options",    USER_INSTALL_MKDIR            },
-  { "curves",          USER_INSTALL_MKDIR            },
-  { "levels",          USER_INSTALL_MKDIR            },
-  { "fractalexplorer", USER_INSTALL_MKDIR            },
-  { "gfig",            USER_INSTALL_MKDIR            },
-  { "gflare",          USER_INSTALL_MKDIR            },
-  { "gimpressionist",  USER_INSTALL_MKDIR            }
+  { "gtkrc",           USER_INSTALL_COPY  },
+  { "brushes",         USER_INSTALL_MKDIR },
+  { "fonts",           USER_INSTALL_MKDIR },
+  { "gradients",       USER_INSTALL_MKDIR },
+  { "palettes",        USER_INSTALL_MKDIR },
+  { "patterns",        USER_INSTALL_MKDIR },
+  { "plug-ins",        USER_INSTALL_MKDIR },
+  { "modules",         USER_INSTALL_MKDIR },
+  { "interpreters",    USER_INSTALL_MKDIR },
+  { "environ",         USER_INSTALL_MKDIR },
+  { "scripts",         USER_INSTALL_MKDIR },
+  { "templates",       USER_INSTALL_MKDIR },
+  { "themes",          USER_INSTALL_MKDIR },
+  { "tmp",             USER_INSTALL_MKDIR },
+  { "tool-options",    USER_INSTALL_MKDIR },
+  { "curves",          USER_INSTALL_MKDIR },
+  { "levels",          USER_INSTALL_MKDIR },
+  { "fractalexplorer", USER_INSTALL_MKDIR },
+  { "gfig",            USER_INSTALL_MKDIR },
+  { "gflare",          USER_INSTALL_MKDIR },
+  { "gimpressionist",  USER_INSTALL_MKDIR }
 };
 
 
@@ -136,17 +133,10 @@ static GtkWidget *
 user_install_notebook_set_page (GtkNotebook *notebook,
                                 gint         index)
 {
-  GtkWidget   *page;
-  const gchar *title;
-  const gchar *footer;
-
-  page = gtk_notebook_get_nth_page (notebook, index);
-
-  title  = g_object_get_data (G_OBJECT (page), "title");
-  footer = g_object_get_data (G_OBJECT (page), "footer");
+  GtkWidget   *page  = gtk_notebook_get_nth_page (notebook, index);
+  const gchar *title = g_object_get_data (G_OBJECT (page), "title");
 
   gtk_label_set_text (GTK_LABEL (title_label), title);
-  gtk_label_set_text (GTK_LABEL (footer_label), footer);
 
   gtk_notebook_set_current_page (notebook, index);
 
@@ -154,9 +144,9 @@ user_install_notebook_set_page (GtkNotebook *notebook,
 }
 
 static void
-user_install_response (GtkWidget *dialog,
-                       gint       response_id,
-                       GimpRc    *gimprc)
+user_install_dialog_response (GtkWidget *dialog,
+                              gint       response_id,
+                              GimpRc    *gimprc)
 {
   gint index = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
 
@@ -185,12 +175,12 @@ user_install_response (GtkWidget *dialog,
             gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_OK, TRUE);
 
-            gtk_label_set_text (GTK_LABEL (footer_label),
-                                _("Installation successful."));
+            gtk_label_set_text (GTK_LABEL (title_label),
+                                _("Installation successful!"));
           }
         else
           {
-            gtk_label_set_text (GTK_LABEL (footer_label),
+            gtk_label_set_text (GTK_LABEL (title_label),
                                 _("Installation failed!"));
           }
 
@@ -215,29 +205,131 @@ user_install_response (GtkWidget *dialog,
 }
 
 static GtkWidget *
-user_install_notebook_append_page (GtkNotebook *notebook,
-                                   const gchar *title,
-                                   const gchar *footer,
-                                   gint         vbox_spacing)
+user_install_notebook_append_page (GtkWidget   *notebook,
+                                   const gchar *title)
 {
-  GtkWidget *page = gtk_vbox_new (FALSE, vbox_spacing);
+  GtkWidget *page = gtk_vbox_new (FALSE, 12);
+
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, NULL);
+  gtk_widget_show (page);
 
   g_object_set_data (G_OBJECT (page), "title",  (gpointer) title);
-  g_object_set_data (G_OBJECT (page), "footer", (gpointer) footer);
-
-  gtk_notebook_append_page (notebook, page, NULL);
-  gtk_widget_show (page);
 
   return page;
 }
 
-static void
-user_install_details_expand (GtkExpander *expander)
+static GtkWidget *
+user_install_dialog_create_log (GtkWidget *dialog)
 {
-  gtk_expander_set_label (expander,
-                          gtk_expander_get_expanded (expander) ?
-                          _("Hide _details") : _("Show _details"));
-  gtk_expander_set_use_underline (expander, TRUE);
+  GtkWidget     *scrolled_window;
+  GtkTextBuffer *log_buffer;
+  GtkWidget     *log_view;
+
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
+
+  log_buffer = gtk_text_buffer_new (NULL);
+
+  gtk_text_buffer_create_tag (log_buffer, "bold",
+                              "weight", PANGO_WEIGHT_BOLD,
+                              NULL);
+
+  log_view = gtk_text_view_new_with_buffer (log_buffer);
+  g_object_unref (log_buffer);
+
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (log_view), FALSE);
+
+  gtk_container_add (GTK_CONTAINER (scrolled_window), log_view);
+  gtk_widget_show (log_view);
+
+  g_object_set_data (G_OBJECT (dialog), "log-view", log_view);
+  g_object_set_data (G_OBJECT (dialog), "log-buffer", log_buffer);
+
+  return scrolled_window;
+}
+
+static GtkWidget *
+user_install_dialog_add_welcome_page (GtkWidget   *dialog G_GNUC_UNUSED,
+                                      GtkWidget   *notebook,
+                                      const gchar *version)
+{
+  GtkWidget *page;
+  GtkWidget *widget;
+
+  page = user_install_notebook_append_page (notebook,
+                                            _("Welcome to the GNU Image "
+                                              "Manipulation Program"));
+
+  if (version)
+    {
+      gchar *title;
+      gchar *label;
+
+      title = g_strdup_printf (_("It seems you have used GIMP %s before."),
+                               version);
+      label = g_strdup_printf (_("_Migrate GIMP %s user settings"), version);
+
+      widget = gimp_int_radio_group_new (TRUE, title,
+                                         G_CALLBACK (gimp_radio_button_update),
+                                         &migrate, migrate,
+
+                                         label,
+                                         TRUE,  NULL,
+
+                                         _("Do a _fresh user installation"),
+                                         FALSE, NULL,
+
+                                         NULL);
+
+      g_free (label);
+      g_free (title);
+    }
+  else
+    {
+      gchar *text;
+
+      text = g_strdup_printf (_("It appears that you are using GIMP for the "
+                                "first time.  GIMP will now create a folder "
+                                "named '<b>%s</b>' and copy some files to it."),
+                                gimp_filename_to_utf8 (gimp_directory ()));
+
+      widget = g_object_new (GTK_TYPE_LABEL,
+                             "use-markup", TRUE,
+                             "label",      text,
+                             "wrap",       TRUE,
+                             "xalign",     0.0,
+                             NULL);
+      g_free (text);
+    }
+
+  gtk_box_pack_start (GTK_BOX (page), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
+
+  return page;
+}
+
+static GtkWidget *
+user_install_dialog_add_install_page (GtkWidget *dialog,
+                                      GtkWidget *notebook)
+{
+  GtkWidget *page;
+  GtkWidget *expander;
+  GtkWidget *log;
+
+  page = user_install_notebook_append_page (notebook, _("Installing..."));
+
+  expander = gtk_expander_new (_("Installation Log"));
+  gtk_box_pack_start (GTK_BOX (page), expander, TRUE, TRUE, 0);
+  gtk_widget_show (expander);
+
+  log = user_install_dialog_create_log (dialog);
+  gtk_widget_set_size_request (log, -1, 300);
+  gtk_container_add (GTK_CONTAINER (expander), log);
+  gtk_widget_show (log);
+
+  return page;
 }
 
 void
@@ -245,49 +337,15 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
                          const gchar *alternate_gimprc,
                          gboolean     verbose)
 {
-  GimpRc    *gimprc;
-  GtkWidget *dialog;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *page;
-  GtkWidget *widget;
-  GdkPixbuf *wilber;
-  gchar     *filename;
-  gchar     *version;
+  GimpRc      *gimprc;
+  GtkWidget   *dialog;
+  GtkWidget   *vbox;
+  GtkWidget   *hbox;
+  GdkPixbuf   *wilber;
+  gchar       *filename;
+  const gchar *version = NULL;
 
-  oldgimp = g_strdup (gimp_directory ());
-
-  /*  FIXME  */
-  version = strstr (oldgimp, "2.3");
-
-  if (version)
-    {
-      version[2]    = '2';
-      oldgimp_major = 2;
-      oldgimp_minor = 2;
-    }
-
-  migrate = (version && g_file_test (oldgimp, G_FILE_TEST_IS_DIR));
-
-  if (! migrate)
-    {
-      if (version)
-        {
-          version[2]    = '0';
-          oldgimp_major = 2;
-          oldgimp_minor = 0;
-        }
-
-      migrate = (version && g_file_test (oldgimp, G_FILE_TEST_IS_DIR));
-    }
-
-  if (! migrate)
-    {
-      g_free (oldgimp);
-      oldgimp = NULL;
-      oldgimp_major = 0;
-      oldgimp_minor = 0;
-    }
+  migrate = user_install_detect_old (&version);
 
   dialog = gimp_dialog_new (_("GIMP User Installation"),
                             "gimp-user-installation",
@@ -307,7 +365,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   gimprc = gimp_rc_new (alternate_system_gimprc, alternate_gimprc, verbose);
 
   g_signal_connect (dialog, "response",
-                    G_CALLBACK (user_install_response),
+                    G_CALLBACK (user_install_dialog_response),
                     gimprc);
 
   g_object_weak_ref (G_OBJECT (dialog), (GWeakNotify) g_object_unref, gimprc);
@@ -352,115 +410,10 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);
   gtk_widget_show (notebook);
 
-  footer_label = gtk_label_new (NULL);
-  gtk_label_set_justify (GTK_LABEL (footer_label), GTK_JUSTIFY_LEFT);
-  gtk_label_set_line_wrap (GTK_LABEL (footer_label), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (footer_label), 0.0, 0.5);
-  gimp_label_set_attributes (GTK_LABEL (footer_label),
-                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
-                             -1);
-  gtk_box_pack_start (GTK_BOX (vbox), footer_label, FALSE, FALSE, 0);
-  gtk_widget_show (footer_label);
+  user_install_dialog_add_welcome_page (dialog, notebook,
+                                        migrate ? version : NULL);
 
-  /*  WELCOME_PAGE  */
-  page = user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
-                                            _("Welcome to the GNU Image "
-                                              "Manipulation Program"),
-                                            NULL,
-                                            12);
-
-  if (migrate)
-    {
-      gchar     *title;
-      gchar     *label;
-
-      title = g_strdup_printf (_("It seems you have used GIMP %s before."),
-                               version);
-      label = g_strdup_printf (_("_Migrate GIMP %s user settings"), version);
-
-      widget = gimp_int_radio_group_new (TRUE, title,
-                                         G_CALLBACK (gimp_radio_button_update),
-                                         &migrate, migrate,
-
-                                         label,
-                                         TRUE,  NULL,
-
-                                         _("Do a _fresh user installation"),
-                                         FALSE, NULL,
-
-                                         NULL);
-
-      g_free (label);
-      g_free (title);
-    }
-  else
-    {
-      gchar *text;
-
-      text = g_strdup_printf (_("It appears that you are using GIMP for the "
-                                "first time.  GIMP will now create a folder "
-                                "named '<b>%s</b>' and copy some files to it."),
-                                gimp_filename_to_utf8 (gimp_directory ()));
-
-      widget = g_object_new (GTK_TYPE_LABEL,
-                             "use-markup", TRUE,
-                             "label",      text,
-                             "wrap",       TRUE,
-                             "xalign",     0.0,
-                             NULL);
-      g_free (text);
-    }
-
-  gtk_box_pack_start (GTK_BOX (page), widget, FALSE, FALSE, 0);
-  gtk_widget_show (widget);
-
-  /*  INSTALLATION_PAGE  */
-  page = user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
-                                            _("User Installation"),
-                                            _("Your personal GIMP folder is "
-                                              "being created..."),
-                                            0);
-  {
-    GtkWidget     *expander;
-    GtkWidget     *scrolled_window;
-    GtkTextBuffer *log_buffer;
-    GtkWidget     *log_view;
-
-    expander = gtk_expander_new (NULL);
-    gtk_box_pack_start (GTK_BOX (page), expander, TRUE, TRUE, 0);
-    gtk_widget_show (expander);
-
-    g_signal_connect (expander, "notify::expanded",
-                      G_CALLBACK (user_install_details_expand),
-                      NULL);
-
-    user_install_details_expand (GTK_EXPANDER (expander));
-
-    scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-                                    GTK_POLICY_AUTOMATIC,
-                                    GTK_POLICY_AUTOMATIC);
-    gtk_widget_set_size_request (scrolled_window, -1, 300);
-    gtk_container_add (GTK_CONTAINER (expander), scrolled_window);
-    gtk_widget_show (scrolled_window);
-
-    log_buffer = gtk_text_buffer_new (NULL);
-
-    gtk_text_buffer_create_tag (log_buffer, "bold",
-                                "weight", PANGO_WEIGHT_BOLD,
-                                NULL);
-
-    log_view = gtk_text_view_new_with_buffer (log_buffer);
-    g_object_unref (log_buffer);
-
-    gtk_text_view_set_editable (GTK_TEXT_VIEW (log_view), FALSE);
-
-    gtk_container_add (GTK_CONTAINER (scrolled_window), log_view);
-    gtk_widget_show (log_view);
-
-    g_object_set_data (G_OBJECT (dialog), "log-view", log_view);
-    g_object_set_data (G_OBJECT (dialog), "log-buffer", log_buffer);
-  }
+  user_install_dialog_add_install_page (dialog, notebook);
 
   user_install_notebook_set_page (GTK_NOTEBOOK (notebook), WELCOME_PAGE);
 
@@ -475,13 +428,64 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
 /*********************/
 /*  Local functions  */
 
-static void
-print_log (GtkWidget     *view,
-           GtkTextBuffer *buffer,
-           GError        *error)
+static gboolean
+user_install_detect_old (const gchar **version)
 {
-  GtkTextIter  cursor;
+  gchar *str;
+
+  g_return_val_if_fail (oldgimp == NULL, FALSE);
+
+  oldgimp = g_strdup (gimp_directory ());
+
+  /*  FIXME  */
+  str = strstr (oldgimp, "2.3");
+
+  if (str)
+    {
+      str[2]        = '2';
+      oldgimp_major = 2;
+      oldgimp_minor = 2;
+    }
+
+  migrate = (str && g_file_test (oldgimp, G_FILE_TEST_IS_DIR));
+
+  if (! migrate)
+    {
+      if (version)
+        {
+          str[2]        = '0';
+          oldgimp_major = 2;
+          oldgimp_minor = 0;
+        }
+
+      migrate = (str && g_file_test (oldgimp, G_FILE_TEST_IS_DIR));
+    }
+
+  if (migrate)
+    {
+      *version = (const gchar *) str;
+    }
+  else
+    {
+      g_free (oldgimp);
+      oldgimp = NULL;
+
+      oldgimp_major = 0;
+      oldgimp_minor = 0;
+
+      *version = NULL;
+    }
+
+  return migrate;
+}
+
+static void
+user_install_log (GtkWidget     *view,
+                  GtkTextBuffer *buffer,
+                  GError        *error)
+{
   GdkPixbuf   *pixbuf;
+  GtkTextIter  cursor;
 
   gtk_text_buffer_insert_at_cursor (buffer, error ? "\n" : " ", -1);
 
@@ -521,6 +525,7 @@ user_install_file_copy (GtkTextBuffer  *log_buffer,
   msg = g_strdup_printf (_("Copying file '%s' from '%s'..."),
                          gimp_filename_to_utf8 (dest),
                          gimp_filename_to_utf8 (source));
+
   gtk_text_buffer_insert_at_cursor (log_buffer, msg, -1);
   g_free (msg);
 
@@ -539,6 +544,7 @@ user_install_mkdir (GtkTextBuffer  *log_buffer,
 
   msg = g_strdup_printf (_("Creating folder '%s'..."),
                          gimp_filename_to_utf8 (dirname));
+
   gtk_text_buffer_insert_at_cursor (log_buffer, msg, -1);
   g_free (msg);
 
@@ -572,6 +578,8 @@ user_install_dir_copy (GtkWidget      *log_view,
   gchar *basename;
   gchar *dirname;
 
+  g_return_val_if_fail (error != NULL && *error == NULL, FALSE);
+
   basename = g_path_get_basename (source);
   dirname = g_build_filename (base, basename, NULL);
   g_free (basename);
@@ -582,20 +590,21 @@ user_install_dir_copy (GtkWidget      *log_view,
       return FALSE;
     }
 
-  print_log (log_view, log_buffer, NULL);
+  user_install_log (log_view, log_buffer, NULL);
 
   dest_dir = g_dir_open (dirname, 0, error);
+
   if (dest_dir)
     {
       source_dir = g_dir_open (source, 0, error);
+
       if (source_dir)
         {
           const gchar *basename;
-          gchar       *name;
 
           while ((basename = g_dir_read_name (source_dir)) != NULL)
             {
-              name = g_build_filename (source, basename, NULL);
+              gchar *name = g_build_filename (source, basename, NULL);
 
               if (g_file_test (name, G_FILE_TEST_IS_REGULAR))
                 {
@@ -608,7 +617,7 @@ user_install_dir_copy (GtkWidget      *log_view,
                       goto break_out_of_loop;
                     }
 
-                  print_log (log_view, log_buffer, NULL);
+                  user_install_log (log_view, log_buffer, NULL);
                 }
 
               g_free (name);
@@ -621,6 +630,7 @@ user_install_dir_copy (GtkWidget      *log_view,
 
   if (source_dir)
     g_dir_close (source_dir);
+
   if (dest_dir)
     g_dir_close (dest_dir);
 
@@ -631,12 +641,13 @@ static gboolean
 user_install_create_files (GtkWidget     *log_view,
                            GtkTextBuffer *log_buffer)
 {
-  gchar   dest[1024];
-  gchar   source[1024];
-  gint    i;
-  GError *error = NULL;
+  gchar     dest[1024];
+  gchar     source[1024];
+  gint      i;
+  gboolean  success = TRUE;
+  GError   *error   = NULL;
 
-  for (i = 0; i < G_N_ELEMENTS (user_install_items); i++)
+  for (i = 0; success && i < G_N_ELEMENTS (user_install_items); i++)
     {
       g_snprintf (dest, sizeof (dest), "%s%c%s",
                   gimp_directory (),
@@ -645,42 +656,24 @@ user_install_create_files (GtkWidget     *log_view,
 
       switch (user_install_items[i].action)
         {
-        case USER_INSTALL_DO_NOTHING:
-          break;
-
         case USER_INSTALL_MKDIR:
-          if (! user_install_mkdir (log_buffer, dest, &error))
-              goto break_out_of_loop;
+          success = user_install_mkdir (log_buffer, dest, &error);
           break;
 
-        case USER_INSTALL_FROM_SYSCONF_DIR:
+        case USER_INSTALL_COPY:
           g_snprintf (source, sizeof (source), "%s%c%s",
                       gimp_sysconf_directory (), G_DIR_SEPARATOR,
                       user_install_items[i].name);
 
-          if (! user_install_file_copy (log_buffer, source, dest, &error))
-            goto break_out_of_loop;
-          break;
-
-        default:
-          g_assert_not_reached ();
+          success = user_install_file_copy (log_buffer, source, dest, &error);
           break;
         }
 
-      if (user_install_items[i].action != USER_INSTALL_DO_NOTHING)
-        print_log (log_view, log_buffer, NULL);
-    }
-
- break_out_of_loop:
-  if (error)
-    {
-      print_log (log_view, log_buffer, error);
+      user_install_log (log_view, log_buffer, error);
       g_clear_error (&error);
-
-      return FALSE;
     }
 
-  return TRUE;
+  return success;
 }
 
 static gboolean
@@ -691,9 +684,10 @@ user_install_migrate_files (const gchar   *oldgimp,
                             GtkTextBuffer *log_buffer)
 {
   GDir   *dir;
-  GError *error  = NULL;
+  GError *error = NULL;
 
   dir = g_dir_open (oldgimp, 0, &error);
+
   if (dir)
     {
       const gchar *basename;
@@ -726,7 +720,7 @@ user_install_migrate_files (const gchar   *oldgimp,
 
               user_install_file_copy (log_buffer, source, dest, &error);
 
-              print_log (log_view, log_buffer, error);
+              user_install_log (log_view, log_buffer, error);
               g_clear_error (&error);
             }
           else if (g_file_test (source, G_FILE_TEST_IS_DIR) &&
@@ -735,7 +729,7 @@ user_install_migrate_files (const gchar   *oldgimp,
               if (! user_install_dir_copy (log_view, log_buffer,
                                            source, gimp_directory (), &error))
                 {
-                  print_log (log_view, log_buffer, error);
+                  user_install_log (log_view, log_buffer, error);
                   g_clear_error (&error);
                 }
             }
@@ -752,14 +746,17 @@ user_install_migrate_files (const gchar   *oldgimp,
                   gimp_directory (), G_DIR_SEPARATOR, "tmp");
 
       if (user_install_mkdir (log_buffer, dest, &error))
-        print_log (log_view, log_buffer, NULL);
+        {
+          user_install_log (log_view, log_buffer, NULL);
+          g_clear_error (&error);
+        }
 
       g_dir_close (dir);
     }
 
   if (error)
     {
-      print_log (log_view, log_buffer, error);
+      user_install_log (log_view, log_buffer, error);
       g_clear_error (&error);
 
       return FALSE;
@@ -780,13 +777,13 @@ user_install_run (GtkWidget   *dialog,
 
   if (! user_install_mkdir (buffer, gimp_directory (), &error))
     {
-      print_log (view, buffer, error);
+      user_install_log (view, buffer, error);
       g_clear_error (&error);
 
       return FALSE;
     }
 
-  print_log (view, buffer, NULL);
+  user_install_log (view, buffer, NULL);
 
   if (oldgimp)
     return user_install_migrate_files (oldgimp, oldgimp_major, oldgimp_minor,

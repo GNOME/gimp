@@ -1,3 +1,7 @@
+2006-04-28  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/user-install-dialog.c: code and user interface cleanup.
+
 2006-04-28  Tor Lillqvist  <tml@novell.com>
 
 	* HACKING: Clarify the wording about TABs. s/bracket/brace/ .
