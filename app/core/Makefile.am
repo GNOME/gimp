@@ -1,7 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Core\"	\
+	-DGIMP_APP_VERSION=\"$(GIMP_APP_VERSION)\"	\
+	-DG_LOG_DOMAIN=\"Gimp-Core\"			\
 	@GTHREAD_CFLAGS@
 
 INCLUDES = \
@@ -40,6 +41,8 @@ libappcore_a_sources = \
 	gimp-transform-utils.h		\
 	gimp-units.c			\
 	gimp-units.h			\
+	gimp-user-install.c		\
+	gimp-user-install.h		\
 	gimp-utils.c			\
 	gimp-utils.h			\
 	gimparea.c			\

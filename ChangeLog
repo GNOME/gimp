@@ -1,5 +1,12 @@
 2006-04-29  Sven Neumann  <sven@gimp.org>
 
+	* app/core/Makefile.am (AM_CPP_FLAGS): define GIMP_APP_VERSION.
+
+	* app/core/gimp-user-install.c: use GIMP_APP_VERSION instead of
+	hardcoding it.
+
+2006-04-29  Sven Neumann  <sven@gimp.org>
+
 	* app/core/Makefile.am
 	* app/core/gimp-user-install.[ch]: new files based on code that
 	used to live in user-install-dialog.c.

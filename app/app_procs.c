@@ -41,6 +41,7 @@
 #include "base/base.h"
 
 #include "core/gimp.h"
+#include "core/gimp-user-install.h"
 
 #include "plug-in/gimppluginmanager.h"
 
@@ -219,26 +220,18 @@ app_run (const gchar         *full_prog_name,
    */
   if (! g_file_test (gimp_directory (), G_FILE_TEST_IS_DIR))
     {
-      /*  not properly installed  */
+      GimpUserInstall *install = gimp_user_install_new ();
 
-#ifndef GIMP_CONSOLE_COMPILATION
+#ifdef GIMP_CONSOLE_COMPILATION
+      gimp_user_install_run (install, FALSE);
+#else
       if (no_interface)
-#endif
-        {
-          const gchar *msg;
-
-          msg = _("GIMP is not properly installed for the current user.\n"
-                  "User installation was skipped because the '--no-interface' flag was used.\n"
-                  "To perform user installation, run the GIMP without the '--no-interface' flag.");
-
-          g_printerr ("%s\n\n", msg);
-        }
-#ifndef GIMP_CONSOLE_COMPILATION
+        gimp_user_install_run (install, FALSE);
       else
-        {
-          user_install_dialog_run (be_verbose);
-        }
+        user_install_dialog_run (install);
 #endif
+
+      gimp_user_install_free (install);
     }
 
 #if defined G_OS_WIN32 && !defined GIMP_CONSOLE_COMPILATION

@@ -130,10 +130,15 @@ gimp_user_install_new ()
 
   dir = g_strdup (gimp_directory ());
 
-  /*  FIXME  */
-  version = strstr (dir, "2.3");
+  version = strstr (dir, GIMP_APP_VERSION);
 
-  g_assert (version != NULL);
+  if (! version)
+    {
+      g_free (dir);
+      return install;
+    }
+
+  /*  we assume that GIMP_APP_VERSION is in the form '2.x'  */
 
   version[2] = '2';
 
