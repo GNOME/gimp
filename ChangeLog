@@ -1,3 +1,13 @@
+2006-04-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/gimppluginmanager-locale-domain.c
+	(gimp_plug_in_manager_get_locale_domains): NULL-terminate string
+	arrays here too, so they can be freed with g_strfreev() (even
+	though they currently aren't).
+
+	* app/widgets/gimphelp.c: set the plug-in arguments
+	correctly. Fixes warnings and makes help work again.
+
 2006-04-29  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/user-install-dialog.c: fixed signal connection.

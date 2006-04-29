@@ -136,8 +136,8 @@ gimp_plug_in_manager_get_help_domains (GimpPlugInManager   *manager,
 
   n_domains = g_slist_length (manager->help_domains);
 
-  *help_domains = g_new0 (gchar *, n_domains);
-  *help_uris    = g_new0 (gchar *, n_domains);
+  *help_domains = g_new0 (gchar *, n_domains + 1);
+  *help_uris    = g_new0 (gchar *, n_domains + 1);
 
   for (list = manager->help_domains, i = 0; list; list = list->next, i++)
     {

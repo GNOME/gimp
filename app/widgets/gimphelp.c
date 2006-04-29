@@ -35,6 +35,7 @@
 
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
+#include "core/gimpparamspecs.h"
 
 #include "pdb/gimppdb.h"
 #include "pdb/gimpprocedure.h"
@@ -198,7 +199,7 @@ gimp_help_browser (Gimp *gimp)
       args = gimp_procedure_get_arguments (procedure);
       gimp_value_array_truncate (args, 1);
 
-      g_value_set_enum (&args->values[0], GIMP_RUN_INTERACTIVE);
+      g_value_set_int (&args->values[0], GIMP_RUN_INTERACTIVE);
 
       gimp_procedure_execute_async (procedure, gimp,
                                     gimp_get_user_context (gimp),
@@ -288,10 +289,10 @@ gimp_help_call (Gimp        *gimp,
       args = gimp_procedure_get_arguments (procedure);
       gimp_value_array_truncate (args, 4);
 
-      g_value_set_int     (&args->values[0], n_domains);
-      g_value_set_pointer (&args->values[1], help_domains);
-      g_value_set_int     (&args->values[2], n_domains);
-      g_value_set_pointer (&args->values[3], help_uris);
+      g_value_set_int             (&args->values[0], n_domains);
+      gimp_value_take_stringarray (&args->values[1], help_domains, n_domains);
+      g_value_set_int             (&args->values[2], n_domains);
+      gimp_value_take_stringarray (&args->values[3], help_uris, n_domains);
 
       gimp_procedure_execute_async (procedure, gimp,
                                     gimp_get_user_context (gimp),
