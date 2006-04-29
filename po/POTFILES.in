@@ -85,6 +85,7 @@ app/core/gimp-gradients.c
 app/core/gimp-gui.c
 app/core/gimp-modules.c
 app/core/gimp-units.c
+app/core/gimp-user-install.c
 app/core/gimp.c
 app/core/gimpbrush.c
 app/core/gimpbrush-load.c

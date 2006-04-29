@@ -1,3 +1,15 @@
+2006-04-29  Sven Neumann  <sven@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/gimp-user-install.[ch]: new files based on code that
+	used to live in user-install-dialog.c.
+
+	* app/dialogs/user-install-dialog.[ch]: only the dialog code
+	remained here.
+
+	* app/app_procs.c: use the new user-install API.  Perform a
+	non-interactive user installation when running without a display.
+
 2006-04-29  Tor Lillqvist  <tml@novell.com>
 
 	* app/plug-in/gimppluginmanager-locale-domain.c
@@ -63,7 +75,7 @@
 
 	* app/plug-in/gimpplugindebug.[ch]
 	* app/plug-in/gimppluginshm.[ch]: ...and added as properly
-	namespeced structs with constructors and destructors.
+	namespaced structs with constructors and destructors.
 
 	* app/core/Makefile.am
 	* app/core/gimpenvirontable.[ch]
