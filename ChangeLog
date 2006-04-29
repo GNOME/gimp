@@ -1,5 +1,21 @@
 2006-04-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/plug-in.[ch]: removed plug_in_push() and
+	plug_in_pop()...
+
+	* app/plug-in/gimppluginmanager.[ch]: ...and added them here as
+	gimp_plug_in_manager_plug_in_push() and _pop()
+
+	* app/plug-in/plug-in-message.c (plug_in_handle_proc_run): changed
+	accordingly.
+
+	* app/plug-in/plug-in.c (plug_in_close): removed an unused
+	variable, moved another one to a local scope.
+
+	* app/plug-in/plug-in.h: indentation.
+
+2006-04-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/gimppluginmanager-locale-domain.c
 	(gimp_plug_in_manager_get_locale_domains): NULL-terminate string
 	arrays here too, so they can be freed with g_strfreev() (even

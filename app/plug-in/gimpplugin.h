@@ -72,45 +72,41 @@ void              plug_in_init             (GimpPlugInManager *manager);
 void              plug_in_exit             (GimpPlugInManager *manager);
 
 void              plug_in_call_query       (GimpPlugInManager *manager,
-                                            GimpContext   *context,
-                                            PlugInDef     *plug_in_def);
+                                            GimpContext       *context,
+                                            PlugInDef         *plug_in_def);
 void              plug_in_call_init        (GimpPlugInManager *manager,
-                                            GimpContext   *context,
-                                            PlugInDef     *plug_in_def);
+                                            GimpContext       *context,
+                                            PlugInDef         *plug_in_def);
 
 PlugIn          * plug_in_new              (GimpPlugInManager *manager,
-                                            GimpContext   *context,
-                                            GimpProgress  *progress,
-                                            GimpProcedure *procedure,
-                                            const gchar   *prog);
+                                            GimpContext       *context,
+                                            GimpProgress      *progress,
+                                            GimpProcedure     *procedure,
+                                            const gchar       *prog);
 
-void              plug_in_ref              (PlugIn        *plug_in);
-void              plug_in_unref            (PlugIn        *plug_in);
+void              plug_in_ref              (PlugIn            *plug_in);
+void              plug_in_unref            (PlugIn            *plug_in);
 
-gboolean          plug_in_open             (PlugIn        *plug_in);
-void              plug_in_close            (PlugIn        *plug_in,
-                                            gboolean       kill_it);
+gboolean          plug_in_open             (PlugIn            *plug_in);
+void              plug_in_close            (PlugIn            *plug_in,
+                                            gboolean           kill_it);
 
-void              plug_in_push             (GimpPlugInManager *manager,
-                                            PlugIn            *plug_in);
-void              plug_in_pop              (GimpPlugInManager *manager);
+PlugInProcFrame * plug_in_get_proc_frame   (PlugIn            *plug_in);
 
-PlugInProcFrame * plug_in_get_proc_frame   (PlugIn        *plug_in);
+PlugInProcFrame * plug_in_proc_frame_push  (PlugIn            *plug_in,
+                                            GimpContext       *context,
+                                            GimpProgress      *progress,
+                                            GimpProcedure     *procedure);
+void              plug_in_proc_frame_pop   (PlugIn            *plug_in);
 
-PlugInProcFrame * plug_in_proc_frame_push  (PlugIn        *plug_in,
-                                            GimpContext   *context,
-                                            GimpProgress  *progress,
-                                            GimpProcedure *procedure);
-void              plug_in_proc_frame_pop   (PlugIn        *plug_in);
+void              plug_in_main_loop        (PlugIn            *plug_in);
+void              plug_in_main_loop_quit   (PlugIn            *plug_in);
 
-void              plug_in_main_loop        (PlugIn        *plug_in);
-void              plug_in_main_loop_quit   (PlugIn        *plug_in);
+gchar           * plug_in_get_undo_desc    (PlugIn            *plug_in);
 
-gchar           * plug_in_get_undo_desc    (PlugIn        *plug_in);
-
-gboolean          plug_in_menu_register    (PlugIn        *plug_in,
-                                            const gchar   *proc_name,
-                                            const gchar   *menu_path);
+gboolean          plug_in_menu_register    (PlugIn            *plug_in,
+                                            const gchar       *proc_name,
+                                            const gchar       *menu_path);
 
 void              plug_in_add_temp_proc    (PlugIn                 *plug_in,
                                             GimpTemporaryProcedure *proc);

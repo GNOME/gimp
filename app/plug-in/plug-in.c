@@ -514,11 +514,7 @@ void
 plug_in_close (PlugIn   *plug_in,
                gboolean  kill_it)
 {
-#ifndef G_OS_WIN32
-  gint           status;
-  struct timeval tv;
-#endif
-  GList         *list;
+  GList *list;
 
   g_return_if_fail (plug_in != NULL);
   g_return_if_fail (plug_in->open == TRUE);
@@ -530,6 +526,10 @@ plug_in_close (PlugIn   *plug_in,
 
   if (plug_in->pid)
     {
+#ifndef G_OS_WIN32
+      gint status;
+#endif
+
       /*  Ask the filter to exit gracefully  */
       if (kill_it)
         {
@@ -540,6 +540,7 @@ plug_in_close (PlugIn   *plug_in,
         }
 
       /* If necessary, kill the filter. */
+
 #ifndef G_OS_WIN32
 
       if (kill_it)
@@ -821,34 +822,6 @@ plug_in_flush (GIOChannel *channel,
     }
 
   return TRUE;
-}
-
-void
-plug_in_push (GimpPlugInManager *manager,
-              PlugIn            *plug_in)
-{
-  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
-  g_return_if_fail (plug_in != NULL);
-
-  manager->current_plug_in = plug_in;
-
-  manager->plug_in_stack = g_slist_prepend (manager->plug_in_stack,
-                                            manager->current_plug_in);
-}
-
-void
-plug_in_pop (GimpPlugInManager *manager)
-{
-  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
-
-  if (manager->current_plug_in)
-    manager->plug_in_stack = g_slist_remove (manager->plug_in_stack,
-                                             manager->plug_in_stack->data);
-
-  if (manager->plug_in_stack)
-    manager->current_plug_in = manager->plug_in_stack->data;
-  else
-    manager->current_plug_in = NULL;
 }
 
 PlugInProcFrame *

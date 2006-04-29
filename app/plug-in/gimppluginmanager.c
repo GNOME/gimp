@@ -689,6 +689,34 @@ gimp_plug_in_manager_get_shm_addr (GimpPlugInManager *manager)
   return manager->shm ? gimp_plug_in_shm_get_addr (manager->shm) : NULL;
 }
 
+void
+gimp_plug_in_manager_plug_in_push (GimpPlugInManager *manager,
+                                   PlugIn            *plug_in)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
+  g_return_if_fail (plug_in != NULL);
+
+  manager->current_plug_in = plug_in;
+
+  manager->plug_in_stack = g_slist_prepend (manager->plug_in_stack,
+                                            manager->current_plug_in);
+}
+
+void
+gimp_plug_in_manager_plug_in_pop (GimpPlugInManager *manager)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
+
+  if (manager->current_plug_in)
+    manager->plug_in_stack = g_slist_remove (manager->plug_in_stack,
+                                             manager->plug_in_stack->data);
+
+  if (manager->plug_in_stack)
+    manager->current_plug_in = manager->plug_in_stack->data;
+  else
+    manager->current_plug_in = NULL;
+}
+
 
 /*  private functions  */
 

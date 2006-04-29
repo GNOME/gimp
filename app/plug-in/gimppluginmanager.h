@@ -105,5 +105,9 @@ void   gimp_plug_in_manager_set_last_plug_in (GimpPlugInManager      *manager,
 gint     gimp_plug_in_manager_get_shm_ID     (GimpPlugInManager      *manager);
 guchar * gimp_plug_in_manager_get_shm_addr   (GimpPlugInManager      *manager);
 
+void     gimp_plug_in_manager_plug_in_push   (GimpPlugInManager      *manager,
+                                              PlugIn                 *plug_in);
+void     gimp_plug_in_manager_plug_in_pop    (GimpPlugInManager      *manager);
+
 
 #endif  /* __GIMP_PLUG_IN_MANAGER_H__ */

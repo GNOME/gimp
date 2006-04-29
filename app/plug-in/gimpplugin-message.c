@@ -407,7 +407,7 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
    *  returned NULL, gimp_pdb_execute_procedure_by_name_args() will
    *  return appropriate error return_vals.
    */
-  plug_in_push (plug_in->manager, plug_in);
+  gimp_plug_in_manager_plug_in_push (plug_in->manager, plug_in);
   return_vals = gimp_pdb_execute_procedure_by_name_args (plug_in->manager->gimp->pdb,
                                                          proc_frame->context_stack ?
                                                          proc_frame->context_stack->data :
@@ -415,7 +415,7 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
                                                          proc_frame->progress,
                                                          proc_name,
                                                          args);
-  plug_in_pop (plug_in->manager);
+  gimp_plug_in_manager_plug_in_pop (plug_in->manager);
 
   g_free (canonical);
 
