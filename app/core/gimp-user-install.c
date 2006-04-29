@@ -139,7 +139,6 @@ gimp_user_install_new ()
     }
 
   /*  we assume that GIMP_APP_VERSION is in the form '2.x'  */
-
   version[2] = '2';
 
   migrate = g_file_test (dir, G_FILE_TEST_IS_DIR);
@@ -296,7 +295,7 @@ user_install_file_copy (GimpUserInstall  *install,
 
 static gboolean
 user_install_mkdir (GimpUserInstall *install,
-                    const gchar *dirname)
+                    const gchar     *dirname)
 {
   user_install_log (install, _("Creating folder '%s'..."),
                     gimp_filename_to_utf8 (dirname));

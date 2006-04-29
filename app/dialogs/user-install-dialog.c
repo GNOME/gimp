@@ -263,11 +263,14 @@ user_install_dialog_log (const gchar *message,
                          gboolean     error,
                          gpointer     data)
 {
-  GtkWidget    *dialog  = data;
+  GtkWidget     *dialog = data;
   GtkWidget     *view   = g_object_get_data (G_OBJECT (dialog), "log-view");
   GtkTextBuffer *buffer = g_object_get_data (G_OBJECT (dialog), "log-buffer");
   GdkPixbuf     *pixbuf;
   GtkTextIter    cursor;
+
+  g_return_if_fail (GTK_IS_WIDGET (view));
+  g_return_if_fail (GTK_IS_TEXT_BUFFER (buffer));
 
   gtk_text_buffer_insert_at_cursor (buffer, error ? "\n" : " ", -1);
 
@@ -375,7 +378,7 @@ user_install_dialog_run (GimpUserInstall *install)
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (user_install_dialog_response),
-                    notebook);
+                    install);
 
   user_install_dialog_add_welcome_page (install, notebook);
 

@@ -1,5 +1,11 @@
 2006-04-29  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/user-install-dialog.c: fixed signal connection.
+
+	* app/core/gimp-user-install.c: indentation.
+
+2006-04-29  Sven Neumann  <sven@gimp.org>
+
 	* app/core/Makefile.am (AM_CPP_FLAGS): define GIMP_APP_VERSION.
 
 	* app/core/gimp-user-install.c: use GIMP_APP_VERSION instead of
