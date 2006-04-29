@@ -107,7 +107,6 @@ app/core/gimpdrawable-offset.c
 app/core/gimpdrawable-stroke.c
 app/core/gimpdrawable-transform.c
 app/core/gimpdrawable.c
-app/core/gimpenvirontable.c
 app/core/gimpgradient-load.c
 app/core/gimpgradient-save.c
 app/core/gimpgrid.c
@@ -125,7 +124,6 @@ app/core/gimpimage-scale.c
 app/core/gimpimage-undo-push.c
 app/core/gimpimage.c
 app/core/gimpimagefile.c
-app/core/gimpinterpreterdb.c
 app/core/gimpitem.c
 app/core/gimplayer-floating-sel.c
 app/core/gimplayer.c
@@ -231,9 +229,11 @@ app/pdb/transform_tools_cmds.c
 app/pdb/undo_cmds.c
 app/pdb/vectors_cmds.c
 
+app/plug-in/gimpenvirontable.c
+app/plug-in/gimpinterpreterdb.c
+app/plug-in/gimppluginmanager.c
 app/plug-in/plug-in.c
 app/plug-in/plug-in-rc.c
-app/plug-in/plug-ins.c
 
 app/text/text-enums.c
 app/text/gimpfont.c

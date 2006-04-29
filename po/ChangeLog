@@ -1,3 +1,7 @@
+2006-04-29  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: updated.
+
 2006-04-28  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: added app/pdb/gimppdb.c.
