@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-25 15:30+0200\n"
-"PO-Revision-Date: 2006-04-25 15:33+0200\n"
+"POT-Creation-Date: 2006-05-01 00:14+0200\n"
+"PO-Revision-Date: 2006-05-01 00:44+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -79,23 +79,11 @@ msgstr ""
 "se così non fosse, scrivi alla Free Software Foundation, Inc., 59 Temple "
 "Place - Suite 330, Boston, MA 02111-1307, USA."
 
-#: ../app/app_procs.c:134
+#: ../app/app_procs.c:137
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Questa finestra di console si chiuderà in 10 secondi)\n"
 
-#: ../app/app_procs.c:228
-msgid ""
-"GIMP is not properly installed for the current user.\n"
-"User installation was skipped because the '--no-interface' flag was used.\n"
-"To perform user installation, run the GIMP without the '--no-interface' flag."
-msgstr ""
-"GIMP non è installato correttamente per l'utente corrente.\n"
-"L'installazione utente non è stata effettuata dato che è stata utilizzata \n"
-"l'opzione '--no-interface'. Per effettuare l'installazione utente, "
-"eseguire \n"
-"GIMP senza l'opzione '--no-interface'."
-
-#: ../app/app_procs.c:279
+#: ../app/app_procs.c:272
 #, c-format
 msgid ""
 "Unable to open a test swap file.\n"
@@ -108,12 +96,12 @@ msgstr ""
 "Per evitare di perdere dati controllare la posizione ed i permessi della "
 "cartella di scambio nelle preferenze (attualmente è \"%s\")."
 
-#: ../app/app_procs.c:334 ../app/core/gimppalette-import.c:492
+#: ../app/app_procs.c:327 ../app/core/gimppalette-import.c:492
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "L'apertura di \"%s\" è fallita: %s"
 
-#: ../app/batch.c:86 ../app/batch.c:103
+#: ../app/batch.c:87 ../app/batch.c:105
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
@@ -250,7 +238,7 @@ msgstr "Editor pennelli"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:101 ../app/actions/dialogs-actions.c:130
-#: ../app/core/gimp.c:858 ../app/dialogs/dialogs.c:146
+#: ../app/core/gimp.c:790 ../app/dialogs/dialogs.c:146
 #: ../app/dialogs/preferences-dialog.c:2417
 msgid "Brushes"
 msgstr "Pennelli"
@@ -319,7 +307,7 @@ msgstr "File"
 
 #. initialize the list of gimp fonts
 #: ../app/actions/actions.c:146 ../app/actions/dialogs-actions.c:150
-#: ../app/core/gimp.c:874 ../app/dialogs/dialogs.c:154
+#: ../app/core/gimp.c:806 ../app/dialogs/dialogs.c:154
 #: ../app/dialogs/preferences-dialog.c:2433
 msgid "Fonts"
 msgstr "Caratteri"
@@ -331,7 +319,7 @@ msgstr "Editor dei gradienti"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:152 ../app/actions/dialogs-actions.c:140
-#: ../app/core/gimp.c:870 ../app/dialogs/dialogs.c:150
+#: ../app/core/gimp.c:802 ../app/dialogs/dialogs.c:150
 #: ../app/dialogs/preferences-dialog.c:2429
 msgid "Gradients"
 msgstr "Gradienti"
@@ -362,14 +350,14 @@ msgstr "Editor tavolozza"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:170 ../app/actions/dialogs-actions.c:145
-#: ../app/core/gimp.c:866 ../app/dialogs/dialogs.c:152
+#: ../app/core/gimp.c:798 ../app/dialogs/dialogs.c:152
 #: ../app/dialogs/preferences-dialog.c:2425
 msgid "Palettes"
 msgstr "Tavolozze"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:173 ../app/actions/dialogs-actions.c:135
-#: ../app/core/gimp.c:862 ../app/dialogs/dialogs.c:148
+#: ../app/core/gimp.c:794 ../app/dialogs/dialogs.c:148
 #: ../app/dialogs/preferences-dialog.c:2421
 msgid "Patterns"
 msgstr "Motivi"
@@ -393,7 +381,7 @@ msgid "Select"
 msgstr "Seleziona"
 
 #. initialize the template list
-#: ../app/actions/actions.c:188 ../app/core/gimp.c:883
+#: ../app/actions/actions.c:188 ../app/core/gimp.c:815
 #: ../app/dialogs/dialogs.c:162
 msgid "Templates"
 msgstr "Modelli"
@@ -404,7 +392,7 @@ msgstr "Editor di testi"
 
 #: ../app/actions/actions.c:194 ../app/actions/dialogs-actions.c:65
 #: ../app/dialogs/dialogs.c:127 ../app/dialogs/preferences-dialog.c:1617
-#: ../app/gui/gui.c:421
+#: ../app/gui/gui.c:424
 msgid "Tool Options"
 msgstr "Opzioni strumenti"
 
@@ -748,7 +736,7 @@ msgstr "S_trumento"
 msgid "_Brush"
 msgstr "_Pennello"
 
-#: ../app/actions/context-actions.c:52 ../app/actions/plug-in-actions.c:82
+#: ../app/actions/context-actions.c:52 ../app/actions/plug-in-actions.c:100
 #: ../app/dialogs/preferences-dialog.c:1680
 msgid "_Pattern"
 msgstr "_Motivo"
@@ -823,9 +811,9 @@ msgid "Sample Merged"
 msgstr "Campionamento diffuso"
 
 #: ../app/actions/data-commands.c:102 ../app/actions/documents-commands.c:320
-#: ../app/actions/file-commands.c:174 ../app/dialogs/file-open-dialog.c:208
+#: ../app/actions/file-commands.c:176 ../app/dialogs/file-open-dialog.c:208
 #: ../app/dialogs/file-open-dialog.c:259
-#: ../app/dialogs/file-open-location-dialog.c:201
+#: ../app/dialogs/file-open-location-dialog.c:204
 #: ../app/display/gimpdisplayshell-dnd.c:448
 #: ../app/widgets/gimplayertreeview.c:727 ../app/widgets/gimptoolbox-dnd.c:157
 #: ../app/widgets/gimptoolbox.c:918
@@ -839,10 +827,10 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/data-commands.c:128 ../app/core/gimpimage.c:1316
+#: ../app/actions/data-commands.c:128 ../app/core/gimpimage.c:1318
 #: ../app/core/gimppalette-import.c:218 ../app/core/gimppalette.c:477
 #: ../app/core/gimppalette.c:587 ../app/dialogs/palette-import-dialog.c:690
-#: ../app/pdb/image_cmds.c:1880 ../app/widgets/gimpdnd-xds.c:95
+#: ../app/pdb/image_cmds.c:1880 ../app/widgets/gimpdnd-xds.c:97
 msgid "Untitled"
 msgstr "Immagine"
 
@@ -1654,8 +1642,8 @@ msgstr "_Esci"
 msgid "Quit the GNU Image Manipulation Program"
 msgstr "Esci dal programma di elaborazione immagini GNU GIMP"
 
-#: ../app/actions/file-commands.c:237 ../app/dialogs/file-save-dialog.c:465
-#: ../app/widgets/gimpdnd-xds.c:170
+#: ../app/actions/file-commands.c:240 ../app/dialogs/file-save-dialog.c:471
+#: ../app/widgets/gimpdnd-xds.c:172
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -1666,36 +1654,36 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/file-commands.c:268 ../app/dialogs/file-save-dialog.c:81
+#: ../app/actions/file-commands.c:271 ../app/dialogs/file-save-dialog.c:83
 msgid "Save Image"
 msgstr "Salva immagine"
 
-#: ../app/actions/file-commands.c:284
+#: ../app/actions/file-commands.c:287
 msgid "Save a Copy of the Image"
 msgstr "Salva una copia dell'immagine"
 
-#: ../app/actions/file-commands.c:295
+#: ../app/actions/file-commands.c:298
 msgid "Create New Template"
 msgstr "Crea un nuovo modello"
 
-#: ../app/actions/file-commands.c:299
+#: ../app/actions/file-commands.c:302
 msgid "Enter a name for this template"
 msgstr "Inserisci un nome per questo modello"
 
-#: ../app/actions/file-commands.c:321
+#: ../app/actions/file-commands.c:324
 msgid "Revert failed. No file name associated with this image."
 msgstr "Fallita la ricarica. Nessun nome file associato a quest'immagine."
 
-#: ../app/actions/file-commands.c:333
+#: ../app/actions/file-commands.c:336
 msgid "Revert Image"
 msgstr "Ricarica immagine"
 
-#: ../app/actions/file-commands.c:359
+#: ../app/actions/file-commands.c:362
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Ricaricare \"%s\" a \"%s\"?"
 
-#: ../app/actions/file-commands.c:365
+#: ../app/actions/file-commands.c:368
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -1703,19 +1691,19 @@ msgstr ""
 "Ricaricando l'immagine salvata su disco, perderai tutte le modifiche, "
 "incluse tutte le informazioni di annullamento."
 
-#: ../app/actions/file-commands.c:437
+#: ../app/actions/file-commands.c:440
 msgid "Open Image as Layer"
 msgstr "Apri immagine come livello"
 
-#: ../app/actions/file-commands.c:442 ../app/dialogs/file-open-dialog.c:74
+#: ../app/actions/file-commands.c:445 ../app/dialogs/file-open-dialog.c:74
 msgid "Open Image"
 msgstr "Apri immagine"
 
-#: ../app/actions/file-commands.c:513
+#: ../app/actions/file-commands.c:516
 msgid "(Unnamed Template)"
 msgstr "(modello senza nome)"
 
-#: ../app/actions/file-commands.c:560
+#: ../app/actions/file-commands.c:563
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -2139,6 +2127,7 @@ msgid "I_nfo"
 msgstr "I_nformazioni"
 
 #: ../app/actions/image-actions.c:67 ../app/tools/gimplevelstool.c:611
+#: ../app/tools/gimpthresholdtool.c:242
 msgid "_Auto"
 msgstr "_Auto"
 
@@ -2893,121 +2882,121 @@ msgstr "_Modifica motivo..."
 msgid "Edit pattern"
 msgstr "Modifica motivo..."
 
-#: ../app/actions/plug-in-actions.c:67
+#: ../app/actions/plug-in-actions.c:85
 msgid "Filte_rs"
 msgstr "Filt_ri"
 
-#: ../app/actions/plug-in-actions.c:68
+#: ../app/actions/plug-in-actions.c:86
 msgid "Recently Used"
 msgstr "Usati recentemente"
 
-#: ../app/actions/plug-in-actions.c:69
+#: ../app/actions/plug-in-actions.c:87
 msgid "_Blur"
 msgstr "Sfocat_ure"
 
-#: ../app/actions/plug-in-actions.c:70
+#: ../app/actions/plug-in-actions.c:88
 msgid "_Noise"
 msgstr "Dist_urbo"
 
-#: ../app/actions/plug-in-actions.c:71
+#: ../app/actions/plug-in-actions.c:89
 msgid "Edge-De_tect"
 msgstr "Rilevamen_to margini"
 
-#: ../app/actions/plug-in-actions.c:72
+#: ../app/actions/plug-in-actions.c:90
 msgid "En_hance"
 msgstr "_Miglioramento"
 
-#: ../app/actions/plug-in-actions.c:73
+#: ../app/actions/plug-in-actions.c:91
 msgid "C_ombine"
 msgstr "C_ombina"
 
-#: ../app/actions/plug-in-actions.c:74
+#: ../app/actions/plug-in-actions.c:92
 msgid "_Generic"
 msgstr "_Generico"
 
-#: ../app/actions/plug-in-actions.c:75
+#: ../app/actions/plug-in-actions.c:93
 msgid "_Light and Shadow"
 msgstr "_Luce e ombra"
 
-#: ../app/actions/plug-in-actions.c:76
+#: ../app/actions/plug-in-actions.c:94
 msgid "_Distorts"
 msgstr "_Distorsioni"
 
-#: ../app/actions/plug-in-actions.c:77
+#: ../app/actions/plug-in-actions.c:95
 msgid "_Artistic"
 msgstr "_Artistici"
 
-#: ../app/actions/plug-in-actions.c:78
+#: ../app/actions/plug-in-actions.c:96
 msgid "_Map"
 msgstr "_Mappa"
 
-#: ../app/actions/plug-in-actions.c:79
+#: ../app/actions/plug-in-actions.c:97
 msgid "_Render"
 msgstr "_Render"
 
-#: ../app/actions/plug-in-actions.c:80
+#: ../app/actions/plug-in-actions.c:98
 msgid "_Clouds"
 msgstr "N_uvole"
 
-#: ../app/actions/plug-in-actions.c:81
+#: ../app/actions/plug-in-actions.c:99
 msgid "_Nature"
 msgstr "_Natura"
 
-#: ../app/actions/plug-in-actions.c:83
+#: ../app/actions/plug-in-actions.c:101
 msgid "_Web"
 msgstr "_Web"
 
-#: ../app/actions/plug-in-actions.c:84
+#: ../app/actions/plug-in-actions.c:102
 msgid "An_imation"
 msgstr "An_imazione"
 
-#: ../app/actions/plug-in-actions.c:87
+#: ../app/actions/plug-in-actions.c:105
 msgid "Reset all _Filters"
 msgstr "Reimposta tutti i _filtri"
 
-#: ../app/actions/plug-in-actions.c:88
+#: ../app/actions/plug-in-actions.c:106
 msgid "Set all plug-in to their default settings"
 msgstr "imposta tutti i plug-in con i valori predefiniti"
 
-#: ../app/actions/plug-in-actions.c:96
+#: ../app/actions/plug-in-actions.c:114
 msgid "Re_peat Last"
 msgstr "Ri_peti l'ultimo"
 
-#: ../app/actions/plug-in-actions.c:97
+#: ../app/actions/plug-in-actions.c:115
 msgid "Rerun the last used plug-in using the same settings"
 msgstr "Riesegui l'ultimo plug-in usato con le stesse impostazioni"
 
-#: ../app/actions/plug-in-actions.c:102
+#: ../app/actions/plug-in-actions.c:120
 msgid "R_e-Show Last"
 msgstr "R_i-mostra l'ultimo"
 
-#: ../app/actions/plug-in-actions.c:103
+#: ../app/actions/plug-in-actions.c:121
 msgid "Show the last used plug-in dialog again"
 msgstr "Mostra ancora la finestra dell'ultimo plug-in usato"
 
-#: ../app/actions/plug-in-actions.c:455
+#: ../app/actions/plug-in-actions.c:531
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Ri_peti \"%s\""
 
-#: ../app/actions/plug-in-actions.c:456
+#: ../app/actions/plug-in-actions.c:532
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "R_i-mostra \"%s\""
 
-#: ../app/actions/plug-in-actions.c:469
+#: ../app/actions/plug-in-actions.c:545
 msgid "Repeat Last"
 msgstr "Ripeti l'ultimo"
 
-#: ../app/actions/plug-in-actions.c:471
+#: ../app/actions/plug-in-actions.c:547
 msgid "Re-Show Last"
 msgstr "Ri-mostra l'ultimo"
 
-#: ../app/actions/plug-in-commands.c:194
+#: ../app/actions/plug-in-commands.c:197
 msgid "Reset all Filters"
 msgstr "Reimposta tutti i filtri"
 
-#: ../app/actions/plug-in-commands.c:213
+#: ../app/actions/plug-in-commands.c:216
 msgid "Do you really want to reset all filters to default values?"
 msgstr "Sicuri di voler reimpostare tutti i filtri ai valori predefiniti?"
 
@@ -3315,7 +3304,7 @@ msgstr "Apri file di testo (UTF-8)"
 #: ../app/core/gimpbrush-load.c:395 ../app/core/gimpbrushgenerated.c:560
 #: ../app/core/gimpbrushpipe.c:314 ../app/core/gimpgradient-load.c:62
 #: ../app/core/gimppalette.c:322 ../app/core/gimppattern.c:263
-#: ../app/tools/gimpimagemaptool.c:580 ../app/xcf/xcf.c:349
+#: ../app/tools/gimpimagemaptool.c:580 ../app/xcf/xcf.c:348
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Impossibile aprire \"%s\" in lettura: %s"
@@ -4026,7 +4015,7 @@ msgstr ""
 #: ../app/core/gimpgradient-save.c:51 ../app/core/gimpgradient-save.c:142
 #: ../app/core/gimppalette.c:521 ../app/gui/themes.c:238
 #: ../app/tools/gimpimagemaptool.c:579 ../app/vectors/gimpvectors-export.c:83
-#: ../app/xcf/xcf.c:406
+#: ../app/xcf/xcf.c:405
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Non è possibile aprire \"%s\" in scrittura: %s"
@@ -4053,7 +4042,7 @@ msgstr ""
 "\"%s\"."
 
 #: ../app/config/gimprc.c:259 ../app/config/gimprc.c:272
-#: ../app/plug-in/plug-ins.c:125
+#: ../app/plug-in/gimppluginmanager.c:312
 #, c-format
 msgid "Parsing '%s'\n"
 msgstr "Analisi di \"%s\"\n"
@@ -5002,7 +4991,7 @@ msgstr "Rimuovi parasite"
 msgid "Import paths"
 msgstr "Importa tracciati"
 
-#: ../app/core/core-enums.c:836 ../app/pdb/drawable_cmds.c:769
+#: ../app/core/core-enums.c:836 ../app/pdb/drawable_cmds.c:770
 msgid "Plug-In"
 msgstr "Plug-in"
 
@@ -5171,39 +5160,46 @@ msgstr "Da pp a sf (HSV orario)"
 msgid "FG to Transparent"
 msgstr "Da pp a trasparente"
 
-#: ../app/core/gimp.c:568
+#: ../app/core/gimp-user-install.c:285
+#, c-format
+msgid "Copying file '%s' from '%s'..."
+msgstr "Copia del file '%s' da '%s'..."
+
+#: ../app/core/gimp-user-install.c:300
+#, c-format
+msgid "Creating folder '%s'..."
+msgstr "Creazione cartella '%s'..."
+
+#: ../app/core/gimp-user-install.c:311
+#, c-format
+msgid "Cannot create folder '%s': %s"
+msgstr "Impossibile creare la cartella '%s': %s"
+
+#: ../app/core/gimp.c:507
 msgid "Initialization"
 msgstr "Inizializzazione"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:629
+#: ../app/core/gimp.c:568
 msgid "Internal Procedures"
 msgstr "Procedure interne"
 
-#: ../app/core/gimp.c:632
-msgid "Plug-In Interpreters"
-msgstr "Interpreti dei plug-in"
-
-#: ../app/core/gimp.c:638
-msgid "Plug-In Environment"
-msgstr "Ambiente plug-in"
-
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:854
+#: ../app/core/gimp.c:786
 msgid "Looking for data files"
 msgstr "Inizializzazione"
 
-#: ../app/core/gimp.c:854
+#: ../app/core/gimp.c:786
 msgid "Parasites"
 msgstr "Parasites"
 
 #. initialize the document history
-#: ../app/core/gimp.c:879
+#: ../app/core/gimp.c:811
 msgid "Documents"
 msgstr "Documenti"
 
 #. initialize the module list
-#: ../app/core/gimp.c:887 ../app/dialogs/preferences-dialog.c:2445
+#: ../app/core/gimp.c:819 ../app/dialogs/preferences-dialog.c:2445
 msgid "Modules"
 msgstr "Moduli"
 
@@ -5525,16 +5521,6 @@ msgstr "Trasforma livello"
 msgid "Transformation"
 msgstr "Trasformazione"
 
-#: ../app/core/gimpenvirontable.c:249
-#, c-format
-msgid "Empty variable name in environment file %s"
-msgstr "Nome variabile vuoto nel file di ambiente %s"
-
-#: ../app/core/gimpenvirontable.c:267
-#, c-format
-msgid "Illegal variable name in environment file %s: %s"
-msgstr "Nome variabile illegale nel file di ambiente %s: %s"
-
 #: ../app/core/gimpgradient-load.c:71
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
@@ -5726,131 +5712,131 @@ msgstr "Sposta punto di campionamento"
 msgid "Can't undo %s"
 msgstr "Impossibile annullare %s"
 
-#: ../app/core/gimpimage.c:1390
+#: ../app/core/gimpimage.c:1392
 msgid "Change Image Resolution"
 msgstr "Cambia risoluzione immagine"
 
-#: ../app/core/gimpimage.c:1430
+#: ../app/core/gimpimage.c:1432
 msgid "Change Image Unit"
 msgstr "Cambia unità immagine"
 
-#: ../app/core/gimpimage.c:2251
+#: ../app/core/gimpimage.c:2253
 msgid "Attach Parasite to Image"
 msgstr "Allega parasite all'immagine"
 
-#: ../app/core/gimpimage.c:2286
+#: ../app/core/gimpimage.c:2288
 msgid "Remove Parasite from Image"
 msgstr "Rimuovi parasite dall'immagine"
 
-#: ../app/core/gimpimage.c:2754
+#: ../app/core/gimpimage.c:2756
 msgid "Add Layer"
 msgstr "Aggiungi livello"
 
-#: ../app/core/gimpimage.c:2818 ../app/core/gimpimage.c:2831
+#: ../app/core/gimpimage.c:2820 ../app/core/gimpimage.c:2833
 msgid "Remove Layer"
 msgstr "Rimuovi livello"
 
-#: ../app/core/gimpimage.c:2905
+#: ../app/core/gimpimage.c:2907
 msgid "Layer cannot be raised higher."
 msgstr "Il livello non può essere alzato ulteriormente."
 
-#: ../app/core/gimpimage.c:2910
+#: ../app/core/gimpimage.c:2912
 msgid "Raise Layer"
 msgstr "Alza il livello"
 
-#: ../app/core/gimpimage.c:2927
+#: ../app/core/gimpimage.c:2929
 msgid "Layer cannot be lowered more."
 msgstr "Il livello non può essere abbassato ulteriormente."
 
-#: ../app/core/gimpimage.c:2932
+#: ../app/core/gimpimage.c:2934
 msgid "Lower Layer"
 msgstr "Abbassa il livello"
 
-#: ../app/core/gimpimage.c:2943
+#: ../app/core/gimpimage.c:2945
 msgid "Raise Layer to Top"
 msgstr "Alza il livello fino in cima"
 
-#: ../app/core/gimpimage.c:2958
+#: ../app/core/gimpimage.c:2960
 msgid "Lower Layer to Bottom"
 msgstr "Abbassa il livello fino in fondo"
 
-#: ../app/core/gimpimage.c:3031
+#: ../app/core/gimpimage.c:3033
 msgid "Add Channel"
 msgstr "Aggiungi canale"
 
-#: ../app/core/gimpimage.c:3075 ../app/core/gimpimage.c:3086
+#: ../app/core/gimpimage.c:3077 ../app/core/gimpimage.c:3088
 msgid "Remove Channel"
 msgstr "Rimuovi canale"
 
-#: ../app/core/gimpimage.c:3133
+#: ../app/core/gimpimage.c:3135
 msgid "Channel cannot be raised higher."
 msgstr "Il canale non può essere alzato ulteriormente."
 
-#: ../app/core/gimpimage.c:3138
+#: ../app/core/gimpimage.c:3140
 msgid "Raise Channel"
 msgstr "Alza il canale"
 
-#: ../app/core/gimpimage.c:3155
+#: ../app/core/gimpimage.c:3157
 msgid "Channel is already on top."
 msgstr "Il canale è già in cima."
 
-#: ../app/core/gimpimage.c:3160
+#: ../app/core/gimpimage.c:3162
 msgid "Raise Channel to Top"
 msgstr "Alza il canale fino in cima"
 
-#: ../app/core/gimpimage.c:3177
+#: ../app/core/gimpimage.c:3179
 msgid "Channel cannot be lowered more."
 msgstr "Il canale non può essere abbassato ulteriormente."
 
-#: ../app/core/gimpimage.c:3182
+#: ../app/core/gimpimage.c:3184
 msgid "Lower Channel"
 msgstr "Abbassa il canale"
 
-#: ../app/core/gimpimage.c:3202
+#: ../app/core/gimpimage.c:3204
 msgid "Channel is already on the bottom."
 msgstr "Il canale è già in fondo."
 
-#: ../app/core/gimpimage.c:3207
+#: ../app/core/gimpimage.c:3209
 msgid "Lower Channel to Bottom"
 msgstr "Abbassa il canale fino in fondo"
 
-#: ../app/core/gimpimage.c:3282
+#: ../app/core/gimpimage.c:3284
 msgid "Add Path"
 msgstr "Aggiungi tracciati"
 
-#: ../app/core/gimpimage.c:3327
+#: ../app/core/gimpimage.c:3329
 msgid "Remove Path"
 msgstr "Rimuovi tracciati"
 
-#: ../app/core/gimpimage.c:3371
+#: ../app/core/gimpimage.c:3373
 msgid "Path cannot be raised higher."
 msgstr "Il tracciato non può essere alzato ulteriormente."
 
-#: ../app/core/gimpimage.c:3376
+#: ../app/core/gimpimage.c:3378
 msgid "Raise Path"
 msgstr "Alza il tracciato"
 
-#: ../app/core/gimpimage.c:3393
+#: ../app/core/gimpimage.c:3395
 msgid "Path is already on top."
 msgstr "Il tracciato è già in cima."
 
-#: ../app/core/gimpimage.c:3398
+#: ../app/core/gimpimage.c:3400
 msgid "Raise Path to Top"
 msgstr "Alza il tracciato fino in cima"
 
-#: ../app/core/gimpimage.c:3415
+#: ../app/core/gimpimage.c:3417
 msgid "Path cannot be lowered more."
 msgstr "Il tracciato non può essere abbassato ulteriormente."
 
-#: ../app/core/gimpimage.c:3420
+#: ../app/core/gimpimage.c:3422
 msgid "Lower Path"
 msgstr "Abbassa il tracciato"
 
-#: ../app/core/gimpimage.c:3440
+#: ../app/core/gimpimage.c:3442
 msgid "Path is already on the bottom."
 msgstr "Il tracciato è già in fondo."
 
-#: ../app/core/gimpimage.c:3445
+#: ../app/core/gimpimage.c:3447
 msgid "Lower Path to Bottom"
 msgstr "Abbassa tracciato fino in fondo"
 
@@ -5906,16 +5892,6 @@ msgstr[1] "%d livelli"
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Impossibile aprire la miniatura '%s': %s."
-
-#: ../app/core/gimpinterpreterdb.c:262
-#, c-format
-msgid "Bad interpreter referenced in interpreter file %s: %s"
-msgstr "Riferimento a interprete errato in file interprete %s: %s"
-
-#: ../app/core/gimpinterpreterdb.c:320
-#, c-format
-msgid "Bad binary format string in interpreter file %s"
-msgstr "Stringa di formato binario errato in file interprete %s"
 
 #: ../app/core/gimpitem.c:1159
 msgid "Attach Parasite"
@@ -6148,7 +6124,7 @@ msgstr ""
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Stringa UTF-8 non valida nel file motivo di GIMP '%s'."
 
-#: ../app/core/gimppdbprogress.c:263 ../app/widgets/gimppdbdialog.c:317
+#: ../app/core/gimppdbprogress.c:286 ../app/widgets/gimppdbdialog.c:333
 #, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr ""
@@ -6272,14 +6248,14 @@ msgstr "pica"
 msgid "percent"
 msgstr "percento"
 
-#: ../app/dialogs/about-dialog.c:125
+#: ../app/dialogs/about-dialog.c:126
 msgid "Visit the GIMP website"
 msgstr "Visitate il sito di GIMP"
 
 #. Translators: insert your names here,
 #. * separated by newline
 #.
-#: ../app/dialogs/about-dialog.c:132
+#: ../app/dialogs/about-dialog.c:133
 msgid "translator-credits"
 msgstr ""
 "Marco Ciampa\n"
@@ -6288,7 +6264,7 @@ msgstr ""
 "Mike Vargas\n"
 "Gruppo Traduttori Italiani di Gimp"
 
-#: ../app/dialogs/about-dialog.c:666
+#: ../app/dialogs/about-dialog.c:668
 msgid "GIMP is brought to you by"
 msgstr "GIMP è stato realizzato da"
 
@@ -6353,7 +6329,7 @@ msgstr "_Desaturazione"
 msgid "Choose shade of gray based on:"
 msgstr "Scegliere le sfumature i grigio basate su:"
 
-#: ../app/dialogs/dialogs-constructors.c:175 ../app/gui/gui.c:153
+#: ../app/dialogs/dialogs-constructors.c:175 ../app/gui/gui.c:155
 msgid "GIMP Message"
 msgstr "Messaggio GIMP"
 
@@ -6385,15 +6361,15 @@ msgstr "Navigazione"
 msgid "FG/BG"
 msgstr "PP/SF"
 
-#: ../app/dialogs/file-open-location-dialog.c:71
+#: ../app/dialogs/file-open-location-dialog.c:73
 msgid "Open Location"
 msgstr "Apri indirizzo"
 
-#: ../app/dialogs/file-open-location-dialog.c:109
+#: ../app/dialogs/file-open-location-dialog.c:111
 msgid "Enter location (URI):"
 msgstr "Inserisci indirizzo (URI):"
 
-#: ../app/dialogs/file-save-dialog.c:260 ../app/dialogs/file-save-dialog.c:296
+#: ../app/dialogs/file-save-dialog.c:266 ../app/dialogs/file-save-dialog.c:302
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -6402,7 +6378,7 @@ msgstr ""
 "conosciuta o selezionare un formato file dall'elenco dei formati."
 
 #. remote URI
-#: ../app/dialogs/file-save-dialog.c:329
+#: ../app/dialogs/file-save-dialog.c:335
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -6412,15 +6388,15 @@ msgstr ""
 "file dall'estensione. Inserire un'estensione corrispondente con il formato "
 "file selezionato o non inserire nessuna estensione."
 
-#: ../app/dialogs/file-save-dialog.c:389
+#: ../app/dialogs/file-save-dialog.c:395
 msgid "Extension Mismatch"
 msgstr "Estensione non corrispondente"
 
-#: ../app/dialogs/file-save-dialog.c:405
+#: ../app/dialogs/file-save-dialog.c:411
 msgid "The given file extension does not match the chosen file type."
 msgstr "L'estensione file data non corrisponde con il tipo di file scelto."
 
-#: ../app/dialogs/file-save-dialog.c:409
+#: ../app/dialogs/file-save-dialog.c:415
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Usare ugualmente questo nome per salvare l'immagine?"
 
@@ -7634,49 +7610,33 @@ msgstr "_Successivo"
 msgid "tips-locale:C"
 msgstr "tips-locale:it"
 
-#: ../app/dialogs/user-install-dialog.c:189
-msgid "Installation successful."
-msgstr "Installazione completata."
+#: ../app/dialogs/user-install-dialog.c:107
+msgid "Installation successful!"
+msgstr "Installazione completata!"
 
-#: ../app/dialogs/user-install-dialog.c:194
+#: ../app/dialogs/user-install-dialog.c:112
 msgid "Installation failed!"
 msgstr "Installazione fallita!"
 
-#: ../app/dialogs/user-install-dialog.c:239
-msgid "Hide _details"
-msgstr "Nascondi i _dettagli"
-
-#: ../app/dialogs/user-install-dialog.c:239
-msgid "Show _details"
-msgstr "Mostra i _dettagli"
-
-#: ../app/dialogs/user-install-dialog.c:292
-msgid "GIMP User Installation"
-msgstr "GIMP Installazione Utente"
-
-#: ../app/dialogs/user-install-dialog.c:298
-msgid "Continue"
-msgstr "Continua"
-
-#: ../app/dialogs/user-install-dialog.c:367
+#: ../app/dialogs/user-install-dialog.c:185
 msgid "Welcome to the GNU Image Manipulation Program"
 msgstr "Benvenuti nel programma di elaborazione immagini GNU GIMP"
 
-#: ../app/dialogs/user-install-dialog.c:377
+#: ../app/dialogs/user-install-dialog.c:193
 #, c-format
 msgid "It seems you have used GIMP %s before."
 msgstr "Sembra che sia stato utilizzato GIMP %s in passato."
 
-#: ../app/dialogs/user-install-dialog.c:379
+#: ../app/dialogs/user-install-dialog.c:195
 #, c-format
 msgid "_Migrate GIMP %s user settings"
 msgstr "_Migrazione delle impostazioni utente GIMP %s"
 
-#: ../app/dialogs/user-install-dialog.c:388
+#: ../app/dialogs/user-install-dialog.c:206
 msgid "Do a _fresh user installation"
 msgstr "Crea una _nuova installazione utente GIMP"
 
-#: ../app/dialogs/user-install-dialog.c:400
+#: ../app/dialogs/user-install-dialog.c:219
 #, c-format
 msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
@@ -7685,28 +7645,21 @@ msgstr ""
 "Sembra che tu stia usando GIMP per la prima volta. GIMP ora creerà una "
 "cartella di nome \"<b>%s</b>\" e vi copiarà alcuni file al suo interno."
 
-#: ../app/dialogs/user-install-dialog.c:419
-msgid "User Installation"
-msgstr "Installazione utente"
+#: ../app/dialogs/user-install-dialog.c:247
+msgid "Installing..."
+msgstr "Installazione..."
 
-#: ../app/dialogs/user-install-dialog.c:420
-msgid "Your personal GIMP folder is being created..."
-msgstr "La cartella personale di GIMP è stata creata..."
+#: ../app/dialogs/user-install-dialog.c:249
+msgid "Installation Log"
+msgstr "Rapporto installazione"
 
-#: ../app/dialogs/user-install-dialog.c:521
-#, c-format
-msgid "Copying file '%s' from '%s'..."
-msgstr "Copia del file '%s' da '%s'..."
+#: ../app/dialogs/user-install-dialog.c:318
+msgid "GIMP User Installation"
+msgstr "GIMP Installazione Utente"
 
-#: ../app/dialogs/user-install-dialog.c:540
-#, c-format
-msgid "Creating folder '%s'..."
-msgstr "Creazione cartella '%s'..."
-
-#: ../app/dialogs/user-install-dialog.c:554
-#, c-format
-msgid "Cannot create folder '%s': %s"
-msgstr "Impossibile creare la cartella '%s': %s"
+#: ../app/dialogs/user-install-dialog.c:324
+msgid "Continue"
+msgstr "Continua"
 
 #: ../app/dialogs/vectors-export-dialog.c:53
 msgid "Export Path to SVG"
@@ -7913,27 +7866,27 @@ msgstr "Cancella"
 msgid "Other..."
 msgstr "Altro..."
 
-#: ../app/file/file-open.c:104
+#: ../app/file/file-open.c:106
 msgid "Unknown file type"
 msgstr "Tipo di file sconosciuto"
 
-#: ../app/file/file-open.c:119 ../app/file/file-save.c:106
+#: ../app/file/file-open.c:121 ../app/file/file-save.c:111
 msgid "Not a regular file"
 msgstr "Non è un file regolare"
 
-#: ../app/file/file-open.c:162
+#: ../app/file/file-open.c:166
 msgid "Plug-In returned SUCCESS but did not return an image"
 msgstr "Il plug-in ha risposto successo ma non ha restituito un'immagine"
 
-#: ../app/file/file-open.c:170
+#: ../app/file/file-open.c:174
 msgid "Plug-In could not open image"
 msgstr "Il plug-in non può aprire l'immagine"
 
-#: ../app/file/file-open.c:407
+#: ../app/file/file-open.c:413
 msgid "Image doesn't contain any visible layers"
 msgstr "L'immagine non contiene nessun livello visibile"
 
-#: ../app/file/file-save.c:178
+#: ../app/file/file-save.c:188
 msgid "Plug-In could not save image"
 msgstr "Il plug-in non può salvare l'immagine"
 
@@ -7945,7 +7898,7 @@ msgstr "Carattere non valido in sequenza URI"
 msgid "GIMP Startup"
 msgstr "Avvio di GIMP"
 
-#: ../app/gui/themes.c:231 ../app/plug-in/plug-ins.c:236
+#: ../app/gui/themes.c:231 ../app/plug-in/gimppluginmanager.c:423
 #, c-format
 msgid "Writing '%s'\n"
 msgstr "Scrittura di '%s'\n"
@@ -7969,7 +7922,7 @@ msgstr "Duplica"
 
 #: ../app/paint/gimpconvolve.c:121 ../app/tools/gimpconvolvetool.c:68
 msgid "Convolve"
-msgstr "Arrotolamento"
+msgstr "Condensa"
 
 #: ../app/paint/gimpdodgeburn.c:87 ../app/tools/gimpdodgeburntool.c:68
 msgid "Dodge/Burn"
@@ -8005,11 +7958,11 @@ msgstr "Fisso"
 
 #: ../app/paint/paint-enums.c:83
 msgid "Blur"
-msgstr "Sfuma"
+msgstr "Sfocata"
 
 #: ../app/paint/paint-enums.c:84
 msgid "Sharpen"
-msgstr "Definisci"
+msgstr "Contrastata"
 
 #: ../app/pdb/color_cmds.c:100 ../app/tools/gimpbrightnesscontrasttool.c:99
 msgid "Brightness-Contrast"
@@ -8036,7 +7989,7 @@ msgstr "Colora"
 msgid "Hue-Saturation"
 msgstr "Tonalità-saturazione"
 
-#: ../app/pdb/color_cmds.c:825 ../app/tools/gimpthresholdtool.c:87
+#: ../app/pdb/color_cmds.c:825 ../app/tools/gimpthresholdtool.c:83
 msgid "Threshold"
 msgstr "Soglia"
 
@@ -8068,7 +8021,7 @@ msgstr "Trasformazione 2D in corso"
 msgid "Blending"
 msgstr "Sfumatura in corso"
 
-#: ../app/pdb/gimp-pdb.c:264 ../app/pdb/gimp-pdb.c:328
+#: ../app/pdb/gimppdb.c:306 ../app/pdb/gimppdb.c:370
 #, c-format
 msgid ""
 "PDB calling error:\n"
@@ -8077,7 +8030,7 @@ msgstr ""
 "Errore di chiamata PDB:\n"
 "Procedura \"%s\" non trovata"
 
-#: ../app/pdb/gimp-pdb.c:361
+#: ../app/pdb/gimppdb.c:403
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -8116,12 +8069,79 @@ msgstr ""
 msgid "Free Select"
 msgstr "Selezione libera"
 
-#: ../app/plug-in/plug-in.c:572 ../app/plug-in/plug-in.c:605
+#: ../app/plug-in/gimpenvirontable.c:249
+#, c-format
+msgid "Empty variable name in environment file %s"
+msgstr "Nome variabile vuoto nel file di ambiente %s"
+
+#: ../app/plug-in/gimpenvirontable.c:267
+#, c-format
+msgid "Illegal variable name in environment file %s: %s"
+msgstr "Nome variabile illegale nel file di ambiente %s: %s"
+
+#: ../app/plug-in/gimpinterpreterdb.c:262
+#, c-format
+msgid "Bad interpreter referenced in interpreter file %s: %s"
+msgstr "Riferimento a interprete errato in file interprete %s: %s"
+
+#: ../app/plug-in/gimpinterpreterdb.c:320
+#, c-format
+msgid "Bad binary format string in interpreter file %s"
+msgstr "Stringa di formato binario errato in file interprete %s"
+
+#: ../app/plug-in/gimppluginmanager.c:228
+msgid "Plug-In Interpreters"
+msgstr "Interpreti dei plug-in"
+
+#: ../app/plug-in/gimppluginmanager.c:235
+msgid "Plug-In Environment"
+msgstr "Ambiente plug-in"
+
+#: ../app/plug-in/gimppluginmanager.c:277
+msgid "Searching Plug-Ins"
+msgstr "Ricerca plug-in"
+
+#: ../app/plug-in/gimppluginmanager.c:308
+msgid "Resource configuration"
+msgstr "Configurazione risorse"
+
+#. query any plug-ins that have changed since we last wrote out
+#. *  the pluginrc file
+#.
+#: ../app/plug-in/gimppluginmanager.c:334
+msgid "Querying new Plug-ins"
+msgstr "Interrogazione nuovi plug-in"
+
+#: ../app/plug-in/gimppluginmanager.c:362
+#, c-format
+msgid "Querying plug-in: '%s'\n"
+msgstr "Interrogazione plug-in: '%s'\n"
+
+#. initialize the plug-ins
+#: ../app/plug-in/gimppluginmanager.c:371
+msgid "Initializing Plug-ins"
+msgstr "Inizializzazione plug-in"
+
+#: ../app/plug-in/gimppluginmanager.c:397
+#, c-format
+msgid "Initializing plug-in: '%s'\n"
+msgstr "Inizializzazione plug-in: '%s'\n"
+
+#: ../app/plug-in/gimppluginmanager.c:521
+msgid "Starting Extensions"
+msgstr "Avvio estensioni"
+
+#: ../app/plug-in/gimppluginmanager.c:529
+#, c-format
+msgid "Starting extension: '%s'\n"
+msgstr "Avvio estensioni: '%s'\n"
+
+#: ../app/plug-in/plug-in.c:549 ../app/plug-in/plug-in.c:582
 #, c-format
 msgid "Terminating plug-in: '%s'\n"
 msgstr "Terminazione plug-in: '%s'\n"
 
-#: ../app/plug-in/plug-in.c:747
+#: ../app/plug-in/plug-in.c:725
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -8150,46 +8170,6 @@ msgstr "valore non valido '%s' per il tipo icona"
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "valore non valido '%ld' per il tipo icona"
-
-#. search for binaries in the plug-in directory path
-#: ../app/plug-in/plug-ins.c:91
-msgid "Searching Plug-Ins"
-msgstr "Ricerca plug-in"
-
-#: ../app/plug-in/plug-ins.c:121
-msgid "Resource configuration"
-msgstr "Configurazione risorse"
-
-#. query any plug-ins that have changed since we last wrote out
-#. *  the pluginrc file
-#.
-#: ../app/plug-in/plug-ins.c:147
-msgid "Querying new Plug-ins"
-msgstr "Interrogazione nuovi plug-in"
-
-#: ../app/plug-in/plug-ins.c:175
-#, c-format
-msgid "Querying plug-in: '%s'\n"
-msgstr "Interrogazione plug-in: '%s'\n"
-
-#. initialize the plug-ins
-#: ../app/plug-in/plug-ins.c:184
-msgid "Initializing Plug-ins"
-msgstr "Inizializzazione plug-in"
-
-#: ../app/plug-in/plug-ins.c:210
-#, c-format
-msgid "Initializing plug-in: '%s'\n"
-msgstr "Inizializzazione plug-in: '%s'\n"
-
-#: ../app/plug-in/plug-ins.c:307
-msgid "Starting Extensions"
-msgstr "Avvio estensioni"
-
-#: ../app/plug-in/plug-ins.c:315
-#, c-format
-msgid "Starting extension: '%s'\n"
-msgstr "Avvio estensioni: '%s'\n"
 
 #: ../app/text/text-enums.c:81
 msgid "Left justified"
@@ -8671,13 +8651,13 @@ msgstr "Sfoca o contrasta"
 
 #: ../app/tools/gimpconvolvetool.c:70
 msgid "Con_volve"
-msgstr "_Arrotolamento"
+msgstr "C_ondensa"
 
 #. the type radio box
 #: ../app/tools/gimpconvolvetool.c:159
 #, c-format
 msgid "Convolve Type  (%s)"
-msgstr "Tipo di arrotolamento (%s)"
+msgstr "Tipo di condensa (%s)"
 
 #. tool toggle
 #: ../app/tools/gimpcropoptions.c:179 ../app/tools/gimpmagnifyoptions.c:182
@@ -9021,7 +9001,7 @@ msgstr "Regola colore selezionato"
 msgid "R_eset Color"
 msgstr "R_eimposta il colore"
 
-#: ../app/tools/gimpimagemaptool.c:233 ../app/widgets/gimpthumbbox.c:329
+#: ../app/tools/gimpimagemaptool.c:233 ../app/widgets/gimpthumbbox.c:331
 msgid "_Preview"
 msgstr "Ante_prima"
 
@@ -9621,21 +9601,25 @@ msgstr ""
 "Puoi modificare il livello oppure creare un nuovo livello di testo dai suoi "
 "attributi."
 
-#: ../app/tools/gimpthresholdtool.c:88
+#: ../app/tools/gimpthresholdtool.c:84
 msgid "Reduce image to two colors using a threshold"
 msgstr "Riduci immagine a due colori utilizzando una soglia"
 
-#: ../app/tools/gimpthresholdtool.c:89
+#: ../app/tools/gimpthresholdtool.c:85
 msgid "_Threshold..."
 msgstr "_Soglia..."
 
-#: ../app/tools/gimpthresholdtool.c:106
+#: ../app/tools/gimpthresholdtool.c:102
 msgid "Apply Threshold"
 msgstr "Applica soglia"
 
-#: ../app/tools/gimpthresholdtool.c:157
+#: ../app/tools/gimpthresholdtool.c:153
 msgid "Threshold does not operate on indexed layers."
 msgstr "La soglia non agisce su livelli indicizzati."
+
+#: ../app/tools/gimpthresholdtool.c:244
+msgid "Automatically adjust to optimal binarization threshold"
+msgstr "Regolazione automatica della soglia di binarizzazione automatica"
 
 #: ../app/tools/gimptransformoptions.c:304
 msgid "Transform Direction"
@@ -10386,24 +10370,24 @@ msgstr "Primo piano: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Sfondo: %d, %d, %d"
 
-#: ../app/widgets/gimpdnd-xds.c:186
+#: ../app/widgets/gimpdnd-xds.c:188
 msgid "The given filename does not have any known file extension."
 msgstr "Il nome file dato non possiede una forma di estensione conosciuta."
 
-#: ../app/widgets/gimpdnd-xds.c:204
+#: ../app/widgets/gimpdnd-xds.c:206
 msgid "File Exists"
 msgstr "Il file esiste"
 
-#: ../app/widgets/gimpdnd-xds.c:209
+#: ../app/widgets/gimpdnd-xds.c:211
 msgid "_Replace"
 msgstr "_Rimpiazza"
 
-#: ../app/widgets/gimpdnd-xds.c:220
+#: ../app/widgets/gimpdnd-xds.c:222
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr "Un file di nome '%s' esiste già."
 
-#: ../app/widgets/gimpdnd-xds.c:225
+#: ../app/widgets/gimpdnd-xds.c:227
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "Volete rimpiazzarlo con l'immagine che stavate salvando?"
 
@@ -10449,32 +10433,32 @@ msgstr "Troppi messaggi di errore!"
 msgid "Messages are redirected to stderr."
 msgstr "I messaggi sono rediretti su stderr."
 
-#: ../app/widgets/gimpfiledialog.c:267
+#: ../app/widgets/gimpfiledialog.c:268
 msgid "Automatically Detected"
 msgstr "Rilevato automaticamente"
 
-#: ../app/widgets/gimpfiledialog.c:276
+#: ../app/widgets/gimpfiledialog.c:278
 msgid "By Extension"
 msgstr "Per estensione"
 
-#: ../app/widgets/gimpfiledialog.c:442
+#: ../app/widgets/gimpfiledialog.c:445
 msgid "All files"
 msgstr "Tutti i file"
 
-#: ../app/widgets/gimpfiledialog.c:447
+#: ../app/widgets/gimpfiledialog.c:450
 msgid "All images"
 msgstr "Tutte le immagini"
 
-#: ../app/widgets/gimpfiledialog.c:586
+#: ../app/widgets/gimpfiledialog.c:591
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Seleziona _tipo di file (%s)"
 
-#: ../app/widgets/gimpfileprocview.c:199
+#: ../app/widgets/gimpfileprocview.c:201
 msgid "File Type"
 msgstr "Tipo di file"
 
-#: ../app/widgets/gimpfileprocview.c:211
+#: ../app/widgets/gimpfileprocview.c:213
 msgid "Extensions"
 msgstr "Estensioni"
 
@@ -10594,29 +10578,29 @@ msgstr "Colore di _sfondo:"
 msgid "Spacing"
 msgstr "Spaziatura"
 
-#: ../app/widgets/gimphelp.c:187
+#: ../app/widgets/gimphelp.c:190
 msgid "Help browser not found"
 msgstr "Visualizzatore dell'aiuto non trovato"
 
-#: ../app/widgets/gimphelp.c:188
+#: ../app/widgets/gimphelp.c:191
 msgid "Could not find GIMP help browser."
 msgstr "Impossibile trovare il visualizzatore dell'aiuto di GIMP."
 
-#: ../app/widgets/gimphelp.c:189
+#: ../app/widgets/gimphelp.c:192
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation."
 msgstr ""
 "Manca dall'installazione il plug-in di visualizzazione dell'aiuto di GIMP."
 
-#: ../app/widgets/gimphelp.c:214
+#: ../app/widgets/gimphelp.c:218
 msgid "Help browser doesn't start"
 msgstr "Visualizzatore dell'aiuto non parte"
 
-#: ../app/widgets/gimphelp.c:215
+#: ../app/widgets/gimphelp.c:219
 msgid "Could not start the GIMP help browser plug-in."
 msgstr "Impossibile eseguire il plug-in visualizzatore dell'aiuto di GIMP."
 
-#: ../app/widgets/gimphelp.c:241
+#: ../app/widgets/gimphelp.c:245
 msgid "Use _web browser instead"
 msgstr "Usa in alternativa il navigatore _web"
 
@@ -10863,7 +10847,7 @@ msgstr "%d ppi, %s"
 msgid "_Use selected font"
 msgstr "_Usa il carattere selezionato"
 
-#: ../app/widgets/gimpthumbbox.c:311
+#: ../app/widgets/gimpthumbbox.c:313
 #, c-format
 msgid ""
 "Click to update preview\n"
@@ -10872,16 +10856,16 @@ msgstr ""
 "Fare clic per aggiornare l'anteprima\n"
 "%s%sfare clic per forzare l'aggiornamento anche se l'anteprima è aggiornata"
 
-#: ../app/widgets/gimpthumbbox.c:382 ../app/widgets/gimpthumbbox.c:457
+#: ../app/widgets/gimpthumbbox.c:384 ../app/widgets/gimpthumbbox.c:459
 msgid "No selection"
 msgstr "Nessuna selezione"
 
-#: ../app/widgets/gimpthumbbox.c:585 ../app/widgets/gimpthumbbox.c:609
+#: ../app/widgets/gimpthumbbox.c:587 ../app/widgets/gimpthumbbox.c:611
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Miniatura %d di %d"
 
-#: ../app/widgets/gimpthumbbox.c:722 ../app/widgets/gimpthumbbox.c:732
+#: ../app/widgets/gimpthumbbox.c:725 ../app/widgets/gimpthumbbox.c:735
 msgid "Creating preview..."
 msgstr "Creazione anteprima..."
 
@@ -11110,7 +11094,7 @@ msgstr "Stringa UTF-8 non valida nel file XCF"
 
 #: ../app/xcf/xcf-save.c:157 ../app/xcf/xcf-save.c:167
 #: ../app/xcf/xcf-save.c:177 ../app/xcf/xcf-save.c:187
-#: ../app/xcf/xcf-save.c:211 ../app/xcf/xcf.c:400
+#: ../app/xcf/xcf-save.c:211 ../app/xcf/xcf.c:399
 #, c-format
 msgid "Error saving XCF file: %s"
 msgstr "Errore durante il salvataggio del file XCF: %s"
@@ -11125,12 +11109,12 @@ msgstr "Errore durante la scrittura del file XCF: %s"
 msgid "Could not seek in XCF file: %s"
 msgstr "Impossibile posizionarsi sul file XCF: %s"
 
-#: ../app/xcf/xcf.c:70 ../app/xcf/xcf.c:93 ../app/xcf/xcf.c:146
-#: ../app/xcf/xcf.c:212
+#: ../app/xcf/xcf.c:69 ../app/xcf/xcf.c:92 ../app/xcf/xcf.c:145
+#: ../app/xcf/xcf.c:211
 msgid "GIMP XCF image"
 msgstr "Immagine GIMP XCF"
 
-#: ../app/xcf/xcf.c:340
+#: ../app/xcf/xcf.c:339
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Errore XCF: riscontrata versione file XCF %d non supportata"
