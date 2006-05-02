@@ -27,6 +27,8 @@ libappplug_in_a_SOURCES = \
 	gimpplugindebug.h			\
 	gimppluginmanager.c			\
 	gimppluginmanager.h			\
+	gimppluginmanager-call.c		\
+	gimppluginmanager-call.h		\
 	gimppluginmanager-data.c		\
 	gimppluginmanager-data.h		\
 	gimppluginmanager-file.c		\
@@ -37,8 +39,6 @@ libappplug_in_a_SOURCES = \
 	gimppluginmanager-locale-domain.h	\
 	gimppluginmanager-menu-branch.c		\
 	gimppluginmanager-menu-branch.h		\
-	gimppluginmanager-run.c			\
-	gimppluginmanager-run.h			\
 	gimppluginmanager-query.c		\
 	gimppluginmanager-query.h		\
 	gimppluginshm.c				\

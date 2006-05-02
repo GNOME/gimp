@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * plug-in-run.c
+ * gimppluginmanager-call.c
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,9 +39,11 @@
 #include "pdb/gimptemporaryprocedure.h"
 
 #include "gimppluginmanager.h"
-#define __YES_I_NEED_GIMP_PLUG_IN_MANAGER_RUN__
-#include "gimppluginmanager-run.h"
+#define __YES_I_NEED_GIMP_PLUG_IN_MANAGER_CALL__
+#include "gimppluginmanager-call.h"
 #include "plug-in.h"
+#include "plug-in-def.h"
+#include "plug-in-message.h"
 #include "plug-in-params.h"
 
 #include "gimp-intl.h"
@@ -49,15 +51,93 @@
 
 /*  public functions  */
 
+void
+gimp_plug_in_manager_call_query (GimpPlugInManager *manager,
+                                 GimpContext       *context,
+                                 PlugInDef         *plug_in_def)
+{
+  PlugIn *plug_in;
+
+  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (plug_in_def != NULL);
+
+  plug_in = plug_in_new (manager, context, NULL, NULL, plug_in_def->prog);
+
+  if (plug_in)
+    {
+      plug_in->plug_in_def = plug_in_def;
+
+      if (plug_in_open (plug_in, GIMP_PLUG_IN_CALL_QUERY, TRUE))
+        {
+          while (plug_in->open)
+            {
+              GimpWireMessage msg;
+
+              if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
+                {
+                  plug_in_close (plug_in, TRUE);
+                }
+              else
+                {
+                  plug_in_handle_message (plug_in, &msg);
+                  gimp_wire_destroy (&msg);
+                }
+            }
+        }
+
+      plug_in_unref (plug_in);
+    }
+}
+
+void
+gimp_plug_in_manager_call_init (GimpPlugInManager *manager,
+                                GimpContext       *context,
+                                PlugInDef         *plug_in_def)
+{
+  PlugIn *plug_in;
+
+  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (plug_in_def != NULL);
+
+  plug_in = plug_in_new (manager, context, NULL, NULL, plug_in_def->prog);
+
+  if (plug_in)
+    {
+      plug_in->plug_in_def = plug_in_def;
+
+      if (plug_in_open (plug_in, GIMP_PLUG_IN_CALL_INIT, TRUE))
+        {
+          while (plug_in->open)
+            {
+              GimpWireMessage msg;
+
+              if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
+                {
+                  plug_in_close (plug_in, TRUE);
+                }
+              else
+                {
+                  plug_in_handle_message (plug_in, &msg);
+                  gimp_wire_destroy (&msg);
+                }
+            }
+        }
+
+      plug_in_unref (plug_in);
+    }
+}
+
 GValueArray *
-gimp_plug_in_manager_run (GimpPlugInManager   *manager,
-                          GimpContext         *context,
-                          GimpProgress        *progress,
-                          GimpPlugInProcedure *procedure,
-                          GValueArray         *args,
-                          gboolean             synchronous,
-                          gboolean             destroy_return_vals,
-                          gint                 display_ID)
+gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
+                               GimpContext         *context,
+                               GimpProgress        *progress,
+                               GimpPlugInProcedure *procedure,
+                               GValueArray         *args,
+                               gboolean             synchronous,
+                               gboolean             destroy_return_vals,
+                               gint                 display_ID)
 {
   GValueArray *return_vals = NULL;
   PlugIn      *plug_in;
@@ -81,7 +161,7 @@ gimp_plug_in_manager_run (GimpPlugInManager   *manager,
       GPProcRun          proc_run;
       gint               monitor;
 
-      if (! plug_in_open (plug_in))
+      if (! plug_in_open (plug_in, GIMP_PLUG_IN_CALL_RUN, FALSE))
         {
           plug_in_unref (plug_in);
           goto done;
@@ -184,11 +264,11 @@ gimp_plug_in_manager_run (GimpPlugInManager   *manager,
 }
 
 GValueArray *
-gimp_plug_in_manager_run_temp (GimpPlugInManager      *manager,
-                               GimpContext            *context,
-                               GimpProgress           *progress,
-                               GimpTemporaryProcedure *procedure,
-                               GValueArray            *args)
+gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
+                                    GimpContext            *context,
+                                    GimpProgress           *progress,
+                                    GimpTemporaryProcedure *procedure,
+                                    GValueArray            *args)
 {
   GValueArray *return_vals = NULL;
   PlugIn      *plug_in;

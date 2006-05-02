@@ -44,6 +44,38 @@ plug_in_image_type_get_type (void)
   return type;
 }
 
+GType
+gimp_plug_in_call_mode_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_PLUG_IN_CALL_NONE, "GIMP_PLUG_IN_CALL_NONE", "none" },
+    { GIMP_PLUG_IN_CALL_RUN, "GIMP_PLUG_IN_CALL_RUN", "run" },
+    { GIMP_PLUG_IN_CALL_QUERY, "GIMP_PLUG_IN_CALL_QUERY", "query" },
+    { GIMP_PLUG_IN_CALL_INIT, "GIMP_PLUG_IN_CALL_INIT", "init" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_PLUG_IN_CALL_NONE, "GIMP_PLUG_IN_CALL_NONE", NULL },
+    { GIMP_PLUG_IN_CALL_RUN, "GIMP_PLUG_IN_CALL_RUN", NULL },
+    { GIMP_PLUG_IN_CALL_QUERY, "GIMP_PLUG_IN_CALL_QUERY", NULL },
+    { GIMP_PLUG_IN_CALL_INIT, "GIMP_PLUG_IN_CALL_INIT", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpPlugInCallMode", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
 
 /* Generated data ends here */
 

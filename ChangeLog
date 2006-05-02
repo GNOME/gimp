@@ -1,3 +1,30 @@
+2006-05-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in-enums.[ch]: added enum GimpPlugInCallMode
+	which can be one of { NONE, QUERY, INIT, RUN }.
+
+	* app/plug-in/Makefile.am
+	* app/plug-in/gimppluginmanager-run.[ch]: removed again...
+
+	* app/plug-in/gimppluginmanager-call.[ch]: ...and added
+	here. Added gimp_plug_in_manager_call_init() and
+	gimp_plug_in_manager_call_query().
+
+	* app/plug-in/plug-in.[ch]: removed plug_in_call_query() and
+	plug_in_call_init().
+
+	(struct PlugIn): removed members "init", "query" and "synchronous".
+
+	(plug_in_open): added parameters "call_mode" and "synchronous".
+
+	* app/plug-in/gimppluginmanager.c
+	* app/plug-in/plug-in-message.c
+	* app/pdb/gimppluginprocedure.c
+	* app/pdb/gimptemporaryprocedure.c
+	* tools/pdbgen/pdb/plug_in.pdb: changed accordingly.
+
+	* app/pdb/plug_in_cmds.c: regenerated.
+
 2006-05-02  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/user-install-dialog.c: code cleanup, rephrased radio

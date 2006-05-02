@@ -596,7 +596,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
   proc = GIMP_PLUG_IN_PROCEDURE (procedure);
 
   proc->mtime                 = time (NULL);
-  proc->installed_during_init = plug_in->init;
+  proc->installed_during_init = (plug_in->call_mode == GIMP_PLUG_IN_CALL_INIT);
 
   gimp_plug_in_procedure_set_image_types (proc, proc_install->image_types);
 
@@ -709,7 +709,7 @@ plug_in_handle_extension_ack (PlugIn *plug_in)
 static void
 plug_in_handle_has_init (PlugIn *plug_in)
 {
-  if (plug_in->query)
+  if (plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY)
     {
       plug_in_def_set_has_init (plug_in->plug_in_def, TRUE);
     }

@@ -26,8 +26,8 @@
 
 #include "core/gimp.h"
 
-#define __YES_I_NEED_GIMP_PLUG_IN_MANAGER_RUN__
-#include "plug-in/gimppluginmanager-run.h"
+#define __YES_I_NEED_GIMP_PLUG_IN_MANAGER_CALL__
+#include "plug-in/gimppluginmanager-call.h"
 #include "plug-in/plug-in.h"
 
 #include "gimptemporaryprocedure.h"
@@ -94,10 +94,10 @@ gimp_temporary_procedure_execute (GimpProcedure *procedure,
                                   GimpProgress  *progress,
                                   GValueArray   *args)
 {
-  return gimp_plug_in_manager_run_temp (gimp->plug_in_manager,
-                                        context, progress,
-                                        GIMP_TEMPORARY_PROCEDURE (procedure),
-                                        args);
+  return gimp_plug_in_manager_call_run_temp (gimp->plug_in_manager,
+                                             context, progress,
+                                             GIMP_TEMPORARY_PROCEDURE (procedure),
+                                             args);
 }
 
 static void
@@ -110,10 +110,10 @@ gimp_temporary_procedure_execute_async (GimpProcedure *procedure,
 {
   GValueArray *return_vals;
 
-  return_vals = gimp_plug_in_manager_run_temp (gimp->plug_in_manager,
-                                               context, progress,
-                                               GIMP_TEMPORARY_PROCEDURE (procedure),
-                                               args);
+  return_vals = gimp_plug_in_manager_call_run_temp (gimp->plug_in_manager,
+                                                    context, progress,
+                                                    GIMP_TEMPORARY_PROCEDURE (procedure),
+                                                    args);
 
   g_value_array_free (return_vals);
 }

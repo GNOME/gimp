@@ -43,6 +43,8 @@
 #include "gimpinterpreterdb.h"
 #include "gimpplugindebug.h"
 #include "gimppluginmanager.h"
+#define __YES_I_NEED_GIMP_PLUG_IN_MANAGER_CALL__
+#include "gimppluginmanager-call.h"
 #include "gimppluginmanager-data.h"
 #include "gimppluginmanager-help-domain.h"
 #include "gimppluginmanager-locale-domain.h"
@@ -362,7 +364,7 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
                 g_print (_("Querying plug-in: '%s'\n"),
                          gimp_filename_to_utf8 (plug_in_def->prog));
 
-              plug_in_call_query (manager, context, plug_in_def);
+              gimp_plug_in_manager_call_query (manager, context, plug_in_def);
             }
         }
     }
@@ -397,7 +399,7 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
                 g_print (_("Initializing plug-in: '%s'\n"),
                          gimp_filename_to_utf8 (plug_in_def->prog));
 
-              plug_in_call_init (manager, context, plug_in_def);
+              gimp_plug_in_manager_call_init (manager, context, plug_in_def);
             }
         }
     }

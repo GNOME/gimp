@@ -95,9 +95,9 @@
 static gboolean   plug_in_write         (GIOChannel   *channel,
                                          const guint8 *buf,
                                          gulong        count,
-                                         gpointer      user_data);
+                                         gpointer      data);
 static gboolean   plug_in_flush         (GIOChannel   *channel,
-                                         gpointer      user_data);
+                                         gpointer      data);
 
 static gboolean   plug_in_recv_message  (GIOChannel   *channel,
                                          GIOCondition  cond,
@@ -143,88 +143,6 @@ plug_in_exit (GimpPlugInManager *manager)
     }
 }
 
-void
-plug_in_call_query (GimpPlugInManager *manager,
-                    GimpContext       *context,
-                    PlugInDef         *plug_in_def)
-{
-  PlugIn *plug_in;
-
-  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (plug_in_def != NULL);
-
-  plug_in = plug_in_new (manager, context, NULL, NULL, plug_in_def->prog);
-
-  if (plug_in)
-    {
-      plug_in->query       = TRUE;
-      plug_in->synchronous = TRUE;
-      plug_in->plug_in_def = plug_in_def;
-
-      if (plug_in_open (plug_in))
-        {
-          while (plug_in->open)
-            {
-              GimpWireMessage msg;
-
-              if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
-                {
-                  plug_in_close (plug_in, TRUE);
-                }
-              else
-                {
-                  plug_in_handle_message (plug_in, &msg);
-                  gimp_wire_destroy (&msg);
-                }
-            }
-        }
-
-      plug_in_unref (plug_in);
-    }
-}
-
-void
-plug_in_call_init (GimpPlugInManager *manager,
-                   GimpContext       *context,
-                   PlugInDef         *plug_in_def)
-{
-  PlugIn *plug_in;
-
-  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (plug_in_def != NULL);
-
-  plug_in = plug_in_new (manager, context, NULL, NULL, plug_in_def->prog);
-
-  if (plug_in)
-    {
-      plug_in->init        = TRUE;
-      plug_in->synchronous = TRUE;
-      plug_in->plug_in_def = plug_in_def;
-
-      if (plug_in_open (plug_in))
-        {
-          while (plug_in->open)
-            {
-              GimpWireMessage msg;
-
-              if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
-                {
-                  plug_in_close (plug_in, TRUE);
-                }
-              else
-                {
-                  plug_in_handle_message (plug_in, &msg);
-                  gimp_wire_destroy (&msg);
-                }
-            }
-        }
-
-      plug_in_unref (plug_in);
-    }
-}
-
 PlugIn *
 plug_in_new (GimpPlugInManager *manager,
              GimpContext       *context,
@@ -247,9 +165,7 @@ plug_in_new (GimpPlugInManager *manager,
   plug_in->ref_count          = 1;
 
   plug_in->open               = FALSE;
-  plug_in->query              = FALSE;
-  plug_in->init               = FALSE;
-  plug_in->synchronous        = FALSE;
+  plug_in->call_mode          = GIMP_PLUG_IN_CALL_NONE;
   plug_in->pid                = 0;
 
   plug_in->name               = g_path_get_basename (prog);
@@ -327,7 +243,9 @@ plug_in_prep_for_exec (gpointer data)
 #endif
 
 gboolean
-plug_in_open (PlugIn *plug_in)
+plug_in_open (PlugIn             *plug_in,
+              GimpPlugInCallMode  call_mode,
+              gboolean            synchronous)
 {
   gint       my_read[2];
   gint       my_write[2];
@@ -343,6 +261,7 @@ plug_in_open (PlugIn *plug_in)
   guint      spawn_flags;
 
   g_return_val_if_fail (plug_in != NULL, FALSE);
+  g_return_val_if_fail (plug_in->call_mode == GIMP_PLUG_IN_CALL_NONE, FALSE);
 
   /* Open two pipes. (Bidirectional communication).
    */
@@ -390,23 +309,25 @@ plug_in_open (PlugIn *plug_in)
   write_fd = g_strdup_printf ("%d",
                               g_io_channel_unix_get_fd (plug_in->his_write));
 
-  /* Set the rest of the command line arguments.
-   * FIXME: this is ugly.  Pass in the mode as a separate argument?
-   */
-  if (plug_in->query)
+  switch (call_mode)
     {
+    case GIMP_PLUG_IN_CALL_QUERY:
       mode = "-query";
       debug_flag = GIMP_DEBUG_WRAP_QUERY;
-    }
-  else if (plug_in->init)
-    {
+      break;
+
+    case GIMP_PLUG_IN_CALL_INIT:
       mode = "-init";
       debug_flag = GIMP_DEBUG_WRAP_INIT;
-    }
-  else
-    {
+      break;
+
+    case GIMP_PLUG_IN_CALL_RUN:
       mode = "-run";
       debug_flag = GIMP_DEBUG_WRAP_RUN;
+      break;
+
+    default:
+      g_assert_not_reached ();
     }
 
   stm = g_strdup_printf ("%d", plug_in->manager->gimp->stack_trace_mode);
@@ -474,7 +395,7 @@ plug_in_open (PlugIn *plug_in)
   g_io_channel_unref (plug_in->his_write);
   plug_in->his_write = NULL;
 
-  if (! plug_in->synchronous)
+  if (! synchronous)
     {
       GSource *source;
 
@@ -494,7 +415,8 @@ plug_in_open (PlugIn *plug_in)
         g_slist_prepend (plug_in->manager->open_plug_ins, plug_in);
     }
 
-  plug_in->open = TRUE;
+  plug_in->open      = TRUE;
+  plug_in->call_mode = call_mode;
 
 cleanup:
 
@@ -663,8 +585,6 @@ plug_in_close (PlugIn   *plug_in,
       g_main_loop_quit (plug_in->ext_main_loop);
     }
 
-  plug_in->synchronous = FALSE;
-
   /* Unregister any temporary procedures. */
   while (plug_in->temp_procedures)
     plug_in_remove_temp_proc (plug_in, plug_in->temp_procedures->data);
@@ -679,7 +599,7 @@ plug_in_close (PlugIn   *plug_in,
 static gboolean
 plug_in_recv_message (GIOChannel   *channel,
                       GIOCondition  cond,
-                      gpointer            data)
+                      gpointer      data)
 {
   PlugIn   *plug_in     = data;
   gboolean  got_message = FALSE;
@@ -739,9 +659,9 @@ static gboolean
 plug_in_write (GIOChannel   *channel,
                const guint8 *buf,
                gulong        count,
-               gpointer      user_data)
+               gpointer      data)
 {
-  PlugIn *plug_in = user_data;
+  PlugIn *plug_in = data;
   gulong  bytes;
 
   while (count > 0)
@@ -772,9 +692,9 @@ plug_in_write (GIOChannel   *channel,
 
 static gboolean
 plug_in_flush (GIOChannel *channel,
-               gpointer    user_data)
+               gpointer    data)
 {
-  PlugIn *plug_in = user_data;
+  PlugIn *plug_in = data;
 
   if (plug_in->write_buffer_index > 0)
     {
@@ -980,7 +900,8 @@ plug_in_menu_register (PlugIn      *plug_in,
 
     case GIMP_PLUGIN:
     case GIMP_EXTENSION:
-      if (! plug_in->query && ! plug_in->init)
+      if (plug_in->call_mode != GIMP_PLUG_IN_CALL_QUERY &&
+          plug_in->call_mode != GIMP_PLUG_IN_CALL_INIT)
         return FALSE;
 
     case GIMP_TEMPORARY:

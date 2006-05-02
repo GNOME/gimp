@@ -105,7 +105,7 @@ plugin_domain_register_invoker (GimpProcedure     *procedure,
     {
       PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
-      if (plug_in && plug_in->query)
+      if (plug_in && plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY)
         {
           plug_in_def_set_locale_domain_name (plug_in->plug_in_def, domain_name);
           plug_in_def_set_locale_domain_path (plug_in->plug_in_def, domain_path);
@@ -135,7 +135,7 @@ plugin_help_register_invoker (GimpProcedure     *procedure,
     {
       PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
-      if (plug_in && plug_in->query)
+      if (plug_in && plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY)
         {
           plug_in_def_set_help_domain_name (plug_in->plug_in_def, domain_name);
           plug_in_def_set_help_domain_uri  (plug_in->plug_in_def, domain_uri);
@@ -232,7 +232,7 @@ plugin_icon_register_invoker (GimpProcedure     *procedure,
     {
       PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
-      if (plug_in && plug_in->query)
+      if (plug_in && plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY)
         {
           GimpPlugInProcedure *proc;
           gchar               *canonical;
