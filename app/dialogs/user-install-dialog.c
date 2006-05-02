@@ -190,27 +190,24 @@ user_install_dialog_add_welcome_page (GtkWidget       *dialog,
   if (gimp_user_install_is_migration (install, &version))
     {
       gchar *title;
-      gchar *label;
 
       title = g_strdup_printf (_("It seems you have used GIMP %s before."),
                                version);
-      label = g_strdup_printf (_("_Migrate GIMP %s user settings"), version);
       g_free (version);
 
       migrate = TRUE;
+
       widget = gimp_int_radio_group_new (TRUE, title,
                                          G_CALLBACK (gimp_radio_button_update),
                                          &migrate, migrate,
 
-                                         label,
+                                         _("_Use my old settings"),
                                          TRUE,  NULL,
 
-                                         _("_Do a fresh user installation"),
+                                         _("_Do a fresh installation"),
                                          FALSE, NULL,
 
                                          NULL);
-
-      g_free (label);
       g_free (title);
     }
   else

@@ -1,6 +1,7 @@
 2006-05-02  Sven Neumann  <sven@gimp.org>
 
-	* app/dialogs/user-install-dialog.c: code cleanup.
+	* app/dialogs/user-install-dialog.c: code cleanup, rephrased radio
+	button labels.
 
 2006-05-02  Sven Neumann  <sven@gimp.org>
 
