@@ -142,7 +142,7 @@ gimp_procedural_db_get_data (const gchar *identifier,
                                           &hack);
   if (hack)
     {
-      memcpy (data, (gpointer) hack, size * sizeof (guint8));
+      memcpy (data, (gconstpointer) hack, size * sizeof (guint8));
       g_free (hack);
     }
 
@@ -164,9 +164,9 @@ gimp_procedural_db_get_data (const gchar *identifier,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_procedural_db_set_data (const gchar *identifier,
-                             gpointer     data,
-                             guint32      bytes)
+gimp_procedural_db_set_data (const gchar   *identifier,
+                             gconstpointer  data,
+                             guint32        bytes)
 {
   return _gimp_procedural_db_set_data (identifier,
                                        bytes,

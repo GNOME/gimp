@@ -41,7 +41,7 @@ gboolean gimp_procedural_db_proc_info    (const gchar      *procedure,
 gboolean gimp_procedural_db_get_data     (const gchar      *identifier,
                                           gpointer          data);
 gboolean gimp_procedural_db_set_data     (const gchar      *identifier,
-                                          gpointer          data,
+                                          gconstpointer     data,
                                           guint32           bytes);
 
 

@@ -1,5 +1,10 @@
 2006-05-02  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpproceduraldb.[ch] (gimp_procedural_db_set_data):
+	added const qualifier.
+
+2006-05-02  Sven Neumann  <sven@gimp.org>
+
 	* fileicon.ico
 	* wilber.ico: new icons for the Windows build created by Jernej
 	Simončič based on the icons drawn by Jimmac (bug #340223).
