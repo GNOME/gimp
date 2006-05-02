@@ -205,7 +205,7 @@ user_install_dialog_add_welcome_page (GtkWidget       *dialog,
                                          label,
                                          TRUE,  NULL,
 
-                                         _("Do a _fresh user installation"),
+                                         _("_Do a fresh user installation"),
                                          FALSE, NULL,
 
                                          NULL);
@@ -323,7 +323,7 @@ user_install_dialog_run (GimpUserInstall *install)
                             NULL, NULL,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            _("Continue"),    GTK_RESPONSE_OK,
+                            _("C_ontinue"),    GTK_RESPONSE_OK,
 
                             NULL);
 
