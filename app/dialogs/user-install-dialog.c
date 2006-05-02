@@ -40,31 +40,32 @@
 enum
 {
   WELCOME_PAGE,
-  INSTALLATION_PAGE,
-  NUM_PAGES
+  INSTALLATION_PAGE
 };
 
 
-static void  user_install_dialog_response (GtkWidget       *dialog,
-                                           gint             response_id,
-                                           GimpUserInstall *install);
+static gboolean  migrate;
 
 
-/*  private stuff  */
+static void
+user_install_dialog_set_title (GtkWidget   *dialog,
+                               const gchar *title)
+{
+  GtkLabel *label = g_object_get_data (G_OBJECT (dialog), "title-label");
 
-static GtkWidget *title_label = NULL;
-static GtkWidget *notebook    = NULL;
-static gboolean   migrate     = TRUE;
-
+  gtk_label_set_text (label, title);
+}
 
 static GtkWidget *
-user_install_notebook_set_page (GtkNotebook *notebook,
-                                gint         index)
+user_install_dialog_set_page (GtkWidget *dialog,
+                              gint       index)
 {
-  GtkWidget   *page  = gtk_notebook_get_nth_page (notebook, index);
-  const gchar *title = g_object_get_data (G_OBJECT (page), "title");
+  GtkNotebook *notebook = g_object_get_data (G_OBJECT (dialog), "notebook");
+  GtkWidget   *page     = gtk_notebook_get_nth_page (notebook, index);
 
-  gtk_label_set_text (GTK_LABEL (title_label), title);
+  user_install_dialog_set_title (dialog,
+                                 gtk_notebook_get_menu_label_text (notebook,
+                                                                   page));
 
   gtk_notebook_set_current_page (notebook, index);
 
@@ -76,19 +77,19 @@ user_install_dialog_response (GtkWidget       *dialog,
                               gint             response_id,
                               GimpUserInstall *install)
 {
-  gint index = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
+  GtkWidget *notebook = g_object_get_data (G_OBJECT (dialog), "notebook");
+  gint       index;
 
   if (response_id != GTK_RESPONSE_OK)
     exit (EXIT_SUCCESS);
+
+  index = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
 
   switch (index)
     {
     case WELCOME_PAGE:
       {
-        GtkWidget *page;
-
-        page = user_install_notebook_set_page (GTK_NOTEBOOK (notebook),
-                                               ++index);
+        user_install_dialog_set_page (dialog, ++index);
 
         /*  Creating the directories can take some time on NFS, so inform
          *  the user and set the buttons insensitive
@@ -100,16 +101,16 @@ user_install_dialog_response (GtkWidget       *dialog,
 
         if (gimp_user_install_run (install, migrate))
           {
+            user_install_dialog_set_title (dialog,
+                                           _("Installation successful!"));
+
             gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_OK, TRUE);
-
-            gtk_label_set_text (GTK_LABEL (title_label),
-                                _("Installation successful!"));
           }
         else
           {
-            gtk_label_set_text (GTK_LABEL (title_label),
-                                _("Installation failed!"));
+            user_install_dialog_set_title (dialog,
+                                           _("Installation failed!"));
           }
 
         gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
@@ -128,21 +129,22 @@ user_install_dialog_response (GtkWidget       *dialog,
 }
 
 static GtkWidget *
-user_install_notebook_append_page (GtkWidget   *notebook,
-                                   const gchar *title)
+user_install_dialog_append_page (GtkWidget   *dialog,
+                                 const gchar *title)
 {
-  GtkWidget *page = gtk_vbox_new (FALSE, 12);
+  GtkWidget *notebook = g_object_get_data (G_OBJECT (dialog), "notebook");
+  GtkWidget *page     = gtk_vbox_new (FALSE, 12);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, NULL);
   gtk_widget_show (page);
 
-  g_object_set_data (G_OBJECT (page), "title", (gpointer) title);
+  gtk_notebook_set_menu_label_text (GTK_NOTEBOOK (notebook), page, title);
 
   return page;
 }
 
 static GtkWidget *
-user_install_dialog_create_log (GtkWidget *dialog)
+user_install_dialog_add_log (GtkWidget *dialog)
 {
   GtkWidget     *scrolled_window;
   GtkTextBuffer *log_buffer;
@@ -174,16 +176,16 @@ user_install_dialog_create_log (GtkWidget *dialog)
 }
 
 static GtkWidget *
-user_install_dialog_add_welcome_page (GimpUserInstall *install,
-                                      GtkWidget       *notebook)
+user_install_dialog_add_welcome_page (GtkWidget       *dialog,
+                                      GimpUserInstall *install)
 {
   GtkWidget *page;
   GtkWidget *widget;
   gchar     *version;
 
-  page = user_install_notebook_append_page (notebook,
-                                            _("Welcome to the GNU Image "
-                                              "Manipulation Program"));
+  page = user_install_dialog_append_page (dialog,
+                                          _("Welcome to the GNU Image "
+                                            "Manipulation Program"));
 
   if (gimp_user_install_is_migration (install, &version))
     {
@@ -193,9 +195,9 @@ user_install_dialog_add_welcome_page (GimpUserInstall *install,
       title = g_strdup_printf (_("It seems you have used GIMP %s before."),
                                version);
       label = g_strdup_printf (_("_Migrate GIMP %s user settings"), version);
+      g_free (version);
 
       migrate = TRUE;
-
       widget = gimp_int_radio_group_new (TRUE, title,
                                          G_CALLBACK (gimp_radio_button_update),
                                          &migrate, migrate,
@@ -210,7 +212,6 @@ user_install_dialog_add_welcome_page (GimpUserInstall *install,
 
       g_free (label);
       g_free (title);
-      g_free (version);
     }
   else
     {
@@ -237,20 +238,19 @@ user_install_dialog_add_welcome_page (GimpUserInstall *install,
 }
 
 static GtkWidget *
-user_install_dialog_add_install_page (GtkWidget *dialog,
-                                      GtkWidget *notebook)
+user_install_dialog_add_install_page (GtkWidget *dialog)
 {
   GtkWidget *page;
   GtkWidget *expander;
   GtkWidget *log;
 
-  page = user_install_notebook_append_page (notebook, _("Installing..."));
+  page = user_install_dialog_append_page (dialog, _("Installing..."));
 
   expander = gtk_expander_new (_("Installation Log"));
   gtk_box_pack_start (GTK_BOX (page), expander, TRUE, TRUE, 0);
   gtk_widget_show (expander);
 
-  log = user_install_dialog_create_log (dialog);
+  log = user_install_dialog_add_log (dialog);
   gtk_widget_set_size_request (log, -1, 300);
   gtk_container_add (GTK_CONTAINER (expander), log);
   gtk_widget_show (log);
@@ -263,7 +263,7 @@ user_install_dialog_log (const gchar *message,
                          gboolean     error,
                          gpointer     data)
 {
-  GtkWidget     *dialog = data;
+  GtkWidget     *dialog = GTK_WIDGET (data);
   GtkWidget     *view   = g_object_get_data (G_OBJECT (dialog), "log-view");
   GtkTextBuffer *buffer = g_object_get_data (G_OBJECT (dialog), "log-buffer");
   GdkPixbuf     *pixbuf;
@@ -310,6 +310,8 @@ user_install_dialog_run (GimpUserInstall *install)
   GtkWidget *dialog;
   GtkWidget *vbox;
   GtkWidget *hbox;
+  GtkWidget *notebook;
+  GtkWidget *label;
   GdkPixbuf *wilber;
   gchar     *filename;
 
@@ -360,15 +362,17 @@ user_install_dialog_run (GimpUserInstall *install)
       gtk_widget_show (image);
     }
 
-  title_label = gtk_label_new (NULL);
-  gtk_label_set_justify (GTK_LABEL (title_label), GTK_JUSTIFY_LEFT);
-  gtk_label_set_line_wrap (GTK_LABEL (title_label), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (title_label), 0.0, 0.5);
-  gimp_label_set_attributes (GTK_LABEL (title_label),
+  label = gtk_label_new (NULL);
+  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_SCALE, PANGO_SCALE_X_LARGE,
                              -1);
-  gtk_box_pack_start (GTK_BOX (hbox), title_label, FALSE, FALSE, 0);
-  gtk_widget_show (title_label);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  g_object_set_data (G_OBJECT (dialog), "title-label", label);
 
   notebook = gtk_notebook_new ();
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook), FALSE);
@@ -376,15 +380,16 @@ user_install_dialog_run (GimpUserInstall *install)
   gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);
   gtk_widget_show (notebook);
 
+  g_object_set_data (G_OBJECT (dialog), "notebook", notebook);
+
   g_signal_connect (dialog, "response",
                     G_CALLBACK (user_install_dialog_response),
                     install);
 
-  user_install_dialog_add_welcome_page (install, notebook);
+  user_install_dialog_add_welcome_page (dialog, install);
+  user_install_dialog_add_install_page (dialog);
 
-  user_install_dialog_add_install_page (dialog, notebook);
-
-  user_install_notebook_set_page (GTK_NOTEBOOK (notebook), WELCOME_PAGE);
+  user_install_dialog_set_page (dialog, WELCOME_PAGE);
 
   gtk_widget_show (dialog);
 
