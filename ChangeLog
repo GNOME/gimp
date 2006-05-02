@@ -1,3 +1,9 @@
+2006-05-02  Sven Neumann  <sven@gimp.org>
+
+	* fileicon.ico
+	* wilber.ico: new icons for the Windows build created by Jernej
+	Simončič based on the icons drawn by Jimmac (bug #340223).
+
 2006-04-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in.[ch]: removed plug_in_push() and
