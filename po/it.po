@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-01 00:14+0200\n"
-"PO-Revision-Date: 2006-05-01 00:44+0200\n"
+"POT-Creation-Date: 2006-05-02 16:55+0200\n"
+"PO-Revision-Date: 2006-05-02 16:57+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -7610,33 +7610,32 @@ msgstr "_Successivo"
 msgid "tips-locale:C"
 msgstr "tips-locale:it"
 
-#: ../app/dialogs/user-install-dialog.c:107
+#: ../app/dialogs/user-install-dialog.c:105
 msgid "Installation successful!"
 msgstr "Installazione completata!"
 
-#: ../app/dialogs/user-install-dialog.c:112
+#: ../app/dialogs/user-install-dialog.c:113
 msgid "Installation failed!"
 msgstr "Installazione fallita!"
 
-#: ../app/dialogs/user-install-dialog.c:185
+#: ../app/dialogs/user-install-dialog.c:187
 msgid "Welcome to the GNU Image Manipulation Program"
 msgstr "Benvenuti nel programma di elaborazione immagini GNU GIMP"
 
-#: ../app/dialogs/user-install-dialog.c:193
+#: ../app/dialogs/user-install-dialog.c:194
 #, c-format
 msgid "It seems you have used GIMP %s before."
 msgstr "Sembra che sia stato utilizzato GIMP %s in passato."
 
-#: ../app/dialogs/user-install-dialog.c:195
-#, c-format
-msgid "_Migrate GIMP %s user settings"
-msgstr "_Migrazione delle impostazioni utente GIMP %s"
+#: ../app/dialogs/user-install-dialog.c:204
+msgid "_Use my old settings"
+msgstr "_Usa le vecchie impostazioni personali"
 
-#: ../app/dialogs/user-install-dialog.c:206
-msgid "Do a _fresh user installation"
-msgstr "Crea una _nuova installazione utente GIMP"
+#: ../app/dialogs/user-install-dialog.c:207
+msgid "_Do a fresh installation"
+msgstr "Crea una _nuova installazione"
 
-#: ../app/dialogs/user-install-dialog.c:219
+#: ../app/dialogs/user-install-dialog.c:217
 #, c-format
 msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
@@ -7645,21 +7644,21 @@ msgstr ""
 "Sembra che tu stia usando GIMP per la prima volta. GIMP ora creerà una "
 "cartella di nome \"<b>%s</b>\" e vi copiarà alcuni file al suo interno."
 
-#: ../app/dialogs/user-install-dialog.c:247
+#: ../app/dialogs/user-install-dialog.c:244
 msgid "Installing..."
 msgstr "Installazione..."
 
-#: ../app/dialogs/user-install-dialog.c:249
+#: ../app/dialogs/user-install-dialog.c:246
 msgid "Installation Log"
 msgstr "Rapporto installazione"
 
-#: ../app/dialogs/user-install-dialog.c:318
+#: ../app/dialogs/user-install-dialog.c:317
 msgid "GIMP User Installation"
 msgstr "GIMP Installazione Utente"
 
-#: ../app/dialogs/user-install-dialog.c:324
-msgid "Continue"
-msgstr "Continua"
+#: ../app/dialogs/user-install-dialog.c:323
+msgid "C_ontinue"
+msgstr "C_ontinua"
 
 #: ../app/dialogs/vectors-export-dialog.c:53
 msgid "Export Path to SVG"
@@ -8768,7 +8767,7 @@ msgstr "Modalità"
 
 #: ../app/tools/gimpdodgeburntool.c:184
 msgid "Exposure:"
-msgstr "Sorgente:"
+msgstr "Esposizione:"
 
 #: ../app/tools/gimpeditselectiontool.c:235
 #: ../app/tools/gimpeditselectiontool.c:1172
