@@ -1,5 +1,11 @@
 2006-05-02  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcontainercombobox.c
+	(gimp_container_combo_box_remove_item): turned a #warning into an
+	explanation because the bug it referred to is marked as WONTFIX.
+
+2006-05-02  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpproceduraldb.[ch] (gimp_procedural_db_set_data):
 	added const qualifier.
 

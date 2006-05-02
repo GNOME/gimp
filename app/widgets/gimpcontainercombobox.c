@@ -280,16 +280,15 @@ gimp_container_combo_box_remove_item (GimpContainerView *view,
     {
       gtk_list_store_remove (GTK_LIST_STORE (model), iter);
 
-#ifdef __GNUC__
-#warning FIXME: remove this hack as soon as bug #149906 is fixed
-#endif
-      /*  if the store is empty after this remove, clear out renderers
-       *  from all cells so they don't keep refing the viewables
+      /*  If the store is now empty, clear out renderers from all cells
+       *  so that they don't reference the viewables.  See bug #149906.
        */
-      if (! gtk_tree_model_iter_n_children (model, NULL))
-        g_object_set (GIMP_CONTAINER_COMBO_BOX (view)->viewable_renderer,
-                      "renderer", NULL,
-                      NULL);
+      if (gtk_tree_model_iter_n_children (model, NULL) == 0)
+        {
+          g_object_set (GIMP_CONTAINER_COMBO_BOX (view)->viewable_renderer,
+                        "renderer", NULL,
+                        NULL);
+        }
     }
 }
 
