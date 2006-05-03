@@ -1,3 +1,8 @@
+2006-05-03  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage-merge.c: allow Merge operations on single
+	layers as suggested in bug #340491.
+
 2006-05-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in-enums.[ch]: added enum GimpPlugInCallMode

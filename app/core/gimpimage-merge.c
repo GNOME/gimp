@@ -91,7 +91,7 @@ gimp_image_merge_visible_layers (GimpImage     *image,
         }
     }
 
-  if (merge_list && merge_list->next)
+  if (merge_list)
     {
       const gchar *undo_desc = _("Merge Visible Layers");
 
@@ -124,20 +124,8 @@ gimp_image_merge_visible_layers (GimpImage     *image,
 
       return layer;
     }
-  else
-    {
-      g_slist_free (merge_list);
 
-      /* If there was a floating selection, we have done something.
-         No need to warn the user. Return the active layer instead */
-      if (had_floating_sel)
-        return image->active_layer;
-      else
-        g_message (_("Not enough visible layers for a merge. "
-                     "There must be at least two."));
-
-      return NULL;
-    }
+  return image->active_layer;
 }
 
 GimpLayer *
@@ -184,9 +172,10 @@ gimp_image_merge_down (GimpImage     *image,
                        GimpContext   *context,
                        GimpMergeType  merge_type)
 {
-  GList  *list;
-  GList  *layer_list;
-  GSList *merge_list;
+  GimpLayer *layer;
+  GList     *list;
+  GList     *layer_list;
+  GSList    *merge_list;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -195,7 +184,7 @@ gimp_image_merge_down (GimpImage     *image,
        list && !layer_list;
        list = g_list_next (list))
     {
-      GimpLayer *layer = list->data;
+      layer = list->data;
 
       if (layer == current_layer)
         break;
@@ -205,33 +194,23 @@ gimp_image_merge_down (GimpImage     *image,
        layer_list && !merge_list;
        layer_list = g_list_next (layer_list))
     {
-      GimpLayer *layer = layer_list->data;
+      layer = layer_list->data;
 
       if (gimp_item_get_visible (GIMP_ITEM (layer)))
         merge_list = g_slist_append (NULL, layer);
     }
 
-  if (merge_list)
-    {
-      GimpLayer *layer;
+  merge_list = g_slist_prepend (merge_list, current_layer);
 
-      merge_list = g_slist_prepend (merge_list, current_layer);
+  gimp_set_busy (image->gimp);
 
-      gimp_set_busy (image->gimp);
+  layer = gimp_image_merge_layers (image, merge_list, context, merge_type,
+                                   _("Merge Down"));
+  g_slist_free (merge_list);
 
-      layer = gimp_image_merge_layers (image, merge_list, context, merge_type,
-                                       _("Merge Down"));
-      g_slist_free (merge_list);
+  gimp_unset_busy (image->gimp);
 
-      gimp_unset_busy (image->gimp);
-
-      return layer;
-    }
-  else
-    {
-      g_message (_("There are not enough visible layers for a merge down."));
-      return NULL;
-    }
+  return layer;
 }
 
 GimpLayer *
