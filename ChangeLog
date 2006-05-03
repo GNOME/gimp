@@ -1,5 +1,12 @@
 2006-05-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpselectiondata.c
+	(gimp_selection_data_get_tool_info): port to using
+	gimp_selection_data_get_object(), it was simply forgotten.
+	Fixes tool dropping (bug #336402).
+
+2006-05-03  Michael Natterer  <mitch@gimp.org>
+
 	Made an object out of the plug-in struct. Also change refcounting
 	considerably:
 

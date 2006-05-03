@@ -639,25 +639,13 @@ GimpToolInfo *
 gimp_selection_data_get_tool_info (GtkSelectionData *selection,
                                    Gimp             *gimp)
 {
-  GimpToolInfo *tool_info;
-  gchar        *name;
-
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (selection != NULL, NULL);
 
-  name = gimp_selection_data_get_name (selection);
-  if (! name)
-    return NULL;
-
-  if (strcmp (name, "gimp-standard-tool") == 0)
-    tool_info = gimp_tool_info_get_standard (gimp);
-  else
-    tool_info = (GimpToolInfo *)
-      gimp_container_get_child_by_name (gimp->tool_info_list, name);
-
-  g_free (name);
-
-  return tool_info;
+  return (GimpToolInfo *)
+    gimp_selection_data_get_object (selection,
+                                    gimp->tool_info_list,
+                                    GIMP_OBJECT (gimp_tool_info_get_standard (gimp)));
 }
 
 
