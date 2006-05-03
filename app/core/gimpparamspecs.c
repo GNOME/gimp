@@ -2454,7 +2454,7 @@ gimp_string_array_new (const gchar **data,
   GimpArray *array;
 
   g_return_val_if_fail ((data == NULL && length == 0) ||
-                        (data != NULL && length  > 0), NULL);
+                        (data != NULL && length >= 0), NULL);
 
   array = g_new0 (GimpArray, 1);
 
@@ -2581,8 +2581,7 @@ gimp_param_string_array_validate (GParamSpec *pspec,
 
   if (array)
     {
-      if ((array->data == NULL && array->length != 0) ||
-          (array->data != NULL && array->length == 0))
+      if (array->length < 0 || (array->data == NULL && array->length != 0))
         {
           g_value_set_boxed (value, NULL);
           return TRUE;

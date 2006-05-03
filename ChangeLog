@@ -1,5 +1,12 @@
 2006-05-03  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpparamspecs.c (gimp_string_array_new,
+	gimp_param_string_array_validate): relaxed the checks so that
+	GimpStringArray deals correctly with (length == 0 && data != NULL).
+	Fixes bug #340365.
+
+2006-05-03  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-merge.c: allow Merge operations on single
 	layers as suggested in bug #340491.
 
