@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-15 02:51+0200\n"
-"PO-Revision-Date: 2005-10-15 16:09+0800\n"
+"POT-Creation-Date: 2006-05-03 03:12+0200\n"
+"PO-Revision-Date: 2006-05-03 15:46+0800\n"
 "Last-Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgid "%s can't handle layers"
 msgstr "%s 无法处理图层"
 
 #: ../libgimp/gimpexport.c:216 ../libgimp/gimpexport.c:225
-#: ../libgimp/gimpexport.c:234
+#: ../libgimp/gimpexport.c:234 ../libgimp/gimpexport.c:252
 msgid "Merge Visible Layers"
 msgstr "合并可见图层"
 
@@ -167,11 +167,11 @@ msgid ""
 msgstr "您的图像在保存为 %s 之前应该先进行导出，因为："
 
 #. the footline
-#: ../libgimp/gimpexport.c:568
+#: ../libgimp/gimpexport.c:571
 msgid "The export conversion won't modify your original image."
 msgstr "导出转换不会改变您原来的图像。"
 
-#: ../libgimp/gimpexport.c:668
+#: ../libgimp/gimpexport.c:671
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -180,7 +180,7 @@ msgstr ""
 "您将要把图层蒙板保存为 %s。\n"
 "这将不会保存可见的图层。"
 
-#: ../libgimp/gimpexport.c:674
+#: ../libgimp/gimpexport.c:677
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -189,20 +189,19 @@ msgstr ""
 "您将要把通道(已保存的选区)保存为 %s。\n"
 "这将不会保存可见的图层。"
 
-#: ../libgimp/gimpfontselectbutton.c:124 ../libgimp/gimpfontselectbutton.c:169
+#: ../libgimp/gimpfontselectbutton.c:126 ../libgimp/gimpfontselectbutton.c:177
 msgid "Font Selection"
 msgstr "字体选择"
 
-#: ../libgimp/gimpfontselectbutton.c:137 ../libgimp/gimpfontselectbutton.c:170
-#, fuzzy
+#: ../libgimp/gimpfontselectbutton.c:139 ../libgimp/gimpfontselectbutton.c:178
 msgid "Sans"
-msgstr "缩放"
+msgstr "Sans"
 
 #: ../libgimp/gimpgradientmenu.c:115
 msgid "Gradient Selection"
 msgstr "渐变选择"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:167
+#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:131
 msgid "(Empty)"
 msgstr "(空)"
 
@@ -214,83 +213,84 @@ msgstr "色板选择"
 msgid "Pattern Selection"
 msgstr "图案选择"
 
-#: ../libgimp/gimpprocbrowserdialog.c:171
+#: ../libgimp/gimpprocbrowserdialog.c:140
 msgid "by name"
 msgstr "按名称"
 
-#: ../libgimp/gimpprocbrowserdialog.c:172
+#: ../libgimp/gimpprocbrowserdialog.c:141
 msgid "by description"
 msgstr "按描述"
 
-#: ../libgimp/gimpprocbrowserdialog.c:173
+#: ../libgimp/gimpprocbrowserdialog.c:142
 msgid "by help"
 msgstr "按帮助"
 
-#: ../libgimp/gimpprocbrowserdialog.c:174
+#: ../libgimp/gimpprocbrowserdialog.c:143
 msgid "by author"
 msgstr "按作者"
 
-#: ../libgimp/gimpprocbrowserdialog.c:175
+#: ../libgimp/gimpprocbrowserdialog.c:144
 msgid "by copyright"
 msgstr "按版权"
 
-#: ../libgimp/gimpprocbrowserdialog.c:176
+#: ../libgimp/gimpprocbrowserdialog.c:145
 msgid "by date"
 msgstr "按日期"
 
-#: ../libgimp/gimpprocbrowserdialog.c:177
+#: ../libgimp/gimpprocbrowserdialog.c:146
 msgid "by type"
 msgstr "按类型"
 
-#: ../libgimp/gimpprocbrowserdialog.c:408
+#: ../libgimp/gimpprocbrowserdialog.c:377
 msgid "Searching"
 msgstr "搜索"
 
-#: ../libgimp/gimpprocbrowserdialog.c:419
+#: ../libgimp/gimpprocbrowserdialog.c:388
 msgid "Searching by name"
 msgstr "按名称搜索"
 
-#: ../libgimp/gimpprocbrowserdialog.c:440
+#: ../libgimp/gimpprocbrowserdialog.c:409
 msgid "Searching by description"
 msgstr "按描述搜索"
 
-#: ../libgimp/gimpprocbrowserdialog.c:447
+#: ../libgimp/gimpprocbrowserdialog.c:416
 msgid "Searching by help"
 msgstr "按帮助搜索"
 
-#: ../libgimp/gimpprocbrowserdialog.c:454
+#: ../libgimp/gimpprocbrowserdialog.c:423
 msgid "Searching by author"
 msgstr "按作者搜索"
 
-#: ../libgimp/gimpprocbrowserdialog.c:461
+#: ../libgimp/gimpprocbrowserdialog.c:430
 msgid "Searching by copyright"
 msgstr "按版权搜索"
 
-#: ../libgimp/gimpprocbrowserdialog.c:468
+#: ../libgimp/gimpprocbrowserdialog.c:437
 msgid "Searching by date"
 msgstr "按日期搜索"
 
-#: ../libgimp/gimpprocbrowserdialog.c:475
+#: ../libgimp/gimpprocbrowserdialog.c:444
 msgid "Searching by type"
 msgstr "按类型搜索"
 
-#: ../libgimp/gimpprocbrowserdialog.c:484
-#, c-format
-msgid "%d procedures"
-msgstr "%d 个过程"
+#: ../libgimp/gimpprocbrowserdialog.c:454
+#, fuzzy, c-format
+msgid "%d procedure"
+msgid_plural "%d procedures"
+msgstr[0] "%d 个过程"
 
-#: ../libgimp/gimpprocbrowserdialog.c:491
+#: ../libgimp/gimpprocbrowserdialog.c:463
 msgid "No matches for your query"
 msgstr "您的查询无匹配项"
 
-#: ../libgimp/gimpprocbrowserdialog.c:495
+#: ../libgimp/gimpprocbrowserdialog.c:467
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "您的查询有 %d 个过程匹配"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:145
+#: ../libgimp/gimpprocbrowserdialog.c:516 ../libgimpwidgets/gimpbrowser.c:114
 msgid "No matches"
 msgstr "无匹配"
 
@@ -427,19 +427,16 @@ msgid "Large"
 msgstr "大"
 
 #: ../libgimpbase/gimpbaseenums.c:228
-#, fuzzy
 msgid "Light checks"
-msgstr "浅色方格"
+msgstr "浅色十字"
 
 #: ../libgimpbase/gimpbaseenums.c:229
-#, fuzzy
 msgid "Mid-tone checks"
-msgstr "中等色调方格"
+msgstr "中等色调十字"
 
 #: ../libgimpbase/gimpbaseenums.c:230
-#, fuzzy
 msgid "Dark checks"
-msgstr "深色方格"
+msgstr "深色十字"
 
 #: ../libgimpbase/gimpbaseenums.c:231
 msgid "White only"
@@ -462,9 +459,8 @@ msgid "Pattern source"
 msgstr "图案源"
 
 #: ../libgimpbase/gimpbaseenums.c:291
-#, fuzzy
 msgid "Lightness"
-msgstr "浅色方格"
+msgstr "亮度"
 
 #: ../libgimpbase/gimpbaseenums.c:292
 msgid "Luminosity"
@@ -619,97 +615,109 @@ msgstr "锯齿波"
 msgid "Triangular wave"
 msgstr "三角波"
 
-#: ../libgimpbase/gimpbaseenums.c:651
+#: ../libgimpbase/gimpbaseenums.c:652
+msgid "Run interactively"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:653
+msgid "Run non-interactively"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:654
+msgid "Run with last used values"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:682
 msgid "Pixels"
 msgstr "像素"
 
-#: ../libgimpbase/gimpbaseenums.c:652
+#: ../libgimpbase/gimpbaseenums.c:683
 msgid "Points"
 msgstr "点"
 
-#: ../libgimpbase/gimpbaseenums.c:681
+#: ../libgimpbase/gimpbaseenums.c:712
 msgid "Shadows"
 msgstr "阴暗"
 
-#: ../libgimpbase/gimpbaseenums.c:682
+#: ../libgimpbase/gimpbaseenums.c:713
 msgid "Midtones"
 msgstr "中等深浅"
 
-#: ../libgimpbase/gimpbaseenums.c:683
+#: ../libgimpbase/gimpbaseenums.c:714
 msgid "Highlights"
 msgstr "明亮"
 
-#: ../libgimpbase/gimpbaseenums.c:711
+#: ../libgimpbase/gimpbaseenums.c:742
 msgid "Forward"
-msgstr ""
+msgstr "向前"
 
-#: ../libgimpbase/gimpbaseenums.c:712
-#, fuzzy
+#: ../libgimpbase/gimpbaseenums.c:743
 msgid "Backward"
-msgstr "黑色"
+msgstr "向后"
 
-#: ../libgimpbase/gimpbaseenums.c:813
+#: ../libgimpbase/gimpbaseenums.c:846
 msgid "Internal GIMP procedure"
-msgstr ""
+msgstr "GIMP 内部过程"
 
-#: ../libgimpbase/gimpbaseenums.c:814
+#: ../libgimpbase/gimpbaseenums.c:847
 msgid "GIMP Plug-In"
 msgstr "GIMP 插件"
 
-#: ../libgimpbase/gimpbaseenums.c:815
+#: ../libgimpbase/gimpbaseenums.c:848
 msgid "GIMP Extension"
 msgstr "GIMP 扩展"
 
-#: ../libgimpbase/gimpbaseenums.c:816
+#: ../libgimpbase/gimpbaseenums.c:849
 msgid "Temporary Procedure"
 msgstr "临时过程"
 
-#: ../libgimpbase/gimpmemsize.c:177
+#: ../libgimpbase/gimpmemsize.c:180
 #, c-format
-msgid "%d Bytes"
-msgstr "%d 字节"
+msgid "%d Byte"
+msgid_plural "%d Bytes"
+msgstr[0] "%d 字节"
 
-#: ../libgimpbase/gimpmemsize.c:182
+#: ../libgimpbase/gimpmemsize.c:186
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f KB"
 
-#: ../libgimpbase/gimpmemsize.c:186
+#: ../libgimpbase/gimpmemsize.c:190
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f KB"
 
-#: ../libgimpbase/gimpmemsize.c:190
+#: ../libgimpbase/gimpmemsize.c:194
 #, c-format
 msgid "%d KB"
 msgstr "%d KB"
 
-#: ../libgimpbase/gimpmemsize.c:197
+#: ../libgimpbase/gimpmemsize.c:201
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MB"
 
-#: ../libgimpbase/gimpmemsize.c:201
+#: ../libgimpbase/gimpmemsize.c:205
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
 
-#: ../libgimpbase/gimpmemsize.c:205
+#: ../libgimpbase/gimpmemsize.c:209
 #, c-format
 msgid "%d MB"
 msgstr "%d MB"
 
-#: ../libgimpbase/gimpmemsize.c:212
+#: ../libgimpbase/gimpmemsize.c:216
 #, c-format
 msgid "%.2f GB"
 msgstr "%.2f GB"
 
-#: ../libgimpbase/gimpmemsize.c:216
+#: ../libgimpbase/gimpmemsize.c:220
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f GB"
 
-#: ../libgimpbase/gimpmemsize.c:220
+#: ../libgimpbase/gimpmemsize.c:224
 #, c-format
 msgid "%d GB"
 msgstr "%d GB"
@@ -795,9 +803,8 @@ msgid "Use embedded profile"
 msgstr "使用嵌入的配置文件"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:90
-#, fuzzy
 msgid "Convert to RGB workspace"
-msgstr "转换到 RGB"
+msgstr "转换到 RGB 工作空间"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:95
 #, c-format
@@ -883,36 +890,26 @@ msgstr "无效的 UTF-8 字符串"
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "解析“%s”第 %d 行时出错：%s"
 
-#: ../libgimpmodule/gimpmodule.c:180
-#, c-format
-msgid "Loading module: '%s'\n"
-msgstr "正在加载模块：“%s”\n"
-
-#: ../libgimpmodule/gimpmodule.c:197 ../libgimpmodule/gimpmodule.c:216
-#: ../libgimpmodule/gimpmodule.c:330 ../libgimpmodule/gimpmodule.c:358
-#: ../libgimpmodule/gimpmodule.c:470
+#: ../libgimpmodule/gimpmodule.c:152 ../libgimpmodule/gimpmodule.c:170
+#: ../libgimpmodule/gimpmodule.c:279 ../libgimpmodule/gimpmodule.c:306
+#: ../libgimpmodule/gimpmodule.c:417
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "模块“%s”加载错误：%s"
 
-#: ../libgimpmodule/gimpmodule.c:286
-#, c-format
-msgid "Skipping module: '%s'\n"
-msgstr "正在跳过模块：“%s”\n"
-
-#: ../libgimpmodule/gimpmodule.c:426
+#: ../libgimpmodule/gimpmodule.c:374
 msgid "Module error"
 msgstr "模块错误"
 
-#: ../libgimpmodule/gimpmodule.c:427
+#: ../libgimpmodule/gimpmodule.c:375
 msgid "Loaded"
 msgstr "已加载"
 
-#: ../libgimpmodule/gimpmodule.c:428
+#: ../libgimpmodule/gimpmodule.c:376
 msgid "Load failed"
 msgstr "加载失败"
 
-#: ../libgimpmodule/gimpmodule.c:429
+#: ../libgimpmodule/gimpmodule.c:377
 msgid "Not loaded"
 msgstr "未加载"
 
@@ -930,12 +927,12 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "无法创建缩略图文件夹“%s”。"
 
-#: ../libgimpthumb/gimpthumbnail.c:919
+#: ../libgimpthumb/gimpthumbnail.c:889
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "无法为“%s”创建缩略图：%s"
 
-#: ../libgimpwidgets/gimpbrowser.c:129
+#: ../libgimpwidgets/gimpbrowser.c:98
 msgid "_Search:"
 msgstr "搜索(_S)："
 
@@ -955,77 +952,120 @@ msgstr "黑(_K)"
 msgid "_White"
 msgstr "白(_W)"
 
-#: ../libgimpwidgets/gimpcolorscales.c:129
+#: ../libgimpwidgets/gimpcolorscales.c:98
 msgid "Scales"
 msgstr "缩放"
 
-#: ../libgimpwidgets/gimpcolorselection.c:218
+#: ../libgimpwidgets/gimpcolorselection.c:187
 msgid "Current:"
 msgstr "当前："
 
-#: ../libgimpwidgets/gimpcolorselection.c:240
+#: ../libgimpwidgets/gimpcolorselection.c:209
 msgid "Old:"
 msgstr "旧的："
 
-#: ../libgimpwidgets/gimpcolorselection.c:294
+#: ../libgimpwidgets/gimpcolorselection.c:263
 msgid "Hexadecimal color notation as used in HTML and CSS"
 msgstr "HTML 和 CSS 中所使用的十六进制颜色格式"
 
-#: ../libgimpwidgets/gimpcolorselection.c:299
+#: ../libgimpwidgets/gimpcolorselection.c:268
 msgid "HTML _notation:"
 msgstr "HTML 格式(_N)："
 
-#: ../libgimpwidgets/gimpfileentry.c:351
+#: ../libgimpwidgets/gimpfileentry.c:320
 msgid "Select Folder"
 msgstr "选择文件夹"
 
-#: ../libgimpwidgets/gimpfileentry.c:353
+#: ../libgimpwidgets/gimpfileentry.c:322
 msgid "Select File"
 msgstr "选择文件"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:232
+#: ../libgimpwidgets/gimpmemsizeentry.c:203
 msgid "Kilobytes"
 msgstr "千字节"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:233
+#: ../libgimpwidgets/gimpmemsizeentry.c:204
 msgid "Megabytes"
 msgstr "兆字节"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:234
+#: ../libgimpwidgets/gimpmemsizeentry.c:205
 msgid "Gigabytes"
 msgstr "G 字节"
 
-#: ../libgimpwidgets/gimppatheditor.c:243
+#. Count label
+#: ../libgimpwidgets/gimppageselector.c:269
+#: ../libgimpwidgets/gimppageselector.c:1171
+msgid "Nothing selected"
+msgstr "未选中"
+
+#: ../libgimpwidgets/gimppageselector.c:287
+msgid "Select _All"
+msgstr "全部选中(_A)"
+
+#: ../libgimpwidgets/gimppageselector.c:307
+msgid "Select _range:"
+msgstr "选择范围(_R)："
+
+#: ../libgimpwidgets/gimppageselector.c:319
+msgid "Open _pages as"
+msgstr ""
+
+#: ../libgimpwidgets/gimppageselector.c:420
+msgid "Page 000"
+msgstr ""
+
+#: ../libgimpwidgets/gimppageselector.c:512
+#: ../libgimpwidgets/gimppageselector.c:749
+#, c-format
+msgid "Page %d"
+msgstr ""
+
+#: ../libgimpwidgets/gimppageselector.c:1176
+msgid "One page selected"
+msgstr ""
+
+#: ../libgimpwidgets/gimppageselector.c:1183
+#, c-format
+msgid "All %d pages selected"
+msgstr ""
+
+#: ../libgimpwidgets/gimppageselector.c:1185
+#, c-format
+msgid "%d pages selected"
+msgstr ""
+
+#: ../libgimpwidgets/gimppatheditor.c:212
 msgid "Writable"
 msgstr "可写"
 
-#: ../libgimpwidgets/gimppatheditor.c:252
+#: ../libgimpwidgets/gimppatheditor.c:221
 msgid "Folder"
 msgstr "文件夹"
 
-#: ../libgimpwidgets/gimppickbutton.c:138
+#: ../libgimpwidgets/gimppickbutton.c:107
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr "点击滴管，然后点击您的屏幕上任何位置的颜色即可选取该颜色。"
 
-#: ../libgimpwidgets/gimppreviewarea.c:126
+#: ../libgimpwidgets/gimppreviewarea.c:94
 msgid "Check Size"
 msgstr "方格大小"
 
-#: ../libgimpwidgets/gimppreviewarea.c:133
+#: ../libgimpwidgets/gimppreviewarea.c:101
 msgid "Check Style"
 msgstr "方格风格"
 
 #. toggle button to (des)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:256
+#: ../libgimpwidgets/gimppreview.c:265
 msgid "_Preview"
 msgstr "预览(_P)"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1868
-#, c-format
-msgid "This text input field is limited to %d characters."
-msgstr "文本输入框限制为 %d 个字符。"
+#: ../libgimpwidgets/gimppropwidgets.c:1869
+#, fuzzy, c-format
+msgid "This text input field is limited to %d character."
+msgid_plural "This text input field is limited to %d characters."
+msgstr[0] "文本输入框限制为 %d 个字符。"
 
 #: ../libgimpwidgets/gimpresolutionentry.c:382
 #, c-format
@@ -1104,19 +1144,19 @@ msgstr "旋转(_R)"
 msgid "_Shear"
 msgstr "切变(_S)"
 
-#: ../libgimpwidgets/gimpunitmenu.c:302
+#: ../libgimpwidgets/gimpunitmenu.c:267
 msgid "More..."
 msgstr "更多..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:612
+#: ../libgimpwidgets/gimpunitmenu.c:577
 msgid "Unit Selection"
 msgstr "单位选择"
 
-#: ../libgimpwidgets/gimpunitmenu.c:660
+#: ../libgimpwidgets/gimpunitmenu.c:625
 msgid "Unit"
 msgstr "单位"
 
-#: ../libgimpwidgets/gimpunitmenu.c:664
+#: ../libgimpwidgets/gimpunitmenu.c:629
 msgid "Factor"
 msgstr "因子"
 
@@ -1259,7 +1299,7 @@ msgstr "操作模式："
 
 #: ../modules/cdisplay_lcms.c:322
 msgid "RGB workspace profile:"
-msgstr ""
+msgstr "RGB 工作空间配置文件："
 
 #: ../modules/cdisplay_lcms.c:332
 msgid "Monitor profile:"
@@ -1353,14 +1393,183 @@ msgstr "画家风格的三角颜色选择器"
 msgid "Triangle"
 msgstr "三角"
 
-#: ../modules/colorsel_water.c:88
+#: ../modules/colorsel_water.c:84
 msgid "Watercolor style color selector"
 msgstr "水彩风格的颜色选择器"
 
-#: ../modules/colorsel_water.c:154
+#: ../modules/colorsel_water.c:150
 msgid "Watercolor"
 msgstr "水彩"
 
-#: ../modules/colorsel_water.c:220
+#: ../modules/colorsel_water.c:213
 msgid "Pressure"
 msgstr "压力"
+
+#: ../modules/controller_linux_input.c:56
+msgid "Button 0"
+msgstr "按钮 0"
+
+#: ../modules/controller_linux_input.c:57
+msgid "Button 1"
+msgstr "按钮 1"
+
+#: ../modules/controller_linux_input.c:58
+msgid "Button 2"
+msgstr "按钮 2"
+
+#: ../modules/controller_linux_input.c:59
+msgid "Button 3"
+msgstr "按钮 3"
+
+#: ../modules/controller_linux_input.c:60
+msgid "Button 4"
+msgstr "按钮 4"
+
+#: ../modules/controller_linux_input.c:61
+msgid "Button 5"
+msgstr "按钮 5"
+
+#: ../modules/controller_linux_input.c:62
+msgid "Button 6"
+msgstr "按钮 6"
+
+#: ../modules/controller_linux_input.c:63
+msgid "Button 7"
+msgstr "按钮 7"
+
+#: ../modules/controller_linux_input.c:64
+msgid "Button 8"
+msgstr "按钮 8"
+
+#: ../modules/controller_linux_input.c:65
+msgid "Button 9"
+msgstr "按钮 9"
+
+#: ../modules/controller_linux_input.c:66
+msgid "Button Mouse"
+msgstr "鼠标按钮"
+
+#: ../modules/controller_linux_input.c:67
+msgid "Button Left"
+msgstr "左键"
+
+#: ../modules/controller_linux_input.c:68
+msgid "Button Right"
+msgstr "右键"
+
+#: ../modules/controller_linux_input.c:69
+msgid "Button Middle"
+msgstr "中键"
+
+#: ../modules/controller_linux_input.c:70
+msgid "Button Side"
+msgstr "侧键"
+
+#: ../modules/controller_linux_input.c:71
+msgid "Button Extra"
+msgstr "额外键"
+
+#: ../modules/controller_linux_input.c:72
+#: ../modules/controller_linux_input.c:73
+msgid "Button Forward"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:75
+msgid "Button Wheel"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:78
+msgid "Button Gear Down"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:81
+msgid "Button Gear Up"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:87
+msgid "Wheel Turn Left"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:88
+msgid "Wheel Turn Right"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:89
+msgid "Dial Turn Left"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:90
+msgid "Dial Turn Right"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:154
+msgid "Linux input event controller"
+msgstr "Linux 输入事件控制器"
+
+#: ../modules/controller_linux_input.c:222 ../modules/controller_midi.c:244
+msgid "Device:"
+msgstr "设备："
+
+#: ../modules/controller_linux_input.c:223
+msgid "The name of the device to read Linux Input events from."
+msgstr "要读取 Linux 输入事件的设备名称。"
+
+#: ../modules/controller_linux_input.c:227
+msgid "Linux Input"
+msgstr "Linux 输入"
+
+#: ../modules/controller_linux_input.c:351
+msgid "Linux Input Events"
+msgstr "Linux 输入事件"
+
+#: ../modules/controller_linux_input.c:372 ../modules/controller_midi.c:480
+#: ../modules/controller_midi.c:506
+#, c-format
+msgid "Reading from %s"
+msgstr "从 %s 读取"
+
+#: ../modules/controller_linux_input.c:388
+#: ../modules/controller_linux_input.c:431 ../modules/controller_midi.c:462
+#: ../modules/controller_midi.c:523 ../modules/controller_midi.c:594
+#, c-format
+msgid "Device not available: %s"
+msgstr "设备不可用：%s"
+
+#: ../modules/controller_linux_input.c:396 ../modules/controller_midi.c:531
+msgid "No device configured"
+msgstr "未配置设备"
+
+#: ../modules/controller_linux_input.c:440 ../modules/controller_midi.c:603
+msgid "End of file"
+msgstr "文件结尾"
+
+#: ../modules/controller_midi.c:166
+msgid "MIDI event controller"
+msgstr "MIDI 事件控制器"
+
+#: ../modules/controller_midi.c:235
+msgid "The name of the device to read MIDI events from."
+msgstr "要读取的 MIDI 事件的设备名称。"
+
+#: ../modules/controller_midi.c:238
+msgid "Enter 'alsa' to use the ALSA sequencer."
+msgstr "输入“alsa”可使用 ALSA 音序器。"
+
+#: ../modules/controller_midi.c:253
+msgid "Channel:"
+msgstr "通道："
+
+#: ../modules/controller_midi.c:254
+msgid ""
+"The MIDI channel to read events from. Set to -1 for reading from all MIDI "
+"channels."
+msgstr "要读取事件的 MIDI 通道。设为 -1 可从全部 MIDI 通道中读取。"
+
+#: ../modules/controller_midi.c:258
+msgid "MIDI"
+msgstr "MIDI"
+
+#: ../modules/controller_midi.c:434
+msgid "MIDI Events"
+msgstr "MIDI 事件"
+
