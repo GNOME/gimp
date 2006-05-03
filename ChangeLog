@@ -1,3 +1,55 @@
+2006-05-03  Michael Natterer  <mitch@gimp.org>
+
+	Made an object out of the plug-in struct. Also change refcounting
+	considerably:
+
+	- gimp_plug_in_open() adds a reference that is only dropped by
+	  gimp_plug_in_close().
+	- temporarily ref the plug-in while handling messages.
+	- remporarily ref the plug-in while a recursive main loop is
+	  running.
+	- each caller of gimp_plug_in_new() also unrefs the plug-in before
+	  returning, the only reference that persists across functions
+	  (that keeps the plug-in alive) is the one added by open().
+
+	* app/plug-in/plug-in.[ch]
+	* app/plug-in/plug-in-context.[ch]
+	* app/plug-in/plug-in-message.[ch]
+	* app/plug-in/plug-in-progress.[ch]: removed these files...
+
+	* app/plug-in/gimpplugin.[ch]
+	* app/plug-in/gimpplugin-context.[ch]
+	* app/plug-in/gimpplugin-message.[ch]
+	* app/plug-in/gimpplugin-progress.[ch]: ...and added here as GObject.
+
+	* app/plug-in/plug-in-proc-frame.[ch]: removed...
+
+	* app/plug-in/gimppluginprocframe.[ch]: ...and added with a namespace.
+
+	* app/plug-in/Makefile.am
+	* app/plug-in/plug-in-types.h
+	* app/plug-in/gimppluginmanager-call.c
+	* app/plug-in/gimppluginmanager-file.c
+	* app/plug-in/gimppluginmanager.[ch]
+	* app/pdb/gimppluginprocedure.c
+	* app/pdb/gimptemporaryprocedure.c
+	* app/pdb/gimptemporaryprocedure.h
+	* tools/pdbgen/pdb/context.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/help.pdb
+	* tools/pdbgen/pdb/message.pdb
+	* tools/pdbgen/pdb/plug_in.pdb
+	* tools/pdbgen/pdb/progress.pdb
+	* tools/pdbgen/pdb/undo.pdb: changed accordingly.
+
+	* app/pdb/context_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/help_cmds.c
+	* app/pdb/message_cmds.c
+	* app/pdb/plug_in_cmds.c
+	* app/pdb/progress_cmds.c
+	* app/pdb/undo_cmds.c: regenerated.
+
 2006-05-03  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/gifload.c: removed some unused code, untabified.

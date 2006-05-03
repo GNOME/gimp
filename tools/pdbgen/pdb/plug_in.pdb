@@ -99,7 +99,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
   if (plug_in && plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY)
     {
@@ -134,7 +134,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
   if (plug_in && plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY)
     {
@@ -167,12 +167,12 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
   if (plug_in)
     {
       gchar *canonical = gimp_canonicalize_identifier (procedure_name);
-      success = plug_in_menu_register (plug_in, canonical, menu_path);
+      success = gimp_plug_in_menu_register (plug_in, canonical, menu_path);
       g_free (canonical);
     }
   else
@@ -203,7 +203,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
   if (plug_in)
     {
@@ -241,7 +241,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
   if (plug_in && plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY)
     {
@@ -271,10 +271,10 @@ CODE
 
 @headers = qw(<string.h> <stdlib.h>
               "libgimpbase/gimpbase.h" "core/gimp.h"
+              "plug-in/gimpplugin.h"
               "plug-in/gimppluginmanager.h"
               "plug-in/gimppluginmanager-menu-branch.h"
               "plug-in/gimppluginmanager-query.h"
-              "plug-in/plug-in.h"
               "plug-in/plug-in-def.h"
               "gimppluginprocedure.h");
 

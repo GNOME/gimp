@@ -26,9 +26,9 @@
 
 #include "core/gimp.h"
 
+#include "plug-in/gimpplugin.h"
 #define __YES_I_NEED_GIMP_PLUG_IN_MANAGER_CALL__
 #include "plug-in/gimppluginmanager-call.h"
-#include "plug-in/plug-in.h"
 
 #include "gimptemporaryprocedure.h"
 
@@ -128,11 +128,11 @@ gimp_temporary_procedure_get_progname (const GimpPlugInProcedure *procedure)
 /*  public functions  */
 
 GimpProcedure *
-gimp_temporary_procedure_new (PlugIn *plug_in)
+gimp_temporary_procedure_new (GimpPlugIn *plug_in)
 {
   GimpTemporaryProcedure *proc;
 
-  g_return_val_if_fail (plug_in != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
 
   proc = g_object_new (GIMP_TYPE_TEMPORARY_PROCEDURE, NULL);
 

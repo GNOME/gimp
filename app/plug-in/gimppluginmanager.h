@@ -52,7 +52,7 @@ struct _GimpPlugInManager
   GSList            *locale_domains;
   GSList            *help_domains;
 
-  PlugIn            *current_plug_in;
+  GimpPlugIn        *current_plug_in;
   GSList            *open_plug_ins;
   GSList            *plug_in_stack;
   GSList            *last_plug_ins;
@@ -106,7 +106,7 @@ gint     gimp_plug_in_manager_get_shm_ID     (GimpPlugInManager      *manager);
 guchar * gimp_plug_in_manager_get_shm_addr   (GimpPlugInManager      *manager);
 
 void     gimp_plug_in_manager_plug_in_push   (GimpPlugInManager      *manager,
-                                              PlugIn                 *plug_in);
+                                              GimpPlugIn             *plug_in);
 void     gimp_plug_in_manager_plug_in_pop    (GimpPlugInManager      *manager);
 
 

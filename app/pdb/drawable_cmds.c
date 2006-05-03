@@ -41,8 +41,8 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "gimp-intl.h"
+#include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
-#include "plug-in/plug-in.h"
 
 
 static GValueArray *
@@ -764,7 +764,7 @@ drawable_merge_shadow_invoker (GimpProcedure     *procedure,
           gchar *undo_desc = NULL;
 
           if (gimp->plug_in_manager->current_plug_in)
-            undo_desc = plug_in_get_undo_desc (gimp->plug_in_manager->current_plug_in);
+            undo_desc = gimp_plug_in_get_undo_desc (gimp->plug_in_manager->current_plug_in);
 
           if (! undo_desc)
             undo_desc = g_strdup (_("Plug-In"));

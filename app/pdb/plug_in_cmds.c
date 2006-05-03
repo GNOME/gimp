@@ -34,11 +34,11 @@
 
 #include "core/gimp.h"
 #include "gimppluginprocedure.h"
+#include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager-menu-branch.h"
 #include "plug-in/gimppluginmanager-query.h"
 #include "plug-in/gimppluginmanager.h"
 #include "plug-in/plug-in-def.h"
-#include "plug-in/plug-in.h"
 
 
 static GValueArray *
@@ -103,7 +103,7 @@ plugin_domain_register_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
       if (plug_in && plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY)
         {
@@ -133,7 +133,7 @@ plugin_help_register_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
       if (plug_in && plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY)
         {
@@ -163,12 +163,12 @@ plugin_menu_register_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
       if (plug_in)
         {
           gchar *canonical = gimp_canonicalize_identifier (procedure_name);
-          success = plug_in_menu_register (plug_in, canonical, menu_path);
+          success = gimp_plug_in_menu_register (plug_in, canonical, menu_path);
           g_free (canonical);
         }
       else
@@ -196,7 +196,7 @@ plugin_menu_branch_register_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
       if (plug_in)
         {
@@ -230,7 +230,7 @@ plugin_icon_register_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
       if (plug_in && plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY)
         {

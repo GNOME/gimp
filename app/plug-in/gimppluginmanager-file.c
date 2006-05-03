@@ -30,9 +30,9 @@
 #include "pdb/gimp-pdb.h"
 #include "pdb/gimppluginprocedure.h"
 
+#include "gimpplugin.h"
 #include "gimppluginmanager.h"
 #include "gimppluginmanager-file.h"
-#include "plug-in.h"
 #include "plug-in-def.h"
 
 

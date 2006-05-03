@@ -41,6 +41,7 @@
 
 #include "gimpenvirontable.h"
 #include "gimpinterpreterdb.h"
+#include "gimpplugin.h"
 #include "gimpplugindebug.h"
 #include "gimppluginmanager.h"
 #define __YES_I_NEED_GIMP_PLUG_IN_MANAGER_CALL__
@@ -50,7 +51,6 @@
 #include "gimppluginmanager-locale-domain.h"
 #include "gimppluginmanager-menu-branch.h"
 #include "gimppluginshm.h"
-#include "plug-in.h"
 #include "plug-in-def.h"
 #include "plug-in-rc.h"
 
@@ -240,8 +240,6 @@ gimp_plug_in_manager_initialize (GimpPlugInManager  *manager,
                                   TRUE, NULL);
   gimp_environ_table_load (manager->environ_table, path);
   g_free (path);
-
-  plug_in_init (manager);
 
   /* allocate a piece of shared memory for use in transporting tiles
    *  to plug-ins. if we can't allocate a piece of shared memory then
@@ -550,6 +548,8 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
 void
 gimp_plug_in_manager_exit (GimpPlugInManager *manager)
 {
+  GSList *list;
+
   g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
 
   if (manager->debug)
@@ -564,7 +564,15 @@ gimp_plug_in_manager_exit (GimpPlugInManager *manager)
       manager->shm = NULL;
     }
 
-  plug_in_exit (manager);
+  list = manager->open_plug_ins;
+  while (list)
+    {
+      GimpPlugIn *plug_in = list->data;
+
+      list = list->next;
+
+      gimp_plug_in_close (plug_in, TRUE);
+    }
 
   g_slist_foreach (manager->plug_in_procedures, (GFunc) g_object_unref, NULL);
   g_slist_free (manager->plug_in_procedures);
@@ -693,10 +701,10 @@ gimp_plug_in_manager_get_shm_addr (GimpPlugInManager *manager)
 
 void
 gimp_plug_in_manager_plug_in_push (GimpPlugInManager *manager,
-                                   PlugIn            *plug_in)
+                                   GimpPlugIn        *plug_in)
 {
   g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
-  g_return_if_fail (plug_in != NULL);
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
 
   manager->current_plug_in = plug_in;
 

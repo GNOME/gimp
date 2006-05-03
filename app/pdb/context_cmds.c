@@ -34,9 +34,9 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
+#include "plug-in/gimpplugin-context.h"
+#include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
-#include "plug-in/plug-in-context.h"
-#include "plug-in/plug-in.h"
 
 
 static GValueArray *
@@ -47,11 +47,13 @@ context_push_invoker (GimpProcedure     *procedure,
                       const GValueArray *args)
 {
   gboolean success = TRUE;
-  if (gimp->plug_in_manager->current_plug_in &&
-      gimp->plug_in_manager->current_plug_in->open)
-    success = plug_in_context_push (gimp->plug_in_manager->current_plug_in);
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
+    success = gimp_plug_in_context_push (plug_in);
   else
     success = FALSE;
+
   return gimp_procedure_get_return_values (procedure, success);
 }
 
@@ -63,11 +65,13 @@ context_pop_invoker (GimpProcedure     *procedure,
                      const GValueArray *args)
 {
   gboolean success = TRUE;
-  if (gimp->plug_in_manager->current_plug_in &&
-      gimp->plug_in_manager->current_plug_in->open)
-    success = plug_in_context_pop (gimp->plug_in_manager->current_plug_in);
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
+    success = gimp_plug_in_context_pop (plug_in);
   else
     success = FALSE;
+
   return gimp_procedure_get_return_values (procedure, success);
 }
 

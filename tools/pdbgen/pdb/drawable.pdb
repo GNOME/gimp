@@ -38,7 +38,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("plug-in/gimppluginmanager.h" "plug-in/plug-in.h") ],
+	headers => [ qw("plug-in/gimpplugin.h" "plug-in/gimppluginmanager.h") ],
 	code    => <<'CODE'
 {
   if (gimp_item_is_attached (GIMP_ITEM (drawable)))
@@ -46,7 +46,7 @@ HELP
       gchar *undo_desc = NULL;
 
       if (gimp->plug_in_manager->current_plug_in)
-        undo_desc = plug_in_get_undo_desc (gimp->plug_in_manager->current_plug_in);
+        undo_desc = gimp_plug_in_get_undo_desc (gimp->plug_in_manager->current_plug_in);
 
       if (! undo_desc)
         undo_desc = g_strdup (_("Plug-In"));
@@ -1237,10 +1237,15 @@ CODE
 }
 
 
-@headers = qw("base/tile.h" "base/tile-manager.h" "base/temp-buf.h"
+@headers = qw("base/tile.h"
+              "base/tile-manager.h"
+              "base/temp-buf.h"
               "config/gimpcoreconfig.h"
-              "core/gimp.h" "core/gimplayer.h" "core/gimplayermask.h"
-              "core/gimpdrawable-offset.h" "gimp-intl.h");
+              "core/gimp.h"
+              "core/gimpdrawable-offset.h"
+              "core/gimplayer.h"
+              "core/gimplayermask.h"
+              "gimp-intl.h");
 
 @procs = qw(drawable_delete
             drawable_is_layer drawable_is_layer_mask drawable_is_channel

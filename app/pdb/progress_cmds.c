@@ -29,9 +29,9 @@
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
+#include "plug-in/gimpplugin-progress.h"
+#include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
-#include "plug-in/plug-in-progress.h"
-#include "plug-in/plug-in.h"
 
 
 static GValueArray *
@@ -50,12 +50,12 @@ progress_init_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
       if (plug_in && plug_in->open)
         {
           if (! gimp->no_interface)
-            plug_in_progress_start (plug_in, message, gdisplay);
+            gimp_plug_in_progress_start (plug_in, message, gdisplay);
         }
       else
         success = FALSE;
@@ -78,12 +78,12 @@ progress_update_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
       if (plug_in && plug_in->open)
         {
           if (! gimp->no_interface)
-            plug_in_progress_set_value (plug_in, percentage);
+            gimp_plug_in_progress_set_value (plug_in, percentage);
         }
       else
         success = FALSE;
@@ -100,12 +100,12 @@ progress_pulse_invoker (GimpProcedure     *procedure,
                         const GValueArray *args)
 {
   gboolean success = TRUE;
-  PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
   if (plug_in && plug_in->open)
     {
       if (! gimp->no_interface)
-        plug_in_progress_pulse (plug_in);
+        gimp_plug_in_progress_pulse (plug_in);
     }
   else
     success = FALSE;
@@ -127,12 +127,12 @@ progress_set_text_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
       if (plug_in && plug_in->open)
         {
           if (! gimp->no_interface)
-            plug_in_progress_set_text (plug_in, message);
+            gimp_plug_in_progress_set_text (plug_in, message);
         }
       else
         success = FALSE;
@@ -152,12 +152,12 @@ progress_get_window_handle_invoker (GimpProcedure     *procedure,
   GValueArray *return_vals;
   gint32 window = 0;
 
-  PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
   if (plug_in && plug_in->open)
     {
       if (! gimp->no_interface)
-        window = plug_in_progress_get_window (plug_in);
+        window = gimp_plug_in_progress_get_window (plug_in);
     }
   else
     success = FALSE;
@@ -184,10 +184,10 @@ progress_install_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
       if (plug_in && plug_in->open)
-        success = plug_in_progress_install (plug_in, progress_callback);
+        success = gimp_plug_in_progress_install (plug_in, progress_callback);
       else
         success = FALSE;
     }
@@ -209,10 +209,10 @@ progress_uninstall_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
       if (plug_in && plug_in->open)
-        success = plug_in_progress_uninstall (plug_in, progress_callback);
+        success = gimp_plug_in_progress_uninstall (plug_in, progress_callback);
       else
         success = FALSE;
     }
@@ -234,10 +234,10 @@ progress_cancel_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      PlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
       if (plug_in && plug_in->open)
-        success = plug_in_progress_cancel (plug_in, progress_callback);
+        success = gimp_plug_in_progress_cancel (plug_in, progress_callback);
       else
         success = FALSE;
     }

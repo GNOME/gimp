@@ -29,9 +29,9 @@
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
+#include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager-help-domain.h"
 #include "plug-in/gimppluginmanager.h"
-#include "plug-in/plug-in.h"
 
 
 static GValueArray *

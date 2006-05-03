@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * plug-in.c
+ * gimpplugin.c
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,10 +56,10 @@
 #endif
 
 #ifdef G_WITH_CYGWIN
-#define O_TEXT                0x0100        /* text file */
-#define _O_TEXT                0x0100        /* text file */
-#define O_BINARY        0x0200        /* binary file */
-#define _O_BINARY        0x0200        /* binary file */
+#define O_TEXT    0x0100  /* text file   */
+#define _O_TEXT   0x0100  /* text file   */
+#define O_BINARY  0x0200  /* binary file */
+#define _O_BINARY 0x0200  /* binary file */
 #endif
 
 #endif /* G_OS_WIN32 || G_WITH_CYGWIN */
@@ -78,98 +78,67 @@
 
 #include "gimpenvirontable.h"
 #include "gimpinterpreterdb.h"
+#include "gimpplugin.h"
+#include "gimpplugin-message.h"
+#include "gimpplugin-progress.h"
 #include "gimpplugindebug.h"
 #include "gimppluginmanager.h"
 #include "gimppluginmanager-locale-domain.h"
-#include "plug-in.h"
 #include "plug-in-def.h"
-#include "plug-in-message.h"
 #include "plug-in-params.h"
-#include "plug-in-progress.h"
 
 #include "gimp-intl.h"
 
 
-/*  local funcion prototypes  */
+static void       gimp_plug_in_finalize      (GObject      *object);
 
-static gboolean   plug_in_write         (GIOChannel   *channel,
-                                         const guint8 *buf,
-                                         gulong        count,
-                                         gpointer      data);
-static gboolean   plug_in_flush         (GIOChannel   *channel,
-                                         gpointer      data);
+static gboolean   gimp_plug_in_write         (GIOChannel   *channel,
+                                              const guint8 *buf,
+                                              gulong        count,
+                                              gpointer      data);
+static gboolean   gimp_plug_in_flush         (GIOChannel   *channel,
+                                              gpointer      data);
 
-static gboolean   plug_in_recv_message  (GIOChannel   *channel,
-                                         GIOCondition  cond,
-                                         gpointer      data);
+static gboolean   gimp_plug_in_recv_message  (GIOChannel   *channel,
+                                              GIOCondition  cond,
+                                              gpointer      data);
 
 #if !defined(G_OS_WIN32) && !defined (G_WITH_CYGWIN)
-static void       plug_in_prep_for_exec (gpointer      data);
+static void       gimp_plug_in_prep_for_exec (gpointer      data);
+#else
+#define           gimp_plug_in_prep_for_exec  NULL
 #endif
 
 
-void
-plug_in_init (GimpPlugInManager *manager)
+G_DEFINE_TYPE (GimpPlugIn, gimp_plug_in, GIMP_TYPE_OBJECT);
+
+#define parent_class gimp_plug_in_parent_class
+
+
+static void
+gimp_plug_in_class_init (GimpPlugInClass *klass)
 {
-  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->finalize = gimp_plug_in_finalize;
 
   /* initialize the gimp protocol library and set the read and
    *  write handlers.
    */
   gp_init ();
-
-  gimp_wire_set_writer (plug_in_write);
-  gimp_wire_set_flusher (plug_in_flush);
+  gimp_wire_set_writer (gimp_plug_in_write);
+  gimp_wire_set_flusher (gimp_plug_in_flush);
 }
 
-void
-plug_in_exit (GimpPlugInManager *manager)
+static void
+gimp_plug_in_init (GimpPlugIn *plug_in)
 {
-  GSList *list;
-
-  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
-
-  list = manager->open_plug_ins;
-  while (list)
-    {
-      PlugIn *plug_in = list->data;
-
-      list = list->next;
-
-      if (plug_in->open)
-        plug_in_close (plug_in, TRUE);
-
-      plug_in_unref (plug_in);
-    }
-}
-
-PlugIn *
-plug_in_new (GimpPlugInManager *manager,
-             GimpContext       *context,
-             GimpProgress      *progress,
-             GimpProcedure     *procedure,
-             const gchar       *prog)
-{
-  PlugIn *plug_in;
-
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
-  g_return_val_if_fail (prog != NULL, NULL);
-  g_return_val_if_fail (g_path_is_absolute (prog), NULL);
-
-  plug_in = g_new0 (PlugIn, 1);
-
-  plug_in->manager            = manager;
-
-  plug_in->ref_count          = 1;
-
   plug_in->open               = FALSE;
   plug_in->call_mode          = GIMP_PLUG_IN_CALL_NONE;
   plug_in->pid                = 0;
 
-  plug_in->name               = g_path_get_basename (prog);
-  plug_in->prog               = g_strdup (prog);
+  plug_in->name               = NULL;
+  plug_in->prog               = NULL;
 
   plug_in->my_read            = NULL;
   plug_in->my_write           = NULL;
@@ -183,51 +152,61 @@ plug_in_new (GimpPlugInManager *manager,
 
   plug_in->ext_main_loop      = NULL;
 
-  plug_in_proc_frame_init (&plug_in->main_proc_frame,
-                           context, progress, procedure);
-
   plug_in->temp_proc_frames   = NULL;
 
   plug_in->plug_in_def        = NULL;
+}
+
+GimpPlugIn *
+gimp_plug_in_new (GimpPlugInManager   *manager,
+                  GimpContext         *context,
+                  GimpProgress        *progress,
+                  GimpPlugInProcedure *procedure,
+                  const gchar         *prog)
+{
+  GimpPlugIn *plug_in;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (procedure == NULL ||
+                        GIMP_IS_PLUG_IN_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (prog != NULL, NULL);
+  g_return_val_if_fail (g_path_is_absolute (prog), NULL);
+
+  plug_in = g_object_new (GIMP_TYPE_PLUG_IN, NULL);
+
+  plug_in->manager = manager;
+  plug_in->name    = g_path_get_basename (prog);
+  plug_in->prog    = g_strdup (prog);
+
+  gimp_plug_in_proc_frame_init (&plug_in->main_proc_frame,
+                                context, progress, procedure);
 
   return plug_in;
 }
 
-void
-plug_in_ref (PlugIn *plug_in)
+static void
+gimp_plug_in_finalize (GObject *object)
 {
-  g_return_if_fail (plug_in != NULL);
+  GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
 
-  plug_in->ref_count++;
-}
+  g_printerr ("%s (%s)\n", G_STRFUNC, plug_in->name);
 
-void
-plug_in_unref (PlugIn *plug_in)
-{
-  g_return_if_fail (plug_in != NULL);
+  g_free (plug_in->name);
+  g_free (plug_in->prog);
 
-  plug_in->ref_count--;
+  gimp_plug_in_proc_frame_dispose (&plug_in->main_proc_frame, plug_in);
 
-  if (plug_in->ref_count < 1)
-    {
-      if (plug_in->open)
-        plug_in_close (plug_in, TRUE);
-
-      g_free (plug_in->name);
-      g_free (plug_in->prog);
-
-      plug_in_proc_frame_dispose (&plug_in->main_proc_frame, plug_in);
-
-      g_free (plug_in);
-    }
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 #if !defined(G_OS_WIN32) && !defined (G_WITH_CYGWIN)
 
 static void
-plug_in_prep_for_exec (gpointer data)
+gimp_plug_in_prep_for_exec (gpointer data)
 {
-  PlugIn *plug_in = data;
+  GimpPlugIn *plug_in = data;
 
   g_io_channel_unref (plug_in->my_read);
   plug_in->my_read  = NULL;
@@ -236,16 +215,12 @@ plug_in_prep_for_exec (gpointer data)
   plug_in->my_write  = NULL;
 }
 
-#else
-
-#define plug_in_prep_for_exec NULL
-
 #endif
 
 gboolean
-plug_in_open (PlugIn             *plug_in,
-              GimpPlugInCallMode  call_mode,
-              gboolean            synchronous)
+gimp_plug_in_open (GimpPlugIn         *plug_in,
+                   GimpPlugInCallMode  call_mode,
+                   gboolean            synchronous)
 {
   gint       my_read[2];
   gint       my_write[2];
@@ -260,7 +235,7 @@ plug_in_open (PlugIn             *plug_in,
   guint      debug_flag;
   guint      spawn_flags;
 
-  g_return_val_if_fail (plug_in != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
   g_return_val_if_fail (plug_in->call_mode == GIMP_PLUG_IN_CALL_NONE, FALSE);
 
   /* Open two pipes. (Bidirectional communication).
@@ -377,7 +352,7 @@ plug_in_open (PlugIn             *plug_in,
    * can later use it to kill the filter if necessary.
    */
   if (! g_spawn_async (NULL, argv, envp, spawn_flags,
-                       plug_in_prep_for_exec, plug_in,
+                       gimp_plug_in_prep_for_exec, plug_in,
                        &plug_in->pid,
                        &error))
     {
@@ -403,7 +378,7 @@ plug_in_open (PlugIn             *plug_in,
                                   G_IO_IN  | G_IO_PRI | G_IO_ERR | G_IO_HUP);
 
       g_source_set_callback (source,
-                             (GSourceFunc) plug_in_recv_message, plug_in,
+                             (GSourceFunc) gimp_plug_in_recv_message, plug_in,
                              NULL);
 
       g_source_set_can_recurse (source, TRUE);
@@ -415,10 +390,12 @@ plug_in_open (PlugIn             *plug_in,
         g_slist_prepend (plug_in->manager->open_plug_ins, plug_in);
     }
 
+  g_object_ref (plug_in);
+
   plug_in->open      = TRUE;
   plug_in->call_mode = call_mode;
 
-cleanup:
+ cleanup:
 
   if (debug)
     g_free (argv);
@@ -433,16 +410,15 @@ cleanup:
 }
 
 void
-plug_in_close (PlugIn   *plug_in,
-               gboolean  kill_it)
+gimp_plug_in_close (GimpPlugIn *plug_in,
+                    gboolean    kill_it)
 {
   GList *list;
 
-  g_return_if_fail (plug_in != NULL);
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
   g_return_if_fail (plug_in->open == TRUE);
 
-  if (! plug_in->open)
-    return;
+  g_printerr ("%s (%s)\n", G_STRFUNC, plug_in->name);
 
   plug_in->open = FALSE;
 
@@ -547,7 +523,7 @@ plug_in_close (PlugIn   *plug_in,
 
   for (list = plug_in->temp_proc_frames; list; list = g_list_next (list))
     {
-      PlugInProcFrame *proc_frame = list->data;
+      GimpPlugInProcFrame *proc_frame = list->data;
 
 #ifdef GIMP_UNSTABLE
       g_printerr ("plug_in_close: plug-in aborted before sending its "
@@ -572,8 +548,6 @@ plug_in_close (PlugIn   *plug_in,
       g_main_loop_quit (plug_in->main_proc_frame.main_loop);
     }
 
-  plug_in_proc_frame_dispose (&plug_in->main_proc_frame, plug_in);
-
   if (plug_in->ext_main_loop &&
       g_main_loop_is_running (plug_in->ext_main_loop))
     {
@@ -587,22 +561,24 @@ plug_in_close (PlugIn   *plug_in,
 
   /* Unregister any temporary procedures. */
   while (plug_in->temp_procedures)
-    plug_in_remove_temp_proc (plug_in, plug_in->temp_procedures->data);
+    gimp_plug_in_remove_temp_proc (plug_in, plug_in->temp_procedures->data);
 
   /* Close any dialogs that this plugin might have opened */
   gimp_pdb_dialogs_check (plug_in->manager->gimp);
 
   plug_in->manager->open_plug_ins =
     g_slist_remove (plug_in->manager->open_plug_ins, plug_in);
+
+  g_object_unref (plug_in);
 }
 
 static gboolean
-plug_in_recv_message (GIOChannel   *channel,
-                      GIOCondition  cond,
-                      gpointer      data)
+gimp_plug_in_recv_message (GIOChannel   *channel,
+                           GIOCondition  cond,
+                           gpointer      data)
 {
-  PlugIn   *plug_in     = data;
-  gboolean  got_message = FALSE;
+  GimpPlugIn *plug_in     = data;
+  gboolean    got_message = FALSE;
 
 #ifdef G_OS_WIN32
   /* Workaround for GLib bug #137968: sometimes we are called for no
@@ -615,6 +591,8 @@ plug_in_recv_message (GIOChannel   *channel,
   if (plug_in->my_read == NULL)
     return TRUE;
 
+  g_object_ref (plug_in);
+
   if (cond & (G_IO_IN | G_IO_PRI))
     {
       GimpWireMessage msg;
@@ -623,11 +601,11 @@ plug_in_recv_message (GIOChannel   *channel,
 
       if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
         {
-          plug_in_close (plug_in, TRUE);
+          gimp_plug_in_close (plug_in, TRUE);
         }
       else
         {
-          plug_in_handle_message (plug_in, &msg);
+          gimp_plug_in_handle_message (plug_in, &msg);
           gimp_wire_destroy (&msg);
           got_message = TRUE;
         }
@@ -636,9 +614,7 @@ plug_in_recv_message (GIOChannel   *channel,
   if (cond & (G_IO_ERR | G_IO_HUP))
     {
       if (plug_in->open)
-        {
-          plug_in_close (plug_in, TRUE);
-        }
+        gimp_plug_in_close (plug_in, TRUE);
     }
 
   if (! got_message)
@@ -649,20 +625,19 @@ plug_in_recv_message (GIOChannel   *channel,
                gimp_filename_to_utf8 (plug_in->name),
                gimp_filename_to_utf8 (plug_in->prog));
 
-  if (! plug_in->open)
-    plug_in_unref (plug_in);
+  g_object_unref (plug_in);
 
   return TRUE;
 }
 
 static gboolean
-plug_in_write (GIOChannel   *channel,
-               const guint8 *buf,
-               gulong        count,
-               gpointer      data)
+gimp_plug_in_write (GIOChannel   *channel,
+                    const guint8 *buf,
+                    gulong        count,
+                    gpointer      data)
 {
-  PlugIn *plug_in = data;
-  gulong  bytes;
+  GimpPlugIn *plug_in = data;
+  gulong      bytes;
 
   while (count > 0)
     {
@@ -691,10 +666,10 @@ plug_in_write (GIOChannel   *channel,
 }
 
 static gboolean
-plug_in_flush (GIOChannel *channel,
-               gpointer    data)
+gimp_plug_in_flush (GIOChannel *channel,
+                    gpointer    data)
 {
-  PlugIn *plug_in = data;
+  GimpPlugIn *plug_in = data;
 
   if (plug_in->write_buffer_index > 0)
     {
@@ -744,10 +719,10 @@ plug_in_flush (GIOChannel *channel,
   return TRUE;
 }
 
-PlugInProcFrame *
-plug_in_get_proc_frame (PlugIn *plug_in)
+GimpPlugInProcFrame *
+gimp_plug_in_get_proc_frame (GimpPlugIn *plug_in)
 {
-  g_return_val_if_fail (plug_in != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
 
   if (plug_in->temp_proc_frames)
     return plug_in->temp_proc_frames->data;
@@ -755,20 +730,20 @@ plug_in_get_proc_frame (PlugIn *plug_in)
     return &plug_in->main_proc_frame;
 }
 
-PlugInProcFrame *
-plug_in_proc_frame_push (PlugIn        *plug_in,
-                         GimpContext   *context,
-                         GimpProgress  *progress,
-                         GimpProcedure *procedure)
+GimpPlugInProcFrame *
+gimp_plug_in_proc_frame_push (GimpPlugIn             *plug_in,
+                              GimpContext            *context,
+                              GimpProgress           *progress,
+                              GimpTemporaryProcedure *procedure)
 {
-  PlugInProcFrame *proc_frame;
+  GimpPlugInProcFrame *proc_frame;
 
-  g_return_val_if_fail (plug_in != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
-  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (GIMP_IS_TEMPORARY_PROCEDURE (procedure), NULL);
 
-  proc_frame = plug_in_proc_frame_new (context, progress, procedure);
+  proc_frame = gimp_plug_in_proc_frame_new (context, progress, procedure);
 
   plug_in->temp_proc_frames = g_list_prepend (plug_in->temp_proc_frames,
                                               proc_frame);
@@ -777,30 +752,30 @@ plug_in_proc_frame_push (PlugIn        *plug_in,
 }
 
 void
-plug_in_proc_frame_pop (PlugIn *plug_in)
+gimp_plug_in_proc_frame_pop (GimpPlugIn *plug_in)
 {
-  PlugInProcFrame *proc_frame;
+  GimpPlugInProcFrame *proc_frame;
 
-  g_return_if_fail (plug_in != NULL);
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
   g_return_if_fail (plug_in->temp_proc_frames != NULL);
 
-  proc_frame = (PlugInProcFrame *) plug_in->temp_proc_frames->data;
+  proc_frame = (GimpPlugInProcFrame *) plug_in->temp_proc_frames->data;
 
-  plug_in_proc_frame_unref (proc_frame, plug_in);
+  gimp_plug_in_proc_frame_unref (proc_frame, plug_in);
 
   plug_in->temp_proc_frames = g_list_remove (plug_in->temp_proc_frames,
                                              proc_frame);
 }
 
 void
-plug_in_main_loop (PlugIn *plug_in)
+gimp_plug_in_main_loop (GimpPlugIn *plug_in)
 {
-  PlugInProcFrame *proc_frame;
+  GimpPlugInProcFrame *proc_frame;
 
-  g_return_if_fail (plug_in != NULL);
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
   g_return_if_fail (plug_in->temp_proc_frames != NULL);
 
-  proc_frame = (PlugInProcFrame *) plug_in->temp_proc_frames->data;
+  proc_frame = (GimpPlugInProcFrame *) plug_in->temp_proc_frames->data;
 
   g_return_if_fail (proc_frame->main_loop == NULL);
 
@@ -815,14 +790,14 @@ plug_in_main_loop (PlugIn *plug_in)
 }
 
 void
-plug_in_main_loop_quit (PlugIn *plug_in)
+gimp_plug_in_main_loop_quit (GimpPlugIn *plug_in)
 {
-  PlugInProcFrame *proc_frame;
+  GimpPlugInProcFrame *proc_frame;
 
-  g_return_if_fail (plug_in != NULL);
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
   g_return_if_fail (plug_in->temp_proc_frames != NULL);
 
-  proc_frame = (PlugInProcFrame *) plug_in->temp_proc_frames->data;
+  proc_frame = (GimpPlugInProcFrame *) plug_in->temp_proc_frames->data;
 
   g_return_if_fail (proc_frame->main_loop != NULL);
 
@@ -830,15 +805,15 @@ plug_in_main_loop_quit (PlugIn *plug_in)
 }
 
 gchar *
-plug_in_get_undo_desc (PlugIn *plug_in)
+gimp_plug_in_get_undo_desc (GimpPlugIn *plug_in)
 {
-  PlugInProcFrame     *proc_frame = NULL;
+  GimpPlugInProcFrame *proc_frame = NULL;
   GimpPlugInProcedure *proc       = NULL;
   gchar               *undo_desc  = NULL;
 
-  g_return_val_if_fail (plug_in != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
 
-  proc_frame = plug_in_get_proc_frame (plug_in);
+  proc_frame = gimp_plug_in_get_proc_frame (plug_in);
 
   if (proc_frame)
     proc = GIMP_PLUG_IN_PROCEDURE (proc_frame->procedure);
@@ -861,14 +836,14 @@ plug_in_get_undo_desc (PlugIn *plug_in)
 
 /*  called from the PDB (gimp_plugin_menu_register)  */
 gboolean
-plug_in_menu_register (PlugIn      *plug_in,
-                       const gchar *proc_name,
-                       const gchar *menu_path)
+gimp_plug_in_menu_register (GimpPlugIn  *plug_in,
+                            const gchar *proc_name,
+                            const gchar *menu_path)
 {
   GimpPlugInProcedure *proc  = NULL;
   GError              *error = NULL;
 
-  g_return_val_if_fail (plug_in != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
   g_return_val_if_fail (proc_name != NULL, FALSE);
   g_return_val_if_fail (menu_path != NULL, FALSE);
 
@@ -936,10 +911,10 @@ plug_in_menu_register (PlugIn      *plug_in,
 }
 
 void
-plug_in_add_temp_proc (PlugIn                 *plug_in,
-                       GimpTemporaryProcedure *proc)
+gimp_plug_in_add_temp_proc (GimpPlugIn             *plug_in,
+                            GimpTemporaryProcedure *proc)
 {
-  g_return_if_fail (plug_in != NULL);
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
   g_return_if_fail (GIMP_IS_TEMPORARY_PROCEDURE (proc));
 
   plug_in->temp_procedures = g_slist_prepend (plug_in->temp_procedures,
@@ -948,10 +923,10 @@ plug_in_add_temp_proc (PlugIn                 *plug_in,
 }
 
 void
-plug_in_remove_temp_proc (PlugIn                 *plug_in,
-                          GimpTemporaryProcedure *proc)
+gimp_plug_in_remove_temp_proc (GimpPlugIn             *plug_in,
+                               GimpTemporaryProcedure *proc)
 {
-  g_return_if_fail (plug_in != NULL);
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
   g_return_if_fail (GIMP_IS_TEMPORARY_PROCEDURE (proc));
 
   plug_in->temp_procedures = g_slist_remove (plug_in->temp_procedures,

@@ -25,6 +25,14 @@ libappplug_in_a_SOURCES = \
 	gimpinterpreterdb.h			\
 	gimpplugindebug.c			\
 	gimpplugindebug.h			\
+	gimpplugin.c				\
+	gimpplugin.h				\
+	gimpplugin-context.c			\
+	gimpplugin-context.h			\
+	gimpplugin-message.c			\
+	gimpplugin-message.h			\
+	gimpplugin-progress.c			\
+	gimpplugin-progress.h			\
 	gimppluginmanager.c			\
 	gimppluginmanager.h			\
 	gimppluginmanager-call.c		\
@@ -41,23 +49,15 @@ libappplug_in_a_SOURCES = \
 	gimppluginmanager-menu-branch.h		\
 	gimppluginmanager-query.c		\
 	gimppluginmanager-query.h		\
+	gimppluginprocframe.c			\
+	gimppluginprocframe.h			\
 	gimppluginshm.c				\
 	gimppluginshm.h				\
 	\
-	plug-in.c				\
-	plug-in.h				\
-	plug-in-context.c			\
-	plug-in-context.h			\
 	plug-in-def.c				\
 	plug-in-def.h				\
-	plug-in-message.c			\
-	plug-in-message.h			\
 	plug-in-params.c			\
 	plug-in-params.h			\
-	plug-in-proc-frame.c			\
-	plug-in-proc-frame.h			\
-	plug-in-progress.c			\
-	plug-in-progress.h			\
 	plug-in-rc.c				\
 	plug-in-rc.h
 

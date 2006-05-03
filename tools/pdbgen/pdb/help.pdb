@@ -57,9 +57,9 @@ CODE
 
 
 @headers = qw("core/gimp.h"
+              "plug-in/gimpplugin.h"
               "plug-in/gimppluginmanager.h"
-              "plug-in/gimppluginmanager-help-domain.h"
-              "plug-in/plug-in.h");
+              "plug-in/gimppluginmanager-help-domain.h");
 
 @procs = qw(help);
 

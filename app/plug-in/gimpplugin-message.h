@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * plug-in-message.h
+ * gimpplugin-message.h
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,12 +18,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PLUG_IN_MESSAGE_H__
-#define __PLUG_IN_MESSAGE_H__
+#ifndef __GIMP_PLUG_IN_MESSAGE_H__
+#define __GIMP_PLUG_IN_MESSAGE_H__
 
 
-void   plug_in_handle_message (PlugIn          *plug_in,
-                               GimpWireMessage *msg);
+void   gimp_plug_in_handle_message (GimpPlugIn      *plug_in,
+                                    GimpWireMessage *msg);
 
 
-#endif /* __PLUG_IN_MESSAGE_H__ */
+#endif /* __GIMP_PLUG_IN_MESSAGE_H__ */

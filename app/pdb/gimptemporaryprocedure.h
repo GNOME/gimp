@@ -39,7 +39,7 @@ struct _GimpTemporaryProcedure
 {
   GimpPlugInProcedure  parent_instance;
 
-  PlugIn              *plug_in;
+  GimpPlugIn          *plug_in;
 };
 
 struct _GimpTemporaryProcedureClass
@@ -50,7 +50,7 @@ struct _GimpTemporaryProcedureClass
 
 GType           gimp_temporary_procedure_get_type (void) G_GNUC_CONST;
 
-GimpProcedure * gimp_temporary_procedure_new      (PlugIn *plug_in);
+GimpProcedure * gimp_temporary_procedure_new      (GimpPlugIn *plug_in);
 
 
 #endif /* __GIMP_TEMPORARY_PROCEDURE_H__ */

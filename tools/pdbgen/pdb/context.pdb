@@ -38,9 +38,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp->plug_in_manager->current_plug_in &&
-      gimp->plug_in_manager->current_plug_in->open)
-    success = plug_in_context_push (gimp->plug_in_manager->current_plug_in);
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
+    success = gimp_plug_in_context_push (plug_in);
   else
     success = FALSE;
 }
@@ -62,9 +63,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp->plug_in_manager->current_plug_in &&
-      gimp->plug_in_manager->current_plug_in->open)
-    success = plug_in_context_pop (gimp->plug_in_manager->current_plug_in);
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
+    success = gimp_plug_in_context_pop (plug_in);
   else
     success = FALSE;
 }
@@ -684,10 +686,13 @@ CODE
 }
 
 
-@headers = qw("core/gimp.h" "core/gimpcontainer.h" "core/gimpcontext.h"
+@headers = qw("core/gimp.h"
+              "core/gimpcontainer.h"
+              "core/gimpcontext.h"
               "core/gimpdatafactory.h"
-              "plug-in/gimppluginmanager.h" "plug-in/plug-in.h"
-              "plug-in/plug-in-context.h");
+              "plug-in/gimpplugin.h"
+              "plug-in/gimpplugin-context.h"
+              "plug-in/gimppluginmanager.h");
 
 @procs = qw(context_push context_pop
             context_get_paint_method context_set_paint_method

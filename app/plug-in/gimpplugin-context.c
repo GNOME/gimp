@@ -1,6 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * gimpplugin-context.c
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -25,21 +27,21 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 
+#include "gimpplugin.h"
+#include "gimpplugin-context.h"
 #include "gimppluginmanager.h"
-#include "plug-in.h"
-#include "plug-in-context.h"
 
 
 gboolean
-plug_in_context_push (PlugIn *plug_in)
+gimp_plug_in_context_push (GimpPlugIn *plug_in)
 {
-  PlugInProcFrame *proc_frame;
-  GimpContext     *parent;
-  GimpContext     *context;
+  GimpPlugInProcFrame *proc_frame;
+  GimpContext         *parent;
+  GimpContext         *context;
 
-  g_return_val_if_fail (plug_in != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
 
-  proc_frame = plug_in_get_proc_frame (plug_in);
+  proc_frame = gimp_plug_in_get_proc_frame (plug_in);
 
   if (proc_frame->context_stack)
     parent = proc_frame->context_stack->data;
@@ -56,13 +58,13 @@ plug_in_context_push (PlugIn *plug_in)
 }
 
 gboolean
-plug_in_context_pop (PlugIn *plug_in)
+gimp_plug_in_context_pop (GimpPlugIn *plug_in)
 {
-  PlugInProcFrame *proc_frame;
+  GimpPlugInProcFrame *proc_frame;
 
-  g_return_val_if_fail (plug_in != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
 
-  proc_frame = plug_in_get_proc_frame (plug_in);
+  proc_frame = gimp_plug_in_get_proc_frame (plug_in);
 
   if (proc_frame->context_stack)
     {

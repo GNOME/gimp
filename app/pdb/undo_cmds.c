@@ -31,8 +31,8 @@
 #include "core/gimp.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage.h"
+#include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
-#include "plug-in/plug-in.h"
 
 
 static GValueArray *
@@ -49,11 +49,11 @@ image_undo_group_start_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      PlugIn *plug_in  = gimp->plug_in_manager->current_plug_in;
-      gchar  *undo_desc = NULL;
+      GimpPlugIn *plug_in  = gimp->plug_in_manager->current_plug_in;
+      gchar      *undo_desc = NULL;
 
       if (plug_in)
-        undo_desc = plug_in_get_undo_desc (plug_in);
+        undo_desc = gimp_plug_in_get_undo_desc (plug_in);
 
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_MISC, undo_desc);
 

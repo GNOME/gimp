@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * plug-in-message.c
+ * gimpplugin-message.c
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,41 +40,46 @@
 #include "pdb/gimp-pdb-compat.h"
 #include "pdb/gimptemporaryprocedure.h"
 
+#include "gimpplugin.h"
+#include "gimpplugin-message.h"
 #include "gimppluginmanager.h"
-#include "plug-in.h"
 #include "plug-in-def.h"
 #include "plug-in-params.h"
 
 
 /*  local function prototypes  */
 
-static void plug_in_handle_quit             (PlugIn          *plug_in);
-static void plug_in_handle_tile_req         (PlugIn          *plug_in,
-                                             GPTileReq       *tile_req);
-static void plug_in_handle_proc_run         (PlugIn          *plug_in,
-                                             GPProcRun       *proc_run);
-static void plug_in_handle_proc_return      (PlugIn          *plug_in,
-                                             GPProcReturn    *proc_return);
-static void plug_in_handle_temp_proc_return (PlugIn          *plug_in,
-                                             GPProcReturn    *proc_return);
-static void plug_in_handle_proc_install     (PlugIn          *plug_in,
-                                             GPProcInstall   *proc_install);
-static void plug_in_handle_proc_uninstall   (PlugIn          *plug_in,
-                                             GPProcUninstall *proc_uninstall);
-static void plug_in_handle_extension_ack    (PlugIn          *plug_in);
-static void plug_in_handle_has_init         (PlugIn          *plug_in);
+static void gimp_plug_in_handle_quit             (GimpPlugIn      *plug_in);
+static void gimp_plug_in_handle_tile_req         (GimpPlugIn      *plug_in,
+                                                  GPTileReq       *tile_req);
+static void gimp_plug_in_handle_proc_run         (GimpPlugIn      *plug_in,
+                                                  GPProcRun       *proc_run);
+static void gimp_plug_in_handle_proc_return      (GimpPlugIn      *plug_in,
+                                                  GPProcReturn    *proc_return);
+static void gimp_plug_in_handle_temp_proc_return (GimpPlugIn      *plug_in,
+                                                  GPProcReturn    *proc_return);
+static void gimp_plug_in_handle_proc_install     (GimpPlugIn      *plug_in,
+                                                  GPProcInstall   *proc_install);
+static void gimp_plug_in_handle_proc_uninstall   (GimpPlugIn      *plug_in,
+                                                  GPProcUninstall *proc_uninstall);
+static void gimp_plug_in_handle_extension_ack    (GimpPlugIn      *plug_in);
+static void gimp_plug_in_handle_has_init         (GimpPlugIn      *plug_in);
 
 
 /*  public functions  */
 
 void
-plug_in_handle_message (PlugIn          *plug_in,
-                        GimpWireMessage *msg)
+gimp_plug_in_handle_message (GimpPlugIn      *plug_in,
+                             GimpWireMessage *msg)
 {
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+  g_return_if_fail (plug_in->open == TRUE);
+  g_return_if_fail (msg != NULL);
+
   switch (msg->type)
     {
     case GP_QUIT:
-      plug_in_handle_quit (plug_in);
+      gimp_plug_in_handle_quit (plug_in);
       break;
 
     case GP_CONFIG:
@@ -82,11 +87,11 @@ plug_in_handle_message (PlugIn          *plug_in,
                  "sent a CONFIG message.  This should not happen.",
                  gimp_filename_to_utf8 (plug_in->name),
                  gimp_filename_to_utf8 (plug_in->prog));
-      plug_in_close (plug_in, TRUE);
+      gimp_plug_in_close (plug_in, TRUE);
       break;
 
     case GP_TILE_REQ:
-      plug_in_handle_tile_req (plug_in, msg->data);
+      gimp_plug_in_handle_tile_req (plug_in, msg->data);
       break;
 
     case GP_TILE_ACK:
@@ -94,7 +99,7 @@ plug_in_handle_message (PlugIn          *plug_in,
                  "sent a TILE_ACK message.  This should not happen.",
                  gimp_filename_to_utf8 (plug_in->name),
                  gimp_filename_to_utf8 (plug_in->prog));
-      plug_in_close (plug_in, TRUE);
+      gimp_plug_in_close (plug_in, TRUE);
       break;
 
     case GP_TILE_DATA:
@@ -102,15 +107,15 @@ plug_in_handle_message (PlugIn          *plug_in,
                  "sent a TILE_DATA message.  This should not happen.",
                  gimp_filename_to_utf8 (plug_in->name),
                  gimp_filename_to_utf8 (plug_in->prog));
-      plug_in_close (plug_in, TRUE);
+      gimp_plug_in_close (plug_in, TRUE);
       break;
 
     case GP_PROC_RUN:
-      plug_in_handle_proc_run (plug_in, msg->data);
+      gimp_plug_in_handle_proc_run (plug_in, msg->data);
       break;
 
     case GP_PROC_RETURN:
-      plug_in_handle_proc_return (plug_in, msg->data);
+      gimp_plug_in_handle_proc_return (plug_in, msg->data);
       break;
 
     case GP_TEMP_PROC_RUN:
@@ -118,27 +123,27 @@ plug_in_handle_message (PlugIn          *plug_in,
                  "sent a TEMP_PROC_RUN message.  This should not happen.",
                  gimp_filename_to_utf8 (plug_in->name),
                  gimp_filename_to_utf8 (plug_in->prog));
-      plug_in_close (plug_in, TRUE);
+      gimp_plug_in_close (plug_in, TRUE);
       break;
 
     case GP_TEMP_PROC_RETURN:
-      plug_in_handle_temp_proc_return (plug_in, msg->data);
+      gimp_plug_in_handle_temp_proc_return (plug_in, msg->data);
       break;
 
     case GP_PROC_INSTALL:
-      plug_in_handle_proc_install (plug_in, msg->data);
+      gimp_plug_in_handle_proc_install (plug_in, msg->data);
       break;
 
     case GP_PROC_UNINSTALL:
-      plug_in_handle_proc_uninstall (plug_in, msg->data);
+      gimp_plug_in_handle_proc_uninstall (plug_in, msg->data);
       break;
 
     case GP_EXTENSION_ACK:
-      plug_in_handle_extension_ack (plug_in);
+      gimp_plug_in_handle_extension_ack (plug_in);
       break;
 
     case GP_HAS_INIT:
-      plug_in_handle_has_init (plug_in);
+      gimp_plug_in_handle_has_init (plug_in);
       break;
     }
 }
@@ -147,14 +152,14 @@ plug_in_handle_message (PlugIn          *plug_in,
 /*  private functions  */
 
 static void
-plug_in_handle_quit (PlugIn *plug_in)
+gimp_plug_in_handle_quit (GimpPlugIn *plug_in)
 {
-  plug_in_close (plug_in, FALSE);
+  gimp_plug_in_close (plug_in, FALSE);
 }
 
 static void
-plug_in_handle_tile_req (PlugIn    *plug_in,
-                         GPTileReq *tile_req)
+gimp_plug_in_handle_tile_req (GimpPlugIn *plug_in,
+                              GPTileReq  *tile_req)
 {
   GPTileData       tile_data;
   GPTileData      *tile_info;
@@ -182,21 +187,21 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
       if (! gp_tile_data_write (plug_in->my_write, &tile_data, plug_in))
         {
           g_warning ("plug_in_handle_tile_req: ERROR");
-          plug_in_close (plug_in, TRUE);
+          gimp_plug_in_close (plug_in, TRUE);
           return;
         }
 
       if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
         {
           g_warning ("plug_in_handle_tile_req: ERROR");
-          plug_in_close (plug_in, TRUE);
+          gimp_plug_in_close (plug_in, TRUE);
           return;
         }
 
       if (msg.type != GP_TILE_DATA)
         {
           g_warning ("expected tile data and received: %d", msg.type);
-          plug_in_close (plug_in, TRUE);
+          gimp_plug_in_close (plug_in, TRUE);
           return;
         }
 
@@ -211,7 +216,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
                      "requested invalid drawable (killing)",
                      gimp_filename_to_utf8 (plug_in->name),
                      gimp_filename_to_utf8 (plug_in->prog));
-          plug_in_close (plug_in, TRUE);
+          gimp_plug_in_close (plug_in, TRUE);
           return;
         }
 
@@ -228,7 +233,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
                      "requested invalid tile (killing)",
                      gimp_filename_to_utf8 (plug_in->name),
                      gimp_filename_to_utf8 (plug_in->prog));
-          plug_in_close (plug_in, TRUE);
+          gimp_plug_in_close (plug_in, TRUE);
           return;
         }
 
@@ -247,7 +252,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
       if (! gp_tile_ack_write (plug_in->my_write, plug_in))
         {
           g_warning ("plug_in_handle_tile_req: ERROR");
-          plug_in_close (plug_in, TRUE);
+          gimp_plug_in_close (plug_in, TRUE);
           return;
         }
     }
@@ -264,7 +269,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
                      "requested invalid drawable (killing)",
                      gimp_filename_to_utf8 (plug_in->name),
                      gimp_filename_to_utf8 (plug_in->prog));
-          plug_in_close (plug_in, TRUE);
+          gimp_plug_in_close (plug_in, TRUE);
           return;
         }
 
@@ -281,7 +286,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
                      "requested invalid tile (killing)",
                      gimp_filename_to_utf8 (plug_in->name),
                      gimp_filename_to_utf8 (plug_in->prog));
-          plug_in_close (plug_in, TRUE);
+          gimp_plug_in_close (plug_in, TRUE);
           return;
         }
 
@@ -303,7 +308,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
       if (! gp_tile_data_write (plug_in->my_write, &tile_data, plug_in))
         {
           g_message ("plug_in_handle_tile_req: ERROR");
-          plug_in_close (plug_in, TRUE);
+          gimp_plug_in_close (plug_in, TRUE);
           return;
         }
 
@@ -312,14 +317,14 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
       if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
         {
           g_message ("plug_in_handle_tile_req: ERROR");
-          plug_in_close (plug_in, TRUE);
+          gimp_plug_in_close (plug_in, TRUE);
           return;
         }
 
       if (msg.type != GP_TILE_ACK)
         {
           g_warning ("expected tile ack and received: %d", msg.type);
-          plug_in_close (plug_in, TRUE);
+          gimp_plug_in_close (plug_in, TRUE);
           return;
         }
 
@@ -328,20 +333,20 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
 }
 
 static void
-plug_in_handle_proc_run (PlugIn    *plug_in,
-                         GPProcRun *proc_run)
+gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
+                              GPProcRun  *proc_run)
 {
-  PlugInProcFrame *proc_frame;
-  gchar           *canonical;
-  const gchar     *proc_name     = NULL;
-  GimpProcedure   *procedure;
-  GValueArray     *args          = NULL;
-  GValueArray     *return_vals   = NULL;
-  GPProcReturn     proc_return;
+  GimpPlugInProcFrame *proc_frame;
+  gchar               *canonical;
+  const gchar         *proc_name     = NULL;
+  GimpProcedure       *procedure;
+  GValueArray         *args          = NULL;
+  GValueArray         *return_vals   = NULL;
+  GPProcReturn         proc_return;
 
   canonical = gimp_canonicalize_identifier (proc_run->name);
 
-  proc_frame = plug_in_get_proc_frame (plug_in);
+  proc_frame = gimp_plug_in_get_proc_frame (plug_in);
 
   procedure = gimp_pdb_lookup_procedure (plug_in->manager->gimp->pdb,
                                          canonical);
@@ -430,7 +435,7 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
   if (! gp_proc_return_write (plug_in->my_write, &proc_return, plug_in))
     {
       g_warning ("plug_in_handle_proc_run: ERROR");
-      plug_in_close (plug_in, TRUE);
+      gimp_plug_in_close (plug_in, TRUE);
     }
 
   g_value_array_free (args);
@@ -439,10 +444,10 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
 }
 
 static void
-plug_in_handle_proc_return (PlugIn       *plug_in,
-                            GPProcReturn *proc_return)
+gimp_plug_in_handle_proc_return (GimpPlugIn   *plug_in,
+                                 GPProcReturn *proc_return)
 {
-  PlugInProcFrame *proc_frame = &plug_in->main_proc_frame;
+  GimpPlugInProcFrame *proc_frame = &plug_in->main_proc_frame;
 
   if (proc_frame->main_loop)
     proc_frame->return_vals =
@@ -455,16 +460,16 @@ plug_in_handle_proc_return (PlugIn       *plug_in,
   if (proc_frame->main_loop)
     g_main_loop_quit (proc_frame->main_loop);
 
-  plug_in_close (plug_in, FALSE);
+  gimp_plug_in_close (plug_in, FALSE);
 }
 
 static void
-plug_in_handle_temp_proc_return (PlugIn       *plug_in,
-                                 GPProcReturn *proc_return)
+gimp_plug_in_handle_temp_proc_return (GimpPlugIn   *plug_in,
+                                      GPProcReturn *proc_return)
 {
   if (plug_in->temp_proc_frames)
     {
-      PlugInProcFrame *proc_frame = plug_in->temp_proc_frames->data;
+      GimpPlugInProcFrame *proc_frame = plug_in->temp_proc_frames->data;
 
       proc_frame->return_vals =
         plug_in_params_to_args (proc_frame->procedure->values,
@@ -473,8 +478,8 @@ plug_in_handle_temp_proc_return (PlugIn       *plug_in,
                                 proc_return->nparams,
                                 TRUE, TRUE);
 
-      plug_in_main_loop_quit (plug_in);
-      plug_in_proc_frame_pop (plug_in);
+      gimp_plug_in_main_loop_quit (plug_in);
+      gimp_plug_in_proc_frame_pop (plug_in);
     }
   else
     {
@@ -483,13 +488,13 @@ plug_in_handle_temp_proc_return (PlugIn       *plug_in,
                  "a temporary procedure.  This should not happen.",
                  gimp_filename_to_utf8 (plug_in->name),
                  gimp_filename_to_utf8 (plug_in->prog));
-      plug_in_close (plug_in, TRUE);
+      gimp_plug_in_close (plug_in, TRUE);
     }
 }
 
 static void
-plug_in_handle_proc_install (PlugIn        *plug_in,
-                             GPProcInstall *proc_install)
+gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
+                                  GPProcInstall *proc_install)
 {
   GimpPlugInProcedure *proc        = NULL;
   GimpProcedure       *procedure   = NULL;
@@ -587,7 +592,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
       proc = gimp_plug_in_procedure_find (plug_in->temp_procedures, canonical);
 
       if (proc)
-        plug_in_remove_temp_proc (plug_in, GIMP_TEMPORARY_PROCEDURE (proc));
+        gimp_plug_in_remove_temp_proc (plug_in, GIMP_TEMPORARY_PROCEDURE (proc));
 
       procedure = gimp_temporary_procedure_new (plug_in);
       break;
@@ -664,7 +669,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
       break;
 
     case GIMP_TEMPORARY:
-      plug_in_add_temp_proc (plug_in, GIMP_TEMPORARY_PROCEDURE (proc));
+      gimp_plug_in_add_temp_proc (plug_in, GIMP_TEMPORARY_PROCEDURE (proc));
       break;
     }
 
@@ -672,8 +677,8 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 }
 
 static void
-plug_in_handle_proc_uninstall (PlugIn          *plug_in,
-                               GPProcUninstall *proc_uninstall)
+gimp_plug_in_handle_proc_uninstall (GimpPlugIn      *plug_in,
+                                    GPProcUninstall *proc_uninstall)
 {
   GimpPlugInProcedure *proc;
   gchar               *canonical;
@@ -683,13 +688,13 @@ plug_in_handle_proc_uninstall (PlugIn          *plug_in,
   proc = gimp_plug_in_procedure_find (plug_in->temp_procedures, canonical);
 
   if (proc)
-    plug_in_remove_temp_proc (plug_in, GIMP_TEMPORARY_PROCEDURE (proc));
+    gimp_plug_in_remove_temp_proc (plug_in, GIMP_TEMPORARY_PROCEDURE (proc));
 
   g_free (canonical);
 }
 
 static void
-plug_in_handle_extension_ack (PlugIn *plug_in)
+gimp_plug_in_handle_extension_ack (GimpPlugIn *plug_in)
 {
   if (plug_in->ext_main_loop)
     {
@@ -702,12 +707,12 @@ plug_in_handle_extension_ack (PlugIn *plug_in)
                  "as an extension.  This should not happen.",
                  gimp_filename_to_utf8 (plug_in->name),
                  gimp_filename_to_utf8 (plug_in->prog));
-      plug_in_close (plug_in, TRUE);
+      gimp_plug_in_close (plug_in, TRUE);
     }
 }
 
 static void
-plug_in_handle_has_init (PlugIn *plug_in)
+gimp_plug_in_handle_has_init (GimpPlugIn *plug_in)
 {
   if (plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY)
     {
@@ -720,6 +725,6 @@ plug_in_handle_has_init (PlugIn *plug_in)
                  "This should not happen.",
                  gimp_filename_to_utf8 (plug_in->name),
                  gimp_filename_to_utf8 (plug_in->prog));
-      plug_in_close (plug_in, TRUE);
+      gimp_plug_in_close (plug_in, TRUE);
     }
 }

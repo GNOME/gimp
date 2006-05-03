@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * plug-in-proc-frame.h
+ * gimppluginprocframe.h
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,11 +18,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PLUG_IN_PROC_FRAME_H__
-#define __PLUG_IN_PRON_FRAME_H__
+#ifndef __GIMP_PLUG_IN_PROC_FRAME_H__
+#define __GIMP_PLUG_IN_PRON_FRAME_H__
 
 
-struct _PlugInProcFrame
+struct _GimpPlugInProcFrame
 {
   gint           ref_count;
 
@@ -40,22 +40,22 @@ struct _PlugInProcFrame
 };
 
 
-PlugInProcFrame * plug_in_proc_frame_new         (GimpContext     *context,
-                                                  GimpProgress    *progress,
-                                                  GimpProcedure   *procedure);
-void              plug_in_proc_frame_init        (PlugInProcFrame *proc_frame,
-                                                  GimpContext     *context,
-                                                  GimpProgress    *progress,
-                                                  GimpProcedure   *procedure);
+GimpPlugInProcFrame * gimp_plug_in_proc_frame_new     (GimpContext         *context,
+                                                       GimpProgress        *progress,
+                                                       GimpPlugInProcedure *procedure);
+void                  gimp_plug_in_proc_frame_init    (GimpPlugInProcFrame *proc_frame,
+                                                       GimpContext         *context,
+                                                       GimpProgress        *progress,
+                                                       GimpPlugInProcedure *procedure);
 
-void              plug_in_proc_frame_dispose     (PlugInProcFrame *proc_frame,
-                                                  PlugIn          *plug_in);
+void                  gimp_plug_in_proc_frame_dispose (GimpPlugInProcFrame *proc_frame,
+                                                       GimpPlugIn          *plug_in);
 
-PlugInProcFrame * plug_in_proc_frame_ref         (PlugInProcFrame *proc_frame);
-void              plug_in_proc_frame_unref       (PlugInProcFrame *proc_frame,
-                                                  PlugIn          *plug_in);
+GimpPlugInProcFrame * gimp_plug_in_proc_frame_ref     (GimpPlugInProcFrame *proc_frame);
+void                  gimp_plug_in_proc_frame_unref   (GimpPlugInProcFrame *proc_frame,
+                                                       GimpPlugIn          *plug_in);
 
-GValueArray * plug_in_proc_frame_get_return_vals (PlugInProcFrame *proc_frame);
+GValueArray * gimp_plug_in_proc_frame_get_return_vals (GimpPlugInProcFrame *proc_frame);
 
 
-#endif /* __PLUG_IN_PROC_FRAME_H__ */
+#endif /* __GIMP_PLUG_IN_PROC_FRAME_H__ */

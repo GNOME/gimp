@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * plug-in-proc-frame.c
+ * gimppluginprocframe.c
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,51 +29,49 @@
 #include "core/gimpcontext.h"
 #include "core/gimpprogress.h"
 
-#include "pdb/gimpprocedure.h"
+#include "pdb/gimppluginprocedure.h"
 
-#include "plug-in-proc-frame.h"
-#include "plug-in-progress.h"
-
-
-static void  plug_in_proc_frame_free (PlugInProcFrame *proc_frame,
-                                      PlugIn          *plug_in);
+#include "gimpplugin.h"
+#include "gimpplugin-progress.h"
 
 
 /*  publuc functions  */
 
-PlugInProcFrame *
-plug_in_proc_frame_new (GimpContext   *context,
-                        GimpProgress  *progress,
-                        GimpProcedure *procedure)
+GimpPlugInProcFrame *
+gimp_plug_in_proc_frame_new (GimpContext         *context,
+                             GimpProgress        *progress,
+                             GimpPlugInProcedure *procedure)
 {
-  PlugInProcFrame *proc_frame;
+  GimpPlugInProcFrame *proc_frame;
 
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
-  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (procedure), NULL);
 
-  proc_frame = g_new0 (PlugInProcFrame, 1);
+  proc_frame = g_new0 (GimpPlugInProcFrame, 1);
 
   proc_frame->ref_count = 1;
 
-  plug_in_proc_frame_init (proc_frame, context, progress, procedure);
+  gimp_plug_in_proc_frame_init (proc_frame, context, progress, procedure);
 
   return proc_frame;
 }
 
 void
-plug_in_proc_frame_init (PlugInProcFrame *proc_frame,
-                         GimpContext     *context,
-                         GimpProgress    *progress,
-                         GimpProcedure   *procedure)
+gimp_plug_in_proc_frame_init (GimpPlugInProcFrame *proc_frame,
+                              GimpContext         *context,
+                              GimpProgress        *progress,
+                              GimpPlugInProcedure *procedure)
 {
   g_return_if_fail (proc_frame != NULL);
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (procedure == NULL ||
+                    GIMP_IS_PLUG_IN_PROCEDURE (procedure));
 
   proc_frame->main_context       = g_object_ref (context);
   proc_frame->context_stack      = NULL;
-  proc_frame->procedure          = procedure;
+  proc_frame->procedure          = GIMP_PROCEDURE (procedure);
   proc_frame->main_loop          = NULL;
   proc_frame->return_vals        = NULL;
   proc_frame->progress           = progress ? g_object_ref (progress) : NULL;
@@ -82,15 +80,15 @@ plug_in_proc_frame_init (PlugInProcFrame *proc_frame,
 }
 
 void
-plug_in_proc_frame_dispose (PlugInProcFrame *proc_frame,
-                            PlugIn          *plug_in)
+gimp_plug_in_proc_frame_dispose (GimpPlugInProcFrame *proc_frame,
+                                 GimpPlugIn          *plug_in)
 {
   g_return_if_fail (proc_frame != NULL);
-  g_return_if_fail (plug_in != NULL);
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
 
   if (proc_frame->progress)
     {
-      plug_in_progress_end (plug_in);
+      gimp_plug_in_progress_end (plug_in);
 
       if (proc_frame->progress)
         {
@@ -111,22 +109,22 @@ plug_in_proc_frame_dispose (PlugInProcFrame *proc_frame,
       g_object_unref (proc_frame->main_context);
       proc_frame->main_context = NULL;
     }
+
+  if (proc_frame->return_vals)
+    {
+      g_value_array_free (proc_frame->return_vals);
+      proc_frame->return_vals = NULL;
+    }
+
+  if (proc_frame->main_loop)
+    {
+      g_main_loop_unref (proc_frame->main_loop);
+      proc_frame->main_loop = NULL;
+    }
 }
 
-static void
-plug_in_proc_frame_free (PlugInProcFrame *proc_frame,
-                         PlugIn          *plug_in)
-{
-  g_return_if_fail (proc_frame != NULL);
-  g_return_if_fail (plug_in != NULL);
-
-  plug_in_proc_frame_dispose (proc_frame, plug_in);
-
-  g_free (proc_frame);
-}
-
-PlugInProcFrame *
-plug_in_proc_frame_ref (PlugInProcFrame *proc_frame)
+GimpPlugInProcFrame *
+gimp_plug_in_proc_frame_ref (GimpPlugInProcFrame *proc_frame)
 {
   g_return_val_if_fail (proc_frame != NULL, NULL);
 
@@ -136,20 +134,23 @@ plug_in_proc_frame_ref (PlugInProcFrame *proc_frame)
 }
 
 void
-plug_in_proc_frame_unref (PlugInProcFrame *proc_frame,
-                          PlugIn          *plug_in)
+gimp_plug_in_proc_frame_unref (GimpPlugInProcFrame *proc_frame,
+                               GimpPlugIn          *plug_in)
 {
   g_return_if_fail (proc_frame != NULL);
-  g_return_if_fail (plug_in != NULL);
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
 
   proc_frame->ref_count--;
 
   if (proc_frame->ref_count < 1)
-    plug_in_proc_frame_free (proc_frame, plug_in);
+    {
+      gimp_plug_in_proc_frame_dispose (proc_frame, plug_in);
+      g_free (proc_frame);
+    }
 }
 
 GValueArray *
-plug_in_proc_frame_get_return_vals (PlugInProcFrame *proc_frame)
+gimp_plug_in_proc_frame_get_return_vals (GimpPlugInProcFrame *proc_frame)
 {
   GValueArray *return_vals;
 

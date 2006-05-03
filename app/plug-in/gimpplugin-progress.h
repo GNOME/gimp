@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * plug-in-progress.h
+ * gimpplugin-progress.h
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,30 +18,30 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PLUG_IN_PROGRESS_H__
-#define __PLUG_IN_PROGRESS_H__
+#ifndef __GIMP_PLUG_IN_PROGRESS_H__
+#define __GIMP_PLUG_IN_PROGRESS_H__
 
 
-void       plug_in_progress_start      (PlugIn      *plug_in,
-                                        const gchar *message,
-                                        GimpObject  *display);
-void       plug_in_progress_end        (PlugIn      *plug_in);
-void       plug_in_progress_set_text   (PlugIn      *plug_in,
-                                        const gchar *message);
-void       plug_in_progress_set_value  (PlugIn      *plug_in,
-                                        gdouble      percentage);
-void       plug_in_progress_pulse      (PlugIn      *plug_in);
-guint32    plug_in_progress_get_window (PlugIn      *plug_in);
+void       gimp_plug_in_progress_start      (GimpPlugIn  *plug_in,
+                                             const gchar *message,
+                                             GimpObject  *display);
+void       gimp_plug_in_progress_end        (GimpPlugIn  *plug_in);
+void       gimp_plug_in_progress_set_text   (GimpPlugIn  *plug_in,
+                                             const gchar *message);
+void       gimp_plug_in_progress_set_value  (GimpPlugIn  *plug_in,
+                                             gdouble      percentage);
+void       gimp_plug_in_progress_pulse      (GimpPlugIn  *plug_in);
+guint32    gimp_plug_in_progress_get_window (GimpPlugIn  *plug_in);
 
-gboolean   plug_in_progress_install    (PlugIn      *plug_in,
-                                        const gchar *progress_callback);
-gboolean   plug_in_progress_uninstall  (PlugIn      *plug_in,
-                                        const gchar *progress_callback);
-gboolean   plug_in_progress_cancel     (PlugIn      *plug_in,
-                                        const gchar *progress_callback);
+gboolean   gimp_plug_in_progress_install    (GimpPlugIn  *plug_in,
+                                             const gchar *progress_callback);
+gboolean   gimp_plug_in_progress_uninstall  (GimpPlugIn  *plug_in,
+                                             const gchar *progress_callback);
+gboolean   gimp_plug_in_progress_cancel     (GimpPlugIn  *plug_in,
+                                             const gchar *progress_callback);
 
-void       plug_in_progress_message    (PlugIn      *plug_in,
-                                        const gchar *message);
+void      gimp_plug_in_progress_message     (GimpPlugIn  *plug_in,
+                                             const gchar *message);
 
 
-#endif /* __PLUG_IN_PROGRESS_H__ */
+#endif /* __GIMP_PLUG_IN_PROGRESS_H__ */
