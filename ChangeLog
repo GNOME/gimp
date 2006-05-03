@@ -1,5 +1,9 @@
 2006-05-03  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/gifload.c: removed some unused code, untabified.
+
+2006-05-03  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpparamspecs.c (gimp_string_array_new,
 	gimp_param_string_array_validate): relaxed the checks so that
 	GimpStringArray deals correctly with (length == 0 && data != NULL).

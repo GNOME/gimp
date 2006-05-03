@@ -1,4 +1,4 @@
-/* GIF loading file filter for The GIMP 1.3/1.4
+/* GIF loading file filter for GIMP 2.x
  * +-------------------------------------------------------------------+
  * |  Copyright Adam D. Moss, Peter Mattis, Spencer Kimball            |
  * +-------------------------------------------------------------------+
@@ -139,7 +139,7 @@ query (void)
                           "Spencer Kimball, Peter Mattis, Adam Moss, David Koblas",
                           "1995-2006",
                           N_("GIF image"),
-			  NULL,
+                          NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
@@ -147,9 +147,9 @@ query (void)
 
   gimp_register_file_handler_mime (LOAD_PROC, "image/gif");
   gimp_register_magic_load_handler (LOAD_PROC,
-				    "gif",
-				    "",
-				    "0,string,GIF8");
+                                    "gif",
+                                    "",
+                                    "0,string,GIF8");
 
   gimp_install_procedure (LOAD_THUMB_PROC,
                           "Loads only the first frame of a GIF image, to be "
@@ -158,8 +158,8 @@ query (void)
                           "Sven Neumann",
                           "Sven Neumann",
                           "2006",
-			  NULL,
-			  NULL,
+                          NULL,
+                          NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (thumb_args),
                           G_N_ELEMENTS (load_return_vals),
@@ -221,7 +221,7 @@ run (const gchar      *name,
             gimp_image_set_colormap (image_ID,
                                      gimp_cmap, highest_used_index + 1);
 
-	  *nreturn_vals = 2;
+          *nreturn_vals = 2;
           values[1].type         = GIMP_PDB_IMAGE;
           values[1].data.d_image = image_ID;
         }
@@ -285,7 +285,7 @@ static int GetCode      (FILE *, int, int);
 static int LZWReadByte  (FILE *, int, int);
 static gint32 ReadImage (FILE *, const gchar *,
                          int, int, CMap, int, int, int, int,
-			 guint, guint, guint, guint);
+                         guint, guint, guint, guint);
 
 
 static gint32
@@ -353,10 +353,10 @@ load_image (const gchar *filename,
       /* Global Colormap */
       if (ReadColorMap (fd, GifScreen.BitPixel, GifScreen.ColorMap,
                         &GifScreen.GrayScale))
-	{
-	  g_message ("Error reading global colormap");
-	  return -1;
-	}
+        {
+          g_message ("Error reading global colormap");
+          return -1;
+        }
     }
 
   if (GifScreen.AspectRatio != 0 && GifScreen.AspectRatio != 49)
@@ -370,87 +370,87 @@ load_image (const gchar *filename,
   for (;;)
     {
       if (!ReadOK (fd, &c, 1))
-	{
-	  g_message ("EOF / read error on image data");
-	  return image_ID; /* will be -1 if failed on first image! */
-	}
+        {
+          g_message ("EOF / read error on image data");
+          return image_ID; /* will be -1 if failed on first image! */
+        }
 
       if (c == ';')
-	{
-	  /* GIF terminator */
-	  return image_ID;
-	}
+        {
+          /* GIF terminator */
+          return image_ID;
+        }
 
       if (c == '!')
-	{
-	  /* Extension */
-	  if (!ReadOK (fd, &c, 1))
-	    {
-	      g_message ("EOF / read error on extension function code");
-	      return image_ID; /* will be -1 if failed on first image! */
-	    }
-	  DoExtension (fd, c);
-	  continue;
-	}
+        {
+          /* Extension */
+          if (!ReadOK (fd, &c, 1))
+            {
+              g_message ("EOF / read error on extension function code");
+              return image_ID; /* will be -1 if failed on first image! */
+            }
+          DoExtension (fd, c);
+          continue;
+        }
 
       if (c != ',')
-	{
-	  /* Not a valid start character */
-	  g_printerr ("GIF: bogus character 0x%02x, ignoring.\n", (int) c);
-	  continue;
-	}
+        {
+          /* Not a valid start character */
+          g_printerr ("GIF: bogus character 0x%02x, ignoring.\n", (int) c);
+          continue;
+        }
 
       ++imageCount;
 
       if (!ReadOK (fd, buf, 9))
-	{
-	  g_message ("Couldn't read left/top/width/height");
-	  return image_ID; /* will be -1 if failed on first image! */
-	}
+        {
+          g_message ("Couldn't read left/top/width/height");
+          return image_ID; /* will be -1 if failed on first image! */
+        }
 
       useGlobalColormap = !BitSet (buf[8], LOCALCOLORMAP);
 
       bitPixel = 1 << ((buf[8] & 0x07) + 1);
 
       if (! useGlobalColormap)
-	{
-	  if (ReadColorMap (fd, bitPixel, localColorMap, &grayScale))
-	    {
-	      g_message ("Error reading local colormap");
-	      return image_ID; /* will be -1 if failed on first image! */
-	    }
+        {
+          if (ReadColorMap (fd, bitPixel, localColorMap, &grayScale))
+            {
+              g_message ("Error reading local colormap");
+              return image_ID; /* will be -1 if failed on first image! */
+            }
 
-	  image_ID = ReadImage (fd, filename, LM_to_uint (buf[4], buf[5]),
-				LM_to_uint (buf[6], buf[7]),
-				localColorMap, bitPixel,
-				grayScale,
-				BitSet (buf[8], INTERLACE), imageCount,
-				(guint) LM_to_uint (buf[0], buf[1]),
-				(guint) LM_to_uint (buf[2], buf[3]),
-				GifScreen.Width,
-				GifScreen.Height);
-	}
+          image_ID = ReadImage (fd, filename, LM_to_uint (buf[4], buf[5]),
+                                LM_to_uint (buf[6], buf[7]),
+                                localColorMap, bitPixel,
+                                grayScale,
+                                BitSet (buf[8], INTERLACE), imageCount,
+                                (guint) LM_to_uint (buf[0], buf[1]),
+                                (guint) LM_to_uint (buf[2], buf[3]),
+                                GifScreen.Width,
+                                GifScreen.Height);
+        }
       else
-	{
-	  image_ID = ReadImage (fd, filename, LM_to_uint (buf[4], buf[5]),
-				LM_to_uint (buf[6], buf[7]),
-				GifScreen.ColorMap, GifScreen.BitPixel,
-				GifScreen.GrayScale,
-				BitSet (buf[8], INTERLACE), imageCount,
-				(guint) LM_to_uint (buf[0], buf[1]),
-				(guint) LM_to_uint (buf[2], buf[3]),
-				GifScreen.Width,
-				GifScreen.Height);
-	}
+        {
+          image_ID = ReadImage (fd, filename, LM_to_uint (buf[4], buf[5]),
+                                LM_to_uint (buf[6], buf[7]),
+                                GifScreen.ColorMap, GifScreen.BitPixel,
+                                GifScreen.GrayScale,
+                                BitSet (buf[8], INTERLACE), imageCount,
+                                (guint) LM_to_uint (buf[0], buf[1]),
+                                (guint) LM_to_uint (buf[2], buf[3]),
+                                GifScreen.Width,
+                                GifScreen.Height);
+        }
 
       if (comment_parasite != NULL)
-	{
+        {
           if (! thumbnail)
             gimp_image_parasite_attach (image_ID, comment_parasite);
 
-	  gimp_parasite_free (comment_parasite);
-	  comment_parasite = NULL;
-	}
+          gimp_parasite_free (comment_parasite);
+          comment_parasite = NULL;
+        }
 
       /* If we are loading a thumbnail, we stop after the first frame. */
       if (thumbnail)
@@ -462,9 +462,9 @@ load_image (const gchar *filename,
 
 static int
 ReadColorMap (FILE *fd,
-	      int   number,
-	      CMap  buffer,
-	      int  *format)
+              int   number,
+              CMap  buffer,
+              int  *format)
 {
   guchar rgb[3];
   gint   flag;
@@ -475,10 +475,10 @@ ReadColorMap (FILE *fd,
   for (i = 0; i < number; ++i)
     {
       if (!ReadOK (fd, rgb, sizeof (rgb)))
-	{
-	  g_message ("Bad colormap");
-	  return TRUE;
-	}
+        {
+          g_message ("Bad colormap");
+          return TRUE;
+        }
 
       buffer[CM_RED][i] = rgb[0];
       buffer[CM_GREEN][i] = rgb[1];
@@ -494,18 +494,18 @@ ReadColorMap (FILE *fd,
 
 static int
 DoExtension (FILE *fd,
-	     int   label)
+             int   label)
 {
   static gchar  buf[256];
   gchar        *str;
 
   switch (label)
     {
-    case 0x01:			/* Plain Text Extension */
+    case 0x01:                  /* Plain Text Extension */
       str = "Plain Text Extension";
 #ifdef notdef
       if (GetDataBlock (fd, (unsigned char *) buf) == 0)
-	;
+        ;
 
       lpos = LM_to_uint (buf[0], buf[1]);
       tpos = LM_to_uint (buf[2], buf[3]);
@@ -517,50 +517,50 @@ DoExtension (FILE *fd,
       background = buf[11];
 
       while (GetDataBlock (fd, (unsigned char *) buf) > 0)
-	{
-	  PPM_ASSIGN (image[ypos][xpos],
-		      cmap[CM_RED][v],
-		      cmap[CM_GREEN][v],
-		      cmap[CM_BLUE][v]);
-	  ++index;
-	}
+        {
+          PPM_ASSIGN (image[ypos][xpos],
+                      cmap[CM_RED][v],
+                      cmap[CM_GREEN][v],
+                      cmap[CM_BLUE][v]);
+          ++index;
+        }
 
       return FALSE;
 #else
       break;
 #endif
-    case 0xff:			/* Application Extension */
+    case 0xff:                  /* Application Extension */
       str = "Application Extension";
       break;
-    case 0xfe:			/* Comment Extension */
+    case 0xfe:                  /* Comment Extension */
       str = "Comment Extension";
       while (GetDataBlock (fd, (unsigned char *) buf) > 0)
-	{
+        {
           if (!g_utf8_validate (buf, -1, NULL))
             continue;
 
-	  if (comment_parasite)
+          if (comment_parasite)
             gimp_parasite_free (comment_parasite);
 
-	  comment_parasite = gimp_parasite_new ("gimp-comment",
+          comment_parasite = gimp_parasite_new ("gimp-comment",
                                                 GIMP_PARASITE_PERSISTENT,
                                                 strlen (buf) + 1, buf);
-	}
+        }
       return TRUE;
       break;
-    case 0xf9:			/* Graphic Control Extension */
+    case 0xf9:                  /* Graphic Control Extension */
       str = "Graphic Control Extension";
       (void) GetDataBlock (fd, (unsigned char *) buf);
       Gif89.disposal = (buf[0] >> 2) & 0x7;
       Gif89.inputFlag = (buf[0] >> 1) & 0x1;
       Gif89.delayTime = LM_to_uint (buf[1], buf[2]);
       if ((buf[0] & 0x1) != 0)
-	Gif89.transparent = buf[3];
+        Gif89.transparent = buf[3];
       else
-	Gif89.transparent = -1;
+        Gif89.transparent = -1;
 
       while (GetDataBlock (fd, (unsigned char *) buf) > 0)
-	;
+        ;
       return FALSE;
       break;
     default:
@@ -583,7 +583,7 @@ int ZeroDataBlock = FALSE;
 
 static int
 GetDataBlock (FILE          *fd,
-	      unsigned char *buf)
+              unsigned char *buf)
 {
   unsigned char count;
 
@@ -606,8 +606,8 @@ GetDataBlock (FILE          *fd,
 
 static int
 GetCode (FILE *fd,
-	 int   code_size,
-	 int   flag)
+         int   code_size,
+         int   flag)
 {
   static unsigned char buf[280];
   static int curbit, lastbit, done, last_byte;
@@ -625,20 +625,20 @@ GetCode (FILE *fd,
   if ((curbit + code_size) >= lastbit)
     {
       if (done)
-	{
-	  if (curbit >= lastbit)
-	    {
-	      g_message ("Ran off the end of my bits");
-	      gimp_quit ();
-	    }
-	  return -1;
-	}
+        {
+          if (curbit >= lastbit)
+            {
+              g_message ("Ran off the end of my bits");
+              gimp_quit ();
+            }
+          return -1;
+        }
 
       buf[0] = buf[last_byte - 2];
       buf[1] = buf[last_byte - 1];
 
       if ((count = GetDataBlock (fd, &buf[2])) <= 0)
-	done = TRUE;
+        done = TRUE;
 
       last_byte = 2 + count;
       curbit = (curbit - lastbit) + 16;
@@ -656,8 +656,8 @@ GetCode (FILE *fd,
 
 static int
 LZWReadByte (FILE *fd,
-	     int   just_reset_LZW,
-	     int   input_code_size)
+             int   just_reset_LZW,
+             int   input_code_size)
 {
   static int fresh = FALSE;
   int code, incode;
@@ -672,10 +672,10 @@ LZWReadByte (FILE *fd,
   if (just_reset_LZW)
     {
       if (input_code_size > MAX_LZW_BITS)
-	{
-	  g_message("Value out of range for code size (corrupted file?)");
-	  return -1;
-	}
+        {
+          g_message("Value out of range for code size (corrupted file?)");
+          return -1;
+        }
 
       set_code_size = input_code_size;
       code_size = set_code_size + 1;
@@ -691,15 +691,15 @@ LZWReadByte (FILE *fd,
       sp = stack;
 
       for (i = 0; i < clear_code; ++i)
-	{
-	  table[0][i] = 0;
-	  table[1][i] = i;
-	}
+        {
+          table[0][i] = 0;
+          table[1][i] = i;
+        }
       for (; i < (1 << MAX_LZW_BITS); ++i)
-	{
-	  table[0][i] = 0;
-	  table[1][i] = 0;
-	}
+        {
+          table[0][i] = 0;
+          table[1][i] = 0;
+        }
 
       return 0;
     }
@@ -707,10 +707,10 @@ LZWReadByte (FILE *fd,
     {
       fresh = FALSE;
       do
-	{
-	  firstcode = oldcode =
-	    GetCode (fd, code_size, FALSE);
-	}
+        {
+          firstcode = oldcode =
+            GetCode (fd, code_size, FALSE);
+        }
       while (firstcode == clear_code);
       return firstcode;
     }
@@ -721,97 +721,97 @@ LZWReadByte (FILE *fd,
   while ((code = GetCode (fd, code_size, FALSE)) >= 0)
     {
       if (code == clear_code)
-	{
-	  for (i = 0; i < clear_code; ++i)
-	    {
-	      table[0][i] = 0;
-	      table[1][i] = i;
-	    }
-	  for (; i < (1 << MAX_LZW_BITS); ++i)
-	    {
-	      table[0][i] = 0;
-	      table[1][i] = 0;
-	    }
-	  code_size = set_code_size + 1;
-	  max_code_size = 2 * clear_code;
-	  max_code = clear_code + 2;
-	  sp = stack;
-	  firstcode = oldcode =
-	    GetCode (fd, code_size, FALSE);
-	  return firstcode;
-	}
+        {
+          for (i = 0; i < clear_code; ++i)
+            {
+              table[0][i] = 0;
+              table[1][i] = i;
+            }
+          for (; i < (1 << MAX_LZW_BITS); ++i)
+            {
+              table[0][i] = 0;
+              table[1][i] = 0;
+            }
+          code_size = set_code_size + 1;
+          max_code_size = 2 * clear_code;
+          max_code = clear_code + 2;
+          sp = stack;
+          firstcode = oldcode =
+            GetCode (fd, code_size, FALSE);
+          return firstcode;
+        }
       else if (code == end_code)
-	{
-	  int count;
-	  unsigned char buf[260];
+        {
+          int count;
+          unsigned char buf[260];
 
-	  if (ZeroDataBlock)
-	    return -2;
+          if (ZeroDataBlock)
+            return -2;
 
-	  while ((count = GetDataBlock (fd, buf)) > 0)
-	    ;
+          while ((count = GetDataBlock (fd, buf)) > 0)
+            ;
 
-	  if (count != 0)
-	    g_print ("GIF: missing EOD in data stream (common occurence)");
-	  return -2;
-	}
+          if (count != 0)
+            g_print ("GIF: missing EOD in data stream (common occurence)");
+          return -2;
+        }
 
       incode = code;
 
       if (code >= max_code)
-	{
-	  *sp++ = firstcode;
-	  code = oldcode;
-	}
+        {
+          *sp++ = firstcode;
+          code = oldcode;
+        }
 
       while (code >= clear_code)
-	{
-	  *sp++ = table[1][code];
-	  if (code == table[0][code])
-	    {
-	      g_message ("Circular table entry.  Corrupt file.");
-	      gimp_quit ();
-	    }
-	  code = table[0][code];
-	}
+        {
+          *sp++ = table[1][code];
+          if (code == table[0][code])
+            {
+              g_message ("Circular table entry.  Corrupt file.");
+              gimp_quit ();
+            }
+          code = table[0][code];
+        }
 
       *sp++ = firstcode = table[1][code];
 
       if ((code = max_code) < (1 << MAX_LZW_BITS))
-	{
-	  table[0][code] = oldcode;
-	  table[1][code] = firstcode;
-	  ++max_code;
-	  if ((max_code >= max_code_size) &&
-	      (max_code_size < (1 << MAX_LZW_BITS)))
-	    {
-	      max_code_size *= 2;
-	      ++code_size;
-	    }
-	}
+        {
+          table[0][code] = oldcode;
+          table[1][code] = firstcode;
+          ++max_code;
+          if ((max_code >= max_code_size) &&
+              (max_code_size < (1 << MAX_LZW_BITS)))
+            {
+              max_code_size *= 2;
+              ++code_size;
+            }
+        }
 
       oldcode = incode;
 
       if (sp > stack)
-	return *--sp;
+        return *--sp;
     }
   return code;
 }
 
 static gint32
 ReadImage (FILE        *fd,
-	   const gchar *filename,
-	   gint         len,
-	   gint         height,
-	   CMap         cmap,
-	   gint         ncols,
-	   gint         format,
-	   gint         interlace,
-	   gint         number,
-	   guint        leftpos,
-	   guint        toppos,
-	   guint        screenwidth,
-	   guint        screenheight)
+           const gchar *filename,
+           gint         len,
+           gint         height,
+           CMap         cmap,
+           gint         ncols,
+           gint         format,
+           gint         interlace,
+           gint         number,
+           guint        leftpos,
+           guint        toppos,
+           guint        screenwidth,
+           guint        screenheight)
 {
   static gint32 image_ID   = -1;
   static gint frame_number = 1;
@@ -856,44 +856,44 @@ ReadImage (FILE        *fd,
     {
       /* Guard against bogus logical screen size values */
       if (screenwidth == 0)
-	screenwidth = len;
+        screenwidth = len;
 
       if (screenheight == 0)
-	screenheight = height;
+        screenheight = height;
 
       image_ID = gimp_image_new (screenwidth, screenheight, GIMP_INDEXED);
       gimp_image_set_filename (image_ID, filename);
 
       for (i = 0, j = 0; i < ncols; i++)
-	{
-	  used_cmap[0][i] = gimp_cmap[j++] = cmap[0][i];
-	  used_cmap[1][i] = gimp_cmap[j++] = cmap[1][i];
-	  used_cmap[2][i] = gimp_cmap[j++] = cmap[2][i];
-	}
+        {
+          used_cmap[0][i] = gimp_cmap[j++] = cmap[0][i];
+          used_cmap[1][i] = gimp_cmap[j++] = cmap[1][i];
+          used_cmap[2][i] = gimp_cmap[j++] = cmap[2][i];
+        }
 
       gimp_image_set_colormap (image_ID, gimp_cmap, ncols);
 
       if (Gif89.delayTime < 0)
-	framename = g_strdup (_("Background"));
+        framename = g_strdup (_("Background"));
       else
-	framename = g_strdup_printf (_("Background (%d%s)"),
+        framename = g_strdup_printf (_("Background (%d%s)"),
                                      10 * Gif89.delayTime, "ms");
 
       previous_disposal = Gif89.disposal;
 
       if (Gif89.transparent == -1)
-	{
-	  layer_ID = gimp_layer_new (image_ID, framename,
-				     len, height,
-				     GIMP_INDEXED_IMAGE, 100, GIMP_NORMAL_MODE);
-	}
+        {
+          layer_ID = gimp_layer_new (image_ID, framename,
+                                     len, height,
+                                     GIMP_INDEXED_IMAGE, 100, GIMP_NORMAL_MODE);
+        }
       else
-	{
-	  layer_ID = gimp_layer_new (image_ID, framename,
-				     len, height,
-				     GIMP_INDEXEDA_IMAGE, 100, GIMP_NORMAL_MODE);
-	  alpha_frame=TRUE;
-	}
+        {
+          layer_ID = gimp_layer_new (image_ID, framename,
+                                     len, height,
+                                     GIMP_INDEXEDA_IMAGE, 100, GIMP_NORMAL_MODE);
+          alpha_frame=TRUE;
+        }
 
       g_free (framename);
     }
@@ -906,77 +906,77 @@ ReadImage (FILE        *fd,
 
        /* If the colourmap is now different, we have to promote to RGB! */
       if (!promote_to_rgb)
-	{
-	  for (i = 0; i < ncols; i++)
-	    {
-	      if ((used_cmap[0][i] != cmap[0][i]) ||
-		  (used_cmap[1][i] != cmap[1][i]) ||
-		  (used_cmap[2][i] != cmap[2][i]))
-		{
+        {
+          for (i = 0; i < ncols; i++)
+            {
+              if ((used_cmap[0][i] != cmap[0][i]) ||
+                  (used_cmap[1][i] != cmap[1][i]) ||
+                  (used_cmap[2][i] != cmap[2][i]))
+                {
                   /* Everything is RGB(A) from now on... sigh. */
-		  promote_to_rgb = TRUE;
+                  promote_to_rgb = TRUE;
 
-		  /* Promote everything we have so far into RGB(A) */
+                  /* Promote everything we have so far into RGB(A) */
 #ifdef GIFDEBUG
-		  g_print ("GIF: Promoting image to RGB...\n");
+                  g_print ("GIF: Promoting image to RGB...\n");
 #endif
-		  gimp_image_convert_rgb (image_ID);
+                  gimp_image_convert_rgb (image_ID);
 
-		  break;
-		}
-	    }
-	}
+                  break;
+                }
+            }
+        }
 
       if (Gif89.delayTime < 0)
-	framename = g_strdup_printf (_("Frame %d"), frame_number);
+        framename = g_strdup_printf (_("Frame %d"), frame_number);
       else
-	framename = g_strdup_printf (_("Frame %d (%d%s)"),
+        framename = g_strdup_printf (_("Frame %d (%d%s)"),
                                      frame_number, 10 * Gif89.delayTime, "ms");
 
       switch (previous_disposal)
-	{
-	case 0x00:
-	  break; /* 'don't care' */
-	case 0x01:
-	  framename_ptr = framename;
-	  framename = g_strconcat (framename, " (combine)", NULL);
-	  g_free (framename_ptr);
-	  break;
-	case 0x02:
-	  framename_ptr = framename;
-	  framename = g_strconcat (framename, " (replace)", NULL);
-	  g_free (framename_ptr);
-	  break;
-	case 0x03:  /* Rarely-used, and unhandled by many
-		       loaders/players (including GIMP: we treat as
-		       'combine' mode). */
-	  framename_ptr = framename;
-	  framename = g_strconcat (framename, " (combine) (!)", NULL);
-	  g_free (framename_ptr);
-	  break;
-	case 0x04: /* I've seen a composite of this type. stvo_online_banner2.gif */
-	case 0x05:
-	case 0x06: /* I've seen a composite of this type. bn31.Gif */
-	case 0x07:
-	  framename_ptr = framename;
-	  framename = g_strconcat (framename, " (unknown disposal)", NULL);
-	  g_free (framename_ptr);
- 	  g_message (_("GIF: Undocumented GIF composite type %d is "
- 		       "not handled.  Animation might not play or "
- 		       "re-save perfectly."),
-		     previous_disposal);
-	  break;
-	default:
-	  g_message ("Disposal word got corrupted.  Bug.");
-	  break;
-	}
+        {
+        case 0x00:
+          break; /* 'don't care' */
+        case 0x01:
+          framename_ptr = framename;
+          framename = g_strconcat (framename, " (combine)", NULL);
+          g_free (framename_ptr);
+          break;
+        case 0x02:
+          framename_ptr = framename;
+          framename = g_strconcat (framename, " (replace)", NULL);
+          g_free (framename_ptr);
+          break;
+        case 0x03:  /* Rarely-used, and unhandled by many
+                       loaders/players (including GIMP: we treat as
+                       'combine' mode). */
+          framename_ptr = framename;
+          framename = g_strconcat (framename, " (combine) (!)", NULL);
+          g_free (framename_ptr);
+          break;
+        case 0x04: /* I've seen a composite of this type. stvo_online_banner2.gif */
+        case 0x05:
+        case 0x06: /* I've seen a composite of this type. bn31.Gif */
+        case 0x07:
+          framename_ptr = framename;
+          framename = g_strconcat (framename, " (unknown disposal)", NULL);
+          g_free (framename_ptr);
+          g_message (_("GIF: Undocumented GIF composite type %d is "
+                       "not handled.  Animation might not play or "
+                       "re-save perfectly."),
+                     previous_disposal);
+          break;
+        default:
+          g_message ("Disposal word got corrupted.  Bug.");
+          break;
+        }
       previous_disposal = Gif89.disposal;
 
       layer_ID = gimp_layer_new (image_ID, framename,
-				 len, height,
-				 promote_to_rgb ?
+                                 len, height,
+                                 promote_to_rgb ?
                                  GIMP_RGBA_IMAGE : GIMP_INDEXEDA_IMAGE,
-				 100, GIMP_NORMAL_MODE);
+                                 100, GIMP_NORMAL_MODE);
       alpha_frame = TRUE;
       g_free (framename);
     }
@@ -993,19 +993,19 @@ ReadImage (FILE        *fd,
 
   if (alpha_frame)
     dest = (guchar *) g_malloc (len * height *
-				(promote_to_rgb ? 4 : 2));
+                                (promote_to_rgb ? 4 : 2));
   else
     dest = (guchar *) g_malloc (len * height);
 
 #ifdef GIFDEBUG
     g_print ("GIF: reading %d by %d%s GIF image, ncols=%d\n",
-	     len, height, interlace ? " interlaced" : "", ncols);
+             len, height, interlace ? " interlaced" : "", ncols);
 #endif
 
   if (!alpha_frame && promote_to_rgb)
     {
       /* I don't see how one would easily construct a GIF in which
- 	 this could happen, but it's a mad mad world. */
+         this could happen, but it's a mad mad world. */
       g_message ("Ouch!  Can't handle non-alpha RGB frames.\n"
                  "Please file a bug report in GIMP's bugzilla.");
       gimp_quit ();
@@ -1014,77 +1014,77 @@ ReadImage (FILE        *fd,
   while ((v = LZWReadByte (fd, FALSE, c)) >= 0)
     {
       if (alpha_frame)
-	{
-	  if (((guchar) v > highest_used_index) && !(v == Gif89.transparent))
-	    highest_used_index = (guchar) v;
+        {
+          if (((guchar) v > highest_used_index) && !(v == Gif89.transparent))
+            highest_used_index = (guchar) v;
 
-	  if (promote_to_rgb)
-	    {
-	      temp = dest + ( (ypos * len) + xpos ) * 4;
-	      *(temp  ) = (guchar) cmap[0][v];
-	      *(temp+1) = (guchar) cmap[1][v];
-	      *(temp+2) = (guchar) cmap[2][v];
-	      *(temp+3) = (guchar) ((v == Gif89.transparent) ? 0 : 255);
-	    }
-	  else
-	    {
-	      temp = dest + ( (ypos * len) + xpos ) * 2;
-	      *temp = (guchar) v;
-	      *(temp+1) = (guchar) ((v == Gif89.transparent) ? 0 : 255);
-	    }
-	}
+          if (promote_to_rgb)
+            {
+              temp = dest + ( (ypos * len) + xpos ) * 4;
+              *(temp  ) = (guchar) cmap[0][v];
+              *(temp+1) = (guchar) cmap[1][v];
+              *(temp+2) = (guchar) cmap[2][v];
+              *(temp+3) = (guchar) ((v == Gif89.transparent) ? 0 : 255);
+            }
+          else
+            {
+              temp = dest + ( (ypos * len) + xpos ) * 2;
+              *temp = (guchar) v;
+              *(temp+1) = (guchar) ((v == Gif89.transparent) ? 0 : 255);
+            }
+        }
       else
-	{
-	  if ((guchar) v > highest_used_index)
-	    highest_used_index = (guchar) v;
+        {
+          if ((guchar) v > highest_used_index)
+            highest_used_index = (guchar) v;
 
-	  temp = dest + (ypos * len) + xpos;
-	  *temp = (guchar) v;
-	}
+          temp = dest + (ypos * len) + xpos;
+          *temp = (guchar) v;
+        }
 
       xpos++;
       if (xpos == len)
-	{
-	  xpos = 0;
-	  if (interlace)
-	    {
-	      switch (pass)
-		{
-		case 0:
-		case 1:
-		  ypos += 8;
-		  break;
-		case 2:
-		  ypos += 4;
-		  break;
-		case 3:
-		  ypos += 2;
-		  break;
-		}
+        {
+          xpos = 0;
+          if (interlace)
+            {
+              switch (pass)
+                {
+                case 0:
+                case 1:
+                  ypos += 8;
+                  break;
+                case 2:
+                  ypos += 4;
+                  break;
+                case 3:
+                  ypos += 2;
+                  break;
+                }
 
-	      if (ypos >= height)
-		{
-		  pass++;
-		  switch (pass)
-		    {
-		    case 1:
-		      ypos = 4;
-		      break;
-		    case 2:
-		      ypos = 2;
-		      break;
-		    case 3:
-		      ypos = 1;
-		      break;
-		    default:
-		      goto fini;
-		    }
-		}
-	    }
-	  else
-	    {
-	      ypos++;
-	    }
+              if (ypos >= height)
+                {
+                  pass++;
+                  switch (pass)
+                    {
+                    case 1:
+                      ypos = 4;
+                      break;
+                    case 2:
+                      ypos = 2;
+                      break;
+                    case 3:
+                      ypos = 1;
+                      break;
+                    default:
+                      goto fini;
+                    }
+                }
+            }
+          else
+            {
+              ypos++;
+            }
 
           if (frame_number == 1)
             {
@@ -1096,7 +1096,7 @@ ReadImage (FILE        *fd,
         }
 
       if (ypos >= height)
-	break;
+        break;
     }
 
 fini:
@@ -1115,107 +1115,3 @@ fini:
 
   return image_ID;
 }
-
-
-
-/* ppmtogif.c - read a portable pixmap and produce a GIF file
-**
-** Based on GIFENCOD by David Rowley <mgardi@watdscu.waterloo.edu>.A
-** Lempel-Zim compression based on "compress".
-**
-** Modified by Marcel Wijkstra <wijkstra@fwi.uva.nl>
-**
-**
-** Copyright (C) 1989 by Jef Poskanzer.
-**
-** Permission to use, copy, modify, and distribute this software and its
-** documentation for any purpose and without fee is hereby granted, provided
-** that the above copyright notice appear in all copies and that both that
-** copyright notice and this permission notice appear in supporting
-** documentation.  This software is provided "as is" without express or
-** implied warranty.
-**
-** The Graphics Interchange Format(c) is the Copyright property of
-** CompuServe Incorporated.  GIF(sm) is a Service Mark property of
-** CompuServe Incorporated.
-*/
-
-#define MAXCOLORS 256
-
-/*
- * Pointer to function returning an int
- */
-typedef int (*ifunptr) (int, int);
-
-/*
- * a code_int must be able to hold 2**BITS values of type int, and also -1
- */
-typedef int code_int;
-
-#ifdef SIGNED_COMPARE_SLOW
-typedef unsigned long int count_int;
-typedef unsigned short int count_short;
-#else /*SIGNED_COMPARE_SLOW */
-typedef long int count_int;
-#endif /*SIGNED_COMPARE_SLOW */
-
-
-
-/* public */
-
-
-
-/***************************************************************************
- *
- *  GIFCOMPR.C       - GIF Image compression routines
- *
- *  Lempel-Ziv compression based on 'compress'.  GIF modifications by
- *  David Rowley (mgardi@watdcsu.waterloo.edu)
- *
- ***************************************************************************/
-
-/*
- * General DEFINEs
- */
-
-#define GIF_BITS    12
-
-#define HSIZE  5003		/* 80% occupancy */
-
-#ifdef NO_UCHAR
-typedef char char_type;
-#else /*NO_UCHAR */
-typedef unsigned char char_type;
-#endif /*NO_UCHAR */
-
-/*
-
- * GIF Image compression - modified 'compress'
- *
- * Based on: compress.c - File compression ala IEEE Computer, June 1984.
- *
- * By Authors:  Spencer W. Thomas       (decvax!harpo!utah-cs!utah-gr!thomas)
- *              Jim McKie               (decvax!mcvax!jim)
- *              Steve Davies            (decvax!vax135!petsd!peora!srd)
- *              Ken Turkowski           (decvax!decwrl!turtlevax!ken)
- *              James A. Woods          (decvax!ihnp4!ames!jaw)
- *              Joe Orost               (decvax!vax135!petsd!joe)
- *
- */
-
-#define ARGVAL() (*++(*argv) || (--argc && *++argv))
-
-#ifdef COMPATIBLE		/* But wrong! */
-#define MAXCODE(Mn_bits)        ((code_int) 1 << (Mn_bits) - 1)
-#else /*COMPATIBLE */
-#define MAXCODE(Mn_bits)        (((code_int) 1 << (Mn_bits)) - 1)
-#endif /*COMPATIBLE */
-
-
-const code_int hsize = HSIZE;	/* the original reason for this being
-				   variable was "for dynamic table sizing",
-				   but since it was never actually changed
-				   I made it const   --Adam. */
-
-
-/* The End */
