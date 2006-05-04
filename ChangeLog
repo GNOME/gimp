@@ -1,5 +1,15 @@
 2006-05-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpparamspecs.c (gimp_string_array_new)
+	(gimp_param_string_array_validate): restore the strict checks
+	on string arrays.
+
+	* app/plug-in/gimppluginmanager-help-domain.c
+	(gimp_plug_in_manager_get_help_domains): return NULL string arrays
+	when there are 0 help domains to fix the inconsistency at its root.
+
+2006-05-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/gimpplugin.c
 	* app/plug-in/gimppluginmanager-call.c: use the right procedure
 	types in calls to gimp_plug_in_proc_frame_foo().

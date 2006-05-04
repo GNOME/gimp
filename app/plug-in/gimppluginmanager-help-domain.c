@@ -126,9 +126,7 @@ gimp_plug_in_manager_get_help_domains (GimpPlugInManager   *manager,
                                        gchar             ***help_domains,
                                        gchar             ***help_uris)
 {
-  GSList *list;
-  gint    n_domains;
-  gint    i;
+  gint n_domains;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), 0);
   g_return_val_if_fail (help_domains != NULL, 0);
@@ -136,15 +134,26 @@ gimp_plug_in_manager_get_help_domains (GimpPlugInManager   *manager,
 
   n_domains = g_slist_length (manager->help_domains);
 
-  *help_domains = g_new0 (gchar *, n_domains + 1);
-  *help_uris    = g_new0 (gchar *, n_domains + 1);
-
-  for (list = manager->help_domains, i = 0; list; list = list->next, i++)
+  if (n_domains > 0)
     {
-      GimpPlugInHelpDomain *domain = list->data;
+      GSList *list;
+      gint    i;
 
-      (*help_domains)[i] = g_strdup (domain->domain_name);
-      (*help_uris)[i]    = g_strdup (domain->domain_uri);
+      *help_domains = g_new0 (gchar *, n_domains + 1);
+      *help_uris    = g_new0 (gchar *, n_domains + 1);
+
+      for (list = manager->help_domains, i = 0; list; list = list->next, i++)
+        {
+          GimpPlugInHelpDomain *domain = list->data;
+
+          (*help_domains)[i] = g_strdup (domain->domain_name);
+          (*help_uris)[i]    = g_strdup (domain->domain_uri);
+        }
+    }
+  else
+    {
+      *help_domains = NULL;
+      *help_uris    = NULL;
     }
 
   return n_domains;
