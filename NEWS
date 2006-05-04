@@ -11,11 +11,13 @@ Changes in GIMP 2.3.9
 =====================
 
 - better interpolation for "smooth" curves in the Curve tool
-- pick a suitable initial value for the Threshold tool
+- added an Auto button to the Threshold tool that picks a suitable value
 - simplified user installation
 - added Red Eye Removal plug-in
 - added thumbnail loader to GIF load plug-in
 - declared even more data as const
+- refactoring of the PDB and plug-in management code
+- allow Merge to work on a single layer
 - bug fixes and code cleanup
 
 
