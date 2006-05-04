@@ -53,6 +53,8 @@
 
 struct _GimpUserInstall
 {
+  gboolean                verbose;
+
   gchar                  *old_dir;
   gint                    old_major;
   gint                    old_minor;
@@ -121,12 +123,14 @@ static gboolean  user_install_migrate_files (GimpUserInstall  *install);
 
 
 GimpUserInstall *
-gimp_user_install_new ()
+gimp_user_install_new (gboolean verbose)
 {
   GimpUserInstall *install = g_new0 (GimpUserInstall, 1);
   gchar           *dir;
   gchar           *version;
   gboolean         migrate;
+
+  install->verbose = verbose;
 
   dir = g_strdup (gimp_directory ());
 
@@ -187,8 +191,6 @@ gimp_user_install_run (GimpUserInstall *install,
     return user_install_migrate_files (install);
   else
     return user_install_create_files (install);
-
-  return FALSE;
 }
 
 void
@@ -245,10 +247,11 @@ user_install_log (GimpUserInstall *install,
     {
       gchar *message = g_strdup_vprintf (format, args);
 
+      if (install->verbose)
+        g_print ("%s\n", message);
+
       if (install->log)
         install->log (message, FALSE, install->log_data);
-      else
-        g_printerr ("user-install: %s\n", message);
 
       g_free (message);
     }
@@ -268,7 +271,7 @@ user_install_log_error (GimpUserInstall  *install,
       if (install->log)
         install->log (message, TRUE, install->log_data);
       else
-        g_printerr ("user-install (error): %s\n", message);
+        g_print ("error: %s\n", message);
 
       g_clear_error (error);
     }
