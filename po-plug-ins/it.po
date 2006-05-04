@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-03 12:47+0200\n"
-"PO-Revision-Date: 2006-05-03 16:14+0200\n"
+"POT-Creation-Date: 2006-05-04 09:18+0200\n"
+"PO-Revision-Date: 2006-05-04 09:55+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -2185,15 +2185,15 @@ msgstr "_Numero di segmenti"
 
 #: ../plug-ins/common/blur.c:130
 msgid "Simple blur, fast but not very strong"
-msgstr "Sfocatura semplice, veloce ma non molto forte"
+msgstr "Sfocatura semplice, veloce ma non molto intensa"
 
 #: ../plug-ins/common/blur.c:139
 msgid "_Blur"
-msgstr "Sfocatura _semplice"
+msgstr "_Semplice"
 
 #: ../plug-ins/common/blur.c:183 ../plug-ins/common/unsharp.c:441
 msgid "Blurring"
-msgstr "Sfocatura in corso"
+msgstr "Sfocatura semplice in corso"
 
 #: ../plug-ins/common/borderaverage.c:99
 msgid "Set foreground to the average color of the image border"
@@ -4042,7 +4042,7 @@ msgstr "Il metodo di sfocatura più usato e semplice"
 
 #: ../plug-ins/common/gauss.c:172
 msgid "_Gaussian Blur..."
-msgstr "Sfocatura _Gaussiana..."
+msgstr "_Gaussiana..."
 
 #: ../plug-ins/common/gauss.c:179 ../plug-ins/common/gauss.c:199
 #: ../plug-ins/common/gauss.c:219 ../plug-ins/common/gauss.c:239
@@ -5119,11 +5119,11 @@ msgstr "Simula il movimento usando la sfocatura direzionale"
 
 #: ../plug-ins/common/mblur.c:174
 msgid "_Motion Blur..."
-msgstr "Sfocatura _movimento..."
+msgstr "_Movimento..."
 
 #: ../plug-ins/common/mblur.c:808
 msgid "Motion blurring"
-msgstr "Sfocatura movimento"
+msgstr "Sfocatura movimento in corso"
 
 #: ../plug-ins/common/mblur.c:910
 msgid "Motion Blur"
@@ -6499,7 +6499,8 @@ msgstr "Tipo tavolozza indicizzata"
 
 #: ../plug-ins/common/redeye.c:107
 msgid "Remove the red eye effect caused by camera flashes"
-msgstr "Rimuovi l'effetto occhi rossi prodotto dal flash della macchina fotografica"
+msgstr ""
+"Rimuovi l'effetto occhi rossi prodotto dal flash della macchina fotografica"
 
 #: ../plug-ins/common/redeye.c:118
 msgid "_Red Eye Removal..."
@@ -6708,7 +6709,7 @@ msgstr "Usa subcolori"
 #. check button
 #: ../plug-ins/common/sample_colorize.c:1681
 msgid "Smooth samples"
-msgstr "Campioni smussati"
+msgstr "Campioni delicati"
 
 #: ../plug-ins/common/sample_colorize.c:2653
 msgid "Sample analyze"
@@ -6831,7 +6832,7 @@ msgstr "Sfuma i pixel vicini ma solo in aree a basso contrasto"
 
 #: ../plug-ins/common/sel_gauss.c:108
 msgid "_Selective Gaussian Blur..."
-msgstr "Sfocatura se_lettiva Gaussiana..."
+msgstr "Se_lettiva Gaussiana..."
 
 #: ../plug-ins/common/sel_gauss.c:188 ../plug-ins/common/sel_gauss.c:225
 msgid "Selective Gaussian Blur"
