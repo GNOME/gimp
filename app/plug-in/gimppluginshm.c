@@ -69,6 +69,11 @@
 #include "gimppluginshm.h"
 
 
+#define TILE_MAP_SIZE (TILE_WIDTH * TILE_HEIGHT * 4)
+
+#define ERRMSG_SHM_DISABLE "Disabling shared memory tile transport"
+
+
 struct _GimpPlugInShm
 {
   gint    shm_ID;
@@ -80,10 +85,6 @@ struct _GimpPlugInShm
 };
 
 
-#define TILE_MAP_SIZE (TILE_WIDTH * TILE_HEIGHT * 4)
-
-#define ERRMSG_SHM_DISABLE "Disabling shared memory tile transport"
-
 GimpPlugInShm *
 gimp_plug_in_shm_new (void)
 {
@@ -94,135 +95,145 @@ gimp_plug_in_shm_new (void)
 
   GimpPlugInShm *shm = g_new0 (GimpPlugInShm, 1);
 
-#if defined(USE_SYSV_SHM)
-  /* Use SysV shared memory mechanisms for transferring tile data. */
-
   shm->shm_ID = -1;
 
-  shm->shm_ID = shmget (IPC_PRIVATE, TILE_MAP_SIZE, IPC_CREAT | 0600);
+#if defined(USE_SYSV_SHM)
 
-  if (shm->shm_ID != -1)
-    {
-      shm->shm_addr = (guchar *) shmat (shm->shm_ID, NULL, 0);
+  /* Use SysV shared memory mechanisms for transferring tile data. */
+  {
+    shm->shm_ID = shmget (IPC_PRIVATE, TILE_MAP_SIZE, IPC_CREAT | 0600);
 
-      if (shm->shm_addr == (guchar *) -1)
-        {
-          g_warning ("shmat() failed: %s\n" ERRMSG_SHM_DISABLE,
-                     g_strerror (errno));
-          shmctl (shm->shm_ID, IPC_RMID, NULL);
-          shm->shm_ID = -1;
-        }
+    if (shm->shm_ID != -1)
+      {
+        shm->shm_addr = (guchar *) shmat (shm->shm_ID, NULL, 0);
+
+        if (shm->shm_addr == (guchar *) -1)
+          {
+            g_printerr ("shmat() failed: %s\n" ERRMSG_SHM_DISABLE,
+                        g_strerror (errno));
+            shmctl (shm->shm_ID, IPC_RMID, NULL);
+            shm->shm_ID = -1;
+          }
 
 #ifdef IPC_RMID_DEFERRED_RELEASE
-      if (shm->shm_addr != (guchar *) -1)
-        shmctl (shm->shm_ID, IPC_RMID, NULL);
+        if (shm->shm_addr != (guchar *) -1)
+          shmctl (shm->shm_ID, IPC_RMID, NULL);
 #endif
-    }
-  else
-    {
-      g_warning ("shmget() failed: %s\n" ERRMSG_SHM_DISABLE,
-                 g_strerror (errno));
-    }
+      }
+    else
+      {
+        g_printerr ("shmget() failed: %s\n" ERRMSG_SHM_DISABLE,
+                    g_strerror (errno));
+      }
+  }
 
 #elif defined(USE_WIN32_SHM)
 
   /* Use Win32 shared memory mechanisms for transferring tile data. */
+  {
+    gint  pid;
+    gchar fileMapName[MAX_PATH];
 
-  gint  pid;
-  gchar fileMapName[MAX_PATH];
+    /* Our shared memory id will be our process ID */
+    pid = GetCurrentProcessId ();
 
-  shm->shm_ID = -1;
+    /* From the id, derive the file map name */
+    g_snprintf (fileMapName, sizeof (fileMapName), "GIMP%d.SHM", pid);
 
-  /* Our shared memory id will be our process ID */
-  pid = GetCurrentProcessId ();
+    /* Create the file mapping into paging space */
+    shm->shm_handle = CreateFileMapping ((HANDLE) 0xFFFFFFFF, NULL,
+                                         PAGE_READWRITE, 0,
+                                         TILE_MAP_SIZE,
+                                         fileMapName);
 
-  /* From the id, derive the file map name */
-  g_snprintf (fileMapName, sizeof (fileMapName), "GIMP%d.SHM", pid);
+    if (shm->shm_handle)
+      {
+        /* Map the shared memory into our address space for use */
+        shm->shm_addr = (guchar *) MapViewOfFile (shm->shm_handle,
+                                                  FILE_MAP_ALL_ACCESS,
+                                                  0, 0, TILE_MAP_SIZE);
 
-  /* Create the file mapping into paging space */
-  shm->shm_handle = CreateFileMapping ((HANDLE) 0xFFFFFFFF, NULL,
-                                       PAGE_READWRITE, 0,
-                                       TILE_MAP_SIZE,
-                                       fileMapName);
-
-  if (shm->shm_handle)
-    {
-      /* Map the shared memory into our address space for use */
-      shm->shm_addr = (guchar *) MapViewOfFile (shm->shm_handle,
-                                                FILE_MAP_ALL_ACCESS,
-                                                0, 0, TILE_MAP_SIZE);
-
-      /* Verify that we mapped our view */
-      if (shm->shm_addr)
-        shm->shm_ID = pid;
-      else
-        g_warning ("MapViewOfFile error: %d... " ERRMSG_SHM_DISABLE,
-                   GetLastError ());
-    }
-  else
-    {
-      g_warning ("CreateFileMapping error: %d... " ERRMSG_SHM_DISABLE,
-                 GetLastError ());
-    }
+        /* Verify that we mapped our view */
+        if (shm->shm_addr)
+          {
+            shm->shm_ID = pid;
+          }
+        else
+          {
+            g_printerr ("MapViewOfFile error: %d... " ERRMSG_SHM_DISABLE,
+                        GetLastError ());
+          }
+      }
+    else
+      {
+        g_printerr ("CreateFileMapping error: %d... " ERRMSG_SHM_DISABLE,
+                    GetLastError ());
+      }
+  }
 
 #elif defined(USE_POSIX_SHM)
 
   /* Use POSIX shared memory mechanisms for transferring tile data. */
+  {
+    gint  pid;
+    gchar shm_handle[32];
+    gint  shm_fd;
 
-  gint  pid;
-  gchar shm_handle[32];
-  gint  shm_fd;
+    /* Our shared memory id will be our process ID */
+    pid = getpid ();
 
-  shm->shm_ID = -1;
+    /* From the id, derive the file map name */
+    g_snprintf (shm_handle, sizeof (shm_handle), "/gimp-shm-%d", pid);
 
-  /* Our shared memory id will be our process ID */
-  pid = getpid ();
+    /* Create the file mapping into paging space */
+    shm_fd = shm_open (shm_handle, O_RDWR | O_CREAT, 0600);
 
-  /* From the id, derive the file map name */
-  g_snprintf (shm_handle, sizeof (shm_handle), "/gimp-shm-%d", pid);
+    if (shm_fd != -1)
+      {
+        if (ftruncate (shm_fd, TILE_MAP_SIZE) != -1)
+          {
+            /* Map the shared memory into our address space for use */
+            shm->shm_addr = (guchar *) mmap (NULL, TILE_MAP_SIZE,
+                                             PROT_READ | PROT_WRITE, MAP_SHARED,
+                                             shm_fd, 0);
 
-  /* Create the file mapping into paging space */
-  shm_fd = shm_open (shm_handle, O_RDWR | O_CREAT, 0600);
+            /* Verify that we mapped our view */
+            if (shm->shm_addr != MAP_FAILED)
+              {
+                shm->shm_ID = pid;
+              }
+            else
+              {
+                g_printerr ("mmap() failed: %s\n" ERRMSG_SHM_DISABLE,
+                            g_strerror (errno));
 
-  if (shm_fd != -1)
-    {
-      if (ftruncate (shm_fd, TILE_MAP_SIZE) != -1)
-        {
-          /* Map the shared memory into our address space for use */
-          shm->shm_addr = (guchar *) mmap (NULL, TILE_MAP_SIZE,
-                                           PROT_READ | PROT_WRITE, MAP_SHARED,
-                                           shm_fd, 0);
+                shm_unlink (shm_handle);
+              }
+          }
+        else
+          {
+            g_printerr ("ftruncate() failed: %s\n" ERRMSG_SHM_DISABLE,
+                        g_strerror (errno));
 
-          /* Verify that we mapped our view */
-          if (shm->shm_addr != MAP_FAILED)
-            {
-              shm->shm_ID = pid;
-            }
-          else
-            {
-              g_warning ("mmap() failed: %s\n" ERRMSG_SHM_DISABLE,
-                         g_strerror (errno));
+            shm_unlink (shm_handle);
+          }
 
-              shm_unlink (shm_handle);
-            }
-        }
-      else
-        {
-          g_warning ("ftruncate() failed: %s\n" ERRMSG_SHM_DISABLE,
-                     g_strerror (errno));
-
-          shm_unlink (shm_handle);
-        }
-
-      close (shm_fd);
-    }
-  else
-    {
-      g_warning ("shm_open() failed: %s\n" ERRMSG_SHM_DISABLE,
-                 g_strerror (errno));
-    }
+        close (shm_fd);
+      }
+    else
+      {
+        g_printerr ("shm_open() failed: %s\n" ERRMSG_SHM_DISABLE,
+                    g_strerror (errno));
+      }
+  }
 
 #endif
+
+  if (shm->shm_ID == -1)
+    {
+      g_free (shm);
+      shm = NULL;
+    }
 
   return shm;
 }
@@ -232,32 +243,25 @@ gimp_plug_in_shm_free (GimpPlugInShm *shm)
 {
   g_return_if_fail (shm != NULL);
 
+  if (shm->shm_ID != -1)
+    {
+
 #if defined (USE_SYSV_SHM)
 
 #ifndef IPC_RMID_DEFERRED_RELEASE
-  if (shm->shm_ID != -1)
-    {
       shmdt (shm->shm_addr);
       shmctl (shm->shm_ID, IPC_RMID, NULL);
-    }
-#else /* IPC_RMID_DEFERRED_RELEASE */
-  if (shm->shm_ID != -1)
-    {
+#else
       shmdt (shm->shm_addr);
-    }
-#endif
+#endif /* IPC_RMID_DEFERRED_RELEASE */
 
 #elif defined(USE_WIN32_SHM)
 
-  if (shm->shm_handle)
-    {
-      CloseHandle (shm->shm_handle);
-    }
+      if (shm->shm_handle)
+        CloseHandle (shm->shm_handle);
 
 #elif defined(USE_POSIX_SHM)
 
-  if (shm->shm_ID != -1)
-    {
       gchar shm_handle[32];
 
       munmap (shm->shm_addr, TILE_MAP_SIZE);
@@ -266,9 +270,10 @@ gimp_plug_in_shm_free (GimpPlugInShm *shm)
                   shm->shm_ID);
 
       shm_unlink (shm_handle);
-    }
 
 #endif
+
+    }
 
   g_free (shm);
 }

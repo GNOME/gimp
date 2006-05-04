@@ -1,3 +1,26 @@
+2006-05-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/gimppluginshm.c: cleaned up a bit.
+
+	(gimp_plug_in_shm_new): return NULL if anything goes wrong,
+	instead of a GimpPlugInShm structure that contains no shm (we
+	don't need multiple cases of "there is no shm"),
+
+	* app/plug-in/gimppluginmanager.[ch]
+	(gimp_plug_in_manager_get_shm_ID)
+	(gimp_plug_in_manager_get_shm_addr): removed these functions.
+
+	* app/plug-in/gimppluginmanager-call.c (gimp_plug_in_manager_call_run)
+	* app/plug-in/gimpplugin-message.c (gimp_plug_in_handle_tile_req):
+	get the shm ID and addr directly from manager->shm if it exists,
+	use -1 and NULL otherwise.
+
+	Unrelated:
+
+	* app/plug-in/gimppluginmanager.c: move most stuff from
+	gimp_plug_in_manager_exit() to gimp_plug_in_manager_finalize().
+	Simplify plug-in killing in _exit().
+
 2006-05-04  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp-user-install.[ch]: added a "verbose" parameter.

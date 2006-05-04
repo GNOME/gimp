@@ -43,6 +43,7 @@
 #include "gimppluginmanager.h"
 #define __YES_I_NEED_GIMP_PLUG_IN_MANAGER_CALL__
 #include "gimppluginmanager-call.h"
+#include "gimppluginshm.h"
 #include "plug-in-def.h"
 #include "plug-in-params.h"
 
@@ -171,7 +172,8 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       config.version          = GIMP_PROTOCOL_VERSION;
       config.tile_width       = TILE_WIDTH;
       config.tile_height      = TILE_HEIGHT;
-      config.shm_ID           = gimp_plug_in_manager_get_shm_ID (manager);
+      config.shm_ID           = (manager->shm ?
+                                 gimp_plug_in_shm_get_ID (manager->shm) : -1);
       config.check_size       = display_config->transparency_size;
       config.check_type       = display_config->transparency_type;
       config.show_help_button = (gui_config->use_help &&

@@ -126,14 +126,25 @@ gimp_plug_in_manager_class_init (GimpPlugInManagerClass *klass)
 static void
 gimp_plug_in_manager_init (GimpPlugInManager *manager)
 {
+  manager->gimp               = NULL;
+
+  manager->plug_in_defs       = NULL;
+  manager->write_pluginrc     = FALSE;
+
   manager->plug_in_procedures = NULL;
   manager->load_procs         = NULL;
   manager->save_procs         = NULL;
 
-  manager->interpreter_db = gimp_interpreter_db_new ();
-  manager->environ_table  = gimp_environ_table_new ();
-  manager->debug          = NULL;
-  manager->data_list      = NULL;
+  manager->current_plug_in    = NULL;
+  manager->open_plug_ins      = NULL;
+  manager->plug_in_stack      = NULL;
+  manager->last_plug_ins      = NULL;
+
+  manager->shm                = NULL;
+  manager->interpreter_db     = gimp_interpreter_db_new ();
+  manager->environ_table      = gimp_environ_table_new ();
+  manager->debug              = NULL;
+  manager->data_list          = NULL;
 }
 
 static void
@@ -153,10 +164,24 @@ gimp_plug_in_manager_finalize (GObject *object)
       manager->save_procs = NULL;
     }
 
+  if (manager->plug_in_procedures)
+    {
+      g_slist_foreach (manager->plug_in_procedures,
+                       (GFunc) g_object_unref, NULL);
+      g_slist_free (manager->plug_in_procedures);
+      manager->plug_in_procedures = NULL;
+    }
+
   if (manager->last_plug_ins)
     {
       g_slist_free (manager->last_plug_ins);
       manager->last_plug_ins = NULL;
+    }
+
+  if (manager->shm)
+    {
+      gimp_plug_in_shm_free (manager->shm);
+      manager->shm = NULL;
     }
 
   if (manager->environ_table)
@@ -169,6 +194,12 @@ gimp_plug_in_manager_finalize (GObject *object)
     {
       g_object_unref (manager->interpreter_db);
       manager->interpreter_db = NULL;
+    }
+
+  if (manager->debug)
+    {
+      gimp_plug_in_debug_free (manager->debug);
+      manager->debug = NULL;
     }
 
   gimp_plug_in_manager_menu_branch_exit (manager);
@@ -548,35 +579,10 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
 void
 gimp_plug_in_manager_exit (GimpPlugInManager *manager)
 {
-  GSList *list;
-
   g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
 
-  if (manager->debug)
-    {
-      gimp_plug_in_debug_free (manager->debug);
-      manager->debug = NULL;
-    }
-
-  if (manager->shm)
-    {
-      gimp_plug_in_shm_free (manager->shm);
-      manager->shm = NULL;
-    }
-
-  list = manager->open_plug_ins;
-  while (list)
-    {
-      GimpPlugIn *plug_in = list->data;
-
-      list = list->next;
-
-      gimp_plug_in_close (plug_in, TRUE);
-    }
-
-  g_slist_foreach (manager->plug_in_procedures, (GFunc) g_object_unref, NULL);
-  g_slist_free (manager->plug_in_procedures);
-  manager->plug_in_procedures = NULL;
+  while (manager->open_plug_ins)
+    gimp_plug_in_close (manager->open_plug_ins->data, TRUE);
 }
 
 void
@@ -681,22 +687,6 @@ gimp_plug_in_manager_set_last_plug_in (GimpPlugInManager   *manager,
     }
 
   g_signal_emit (manager, manager_signals[LAST_PLUG_INS_CHANGED], 0);
-}
-
-gint
-gimp_plug_in_manager_get_shm_ID (GimpPlugInManager *manager)
-{
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), -1);
-
-  return manager->shm ? gimp_plug_in_shm_get_ID (manager->shm) : -1;
-}
-
-guchar *
-gimp_plug_in_manager_get_shm_addr (GimpPlugInManager *manager)
-{
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
-
-  return manager->shm ? gimp_plug_in_shm_get_addr (manager->shm) : NULL;
 }
 
 void

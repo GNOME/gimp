@@ -102,12 +102,9 @@ void   gimp_plug_in_manager_remove_temp_proc (GimpPlugInManager      *manager,
 void   gimp_plug_in_manager_set_last_plug_in (GimpPlugInManager      *manager,
                                               GimpPlugInProcedure    *procedure);
 
-gint     gimp_plug_in_manager_get_shm_ID     (GimpPlugInManager      *manager);
-guchar * gimp_plug_in_manager_get_shm_addr   (GimpPlugInManager      *manager);
-
-void     gimp_plug_in_manager_plug_in_push   (GimpPlugInManager      *manager,
+void   gimp_plug_in_manager_plug_in_push     (GimpPlugInManager      *manager,
                                               GimpPlugIn             *plug_in);
-void     gimp_plug_in_manager_plug_in_pop    (GimpPlugInManager      *manager);
+void   gimp_plug_in_manager_plug_in_pop      (GimpPlugInManager      *manager);
 
 
 #endif  /* __GIMP_PLUG_IN_MANAGER_H__ */

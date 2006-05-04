@@ -43,6 +43,7 @@
 #include "gimpplugin.h"
 #include "gimpplugin-message.h"
 #include "gimppluginmanager.h"
+#include "gimppluginshm.h"
 #include "plug-in-def.h"
 #include "plug-in-params.h"
 
@@ -167,9 +168,6 @@ gimp_plug_in_handle_tile_req (GimpPlugIn *plug_in,
   GimpDrawable    *drawable;
   TileManager     *tm;
   Tile            *tile;
-  gint             shm_ID;
-
-  shm_ID = gimp_plug_in_manager_get_shm_ID (plug_in->manager);
 
   if (tile_req->drawable_ID == -1)
     {
@@ -181,7 +179,7 @@ gimp_plug_in_handle_tile_req (GimpPlugIn *plug_in,
       tile_data.bpp         = 0;
       tile_data.width       = 0;
       tile_data.height      = 0;
-      tile_data.use_shm     = (shm_ID == -1) ? FALSE : TRUE;
+      tile_data.use_shm     = (plug_in->manager->shm != NULL);
       tile_data.data        = NULL;
 
       if (! gp_tile_data_write (plug_in->my_write, &tile_data, plug_in))
@@ -239,7 +237,7 @@ gimp_plug_in_handle_tile_req (GimpPlugIn *plug_in,
 
       if (tile_data.use_shm)
         memcpy (tile_data_pointer (tile, 0, 0),
-                gimp_plug_in_manager_get_shm_addr (plug_in->manager),
+                gimp_plug_in_shm_get_addr (plug_in->manager->shm),
                 tile_size (tile));
       else
         memcpy (tile_data_pointer (tile, 0, 0),
@@ -296,10 +294,10 @@ gimp_plug_in_handle_tile_req (GimpPlugIn *plug_in,
       tile_data.bpp         = tile_bpp (tile);
       tile_data.width       = tile_ewidth (tile);
       tile_data.height      = tile_eheight (tile);
-      tile_data.use_shm     = (shm_ID == -1) ? FALSE : TRUE;
+      tile_data.use_shm     = (plug_in->manager->shm != NULL);
 
       if (tile_data.use_shm)
-        memcpy (gimp_plug_in_manager_get_shm_addr (plug_in->manager),
+        memcpy (gimp_plug_in_shm_get_addr (plug_in->manager->shm),
                 tile_data_pointer (tile, 0, 0),
                 tile_size (tile));
       else
@@ -450,15 +448,16 @@ gimp_plug_in_handle_proc_return (GimpPlugIn   *plug_in,
   GimpPlugInProcFrame *proc_frame = &plug_in->main_proc_frame;
 
   if (proc_frame->main_loop)
-    proc_frame->return_vals =
-      plug_in_params_to_args (proc_frame->procedure->values,
-                              proc_frame->procedure->num_values,
-                              proc_return->params,
-                              proc_return->nparams,
-                              TRUE, TRUE);
+    {
+      proc_frame->return_vals =
+        plug_in_params_to_args (proc_frame->procedure->values,
+                                proc_frame->procedure->num_values,
+                                proc_return->params,
+                                proc_return->nparams,
+                                TRUE, TRUE);
 
-  if (proc_frame->main_loop)
-    g_main_loop_quit (proc_frame->main_loop);
+      g_main_loop_quit (proc_frame->main_loop);
+    }
 
   gimp_plug_in_close (plug_in, FALSE);
 }
