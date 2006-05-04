@@ -1,5 +1,22 @@
 2006-05-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/gimpplugin.[ch] (struct GimpPlugIn): remove member
+	"name" and unused cruft "ref_count". Reordered other members a bit.
+
+	(gimp_plug_in_new): set GimpObject's name to
+	g_filename_display_basename(path) instead.
+
+	Use GimpObject's name instead of plug_in->name for error messages
+	and pass the full path to gimp_plug_in_debug_argv()
+
+	* app/plug-in/gimpplugindebug.c (gimp_plug_in_debug_argv): extract
+	the path's basename ourselves.
+
+	* app/plug-in/gimpplugin-message.c: GimpObject's name for
+	error messages.
+
+2006-05-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpparamspecs.c (gimp_string_array_new)
 	(gimp_param_string_array_validate): restore the strict checks
 	on string arrays.

@@ -113,12 +113,21 @@ gimp_plug_in_debug_argv (GimpPlugInDebug    *debug,
 {
   GPtrArray  *argv;
   gchar     **arg;
+  gchar      *basename;
 
   g_return_val_if_fail (debug != NULL, NULL);
+  g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (args != NULL, NULL);
 
-  if (!(debug->flags & flag) || (strcmp (debug->name, name) != 0))
-    return NULL;
+  basename = g_path_get_basename (name);
+
+  if (!(debug->flags & flag) || (strcmp (debug->name, basename) != 0))
+    {
+      g_free (basename);
+      return NULL;
+    }
+
+  g_free (basename);
 
   argv = g_ptr_array_sized_new (8);
 

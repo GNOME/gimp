@@ -43,16 +43,11 @@ struct _GimpPlugIn
   GimpObject           parent_instance;
 
   GimpPlugInManager   *manager;
-
-  gint                 ref_count;
-
-  guint                open : 1;        /*  Is the plug-in open?              */
-  GimpPlugInCallMode   call_mode;
-
-  GPid                 pid;             /*  Plug-in's process id              */
-
-  gchar               *name;            /*  Plug-in's name                    */
   gchar               *prog;            /*  Plug-in's full path name          */
+
+  GimpPlugInCallMode   call_mode;       /*  QUERY, INIT or RUN                */
+  guint                open : 1;        /*  Is the plug-in open?              */
+  GPid                 pid;             /*  Plug-in's process id              */
 
   GIOChannel          *my_read;         /*  App's read and write channels     */
   GIOChannel          *my_write;
