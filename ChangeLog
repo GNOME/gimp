@@ -1,3 +1,9 @@
+2006-05-04  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimp-user-install.[ch]: added a "verbose" parameter.
+
+	* app/app_procs.c (app_run): abort if the user installation fails.
+
 2006-05-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/gimpplugin.[ch] (struct GimpPlugIn): remove member

@@ -220,15 +220,20 @@ app_run (const gchar         *full_prog_name,
    */
   if (! g_file_test (gimp_directory (), G_FILE_TEST_IS_DIR))
     {
-      GimpUserInstall *install = gimp_user_install_new ();
+      GimpUserInstall *install = gimp_user_install_new (be_verbose);
 
 #ifdef GIMP_CONSOLE_COMPILATION
       gimp_user_install_run (install, FALSE);
 #else
       if (no_interface)
-        gimp_user_install_run (install, FALSE);
+        {
+          if (! gimp_user_install_run (install, FALSE))
+            exit (EXIT_FAILURE);
+        }
       else
-        user_install_dialog_run (install);
+        {
+          user_install_dialog_run (install);
+        }
 #endif
 
       gimp_user_install_free (install);
