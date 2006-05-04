@@ -743,7 +743,8 @@ gimp_plug_in_proc_frame_push (GimpPlugIn             *plug_in,
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (GIMP_IS_TEMPORARY_PROCEDURE (procedure), NULL);
 
-  proc_frame = gimp_plug_in_proc_frame_new (context, progress, procedure);
+  proc_frame = gimp_plug_in_proc_frame_new (context, progress,
+                                            GIMP_PLUG_IN_PROCEDURE (procedure));
 
   plug_in->temp_proc_frames = g_list_prepend (plug_in->temp_proc_frames,
                                               proc_frame);

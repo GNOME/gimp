@@ -151,8 +151,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
   g_return_val_if_fail (args != NULL, NULL);
 
   plug_in = gimp_plug_in_new (manager, context, progress,
-                              GIMP_PROCEDURE (procedure),
-                              procedure->prog);
+                              procedure, procedure->prog);
 
   if (plug_in)
     {
@@ -288,7 +287,7 @@ gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
       GPProcRun            proc_run;
 
       proc_frame = gimp_plug_in_proc_frame_push (plug_in, context, progress,
-                                                 GIMP_PROCEDURE (procedure));
+                                                 procedure);
 
       proc_run.name    = GIMP_PROCEDURE (procedure)->original_name;
       proc_run.nparams = args->n_values;

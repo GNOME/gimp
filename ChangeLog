@@ -1,3 +1,9 @@
+2006-05-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/gimpplugin.c
+	* app/plug-in/gimppluginmanager-call.c: use the right procedure
+	types in calls to gimp_plug_in_proc_frame_foo().
+
 2006-05-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpselectiondata.c
