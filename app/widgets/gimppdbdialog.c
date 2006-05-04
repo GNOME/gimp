@@ -29,6 +29,7 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 
 #include "pdb/gimppdb.h"
@@ -71,6 +72,9 @@ static void      gimp_pdb_dialog_response       (GtkDialog          *dialog,
 
 static void     gimp_pdb_dialog_context_changed (GimpContext        *context,
                                                  GimpObject         *object,
+                                                 GimpPdbDialog      *dialog);
+static void     gimp_pdb_dialog_plug_in_closed  (GimpPlugInManager  *manager,
+                                                 GimpPlugIn         *plug_in,
                                                  GimpPdbDialog      *dialog);
 
 
@@ -206,6 +210,10 @@ gimp_pdb_dialog_constructor (GType                  type,
 
   g_signal_connect_object (dialog->context, signal_name,
                            G_CALLBACK (gimp_pdb_dialog_context_changed),
+                           dialog, 0);
+  g_signal_connect_object (dialog->context->gimp->plug_in_manager,
+                           "plug-in-closed",
+                           G_CALLBACK (gimp_pdb_dialog_plug_in_closed),
                            dialog, 0);
 
   return object;
@@ -363,31 +371,6 @@ gimp_pdb_dialog_get_by_callback (GimpPdbDialogClass *klass,
   return NULL;
 }
 
-void
-gimp_pdb_dialogs_check_callback (GimpPdbDialogClass *klass)
-{
-  GList *list;
-
-  g_return_if_fail (GIMP_IS_PDB_DIALOG_CLASS (klass));
-
-  list = klass->dialogs;
-
-  while (list)
-    {
-      GimpPdbDialog *dialog = list->data;
-
-      list = g_list_next (list);
-
-      if (dialog->caller_context && dialog->callback_name)
-        {
-          if (! gimp_pdb_lookup_procedure (dialog->pdb, dialog->callback_name))
-            {
-              gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
-            }
-        }
-    }
-}
-
 
 /*  private functions  */
 
@@ -398,4 +381,18 @@ gimp_pdb_dialog_context_changed (GimpContext   *context,
 {
   if (object)
     gimp_pdb_dialog_run_callback (dialog, FALSE);
+}
+
+static void
+gimp_pdb_dialog_plug_in_closed (GimpPlugInManager *manager,
+                                GimpPlugIn        *plug_in,
+                                GimpPdbDialog     *dialog)
+{
+  if (dialog->caller_context && dialog->callback_name)
+    {
+      if (! gimp_pdb_lookup_procedure (dialog->pdb, dialog->callback_name))
+        {
+          gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
+        }
+    }
 }

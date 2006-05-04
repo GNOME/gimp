@@ -75,7 +75,6 @@ struct _GimpGui
   gboolean       (* pdb_dialog_close)    (Gimp                *gimp,
                                           GimpContainer       *container,
                                           const gchar         *callback_name);
-  void           (* pdb_dialogs_check)   (Gimp                *gimp);
 };
 
 
@@ -137,7 +136,6 @@ gboolean       gimp_pdb_dialog_set       (Gimp                *gimp,
 gboolean       gimp_pdb_dialog_close     (Gimp                *gimp,
                                           GimpContainer       *container,
                                           const gchar         *callback_name);
-void           gimp_pdb_dialogs_check    (Gimp                *gimp);
 
 
 #endif  /* __GIMP_GUI_H__ */

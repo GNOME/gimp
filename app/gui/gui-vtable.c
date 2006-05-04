@@ -119,7 +119,6 @@ static gboolean       gui_pdb_dialog_set       (Gimp                *gimp,
 static gboolean       gui_pdb_dialog_close     (Gimp                *gimp,
                                                 GimpContainer       *container,
                                                 const gchar         *callback_name);
-static void           gui_pdb_dialogs_check    (Gimp                *gimp);
 
 
 /*  public functions  */
@@ -149,7 +148,6 @@ gui_vtable_init (Gimp *gimp)
   gimp->gui.pdb_dialog_new      = gui_pdb_dialog_new;
   gimp->gui.pdb_dialog_set      = gui_pdb_dialog_set;
   gimp->gui.pdb_dialog_close    = gui_pdb_dialog_close;
-  gimp->gui.pdb_dialogs_check   = gui_pdb_dialogs_check;
 }
 
 
@@ -556,25 +554,4 @@ gui_pdb_dialog_close (Gimp          *gimp,
     }
 
   return FALSE;
-}
-
-static void
-gui_pdb_dialogs_check (Gimp *gimp)
-{
-  GimpPdbDialogClass *klass;
-
-  if ((klass = g_type_class_peek (GIMP_TYPE_BRUSH_SELECT)))
-    gimp_pdb_dialogs_check_callback (klass);
-
-  if ((klass = g_type_class_peek (GIMP_TYPE_FONT_SELECT)))
-    gimp_pdb_dialogs_check_callback (klass);
-
-  if ((klass = g_type_class_peek (GIMP_TYPE_GRADIENT_SELECT)))
-    gimp_pdb_dialogs_check_callback (klass);
-
-  if ((klass = g_type_class_peek (GIMP_TYPE_PALETTE_SELECT)))
-    gimp_pdb_dialogs_check_callback (klass);
-
-  if ((klass = g_type_class_peek (GIMP_TYPE_PATTERN_SELECT)))
-    gimp_pdb_dialogs_check_callback (klass);
 }

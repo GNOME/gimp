@@ -373,15 +373,12 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
 
       plug_in->input_id = g_source_attach (source, NULL);
       g_source_unref (source);
-
-      plug_in->manager->open_plug_ins =
-        g_slist_prepend (plug_in->manager->open_plug_ins, plug_in);
     }
-
-  g_object_ref (plug_in);
 
   plug_in->open      = TRUE;
   plug_in->call_mode = call_mode;
+
+  gimp_plug_in_manager_add_open_plug_in (plug_in->manager, plug_in);
 
  cleanup:
 
@@ -551,13 +548,7 @@ gimp_plug_in_close (GimpPlugIn *plug_in,
   while (plug_in->temp_procedures)
     gimp_plug_in_remove_temp_proc (plug_in, plug_in->temp_procedures->data);
 
-  /* Close any dialogs that this plugin might have opened */
-  gimp_pdb_dialogs_check (plug_in->manager->gimp);
-
-  plug_in->manager->open_plug_ins =
-    g_slist_remove (plug_in->manager->open_plug_ins, plug_in);
-
-  g_object_unref (plug_in);
+  gimp_plug_in_manager_remove_open_plug_in (plug_in->manager, plug_in);
 }
 
 static gboolean

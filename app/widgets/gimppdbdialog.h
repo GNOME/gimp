@@ -81,7 +81,6 @@ void            gimp_pdb_dialog_run_callback    (GimpPdbDialog      *dialog,
 
 GimpPdbDialog * gimp_pdb_dialog_get_by_callback (GimpPdbDialogClass *klass,
                                                  const gchar        *callback_name);
-void            gimp_pdb_dialogs_check_callback (GimpPdbDialogClass *klass);
 
 
 G_END_DECLS

@@ -60,7 +60,6 @@ gimp_gui_init (Gimp *gimp)
   gimp->gui.progress_free       = NULL;
   gimp->gui.pdb_dialog_set      = NULL;
   gimp->gui.pdb_dialog_close    = NULL;
-  gimp->gui.pdb_dialogs_check   = NULL;
 }
 
 void
@@ -391,13 +390,4 @@ gimp_pdb_dialog_close (Gimp          *gimp,
     return gimp->gui.pdb_dialog_close (gimp, container, callback_name);
 
   return FALSE;
-}
-
-void
-gimp_pdb_dialogs_check (Gimp *gimp)
-{
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  if (gimp->gui.pdb_dialogs_check)
-    gimp->gui.pdb_dialogs_check (gimp);
 }

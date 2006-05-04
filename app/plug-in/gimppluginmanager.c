@@ -59,6 +59,8 @@
 
 enum
 {
+  PLUG_IN_OPENED,
+  PLUG_IN_CLOSED,
   MENU_BRANCH_ADDED,
   LAST_PLUG_INS_CHANGED,
   LAST_SIGNAL
@@ -94,6 +96,28 @@ gimp_plug_in_manager_class_init (GimpPlugInManagerClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+
+  manager_signals[PLUG_IN_OPENED] =
+    g_signal_new ("plug-in-opened",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpPlugInManagerClass,
+                                   plug_in_opened),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_PLUG_IN);
+
+  manager_signals[PLUG_IN_CLOSED] =
+    g_signal_new ("plug-in-closed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpPlugInManagerClass,
+                                   plug_in_closed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_PLUG_IN);
 
   manager_signals[MENU_BRANCH_ADDED] =
     g_signal_new ("menu-branch-added",
@@ -687,6 +711,35 @@ gimp_plug_in_manager_set_last_plug_in (GimpPlugInManager   *manager,
     }
 
   g_signal_emit (manager, manager_signals[LAST_PLUG_INS_CHANGED], 0);
+}
+
+void
+gimp_plug_in_manager_add_open_plug_in (GimpPlugInManager *manager,
+                                       GimpPlugIn        *plug_in)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+
+  manager->open_plug_ins = g_slist_prepend (manager->open_plug_ins,
+                                            g_object_ref (plug_in));
+
+  g_signal_emit (manager, manager_signals[PLUG_IN_OPENED], 0,
+                 plug_in);
+}
+
+void
+gimp_plug_in_manager_remove_open_plug_in (GimpPlugInManager *manager,
+                                          GimpPlugIn        *plug_in)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+
+  manager->open_plug_ins = g_slist_remove (manager->open_plug_ins, plug_in);
+
+  g_signal_emit (manager, manager_signals[PLUG_IN_CLOSED], 0,
+                 plug_in);
+
+  g_object_unref (plug_in);
 }
 
 void

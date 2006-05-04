@@ -1,3 +1,22 @@
+2006-05-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/gimppluginmanager.[ch]: added signals
+	"plug-in-opened" and "plug-in-closed". Added functions
+	gimp_plug_in_manager_add_open_plug_in() and _remove_open_plugin()
+	which maintain the list of open plug-ins and emit the signals.
+
+	* app/plug-in/gimpplugin.c (gimp_plug_in_open)
+	(gimp_plug_in_close): don't touch manager->open_plug_ins and don't
+	ref/unref the plug-in. Call above new functions instead. Don't
+	call gimp_pdb_dialogs_check().
+
+	* app/core/gimp-gui.[ch]
+	* app/gui/gui-vtable.c: removed gimp_pdb_dialogs_check().
+
+	* app/widgets/gimppdbdialog.[ch]: removed
+	gimp_pdb_dialogs_check_callback() and connect to the
+	plug-in-manager's "plug-in-closed" signal instead.
+
 2006-05-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/gimppluginshm.c: cleaned up a bit.
