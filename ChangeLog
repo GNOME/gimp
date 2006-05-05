@@ -1,8 +1,24 @@
 2006-05-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/gimppluginmanager-call.[ch]
+	(gimp_plug_in_manager_call_run): changed parameter "gint display_ID"
+	to "GimpObject *display".
+
+	* app/pdb/gimpprocedure.[ch]
+	* app/pdb/gimppluginprocedure.c
+	* app/pdb/gimptemporaryprocedure.c: changed
+	GimpProcedure::execute_async() the same way.
+
+	* app/plug-in/gimppluginmanager.c
+	* app/actions/plug-in-commands.c
+	* app/actions/vectors-commands.c
+	* app/widgets/gimphelp.c: changed accordingly.
+
+2006-05-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/gimppluginmanager.[ch]: added signals
 	"plug-in-opened" and "plug-in-closed". Added functions
-	gimp_plug_in_manager_add_open_plug_in() and _remove_open_plugin()
+	gimp_plug_in_manager_add_open_plug_in() and _remove_open_plug_in()
 	which maintain the list of open plug-ins and emit the signals.
 
 	* app/plug-in/gimpplugin.c (gimp_plug_in_open)

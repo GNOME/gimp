@@ -59,7 +59,7 @@ static void    gimp_procedure_real_execute_async  (GimpProcedure *procedure,
                                                    GimpContext   *context,
                                                    GimpProgress  *progress,
                                                    GValueArray   *args,
-                                                   gint32         display_ID);
+                                                   GimpObject    *display);
 
 static void          gimp_procedure_free_strings  (GimpProcedure *procedure);
 static gboolean      gimp_procedure_validate_args (GimpProcedure *procedure,
@@ -186,7 +186,7 @@ gimp_procedure_real_execute_async (GimpProcedure *procedure,
                                    GimpContext   *context,
                                    GimpProgress  *progress,
                                    GValueArray   *args,
-                                   gint32         display_ID)
+                                   GimpObject    *display)
 {
   GValueArray *return_vals;
 
@@ -341,18 +341,19 @@ gimp_procedure_execute_async (GimpProcedure *procedure,
                               GimpContext   *context,
                               GimpProgress  *progress,
                               GValueArray   *args,
-                              gint32         display_ID)
+                              GimpObject    *display)
 {
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (args != NULL);
+  g_return_if_fail (display == NULL || GIMP_IS_OBJECT (display));
 
   if (gimp_procedure_validate_args (procedure, args))
     GIMP_PROCEDURE_GET_CLASS (procedure)->execute_async (procedure, gimp,
                                                          context, progress,
-                                                         args, display_ID);
+                                                         args, display);
 }
 
 GValueArray *

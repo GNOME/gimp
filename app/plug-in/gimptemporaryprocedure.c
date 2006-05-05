@@ -47,7 +47,7 @@ static void     gimp_temporary_procedure_execute_async (GimpProcedure *procedure
                                                         GimpContext   *context,
                                                         GimpProgress  *progress,
                                                         GValueArray   *args,
-                                                        gint32         display_ID);
+                                                        GimpObject    *display);
 
 const gchar    * gimp_temporary_procedure_get_progname (const GimpPlugInProcedure *procedure);
 
@@ -106,7 +106,7 @@ gimp_temporary_procedure_execute_async (GimpProcedure *procedure,
                                         GimpContext   *context,
                                         GimpProgress  *progress,
                                         GValueArray   *args,
-                                        gint32         display_ID)
+                                        GimpObject    *display)
 {
   GValueArray *return_vals;
 

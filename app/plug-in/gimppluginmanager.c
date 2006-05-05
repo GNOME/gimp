@@ -590,7 +590,7 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
             args = g_value_array_new (0);
 
             gimp_procedure_execute_async (GIMP_PROCEDURE (proc),
-                                          gimp, context, NULL, args, -1);
+                                          gimp, context, NULL, args, NULL);
 
             g_value_array_free (args);
           }

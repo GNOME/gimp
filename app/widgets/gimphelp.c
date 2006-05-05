@@ -203,7 +203,7 @@ gimp_help_browser (Gimp *gimp)
 
       gimp_procedure_execute_async (procedure, gimp,
                                     gimp_get_user_context (gimp),
-                                    NULL, args, -1);
+                                    NULL, args, NULL);
 
       g_value_array_free (args);
     }
@@ -296,7 +296,7 @@ gimp_help_call (Gimp        *gimp,
 
       gimp_procedure_execute_async (procedure, gimp,
                                     gimp_get_user_context (gimp),
-                                    NULL, args, -1);
+                                    NULL, args, NULL);
 
       g_value_array_free (args);
     }

@@ -339,7 +339,7 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
   gimp_procedure_execute_async (procedure, image->gimp,
                                 action_data_get_context (data),
                                 GIMP_PROGRESS (display), args,
-                                display ? gimp_display_get_ID (display) : 0);
+                                GIMP_OBJECT (display));
 
   g_value_array_free (args);
 }

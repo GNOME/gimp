@@ -79,7 +79,7 @@ struct _GimpProcedureClass
                                    GimpContext   *context,
                                    GimpProgress  *progress,
                                    GValueArray   *args,
-                                   gint32         display_ID);
+                                   GimpObject    *display);
 };
 
 
@@ -131,7 +131,7 @@ void            gimp_procedure_execute_async      (GimpProcedure    *procedure,
                                                    GimpContext      *context,
                                                    GimpProgress     *progress,
                                                    GValueArray      *args,
-                                                   gint32            display_ID);
+                                                   GimpObject       *display);
 
 
 #endif  /*  __GIMP_PROCEDURE_H__  */

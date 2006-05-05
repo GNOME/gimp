@@ -140,7 +140,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
                                GValueArray         *args,
                                gboolean             synchronous,
                                gboolean             destroy_return_vals,
-                               gint                 display_ID)
+                               GimpObject          *display)
 {
   GValueArray *return_vals = NULL;
   GimpPlugIn  *plug_in;
@@ -150,6 +150,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (args != NULL, NULL);
+  g_return_val_if_fail (display == NULL || GIMP_IS_OBJECT (display), NULL);
 
   plug_in = gimp_plug_in_new (manager, context, progress,
                               procedure, procedure->prog);
@@ -161,6 +162,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       GimpGuiConfig     *gui_config     = GIMP_GUI_CONFIG (core_config);
       GPConfig           config;
       GPProcRun          proc_run;
+      gint               display_ID;
       gint               monitor;
 
       if (! gimp_plug_in_open (plug_in, GIMP_PLUG_IN_CALL_RUN, FALSE))
@@ -168,6 +170,8 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
           g_object_unref (plug_in);
           goto done;
         }
+
+      display_ID = display ? gimp_get_display_ID (manager->gimp, display) : -1;
 
       config.version          = GIMP_PROTOCOL_VERSION;
       config.tile_width       = TILE_WIDTH;

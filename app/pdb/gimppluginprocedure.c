@@ -63,7 +63,7 @@ static void       gimp_plug_in_procedure_execute_async  (GimpProcedure *procedur
                                                          GimpContext   *context,
                                                          GimpProgress  *progress,
                                                          GValueArray   *args,
-                                                         gint32         display_ID);
+                                                         GimpObject    *display);
 
 const gchar * gimp_plug_in_procedure_real_get_progname (const GimpPlugInProcedure *procedure);
 
@@ -219,7 +219,7 @@ gimp_plug_in_procedure_execute (GimpProcedure *procedure,
   return gimp_plug_in_manager_call_run (gimp->plug_in_manager,
                                         context, progress,
                                         GIMP_PLUG_IN_PROCEDURE (procedure),
-                                        args, TRUE, FALSE, -1);
+                                        args, TRUE, FALSE, NULL);
 }
 
 static void
@@ -228,12 +228,12 @@ gimp_plug_in_procedure_execute_async (GimpProcedure *procedure,
                                       GimpContext   *context,
                                       GimpProgress  *progress,
                                       GValueArray   *args,
-                                      gint32         display_ID)
+                                      GimpObject    *display)
 {
   gimp_plug_in_manager_call_run (gimp->plug_in_manager,
                                  context, progress,
                                  GIMP_PLUG_IN_PROCEDURE (procedure),
-                                 args, FALSE, TRUE, display_ID);
+                                 args, FALSE, TRUE, display);
 }
 
 const gchar *

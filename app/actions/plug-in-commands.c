@@ -127,7 +127,7 @@ plug_in_run_cmd_callback (GtkAction           *action,
   /* run the plug-in procedure */
   gimp_procedure_execute_async (procedure, gimp, gimp_get_user_context (gimp),
                                 GIMP_PROGRESS (display), args,
-                                display ? gimp_display_get_ID (display) : -1);
+                                GIMP_OBJECT (display));
 
   /* remember only "standard" plug-ins */
   if (procedure->proc_type == GIMP_PLUGIN                 &&
@@ -180,7 +180,7 @@ plug_in_repeat_cmd_callback (GtkAction *action,
       gimp_procedure_execute_async (procedure, gimp,
                                     gimp_get_user_context (gimp),
                                     GIMP_PROGRESS (display), args,
-                                    gimp_display_get_ID (display));
+                                    GIMP_OBJECT (display));
 
       g_value_array_free (args);
     }
