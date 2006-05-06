@@ -1,5 +1,12 @@
 2006-05-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-scale.c (gimp_display_shell_scale):
+	return early if the shell is already at the requested zoom level.
+	(paranoia addition for bug #165032, which was already fixed by the
+	fix for bug #164281):
+
+2006-05-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpbrusheditor.c: hide the button bar, which is
 	useless for the brush editor. Fixes user confusion (bug #306704).
 

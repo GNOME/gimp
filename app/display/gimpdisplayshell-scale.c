@@ -229,6 +229,10 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (shell->canvas != NULL);
 
+  if (zoom_type == GIMP_ZOOM_TO &&
+      new_scale == gimp_zoom_model_get_factor (shell->zoom))
+    return;
+
   x = shell->disp_width  / 2;
   y = shell->disp_height / 2;
 
