@@ -34,6 +34,7 @@
 #include "core/gimpcontext.h"
 
 #include "gimpbrusheditor.h"
+#include "gimpdocked.h"
 #include "gimpview.h"
 
 #include "gimp-intl.h"
@@ -45,16 +46,20 @@
 
 /*  local function prototypes  */
 
-static void   gimp_brush_editor_set_data     (GimpDataEditor     *editor,
-                                              GimpData           *data);
+static GObject * gimp_brush_editor_constructor (GType              type,
+                                                guint              n_params,
+                                                GObjectConstructParam *params);
 
-static void   gimp_brush_editor_update_brush (GtkAdjustment      *adjustment,
-                                              GimpBrushEditor    *editor);
-static void   gimp_brush_editor_update_shape (GtkWidget          *widget,
-                                              GimpBrushEditor    *editor);
-static void   gimp_brush_editor_notify_brush (GimpBrushGenerated *brush,
-                                              GParamSpec         *pspec,
-                                              GimpBrushEditor    *editor);
+static void   gimp_brush_editor_set_data       (GimpDataEditor     *editor,
+                                                GimpData           *data);
+
+static void   gimp_brush_editor_update_brush   (GtkAdjustment      *adjustment,
+                                                GimpBrushEditor    *editor);
+static void   gimp_brush_editor_update_shape   (GtkWidget          *widget,
+                                                GimpBrushEditor    *editor);
+static void   gimp_brush_editor_notify_brush   (GimpBrushGenerated *brush,
+                                                GParamSpec         *pspec,
+                                                GimpBrushEditor    *editor);
 
 
 G_DEFINE_TYPE (GimpBrushEditor, gimp_brush_editor, GIMP_TYPE_DATA_EDITOR);
@@ -65,10 +70,13 @@ G_DEFINE_TYPE (GimpBrushEditor, gimp_brush_editor, GIMP_TYPE_DATA_EDITOR);
 static void
 gimp_brush_editor_class_init (GimpBrushEditorClass *klass)
 {
+  GObjectClass        *object_class = G_OBJECT_CLASS (klass);
   GimpDataEditorClass *editor_class = GIMP_DATA_EDITOR_CLASS (klass);
 
-  editor_class->set_data = gimp_brush_editor_set_data;
-  editor_class->title    = _("Brush Editor");
+  object_class->constructor = gimp_brush_editor_constructor;
+
+  editor_class->set_data    = gimp_brush_editor_set_data;
+  editor_class->title       = _("Brush Editor");
 }
 
 static void
@@ -196,6 +204,20 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   g_signal_connect (editor->spacing_data, "value-changed",
                     G_CALLBACK (gimp_brush_editor_update_brush),
                     editor);
+}
+
+static GObject *
+gimp_brush_editor_constructor (GType                  type,
+                               guint                  n_params,
+                               GObjectConstructParam *params)
+{
+  GObject *object;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  gimp_docked_set_show_button_bar (GIMP_DOCKED (object), FALSE);
+
+  return object;
 }
 
 static void

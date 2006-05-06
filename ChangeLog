@@ -1,3 +1,8 @@
+2006-05-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpbrusheditor.c: hide the button bar, which is
+	useless for the brush editor. Fixes user confusion (bug #306704).
+
 2006-05-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimppainttool.c: connect to the context's
