@@ -496,8 +496,8 @@ static int
 DoExtension (FILE *fd,
              int   label)
 {
-  static gchar  buf[256];
-  gchar        *str;
+  static guchar  buf[256];
+  gchar         *str;
 
   switch (label)
     {
@@ -536,7 +536,9 @@ DoExtension (FILE *fd,
       str = "Comment Extension";
       while (GetDataBlock (fd, (unsigned char *) buf) > 0)
         {
-          if (!g_utf8_validate (buf, -1, NULL))
+          gchar *comment = (gchar *) buf;
+
+          if (!g_utf8_validate (comment, -1, NULL))
             continue;
 
           if (comment_parasite)
@@ -544,7 +546,7 @@ DoExtension (FILE *fd,
 
           comment_parasite = gimp_parasite_new ("gimp-comment",
                                                 GIMP_PARASITE_PERSISTENT,
-                                                strlen (buf) + 1, buf);
+                                                strlen (comment) + 1, comment);
         }
       return TRUE;
       break;

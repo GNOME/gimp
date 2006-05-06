@@ -1,3 +1,9 @@
+2006-05-05  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/gifload.c (DoExtension): Revert back to unsigned
+	chars for the buffer, and only cast to gchar if we know we're dealing
+	with a comment. Fixes bug #339865.
+
 2006-05-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/gimppluginmanager-call.[ch]
