@@ -6,6 +6,9 @@
 	valid IDs. Added "none_ok" parameter to all ID param spec
 	constructors.
 
+	* app/xcf/xcf.c: require real image IDs, but allow images without
+	active drawable.
+
 	* app/pdb/gimp-pdb-compat.c: set none_ok to TRUE in all compat
 	param specs, so only IDs that are really random garbage don't pass
 	validation. Fixes validation errors with 0 and -1 IDs.

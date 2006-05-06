@@ -174,13 +174,13 @@ xcf_init (Gimp *gimp)
                                gimp_param_spec_image_id ("image",
                                                          "Image",
                                                          "Input image",
-                                                         gimp,
+                                                         gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "Drawable",
                                                             "Active drawable of input image",
-                                                            gimp,
+                                                            gimp, TRUE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filename",
@@ -258,7 +258,7 @@ xcf_init (Gimp *gimp)
                                    gimp_param_spec_image_id ("image",
                                                              "Image",
                                                              "Output image",
-                                                             gimp,
+                                                             gimp, FALSE,
                                                              GIMP_PARAM_READWRITE));
   gimp_plug_in_manager_add_procedure (gimp->plug_in_manager, proc);
   g_object_unref (procedure);
