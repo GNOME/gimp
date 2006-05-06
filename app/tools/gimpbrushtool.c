@@ -107,6 +107,9 @@ static void   gimp_paint_tool_color_picked   (GimpColorTool       *color_tool,
                                               GimpRGB             *color,
                                               gint                 color_index);
 
+static void   gimp_paint_tool_brush_changed  (GimpContext         *context,
+                                              GimpBrush           *brush,
+                                              GimpPaintTool       *paint_tool);
 static void   gimp_paint_tool_set_brush      (GimpBrushCore       *brush_core,
                                               GimpBrush           *brush,
                                               GimpPaintTool       *paint_tool);
@@ -211,9 +214,13 @@ gimp_paint_tool_constructor (GType                  type,
 
   if (GIMP_IS_BRUSH_CORE (paint_tool->core))
     {
-      g_signal_connect       (paint_tool->core, "set-brush",
-                              G_CALLBACK (gimp_paint_tool_set_brush),
-                              paint_tool);
+      g_signal_connect_object (tool->tool_info->tool_options, "brush-changed",
+                               G_CALLBACK (gimp_paint_tool_brush_changed),
+                               paint_tool, 0);
+
+      g_signal_connect (paint_tool->core, "set-brush",
+                        G_CALLBACK (gimp_paint_tool_set_brush),
+                        paint_tool);
       g_signal_connect_after (paint_tool->core, "set-brush",
                               G_CALLBACK (gimp_paint_tool_set_brush_after),
                               paint_tool);
@@ -868,6 +875,17 @@ gimp_paint_tool_color_picked (GimpColorTool      *color_tool,
           break;
         }
     }
+}
+
+static void
+gimp_paint_tool_brush_changed (GimpContext   *context,
+                               GimpBrush     *brush,
+                               GimpPaintTool *paint_tool)
+{
+  GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_tool->core);
+
+  if (brush_core->main_brush != brush)
+    gimp_brush_core_set_brush (brush_core, brush);
 }
 
 static void

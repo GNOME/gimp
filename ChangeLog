@@ -1,5 +1,12 @@
 2006-05-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimppainttool.c: connect to the context's
+	"brush-changed" signal and update the brush core's brush
+	accordingly. Fixes inconsistent brush preview when not moving
+	the mouse while the brush changes (bug #323404).
+
+2006-05-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpparamspecs.[ch]: added "gboolean none_ok" members
 	to GimpParamSpecImageID, GimpParamSpecItemID and
 	GimpParamSpecDisplayID.  If none_ok is set, allow '0' and '-1' as
