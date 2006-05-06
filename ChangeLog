@@ -1,3 +1,25 @@
+2006-05-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpparamspecs.[ch]: added "gboolean none_ok" members
+	to GimpParamSpecImageID, GimpParamSpecItemID and
+	GimpParamSpecDisplayID.  If none_ok is set, allow '0' and '-1' as
+	valid IDs. Added "none_ok" parameter to all ID param spec
+	constructors.
+
+	* app/pdb/gimp-pdb-compat.c: set none_ok to TRUE in all compat
+	param specs, so only IDs that are really random garbage don't pass
+	validation. Fixes validation errors with 0 and -1 IDs.
+
+	* tools/pdbgen/app.pl: set none_ok to FALSE by default. Added
+	support for $arg->{none_ok} to control it.
+
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/progress.pdb
+	* tools/pdbgen/pdb/text_tool.pdb: use none_ok instead of
+	no_success (which disables validation entirely).
+
+	* app/pdb/[many]_cmds.c: regenerated.
+
 2006-05-05  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/gifload.c (DoExtension): Revert back to unsigned

@@ -849,7 +849,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
@@ -862,7 +862,7 @@ register_vectors_procs (GimpPDB *pdb)
                                    gimp_param_spec_vectors_id ("vectors",
                                                                "vectors",
                                                                "the current vector object, 0 if no vector exists in the image.",
-                                                               pdb->gimp,
+                                                               pdb->gimp, FALSE,
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -884,13 +884,13 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_image_id ("image",
                                                              "image",
                                                              "The vectors image",
-                                                             pdb->gimp,
+                                                             pdb->gimp, FALSE,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -912,7 +912,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
@@ -941,7 +941,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
@@ -970,7 +970,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("visible",
@@ -998,7 +998,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("visible",
@@ -1026,7 +1026,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("linked",
@@ -1054,7 +1054,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("linked",
@@ -1082,7 +1082,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("tattoo",
@@ -1110,7 +1110,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("tattoo",
@@ -1138,7 +1138,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("num-strokes",
@@ -1171,7 +1171,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("stroke-id",
@@ -1211,7 +1211,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("stroke-id",
@@ -1275,7 +1275,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("stroke-id",
@@ -1303,7 +1303,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("stroke-id",
@@ -1331,7 +1331,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("stroke-id",
@@ -1371,7 +1371,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("stroke-id",
@@ -1411,7 +1411,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("stroke-id",
@@ -1462,7 +1462,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x0",
@@ -1502,7 +1502,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("stroke-id",
@@ -1542,7 +1542,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("stroke-id",
@@ -1594,7 +1594,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("stroke-id",
@@ -1658,7 +1658,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x0",

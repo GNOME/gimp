@@ -113,37 +113,37 @@ gimp_pdb_compat_param_spec (Gimp           *gimp,
 
     case GIMP_PDB_DISPLAY:
       pspec = gimp_param_spec_display_id (name, name, desc,
-                                          gimp,
+                                          gimp, TRUE,
                                           G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_IMAGE:
       pspec = gimp_param_spec_image_id (name, name, desc,
-                                        gimp,
+                                        gimp, TRUE,
                                         G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_LAYER:
       pspec = gimp_param_spec_layer_id (name, name, desc,
-                                        gimp,
+                                        gimp, TRUE,
                                         G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_CHANNEL:
       pspec = gimp_param_spec_channel_id (name, name, desc,
-                                          gimp,
+                                          gimp, TRUE,
                                           G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_DRAWABLE:
       pspec = gimp_param_spec_drawable_id (name, name, desc,
-                                           gimp,
+                                           gimp, TRUE,
                                            G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_SELECTION:
       pspec = gimp_param_spec_selection_id (name, name, desc,
-                                            gimp,
+                                            gimp, TRUE,
                                             G_PARAM_READWRITE);
       break;
 
@@ -152,7 +152,7 @@ gimp_pdb_compat_param_spec (Gimp           *gimp,
 
     case GIMP_PDB_VECTORS:
       pspec = gimp_param_spec_vectors_id (name, name, desc,
-                                          gimp,
+                                          gimp, TRUE,
                                           G_PARAM_READWRITE);
       break;
 

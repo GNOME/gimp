@@ -274,7 +274,7 @@ register_selection_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_rgb ("color",
@@ -340,7 +340,7 @@ register_selection_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x",
@@ -411,7 +411,7 @@ register_selection_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("num-segs",
@@ -470,7 +470,7 @@ register_selection_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x",
@@ -541,7 +541,7 @@ register_selection_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x",

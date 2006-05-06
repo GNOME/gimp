@@ -571,7 +571,7 @@ register_parasite_procs (GimpPDB *pdb)
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
@@ -605,7 +605,7 @@ register_parasite_procs (GimpPDB *pdb)
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_parasite ("parasite",
@@ -632,7 +632,7 @@ register_parasite_procs (GimpPDB *pdb)
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
@@ -661,7 +661,7 @@ register_parasite_procs (GimpPDB *pdb)
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("num-parasites",
@@ -694,7 +694,7 @@ register_parasite_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
@@ -728,7 +728,7 @@ register_parasite_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_parasite ("parasite",
@@ -755,7 +755,7 @@ register_parasite_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
@@ -784,7 +784,7 @@ register_parasite_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("num-parasites",
@@ -817,7 +817,7 @@ register_parasite_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
@@ -851,7 +851,7 @@ register_parasite_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_parasite ("parasite",
@@ -878,7 +878,7 @@ register_parasite_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
@@ -907,7 +907,7 @@ register_parasite_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
                                                            "The vectors object",
-                                                           pdb->gimp,
+                                                           pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("num-parasites",

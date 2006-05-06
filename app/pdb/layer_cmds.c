@@ -834,7 +834,7 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image to which to add the layer",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("width",
@@ -879,7 +879,7 @@ register_layer_procs (GimpPDB *pdb)
                                    gimp_param_spec_layer_id ("layer",
                                                              "layer",
                                                              "The newly created layer",
-                                                             pdb->gimp,
+                                                             pdb->gimp, FALSE,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -901,19 +901,19 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The source drawable from where the new layer is copied",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("dest-image",
                                                          "dest image",
                                                          "The destination image to which to add the layer",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_layer_id ("layer-copy",
                                                              "layer copy",
                                                              "The newly copied layer",
-                                                             pdb->gimp,
+                                                             pdb->gimp, FALSE,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -935,7 +935,7 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer to copy",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("add-alpha",
@@ -947,7 +947,7 @@ register_layer_procs (GimpPDB *pdb)
                                    gimp_param_spec_layer_id ("layer-copy",
                                                              "layer copy",
                                                              "The newly copied layer",
-                                                             pdb->gimp,
+                                                             pdb->gimp, FALSE,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -969,7 +969,7 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -991,7 +991,7 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("new-width",
@@ -1031,7 +1031,7 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("new-width",
@@ -1077,7 +1077,7 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer to resize",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -1099,7 +1099,7 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("offx",
@@ -1133,7 +1133,7 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("offx",
@@ -1167,7 +1167,7 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer to which to add the mask",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("mask-type",
@@ -1180,7 +1180,7 @@ register_layer_procs (GimpPDB *pdb)
                                    gimp_param_spec_layer_mask_id ("mask",
                                                                   "mask",
                                                                   "The newly created mask",
-                                                                  pdb->gimp,
+                                                                  pdb->gimp, FALSE,
                                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -1202,13 +1202,13 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_layer_mask_id ("mask",
                                                                   "mask",
                                                                   "The layer mask",
-                                                                  pdb->gimp,
+                                                                  pdb->gimp, FALSE,
                                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -1230,13 +1230,13 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_mask_id ("mask",
                                                               "mask",
                                                               "Mask for which to return the layer",
-                                                              pdb->gimp,
+                                                              pdb->gimp, FALSE,
                                                               GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_layer_id ("layer",
                                                              "layer",
                                                              "The mask's layer",
-                                                             pdb->gimp,
+                                                             pdb->gimp, FALSE,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -1258,13 +1258,13 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer to receive the mask",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_mask_id ("mask",
                                                               "mask",
                                                               "The mask to add to the layer",
-                                                              pdb->gimp,
+                                                              pdb->gimp, FALSE,
                                                               GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -1286,7 +1286,7 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer from which to remove mask",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("mode",
@@ -1315,7 +1315,7 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("is-floating-sel",
@@ -1343,7 +1343,7 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("lock-alpha",
@@ -1371,7 +1371,7 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("lock-alpha",
@@ -1399,7 +1399,7 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("apply-mask",
@@ -1427,7 +1427,7 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("apply-mask",
@@ -1455,7 +1455,7 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("show-mask",
@@ -1483,7 +1483,7 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("show-mask",
@@ -1511,7 +1511,7 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("edit-mask",
@@ -1539,7 +1539,7 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("edit-mask",
@@ -1567,7 +1567,7 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("opacity",
@@ -1595,7 +1595,7 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("opacity",
@@ -1623,7 +1623,7 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("mode",
@@ -1652,7 +1652,7 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("mode",

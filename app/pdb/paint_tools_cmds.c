@@ -711,7 +711,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("pressure",
@@ -750,7 +750,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("num-strokes",
@@ -783,13 +783,13 @@ register_paint_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("src-drawable",
                                                             "src drawable",
                                                             "The source drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("clone-type",
@@ -841,7 +841,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("num-strokes",
@@ -874,7 +874,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("pressure",
@@ -920,7 +920,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("num-strokes",
@@ -953,7 +953,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("exposure",
@@ -1006,7 +1006,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("num-strokes",
@@ -1039,7 +1039,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("num-strokes",
@@ -1086,7 +1086,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("num-strokes",
@@ -1119,7 +1119,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("fade-out",
@@ -1171,7 +1171,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("num-strokes",
@@ -1204,7 +1204,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("num-strokes",
@@ -1237,7 +1237,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("pressure",
@@ -1276,7 +1276,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("num-strokes",

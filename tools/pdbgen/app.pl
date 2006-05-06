@@ -227,74 +227,82 @@ sub generate_pspec {
     }
 
     if ($pdbtype eq 'image') {
+	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;
 gimp_param_spec_image_id ("$name",
                           "$nick",
                           "$blurb",
-                          pdb->gimp,
+                          pdb->gimp, $none_ok,
                           GIMP_PARAM_READWRITE)
 CODE
     }
     elsif ($pdbtype eq 'drawable') {
+	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;
 gimp_param_spec_drawable_id ("$name",
                              "$nick",
                              "$blurb",
-                             pdb->gimp,
+                             pdb->gimp, $none_ok,
                              $flags)
 CODE
     }
     elsif ($pdbtype eq 'layer') {
+	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;
 gimp_param_spec_layer_id ("$name",
                           "$nick",
                           "$blurb",
-                          pdb->gimp,
+                          pdb->gimp, $none_ok,
                           $flags)
 CODE
     }
     elsif ($pdbtype eq 'channel') {
+	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;
 gimp_param_spec_channel_id ("$name",
                             "$nick",
                             "$blurb",
-                            pdb->gimp,
+                            pdb->gimp, $none_ok,
                             $flags)
 CODE
     }
     elsif ($pdbtype eq 'layer_mask') {
+	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;
 gimp_param_spec_layer_mask_id ("$name",
                                "$nick",
                                "$blurb",
-                               pdb->gimp,
+                               pdb->gimp, $none_ok,
                                $flags)
 CODE
     }
     elsif ($pdbtype eq 'selection') {
+	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;
 gimp_param_spec_selection_id ("$name",
                               "$nick",
                               "$blurb",
-                              pdb->gimp,
+                              pdb->gimp, $none_ok,
                               $flags)
 CODE
     }
     elsif ($pdbtype eq 'vectors') {
+	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;
 gimp_param_spec_vectors_id ("$name",
                             "$nick",
                             "$blurb",
-                            pdb->gimp,
+                            pdb->gimp, $none_ok,
                             $flags)
 CODE
     }
     elsif ($pdbtype eq 'display') {
+	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;
 gimp_param_spec_display_id ("$name",
                             "$nick",
                             "$blurb",
-                            pdb->gimp,
+                            pdb->gimp, $none_ok,
                             $flags)
 CODE
     }

@@ -558,7 +558,7 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
-	{ name => 'drawable', type => 'drawable', no_success => 1,
+	{ name => 'drawable', type => 'drawable', none_ok => 1,
           desc => 'The drawable to pick from' },
 	{ name => 'x', type => 'float',
 	  desc => 'x coordinate of upper-left corner of rectangle' },

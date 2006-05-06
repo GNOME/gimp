@@ -30,7 +30,7 @@ HELP
     @inargs = (
 	{ name => 'message', type => 'string', null_ok => 1, wrap => 1,
 	  desc => 'Message to use in the progress dialog' },
-	{ name => 'gdisplay', type => 'display', no_success => 1,
+	{ name => 'gdisplay', type => 'display', none_ok => 1,
 	  desc => 'GimpDisplay to update progressbar in, or -1 for a seperate
 		   window' }
     );

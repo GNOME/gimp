@@ -199,7 +199,7 @@ register_floating_sel_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("floating-sel",
                                                          "floating sel",
                                                          "The floating selection",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -221,7 +221,7 @@ register_floating_sel_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("floating-sel",
                                                          "floating sel",
                                                          "The floating selection",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -243,7 +243,7 @@ register_floating_sel_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("floating-sel",
                                                          "floating sel",
                                                          "The floating selection",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -265,13 +265,13 @@ register_floating_sel_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
                                                          "The layer (is attached as floating selection)",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The drawable (where to attach the floating selection)",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -293,7 +293,7 @@ register_floating_sel_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("floating-sel",
                                                          "floating sel",
                                                          "The floating selection",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("undo",
@@ -321,7 +321,7 @@ register_floating_sel_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("floating-sel",
                                                          "floating sel",
                                                          "The floating selection",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("undo",

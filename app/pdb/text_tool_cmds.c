@@ -294,14 +294,14 @@ register_text_tool_procs (GimpPDB *pdb)
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable: (-1 for a new text layer)",
-                                                            pdb->gimp,
-                                                            GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+                                                            pdb->gimp, TRUE,
+                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x",
                                                     "x",
@@ -357,7 +357,7 @@ register_text_tool_procs (GimpPDB *pdb)
                                    gimp_param_spec_layer_id ("text-layer",
                                                              "text layer",
                                                              "The new text layer or -1 if no layer was created.",
-                                                             pdb->gimp,
+                                                             pdb->gimp, FALSE,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -446,14 +446,14 @@ register_text_tool_procs (GimpPDB *pdb)
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
-                                                         pdb->gimp,
+                                                         pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable: (-1 for a new text layer)",
-                                                            pdb->gimp,
-                                                            GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+                                                            pdb->gimp, TRUE,
+                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x",
                                                     "x",
@@ -558,7 +558,7 @@ register_text_tool_procs (GimpPDB *pdb)
                                    gimp_param_spec_layer_id ("text-layer",
                                                              "text layer",
                                                              "The new text layer or -1 if no layer was created.",
-                                                             pdb->gimp,
+                                                             pdb->gimp, FALSE,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

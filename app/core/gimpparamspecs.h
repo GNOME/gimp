@@ -223,6 +223,7 @@ struct _GimpParamSpecImageID
   GParamSpecInt  parent_instance;
 
   Gimp          *gimp;
+  gboolean       none_ok;
 };
 
 GType        gimp_param_image_id_get_type (void) G_GNUC_CONST;
@@ -231,6 +232,7 @@ GParamSpec * gimp_param_spec_image_id     (const gchar  *name,
                                            const gchar  *nick,
                                            const gchar  *blurb,
                                            Gimp         *gimp,
+                                           gboolean      none_ok,
                                            GParamFlags   flags);
 
 GimpImage  * gimp_value_get_image         (const GValue *value,
@@ -267,6 +269,7 @@ struct _GimpParamSpecItemID
 
   Gimp          *gimp;
   GType          item_type;
+  gboolean       none_ok;
 };
 
 GType        gimp_param_item_id_get_type (void) G_GNUC_CONST;
@@ -276,6 +279,7 @@ GParamSpec * gimp_param_spec_item_id     (const gchar  *name,
                                           const gchar  *blurb,
                                           Gimp         *gimp,
                                           GType         item_type,
+                                          gboolean      none_ok,
                                           GParamFlags   flags);
 
 GimpItem   * gimp_value_get_item         (const GValue *value,
@@ -317,6 +321,7 @@ GParamSpec  * gimp_param_spec_drawable_id     (const gchar  *name,
                                                const gchar  *nick,
                                                const gchar  *blurb,
                                                Gimp         *gimp,
+                                               gboolean      none_ok,
                                                GParamFlags   flags);
 
 GimpDrawable * gimp_value_get_drawable        (const GValue *value,
@@ -357,6 +362,7 @@ GParamSpec * gimp_param_spec_layer_id     (const gchar  *name,
                                            const gchar  *nick,
                                            const gchar  *blurb,
                                            Gimp         *gimp,
+                                           gboolean      none_ok,
                                            GParamFlags   flags);
 
 GimpLayer  * gimp_value_get_layer         (const GValue *value,
@@ -397,6 +403,7 @@ GParamSpec  * gimp_param_spec_channel_id     (const gchar  *name,
                                               const gchar  *nick,
                                               const gchar  *blurb,
                                               Gimp         *gimp,
+                                              gboolean      none_ok,
                                               GParamFlags   flags);
 
 GimpChannel * gimp_value_get_channel         (const GValue *value,
@@ -437,6 +444,7 @@ GParamSpec    * gimp_param_spec_layer_mask_id     (const gchar   *name,
                                                    const gchar   *nick,
                                                    const gchar   *blurb,
                                                    Gimp          *gimp,
+                                                   gboolean       none_ok,
                                                    GParamFlags    flags);
 
 GimpLayerMask * gimp_value_get_layer_mask         (const GValue  *value,
@@ -477,6 +485,7 @@ GParamSpec    * gimp_param_spec_selection_id     (const gchar   *name,
                                                   const gchar   *nick,
                                                   const gchar   *blurb,
                                                   Gimp          *gimp,
+                                                  gboolean       none_ok,
                                                   GParamFlags    flags);
 
 GimpSelection * gimp_value_get_selection         (const GValue  *value,
@@ -517,6 +526,7 @@ GParamSpec  * gimp_param_spec_vectors_id     (const gchar  *name,
                                               const gchar  *nick,
                                               const gchar  *blurb,
                                               Gimp         *gimp,
+                                              gboolean      none_ok,
                                               GParamFlags   flags);
 
 GimpVectors * gimp_value_get_vectors         (const GValue *value,
@@ -551,6 +561,7 @@ struct _GimpParamSpecDisplayID
   GParamSpecInt  parent_instance;
 
   Gimp          *gimp;
+  gboolean       none_ok;
 };
 
 GType        gimp_param_display_id_get_type (void) G_GNUC_CONST;
@@ -559,6 +570,7 @@ GParamSpec * gimp_param_spec_display_id     (const gchar  *name,
                                              const gchar  *nick,
                                              const gchar  *blurb,
                                              Gimp         *gimp,
+                                             gboolean      none_ok,
                                              GParamFlags   flags);
 
 GimpObject * gimp_value_get_display         (const GValue *value,

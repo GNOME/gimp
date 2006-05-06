@@ -443,7 +443,7 @@ register_transform_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("flip-type",
@@ -458,7 +458,7 @@ register_transform_tools_procs (GimpPDB *pdb)
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
                                                                 "The flipped drawable",
-                                                                pdb->gimp,
+                                                                pdb->gimp, FALSE,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -480,7 +480,7 @@ register_transform_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("interpolation",
@@ -540,7 +540,7 @@ register_transform_tools_procs (GimpPDB *pdb)
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
                                                                 "The newly mapped drawable",
-                                                                pdb->gimp,
+                                                                pdb->gimp, FALSE,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -562,7 +562,7 @@ register_transform_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("interpolation",
@@ -580,7 +580,7 @@ register_transform_tools_procs (GimpPDB *pdb)
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
                                                                 "The rotated drawable",
-                                                                pdb->gimp,
+                                                                pdb->gimp, FALSE,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -602,7 +602,7 @@ register_transform_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("interpolation",
@@ -638,7 +638,7 @@ register_transform_tools_procs (GimpPDB *pdb)
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
                                                                 "The scaled drawable",
-                                                                pdb->gimp,
+                                                                pdb->gimp, FALSE,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -660,7 +660,7 @@ register_transform_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("interpolation",
@@ -687,7 +687,7 @@ register_transform_tools_procs (GimpPDB *pdb)
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
                                                                 "The sheared drawable",
-                                                                pdb->gimp,
+                                                                pdb->gimp, FALSE,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -709,7 +709,7 @@ register_transform_tools_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
-                                                            pdb->gimp,
+                                                            pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("interpolation",
@@ -763,7 +763,7 @@ register_transform_tools_procs (GimpPDB *pdb)
                                    gimp_param_spec_drawable_id ("drawable",
                                                                 "drawable",
                                                                 "The transformed drawable",
-                                                                pdb->gimp,
+                                                                pdb->gimp, FALSE,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
