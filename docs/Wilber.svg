@@ -1,5 +1,6 @@
 <?xml version="1.0" standalone="yes"?>
-<svg width="160mm" height="120mm" viewBox="0 0 77 60">
+<svg width="160mm" height="120mm" viewBox="0 0 77 60"
+     xmlns="http://www.w3.org/2000/svg">
    <g>
       <g>
          <path id="head"

@@ -1,3 +1,13 @@
+2006-05-07  Simon Budig  <simon@gimp.org>
+
+	* modules/colorsel_triangle.c: Make the hue angle behave
+	mathematically correct. Fixes bug #141922
+
+	* plug-ins/script-fu/scripts/circuit.scm: Fix multi line description.
+
+	* docs/Wilber.svg: Add xmlns attribute to the svg element, so
+	firefox renders it when reading it from disk.
+
 2006-05-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-scale.c (gimp_display_shell_scale):

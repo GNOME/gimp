@@ -261,16 +261,16 @@ colorsel_triangle_update_preview (ColorselTriangle *triangle)
   hue = (gdouble) selector->hsv.h * 2 * G_PI;
 
   /* Colored point (value = 1, saturation = 1) */
-  hx = RINT (sin (hue) * triangle->triangleradius);
-  hy = RINT (cos (hue) * triangle->triangleradius);
+  hx = RINT (cos (hue) * triangle->triangleradius);
+  hy = RINT (sin (hue) * triangle->triangleradius);
 
   /* Black point (value = 0, saturation not important) */
-  sx = RINT (sin (hue - 2 * G_PI / 3) * triangle->triangleradius);
-  sy = RINT (cos (hue - 2 * G_PI / 3) * triangle->triangleradius);
+  sx = RINT (cos (hue + 2 * G_PI / 3) * triangle->triangleradius);
+  sy = RINT (sin (hue + 2 * G_PI / 3) * triangle->triangleradius);
 
   /* White point (value = 1, saturation = 0) */
-  vx = RINT (sin (hue + 2 * G_PI / 3) * triangle->triangleradius);
-  vy = RINT (cos (hue + 2 * G_PI / 3) * triangle->triangleradius);
+  vx = RINT (cos (hue - 2 * G_PI / 3) * triangle->triangleradius);
+  vy = RINT (sin (hue - 2 * G_PI / 3) * triangle->triangleradius);
 
   hue = selector->hsv.h * 360.0;
 
@@ -286,7 +286,7 @@ colorsel_triangle_update_preview (ColorselTriangle *triangle)
             {
               if (r2 > SQR (triangle->triangleradius))
                 {
-                  atn = atan2 (x, y);
+                  atn = atan2 (y, x);
                   if (atn < 0)
                     atn = atn + 2 * G_PI;
 
@@ -310,16 +310,16 @@ colorsel_triangle_update_preview (ColorselTriangle *triangle)
 
   /* marker in outer ring */
 
-  x0 = RINT (sin (hue * G_PI / 180) *
+  x0 = RINT (cos (hue * G_PI / 180) *
              ((gdouble) (triangle->wheelradius -
                          triangle->triangleradius + 1) / 2 +
               triangle->triangleradius));
-  y0 = RINT (cos (hue * G_PI / 180) *
+  y0 = RINT (sin (hue * G_PI / 180) *
              ((gdouble) (triangle->wheelradius -
                          triangle->triangleradius + 1) / 2 +
               triangle->triangleradius));
 
-  atn = atan2 (x0, y0);
+  atn = atan2 (y0, x0);
   if (atn < 0)
     atn = atn + 2 * G_PI;
 
@@ -341,7 +341,7 @@ colorsel_triangle_update_preview (ColorselTriangle *triangle)
             }
           else
             {
-              atn = atan2 (x, y);
+              atn = atan2 (y, x);
               if (atn < 0)
                 atn = atn + 2 * G_PI;
 
@@ -382,7 +382,7 @@ colorsel_triangle_update_preview (ColorselTriangle *triangle)
             {
               if (SQR (x) + SQR (y) > SQR (triangle->triangleradius))
                 {
-                  atn = atan2 (x, y);
+                  atn = atan2 (y, x);
                   if (atn < 0)
                     atn = atn + 2 * G_PI;
 
@@ -497,7 +497,7 @@ colorsel_triangle_event (GtkWidget        *widget,
       x = event->button.x - (width - 1) / 2 - 1;
       y = - event->button.y + (height - 1) / 2 + 1;
       r = sqrt ((gdouble) (SQR (x) + SQR (y)));
-      angle = ((gint) RINT (atan2 (x, y) / G_PI * 180) + 360 ) % 360;
+      angle = ((gint) RINT (atan2 (y, x) / G_PI * 180) + 360 ) % 360;
 
       if ( /* r <= triangle->wheelradius  && */ r > triangle->triangleradius)
         triangle->mode = 1;  /* Dragging in the Ring */
@@ -513,7 +513,7 @@ colorsel_triangle_event (GtkWidget        *widget,
       x = x - (width - 1) / 2 - 1;
       y = - y + (height - 1) / 2 + 1;
       r = sqrt ((gdouble) (SQR (x) + SQR (y)));
-      angle = ((gint) RINT (atan2 (x, y) / G_PI * 180) + 360 ) % 360;
+      angle = ((gint) RINT (atan2 (y, x) / G_PI * 180) + 360 ) % 360;
       break;
 
     case GDK_BUTTON_RELEASE:
@@ -542,12 +542,12 @@ colorsel_triangle_event (GtkWidget        *widget,
     {
       hue = selector->hsv.h * 2 * G_PI;
 
-      hx = sin (hue) * triangle->triangleradius;
-      hy = cos (hue) * triangle->triangleradius;
-      sx = sin (hue - 2 * G_PI / 3) * triangle->triangleradius;
-      sy = cos (hue - 2 * G_PI / 3) * triangle->triangleradius;
-      vx = sin (hue + 2 * G_PI / 3) * triangle->triangleradius;
-      vy = cos (hue + 2 * G_PI / 3) * triangle->triangleradius;
+      hx = cos (hue) * triangle->triangleradius;
+      hy = sin (hue) * triangle->triangleradius;
+      sx = cos (hue + 2 * G_PI / 3) * triangle->triangleradius;
+      sy = sin (hue + 2 * G_PI / 3) * triangle->triangleradius;
+      vx = cos (hue - 2 * G_PI / 3) * triangle->triangleradius;
+      vy = sin (hue - 2 * G_PI / 3) * triangle->triangleradius;
 
       hue = selector->hsv.h * 360.0;
 
