@@ -1,3 +1,9 @@
+2006-05-08  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/script-fu/siod/sliba.c: Insert a missing break that
+	was responsible for a weird output of integer arrays.
+	Untabbified.
+
 2006-05-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpfiledialog.c (gimp_file_dialog_new): set the
