@@ -207,13 +207,13 @@ static gint   save_rgb         (FILE              *ofp,
                                 gint32             drawable_ID);
 
 static gint32 create_new_image (const gchar       *filename,
-				guint              pagenum,
-				guint              width,
-				guint              height,
-				GimpImageBaseType  type,
-				gint32            *layer_ID,
-				GimpDrawable     **drawable,
-				GimpPixelRgn      *pixel_rgn);
+                                guint              pagenum,
+                                guint              width,
+                                guint              height,
+                                GimpImageBaseType  type,
+                                gint32            *layer_ID,
+                                GimpDrawable     **drawable,
+                                GimpPixelRgn      *pixel_rgn);
 
 static void   check_load_vals  (void);
 static void   check_save_vals  (void);
@@ -348,7 +348,7 @@ ascii85_flush (FILE *ofp)
           putc ('\n', ofp);
           ascii85_linewidth = 0;
         }
-	putc (c[i], ofp);
+        putc (c[i], ofp);
         ascii85_linewidth++;
       }
     }
@@ -594,8 +594,8 @@ query (void)
 
   gimp_register_file_handler_mime (LOAD_PS_PROC, "application/postscript");
   gimp_register_magic_load_handler (LOAD_PS_PROC,
-				    "ps",
-				    "",
+                                    "ps",
+                                    "",
                                     "0,string,%!,0,long,0xc5d0d3c6");
 
   gimp_install_procedure (LOAD_EPS_PROC,
@@ -613,8 +613,8 @@ query (void)
 
   gimp_register_file_handler_mime (LOAD_EPS_PROC, "image/x-eps");
   gimp_register_magic_load_handler (LOAD_EPS_PROC,
-				    "eps",
-				    "",
+                                    "eps",
+                                    "",
                                     "0,string,%!,0,long,0xc5d0d3c6");
 
 #ifndef HAVE_POPPLER
@@ -633,8 +633,8 @@ query (void)
 
   gimp_register_file_handler_mime (LOAD_PDF_PROC, "application/pdf");
   gimp_register_magic_load_handler (LOAD_PDF_PROC,
-				    "pdf",
-				    "",
+                                    "pdf",
+                                    "",
                                     "0,string,%PDF");
 #endif
 
@@ -656,8 +656,8 @@ query (void)
                           "Peter Kirchgessner <peter@kirchgessner.net>",
                           "Peter Kirchgessner",
                           dversio,
-			  NULL,
-			  NULL,
+                          NULL,
+                          NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (thumb_args),
                           G_N_ELEMENTS (thumb_return_vals),
@@ -771,14 +771,14 @@ run (const gchar      *name,
       strcmp (name, LOAD_PDF_PROC) == 0)
     {
       switch (run_mode)
-	{
+        {
         case GIMP_RUN_INTERACTIVE:
           /*  Possibly retrieve data  */
           gimp_get_data (LOAD_PS_PROC, &plvals);
 
           if (! load_dialog (param[1].data.d_string,
                              ! strcmp (name, LOAD_PDF_PROC)))
-	    status = GIMP_PDB_CANCEL;
+            status = GIMP_PDB_CANCEL;
           break;
 
         case GIMP_RUN_NONINTERACTIVE:
@@ -796,28 +796,28 @@ run (const gchar      *name,
 
         default:
           break;
-	}
+        }
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  check_load_vals ();
-	  image_ID = load_image (param[1].data.d_string);
+        {
+          check_load_vals ();
+          image_ID = load_image (param[1].data.d_string);
 
-	  if (image_ID != -1)
-	    {
-	      *nreturn_vals = 2;
-	      values[1].type         = GIMP_PDB_IMAGE;
-	      values[1].data.d_image = image_ID;
-	    }
-	  else
-	    {
-	      status = GIMP_PDB_EXECUTION_ERROR;
-	    }
-	}
+          if (image_ID != -1)
+            {
+              *nreturn_vals = 2;
+              values[1].type         = GIMP_PDB_IMAGE;
+              values[1].data.d_image = image_ID;
+            }
+          else
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+        }
 
       /*  Store plvals data  */
       if (status == GIMP_PDB_SUCCESS)
-	gimp_set_data (LOAD_PS_PROC, &plvals, sizeof (PSLoadVals));
+        gimp_set_data (LOAD_PS_PROC, &plvals, sizeof (PSLoadVals));
     }
   else if (strcmp (name, LOAD_PS_THUMB_PROC) == 0)
     {
@@ -844,9 +844,9 @@ run (const gchar      *name,
 
           if (image_ID != -1)
             {
-	      *nreturn_vals = 2;
-	      values[1].type         = GIMP_PDB_IMAGE;
-	      values[1].data.d_image = image_ID;
+              *nreturn_vals = 2;
+              values[1].type         = GIMP_PDB_IMAGE;
+              values[1].data.d_image = image_ID;
             }
           else
             {
@@ -864,24 +864,24 @@ run (const gchar      *name,
 
       /* eventually export the image */
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init (PLUG_IN_BINARY, FALSE);
-	  export = gimp_export_image (&image_ID, &drawable_ID,
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
+          export = gimp_export_image (&image_ID, &drawable_ID,
                                       psvals.eps ? "EPS" : "PostScript",
-				      (GIMP_EXPORT_CAN_HANDLE_RGB |
-				       GIMP_EXPORT_CAN_HANDLE_GRAY |
-				       GIMP_EXPORT_CAN_HANDLE_INDEXED));
-	  if (export == GIMP_EXPORT_CANCEL)
-	    {
-	      values[0].data.d_status = GIMP_PDB_CANCEL;
-	      return;
-	    }
-	  break;
-	default:
-	  break;
-	}
+                                      (GIMP_EXPORT_CAN_HANDLE_RGB |
+                                       GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                       GIMP_EXPORT_CAN_HANDLE_INDEXED));
+          if (export == GIMP_EXPORT_CANCEL)
+            {
+              values[0].data.d_status = GIMP_PDB_CANCEL;
+              return;
+            }
+          break;
+        default:
+          break;
+        }
 
       switch (run_mode)
         {
@@ -899,23 +899,23 @@ run (const gchar      *name,
         case GIMP_RUN_NONINTERACTIVE:
           /*  Make sure all the arguments are there!  */
           if (nparams != 15)
-	    {
-	      status = GIMP_PDB_CALLING_ERROR;
-	    }
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
           else
-	    {
-	      psvals.width        = param[5].data.d_float;
-	      psvals.height       = param[6].data.d_float;
-	      psvals.x_offset     = param[7].data.d_float;
-	      psvals.y_offset     = param[8].data.d_float;
-	      psvals.unit_mm      = (param[9].data.d_int32 != 0);
-	      psvals.keep_ratio   = (param[10].data.d_int32 != 0);
-	      psvals.rotate       = param[11].data.d_int32;
-	      psvals.eps          = param[12].data.d_int32;
-	      psvals.preview      = (param[13].data.d_int32 != 0);
-	      psvals.preview_size = param[13].data.d_int32;
-	      psvals.level        = param[14].data.d_int32;
-	    }
+            {
+              psvals.width        = param[5].data.d_float;
+              psvals.height       = param[6].data.d_float;
+              psvals.x_offset     = param[7].data.d_float;
+              psvals.y_offset     = param[8].data.d_float;
+              psvals.unit_mm      = (param[9].data.d_int32 != 0);
+              psvals.keep_ratio   = (param[10].data.d_int32 != 0);
+              psvals.rotate       = param[11].data.d_int32;
+              psvals.eps          = param[12].data.d_int32;
+              psvals.preview      = (param[13].data.d_int32 != 0);
+              psvals.preview_size = param[13].data.d_int32;
+              psvals.level        = param[14].data.d_int32;
+            }
           break;
 
         case GIMP_RUN_WITH_LAST_VALS:
@@ -928,51 +928,51 @@ run (const gchar      *name,
         }
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  if ((psvals.width == 0.0) || (psvals.height == 0.0))
-	    ps_set_save_size (&psvals, orig_image_ID);
+        {
+          if ((psvals.width == 0.0) || (psvals.height == 0.0))
+            ps_set_save_size (&psvals, orig_image_ID);
 
-	  check_save_vals ();
-	  if (save_image (param[3].data.d_string, image_ID, drawable_ID))
-	    {
-	      /*  Store psvals data  */
-	      gimp_set_data (name, &psvals, sizeof (PSSaveVals));
-	    }
-	  else
-	    {
-	      status = GIMP_PDB_EXECUTION_ERROR;
-	    }
-	}
+          check_save_vals ();
+          if (save_image (param[3].data.d_string, image_ID, drawable_ID))
+            {
+              /*  Store psvals data  */
+              gimp_set_data (name, &psvals, sizeof (PSSaveVals));
+            }
+          else
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+        }
 
       if (export == GIMP_EXPORT_EXPORT)
-	gimp_image_delete (image_ID);
+        gimp_image_delete (image_ID);
     }
   else if (strcmp (name, LOAD_PS_SETARGS_PROC) == 0)
     {
       /*  Make sure all the arguments are there!  */
       if (nparams != 8)
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	}
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
       else
-	{
-	  plvals.resolution = param[0].data.d_int32;
-	  plvals.width      = param[1].data.d_int32;
-	  plvals.height     = param[2].data.d_int32;
-	  plvals.use_bbox   = param[3].data.d_int32;
-	  if (param[4].data.d_string != NULL)
-	    strncpy (plvals.pages, param[4].data.d_string,
-		     sizeof (plvals.pages));
-	  else
-	    plvals.pages[0] = '\0';
-	  plvals.pages[sizeof (plvals.pages) - 1] = '\0';
-	  plvals.pnm_type      = param[5].data.d_int32;
-	  plvals.textalpha     = param[6].data.d_int32;
-	  plvals.graphicsalpha = param[7].data.d_int32;
-	  check_load_vals ();
+        {
+          plvals.resolution = param[0].data.d_int32;
+          plvals.width      = param[1].data.d_int32;
+          plvals.height     = param[2].data.d_int32;
+          plvals.use_bbox   = param[3].data.d_int32;
+          if (param[4].data.d_string != NULL)
+            strncpy (plvals.pages, param[4].data.d_string,
+                     sizeof (plvals.pages));
+          else
+            plvals.pages[0] = '\0';
+          plvals.pages[sizeof (plvals.pages) - 1] = '\0';
+          plvals.pnm_type      = param[5].data.d_int32;
+          plvals.textalpha     = param[6].data.d_int32;
+          plvals.graphicsalpha = param[7].data.d_int32;
+          check_load_vals ();
 
-	  gimp_set_data (LOAD_PS_PROC, &plvals, sizeof (PSLoadVals));
-	}
+          gimp_set_data (LOAD_PS_PROC, &plvals, sizeof (PSLoadVals));
+        }
     }
   else
     {
@@ -1039,16 +1039,16 @@ load_image (const gchar *filename)
     {
       max_pagenum = -1;
       for (temp = plvals.pages; *temp != '\0'; temp++)
-	{
-	  if ((*temp < '0') || (*temp > '9'))
+        {
+          if ((*temp < '0') || (*temp > '9'))
             continue; /* Search next digit */
-	  sscanf (temp, "%d", &k);
-	  if (k > max_pagenum)
+          sscanf (temp, "%d", &k);
+          if (k > max_pagenum)
             max_pagenum = k;
-	  while ((*temp >= '0') && (*temp <= '9'))
+          while ((*temp >= '0') && (*temp <= '9'))
             temp++;
-	  temp--;
-	}
+          temp--;
+        }
 
       if (max_pagenum < 1)
         max_pagenum = 9999;
@@ -1058,31 +1058,31 @@ load_image (const gchar *filename)
   for (page_count = 1; page_count <= max_pagenum; page_count++)
     {
       if (page_in_list (plvals.pages, page_count))
-	{
-	  image_ID = load_ps (filename, page_count, ifp, llx, lly, urx, ury);
-	  if (image_ID == -1)
+        {
+          image_ID = load_ps (filename, page_count, ifp, llx, lly, urx, ury);
+          if (image_ID == -1)
             break;
 
-	  gimp_image_set_resolution (image_ID,
-				     (double) plvals.resolution,
-				     (double) plvals.resolution);
+          gimp_image_set_resolution (image_ID,
+                                     (double) plvals.resolution,
+                                     (double) plvals.resolution);
 
-	  if (n_images == max_images)
-	    {
-	      nl = (gint32 *) g_realloc (image_list,
-					 (max_images+10)*sizeof (gint32));
-	      if (nl == NULL) break;
-	      image_list = nl;
-	      max_images += 10;
-	    }
-	  image_list[n_images++] = image_ID;
-	}
+          if (n_images == max_images)
+            {
+              nl = (gint32 *) g_realloc (image_list,
+                                         (max_images+10)*sizeof (gint32));
+              if (nl == NULL) break;
+              image_list = nl;
+              max_images += 10;
+            }
+          image_list[n_images++] = image_ID;
+        }
       else  /* Skip an image */
-	{
+        {
           image_ID = -1;
-	  if (! skip_ps (ifp))
+          if (! skip_ps (ifp))
             break;
-	}
+        }
     }
 
   ps_close (ifp, ChildPid);
@@ -1272,21 +1272,21 @@ page_in_list (gchar *list,
   while (*c1)    /* Remove all whitespace and break on unsupported characters */
     {
       if ((*c1 >= '0') && (*c1 <= '9'))
-	{
-	  *(c0++) = *c1;
-	}
+        {
+          *(c0++) = *c1;
+        }
       else if ((*c1 == '-') || (*c1 == ','))
-	{ /* Try to remove double occurances of these characters */
-	  if (c0 == tmplist)
-	    {
-	      *(c0++) = *c1;
-	    }
-	  else
-	    {
-	      if (*(c0-1) != *c1)
-		*(c0++) = *c1;
-	    }
-	}
+        { /* Try to remove double occurances of these characters */
+          if (c0 == tmplist)
+            {
+              *(c0++) = *c1;
+            }
+          else
+            {
+              if (*(c0-1) != *c1)
+                *(c0++) = *c1;
+            }
+        }
       else
         break;
 
@@ -1305,54 +1305,54 @@ page_in_list (gchar *list,
   for (c0 = tmplist; *c0 != '\0'; c0++)
     {
       switch (state)
-	{
-	case READ_STARTNUM:
-	  if (*c0 == ',')
-	    {
-	      if ((start_num > 0) && (start_num == (int)page_num))
+        {
+        case READ_STARTNUM:
+          if (*c0 == ',')
+            {
+              if ((start_num > 0) && (start_num == (int)page_num))
                 return -1;
-	      start_num = -1;
-	    }
-	  else if (*c0 == '-')
-	    {
-	      if (start_num < 0) start_num = 1;
-	      state = READ_ENDNUM;
-	    }
-	  else /* '0' - '9' */
-	    {
-	      if (start_num < 0) start_num = 0;
-	      start_num *= 10;
-	      start_num += *c0 - '0';
-	    }
-	  break;
+              start_num = -1;
+            }
+          else if (*c0 == '-')
+            {
+              if (start_num < 0) start_num = 1;
+              state = READ_ENDNUM;
+            }
+          else /* '0' - '9' */
+            {
+              if (start_num < 0) start_num = 0;
+              start_num *= 10;
+              start_num += *c0 - '0';
+            }
+          break;
 
-	case READ_ENDNUM:
-	  if (*c0 == ',')
-	    {
-	      if (end_num < 0) end_num = 9999;
-	      CHK_LIST (start_num, end_num, (int)page_num);
-	      start_num = end_num = -1;
-	      state = READ_STARTNUM;
-	    }
-	  else if (*c0 == '-')
-	    {
-	      CHK_LIST (start_num, end_num, (int)page_num);
-	      start_num = end_num;
-	      end_num = -1;
-	    }
-	  else /* '0' - '9' */
-	    {
-	      if (end_num < 0) end_num = 0;
-	      end_num *= 10;
-	      end_num += *c0 - '0';
-	    }
-	  break;
-	}
+        case READ_ENDNUM:
+          if (*c0 == ',')
+            {
+              if (end_num < 0) end_num = 9999;
+              CHK_LIST (start_num, end_num, (int)page_num);
+              start_num = end_num = -1;
+              state = READ_STARTNUM;
+            }
+          else if (*c0 == '-')
+            {
+              CHK_LIST (start_num, end_num, (int)page_num);
+              start_num = end_num;
+              end_num = -1;
+            }
+          else /* '0' - '9' */
+            {
+              if (end_num < 0) end_num = 0;
+              end_num *= 10;
+              end_num += *c0 - '0';
+            }
+          break;
+        }
     }
   if (state == READ_STARTNUM)
     {
       if (start_num > 0)
-	return (start_num == (int) page_num);
+        return (start_num == (int) page_num);
     }
   else
     {
@@ -1456,7 +1456,7 @@ get_bbox (const gchar *filename,
       while ((*src == ' ') || (*src == '\t') || (*src == ':')) src++;
       if (strncmp (src, "(atend)", 7) == 0) continue;
       if (sscanf (src, "%d%d%d%d", x0, y0, x1, y1) == 4)
-	retval = 0;
+        retval = 0;
       break;
     }
   fclose (ifp);
@@ -1689,7 +1689,7 @@ ps_open (const gchar      *filename,
                                   NULL,         /* stderr */
                                   &Gerr) )
     {
-      g_message (_("Error starting ghostscript (%s)"), Gerr->message);
+      g_message (_("Error starting Ghostscript. Make sure that Ghostscript is installed and - if necessary - use the environment variable GS_PROC to tell GIMP about its location.\n(%s)"), Gerr->message);
       g_error_free (Gerr);
 
       *ChildPidPtr = 0;
@@ -1719,7 +1719,7 @@ ps_open (const gchar      *filename,
                       NULL,       /* exit code */
                       &Gerr) )
     {
-      g_message (_("Error starting ghostscript: %s"), Gerr->message);
+      g_message (_("Error starting Ghostscript. Make sure that Ghostscript is installed and - if necessary - use the environment variable GS_PROC to tell GIMP about its location.\n(%s)"), Gerr->message);
       g_error_free (Gerr);
 
       g_unlink (pnmfile);
@@ -1817,7 +1817,7 @@ read_pnmraw_type (FILE *ifp,
       if (thrd == '\r') thrd = getc (ifp);
 #endif
       if ((thrd == '\n') && (frst == 'P') && (scnd >= '1') && (scnd <= '6'))
-	break;
+        break;
       frst = scnd;
       scnd = thrd;
       thrd = getc (ifp);
@@ -1843,12 +1843,12 @@ read_pnmraw_type (FILE *ifp,
   if (pnmtype != 4)  /* Read maxval */
     {
       for (;;)
-	{
-	  if (fgets (line, sizeof (line)-1, ifp) == NULL)
+        {
+          if (fgets (line, sizeof (line)-1, ifp) == NULL)
             return -1;
-	  if (line[0] != '#')
+          if (line[0] != '#')
             break;
-	}
+        }
       if (sscanf (line, "%d", maxval) != 1)
         return -1;
     }
@@ -1885,14 +1885,14 @@ create_new_image (const gchar        *filename,
 
   tmp = g_strdup_printf (_("Page %d"), pagenum);
   *layer_ID = gimp_layer_new (image_ID, tmp, width, height,
-			      gdtype, 100, GIMP_NORMAL_MODE);
+                              gdtype, 100, GIMP_NORMAL_MODE);
   g_free (tmp);
 
   gimp_image_add_layer (image_ID, *layer_ID, 0);
 
   *drawable = gimp_drawable_get (*layer_ID);
   gimp_pixel_rgn_init (pixel_rgn, *drawable, 0, 0, (*drawable)->width,
-		       (*drawable)->height, TRUE, FALSE);
+                       (*drawable)->height, TRUE, FALSE);
 
   return image_ID;
 }
@@ -1981,8 +1981,8 @@ load_ps (const gchar *filename,
       /* Get an array for mapping 8 bits in a byte to 8 bytes */
       temp = bit2byte;
       for (j = 0; j < 256; j++)
-	for (i = 7; i >= 0; i--)
-	  *(temp++) = ((j & (1 << i)) != 0);
+        for (i = 7; i >= 0; i--)
+          *(temp++) = ((j & (1 << i)) != 0);
     }
   else if (pnmtype == 5)  /* Portable Greymap */
     {
@@ -2002,8 +2002,8 @@ load_ps (const gchar *filename,
     return -1;
 
   image_ID = create_new_image (filename, pagenum,
-			       image_width, image_height, imagetype,
-			       &layer_ID, &drawable, &pixel_rgn);
+                               image_width, image_height, imagetype,
+                               &layer_ID, &drawable, &pixel_rgn);
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * image_width * bpp);
@@ -2018,67 +2018,67 @@ load_ps (const gchar *filename,
 
     for (i = 0; i < height; i++)
       {
-	e = (fread (bitline, 1, nread, ifp) != nread);
-	if (total_scan_lines >= image_height) continue;
-	err |= e;
-	if (err) break;
+        e = (fread (bitline, 1, nread, ifp) != nread);
+        if (total_scan_lines >= image_height) continue;
+        err |= e;
+        if (err) break;
 
-	j = width;      /* Map 1 byte of bitimage to 8 bytes of indexed image */
-	temp = bitline;
-	byteptr = byteline;
-	while (j >= 8)
-	  {
-	    memcpy (byteptr, bit2byte + *(temp++)*8, 8);
-	    byteptr += 8;
-	    j -= 8;
-	  }
-	if (j > 0)
-	  memcpy (byteptr, bit2byte + *temp*8, j);
+        j = width;      /* Map 1 byte of bitimage to 8 bytes of indexed image */
+        temp = bitline;
+        byteptr = byteline;
+        while (j >= 8)
+          {
+            memcpy (byteptr, bit2byte + *(temp++)*8, 8);
+            byteptr += 8;
+            j -= 8;
+          }
+        if (j > 0)
+          memcpy (byteptr, bit2byte + *temp*8, j);
 
-	memcpy (dest, byteline+skip_left, image_width);
-	dest += image_width;
-	scan_lines++;
-	total_scan_lines++;
+        memcpy (dest, byteline+skip_left, image_width);
+        dest += image_width;
+        scan_lines++;
+        total_scan_lines++;
 
-	if ((i % 20) == 0)
-	  gimp_progress_update ((double)(i+1) / (double)image_height);
+        if ((i % 20) == 0)
+          gimp_progress_update ((double)(i+1) / (double)image_height);
 
-	if ((scan_lines == tile_height) || ((i+1) == image_height))
-	  {
-	    gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-				     image_width, scan_lines);
-	    scan_lines = 0;
-	    dest = data;
-	  }
-	if (err) break;
+        if ((scan_lines == tile_height) || ((i+1) == image_height))
+          {
+            gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
+                                     image_width, scan_lines);
+            scan_lines = 0;
+            dest = data;
+          }
+        if (err) break;
       }
     }
   else   /* Read gray/rgb-image */
     {
       for (i = 0; i < height; i++)
-	{
-	  e = (fread (byteline, bpp, width, ifp) != width);
-	  if (total_scan_lines >= image_height) continue;
-	  err |= e;
-	  if (err) break;
+        {
+          e = (fread (byteline, bpp, width, ifp) != width);
+          if (total_scan_lines >= image_height) continue;
+          err |= e;
+          if (err) break;
 
-	  memcpy (dest, byteline+skip_left*bpp, image_width*bpp);
-	  dest += image_width*bpp;
-	  scan_lines++;
-	  total_scan_lines++;
+          memcpy (dest, byteline+skip_left*bpp, image_width*bpp);
+          dest += image_width*bpp;
+          scan_lines++;
+          total_scan_lines++;
 
-	  if ((i % 20) == 0)
-	    gimp_progress_update ((double)(i+1) / (double)image_height);
+          if ((i % 20) == 0)
+            gimp_progress_update ((double)(i+1) / (double)image_height);
 
-	  if ((scan_lines == tile_height) || ((i+1) == image_height))
-	    {
-	      gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-				       image_width, scan_lines);
-	      scan_lines = 0;
-	      dest = data;
-	    }
-	  if (err) break;
-	}
+          if ((scan_lines == tile_height) || ((i+1) == image_height))
+            {
+              gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
+                                       image_width, scan_lines);
+              scan_lines = 0;
+              dest = data;
+            }
+          if (err) break;
+        }
     }
 
   g_free (data);
@@ -2151,9 +2151,9 @@ save_ps_setup (FILE   *ofp,
       f1 = width_inch / width;
       f2 = height_inch / height;
       if (f1 < f2)
-	height_inch = width_inch * (double)(height)/(double)(width);
+        height_inch = width_inch * (double)(height)/(double)(width);
       else
-	width_inch = fabs (height_inch) * (double)(width)/(double)(height);
+        width_inch = fabs (height_inch) * (double)(width)/(double)(height);
     }
   if ((psvals.rotate == 0) || (psvals.rotate == 180))
     {
@@ -2270,22 +2270,22 @@ dither_grey (guchar *grey,
 
       /* Initialize some arrays that speed up dithering */
       if (do_init_arrays)
-	{
-	  do_init_arrays = 0;
-	  for (x = -511; x <= 766; x++)
-	    limit[x] = (x < 0) ? 0 : ((x > 255) ? 255 : x);
-	  for (greyval = 0; greyval < 256; greyval++)
-	    {
-	      east_error[greyval] = (greyval < 128) ? ((greyval * 79) >> 8)
-		: (((greyval-255)*79) >> 8);
-	      seast_error[greyval] = (greyval < 128) ? ((greyval * 34) >> 8)
-		: (((greyval-255)*34) >> 8);
-	      south_error[greyval] = (greyval < 128) ? ((greyval * 56) >> 8)
-		: (((greyval-255)*56) >> 8);
-	      swest_error[greyval] = (greyval < 128) ? ((greyval * 12) >> 8)
-		: (((greyval-255)*12) >> 8);
-	    }
-	}
+        {
+          do_init_arrays = 0;
+          for (x = -511; x <= 766; x++)
+            limit[x] = (x < 0) ? 0 : ((x > 255) ? 255 : x);
+          for (greyval = 0; greyval < 256; greyval++)
+            {
+              east_error[greyval] = (greyval < 128) ? ((greyval * 79) >> 8)
+                : (((greyval-255)*79) >> 8);
+              seast_error[greyval] = (greyval < 128) ? ((greyval * 34) >> 8)
+                : (((greyval-255)*34) >> 8);
+              south_error[greyval] = (greyval < 128) ? ((greyval * 56) >> 8)
+                : (((greyval-255)*56) >> 8);
+              swest_error[greyval] = (greyval < 128) ? ((greyval * 12) >> 8)
+                : (((greyval-255)*12) >> 8);
+            }
+        }
     }
   if (fs_error == NULL) return;
 
@@ -2308,10 +2308,10 @@ dither_grey (guchar *grey,
 
       mask >>= 1;   /* Get mask for next b/w-pixel */
       if (!mask)
-	{
-	  mask = 0x80;
-	  bwptr++;
-	}
+        {
+          mask = 0x80;
+          bwptr++;
+        }
     }
 }
 
@@ -2338,7 +2338,7 @@ save_ps_preview (FILE   *ofp,
 
   /* Calculate size of preview */
   if (   (drawable->width <= psvals.preview_size)
-	 && (drawable->height <= psvals.preview_size))
+         && (drawable->height <= psvals.preview_size))
     {
       width = drawable->width;
       height = drawable->height;
@@ -2348,17 +2348,17 @@ save_ps_preview (FILE   *ofp,
       f1 = (double)psvals.preview_size / (double)drawable->width;
       f2 = (double)psvals.preview_size / (double)drawable->height;
       if (f1 < f2)
-	{
-	  width = psvals.preview_size;
-	  height = drawable->height * f1;
-	  if (height <= 0) height = 1;
-	}
+        {
+          width = psvals.preview_size;
+          height = drawable->height * f1;
+          if (height <= 0) height = 1;
+        }
       else
-	{
-	  height = psvals.preview_size;
-	  width = drawable->width * f1;
-	  if (width <= 0) width = 1;
-	}
+        {
+          height = psvals.preview_size;
+          width = drawable->width * f1;
+          if (width <= 0) width = 1;
+        }
     }
 
   nbsl = (width+7)/8;  /* Number of bytes per scanline in bitmap */
@@ -2368,10 +2368,10 @@ save_ps_preview (FILE   *ofp,
   src_row = (guchar *)g_malloc (drawable->width * drawable->bpp);
 
   fprintf (ofp, "%%%%BeginPreview: %d %d 1 %d\n", width, height,
-	   ((nbsl*2+nchar_pl-1)/nchar_pl)*height);
+           ((nbsl*2+nchar_pl-1)/nchar_pl)*height);
 
   gimp_pixel_rgn_init (&src_rgn, drawable, 0, 0, drawable->width,
-		       drawable->height, FALSE, FALSE);
+                       drawable->height, FALSE, FALSE);
 
   cmap = NULL;     /* Check if we need a colour table */
   if (gimp_drawable_type (drawable_ID) == GIMP_INDEXED_IMAGE)
@@ -2386,28 +2386,28 @@ save_ps_preview (FILE   *ofp,
 
       greyptr = grey;
       if (drawable->bpp == 3)   /* RGB-image */
-	{
-	  for (x = 0; x < width; x++)
-	    {                       /* Convert to grey */
-	      src_ptr = src_row + ((x * drawable->width) / width) * 3;
-	      *(greyptr++) = (3*src_ptr[0] + 6*src_ptr[1] + src_ptr[2]) / 10;
-	    }
-	}
+        {
+          for (x = 0; x < width; x++)
+            {                       /* Convert to grey */
+              src_ptr = src_row + ((x * drawable->width) / width) * 3;
+              *(greyptr++) = (3*src_ptr[0] + 6*src_ptr[1] + src_ptr[2]) / 10;
+            }
+        }
       else if (cmap)    /* Indexed image */
-	{
-	  for (x = 0; x < width; x++)
-	    {
-	      src_ptr = src_row + ((x * drawable->width) / width);
-	      cind = *src_ptr;   /* Get colour index and convert to grey */
-	      src_ptr = (cind >= ncols) ? cmap : (cmap + 3*cind);
-	      *(greyptr++) = (3*src_ptr[0] + 6*src_ptr[1] + src_ptr[2]) / 10;
-	    }
-	}
+        {
+          for (x = 0; x < width; x++)
+            {
+              src_ptr = src_row + ((x * drawable->width) / width);
+              cind = *src_ptr;   /* Get colour index and convert to grey */
+              src_ptr = (cind >= ncols) ? cmap : (cmap + 3*cind);
+              *(greyptr++) = (3*src_ptr[0] + 6*src_ptr[1] + src_ptr[2]) / 10;
+            }
+        }
       else             /* Grey image */
-	{
-	  for (x = 0; x < width; x++)
-	    *(greyptr++) = *(src_row + ((x * drawable->width) / width));
-	}
+        {
+          for (x = 0; x < width; x++)
+            *(greyptr++) = *(src_row + ((x * drawable->width) / width));
+        }
 
       /* Now we have a greyscale line for the desired width. */
       /* Dither it to b/w */
@@ -2417,21 +2417,21 @@ save_ps_preview (FILE   *ofp,
       out_count = 0;
       bwptr = bw;
       for (x = 0; x < nbsl; x++)
-	{
-	  if (out_count == 0) fprintf (ofp, "%% ");
-	  fprintf (ofp, "%02x", *(bwptr++));
-	  out_count += 2;
-	  if (out_count >= nchar_pl)
-	    {
-	      fprintf (ofp, "\n");
-	      out_count = 0;
-	    }
-	}
+        {
+          if (out_count == 0) fprintf (ofp, "%% ");
+          fprintf (ofp, "%02x", *(bwptr++));
+          out_count += 2;
+          if (out_count >= nchar_pl)
+            {
+              fprintf (ofp, "\n");
+              out_count = 0;
+            }
+        }
       if (out_count != 0)
-	fprintf (ofp, "\n");
+        fprintf (ofp, "\n");
 
       if ((y % 20) == 0)
-	gimp_progress_update ((double)(y) / (double)height);
+        gimp_progress_update ((double)(y) / (double)height);
     }
 
   fprintf (ofp, "%%%%EndPreview\n");
@@ -2497,25 +2497,25 @@ save_gray  (FILE   *ofp,
     {
       if ((i % tile_height) == 0) GET_GRAY_TILE (data); /* Get more data */
       if (!level2)
-	{
-	  for (j = 0; j < width; j++)
-	    {
-	      putc (hex[(*src) >> 4], ofp);
-	      putc (hex[(*(src++)) & 0x0f], ofp);
-	      if (((j+1) % 39) == 0) putc ('\n', ofp);
-	    }
-	  putc ('\n', ofp);
-	}
+        {
+          for (j = 0; j < width; j++)
+            {
+              putc (hex[(*src) >> 4], ofp);
+              putc (hex[(*(src++)) & 0x0f], ofp);
+              if (((j+1) % 39) == 0) putc ('\n', ofp);
+            }
+          putc ('\n', ofp);
+        }
       else
-	{int nout;
+        {int nout;
 
           compress_packbits (width, src, &nout, packb);
           ascii85_nout (nout, packb, ofp);
           src += width;
-	}
+        }
 
       if ((i % 20) == 0)
-	gimp_progress_update ((double) i / (double) height);
+        gimp_progress_update ((double) i / (double) height);
     }
 
   if (level2)
@@ -2611,41 +2611,41 @@ save_bw (FILE   *ofp,
       mask = 0x80;
       /* Build a bitmap for a scanline */
       for (j = 0; j < width; j++)
-	{
-	  ct = cmap + *(src++)*3;
-	  if (ct[0] || ct[1] || ct[2])
-	    *dst |= mask;
-	  if (mask == 0x01) { mask = 0x80; dst++; } else mask >>= 1;
-	}
+        {
+          ct = cmap + *(src++)*3;
+          if (ct[0] || ct[1] || ct[2])
+            *dst |= mask;
+          if (mask == 0x01) { mask = 0x80; dst++; } else mask >>= 1;
+        }
       if (!level2)
-	{
-	  /* Convert to hexstring */
-	  for (j = 0; j < nbsl; j++)
-	    {
-	      hex_scanline[j*2] = (unsigned char)hex[scanline[j] >> 4];
-	      hex_scanline[j*2+1] = (unsigned char)hex[scanline[j] & 0x0f];
-	    }
-	  /* Write out hexstring */
-	  j = nbsl * 2;
-	  dst = hex_scanline;
-	  while (j > 0)
-	    {
-	      nwrite = (j > 78) ? 78 : j;
-	      fwrite (dst, nwrite, 1, ofp);
-	      putc ('\n', ofp);
-	      j -= nwrite;
-	      dst += nwrite;
-	    }
-	}
+        {
+          /* Convert to hexstring */
+          for (j = 0; j < nbsl; j++)
+            {
+              hex_scanline[j*2] = (unsigned char)hex[scanline[j] >> 4];
+              hex_scanline[j*2+1] = (unsigned char)hex[scanline[j] & 0x0f];
+            }
+          /* Write out hexstring */
+          j = nbsl * 2;
+          dst = hex_scanline;
+          while (j > 0)
+            {
+              nwrite = (j > 78) ? 78 : j;
+              fwrite (dst, nwrite, 1, ofp);
+              putc ('\n', ofp);
+              j -= nwrite;
+              dst += nwrite;
+            }
+        }
       else
-	{int nout;
+        {int nout;
 
           compress_packbits (nbsl, scanline, &nout, packb);
           ascii85_nout (nout, packb, ofp);
-	}
+        }
 
       if ((i % 20) == 0)
-	gimp_progress_update ((double) i / (double) height);
+        gimp_progress_update ((double) i / (double) height);
     }
 
   if (level2)
@@ -2703,21 +2703,21 @@ save_index (FILE   *ofp,
   for (j = 0; j < 256; j++)
     {
       if (j >= ncols)
-	{
-	  memcpy (ct, background, 6);
-	  ct += 6;
-	}
+        {
+          memcpy (ct, background, 6);
+          ct += 6;
+        }
       else
-	{
-	  bw &=    ((cmap[0] == 0) && (cmap[1] == 0) && (cmap[2] == 0))
+        {
+          bw &=    ((cmap[0] == 0) && (cmap[1] == 0) && (cmap[2] == 0))
             || ((cmap[0] == 255) && (cmap[1] == 255) && (cmap[2] == 255));
-	  *(ct++) = (guchar)hex[(*cmap) >> 4];
-	  *(ct++) = (guchar)hex[(*(cmap++)) & 0x0f];
-	  *(ct++) = (guchar)hex[(*cmap) >> 4];
-	  *(ct++) = (guchar)hex[(*(cmap++)) & 0x0f];
-	  *(ct++) = (guchar)hex[(*cmap) >> 4];
-	  *(ct++) = (guchar)hex[(*(cmap++)) & 0x0f];
-	}
+          *(ct++) = (guchar)hex[(*cmap) >> 4];
+          *(ct++) = (guchar)hex[(*(cmap++)) & 0x0f];
+          *(ct++) = (guchar)hex[(*cmap) >> 4];
+          *(ct++) = (guchar)hex[(*(cmap++)) & 0x0f];
+          *(ct++) = (guchar)hex[(*cmap) >> 4];
+          *(ct++) = (guchar)hex[(*(cmap++)) & 0x0f];
+        }
     }
   if (bw)
     return (save_bw (ofp, image_ID, drawable_ID));
@@ -2774,14 +2774,14 @@ save_index (FILE   *ofp,
     {
       if ((i % tile_height) == 0) GET_INDEX_TILE (data); /* Get more data */
       if (!level2)
-	{
-	  for (j = 0; j < width; j++)
-	    {
-	      fwrite (coltab+(*(src++))*6, 6, 1, ofp);
-	      if (((j+1) % 13) == 0) putc ('\n', ofp);
-	    }
-	  putc ('\n', ofp);
-	}
+        {
+          for (j = 0; j < width; j++)
+            {
+              fwrite (coltab+(*(src++))*6, 6, 1, ofp);
+              if (((j+1) % 13) == 0) putc ('\n', ofp);
+            }
+          putc ('\n', ofp);
+        }
       else
         {guchar *plane_ptr, *src_ptr;
          int rgb, nout;
@@ -2802,7 +2802,7 @@ save_index (FILE   *ofp,
         }
 
       if ((i % 20) == 0)
-	gimp_progress_update ((double) i / (double) height);
+        gimp_progress_update ((double) i / (double) height);
     }
 
   ps_end_data (ofp);
@@ -2896,21 +2896,21 @@ save_rgb (FILE   *ofp,
     {
       if ((i % tile_height) == 0) GET_RGB_TILE (data); /* Get more data */
       if (!level2)
-	{
-	  for (j = 0; j < width; j++)
-	    {
-	      putc (hex[(*src) >> 4], ofp);        /* Red */
-	      putc (hex[(*(src++)) & 0x0f], ofp);
-	      putc (hex[(*src) >> 4], ofp);        /* Green */
-	      putc (hex[(*(src++)) & 0x0f], ofp);
-	      putc (hex[(*src) >> 4], ofp);        /* Blue */
-	      putc (hex[(*(src++)) & 0x0f], ofp);
-	      if (((j+1) % 13) == 0) putc ('\n', ofp);
-	    }
-	  putc ('\n', ofp);
-	}
+        {
+          for (j = 0; j < width; j++)
+            {
+              putc (hex[(*src) >> 4], ofp);        /* Red */
+              putc (hex[(*(src++)) & 0x0f], ofp);
+              putc (hex[(*src) >> 4], ofp);        /* Green */
+              putc (hex[(*(src++)) & 0x0f], ofp);
+              putc (hex[(*src) >> 4], ofp);        /* Blue */
+              putc (hex[(*(src++)) & 0x0f], ofp);
+              if (((j+1) % 13) == 0) putc ('\n', ofp);
+            }
+          putc ('\n', ofp);
+        }
       else
-	{guchar *plane_ptr, *src_ptr;
+        {guchar *plane_ptr, *src_ptr;
          int rgb, nout;
 
           for (rgb = 0; rgb < 3; rgb++)
@@ -2918,21 +2918,21 @@ save_rgb (FILE   *ofp,
             src_ptr = src + rgb;
             plane_ptr = plane;
             for (j = 0; j < width; j++)
-	    {
+            {
               *(plane_ptr++) = *src_ptr;
               src_ptr += 3;
             }
             compress_packbits (width, plane, &nout, packb);
             ascii85_init ();
-	    ascii85_nout (nout, packb, ofp);
+            ascii85_nout (nout, packb, ofp);
             ascii85_out (128, ofp); /* Write EOD of RunLengthDecode filter */
             ascii85_done (ofp);
           }
           src += 3*width;
-	}
+        }
 
       if ((i % 20) == 0)
-	gimp_progress_update ((double) i / (double) height);
+        gimp_progress_update ((double) i / (double) height);
     }
 
   ps_end_data (ofp);
@@ -3026,12 +3026,12 @@ load_dialog (const gchar *filename,
 
   dialog = gimp_dialog_new (_("Import from PostScript"), PLUG_IN_BINARY,
                             NULL, 0,
-			    gimp_standard_help_func, LOAD_PS_PROC,
+                            gimp_standard_help_func, LOAD_PS_PROC,
 
-			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			    _("_Import"),     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            _("_Import"),     GTK_RESPONSE_OK,
 
-			    NULL);
+                            NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
@@ -3049,9 +3049,9 @@ load_dialog (const gchar *filename,
       selector = gimp_page_selector_new ();
       gtk_box_pack_start (GTK_BOX (main_vbox), selector, TRUE, TRUE, 0);
       gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (selector),
-		                      page_count);
+                                      page_count);
       gimp_page_selector_set_target (GIMP_PAGE_SELECTOR (selector),
-		                     ps_pagemode);
+                                     ps_pagemode);
 
       gtk_widget_show (selector);
 
@@ -3079,28 +3079,28 @@ load_dialog (const gchar *filename,
   gtk_widget_show (table);
 
   spinbutton = gimp_spin_button_new (&adj, plvals.resolution,
-				     5, 1440, 1, 10, 0, 1, 0);
+                                     5, 1440, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Resolution:"), 0.0, 0.5,
-			     spinbutton, 1, FALSE);
+                             _("Resolution:"), 0.0, 0.5,
+                             spinbutton, 1, FALSE);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &plvals.resolution);
 
   spinbutton = gimp_spin_button_new (&adj, plvals.width,
-				     1, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
+                                     1, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("_Width:"), 0.0, 0.5,
-			     spinbutton, 1, FALSE);
+                             _("_Width:"), 0.0, 0.5,
+                             spinbutton, 1, FALSE);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &plvals.width);
 
   spinbutton = gimp_spin_button_new (&adj, plvals.height,
-				     1, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
+                                     1, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("_Height:"), 0.0, 0.5,
-			     spinbutton, 1, FALSE);
+                             _("_Height:"), 0.0, 0.5,
+                             spinbutton, 1, FALSE);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &plvals.height);
@@ -3111,8 +3111,8 @@ load_dialog (const gchar *filename,
       gtk_widget_set_size_request (entry, 80, -1);
       gtk_entry_set_text (GTK_ENTRY (entry), plvals.pages);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-  	 		         _("Pages:"), 0.0, 0.5,
-  			         entry, 1, FALSE);
+                                 _("Pages:"), 0.0, 0.5,
+                                 entry, 1, FALSE);
 
       g_signal_connect (entry, "changed",
                         G_CALLBACK (load_pages_entry_callback),
@@ -3122,13 +3122,13 @@ load_dialog (const gchar *filename,
 
       target = gtk_combo_box_new_text ();
       gtk_combo_box_insert_text (GTK_COMBO_BOX (target),
-		                 GIMP_PAGE_SELECTOR_TARGET_LAYERS, _("Layers"));
+                                 GIMP_PAGE_SELECTOR_TARGET_LAYERS, _("Layers"));
       gtk_combo_box_insert_text (GTK_COMBO_BOX (target),
-		                 GIMP_PAGE_SELECTOR_TARGET_IMAGES, _("Images"));
+                                 GIMP_PAGE_SELECTOR_TARGET_IMAGES, _("Images"));
       gtk_combo_box_set_active (GTK_COMBO_BOX (target), (int) ps_pagemode);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
-		                 _("Open as"), 0.0, 0.5,
-				 target, 1, FALSE);
+                                 _("Open as"), 0.0, 0.5,
+                                 target, 1, FALSE);
     }
 
   toggle = gtk_check_button_new_with_label (_("Try Bounding Box"));
@@ -3145,15 +3145,15 @@ load_dialog (const gchar *filename,
 
   /* Colouring */
   frame = gimp_int_radio_group_new (TRUE, _("Coloring"),
-				    G_CALLBACK (gimp_radio_button_update),
-				    &plvals.pnm_type, plvals.pnm_type,
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &plvals.pnm_type, plvals.pnm_type,
 
-				    _("B/W"),       4, NULL,
-				    _("Gray"),      5, NULL,
-				    _("Color"),     6, NULL,
-				    _("Automatic"), 7, NULL,
+                                    _("B/W"),       4, NULL,
+                                    _("Gray"),      5, NULL,
+                                    _("Color"),     6, NULL,
+                                    _("Automatic"), 7, NULL,
 
-				    NULL);
+                                    NULL);
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -3162,26 +3162,26 @@ load_dialog (const gchar *filename,
   gtk_widget_show (hbox);
 
   frame = gimp_int_radio_group_new (TRUE, _("Text antialiasing"),
-				    G_CALLBACK (gimp_radio_button_update),
-				    &plvals.textalpha, plvals.textalpha,
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &plvals.textalpha, plvals.textalpha,
 
-				    _("None"),   1, NULL,
-				    _("Weak"),   2, NULL,
-				    _("Strong"), 4, NULL,
+                                    _("None"),   1, NULL,
+                                    _("Weak"),   2, NULL,
+                                    _("Strong"), 4, NULL,
 
-				    NULL);
+                                    NULL);
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, TRUE, 0);
   gtk_widget_show (frame);
 
   frame = gimp_int_radio_group_new (TRUE, _("Graphic antialiasing"),
-				    G_CALLBACK (gimp_radio_button_update),
-				    &plvals.graphicsalpha, plvals.graphicsalpha,
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &plvals.graphicsalpha, plvals.graphicsalpha,
 
-				    _("None"),   1, NULL,
-				    _("Weak"),   2, NULL,
-				    _("Strong"), 4, NULL,
+                                    _("None"),   1, NULL,
+                                    _("Weak"),   2, NULL,
+                                    _("Strong"), 4, NULL,
 
-				    NULL);
+                                    NULL);
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -3222,7 +3222,7 @@ load_dialog (const gchar *filename,
 
 static void
 load_pages_entry_callback (GtkWidget *widget,
-			   gpointer   data)
+                           gpointer   data)
 {
   gsize nelem = sizeof (plvals.pages);
 
@@ -3253,12 +3253,12 @@ save_dialog (void)
 
   dialog = gimp_dialog_new (_("Save as PostScript"), PLUG_IN_BINARY,
                             NULL, 0,
-			    gimp_standard_help_func, SAVE_PS_PROC,
+                            gimp_standard_help_func, SAVE_PS_PROC,
 
-			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			    GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
-			    NULL);
+                            NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
@@ -3296,37 +3296,37 @@ save_dialog (void)
   gtk_widget_show (table);
 
   spinbutton = gimp_spin_button_new (&vals->adjustment[0], psvals.width,
-				     1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
+                                     1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("_Width:"), 0.0, 0.5,
-			     spinbutton, 1, FALSE);
+                             _("_Width:"), 0.0, 0.5,
+                             spinbutton, 1, FALSE);
   g_signal_connect (vals->adjustment[0], "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &psvals.width);
 
   spinbutton = gimp_spin_button_new (&vals->adjustment[1], psvals.height,
-				     1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
+                                     1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("_Height:"), 0.0, 0.5,
-			     spinbutton, 1, FALSE);
+                             _("_Height:"), 0.0, 0.5,
+                             spinbutton, 1, FALSE);
   g_signal_connect (vals->adjustment[1], "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &psvals.height);
 
   spinbutton = gimp_spin_button_new (&vals->adjustment[2], psvals.x_offset,
-				     0.0, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
+                                     0.0, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("_X offset:"), 0.0, 0.5,
-			     spinbutton, 1, FALSE);
+                             _("_X offset:"), 0.0, 0.5,
+                             spinbutton, 1, FALSE);
   g_signal_connect (vals->adjustment[2], "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &psvals.x_offset);
 
   spinbutton = gimp_spin_button_new (&vals->adjustment[3], psvals.y_offset,
-				     0.0, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
+                                     0.0, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("_Y offset:"), 0.0, 0.5,
-			     spinbutton, 1, FALSE);
+                             _("_Y offset:"), 0.0, 0.5,
+                             spinbutton, 1, FALSE);
   g_signal_connect (vals->adjustment[3], "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &psvals.y_offset);
@@ -3339,7 +3339,7 @@ save_dialog (void)
   gimp_help_set_help_data (toggle,
                            _("When toggled, the resulting image will be scaled to fit "
                              "into the given size without changing the aspect ratio."),
-			   "#keep_aspect_ratio"),
+                           "#keep_aspect_ratio"),
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
@@ -3347,13 +3347,13 @@ save_dialog (void)
 
   /* Unit */
   uframe = gimp_int_radio_group_new (TRUE, _("Unit"),
-				     G_CALLBACK (save_unit_toggle_update),
-				     vals, psvals.unit_mm,
+                                     G_CALLBACK (save_unit_toggle_update),
+                                     vals, psvals.unit_mm,
 
-				     _("_Inch"),       FALSE, NULL,
-				     _("_Millimeter"), TRUE,  NULL,
+                                     _("_Inch"),       FALSE, NULL,
+                                     _("_Millimeter"), TRUE,  NULL,
 
-				     NULL);
+                                     NULL);
 
   gtk_box_pack_start (GTK_BOX (main_vbox[0]), uframe, TRUE, TRUE, 0);
   gtk_widget_show (uframe);
@@ -3363,15 +3363,15 @@ save_dialog (void)
 
   /* Rotation */
   frame = gimp_int_radio_group_new (TRUE, _("Rotation"),
-				    G_CALLBACK (gimp_radio_button_update),
-				    &psvals.rotate, psvals.rotate,
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &psvals.rotate, psvals.rotate,
 
-				    "_0",   0,   NULL,
-				    "_90",  90,  NULL,
-				    "_180", 180, NULL,
-				    "_270", 270, NULL,
+                                    "_0",   0,   NULL,
+                                    "_90",  90,  NULL,
+                                    "_180", 180, NULL,
+                                    "_270", 270, NULL,
 
-				    NULL);
+                                    NULL);
 
   gtk_box_pack_start (GTK_BOX (main_vbox[1]), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
@@ -3420,10 +3420,10 @@ save_dialog (void)
   gtk_widget_set_sensitive (table, psvals.preview);
 
   spinbutton = gimp_spin_button_new (&adj, psvals.preview_size,
-				     0, 1024, 1, 10, 0, 1, 0);
+                                     0, 1024, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Preview _size:"), 1.0, 0.5,
-			     spinbutton, 1, FALSE);
+                             _("Preview _size:"), 1.0, 0.5,
+                             spinbutton, 1, FALSE);
   gtk_widget_show (spinbutton);
 
   g_signal_connect (adj, "value-changed",
@@ -3449,7 +3449,7 @@ save_dialog (void)
 
 static void
 save_unit_toggle_update (GtkWidget *widget,
-			 gpointer   data)
+                         gpointer   data)
 {
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
@@ -3466,15 +3466,15 @@ save_unit_toggle_update (GtkWidget *widget,
       psvals.unit_mm = unit_mm;
 
       if (unit_mm)
-	factor = 25.4;
+        factor = 25.4;
       else
-	factor = 1.0 / 25.4;
+        factor = 1.0 / 25.4;
 
       for (i = 0; i < 4; i++)
-	{
-	  value = GTK_ADJUSTMENT (vals->adjustment[i])->value * factor;
+        {
+          value = GTK_ADJUSTMENT (vals->adjustment[i])->value * factor;
 
-	  gtk_adjustment_set_value (GTK_ADJUSTMENT (vals->adjustment[i]), value);
-	}
+          gtk_adjustment_set_value (GTK_ADJUSTMENT (vals->adjustment[i]), value);
+        }
     }
 }

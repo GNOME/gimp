@@ -1,3 +1,8 @@
+2006-05-08  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/common/postscript.c: improve the error message when
+	spawning ghostscript does not work. See bug #340996. Untabbified.
+
 2006-05-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable.c: don't #include "gimp.h".
