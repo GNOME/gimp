@@ -13,7 +13,7 @@
 	* app/display/gimpdisplayshell-scale.c (gimp_display_shell_scale):
 	return early if the shell is already at the requested zoom level.
 	(paranoia addition for bug #165032, which was already fixed by the
-	fix for bug #164281):
+	fix for bug #164281)
 
 2006-05-07  Michael Natterer  <mitch@gimp.org>
 
@@ -40,7 +40,7 @@
 
 	* app/pdb/gimp-pdb-compat.c: set none_ok to TRUE in all compat
 	param specs, so only IDs that are really random garbage don't pass
-	validation. Fixes validation errors with 0 and -1 IDs.
+	validation. Fixes validation errors with 0 and -1 IDs (bug #339840).
 
 	* tools/pdbgen/app.pl: set none_ok to FALSE by default. Added
 	support for $arg->{none_ok} to control it.
