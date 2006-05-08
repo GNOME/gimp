@@ -1077,7 +1077,7 @@ msgstr "Rotate _180 degrees"
 
 #: ../app/actions/drawable-actions.c:111 ../app/actions/image-actions.c:170
 msgid "Rotate 90 degrees CC_W"
-msgstr "Rotate 90 degrees CC_W"
+msgstr "Rotate 90 degrees AC_W"
 
 #: ../app/actions/drawable-commands.c:74
 msgid "Desaturate operates only on RGB color layers."
