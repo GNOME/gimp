@@ -40,30 +40,30 @@ typedef struct _GimpPlugInProcedureClass GimpPlugInProcedureClass;
 
 struct _GimpPlugInProcedure
 {
-  GimpProcedure    parent_instance;
+  GimpProcedure        parent_instance;
 
   /*  common members  */
-  gchar           *prog;
-  gchar           *menu_label;
-  GList           *menu_paths;
-  GimpIconType     icon_type;
-  gint             icon_data_length;
-  guint8          *icon_data;
-  gchar           *image_types;
-  PlugInImageType  image_types_val;
-  time_t           mtime;
-  gboolean         installed_during_init;
+  gchar               *prog;
+  gchar               *menu_label;
+  GList               *menu_paths;
+  GimpIconType         icon_type;
+  gint                 icon_data_length;
+  guint8              *icon_data;
+  gchar               *image_types;
+  GimpPlugInImageType  image_types_val;
+  time_t               mtime;
+  gboolean             installed_during_init;
 
   /*  file proc specific members  */
-  gboolean         file_proc;
-  gchar           *extensions;
-  gchar           *prefixes;
-  gchar           *magics;
-  gchar           *mime_type;
-  GSList          *extensions_list;
-  GSList          *prefixes_list;
-  GSList          *magics_list;
-  gchar           *thumb_loader;
+  gboolean             file_proc;
+  gchar               *extensions;
+  gchar               *prefixes;
+  gchar               *magics;
+  gchar               *mime_type;
+  GSList              *extensions_list;
+  GSList              *prefixes_list;
+  GSList              *magics_list;
+  gchar               *thumb_loader;
 };
 
 struct _GimpPlugInProcedureClass

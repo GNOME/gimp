@@ -604,22 +604,22 @@ gimp_plug_in_procedure_get_sensitive (const GimpPlugInProcedure *proc,
   switch (image_type)
     {
     case GIMP_RGB_IMAGE:
-      sensitive = proc->image_types_val & PLUG_IN_RGB_IMAGE;
+      sensitive = proc->image_types_val & GIMP_PLUG_IN_RGB_IMAGE;
       break;
     case GIMP_RGBA_IMAGE:
-      sensitive = proc->image_types_val & PLUG_IN_RGBA_IMAGE;
+      sensitive = proc->image_types_val & GIMP_PLUG_IN_RGBA_IMAGE;
       break;
     case GIMP_GRAY_IMAGE:
-      sensitive = proc->image_types_val & PLUG_IN_GRAY_IMAGE;
+      sensitive = proc->image_types_val & GIMP_PLUG_IN_GRAY_IMAGE;
       break;
     case GIMP_GRAYA_IMAGE:
-      sensitive = proc->image_types_val & PLUG_IN_GRAYA_IMAGE;
+      sensitive = proc->image_types_val & GIMP_PLUG_IN_GRAYA_IMAGE;
       break;
     case GIMP_INDEXED_IMAGE:
-      sensitive = proc->image_types_val & PLUG_IN_INDEXED_IMAGE;
+      sensitive = proc->image_types_val & GIMP_PLUG_IN_INDEXED_IMAGE;
       break;
     case GIMP_INDEXEDA_IMAGE:
-      sensitive = proc->image_types_val & PLUG_IN_INDEXEDA_IMAGE;
+      sensitive = proc->image_types_val & GIMP_PLUG_IN_INDEXEDA_IMAGE;
       break;
     default:
       sensitive = FALSE;
@@ -629,11 +629,11 @@ gimp_plug_in_procedure_get_sensitive (const GimpPlugInProcedure *proc,
   return sensitive ? TRUE : FALSE;
 }
 
-static PlugInImageType
+static GimpPlugInImageType
 image_types_parse (const gchar *image_types)
 {
-  const gchar     *type_spec = image_types;
-  PlugInImageType  types     = 0;
+  const gchar         *type_spec = image_types;
+  GimpPlugInImageType  types     = 0;
 
   /*  If the plug_in registers with image_type == NULL or "", return 0
    *  By doing so it won't be touched by plug_in_set_menu_sensitivity()
@@ -653,54 +653,54 @@ image_types_parse (const gchar *image_types)
         {
           if (strncmp (image_types, "RGBA", 4) == 0)
             {
-              types |= PLUG_IN_RGBA_IMAGE;
+              types |= GIMP_PLUG_IN_RGBA_IMAGE;
               image_types += 4;
             }
           else if (strncmp (image_types, "RGB*", 4) == 0)
             {
-              types |= PLUG_IN_RGB_IMAGE | PLUG_IN_RGBA_IMAGE;
+              types |= GIMP_PLUG_IN_RGB_IMAGE | GIMP_PLUG_IN_RGBA_IMAGE;
               image_types += 4;
             }
           else if (strncmp (image_types, "RGB", 3) == 0)
             {
-              types |= PLUG_IN_RGB_IMAGE;
+              types |= GIMP_PLUG_IN_RGB_IMAGE;
               image_types += 3;
             }
           else if (strncmp (image_types, "GRAYA", 5) == 0)
             {
-              types |= PLUG_IN_GRAYA_IMAGE;
+              types |= GIMP_PLUG_IN_GRAYA_IMAGE;
               image_types += 5;
             }
           else if (strncmp (image_types, "GRAY*", 5) == 0)
             {
-              types |= PLUG_IN_GRAY_IMAGE | PLUG_IN_GRAYA_IMAGE;
+              types |= GIMP_PLUG_IN_GRAY_IMAGE | GIMP_PLUG_IN_GRAYA_IMAGE;
               image_types += 5;
             }
           else if (strncmp (image_types, "GRAY", 4) == 0)
             {
-              types |= PLUG_IN_GRAY_IMAGE;
+              types |= GIMP_PLUG_IN_GRAY_IMAGE;
               image_types += 4;
             }
           else if (strncmp (image_types, "INDEXEDA", 8) == 0)
             {
-              types |= PLUG_IN_INDEXEDA_IMAGE;
+              types |= GIMP_PLUG_IN_INDEXEDA_IMAGE;
               image_types += 8;
             }
           else if (strncmp (image_types, "INDEXED*", 8) == 0)
             {
-              types |= PLUG_IN_INDEXED_IMAGE | PLUG_IN_INDEXEDA_IMAGE;
+              types |= GIMP_PLUG_IN_INDEXED_IMAGE | GIMP_PLUG_IN_INDEXEDA_IMAGE;
               image_types += 8;
             }
           else if (strncmp (image_types, "INDEXED", 7) == 0)
             {
-              types |= PLUG_IN_INDEXED_IMAGE;
+              types |= GIMP_PLUG_IN_INDEXED_IMAGE;
               image_types += 7;
             }
           else if (strncmp (image_types, "*", 1) == 0)
             {
-              types |= PLUG_IN_RGB_IMAGE | PLUG_IN_RGBA_IMAGE
-                     | PLUG_IN_GRAY_IMAGE | PLUG_IN_GRAYA_IMAGE
-                     | PLUG_IN_INDEXED_IMAGE | PLUG_IN_INDEXEDA_IMAGE;
+              types |= (GIMP_PLUG_IN_RGB_IMAGE     | GIMP_PLUG_IN_RGBA_IMAGE  |
+                        GIMP_PLUG_IN_GRAY_IMAGE    | GIMP_PLUG_IN_GRAYA_IMAGE |
+                        GIMP_PLUG_IN_INDEXED_IMAGE | GIMP_PLUG_IN_INDEXEDA_IMAGE);
               image_types += 1;
             }
           else
