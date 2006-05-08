@@ -1,3 +1,7 @@
+2006-05-08  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/common/postscript.c: fix typo...
+
 2006-05-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in-enums.[ch]: changed enum PlugInImageType

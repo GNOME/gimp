@@ -1689,7 +1689,7 @@ ps_open (const gchar      *filename,
                                   NULL,         /* stderr */
                                   &Gerr) )
     {
-      g_message (_("Error starting Ghostscript. Make sure that Ghostscript is installed and - if necessary - use the environment variable GS_PROC to tell GIMP about its location.\n(%s)"), Gerr->message);
+      g_message (_("Error starting Ghostscript. Make sure that Ghostscript is installed and - if necessary - use the environment variable GS_PROG to tell GIMP about its location.\n(%s)"), Gerr->message);
       g_error_free (Gerr);
 
       *ChildPidPtr = 0;
@@ -1719,7 +1719,7 @@ ps_open (const gchar      *filename,
                       NULL,       /* exit code */
                       &Gerr) )
     {
-      g_message (_("Error starting Ghostscript. Make sure that Ghostscript is installed and - if necessary - use the environment variable GS_PROC to tell GIMP about its location.\n(%s)"), Gerr->message);
+      g_message (_("Error starting Ghostscript. Make sure that Ghostscript is installed and - if necessary - use the environment variable GS_PROG to tell GIMP about its location.\n(%s)"), Gerr->message);
       g_error_free (Gerr);
 
       g_unlink (pnmfile);
