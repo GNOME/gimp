@@ -302,6 +302,10 @@ gimp_file_dialog_new (Gimp                 *gimp,
                           NULL);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   gimp_help_connect (GTK_WIDGET (dialog),
                      gimp_file_dialog_help_func, help_id, dialog);

@@ -81,11 +81,6 @@ file_open_dialog_new (Gimp *gimp)
                     G_CALLBACK (file_open_dialog_response),
                     gimp);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
   return dialog;
 }
 

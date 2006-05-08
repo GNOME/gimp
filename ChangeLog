@@ -1,3 +1,12 @@
+2006-05-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_new): set the
+	alternative button order here...
+
+	* app/dialogs/file-open-dialog.c (file_open_dialog_new)
+	* app/dialogs/file-save-dialog.c (file_save_dialog_new): ...instead
+	of here.
+
 2006-05-08  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/common/postscript.c: fix typo...
