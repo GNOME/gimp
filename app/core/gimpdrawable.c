@@ -32,7 +32,6 @@
 #include "paint-funcs/paint-funcs.h"
 #include "paint-funcs/scale-funcs.h"
 
-#include "gimp.h"
 #include "gimp-utils.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
@@ -1102,7 +1101,7 @@ gimp_drawable_fill (GimpDrawable      *drawable,
   g_return_if_fail (color != NULL || pattern != NULL);
   g_return_if_fail (pattern == NULL || GIMP_IS_PATTERN (pattern));
 
-  item   = GIMP_ITEM (drawable);
+  item  = GIMP_ITEM (drawable);
   image = gimp_item_get_image (item);
 
   drawable_type = gimp_drawable_type (drawable);
