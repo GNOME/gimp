@@ -1,3 +1,8 @@
+2006-05-09  Simon Budig  <simon@gimp.org>
+
+	* themes/Default/images/stock-color-triangle-16.png: New icon
+	to reflect the corrected triangular color selector.
+
 2006-05-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage.c (gimp_image_new)
