@@ -41,8 +41,6 @@
 
 #include "text/gimpfont.h"
 
-#include "pdb/gimppluginprocedure.h"
-
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpbrushselect.h"
 #include "widgets/gimpdialogfactory.h"

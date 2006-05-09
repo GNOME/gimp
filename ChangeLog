@@ -1,3 +1,7 @@
+2006-05-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/gui-vtable.c: don't #include "pdb/gimppluginprocedure.h".
+
 2006-05-08  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/script-fu/siod/sliba.c: Insert a missing break that
