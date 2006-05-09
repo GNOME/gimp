@@ -641,7 +641,15 @@ gimp_image_constructor (GType                  type,
 
   config = image->gimp->config;
 
-  image->ID = image->gimp->next_image_ID++;
+  do
+    {
+      image->ID = image->gimp->next_image_ID++;
+
+      if (image->gimp->next_image_ID == G_MAXINT)
+        image->gimp->next_image_ID = 1;
+    }
+  while (g_hash_table_lookup (image->gimp->image_table,
+                              GINT_TO_POINTER (image->ID)));
 
   g_hash_table_insert (image->gimp->image_table,
                        GINT_TO_POINTER (image->ID),
@@ -687,6 +695,8 @@ gimp_image_constructor (GType                  type,
   g_signal_connect_object (config, "notify::layer-previews",
                            G_CALLBACK (gimp_viewable_size_changed),
                            image, G_CONNECT_SWAPPED);
+
+  gimp_container_add (image->gimp->images, GIMP_OBJECT (image));
 
   return object;
 }

@@ -252,19 +252,13 @@ gimp_create_display (Gimp      *gimp,
                      GimpUnit   unit,
                      gdouble    scale)
 {
-  GimpObject *display = NULL;
-
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   if (gimp->gui.display_create)
-    {
-      display = gimp->gui.display_create (image, unit, scale);
+    return gimp->gui.display_create (image, unit, scale);
 
-      gimp_container_add (gimp->displays, display);
-    }
-
-  return display;
+  return NULL;
 }
 
 void

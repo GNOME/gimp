@@ -331,6 +331,7 @@ gimp_display_new (GimpImage       *image,
                   GimpUIManager   *popup_manager)
 {
   GimpDisplay *display;
+  gint         ID;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -338,8 +339,17 @@ gimp_display_new (GimpImage       *image,
   if (image->gimp->no_interface)
     return NULL;
 
+  do
+    {
+      ID = image->gimp->next_display_ID++;
+
+      if (image->gimp->next_display_ID == G_MAXINT)
+        image->gimp->next_display_ID = 1;
+    }
+  while (gimp_display_get_by_ID (image->gimp, ID));
+
   display = g_object_new (GIMP_TYPE_DISPLAY,
-                          "id", image->gimp->next_display_ID++,
+                          "id", ID,
                           NULL);
 
   /*  refs the image  */
@@ -353,6 +363,9 @@ gimp_display_new (GimpImage       *image,
   g_signal_connect (GIMP_DISPLAY_SHELL (display->shell)->statusbar, "cancel",
                     G_CALLBACK (gimp_display_progress_canceled),
                     display);
+
+  /* add the display to the list */
+  gimp_container_add (image->gimp->displays, GIMP_OBJECT (display));
 
   return display;
 }

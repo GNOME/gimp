@@ -1,5 +1,27 @@
 2006-05-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.c (gimp_image_new)
+	* app/core/gimpitem.c (gimp_item_configure)
+	* app/display/gimpdisplay.c (gimp_display_new): make sure IDs wrap
+	correctly at G_MAXINT and skip IDs which are currently in use.
+
+	It makes no sense to treat gimp->image_table and gimp->images
+	differently, since they keep the same set of images. And it makes
+	no sense to treat gimp->displays and gimp->images differently.
+	Moved all container adding into the objects' constructors:
+
+	* app/core/gimp.c (gimp_create_image): don't add the new image
+	to gimp->images here...
+
+	* app/core/gimpimage.c (gimp_image_constructor): ...but here.
+
+	* app/core/gimp-gui.c (gimp_create_display): don't add the new
+	display to gimp->displays here...
+
+	* app/display/gimpdisplay.c (gimp_display_new): ...but here.
+
+2006-05-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/gui-vtable.c: don't #include "pdb/gimppluginprocedure.h".
 
 2006-05-08  Simon Budig  <simon@gimp.org>

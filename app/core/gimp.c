@@ -880,8 +880,6 @@ gimp_create_image (Gimp              *gimp,
 
   image = gimp_image_new (gimp, width, height, type);
 
-  gimp_container_add (gimp->images, GIMP_OBJECT (image));
-
   if (attach_comment)
     {
       const gchar *comment = gimp->config->default_image->comment;

@@ -505,7 +505,15 @@ gimp_item_configure (GimpItem    *item,
 
   if (item->ID == 0)
     {
-      item->ID = image->gimp->next_item_ID++;
+      do
+        {
+          item->ID = image->gimp->next_item_ID++;
+
+          if (image->gimp->next_item_ID == G_MAXINT)
+            image->gimp->next_item_ID = 1;
+        }
+      while (g_hash_table_lookup (image->gimp->item_table,
+                                  GINT_TO_POINTER (item->ID)));
 
       g_hash_table_insert (image->gimp->item_table,
                            GINT_TO_POINTER (item->ID),
