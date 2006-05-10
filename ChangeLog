@@ -1,3 +1,10 @@
+2006-05-10  Sven Neumann  <sven@gimp.org>
+
+	* app/composite/gimp-composite-mmx.c
+	(gimp_composite_swap_rgba8_rgba8_rgba8_mmx): applied patch from
+	Mukund that replaces remaining movntq instructions in MMX assembly
+	(bug #162778).
+
 2006-05-09  Simon Budig  <simon@gimp.org>
 
 	* themes/Default/images/stock-color-triangle-16.png: New icon
