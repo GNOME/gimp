@@ -1,5 +1,12 @@
 2006-05-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpviewrendererbrush.c
+	* app/widgets/gimpviewrendererbuffer.c: use
+	gimp_viewable_get_size() and get rid of useless
+	local "brush" and "buffer" variables.
+
+2006-05-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimptoolbox.c: code cleanup, no logic changed.
 
 	* app/widgets/gimptoolbox-color-area.c: make the very first click

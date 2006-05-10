@@ -61,16 +61,17 @@ static void
 gimp_view_renderer_buffer_render (GimpViewRenderer *renderer,
                                   GtkWidget        *widget)
 {
-  GimpBuffer *buffer;
-  gint        view_width;
-  gint        view_height;
-  gboolean    scaling_up;
-  TempBuf    *render_buf = NULL;
+  gint      buffer_width;
+  gint      buffer_height;
+  gint      view_width;
+  gint      view_height;
+  gboolean  scaling_up;
+  TempBuf  *render_buf = NULL;
 
-  buffer = GIMP_BUFFER (renderer->viewable);
+  gimp_viewable_get_size (renderer->viewable, &buffer_width, &buffer_height);
 
-  gimp_viewable_calc_preview_size (gimp_buffer_get_width (buffer),
-                                   gimp_buffer_get_height (buffer),
+  gimp_viewable_calc_preview_size (buffer_width,
+                                   buffer_height,
                                    renderer->width,
                                    renderer->height,
                                    TRUE, 1.0, 1.0,
@@ -83,8 +84,7 @@ gimp_view_renderer_buffer_render (GimpViewRenderer *renderer,
       TempBuf *temp_buf;
 
       temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
-                                                gimp_buffer_get_width (buffer),
-                                                gimp_buffer_get_height (buffer));
+                                                buffer_width, buffer_height);
 
       if (temp_buf)
         {

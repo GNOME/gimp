@@ -84,7 +84,6 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
                                  GtkWidget        *widget)
 {
   GimpViewRendererBrush *renderbrush = GIMP_VIEW_RENDERER_BRUSH (renderer);
-  GimpBrush             *brush;
   TempBuf               *temp_buf;
   gint                   brush_width;
   gint                   brush_height;
@@ -95,9 +94,7 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
       renderbrush->pipe_timeout_id = 0;
     }
 
-  brush        = GIMP_BRUSH (renderer->viewable);
-  brush_width  = brush->mask->width;
-  brush_height = brush->mask->height;
+  gimp_viewable_get_size (renderer->viewable, &brush_width, &brush_height);
 
   temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
                                             renderer->width,
@@ -117,7 +114,7 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
 
       temp_buf_free (temp_buf);
 
-      if (GIMP_IS_BRUSH_PIPE (brush))
+      if (GIMP_IS_BRUSH_PIPE (renderer->viewable))
         {
           renderbrush->pipe_animation_index = 0;
           renderbrush->pipe_timeout_id =
@@ -139,10 +136,10 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
 
   if (renderer->width  >= INDICATOR_WIDTH  * 2 &&
       renderer->height >= INDICATOR_HEIGHT * 2 &&
-      (renderer->width  < brush_width  ||
-       renderer->height < brush_height ||
-       GIMP_IS_BRUSH_PIPE (brush) ||
-       GIMP_IS_BRUSH_GENERATED (brush)))
+      (renderer->width  < brush_width          ||
+       renderer->height < brush_height         ||
+       GIMP_IS_BRUSH_PIPE (renderer->viewable) ||
+       GIMP_IS_BRUSH_GENERATED (renderer->viewable)))
     {
 #define WHT { 255, 255, 255 }
 #define BLK {   0,   0,   0 }
@@ -225,8 +222,8 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
       buf = renderer->buffer + (offset_y * renderer->rowstride +
                                 offset_x * renderer->bytes);
 
-      pipe     = GIMP_IS_BRUSH_PIPE (brush);
-      genbrush = GIMP_IS_BRUSH_GENERATED (brush);
+      pipe     = GIMP_IS_BRUSH_PIPE (renderer->viewable);
+      genbrush = GIMP_IS_BRUSH_GENERATED (renderer->viewable);
       scale    = (renderer->width  < brush_width ||
                   renderer->height < brush_height);
       alpha    = (renderer->bytes == 4);
