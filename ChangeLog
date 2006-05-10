@@ -1,3 +1,10 @@
+2006-05-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimptoolbox.c: code cleanup, no logic changed.
+
+	* app/widgets/gimptoolbox-color-area.c: make the very first click
+	on the color area work as expected.
+
 2006-05-10  Sven Neumann  <sven@gimp.org>
 
 	* app/composite/gimp-composite-mmx.c

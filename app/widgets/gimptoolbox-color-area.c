@@ -148,24 +148,21 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
 
       toplevel_factory = gimp_dialog_factory_from_name ("toplevel");
 
-      color_dialog = gimp_color_dialog_new (NULL, title, NULL, NULL,
+      color_dialog = gimp_color_dialog_new (NULL, NULL, NULL, NULL,
                                             GTK_WIDGET (editor),
                                             toplevel_factory,
                                             "gimp-toolbox-color-dialog",
-                                            (const GimpRGB *) &color,
+                                            &color,
                                             TRUE, FALSE);
-      color_dialog_active = TRUE;
 
       g_signal_connect (color_dialog, "update",
                         G_CALLBACK (color_area_dialog_update),
                         context);
     }
-  else
-    {
-      gtk_window_set_title (GTK_WINDOW (color_dialog), title);
-      gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (color_dialog), &color);
 
-      gtk_window_present (GTK_WINDOW (color_dialog));
-      color_dialog_active = TRUE;
-    }
+  gtk_window_set_title (GTK_WINDOW (color_dialog), title);
+  gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (color_dialog), &color);
+
+  gtk_window_present (GTK_WINDOW (color_dialog));
+  color_dialog_active = TRUE;
 }
