@@ -1,5 +1,11 @@
 2006-05-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/gimppdb-query.c (gimp_pdb_proc_info): restored old
+	version of this function, it was correct after all (spotted by
+	Kevin Cozens).
+
+2006-05-11  Michael Natterer  <mitch@gimp.org>
+
 	Applied modified patch from Michael J. Hammel which allows to
 	remove all keyboard shortcuts from the menus (fixes bug #331839):
 

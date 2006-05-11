@@ -220,20 +220,27 @@ gimp_pdb_proc_info (GimpPDB          *pdb,
 
   procedure = gimp_pdb_lookup_procedure (pdb, proc_name);
 
-  if (! procedure)
+  if (procedure)
+    {
+      gimp_pdb_get_strings (&strings, procedure, FALSE);
+    }
+  else
     {
       const gchar *compat_name;
 
       compat_name = gimp_pdb_lookup_compat_proc_name (pdb, proc_name);
 
       if (compat_name)
-        procedure = gimp_pdb_lookup_procedure (pdb, compat_name);
+        {
+          procedure = gimp_pdb_lookup_procedure (pdb, compat_name);
+
+          if (procedure)
+            gimp_pdb_get_strings (&strings, procedure, TRUE);
+        }
     }
 
   if (procedure)
     {
-      gimp_pdb_get_strings (&strings, procedure, TRUE);
-
       *blurb      = strings.compat ? strings.blurb : g_strdup (strings.blurb);
       *help       = strings.compat ? strings.help : g_strdup (strings.help);
       *author     = strings.compat ? strings.author : g_strdup (strings.author);
