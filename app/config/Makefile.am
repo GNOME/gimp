@@ -4,6 +4,8 @@ libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
 libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
+libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la
+libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
 
 noinst_LIBRARIES = libappconfig.a
 
@@ -63,14 +65,33 @@ TESTS = test-config
 
 test_config_DEPENDENCIES = $(gimpconfig_libs)
 
+test_config_LDFLAGS = -u gimp_pdb_get_type
+
 test_config_LDADD = \
-	../base/libappbase.a	\
-	../core/libappcore.a	\
-	libappconfig.a		\
-	$(libgimpcolor)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpbase)		\
+	../widgets/widgets-enums.o		\
+	../display/display-enums.o		\
+	../display/gimpdisplayoptions.o		\
+	../pdb/libapppdb.a			\
+	../vectors/libappvectors.a		\
+	../plug-in/libappplug-in.a		\
+	../core/libappcore.a			\
+	../paint/libapppaint.a			\
+	../xcf/libappxcf.a			\
+	../text/libapptext.a			\
+	../file/libappfile.a			\
+	libappconfig.a				\
+	../paint-funcs/libapppaint-funcs.a	\
+	../composite/libappcomposite.a		\
+	../base/libappbase.a			\
+	$(libgimpmodule)			\
+	$(libgimpcolor)				\
+	$(libgimpthumb)				\
+	$(libgimpmath)				\
+	$(libgimpconfig)			\
+	$(libgimpbase)				\
+	$(PANGOFT2_LIBS)			\
+	$(GDK_PIXBUF_LIBS)			\
+	$(LIBART_LIBS)				\
 	$(GLIB_LIBS)
 
 
