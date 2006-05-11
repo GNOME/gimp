@@ -1,3 +1,14 @@
+2006-05-11  Michael Natterer  <mitch@gimp.org>
+
+	Applied modified patch from Michael J. Hammel which allows to
+	remove all keyboard shortcuts from the menus (fixes bug #331839):
+
+	* app/dialogs/preferences-dialog.c: added "Remove all keyboard
+	shortcuts" button to the "Interface" section.
+
+	* app/menus/menus.[ch]: added menus_remove() which does the
+	shortcut removal.
+
 2006-05-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpviewrendererbrush.c

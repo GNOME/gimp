@@ -33,6 +33,7 @@ void       menus_save    (Gimp               *gimp,
 
 gboolean   menus_clear   (Gimp               *gimp,
                           GError            **error);
+void       menus_remove  (Gimp               *gimp);
 
 
 #endif /* __MENUS_H__ */

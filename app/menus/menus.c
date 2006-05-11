@@ -54,7 +54,12 @@
 
 /*  local function prototypes  */
 
-static void   menus_can_change_accels (GimpGuiConfig *config);
+static void   menus_can_change_accels (GimpGuiConfig   *config);
+static void   menus_remove_accels     (gpointer         data,
+                                       const gchar     *accel_path,
+                                       guint            accel_key,
+                                       GdkModifierType  accel_mods,
+                                       gboolean         changed);
 
 
 /*  global variables  */
@@ -424,6 +429,14 @@ menus_clear (Gimp    *gimp,
   return success;
 }
 
+void
+menus_remove (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  gtk_accel_map_foreach (gimp, menus_remove_accels);
+}
+
 
 /*  private functions  */
 
@@ -433,4 +446,14 @@ menus_can_change_accels (GimpGuiConfig *config)
   g_object_set (gtk_settings_get_for_screen (gdk_screen_get_default ()),
                 "gtk-can-change-accels", config->can_change_accels,
                 NULL);
+}
+
+static void
+menus_remove_accels (gpointer        data,
+                     const gchar    *accel_path,
+                     guint           accel_key,
+                     GdkModifierType accel_mods,
+                     gboolean        changed)
+{
+  gtk_accel_map_change_entry (accel_path, 0, 0, TRUE);
 }

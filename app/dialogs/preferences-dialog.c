@@ -44,6 +44,8 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpgrideditor.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpmessagebox.h"
+#include "widgets/gimpmessagedialog.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimptemplateeditor.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -90,6 +92,8 @@ static void   prefs_input_dialog_able_callback    (GtkWidget  *widget,
 static void   prefs_menus_save_callback           (GtkWidget  *widget,
                                                    Gimp       *gimp);
 static void   prefs_menus_clear_callback          (GtkWidget  *widget,
+                                                   Gimp       *gimp);
+static void   prefs_menus_remove_callback         (GtkWidget  *widget,
                                                    Gimp       *gimp);
 static void   prefs_session_save_callback         (GtkWidget  *widget,
                                                    Gimp       *gimp);
@@ -507,6 +511,45 @@ prefs_menus_clear_callback (GtkWidget *widget,
       g_message (_("Your keyboard shortcuts will be reset to default values "
                    "the next time you start GIMP."));
     }
+}
+
+static void
+prefs_menus_remove_callback (GtkWidget *widget,
+                             Gimp      *gimp)
+{
+  GtkWidget *dialog;
+
+  dialog = gimp_message_dialog_new (_("Remove all Keyboard Shortcuts"),
+                                    GIMP_STOCK_QUESTION,
+                                    gtk_widget_get_toplevel (widget),
+                                    GTK_DIALOG_MODAL |
+                                    GTK_DIALOG_DESTROY_WITH_PARENT,
+                                    gimp_standard_help_func, NULL,
+
+                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                    GTK_STOCK_CLEAR,  GTK_RESPONSE_OK,
+
+                                    NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  g_signal_connect_object (gtk_widget_get_toplevel (widget), "unmap",
+                           G_CALLBACK (gtk_widget_destroy),
+                           dialog, G_CONNECT_SWAPPED);
+
+  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                     _("Do you really want to remove all "
+                                       "keyboard shortcuts from all menus?"));
+
+  if (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK)
+    {
+      menus_remove (gimp);
+    }
+
+  gtk_widget_destroy (dialog);
 }
 
 static void
@@ -1450,6 +1493,13 @@ prefs_dialog_new (Gimp       *gimp,
                     gimp);
 
   g_object_set_data (G_OBJECT (button), "clear-button", button2);
+
+  button = prefs_button_add (GTK_STOCK_CLEAR,
+                             _("Remove _All Keyboard Shortcuts"),
+                             GTK_BOX (vbox2));
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (prefs_menus_remove_callback),
+                    gimp);
 
 
   /***********/
