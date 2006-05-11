@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-27 15:22+0200\n"
-"PO-Revision-Date: 2006-03-27 15:21+0200\n"
+"POT-Creation-Date: 2006-05-11 12:34+0200\n"
+"PO-Revision-Date: 2006-05-11 12:43+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -625,47 +625,59 @@ msgstr "Pilová vlna"
 msgid "Triangular wave"
 msgstr "Trojúhelníková vlna"
 
-#: ../libgimpbase/gimpbaseenums.c:651
+#: ../libgimpbase/gimpbaseenums.c:652
+msgid "Run interactively"
+msgstr "Spustit interaktivně"
+
+#: ../libgimpbase/gimpbaseenums.c:653
+msgid "Run non-interactively"
+msgstr "Spustit neinteraktivně"
+
+#: ../libgimpbase/gimpbaseenums.c:654
+msgid "Run with last used values"
+msgstr "Spustit s naposledy použitými hodnotami"
+
+#: ../libgimpbase/gimpbaseenums.c:682
 msgid "Pixels"
 msgstr "pixelů"
 
-#: ../libgimpbase/gimpbaseenums.c:652
+#: ../libgimpbase/gimpbaseenums.c:683
 msgid "Points"
 msgstr "Bodů"
 
-#: ../libgimpbase/gimpbaseenums.c:681
+#: ../libgimpbase/gimpbaseenums.c:712
 msgid "Shadows"
 msgstr "Stíny"
 
-#: ../libgimpbase/gimpbaseenums.c:682
+#: ../libgimpbase/gimpbaseenums.c:713
 msgid "Midtones"
 msgstr "Střední tóny"
 
-#: ../libgimpbase/gimpbaseenums.c:683
+#: ../libgimpbase/gimpbaseenums.c:714
 msgid "Highlights"
 msgstr "Světla"
 
-#: ../libgimpbase/gimpbaseenums.c:711
+#: ../libgimpbase/gimpbaseenums.c:742
 msgid "Forward"
 msgstr "Vpřed"
 
-#: ../libgimpbase/gimpbaseenums.c:712
+#: ../libgimpbase/gimpbaseenums.c:743
 msgid "Backward"
 msgstr "Zpět"
 
-#: ../libgimpbase/gimpbaseenums.c:815
+#: ../libgimpbase/gimpbaseenums.c:846
 msgid "Internal GIMP procedure"
 msgstr "Interní procedura GIMPu"
 
-#: ../libgimpbase/gimpbaseenums.c:816
+#: ../libgimpbase/gimpbaseenums.c:847
 msgid "GIMP Plug-In"
 msgstr "Zásuvný modul GIMPu"
 
-#: ../libgimpbase/gimpbaseenums.c:817
+#: ../libgimpbase/gimpbaseenums.c:848
 msgid "GIMP Extension"
 msgstr "Rozšíření GIMPu"
 
-#: ../libgimpbase/gimpbaseenums.c:818
+#: ../libgimpbase/gimpbaseenums.c:849
 msgid "Temporary Procedure"
 msgstr "Dočasná procedura"
 
@@ -761,8 +773,7 @@ msgid "Sets how colors are mapped for your display."
 msgstr "Nastaví, jak se barvy mapují na vašem displeji."
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
-msgid ""
-"Sets how colors are converted from workspace to the print simulation device."
+msgid "Sets how colors are converted from workspace to the print simulation device."
 msgstr ""
 "Nastaví, jak se barvy převádí z pracovního prostředí na zařízení simulace "
 "tisku."
@@ -1067,7 +1078,7 @@ msgstr "Zkotrolovat styl"
 msgid "_Preview"
 msgstr "Ná_hled"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1872
+#: ../libgimpwidgets/gimppropwidgets.c:1869
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1300,8 +1311,7 @@ msgstr "Správa barev"
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
-msgstr ""
-"Tento filtr bere své nastavení z oddílu Správa barev dialogu Předvolby."
+msgstr "Tento filtr bere své nastavení z oddílu Správa barev dialogu Předvolby."
 
 #: ../modules/cdisplay_lcms.c:311
 msgid "Mode of operation:"
@@ -1584,3 +1594,4 @@ msgstr "MIDI"
 #: ../modules/controller_midi.c:434
 msgid "MIDI Events"
 msgstr "Události MIDI"
+
