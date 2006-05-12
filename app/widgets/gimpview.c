@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpview.c
- * Copyright (C) 2001-2005 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2006 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,12 +40,6 @@
 #include "gimpview-popup.h"
 #include "gimpviewrenderer.h"
 #include "gimpviewrenderer-utils.h"
-
-
-#define VIEW_EVENT_MASK (GDK_BUTTON_PRESS_MASK   | \
-                         GDK_BUTTON_RELEASE_MASK | \
-                         GDK_ENTER_NOTIFY_MASK   | \
-                         GDK_LEAVE_NOTIFY_MASK)
 
 
 enum
@@ -168,6 +162,12 @@ gimp_view_init (GimpView *view)
 {
   GTK_WIDGET_SET_FLAGS (view, GTK_NO_WINDOW);
 
+  gtk_widget_add_events (GTK_WIDGET (view), (GDK_BUTTON_PRESS_MASK   |
+                                             GDK_BUTTON_RELEASE_MASK |
+                                             GDK_ENTER_NOTIFY_MASK   |
+                                             GDK_LEAVE_NOTIFY_MASK));
+
+  view->event_window      = NULL;
   view->viewable          = NULL;
   view->renderer          = NULL;
 
@@ -177,6 +177,8 @@ gimp_view_init (GimpView *view)
   view->expand            = FALSE;
 
   view->in_button         = FALSE;
+  view->has_grab          = FALSE;
+  view->press_state       = 0;
 }
 
 static void
@@ -206,14 +208,12 @@ gimp_view_realize (GtkWidget *widget)
   GTK_WIDGET_CLASS (parent_class)->realize (widget);
 
   attributes.window_type = GDK_WINDOW_CHILD;
-  attributes.x      = widget->allocation.x;
-  attributes.y      = widget->allocation.y;
-  attributes.width  = widget->allocation.width;
-  attributes.height = widget->allocation.height;
-
-  attributes.wclass = GDK_INPUT_ONLY;
-  attributes.event_mask = gtk_widget_get_events (widget);
-  attributes.event_mask |= VIEW_EVENT_MASK;
+  attributes.x           = widget->allocation.x;
+  attributes.y           = widget->allocation.y;
+  attributes.width       = widget->allocation.width;
+  attributes.height      = widget->allocation.height;
+  attributes.wclass      = GDK_INPUT_ONLY;
+  attributes.event_mask  = gtk_widget_get_events (widget);
 
   attributes_mask = GDK_WA_X | GDK_WA_Y;
 

@@ -43,7 +43,7 @@ struct _GimpViewRendererImagefile
   GimpViewRenderer parent_instance;
 
 #ifdef ENABLE_FILE_SYSTEM_ICONS
-  gpointer            file_system;
+  gpointer         file_system;
 #endif
 };
 

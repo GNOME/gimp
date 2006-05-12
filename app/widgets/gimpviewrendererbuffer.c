@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpviewrendererbuffer.c
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2004-2006 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,8 +28,6 @@
 #include "widgets-types.h"
 
 #include "base/temp-buf.h"
-
-#include "core/gimpbuffer.h"
 
 #include "gimpviewrendererbuffer.h"
 

@@ -1,5 +1,20 @@
 2006-05-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpview.h: save 20 bytes per instance by using
+	single bits instead of 6 gbooleans.
+
+	* app/widgets/gimpview.c: some code cleanup.
+
+	* app/widgets/gimpviewrendererbrush.c: don't #include "gimpbrush.h".
+
+	* app/widgets/gimpviewrendererbuffer.c: don't #include "gimpbuffer.h".
+
+	* app/widgets/gimpviewrenderergradient.c
+	* app/widgets/gimpviewrendererimagefile.c
+	* app/widgets/gimpviewrendererimagefile.h: micro cosmetics.
+
+2006-05-12  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/imagemap/imap_csim.y: fix warning about unused return
 	value of g_list_append().
 

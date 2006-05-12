@@ -88,7 +88,7 @@ gimp_view_renderer_imagefile_render (GimpViewRenderer *renderer,
           GtkFilePath   *path;
 
           file_system = GIMP_VIEW_RENDERER_IMAGEFILE (renderer)->file_system;
-2
+
           path = gtk_file_system_uri_to_path (file_system, uri);
 
           pixbuf = gtk_file_system_render_icon (file_system, path, widget,

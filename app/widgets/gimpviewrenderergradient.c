@@ -204,7 +204,7 @@ gimp_view_renderer_gradient_set_offsets (GimpViewRendererGradient *renderer,
 
 void
 gimp_view_renderer_gradient_set_reverse (GimpViewRendererGradient *renderer,
-                                         gboolean                     reverse)
+                                         gboolean                  reverse)
 {
   g_return_if_fail (GIMP_IS_VIEW_RENDERER_GRADIENT (renderer));
 

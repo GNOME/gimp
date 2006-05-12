@@ -27,7 +27,6 @@
 
 #include "base/temp-buf.h"
 
-#include "core/gimpbrush.h"
 #include "core/gimpbrushpipe.h"
 #include "core/gimpbrushgenerated.h"
 

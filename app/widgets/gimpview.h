@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpview.h
- * Copyright (C) 2001-2005 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2006 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,14 +42,14 @@ struct _GimpView
   GimpViewable     *viewable;
   GimpViewRenderer *renderer;
 
-  gboolean          clickable;
-  gboolean          eat_button_events;
-  gboolean          show_popup;
-  gboolean          expand;
+  guint             clickable : 1;
+  guint             eat_button_events : 1;
+  guint             show_popup : 1;
+  guint             expand : 1;
 
   /*< private >*/
-  gboolean          in_button;
-  gboolean          has_grab;
+  guint             in_button : 1;
+  guint             has_grab : 1;
   GdkModifierType   press_state;
 };
 
