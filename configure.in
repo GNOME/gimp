@@ -405,7 +405,7 @@ AM_PATH_GLIB_2_0(glib_required_version, :,
   AC_MSG_ERROR(Test for GLIB failed. See the file 'INSTALL' for help.),
   gobject)
 
-PKG_CHECK_MODULES(GMODULE, gmodule-2.0 gobject-2.0)
+PKG_CHECK_MODULES(GMODULE_NO_EXPORT, gmodule-no-export-2.0)
 
 AC_MSG_CHECKING([if GLib is version 2.11.0 or newer])
 if $PKG_CONFIG --atleast-version=2.11.0 glib-2.0; then

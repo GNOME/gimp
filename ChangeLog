@@ -1,5 +1,17 @@
 2006-05-12  Michael Natterer  <mitch@gimp.org>
 
+	* configure.in: check for gmodule-no-export-2.0, not for
+	gmodule-2.0. Also removed gobject-2.0 from the gmodule check, i
+	have no idea why it was there.
+
+	* libgimpmodule/Makefile.am: s/GMODULE/GMODULE_NO_EXPORT/ because
+	we only want to import modules here, not export our own symbols.
+
+	(note that this change is actually useless, because libgimpmodule
+	 exports its symbols anyway, but it's more correct this way).
+
+2006-05-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/config/Makefile.am: make test-config link again.
 	Fixes bug #340601.
 
