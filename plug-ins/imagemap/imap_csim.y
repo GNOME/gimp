@@ -236,7 +236,7 @@ coords_tag	: COORDS '=' STRING
 			 p = strtok(NULL, ",");
 			 y = atoi(p);
 			 point = new_point(x, y);
-			 g_list_append(points, (gpointer) point);
+			 points = g_list_append(points, (gpointer) point);
 		      }
 		      /* Remove last point if duplicate */
 		      first = (GdkPoint*) points->data;

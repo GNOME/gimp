@@ -1,5 +1,13 @@
 2006-05-12  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/imagemap/imap_csim.y: fix warning about unused return
+	value of g_list_append().
+
+	* plug-ins/imagemap/imap_csim_parse.[ch]: regenerated (using
+	bison 2.1 instead of 2.0, lots of things changed, please test).
+
+2006-05-12  Michael Natterer  <mitch@gimp.org>
+
 	* configure.in: check for gmodule-no-export-2.0, not for
 	gmodule-2.0. Also removed gobject-2.0 from the gmodule check, i
 	have no idea why it was there.
