@@ -29,6 +29,8 @@
 
 #include "base/temp-buf.h"
 
+#include "core/gimpviewable.h"
+
 #include "gimpviewrendererbuffer.h"
 
 

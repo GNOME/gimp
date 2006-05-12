@@ -7,7 +7,8 @@
 
 	* app/widgets/gimpviewrendererbrush.c: don't #include "gimpbrush.h".
 
-	* app/widgets/gimpviewrendererbuffer.c: don't #include "gimpbuffer.h".
+	* app/widgets/gimpviewrendererbuffer.c: #include "gimpviewable.h"
+	instead of "gimpbuffer.h".
 
 	* app/widgets/gimpviewrenderergradient.c
 	* app/widgets/gimpviewrendererimagefile.c
