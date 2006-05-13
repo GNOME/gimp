@@ -1,3 +1,13 @@
+2006-05-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptexttool.c (gimp_text_tool_set_layer): find a
+	suitable display and fully set up the tool (just as the vector
+	tool does). Fixes bug #322182.
+
+	(gimp_text_tool_button_press): chain up to activate the tool.
+
+	(gimp_text_tool_set_drawable): removed redundant check.
+
 2006-05-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimplayer.c (gimp_layer_transform): add an alpha
