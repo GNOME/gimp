@@ -52,6 +52,10 @@ void   layers_delete_cmd_callback             (GtkAction   *action,
                                                gpointer     data);
 void   layers_text_discard_cmd_callback       (GtkAction   *action,
                                                gpointer     data);
+void   layers_text_to_vectors_cmd_callback    (GtkAction   *action,
+                                               gpointer     data);
+void   layers_text_along_vectors_cmd_callback (GtkAction   *action,
+                                               gpointer     data);
 
 void   layers_resize_cmd_callback             (GtkAction   *action,
                                                gpointer     data);

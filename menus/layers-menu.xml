@@ -17,7 +17,11 @@
     <menuitem action="layers-anchor" />
     <menuitem action="layers-merge-down" />
     <menuitem action="layers-delete" />
+    <separator />
     <menuitem action="layers-text-discard" />
+    <menuitem action="layers-text-to-vectors" />
+    <menuitem action="layers-text-along-vectors" />
+    <menuitem action="layers-text-selection-replace" />
     <separator />
     <menuitem action="layers-resize" />
     <menuitem action="layers-resize-to-image" />

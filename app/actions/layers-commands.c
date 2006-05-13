@@ -47,7 +47,10 @@
 #include "core/gimpprogress.h"
 
 #include "text/gimptext.h"
+#include "text/gimptext-vectors.h"
 #include "text/gimptextlayer.h"
+
+#include "vectors/gimpvectors-warp.h"
 
 #include "widgets/gimpaction.h"
 #include "widgets/gimpdock.h"
@@ -453,6 +456,59 @@ layers_text_discard_cmd_callback (GtkAction *action,
 
   if (GIMP_IS_TEXT_LAYER (layer))
     gimp_text_layer_discard (GIMP_TEXT_LAYER (layer));
+}
+
+void
+layers_text_to_vectors_cmd_callback (GtkAction *action,
+                                     gpointer   data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  return_if_no_layer (image, layer, data);
+
+  if (GIMP_IS_TEXT_LAYER (layer))
+    {
+      GimpVectors *vectors;
+      gint         x, y;
+
+      vectors = gimp_text_vectors_new (image, GIMP_TEXT_LAYER (layer)->text);
+
+      gimp_item_offsets (GIMP_ITEM (layer), &x, &y);
+      gimp_item_translate (GIMP_ITEM (vectors), x, y, FALSE);
+
+      gimp_image_add_vectors (image, vectors, -1);
+      gimp_image_set_active_vectors (image, vectors);
+
+      gimp_image_flush (image);
+    }
+}
+
+void
+layers_text_along_vectors_cmd_callback (GtkAction *action,
+                                        gpointer   data)
+{
+  GimpImage   *image;
+  GimpLayer   *layer;
+  GimpVectors *vectors;
+  return_if_no_layer (image, layer, data);
+  return_if_no_vectors (image, vectors, data);
+
+  if (GIMP_IS_TEXT_LAYER (layer))
+    {
+      GimpVectors *new_vectors;
+
+      new_vectors = gimp_text_vectors_new (image, GIMP_TEXT_LAYER (layer)->text);
+
+      gimp_vectors_warp_vectors (vectors, new_vectors,
+                                 0.5 * gimp_item_height (GIMP_ITEM (layer)));
+
+      gimp_item_set_visible (GIMP_ITEM (new_vectors), TRUE, FALSE);
+
+      gimp_image_add_vectors (image, new_vectors, -1);
+      gimp_image_set_active_vectors (image, new_vectors);
+
+      gimp_image_flush (image);
+    }
 }
 
 void

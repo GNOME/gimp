@@ -1,3 +1,21 @@
+2006-05-13  Michael Natterer  <mitch@gimp.org>
+
+	Added some new text layer actions and menu items (bug #316299).
+
+	* app/actions/layers-actions.c: added actions for "Text to Path",
+	"Text along Path" and "Text to Selection" (use the alpha to
+	selection callback for text to selection)
+
+	* app/actions/layers-commands.[ch]: added
+	layers_text_to_vectors_cmd_callback() and
+	layers_text_along_vectors_cmd_callback().
+
+	* app/widgets/gimphelp-ids.h: help IDs for the new actions.
+
+	* menus/image-menu.xml.in
+	* menus/layers-menu.xml: added them to the layers menus in the
+	image window and the layers dialog.
+
 2006-05-13  Hans Breuer  <hans@breuer.org>
 
 	* **/makefile.msc app/gimpcore.def : updated

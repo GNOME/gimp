@@ -48,14 +48,15 @@ static const GimpActionEntry layers_actions[] =
     N_("Layers Menu"), NULL, NULL, NULL,
     GIMP_HELP_LAYER_DIALOG },
 
-  { "layers-menu",              NULL,                    N_("_Layer")        },
-  { "layers-stack-menu",        NULL,                    N_("Stac_k")        },
-  { "layers-mask-menu",         NULL,                    N_("_Mask")         },
-  { "layers-transparency-menu", NULL,                    N_("Tr_ansparency") },
-  { "layers-transform-menu",    NULL,                    N_("_Transform")    },
-  { "layers-properties-menu",   GTK_STOCK_PROPERTIES,    N_("_Properties")   },
-  { "layers-opacity-menu",      GIMP_STOCK_TRANSPARENCY, N_("_Opacity")      },
-  { "layers-mode-menu",         GIMP_STOCK_TOOL_PENCIL,  N_("Layer _Mode")   },
+  { "layers-menu",              NULL,                      N_("_Layer")        },
+  { "layers-stack-menu",        NULL,                      N_("Stac_k")        },
+  { "layers-text-to-selection-menu", GIMP_STOCK_TOOL_TEXT, N_("Te_xt to Selection") },
+  { "layers-mask-menu",         NULL,                      N_("_Mask")         },
+  { "layers-transparency-menu", NULL,                      N_("Tr_ansparency") },
+  { "layers-transform-menu",    NULL,                      N_("_Transform")    },
+  { "layers-properties-menu",   GTK_STOCK_PROPERTIES,      N_("_Properties")   },
+  { "layers-opacity-menu",      GIMP_STOCK_TRANSPARENCY,   N_("_Opacity")      },
+  { "layers-mode-menu",         GIMP_STOCK_TOOL_PENCIL,    N_("Layer _Mode")   },
 
   { "layers-text-tool", GIMP_STOCK_TOOL_TEXT,
     N_("Te_xt Tool"), NULL,
@@ -146,6 +147,18 @@ static const GimpActionEntry layers_actions[] =
     N_("Turn this text layer into a normal layer"),
     G_CALLBACK (layers_text_discard_cmd_callback),
     GIMP_HELP_LAYER_TEXT_DISCARD },
+
+  { "layers-text-to-vectors", GIMP_STOCK_TOOL_TEXT,
+    N_("Text to _Path"), NULL,
+    N_("Create a path from this text layer"),
+    G_CALLBACK (layers_text_to_vectors_cmd_callback),
+    GIMP_HELP_LAYER_TEXT_TO_PATH },
+
+  { "layers-text-along-vectors", GIMP_STOCK_TOOL_TEXT,
+    N_("Text alon_g Path"), NULL,
+    N_("Warp this layer's text along the current path"),
+    G_CALLBACK (layers_text_along_vectors_cmd_callback),
+    GIMP_HELP_LAYER_TEXT_ALONG_PATH },
 
   { "layers-resize", GIMP_STOCK_RESIZE,
     N_("Layer B_oundary Size..."), NULL,
@@ -289,6 +302,33 @@ static const GimpEnumActionEntry layers_alpha_to_selection_actions[] =
     GIMP_HELP_LAYER_ALPHA_SELECTION_INTERSECT }
 };
 
+static const GimpEnumActionEntry layers_text_to_selection_actions[] =
+{
+  { "layers-text-selection-replace", GIMP_STOCK_SELECTION_REPLACE,
+    N_("_Text to Selection"), NULL,
+    N_("Replace the selection with the text layer's outline"),
+    GIMP_CHANNEL_OP_REPLACE, FALSE,
+    GIMP_HELP_LAYER_TEXT_SELECTION_REPLACE },
+
+  { "layers-text-selection-add", GIMP_STOCK_SELECTION_ADD,
+    N_("A_dd to Selection"), NULL,
+    N_("Add the text layer's outline to the current selection"),
+    GIMP_CHANNEL_OP_ADD, FALSE,
+    GIMP_HELP_LAYER_TEXT_SELECTION_ADD },
+
+  { "layers-text-selection-subtract", GIMP_STOCK_SELECTION_SUBTRACT,
+    N_("_Subtract from Selection"), NULL,
+    N_("Subtract the text layer's outline from the current selection"),
+    GIMP_CHANNEL_OP_SUBTRACT, FALSE,
+    GIMP_HELP_LAYER_TEXT_SELECTION_SUBTRACT },
+
+  { "layers-text-selection-intersect", GIMP_STOCK_SELECTION_INTERSECT,
+    N_("_Intersect with Selection"), NULL,
+    N_("Intersect the text layer's outline with the current selection"),
+    GIMP_CHANNEL_OP_INTERSECT, FALSE,
+    GIMP_HELP_LAYER_TEXT_SELECTION_INTERSECT }
+};
+
 static const GimpEnumActionEntry layers_select_actions[] =
 {
   { "layers-select-top", NULL,
@@ -392,6 +432,11 @@ layers_actions_setup (GimpActionGroup *group)
                                       G_CALLBACK (layers_alpha_to_selection_cmd_callback));
 
   gimp_action_group_add_enum_actions (group,
+                                      layers_text_to_selection_actions,
+                                      G_N_ELEMENTS (layers_alpha_to_selection_actions),
+                                      G_CALLBACK (layers_alpha_to_selection_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group,
                                       layers_select_actions,
                                       G_N_ELEMENTS (layers_select_actions),
                                       G_CALLBACK (layers_select_cmd_callback));
@@ -479,11 +524,18 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-lower",           layer && !fs && !ac && next);
   SET_SENSITIVE ("layers-lower-to-bottom", layer && !fs && !ac && next);
 
-  SET_SENSITIVE ("layers-anchor",        layer &&  fs && !ac);
-  SET_SENSITIVE ("layers-merge-down",    layer && !fs && !ac && next);
-  SET_SENSITIVE ("layers-merge-layers",  layer && !fs && !ac);
-  SET_SENSITIVE ("layers-flatten-image", layer && !fs && !ac);
-  SET_VISIBLE   ("layers-text-discard",  text_layer && !ac);
+  SET_SENSITIVE ("layers-anchor",          layer &&  fs && !ac);
+  SET_SENSITIVE ("layers-merge-down",      layer && !fs && !ac && next);
+  SET_SENSITIVE ("layers-merge-layers",    layer && !fs && !ac);
+  SET_SENSITIVE ("layers-flatten-image",   layer && !fs && !ac);
+
+  SET_VISIBLE   ("layers-text-discard",             text_layer && !ac);
+  SET_VISIBLE   ("layers-text-to-vectors",          text_layer && !ac);
+  SET_VISIBLE   ("layers-text-along-vectors",       text_layer && !ac);
+  SET_VISIBLE   ("layers-text-selection-replace",   text_layer && !ac);
+  SET_VISIBLE   ("layers-text-selection-add",       text_layer && !ac);
+  SET_VISIBLE   ("layers-text-selection-subtract",  text_layer && !ac);
+  SET_VISIBLE   ("layers-text-selection-intersect", text_layer && !ac);
 
   SET_SENSITIVE ("layers-resize",          layer && !ac);
   SET_SENSITIVE ("layers-resize-to-image", layer && !ac);
