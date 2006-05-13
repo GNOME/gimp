@@ -1,5 +1,12 @@
 2006-05-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimplayer.c (gimp_layer_transform): add an alpha
+	channel if the layer has none and interpolation is requested.
+	Works around bug #315048, the real fix would be to implement
+	interpolation on layers without alpha.
+
+2006-05-13  Michael Natterer  <mitch@gimp.org>
+
 	Added some new text layer actions and menu items (bug #316299).
 
 	* app/actions/layers-actions.c: added actions for "Text to Path",
