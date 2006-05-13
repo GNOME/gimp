@@ -196,8 +196,6 @@ EXPORTS
 	gimp_drawable_bucket_fill_full
 	gimp_drawable_bytes
 	gimp_drawable_calculate_histogram
-	gimp_drawable_cmap
-	gimp_drawable_data
 	gimp_drawable_desaturate
 	gimp_drawable_equalize
 	gimp_drawable_fill_by_type
@@ -539,7 +537,6 @@ EXPORTS
 	gimp_selection_get_type
 	gimp_selection_save
 	gimp_set_busy
-	gimp_set_last_plug_in
 	gimp_smudge_options_get_type
 	gimp_stroke_anchor_convert
 	gimp_stroke_anchor_delete
@@ -638,22 +635,7 @@ EXPORTS
 	pixel_region_set_row
 	pixel_regions_process
 	pixel_regions_register
-	plug_in_data_free
-	plug_in_proc_def_get_help_id
-	plug_in_proc_def_get_label
-	plug_in_proc_def_get_pixbuf
-	plug_in_proc_def_get_progname
-	plug_in_proc_def_get_stock_id
-	plug_in_repeat
-	plug_in_run
-	plug_ins_help_domain
-	plug_ins_help_domains
-	plug_ins_locale_domain
 	posterize_lut_setup
-	procedural_db_destroy_args
-	procedural_db_execute
-	procedural_db_lookup
-	procedural_db_run_proc
 	read_pixel_data_1
 	temp_buf_data
 	temp_buf_data_clear
@@ -715,7 +697,6 @@ gimp_progress_start
 gimp_stroke_desc_new
 gimp_view_size_get_type
 levels_stretch
-plug_in_proc_def_get_sensitive
 file_utils_find_proc_by_extension
 gimp_templates_migrate
 file_utils_filename_from_uri
@@ -775,3 +756,49 @@ gimp_scan_convert_add_polyline
 gimp_scan_convert_compose
 gimp_scan_convert_render_value
 gimp_scan_convert_stroke
+
+gimp_array_free
+gimp_array_new
+gimp_drawable_get_colormap
+gimp_drawable_get_tiles
+gimp_drawable_id_get_type
+gimp_float_array_get_type
+gimp_histogram_get_threshold
+gimp_image_id_get_type
+gimp_int32_get_type
+gimp_int8_array_get_type
+gimp_object_set_static_name
+gimp_object_take_name
+gimp_param_drawable_id_get_type
+gimp_param_image_id_get_type
+gimp_pdb_execute_procedure_by_name
+gimp_pdb_execute_procedure_by_name_args
+gimp_pdb_get_type
+gimp_pdb_lookup_procedure
+gimp_pickable_flush
+gimp_pickable_get_bytes
+gimp_pickable_get_tiles
+gimp_plug_in_manager_data_free
+gimp_plug_in_manager_get_help_domain
+gimp_plug_in_manager_get_help_domains
+gimp_plug_in_manager_get_locale_domain
+gimp_plug_in_manager_set_last_plug_in
+gimp_plug_in_procedure_get_help_id
+gimp_plug_in_procedure_get_label
+gimp_plug_in_procedure_get_pixbuf
+gimp_plug_in_procedure_get_progname
+gimp_plug_in_procedure_get_sensitive
+gimp_plug_in_procedure_get_stock_id
+gimp_plug_in_procedure_get_type
+gimp_procedure_execute_async
+gimp_procedure_get_arguments
+gimp_procedure_get_type
+gimp_user_install_free
+gimp_user_install_is_migration
+gimp_user_install_new
+gimp_user_install_run
+gimp_user_install_set_log_handler
+gimp_value_array_truncate
+gimp_value_set_drawable
+gimp_value_set_image
+gimp_value_take_stringarray

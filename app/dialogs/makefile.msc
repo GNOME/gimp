@@ -38,7 +38,6 @@ OBJECTS = \
 	image-new-dialog.obj \
 	image-properties-dialog.obj \
 	image-scale-dialog.obj \
-	info-dialog.obj \
 	keyboard-shortcuts-dialog.obj \
 	layer-add-mask-dialog.obj \
 	layer-options-dialog.obj \

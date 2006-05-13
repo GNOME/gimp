@@ -36,7 +36,6 @@ OBJECTS_UI = \
 OBJECTS = \
 	$(OBJECTS_UI) \
 	internal_procs.obj \
-	procedural_db.obj \
 	brush_cmds.obj \
 	brushes_cmds.obj \
 	buffer_cmds.obj \
@@ -70,7 +69,6 @@ OBJECTS = \
 	pattern_cmds.obj \
 	patterns_cmds.obj \
 	plug_in_cmds.obj \
-	procedural-db-query.obj \
 	procedural_db_cmds.obj \
 	progress_cmds.obj \
 	selection_cmds.obj \
@@ -80,6 +78,15 @@ OBJECTS = \
 	undo_cmds.obj \
 	unit_cmds.obj \
 	vectors_cmds.obj \
+	\
+	gimppdb.obj \
+	\
+	gimp-pdb.obj \
+	gimp-pdb-compat.obj \
+	gimppdb-query.obj \
+	gimppluginprocedure.obj \
+	gimpprocedure.obj \
+	gimptemporaryprocedure.obj
 
 INCLUDES = \
 	-FImsvc_recommended_pragmas.h \

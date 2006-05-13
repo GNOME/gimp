@@ -32,11 +32,11 @@ FROMPLUGINSDIR=YES		# Used to bypass other parts below
 # List plug-ins. We must use several lists to work around nmake's limits
 
 # The COMMON* ones are in the common subdirectory
-COMMON0 = plugin_browser procedure_browser gnomeprint
+COMMON0 = plugin_browser procedure_browser #gnomeprint
 COMMON1 = AlienMap2 ccanalyze CEL channel_mixer CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch cartoon checkerboard color_enhance colorify colortoalpha compose compressor convmatrix csource cubism curve_bend
 COMMON2 = decompose deinterlace depthmerge despeckle destripe dicom diffraction displace dog edge emboss engrave exchange film flarefx fp fractaltrace
 COMMON3 = gauss gbr gee gee_zoom gif gifload gih glasstile glob gqbist gradmap grid gtm guillotine header hot illusion iwarp jigsaw laplace lic
-COMMON4 = mapcolor max_rgb mblur mosaic neon newsprint nlfilt noisify normalize nova oilify papertile pat pcx photocopy pix pixelize plasma png pnm polar postscript psd psd_save psp randomize raw retinex ripple rotate
+COMMON4 = mapcolor max_rgb mblur mosaic neon newsprint nlfilt noisify normalize nova oilify papertile pat pcx photocopy pix pixelize plasma png pnm polar postscript psd psd_save psp randomize raw redeye retinex ripple rotate
 COMMON5 = sample_colorize scatter_hsv screenshot sel_gauss semiflatten sharpen shift sinus smooth_palette snoise sobel softglow sparkle spheredesigner spread struc sunras tga threshold_alpha tiff tile tileit tiler uniteditor unsharp video vinvert vpropagate 
 COMMON6 = warp waves webbrowser whirlpinch winclipboard wind winprint wiredebug xbm xwd zealouscrop
 
@@ -445,8 +445,14 @@ OPTIMIZE =
 !ENDIF
 
 !IFDEF EXTRA_jpeg
-EXTRACFLAGS = -I$(JPEG)
-EXTRALIBS = $(JPEG)\libjpeg.lib
+EXTRACFLAGS = -I$(JPEG) \
+!IFDEF EXIF_CFLAGS
+	$(EXIF_CFLAGS) -DHAVE_EXIF -DHAVE_EXIF_0_6
+!ENDIF
+
+EXTRALIBS = \
+	$(JPEG)\libjpeg.lib $(EXIF_LIBS)
+
 OBJECTS = \
 	gimpexif.obj \
 	jpeg.obj \

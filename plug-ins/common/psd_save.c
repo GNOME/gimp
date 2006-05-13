@@ -1115,9 +1115,6 @@ write_pixel_data (FILE *fd, gint32 drawableID, gint32 *ChanLenPosition,
   GimpPixelRgn region;      /* Image region */
   guchar *data;             /* Temporary copy of pixel data */
 
-  IFDBG printf (" Function: write_pixel_data, drw %d, lto %d\n",
-                drawableID, ltable_offset);
-
   gint32 tile_height = gimp_tile_height();
 
   GimpDrawable *drawable = gimp_drawable_get (drawableID);
@@ -1134,6 +1131,9 @@ write_pixel_data (FILE *fd, gint32 drawableID, gint32 *ChanLenPosition,
   guchar *rledata;              /* Compressed data from a region */
   gint32 length_table_pos;      /* position in file of the length table */
   int i, j;
+
+  IFDBG printf (" Function: write_pixel_data, drw %d, lto %d\n",
+                drawableID, ltable_offset);
 
   if ( gimp_drawable_has_alpha  (drawableID) &&
       !gimp_drawable_is_indexed (drawableID))
@@ -1219,8 +1219,8 @@ write_pixel_data (FILE *fd, gint32 drawableID, gint32 *ChanLenPosition,
 
   /* Write layer mask, as last channel, id -2 */
   if (maskID != -1) {
-    len = 0;
     GimpDrawable *mdrawable = gimp_drawable_get(maskID);
+    len = 0;
 
     gimp_pixel_rgn_init (&region, mdrawable, 0, 0,
                          width, height, FALSE, FALSE);

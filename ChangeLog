@@ -1,3 +1,13 @@
+2006-05-13  Hans Breuer  <hans@breuer.org>
+
+	* **/makefile.msc app/gimpcore.def : updated
+	* app/core/gimp-util.c : dont include "config/gimpbaseconfig.c", it
+	gives an redefinition error with msvc. Instead include 
+	config/gimpbaseconfig.h and libgimpconfig/gimpconfig-path.h
+
+	* plug-ins/common/psd_save.c : fix c99isms (declarations only at the
+	start of a block)
+
 2006-05-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpview.h: save 20 bytes per instance by using

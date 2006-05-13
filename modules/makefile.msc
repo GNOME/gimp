@@ -26,7 +26,11 @@ MODULES = \
 	colorsel_cmyk-$(GIMP_VER).dll \
 	cdisplay_colorblind-$(GIMP_VER).dll \
 	cdisplay_gamma-$(GIMP_VER).dll \
-	cdisplay_highcontrast-$(GIMP_VER).dll
+	cdisplay_highcontrast-$(GIMP_VER).dll \
+!IFDEF LCMS_CFLAGS
+	cdisplay_lcms-$(GIMP_VER).dll \
+	cdisplay_proof-$(GIMP_VER).dll \
+!ENDIF
 
 
 all : \
@@ -76,9 +80,23 @@ cdisplay_highcontrast-$(GIMP_VER).dll : cdisplay_highcontrast.obj
 	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
 	$(DEPLIBS)
 
+cdisplay_lcms-$(GIMP_VER).dll : cdisplay_lcms.obj
+	$(CC) $(CFLAGS) $(LCMS_CFLAGS) -LD -Fe$@ cdisplay_lcms.obj $(LDFLAGS) \
+	..\libgimpbase\gimpbase-$(GIMP_VER).lib \
+	..\libgimpconfig\gimpconfig-$(GIMP_VER).lib \
+	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
+	$(DEPLIBS) $(LCMS_LIBS)
+
+cdisplay_proof-$(GIMP_VER).dll : cdisplay_proof.obj
+	$(CC) $(CFLAGS) $(LCMS_CFLAGS) -LD -Fe$@ cdisplay_proof.obj $(LDFLAGS) \
+	..\libgimpbase\gimpbase-$(GIMP_VER).lib \
+	..\libgimpconfig\gimpconfig-$(GIMP_VER).lib \
+	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
+	$(DEPLIBS) $(LCMS_LIBS)
+
 # General rule for building 
 .c.obj:
-	$(CC) $(CFLAGS) -GD -c $<
+	$(CC) $(CFLAGS) $(LCMS_CFLAGS) -GD -c $<
 
 clean::
 	del *.dll

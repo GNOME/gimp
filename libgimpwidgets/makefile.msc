@@ -21,6 +21,7 @@ DEPLIBS = $(GLIB_LIBS) $(GTK2_LIBS) $(INTL_LIBS)
 
 all : \
 	..\config.h \
+	gimp-wilber-pixbufs.h \
 	gimpwidgetsmarshal.c \
 	gimpwidgets-$(GIMP_VER).dll
 
@@ -80,6 +81,22 @@ OBJECTS = \
 	gimpwidgetsenums.obj \
 	gimpwidgetsmarshal.obj \
 
+
+# these are duplicated from the $(TOP)/themes/default/images directory - though under a different name
+WILBER_IMAGES = \
+	wilber-16.png	\
+	wilber-32.png	\
+	wilber-48.png	\
+	wilber-64.png
+
+WILBER_VARIABLES = \
+	wilber_16  wilber-16.png	\
+	wilber_32  wilber-32.png	\
+	wilber_48  wilber-48.png	\
+	wilber_64  wilber-64.png
+
+gimp-wilber-pixbufs.h: $(WILBER_IMAGES) makefile.msc
+	gdk-pixbuf-csource --raw --build-list $(WILBER_VARIABLES) > gimp-wilber-pixbufs.h
 
 gimpwidgetsmarshal.h : gimpwidgetsmarshal.list
 	$(GLIB)\gobject\glib-genmarshal --prefix=_gimp_widgets_marshal gimpwidgetsmarshal.list --header >gimpwidgetsmarshal.h

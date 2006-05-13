@@ -17,21 +17,28 @@ PKG_LINK = \
 	..\core\appcore-$(PKG_VER).lib
 
 OBJECTS = \
-	plug-in.obj \
-	plug-in-context.obj \
-	plug-in-data.obj \
-	plug-in-debug.obj \
+	gimpenvirontable.obj \
+	gimpinterpreterdb.obj \
+	gimpplugin.obj \
+	gimpplugin-context.obj \
+	gimpplugindebug.obj \
+	gimppluginmanager.obj \
+	gimppluginmanager-call.obj \
+	gimppluginmanager-data.obj \
+	gimppluginmanager-file.obj \
+	gimppluginmanager-help-domain.obj \
+	gimppluginmanager-locale-domain.obj \
+	gimppluginmanager-menu-branch.obj \
+	gimppluginmanager-query.obj \
+	gimpplugin-message.obj \
+	gimppluginprocframe.obj \
+	gimpplugin-progress.obj \
+	gimppluginshm.obj \
+	\
 	plug-in-def.obj \
-	plug-in-message.obj \
+	plug-in-enums.obj \
 	plug-in-params.obj \
-	plug-in-proc-def.obj \
-	plug-in-proc-frame.obj \
-	plug-in-progress.obj \
-	plug-ins-query.obj \
-	plug-in-rc.obj \
-	plug-in-run.obj \
-	plug-in-shm.obj \
-	plug-ins.obj \
+	plug-in-rc.obj
 
 INCLUDES = \
 	-FImsvc_recommended_pragmas.h \

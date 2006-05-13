@@ -71,7 +71,6 @@ OBJECTS = \
 	gimpdrawable-preview.obj \
 	gimpdrawable-stroke.obj \
 	gimpdrawable-transform.obj \
-	gimpenvirontable.obj \
 	gimpgradient.obj \
 	gimpgradient-load.obj \
 	gimpgradient-save.obj \
@@ -101,7 +100,6 @@ OBJECTS = \
 	gimpimage-undo.obj \
 	gimpimage-undo-push.obj \
 	gimpimagefile.obj \
-	gimpinterpreterdb.obj \
 	gimpitem.obj \
 	gimpitem-align.obj \
 	gimpitem-linked.obj \
@@ -111,6 +109,7 @@ OBJECTS = \
 	gimplayer-floating-sel.obj \
 	gimplayermask.obj \
 	gimplist.obj \
+	gimpparamspecs.obj \
 	gimpprojection.obj \
 	gimpprojection-construct.obj \
 	gimpmarshal.obj \
@@ -141,6 +140,7 @@ OBJECTS = \
 #	gimpunits.obj \
 	gimpviewable.obj \
 	gimp-utils.obj \
+	gimp-user-install.obj
 
 OTHER_FILES = \
 	\
@@ -163,6 +163,7 @@ INCLUDES = \
 
 DEFINES = \
 	-DGIMP_COMPILATION \
+	-DGIMP_APP_VERSION=\"2.3\" \
 	-DG_LOG_DOMAIN=\"Gimp-Core\"
 
 all : \

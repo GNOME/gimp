@@ -43,10 +43,11 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig-path.h"
 
 #include "core-types.h"
 
-#include "config/gimpbaseconfig.c"
+#include "config/gimpbaseconfig.h"
 
 #include "gimp.h"
 #include "gimp-utils.h"
