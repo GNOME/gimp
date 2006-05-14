@@ -18,6 +18,7 @@ gimp_add_mask_type_get_type (void)
     { GIMP_ADD_ALPHA_TRANSFER_MASK, "GIMP_ADD_ALPHA_TRANSFER_MASK", "alpha-transfer-mask" },
     { GIMP_ADD_SELECTION_MASK, "GIMP_ADD_SELECTION_MASK", "selection-mask" },
     { GIMP_ADD_COPY_MASK, "GIMP_ADD_COPY_MASK", "copy-mask" },
+    { GIMP_ADD_CHANNEL_MASK, "GIMP_ADD_CHANNEL_MASK", "channel-mask" },
     { 0, NULL, NULL }
   };
 
@@ -29,6 +30,7 @@ gimp_add_mask_type_get_type (void)
     { GIMP_ADD_ALPHA_TRANSFER_MASK, N_("_Transfer layer's alpha channel"), NULL },
     { GIMP_ADD_SELECTION_MASK, N_("_Selection"), NULL },
     { GIMP_ADD_COPY_MASK, N_("_Grayscale copy of layer"), NULL },
+    { GIMP_ADD_CHANNEL_MASK, N_("C_hannel"), NULL },
     { 0, NULL, NULL }
   };
 

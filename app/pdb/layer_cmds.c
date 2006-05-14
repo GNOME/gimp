@@ -355,10 +355,23 @@ layer_create_mask_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      mask = gimp_layer_create_mask (layer, (GimpAddMaskType) mask_type);
+      GimpChannel *channel = NULL;
 
-      if (! mask)
-        success = FALSE;
+      if (mask_type == GIMP_ADD_CHANNEL_MASK)
+        {
+          channel = gimp_image_get_active_channel (GIMP_ITEM (layer)->image);
+
+          if (! channel)
+            success = FALSE;
+        }
+
+      if (success)
+        {
+          mask = gimp_layer_create_mask (layer, mask_type, channel);
+
+          if (! mask)
+            success = FALSE;
+        }
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);
@@ -1172,7 +1185,7 @@ register_layer_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("mask-type",
                                                   "mask type",
-                                                  "The type of mask: { GIMP_ADD_WHITE_MASK (0), GIMP_ADD_BLACK_MASK (1), GIMP_ADD_ALPHA_MASK (2), GIMP_ADD_ALPHA_TRANSFER_MASK (3), GIMP_ADD_SELECTION_MASK (4), GIMP_ADD_COPY_MASK (5) }",
+                                                  "The type of mask: { GIMP_ADD_WHITE_MASK (0), GIMP_ADD_BLACK_MASK (1), GIMP_ADD_ALPHA_MASK (2), GIMP_ADD_ALPHA_TRANSFER_MASK (3), GIMP_ADD_SELECTION_MASK (4), GIMP_ADD_COPY_MASK (5), GIMP_ADD_CHANNEL_MASK (6) }",
                                                   GIMP_TYPE_ADD_MASK_TYPE,
                                                   GIMP_ADD_WHITE_MASK,
                                                   GIMP_PARAM_READWRITE));

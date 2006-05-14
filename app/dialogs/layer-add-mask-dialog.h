@@ -28,6 +28,7 @@ struct _LayerAddMaskDialog
 
   GimpLayer       *layer;
   GimpAddMaskType  add_mask_type;
+  GimpChannel     *channel;
   gboolean         invert;
 };
 

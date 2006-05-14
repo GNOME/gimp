@@ -99,7 +99,8 @@ GimpLayer     * gimp_layer_new_from_region     (PixelRegion          *region,
                                                 GimpLayerModeEffects  mode);
 
 GimpLayerMask * gimp_layer_create_mask         (const GimpLayer      *layer,
-                                                GimpAddMaskType       mask_type);
+                                                GimpAddMaskType       mask_type,
+                                                GimpChannel          *channel);
 GimpLayerMask * gimp_layer_add_mask            (GimpLayer            *layer,
                                                 GimpLayerMask        *mask,
                                                 gboolean              push_undo);

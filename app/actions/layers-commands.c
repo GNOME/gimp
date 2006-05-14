@@ -974,9 +974,16 @@ layers_add_mask_response (GtkWidget          *widget,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpLayer     *layer  = dialog->layer;
+      GimpLayer     *layer = dialog->layer;
       GimpImage     *image = gimp_item_get_image (GIMP_ITEM (layer));
       GimpLayerMask *mask;
+
+      if (dialog->add_mask_type == GIMP_ADD_CHANNEL_MASK &&
+          ! dialog->channel)
+        {
+          g_message (_("Please select a channel first"));
+          return;
+        }
 
       layer_add_mask_type = dialog->add_mask_type;
       layer_mask_invert   = dialog->invert;
@@ -987,7 +994,8 @@ layers_add_mask_response (GtkWidget          *widget,
       if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
         gimp_layer_add_alpha (layer);
 
-      mask = gimp_layer_create_mask (layer, layer_add_mask_type);
+      mask = gimp_layer_create_mask (layer, layer_add_mask_type,
+                                     dialog->channel);
 
       if (layer_mask_invert)
         gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);

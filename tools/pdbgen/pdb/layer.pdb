@@ -135,10 +135,23 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  mask = gimp_layer_create_mask (layer, (GimpAddMaskType) mask_type);
+  GimpChannel *channel = NULL;
 
-  if (! mask)
-    success = FALSE;
+  if (mask_type == GIMP_ADD_CHANNEL_MASK)
+    {
+      channel = gimp_image_get_active_channel (GIMP_ITEM (layer)->image);
+
+      if (! channel)
+        success = FALSE;
+    }
+
+  if (success)
+    {
+      mask = gimp_layer_create_mask (layer, mask_type, channel);
+
+      if (! mask)
+        success = FALSE;
+    }
 }
 CODE
     );

@@ -1,5 +1,33 @@
 2006-05-14  Michael Natterer  <mitch@gimp.org>
 
+	Allow to initialize a new layer mask with any of the image's
+	channels. Fixes bug #310207.
+
+	* libgimpbase/gimpbaseenums.h (enum GimpAddMaskType): added
+	value GIMP_ADD_CHANNEL_MASK.
+
+	* libgimpbase/gimpbaseenums.c
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* app/core/gimplayer.[ch] (gimp_layer_create_mask): added
+	GimpChannel* parameter. Hacked the GIMP_ADD_SELECTION_MASK code a
+	bit so it can handle GIMP_ADD_CHANNEL_MASK too. Cleaned up the
+	function a bit.
+
+	* app/dialogs/layer-add-mask-dialog.[ch]: added a menu of the
+	image's channels.
+
+	* app/actions/layers-commands.c (layers_add_mask_response): pass
+	the channel selected in the menu to gimp_layer_create_mask().
+
+	* tools/pdbgen/pdb/layer.pdb (layer_create_mask): use the image's
+	active channel when GIMP_ADD_CHANNEL_MASK is passed. Fail if there
+	is no active channel.
+
+	* app/pdb/layer_cmds.c: regenerated.
+
+2006-05-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimptexttool.c (gimp_text_tool_set_layer): find a
 	suitable display and fully set up the tool (just as the vector
 	tool does). Fixes bug #322182.

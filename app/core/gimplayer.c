@@ -1279,7 +1279,8 @@ gimp_layer_add_mask (GimpLayer     *layer,
 
 GimpLayerMask *
 gimp_layer_create_mask (const GimpLayer *layer,
-                        GimpAddMaskType  add_mask_type)
+                        GimpAddMaskType  add_mask_type,
+                        GimpChannel     *channel)
 {
   GimpDrawable  *drawable;
   GimpItem      *item;
@@ -1291,10 +1292,12 @@ gimp_layer_create_mask (const GimpLayer *layer,
   GimpRGB        black = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
 
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
+  g_return_val_if_fail (add_mask_type != GIMP_ADD_CHANNEL_MASK ||
+                        GIMP_IS_CHANNEL (channel), NULL);
 
   drawable = GIMP_DRAWABLE (layer);
   item     = GIMP_ITEM (layer);
-  image   = gimp_item_get_image (item);
+  image    = gimp_item_get_image (item);
 
   mask_name = g_strdup_printf (_("%s mask"),
                                gimp_object_get_name (GIMP_OBJECT (layer)));
@@ -1320,7 +1323,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
       break;
     }
 
-  pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles,
+  pixel_region_init (&destPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
                      0, 0,
                      GIMP_ITEM (mask)->width,
                      GIMP_ITEM (mask)->height,
@@ -1336,7 +1339,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
     case GIMP_ADD_ALPHA_TRANSFER_MASK:
       if (gimp_drawable_has_alpha (drawable))
         {
-          pixel_region_init (&srcPR, drawable->tiles,
+          pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                              0, 0,
                              item->width, item->height,
                              FALSE);
@@ -1349,14 +1352,14 @@ gimp_layer_create_mask (const GimpLayer *layer,
               gint    w, h;
               guchar *alpha_ptr;
 
-              gimp_drawable_push_undo (GIMP_DRAWABLE (layer),
+              gimp_drawable_push_undo (drawable,
                                        _("Transfer Alpha to Mask"),
                                        0, 0,
                                        item->width,
                                        item->height,
                                        NULL, FALSE);
 
-              pixel_region_init (&srcPR, drawable->tiles,
+              pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                                  0, 0,
                                  item->width, item->height,
                                  TRUE);
@@ -1385,31 +1388,36 @@ gimp_layer_create_mask (const GimpLayer *layer,
       break;
 
     case GIMP_ADD_SELECTION_MASK:
+    case GIMP_ADD_CHANNEL_MASK:
       {
-        GimpChannel *selection;
-        gboolean     selection_empty;
-        gint         copy_x, copy_y;
-        gint         copy_width, copy_height;
+        gboolean channel_empty;
+        gint     copy_x, copy_y;
+        gint     copy_width, copy_height;
 
-        selection       = gimp_image_get_mask (image);
-        selection_empty = gimp_channel_is_empty (selection);
+        if (add_mask_type == GIMP_ADD_SELECTION_MASK)
+          channel = GIMP_CHANNEL (gimp_image_get_mask (image));
+
+        channel_empty = gimp_channel_is_empty (channel);
 
         gimp_rectangle_intersect (0, 0, image->width, image->height,
                                   item->offset_x, item->offset_y,
                                   item->width, item->height,
                                   &copy_x, &copy_y, &copy_width, &copy_height);
 
-        if (copy_width < item->width || copy_height < item->height ||
-            selection_empty)
+        if (copy_width  < item->width  ||
+            copy_height < item->height ||
+            channel_empty)
           gimp_channel_clear (GIMP_CHANNEL (mask), NULL, FALSE);
 
-        if ((copy_width || copy_height) && ! selection_empty)
+        if ((copy_width || copy_height) && ! channel_empty)
           {
-            pixel_region_init (&srcPR, GIMP_DRAWABLE (selection)->tiles,
+            pixel_region_init (&srcPR,
+                               gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
                                copy_x, copy_y,
                                copy_width, copy_height,
                                FALSE);
-            pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles,
+            pixel_region_init (&destPR,
+                               gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
                                copy_x - item->offset_x, copy_y - item->offset_y,
                                copy_width, copy_height,
                                TRUE);
@@ -1451,7 +1459,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
           }
         else
           {
-            pixel_region_init (&srcPR, drawable->tiles,
+            pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                                0, 0,
                                item->width,
                                item->height,

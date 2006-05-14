@@ -24,14 +24,28 @@
 
 #include "dialogs-types.h"
 
+#include "core/gimpchannel.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpimage.h"
 #include "core/gimplayer.h"
 
+#include "widgets/gimpcontainercombobox.h"
+#include "widgets/gimpcontainerview.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "layer-add-mask-dialog.h"
 
 #include "gimp-intl.h"
+
+
+/*  local function prototypes  */
+
+static gboolean   layer_add_mask_dialog_channel_selected (GimpContainerView  *view,
+                                                          GimpViewable       *viewable,
+                                                          gpointer            insert_data,
+                                                          LayerAddMaskDialog *dialog);
 
 
 /*  public functions  */
@@ -45,7 +59,9 @@ layer_add_mask_dialog_new (GimpLayer       *layer,
   LayerAddMaskDialog *dialog;
   GtkWidget          *vbox;
   GtkWidget          *frame;
+  GtkWidget          *combo;
   GtkWidget          *button;
+  GimpChannel        *channel;
 
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
@@ -97,6 +113,26 @@ layer_add_mask_dialog_new (GimpLayer       *layer,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
+  combo = gimp_container_combo_box_new (GIMP_ITEM (layer)->image->channels,
+                                        NULL,
+                                        GIMP_VIEW_SIZE_SMALL, 1);
+  gimp_enum_radio_frame_add (GTK_FRAME (frame), combo, GIMP_ADD_CHANNEL_MASK);
+  gtk_widget_show (combo);
+
+  g_signal_connect (combo, "select-item",
+                    G_CALLBACK (layer_add_mask_dialog_channel_selected),
+                    dialog);
+
+  channel = gimp_image_get_active_channel (GIMP_ITEM (layer)->image);
+
+  if (! channel)
+    channel = GIMP_CHANNEL
+      (gimp_container_get_child_by_index (GIMP_ITEM (layer)->image->channels,
+                                          0));
+
+  gimp_container_view_select_item (GIMP_CONTAINER_VIEW (combo),
+                                   GIMP_VIEWABLE (channel));
+
   button = gtk_check_button_new_with_mnemonic (_("In_vert mask"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), dialog->invert);
   gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -107,4 +143,18 @@ layer_add_mask_dialog_new (GimpLayer       *layer,
                     &dialog->invert);
 
   return dialog;
+}
+
+
+/*  private functions  */
+
+static gboolean
+layer_add_mask_dialog_channel_selected (GimpContainerView  *view,
+                                        GimpViewable       *viewable,
+                                        gpointer            insert_data,
+                                        LayerAddMaskDialog *dialog)
+{
+  dialog->channel = GIMP_CHANNEL (viewable);
+
+  return TRUE;
 }
