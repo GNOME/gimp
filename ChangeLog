@@ -1,3 +1,7 @@
+2006-05-15  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimp-utils.c: include "libgimpconfig/gimpconfig.h".
+
 2006-05-14  Michael Natterer  <mitch@gimp.org>
 
 	Allow to initialize a new layer mask with any of the image's
