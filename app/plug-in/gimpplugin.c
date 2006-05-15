@@ -162,8 +162,6 @@ gimp_plug_in_finalize (GObject *object)
 {
   GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
 
-  g_printerr ("%s (%s)\n", G_STRFUNC, GIMP_OBJECT (plug_in)->name);
-
   g_free (plug_in->prog);
 
   gimp_plug_in_proc_frame_dispose (&plug_in->main_proc_frame, plug_in);
@@ -401,9 +399,7 @@ gimp_plug_in_close (GimpPlugIn *plug_in,
   GList *list;
 
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
-  g_return_if_fail (plug_in->open == TRUE);
-
-  g_printerr ("%s (%s)\n", G_STRFUNC, GIMP_OBJECT (plug_in)->name);
+  g_return_if_fail (plug_in->open);
 
   plug_in->open = FALSE;
 

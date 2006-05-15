@@ -1,5 +1,9 @@
 2006-05-15  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/gimpplugin.c: removed debugging output.
+
+2006-05-15  Sven Neumann  <sven@gimp.org>
+
 	* app/*/*.c:
 	* lib*/*.c: removed erroneous semicolon after G_DEFINE_TYPE macros.
 
